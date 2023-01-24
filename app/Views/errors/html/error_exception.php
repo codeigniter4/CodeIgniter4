@@ -283,21 +283,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($headers as $value) : ?>
-                            <?php
-                            if (empty($value)) {
-                                continue;
-                            }
-
-                            if (! is_array($value)) {
-                                $value = [$value];
-                            } ?>
-                            <?php foreach ($value as $h) : ?>
-                                <tr>
-                                    <td><?= esc($h->getName(), 'html') ?></td>
-                                    <td><?= esc($h->getValueLine(), 'html') ?></td>
-                                </tr>
-                            <?php endforeach; ?>
+                        <?php foreach ($headers as $header) : ?>
+                            <tr>
+                                <td><?= esc($header->getName(), 'html') ?></td>
+                                <td><?= esc($header->getValueLine(), 'html') ?></td>
+                            </tr>
                         <?php endforeach; ?>
                         </tbody>
                     </table>
@@ -332,7 +322,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($headers as $name => $value) : ?>
+                        <?php foreach ($headers as $name => $header) : ?>
                             <tr>
                                 <td><?= esc($name, 'html') ?></td>
                                 <td><?= esc($response->getHeaderLine($name), 'html') ?></td>

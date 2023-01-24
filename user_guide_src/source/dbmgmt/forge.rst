@@ -1,3 +1,4 @@
+####################
 Database Forge Class
 ####################
 
@@ -77,9 +78,9 @@ for the file where the database will be created using the ``--ext`` option. Vali
     produce a success message but no database file is created. This is because SQLite3 will just use
     an in-memory database.
 
-****************************
-Creating and Dropping Tables
-****************************
+***************
+Creating Tables
+***************
 
 There are several things you may wish to do when creating tables. Add
 fields, add keys to the table, alter columns. CodeIgniter provides a
@@ -142,7 +143,7 @@ string into the field definitions with ``addField()``:
 
 .. note:: Multiple calls to ``addField()`` are cumulative.
 
-Creating an id field
+Creating an id Field
 --------------------
 
 There is a special exception for creating id fields. A field with type
@@ -155,6 +156,9 @@ Primary Key.
 
 Adding Keys
 ===========
+
+$forge->addKey()
+----------------
 
 Generally speaking, you'll want your table to have Keys. This is
 accomplished with ``$forge->addKey('field')``. The optional second
@@ -169,16 +173,18 @@ below is for MySQL.
 
 .. literalinclude:: forge/010.php
 
+$forge->addPrimaryKey()
+-----------------------
+
+$forge->addUniqueKey()
+----------------------
+
 To make code reading more objective it is also possible to add primary
 and unique keys with specific methods:
 
 .. literalinclude:: forge/011.php
 
 .. note:: When you add a primary key, MySQL and SQLite will assume the name ``PRIMARY`` even if a name is provided.
-
-You may add keys to an existing table by using ``processIndexes()``:
-
-.. literalinclude:: forge/029.php
 
 .. _adding-foreign-keys:
 
@@ -216,6 +222,10 @@ You could also pass optional table attributes, such as MySQL's ``ENGINE``:
     ``createTable()`` will always add them with your configured *charset*
     and *DBCollat* values, as long as they are not empty (MySQL only).
 
+***************
+Dropping Tables
+***************
+
 Dropping a Table
 ================
 
@@ -228,44 +238,12 @@ drivers to handle removal of tables with foreign keys.
 
 .. literalinclude:: forge/018.php
 
-Dropping a Foreign Key
-======================
-
-Execute a DROP FOREIGN KEY.
-
-.. literalinclude:: forge/019.php
-
-Dropping a Key
-======================
-
-Execute a DROP KEY.
-
-.. literalinclude:: forge/020.php
-
-.. _dropping-a-primary-key:
-
-Dropping a Primary Key
-======================
-
-.. versionadded:: 4.3.0
-
-Execute a DROP PRIMARY KEY.
-
-.. literalinclude:: forge/028.php
-
-Renaming a Table
-================
-
-Executes a TABLE rename
-
-.. literalinclude:: forge/021.php
-
 ****************
 Modifying Tables
 ****************
 
-Adding a Column to a Table
-==========================
+Adding a Field to a Table
+=========================
 
 $forge->addColumn()
 -------------------
@@ -283,8 +261,8 @@ Examples:
 
 .. literalinclude:: forge/023.php
 
-Dropping Columns From a Table
-==============================
+Dropping Fields From a Table
+============================
 
 .. _db-forge-dropColumn:
 
@@ -299,8 +277,8 @@ Used to remove multiple columns from a table.
 
 .. literalinclude:: forge/025.php
 
-Modifying a Column in a Table
-=============================
+Modifying a Field in a Table
+============================
 
 $forge->modifyColumn()
 ----------------------
@@ -310,6 +288,50 @@ alters an existing column rather than adding a new one. In order to
 change the name, you can add a "name" key into the field defining array.
 
 .. literalinclude:: forge/026.php
+
+.. _db-forge-adding-keys-to-a-table:
+
+Adding Keys to a Table
+======================
+
+.. versionadded:: 4.3.0
+
+You may add keys to an existing table by using ``addKey()``, ``addPrimaryKey()``,
+``addUniqueKey()`` or ``addForeignKey()`` and ``processIndexes()``:
+
+.. literalinclude:: forge/029.php
+
+.. _dropping-a-primary-key:
+
+Dropping a Primary Key
+======================
+
+.. versionadded:: 4.3.0
+
+Execute a DROP PRIMARY KEY.
+
+.. literalinclude:: forge/028.php
+
+Dropping a Key
+===============
+
+Execute a DROP KEY.
+
+.. literalinclude:: forge/020.php
+
+Dropping a Foreign Key
+======================
+
+Execute a DROP FOREIGN KEY.
+
+.. literalinclude:: forge/019.php
+
+Renaming a Table
+================
+
+Executes a TABLE rename
+
+.. literalinclude:: forge/021.php
 
 ***************
 Class Reference
@@ -326,7 +348,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Adds a column to a table. Usage:  See `Adding a Column to a Table`_.
+        Adds a column to a table. Usage:  See `Adding a Field to a Table`_.
 
     .. php:method:: addField($field)
 
@@ -334,7 +356,7 @@ Class Reference
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 
-                Adds a field to the set that will be used to create a table. Usage:  See `Adding Fields`_.
+        Adds a field to the set that will be used to create a table. Usage:  See `Adding Fields`_.
 
     .. php:method:: addForeignKey($fieldName, $tableName, $tableField[, $onUpdate = '', $onDelete = '', $fkName = ''])
 
@@ -346,8 +368,6 @@ Class Reference
         :param    string    $fkName: Name of foreign key. This does not work with SQLite3
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
-
-        .. note:: ``$fkName`` can be used since v4.3.0.
 
         Adds a foreign key to the set that will be used to create a table. Usage:  See `Adding Foreign Keys`_.
 
@@ -414,7 +434,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Drops single or multiple columns from a table. Usage:  See `Dropping Columns From a Table`_.
+        Drops single or multiple columns from a table. Usage:  See `Dropping Fields From a Table`_.
 
     .. php:method:: dropDatabase($dbName)
 
@@ -458,12 +478,15 @@ Class Reference
 
     .. php:method:: processIndexes($table)
 
+        .. versionadded:: 4.3.0
+
         :param    string    $table: Name of the table to add indexes to
         :returns:    true on success, false on failure
         :rtype:    bool
 
         Used following ``addKey()``, ``addPrimaryKey()``, ``addUniqueKey()``,
         and ``addForeignKey()`` to add indexes to an existing table.
+        See `Adding Keys to a Table`_.
 
     .. php:method:: modifyColumn($table, $field)
 
@@ -472,7 +495,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Modifies a table column. Usage:  See `Modifying a Column in a Table`_.
+        Modifies a table column. Usage:  See `Modifying a Field in a Table`_.
 
     .. php:method:: renameTable($table_name, $new_table_name)
 

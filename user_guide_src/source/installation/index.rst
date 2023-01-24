@@ -11,7 +11,7 @@ Which is right for you?
   is known for, choose the manual installation.
 
 However you choose to install and run CodeIgniter4, the
-`user guide <https://codeigniter4.github.io/userguide/>`_ is accessible online.
+`user guide <https://codeigniter.com/user_guide/>`_ is accessible online.
 
 .. note:: Before using CodeIgniter 4, make sure that your server meets the
     :doc:`requirements </intro/requirements>`, in particular the PHP

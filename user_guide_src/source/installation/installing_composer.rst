@@ -9,13 +9,16 @@ Composer can be used in several ways to install CodeIgniter4 on your system.
 
 .. important:: CodeIgniter4 requires Composer 2.0.14 or later.
 
+.. note:: If you are not familiar with Composer, we recommend you read
+    `Basic usage <https://getcomposer.org/doc/01-basic-usage.md>`_ first.
+
 The first technique describes creating a skeleton project
 using CodeIgniter4, that you would then use as the base for a new webapp.
 The second technique described below lets you add CodeIgniter4 to an existing
 webapp,
 
 .. note:: If you are using a Git repository to store your code, or for
-   collaboration with others, then the ``vendor`` folder would normally
+   collaboration with others, then the **vendor** folder would normally
    be "git ignored". In such a case, you will need to do a ``composer update``
    when you clone the repository to a new system.
 
@@ -36,7 +39,7 @@ In the folder above your project root::
 
     > composer create-project codeigniter4/appstarter project-root
 
-The command above will create a "project-root" folder.
+The command above will create a **project-root** folder.
 
 If you omit the "project-root" argument, the command will create an
 "appstarter" folder, which can be renamed as appropriate.
@@ -45,14 +48,14 @@ If you omit the "project-root" argument, the command will create an
     The symbols that can be used are ``/``, ``_``, ``.``, ``:``, ``\`` and space.
     So if you install CodeIgniter under the folder that contains the special characters like ``(``, ``)``, etc., CodeIgniter won't work.
 
-If you don't need or want phpunit installed, and all of its composer
-dependencies, then add the ``--no-dev`` option to the end of the above
-command line. That will result in only the framework, and the three
-trusted dependencies that we bundle, being composer-installed.
+.. important:: When you deploy to your production server, don't forget to run the
+    following command::
 
-A sample such installation command, using the default project-root "appstarter"::
+    > composer install --no-dev
 
-    > composer create-project codeigniter4/appstarter --no-dev
+    The above command will removes the Composer packages only for development
+    that are not needed in the production environment. This will greatly reduce
+    the vendor folder size.
 
 Initial Configuration
 ---------------------
@@ -131,11 +134,20 @@ In your project root::
 
     > composer require codeigniter4/framework
 
+.. important:: When you deploy to your production server, don't forget to run the
+    following command::
+
+    > composer install --no-dev
+
+    The above command will removes the Composer packages only for development
+    that are not needed in the production environment. This will greatly reduce
+    the vendor folder size.
+
 Setting Up
 ----------
 
-    1. Copy the ``app``, ``public``, ``tests`` and ``writable`` folders from ``vendor/codeigniter4/framework`` to your project root
-    2. Copy the ``env``, ``phpunit.xml.dist`` and ``spark`` files, from ``vendor/codeigniter4/framework`` to your project root
+    1. Copy the **app**, **public**, **tests** and **writable** folders from **vendor/codeigniter4/framework** to your project root
+    2. Copy the **env**, **phpunit.xml.dist** and **spark** files, from **vendor/codeigniter4/framework** to your project root
     3. You will have to adjust the ``$systemDirectory`` property in **app/Config/Paths.php** to refer to the vendor one, e.g., ``ROOTPATH . '/vendor/codeigniter4/framework/system'``.
 
 Initial Configuration
