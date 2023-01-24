@@ -2142,6 +2142,14 @@ class BaseBuilder
     }
 
     /**
+     * Gets $QBOptions for use in Model
+     */
+    public function getQBOptions(): array
+    {
+        return $this->QBOptions;
+    }
+
+    /**
      * Gets column names from a select query
      */
     protected function fieldsFromQuery(string $sql): array
