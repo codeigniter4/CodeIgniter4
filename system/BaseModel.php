@@ -423,7 +423,7 @@ abstract class BaseModel
      * This method works only with dbCalls.
      *
      * @param array|null  $set       An associative array of update values
-     * @param string|null $index     The where key
+     * @param array|RawSql|string|null $constraints
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
@@ -431,7 +431,7 @@ abstract class BaseModel
      *
      * @throws DatabaseException
      */
-    abstract protected function doUpdateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false);
+    abstract protected function doUpdateBatch(?array $set = null, $constraints = null, int $batchSize = 100, bool $returnSQL = false);
 
     /**
      * Deletes a single record from the database where $id matches.
@@ -957,7 +957,7 @@ abstract class BaseModel
      * Compiles an update and runs the query.
      *
      * @param array|null  $set       An associative array of update values
-     * @param string|null $index     The where key
+     * @param array|RawSql|string|null $constraints
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
@@ -966,7 +966,7 @@ abstract class BaseModel
      * @throws DatabaseException
      * @throws ReflectionException
      */
-    public function updateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false)
+    public function updateBatch(?array $set = null, $constraints = null, int $batchSize = 100, bool $returnSQL = false)
     {
         if (is_array($set)) {
             foreach ($set as &$row) {
@@ -989,17 +989,9 @@ abstract class BaseModel
                     return false;
                 }
 
-                // Save updateIndex for later
-                $updateIndex = $row[$index] ?? null;
-
                 // Must be called first so we don't
                 // strip out updated_at values.
-                $row = $this->doProtectFields($row);
-
-                // Restore updateIndex value in case it was wiped out
-                if ($updateIndex !== null) {
-                    $row[$index] = $updateIndex;
-                }
+                $row = $this->doProtectFields($row, (array) $constraints);
             }
 
             if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, current($set))) {
@@ -1013,7 +1005,7 @@ abstract class BaseModel
             $eventData = $this->trigger('beforeUpdateBatch', $eventData);
         }
 
-        $result = $this->doUpdateBatch($eventData['data'], $index, $batchSize, $returnSQL);
+        $result = $this->doUpdateBatch($eventData['data'], $constraints, $batchSize, $returnSQL);
 
         $eventData = [
             'data'   => $eventData['data'],
@@ -1230,10 +1222,11 @@ abstract class BaseModel
      * vulnerabilities.
      *
      * @param array $data Data
+     * @param array $keep Additional fields to keep in data
      *
      * @throws DataException
      */
-    protected function doProtectFields(array $data): array
+    protected function doProtectFields(array $data, array $keep): array
     {
         if (! $this->protectFields) {
             return $data;
@@ -1243,8 +1236,10 @@ abstract class BaseModel
             throw DataException::forInvalidAllowedFields(static::class);
         }
 
+        $fieldsToKeep = array_merge($this->allowedFields, $keep);
+
         foreach (array_keys($data) as $key) {
-            if (! in_array($key, $this->allowedFields, true)) {
+            if (! in_array($key, $fieldsToKeep, true)) {
                 unset($data[$key]);
             }
         }

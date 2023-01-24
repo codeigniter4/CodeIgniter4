@@ -400,7 +400,7 @@ class Model extends BaseModel
      * This method works only with dbCalls.
      *
      * @param array|null  $set       An associative array of update values
-     * @param string|null $index     The where key
+     * @param array|RawSql|string|null $constraints
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
@@ -408,14 +408,14 @@ class Model extends BaseModel
      *
      * @throws DatabaseException
      */
-    protected function doUpdateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false)
+    protected function doUpdateBatch(?array $set = null, $constraints = null, int $batchSize = 100, bool $returnSQL = false)
     {
         $escape       = $this->escape[0] ?? null;
         $this->escape = [];
 
         $builder = $this->builder()->setData($set, $escape);
 
-        return $builder->testMode($returnSQL)->updateBatch(null, $index, $batchSize);
+        return $builder->testMode($returnSQL)->updateBatch(null, $constraints, $batchSize);
     }
 
     /**
@@ -790,7 +790,7 @@ class Model extends BaseModel
      * Compiles an update and runs the query.
      *
      * @param array|null  $set       An associative array of update values
-     * @param string|null $index     The where key
+     * @param array|RawSql|string|null $constraints
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
@@ -799,14 +799,14 @@ class Model extends BaseModel
      * @throws DatabaseException
      * @throws ReflectionException
      */
-    public function updateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false)
+    public function updateBatch(?array $set = null, $constraints = null, int $batchSize = 100, bool $returnSQL = false)
     {
         $set ??= $this->tempData['data'] ?? null;
 
         $this->escape[0] = $this->tempData['escape'] ?? null;
         $this->tempData  = [];
 
-        return parent::updateBatch($set, $index, $batchSize, $returnSQL);
+        return parent::updateBatch($set, $constraints, $batchSize, $returnSQL);
     }
 
     /**
