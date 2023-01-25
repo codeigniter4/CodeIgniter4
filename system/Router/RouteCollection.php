@@ -1583,36 +1583,46 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function getRegisteredControllers(?string $verb = '*'): array
     {
-        $handlers = [];
+        $controllers = [];
 
         if ($verb === '*') {
             foreach ($this->defaultHTTPMethods as $tmpVerb) {
                 foreach ($this->routes[$tmpVerb] as $route) {
-                    $key        = key($route['route']);
-                    $handlers[] = $route['route'][$key];
+                    $routeKey   = key($route['route']);
+                    $controller = $this->getControllerName($route['route'][$routeKey]);
+                    if ($controller !== null) {
+                        $controllers[] = $controller;
+                    }
                 }
             }
         } else {
             $routes = $this->getRoutes($verb);
 
             foreach ($routes as $handler) {
-                $handlers[] = $handler;
+                $controller = $this->getControllerName($handler);
+                if ($controller !== null) {
+                    $controllers[] = $controller;
+                }
             }
-        }
-
-        $controllers = [];
-
-        foreach ($handlers as $handler) {
-            if (! is_string($handler)) {
-                continue;
-            }
-
-            [$controller] = explode('::', $handler, 2);
-
-            $controllers[] = $controller;
         }
 
         return array_unique($controllers);
+    }
+
+    /**
+     * @param Closure|string $handler Handler
+     *
+     * @return string|null Controller classname
+     */
+    private function getControllerName($handler)
+    {
+        if (! is_string($handler)) {
+            return null;
+        }
+
+        [$controller] = explode('::', $handler, 2);
+
+        return $controller;
     }
 
     /**
