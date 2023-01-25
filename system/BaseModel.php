@@ -968,35 +968,70 @@ abstract class BaseModel
      */
     public function updateBatch(?array $set = null, $constraints = null, int $batchSize = 100, bool $returnSQL = false)
     {
-        if (is_array($set)) {
-            foreach ($set as &$row) {
-                // If $data is using a custom class with public or protected
-                // properties representing the collection elements, we need to grab
-                // them as an array.
-                if (is_object($row) && ! $row instanceof stdClass) {
-                    $row = $this->objectToArray($row, true, true);
-                }
+        if (! is_array($set) || $set === []) {
+            throw new DatabaseException('$set containts no data'); // @codeCoverageIgnore
+        }
 
-                // If it's still a stdClass, go ahead and convert to
-                // an array so doProtectFields and other model methods
-                // don't have to do special checks.
-                if (is_object($row)) {
-                    $row = (array) $row;
-                }
-
-                // Validate data before saving.
-                if (! $this->skipValidation && ! $this->validate($row)) {
-                    return false;
-                }
-
-                // Must be called first so we don't
-                // strip out updated_at values.
-                $row = $this->doProtectFields($row, (array) $constraints);
+        foreach ($set as &$row) {
+            // If $data is using a custom class with public or protected
+            // properties representing the collection elements, we need to grab
+            // them as an array.
+            if (is_object($row) && ! $row instanceof stdClass) {
+                $row = $this->objectToArray($row, true, true);
             }
 
-            if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, current($set))) {
-                $this->updateFields([$this->updatedField => new RawSql($this->db->escape($this->setDate()))], true);
+            // If it's still a stdClass, go ahead and convert to
+            // an array so doProtectFields and other model methods
+            // don't have to do special checks.
+            if (is_object($row)) {
+                $row = (array) $row;
             }
+
+            // Validate data before saving.
+            if (! $this->skipValidation && ! $this->validate($row)) {
+                return false;
+            }
+
+            // We won't remove the fields from data in case they are used to calculate another column or used as a constraint
+            //$row = $this->doProtectFields($row, (array) $constraints);
+        }
+
+        $esc = $this->db->escapeChar;
+        
+        // constraints may already defined - if not define them in builder
+        $this->builder()->onConstraint($constraints);
+        $constraints = null;
+        
+        // retrieve updateFields from builder if set already. We need to doProtectFields() on them.
+        $updateFields = [];
+        foreach ($this->getQBOptions()['updateFields'] ?? [] as $k => $v) {
+            $updateFields[trim($k, $esc)] = ($v instanceof RawSql) ? $v : trim($v, $esc);
+        }
+        $this->unsetQBOptions(['updateFields']);
+        
+        $updateFieldsAdditional = [];
+        foreach ($this->getQBOptions()['updateFieldsAdditional'] ?? [] as $k => $v) {
+            $updateFieldsAdditional[trim($k, $esc)] = ($v instanceof RawSql) ? $v : trim($v, $esc);
+        }
+        $this->unsetQBOptions(['updateFieldsAdditional']);
+
+        // if updateFields haven't been defined lets define them based on data and then filter them.
+        if ($updateFields === []) {
+            foreach (array_keys(current($set)) as $k) {
+                $updateFields[$k] = $k; // we need the keys set for doProtectFields() below
+            }
+        }
+        
+        $updateFields = array_merge($updateFields, $updateFieldsAdditional);
+
+        // we need to define these now or else builder will update all fields in dataset
+        // make sure we aren't updating a column not allowed
+        $this->builder()->updateFields($this->doProtectFields($updateFields));
+
+        // add update timestamp if not already in data 
+        // also check updateFields in case it was added there
+        if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, current($set)) && ! array_key_exists($this->updatedField, $updateFields)) {
+            $this->updateFields([$this->updatedField => new RawSql($this->db->escape($this->setDate()))]);
         }
 
         $eventData = ['data' => $set];
@@ -1226,7 +1261,7 @@ abstract class BaseModel
      *
      * @throws DataException
      */
-    protected function doProtectFields(array $data, array $keep): array
+    protected function doProtectFields(array $data, array $keep = []): array
     {
         if (! $this->protectFields) {
             return $data;
