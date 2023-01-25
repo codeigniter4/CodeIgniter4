@@ -206,6 +206,12 @@ final class UpdateModelTest extends LiveModelTestCase
             ];
         };
 
+        $data = ['id' => 1, 'name' => 'Jones Martin', 'country' => 'India', 'deleted' => 0];
+        $entity1->fill($data);
+
+        $data = ['id' => 4, 'name' => 'Jones Martin', 'country' => 'India', 'deleted' => 0];
+        $entity2->fill($data);
+
         $this->assertSame(2, $this->createModel(UserModel::class)->updateBatch([$entity1, $entity2], 'id'));
     }
 
@@ -370,6 +376,15 @@ final class UpdateModelTest extends LiveModelTestCase
                 'casts' => [],
             ];
         };
+
+        $data = [
+            'id'      => 4,
+            'name'    => 'Jones Martin',
+            'email'   => 'jones@example.org',
+            'country' => 'India',
+            'deleted' => 0,
+        ];
+        $entity->fill($data);
 
         $id = $this->model->insert($entity);
 
