@@ -9,8 +9,5 @@ $routes->add(
 
 ?>
 
-<?php
-
-// Generate the route with user ID 15, gallery 12 and locale en:
-route_to('user_gallery', 15, 12, 'en');
-// Result: '/en/users/15/gallery/12'
+<a href="<?= url_to('user_gallery', 15, 12, 'en') ?>">View Gallery</a>
+<!-- Result: 'http://example.com/en/users/15/gallery/12' -->

@@ -361,8 +361,8 @@ The following functions are available:
 
 .. php:function:: url_to($controller[, ...$args])
 
-    :param  string  $controller: Named route or Controller::method
-    :param  mixed   ...$args:    One or more parameters to be passed to the route
+    :param  string  $controller: Route name or Controller::method
+    :param  mixed   ...$args:    One or more parameters to be passed to the route. The last parameter allows you to set the locale.
     :returns: Absolute URL
     :rtype: string
 
@@ -379,6 +379,10 @@ The following functions are available:
 
     This is useful because you can still change your routes after putting links
     into your views.
+
+    Since v4.3.0, when you use ``{locale}`` in your route, you can optionally specify the locale value as the last parameter.
+
+    .. literalinclude:: url_helper/025.php
 
     For full details, see the :ref:`reverse-routing` and :ref:`using-named-routes`.
 
