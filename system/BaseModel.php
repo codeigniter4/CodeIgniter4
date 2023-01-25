@@ -12,6 +12,7 @@
 namespace CodeIgniter;
 
 use Closure;
+use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
@@ -343,6 +344,15 @@ abstract class BaseModel
     protected function initialize()
     {
     }
+
+    /**
+     * Provides a shared instance of the Query Builder.
+     *
+     * @return BaseBuilder
+     *
+     * @throws ModelException
+     */
+    abstract protected function builder(?string $table = null);
 
     /**
      * Fetches the row of database.
@@ -1005,17 +1015,17 @@ abstract class BaseModel
         // retrieve updateFields from builder if set already. We need to doProtectFields() on them.
         $updateFields = [];
 
-        foreach ($this->getQBOptions()['updateFields'] ?? [] as $k => $v) {
+        foreach ($this->builder()->getQBOptions()['updateFields'] ?? [] as $k => $v) {
             $updateFields[trim($k, $esc)] = ($v instanceof RawSql) ? $v : trim($v, $esc);
         }
-        $this->unsetQBOptions(['updateFields']);
+        $this->builder()->unsetQBOptions(['updateFields']);
 
         $updateFieldsAdditional = [];
 
-        foreach ($this->getQBOptions()['updateFieldsAdditional'] ?? [] as $k => $v) {
+        foreach ($this->builder()->getQBOptions()['updateFieldsAdditional'] ?? [] as $k => $v) {
             $updateFieldsAdditional[trim($k, $esc)] = ($v instanceof RawSql) ? $v : trim($v, $esc);
         }
-        $this->unsetQBOptions(['updateFieldsAdditional']);
+        $this->builder()->unsetQBOptions(['updateFieldsAdditional']);
 
         // if updateFields haven't been defined lets define them based on data and then filter them.
         if ($updateFields === []) {
@@ -1033,7 +1043,7 @@ abstract class BaseModel
         // add update timestamp if not already in data
         // also check updateFields in case it was added there
         if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, current($set)) && ! array_key_exists($this->updatedField, $updateFields)) {
-            $this->updateFields([$this->updatedField => new RawSql($this->db->escape($this->setDate()))]);
+            $this->builder()->updateFields([$this->updatedField => new RawSql($this->db->escape($this->setDate()))]);
         }
 
         $eventData = ['data' => $set];
