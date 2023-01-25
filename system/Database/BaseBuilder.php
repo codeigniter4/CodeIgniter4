@@ -2057,7 +2057,7 @@ class BaseBuilder
         }
 
         // allow this to remove any fields set even when called with no data
-        if (is_array($ignore) && is_array($this->QBOptions['updateFields'])) {
+        if (is_array($ignore) && isset($this->QBOptions['updateFields'])) {
             foreach (array_keys($this->QBOptions['updateFields']) as $key) {
                 if (in_array($key, $ignore, true)) {
                     unset($this->QBOptions['updateFields'][$key]);
