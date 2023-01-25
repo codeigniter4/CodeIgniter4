@@ -1462,8 +1462,8 @@ class RouteCollection implements RouteCollectionInterface
         // routes should always be the "source of truth".
         // this works only because discovered routes are added just prior
         // to attempting to route the request.
-        $fromExists = isset($this->routes[$verb][$routeKey]);
-        if ((isset($this->routesNames[$verb][$name]) || $fromExists) && ! $overwrite) {
+        $routeKeyExists = isset($this->routes[$verb][$routeKey]);
+        if ((isset($this->routesNames[$verb][$name]) || $routeKeyExists) && ! $overwrite) {
             return;
         }
 
