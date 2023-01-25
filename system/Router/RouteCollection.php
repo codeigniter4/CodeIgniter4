@@ -1691,7 +1691,7 @@ class RouteCollection implements RouteCollectionInterface
 
         if ($verb === '*') {
             foreach ($this->defaultHTTPMethods as $tmpVerb) {
-                foreach ($this->routes[$tmpVerb] as $routeKey => $route) {
+                foreach ($this->routes[$tmpVerb] as $route) {
                     $controller = $this->getControllerName($route['handler']);
                     if ($controller !== null) {
                         $controllers[] = $controller;
