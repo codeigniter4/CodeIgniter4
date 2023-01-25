@@ -884,4 +884,20 @@ final class MiscUrlTest extends CIUnitTestCase
             ],
         ];
     }
+
+    public function testUrlToWithSupportedLocaleInRoute()
+    {
+        Services::createRequest(new App());
+        $routes = service('routes');
+        $routes->add(
+            '{locale}/path/(:segment)/to/(:num)',
+            'myController::goto/$1/$2',
+            ['as' => 'path-to']
+        );
+
+        $this->assertSame(
+            'http://example.com/index.php/en/path/string/to/13',
+            url_to('path-to', 'string', 13, 'en')
+        );
+    }
 }

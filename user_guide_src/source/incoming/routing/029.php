@@ -1,7 +1,7 @@
 <?php
 
 // The route is defined as:
-$routes->get('users/(:num)/gallery(:any)', 'Galleries::showUserGallery/$1/$2');
+$routes->get('users/(:num)/gallery/(:num)', 'Galleries::showUserGallery/$1/$2');
 
 ?>
 

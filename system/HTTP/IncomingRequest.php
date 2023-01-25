@@ -62,8 +62,8 @@ class IncomingRequest extends Request
      *
      * Note: This WILL NOT match the actual URL in the browser since for
      * everything this cares about (and the router, etc) is the portion
-     * AFTER the script name. So, if hosted in a sub-folder this will
-     * appear different than actual URL. If you need that use getPath().
+     * AFTER the baseURL. So, if hosted in a sub-folder this will
+     * appear different than actual URI path. If you need that use getPath().
      *
      * @deprecated Will be protected. Use getUri() instead.
      *
@@ -72,7 +72,7 @@ class IncomingRequest extends Request
     public $uri;
 
     /**
-     * The detected path (relative to SCRIPT_NAME).
+     * The detected URI path (relative to the baseURL).
      *
      * Note: current_url() uses this to build its URI,
      * so this becomes the source for the "current URL"
@@ -511,7 +511,7 @@ class IncomingRequest extends Request
     }
 
     /**
-     * Returns the path relative to SCRIPT_NAME,
+     * Returns the URI path relative to baseURL,
      * running detection as necessary.
      */
     public function getPath(): string
