@@ -1577,31 +1577,32 @@ class RouteCollection implements RouteCollectionInterface
      * Get all controllers in Route Handlers
      *
      * @param string|null $verb HTTP verb. `'*'` returns all controllers in any verb.
+     *
+     * @return array<int, string> controller name list
+     * @phpstan-return list<string>
      */
     public function getRegisteredControllers(?string $verb = '*'): array
     {
-        $routes = [];
+        $handlers = [];
 
         if ($verb === '*') {
-            $rawRoutes = [];
-
             foreach ($this->defaultHTTPMethods as $tmpVerb) {
-                $rawRoutes = array_merge($rawRoutes, $this->routes[$tmpVerb]);
-            }
-
-            foreach ($rawRoutes as $route) {
-                $key     = key($route['route']);
-                $handler = $route['route'][$key];
-
-                $routes[$key] = $handler;
+                foreach ($this->routes[$tmpVerb] as $route) {
+                    $key        = key($route['route']);
+                    $handlers[] = $route['route'][$key];
+                }
             }
         } else {
             $routes = $this->getRoutes($verb);
+
+            foreach ($routes as $handler) {
+                $handlers[] = $handler;
+            }
         }
 
         $controllers = [];
 
-        foreach ($routes as $handler) {
+        foreach ($handlers as $handler) {
             if (! is_string($handler)) {
                 continue;
             }
