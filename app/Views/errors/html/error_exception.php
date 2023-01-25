@@ -1,4 +1,9 @@
-<?php $error_id = uniqid('error', true); ?>
+<?php
+use Config\Services;
+use CodeIgniter\CodeIgniter;
+
+$errorId = uniqid('error', true);
+?>
 <!doctype html>
 <html>
 <head>
@@ -77,16 +82,16 @@
                             <?php if (isset($row['class'])) : ?>
                                 &nbsp;&nbsp;&mdash;&nbsp;&nbsp;<?= esc($row['class'] . $row['type'] . $row['function']) ?>
                                 <?php if (! empty($row['args'])) : ?>
-                                    <?php $args_id = $error_id . 'args' . $index ?>
-                                    ( <a href="#" onclick="return toggle('<?= esc($args_id, 'attr') ?>');">arguments</a> )
-                                    <div class="args" id="<?= esc($args_id, 'attr') ?>">
+                                    <?php $argsId = $errorId . 'args' . $index ?>
+                                    ( <a href="#" onclick="return toggle('<?= esc($argsId, 'attr') ?>');">arguments</a> )
+                                    <div class="args" id="<?= esc($argsId, 'attr') ?>">
                                         <table cellspacing="0">
 
                                         <?php
                                         $params = null;
                                         // Reflection by name is not available for closure function
                                         if (substr($row['function'], -1) !== '}') {
-                                            $mirror = isset($row['class']) ? new \ReflectionMethod($row['class'], $row['function']) : new \ReflectionFunction($row['function']);
+                                            $mirror = isset($row['class']) ? new ReflectionMethod($row['class'], $row['function']) : new ReflectionFunction($row['function']);
                                             $params = $mirror->getParameters();
                                         }
 
@@ -189,7 +194,7 @@
 
             <!-- Request -->
             <div class="content" id="request">
-                <?php $request = \Config\Services::request(); ?>
+                <?php $request = Services::request(); ?>
 
                 <table>
                     <tbody>
@@ -297,7 +302,7 @@
 
             <!-- Response -->
             <?php
-                $response = \Config\Services::response();
+                $response = Services::response();
                 $response->setStatusCode(http_response_code());
             ?>
             <div class="content" id="response">
@@ -322,7 +327,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($headers as $name => $header) : ?>
+                        <?php foreach (array_keys($headers) as $name) : ?>
                             <tr>
                                 <td><?= esc($name, 'html') ?></td>
                                 <td><?= esc($response->getHeaderLine($name), 'html') ?></td>
@@ -377,7 +382,7 @@
             <p>
                 Displayed at <?= esc(date('H:i:sa')) ?> &mdash;
                 PHP: <?= esc(PHP_VERSION) ?>  &mdash;
-                CodeIgniter: <?= esc(\CodeIgniter\CodeIgniter::CI_VERSION) ?>
+                CodeIgniter: <?= esc(CodeIgniter::CI_VERSION) ?>
             </p>
 
         </div>
