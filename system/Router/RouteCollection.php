@@ -654,12 +654,14 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * Determines if the route is a redirecting route.
+     *
+     * @param string $routeKey routeKey or route name
      */
-    public function isRedirect(string $from): bool
+    public function isRedirect(string $routeKey): bool
     {
         foreach ($this->routes['*'] as $name => $route) {
             // Named route?
-            if ($name === $from || key($route['route']) === $from) {
+            if ($name === $routeKey || key($route['route']) === $routeKey) {
                 return isset($route['redirect']) && is_numeric($route['redirect']);
             }
         }
@@ -669,12 +671,14 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * Grabs the HTTP status code from a redirecting Route.
+     *
+     * @param string $routeKey routeKey or route name
      */
-    public function getRedirectCode(string $from): int
+    public function getRedirectCode(string $routeKey): int
     {
         foreach ($this->routes['*'] as $name => $route) {
             // Named route?
-            if ($name === $from || key($route['route']) === $from) {
+            if ($name === $routeKey || key($route['route']) === $routeKey) {
                 return $route['redirect'] ?? 0;
             }
         }
