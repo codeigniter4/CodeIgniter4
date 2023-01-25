@@ -2048,11 +2048,20 @@ class BaseBuilder
                     }
                 }
             }
+        }
 
-            if ($addToDefault === false && isset($this->QBOptions['updateFieldsAdditional'], $this->QBOptions['updateFields'])) {
-                $this->QBOptions['updateFields'] = array_merge($this->QBOptions['updateFields'], $this->QBOptions['updateFieldsAdditional']);
+        if ($addToDefault === false && isset($this->QBOptions['updateFieldsAdditional'], $this->QBOptions['updateFields'])) {
+            $this->QBOptions['updateFields'] = array_merge($this->QBOptions['updateFields'], $this->QBOptions['updateFieldsAdditional']);
 
-                unset($this->QBOptions['updateFieldsAdditional']);
+            unset($this->QBOptions['updateFieldsAdditional']);
+        }
+
+        // allow this to remove any fields set even when called with no data
+        if (is_array($ignore) && is_array($this->QBOptions['updateFields'])) {
+            foreach ($this->QBOptions['updateFields'] as $key => $value) {
+                if (in_array($key, $ignore, true)) {
+                    unset($this->QBOptions['updateFields'][$key]);
+                }
             }
         }
 
@@ -2161,7 +2170,7 @@ class BaseBuilder
         foreach ($keys as $option) {
             unset($this->QBOptions[$option]);
         }
-        
+
         return $this;
     }
 
