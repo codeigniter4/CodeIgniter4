@@ -1388,10 +1388,11 @@ class RouteCollection implements RouteCollectionInterface
             }
         }
 
+        $routeKey = $from;
         // Replace our regex pattern placeholders with the actual thing
         // so that the Router doesn't need to know about any of this.
         foreach ($this->placeholders as $tag => $pattern) {
-            $from = str_ireplace(':' . $tag, $pattern, $from);
+            $routeKey = str_ireplace(':' . $tag, $pattern, $routeKey);
         }
 
         // If is redirect, No processing
@@ -1406,7 +1407,7 @@ class RouteCollection implements RouteCollectionInterface
             $to = '\\' . ltrim($to, '\\');
         }
 
-        $name = $options['as'] ?? $from;
+        $name = $options['as'] ?? $routeKey;
 
         helper('array');
 
@@ -1415,16 +1416,16 @@ class RouteCollection implements RouteCollectionInterface
         // routes should always be the "source of truth".
         // this works only because discovered routes are added just prior
         // to attempting to route the request.
-        $fromExists = dot_array_search('*.route.' . $from, $this->routes[$verb] ?? []) !== null;
+        $fromExists = dot_array_search('*.route.' . $routeKey, $this->routes[$verb] ?? []) !== null;
         if ((isset($this->routes[$verb][$name]) || $fromExists) && ! $overwrite) {
             return;
         }
 
         $this->routes[$verb][$name] = [
-            'route' => [$from => $to],
+            'route' => [$routeKey => $to],
         ];
 
-        $this->routesOptions[$verb][$from] = $options;
+        $this->routesOptions[$verb][$routeKey] = $options;
 
         // Is this a redirect?
         if (isset($options['redirect']) && is_numeric($options['redirect'])) {
