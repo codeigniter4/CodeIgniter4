@@ -1114,8 +1114,8 @@ class RouteCollection implements RouteCollectionInterface
         // all routes to find a match.
         foreach ($this->routes as $collection) {
             foreach ($collection as $route) {
-                $from = key($route['route']);
-                $to   = $route['route'][$from];
+                $routeKey = key($route['route']);
+                $to       = $route['route'][$routeKey];
 
                 // ignore closures
                 if (! is_string($to)) {
@@ -1139,7 +1139,7 @@ class RouteCollection implements RouteCollectionInterface
                     continue;
                 }
 
-                return $this->buildReverseRoute($from, $params);
+                return $this->buildReverseRoute($routeKey, $params);
             }
         }
 
@@ -1254,21 +1254,21 @@ class RouteCollection implements RouteCollectionInterface
      * @param array $params One or more parameters to be passed to the route.
      *                      The last parameter allows you to set the locale.
      */
-    protected function buildReverseRoute(string $from, array $params): string
+    protected function buildReverseRoute(string $routeKey, array $params): string
     {
         $locale = null;
 
         // Find all of our back-references in the original route
-        preg_match_all('/\(([^)]+)\)/', $from, $matches);
+        preg_match_all('/\(([^)]+)\)/', $routeKey, $matches);
 
         if (empty($matches[0])) {
-            if (strpos($from, '{locale}') !== false) {
+            if (strpos($routeKey, '{locale}') !== false) {
                 $locale = $params[0] ?? null;
             }
 
-            $from = $this->replaceLocale($from, $locale);
+            $routeKey = $this->replaceLocale($routeKey, $locale);
 
-            return '/' . ltrim($from, '/');
+            return '/' . ltrim($routeKey, '/');
         }
 
         // Locale is passed?
@@ -1286,13 +1286,13 @@ class RouteCollection implements RouteCollectionInterface
 
             // Ensure that the param we're inserting matches
             // the expected param type.
-            $pos  = strpos($from, $pattern);
-            $from = substr_replace($from, $params[$index], $pos, strlen($pattern));
+            $pos      = strpos($routeKey, $pattern);
+            $routeKey = substr_replace($routeKey, $params[$index], $pos, strlen($pattern));
         }
 
-        $from = $this->replaceLocale($from, $locale);
+        $routeKey = $this->replaceLocale($routeKey, $locale);
 
-        return '/' . ltrim($from, '/');
+        return '/' . ltrim($routeKey, '/');
     }
 
     /**
