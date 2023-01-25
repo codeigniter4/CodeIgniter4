@@ -172,8 +172,8 @@ class BaseBuilder
      *   setQueryAsData?: string,
      *   sql?: string,
      *   alias?: string
-     * }
-     * @var array
+     * }|null
+     * @var array|null
      */
     protected $QBOptions;
 
@@ -2038,7 +2038,7 @@ class BaseBuilder
                 if ($ignore === null || ! in_array($key, $ignore, true)) {
                     if ($addToDefault) {
                         // if fields are already defined add to updateFields
-                        if ($this->QBOptions['updateFields'] ?? [] !== []) {
+                        if (isset($this->QBOptions['updateFields'])) {
                             $this->QBOptions['updateFields'][$this->db->protectIdentifiers($key)] = $value;
                         } else { // else store seperately for later when fields are defined
                             $this->QBOptions['updateFieldsAdditional'][$this->db->protectIdentifiers($key)] = $value;
@@ -2058,7 +2058,7 @@ class BaseBuilder
 
         // allow this to remove any fields set even when called with no data
         if (is_array($ignore) && is_array($this->QBOptions['updateFields'])) {
-            foreach ($this->QBOptions['updateFields'] as $key => $value) {
+            foreach (array_keys($this->QBOptions['updateFields']) as $key) {
                 if (in_array($key, $ignore, true)) {
                     unset($this->QBOptions['updateFields'][$key]);
                 }
@@ -2162,8 +2162,6 @@ class BaseBuilder
      * Unsets $QBOptions for use in Model
      *
      * @param array $keys Array of keys of option to unset
-     *
-     * @return $this
      */
     public function unsetQBOptions(array $keys): BaseBuilder
     {
