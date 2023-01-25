@@ -640,12 +640,14 @@ class RouteCollection implements RouteCollectionInterface
     {
         // Use the named route's pattern if this is a named route.
         if (array_key_exists($to, $this->routes['*'])) {
-            $to = $this->routes['*'][$to]['route'];
+            $redirectTo = $this->routes['*'][$to]['route'];
         } elseif (array_key_exists($to, $this->routes['get'])) {
-            $to = $this->routes['get'][$to]['route'];
+            $redirectTo = $this->routes['get'][$to]['route'];
+        } else {
+            $redirectTo = $to;
         }
 
-        $this->create('*', $from, $to, ['redirect' => $status]);
+        $this->create('*', $from, $redirectTo, ['redirect' => $status]);
 
         return $this;
     }
