@@ -20,6 +20,7 @@ use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Validation\ValidationInterface;
@@ -78,6 +79,7 @@ use ReflectionProperty;
  * @method $this selectMax(string $select = '', string $alias = '')
  * @method $this selectMin(string $select = '', string $alias = '')
  * @method $this selectSum(string $select = '', string $alias = '')
+ * @method $this setAlias(string $alias)
  * @method $this updateFields($set, bool $addToDefault = false, ?array $ignore = null)
  * @method $this where($key, $value = null, ?bool $escape = null)
  * @method $this whereIn(?string $key = null, $values = null, ?bool $escape = null)
@@ -673,7 +675,7 @@ class Model extends BaseModel
             return null; // @codeCoverageIgnore
         }
 
-        $this->setAlias($alias);
+        $this->builder()->setAlias($alias);
 
         $this->tempData['data']   = array_merge($this->tempData['data'] ?? [], $set);
         $this->tempData['escape'] = $escape;

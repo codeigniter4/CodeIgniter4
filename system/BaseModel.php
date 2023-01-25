@@ -352,7 +352,7 @@ abstract class BaseModel
      *
      * @throws ModelException
      */
-    abstract protected function builder(?string $table = null);
+    abstract public function builder(?string $table = null);
 
     /**
      * Fetches the row of database.
