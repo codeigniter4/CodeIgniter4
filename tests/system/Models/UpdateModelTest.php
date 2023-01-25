@@ -13,6 +13,7 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Entity\Entity;
 use Generator;
 use InvalidArgumentException;
@@ -216,6 +217,62 @@ final class UpdateModelTest extends LiveModelTestCase
         $entity2->deleted = 0;
 
         $this->assertSame(2, $this->createModel(UserModel::class)->updateBatch([$entity1, $entity2], 'id'));
+    }
+
+    public function testUpdateBatchWithBuilderMethods(): void
+    {
+        $data = [
+            [
+                'id'      => 3,
+                'name'    => 'Should Not Change',
+                'email'   => 'wontchange@test.com', // won't change because not in $updateFields
+                'country' => 'Greece', // will not update
+            ],
+            [
+                'id'      => 4,
+                'name'    => 'Should Change',
+                'email'   => 'wontchange2@test.com',
+                'country' => 'UK', // will update
+            ],
+        ];
+
+        $model = $this->createModel(UserModel::class);
+        $this->setPrivateProperty($model, 'useTimestamps', true);
+
+        $updateFields = ['name', 'deleted_at' => new RawSql('CURRENT_TIMESTAMP')];
+
+        $esc = $this->db->escapeChar;
+
+        $model
+            ->updateFields($updateFields)
+            ->onConstraint(['id', new RawSql("{$esc}db_user{$esc}.{$esc}country{$esc} = {$esc}_update{$esc}.{$esc}country{$esc}")])
+            ->setData($data, null, '_update')
+            ->updateBatch();
+
+        $this->seeInDatabase('user', [
+            'id'      => 3,
+            'name'    => 'Richard A Causey',
+            'email'   => 'richard@world.com',
+            'country' => 'US',
+        ]);
+        $this->seeInDatabase('user', [
+            'id'      => 4,
+            'name'    => 'Should Change',
+            'email'   => 'chris@world.com',
+            'country' => 'UK',
+        ]);
+
+        $result = $this->db->table('user')->where('id IN (3,4)')->get()->getResultArray();
+
+        foreach ($result as $row) {
+            if ((int) $row['id'] === 3) {
+                $this->assertNull($row['updated_at']);
+                $this->assertNull($row['deleted_at']);
+            } else {
+                $this->assertNotNull($row['updated_at']);
+                $this->assertNotNull($row['deleted_at']);
+            }
+        }
     }
 
     public function testUpdateNoPrimaryKey(): void
