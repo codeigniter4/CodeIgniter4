@@ -470,7 +470,7 @@ abstract class BaseResult implements ResultInterface
         return $this->numRows = count($this->getResultArray());
     }
 
-    private function isValidResultId(): bool
+    protected function isValidResultId(): bool
     {
         return is_resource($this->resultID) || is_object($this->resultID);
     }
