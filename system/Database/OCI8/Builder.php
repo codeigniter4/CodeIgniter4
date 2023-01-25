@@ -255,6 +255,8 @@ class Builder extends BaseBuilder
                 return ''; // @codeCoverageIgnore
             }
 
+            // remove any constraints from updateFields
+            $this->updateFields($this->QBOptions['updateFields'] ?? [], false, $constraints);
             $updateFields = $this->QBOptions['updateFields'] ??
                 $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ??
                 [];
@@ -367,6 +369,8 @@ class Builder extends BaseBuilder
 
             $alias = $this->QBOptions['alias'] ?? '"_upsert"';
 
+            // remove any constraints from updateFields
+            $this->updateFields($this->QBOptions['updateFields'] ?? [], false, $constraints);
             $updateFields = $this->QBOptions['updateFields'] ?? $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ?? [];
 
             $sql = 'MERGE INTO ' . $table . "\nUSING (\n{:_table_:}";
