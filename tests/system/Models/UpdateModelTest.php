@@ -169,11 +169,11 @@ final class UpdateModelTest extends LiveModelTestCase
     public function testUpdateBatchWithEntity(): void
     {
         $entity1 = new class () extends Entity {
-            protected $id;
-            protected $name;
+            protected $id   = 1;
+            protected $name = 'Jones Martin';
             protected $email;
-            protected $country;
-            protected $deleted;
+            protected $country = 'India';
+            protected $deleted = 0;
             protected $created_at;
             protected $updated_at;
             protected $_options = [
@@ -188,11 +188,11 @@ final class UpdateModelTest extends LiveModelTestCase
         };
 
         $entity2 = new class () extends Entity {
-            protected $id;
-            protected $name;
+            protected $id   = 4;
+            protected $name = 'Jones Martin';
             protected $email;
-            protected $country;
-            protected $deleted;
+            protected $country = 'India';
+            protected $deleted = 0;
             protected $created_at;
             protected $updated_at;
             protected $_options = [
@@ -205,16 +205,6 @@ final class UpdateModelTest extends LiveModelTestCase
                 'casts' => [],
             ];
         };
-
-        $entity1->id      = 1;
-        $entity1->name    = 'Jones Martin';
-        $entity1->country = 'India';
-        $entity1->deleted = 0;
-
-        $entity2->id      = 4;
-        $entity2->name    = 'Jones Martin';
-        $entity2->country = 'India';
-        $entity2->deleted = 0;
 
         $this->assertSame(2, $this->createModel(UserModel::class)->updateBatch([$entity1, $entity2], 'id'));
     }
@@ -249,26 +239,17 @@ final class UpdateModelTest extends LiveModelTestCase
             ->setData($data, null, '_update')
             ->updateBatch();
 
-        $this->seeInDatabase('user', [
-            'id'      => 3,
-            'name'    => 'Richard A Causey',
-            'email'   => 'richard@world.com',
-            'country' => 'US',
-        ]);
-        $this->seeInDatabase('user', [
-            'id'      => 4,
-            'name'    => 'Should Change',
-            'email'   => 'chris@world.com',
-            'country' => 'UK',
-        ]);
-
         $result = $this->db->table('user')->where('id IN (3,4)')->get()->getResultArray();
 
         foreach ($result as $row) {
             if ((int) $row['id'] === 3) {
+                $this->assertSame('Richard A Causey', $row['name']);
+                $this->assertSame('US', $row['country']);
                 $this->assertNull($row['updated_at']);
                 $this->assertNull($row['deleted_at']);
             } else {
+                $this->assertSame('Should Change', $row['name']);
+                $this->assertSame('UK', $row['country']);
                 $this->assertNotNull($row['updated_at']);
                 $this->assertNotNull($row['deleted_at']);
             }
@@ -372,11 +353,11 @@ final class UpdateModelTest extends LiveModelTestCase
         $this->createModel(UserModel::class);
 
         $entity = new class () extends Entity {
-            protected $id;
-            protected $name;
-            protected $email;
-            protected $country;
-            protected $deleted;
+            protected $id      = 1;
+            protected $name    = 'Jones Martin';
+            protected $email   = 'jones@example.org';
+            protected $country = 'India';
+            protected $deleted = 0;
             protected $created_at;
             protected $updated_at;
             protected $_options = [
@@ -389,12 +370,6 @@ final class UpdateModelTest extends LiveModelTestCase
                 'casts' => [],
             ];
         };
-
-        $entity->id      = 1;
-        $entity->name    = 'Jones Martin';
-        $entity->email   = 'jones@example.org';
-        $entity->country = 'India';
-        $entity->deleted = 0;
 
         $id = $this->model->insert($entity);
 
@@ -442,7 +417,7 @@ final class UpdateModelTest extends LiveModelTestCase
     /**
      * @dataProvider provideInvalidIds
      *
-     * @param false|null $id
+     * @param false|int|null $id
      */
     public function testUpdateThrowDatabaseExceptionWithoutWhereClause($id, string $exception, string $exceptionMessage): void
     {
