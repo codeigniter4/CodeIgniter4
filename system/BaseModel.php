@@ -17,6 +17,7 @@ use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
@@ -26,7 +27,6 @@ use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
-use CodeIgniter\Database\RawSql;
 use stdClass;
 
 /**
@@ -422,10 +422,10 @@ abstract class BaseModel
      * Compiles an update and runs the query.
      * This method works only with dbCalls.
      *
-     * @param array|null  $set       An associative array of update values
+     * @param array|null               $set         An associative array of update values
      * @param array|RawSql|string|null $constraints
-     * @param int         $batchSize The size of the batch to run
-     * @param bool        $returnSQL True means SQL is returned, false will execute the query
+     * @param int                      $batchSize   The size of the batch to run
+     * @param bool                     $returnSQL   True means SQL is returned, false will execute the query
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      *
@@ -956,10 +956,10 @@ abstract class BaseModel
     /**
      * Compiles an update and runs the query.
      *
-     * @param array|null  $set       An associative array of update values
+     * @param array|null               $set         An associative array of update values
      * @param array|RawSql|string|null $constraints
-     * @param int         $batchSize The size of the batch to run
-     * @param bool        $returnSQL True means SQL is returned, false will execute the query
+     * @param int                      $batchSize   The size of the batch to run
+     * @param bool                     $returnSQL   True means SQL is returned, false will execute the query
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      *
@@ -993,23 +993,25 @@ abstract class BaseModel
             }
 
             // We won't remove the fields from data in case they are used to calculate another column or used as a constraint
-            //$row = $this->doProtectFields($row, (array) $constraints);
+            // $row = $this->doProtectFields($row, (array) $constraints);
         }
 
         $esc = $this->db->escapeChar;
-        
+
         // constraints may already defined - if not define them in builder
         $this->builder()->onConstraint($constraints);
         $constraints = null;
-        
+
         // retrieve updateFields from builder if set already. We need to doProtectFields() on them.
         $updateFields = [];
+
         foreach ($this->getQBOptions()['updateFields'] ?? [] as $k => $v) {
             $updateFields[trim($k, $esc)] = ($v instanceof RawSql) ? $v : trim($v, $esc);
         }
         $this->unsetQBOptions(['updateFields']);
-        
+
         $updateFieldsAdditional = [];
+
         foreach ($this->getQBOptions()['updateFieldsAdditional'] ?? [] as $k => $v) {
             $updateFieldsAdditional[trim($k, $esc)] = ($v instanceof RawSql) ? $v : trim($v, $esc);
         }
@@ -1021,14 +1023,14 @@ abstract class BaseModel
                 $updateFields[$k] = $k; // we need the keys set for doProtectFields() below
             }
         }
-        
+
         $updateFields = array_merge($updateFields, $updateFieldsAdditional);
 
         // we need to define these now or else builder will update all fields in dataset
         // make sure we aren't updating a column not allowed
         $this->builder()->updateFields($this->doProtectFields($updateFields));
 
-        // add update timestamp if not already in data 
+        // add update timestamp if not already in data
         // also check updateFields in case it was added there
         if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, current($set)) && ! array_key_exists($this->updatedField, $updateFields)) {
             $this->updateFields([$this->updatedField => new RawSql($this->db->escape($this->setDate()))]);

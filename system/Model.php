@@ -399,10 +399,10 @@ class Model extends BaseModel
      * Compiles an update string and runs the query
      * This method works only with dbCalls.
      *
-     * @param array|null  $set       An associative array of update values
+     * @param array|null               $set         An associative array of update values
      * @param array|RawSql|string|null $constraints
-     * @param int         $batchSize The size of the batch to run
-     * @param bool        $returnSQL True means SQL is returned, false will execute the query
+     * @param int                      $batchSize   The size of the batch to run
+     * @param bool                     $returnSQL   True means SQL is returned, false will execute the query
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      *
@@ -789,10 +789,10 @@ class Model extends BaseModel
     /**
      * Compiles an update and runs the query.
      *
-     * @param array|null  $set       An associative array of update values
+     * @param array|null               $set         An associative array of update values
      * @param array|RawSql|string|null $constraints
-     * @param int         $batchSize The size of the batch to run
-     * @param bool        $returnSQL True means SQL is returned, false will execute the query
+     * @param int                      $batchSize   The size of the batch to run
+     * @param bool                     $returnSQL   True means SQL is returned, false will execute the query
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      *
