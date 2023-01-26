@@ -21,7 +21,7 @@ updating records, deleting records, and more.
 Accessing Models
 ****************
 
-Models are typically stored in the ``app/Models`` directory. They should have a namespace that matches their
+Models are typically stored in the **app/Models** directory. They should have a namespace that matches their
 location within the directory, like ``namespace App\Models``.
 
 You can access models within your classes by creating a new instance or using the :php:func:`model()` helper function.
