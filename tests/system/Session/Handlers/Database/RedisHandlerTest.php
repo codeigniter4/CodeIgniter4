@@ -117,6 +117,19 @@ final class RedisHandlerTest extends CIUnitTestCase
         $this->assertTrue($handler->open($this->sessionSavePath, $this->sessionName));
     }
 
+    public function testOpenWithDefaultProtocol()
+    {
+        $default = $this->sessionSavePath;
+
+        $this->sessionSavePath = '127.0.0.1:6379';
+
+        $handler = $this->getInstance();
+        $this->assertTrue($handler->open($this->sessionSavePath, $this->sessionName));
+
+        // Rollback to default
+        $this->sessionSavePath = $default;
+    }
+
     public function testWrite()
     {
         $handler = $this->getInstance();
