@@ -672,7 +672,7 @@ expire earlier than that time). This happens very rarely, but should be
 considered as it may result in loss of sessions.
 
 Configure MemcachedHandler
-----------------------
+--------------------------
 
 The ``$savePath`` format is fairly straightforward here,
 being just a ``host:port`` pair:
