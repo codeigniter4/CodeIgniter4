@@ -15,6 +15,11 @@ What are Factories?
 Like :doc:`./services`, **Factories** are an extension of autoloading that helps keep your code
 concise yet optimal, without having to pass around object instances between classes.
 
+Factories are similar to CodeIgniter 3's ``$this->load`` in the following points:
+
+- Load a class
+- Share the loaded class instance
+
 At its
 simplest, Factories provide a common way to create a class instance and access it from
 anywhere. This is a great way to reuse object states and reduce memory load from keeping
