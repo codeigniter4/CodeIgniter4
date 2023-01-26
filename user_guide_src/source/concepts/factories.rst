@@ -150,6 +150,9 @@ Configurations
 To set default component options, create a new Config files at **app/Config/Factory.php**
 that supplies options as an array property that matches the name of the component.
 
+Example: Filters Factories
+--------------------------
+
 For example, if you want to create **Filters** by Factories, the component name wll be ``filters``.
 And if you want to ensure that each filter is an instance of a class which implements CodeIgniter's ``FilterInterface``,
 your **app/Config/Factory.php** file might look like this:
@@ -161,6 +164,22 @@ and the returned instance will surely be a CodeIgniter's filter.
 
 This would prevent conflict of an third-party module which happened to have an
 unrelated ``Filters`` path in its namespace.
+
+Example: Library Factories
+--------------------------
+
+If you want to load your library classes in the **app/Libraries** directory with
+``Factories::library('SomeLib')``, the path `Libraries` is different from the
+default path `Library`.
+
+In this case, your **app/Config/Factory.php** file will look like this:
+
+.. literalinclude:: factories/011.php
+
+Now you can load your libraries with the ``Factories::library()`` method:
+
+.. literalinclude:: factories/012.php
+   :lines: 2-
 
 setOptions Method
 =================
