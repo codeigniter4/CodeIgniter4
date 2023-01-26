@@ -49,6 +49,8 @@ Example
 Take a look at **Models** as an example. You can access the Factory specific to Models
 by using the magic static method of the Factories class, ``Factories::models()``.
 
+The static method name is called *component*.
+
 By default, Factories first searches in the ``App`` namespace for the path corresponding to the magic static method name.
 ``Factories::models()`` searches the **app/Models** directory.
 
