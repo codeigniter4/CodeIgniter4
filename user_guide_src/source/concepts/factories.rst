@@ -126,8 +126,8 @@ Key        Type           Description                                           
 ========== ============== ============================================================ ===================================================
 component  string or null The name of the component (if different than the static      ``null`` (defaults to the component name)
                           method). This can be used to alias one component to another.
-path       string or null The relative path within the namespace/folder to look for    ``null`` (defaults to the component name)
-                          classes.
+path       string or null The relative path within the namespace/folder to look for    ``null`` (defaults to the component name,
+                          classes.                                                     but makes the first character uppercase)
 instanceOf string or null A required class name to match on the returned instance.     ``null`` (no filtering)
 getShared  boolean        Whether to return a shared instance of the class or load a   ``true``
                           fresh one.
