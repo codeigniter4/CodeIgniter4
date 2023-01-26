@@ -24,7 +24,8 @@ use ReturnTypeWillChange;
  */
 class RedisHandler extends BaseHandler
 {
-    private const DEFAULT_PORT = 6379;
+    private const DEFAULT_PORT     = 6379;
+    private const DEFAULT_PROTOCOL = 'tcp';
 
     /**
      * phpRedis instance
@@ -108,7 +109,7 @@ class RedisHandler extends BaseHandler
             }
 
             $this->savePath = [
-                'protocol' => in_array($matches[1], ['tcp', 'tls'], true) ? $matches[1] : 'tcp',
+                'protocol' => in_array($matches[1], ['tcp', 'tls'], true) ? $matches[1] : self::DEFAULT_PROTOCOL,
                 'host'     => $matches[2],
                 'port'     => empty($matches[3]) ? self::DEFAULT_PORT : $matches[3],
                 'password' => preg_match('#auth=([^\s&]+)#', $matches[4], $match) ? $match[1] : null,

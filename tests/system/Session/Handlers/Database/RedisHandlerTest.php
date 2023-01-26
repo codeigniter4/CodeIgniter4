@@ -54,28 +54,39 @@ final class RedisHandlerTest extends CIUnitTestCase
         return new RedisHandler(new AppConfig(), $this->userIpAddress);
     }
 
-    public function testSavePathTLSAuth()
+    public function testSavePathWithoutProtocol()
     {
         $handler = $this->getInstance(
-            ['savePath' => 'tls://127.0.0.1:6379?auth=password&timeout=2.5']
+            ['savePath' => '127.0.0.1:6379']
         );
 
         $savePath = $this->getPrivateProperty($handler, 'savePath');
 
+        $this->assertSame('tcp', $savePath['protocol']);
+    }
+
+    public function testSavePathTLSAuth()
+    {
+        $handler = $this->getInstance(
+            ['savePath' => 'tls://127.0.0.1:6379?auth=password']
+        );
+
+        $savePath = $this->getPrivateProperty($handler, 'savePath');
+
+        $this->assertSame('tls', $savePath['protocol']);
         $this->assertSame('password', $savePath['password']);
-        $this->assertSame(2.5, $savePath['timeout']);
     }
 
     public function testSavePathTCPAuth()
     {
         $handler = $this->getInstance(
-            ['savePath' => 'tcp://127.0.0.1:6379?auth=password&timeout=2.5']
+            ['savePath' => 'tcp://127.0.0.1:6379?auth=password']
         );
 
         $savePath = $this->getPrivateProperty($handler, 'savePath');
 
+        $this->assertSame('tcp', $savePath['protocol']);
         $this->assertSame('password', $savePath['password']);
-        $this->assertSame(2.5, $savePath['timeout']);
     }
 
     public function testSavePathTimeoutFloat()
