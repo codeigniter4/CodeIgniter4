@@ -54,6 +54,30 @@ final class RedisHandlerTest extends CIUnitTestCase
         return new RedisHandler(new AppConfig(), $this->userIpAddress);
     }
 
+    public function testSavePathTLSAuth()
+    {
+        $handler = $this->getInstance(
+            ['savePath' => 'tls://127.0.0.1:6379?auth=password&timeout=2.5']
+        );
+
+        $savePath = $this->getPrivateProperty($handler, 'savePath');
+
+        $this->assertSame('password', $savePath['password']);
+        $this->assertSame(2.5, $savePath['timeout']);
+    }
+
+    public function testSavePathTCPAuth()
+    {
+        $handler = $this->getInstance(
+            ['savePath' => 'tcp://127.0.0.1:6379?auth=password&timeout=2.5']
+        );
+
+        $savePath = $this->getPrivateProperty($handler, 'savePath');
+
+        $this->assertSame('password', $savePath['password']);
+        $this->assertSame(2.5, $savePath['timeout']);
+    }
+
     public function testSavePathTimeoutFloat()
     {
         $handler = $this->getInstance(
