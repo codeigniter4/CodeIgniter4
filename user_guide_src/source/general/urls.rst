@@ -34,7 +34,7 @@ Term       Example                      Description
 ========== ============================ =========================================
 Base URL   **https://www.example.com/** Base URL is often denoted as **baseURL**.
 URI path   /blog/news/2022/10
-Route path blog/news/2022/10            The URI path relative to the Base URL.
+Route path /blog/news/2022/10           The URI path relative to the Base URL.
                                         It is also called as **URI string**.
 Query      page=2
 ========== ============================ =========================================
@@ -53,7 +53,7 @@ Term       Example                              Description
 ========== ==================================== =========================================
 Base URL   **https://www.example.com/ci-blog/** Base URL is often denoted as **baseURL**.
 URI path   /ci-blog/blog/news/2022/10
-Route path blog/news/2022/10                    The URI path relative to the Base URL.
+Route path /blog/news/2022/10                   The URI path relative to the Base URL.
                                                 It is also called as **URI string**.
 Query      page=2
 ========== ==================================== =========================================
