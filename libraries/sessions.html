@@ -281,36 +281,36 @@ activity while they browse your site.</p>
 in the last section of the table of contents:</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#using-the-session-class" id="id3">Using the Session Class</a></p>
+<li><p><a class="reference internal" href="#using-the-session-class" id="id2">Using the Session Class</a></p>
 <ul>
-<li><p><a class="reference internal" href="#initializing-a-session" id="id4">Initializing a Session</a></p></li>
-<li><p><a class="reference internal" href="#how-do-sessions-work" id="id5">How do Sessions work?</a></p></li>
-<li><p><a class="reference internal" href="#what-is-session-data" id="id6">What is Session Data?</a></p></li>
-<li><p><a class="reference internal" href="#retrieving-session-data" id="id7">Retrieving Session Data</a></p></li>
-<li><p><a class="reference internal" href="#adding-session-data" id="id8">Adding Session Data</a></p></li>
-<li><p><a class="reference internal" href="#pushing-new-value-to-session-data" id="id9">Pushing New Value to Session Data</a></p></li>
-<li><p><a class="reference internal" href="#removing-session-data" id="id10">Removing Session Data</a></p></li>
-<li><p><a class="reference internal" href="#flashdata" id="id11">Flashdata</a></p></li>
-<li><p><a class="reference internal" href="#tempdata" id="id12">Tempdata</a></p></li>
-<li><p><a class="reference internal" href="#destroying-a-session" id="id13">Destroying a Session</a></p></li>
-<li><p><a class="reference internal" href="#accessing-session-metadata" id="id14">Accessing Session Metadata</a></p></li>
+<li><p><a class="reference internal" href="#initializing-a-session" id="id3">Initializing a Session</a></p></li>
+<li><p><a class="reference internal" href="#how-do-sessions-work" id="id4">How do Sessions work?</a></p></li>
+<li><p><a class="reference internal" href="#what-is-session-data" id="id5">What is Session Data?</a></p></li>
+<li><p><a class="reference internal" href="#retrieving-session-data" id="id6">Retrieving Session Data</a></p></li>
+<li><p><a class="reference internal" href="#adding-session-data" id="id7">Adding Session Data</a></p></li>
+<li><p><a class="reference internal" href="#pushing-new-value-to-session-data" id="id8">Pushing New Value to Session Data</a></p></li>
+<li><p><a class="reference internal" href="#removing-session-data" id="id9">Removing Session Data</a></p></li>
+<li><p><a class="reference internal" href="#flashdata" id="id10">Flashdata</a></p></li>
+<li><p><a class="reference internal" href="#tempdata" id="id11">Tempdata</a></p></li>
+<li><p><a class="reference internal" href="#destroying-a-session" id="id12">Destroying a Session</a></p></li>
+<li><p><a class="reference internal" href="#accessing-session-metadata" id="id13">Accessing Session Metadata</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#session-preferences" id="id15">Session Preferences</a></p></li>
-<li><p><a class="reference internal" href="#session-drivers" id="id16">Session Drivers</a></p>
+<li><p><a class="reference internal" href="#session-preferences" id="id14">Session Preferences</a></p></li>
+<li><p><a class="reference internal" href="#session-drivers" id="id15">Session Drivers</a></p>
 <ul>
-<li><p><a class="reference internal" href="#filehandler-driver-the-default" id="id17">FileHandler Driver (the default)</a></p></li>
-<li><p><a class="reference internal" href="#databasehandler-driver" id="id18">DatabaseHandler Driver</a></p></li>
-<li><p><a class="reference internal" href="#redishandler-driver" id="id19">RedisHandler Driver</a></p></li>
-<li><p><a class="reference internal" href="#memcachedhandler-driver" id="id20">MemcachedHandler Driver</a></p></li>
+<li><p><a class="reference internal" href="#filehandler-driver-the-default" id="id16">FileHandler Driver (the default)</a></p></li>
+<li><p><a class="reference internal" href="#databasehandler-driver" id="id17">DatabaseHandler Driver</a></p></li>
+<li><p><a class="reference internal" href="#redishandler-driver" id="id18">RedisHandler Driver</a></p></li>
+<li><p><a class="reference internal" href="#memcachedhandler-driver" id="id19">MemcachedHandler Driver</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <section id="using-the-session-class">
-<h2><a class="toc-backref" href="#id3">Using the Session Class</a><a class="headerlink" href="#using-the-session-class" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Using the Session Class</a><a class="headerlink" href="#using-the-session-class" title="Permalink to this headline"></a></h2>
 <section id="initializing-a-session">
-<h3><a class="toc-backref" href="#id4">Initializing a Session</a><a class="headerlink" href="#initializing-a-session" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3">Initializing a Session</a><a class="headerlink" href="#initializing-a-session" title="Permalink to this headline"></a></h3>
 <p>Sessions will typically run globally with each page load, so the Session
 class should be magically initialized.</p>
 <p>To access and initialize the session:</p>
@@ -336,7 +336,7 @@ but does not take any configuration options.</p>
 </div>
 </section>
 <section id="how-do-sessions-work">
-<h3><a class="toc-backref" href="#id5">How do Sessions work?</a><a class="headerlink" href="#how-do-sessions-work" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4">How do Sessions work?</a><a class="headerlink" href="#how-do-sessions-work" title="Permalink to this headline"></a></h3>
 <p>When a page is loaded, the session class will check to see if a valid
 session cookie is sent by the user’s browser. If a sessions cookie does
 <strong>not</strong> exist (or if it doesn’t match one stored on the server or has
@@ -384,7 +384,7 @@ current request after you no longer need it.</p>
 </section>
 </section>
 <section id="what-is-session-data">
-<h3><a class="toc-backref" href="#id6">What is Session Data?</a><a class="headerlink" href="#what-is-session-data" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">What is Session Data?</a><a class="headerlink" href="#what-is-session-data" title="Permalink to this headline"></a></h3>
 <p>Session data is simply an array associated with a particular session ID
 (cookie).</p>
 <p>If you’ve used sessions in PHP before, you should be familiar with PHP’s
@@ -407,7 +407,7 @@ that are further explained below: <a class="reference internal" href="#flashdata
 </div>
 </section>
 <section id="retrieving-session-data">
-<h3><a class="toc-backref" href="#id7">Retrieving Session Data</a><a class="headerlink" href="#retrieving-session-data" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Retrieving Session Data</a><a class="headerlink" href="#retrieving-session-data" title="Permalink to this headline"></a></h3>
 <p>Any piece of information from the session array is available through the
 <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> superglobal:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -471,7 +471,7 @@ grabbing all data from the session, however.</p>
 </div>
 </section>
 <section id="adding-session-data">
-<h3><a class="toc-backref" href="#id8">Adding Session Data</a><a class="headerlink" href="#adding-session-data" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Adding Session Data</a><a class="headerlink" href="#adding-session-data" title="Permalink to this headline"></a></h3>
 <p>Let’s say a particular user logs into your site. Once authenticated, you
 could add their username and e-mail address to the session, making that
 data globally available to you without having to run a database query when
@@ -524,7 +524,7 @@ supports this syntax:</p>
 </div>
 </section>
 <section id="pushing-new-value-to-session-data">
-<h3><a class="toc-backref" href="#id9">Pushing New Value to Session Data</a><a class="headerlink" href="#pushing-new-value-to-session-data" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Pushing New Value to Session Data</a><a class="headerlink" href="#pushing-new-value-to-session-data" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">push()</span></code> method is used to push a new value onto a session value that is an array.
 For instance, if the <code class="docutils literal notranslate"><span class="pre">hobbies</span></code> key contains an array of hobbies, you can add a new value onto the array like so:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -534,7 +534,7 @@ For instance, if the <code class="docutils literal notranslate"><span class="pre
 </div>
 </section>
 <section id="removing-session-data">
-<h3><a class="toc-backref" href="#id10">Removing Session Data</a><a class="headerlink" href="#removing-session-data" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">Removing Session Data</a><a class="headerlink" href="#removing-session-data" title="Permalink to this headline"></a></h3>
 <p>Just as with any other variable, unsetting a value in <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> can be
 done through <code class="docutils literal notranslate"><span class="pre">unset()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -565,7 +565,7 @@ session data array:</p>
 </div>
 </section>
 <section id="flashdata">
-<h3><a class="toc-backref" href="#id11">Flashdata</a><a class="headerlink" href="#flashdata" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">Flashdata</a><a class="headerlink" href="#flashdata" title="Permalink to this headline"></a></h3>
 <p>CodeIgniter supports “flashdata”, or session data that will only be
 available for the next request, and is then automatically cleared.</p>
 <p>This can be very useful, especially for one-time informational, error or
@@ -642,7 +642,7 @@ You can either pass a single item or an array of flashdata items to keep.</p>
 </div>
 </section>
 <section id="tempdata">
-<h3><a class="toc-backref" href="#id12">Tempdata</a><a class="headerlink" href="#tempdata" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11">Tempdata</a><a class="headerlink" href="#tempdata" title="Permalink to this headline"></a></h3>
 <p>CodeIgniter also supports “tempdata”, or session data with a specific
 expiration time. After the value expires, or the session expires or is
 deleted, the value is automatically removed.</p>
@@ -745,7 +745,7 @@ intend to reuse that same key in the same request, you’d want to use
 </div>
 </section>
 <section id="destroying-a-session">
-<h3><a class="toc-backref" href="#id13">Destroying a Session</a><a class="headerlink" href="#destroying-a-session" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">Destroying a Session</a><a class="headerlink" href="#destroying-a-session" title="Permalink to this headline"></a></h3>
 <p>To clear the current session (for example, during a logout), you may
 simply use either PHP’s <a class="reference external" href="https://www.php.net/session_destroy">session_destroy()</a>
 function, or the library’s <code class="docutils literal notranslate"><span class="pre">destroy()</span></code> method. Both will work in exactly the
@@ -774,7 +774,7 @@ the cookie that contained the session ID:</p>
 </div>
 </section>
 <section id="accessing-session-metadata">
-<h3><a class="toc-backref" href="#id14">Accessing Session Metadata</a><a class="headerlink" href="#accessing-session-metadata" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13">Accessing Session Metadata</a><a class="headerlink" href="#accessing-session-metadata" title="Permalink to this headline"></a></h3>
 <p>In CodeIgniter 2, the session data array included 4 items
 by default: ‘session_id’, ‘ip_address’, ‘user_agent’, ‘last_activity’.</p>
 <p>This was due to the specifics of how sessions worked, but is now no longer
@@ -792,7 +792,7 @@ accessing them:</p>
 </section>
 </section>
 <section id="session-preferences">
-<h2><a class="toc-backref" href="#id15">Session Preferences</a><a class="headerlink" href="#session-preferences" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id14">Session Preferences</a><a class="headerlink" href="#session-preferences" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter will usually make everything work out of the box. However,
 Sessions are a very sensitive component of any application, so some
 careful configuration must be done. Please take your time to consider
@@ -923,7 +923,7 @@ ignored.</p>
 </div>
 </section>
 <section id="session-drivers">
-<h2><a class="toc-backref" href="#id16">Session Drivers</a><a class="headerlink" href="#session-drivers" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id15">Session Drivers</a><a class="headerlink" href="#session-drivers" title="Permalink to this headline"></a></h2>
 <p>As already mentioned, the Session library comes with 4 handlers, or storage
 engines, that you can use:</p>
 <blockquote>
@@ -948,7 +948,7 @@ get yourself familiar with them (below) before you make that choice.</p>
 a PHP array, while preventing the data from being persisted.</p>
 </div>
 <section id="filehandler-driver-the-default">
-<h3><a class="toc-backref" href="#id17">FileHandler Driver (the default)</a><a class="headerlink" href="#filehandler-driver-the-default" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16">FileHandler Driver (the default)</a><a class="headerlink" href="#filehandler-driver-the-default" title="Permalink to this headline"></a></h3>
 <p>The ‘FileHandler’ driver uses your file system for storing session data.</p>
 <p>It can safely be said that it works exactly like PHP’s own default session
 implementation, but in case this is an important detail for you, have it
@@ -991,7 +991,7 @@ into using <a class="reference external" href="https://eddmann.com/posts/storing
 </section>
 </section>
 <section id="databasehandler-driver">
-<span id="sessions-databasehandler-driver"></span><h3><a class="toc-backref" href="#id18">DatabaseHandler Driver</a><a class="headerlink" href="#databasehandler-driver" title="Permalink to this headline"></a></h3>
+<span id="sessions-databasehandler-driver"></span><h3><a class="toc-backref" href="#id17">DatabaseHandler Driver</a><a class="headerlink" href="#databasehandler-driver" title="Permalink to this headline"></a></h3>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Only MySQL and PostgreSQL databases are officially
@@ -1105,7 +1105,7 @@ when it generates the code.</p>
 </section>
 </section>
 <section id="redishandler-driver">
-<span id="sessions-redishandler-driver"></span><h3><a class="toc-backref" href="#id19">RedisHandler Driver</a><a class="headerlink" href="#redishandler-driver" title="Permalink to this headline"></a></h3>
+<span id="sessions-redishandler-driver"></span><h3><a class="toc-backref" href="#id18">RedisHandler Driver</a><a class="headerlink" href="#redishandler-driver" title="Permalink to this headline"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since Redis doesn’t have a locking mechanism exposed, locks for
@@ -1156,7 +1156,7 @@ sufficient:</p>
 </section>
 </section>
 <section id="memcachedhandler-driver">
-<span id="sessions-memcachedhandler-driver"></span><h3><a class="toc-backref" href="#id20">MemcachedHandler Driver</a><a class="headerlink" href="#memcachedhandler-driver" title="Permalink to this headline"></a></h3>
+<span id="sessions-memcachedhandler-driver"></span><h3><a class="toc-backref" href="#id19">MemcachedHandler Driver</a><a class="headerlink" href="#memcachedhandler-driver" title="Permalink to this headline"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since Memcached doesn’t have a locking mechanism exposed, locks
@@ -1174,8 +1174,8 @@ is that setting value X to expire after Y seconds will result in it being
 deleted after Y seconds have passed (but not necessarily that it won’t
 expire earlier than that time). This happens very rarely, but should be
 considered as it may result in loss of sessions.</p>
-<section id="id1">
-<h4>Configure RedisHandler<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h4>
+<section id="configure-memcachedhandler">
+<h4>Configure MemcachedHandler<a class="headerlink" href="#configure-memcachedhandler" title="Permalink to this headline"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">$savePath</span></code> format is fairly straightforward here,
 being just a <code class="docutils literal notranslate"><span class="pre">host:port</span></code> pair:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1198,8 +1198,8 @@ being just a <code class="docutils literal notranslate"><span class="pre">host:p
 </pre></div>
 </div>
 </section>
-<section id="id2">
-<h4>Bonus Tip<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h4>
+<section id="id1">
+<h4>Bonus Tip<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h4>
 <p>Multi-server configuration with an optional <em>weight</em> parameter as the
 third colon-separated (<code class="docutils literal notranslate"><span class="pre">:weight</span></code>) value is also supported, but we have
 to note that we haven’t tested if that is reliable.</p>
@@ -1241,7 +1241,7 @@ separate the multiple server paths with commas:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 25, 2023.
+      <span class="lastupdated">Last updated on Jan 26, 2023.
       </span></p>
   </div>
 
