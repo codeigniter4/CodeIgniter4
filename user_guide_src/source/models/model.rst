@@ -28,6 +28,9 @@ You can access models within your classes by creating a new instance or using th
 
 .. literalinclude:: model/001.php
 
+The ``model()`` uses ``Factories::models()`` internally.
+See :ref:`factories-example` for details on the first parameter.
+
 CodeIgniter's Model
 *******************
 

@@ -107,6 +107,11 @@ Service Accessors
     :returns: The model instances
     :rtype: object
 
+    More simple way of getting model instances.
+
+    The ``model()`` uses ``Factories::models()`` internally.
+    See :ref:`factories-example` for details on the first parameter ``$name``.
+
     See also the :ref:`Using CodeIgniter's Model <accessing-models>`.
 
 .. php:function:: old($key[, $default = null,[, $escape = 'html']])
