@@ -50,7 +50,7 @@ Take a look at **Models** as an example. You can access the Factory specific to 
 by using the magic static method of the Factories class, ``Factories::models()``.
 
 By default, Factories first searches in the ``App`` namespace for the path corresponding to the magic static method name.
-``Factories::models()`` searches the path **Models/**.
+``Factories::models()`` searches the **app/Models** directory.
 
 In the following code, if you have ``App\Models\UserModel``, the instance will be returned:
 
