@@ -230,11 +230,18 @@ class so that it can inherit all its methods.
 Methods
 =======
 
-In the above example, the method name is ``getIndex()``.
-The method (HTTP verb + ``Index()``) is loaded if the **second segment** of the URI is empty.
 
-**The second segment of the URI determines which method in the
-controller gets called.**
+Default Method
+--------------
+
+In the above example, the method name is ``getIndex()``.
+The method (HTTP verb + ``Index()``) is called the **default method**, and is loaded if the **second segment** of the URI is empty.
+
+Normal Methods
+--------------
+
+The second segment of the URI determines which method in the
+controller gets called.
 
 Let's try it. Add a new method to your controller:
 
