@@ -2151,28 +2151,6 @@ class BaseBuilder
     }
 
     /**
-     * Gets $QBOptions for use in Model
-     */
-    public function getQBOptions(): array
-    {
-        return $this->QBOptions ?? [];
-    }
-
-    /**
-     * Unsets $QBOptions for use in Model
-     *
-     * @param array $keys Array of keys of option to unset
-     */
-    public function unsetQBOptions(array $keys): BaseBuilder
-    {
-        foreach ($keys as $option) {
-            unset($this->QBOptions[$option]);
-        }
-
-        return $this;
-    }
-
-    /**
      * Gets column names from a select query
      */
     protected function fieldsFromQuery(string $sql): array
