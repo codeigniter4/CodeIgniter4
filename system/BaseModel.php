@@ -968,7 +968,6 @@ abstract class BaseModel
      */
     public function updateBatch(?array $set = null, $constraints = null, int $batchSize = 100, bool $returnSQL = false)
     {
-        $index = null;
         if (is_array($set)) {
             foreach ($set as &$row) {
                 // If $data is using a custom class with public or protected
@@ -1006,7 +1005,7 @@ abstract class BaseModel
             $eventData = $this->trigger('beforeUpdateBatch', $eventData);
         }
 
-        $result = $this->doUpdateBatch($eventData['data'], $index, $batchSize, $returnSQL);
+        $result = $this->doUpdateBatch($eventData['data'], $constraints, $batchSize, $returnSQL);
 
         $eventData = [
             'data'   => $eventData['data'],
