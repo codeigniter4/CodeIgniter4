@@ -39,7 +39,7 @@ Additional related deprecations from the HTTP layer:
 
 * ``Message::isJSON()``: Check the "Content-Type" header directly
 * ``Request[Interface]::isValidIP()``: Use the Validation class with ``valid_ip``
-* ``Request[Interface]::getMethod()``: The ``$upper`` parameter will be removed, use str_to_upper()
+* ``Request[Interface]::getMethod()``: The ``$upper`` parameter will be removed, use strtoupper()
 * ``Request[Trait]::$ipAddress``: This property will become private
 * ``Request::$proxyIPs``: This property will be removed; access ``config('App')->proxyIPs`` directly
 * ``Request::__construct()``: The constructor will no longer take ``Config\App`` and has been made nullable to aid transition
