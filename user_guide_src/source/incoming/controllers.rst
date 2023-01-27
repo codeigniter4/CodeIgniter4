@@ -494,6 +494,8 @@ CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Rout
 Remapping Method Calls
 **********************
 
+.. note:: **Auto Routing (Improved)** does not support this feature intentionally.
+
 As noted above, the second segment of the URI typically determines which
 method in the controller gets called. CodeIgniter permits you to override
 this behavior through the use of the ``_remap()`` method:
