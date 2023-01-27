@@ -420,4 +420,4 @@
 * Small change to improve code reading by @valmorflores in https://github.com/codeigniter4/CodeIgniter4/pull/6051
 * refactor: remove `CodeIgniter\Services` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6053
 
-See [CHANGELOG_4.1.md](./changelogs/CHANGELOG_4.1.md)
+See [CHANGELOG_4.1.md](./CHANGELOG_4.1.md)
