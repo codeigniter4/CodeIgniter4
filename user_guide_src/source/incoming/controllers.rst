@@ -221,12 +221,11 @@ class so that it can inherit all its methods.
     folders/files in **app/Controllers/**, when a match wasn't found against defined routes.
     That's why your folders/files MUST start with a capital letter and the rest MUST be lowercase.
 
+    If you want another naming convention you need to manually define it using the
+    :ref:`Defined Route Routing <defined-route-routing>`.
     Here is an example based on PSR-4 Autoloader:
 
     .. literalinclude:: controllers/012.php
-
-    If you want another naming convention you need to manually define it using the
-    :ref:`Defined Route Routing <defined-route-routing>`.
 
 Methods
 =======
@@ -390,12 +389,11 @@ class so that it can inherit all its methods.
     folders/files in **app/Controllers/**, when a match wasn't found against defined routes.
     That's why your folders/files MUST start with a capital letter and the rest MUST be lowercase.
 
+    If you want another naming convention you need to manually define it using the
+    :ref:`Defined Route Routing <defined-route-routing>`.
     Here is an example based on PSR-4 Autoloader:
 
     .. literalinclude:: controllers/012.php
-
-    If you want another naming convention you need to manually define it using the
-    :ref:`Defined Route Routing <defined-route-routing>`.
 
 Methods
 =======
