@@ -274,6 +274,10 @@ Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
 
 .. literalinclude:: controllers/022.php
 
+.. note:: If there are more parameters in the URI than the method parameters,
+    Auto Routing (Improved) does not execute the method, and it results in 404
+    Not Found.
+
 Defining a Default Controller
 =============================
 
