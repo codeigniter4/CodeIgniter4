@@ -28,6 +28,7 @@ use Config\Database;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
+use stdClass;
 
 /**
  * The Model class extends BaseModel and provides additional
@@ -416,6 +417,7 @@ class Model extends BaseModel
     {
         $escape = $this->tempData['setData']['escape'] ?? null;
         $alias  = $this->tempData['setData']['alias'] ?? '';
+        $constraints ??= $this->tempData['constraints'];
 
         $this->tempData = [];
 
@@ -660,6 +662,91 @@ class Model extends BaseModel
     }
 
     /**
+     * Sets update fields for upsert, update
+     *
+     * @param string|string[] $set
+     * @param bool            $addToDefault adds update fields to the default ones
+     * @param array|null      $ignore       ignores items in set
+     *
+     * @return $this
+     */
+    public function updateFields($set, bool $addToDefault = false, ?array $ignore = null)
+    {
+        if (! empty($set)) {
+            if (! is_array($set)) {
+                $set = explode(',', $set);
+            }
+
+            foreach ($set as $key => $value) {
+                if (is_numeric($key)) {
+                    $key = $value;
+                }
+
+                if ($ignore === null || ! in_array($key, $ignore, true)) {
+                    if ($addToDefault) {
+                        // if fields are already defined add to updateFields
+                        if (isset($this->tempData['updateFields'])) {
+                            $this->tempData['updateFields'][$key] = $value;
+                        } else { // else store seperately for later when fields are defined
+                            $this->tempData['updateFieldsAdditional'][$key] = $value;
+                        }
+                    } else {
+                        $this->tempData['updateFields'][$key] = $value;
+                    }
+                }
+            }
+        }
+
+        if ($addToDefault === false && isset($this->tempData['updateFieldsAdditional'], $this->tempData['updateFields'])) {
+            $this->tempData['updateFields'] = array_merge($this->tempData['updateFields'], $this->tempData['updateFieldsAdditional']);
+
+            unset($this->tempData['updateFieldsAdditional']);
+        }
+
+        // allow this to remove any fields set even when called with no data
+        if (is_array($ignore) && isset($this->tempData['updateFields'])) {
+            foreach (array_keys($this->tempData['updateFields']) as $key) {
+                if (in_array($key, $ignore, true)) {
+                    unset($this->tempData['updateFields'][$key]);
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Sets constraints for batch upsert, update
+     *
+     * @param array|RawSql|string $set a string of columns, key value pairs, or RawSql
+     *
+     * @return $this
+     */
+    public function onConstraint($set)
+    {
+        if (! empty($set)) {
+            if (is_string($set)) {
+                $set = explode(',', $set);
+
+                $set = array_map(static fn ($key) => trim($key), $set);
+            }
+
+            if ($set instanceof RawSql) {
+                $set = [$set];
+            }
+
+            foreach ($set as $key => $value) {
+                if (is_string($key)) {
+                }
+
+                $this->tempData['constraints'][$key] = $value;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * Allows a row or multiple rows to be set for batch inserts/upserts/updates
      *
      * @param array|object $set
@@ -806,11 +893,77 @@ class Model extends BaseModel
      */
     public function updateBatch(?array $set = null, $constraints = null, int $batchSize = 100, bool $returnSQL = false)
     {
+        $this->onConstraint($constraints);
+        $constraints = null;
+
         $set ??= $this->tempData['setData']['set'] ?? null;
 
-        $this->tempData['setData']['set'] = [];
+        $this->tempData['setData']['set'] = null;
 
-        return parent::updateBatch($set, $constraints, $batchSize, $returnSQL);
+        if (! is_array($set) || $set === []) {
+            throw new DatabaseException('$set containts no data'); // @codeCoverageIgnore
+        }
+
+        foreach ($set as &$row) {
+            // If $data is using a custom class with public or protected
+            // properties representing the collection elements, we need to grab
+            // them as an array.
+            if (is_object($row) && ! $row instanceof stdClass) {
+                $row = $this->objectToArray($row, true, true);
+            }
+
+            // If it's still a stdClass, go ahead and convert to
+            // an array so doProtectFields and other model methods
+            // don't have to do special checks.
+            if (is_object($row)) {
+                $row = (array) $row;
+            }
+
+            // Validate data before saving.
+            if (! $this->skipValidation && ! $this->validate($row)) {
+                return false;
+            }
+        }
+
+        // if updateFields is empty then use data keys
+        if (! isset($this->tempData['updateFields'])) {
+            $this->updateFields(array_keys(current($set)));
+        }
+
+        // merge additional fields
+        $this->tempData['updateFields'] = array_merge($this->tempData['updateFields'], $this->tempData['updateFieldsAdditional'] ?? []);
+
+        // we need to define these now or else builder will update all fields in dataset
+        // make sure we aren't updating a column not allowed
+        $this->builder()->updateFields($this->doProtectFields($this->tempData['updateFields']));
+
+        // add update timestamp if not already in data
+        // also check updateFields in case it was added there
+        if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, current($set)) && ! array_key_exists($this->updatedField, $this->tempData['updateFields'])) {
+            $this->builder()->updateFields([$this->updatedField => new RawSql($this->db->escape($this->setDate()))]);
+        }
+
+        $eventData = ['data' => $set];
+
+        if ($this->tempAllowCallbacks) {
+            $eventData = $this->trigger('beforeUpdateBatch', $eventData);
+        }
+
+        $result = $this->doUpdateBatch($eventData['data'], $constraints, $batchSize, $returnSQL);
+
+        $eventData = [
+            'data'   => $eventData['data'],
+            'result' => $result,
+        ];
+
+        if ($this->tempAllowCallbacks) {
+            // Trigger afterInsert events with the inserted data and new ID
+            $this->trigger('afterUpdateBatch', $eventData);
+        }
+
+        $this->tempAllowCallbacks = $this->allowCallbacks;
+
+        return $result;
     }
 
     /**
