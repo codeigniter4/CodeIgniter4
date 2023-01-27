@@ -33,8 +33,9 @@ You may always pass ``--no-header`` to suppress the header output, helpful for p
 For all of the commands CodeIgniter provides, if you do not provide the required arguments, you will be prompted
 for the information it needs to run correctly::
 
-    > php spark migrate:version
-    > Version?
+    > php spark make::controller
+
+    Controller class name :
 
 Calling Commands
 ================
