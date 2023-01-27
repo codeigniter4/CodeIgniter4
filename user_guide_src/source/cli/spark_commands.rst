@@ -12,13 +12,18 @@ CodeIgniter ships with the official command **spark** and built-in commands.
 Running Commands
 ****************
 
-The commands are run from the command line, in the root directory.
-A custom script, **spark** has been provided that is used to run any of the CLI commands::
+Running via CLI
+===============
+
+The commands are run from the command line, in the project root directory.
+The command file **spark** has been provided that is used to run any of the CLI commands::
 
     > php spark
 
 When called without specifying a command, a simple help page is displayed that also provides a list of
-available commands. You should pass the name of the command as the first argument to run that command::
+available commands.
+
+You should pass the name of the command as the first argument to run that command::
 
     > php spark migrate
 
@@ -55,9 +60,21 @@ so that you can choose to display it or not.
 Using Help Command
 ******************
 
-You can get help about any CLI command using the help command as follows::
+spark help
+==========
+
+You can get help about any CLI command using the ``help`` command as follows::
 
     > php spark help db:seed
 
-Use the **list** command to get a list of available commands and their descriptions, sorted by categories.
-You may also use ``spark list --simple`` to get a raw list of all available commands, sorted alphabetically.
+
+spark list
+==========
+
+Use the ``list`` command to get a list of available commands and their descriptions, sorted by categories::
+
+    > php spark list
+
+You may also use the ``--simple`` option to get a raw list of all available commands, sorted alphabetically::
+
+    > php spark list --simple
