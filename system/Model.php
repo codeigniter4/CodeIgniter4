@@ -414,10 +414,12 @@ class Model extends BaseModel
      */
     protected function doUpdateBatch(?array $set = null, $constraints = null, int $batchSize = 100, bool $returnSQL = false)
     {
-        $escape       = $this->escape[0] ?? null;
-        $this->escape = [];
+        $escape = $this->tempData['setData']['escape'] ?? null;
+        $alias  = $this->tempData['setData']['alias'] ?? '';
 
-        $builder = $this->builder()->setData($set, $escape);
+        $this->tempData = [];
+
+        $builder = $this->builder()->setData($set, $escape, $alias);
 
         return $builder->testMode($returnSQL)->updateBatch(null, $constraints, $batchSize);
     }
@@ -675,10 +677,9 @@ class Model extends BaseModel
             return null; // @codeCoverageIgnore
         }
 
-        $this->builder()->setAlias($alias);
-
-        $this->tempData['data']   = array_merge($this->tempData['data'] ?? [], $set);
-        $this->tempData['escape'] = $escape;
+        $this->tempData['setData']['set']    = array_merge($this->tempData['setData']['set'] ?? [], $set);
+        $this->tempData['setData']['escape'] = $escape;
+        $this->tempData['setData']['alias']  = $alias;
 
         return $this;
     }
@@ -805,10 +806,9 @@ class Model extends BaseModel
      */
     public function updateBatch(?array $set = null, $constraints = null, int $batchSize = 100, bool $returnSQL = false)
     {
-        $set ??= $this->tempData['data'] ?? null;
+        $set ??= $this->tempData['setData']['set'] ?? null;
 
-        $this->escape[0] = $this->tempData['escape'] ?? null;
-        $this->tempData  = [];
+        $this->tempData['setData']['set'] = [];
 
         return parent::updateBatch($set, $constraints, $batchSize, $returnSQL);
     }
