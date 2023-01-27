@@ -67,6 +67,9 @@ You can get help about any CLI command using the ``help`` command as follows::
 
     > php spark help db:seed
 
+Since v4.3.0, you can also use the ``--help`` option instead of the ``help`` command::
+
+    > php spark db:seed --help
 
 spark list
 ==========
