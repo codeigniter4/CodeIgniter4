@@ -263,6 +263,29 @@ Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
 
 .. literalinclude:: controllers/022.php
 
+.. _controller-default-method-fallback:
+
+Default Method Fallback
+=======================
+
+.. versionadded:: 4.4.0
+
+If the controller method corresponding to the URI segment of the method name
+does not exist, and if the default method is defined, the URI segments are
+passed to the default method for execution.
+
+.. literalinclude:: controllers/024.php
+
+Load the following URL::
+
+    example.com/index.php/product/15/edit
+
+The method will be passed URI segments 2 and 3 (``'15'`` and ``'edit'``):
+
+.. note:: If there are more parameters in the URI than the method parameters,
+    Auto Routing (Improved) does not execute the method, and it results in 404
+    Not Found.
+
 Defining a Default Controller
 =============================
 

@@ -129,7 +129,7 @@ final class RoutesTest extends CIUnitTestCase
             | TRACE      | testing                        | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
             | CONNECT    | testing                        | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
             | CLI        | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
-            | GET(auto)  | newautorouting                 |               | \Tests\Support\Controllers\Newautorouting::getIndex |                | toolbar       |
+            | GET(auto)  | newautorouting[/..]            |               | \Tests\Support\Controllers\Newautorouting::getIndex |                | toolbar       |
             | POST(auto) | newautorouting/save/../..[/..] |               | \Tests\Support\Controllers\Newautorouting::postSave |                | toolbar       |
             +------------+--------------------------------+---------------+-----------------------------------------------------+----------------+---------------+
             EOL;

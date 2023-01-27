@@ -9,17 +9,13 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Router\Controllers;
+namespace CodeIgniter\Router\Exceptions;
 
-use CodeIgniter\Controller;
+use RuntimeException;
 
-class Index extends Controller
+/**
+ * @internal
+ */
+final class MethodNotFoundException extends RuntimeException
 {
-    public function getIndex($p1 = '')
-    {
-    }
-
-    public function postIndex()
-    {
-    }
 }

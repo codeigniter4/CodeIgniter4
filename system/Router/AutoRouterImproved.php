@@ -12,6 +12,7 @@
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\Router\Exceptions\MethodNotFoundException;
 use ReflectionClass;
 use ReflectionException;
 
@@ -168,17 +169,30 @@ final class AutoRouterImproved implements AutoRouterInterface
             '\\'
         );
 
-        // Ensure routes registered via $routes->cli() are not accessible via web.
+        // Ensure the controller is not defined in routes.
         $this->protectDefinedRoutes();
 
-        // Check _remap()
+        // Ensure the controller does not have _remap() method.
         $this->checkRemap();
 
-        // Check parameters
+        // Check parameter count
         try {
             $this->checkParameters($uri);
-        } catch (ReflectionException $e) {
-            throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
+        } catch (MethodNotFoundException $e) {
+            // Fallback to the default method
+            if (! isset($methodSegment)) {
+                throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
+            }
+
+            array_unshift($this->params, $methodSegment);
+            $method       = $this->method;
+            $this->method = $this->defaultMethod;
+
+            try {
+                $this->checkParameters($uri);
+            } catch (MethodNotFoundException $e) {
+                throw PageNotFoundException::forControllerNotFound($this->controller, $method);
+            }
         }
 
         return [$this->directory, $this->controller, $this->method, $this->params];
@@ -201,12 +215,21 @@ final class AutoRouterImproved implements AutoRouterInterface
 
     private function checkParameters(string $uri): void
     {
-        $refClass  = new ReflectionClass($this->controller);
-        $refMethod = $refClass->getMethod($this->method);
-        $refParams = $refMethod->getParameters();
+        try {
+            $refClass = new ReflectionClass($this->controller);
+        } catch (ReflectionException $e) {
+            throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
+        }
+
+        try {
+            $refMethod = $refClass->getMethod($this->method);
+            $refParams = $refMethod->getParameters();
+        } catch (ReflectionException $e) {
+            throw new MethodNotFoundException();
+        }
 
         if (! $refMethod->isPublic()) {
-            throw PageNotFoundException::forMethodNotFound($this->method);
+            throw new MethodNotFoundException();
         }
 
         if (count($refParams) < count($this->params)) {

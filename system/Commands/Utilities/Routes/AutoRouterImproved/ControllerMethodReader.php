@@ -76,18 +76,37 @@ final class ControllerMethodReader
                         );
 
                         if ($routeWithoutController !== []) {
+                            // Route for the default controller.
                             $output = [...$output, ...$routeWithoutController];
 
                             continue;
+                        }
+
+                        $params      = [];
+                        $routeParams = '';
+                        $refParams   = $method->getParameters();
+
+                        foreach ($refParams as $param) {
+                            $required = true;
+                            if ($param->isOptional()) {
+                                $required = false;
+
+                                $routeParams .= '[/..]';
+                            } else {
+                                $routeParams .= '/..';
+                            }
+
+                            // [variable_name => required?]
+                            $params[$param->getName()] = $required;
                         }
 
                         // Route for the default method.
                         $output[] = [
                             'method'       => $httpVerb,
                             'route'        => $classInUri,
-                            'route_params' => '',
+                            'route_params' => $routeParams,
                             'handler'      => '\\' . $classname . '::' . $methodName,
-                            'params'       => [],
+                            'params'       => $params,
                         ];
 
                         continue;
