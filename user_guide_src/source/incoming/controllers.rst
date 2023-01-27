@@ -230,6 +230,13 @@ class so that it can inherit all its methods.
 Methods
 =======
 
+Method Visibility
+-----------------
+
+When you define a method that is executable via HTTP request, the method must be
+declared as ``public``.
+
+.. warning:: For security reasons be sure to declare any new utility methods as ``protected`` or ``private``.
 
 Default Method
 --------------
@@ -252,8 +259,6 @@ Now load the following URL to see the ``getComment()`` method::
     example.com/index.php/helloworld/comment/
 
 You should see your new message.
-
-.. warning:: For security reasons be sure to declare any new utility methods as ``protected`` or ``private``.
 
 Passing URI Segments to Your Methods
 ====================================
