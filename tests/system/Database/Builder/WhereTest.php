@@ -160,6 +160,53 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
+    public function testWhereCustomStringWithOperatorEscapeFalse()
+    {
+        $builder = $this->db->table('jobs');
+
+        $where = 'CURRENT_TIMESTAMP() = DATE_ADD(column, INTERVAL 2 HOUR)';
+        $builder->where($where, null, false);
+
+        $expectedSQL = 'SELECT * FROM "jobs" WHERE CURRENT_TIMESTAMP() = DATE_ADD(column, INTERVAL 2 HOUR)';
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+        $expectedBinds = [];
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testWhereCustomStringWithoutOperatorEscapeFalse()
+    {
+        $builder = $this->db->table('jobs');
+
+        $where = "REPLACE(column, 'somestring', '')";
+        $builder->where($where, "''", false);
+
+        $expectedSQL = "SELECT * FROM \"jobs\" WHERE REPLACE(column, 'somestring', '') = ''";
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+        $expectedBinds = [
+            "REPLACE(column, 'somestring', '')" => [
+                0 => "''",
+                1 => false,
+            ],
+        ];
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testWhereCustomStringWithBetweenEscapeFalse()
+    {
+        $builder = $this->db->table('jobs');
+
+        $where = "created_on BETWEEN '2022-07-01 00:00:00' AND '2022-12-31 23:59:59'";
+        $builder->where($where, null, false);
+
+        $expectedSQL = "SELECT * FROM \"jobs\" WHERE created_on BETWEEN '2022-07-01 00:00:00' AND '2022-12-31 23:59:59'";
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+        $expectedBinds = [];
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
     public function testWhereRawSql()
     {
         $builder = $this->db->table('jobs');

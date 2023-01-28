@@ -66,7 +66,7 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- app/Config/Encryption.php
+- app/Config/Email.php
     - Set the default value ``''`` to ``$fromEmail``, ``$fromName``,
       ``$recipients``, ``$SMTPHost``, ``$SMTPUser`` and ``$SMTPPass``
       to apply environment variable (**.env**) values.

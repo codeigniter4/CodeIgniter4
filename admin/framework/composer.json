@@ -42,6 +42,11 @@
         "ext-fileinfo": "Improves mime type detection for files",
         "ext-readline": "Improves CLI::input() usability"
     },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
     "autoload": {
         "psr-4": {
             "CodeIgniter\\": "system/"

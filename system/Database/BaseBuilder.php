@@ -761,9 +761,9 @@ class BaseBuilder
                     $k = trim($k);
 
                     end($op);
-
                     $op = trim(current($op));
 
+                    // Does the key end with operator?
                     if (substr($k, -strlen($op)) === $op) {
                         $k  = rtrim(substr($k, 0, -strlen($op)));
                         $op = " {$op}";
@@ -783,7 +783,15 @@ class BaseBuilder
             } elseif (! $this->hasOperator($k) && $qbKey !== 'QBHaving') {
                 // value appears not to have been set, assign the test to IS NULL
                 $op = ' IS NULL';
-            } elseif (preg_match('/\s*(!?=|<>|IS(?:\s+NOT)?)\s*$/i', $k, $match, PREG_OFFSET_CAPTURE)) {
+            } elseif (
+                // The key ends with !=, =, <>, IS, IS NOT
+                preg_match(
+                    '/\s*(!?=|<>|IS(?:\s+NOT)?)\s*$/i',
+                    $k,
+                    $match,
+                    PREG_OFFSET_CAPTURE
+                )
+            ) {
                 $k  = substr($k, 0, $match[0][1]);
                 $op = $match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL';
             } else {
@@ -3377,16 +3385,16 @@ class BaseBuilder
                 : '';
             $this->pregOperators = [
                 '\s*(?:<|>|!)?=\s*', // =, <=, >=, !=
-                '\s*<>?\s*', // <, <>
-                '\s*>\s*', // >
-                '\s+IS NULL', // IS NULL
-                '\s+IS NOT NULL', // IS NOT NULL
-                '\s+EXISTS\s*\(.*\)', // EXISTS(sql)
+                '\s*<>?\s*',         // <, <>
+                '\s*>\s*',           // >
+                '\s+IS NULL',             // IS NULL
+                '\s+IS NOT NULL',         // IS NOT NULL
+                '\s+EXISTS\s*\(.*\)',     // EXISTS (sql)
                 '\s+NOT EXISTS\s*\(.*\)', // NOT EXISTS(sql)
-                '\s+BETWEEN\s+', // BETWEEN value AND value
-                '\s+IN\s*\(.*\)', // IN(list)
-                '\s+NOT IN\s*\(.*\)', // NOT IN (list)
-                '\s+LIKE\s+\S.*(' . $_les . ')?', // LIKE 'expr'[ ESCAPE '%s']
+                '\s+BETWEEN\s+',          // BETWEEN value AND value
+                '\s+IN\s*\(.*\)',         // IN (list)
+                '\s+NOT IN\s*\(.*\)',     // NOT IN (list)
+                '\s+LIKE\s+\S.*(' . $_les . ')?',     // LIKE 'expr'[ ESCAPE '%s']
                 '\s+NOT LIKE\s+\S.*(' . $_les . ')?', // NOT LIKE 'expr'[ ESCAPE '%s']
             ];
         }
@@ -3409,13 +3417,18 @@ class BaseBuilder
         $whereKey = trim($whereKey);
 
         $pregOperators = [
-            '\s*(?:<|>|!)?=', // =, <=, >=, !=
-            '\s*<>?',         // <, <>
-            '\s*>',           // >
-            '\s+IS NULL',     // IS NULL
-            '\s+IS NOT NULL', // IS NOT NULL
-            '\s+LIKE',        // LIKE
-            '\s+NOT LIKE',    // NOT LIKE
+            '\s*(?:<|>|!)?=',         // =, <=, >=, !=
+            '\s*<>?',                 // <, <>
+            '\s*>',                   // >
+            '\s+IS NULL',             // IS NULL
+            '\s+IS NOT NULL',         // IS NOT NULL
+            '\s+EXISTS\s*\(.*\)',     // EXISTS (sql)
+            '\s+NOT EXISTS\s*\(.*\)', // NOT EXISTS (sql)
+            '\s+BETWEEN\s+',          // BETWEEN value AND value
+            '\s+IN\s*\(.*\)',         // IN (list)
+            '\s+NOT IN\s*\(.*\)',     // NOT IN (list)
+            '\s+LIKE',                // LIKE
+            '\s+NOT LIKE',            // NOT LIKE
         ];
 
         return preg_match_all(

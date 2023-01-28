@@ -13,8 +13,10 @@
         "mikey179/vfsstream": "^1.6",
         "phpunit/phpunit": "^9.1"
     },
-    "suggest": {
-        "ext-fileinfo": "Improves mime type detection for files"
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
     },
     "autoload": {
         "exclude-from-classmap": [
