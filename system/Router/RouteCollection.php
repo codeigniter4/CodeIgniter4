@@ -722,7 +722,7 @@ class RouteCollection implements RouteCollectionInterface
      *      POST        /photos/{id}        update
      *
      * @param string     $name    The name of the resource/controller to route to.
-     * @param array|null $options An list of possible ways to customize the routing.
+     * @param array|null $options A list of possible ways to customize the routing.
      */
     public function resource(string $name, ?array $options = null): RouteCollectionInterface
     {
@@ -816,7 +816,7 @@ class RouteCollection implements RouteCollectionInterface
      *      POST        /photos/delete/{id} delete          deleting the specified photo object
      *
      * @param string     $name    The name of the controller to route to.
-     * @param array|null $options An list of possible ways to customize the routing.
+     * @param array|null $options A list of possible ways to customize the routing.
      */
     public function presenter(string $name, ?array $options = null): RouteCollectionInterface
     {
@@ -1467,7 +1467,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     /**
-     * Examines the HTTP_HOST to get a best match for the subdomain. It
+     * Examines the HTTP_HOST to get the best match for the subdomain. It
      * won't be perfect, but should work for our needs.
      *
      * It's especially not perfect since it's possible to register a domain
