@@ -322,7 +322,7 @@ to all classes that extend <code class="docutils literal notranslate"><span clas
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Message::isJSON()</span></code>: Check the “Content-Type” header directly</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Request[Interface]::isValidIP()</span></code>: Use the Validation class with <code class="docutils literal notranslate"><span class="pre">valid_ip</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Request[Interface]::getMethod()</span></code>: The <code class="docutils literal notranslate"><span class="pre">$upper</span></code> parameter will be removed, use str_to_upper()</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Request[Interface]::getMethod()</span></code>: The <code class="docutils literal notranslate"><span class="pre">$upper</span></code> parameter will be removed, use strtoupper()</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Request[Trait]::$ipAddress</span></code>: This property will become private</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Request::$proxyIPs</span></code>: This property will be removed; access <code class="docutils literal notranslate"><span class="pre">config('App')-&gt;proxyIPs</span></code> directly</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Request::__construct()</span></code>: The constructor will no longer take <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> and has been made nullable to aid transition</p></li>
@@ -460,7 +460,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 26, 2023.
+      <span class="lastupdated">Last updated on Jan 28, 2023.
       </span></p>
   </div>
 

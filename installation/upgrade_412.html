@@ -336,7 +336,7 @@ implementing libraries: <code class="docutils literal notranslate"><span class="
 <p><code class="docutils literal notranslate"><span class="pre">BaseConnection::query()</span></code> method in prior versions was incorrectly returning BaseResult objects
 even if the query failed. This method will now return <code class="docutils literal notranslate"><span class="pre">false</span></code> for failed queries (or throw an
 Exception if <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>) and will return booleans for write-type queries. Review any use
-of <code class="docutils literal notranslate"><span class="pre">query()</span></code> method and be assess whether the value might be boolean instead of Result object.
+of <code class="docutils literal notranslate"><span class="pre">query()</span></code> method and assess whether the value might be boolean instead of Result object.
 For a better idea of what queries are write-type queries, check <code class="docutils literal notranslate"><span class="pre">BaseConnection::isWriteType()</span></code>
 and any DBMS-specific override <code class="docutils literal notranslate"><span class="pre">isWriteType()</span></code> in the relevant Connection class.</p>
 </section>
@@ -477,7 +477,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 26, 2023.
+      <span class="lastupdated">Last updated on Jan 28, 2023.
       </span></p>
   </div>
 
