@@ -104,8 +104,13 @@ Service Accessors
     :param string                   $name: The model classname.
     :param boolean                  $getShared: Whether to return a shared instance.
     :param ConnectionInterface|null $conn: The database connection.
-    :returns: More simple way of getting model instances
+    :returns: The model instances
     :rtype: object
+
+    More simple way of getting model instances.
+
+    The ``model()`` uses ``Factories::models()`` internally.
+    See :ref:`factories-example` for details on the first parameter ``$name``.
 
     See also the :ref:`Using CodeIgniter's Model <accessing-models>`.
 
