@@ -103,13 +103,13 @@ class RedisHandler extends BaseHandler
             throw SessionException::forEmptySavepath();
         }
 
-        if (preg_match('#(?:(^.*)://)?([^:?]+)(?:\:(\d+))?(\?.+)?#', $this->savePath, $matches)) {
+        if (preg_match('#(?:(tcp|tls)://)?([^:?]+)(?:\:(\d+))?(\?.+)?#', $this->savePath, $matches)) {
             if (! isset($matches[4])) {
                 $matches[4] = ''; // Just to avoid undefined index notices below
             }
 
             $this->savePath = [
-                'protocol' => in_array($matches[1], ['tcp', 'tls'], true) ? $matches[1] : self::DEFAULT_PROTOCOL,
+                'protocol' => ! empty($matches[1]) ? $matches[1] : self::DEFAULT_PROTOCOL,
                 'host'     => $matches[2],
                 'port'     => empty($matches[3]) ? self::DEFAULT_PORT : $matches[3],
                 'password' => preg_match('#auth=([^\s&]+)#', $matches[4], $match) ? $match[1] : null,
