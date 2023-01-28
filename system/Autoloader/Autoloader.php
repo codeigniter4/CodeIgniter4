@@ -381,7 +381,12 @@ class Autoloader
             );
         }
         // This method requires Composer 2.0.14 or later.
-        $packageList = InstalledVersions::getAllRawData()[0]['versions'];
+        $allData     = InstalledVersions::getAllRawData();
+        $packageList = [];
+
+        foreach ($allData as $list) {
+            $packageList = array_merge($packageList, $list['versions']);
+        }
 
         // Check config for $composerPackages.
         $only    = $composerPackages['only'] ?? [];
