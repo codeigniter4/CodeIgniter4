@@ -137,6 +137,17 @@ final class IncomingRequestDetectingTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->detectPath('QUERY_STRING'));
     }
 
+    public function testPathQueryStringWithQueryString()
+    {
+        // /index.php?/ci/woot?code=good#pos
+        $_SERVER['REQUEST_URI']  = '/index.php?/ci/woot?code=good';
+        $_SERVER['QUERY_STRING'] = '/ci/woot?code=good';
+        $_SERVER['SCRIPT_NAME']  = '/index.php';
+
+        $expected = 'ci/woot';
+        $this->assertSame($expected, $this->request->detectPath('QUERY_STRING'));
+    }
+
     public function testPathQueryStringEmpty()
     {
         // /index.php?
