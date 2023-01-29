@@ -296,44 +296,47 @@ them one by one.</p>
 <p><strong>Do read the user guide</strong> before embarking on a project conversion!</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#general-adjustments" id="id1">General Adjustments</a></p>
+<li><p><a class="reference internal" href="#general-adjustments" id="id2">General Adjustments</a></p>
 <ul>
-<li><p><a class="reference internal" href="#downloads" id="id2">Downloads</a></p></li>
-<li><p><a class="reference internal" href="#namespaces" id="id3">Namespaces</a></p></li>
-<li><p><a class="reference internal" href="#application-structure" id="id4">Application Structure</a></p></li>
-<li><p><a class="reference internal" href="#routing" id="id5">Routing</a></p></li>
-<li><p><a class="reference internal" href="#model-view-and-controller" id="id6">Model, View and Controller</a></p></li>
-<li><p><a class="reference internal" href="#class-loading" id="id7">Class Loading</a></p></li>
-<li><p><a class="reference internal" href="#libraries" id="id8">Libraries</a></p></li>
-<li><p><a class="reference internal" href="#helpers" id="id9">Helpers</a></p></li>
-<li><p><a class="reference internal" href="#events" id="id10">Events</a></p></li>
-<li><p><a class="reference internal" href="#extending-the-framework" id="id11">Extending the Framework</a></p></li>
+<li><p><a class="reference internal" href="#downloads" id="id3">Downloads</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id4">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#application-structure" id="id5">Application Structure</a></p></li>
+<li><p><a class="reference internal" href="#routing" id="id6">Routing</a></p></li>
+<li><p><a class="reference internal" href="#model-view-and-controller" id="id7">Model, View and Controller</a></p></li>
+<li><p><a class="reference internal" href="#class-loading" id="id8">Class Loading</a></p></li>
+<li><p><a class="reference internal" href="#libraries" id="id9">Libraries</a></p></li>
+<li><p><a class="reference internal" href="#helpers" id="id10">Helpers</a></p></li>
+<li><p><a class="reference internal" href="#hooks" id="id11">Hooks</a></p></li>
+<li><p><a class="reference internal" href="#extending-the-framework" id="id12">Extending the Framework</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#upgrading-libraries" id="id12">Upgrading Libraries</a></p></li>
+<li><p><a class="reference internal" href="#upgrading-libraries" id="id13">Upgrading Libraries</a></p></li>
 </ul>
 </div>
 <section id="general-adjustments">
-<h2><a class="toc-backref" href="#id1">General Adjustments</a><a class="headerlink" href="#general-adjustments" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">General Adjustments</a><a class="headerlink" href="#general-adjustments" title="Permalink to this headline"></a></h2>
 <section id="downloads">
-<h3><a class="toc-backref" href="#id2">Downloads</a><a class="headerlink" href="#downloads" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3">Downloads</a><a class="headerlink" href="#downloads" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>CI4 is still available as a <a class="reference internal" href="installing_manual.html"><span class="doc">ready-to-run zip or tarball</span></a>.</p></li>
 <li><p>It can also be installed using <a class="reference internal" href="installing_composer.html"><span class="doc">Composer</span></a>.</p></li>
 </ul>
 </section>
 <section id="namespaces">
-<h3><a class="toc-backref" href="#id3">Namespaces</a><a class="headerlink" href="#namespaces" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4">Namespaces</a><a class="headerlink" href="#namespaces" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>CI4 is built for PHP 7.4+, and everything in the framework is namespaced, except for the helpers.</p></li>
 </ul>
 </section>
 <section id="application-structure">
-<h3><a class="toc-backref" href="#id4">Application Structure</a><a class="headerlink" href="#application-structure" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">Application Structure</a><a class="headerlink" href="#application-structure" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>The <strong>application</strong> folder is renamed as <strong>app</strong> and the framework still has <strong>system</strong> folders,
 with the same interpretation as before.</p></li>
 <li><p>The framework now provides for a <strong>public</strong> folder, intended as the document root for your app.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">defined('BASEPATH')</span> <span class="pre">OR</span> <span class="pre">exit('No</span> <span class="pre">direct</span> <span class="pre">script</span> <span class="pre">access</span> <span class="pre">allowed');</span></code> line is not necessary
+because files outside the <strong>public</strong> folder are not accessible in the standard configuration.
+And CI4 no longer defines the constant <code class="docutils literal notranslate"><span class="pre">BASEPATH</span></code>, so remove the line in all files.</p></li>
 <li><p>There is also a <strong>writable</strong> folder, to hold cache data, logs, and session data.</p></li>
 <li><p>The <strong>app</strong> folder looks very similar to <strong>application</strong> for CI3, with some
 name changes, and some subfolders moved to the <strong>writable</strong> folder.</p></li>
@@ -342,14 +345,14 @@ a different mechanism for extending framework components (see below).</p></li>
 </ul>
 </section>
 <section id="routing">
-<h3><a class="toc-backref" href="#id5">Routing</a><a class="headerlink" href="#routing" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Routing</a><a class="headerlink" href="#routing" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>The Auto Routing is disabled by default. If you want to use the Auto Routing in the same way as CI3, you need to enable <a class="reference internal" href="../incoming/routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a>.</p></li>
 <li><p>CI4 also has an optional new more secure <a class="reference internal" href="../incoming/routing.html#auto-routing-improved"><span class="std std-ref">Auto Routing (Improved)</span></a>.</p></li>
 </ul>
 </section>
 <section id="model-view-and-controller">
-<h3><a class="toc-backref" href="#id6">Model, View and Controller</a><a class="headerlink" href="#model-view-and-controller" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Model, View and Controller</a><a class="headerlink" href="#model-view-and-controller" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>CodeIgniter is based on the MVC concept. Thus, the changes on the Model, View and Controller
 are one of the most important things you have to handle.</p></li>
@@ -374,7 +377,7 @@ you some step-by-step instructions to convert the MVC classes in CodeIgniter4:</
 </div>
 </section>
 <section id="class-loading">
-<h3><a class="toc-backref" href="#id7">Class Loading</a><a class="headerlink" href="#class-loading" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Class Loading</a><a class="headerlink" href="#class-loading" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>There is no longer a CodeIgniter “superobject”, with framework component
 references magically injected as properties of your controller.</p></li>
@@ -388,7 +391,7 @@ you are most comfortable with, including the “HMVC” style.</p></li>
 </ul>
 </section>
 <section id="libraries">
-<h3><a class="toc-backref" href="#id8">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Your app classes can still go inside <strong>app/Libraries</strong>, but they don’t have to.</p></li>
 <li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('x');</span></code> you can now use
@@ -396,7 +399,7 @@ you are most comfortable with, including the “HMVC” style.</p></li>
 </ul>
 </section>
 <section id="helpers">
-<h3><a class="toc-backref" href="#id9">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="../general/helpers.html"><span class="doc">Helpers</span></a> are pretty much the same as before, though some have been simplified.</p></li>
 <li><p>Since v4.3.0, you can autoload helpers by <strong>app/Config/Autoload.php</strong> as well as CI3.</p></li>
@@ -428,8 +431,8 @@ in CI3 are included in <a class="reference internal" href="../helpers/text_helpe
 </li>
 </ul>
 </section>
-<section id="events">
-<h3><a class="toc-backref" href="#id10">Events</a><a class="headerlink" href="#events" title="Permalink to this headline"></a></h3>
+<section id="hooks">
+<h3><a class="toc-backref" href="#id11">Hooks</a><a class="headerlink" href="#hooks" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.codeigniter.com/userguide3/general/hooks.html">Hooks</a> have been
 replaced by <a class="reference internal" href="../extending/events.html"><span class="doc">Events</span></a>.</p></li>
@@ -439,7 +442,7 @@ replaced by <a class="reference internal" href="../extending/events.html"><span 
 </ul>
 </section>
 <section id="extending-the-framework">
-<h3><a class="toc-backref" href="#id11">Extending the Framework</a><a class="headerlink" href="#extending-the-framework" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">Extending the Framework</a><a class="headerlink" href="#extending-the-framework" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>You don’t need a <strong>core</strong> folder to hold <code class="docutils literal notranslate"><span class="pre">MY_...</span></code> framework
 component extensions or replacements.</p></li>
@@ -453,7 +456,7 @@ your components instead of the default ones.</p></li>
 </section>
 </section>
 <section id="upgrading-libraries">
-<h2><a class="toc-backref" href="#id12">Upgrading Libraries</a><a class="headerlink" href="#upgrading-libraries" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id13">Upgrading Libraries</a><a class="headerlink" href="#upgrading-libraries" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Your app classes can still go inside <strong>app/Libraries</strong>, but they don’t have to.</p></li>
 <li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('x');</span></code> you can now use <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>,

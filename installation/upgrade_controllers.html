@@ -314,6 +314,7 @@ objects for you to work with - more powerful than the CI3-way.</p></li>
 <li><p>First, move all controller files to the folder <strong>app/Controllers</strong>.</p></li>
 <li><p>Add this line just after the opening php tag: <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Controllers;</span></code></p></li>
 <li><p>Replace <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">CI_Controller</span></code> with <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">BaseController</span></code>.</p></li>
+<li><p>Remove the line <code class="docutils literal notranslate"><span class="pre">defined('BASEPATH')</span> <span class="pre">OR</span> <span class="pre">exit('No</span> <span class="pre">direct</span> <span class="pre">script</span> <span class="pre">access</span> <span class="pre">allowed');</span></code> if it exists.</p></li>
 </ol>
 <div class="line-block">
 <div class="line">If you use sub-directories in your controller structure, you have to change the namespace according to that.</div>

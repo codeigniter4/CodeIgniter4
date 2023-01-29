@@ -316,7 +316,7 @@ You need to upgrade the migration table definition and its data.</p></li>
 <ol class="arabic">
 <li><p>If your v3 project uses sequential migration names you have to change those to timestamp names.</p></li>
 <li><p>You have to move all migration files to the new folder <strong>app/Database/Migrations</strong>.</p></li>
-<li><p>Remove the following line <code class="docutils literal notranslate"><span class="pre">defined('BASEPATH')</span> <span class="pre">OR</span> <span class="pre">exit('No</span> <span class="pre">direct</span> <span class="pre">script</span> <span class="pre">access</span> <span class="pre">allowed');</span></code>.</p></li>
+<li><p>Remove the line <code class="docutils literal notranslate"><span class="pre">defined('BASEPATH')</span> <span class="pre">OR</span> <span class="pre">exit('No</span> <span class="pre">direct</span> <span class="pre">script</span> <span class="pre">access</span> <span class="pre">allowed');</span></code> if it exists.</p></li>
 <li><p>Add this line just after the opening php tag: <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Database\Migrations;</span></code>.</p></li>
 <li><p>Below the <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Database\Migrations;</span></code> line add this line: <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">CodeIgniter\Database\Migration;</span></code></p></li>
 <li><p>Replace <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">CI_Migration</span></code> with <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">Migration</span></code>.</p></li>
