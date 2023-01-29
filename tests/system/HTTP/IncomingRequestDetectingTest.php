@@ -128,8 +128,8 @@ final class IncomingRequestDetectingTest extends CIUnitTestCase
 
     public function testPathQueryString()
     {
-        // /?/ci/index.php/woot
-        $_SERVER['REQUEST_URI']  = '/?/ci/woot';
+        // /index.php?/ci/woot
+        $_SERVER['REQUEST_URI']  = '/index.php?/ci/woot';
         $_SERVER['QUERY_STRING'] = '/ci/woot';
         $_SERVER['SCRIPT_NAME']  = '/index.php';
 
@@ -139,8 +139,8 @@ final class IncomingRequestDetectingTest extends CIUnitTestCase
 
     public function testPathQueryStringEmpty()
     {
-        // /?/ci/index.php/woot
-        $_SERVER['REQUEST_URI']  = '/?/ci/woot';
+        // /index.php?
+        $_SERVER['REQUEST_URI']  = '/index.php?';
         $_SERVER['QUERY_STRING'] = '';
         $_SERVER['SCRIPT_NAME']  = '/index.php';
 
