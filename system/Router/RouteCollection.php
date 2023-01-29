@@ -1577,41 +1577,52 @@ class RouteCollection implements RouteCollectionInterface
      * Get all controllers in Route Handlers
      *
      * @param string|null $verb HTTP verb. `'*'` returns all controllers in any verb.
+     *
+     * @return array<int, string> controller name list
+     * @phpstan-return list<string>
      */
     public function getRegisteredControllers(?string $verb = '*'): array
     {
-        $routes = [];
+        $controllers = [];
 
         if ($verb === '*') {
-            $rawRoutes = [];
-
             foreach ($this->defaultHTTPMethods as $tmpVerb) {
-                $rawRoutes = array_merge($rawRoutes, $this->routes[$tmpVerb]);
-            }
-
-            foreach ($rawRoutes as $route) {
-                $key     = key($route['route']);
-                $handler = $route['route'][$key];
-
-                $routes[$key] = $handler;
+                foreach ($this->routes[$tmpVerb] as $route) {
+                    $routeKey   = key($route['route']);
+                    $controller = $this->getControllerName($route['route'][$routeKey]);
+                    if ($controller !== null) {
+                        $controllers[] = $controller;
+                    }
+                }
             }
         } else {
             $routes = $this->getRoutes($verb);
-        }
 
-        $controllers = [];
-
-        foreach ($routes as $handler) {
-            if (! is_string($handler)) {
-                continue;
+            foreach ($routes as $handler) {
+                $controller = $this->getControllerName($handler);
+                if ($controller !== null) {
+                    $controllers[] = $controller;
+                }
             }
-
-            [$controller] = explode('::', $handler, 2);
-
-            $controllers[] = $controller;
         }
 
         return array_unique($controllers);
+    }
+
+    /**
+     * @param Closure|string $handler Handler
+     *
+     * @return string|null Controller classname
+     */
+    private function getControllerName($handler)
+    {
+        if (! is_string($handler)) {
+            return null;
+        }
+
+        [$controller] = explode('::', $handler, 2);
+
+        return $controller;
     }
 
     /**
