@@ -280,21 +280,30 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="#running-commands" id="id1">Running Commands</a></p>
 <ul>
-<li><p><a class="reference internal" href="#calling-commands" id="id2">Calling Commands</a></p></li>
+<li><p><a class="reference internal" href="#running-via-cli" id="id2">Running via CLI</a></p></li>
+<li><p><a class="reference internal" href="#calling-commands" id="id3">Calling Commands</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#using-help-command" id="id3">Using Help Command</a></p></li>
+<li><p><a class="reference internal" href="#using-help-command" id="id4">Using Help Command</a></p>
+<ul>
+<li><p><a class="reference internal" href="#spark-help" id="id5">spark help</a></p></li>
+<li><p><a class="reference internal" href="#spark-list" id="id6">spark list</a></p></li>
+</ul>
+</li>
 </ul>
 </div>
 <section id="running-commands">
 <h2><a class="toc-backref" href="#id1">Running Commands</a><a class="headerlink" href="#running-commands" title="Permalink to this headline"></a></h2>
-<p>The commands are run from the command line, in the root directory.
-A custom script, <strong>spark</strong> has been provided that is used to run any of the CLI commands:</p>
+<section id="running-via-cli">
+<h3><a class="toc-backref" href="#id2">Running via CLI</a><a class="headerlink" href="#running-via-cli" title="Permalink to this headline"></a></h3>
+<p>The commands are run from the command line, in the project root directory.
+The command file <strong>spark</strong> has been provided that is used to run any of the CLI commands:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span>
 </pre></div>
 </div>
 <p>When called without specifying a command, a simple help page is displayed that also provides a list of
-available commands. You should pass the name of the command as the first argument to run that command:</p>
+available commands.</p>
+<p>You should pass the name of the command as the first argument to run that command:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span>
 </pre></div>
 </div>
@@ -308,12 +317,14 @@ available commands. You should pass the name of the command as the first argumen
 </div>
 <p>For all of the commands CodeIgniter provides, if you do not provide the required arguments, you will be prompted
 for the information it needs to run correctly:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span><span class="o">:</span><span class="nx">version</span>
-<span class="o">&gt;</span> <span class="nx">Version</span><span class="o">?</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">::</span><span class="na">controller</span>
+
+<span class="nx">Controller</span> <span class="k">class</span> <span class="nc">name</span> <span class="o">:</span>
 </pre></div>
 </div>
+</section>
 <section id="calling-commands">
-<h3><a class="toc-backref" href="#id2">Calling Commands</a><a class="headerlink" href="#calling-commands" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3">Calling Commands</a><a class="headerlink" href="#calling-commands" title="Permalink to this headline"></a></h3>
 <p>Commands can also be ran from within your own code. This is most often done within a controller for cronjob tasks,
 but they can be used at any time. You do this by using the <code class="docutils literal notranslate"><span class="pre">command()</span></code> function. This function is always available.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -328,13 +339,29 @@ so that you can choose to display it or not.</p>
 </section>
 </section>
 <section id="using-help-command">
-<h2><a class="toc-backref" href="#id3">Using Help Command</a><a class="headerlink" href="#using-help-command" title="Permalink to this headline"></a></h2>
-<p>You can get help about any CLI command using the help command as follows:</p>
+<h2><a class="toc-backref" href="#id4">Using Help Command</a><a class="headerlink" href="#using-help-command" title="Permalink to this headline"></a></h2>
+<section id="spark-help">
+<h3><a class="toc-backref" href="#id5">spark help</a><a class="headerlink" href="#spark-help" title="Permalink to this headline"></a></h3>
+<p>You can get help about any CLI command using the <code class="docutils literal notranslate"><span class="pre">help</span></code> command as follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">help</span> <span class="nx">db</span><span class="o">:</span><span class="nx">seed</span>
 </pre></div>
 </div>
-<p>Use the <strong>list</strong> command to get a list of available commands and their descriptions, sorted by categories.
-You may also use <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">list</span> <span class="pre">--simple</span></code> to get a raw list of all available commands, sorted alphabetically.</p>
+<p>Since v4.3.0, you can also use the <code class="docutils literal notranslate"><span class="pre">--help</span></code> option instead of the <code class="docutils literal notranslate"><span class="pre">help</span></code> command:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">seed</span> <span class="o">--</span><span class="nx">help</span>
+</pre></div>
+</div>
+</section>
+<section id="spark-list">
+<h3><a class="toc-backref" href="#id6">spark list</a><a class="headerlink" href="#spark-list" title="Permalink to this headline"></a></h3>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">list</span></code> command to get a list of available commands and their descriptions, sorted by categories:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="k">list</span>
+</pre></div>
+</div>
+<p>You may also use the <code class="docutils literal notranslate"><span class="pre">--simple</span></code> option to get a raw list of all available commands, sorted alphabetically:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="k">list</span> <span class="o">--</span><span class="nx">simple</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
