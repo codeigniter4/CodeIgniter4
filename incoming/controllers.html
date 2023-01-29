@@ -655,7 +655,9 @@ class so that it can inherit all its methods.</p>
 <p>The system will attempt to match the URI against Controllers by matching each segment against
 folders/files in <strong>app/Controllers/</strong>, when a match wasn’t found against defined routes.
 That’s why your folders/files MUST start with a capital letter and the rest MUST be lowercase.</p>
-<p>Here is an example based on PSR-4 Autoloader:</p>
+<p>If you want another naming convention you need to manually define it using the
+<a class="reference internal" href="routing.html#defined-route-routing"><span class="std std-ref">Defined Route Routing</span></a>.
+Here is an example based on PSR-4 Autoloader:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="cm">/*</span>
@@ -666,16 +668,28 @@ That’s why your folders/files MUST start with a capital letter and the rest MU
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;helloworld&#39;</span><span class="p">,</span> <span class="s1">&#39;\App\Controllers\HelloWorld::index&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If you want another naming convention you need to manually define it using the
-<a class="reference internal" href="routing.html#defined-route-routing"><span class="std std-ref">Defined Route Routing</span></a>.</p>
 </div>
 </section>
 <section id="methods">
 <h3><a class="toc-backref" href="#id20">Methods</a><a class="headerlink" href="#methods" title="Permalink to this headline"></a></h3>
+<section id="method-visibility">
+<h4>Method Visibility<a class="headerlink" href="#method-visibility" title="Permalink to this headline"></a></h4>
+<p>When you define a method that is executable via HTTP request, the method must be
+declared as <code class="docutils literal notranslate"><span class="pre">public</span></code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For security reasons be sure to declare any new utility methods as <code class="docutils literal notranslate"><span class="pre">protected</span></code> or <code class="docutils literal notranslate"><span class="pre">private</span></code>.</p>
+</div>
+</section>
+<section id="default-method">
+<h4>Default Method<a class="headerlink" href="#default-method" title="Permalink to this headline"></a></h4>
 <p>In the above example, the method name is <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>.
-The method (HTTP verb + <code class="docutils literal notranslate"><span class="pre">Index()</span></code>) is loaded if the <strong>second segment</strong> of the URI is empty.</p>
-<p><strong>The second segment of the URI determines which method in the
-controller gets called.</strong></p>
+The method (HTTP verb + <code class="docutils literal notranslate"><span class="pre">Index()</span></code>) is called the <strong>default method</strong>, and is loaded if the <strong>second segment</strong> of the URI is empty.</p>
+</section>
+<section id="normal-methods">
+<h4>Normal Methods<a class="headerlink" href="#normal-methods" title="Permalink to this headline"></a></h4>
+<p>The second segment of the URI determines which method in the
+controller gets called.</p>
 <p>Let’s try it. Add a new method to your controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -700,10 +714,7 @@ controller gets called.</strong></p>
 </pre></div>
 </div>
 <p>You should see your new message.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>For security reasons be sure to declare any new utility methods as <code class="docutils literal notranslate"><span class="pre">protected</span></code> or <code class="docutils literal notranslate"><span class="pre">private</span></code>.</p>
-</div>
+</section>
 </section>
 <section id="passing-uri-segments-to-your-methods">
 <h3><a class="toc-backref" href="#id21">Passing URI Segments to Your Methods</a><a class="headerlink" href="#passing-uri-segments-to-your-methods" title="Permalink to this headline"></a></h3>
@@ -726,6 +737,12 @@ method as parameters.</p>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If there are more parameters in the URI than the method parameters,
+Auto Routing (Improved) does not execute the method, and it results in 404
+Not Found.</p>
 </div>
 </section>
 <section id="defining-a-default-controller">
@@ -887,7 +904,9 @@ class so that it can inherit all its methods.</p>
 <p>The system will attempt to match the URI against Controllers by matching each segment against
 folders/files in <strong>app/Controllers/</strong>, when a match wasn’t found against defined routes.
 That’s why your folders/files MUST start with a capital letter and the rest MUST be lowercase.</p>
-<p>Here is an example based on PSR-4 Autoloader:</p>
+<p>If you want another naming convention you need to manually define it using the
+<a class="reference internal" href="routing.html#defined-route-routing"><span class="std std-ref">Defined Route Routing</span></a>.
+Here is an example based on PSR-4 Autoloader:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="cm">/*</span>
@@ -898,8 +917,6 @@ That’s why your folders/files MUST start with a capital letter and the rest MU
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;helloworld&#39;</span><span class="p">,</span> <span class="s1">&#39;\App\Controllers\HelloWorld::index&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If you want another naming convention you need to manually define it using the
-<a class="reference internal" href="routing.html#defined-route-routing"><span class="std std-ref">Defined Route Routing</span></a>.</p>
 </div>
 </section>
 <section id="id2">
@@ -1023,6 +1040,10 @@ your <strong>app/Config/Routes.php</strong> file.</p>
 </section>
 <section id="remapping-method-calls">
 <h2><a class="toc-backref" href="#id30">Remapping Method Calls</a><a class="headerlink" href="#remapping-method-calls" title="Permalink to this headline"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Auto Routing (Improved)</strong> does not support this feature intentionally.</p>
+</div>
 <p>As noted above, the second segment of the URI typically determines which
 method in the controller gets called. CodeIgniter permits you to override
 this behavior through the use of the <code class="docutils literal notranslate"><span class="pre">_remap()</span></code> method:</p>
