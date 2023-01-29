@@ -90,7 +90,11 @@ if (! function_exists('clean_path')) {
     function clean_path(string $path): string
     {
         // Resolve relative paths
-        $path = realpath($path) ?: $path;
+        try {
+            $path = realpath($path) ?: $path;
+        } catch (ErrorException|ValueError $e) {
+            $path = 'error file path: ' . urlencode($path);
+        }
 
         switch (true) {
             case strpos($path, APPPATH) === 0:
