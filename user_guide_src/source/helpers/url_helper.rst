@@ -116,10 +116,10 @@ The following functions are available:
 
     Returns the full URL (including segments) of the page the user was previously on.
 
-    .. note:: Due to security issues of blindly trusting the HTTP_REFERER system variable, CodeIgniter will
+    .. note:: Due to security issues of blindly trusting the ``HTTP_REFERER`` system variable, CodeIgniter will
         store previously visited pages in the session if it's available. This ensures that we always
         use a known and trusted source. If the session hasn't been loaded, or is otherwise unavailable,
-        then a sanitized version of HTTP_REFERER will be used.
+        then a sanitized version of ``HTTP_REFERER`` will be used.
 
 .. php:function:: uri_string()
 
@@ -151,7 +151,7 @@ The following functions are available:
 .. php:function:: index_page([$altConfig = null])
 
     :param \\Config\\App $altConfig: Alternate configuration to use
-    :returns: 'index_page' value
+    :returns:  The ``indexPage`` value
     :rtype:    string
 
     Returns your site **indexPage**, as specified in your config file.
@@ -180,7 +180,7 @@ The following functions are available:
     be a string or an array.
 
     .. note:: If you are building links that are internal to your application
-        do not include the base URL (`http://...`). This will be added
+        do not include the base URL (``http://...``). This will be added
         automatically from the information specified in your config file.
         Include only the URI segments you wish appended to the URL.
 
@@ -304,12 +304,12 @@ The following functions are available:
 
     .. literalinclude:: url_helper/016.php
 
-    .. note:: The only URLs recognized are those that start with "www." or with "://".
+    .. note:: The only URLs recognized are those that start with ``www.`` or with ``://``.
 
 .. php:function:: url_title($str[, $separator = '-'[, $lowercase = false]])
 
     :param  string  $str: Input string
-    :param  string  $separator: Word separator (usually '-' or '_')
+    :param  string  $separator: Word separator (usually ``'-'`` or ``'_'``)
     :param  bool    $lowercase: Whether to transform the output string to lowercase
     :returns: URL-formatted string
     :rtype: string
@@ -321,7 +321,7 @@ The following functions are available:
     .. literalinclude:: url_helper/017.php
 
     The second parameter determines the word delimiter. By default dashes
-    are used. Preferred options are: **-** (dash) or **_** (underscore).
+    are used. Preferred options are: ``-`` (dash) or ``_`` (underscore).
 
     Example:
 
@@ -337,7 +337,7 @@ The following functions are available:
 .. php:function:: mb_url_title($str[, $separator = '-'[, $lowercase = false]])
 
     :param  string  $str: Input string
-    :param  string  $separator: Word separator (usually '-' or '_')
+    :param  string  $separator: Word separator (usually ``'-'`` or ``'_'``)
     :param  bool    $lowercase: Whether to transform the output string to lowercase
     :returns: URL-formatted string
     :rtype: string
@@ -348,11 +348,11 @@ The following functions are available:
 .. php:function:: prep_url([$str = ''[, $secure = false]])
 
     :param  string   $str: URL string
-    :param  boolean  $secure: true for https://
+    :param  boolean  $secure: true for ``https://``
     :returns: Protocol-prefixed URL string
     :rtype: string
 
-    This function will add *http://* or *https://* in the event that a protocol prefix
+    This function will add ``http://`` or ``https://`` in the event that a protocol prefix
     is missing from a URL.
 
     Pass the URL string to the function like this:
