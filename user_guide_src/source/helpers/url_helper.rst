@@ -388,14 +388,17 @@ The following functions are available:
 
 .. php:function:: url_is($path)
 
-    :param string $path: The path to check the current URI path against.
+    :param string $path: The URL path relative to baseURL to check the current URI path against.
     :rtype: boolean
 
     Compares the current URL's path against the given path to see if they match. Example:
 
     .. literalinclude:: url_helper/023.php
 
-    This would match ``http://example.com/admin``. You can use the ``*`` wildcard to match
+    This would match **http://example.com/admin**. It would match **http://example.com/subdir/admin**
+    if your baseURL is ``http://example.com/subdir/``.
+
+    You can use the ``*`` wildcard to match
     any other applicable characters in the URL:
 
     .. literalinclude:: url_helper/024.php
