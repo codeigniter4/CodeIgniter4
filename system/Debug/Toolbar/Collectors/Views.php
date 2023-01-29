@@ -73,7 +73,7 @@ class Views extends BaseCollector
      */
     protected $views = [];
 
-    private function getViewer(): void
+    private function initViewer(): void
     {
         $this->viewer ??= Services::renderer();
     }
@@ -84,7 +84,7 @@ class Views extends BaseCollector
      */
     protected function formatTimelineData(): array
     {
-        $this->getViewer();
+        $this->initViewer();
 
         $data = [];
 
@@ -120,7 +120,7 @@ class Views extends BaseCollector
      */
     public function getVarData(): array
     {
-        $this->getViewer();
+        $this->initViewer();
 
         return [
             'View Data' => $this->viewer->getData(),
@@ -132,7 +132,7 @@ class Views extends BaseCollector
      */
     public function getBadgeValue(): int
     {
-        $this->getViewer();
+        $this->initViewer();
 
         return count($this->viewer->getPerformanceData());
     }
