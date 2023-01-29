@@ -101,11 +101,6 @@ parameters:
 			path: system/Database/SQLSRV/Forge.php
 
 		-
-			message: "#^Call to an undefined method CodeIgniter\\\\View\\\\RendererInterface\\:\\:getPerformanceData\\(\\)\\.$#"
-			count: 1
-			path: system/Debug/Toolbar/Collectors/Events.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Log\\\\Logger\\:\\:\\$logCache \\(array\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/Debug/Toolbar/Collectors/Logs.php
