@@ -49,6 +49,9 @@ Application Structure
 - The **application** folder is renamed as **app** and the framework still has **system** folders,
   with the same interpretation as before.
 - The framework now provides for a **public** folder, intended as the document root for your app.
+- The ``defined('BASEPATH') OR exit('No direct script access allowed');`` line is not necessary
+  because files outside the **public** folder are not accessible in the standard configuration.
+  And CI4 no longer defines the constant ``BASEPATH``, so remove the line in all files.
 - There is also a **writable** folder, to hold cache data, logs, and session data.
 - The **app** folder looks very similar to **application** for CI3, with some
   name changes, and some subfolders moved to the **writable** folder.
@@ -132,8 +135,8 @@ Helpers
     - `redirect() Documentation CodeIgniter 3.X <https://codeigniter.com/userguide3/helpers/url_helper.html#redirect>`_
     - `redirect() Documentation CodeIgniter 4.X <../general/common_functions.html#redirect>`_
 
-Events
-======
+Hooks
+=====
 
 - `Hooks <https://www.codeigniter.com/userguide3/general/hooks.html>`_ have been
   replaced by :doc:`../extending/events`.
