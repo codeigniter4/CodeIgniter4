@@ -27,6 +27,7 @@ Upgrade Guide
 1. First, move all controller files to the folder **app/Controllers**.
 2. Add this line just after the opening php tag: ``namespace App\Controllers;``
 3. Replace ``extends CI_Controller`` with ``extends BaseController``.
+4. Remove the line ``defined('BASEPATH') OR exit('No direct script access allowed');`` if it exists.
 
 | If you use sub-directories in your controller structure, you have to change the namespace according to that.
 | For example, you have a version 3 controller located in **application/controllers/users/auth/Register.php**,

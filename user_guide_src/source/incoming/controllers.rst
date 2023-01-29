@@ -221,21 +221,34 @@ class so that it can inherit all its methods.
     folders/files in **app/Controllers/**, when a match wasn't found against defined routes.
     That's why your folders/files MUST start with a capital letter and the rest MUST be lowercase.
 
+    If you want another naming convention you need to manually define it using the
+    :ref:`Defined Route Routing <defined-route-routing>`.
     Here is an example based on PSR-4 Autoloader:
 
     .. literalinclude:: controllers/012.php
 
-    If you want another naming convention you need to manually define it using the
-    :ref:`Defined Route Routing <defined-route-routing>`.
-
 Methods
 =======
 
-In the above example, the method name is ``getIndex()``.
-The method (HTTP verb + ``Index()``) is loaded if the **second segment** of the URI is empty.
+Method Visibility
+-----------------
 
-**The second segment of the URI determines which method in the
-controller gets called.**
+When you define a method that is executable via HTTP request, the method must be
+declared as ``public``.
+
+.. warning:: For security reasons be sure to declare any new utility methods as ``protected`` or ``private``.
+
+Default Method
+--------------
+
+In the above example, the method name is ``getIndex()``.
+The method (HTTP verb + ``Index()``) is called the **default method**, and is loaded if the **second segment** of the URI is empty.
+
+Normal Methods
+--------------
+
+The second segment of the URI determines which method in the
+controller gets called.
 
 Let's try it. Add a new method to your controller:
 
@@ -246,8 +259,6 @@ Now load the following URL to see the ``getComment()`` method::
     example.com/index.php/helloworld/comment/
 
 You should see your new message.
-
-.. warning:: For security reasons be sure to declare any new utility methods as ``protected`` or ``private``.
 
 Passing URI Segments to Your Methods
 ====================================
@@ -413,12 +424,11 @@ class so that it can inherit all its methods.
     folders/files in **app/Controllers/**, when a match wasn't found against defined routes.
     That's why your folders/files MUST start with a capital letter and the rest MUST be lowercase.
 
+    If you want another naming convention you need to manually define it using the
+    :ref:`Defined Route Routing <defined-route-routing>`.
     Here is an example based on PSR-4 Autoloader:
 
     .. literalinclude:: controllers/012.php
-
-    If you want another naming convention you need to manually define it using the
-    :ref:`Defined Route Routing <defined-route-routing>`.
 
 Methods
 =======
@@ -516,6 +526,8 @@ CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Rout
 
 Remapping Method Calls
 **********************
+
+.. note:: **Auto Routing (Improved)** does not support this feature intentionally.
 
 As noted above, the second segment of the URI typically determines which
 method in the controller gets called. CodeIgniter permits you to override
