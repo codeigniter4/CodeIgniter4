@@ -77,7 +77,7 @@ composer.json
 =============
 
 If you installed CodeIgnter manually, and are using Composer,
-you need to remove the "kint-php/kint" line, and run ``composer update``.
+you need to remove the following lines, and run ``composer update``.
 
 .. code-block:: text
 
@@ -87,6 +87,13 @@ you need to remove the "kint-php/kint" line, and run ``composer update``.
             ...
             "kint-php/kint": "^4.2",  <-- Remove this line
             ...
+        },
+        ...
+        "scripts": {
+            "post-update-cmd": [
+                "CodeIgniter\\ComposerScripts::postUpdate"  <-- Remove this line
+            ],
+            "test": "phpunit"
         },
         ...
     }
