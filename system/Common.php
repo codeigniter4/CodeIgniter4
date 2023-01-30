@@ -863,7 +863,7 @@ if (! function_exists('redirect')) {
      *
      * If more control is needed, you must use $response->redirect explicitly.
      *
-     * @param string $route
+     * @param string|null $route Route name or Controller::method
      */
     function redirect(?string $route = null): RedirectResponse
     {
