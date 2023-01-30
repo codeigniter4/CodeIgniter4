@@ -27,7 +27,7 @@ interface RouterInterface
     /**
      * Finds the controller method corresponding to the URI.
      *
-     * @param string $uri
+     * @param string|null $uri URI path relative to baseURL
      *
      * @return Closure|string Controller classname or Closure
      */
