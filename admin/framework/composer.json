@@ -56,9 +56,6 @@
         ]
     },
     "scripts": {
-        "post-update-cmd": [
-            "CodeIgniter\\ComposerScripts::postUpdate"
-        ],
         "test": "phpunit"
     },
     "support": {
