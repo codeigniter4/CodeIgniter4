@@ -307,6 +307,11 @@
 <h3><a class="toc-backref" href="#id3">What are Factories?</a><a class="headerlink" href="#what-are-factories" title="Permalink to this headline"></a></h3>
 <p>Like <a class="reference internal" href="services.html"><span class="doc">Services</span></a>, <strong>Factories</strong> are an extension of autoloading that helps keep your code
 concise yet optimal, without having to pass around object instances between classes.</p>
+<p>Factories are similar to CodeIgniter 3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load</span></code> in the following points:</p>
+<ul class="simple">
+<li><p>Load a class</p></li>
+<li><p>Share the loaded class instance</p></li>
+</ul>
 <p>At its
 simplest, Factories provide a common way to create a class instance and access it from
 anywhere. This is a great way to reuse object states and reduce memory load from keeping
@@ -328,8 +333,9 @@ not a class name, so the returned instance can be changed without changing the c
 <span id="factories-example"></span><h3><a class="toc-backref" href="#id5">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
 <p>Take a look at <strong>Models</strong> as an example. You can access the Factory specific to Models
 by using the magic static method of the Factories class, <code class="docutils literal notranslate"><span class="pre">Factories::models()</span></code>.</p>
+<p>The static method name is called <em>component</em>.</p>
 <p>By default, Factories first searches in the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace for the path corresponding to the magic static method name.
-<code class="docutils literal notranslate"><span class="pre">Factories::models()</span></code> searches the path <strong>Models/</strong>.</p>
+<code class="docutils literal notranslate"><span class="pre">Factories::models()</span></code> searches the <strong>app/Models</strong> directory.</p>
 <p>In the following code, if you have <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code>, the instance will be returned:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -339,24 +345,22 @@ by using the magic static method of the Factories class, <code class="docutils l
 </pre></div>
 </div>
 <p>Or you could also request a specific class:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;Blog\Models\UserModel&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;Blog\Models\UserModel&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you have only <code class="docutils literal notranslate"><span class="pre">Blog\Models\UserModel</span></code>, the instance will be returned.
 But if you have both <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> and <code class="docutils literal notranslate"><span class="pre">Blog\Models\UserModel</span></code>,
 the instance of <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> will be returned.</p>
 <p>If you want to get <code class="docutils literal notranslate"><span class="pre">Blog\Models\UserModel</span></code>, you need to disable the option <code class="docutils literal notranslate"><span class="pre">preferApp</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$widgets</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;Blog\Models\UserModel&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;preferApp&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;Blog\Models\UserModel&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;preferApp&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>See <a class="reference internal" href="#factories-options"><span class="std std-ref">Factories Options</span></a> for the details.</p>
 <p>Next time you ask for the same class anywhere in your code, Factories will be sure
 you get back the instance as before:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\Factories</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">SomeOtherClass</span>
 <span class="p">{</span>
@@ -409,7 +413,7 @@ your app uses a separate database for authentication and you want to be sure tha
 to access user records always go through that connection:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$conn</span>  <span class="o">=</span> <span class="nx">db_connect</span><span class="p">(</span><span class="s1">&#39;AuthDatabase&#39;</span><span class="p">);</span>
+<span class="nv">$conn</span>  <span class="o">=</span> <span class="nx">db_connect</span><span class="p">(</span><span class="s1">&#39;auth&#39;</span><span class="p">);</span>
 <span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">,</span> <span class="p">[],</span> <span class="nv">$conn</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -446,7 +450,8 @@ method). This can be used to alias one component to another.</p></td>
 <td><p>string or null</p></td>
 <td><p>The relative path within the namespace/folder to look for
 classes.</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code> (defaults to the component name)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code> (defaults to the component name,
+but makes the first character uppercase)</p></td>
 </tr>
 <tr class="row-even"><td><p>instanceOf</p></td>
 <td><p>string or null</p></td>
@@ -480,6 +485,8 @@ overrides other explicit class requests.</p></td>
 <h3><a class="toc-backref" href="#id12">Configurations</a><a class="headerlink" href="#configurations" title="Permalink to this headline"></a></h3>
 <p>To set default component options, create a new Config files at <strong>app/Config/Factory.php</strong>
 that supplies options as an array property that matches the name of the component.</p>
+<section id="example-filters-factories">
+<h4>Example: Filters Factories<a class="headerlink" href="#example-filters-factories" title="Permalink to this headline"></a></h4>
 <p>For example, if you want to create <strong>Filters</strong> by Factories, the component name wll be <code class="docutils literal notranslate"><span class="pre">filters</span></code>.
 And if you want to ensure that each filter is an instance of a class which implements CodeIgniter’s <code class="docutils literal notranslate"><span class="pre">FilterInterface</span></code>,
 your <strong>app/Config/Factory.php</strong> file might look like this:</p>
@@ -502,6 +509,34 @@ your <strong>app/Config/Factory.php</strong> file might look like this:</p>
 and the returned instance will surely be a CodeIgniter’s filter.</p>
 <p>This would prevent conflict of an third-party module which happened to have an
 unrelated <code class="docutils literal notranslate"><span class="pre">Filters</span></code> path in its namespace.</p>
+</section>
+<section id="example-library-factories">
+<h4>Example: Library Factories<a class="headerlink" href="#example-library-factories" title="Permalink to this headline"></a></h4>
+<p>If you want to load your library classes in the <strong>app/Libraries</strong> directory with
+<code class="docutils literal notranslate"><span class="pre">Factories::library('SomeLib')</span></code>, the path <cite>Libraries</cite> is different from the
+default path <cite>Library</cite>.</p>
+<p>In this case, your <strong>app/Config/Factory.php</strong> file will look like this:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\Factory</span> <span class="k">as</span> <span class="nx">BaseFactory</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Factory</span> <span class="k">extends</span> <span class="nx">BaseFactory</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$library</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Libraries&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now you can load your libraries with the <code class="docutils literal notranslate"><span class="pre">Factories::library()</span></code> method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Config\Factories</span><span class="p">;</span>
+
+<span class="nv">$someLib</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;SomeLib&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="setoptions-method">
 <h3><a class="toc-backref" href="#id13">setOptions Method</a><a class="headerlink" href="#setoptions-method" title="Permalink to this headline"></a></h3>
@@ -526,7 +561,7 @@ names as keys to each overriding value.</p>
 <p>For example, by default <code class="docutils literal notranslate"><span class="pre">Factories</span></code> assumes that you want to locate a shared instance of
 a component. By adding a second parameter to the magic static call, you can control whether
 that single call will return a new or shared instance:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;getShared&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span> <span class="c1">// Default; will always be the same instance</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;getShared&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>  <span class="c1">// Default; will always be the same instance</span>
 <span class="nv">$other</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;getShared&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span> <span class="c1">// Will always create a new instance</span>
 </pre></div>
 </div>
