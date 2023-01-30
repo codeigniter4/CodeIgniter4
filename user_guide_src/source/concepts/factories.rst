@@ -15,6 +15,11 @@ What are Factories?
 Like :doc:`./services`, **Factories** are an extension of autoloading that helps keep your code
 concise yet optimal, without having to pass around object instances between classes.
 
+Factories are similar to CodeIgniter 3's ``$this->load`` in the following points:
+
+- Load a class
+- Share the loaded class instance
+
 At its
 simplest, Factories provide a common way to create a class instance and access it from
 anywhere. This is a great way to reuse object states and reduce memory load from keeping
@@ -44,8 +49,10 @@ Example
 Take a look at **Models** as an example. You can access the Factory specific to Models
 by using the magic static method of the Factories class, ``Factories::models()``.
 
+The static method name is called *component*.
+
 By default, Factories first searches in the ``App`` namespace for the path corresponding to the magic static method name.
-``Factories::models()`` searches the path **Models/**.
+``Factories::models()`` searches the **app/Models** directory.
 
 In the following code, if you have ``App\Models\UserModel``, the instance will be returned:
 
@@ -54,6 +61,7 @@ In the following code, if you have ``App\Models\UserModel``, the instance will b
 Or you could also request a specific class:
 
 .. literalinclude:: factories/002.php
+   :lines: 2-
 
 If you have only ``Blog\Models\UserModel``, the instance will be returned.
 But if you have both ``App\Models\UserModel`` and ``Blog\Models\UserModel``,
@@ -62,6 +70,7 @@ the instance of ``App\Models\UserModel`` will be returned.
 If you want to get ``Blog\Models\UserModel``, you need to disable the option ``preferApp``:
 
 .. literalinclude:: factories/010.php
+   :lines: 2-
 
 See :ref:`factories-options` for the details.
 
@@ -119,8 +128,8 @@ Key        Type           Description                                           
 ========== ============== ============================================================ ===================================================
 component  string or null The name of the component (if different than the static      ``null`` (defaults to the component name)
                           method). This can be used to alias one component to another.
-path       string or null The relative path within the namespace/folder to look for    ``null`` (defaults to the component name)
-                          classes.
+path       string or null The relative path within the namespace/folder to look for    ``null`` (defaults to the component name,
+                          classes.                                                     but makes the first character uppercase)
 instanceOf string or null A required class name to match on the returned instance.     ``null`` (no filtering)
 getShared  boolean        Whether to return a shared instance of the class or load a   ``true``
                           fresh one.
@@ -143,6 +152,9 @@ Configurations
 To set default component options, create a new Config files at **app/Config/Factory.php**
 that supplies options as an array property that matches the name of the component.
 
+Example: Filters Factories
+--------------------------
+
 For example, if you want to create **Filters** by Factories, the component name wll be ``filters``.
 And if you want to ensure that each filter is an instance of a class which implements CodeIgniter's ``FilterInterface``,
 your **app/Config/Factory.php** file might look like this:
@@ -154,6 +166,22 @@ and the returned instance will surely be a CodeIgniter's filter.
 
 This would prevent conflict of an third-party module which happened to have an
 unrelated ``Filters`` path in its namespace.
+
+Example: Library Factories
+--------------------------
+
+If you want to load your library classes in the **app/Libraries** directory with
+``Factories::library('SomeLib')``, the path `Libraries` is different from the
+default path `Library`.
+
+In this case, your **app/Config/Factory.php** file will look like this:
+
+.. literalinclude:: factories/011.php
+
+Now you can load your libraries with the ``Factories::library()`` method:
+
+.. literalinclude:: factories/012.php
+   :lines: 2-
 
 setOptions Method
 =================
