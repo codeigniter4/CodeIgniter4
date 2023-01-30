@@ -329,7 +329,7 @@ class IncomingRequest extends Request
         $uri = $_SERVER['QUERY_STRING'] ?? @getenv('QUERY_STRING');
 
         if (trim($uri, '/') === '') {
-            return '';
+            return '/';
         }
 
         if (strncmp($uri, '/', 1) === 0) {

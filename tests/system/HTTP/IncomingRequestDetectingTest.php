@@ -155,7 +155,7 @@ final class IncomingRequestDetectingTest extends CIUnitTestCase
         $_SERVER['QUERY_STRING'] = '';
         $_SERVER['SCRIPT_NAME']  = '/index.php';
 
-        $expected = '';
+        $expected = '/';
         $this->assertSame($expected, $this->request->detectPath('QUERY_STRING'));
     }
 
