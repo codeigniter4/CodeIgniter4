@@ -217,7 +217,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getDefaultNamespace\\(\\)\\.$#"
-			count: 3
+			count: 2
 			path: system/Router/Router.php
 
 		-
