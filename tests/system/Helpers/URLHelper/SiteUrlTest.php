@@ -59,27 +59,31 @@ final class SiteUrlTest extends CIUnitTestCase
      * @param bool        $secure
      * @param string      $path
      * @param string      $expectedSiteUrl
+     * @param string      $expectedBaseUrl
      *
      * @dataProvider configProvider
      */
-    public function testUrls($baseURL, $indexPage, $scheme, $secure, $path, $expectedSiteUrl)
-    {
+    public function testUrls(
+        $baseURL,
+        $indexPage,
+        $scheme,
+        $secure,
+        $path,
+        $expectedSiteUrl,
+        $expectedBaseUrl
+    ) {
         // Set the config
         $this->config->baseURL                   = $baseURL;
         $this->config->indexPage                 = $indexPage;
         $this->config->forceGlobalSecureRequests = $secure;
 
         $this->assertSame($expectedSiteUrl, site_url($path, $scheme, $this->config));
-
-        // base_url is always the trimmed site_url without index page
-        $expectedBaseUrl = $indexPage === '' ? $expectedSiteUrl : str_replace('/' . $indexPage, '', $expectedSiteUrl);
-        $expectedBaseUrl = rtrim($expectedBaseUrl, '/');
         $this->assertSame($expectedBaseUrl, base_url($path, $scheme));
     }
 
     public function configProvider()
     {
-        // baseURL, indexPage, scheme, secure, path, expectedSiteUrl
+        // baseURL, indexPage, scheme, secure, path, expectedSiteUrl, expectedBaseUrl
         return [
             'forceGlobalSecure' => [
                 'http://example.com/',
@@ -88,6 +92,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 true,
                 '',
                 'https://example.com/index.php',
+                'https://example.com/',
             ],
             [
                 'http://example.com/',
@@ -96,14 +101,16 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 '',
                 'http://example.com/index.php',
+                'http://example.com/',
             ],
-            [
+            'baseURL missing /' => [
                 'http://example.com',
                 'index.php',
                 null,
                 false,
                 '',
                 'http://example.com/index.php',
+                'http://example.com/',
             ],
             [
                 'http://example.com/',
@@ -111,6 +118,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 null,
                 false,
                 '',
+                'http://example.com/',
                 'http://example.com/',
             ],
             [
@@ -120,6 +128,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 '',
                 'http://example.com/banana.php',
+                'http://example.com/',
             ],
             [
                 'http://example.com/',
@@ -127,6 +136,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 null,
                 false,
                 'abc',
+                'http://example.com/abc',
                 'http://example.com/abc',
             ],
             'URL decode' => [
@@ -136,6 +146,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 'template/meet-%26-greet',
                 'http://example.com/template/meet-&-greet',
+                'http://example.com/template/meet-&-greet',
             ],
             'URL encode' => [
                 'http://example.com/',
@@ -143,6 +154,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 null,
                 false,
                 '<s>alert</s>',
+                'http://example.com/%3Cs%3Ealert%3C/s%3E',
                 'http://example.com/%3Cs%3Ealert%3C/s%3E',
             ],
             [
@@ -152,6 +164,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 '',
                 'http://example.com/public/index.php',
+                'http://example.com/public/',
             ],
             [
                 'http://example.com/public/',
@@ -159,6 +172,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 null,
                 false,
                 '',
+                'http://example.com/public/',
                 'http://example.com/public/',
             ],
             [
@@ -167,6 +181,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 null,
                 false,
                 '',
+                'http://example.com/public/',
                 'http://example.com/public/',
             ],
             [
@@ -176,6 +191,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 '/',
                 'http://example.com/public/index.php/',
+                'http://example.com/public/',
             ],
             [
                 'http://example.com/public/',
@@ -184,6 +200,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 '/',
                 'http://example.com/public/index.php/',
+                'http://example.com/public/',
             ],
             [
                 'http://example.com/',
@@ -192,6 +209,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 'foo',
                 'http://example.com/index.php/foo',
+                'http://example.com/foo',
             ],
             [
                 'http://example.com/',
@@ -200,6 +218,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 '0',
                 'http://example.com/index.php/0',
+                'http://example.com/0',
             ],
             [
                 'http://example.com/public',
@@ -208,6 +227,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 'foo',
                 'http://example.com/public/index.php/foo',
+                'http://example.com/public/foo',
             ],
             [
                 'http://example.com/',
@@ -216,6 +236,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 'foo?bar=bam',
                 'http://example.com/index.php/foo?bar=bam',
+                'http://example.com/foo?bar=bam',
             ],
             [
                 'http://example.com/',
@@ -224,6 +245,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 'test#banana',
                 'http://example.com/index.php/test#banana',
+                'http://example.com/test#banana',
             ],
             [
                 'http://example.com/',
@@ -232,6 +254,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 'foo',
                 'ftp://example.com/index.php/foo',
+                'ftp://example.com/foo',
             ],
             [
                 'http://example.com/',
@@ -240,6 +263,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 'news/local/123',
                 'http://example.com/index.php/news/local/123',
+                'http://example.com/news/local/123',
             ],
             [
                 'http://example.com/',
@@ -248,6 +272,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 ['news', 'local', '123'],
                 'http://example.com/index.php/news/local/123',
+                'http://example.com/news/local/123',
             ],
         ];
     }
@@ -267,12 +292,12 @@ final class SiteUrlTest extends CIUnitTestCase
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/test';
 
-        $this->assertSame('http://example.com', base_url());
+        $this->assertSame('http://example.com/', base_url());
 
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/test/page';
 
-        $this->assertSame('http://example.com', base_url());
+        $this->assertSame('http://example.com/', base_url());
         $this->assertSame('http://example.com/profile', base_url('profile'));
     }
 
