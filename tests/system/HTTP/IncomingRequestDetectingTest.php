@@ -46,7 +46,7 @@ final class IncomingRequestDetectingTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->detectPath());
     }
 
-    public function testPathEmpty()
+    public function testPathDefaultEmpty()
     {
         // /
         $_SERVER['REQUEST_URI'] = '/';
