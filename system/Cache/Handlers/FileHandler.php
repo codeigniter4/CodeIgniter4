@@ -229,7 +229,7 @@ class FileHandler extends BaseHandler
      * Does the heavy lifting of actually retrieving the file and
      * verifying it's age.
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     protected function getItem(string $filename)
     {
@@ -366,8 +366,8 @@ class FileHandler extends BaseHandler
      * Options are: name, server_path, size, date, readable, writable, executable, fileperms
      * Returns FALSE if the file cannot be found.
      *
-     * @param string $file           Path to file
-     * @param mixed  $returnedValues Array or comma separated string of information returned
+     * @param string       $file           Path to file
+     * @param array|string $returnedValues Array or comma separated string of information returned
      *
      * @return array|false
      */

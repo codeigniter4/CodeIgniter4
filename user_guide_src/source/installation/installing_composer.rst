@@ -53,7 +53,7 @@ If you omit the "project-root" argument, the command will create an
 
     > composer install --no-dev
 
-    The above command will removes the Composer packages only for development
+    The above command will remove the Composer packages only for development
     that are not needed in the production environment. This will greatly reduce
     the vendor folder size.
 
@@ -83,7 +83,11 @@ Cons
 ----
 
 You still need to check for file changes in the **project space**
-(root, app, public, writable) after updating.
+(root, app, public, writable) and merge them after updating.
+
+.. note:: There are some third-party CodeIgniter modules available to assist
+    with merging changes to the project space:
+    `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
 
 Structure
 ---------
@@ -139,7 +143,7 @@ In your project root::
 
     > composer install --no-dev
 
-    The above command will removes the Composer packages only for development
+    The above command will remove the Composer packages only for development
     that are not needed in the production environment. This will greatly reduce
     the vendor folder size.
 
@@ -177,6 +181,10 @@ Cons
 
 You still need to check for file changes in the **project space**
 (root, app, public, writable) after updating.
+
+.. note:: There are some third-party CodeIgniter modules available to assist
+    with merging changes to the project space:
+    `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
 
 Structure
 ---------

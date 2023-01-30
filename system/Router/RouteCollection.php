@@ -1316,13 +1316,12 @@ class RouteCollection implements RouteCollectionInterface
         // Hostname limiting?
         if (! empty($options['hostname'])) {
             // @todo determine if there's a way to whitelist hosts?
-            if (isset($this->httpHost) && strtolower($this->httpHost) !== strtolower($options['hostname'])) {
+            if (! $this->checkHostname($options['hostname'])) {
                 return;
             }
 
             $overwrite = true;
         }
-
         // Limiting to subdomains?
         elseif (! empty($options['subdomain'])) {
             // If we don't match the current subdomain, then
@@ -1393,6 +1392,22 @@ class RouteCollection implements RouteCollectionInterface
         if (isset($options['redirect']) && is_numeric($options['redirect'])) {
             $this->routes['*'][$name]['redirect'] = $options['redirect'];
         }
+    }
+
+    /**
+     * Compares the hostname passed in against the current hostname
+     * on this page request.
+     *
+     * @param string $hostname Hostname in route options
+     */
+    private function checkHostname($hostname): bool
+    {
+        // CLI calls can't be on hostname.
+        if (! isset($this->httpHost)) {
+            return false;
+        }
+
+        return strtolower($this->httpHost) === strtolower($hostname);
     }
 
     private function processArrayCallableSyntax(string $from, array $to): string
