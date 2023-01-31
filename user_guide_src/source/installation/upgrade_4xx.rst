@@ -100,7 +100,7 @@ Class Loading
   namespaces; with Composer autoloading support.
 - You can configure the class loading to support whatever application structure
   you are most comfortable with, including the "HMVC" style.
-- Ci4 provides :doc:`../concepts/factories` that can load a class and share the
+- CI4 provides :doc:`../concepts/factories` that can load a class and share the
   instance like ``$this->load`` in CI3.
 
 Libraries
