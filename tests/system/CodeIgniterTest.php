@@ -252,7 +252,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame('some text', $output);
     }
 
-    public function testControllersRunFilterByClassName()
+    public function testRunExecuteFilterByClassName()
     {
         $_SERVER['argv'] = ['index.php', 'pages/about'];
         $_SERVER['argc'] = 2;
