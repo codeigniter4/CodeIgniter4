@@ -324,12 +324,12 @@ You can specify a new filename by passing it as the second parameter:
 
 .. literalinclude:: uploaded_files/017.php
 
-By default, if the destination file already exists, a new filename will be used.
-For example, if **image_name.jpg** already exists in the directory, then the
-filename will be **image_name_1.jpg**.
-
 Overwriting Existing File
 -------------------------
+
+By default, if the destination file already exists, a new filename will be used.
+For example, if **image_name.jpg** already exists in the directory, then the
+filename will be **image_name_1.jpg** automatically.
 
 You can overwrite the existing file by passing ``true``
 as the third parameter:
