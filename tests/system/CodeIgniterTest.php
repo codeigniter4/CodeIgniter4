@@ -12,6 +12,7 @@
 namespace CodeIgniter;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -19,7 +20,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
 use Config\Cache;
-use Config\Filters;
+use Config\Filters as FiltersConfig;
 use Config\Modules;
 use Tests\Support\Filters\Customfilter;
 
@@ -270,6 +271,42 @@ final class CodeIgniterTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $this->assertStringContainsString('http://hellowworld.com', $output);
+
+        $this->resetServices();
+    }
+
+    public function testRegisterSameFilterTwiceWithDifferentArgument()
+    {
+        $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage('"test-customfilter" already has arguments: null');
+
+        $_SERVER['argv'] = ['index.php', 'pages/about'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI'] = '/pages/about';
+
+        $routes = Services::routes();
+        $routes->add(
+            'pages/about',
+            static fn () => Services::incomingrequest()->getBody(),
+            // Set filter with no argument.
+            ['filter' => 'test-customfilter']
+        );
+
+        $router = Services::router($routes, Services::incomingrequest());
+        Services::injectMock('router', $router);
+
+        /** @var FiltersConfig $filterConfig */
+        $filterConfig          = config('Filters');
+        $filterConfig->filters = [
+            // Set filter with argument.
+            'test-customfilter:arg1' => [
+                'before' => ['pages/*'],
+            ],
+        ];
+        Services::filters($filterConfig);
+
+        $this->codeigniter->run();
 
         $this->resetServices();
     }
@@ -666,7 +703,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $router = Services::router($routes, Services::incomingrequest());
         Services::injectMock('router', $router);
 
-        /** @var Filters $filterConfig */
+        /** @var FiltersConfig $filterConfig */
         $filterConfig                   = config('Filters');
         $filterConfig->globals['after'] = ['secureheaders'];
         Services::filters($filterConfig);
