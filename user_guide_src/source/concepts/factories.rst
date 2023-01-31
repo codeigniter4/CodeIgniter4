@@ -41,10 +41,16 @@ On the other hand, Services have code to create instances, so it can create a co
 that needs other services or class instances. When you get a service, Services require a service name,
 not a class name, so the returned instance can be changed without changing the client code.
 
+Loading Classes
+***************
+
+Loading a Class
+===============
+
 .. _factories-example:
 
-Example
-=======
+Model Example
+-------------
 
 Take a look at **Models** as an example. You can access the Factory specific to Models
 by using the magic static method of the Factories class, ``Factories::models()``.
@@ -78,6 +84,15 @@ Next time you ask for the same class anywhere in your code, Factories will be su
 you get back the instance as before:
 
 .. literalinclude:: factories/003.php
+
+Loading a Class in Sub-directories
+==================================
+
+If you want to load a class in sub directories, you use the ``/`` as a separator.
+The following code loads **app/Libraries/Sub/SubLib.php**:
+
+.. literalinclude:: factories/013.php
+   :lines: 2-
 
 Convenience Functions
 *********************
