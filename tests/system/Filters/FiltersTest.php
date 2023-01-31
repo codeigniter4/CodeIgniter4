@@ -821,7 +821,7 @@ final class FiltersTest extends CIUnitTestCase
     public function testFilterWithArgumentsIsDefined()
     {
         $this->expectException(ConfigException::class);
-        $this->expectExceptionMessage('"role" has already arguments: admin,super');
+        $this->expectExceptionMessage('"role" already has arguments: admin,super');
 
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
