@@ -531,7 +531,7 @@ class Filters
         if ($arguments !== []) {
             if ($check && array_key_exists($name, $this->arguments)) {
                 throw new ConfigException(
-                    '"' . $name . '" has already arguments: '
+                    '"' . $name . '" already has arguments: '
                     . (($this->arguments[$name] === null) ? 'null' : implode(',', $this->arguments[$name]))
                 );
             }
