@@ -307,19 +307,33 @@ version, use ``getMimeType()`` instead:
 Moving Files
 ============
 
+with Original Filename
+----------------------
+
 Each file can be moved to its new location with the aptly named ``move()`` method. This takes the directory to move
 the file to as the first parameter:
 
 .. literalinclude:: uploaded_files/016.php
 
-By default, the original filename was used. You can specify a new filename by passing it as the second parameter:
+By default, the original filename was used.
+
+with New Filename
+-----------------
+
+You can specify a new filename by passing it as the second parameter:
 
 .. literalinclude:: uploaded_files/017.php
+
+Check if the File Moved
+-----------------------
 
 Once the file has been removed the temporary file is deleted. You can check if a file has been moved already with
 the ``hasMoved()`` method, which returns a boolean:
 
 .. literalinclude:: uploaded_files/018.php
+
+When Moving Fails
+-----------------
 
 Moving an uploaded file can fail, with an HTTPException, under several circumstances:
 
