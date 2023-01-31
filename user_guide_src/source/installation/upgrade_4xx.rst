@@ -100,13 +100,17 @@ Class Loading
   namespaces; with Composer autoloading support.
 - You can configure the class loading to support whatever application structure
   you are most comfortable with, including the "HMVC" style.
+- Ci4 provides :doc:`../concepts/factories` that can load a class and share the
+  instance like ``$this->load`` in CI3.
 
 Libraries
 =========
 
 - Your app classes can still go inside **app/Libraries**, but they don't have to.
 - Instead of CI3's ``$this->load->library('x');`` you can now use
-  ``$this->x = new X();``, following namespaced conventions for your component.
+  ``$this->x = new \App\Libraries\X();``, following namespaced conventions for
+  your component. Alternatively, you can use :doc:`../concepts/factories`:
+  ``$this->x = \CodeIgniter\Config\Factories::libraries('X');``.
 
 Helpers
 =======
@@ -160,8 +164,10 @@ Upgrading Libraries
 *******************
 
 - Your app classes can still go inside **app/Libraries**, but they don't have to.
-- Instead of CI3's ``$this->load->library('x');`` you can now use ``$this->x = new X();``,
-  following namespaced conventions for your component.
+- Instead of CI3's ``$this->load->library('x');`` you can now use
+  ``$this->x = new \App\Libraries\X();``, following namespaced conventions for
+  your component. Alternatively, you can use :doc:`../concepts/factories`:
+  ``$this->x = \CodeIgniter\Config\Factories::libraries('X');``.
 - Some libraries from CodeIgniter 3 no longer exists in Version 4. For all these
   libraries, you have to find a new way to implement your functions. These
   libraries are `Calendaring <http://codeigniter.com/userguide3/libraries/calendar.html>`_,
