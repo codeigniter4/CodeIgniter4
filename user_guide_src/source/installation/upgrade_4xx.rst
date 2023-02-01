@@ -131,9 +131,11 @@ Helpers
   will be :doc:`../helpers/filesystem_helper` in CI4.
 - `String Helper <https://www.codeigniter.com/userguide3/helpers/string_helper.html>`_ functions
   in CI3 are included in :doc:`../helpers/text_helper` in CI4.
-- In CI4, ``redirect()`` returns a ``RedirectResponse`` instance instead of redirecting and terminating script execution. You must return it.
+- In CI4, ``redirect()`` is completely changed from CI3's.
     - `redirect() Documentation CodeIgniter 3.X <https://codeigniter.com/userguide3/helpers/url_helper.html#redirect>`_
     - `redirect() Documentation CodeIgniter 4.X <../general/common_functions.html#redirect>`_
+    - In CI4, ``redirect()`` returns a ``RedirectResponse`` instance instead of redirecting and terminating script execution. You must return it.
+    - You need to change CI3's ``redirect('login/form')`` to ``return redirect()->to('login/form')``.
 
 Hooks
 =====
