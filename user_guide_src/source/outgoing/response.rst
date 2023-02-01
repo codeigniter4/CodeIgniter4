@@ -99,7 +99,7 @@ Open file in browser
 Some browsers can display files such as PDF. To tell the browser to display the file instead of saving it, call the
 ``DownloadResponse::inline()`` method.
 
-.. literalinclude:: response/007.php
+.. literalinclude:: response/028.php
 
 HTTP Caching
 ============

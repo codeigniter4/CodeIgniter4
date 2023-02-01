@@ -28,8 +28,9 @@ Method Signature Changes
 
 Enhancements
 ************
-- Added ``DownloadResponse::inline()`` method that sets the ``Content-Disposition: inline`` header to display the file
-in the browser.
+
+- Added ``DownloadResponse::inline()`` method that sets the ``Content-Disposition: inline`` header to display the
+file in the browser.
 
 Commands
 ========
@@ -71,6 +72,7 @@ Message Changes
 
 Changes
 *******
+
 - The ``DownloadResponse`` class, when generating response headers, does not replace the ``Content-Disposition`` header
 if it was previously specified.
 
