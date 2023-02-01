@@ -69,7 +69,8 @@ class Routes extends BaseCommand
      * @var array<string, string>
      */
     protected $options = [
-        '-h' => 'Sort by Handler.',
+        '-h'     => 'Sort by Handler.',
+        '--host' => 'Specify hostname in request URI.',
     ];
 
     /**
@@ -78,9 +79,24 @@ class Routes extends BaseCommand
     public function run(array $params)
     {
         $sortByHandler = array_key_exists('h', $params);
+        $host          = $params['host'] ?? null;
+
+        // Set HTTP_HOST
+        if ($host) {
+            $request              = Services::request();
+            $_SERVER              = $request->getServer();
+            $_SERVER['HTTP_HOST'] = $host;
+            $request->setGlobal('server', $_SERVER);
+        }
 
         $collection = Services::routes()->loadRoutes();
-        $methods    = [
+
+        // Reset HTTP_HOST
+        if ($host) {
+            unset($_SERVER['HTTP_HOST']);
+        }
+
+        $methods = [
             'get',
             'head',
             'post',
@@ -169,6 +185,10 @@ class Routes extends BaseCommand
         // Sort by Handler.
         if ($sortByHandler) {
             usort($tbody, static fn ($handler1, $handler2) => strcmp($handler1[3], $handler2[3]));
+        }
+
+        if ($host) {
+            CLI::write('Host: ' . $host);
         }
 
         CLI::table($tbody, $thead);
