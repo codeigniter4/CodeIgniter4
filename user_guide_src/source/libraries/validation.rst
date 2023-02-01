@@ -603,7 +603,7 @@ shown above. The primary benefit here is that it provides some extra navigation 
 Creating a Rule Class
 ---------------------
 
-Within the file itself, each method is a rule and must accept a string as the first parameter, and must return
+Within the file itself, each method is a rule and must accept a value to validate as the first parameter, and must return
 a boolean true or false value signifying true if it passed the test or false if it did not:
 
 .. literalinclude:: validation/034.php
@@ -624,7 +624,7 @@ Your new custom rule could now be used just like any other rule:
 Allowing Parameters
 -------------------
 
-If your method needs to work with parameters, the function will need a minimum of three parameters: the string to validate,
+If your method needs to work with parameters, the function will need a minimum of three parameters: the value to validate,
 the parameter string, and an array with all of the data that was submitted the form. The ``$data`` array is especially handy
 for rules like ``required_with`` that needs to check the value of another submitted field to base its result on:
 
