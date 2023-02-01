@@ -422,9 +422,11 @@ will be <a class="reference internal" href="../helpers/filesystem_helper.html"><
 <li><p><a class="reference external" href="https://www.codeigniter.com/userguide3/helpers/string_helper.html">String Helper</a> functions
 in CI3 are included in <a class="reference internal" href="../helpers/text_helper.html"><span class="doc">Text Helper</span></a> in CI4.</p></li>
 <li><dl class="simple">
-<dt>In CI4, <code class="docutils literal notranslate"><span class="pre">redirect()</span></code> returns a <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance instead of redirecting and terminating script execution. You must return it.</dt><dd><ul>
+<dt>In CI4, <code class="docutils literal notranslate"><span class="pre">redirect()</span></code> is completely changed from CI3’s.</dt><dd><ul>
 <li><p><a class="reference external" href="https://codeigniter.com/userguide3/helpers/url_helper.html#redirect">redirect() Documentation CodeIgniter 3.X</a></p></li>
 <li><p><a class="reference external" href="../general/common_functions.html#redirect">redirect() Documentation CodeIgniter 4.X</a></p></li>
+<li><p>In CI4, <code class="docutils literal notranslate"><span class="pre">redirect()</span></code> returns a <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance instead of redirecting and terminating script execution. You must return it.</p></li>
+<li><p>You need to change CI3’s <code class="docutils literal notranslate"><span class="pre">redirect('login/form')</span></code> to <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">redirect()-&gt;to('login/form')</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -514,7 +516,7 @@ steps and examples to adjust your code.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 31, 2023.
+      <span class="lastupdated">Last updated on Feb 01, 2023.
       </span></p>
   </div>
 

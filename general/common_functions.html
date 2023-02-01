@@ -890,7 +890,7 @@ refresh the function to use auto-detection.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$route</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The reverse-routed or named route to redirect the user to.</p></li>
+<li><p><strong>$route</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The route name or Controller::method to redirect the user to.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -904,28 +904,42 @@ in the method of the <a class="reference internal" href="../incoming/controllers
 the <a class="reference internal" href="../incoming/filters.html"><span class="doc">Controller Filter</span></a>. If you forget to return it,
 no redirection will occur.</p>
 </div>
-<p>Returns a RedirectResponse instance allowing you to easily create redirects:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="c1">// Go back to the previous page</span>
+<p>Returns a RedirectResponse instance allowing you to easily create redirects.</p>
+<p><strong>Redirect to a URI path</strong></p>
+<p>When you want to pass a URI path (relative to baseURL), use <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;to()</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go to specific URI path. &quot;admin/home&quot; is the URI path relative to baseURL.</span>
+<span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">to</span><span class="p">(</span><span class="s1">&#39;admin/home&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Redirect to a Defined Route</strong></p>
+<p>When you want to pass a <a class="reference internal" href="../incoming/routing.html#using-named-routes"><span class="std std-ref">route name</span></a> or Controller::method
+for <a class="reference internal" href="../incoming/routing.html#reverse-routing"><span class="std std-ref">reverse routing</span></a>, use <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;route()</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go to a named route. &quot;user_gallery&quot; is the route name, not a URI path.</span>
+<span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">route</span><span class="p">(</span><span class="s1">&#39;user_gallery&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>When passing an argument into the function, it is treated as a route name or
+Controller::method for reverse routing, not a relative/full URI,
+treating it the same as using <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;route()</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go to a named/reverse-routed URI.</span>
+<span class="k">return</span> <span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;named_route&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Redirect Back</strong></p>
+<p>When you want to redirect back, use <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;back()</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go back to the previous page.</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">();</span>
 
-<span class="c1">// Go to specific URI</span>
-<span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">to</span><span class="p">(</span><span class="s1">&#39;/admin&#39;</span><span class="p">);</span>
-
-<span class="c1">// Go to a named route</span>
-<span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">route</span><span class="p">(</span><span class="s1">&#39;named_route&#39;</span><span class="p">);</span>
-
-<span class="c1">// Keep the old input values upon redirect so they can be used by the `old()` function</span>
+<span class="c1">// Keep the old input values upon redirect so they can be used by the `old()` function.</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">withInput</span><span class="p">();</span>
 
-<span class="c1">// Set a flash message</span>
+<span class="c1">// Set a flash message.</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">);</span>
 
-<span class="c1">// Copies all cookies from global response instance</span>
+<span class="c1">// Copies all cookies from global response instance.</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">withCookies</span><span class="p">();</span>
 
-<span class="c1">// Copies all headers from the global response instance</span>
+<span class="c1">// Copies all headers from the global response instance.</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">withHeaders</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -934,14 +948,6 @@ no redirection will occur.</p>
 <p><code class="docutils literal notranslate"><span class="pre">redirect()-&gt;back()</span></code> is not the same as browser “back” button.
 It takes a visitor to “the last page viewed during the Session” when the Session is available.
 If the Session hasn’t been loaded, or is otherwise unavailable, then a sanitized version of HTTP_REFERER will be used.</p>
-</div>
-<p>When passing an argument into the function, it is treated as a named/reverse-routed route, not a relative/full URI,
-treating it the same as using <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;route()</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="c1">// Go to a named/reverse-routed URI</span>
-<span class="k">return</span> <span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;named_route&#39;</span><span class="p">);</span>
-</pre></div>
 </div>
 </dd></dl>
 
@@ -1280,7 +1286,7 @@ instance every time.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 31, 2023.
+      <span class="lastupdated">Last updated on Feb 01, 2023.
       </span></p>
   </div>
 
