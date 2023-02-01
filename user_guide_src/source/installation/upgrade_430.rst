@@ -73,6 +73,31 @@ Mock Config Classes
 
 - Add **types** to the properties in these Config classes. You may need to fix the property values to match the property types.
 
+composer.json
+=============
+
+If you installed CodeIgnter manually, and are using Composer,
+you need to remove the following lines, and run ``composer update``.
+
+.. code-block:: text
+
+    {
+        ...
+        "require": {
+            ...
+            "kint-php/kint": "^4.2",  <-- Remove this line
+            ...
+        },
+        ...
+        "scripts": {
+            "post-update-cmd": [
+                "CodeIgniter\\ComposerScripts::postUpdate"  <-- Remove this line
+            ],
+            "test": "phpunit"
+        },
+        ...
+    }
+
 Breaking Changes
 ****************
 

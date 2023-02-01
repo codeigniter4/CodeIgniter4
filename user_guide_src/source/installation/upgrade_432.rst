@@ -27,6 +27,28 @@ slash (``/``). Now it returns baseURL with a trailing slash. For example:
 
 If you have code to call ``base_url()`` without argument, you may need to adjust the URLs.
 
+Mandatory File Changes
+**********************
+
+composer.json
+=============
+
+If you have installed CodeIgnter manually and are using or planning to use Composer,
+remove the following line:
+
+.. code-block:: text
+
+    {
+        ...
+        "scripts": {
+            "post-update-cmd": [
+                "CodeIgniter\\ComposerScripts::postUpdate"  <-- Remove this line
+            ],
+            "test": "phpunit"
+        },
+        ...
+    }
+
 Project Files
 *************
 
