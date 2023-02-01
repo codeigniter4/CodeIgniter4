@@ -64,6 +64,10 @@ The following functions are available:
     .. note:: Since v4.3.0, if you set ``Config\App::$allowedHostnames``,
         this returns the URL with the hostname set in it if the current URL matches.
 
+    .. note:: In previous versions, this returned the base URL without a trailing
+        slash (``/``) when called with no argument. The bug was fixed and
+        since v4.3.2 it returns the base URL with a trailing slash.
+
     Returns your site base URL, as specified in your config file. Example:
 
     .. literalinclude:: url_helper/003.php

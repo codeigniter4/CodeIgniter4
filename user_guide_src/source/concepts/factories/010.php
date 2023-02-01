@@ -1,3 +1,3 @@
 <?php
 
-$widgets = Factories::models('Blog\Models\UserModel', ['preferApp' => false]);
+$users = Factories::models('Blog\Models\UserModel', ['preferApp' => false]);
