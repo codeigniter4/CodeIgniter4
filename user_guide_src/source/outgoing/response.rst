@@ -93,6 +93,14 @@ Use the optional ``setFileName()`` method to change the filename as it is sent t
 .. note:: The response object MUST be returned for the download to be sent to the client. This allows the response
     to be passed through all **after** filters before being sent to the client.
 
+Open file in browser
+--------------------
+
+Some browsers can display files such as PDF. To tell the browser to display the file instead of saving it, call the
+``DownloadResponse::inline()`` method.
+
+.. literalinclude:: response/007.php
+
 HTTP Caching
 ============
 
