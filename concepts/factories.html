@@ -281,22 +281,27 @@
 <ul>
 <li><p><a class="reference internal" href="#what-are-factories" id="id3">What are Factories?</a></p></li>
 <li><p><a class="reference internal" href="#differences-from-services" id="id4">Differences from Services</a></p></li>
-<li><p><a class="reference internal" href="#example" id="id5">Example</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#convenience-functions" id="id6">Convenience Functions</a></p>
+<li><p><a class="reference internal" href="#loading-classes" id="id5">Loading Classes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#config" id="id7">config()</a></p></li>
-<li><p><a class="reference internal" href="#model" id="id8">model()</a></p></li>
+<li><p><a class="reference internal" href="#loading-a-class" id="id6">Loading a Class</a></p></li>
+<li><p><a class="reference internal" href="#loading-a-class-in-sub-directories" id="id7">Loading a Class in Sub-directories</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#factory-parameters" id="id9">Factory Parameters</a></p></li>
-<li><p><a class="reference internal" href="#factories-options" id="id10">Factories Options</a></p></li>
-<li><p><a class="reference internal" href="#factories-behavior" id="id11">Factories Behavior</a></p>
+<li><p><a class="reference internal" href="#convenience-functions" id="id8">Convenience Functions</a></p>
 <ul>
-<li><p><a class="reference internal" href="#configurations" id="id12">Configurations</a></p></li>
-<li><p><a class="reference internal" href="#setoptions-method" id="id13">setOptions Method</a></p></li>
-<li><p><a class="reference internal" href="#parameter-options" id="id14">Parameter Options</a></p></li>
+<li><p><a class="reference internal" href="#config" id="id9">config()</a></p></li>
+<li><p><a class="reference internal" href="#model" id="id10">model()</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#factory-parameters" id="id11">Factory Parameters</a></p></li>
+<li><p><a class="reference internal" href="#factories-options" id="id12">Factories Options</a></p></li>
+<li><p><a class="reference internal" href="#factories-behavior" id="id13">Factories Behavior</a></p>
+<ul>
+<li><p><a class="reference internal" href="#configurations" id="id14">Configurations</a></p></li>
+<li><p><a class="reference internal" href="#setoptions-method" id="id15">setOptions Method</a></p></li>
+<li><p><a class="reference internal" href="#parameter-options" id="id16">Parameter Options</a></p></li>
 </ul>
 </li>
 </ul>
@@ -329,8 +334,13 @@ and you cannot change the class of the instance to be returned.</p>
 that needs other services or class instances. When you get a service, Services require a service name,
 not a class name, so the returned instance can be changed without changing the client code.</p>
 </section>
-<section id="example">
-<span id="factories-example"></span><h3><a class="toc-backref" href="#id5">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+</section>
+<section id="loading-classes">
+<h2><a class="toc-backref" href="#id5">Loading Classes</a><a class="headerlink" href="#loading-classes" title="Permalink to this headline"></a></h2>
+<section id="loading-a-class">
+<h3><a class="toc-backref" href="#id6">Loading a Class</a><a class="headerlink" href="#loading-a-class" title="Permalink to this headline"></a></h3>
+<section id="model-example">
+<span id="factories-example"></span><h4>Model Example<a class="headerlink" href="#model-example" title="Permalink to this headline"></a></h4>
 <p>Take a look at <strong>Models</strong> as an example. You can access the Factory specific to Models
 by using the magic static method of the Factories class, <code class="docutils literal notranslate"><span class="pre">Factories::models()</span></code>.</p>
 <p>The static method name is called <em>component</em>.</p>
@@ -375,11 +385,20 @@ you get back the instance as before:</p>
 </div>
 </section>
 </section>
+<section id="loading-a-class-in-sub-directories">
+<h3><a class="toc-backref" href="#id7">Loading a Class in Sub-directories</a><a class="headerlink" href="#loading-a-class-in-sub-directories" title="Permalink to this headline"></a></h3>
+<p>If you want to load a class in sub directories, you use the <code class="docutils literal notranslate"><span class="pre">/</span></code> as a separator.
+The following code loads <strong>app/Libraries/Sub/SubLib.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$lib</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">libraries</span><span class="p">(</span><span class="s1">&#39;Sub/SubLib&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="convenience-functions">
-<h2><a class="toc-backref" href="#id6">Convenience Functions</a><a class="headerlink" href="#convenience-functions" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8">Convenience Functions</a><a class="headerlink" href="#convenience-functions" title="Permalink to this headline"></a></h2>
 <p>Two shortcut functions for Factories have been provided. These functions are always available.</p>
 <section id="config">
-<h3><a class="toc-backref" href="#id7">config()</a><a class="headerlink" href="#config" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">config()</a><a class="headerlink" href="#config" title="Permalink to this headline"></a></h3>
 <p>The first is <code class="docutils literal notranslate"><span class="pre">config()</span></code> which returns a new instance of a Config class. The only required parameter is the class name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -391,7 +410,7 @@ you get back the instance as before:</p>
 </div>
 </section>
 <section id="model">
-<h3><a class="toc-backref" href="#id8">model()</a><a class="headerlink" href="#model" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">model()</a><a class="headerlink" href="#model" title="Permalink to this headline"></a></h3>
 <p>The second function, <a class="reference internal" href="../general/common_functions.html#model" title="model"><code class="xref php php-func docutils literal notranslate"><span class="pre">model()</span></code></a> returns a new instance of a Model class. The only required parameter is the class name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -404,7 +423,7 @@ you get back the instance as before:</p>
 </section>
 </section>
 <section id="factory-parameters">
-<h2><a class="toc-backref" href="#id9">Factory Parameters</a><a class="headerlink" href="#factory-parameters" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id11">Factory Parameters</a><a class="headerlink" href="#factory-parameters" title="Permalink to this headline"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Factories</span></code> takes as a second parameter an array of option values (described below).
 These directives will override the default options configured for each component.</p>
 <p>Any more parameters passed at the same time will be forwarded on to the class
@@ -421,7 +440,7 @@ to access user records always go through that connection:</p>
 class instance that uses the alternate database connection.</p>
 </section>
 <section id="factories-options">
-<span id="id1"></span><h2><a class="toc-backref" href="#id10">Factories Options</a><a class="headerlink" href="#factories-options" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id12">Factories Options</a><a class="headerlink" href="#factories-options" title="Permalink to this headline"></a></h2>
 <p>The default behavior might not work for every component. For example, say your component
 name and its path do not align, or you need to limit instances to a certain type of class.
 Each component takes a set of options to direct discovery and instantiation.</p>
@@ -474,7 +493,7 @@ overrides other explicit class requests.</p></td>
 </table>
 </section>
 <section id="factories-behavior">
-<h2><a class="toc-backref" href="#id11">Factories Behavior</a><a class="headerlink" href="#factories-behavior" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id13">Factories Behavior</a><a class="headerlink" href="#factories-behavior" title="Permalink to this headline"></a></h2>
 <p>Options can be applied in one of three ways (listed in ascending priority):</p>
 <ul class="simple">
 <li><p>A configuration class <code class="docutils literal notranslate"><span class="pre">Config\Factory</span></code> with a property that matches the name of a component.</p></li>
@@ -482,7 +501,7 @@ overrides other explicit class requests.</p></td>
 <li><p>Passing options directly at call time with a parameter.</p></li>
 </ul>
 <section id="configurations">
-<h3><a class="toc-backref" href="#id12">Configurations</a><a class="headerlink" href="#configurations" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14">Configurations</a><a class="headerlink" href="#configurations" title="Permalink to this headline"></a></h3>
 <p>To set default component options, create a new Config files at <strong>app/Config/Factory.php</strong>
 that supplies options as an array property that matches the name of the component.</p>
 <section id="example-filters-factories">
@@ -539,7 +558,7 @@ default path <cite>Library</cite>.</p>
 </section>
 </section>
 <section id="setoptions-method">
-<h3><a class="toc-backref" href="#id13">setOptions Method</a><a class="headerlink" href="#setoptions-method" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id15">setOptions Method</a><a class="headerlink" href="#setoptions-method" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Factories</span></code> class has a static method to allow runtime option configuration: simply
 supply the desired array of options using the <code class="docutils literal notranslate"><span class="pre">setOptions()</span></code> method and they will be
 merged with the default values and stored for the next call:</p>
@@ -553,7 +572,7 @@ merged with the default values and stored for the next call:</p>
 </div>
 </section>
 <section id="parameter-options">
-<h3><a class="toc-backref" href="#id14">Parameter Options</a><a class="headerlink" href="#parameter-options" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16">Parameter Options</a><a class="headerlink" href="#parameter-options" title="Permalink to this headline"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Factories</span></code>’s magic static call takes as a second parameter an array of option values.
 These directives will override the stored options configured for each component and can be
 used at call time to get exactly what you need. The input should be an array with option
