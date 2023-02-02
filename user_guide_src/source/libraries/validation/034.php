@@ -2,8 +2,8 @@
 
 class MyRules
 {
-    public function even(string $str): bool
+    public function even($value): bool
     {
-        return (int) $str % 2 === 0;
+        return (int) $value % 2 === 0;
     }
 }

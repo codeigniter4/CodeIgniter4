@@ -17,11 +17,11 @@ with different supported languages.
 Language strings are stored in the **app/Language** directory, with a sub-directory for each
 supported language::
 
-    /app
-        /Language
-            /en
+    app/
+        Language/
+            en/
                 App.php
-            /fr
+            fr/
                 App.php
 
 .. important:: Locale detection only works for web-based requests that use the IncomingRequest class.
@@ -30,7 +30,7 @@ supported language::
 Configuring the Locale
 ======================
 
-Every site will have a default language/locale they operate in. This can be set in **Config/App.php**:
+Every site will have a default language/locale they operate in. This can be set in **app/Config/App.php**:
 
 .. literalinclude:: localization/001.php
 
@@ -40,9 +40,9 @@ language codes like en-US for American English, or fr-FR, for French/France. A m
 to this can be found on the `W3C's site <https://www.w3.org/International/articles/language-tags/>`_.
 
 The system is smart enough to fall back to more generic language codes if an exact match
-cannot be found. If the locale code was set to **en-US** and we only have language files set up for **en**
-then those will be used since nothing exists for the more specific **en-US**. If, however, a language
-directory existed at **app/Language/en-US** then that would be used first.
+cannot be found. If the locale code was set to ``en-US`` and we only have language files set up for ``en``
+then those will be used since nothing exists for the more specific ``en-US``. If, however, a language
+directory existed at the **app/Language/en-US** directory then that would be used first.
 
 Locale Detection
 ================
@@ -57,7 +57,7 @@ Should you ever need to set the locale directly you may use ``IncomingRequest::s
 Content Negotiation
 -------------------
 
-You can set up content negotiation to happen automatically by setting two additional settings in Config/App.
+You can set up content negotiation to happen automatically by setting two additional settings in **app/Config/App.php**.
 The first value tells the Request class that we do want to negotiate a locale, so simply set it to true:
 
 .. literalinclude:: localization/002.php
@@ -65,7 +65,7 @@ The first value tells the Request class that we do want to negotiate a locale, s
 Once this is enabled, the system will automatically negotiate the correct language based upon an array
 of locales that you have defined in ``$supportLocales``. If no match is found between the languages
 that you support, and the requested language, the first item in $supportedLocales will be used. In
-the following example, the **en** locale would be used if no match is found:
+the following example, the ``en`` locale would be used if no match is found:
 
 .. literalinclude:: localization/003.php
 
@@ -80,7 +80,7 @@ segment will be your locale:
 
 .. literalinclude:: localization/004.php
 
-In this example, if the user tried to visit ``http://example.com/fr/books``, then the locale would be
+In this example, if the user tried to visit **http://example.com/fr/books**, then the locale would be
 set to ``fr``, assuming it was configured as a valid locale.
 
 If the value doesn't match a valid locale as defined in ``$supportedLocales`` in **app/Config/App.php**, the default
@@ -89,7 +89,7 @@ file:
 
 .. literalinclude:: localization/018.php
 
-.. note:: ``useSupportedLocalesOnly()`` can be used since v4.3.0.
+.. note:: The ``useSupportedLocalesOnly()`` method can be used since v4.3.0.
 
 Retrieving the Current Locale
 =============================
@@ -110,6 +110,8 @@ Language Localization
 Creating Language Files
 =======================
 
+.. note:: The Language Files do not have namespaces.
+
 Languages do not have any specific naming convention that are required. The file should be named logically to
 describe the type of content it holds. For example, let's say you want to create a file containing error messages.
 You might name it simply: **Errors.php**.
@@ -127,9 +129,9 @@ It also support nested definition:
 Basic Usage
 ===========
 
-You can use the ``lang()`` helper function to retrieve text from any of the language files, by passing the
+You can use the :php:func:`lang()` helper function to retrieve text from any of the language files, by passing the
 filename and the language key as the first parameter, separated by a period (.). For example, to load the
-``errorEmailMissing`` string from the ``Errors`` language file, you would do the following:
+``errorEmailMissing`` string from the **Errors.php** language file, you would do the following:
 
 .. literalinclude:: localization/010.php
 
@@ -183,7 +185,7 @@ Specifying Locale
 -----------------
 
 To specify a different locale to be used when replacing parameters, you can pass the locale in as the
-third parameter to the ``lang()`` method.
+third parameter to the ``lang()`` function.
 
 .. literalinclude:: localization/016.php
 
@@ -198,8 +200,8 @@ Language Fallback
 =================
 
 If you have a set of messages for a given locale, for instance
-``Language/en/app.php``, you can add language variants for that locale,
-each in its own folder, for instance ``Language/en-US/app.php``.
+**Language/en/app.php**, you can add language variants for that locale,
+each in its own folder, for instance **Language/en-US/app.php**.
 
 You only need to provide values for those messages that would be
 localized differently for that locale variant. Any missing message
@@ -210,8 +212,8 @@ in case new messages are added to the framework and you haven't had
 a chance to translate them yet for your locale.
 
 So, if you are using the locale ``fr-CA``, then a localized
-message will first be sought in ``Language/fr/CA``, then in
-``Language/fr``, and finally in ``Language/en``.
+message will first be sought in the **Language/fr-CA** directory, then in
+the **Language/fr** directory, and finally in the **Language/en** directory.
 
 Message Translations
 ====================
@@ -219,10 +221,14 @@ Message Translations
 We have an "official" set of translations in their
 `own repository <https://github.com/codeigniter4/translations>`_.
 
-You could download that repository, and copy its ``Language`` folder
-into your ``app``. The incorporated translations will be automatically
-picked up because the ``App`` namespace is mapped to your ``app`` folder.
+You could download that repository, and copy its **Language** folder
+into your **app** folder. The incorporated translations will be automatically
+picked up because the ``App`` namespace is mapped to your **app** folder.
 
-Alternately, a better practice would be to ``composer require codeigniter4/translations``
-inside your project, and the translated messages will be automatically picked
+Alternately, a better practice would be to run the following command inside your
+project::
+
+    > composer require codeigniter4/translations
+
+The translated messages will be automatically picked
 up because the translations folders get mapped appropriately.

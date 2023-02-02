@@ -2,14 +2,14 @@
 
 class MyRules
 {
-    public function required_with($str, string $fields, array $data): bool
+    public function required_with($value, string $params, array $data): bool
     {
-        $fields = explode(',', $fields);
+        $params = explode(',', $params);
 
         // If the field is present we can safely assume that
         // the field is here, no matter whether the corresponding
         // search field is present or not.
-        $present = $this->required($str ?? '');
+        $present = $this->required($value ?? '');
 
         if ($present) {
             return true;
@@ -20,7 +20,7 @@ class MyRules
         // as $fields is the lis
         $requiredFields = [];
 
-        foreach ($fields as $field) {
+        foreach ($params as $field) {
             if (array_key_exists($field, $data)) {
                 $requiredFields[] = $field;
             }
