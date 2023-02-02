@@ -388,6 +388,8 @@ within the <code class="docutils literal notranslate"><span class="pre">App</spa
 namespaces; with Composer autoloading support.</p></li>
 <li><p>You can configure the class loading to support whatever application structure
 you are most comfortable with, including the “HMVC” style.</p></li>
+<li><p>CI4 provides <a class="reference internal" href="../concepts/factories.html"><span class="doc">Factories</span></a> that can load a class and share the
+instance like <code class="docutils literal notranslate"><span class="pre">$this-&gt;load</span></code> in CI3.</p></li>
 </ul>
 </section>
 <section id="libraries">
@@ -395,7 +397,9 @@ you are most comfortable with, including the “HMVC” style.</p></li>
 <ul class="simple">
 <li><p>Your app classes can still go inside <strong>app/Libraries</strong>, but they don’t have to.</p></li>
 <li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('x');</span></code> you can now use
-<code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component.</p></li>
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">\App\Libraries\X();</span></code>, following namespaced conventions for
+your component. Alternatively, you can use <a class="reference internal" href="../concepts/factories.html"><span class="doc">Factories</span></a>:
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">\CodeIgniter\Config\Factories::libraries('X');</span></code>.</p></li>
 </ul>
 </section>
 <section id="helpers">
@@ -461,8 +465,10 @@ your components instead of the default ones.</p></li>
 <h2><a class="toc-backref" href="#id13">Upgrading Libraries</a><a class="headerlink" href="#upgrading-libraries" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Your app classes can still go inside <strong>app/Libraries</strong>, but they don’t have to.</p></li>
-<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('x');</span></code> you can now use <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>,
-following namespaced conventions for your component.</p></li>
+<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('x');</span></code> you can now use
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">\App\Libraries\X();</span></code>, following namespaced conventions for
+your component. Alternatively, you can use <a class="reference internal" href="../concepts/factories.html"><span class="doc">Factories</span></a>:
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">\CodeIgniter\Config\Factories::libraries('X');</span></code>.</p></li>
 <li><p>Some libraries from CodeIgniter 3 no longer exists in Version 4. For all these
 libraries, you have to find a new way to implement your functions. These
 libraries are <a class="reference external" href="http://codeigniter.com/userguide3/libraries/calendar.html">Calendaring</a>,
