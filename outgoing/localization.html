@@ -301,11 +301,11 @@ localization of an application is a complex subject, it’s simple to swap out s
 with different supported languages.</p>
 <p>Language strings are stored in the <strong>app/Language</strong> directory, with a sub-directory for each
 supported language:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="nx">app</span>
-    <span class="o">/</span><span class="nx">Language</span>
-        <span class="o">/</span><span class="nx">en</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">app</span><span class="o">/</span>
+    <span class="nx">Language</span><span class="o">/</span>
+        <span class="nx">en</span><span class="o">/</span>
             <span class="nx">App</span><span class="o">.</span><span class="nx">php</span>
-        <span class="o">/</span><span class="nx">fr</span>
+        <span class="nx">fr</span><span class="o">/</span>
             <span class="nx">App</span><span class="o">.</span><span class="nx">php</span>
 </pre></div>
 </div>
@@ -316,7 +316,7 @@ Command-line requests will not have these features.</p>
 </div>
 <section id="configuring-the-locale">
 <h3><a class="toc-backref" href="#id2">Configuring the Locale</a><a class="headerlink" href="#configuring-the-locale" title="Permalink to this headline"></a></h3>
-<p>Every site will have a default language/locale they operate in. This can be set in <strong>Config/App.php</strong>:</p>
+<p>Every site will have a default language/locale they operate in. This can be set in <strong>app/Config/App.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -325,6 +325,8 @@ Command-line requests will not have these features.</p>
 
 <span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
+    <span class="c1">// ...</span>
+
     <span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultLocale</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
@@ -336,9 +338,9 @@ recommended that a <a class="reference external" href="http://www.rfc-editor.org
 language codes like en-US for American English, or fr-FR, for French/France. A more readable introduction
 to this can be found on the <a class="reference external" href="https://www.w3.org/International/articles/language-tags/">W3C’s site</a>.</p>
 <p>The system is smart enough to fall back to more generic language codes if an exact match
-cannot be found. If the locale code was set to <strong>en-US</strong> and we only have language files set up for <strong>en</strong>
-then those will be used since nothing exists for the more specific <strong>en-US</strong>. If, however, a language
-directory existed at <strong>app/Language/en-US</strong> then that would be used first.</p>
+cannot be found. If the locale code was set to <code class="docutils literal notranslate"><span class="pre">en-US</span></code> and we only have language files set up for <code class="docutils literal notranslate"><span class="pre">en</span></code>
+then those will be used since nothing exists for the more specific <code class="docutils literal notranslate"><span class="pre">en-US</span></code>. If, however, a language
+directory existed at the <strong>app/Language/en-US</strong> directory then that would be used first.</p>
 </section>
 <section id="locale-detection">
 <h3><a class="toc-backref" href="#id3">Locale Detection</a><a class="headerlink" href="#locale-detection" title="Permalink to this headline"></a></h3>
@@ -349,7 +351,7 @@ will be used to set the locale.</p>
 <p>Should you ever need to set the locale directly you may use <code class="docutils literal notranslate"><span class="pre">IncomingRequest::setLocale(string</span> <span class="pre">$locale)</span></code>.</p>
 <section id="content-negotiation">
 <h4>Content Negotiation<a class="headerlink" href="#content-negotiation" title="Permalink to this headline"></a></h4>
-<p>You can set up content negotiation to happen automatically by setting two additional settings in Config/App.
+<p>You can set up content negotiation to happen automatically by setting two additional settings in <strong>app/Config/App.php</strong>.
 The first value tells the Request class that we do want to negotiate a locale, so simply set it to true:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -359,6 +361,8 @@ The first value tells the Request class that we do want to negotiate a locale, s
 
 <span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
+    <span class="c1">// ...</span>
+
     <span class="k">public</span> <span class="nx">bool</span> <span class="nv">$negotiateLocale</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
@@ -368,7 +372,7 @@ The first value tells the Request class that we do want to negotiate a locale, s
 <p>Once this is enabled, the system will automatically negotiate the correct language based upon an array
 of locales that you have defined in <code class="docutils literal notranslate"><span class="pre">$supportLocales</span></code>. If no match is found between the languages
 that you support, and the requested language, the first item in $supportedLocales will be used. In
-the following example, the <strong>en</strong> locale would be used if no match is found:</p>
+the following example, the <code class="docutils literal notranslate"><span class="pre">en</span></code> locale would be used if no match is found:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -377,6 +381,8 @@ the following example, the <strong>en</strong> locale would be used if no match 
 
 <span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
+    <span class="c1">// ...</span>
+
     <span class="k">public</span> <span class="k">array</span> <span class="nv">$supportedLocales</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;es&#39;</span><span class="p">,</span> <span class="s1">&#39;fr-FR&#39;</span><span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -394,7 +400,7 @@ segment will be your locale:</p>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;{locale}/books&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Books::index&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>In this example, if the user tried to visit <code class="docutils literal notranslate"><span class="pre">http://example.com/fr/books</span></code>, then the locale would be
+<p>In this example, if the user tried to visit <strong>http://example.com/fr/books</strong>, then the locale would be
 set to <code class="docutils literal notranslate"><span class="pre">fr</span></code>, assuming it was configured as a valid locale.</p>
 <p>If the value doesn’t match a valid locale as defined in <code class="docutils literal notranslate"><span class="pre">$supportedLocales</span></code> in <strong>app/Config/App.php</strong>, the default
 locale will be used in it’s place, unless you set to use only the supported locales defined in the App configuration
@@ -406,7 +412,7 @@ file:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">useSupportedLocalesOnly()</span></code> can be used since v4.3.0.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">useSupportedLocalesOnly()</span></code> method can be used since v4.3.0.</p>
 </div>
 </section>
 </section>
@@ -439,6 +445,10 @@ If your controller is extending <code class="docutils literal notranslate"><span
 <h2><a class="toc-backref" href="#id5">Language Localization</a><a class="headerlink" href="#language-localization" title="Permalink to this headline"></a></h2>
 <section id="creating-language-files">
 <h3><a class="toc-backref" href="#id6">Creating Language Files</a><a class="headerlink" href="#creating-language-files" title="Permalink to this headline"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Language Files do not have namespaces.</p>
+</div>
 <p>Languages do not have any specific naming convention that are required. The file should be named logically to
 describe the type of content it holds. For example, let’s say you want to create a file containing error messages.
 You might name it simply: <strong>Errors.php</strong>.</p>
@@ -479,9 +489,9 @@ You might name it simply: <strong>Errors.php</strong>.</p>
 </section>
 <section id="basic-usage">
 <h3><a class="toc-backref" href="#id7">Basic Usage</a><a class="headerlink" href="#basic-usage" title="Permalink to this headline"></a></h3>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">lang()</span></code> helper function to retrieve text from any of the language files, by passing the
+<p>You can use the <a class="reference internal" href="../general/common_functions.html#lang" title="lang"><code class="xref php php-func docutils literal notranslate"><span class="pre">lang()</span></code></a> helper function to retrieve text from any of the language files, by passing the
 filename and the language key as the first parameter, separated by a period (.). For example, to load the
-<code class="docutils literal notranslate"><span class="pre">errorEmailMissing</span></code> string from the <code class="docutils literal notranslate"><span class="pre">Errors</span></code> language file, you would do the following:</p>
+<code class="docutils literal notranslate"><span class="pre">errorEmailMissing</span></code> string from the <strong>Errors.php</strong> language file, you would do the following:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Errors.errorEmailMissing&#39;</span><span class="p">);</span>
@@ -593,7 +603,7 @@ earlier will give you an excellent idea as to the options available.</p>
 <section id="specifying-locale">
 <h4>Specifying Locale<a class="headerlink" href="#specifying-locale" title="Permalink to this headline"></a></h4>
 <p>To specify a different locale to be used when replacing parameters, you can pass the locale in as the
-third parameter to the <code class="docutils literal notranslate"><span class="pre">lang()</span></code> method.</p>
+third parameter to the <code class="docutils literal notranslate"><span class="pre">lang()</span></code> function.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Displays &quot;The time is now 23:21:28 GMT-5&quot;</span>
@@ -633,8 +643,8 @@ third parameter to the <code class="docutils literal notranslate"><span class="p
 <section id="language-fallback">
 <h3><a class="toc-backref" href="#id8">Language Fallback</a><a class="headerlink" href="#language-fallback" title="Permalink to this headline"></a></h3>
 <p>If you have a set of messages for a given locale, for instance
-<code class="docutils literal notranslate"><span class="pre">Language/en/app.php</span></code>, you can add language variants for that locale,
-each in its own folder, for instance <code class="docutils literal notranslate"><span class="pre">Language/en-US/app.php</span></code>.</p>
+<strong>Language/en/app.php</strong>, you can add language variants for that locale,
+each in its own folder, for instance <strong>Language/en-US/app.php</strong>.</p>
 <p>You only need to provide values for those messages that would be
 localized differently for that locale variant. Any missing message
 definitions will be automatically pulled from the main locale settings.</p>
@@ -642,18 +652,22 @@ definitions will be automatically pulled from the main locale settings.</p>
 in case new messages are added to the framework and you haven’t had
 a chance to translate them yet for your locale.</p>
 <p>So, if you are using the locale <code class="docutils literal notranslate"><span class="pre">fr-CA</span></code>, then a localized
-message will first be sought in <code class="docutils literal notranslate"><span class="pre">Language/fr/CA</span></code>, then in
-<code class="docutils literal notranslate"><span class="pre">Language/fr</span></code>, and finally in <code class="docutils literal notranslate"><span class="pre">Language/en</span></code>.</p>
+message will first be sought in the <strong>Language/fr-CA</strong> directory, then in
+the <strong>Language/fr</strong> directory, and finally in the <strong>Language/en</strong> directory.</p>
 </section>
 <section id="message-translations">
 <h3><a class="toc-backref" href="#id9">Message Translations</a><a class="headerlink" href="#message-translations" title="Permalink to this headline"></a></h3>
 <p>We have an “official” set of translations in their
 <a class="reference external" href="https://github.com/codeigniter4/translations">own repository</a>.</p>
-<p>You could download that repository, and copy its <code class="docutils literal notranslate"><span class="pre">Language</span></code> folder
-into your <code class="docutils literal notranslate"><span class="pre">app</span></code>. The incorporated translations will be automatically
-picked up because the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace is mapped to your <code class="docutils literal notranslate"><span class="pre">app</span></code> folder.</p>
-<p>Alternately, a better practice would be to <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">require</span> <span class="pre">codeigniter4/translations</span></code>
-inside your project, and the translated messages will be automatically picked
+<p>You could download that repository, and copy its <strong>Language</strong> folder
+into your <strong>app</strong> folder. The incorporated translations will be automatically
+picked up because the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace is mapped to your <strong>app</strong> folder.</p>
+<p>Alternately, a better practice would be to run the following command inside your
+project:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="k">require</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">translations</span>
+</pre></div>
+</div>
+<p>The translated messages will be automatically picked
 up because the translations folders get mapped appropriately.</p>
 </section>
 </section>
