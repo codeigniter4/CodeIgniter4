@@ -718,6 +718,8 @@ version, use <code class="docutils literal notranslate"><span class="pre">getMim
 </section>
 <section id="moving-files">
 <h3><a class="toc-backref" href="#id17">Moving Files</a><a class="headerlink" href="#moving-files" title="Permalink to this headline"></a></h3>
+<section id="with-original-filename">
+<h4>with Original Filename<a class="headerlink" href="#with-original-filename" title="Permalink to this headline"></a></h4>
 <p>Each file can be moved to its new location with the aptly named <code class="docutils literal notranslate"><span class="pre">move()</span></code> method. This takes the directory to move
 the file to as the first parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -725,13 +727,33 @@ the file to as the first parameter:</p>
 <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;uploads&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>By default, the original filename was used. You can specify a new filename by passing it as the second parameter:</p>
+<p>By default, the original filename was used.</p>
+</section>
+<section id="with-new-filename">
+<h4>with New Filename<a class="headerlink" href="#with-new-filename" title="Permalink to this headline"></a></h4>
+<p>You can specify a new filename by passing it as the second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$newName</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">();</span>
 <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;uploads&#39;</span><span class="p">,</span> <span class="nv">$newName</span><span class="p">);</span>
 </pre></div>
 </div>
+</section>
+<section id="overwriting-existing-file">
+<h4>Overwriting Existing File<a class="headerlink" href="#overwriting-existing-file" title="Permalink to this headline"></a></h4>
+<p>By default, if the destination file already exists, a new filename will be used.
+For example, if <strong>image_name.jpg</strong> already exists in the directory, then the
+filename will be <strong>image_name_1.jpg</strong> automatically.</p>
+<p>You can overwrite the existing file by passing <code class="docutils literal notranslate"><span class="pre">true</span></code>
+as the third parameter:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;uploads&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="check-if-the-file-moved">
+<h4>Check if the File Moved<a class="headerlink" href="#check-if-the-file-moved" title="Permalink to this headline"></a></h4>
 <p>Once the file has been removed the temporary file is deleted. You can check if a file has been moved already with
 the <code class="docutils literal notranslate"><span class="pre">hasMoved()</span></code> method, which returns a boolean:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -741,12 +763,16 @@ the <code class="docutils literal notranslate"><span class="pre">hasMoved()</spa
 <span class="p">}</span>
 </pre></div>
 </div>
+</section>
+<section id="when-moving-fails">
+<h4>When Moving Fails<a class="headerlink" href="#when-moving-fails" title="Permalink to this headline"></a></h4>
 <p>Moving an uploaded file can fail, with an HTTPException, under several circumstances:</p>
 <ul class="simple">
 <li><p>the file has already been moved</p></li>
 <li><p>the file did not upload successfully</p></li>
 <li><p>the file move operation fails (e.g., improper permissions)</p></li>
 </ul>
+</section>
 </section>
 <section id="store-files">
 <h3><a class="toc-backref" href="#id18">Store Files</a><a class="headerlink" href="#store-files" title="Permalink to this headline"></a></h3>
@@ -791,7 +817,7 @@ passing it as the second parameter:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 01, 2023.
+      <span class="lastupdated">Last updated on Feb 02, 2023.
       </span></p>
   </div>
 
