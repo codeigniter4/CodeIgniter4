@@ -333,6 +333,28 @@ final class SiteUrlTest extends CIUnitTestCase
         );
     }
 
+    public function testSiteURLWithAltConfig()
+    {
+        $_SERVER['HTTP_HOST']   = 'www.example.jp';
+        $_SERVER['REQUEST_URI'] = '/public';
+        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+
+        $this->config->baseURL          = 'http://example.com/public/';
+        $this->config->allowedHostnames = ['www.example.jp'];
+
+        // URI object are updated in IncomingRequest constructor.
+        $request = Services::incomingrequest($this->config);
+        Services::injectMock('request', $request);
+
+        $altConfig          = clone $this->config;
+        $altConfig->baseURL = 'http://alt.example.com/public/';
+
+        $this->assertSame(
+            'http://alt.example.com/public/index.php/controller/method',
+            site_url('controller/method', null, $altConfig)
+        );
+    }
+
     public function testBaseURLWithAllowedHostname()
     {
         $_SERVER['HTTP_HOST']   = 'www.example.jp';
