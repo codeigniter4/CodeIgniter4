@@ -26,12 +26,14 @@ if (! function_exists('_get_uri')) {
      *
      * @internal Outside the framework this should not be used directly.
      *
-     * @param string $relativePath May include queries or fragments
+     * @param string   $relativePath May include queries or fragments
+     * @param App|null $config       Alternative Config to use
+     * @param bool     $useConfig    Whether to use the Config baseURL
      *
      * @throws HTTPException            For invalid paths.
      * @throws InvalidArgumentException For invalid config.
      */
-    function _get_uri(string $relativePath = '', ?App $config = null): URI
+    function _get_uri(string $relativePath = '', ?App $config = null, bool $useConfig = false): URI
     {
         $config ??= config('App');
 
@@ -57,9 +59,13 @@ if (! function_exists('_get_uri')) {
         $request = Services::request();
 
         /** @var App $config */
-        $url = $request instanceof CLIRequest
-            ? rtrim($config->baseURL, '/ ') . '/'
-            : $request->getUri()->getBaseURL();
+        if ($useConfig) {
+            $url = rtrim($config->baseURL, '/ ') . '/';
+        } else {
+            $url = $request instanceof CLIRequest
+                ? rtrim($config->baseURL, '/ ') . '/'
+                : $request->getUri()->getBaseURL();
+        }
 
         // Check for an index page
         if ($config->indexPage !== '') {
@@ -88,18 +94,28 @@ if (! function_exists('site_url')) {
     /**
      * Returns a site URL as defined by the App config.
      *
-     * @param array|string $relativePath URI string or array of URI segments
-     * @param string|null  $scheme       URI scheme. E.g., http, ftp
-     * @param App|null     $config       Alternate configuration to use
+     * @param array|string $relativePath  URI string or array of URI segments
+     * @param string|null  $scheme        URI scheme. E.g., http, ftp
+     * @param App|null     $config        Alternate configuration to use
+     * @param bool         $dontUseConfig Set true if you don't use the Config
+     *                                    baseURL even when you pass the Config
      */
-    function site_url($relativePath = '', ?string $scheme = null, ?App $config = null): string
-    {
+    function site_url(
+        $relativePath = '',
+        ?string $scheme = null,
+        ?App $config = null,
+        bool $dontUseConfig = false
+    ): string {
+        // If $dontUseConfig is false and $config is not passed,
+        // we use the Config baseURL.
+        $useConfig = (! $dontUseConfig) && ($config !== null);
+
         // Convert array of segments to a string
         if (is_array($relativePath)) {
             $relativePath = implode('/', $relativePath);
         }
 
-        $uri = _get_uri($relativePath, $config);
+        $uri = _get_uri($relativePath, $config, $useConfig);
 
         return URI::createURIString(
             $scheme ?? $uri->getScheme(),
@@ -124,7 +140,7 @@ if (! function_exists('base_url')) {
         $config            = clone config('App');
         $config->indexPage = '';
 
-        return site_url($relativePath, $scheme, $config);
+        return site_url($relativePath, $scheme, $config, true);
     }
 }
 

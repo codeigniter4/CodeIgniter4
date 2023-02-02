@@ -322,6 +322,7 @@ final class SiteUrlTest extends CIUnitTestCase
 
         $this->config->baseURL          = 'http://example.com/public/';
         $this->config->allowedHostnames = ['www.example.jp'];
+        Services::injectMock('config', $this->config);
 
         // URI object are updated in IncomingRequest constructor.
         $request = Services::incomingrequest($this->config);
@@ -329,7 +330,7 @@ final class SiteUrlTest extends CIUnitTestCase
 
         $this->assertSame(
             'http://www.example.jp/public/index.php/controller/method',
-            site_url('controller/method', null, $this->config)
+            site_url('controller/method')
         );
     }
 
