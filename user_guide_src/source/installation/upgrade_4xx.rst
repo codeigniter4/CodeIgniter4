@@ -41,7 +41,8 @@ Downloads
 Namespaces
 ==========
 
-- CI4 is built for PHP 7.4+, and everything in the framework is namespaced, except for the helpers.
+- CI4 is built for PHP 7.4+, and everything in the framework is namespaced,
+  except for the helper and lang files.
 
 Application Structure
 =====================
