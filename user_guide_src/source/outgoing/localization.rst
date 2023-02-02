@@ -185,7 +185,7 @@ Specifying Locale
 -----------------
 
 To specify a different locale to be used when replacing parameters, you can pass the locale in as the
-third parameter to the ``lang()`` method.
+third parameter to the ``lang()`` function.
 
 .. literalinclude:: localization/016.php
 
