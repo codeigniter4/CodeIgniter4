@@ -129,7 +129,7 @@ It also support nested definition:
 Basic Usage
 ===========
 
-You can use the ``lang()`` helper function to retrieve text from any of the language files, by passing the
+You can use the :php:func:`lang()` helper function to retrieve text from any of the language files, by passing the
 filename and the language key as the first parameter, separated by a period (.). For example, to load the
 ``errorEmailMissing`` string from the **Errors.php** language file, you would do the following:
 
