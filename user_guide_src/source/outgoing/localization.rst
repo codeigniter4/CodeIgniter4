@@ -110,6 +110,8 @@ Language Localization
 Creating Language Files
 =======================
 
+.. note:: The Language Files do not have namespaces.
+
 Languages do not have any specific naming convention that are required. The file should be named logically to
 describe the type of content it holds. For example, let's say you want to create a file containing error messages.
 You might name it simply: **Errors.php**.
