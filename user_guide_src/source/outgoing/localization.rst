@@ -30,7 +30,7 @@ supported language::
 Configuring the Locale
 ======================
 
-Every site will have a default language/locale they operate in. This can be set in **Config/App.php**:
+Every site will have a default language/locale they operate in. This can be set in **app/Config/App.php**:
 
 .. literalinclude:: localization/001.php
 
@@ -57,7 +57,7 @@ Should you ever need to set the locale directly you may use ``IncomingRequest::s
 Content Negotiation
 -------------------
 
-You can set up content negotiation to happen automatically by setting two additional settings in Config/App.
+You can set up content negotiation to happen automatically by setting two additional settings in **app/Config/App.php**.
 The first value tells the Request class that we do want to negotiate a locale, so simply set it to true:
 
 .. literalinclude:: localization/002.php
@@ -129,7 +129,7 @@ Basic Usage
 
 You can use the ``lang()`` helper function to retrieve text from any of the language files, by passing the
 filename and the language key as the first parameter, separated by a period (.). For example, to load the
-``errorEmailMissing`` string from the ``Errors`` language file, you would do the following:
+``errorEmailMissing`` string from the **Errors.php** language file, you would do the following:
 
 .. literalinclude:: localization/010.php
 
@@ -198,8 +198,8 @@ Language Fallback
 =================
 
 If you have a set of messages for a given locale, for instance
-``Language/en/app.php``, you can add language variants for that locale,
-each in its own folder, for instance ``Language/en-US/app.php``.
+**Language/en/app.php**, you can add language variants for that locale,
+each in its own folder, for instance **Language/en-US/app.php**.
 
 You only need to provide values for those messages that would be
 localized differently for that locale variant. Any missing message
@@ -210,8 +210,8 @@ in case new messages are added to the framework and you haven't had
 a chance to translate them yet for your locale.
 
 So, if you are using the locale ``fr-CA``, then a localized
-message will first be sought in ``Language/fr/CA``, then in
-``Language/fr``, and finally in ``Language/en``.
+message will first be sought in the **Language/fr-CA** directory, then in
+the **Language/fr** directory, and finally in the **Language/en** directory.
 
 Message Translations
 ====================
@@ -219,9 +219,9 @@ Message Translations
 We have an "official" set of translations in their
 `own repository <https://github.com/codeigniter4/translations>`_.
 
-You could download that repository, and copy its ``Language`` folder
-into your ``app``. The incorporated translations will be automatically
-picked up because the ``App`` namespace is mapped to your ``app`` folder.
+You could download that repository, and copy its **Language** folder
+into your **app** folder. The incorporated translations will be automatically
+picked up because the ``App`` namespace is mapped to your **app** folder.
 
 Alternately, a better practice would be to ``composer require codeigniter4/translations``
 inside your project, and the translated messages will be automatically picked
