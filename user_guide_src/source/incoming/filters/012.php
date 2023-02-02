@@ -9,8 +9,8 @@ class Filters extends BaseConfig
     // ...
 
     public $filters = [
-        'foo' => ['before' => ['admin/*'], 'after' => ['users/*']],
-        'bar' => ['before' => ['api/*', 'admin/*']],
+        'group:admin,superadmin'  => ['before' => ['admin/*']],
+        'permission:users.manage' => ['before' => ['admin/users/*']],
     ];
 
     // ...

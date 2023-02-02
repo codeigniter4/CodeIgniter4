@@ -12,6 +12,7 @@
 namespace CodeIgniter;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -19,7 +20,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
 use Config\Cache;
-use Config\Filters;
+use Config\Filters as FiltersConfig;
 use Config\Modules;
 use Tests\Support\Filters\Customfilter;
 
@@ -188,7 +189,10 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
-        $routes->add('pages/(:segment)', static fn ($segment) => 'You want to see "' . esc($segment) . '" page.');
+        $routes->add(
+            'pages/(:segment)',
+            static fn ($segment) => 'You want to see "' . esc($segment) . '" page.'
+        );
         $router = Services::router($routes, Services::incomingrequest());
         Services::injectMock('router', $router);
 
@@ -251,7 +255,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame('some text', $output);
     }
 
-    public function testControllersRunFilterByClassName()
+    public function testRunExecuteFilterByClassName()
     {
         $_SERVER['argv'] = ['index.php', 'pages/about'];
         $_SERVER['argc'] = 2;
@@ -260,7 +264,11 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
-        $routes->add('pages/about', static fn () => Services::incomingrequest()->getBody(), ['filter' => Customfilter::class]);
+        $routes->add(
+            'pages/about',
+            static fn () => Services::incomingrequest()->getBody(),
+            ['filter' => Customfilter::class]
+        );
 
         $router = Services::router($routes, Services::incomingrequest());
         Services::injectMock('router', $router);
@@ -270,6 +278,42 @@ final class CodeIgniterTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $this->assertStringContainsString('http://hellowworld.com', $output);
+
+        $this->resetServices();
+    }
+
+    public function testRegisterSameFilterTwiceWithDifferentArgument()
+    {
+        $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage('"test-customfilter" already has arguments: null');
+
+        $_SERVER['argv'] = ['index.php', 'pages/about'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI'] = '/pages/about';
+
+        $routes = Services::routes();
+        $routes->add(
+            'pages/about',
+            static fn () => Services::incomingrequest()->getBody(),
+            // Set filter with no argument.
+            ['filter' => 'test-customfilter']
+        );
+
+        $router = Services::router($routes, Services::incomingrequest());
+        Services::injectMock('router', $router);
+
+        /** @var FiltersConfig $filterConfig */
+        $filterConfig          = config('Filters');
+        $filterConfig->filters = [
+            // Set filter with argument.
+            'test-customfilter:arg1' => [
+                'before' => ['pages/*'],
+            ],
+        ];
+        Services::filters($filterConfig);
+
+        $this->codeigniter->run();
 
         $this->resetServices();
     }
@@ -666,7 +710,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $router = Services::router($routes, Services::incomingrequest());
         Services::injectMock('router', $router);
 
-        /** @var Filters $filterConfig */
+        /** @var FiltersConfig $filterConfig */
         $filterConfig                   = config('Filters');
         $filterConfig->globals['after'] = ['secureheaders'];
         Services::filters($filterConfig);
@@ -706,8 +750,11 @@ final class CodeIgniterTest extends CIUnitTestCase
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/pull/6410
      */
-    public function testPageCacheWithCacheQueryString($cacheQueryStringValue, int $expectedPagesInCache, array $testingUrls)
-    {
+    public function testPageCacheWithCacheQueryString(
+        $cacheQueryStringValue,
+        int $expectedPagesInCache,
+        array $testingUrls
+    ) {
         // Suppress command() output
         CITestStreamFilter::$buffer = '';
         $outputStreamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
@@ -729,7 +776,10 @@ final class CodeIgniterTest extends CIUnitTestCase
             $_SERVER['REQUEST_URI'] = '/' . $testingUrl;
             $routes                 = Services::routes(true);
             $routes->add($testingUrl, static function () {
-                CodeIgniter::cache(0); // Don't cache the page in the run() function because CodeIgniter class will create default $cacheConfig and overwrite settings from the dataProvider
+                // Don't cache the page in the run() function because CodeIgniter
+                // class will create default $cacheConfig and overwrite settings
+                // from the dataProvider
+                CodeIgniter::cache(0);
                 $response = Services::response();
                 $string   = 'This is a test page, to check cache configuration';
 
@@ -740,9 +790,11 @@ final class CodeIgniterTest extends CIUnitTestCase
             $router = Services::router($routes, Services::incomingrequest(null, false));
             Services::injectMock('router', $router);
 
-            // Cache the page output using default caching function and $cacheConfig with value from the data provider
+            // Cache the page output using default caching function and $cacheConfig
+            // with value from the data provider
             $this->codeigniter->run();
-            $this->codeigniter->cachePage($cacheConfig); // Cache the page using our own $cacheConfig confugration
+            // Cache the page using our own $cacheConfig confugration
+            $this->codeigniter->cachePage($cacheConfig);
         }
 
         // Calculate how much cached items exist in the cache after the test requests
@@ -763,17 +815,34 @@ final class CodeIgniterTest extends CIUnitTestCase
     public function cacheQueryStringProvider(): array
     {
         $testingUrls = [
-            'test', // URL #1
-            'test?important_parameter=1', // URL #2
-            'test?important_parameter=2',  // URL #3
-            'test?important_parameter=1&not_important_parameter=2', // URL #4
-            'test?important_parameter=1&not_important_parameter=2&another_not_important_parameter=3', // URL #5
+            // URL #1
+            'test',
+            // URL #2
+            'test?important_parameter=1',
+            // URL #3
+            'test?important_parameter=2',
+            // URL #4
+            'test?important_parameter=1&not_important_parameter=2',
+            // URL #5
+            'test?important_parameter=1&not_important_parameter=2&another_not_important_parameter=3',
         ];
 
         return [
-            '$cacheQueryString=false' => [false, 1, $testingUrls], // We expect only 1 page in the cache, because when cacheQueryString is set to false, all GET parameter should be ignored, and page URI will be absolutely same "/test" string for all 5 requests
-            '$cacheQueryString=true'  => [true, 5, $testingUrls], // We expect all 5 pages in the cache, because when cacheQueryString is set to true, all GET parameter should be processed as unique requests
-            '$cacheQueryString=array' => [['important_parameter'], 3, $testingUrls], // We expect only 3 pages in the cache, because when cacheQueryString is set to array with important parameters, we should ignore all parameters thats not in the array. Only URL #1, URL #2 and URL #3 should be cached. URL #4 and URL #5 is duplication of URL #2 (with value ?important_parameter=1), so they should not be processed as new unique requests and application should return already cached page for URL #2
+            // We expect only 1 page in the cache, because when cacheQueryString
+            // is set to false, all GET parameter should be ignored, and page URI
+            // will be absolutely same "/test" string for all 5 requests
+            '$cacheQueryString=false' => [false, 1, $testingUrls],
+            // We expect all 5 pages in the cache, because when cacheQueryString
+            // is set to true, all GET parameter should be processed as unique requests
+            '$cacheQueryString=true' => [true, 5, $testingUrls],
+            // We expect only 3 pages in the cache, because when cacheQueryString
+            // is set to array with important parameters, we should ignore all
+            // parameters thats not in the array. Only URL #1, URL #2 and URL #3
+            // should be cached. URL #4 and URL #5 is duplication of URL #2
+            // (with value ?important_parameter=1), so they should not be processed
+            // as new unique requests and application should return already cached
+            // page for URL #2
+            '$cacheQueryString=array' => [['important_parameter'], 3, $testingUrls],
         ];
     }
 }

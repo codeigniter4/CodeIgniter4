@@ -406,7 +406,7 @@ The value for the filter can be a string or an array of strings:
 * matching the aliases defined in **app/Config/Filters.php**.
 * filter classnames
 
-See :doc:`Controller filters <filters>` for more information on setting up filters.
+See :doc:`Controller Filters <filters>` for more information on setting up filters.
 
 .. Warning:: If you set filters to routes in **app/Config/Routes.php**
     (not in **app/Config/Filters.php**), it is recommended to disable Auto Routing (Legacy).
@@ -445,6 +445,16 @@ Multiple Filters
 You specify an array for the filter value:
 
 .. literalinclude:: routing/037.php
+
+Filter Arguments
+^^^^^^^^^^^^^^^^
+
+Additional arguments may be passed to a filter:
+
+.. literalinclude:: routing/067.php
+
+In this example, the array ``['dual', 'noreturn']`` will be passed in ``$arguments``
+to the filter's ``before()`` and ``after()`` implementation methods.
 
 .. _assigning-namespace:
 
