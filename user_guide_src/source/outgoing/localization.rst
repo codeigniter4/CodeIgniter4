@@ -89,7 +89,7 @@ file:
 
 .. literalinclude:: localization/018.php
 
-.. note:: ``useSupportedLocalesOnly()`` can be used since v4.3.0.
+.. note:: The ``useSupportedLocalesOnly()`` method can be used since v4.3.0.
 
 Retrieving the Current Locale
 =============================
@@ -225,6 +225,10 @@ You could download that repository, and copy its **Language** folder
 into your **app** folder. The incorporated translations will be automatically
 picked up because the ``App`` namespace is mapped to your **app** folder.
 
-Alternately, a better practice would be to ``composer require codeigniter4/translations``
-inside your project, and the translated messages will be automatically picked
+Alternately, a better practice would be to run the following command inside your
+project::
+
+    > composer require codeigniter4/translations
+
+The translated messages will be automatically picked
 up because the translations folders get mapped appropriately.
