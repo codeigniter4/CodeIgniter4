@@ -40,9 +40,9 @@ language codes like en-US for American English, or fr-FR, for French/France. A m
 to this can be found on the `W3C's site <https://www.w3.org/International/articles/language-tags/>`_.
 
 The system is smart enough to fall back to more generic language codes if an exact match
-cannot be found. If the locale code was set to **en-US** and we only have language files set up for **en**
-then those will be used since nothing exists for the more specific **en-US**. If, however, a language
-directory existed at **app/Language/en-US** then that would be used first.
+cannot be found. If the locale code was set to ``en-US`` and we only have language files set up for ``en``
+then those will be used since nothing exists for the more specific ``en-US``. If, however, a language
+directory existed at the **app/Language/en-US** directory then that would be used first.
 
 Locale Detection
 ================
@@ -65,7 +65,7 @@ The first value tells the Request class that we do want to negotiate a locale, s
 Once this is enabled, the system will automatically negotiate the correct language based upon an array
 of locales that you have defined in ``$supportLocales``. If no match is found between the languages
 that you support, and the requested language, the first item in $supportedLocales will be used. In
-the following example, the **en** locale would be used if no match is found:
+the following example, the ``en`` locale would be used if no match is found:
 
 .. literalinclude:: localization/003.php
 
@@ -80,7 +80,7 @@ segment will be your locale:
 
 .. literalinclude:: localization/004.php
 
-In this example, if the user tried to visit ``http://example.com/fr/books``, then the locale would be
+In this example, if the user tried to visit **http://example.com/fr/books**, then the locale would be
 set to ``fr``, assuming it was configured as a valid locale.
 
 If the value doesn't match a valid locale as defined in ``$supportedLocales`` in **app/Config/App.php**, the default
