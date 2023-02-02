@@ -17,11 +17,11 @@ with different supported languages.
 Language strings are stored in the **app/Language** directory, with a sub-directory for each
 supported language::
 
-    /app
-        /Language
-            /en
+    app/
+        Language/
+            en/
                 App.php
-            /fr
+            fr/
                 App.php
 
 .. important:: Locale detection only works for web-based requests that use the IncomingRequest class.
