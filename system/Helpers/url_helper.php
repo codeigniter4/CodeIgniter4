@@ -147,12 +147,12 @@ if (! function_exists('base_url')) {
 if (! function_exists('current_url')) {
     /**
      * Returns the current full URL based on the Config\App settings and IncomingRequest.
-     * String returns ignore query and fragment parts.
      *
      * @param bool                 $returnObject True to return an object instead of a string
      * @param IncomingRequest|null $request      A request to use when retrieving the path
      *
-     * @return string|URI
+     * @return string|URI When returning string, the query and fragment parts are removed.
+     *                    When returning URI, the query and fragment parts are preserved.
      */
     function current_url(bool $returnObject = false, ?IncomingRequest $request = null)
     {
