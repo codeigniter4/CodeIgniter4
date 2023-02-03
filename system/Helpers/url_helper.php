@@ -140,15 +140,14 @@ if (! function_exists('base_url')) {
      */
     function base_url($relativePath = '', ?string $scheme = null): string
     {
-        $uri = _get_uri($relativePath);
+        /** @var App $config */
+        $config = clone config('App');
 
-        return URI::createURIString(
-            $scheme ?? $uri->getScheme(),
-            $uri->getAuthority(),
-            $uri->getPath(),
-            $uri->getQuery(),
-            $uri->getFragment()
-        );
+        // Use the current baseURL for multiple domain support
+        $config->baseURL   = Services::request()->getUri()->getBaseURL();
+        $config->indexPage = '';
+
+        return site_url($relativePath, $scheme, $config);
     }
 }
 
