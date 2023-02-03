@@ -26,81 +26,14 @@ if (! function_exists('_get_uri')) {
      *
      * @internal Outside the framework this should not be used directly.
      *
-     * @param string   $relativePath URI path relative to baseURL. May include queries or fragments
-     * @param App|null $config       Alternative Config to use
-     * @param bool     $useConfig    Whether to use the Config baseURL
+     * @param array|string $relativePath URI string or array of URI segments
+     * @param App|null     $config       Alternative Config to use
+     * @param bool         $indexPage    Whether to add the $indexPage value
      *
      * @throws HTTPException            For invalid paths.
      * @throws InvalidArgumentException For invalid config.
-     *
-     * @deprecated No longer used.
      */
-    function _get_uri(string $relativePath = '', ?App $config = null, bool $useConfig = false): URI
-    {
-        $config ??= config('App');
-
-        if ($config->baseURL === '') {
-            throw new InvalidArgumentException('_get_uri() requires a valid baseURL.');
-        }
-
-        // If a full URI was passed then convert it
-        if (strpos($relativePath, '://') !== false) {
-            $full         = new URI($relativePath);
-            $relativePath = URI::createURIString(
-                null,
-                null,
-                $full->getPath(),
-                $full->getQuery(),
-                $full->getFragment()
-            );
-        }
-
-        $relativePath = URI::removeDotSegments($relativePath);
-
-        // Build the full URL based on $config and $relativePath
-        $request = Services::request();
-
-        /** @var App $config */
-        if ($useConfig) {
-            $url = rtrim($config->baseURL, '/ ') . '/';
-        } else {
-            $url = $request instanceof CLIRequest
-                ? rtrim($config->baseURL, '/ ') . '/'
-                : $request->getUri()->getBaseURL();
-        }
-
-        // Check for an index page
-        if ($config->indexPage !== '') {
-            $url .= $config->indexPage;
-
-            // Check if we need a separator
-            if ($relativePath !== '' && $relativePath[0] !== '/' && $relativePath[0] !== '?') {
-                $url .= '/';
-            }
-        }
-
-        $url .= $relativePath;
-
-        $uri = new URI($url);
-
-        // Check if the baseURL scheme needs to be coerced into its secure version
-        if ($config->forceGlobalSecureRequests && $uri->getScheme() === 'http') {
-            $uri->setScheme('https');
-        }
-
-        return $uri;
-    }
-}
-
-if (! function_exists('site_url')) {
-    /**
-     * Returns a site URL as defined by the App config.
-     *
-     * @param array|string $relativePath URI string or array of URI segments
-     * @param string|null  $scheme       URI scheme. E.g., http, ftp
-     * @param App|null     $config       Alternate configuration to use
-     */
-    function site_url($relativePath = '', ?string $scheme = null, ?App $config = null): string
+    function _get_uri($relativePath = '', ?App $config = null, bool $indexPage = false): URI
     {
         $appConfig = null;
         if ($config === null) {
@@ -140,7 +73,7 @@ if (! function_exists('site_url')) {
         }
 
         // Check for an index page
-        if ($config->indexPage !== '') {
+        if ($indexPage && $config->indexPage !== '') {
             $url .= $config->indexPage;
 
             // Check if we need a separator
@@ -149,7 +82,30 @@ if (! function_exists('site_url')) {
             }
         }
 
-        $uri = new URI($url . $relativePath);
+        return new URI($url . $relativePath);
+    }
+}
+
+if (! function_exists('site_url')) {
+    /**
+     * Returns a site URL as defined by the App config.
+     *
+     * @param array|string $relativePath URI string or array of URI segments
+     * @param string|null  $scheme       URI scheme. E.g., http, ftp
+     * @param App|null     $config       Alternate configuration to use
+     */
+    function site_url($relativePath = '', ?string $scheme = null, ?App $config = null): string
+    {
+        $appConfig = null;
+        if ($config === null) {
+            $appConfig = config('App');
+        }
+
+        $uri = _get_uri($relativePath, $config, true);
+
+        if ($config === null) {
+            $config = $appConfig;
+        }
 
         // Check if the baseURL scheme needs to be coerced into its secure version
         if ($config->forceGlobalSecureRequests && $uri->getScheme() === 'http') {
@@ -176,29 +132,7 @@ if (! function_exists('base_url')) {
      */
     function base_url($relativePath = '', ?string $scheme = null): string
     {
-        // Convert array of segments to a string
-        if (is_array($relativePath)) {
-            $relativePath = implode('/', $relativePath);
-        }
-
-        // If a full URI was passed then convert it
-        if (strpos($relativePath, '://') !== false) {
-            $full         = new URI($relativePath);
-            $relativePath = URI::createURIString(
-                null,
-                null,
-                $full->getPath(),
-                $full->getQuery(),
-                $full->getFragment()
-            );
-        }
-
-        $relativePath = URI::removeDotSegments($relativePath);
-
-        $request        = Services::request();
-        $currentBaseURL = $request->getUri()->getBaseURL();
-
-        $uri = new URI($currentBaseURL . $relativePath);
+        $uri = _get_uri($relativePath);
 
         return URI::createURIString(
             $scheme ?? $uri->getScheme(),
