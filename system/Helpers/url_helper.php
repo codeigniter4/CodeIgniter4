@@ -157,17 +157,19 @@ if (! function_exists('current_url')) {
     function current_url(bool $returnObject = false, ?IncomingRequest $request = null)
     {
         $request ??= Services::request();
-        $path = $request->getPath();
+        $routePath  = $request->getPath();
+        $currentURI = $request->getUri();
 
+        $relativePath = $routePath;
         // Append queries and fragments
-        if ($query = $request->getUri()->getQuery()) {
-            $path .= '?' . $query;
+        if ($query = $currentURI->getQuery()) {
+            $relativePath .= '?' . $query;
         }
-        if ($fragment = $request->getUri()->getFragment()) {
-            $path .= '#' . $fragment;
+        if ($fragment = $currentURI->getFragment()) {
+            $relativePath .= '#' . $fragment;
         }
 
-        $uri = _get_uri($path);
+        $uri = _get_uri($relativePath);
 
         return $returnObject ? $uri : URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
     }
