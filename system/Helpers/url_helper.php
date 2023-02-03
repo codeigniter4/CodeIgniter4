@@ -94,28 +94,65 @@ if (! function_exists('site_url')) {
     /**
      * Returns a site URL as defined by the App config.
      *
-     * @param array|string $relativePath  URI string or array of URI segments
-     * @param string|null  $scheme        URI scheme. E.g., http, ftp
-     * @param App|null     $config        Alternate configuration to use
-     * @param bool         $dontUseConfig Set true if you don't use the Config
-     *                                    baseURL even when you pass the Config
+     * @param array|string $relativePath URI string or array of URI segments
+     * @param string|null  $scheme       URI scheme. E.g., http, ftp
+     * @param App|null     $config       Alternate configuration to use
      */
-    function site_url(
-        $relativePath = '',
-        ?string $scheme = null,
-        ?App $config = null,
-        bool $dontUseConfig = false
-    ): string {
-        // If $dontUseConfig is false and $config is not passed,
-        // we use the Config baseURL.
-        $useConfig = (! $dontUseConfig) && ($config !== null);
+    function site_url($relativePath = '', ?string $scheme = null, ?App $config = null): string
+    {
+        $appConfig = null;
+        if ($config === null) {
+            $appConfig = config('App');
+        }
 
         // Convert array of segments to a string
         if (is_array($relativePath)) {
             $relativePath = implode('/', $relativePath);
         }
 
-        $uri = _get_uri($relativePath, $config, $useConfig);
+        // If a full URI was passed then convert it
+        if (strpos($relativePath, '://') !== false) {
+            $full         = new URI($relativePath);
+            $relativePath = URI::createURIString(
+                null,
+                null,
+                $full->getPath(),
+                $full->getQuery(),
+                $full->getFragment()
+            );
+        }
+
+        $relativePath = URI::removeDotSegments($relativePath);
+
+        $request = Services::request();
+
+        if ($config === null) {
+            $url = $request instanceof CLIRequest
+                ? rtrim($appConfig->baseURL, '/ ') . '/'
+                // Use the current baseURL for multiple domain support
+                : $request->getUri()->getBaseURL();
+
+            $config = $appConfig;
+        } else {
+            $url = rtrim($config->baseURL, '/ ') . '/';
+        }
+
+        // Check for an index page
+        if ($config->indexPage !== '') {
+            $url .= $config->indexPage;
+
+            // Check if we need a separator
+            if ($relativePath !== '' && $relativePath[0] !== '/' && $relativePath[0] !== '?') {
+                $url .= '/';
+            }
+        }
+
+        $uri = new URI($url . $relativePath);
+
+        // Check if the baseURL scheme needs to be coerced into its secure version
+        if ($config->forceGlobalSecureRequests && $uri->getScheme() === 'http') {
+            $uri->setScheme('https');
+        }
 
         return URI::createURIString(
             $scheme ?? $uri->getScheme(),
@@ -137,10 +174,37 @@ if (! function_exists('base_url')) {
      */
     function base_url($relativePath = '', ?string $scheme = null): string
     {
-        $config            = clone config('App');
-        $config->indexPage = '';
+        // Convert array of segments to a string
+        if (is_array($relativePath)) {
+            $relativePath = implode('/', $relativePath);
+        }
 
-        return site_url($relativePath, $scheme, $config, true);
+        // If a full URI was passed then convert it
+        if (strpos($relativePath, '://') !== false) {
+            $full         = new URI($relativePath);
+            $relativePath = URI::createURIString(
+                null,
+                null,
+                $full->getPath(),
+                $full->getQuery(),
+                $full->getFragment()
+            );
+        }
+
+        $relativePath = URI::removeDotSegments($relativePath);
+
+        $request        = Services::request();
+        $currentBaseURL = $request->getUri()->getBaseURL();
+
+        $uri = new URI($currentBaseURL . $relativePath);
+
+        return URI::createURIString(
+            $scheme ?? $uri->getScheme(),
+            $uri->getAuthority(),
+            $uri->getPath(),
+            $uri->getQuery(),
+            $uri->getFragment()
+        );
     }
 }
 
