@@ -429,7 +429,7 @@ final class EntityTest extends CIUnitTestCase
     public function testCastTimestampException()
     {
         $this->expectException(CastException::class);
-        $this->expectErrorMessage('Type casting "timestamp" expects a correct timestamp.');
+        $this->expectExceptionMessage('Type casting "timestamp" expects a correct timestamp.');
 
         $entity        = $this->getCastEntity();
         $entity->ninth = 'some string';
@@ -725,7 +725,7 @@ final class EntityTest extends CIUnitTestCase
     public function testCustomCastException()
     {
         $this->expectException(CastException::class);
-        $this->expectErrorMessage('The "Tests\Support\Entity\Cast\NotExtendsBaseCast" class must inherit the "CodeIgniter\Entity\Cast\BaseCast" class');
+        $this->expectExceptionMessage('The "Tests\Support\Entity\Cast\NotExtendsBaseCast" class must inherit the "CodeIgniter\Entity\Cast\BaseCast" class');
 
         $entity = $this->getCustomCastEntity();
 
