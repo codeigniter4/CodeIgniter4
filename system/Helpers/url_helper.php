@@ -29,15 +29,15 @@ if (! function_exists('_get_uri')) {
      * @param array|string $relativePath URI string or array of URI segments.
      *                                   May include queries or fragments.
      * @param App|null     $config       Alternative Config to use
-     * @param bool         $indexPage    Whether to add the $indexPage value
      *
      * @throws HTTPException            For invalid paths.
      * @throws InvalidArgumentException For invalid config.
      */
-    function _get_uri($relativePath = '', ?App $config = null, bool $indexPage = false): URI
+    function _get_uri($relativePath = '', ?App $config = null): URI
     {
         $appConfig = null;
         if ($config === null) {
+            /** @var App $appConfig */
             $appConfig = config('App');
         }
 
@@ -74,7 +74,7 @@ if (! function_exists('_get_uri')) {
         }
 
         // Check for an index page
-        if ($indexPage && $config->indexPage !== '') {
+        if ($config->indexPage !== '') {
             $url .= $config->indexPage;
 
             // Check if we need a separator
@@ -106,10 +106,11 @@ if (! function_exists('site_url')) {
     {
         $appConfig = null;
         if ($config === null) {
+            /** @var App $appConfig */
             $appConfig = config('App');
         }
 
-        $uri = _get_uri($relativePath, $config, true);
+        $uri = _get_uri($relativePath, $config);
 
         if ($config === null) {
             $config = $appConfig;
@@ -178,7 +179,7 @@ if (! function_exists('current_url')) {
             $relativePath .= '#' . $fragment;
         }
 
-        $uri = _get_uri($relativePath, null, true);
+        $uri = _get_uri($relativePath, null);
 
         return $returnObject ? $uri : URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
     }
