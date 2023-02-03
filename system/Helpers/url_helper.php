@@ -160,7 +160,7 @@ if (! function_exists('current_url')) {
         $routePath  = $request->getPath();
         $currentURI = $request->getUri();
 
-        $url = $request->getUri()->getBaseURL();
+        $currentBaseURL = $currentURI->getBaseURL();
 
         $config       = config('App');
         $relativePath = $routePath;
@@ -174,16 +174,17 @@ if (! function_exists('current_url')) {
         }
 
         // Check for an index page
+        $indexPage = '';
         if ($config->indexPage !== '') {
-            $url .= $config->indexPage;
+            $indexPage = $config->indexPage;
 
             // Check if we need a separator
             if ($relativePath !== '' && $relativePath[0] !== '/' && $relativePath[0] !== '?') {
-                $url .= '/';
+                $indexPage .= '/';
             }
         }
 
-        $uri = new URI($url . $relativePath);
+        $uri = new URI($currentBaseURL . $indexPage . $relativePath);
 
         return $returnObject ? $uri : URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
     }
