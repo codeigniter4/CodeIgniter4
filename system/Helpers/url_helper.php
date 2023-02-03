@@ -26,7 +26,7 @@ if (! function_exists('_get_uri')) {
      *
      * @internal Outside the framework this should not be used directly.
      *
-     * @param string   $relativePath May include queries or fragments
+     * @param string   $relativePath URI path relative to baseURL. May include queries or fragments
      * @param App|null $config       Alternative Config to use
      * @param bool     $useConfig    Whether to use the Config baseURL
      *
