@@ -443,7 +443,7 @@ class IncomingRequest extends Request
      * instance, this can be used to change the "current URL"
      * for testing.
      *
-     * @param string   $path   URI path relative to SCRIPT_NAME
+     * @param string   $path   URI path relative to baseURL
      * @param App|null $config Optional alternate config to use
      *
      * @return $this
