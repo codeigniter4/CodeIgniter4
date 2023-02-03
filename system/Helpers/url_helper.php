@@ -26,7 +26,8 @@ if (! function_exists('_get_uri')) {
      *
      * @internal Outside the framework this should not be used directly.
      *
-     * @param array|string $relativePath URI string or array of URI segments
+     * @param array|string $relativePath URI string or array of URI segments.
+     *                                   May include queries or fragments.
      * @param App|null     $config       Alternative Config to use
      * @param bool         $indexPage    Whether to add the $indexPage value
      *
@@ -82,7 +83,14 @@ if (! function_exists('_get_uri')) {
             }
         }
 
-        return new URI($url . $relativePath);
+        $uri = new URI($url . $relativePath);
+
+        // Check if the baseURL scheme needs to be coerced into its secure version
+        if ($config->forceGlobalSecureRequests && $uri->getScheme() === 'http') {
+            $uri->setScheme('https');
+        }
+
+        return $uri;
     }
 }
 
@@ -157,12 +165,10 @@ if (! function_exists('current_url')) {
     function current_url(bool $returnObject = false, ?IncomingRequest $request = null)
     {
         $request ??= Services::request();
+        /** @var CLIRequest|IncomingRequest $request */
         $routePath  = $request->getPath();
         $currentURI = $request->getUri();
 
-        $currentBaseURL = $currentURI->getBaseURL();
-
-        $config       = config('App');
         $relativePath = $routePath;
 
         // Append queries and fragments
@@ -173,18 +179,7 @@ if (! function_exists('current_url')) {
             $relativePath .= '#' . $fragment;
         }
 
-        // Check for an index page
-        $indexPage = '';
-        if ($config->indexPage !== '') {
-            $indexPage = $config->indexPage;
-
-            // Check if we need a separator
-            if ($relativePath !== '' && $relativePath[0] !== '/' && $relativePath[0] !== '?') {
-                $indexPage .= '/';
-            }
-        }
-
-        $uri = new URI($currentBaseURL . $indexPage . $relativePath);
+        $uri = _get_uri($relativePath, null, true);
 
         return $returnObject ? $uri : URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
     }
