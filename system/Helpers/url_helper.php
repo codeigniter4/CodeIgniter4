@@ -32,6 +32,8 @@ if (! function_exists('_get_uri')) {
      *
      * @throws HTTPException            For invalid paths.
      * @throws InvalidArgumentException For invalid config.
+     *
+     * @deprecated No longer used.
      */
     function _get_uri(string $relativePath = '', ?App $config = null, bool $useConfig = false): URI
     {
@@ -224,7 +226,11 @@ if (! function_exists('current_url')) {
         $routePath  = $request->getPath();
         $currentURI = $request->getUri();
 
+        $url = $request->getUri()->getBaseURL();
+
+        $config       = config('App');
         $relativePath = $routePath;
+
         // Append queries and fragments
         if ($query = $currentURI->getQuery()) {
             $relativePath .= '?' . $query;
@@ -233,7 +239,17 @@ if (! function_exists('current_url')) {
             $relativePath .= '#' . $fragment;
         }
 
-        $uri = _get_uri($relativePath);
+        // Check for an index page
+        if ($config->indexPage !== '') {
+            $url .= $config->indexPage;
+
+            // Check if we need a separator
+            if ($relativePath !== '' && $relativePath[0] !== '/' && $relativePath[0] !== '?') {
+                $url .= '/';
+            }
+        }
+
+        $uri = new URI($url . $relativePath);
 
         return $returnObject ? $uri : URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
     }
