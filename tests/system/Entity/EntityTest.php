@@ -96,7 +96,7 @@ final class EntityTest extends CIUnitTestCase
 
         $this->assertSame(123, $entity->foo);
         $this->assertSame('bar:234:bar', $entity->bar);
-        $this->assertObjectNotHasAttribute('baz', $entity);
+        $this->assertSame(4556, $entity->baz);
     }
 
     /**

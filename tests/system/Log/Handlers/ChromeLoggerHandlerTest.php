@@ -66,10 +66,11 @@ final class ChromeLoggerHandlerTest extends CIUnitTestCase
         $config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] = ['critical'];
 
         $logger = new ChromeLoggerHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
+
         $result = $logger->setDateFormat('F j, Y');
 
-        $this->assertObjectHasAttribute('dateFormat', $result);
-        $this->assertObjectHasAttribute('dateFormat', $logger);
+        $this->assertSame('F j, Y', $this->getPrivateProperty($result, 'dateFormat'));
+        $this->assertSame('F j, Y', $this->getPrivateProperty($logger, 'dateFormat'));
     }
 
     public function testChromeLoggerHeaderSent()
