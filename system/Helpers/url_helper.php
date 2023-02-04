@@ -131,7 +131,11 @@ if (! function_exists('base_url')) {
         $config = clone config('App');
 
         // Use the current baseURL for multiple domain support
-        $config->baseURL   = Services::request()->getUri()->getBaseURL();
+        $request         = Services::request();
+        $config->baseURL = $request instanceof CLIRequest
+            ? rtrim($config->baseURL, '/ ') . '/'
+            : $request->getUri()->getBaseURL();
+
         $config->indexPage = '';
 
         return site_url($relativePath, $scheme, $config);
