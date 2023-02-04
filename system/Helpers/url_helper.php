@@ -63,27 +63,28 @@ if (! function_exists('_get_uri')) {
         $request = Services::request();
 
         if ($config === null) {
-            $url = $request instanceof CLIRequest
+            $baseURL = $request instanceof CLIRequest
                 ? rtrim($appConfig->baseURL, '/ ') . '/'
                 // Use the current baseURL for multiple domain support
                 : $request->getUri()->getBaseURL();
 
             $config = $appConfig;
         } else {
-            $url = rtrim($config->baseURL, '/ ') . '/';
+            $baseURL = rtrim($config->baseURL, '/ ') . '/';
         }
 
         // Check for an index page
+        $indexPage = '';
         if ($config->indexPage !== '') {
-            $url .= $config->indexPage;
+            $indexPage = $config->indexPage;
 
             // Check if we need a separator
             if ($relativePath !== '' && $relativePath[0] !== '/' && $relativePath[0] !== '?') {
-                $url .= '/';
+                $indexPage .= '/';
             }
         }
 
-        $uri = new URI($url . $relativePath);
+        $uri = new URI($baseURL . $indexPage . $relativePath);
 
         // Check if the baseURL scheme needs to be coerced into its secure version
         if ($config->forceGlobalSecureRequests && $uri->getScheme() === 'http') {
