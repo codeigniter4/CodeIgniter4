@@ -105,22 +105,7 @@ if (! function_exists('site_url')) {
      */
     function site_url($relativePath = '', ?string $scheme = null, ?App $config = null): string
     {
-        $appConfig = null;
-        if ($config === null) {
-            /** @var App $appConfig */
-            $appConfig = config('App');
-        }
-
         $uri = _get_uri($relativePath, $config);
-
-        if ($config === null) {
-            $config = $appConfig;
-        }
-
-        // Check if the baseURL scheme needs to be coerced into its secure version
-        if ($config->forceGlobalSecureRequests && $uri->getScheme() === 'http') {
-            $uri->setScheme('https');
-        }
 
         return URI::createURIString(
             $scheme ?? $uri->getScheme(),
