@@ -169,7 +169,7 @@ if (! function_exists('current_url')) {
             $relativePath .= '#' . $fragment;
         }
 
-        $uri = _get_uri($relativePath, null);
+        $uri = _get_uri($relativePath);
 
         return $returnObject ? $uri : URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
     }
