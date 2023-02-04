@@ -314,6 +314,24 @@ final class SiteUrlTest extends CIUnitTestCase
         $this->assertSame('http://example.com/ci/v4/controller/method', base_url('controller/method', null));
     }
 
+    public function testBaseURLWithCLIRequest()
+    {
+        unset($_SERVER['HTTP_HOST'], $_SERVER['REQUEST_URI']);
+
+        $this->config->baseURL = 'http://example.com/';
+        $request               = Services::clirequest($this->config);
+        Services::injectMock('request', $request);
+
+        $this->assertSame(
+            'http://example.com/index.php/controller/method',
+            site_url('controller/method', null, $this->config)
+        );
+        $this->assertSame(
+            'http://example.com/controller/method',
+            base_url('controller/method', null)
+        );
+    }
+
     public function testSiteURLWithAllowedHostname()
     {
         $_SERVER['HTTP_HOST']   = 'www.example.jp';
