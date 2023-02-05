@@ -32,6 +32,7 @@ use CodeIgniter\Session\Session;
 use CodeIgniter\Test\TestLogger;
 use Config\App;
 use Config\Database;
+use Config\DocTypes;
 use Config\Logger;
 use Config\Services;
 use Config\View;
@@ -889,7 +890,7 @@ if (! function_exists('_solidus')) {
      */
     function _solidus(): string
     {
-        if (config(\Config\DocTypes::class)->html5 ?? false) {
+        if (config(DocTypes::class)->html5 ?? false) {
             return '';
         }
 
