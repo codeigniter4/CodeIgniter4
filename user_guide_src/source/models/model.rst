@@ -754,6 +754,8 @@ afterUpdate       **id** = the array of primary keys of the rows being updated.
                   **result** = the results of the update() method used through the Query Builder.
 beforeUpdateBatch **data** = associative array of values that are being updated. If an object or Entity class is passed to the
                   updateBatch method, it is first converted to an array.
+                  **alias** = The alias assigned to the data table.
+                  **updateFields** = The fields updated in the query.
 afterUpdateBatch  **data** = the key/value pairs being updated.
                   **result** = the results of the updateBatch() method used through the Query Builder.
 beforeFind        The name of the calling **method**, whether a **singleton** was requested, and these additional fields:
