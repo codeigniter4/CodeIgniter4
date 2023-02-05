@@ -204,11 +204,12 @@ if (! function_exists('config')) {
     /**
      * More simple way of getting config instances from Factories
      *
-     * @template T of BaseConfig
+     * @template ConfigTemplate of BaseConfig
      *
-     * @param class-string<T> $name
+     * @param class-string<ConfigTemplate>|string $name
      *
-     * @return T
+     * @return ConfigTemplate
+     * @phpstan-return ($name is class-string<ConfigTemplate> ? ConfigTemplate : object|null)
      */
     function config(string $name, bool $getShared = true)
     {
