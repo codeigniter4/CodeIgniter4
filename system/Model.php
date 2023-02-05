@@ -944,7 +944,7 @@ class Model extends BaseModel
 
         $eventData = [
             'data'         => $set,
-            'alias'        => $this->tempData['setData']['alias'],
+            'alias'        => $this->tempData['setData']['alias'] ?? null,
             'updateFields' => $this->tempData['updateFields'],
         ];
 
