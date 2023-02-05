@@ -966,7 +966,8 @@ You can also upsert from a query:
 
 .. literalinclude:: query_builder/115.php
 
-.. note:: ``setQueryAsData()`` can be used since v4.3.0.
+.. note:: The ``setQueryAsData()``, ``onConstraint()``, and ``updateFields()``
+    methods can be used since v4.3.0.
 
 .. note:: It is required to alias the columns of the select query to match those of the target table.
 
@@ -1120,7 +1121,8 @@ You can also update from a query:
 
 .. literalinclude:: query_builder/116.php
 
-.. note:: ``setQueryAsData()`` can be used since v4.3.0.
+.. note:: The ``setQueryAsData()``, ``onConstraint()``, and ``updateFields()``
+    methods can be used since v4.3.0.
 
 .. note:: It is required to alias the columns of the select query to match those of the target table.
 
