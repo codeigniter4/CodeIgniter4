@@ -999,7 +999,16 @@ final class FormHelperTest extends CIUnitTestCase
     public function testValidationShowErrorForWildcards()
     {
         $validation = Services::validation();
-        $validation->setRule('user.0.name', 'Name', 'required')->run([]);
+        $validation->setRule('user.*.name', 'Name', 'required')
+            ->run([
+                'user' => [
+                    'friends' => [
+                        ['name' => 'Name1'],
+                        ['name' => ''],
+                        ['name' => 'Name2'],
+                    ]
+                ]
+            ]);
 
         $html = validation_show_error('user.*.name');
 
