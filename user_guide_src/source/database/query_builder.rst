@@ -908,6 +908,8 @@ Upsert
 $builder->upsert()
 ------------------
 
+.. versionadded:: 4.3.0
+
 Generates an upsert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
 method. By default a constraint will be defined in order. A primary
@@ -929,6 +931,8 @@ The first parameter is an object.
 $builder->getCompiledUpsert()
 -----------------------------
 
+.. versionadded:: 4.3.0
+
 Compiles the upsert query just like ``$builder->upsert()`` but does not
 *run* the query. This method simply returns the SQL query as a string.
 
@@ -943,6 +947,8 @@ upsertBatch
 
 $builder->upsertBatch()
 -----------------------
+
+.. versionadded:: 4.3.0
 
 Generates an upsert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
@@ -967,6 +973,8 @@ You can also upsert from a query:
 $builder->onConstraint()
 ------------------------
 
+.. versionadded:: 4.3.0
+
 Allows manually setting constraint to be used for upsert. This does
 not work with MySQL because MySQL checks all constraints by default.
 
@@ -976,6 +984,9 @@ This method accepts a string or an array of columns.
 
 $builder->updateFields()
 ------------------------
+
+.. versionadded:: 4.3.0
+
 Allows manually setting the fields to be updated when performing upserts.
 
 .. literalinclude:: query_builder/110.php
@@ -1146,6 +1157,8 @@ method, or ``emptyTable()``.
 $builder->deleteBatch()
 -----------------------
 
+.. versionadded:: 4.3.0
+
 Generates a batch **DELETE** statement based on a set of data.
 
 .. literalinclude:: query_builder/118.php
@@ -1198,6 +1211,8 @@ When
 $builder->when()
 ----------------
 
+.. versionadded:: 4.3.0
+
 This allows modifying the query based on a condition without breaking out of the
 query builder chain. The first parameter is the condition, and it should evaluate
 to a boolean. The second parameter is a callable that will be ran
@@ -1222,6 +1237,8 @@ WhenNot
 
 $builder->whenNot()
 -------------------
+
+.. versionadded:: 4.3.0
 
 This works exactly the same way as ``$builder->when()`` except that it will
 only run the callable when the condition evaluates to ``false``, instead of ``true`` like ``when()``.
@@ -1414,6 +1431,8 @@ Class Reference
         Specifies the ``FROM`` clause of a query using a subquery.
 
     .. php:method:: setQueryAsData($query[, $alias[, $columns = null]])
+
+        .. versionadded:: 4.3.0
 
         :param BaseBuilder|RawSql $query: Instance of the BaseBuilder or RawSql
         :param string|null $alias: Alias for query
