@@ -169,17 +169,15 @@ if (! function_exists('current_url')) {
         $routePath  = $request->getPath();
         $currentURI = $request->getUri();
 
-        $relativePath = $routePath;
-
         // Append queries and fragments
         if ($query = $currentURI->getQuery()) {
-            $relativePath .= '?' . $query;
+            $query = '?' . $query;
         }
         if ($fragment = $currentURI->getFragment()) {
-            $relativePath .= '#' . $fragment;
+            $fragment = '#' . $fragment;
         }
 
-        $uri = _get_uri($relativePath);
+        $uri = _get_uri($routePath . $query . $fragment);
 
         return $returnObject ? $uri : URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
     }
