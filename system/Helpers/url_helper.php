@@ -39,6 +39,16 @@ if (! function_exists('_get_uri')) {
         if ($config === null) {
             /** @var App $appConfig */
             $appConfig = config('App');
+
+            if ($appConfig->baseURL === '') {
+                throw new InvalidArgumentException(
+                    '_get_uri() requires a valid baseURL.'
+                );
+            }
+        } elseif ($config->baseURL === '') {
+            throw new InvalidArgumentException(
+                '_get_uri() requires a valid baseURL.'
+            );
         }
 
         // Convert array of segments to a string
