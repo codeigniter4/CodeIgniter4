@@ -933,9 +933,8 @@ class Model extends BaseModel
         // merge additional fields
         $this->tempData['updateFields'] = array_merge($this->tempData['updateFields'], $this->tempData['updateFieldsAdditional'] ?? []);
 
-        // we need to define these now or else builder will update all fields in dataset
         // make sure we aren't updating a column not allowed
-        $this->builder()->updateFields($this->doProtectFields($this->tempData['updateFields']));
+        $this->tempData['updateFields'] = $this->doProtectFields($this->tempData['updateFields']);
 
         // add update timestamp if not already in data
         // also check updateFields in case it was added there
@@ -943,11 +942,20 @@ class Model extends BaseModel
             $this->builder()->updateFields([$this->updatedField => new RawSql($this->db->escape($this->setDate()))]);
         }
 
-        $eventData = ['data' => $set];
+        $eventData = [
+            'data'         => $set,
+            'alias'        => $this->tempData['setData']['alias'],
+            'updateFields' => $this->tempData['updateFields'],
+        ];
 
         if ($this->tempAllowCallbacks) {
             $eventData = $this->trigger('beforeUpdateBatch', $eventData);
         }
+
+        $this->tempData['setData']['alias'] = $eventData['alias'];
+
+        // we need to define these now or else builder will update all fields in dataset
+        $this->builder()->updateFields($eventData['updateFields']);
 
         $result = $this->doUpdateBatch($eventData['data'], $constraints, $batchSize, $returnSQL);
 
