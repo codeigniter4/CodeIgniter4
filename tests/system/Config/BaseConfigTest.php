@@ -110,7 +110,7 @@ final class BaseConfigTest extends CIUnitTestCase
         // override config with shortPrefix ENV var
         $this->assertSame('hubbahubba', $config->delta);
         // incorrect env name should not inject property
-        $this->assertObjectNotHasAttribute('notthere', $config);
+        $this->assertFalse(property_exists($config, 'notthere'));
         // empty ENV var should not affect config setting
         $this->assertSame('pineapple', $config->fruit);
         // non-empty ENV var should overrideconfig setting

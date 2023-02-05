@@ -172,6 +172,11 @@
       <code>UnexsistenceClass</code>
     </UndefinedClass>
   </file>
+  <file src="tests/system/Config/BaseConfigTest.php">
+    <UndefinedClass occurrences="1">
+        <code>SimpleConfig</code>
+    </UndefinedClass>
+  </file>
   <file src="tests/system/Config/FactoriesTest.php">
     <UndefinedClass occurrences="1">
       <code>'SomeWidget'</code>
