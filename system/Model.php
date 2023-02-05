@@ -939,7 +939,7 @@ class Model extends BaseModel
         // add update timestamp if not already in data
         // also check updateFields in case it was added there
         if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, current($set)) && ! array_key_exists($this->updatedField, $this->tempData['updateFields'])) {
-            $this->builder()->updateFields([$this->updatedField => new RawSql($this->db->escape($this->setDate()))]);
+            $this->updateFields([$this->updatedField => new RawSql($this->db->escape($this->setDate()))]);
         }
 
         $eventData = [
