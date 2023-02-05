@@ -727,7 +727,7 @@ Additionally, each model may allow (default) or deny callbacks class-wide by set
 
 .. literalinclude:: model/052.php
 
-You may also change this setting temporarily for a single model call sing the ``allowCallbacks()`` method:
+You may also change this setting temporarily for a single model call using the ``allowCallbacks()`` method:
 
 .. literalinclude:: model/053.php
 
