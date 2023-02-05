@@ -1006,8 +1006,8 @@ final class FormHelperTest extends CIUnitTestCase
                         ['name' => 'Name1'],
                         ['name' => ''],
                         ['name' => 'Name2'],
-                    ]
-                ]
+                    ],
+                ],
             ]);
 
         $html = validation_show_error('user.*.name');
