@@ -10,6 +10,7 @@
  */
 
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
@@ -47,8 +48,7 @@ if (! function_exists('app_timezone')) {
      */
     function app_timezone(): string
     {
-        /** @var App $config */
-        $config = config('App');
+        $config = config(App::class);
 
         return $config->appTimezone;
     }
@@ -203,7 +203,11 @@ if (! function_exists('config')) {
     /**
      * More simple way of getting config instances from Factories
      *
-     * @return object|null
+     * @template T of BaseConfig
+     *
+     * @param class-string<T> $name
+     *
+     * @return T
      */
     function config(string $name, bool $getShared = true)
     {
@@ -495,7 +499,7 @@ if (! function_exists('force_https')) {
             Services::session(null, true)->regenerate(); // @codeCoverageIgnore
         }
 
-        $baseURL = config('App')->baseURL;
+        $baseURL = config(App::class)->baseURL;
 
         if (strpos($baseURL, 'https://') === 0) {
             $authority = substr($baseURL, strlen('https://'));
@@ -885,7 +889,7 @@ if (! function_exists('_solidus')) {
      */
     function _solidus(): string
     {
-        if (config('DocTypes')->html5 ?? false) {
+        if (config(\Config\DocTypes::class)->html5 ?? false) {
             return '';
         }
 
@@ -973,10 +977,9 @@ if (! function_exists('session')) {
      *    session()->set('foo', 'bar');
      *    $foo = session('bar');
      *
-     * @param string $val
+     * @param string|null $val
      *
      * @return array|bool|float|int|object|Session|string|null
-     * @phpstan-return ($val is null ? Session : array|bool|float|int|object|string|null)
      */
     function session(?string $val = null)
     {
@@ -1064,7 +1067,7 @@ if (! function_exists('slash_item')) {
      */
     function slash_item(string $item): ?string
     {
-        $config = config('App');
+        $config = config(App::class);
 
         if (! property_exists($config, $item)) {
             return null;
@@ -1166,10 +1169,8 @@ if (! function_exists('view')) {
      */
     function view(string $name, array $data = [], array $options = []): string
     {
-        /** @var CodeIgniter\View\View $renderer */
         $renderer = Services::renderer();
 
-        /** @var \CodeIgniter\Config\View $config */
         $config   = config(View::class);
         $saveData = $config->saveData;
 
