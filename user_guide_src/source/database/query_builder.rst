@@ -1109,6 +1109,11 @@ Here is an example using an array:
 
 The first parameter is an associative array of values, the second parameter is the where key.
 
+Since v4.3.0, you can also use the ``setQueryAsData()``, ``onConstraint()``, and
+``updateFields()`` methods:
+
+.. literalinclude:: query_builder/120.php
+
 .. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
 
 .. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.

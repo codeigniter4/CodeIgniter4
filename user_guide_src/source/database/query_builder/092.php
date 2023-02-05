@@ -14,28 +14,7 @@ $data = [
         'date'   => 'Date 2',
     ],
 ];
-
 $builder->updateBatch($data, ['title', 'author']);
-
-// OR
-$builder->setData($data)->onConstraint('title, author')->updateBatch();
-
-// OR
-$builder->setData($data, null, 'u')
-    ->onConstraint(['`mytable`.`title`' => '`u`.`title`', 'author' => new RawSql('`u`.`author`')])
-    ->updateBatch();
-
-// OR
-foreach ($data as $row) {
-    $builder->setData($row);
-}
-$builder->onConstraint('title, author')->updateBatch();
-
-// OR
-$builder->setData($data, true, 'u')
-    ->onConstraint(new RawSql('`mytable`.`title` = `u`.`title` AND `mytable`.`author` = `u`.`author`'))
-    ->updateFields(['last_update' => new RawSql('CURRENT_TIMESTAMP()')], true)
-    ->updateBatch();
 /*
  * Produces:
  * UPDATE `mytable`
@@ -47,6 +26,5 @@ $builder->setData($data, true, 'u')
  * SET
  * `mytable`.`title` = `u`.`title`,
  * `mytable`.`name` = `u`.`name`,
- * `mytable`.`date` = `u`.`date`,
- * `mytable`.`last_update` = CURRENT_TIMESTAMP() // this only applies to the last scenario
+ * `mytable`.`date` = `u`.`date`
  */
