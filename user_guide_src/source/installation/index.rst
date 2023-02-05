@@ -10,8 +10,11 @@ Which is right for you?
 - If you would like the simple "download & go" install that CodeIgniter3
   is known for, choose the manual installation.
 
-However you choose to install and run CodeIgniter4, the
+However you choose to install and run CodeIgniter4, the latest
 `user guide <https://codeigniter.com/user_guide/>`_ is accessible online.
+If you want to see previous versions, you can download from the
+`codeigniter4/userguide <https://github.com/codeigniter4/userguide/releases>`_
+repository.
 
 .. note:: Before using CodeIgniter 4, make sure that your server meets the
     :doc:`requirements </intro/requirements>`, in particular the PHP
