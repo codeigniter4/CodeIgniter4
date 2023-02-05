@@ -125,8 +125,7 @@
     </UndefinedGlobalVariable>
   </file>
   <file src="tests/_support/Config/Routes.php">
-    <UndefinedGlobalVariable occurrences="2">
-      <code>$routes</code>
+    <UndefinedGlobalVariable occurrences="5">
       <code>$routes</code>
     </UndefinedGlobalVariable>
   </file>

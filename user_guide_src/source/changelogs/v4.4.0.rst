@@ -32,6 +32,9 @@ Enhancements
 Commands
 ========
 
+- Now ``spark routes`` command can specify the host in the request URL.
+  See :ref:`routing-spark-routes-specify-host`.
+
 Testing
 =======
 
