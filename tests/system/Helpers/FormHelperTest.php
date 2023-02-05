@@ -996,6 +996,16 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame('<span class="help-block">The ID field is required.</span>' . "\n", $html);
     }
 
+    public function testValidationShowErrorForWildcards()
+    {
+        $validation = Services::validation();
+        $validation->setRule('user.0.name', 'Name', 'required')->run([]);
+
+        $html = validation_show_error('user.*.name');
+
+        $this->assertSame('<span class="help-block">The Name field is required.</span>' . "\n", $html);
+    }
+
     public function testFormParseFormAttributesTrue()
     {
         $expected = 'readonly ';
