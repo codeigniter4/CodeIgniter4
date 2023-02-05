@@ -1095,11 +1095,16 @@ UpdateBatch
 $builder->updateBatch()
 -----------------------
 
+.. note:: Since v4.3.0, the second parameter ``$index`` of ``updateBatch()`` has
+    changed to ``$constraints``. It now accepts types array, string, or ``RawSql``.
+
 Generates an update string based on the data you supply, and runs the query.
 You can either pass an **array** or an **object** to the method.
 Here is an example using an array:
 
 .. literalinclude:: query_builder/092.php
+
+.. note:: Since v4.3.0, the generated SQL structure has been Improved.
 
 The first parameter is an associative array of values, the second parameter is the where key.
 
