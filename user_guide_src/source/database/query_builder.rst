@@ -908,6 +908,8 @@ Upsert
 $builder->upsert()
 ------------------
 
+.. versionadded:: 4.3.0
+
 Generates an upsert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
 method. By default a constraint will be defined in order. A primary
@@ -929,6 +931,8 @@ The first parameter is an object.
 $builder->getCompiledUpsert()
 -----------------------------
 
+.. versionadded:: 4.3.0
+
 Compiles the upsert query just like ``$builder->upsert()`` but does not
 *run* the query. This method simply returns the SQL query as a string.
 
@@ -944,10 +948,12 @@ upsertBatch
 $builder->upsertBatch()
 -----------------------
 
+.. versionadded:: 4.3.0
+
 Generates an upsert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
 method. By default a constraint will be defined in order. A primary
-key will be selected first and then unique keys. Mysql will use any
+key will be selected first and then unique keys. MySQL will use any
 constraint by default. Here is an example using an array:
 
 .. literalinclude:: query_builder/108.php
@@ -960,12 +966,15 @@ You can also upsert from a query:
 
 .. literalinclude:: query_builder/115.php
 
-.. note:: ``setQueryAsData()`` can be used since v4.3.0.
+.. note:: The ``setQueryAsData()``, ``onConstraint()``, and ``updateFields()``
+    methods can be used since v4.3.0.
 
 .. note:: It is required to alias the columns of the select query to match those of the target table.
 
 $builder->onConstraint()
 ------------------------
+
+.. versionadded:: 4.3.0
 
 Allows manually setting constraint to be used for upsert. This does
 not work with MySQL because MySQL checks all constraints by default.
@@ -976,6 +985,9 @@ This method accepts a string or an array of columns.
 
 $builder->updateFields()
 ------------------------
+
+.. versionadded:: 4.3.0
+
 Allows manually setting the fields to be updated when performing upserts.
 
 .. literalinclude:: query_builder/110.php
@@ -1084,13 +1096,23 @@ UpdateBatch
 $builder->updateBatch()
 -----------------------
 
+.. note:: Since v4.3.0, the second parameter ``$index`` of ``updateBatch()`` has
+    changed to ``$constraints``. It now accepts types array, string, or ``RawSql``.
+
 Generates an update string based on the data you supply, and runs the query.
 You can either pass an **array** or an **object** to the method.
 Here is an example using an array:
 
 .. literalinclude:: query_builder/092.php
 
+.. note:: Since v4.3.0, the generated SQL structure has been Improved.
+
 The first parameter is an associative array of values, the second parameter is the where key.
+
+Since v4.3.0, you can also use the ``setQueryAsData()``, ``onConstraint()``, and
+``updateFields()`` methods:
+
+.. literalinclude:: query_builder/120.php
 
 .. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
 
@@ -1104,7 +1126,8 @@ You can also update from a query:
 
 .. literalinclude:: query_builder/116.php
 
-.. note:: ``setQueryAsData()`` can be used since v4.3.0.
+.. note:: The ``setQueryAsData()``, ``onConstraint()``, and ``updateFields()``
+    methods can be used since v4.3.0.
 
 .. note:: It is required to alias the columns of the select query to match those of the target table.
 
@@ -1145,6 +1168,8 @@ method, or ``emptyTable()``.
 
 $builder->deleteBatch()
 -----------------------
+
+.. versionadded:: 4.3.0
 
 Generates a batch **DELETE** statement based on a set of data.
 
@@ -1198,6 +1223,8 @@ When
 $builder->when()
 ----------------
 
+.. versionadded:: 4.3.0
+
 This allows modifying the query based on a condition without breaking out of the
 query builder chain. The first parameter is the condition, and it should evaluate
 to a boolean. The second parameter is a callable that will be ran
@@ -1222,6 +1249,8 @@ WhenNot
 
 $builder->whenNot()
 -------------------
+
+.. versionadded:: 4.3.0
 
 This works exactly the same way as ``$builder->when()`` except that it will
 only run the callable when the condition evaluates to ``false``, instead of ``true`` like ``when()``.
@@ -1414,6 +1443,8 @@ Class Reference
         Specifies the ``FROM`` clause of a query using a subquery.
 
     .. php:method:: setQueryAsData($query[, $alias[, $columns = null]])
+
+        .. versionadded:: 4.3.0
 
         :param BaseBuilder|RawSql $query: Instance of the BaseBuilder or RawSql
         :param string|null $alias: Alias for query
