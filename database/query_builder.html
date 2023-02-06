@@ -1746,6 +1746,9 @@ method. Here is an example using an array:</p>
 <h3><a class="toc-backref" href="#id33">Upsert</a><a class="headerlink" href="#upsert" title="Permalink to this headline"></a></h3>
 <section id="builder-upsert">
 <h4>$builder-&gt;upsert()<a class="headerlink" href="#builder-upsert" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
 <p>Generates an upsert string based on the data you supply, and runs the
 query. You can either pass an <strong>array</strong> or an <strong>object</strong> to the
 method. By default a constraint will be defined in order. A primary
@@ -1790,6 +1793,9 @@ constraint by default. Here is an example using an array:</p>
 </section>
 <section id="builder-getcompiledupsert">
 <h4>$builder-&gt;getCompiledUpsert()<a class="headerlink" href="#builder-getcompiledupsert" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
 <p>Compiles the upsert query just like <code class="docutils literal notranslate"><span class="pre">$builder-&gt;upsert()</span></code> but does not
 <em>run</em> the query. This method simply returns the SQL query as a string.</p>
 <p>Example:</p>
@@ -1823,10 +1829,13 @@ constraint by default. Here is an example using an array:</p>
 <h3><a class="toc-backref" href="#id34">upsertBatch</a><a class="headerlink" href="#upsertbatch" title="Permalink to this headline"></a></h3>
 <section id="builder-upsertbatch">
 <h4>$builder-&gt;upsertBatch()<a class="headerlink" href="#builder-upsertbatch" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
 <p>Generates an upsert string based on the data you supply, and runs the
 query. You can either pass an <strong>array</strong> or an <strong>object</strong> to the
 method. By default a constraint will be defined in order. A primary
-key will be selected first and then unique keys. Mysql will use any
+key will be selected first and then unique keys. MySQL will use any
 constraint by default. Here is an example using an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1868,7 +1877,10 @@ constraint by default. Here is an example using an array:</p>
 
 <span class="nv">$additionalUpdateField</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">RawSql</span><span class="p">(</span><span class="s1">&#39;CURRENT_TIMESTAMP&#39;</span><span class="p">)];</span>
 
-<span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">setQueryAsData</span><span class="p">(</span><span class="nv">$query</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">onConstraint</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">updateFields</span><span class="p">(</span><span class="nv">$additionalUpdateField</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">upsertBatch</span><span class="p">();</span>
+<span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">setQueryAsData</span><span class="p">(</span><span class="nv">$query</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">onConstraint</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">updateFields</span><span class="p">(</span><span class="nv">$additionalUpdateField</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">upsertBatch</span><span class="p">();</span>
 <span class="cm">/* MySQLi produces:</span>
 <span class="cm">    INSERT INTO `db_user` (`country`, `email`, `name`)</span>
 <span class="cm">    SELECT user2.name, user2.email, user2.country</span>
@@ -1885,7 +1897,8 @@ constraint by default. Here is an example using an array:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">setQueryAsData()</span></code> can be used since v4.3.0.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">setQueryAsData()</span></code>, <code class="docutils literal notranslate"><span class="pre">onConstraint()</span></code>, and <code class="docutils literal notranslate"><span class="pre">updateFields()</span></code>
+methods can be used since v4.3.0.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1894,6 +1907,9 @@ constraint by default. Here is an example using an array:</p>
 </section>
 <section id="builder-onconstraint">
 <h4>$builder-&gt;onConstraint()<a class="headerlink" href="#builder-onconstraint" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
 <p>Allows manually setting constraint to be used for upsert. This does
 not work with MySQL because MySQL checks all constraints by default.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1921,6 +1937,9 @@ not work with MySQL because MySQL checks all constraints by default.</p>
 </section>
 <section id="builder-updatefields">
 <h4>$builder-&gt;updateFields()<a class="headerlink" href="#builder-updatefields" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
 <p>Allows manually setting the fields to be updated when performing upserts.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -2157,6 +2176,11 @@ performing updates.</p>
 <span id="update-batch"></span><h3><a class="toc-backref" href="#id37">UpdateBatch</a><a class="headerlink" href="#updatebatch" title="Permalink to this headline"></a></h3>
 <section id="builder-updatebatch">
 <h4>$builder-&gt;updateBatch()<a class="headerlink" href="#builder-updatebatch" title="Permalink to this headline"></a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.3.0, the second parameter <code class="docutils literal notranslate"><span class="pre">$index</span></code> of <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> has
+changed to <code class="docutils literal notranslate"><span class="pre">$constraints</span></code>. It now accepts types array, string, or <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>.</p>
+</div>
 <p>Generates an update string based on the data you supply, and runs the query.
 You can either pass an <strong>array</strong> or an <strong>object</strong> to the method.
 Here is an example using an array:</p>
@@ -2176,10 +2200,33 @@ Here is an example using an array:</p>
         <span class="s1">&#39;date&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Date 2&#39;</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">];</span>
-
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">updateBatch</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;author&#39;</span><span class="p">]);</span>
+<span class="cm">/*</span>
+<span class="cm"> * Produces:</span>
+<span class="cm"> * UPDATE `mytable`</span>
+<span class="cm"> * INNER JOIN (</span>
+<span class="cm"> * SELECT &#39;Title 1&#39; `title`, &#39;Author 1&#39; `author`, &#39;Name 1&#39; `name`, &#39;Date 1&#39; `date` UNION ALL</span>
+<span class="cm"> * SELECT &#39;Title 2&#39; `title`, &#39;Author 2&#39; `author`, &#39;Name 2&#39; `name`, &#39;Date 2&#39; `date`</span>
+<span class="cm"> * ) `u`</span>
+<span class="cm"> * ON `mytable`.`title` = `u`.`title` AND `mytable`.`author` = `u`.`author`</span>
+<span class="cm"> * SET</span>
+<span class="cm"> * `mytable`.`title` = `u`.`title`,</span>
+<span class="cm"> * `mytable`.`name` = `u`.`name`,</span>
+<span class="cm"> * `mytable`.`date` = `u`.`date`</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.3.0, the generated SQL structure has been Improved.</p>
+</div>
+<p>The first parameter is an associative array of values, the second parameter is the where key.</p>
+<p>Since v4.3.0, you can also use the <code class="docutils literal notranslate"><span class="pre">setQueryAsData()</span></code>, <code class="docutils literal notranslate"><span class="pre">onConstraint()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">updateFields()</span></code> methods:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// OR</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\RawSql</span><span class="p">;</span>
+
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">onConstraint</span><span class="p">(</span><span class="s1">&#39;title, author&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">updateBatch</span><span class="p">();</span>
 
 <span class="c1">// OR</span>
@@ -2214,7 +2261,6 @@ Here is an example using an array:</p>
 <span class="cm"> */</span>
 </pre></div>
 </div>
-<p>The first parameter is an associative array of values, the second parameter is the where key.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>All values except <code class="docutils literal notranslate"><span class="pre">RawSql</span></code> are escaped automatically producing safer queries.</p>
@@ -2264,7 +2310,8 @@ returns the number of rows affected.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">setQueryAsData()</span></code> can be used since v4.3.0.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">setQueryAsData()</span></code>, <code class="docutils literal notranslate"><span class="pre">onConstraint()</span></code>, and <code class="docutils literal notranslate"><span class="pre">updateFields()</span></code>
+methods can be used since v4.3.0.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2315,6 +2362,9 @@ method, or <code class="docutils literal notranslate"><span class="pre">emptyTab
 </section>
 <section id="builder-deletebatch">
 <span id="delete-batch"></span><h4>$builder-&gt;deleteBatch()<a class="headerlink" href="#builder-deletebatch" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
 <p>Generates a batch <strong>DELETE</strong> statement based on a set of data.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -2434,6 +2484,9 @@ that it produces a <strong>DELETE</strong> SQL string instead of an <strong>INSE
 <span id="db-builder-when"></span><h3><a class="toc-backref" href="#id41">When</a><a class="headerlink" href="#when" title="Permalink to this headline"></a></h3>
 <section id="builder-when">
 <h4>$builder-&gt;when()<a class="headerlink" href="#builder-when" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
 <p>This allows modifying the query based on a condition without breaking out of the
 query builder chain. The first parameter is the condition, and it should evaluate
 to a boolean. The second parameter is a callable that will be ran
@@ -2475,6 +2528,9 @@ This can be accomplished by providing a second closure:</p>
 <h3><a class="toc-backref" href="#id42">WhenNot</a><a class="headerlink" href="#whennot" title="Permalink to this headline"></a></h3>
 <section id="builder-whennot">
 <h4>$builder-&gt;whenNot()<a class="headerlink" href="#builder-whennot" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
 <p>This works exactly the same way as <code class="docutils literal notranslate"><span class="pre">$builder-&gt;when()</span></code> except that it will
 only run the callable when the condition evaluates to <code class="docutils literal notranslate"><span class="pre">false</span></code>, instead of <code class="docutils literal notranslate"><span class="pre">true</span></code> like <code class="docutils literal notranslate"><span class="pre">when()</span></code>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -2860,7 +2916,10 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::setQueryAsData">
 <span class="sig-name descname"><span class="pre">setQueryAsData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$query</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$alias</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$columns</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::setQueryAsData" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$query</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">BaseBuilder|RawSql</span></code></span>) – Instance of the BaseBuilder or RawSql</p></li>
@@ -4114,7 +4173,7 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 05, 2023.
+      <span class="lastupdated">Last updated on Feb 06, 2023.
       </span></p>
   </div>
 
