@@ -68,6 +68,14 @@ final class IncomingRequestDetectingTest extends CIUnitTestCase
 
     public function testPathRequestURINested()
     {
+        // I'm not sure but this is a case of Apache config making such SERVER
+        // values?
+        // The current implementation doesn't use the value of the URI object.
+        // So I removed the code to set URI. Therefore, it's exactly the same as
+        // the method above as a test.
+        // But it may be changed in the future to use the value of the URI object.
+        // So I don't remove this test case.
+
         // /ci/index.php/woot?code=good#pos
         $_SERVER['REQUEST_URI'] = '/index.php/woot';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
