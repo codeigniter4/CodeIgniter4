@@ -12,6 +12,7 @@
 namespace CodeIgniter;
 
 use CodeIgniter\Config\BaseService;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
@@ -28,6 +29,7 @@ use CodeIgniter\Test\Mock\MockSecurity;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
 use Config\App;
+use Config\Cookie;
 use Config\Logger;
 use Config\Modules;
 use Config\Services;
@@ -488,12 +490,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testSlashItem()
     {
-        $this->assertSame('/', slash_item('cookiePath')); // /
-        $this->assertSame('', slash_item('cookieDomain')); // ''
         $this->assertSame('en/', slash_item('defaultLocale')); // en
         $this->assertSame('7200/', slash_item('sessionExpiration')); // int 7200
         $this->assertSame('', slash_item('negotiateLocale')); // false
-        $this->assertSame('1/', slash_item('cookieHTTPOnly')); // true
     }
 
     public function testSlashItemOnInexistentItem()
@@ -514,6 +513,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     protected function injectSessionMock()
     {
+        $appConfig = new App();
+
         $defaults = [
             'sessionDriver'            => FileHandler::class,
             'sessionCookieName'        => 'ci_session',
@@ -522,18 +523,24 @@ final class CommonFunctionsTest extends CIUnitTestCase
             'sessionMatchIP'           => false,
             'sessionTimeToUpdate'      => 300,
             'sessionRegenerateDestroy' => false,
-            'cookieDomain'             => '',
-            'cookiePrefix'             => '',
-            'cookiePath'               => '/',
-            'cookieSecure'             => false,
-            'cookieSameSite'           => 'Lax',
         ];
-
-        $appConfig = new App();
 
         foreach ($defaults as $key => $config) {
             $appConfig->{$key} = $config;
         }
+
+        $cookie = new Cookie();
+
+        foreach ([
+            'prefix'   => '',
+            'domain'   => '',
+            'path'     => '/',
+            'secure'   => false,
+            'samesite' => 'Lax',
+        ] as $key => $value) {
+            $cookie->{$key} = $value;
+        }
+        Factories::injectMock('config', 'Cookie', $cookie);
 
         $session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);
         $session->setLogger(new TestLogger(new Logger()));

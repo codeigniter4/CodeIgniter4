@@ -122,22 +122,13 @@ abstract class BaseHandler implements SessionHandlerInterface
             $this->savePath   = $config->sessionSavePath;
         }
 
-        /** @var CookieConfig|null $cookie */
+        /** @var CookieConfig $cookie */
         $cookie = config('Cookie');
 
-        if ($cookie instanceof CookieConfig) {
-            // Session cookies have no prefix.
-            $this->cookieDomain = $cookie->domain;
-            $this->cookiePath   = $cookie->path;
-            $this->cookieSecure = $cookie->secure;
-        } else {
-            // @TODO Remove this fallback when deprecated `App` members are removed.
-            // `Config/Cookie.php` is absence
-            // Session cookies have no prefix.
-            $this->cookieDomain = $config->cookieDomain;
-            $this->cookiePath   = $config->cookiePath;
-            $this->cookieSecure = $config->cookieSecure;
-        }
+        // Session cookies have no prefix.
+        $this->cookieDomain = $cookie->domain;
+        $this->cookiePath   = $cookie->path;
+        $this->cookieSecure = $cookie->secure;
 
         $this->ipAddress = $ipAddress;
     }

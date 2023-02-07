@@ -12,7 +12,6 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Factories;
-use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
@@ -511,15 +510,5 @@ final class ResponseTest extends CIUnitTestCase
         ob_end_clean();
 
         $this->assertSame('Happy days', $actual);
-    }
-
-    public function testInvalidSameSiteCookie()
-    {
-        $config                 = new App();
-        $config->cookieSameSite = 'Invalid';
-
-        $this->expectException(CookieException::class);
-        $this->expectExceptionMessage(lang('Cookie.invalidSameSite', ['Invalid']));
-        new Response($config);
     }
 }

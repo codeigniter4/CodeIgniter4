@@ -17,12 +17,6 @@ class MockCLIConfig extends App
 {
     public string $baseURL         = 'http://example.com/';
     public string $uriProtocol     = 'REQUEST_URI';
-    public string $cookiePrefix    = '';
-    public string $cookieDomain    = '';
-    public string $cookiePath      = '/';
-    public bool $cookieSecure      = false;
-    public bool $cookieHTTPOnly    = false;
-    public ?string $cookieSameSite = 'Lax';
     public array $proxyIPs         = [];
     public string $CSRFTokenName   = 'csrf_test_name';
     public string $CSRFCookieName  = 'csrf_cookie_name';

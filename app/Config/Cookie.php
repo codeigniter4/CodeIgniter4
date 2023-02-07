@@ -84,6 +84,8 @@ class Cookie extends BaseConfig
      * Defaults to `Lax` for compatibility with modern browsers. Setting `''`
      * (empty string) means default SameSite attribute set by browsers (`Lax`)
      * will be set on cookies. If set to `None`, `$secure` must also be set.
+     *
+     * @phpstan-var 'None'|'Lax'|'Strict'|''
      */
     public string $samesite = 'Lax';
 

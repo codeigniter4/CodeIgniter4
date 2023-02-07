@@ -77,6 +77,7 @@ Message Changes
 Changes
 *******
 
+- **Config:** The deprecated Cookie items in **app/Config/App.php** has been removed.
 - **DownloadResponse:** When generating response headers, does not replace the ``Content-Disposition`` header if it was previously specified.
 
 Deprecations

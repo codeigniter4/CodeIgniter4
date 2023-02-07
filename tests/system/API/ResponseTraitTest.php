@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\API;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Format\FormatterInterface;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
@@ -20,6 +21,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
+use Config\Cookie;
 use stdClass;
 
 /**
@@ -59,16 +61,24 @@ final class ResponseTraitTest extends CIUnitTestCase
             'negotiateLocale'  => false,
             'supportedLocales' => ['en'],
             'CSPEnabled'       => false,
-            'cookiePrefix'     => '',
-            'cookieDomain'     => '',
-            'cookiePath'       => '/',
-            'cookieSecure'     => false,
-            'cookieHTTPOnly'   => false,
             'proxyIPs'         => [],
-            'cookieSameSite'   => 'Lax',
         ] as $key => $value) {
             $config->{$key} = $value;
         }
+
+        $cookie = new Cookie();
+
+        foreach ([
+            'prefix'   => '',
+            'domain'   => '',
+            'path'     => '/',
+            'secure'   => false,
+            'httponly' => false,
+            'samesite' => 'Lax',
+        ] as $key => $value) {
+            $cookie->{$key} = $value;
+        }
+        Factories::injectMock('config', 'Cookie', $cookie);
 
         if ($this->request === null) {
             $this->request  = new MockIncomingRequest($config, new URI($uri), null, new UserAgent());
@@ -532,16 +542,24 @@ final class ResponseTraitTest extends CIUnitTestCase
             'negotiateLocale'  => false,
             'supportedLocales' => ['en'],
             'CSPEnabled'       => false,
-            'cookiePrefix'     => '',
-            'cookieDomain'     => '',
-            'cookiePath'       => '/',
-            'cookieSecure'     => false,
-            'cookieHTTPOnly'   => false,
             'proxyIPs'         => [],
-            'cookieSameSite'   => 'Lax',
         ] as $key => $value) {
             $config->{$key} = $value;
         }
+
+        $cookie = new Cookie();
+
+        foreach ([
+            'prefix'   => '',
+            'domain'   => '',
+            'path'     => '/',
+            'secure'   => false,
+            'httponly' => false,
+            'samesite' => 'Lax',
+        ] as $key => $value) {
+            $cookie->{$key} = $value;
+        }
+        Factories::injectMock('config', 'Cookie', $cookie);
 
         $request  = new MockIncomingRequest($config, new URI($config->baseURL), null, new UserAgent());
         $response = new MockResponse($config);

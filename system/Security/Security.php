@@ -195,7 +195,10 @@ class Security implements SecurityInterface
         }
 
         if ($this->isCSRFCookie()) {
-            $this->configureCookie($config);
+            /** @var CookieConfig $cookie */
+            $cookie = config('Cookie');
+
+            $this->configureCookie($cookie);
         } else {
             // Session based CSRF protection
             $this->configureSession();
@@ -220,20 +223,11 @@ class Security implements SecurityInterface
         $this->session = Services::session();
     }
 
-    private function configureCookie(App $config): void
+    private function configureCookie(CookieConfig $cookie): void
     {
-        /** @var CookieConfig|null $cookie */
-        $cookie = config('Cookie');
-
-        if ($cookie instanceof CookieConfig) {
-            $cookiePrefix     = $cookie->prefix;
-            $this->cookieName = $cookiePrefix . $this->rawCookieName;
-            Cookie::setDefaults($cookie);
-        } else {
-            // `Config/Cookie.php` is absence
-            $cookiePrefix     = $config->cookiePrefix;
-            $this->cookieName = $cookiePrefix . $this->rawCookieName;
-        }
+        $cookiePrefix     = $cookie->prefix;
+        $this->cookieName = $cookiePrefix . $this->rawCookieName;
+        Cookie::setDefaults($cookie);
     }
 
     /**
