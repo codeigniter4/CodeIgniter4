@@ -155,6 +155,10 @@ class Router implements RouterInterface
     }
 
     /**
+     * Finds the controller method corresponding to the URI.
+     *
+     * @param string|null $uri URI path relative to baseURL
+     *
      * @return Closure|string Controller classname or Closure
      *
      * @throws PageNotFoundException
@@ -162,12 +166,9 @@ class Router implements RouterInterface
      */
     public function handle(?string $uri = null)
     {
-        // If we cannot find a URI to match against, then
-        // everything runs off of its default settings.
+        // If we cannot find a URI to match against, then set it to root (`/`).
         if ($uri === null || $uri === '') {
-            return strpos($this->controller, '\\') === false
-                ? $this->collection->getDefaultNamespace() . $this->controller
-                : $this->controller;
+            $uri = '/';
         }
 
         // Decode URL-encoded string
