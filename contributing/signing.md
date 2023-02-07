@@ -53,3 +53,7 @@ bash shell to use the **-S** option to force the secure signing.
 
 Regardless of how you sign a commit, commit messages are important too.
 See [Contribution Workflow](./workflow.md#commit-messages) for details.
+
+## GPG-Signing Old Commits
+
+See [Contribution Workflow](./workflow.md#gpg-signing-old-commits).
