@@ -19,8 +19,6 @@ interface ExceptionHandlerInterface
 {
     /**
      * Determines the correct way to display the error.
-     *
-     * @return void
      */
     public function handle(
         Throwable $exception,
@@ -28,5 +26,5 @@ interface ExceptionHandlerInterface
         ResponseInterface $response,
         int $statusCode,
         int $exitCode
-    );
+    ): void;
 }

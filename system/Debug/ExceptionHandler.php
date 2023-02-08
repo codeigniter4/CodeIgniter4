@@ -36,8 +36,6 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
 
     /**
      * Determines the correct way to display the error.
-     *
-     * @return void
      */
     public function handle(
         Throwable $exception,
@@ -45,7 +43,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
         ResponseInterface $response,
         int $statusCode,
         int $exitCode
-    ) {
+    ): void {
         // ResponseTrait needs these properties.
         $this->request  = $request;
         $this->response = $response;
