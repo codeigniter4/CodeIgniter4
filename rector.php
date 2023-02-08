@@ -28,6 +28,7 @@ use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\MethodCall\RemoveEmptyMethodCallRector;
@@ -87,6 +88,11 @@ return static function (RectorConfig $rectorConfig): void {
         RemoveUnusedPrivateMethodRector::class => [
             // private method called via getPrivateMethodInvoker
             __DIR__ . '/tests/system/Test/ReflectionHelperTest.php',
+        ],
+
+        RemoveUnusedConstructorParamRector::class => [
+            // there are deprecated parameters
+            __DIR__ . '/system/Debug/Exceptions.php',
         ],
 
         // call on purpose for nothing happen check
