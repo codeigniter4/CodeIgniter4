@@ -443,7 +443,7 @@ class IncomingRequest extends Request
      * instance, this can be used to change the "current URL"
      * for testing.
      *
-     * @param string   $path   URI path relative to SCRIPT_NAME
+     * @param string   $path   URI path relative to baseURL
      * @param App|null $config Optional alternate config to use
      *
      * @return $this
@@ -451,6 +451,9 @@ class IncomingRequest extends Request
     public function setPath(string $path, ?App $config = null)
     {
         $this->path = $path;
+
+        // @TODO remove this. The path of the URI object should be a full URI path,
+        //      not a URI path relative to baseURL.
         $this->uri->setPath($path);
 
         $config ??= $this->config;
@@ -481,8 +484,11 @@ class IncomingRequest extends Request
                 $this->uri->setScheme('https');
             }
         } elseif (! is_cli()) {
+            // Do not change exit() to exception; Request is initialized before
+            // setting the exception handler, so if an exception is raised, an
+            // error will be displayed even if in the production environment.
             // @codeCoverageIgnoreStart
-            exit('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
+            exit('You have an empty or invalid baseURL. The baseURL value must be set in app/Config/App.php, or through the .env file.');
             // @codeCoverageIgnoreEnd
         }
 

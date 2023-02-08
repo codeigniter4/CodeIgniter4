@@ -978,6 +978,22 @@ final class URITest extends CIUnitTestCase
         $this->assertTrue(true);
     }
 
+    public function testCreateURIStringNoArguments()
+    {
+        $uri = URI::createURIString();
+
+        $expected = '';
+        $this->assertSame($expected, $uri);
+    }
+
+    public function testCreateURIStringOnlyAuthority()
+    {
+        $uri = URI::createURIString(null, 'example.com');
+
+        $expected = 'example.com';
+        $this->assertSame($expected, $uri);
+    }
+
     public function testCreateURIString()
     {
         $uri = URI::createURIString('https', 'example.com', '/');

@@ -63,6 +63,10 @@ final class CurrentUrlTest extends CIUnitTestCase
 
         $this->config->baseURL = 'http://example.com/public';
 
+        // URI object are updated in IncomingRequest constructor.
+        $request = Services::incomingrequest($this->config);
+        Services::injectMock('request', $request);
+
         $this->assertSame('http://example.com/public/index.php/', current_url());
     }
 
