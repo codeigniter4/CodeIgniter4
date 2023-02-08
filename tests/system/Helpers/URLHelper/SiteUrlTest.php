@@ -139,6 +139,33 @@ final class SiteUrlTest extends CIUnitTestCase
                 'http://example.com/abc',
                 'http://example.com/abc',
             ],
+            [
+                'http://example.com/',
+                '',
+                null,
+                false,
+                '/abc',
+                'http://example.com/abc',
+                'http://example.com/abc',
+            ],
+            [
+                'http://example.com/',
+                '',
+                null,
+                false,
+                '/abc/',
+                'http://example.com/abc/',
+                'http://example.com/abc/',
+            ],
+            [
+                'http://example.com/',
+                '',
+                null,
+                false,
+                '/abc/def',
+                'http://example.com/abc/def',
+                'http://example.com/abc/def',
+            ],
             'URL decode' => [
                 'http://example.com/',
                 '',
@@ -314,7 +341,45 @@ final class SiteUrlTest extends CIUnitTestCase
         $this->assertSame('http://example.com/ci/v4/controller/method', base_url('controller/method', null));
     }
 
+    public function testBaseURLWithCLIRequest()
+    {
+        unset($_SERVER['HTTP_HOST'], $_SERVER['REQUEST_URI']);
+
+        $this->config->baseURL = 'http://example.com/';
+        $request               = Services::clirequest($this->config);
+        Services::injectMock('request', $request);
+
+        $this->assertSame(
+            'http://example.com/index.php/controller/method',
+            site_url('controller/method', null, $this->config)
+        );
+        $this->assertSame(
+            'http://example.com/controller/method',
+            base_url('controller/method', null)
+        );
+    }
+
     public function testSiteURLWithAllowedHostname()
+    {
+        $_SERVER['HTTP_HOST']   = 'www.example.jp';
+        $_SERVER['REQUEST_URI'] = '/public';
+        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+
+        $this->config->baseURL          = 'http://example.com/public/';
+        $this->config->allowedHostnames = ['www.example.jp'];
+        Services::injectMock('config', $this->config);
+
+        // URI object are updated in IncomingRequest constructor.
+        $request = Services::incomingrequest($this->config);
+        Services::injectMock('request', $request);
+
+        $this->assertSame(
+            'http://www.example.jp/public/index.php/controller/method',
+            site_url('controller/method')
+        );
+    }
+
+    public function testSiteURLWithAltConfig()
     {
         $_SERVER['HTTP_HOST']   = 'www.example.jp';
         $_SERVER['REQUEST_URI'] = '/public';
@@ -327,9 +392,12 @@ final class SiteUrlTest extends CIUnitTestCase
         $request = Services::incomingrequest($this->config);
         Services::injectMock('request', $request);
 
+        $altConfig          = clone $this->config;
+        $altConfig->baseURL = 'http://alt.example.com/public/';
+
         $this->assertSame(
-            'http://www.example.jp/public/index.php/controller/method',
-            site_url('controller/method', null, $this->config)
+            'http://alt.example.com/public/index.php/controller/method',
+            site_url('controller/method', null, $altConfig)
         );
     }
 

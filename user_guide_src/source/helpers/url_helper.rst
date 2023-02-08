@@ -98,7 +98,9 @@ The following functions are available:
     :returns: The current URL
     :rtype:    string|\\CodeIgniter\\HTTP\\URI
 
-    Returns the full URL (including segments) of the page being currently viewed.
+    Returns the full URL of the page being currently viewed.
+    When returning string, the query and fragment parts of the URL are removed.
+    When returning URI, the query and fragment parts are preserved.
 
     However for security reasons, it is created based on the ``Config\App`` settings,
     and not intended to match the browser URL.
@@ -106,9 +108,10 @@ The following functions are available:
     Since v4.3.0, if you set ``Config\App::$allowedHostnames``,
     this returns the URL with the hostname set in it if the current URL matches.
 
-    .. note:: Calling this function is the same as doing this:
+    .. note:: Calling ``current_url()`` is the same as doing this:
 
         .. literalinclude:: url_helper/006.php
+           :lines: 2-
 
     .. important:: Prior to v4.1.2, this function had a bug causing it to ignore the configuration on ``Config\App::$indexPage``.
 
