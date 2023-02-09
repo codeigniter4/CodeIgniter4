@@ -39,7 +39,6 @@ final class FormHelperTest extends CIUnitTestCase
         Services::injectMock('uri', $uri);
 
         $config            = new App();
-        $config->baseURL   = '';
         $config->indexPage = 'index.php';
 
         $request = Services::request($config);
