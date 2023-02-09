@@ -350,7 +350,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Adds a column to a table. Usage:  See `Adding a Field to a Table`_.
+        Adds a column to an existing table. Usage: See `Adding a Field to a Table`_.
 
     .. php:method:: addField($field)
 
