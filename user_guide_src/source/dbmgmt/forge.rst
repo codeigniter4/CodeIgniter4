@@ -355,8 +355,8 @@ Class Reference
     .. php:method:: addField($field)
 
         :param    array    $field: Field definition to add
-        :returns:    \CodeIgniter\Database\Forge instance (method chaining)
-        :rtype:    \CodeIgniter\Database\Forge
+        :returns:    ``\CodeIgniter\Database\Forge`` instance (method chaining)
+        :rtype:    ``\CodeIgniter\Database\Forge``
 
         Adds a field to the set that will be used to create a table. Usage:  See `Adding Fields`_.
 
@@ -368,8 +368,8 @@ Class Reference
         :param    string    $onUpdate: Desired action for the "on update"
         :param    string    $onDelete: Desired action for the "on delete"
         :param    string    $fkName: Name of foreign key. This does not work with SQLite3
-        :returns:    \CodeIgniter\Database\Forge instance (method chaining)
-        :rtype:    \CodeIgniter\Database\Forge
+        :returns:    ``\CodeIgniter\Database\Forge`` instance (method chaining)
+        :rtype:    ``\CodeIgniter\Database\Forge``
 
         Adds a foreign key to the set that will be used to create a table. Usage:  See `Adding Foreign Keys`_.
 
@@ -381,8 +381,8 @@ Class Reference
         :param    bool    $primary: Set to true if it should be a primary key or a regular one
         :param    bool    $unique: Set to true if it should be a unique key or a regular one
         :param    string    $keyName: Name of key to be added
-        :returns:    \CodeIgniter\Database\Forge instance (method chaining)
-        :rtype:    \CodeIgniter\Database\Forge
+        :returns:    ``\CodeIgniter\Database\Forge`` instance (method chaining)
+        :rtype:    ``\CodeIgniter\Database\Forge``
 
         Adds a key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
 
@@ -392,8 +392,8 @@ Class Reference
 
         :param    mixed    $key: Name of a key field or an array of fields
         :param    string    $keyName: Name of key to be added
-        :returns:    \CodeIgniter\Database\Forge instance (method chaining)
-        :rtype:    \CodeIgniter\Database\Forge
+        :returns:    ``\CodeIgniter\Database\Forge`` instance (method chaining)
+        :rtype:    ``\CodeIgniter\Database\Forge``
 
         Adds a primary key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
 
@@ -403,8 +403,8 @@ Class Reference
 
         :param    mixed    $key: Name of a key field or an array of fields
         :param    string    $keyName: Name of key to be added
-        :returns:    \CodeIgniter\Database\Forge instance (method chaining)
-        :rtype:    \CodeIgniter\Database\Forge
+        :returns:    ``\CodeIgniter\Database\Forge`` instance (method chaining)
+        :rtype:    ``\CodeIgniter\Database\Forge``
 
         Adds a unique key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
 
