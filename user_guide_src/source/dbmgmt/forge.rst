@@ -358,7 +358,7 @@ Class Reference
         :returns:    ``\CodeIgniter\Database\Forge`` instance (method chaining)
         :rtype:    ``\CodeIgniter\Database\Forge``
 
-        Adds a field to the set that will be used to create a table. Usage:  See `Adding Fields`_.
+        Adds a field to the set that will be used to create a table. Usage: See `Adding Fields`_.
 
     .. php:method:: addForeignKey($fieldName, $tableName, $tableField[, $onUpdate = '', $onDelete = '', $fkName = ''])
 
@@ -371,7 +371,7 @@ Class Reference
         :returns:    ``\CodeIgniter\Database\Forge`` instance (method chaining)
         :rtype:    ``\CodeIgniter\Database\Forge``
 
-        Adds a foreign key to the set that will be used to create a table. Usage:  See `Adding Foreign Keys`_.
+        Adds a foreign key to the set that will be used to create a table. Usage: See `Adding Foreign Keys`_.
 
         .. note:: ``$fkName`` can be used since v4.3.0.
 
@@ -384,7 +384,7 @@ Class Reference
         :returns:    ``\CodeIgniter\Database\Forge`` instance (method chaining)
         :rtype:    ``\CodeIgniter\Database\Forge``
 
-        Adds a key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
+        Adds a key to the set that will be used to create a table. Usage: See `Adding Keys`_.
 
         .. note:: ``$keyName`` can be used since v4.3.0.
 
@@ -395,7 +395,7 @@ Class Reference
         :returns:    ``\CodeIgniter\Database\Forge`` instance (method chaining)
         :rtype:    ``\CodeIgniter\Database\Forge``
 
-        Adds a primary key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
+        Adds a primary key to the set that will be used to create a table. Usage: See `Adding Keys`_.
 
         .. note:: ``$keyName`` can be used since v4.3.0.
 
@@ -406,7 +406,7 @@ Class Reference
         :returns:    ``\CodeIgniter\Database\Forge`` instance (method chaining)
         :rtype:    ``\CodeIgniter\Database\Forge``
 
-        Adds a unique key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
+        Adds a unique key to the set that will be used to create a table. Usage: See `Adding Keys`_.
 
         .. note:: ``$keyName`` can be used since v4.3.0.
 
@@ -417,7 +417,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Creates a new database. Usage:  See `Creating and Dropping Databases`_.
+        Creates a new database. Usage: See `Creating and Dropping Databases`_.
 
     .. php:method:: createTable($table[, $if_not_exists = false[, array $attributes = []]])
 
@@ -427,7 +427,7 @@ Class Reference
         :returns:  Query object on success, false on failure
         :rtype:    mixed
 
-        Creates a new table. Usage:  See `Creating a Table`_.
+        Creates a new table. Usage: See `Creating a Table`_.
 
     .. php:method:: dropColumn($table, $column_name)
 
@@ -436,7 +436,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Drops single or multiple columns from a table. Usage:  See `Dropping Fields From a Table`_.
+        Drops single or multiple columns from a table. Usage: See `Dropping Fields From a Table`_.
 
     .. php:method:: dropDatabase($dbName)
 
@@ -444,7 +444,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Drops a database. Usage:  See `Creating and Dropping Databases`_.
+        Drops a database. Usage: See `Creating and Dropping Databases`_.
 
     .. php:method:: dropKey($table, $keyName[, $prefixKeyName = true])
 
@@ -476,7 +476,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Drops a table. Usage:  See `Dropping a Table`_.
+        Drops a table. Usage: See `Dropping a Table`_.
 
     .. php:method:: processIndexes($table)
 
@@ -497,7 +497,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Modifies a table column. Usage:  See `Modifying a Field in a Table`_.
+        Modifies a table column. Usage: See `Modifying a Field in a Table`_.
 
     .. php:method:: renameTable($table_name, $new_table_name)
 
@@ -506,4 +506,4 @@ Class Reference
         :returns:  Query object on success, false on failure
         :rtype:    mixed
 
-        Renames a table. Usage:  See `Renaming a Table`_.
+        Renames a table. Usage: See `Renaming a Table`_.
