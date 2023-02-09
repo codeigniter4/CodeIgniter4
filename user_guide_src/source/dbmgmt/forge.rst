@@ -116,7 +116,7 @@ After the fields have been defined, they can be added using
 $forge->addField()
 ------------------
 
-The add fields method will accept the above array.
+The ``addField()`` method will accept the above array.
 
 .. _forge-addfield-default-value-rawsql:
 
