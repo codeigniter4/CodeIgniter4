@@ -86,6 +86,8 @@ There are several things you may wish to do when creating tables. Add
 fields, add keys to the table, alter columns. CodeIgniter provides a
 mechanism for this.
 
+.. _adding-fields:
+
 Adding Fields
 =============
 
@@ -249,8 +251,8 @@ $forge->addColumn()
 -------------------
 
 The ``addColumn()`` method is used to modify an existing table. It
-accepts the same field array as above, and can be used for an unlimited
-number of additional fields.
+accepts the same field array as :ref:`Creating Tables <adding-fields>`, and can
+be used for an unlimited number of additional fields.
 
 .. literalinclude:: forge/022.php
 
