@@ -40,11 +40,11 @@ class URIFactory
     }
 
     /**
-     * Create the current URI object.
+     * Create the current URI object from superglobals.
      *
      * This method updates superglobal $_SERVER and $_GET.
      */
-    public function createCurrentURI(): URI
+    public function createFromGlobals(): URI
     {
         $routePath = $this->detectRoutePath();
 

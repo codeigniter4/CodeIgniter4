@@ -49,7 +49,7 @@ final class URIFactoryTest extends CIUnitTestCase
 
         $factory = new URIFactory($_SERVER, $_GET, new App());
 
-        $uri = $factory->createCurrentURI();
+        $uri = $factory->createFromGlobals();
 
         $this->assertInstanceOf(URI::class, $uri);
         $this->assertSame('http://localhost:8080/woot?code=good', (string) $uri);
