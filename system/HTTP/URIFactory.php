@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Exceptions\ConfigException;
 use Config\App;
 
 class URIFactory
@@ -212,12 +213,9 @@ class URIFactory
             return $uri;
         }
         if (! is_cli()) {
-            // Do not change exit() to exception; Request is initialized before
-            // setting the exception handler, so if an exception is raised, an
-            // error will be displayed even if in the production environment.
-            // @codeCoverageIgnoreStart
-            exit('You have an empty or invalid baseURL. The baseURL value must be set in app/Config/App.php, or through the .env file.');
-            // @codeCoverageIgnoreEnd
+            throw new ConfigException(
+                'You have an empty or invalid baseURL. The baseURL value must be set in app/Config/App.php, or through the .env file.'
+            );
         }
 
         return new URI();
