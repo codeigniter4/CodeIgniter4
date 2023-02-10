@@ -235,6 +235,8 @@ class IncomingRequest extends Request
     /**
      * Detects the relative path based on
      * the URIProtocol Config setting.
+     *
+     * @deprecated Moved to URIFactory.
      */
     public function detectPath(string $protocol = ''): string
     {
@@ -265,6 +267,8 @@ class IncomingRequest extends Request
      * fixing the query string if necessary.
      *
      * @return string The URI it found.
+     *
+     * @deprecated Moved to URIFactory.
      */
     protected function parseRequestURI(): string
     {
@@ -323,6 +327,8 @@ class IncomingRequest extends Request
      * Parse QUERY_STRING
      *
      * Will parse QUERY_STRING and automatically detect the URI from it.
+     *
+     * @deprecated Moved to URIFactory.
      */
     protected function parseQueryString(): string
     {
@@ -495,6 +501,9 @@ class IncomingRequest extends Request
         return $this;
     }
 
+    /**
+     * @deprecated Moved to URIFactory.
+     */
     private function determineHost(App $config, string $baseURL): string
     {
         $host = parse_url($baseURL, PHP_URL_HOST);
