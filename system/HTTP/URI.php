@@ -492,6 +492,20 @@ class URI
     }
 
     /**
+     * Returns the URI path relative to baseURL.
+     *
+     * @return string The Route path.
+     */
+    public function getRoutePath(): string
+    {
+        if ($this->routePath === null) {
+            throw new BadMethodCallException('The $routePath is not set.');
+        }
+
+        return $this->routePath;
+    }
+
+    /**
      * Retrieve the query string
      */
     public function getQuery(array $options = []): string
