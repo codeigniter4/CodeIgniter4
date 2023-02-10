@@ -103,15 +103,15 @@ class URIFactory
         // parse out the query string and path.
         $parts = parse_url('http://dummy' . $this->server['REQUEST_URI']);
         $query = $parts['query'] ?? '';
-        $uri   = $parts['path'] ?? '';
+        $path  = $parts['path'] ?? '';
 
         // Strip the SCRIPT_NAME path from the URI
         if (
-            $uri !== '' && isset($this->server['SCRIPT_NAME'][0])
+            $path !== '' && isset($this->server['SCRIPT_NAME'][0])
             && pathinfo($this->server['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php'
         ) {
             // Compare each segment, dropping them until there is no match
-            $segments = $keep = explode('/', $uri);
+            $segments = $keep = explode('/', $path);
 
             foreach (explode('/', $this->server['SCRIPT_NAME']) as $i => $segment) {
                 // If these segments are not the same then we're done
@@ -122,25 +122,26 @@ class URIFactory
                 array_shift($keep);
             }
 
-            $uri = implode('/', $keep);
+            $path = implode('/', $keep);
         }
 
         // This section ensures that even on servers that require the URI to
         // contain the query string (Nginx) a correct URI is found, and also
         // fixes the QUERY_STRING Server var and $_GET array.
-        if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0) {
-            $query = explode('?', $query, 2);
-            $uri   = $query[0];
+        if (trim($path, '/') === '' && strncmp($query, '/', 1) === 0) {
+            $parts    = explode('?', $query, 2);
+            $path     = $parts[0];
+            $newQuery = $query[1] ?? '';
 
-            $this->server['QUERY_STRING'] = $query[1] ?? '';
+            $this->server['QUERY_STRING'] = $newQuery;
         } else {
             $this->server['QUERY_STRING'] = $query;
         }
 
-        // Update our globals for values likely to have been changed
+        // Update our global GET for values likely to have been changed
         parse_str($this->server['QUERY_STRING'], $this->get);
 
-        return URI::removeDotSegments($uri);
+        return URI::removeDotSegments($path);
     }
 
     /**
@@ -152,23 +153,26 @@ class URIFactory
      */
     private function parseQueryString(): string
     {
-        $uri = $this->server['QUERY_STRING'] ?? @getenv('QUERY_STRING');
+        $query = $this->server['QUERY_STRING'] ?? @getenv('QUERY_STRING');
 
-        if (trim($uri, '/') === '') {
+        if (trim($query, '/') === '') {
             return '/';
         }
 
-        if (strncmp($uri, '/', 1) === 0) {
-            $uri = explode('?', $uri, 2);
-            $uri = $uri[0];
+        if (strncmp($query, '/', 1) === 0) {
+            $parts    = explode('?', $query, 2);
+            $path     = $parts[0];
+            $newQuery = $parts[1] ?? '';
 
-            $this->server['QUERY_STRING'] = $uri[1] ?? '';
+            $this->server['QUERY_STRING'] = $newQuery;
+        } else {
+            $path = $query;
         }
 
-        // Update our globals for values likely to have been changed
+        // Update our global GET for values likely to have been changed
         parse_str($this->server['QUERY_STRING'], $this->get);
 
-        return URI::removeDotSegments($uri);
+        return URI::removeDotSegments($path);
     }
 
     /**
