@@ -58,6 +58,8 @@ class URIFactory
      * @param string $protocol URIProtocol
      *
      * @return string The route path
+     *
+     * @internal Used for testing purposes only.
      */
     public function detectRoutePath(string $protocol = ''): string
     {
