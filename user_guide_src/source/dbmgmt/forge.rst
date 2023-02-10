@@ -252,7 +252,7 @@ $forge->addColumn()
 
 The ``addColumn()`` method is used to modify an existing table. It
 accepts the same field array as :ref:`Creating Tables <adding-fields>`, and can
-be used for an unlimited number of additional fields.
+be used to add additional fields.
 
 .. literalinclude:: forge/022.php
 
