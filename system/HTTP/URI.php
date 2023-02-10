@@ -98,6 +98,16 @@ class URI
     protected $path;
 
     /**
+     * URI path relative to baseURL.
+     *
+     * If the baseURL contains sub folders, this value will be different from
+     * the current URI path.
+     *
+     * @var string
+     */
+    protected $routePath;
+
+    /**
      * The name of any fragment.
      *
      * @var string
@@ -751,6 +761,22 @@ class URI
         $this->path = $this->filterPath($path);
 
         $tempPath = trim($this->path, '/');
+
+        $this->segments = ($tempPath === '') ? [] : explode('/', $tempPath);
+
+        return $this;
+    }
+
+    /**
+     * Sets the route path.
+     *
+     * @return $this
+     */
+    public function setRoutePath(string $path)
+    {
+        $this->routePath = $this->filterPath($path);
+
+        $tempPath = trim($this->routePath, '/');
 
         $this->segments = ($tempPath === '') ? [] : explode('/', $tempPath);
 
