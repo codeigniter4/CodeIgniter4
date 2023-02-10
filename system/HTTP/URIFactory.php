@@ -129,8 +129,9 @@ class URIFactory
         // contain the query string (Nginx) a correct URI is found, and also
         // fixes the QUERY_STRING Server var and $_GET array.
         if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0) {
-            $query                        = explode('?', $query, 2);
-            $uri                          = $query[0];
+            $query = explode('?', $query, 2);
+            $uri   = $query[0];
+
             $this->server['QUERY_STRING'] = $query[1] ?? '';
         } else {
             $this->server['QUERY_STRING'] = $query;
@@ -158,9 +159,10 @@ class URIFactory
         }
 
         if (strncmp($uri, '/', 1) === 0) {
-            $uri                          = explode('?', $uri, 2);
+            $uri = explode('?', $uri, 2);
+            $uri = $uri[0];
+
             $this->server['QUERY_STRING'] = $uri[1] ?? '';
-            $uri                          = $uri[0];
         }
 
         // Update our globals for values likely to have been changed
