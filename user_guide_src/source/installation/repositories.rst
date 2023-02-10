@@ -16,24 +16,31 @@ There are several development repositories, of interest to potential contributor
 +------------------+--------------+-----------------------------------------------------------------+
 | Repository       | Audience     | Description                                                     |
 +==================+==============+=================================================================+
-| CodeIgniter4     | contributors | Project codebase, including tests & user guide sources          |
+| CodeIgniter4_    | contributors | Project codebase, including tests & user guide sources          |
 +------------------+--------------+-----------------------------------------------------------------+
-| translations     | developers   | System message translations                                     |
+| translations_    | developers   | System message translations                                     |
 +------------------+--------------+-----------------------------------------------------------------+
 | coding-standard_ | contributors | Coding style conventions & rules                                |
 +------------------+--------------+-----------------------------------------------------------------+
-| devkit           | developers   | Development toolkit for CodeIgniter libraries and projects      |
+| devkit_          | developers   | Development toolkit for CodeIgniter libraries and projects      |
 +------------------+--------------+-----------------------------------------------------------------+
-| settings         | developers   | Settings Library for CodeIgniter 4                              |
+| settings_        | developers   | Settings Library for CodeIgniter 4                              |
 +------------------+--------------+-----------------------------------------------------------------+
-| shield           | developers   | Authentication and Authorization Library for CodeIgniter 4      |
+| shield_          | developers   | Authentication and Authorization Library for CodeIgniter 4      |
 +------------------+--------------+-----------------------------------------------------------------+
-| tasks            | developers   | Task Scheduler for CodeIgniter 4                                |
+| tasks_           | developers   | Task Scheduler for CodeIgniter 4                                |
 +------------------+--------------+-----------------------------------------------------------------+
-| cache            | developers   | PSR-6 and PSR-16 Cache Adapters for CodeIgniter 4               |
+| cache_           | developers   | PSR-6 and PSR-16 Cache Adapters for CodeIgniter 4               |
 +------------------+--------------+-----------------------------------------------------------------+
 
+.. _CodeIgniter4: https://github.com/codeigniter4/CodeIgniter4
+.. _translations: https://github.com/codeigniter4/translations
 .. _coding-standard: https://github.com/CodeIgniter/coding-standard
+.. _devkit: https://github.com/codeigniter4/devkit
+.. _settings: https://github.com/codeigniter4/settings
+.. _shield: https://codeigniter4.github.io/shield
+.. _tasks: https://github.com/codeigniter4/tasks
+.. _cache: https://github.com/codeigniter4/cache
 
 There are also several deployment repositories, referenced in the installation directions.
 The deployment repositories are built automatically when a new version is released, and they
@@ -42,13 +49,17 @@ are not directly contributed to.
 +------------------+--------------+-----------------------------------------------------------------+
 | Repository       | Audience     | Description                                                     |
 +==================+==============+=================================================================+
-| framework        | developers   | Released versions of the framework                              |
+| framework_       | developers   | Released versions of the framework                              |
 +------------------+--------------+-----------------------------------------------------------------+
-| appstarter       | developers   | Starter project (app/public/writable).                          |
+| appstarter_      | developers   | Starter project (app/public/writable).                          |
 |                  |              | Dependent on "framework"                                        |
 +------------------+--------------+-----------------------------------------------------------------+
-| userguide        | anyone       | Pre-built user guide                                            |
+| userguide_       | anyone       | Pre-built user guide                                            |
 +------------------+--------------+-----------------------------------------------------------------+
+
+.. _framework: https://github.com/codeigniter4/framework
+.. _appstarter: https://github.com/codeigniter4/appstarter
+.. _userguide: https://github.com/codeigniter4/userguide
 
 In all the above, the latest version of a repository can be downloaded
 by selecting the "releases" link in the secondary navbar inside
@@ -83,9 +94,12 @@ but which showcase it or make it easier to work with!
 +------------------+--------------+-----------------------------------------------------------------+
 | Repository       | Audience     | Description                                                     |
 +==================+==============+=================================================================+
-| website          | developers   | The codeigniter.com website, written in CodeIgniter 4           |
+| website_         | developers   | The codeigniter.com website, written in CodeIgniter 4           |
 +------------------+--------------+-----------------------------------------------------------------+
-| playground       | developers   | Basic code examples in project form. Still growing.             |
+| playground_      | developers   | Basic code examples in project form. Still growing.             |
 +------------------+--------------+-----------------------------------------------------------------+
+
+.. _website: https://github.com/codeigniter4projects/website
+.. _playground: https://github.com/codeigniter4projects/playground
 
 These are not composer-installable repositories.

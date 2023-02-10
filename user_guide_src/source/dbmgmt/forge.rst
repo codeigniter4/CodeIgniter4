@@ -86,6 +86,8 @@ There are several things you may wish to do when creating tables. Add
 fields, add keys to the table, alter columns. CodeIgniter provides a
 mechanism for this.
 
+.. _adding-fields:
+
 Adding Fields
 =============
 
@@ -116,7 +118,7 @@ After the fields have been defined, they can be added using
 $forge->addField()
 ------------------
 
-The add fields method will accept the above array.
+The ``addField()`` method will accept the above array.
 
 .. _forge-addfield-default-value-rawsql:
 
@@ -249,8 +251,8 @@ $forge->addColumn()
 -------------------
 
 The ``addColumn()`` method is used to modify an existing table. It
-accepts the same field array as above, and can be used for an unlimited
-number of additional fields.
+accepts the same field array as :ref:`Creating Tables <adding-fields>`, and can
+be used to add additional fields.
 
 .. literalinclude:: forge/022.php
 
@@ -348,15 +350,15 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Adds a column to a table. Usage:  See `Adding a Field to a Table`_.
+        Adds a column to an existing table. Usage: See `Adding a Field to a Table`_.
 
     .. php:method:: addField($field)
 
         :param    array    $field: Field definition to add
-        :returns:    \CodeIgniter\Database\Forge instance (method chaining)
-        :rtype:    \CodeIgniter\Database\Forge
+        :returns:    ``\CodeIgniter\Database\Forge`` instance (method chaining)
+        :rtype:    ``\CodeIgniter\Database\Forge``
 
-        Adds a field to the set that will be used to create a table. Usage:  See `Adding Fields`_.
+        Adds a field to the set that will be used to create a table. Usage: See `Adding Fields`_.
 
     .. php:method:: addForeignKey($fieldName, $tableName, $tableField[, $onUpdate = '', $onDelete = '', $fkName = ''])
 
@@ -366,10 +368,10 @@ Class Reference
         :param    string    $onUpdate: Desired action for the "on update"
         :param    string    $onDelete: Desired action for the "on delete"
         :param    string    $fkName: Name of foreign key. This does not work with SQLite3
-        :returns:    \CodeIgniter\Database\Forge instance (method chaining)
-        :rtype:    \CodeIgniter\Database\Forge
+        :returns:    ``\CodeIgniter\Database\Forge`` instance (method chaining)
+        :rtype:    ``\CodeIgniter\Database\Forge``
 
-        Adds a foreign key to the set that will be used to create a table. Usage:  See `Adding Foreign Keys`_.
+        Adds a foreign key to the set that will be used to create a table. Usage: See `Adding Foreign Keys`_.
 
         .. note:: ``$fkName`` can be used since v4.3.0.
 
@@ -379,10 +381,10 @@ Class Reference
         :param    bool    $primary: Set to true if it should be a primary key or a regular one
         :param    bool    $unique: Set to true if it should be a unique key or a regular one
         :param    string    $keyName: Name of key to be added
-        :returns:    \CodeIgniter\Database\Forge instance (method chaining)
-        :rtype:    \CodeIgniter\Database\Forge
+        :returns:    ``\CodeIgniter\Database\Forge`` instance (method chaining)
+        :rtype:    ``\CodeIgniter\Database\Forge``
 
-        Adds a key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
+        Adds a key to the set that will be used to create a table. Usage: See `Adding Keys`_.
 
         .. note:: ``$keyName`` can be used since v4.3.0.
 
@@ -390,10 +392,10 @@ Class Reference
 
         :param    mixed    $key: Name of a key field or an array of fields
         :param    string    $keyName: Name of key to be added
-        :returns:    \CodeIgniter\Database\Forge instance (method chaining)
-        :rtype:    \CodeIgniter\Database\Forge
+        :returns:    ``\CodeIgniter\Database\Forge`` instance (method chaining)
+        :rtype:    ``\CodeIgniter\Database\Forge``
 
-        Adds a primary key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
+        Adds a primary key to the set that will be used to create a table. Usage: See `Adding Keys`_.
 
         .. note:: ``$keyName`` can be used since v4.3.0.
 
@@ -401,10 +403,10 @@ Class Reference
 
         :param    mixed    $key: Name of a key field or an array of fields
         :param    string    $keyName: Name of key to be added
-        :returns:    \CodeIgniter\Database\Forge instance (method chaining)
-        :rtype:    \CodeIgniter\Database\Forge
+        :returns:    ``\CodeIgniter\Database\Forge`` instance (method chaining)
+        :rtype:    ``\CodeIgniter\Database\Forge``
 
-        Adds a unique key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
+        Adds a unique key to the set that will be used to create a table. Usage: See `Adding Keys`_.
 
         .. note:: ``$keyName`` can be used since v4.3.0.
 
@@ -415,7 +417,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Creates a new database. Usage:  See `Creating and Dropping Databases`_.
+        Creates a new database. Usage: See `Creating and Dropping Databases`_.
 
     .. php:method:: createTable($table[, $if_not_exists = false[, array $attributes = []]])
 
@@ -425,7 +427,7 @@ Class Reference
         :returns:  Query object on success, false on failure
         :rtype:    mixed
 
-        Creates a new table. Usage:  See `Creating a Table`_.
+        Creates a new table. Usage: See `Creating a Table`_.
 
     .. php:method:: dropColumn($table, $column_name)
 
@@ -434,7 +436,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Drops single or multiple columns from a table. Usage:  See `Dropping Fields From a Table`_.
+        Drops single or multiple columns from a table. Usage: See `Dropping Fields From a Table`_.
 
     .. php:method:: dropDatabase($dbName)
 
@@ -442,7 +444,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Drops a database. Usage:  See `Creating and Dropping Databases`_.
+        Drops a database. Usage: See `Creating and Dropping Databases`_.
 
     .. php:method:: dropKey($table, $keyName[, $prefixKeyName = true])
 
@@ -474,7 +476,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Drops a table. Usage:  See `Dropping a Table`_.
+        Drops a table. Usage: See `Dropping a Table`_.
 
     .. php:method:: processIndexes($table)
 
@@ -495,7 +497,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Modifies a table column. Usage:  See `Modifying a Field in a Table`_.
+        Modifies a table column. Usage: See `Modifying a Field in a Table`_.
 
     .. php:method:: renameTable($table_name, $new_table_name)
 
@@ -504,4 +506,4 @@ Class Reference
         :returns:  Query object on success, false on failure
         :rtype:    mixed
 
-        Renames a table. Usage:  See `Renaming a Table`_.
+        Renames a table. Usage: See `Renaming a Table`_.
