@@ -79,7 +79,7 @@ class URIFactory
                 break;
         }
 
-        return $routePath;
+        return ($routePath === '/' || $routePath === '') ? '/' : ltrim($routePath, '/');
     }
 
     /**
@@ -88,7 +88,7 @@ class URIFactory
      *
      * This method updates superglobal $_SERVER and $_GET.
      *
-     * @return string The route path.
+     * @return string The route path (before normalization).
      */
     private function parseRequestURI(): string
     {
@@ -138,9 +138,7 @@ class URIFactory
         // Update our globals for values likely to have been changed
         parse_str($this->server['QUERY_STRING'], $this->get);
 
-        $uri = URI::removeDotSegments($uri);
-
-        return ($uri === '/' || $uri === '') ? '/' : ltrim($uri, '/');
+        return URI::removeDotSegments($uri);
     }
 
     /**
@@ -148,7 +146,7 @@ class URIFactory
      *
      * This method updates superglobal $_SERVER and $_GET.
      *
-     * @return string The route path.
+     * @return string The route path (before normalization).
      */
     private function parseQueryString(): string
     {
@@ -167,9 +165,7 @@ class URIFactory
         // Update our globals for values likely to have been changed
         parse_str($this->server['QUERY_STRING'], $this->get);
 
-        $uri = URI::removeDotSegments($uri);
-
-        return ($uri === '/' || $uri === '') ? '/' : ltrim($uri, '/');
+        return URI::removeDotSegments($uri);
     }
 
     /**
