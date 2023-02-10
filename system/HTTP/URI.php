@@ -43,6 +43,7 @@ class URI
 
     /**
      * List of URI segments.
+     * URI Segments mean only the URI path part relative to the baseURL.
      *
      * Starts at 1 instead of 0
      *
