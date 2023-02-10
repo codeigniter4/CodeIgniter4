@@ -713,6 +713,8 @@ class Model extends BaseModel
                 $data = $this->transformDataToArray($data, 'insert');
                 $data = array_merge($this->tempData['data'], $data);
             }
+        } else {
+            $data = $this->transformDataToArray($data, 'insert');
         }
 
         if ($this->useAutoIncrement === false) {
@@ -747,8 +749,9 @@ class Model extends BaseModel
                 $data = $this->transformDataToArray($data, 'update');
                 $data = array_merge($this->tempData['data'], $data);
             }
+        } else {
+            $data = $this->transformDataToArray($data, 'update');
         }
-
         $this->escape   = $this->tempData['escape'] ?? [];
         $this->tempData = [];
 
