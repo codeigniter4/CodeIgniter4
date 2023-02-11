@@ -123,6 +123,15 @@ class Exceptions
 
         [$statusCode, $exitCode] = $this->determineCodes($exception);
 
+        if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true)) {
+            log_message('critical', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
+                'message' => $exception->getMessage(),
+                'exFile'  => clean_path($exception->getFile()), // {file} refers to THIS file
+                'exLine'  => $exception->getLine(), // {line} refers to THIS line
+                'trace'   => self::renderBacktrace($exception->getTrace()),
+            ]);
+        }
+
         $this->request  = Services::request();
         $this->response = Services::response();
 
@@ -146,15 +155,6 @@ class Exceptions
         }
 
         // For backward compatibility
-        if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true)) {
-            log_message('critical', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
-                'message' => $exception->getMessage(),
-                'exFile'  => clean_path($exception->getFile()), // {file} refers to THIS file
-                'exLine'  => $exception->getLine(), // {line} refers to THIS line
-                'trace'   => self::renderBacktrace($exception->getTrace()),
-            ]);
-        }
-
         if (! is_cli()) {
             try {
                 $this->response->setStatusCode($statusCode);
