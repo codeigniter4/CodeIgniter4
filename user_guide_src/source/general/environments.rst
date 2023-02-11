@@ -58,10 +58,10 @@ config using `SetEnv <https://httpd.apache.org/docs/2.4/mod/mod_env.html#setenv>
 
 .. _environment-nginx:
 
-nginx
+Nginx
 -----
 
-Under nginx, you must pass the environment variable through the ``fastcgi_params``
+Under Nginx, you must pass the environment variable through the ``fastcgi_params``
 in order for it to show up under the ``$_SERVER`` variable. This allows it to work on the
 virtual-host level, instead of using `env` to set it for the entire server, though that
 would work fine on a dedicated server. You would then modify your server config to something
@@ -80,7 +80,7 @@ like:
         }
     }
 
-Alternative methods are available for nginx and other servers, or you can
+Alternative methods are available for Nginx and other servers, or you can
 remove this logic entirely and set the constant based on the server's IP address
 (for instance).
 
