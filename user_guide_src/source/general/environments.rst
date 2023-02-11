@@ -48,7 +48,7 @@ The simplest method to set the variable is in your :doc:`.env file </general/con
 Apache
 ------
 
-This server variable can be set in your ``.htaccess`` file or Apache
+This server variable can be set in your **.htaccess** file or Apache
 config using `SetEnv <https://httpd.apache.org/docs/2.2/mod/mod_env.html#setenv>`_.
 
 .. code-block:: apache
@@ -62,7 +62,7 @@ nginx
 -----
 
 Under nginx, you must pass the environment variable through the ``fastcgi_params``
-in order for it to show up under the `$_SERVER` variable. This allows it to work on the
+in order for it to show up under the ``$_SERVER`` variable. This allows it to work on the
 virtual-host level, instead of using `env` to set it for the entire server, though that
 would work fine on a dedicated server. You would then modify your server config to something
 like:
@@ -105,14 +105,14 @@ a fresh install:
 Effects On Default Framework Behavior
 =====================================
 
-There are some places in the CodeIgniter system where the ENVIRONMENT
+There are some places in the CodeIgniter system where the ``ENVIRONMENT``
 constant is used. This section describes how default framework behavior
 is affected.
 
 Error Reporting
 ---------------
 
-Setting the ENVIRONMENT constant to a value of ``development`` will cause
+Setting the ``ENVIRONMENT`` constant to a value of ``development`` will cause
 all PHP errors to be rendered to the browser when they occur.
 Conversely, setting the constant to ``production`` will disable all error
 output. Disabling error reporting in production is a
