@@ -102,7 +102,7 @@ a fresh install:
 * production.php
 * testing.php
 
-Effects On Default Framework Behavior
+Effects on Default Framework Behavior
 =====================================
 
 There are some places in the CodeIgniter system where the ``ENVIRONMENT``
