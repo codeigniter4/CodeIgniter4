@@ -36,6 +36,7 @@ You can use one of the functions available in the :doc:`../helpers/url_helper`:
 .. literalinclude:: uri/004.php
 
 You must pass ``true`` as the first parameter, otherwise, it will return the string representation of the current URL.
+
 This URI is based on the path (relative to your ``baseURL``) as determined by the current request object and
 your settings in ``Config\App`` (``baseURL``, ``indexPage``, and ``forceGlobalSecureRequests``).
 Assuming that you're in a controller that extends ``CodeIgniter\Controller`` you can get this relative path:
