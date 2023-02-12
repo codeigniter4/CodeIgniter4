@@ -139,24 +139,40 @@ can be used to manipulate it:
 Query
 -----
 
-The query variables can be manipulated through the class using simple string representations. Query values can only
+The query variables can be manipulated through the class using simple string representations.
+
+Getting/Setting Query
+^^^^^^^^^^^^^^^^^^^^^
+
+Query values can only
 be set as a string currently.
 
 .. literalinclude:: uri/017.php
 
+The ``setQuery()`` method overwrite any existing query variables.
+
 .. note:: Query values cannot contain fragments. An InvalidArgumentException will be thrown if it does.
+
+Setting Query from Array
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 You can set query values using an array:
 
 .. literalinclude:: uri/018.php
 
-The ``setQuery()`` and ``setQueryArray()`` methods overwrite any existing query variables. You can add a value to the
+The ``setQueryArray()`` method overwrite any existing query variables.
+
+Adding Query Value
+^^^^^^^^^^^^^^^^^^
+
+You can add a value to the
 query variables collection without destroying the existing query variables with the ``addQuery()`` method. The first
 parameter is the name of the variable, and the second parameter is the value:
 
 .. literalinclude:: uri/019.php
 
-**Filtering Query Values**
+Filtering Query Values
+^^^^^^^^^^^^^^^^^^^^^^
 
 You can filter the query values returned by passing an options array to the ``getQuery()`` method, with either an
 *only* or an *except* key:
@@ -164,6 +180,10 @@ You can filter the query values returned by passing an options array to the ``ge
 .. literalinclude:: uri/020.php
 
 This only changes the values returned during this one call. If you need to modify the URI's query values more permanently,
+
+Changing Query Values
+^^^^^^^^^^^^^^^^^^^^^
+
 you can use the ``stripQuery()`` and ``keepQuery()`` methods to change the actual object's query variable collection:
 
 .. literalinclude:: uri/021.php
