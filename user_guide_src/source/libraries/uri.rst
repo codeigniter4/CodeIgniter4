@@ -31,7 +31,7 @@ The Current URI
 ---------------
 
 Many times, all you really want is an object representing the current URL of this request.
-You can use one of the functions available in the **url_helper**:
+You can use one of the functions available in the :doc:`../helpers/url_helper`:
 
 .. literalinclude:: uri/004.php
 
