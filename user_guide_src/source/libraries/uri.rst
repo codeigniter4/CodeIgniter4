@@ -96,7 +96,7 @@ If you do not want to display the port, pass in ``true`` as the only parameter:
 
 .. note:: If the current port is the default port for the scheme it will never be displayed.
 
-Userinfo
+UserInfo
 --------
 
 The userinfo section is simply the username and password that you might see with an FTP URI. While you can get
