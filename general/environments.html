@@ -291,11 +291,11 @@ tools loaded that you don’t in production environments, etc.</p>
 <ul>
 <li><p><a class="reference internal" href="#env" id="id2">.env</a></p></li>
 <li><p><a class="reference internal" href="#apache" id="id3">Apache</a></p></li>
-<li><p><a class="reference internal" href="#nginx" id="id4">nginx</a></p></li>
+<li><p><a class="reference internal" href="#nginx" id="id4">Nginx</a></p></li>
 <li><p><a class="reference internal" href="#boot-files" id="id5">Boot Files</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#effects-on-default-framework-behavior" id="id6">Effects On Default Framework Behavior</a></p>
+<li><p><a class="reference internal" href="#effects-on-default-framework-behavior" id="id6">Effects on Default Framework Behavior</a></p>
 <ul>
 <li><p><a class="reference internal" href="#error-reporting" id="id7">Error Reporting</a></p></li>
 </ul>
@@ -336,16 +336,16 @@ You can’t use it for your development.</p>
 </section>
 <section id="apache">
 <span id="environment-apache"></span><h3><a class="toc-backref" href="#id3">Apache</a><a class="headerlink" href="#apache" title="Permalink to this headline"></a></h3>
-<p>This server variable can be set in your <code class="docutils literal notranslate"><span class="pre">.htaccess</span></code> file or Apache
-config using <a class="reference external" href="https://httpd.apache.org/docs/2.2/mod/mod_env.html#setenv">SetEnv</a>.</p>
+<p>This server variable can be set in your <strong>.htaccess</strong> file or Apache
+config using <a class="reference external" href="https://httpd.apache.org/docs/2.4/mod/mod_env.html#setenv">SetEnv</a>.</p>
 <div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">SetEnv</span><span class="w"> </span>CI_ENVIRONMENT<span class="w"> </span>development
 </pre></div>
 </div>
 </section>
 <section id="nginx">
-<span id="environment-nginx"></span><h3><a class="toc-backref" href="#id4">nginx</a><a class="headerlink" href="#nginx" title="Permalink to this headline"></a></h3>
-<p>Under nginx, you must pass the environment variable through the <code class="docutils literal notranslate"><span class="pre">fastcgi_params</span></code>
-in order for it to show up under the <cite>$_SERVER</cite> variable. This allows it to work on the
+<span id="environment-nginx"></span><h3><a class="toc-backref" href="#id4">Nginx</a><a class="headerlink" href="#nginx" title="Permalink to this headline"></a></h3>
+<p>Under Nginx, you must pass the environment variable through the <code class="docutils literal notranslate"><span class="pre">fastcgi_params</span></code>
+in order for it to show up under the <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> variable. This allows it to work on the
 virtual-host level, instead of using <cite>env</cite> to set it for the entire server, though that
 would work fine on a dedicated server. You would then modify your server config to something
 like:</p>
@@ -361,7 +361,7 @@ like:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Alternative methods are available for nginx and other servers, or you can
+<p>Alternative methods are available for Nginx and other servers, or you can
 remove this logic entirely and set the constant based on the server’s IP address
 (for instance).</p>
 <p>In addition to affecting some basic framework behavior (see the next
@@ -384,13 +384,13 @@ a fresh install:</p>
 </section>
 </section>
 <section id="effects-on-default-framework-behavior">
-<h2><a class="toc-backref" href="#id6">Effects On Default Framework Behavior</a><a class="headerlink" href="#effects-on-default-framework-behavior" title="Permalink to this headline"></a></h2>
-<p>There are some places in the CodeIgniter system where the ENVIRONMENT
+<h2><a class="toc-backref" href="#id6">Effects on Default Framework Behavior</a><a class="headerlink" href="#effects-on-default-framework-behavior" title="Permalink to this headline"></a></h2>
+<p>There are some places in the CodeIgniter system where the <code class="docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code>
 constant is used. This section describes how default framework behavior
 is affected.</p>
 <section id="error-reporting">
 <h3><a class="toc-backref" href="#id7">Error Reporting</a><a class="headerlink" href="#error-reporting" title="Permalink to this headline"></a></h3>
-<p>Setting the ENVIRONMENT constant to a value of <code class="docutils literal notranslate"><span class="pre">development</span></code> will cause
+<p>Setting the <code class="docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code> constant to a value of <code class="docutils literal notranslate"><span class="pre">development</span></code> will cause
 all PHP errors to be rendered to the browser when they occur.
 Conversely, setting the constant to <code class="docutils literal notranslate"><span class="pre">production</span></code> will disable all error
 output. Disabling error reporting in production is a
@@ -411,7 +411,7 @@ output. Disabling error reporting in production is a
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 10, 2023.
+      <span class="lastupdated">Last updated on Feb 13, 2023.
       </span></p>
   </div>
 
