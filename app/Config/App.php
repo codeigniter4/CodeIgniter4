@@ -442,4 +442,23 @@ class App extends BaseConfig
      * @see http://www.w3.org/TR/CSP/
      */
     public bool $CSPEnabled = false;
+
+
+    /**
+     * --------------------------------------------------------------------------
+     * Cross-Origin Resource Sharing (CORS)
+     * --------------------------------------------------------------------------
+     *  To pass cors needs to enter valid url in corsValidDomains variable then
+     *  go to Route.php add this line $routes->setAutoRoute(true).
+     *
+     *  this step is necessary to  pass cors in rest ful api , Auto Route at Route.php must
+     *  be true and uncomment.
+     */
+    public array $corsValidDomains = [
+        'http://localhost:4200', /*  Angular default url*/
+        'http://localhost:3000', /*  React default url*/
+        'https://example.com', /* actual  domain with https */
+        'http://example.com', /* actual  domain  with http*/
+    ];
+
 }
