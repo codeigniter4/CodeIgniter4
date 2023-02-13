@@ -294,7 +294,7 @@ relative URI to an existing one and have it resolved safely and correctly.</p>
 <ul>
 <li><p><a class="reference internal" href="#scheme" id="id5">Scheme</a></p></li>
 <li><p><a class="reference internal" href="#authority" id="id6">Authority</a></p></li>
-<li><p><a class="reference internal" href="#userinfo" id="id7">Userinfo</a></p></li>
+<li><p><a class="reference internal" href="#userinfo" id="id7">UserInfo</a></p></li>
 <li><p><a class="reference internal" href="#host" id="id8">Host</a></p></li>
 <li><p><a class="reference internal" href="#port" id="id9">Port</a></p></li>
 <li><p><a class="reference internal" href="#path" id="id10">Path</a></p></li>
@@ -331,15 +331,15 @@ into its appropriate sections:</p>
 <section id="the-current-uri">
 <h3><a class="toc-backref" href="#id2">The Current URI</a><a class="headerlink" href="#the-current-uri" title="Permalink to this headline"></a></h3>
 <p>Many times, all you really want is an object representing the current URL of this request.
-You can use one of the functions available in the <strong>url_helper</strong>:</p>
+You can use one of the functions available in the <a class="reference internal" href="../helpers/url_helper.html"><span class="doc">URL Helper</span></a>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You must pass <code class="docutils literal notranslate"><span class="pre">true</span></code> as the first parameter, otherwise, it will return the string representation of the current URL.
-This URI is based on the path (relative to your <code class="docutils literal notranslate"><span class="pre">baseURL</span></code>) as determined by the current request object and
-your settings in <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> (baseURL, indexPage, and forceGlobalSecureRequests).
+<p>You must pass <code class="docutils literal notranslate"><span class="pre">true</span></code> as the first parameter, otherwise, it will return the string representation of the current URL.</p>
+<p>This URI is based on the path (relative to your <code class="docutils literal notranslate"><span class="pre">baseURL</span></code>) as determined by the current request object and
+your settings in <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> (<code class="docutils literal notranslate"><span class="pre">baseURL</span></code>, <code class="docutils literal notranslate"><span class="pre">indexPage</span></code>, and <code class="docutils literal notranslate"><span class="pre">forceGlobalSecureRequests</span></code>).
 Assuming that you’re in a controller that extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> you can get this relative path:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -427,7 +427,7 @@ until you turn it off again, so always make sure that you turn it off as soon as
 </div>
 </section>
 <section id="userinfo">
-<h3><a class="toc-backref" href="#id7">Userinfo</a><a class="headerlink" href="#userinfo" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">UserInfo</a><a class="headerlink" href="#userinfo" title="Permalink to this headline"></a></h3>
 <p>The userinfo section is simply the username and password that you might see with an FTP URI. While you can get
 this as part of the Authority, you can also retrieve it yourself:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -477,8 +477,8 @@ can be used to manipulate it:</p>
 
 <span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
 
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>   <span class="c1">// &#39;some/path&#39;</span>
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setPath</span><span class="p">(</span><span class="s1">&#39;another/path&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>  <span class="c1">// &#39;another/path&#39;</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>                            <span class="c1">// &#39;/some/path&#39;</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setPath</span><span class="p">(</span><span class="s1">&#39;/another/path&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>  <span class="c1">// &#39;/another/path&#39;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -489,7 +489,10 @@ characters, and remove dot segments for safety.</p>
 </section>
 <section id="query">
 <h3><a class="toc-backref" href="#id11">Query</a><a class="headerlink" href="#query" title="Permalink to this headline"></a></h3>
-<p>The query variables can be manipulated through the class using simple string representations. Query values can only
+<p>The query data can be manipulated through the class using simple string representations.</p>
+<section id="getting-setting-query">
+<h4>Getting/Setting Query<a class="headerlink" href="#getting-setting-query" title="Permalink to this headline"></a></h4>
+<p>Query values can only
 be set as a string currently.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -499,17 +502,25 @@ be set as a string currently.</p>
 <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="s1">&#39;foo=bar&amp;bar=baz&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>The <code class="docutils literal notranslate"><span class="pre">setQuery()</span></code> method overwrite any existing query variables.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Query values cannot contain fragments. An InvalidArgumentException will be thrown if it does.</p>
 </div>
+</section>
+<section id="setting-query-from-array">
+<h4>Setting Query from Array<a class="headerlink" href="#setting-query-from-array" title="Permalink to this headline"></a></h4>
 <p>You can set query values using an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setQueryArray</span><span class="p">([</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;baz&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">setQuery()</span></code> and <code class="docutils literal notranslate"><span class="pre">setQueryArray()</span></code> methods overwrite any existing query variables. You can add a value to the
+<p>The <code class="docutils literal notranslate"><span class="pre">setQueryArray()</span></code> method overwrite any existing query variables.</p>
+</section>
+<section id="adding-query-value">
+<h4>Adding Query Value<a class="headerlink" href="#adding-query-value" title="Permalink to this headline"></a></h4>
+<p>You can add a value to the
 query variables collection without destroying the existing query variables with the <code class="docutils literal notranslate"><span class="pre">addQuery()</span></code> method. The first
 parameter is the name of the variable, and the second parameter is the value:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -517,7 +528,9 @@ parameter is the name of the variable, and the second parameter is the value:</p
 <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">addQuery</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>Filtering Query Values</strong></p>
+</section>
+<section id="filtering-query-values">
+<h4>Filtering Query Values<a class="headerlink" href="#filtering-query-values" title="Permalink to this headline"></a></h4>
 <p>You can filter the query values returned by passing an options array to the <code class="docutils literal notranslate"><span class="pre">getQuery()</span></code> method, with either an
 <em>only</em> or an <em>except</em> key:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -531,8 +544,11 @@ parameter is the name of the variable, and the second parameter is the value:</p
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">([</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;bar&#39;</span><span class="p">]]);</span>
 </pre></div>
 </div>
-<p>This only changes the values returned during this one call. If you need to modify the URI’s query values more permanently,
-you can use the <code class="docutils literal notranslate"><span class="pre">stripQuery()</span></code> and <code class="docutils literal notranslate"><span class="pre">keepQuery()</span></code> methods to change the actual object’s query variable collection:</p>
+<p>This only changes the values returned during this one call. If you need to modify the URI’s query values more permanently,</p>
+</section>
+<section id="changing-query-values">
+<h4>Changing Query Values<a class="headerlink" href="#changing-query-values" title="Permalink to this headline"></a></h4>
+<p>you can use the <code class="docutils literal notranslate"><span class="pre">stripQuery()</span></code> and <code class="docutils literal notranslate"><span class="pre">keepQuery()</span></code> methods to change the actual object’s query variable collection:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&amp;bar=baz&amp;baz=foz&#39;</span><span class="p">);</span>
@@ -551,9 +567,10 @@ If you want to use more liberal rules (which allow key names to contain dots), y
 <code class="docutils literal notranslate"><span class="pre">useRawQueryString()</span></code> beforehand.</p>
 </div>
 </section>
+</section>
 <section id="fragment">
 <h3><a class="toc-backref" href="#id12">Fragment</a><a class="headerlink" href="#fragment" title="Permalink to this headline"></a></h3>
-<p>Fragments are the portion at the end of the URL, preceded by the pound-sign (#). In HTML URLs these are links
+<p>Fragments are the portion at the end of the URL, preceded by the pound-sign (<code class="docutils literal notranslate"><span class="pre">#</span></code>). In HTML URLs these are links
 to an on-page anchor. Media URI’s can make use of them in various other ways.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
