@@ -139,7 +139,7 @@ can be used to manipulate it:
 Query
 -----
 
-The query variables can be manipulated through the class using simple string representations.
+The query data can be manipulated through the class using simple string representations.
 
 Getting/Setting Query
 ^^^^^^^^^^^^^^^^^^^^^
