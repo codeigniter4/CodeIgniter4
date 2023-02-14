@@ -15,6 +15,18 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Breaking Changes
 ****************
 
+URI::getSegment() Change
+========================
+
+Dut to a bug, in previous versions an exception was not thrown if the last segment
+``+1`` was specified. This bug has been fixed. If the non-existent segment is
+specified, an exception is always thrown.
+
+If your code depends on this bug, add ``->setSilent()`` before the call.
+
+.. literalinclude:: upgrade_440/001.php
+   :lines: 2-
+
 Mandatory File Changes
 **********************
 

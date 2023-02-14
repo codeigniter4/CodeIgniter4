@@ -20,6 +20,13 @@ BREAKING
 Behavior Changes
 ================
 
+URI::getSegment() and Non-Existent Segment
+------------------------------------------
+
+An exception is now thrown whenever a non-existent segment number is passed.
+In previous versions, an exception was not thrown if the last segment ``+1`` was
+specified.
+
 Interface Changes
 =================
 
