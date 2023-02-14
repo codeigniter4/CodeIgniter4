@@ -537,17 +537,21 @@ class URI
      * @param string $default Default value
      *
      * @return string The value of the segment. If no segment is found,
-     *                throws InvalidArgumentError
+     *                throws HTTPException
      */
     public function getSegment(int $number, string $default = ''): string
     {
-        // The segment should treat the array as 1-based for the user
-        // but we still have to deal with a zero-based array.
-        $number--;
+        if ($number < 1) {
+            throw HTTPException::forURISegmentOutOfRange($number);
+        }
 
         if ($number > count($this->segments) && ! $this->silent) {
             throw HTTPException::forURISegmentOutOfRange($number);
         }
+
+        // The segment should treat the array as 1-based for the user
+        // but we still have to deal with a zero-based array.
+        $number--;
 
         return $this->segments[$number] ?? $default;
     }

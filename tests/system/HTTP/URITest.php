@@ -62,7 +62,6 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('path', $uri->getSegment(1));
         $this->assertSame('to', $uri->getSegment(2));
         $this->assertSame('script', $uri->getSegment(3));
-        $this->assertSame('', $uri->getSegment(4));
 
         $this->assertSame(3, $uri->getTotalSegments());
     }
@@ -70,22 +69,43 @@ final class URITest extends CIUnitTestCase
     public function testSegmentOutOfRange()
     {
         $this->expectException(HTTPException::class);
+
         $uri = new URI('http://hostname/path/to/script');
-        $uri->getSegment(5);
+        $uri->getSegment(4);
+    }
+
+    public function testSegmentOutOfRangeZero()
+    {
+        $this->expectException(HTTPException::class);
+
+        $uri = new URI('http://hostname/path/to/script');
+        $uri->getSegment(0);
+    }
+
+    public function testSegmentOutOfRangeNegative()
+    {
+        $this->expectException(HTTPException::class);
+
+        $uri = new URI('http://hostname/path/to/script');
+        $uri->getSegment(-1);
     }
 
     public function testSegmentOutOfRangeWithSilent()
     {
         $url = 'http://abc.com/a123/b/c';
         $uri = new URI($url);
+
+        $this->assertSame('', $uri->setSilent()->getSegment(4));
         $this->assertSame('', $uri->setSilent()->getSegment(22));
     }
 
     public function testSegmentOutOfRangeWithDefaultValue()
     {
         $this->expectException(HTTPException::class);
+
         $url = 'http://abc.com/a123/b/c';
         $uri = new URI($url);
+
         $uri->getSegment(22, 'something');
     }
 
@@ -93,6 +113,7 @@ final class URITest extends CIUnitTestCase
     {
         $url = 'http://abc.com/a123/b/c';
         $uri = new URI($url);
+
         $this->assertSame('something', $uri->setSilent()->getSegment(22, 'something'));
     }
 
