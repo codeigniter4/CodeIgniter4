@@ -263,6 +263,8 @@ class URI
      * If $silent == true, then will not throw exceptions and will
      * attempt to continue gracefully.
      *
+     * Note: Method not in PSR-7
+     *
      * @return URI
      */
     public function setSilent(bool $silent = true)
@@ -275,6 +277,8 @@ class URI
     /**
      * If $raw == true, then will use parseStr() method
      * instead of native parse_str() function.
+     *
+     * Note: Method not in PSR-7
      *
      * @return URI
      */
@@ -291,6 +295,8 @@ class URI
      * @return URI
      *
      * @throws HTTPException
+     *
+     * @deprecated This method will be private.
      */
     public function setURI(?string $uri = null)
     {
@@ -407,6 +413,8 @@ class URI
     /**
      * Temporarily sets the URI to show a password in userInfo. Will
      * reset itself after the first call to authority().
+     *
+     * Note: Method not in PSR-7
      *
      * @return URI
      */
@@ -567,6 +575,8 @@ class URI
      * Set the value of a specific segment of the URI path.
      * Allows to set only existing segments or add new one.
      *
+     * Note: Method not in PSR-7
+     *
      * @param int        $number Segment number starting at 1
      * @param int|string $value
      *
@@ -598,6 +608,8 @@ class URI
 
     /**
      * Returns the total number of segments.
+     *
+     * Note: Method not in PSR-7
      */
     public function getTotalSegments(): int
     {
@@ -665,6 +677,8 @@ class URI
     /**
      * Parses the given string and saves the appropriate authority pieces.
      *
+     * Note: Method not in PSR-7
+     *
      * @return $this
      */
     public function setAuthority(string $str)
@@ -694,6 +708,8 @@ class URI
      * @see https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
      *
      * @return $this
+     *
+     * @TODO PSR-7: Should be `withScheme($scheme)`.
      */
     public function setScheme(string $str)
     {
@@ -710,6 +726,8 @@ class URI
      * @param string $pass The user's password
      *
      * @return $this
+     *
+     * @TODO PSR-7: Should be `withUserInfo($user, $password = null)`.
      */
     public function setUserInfo(string $user, string $pass)
     {
@@ -723,6 +741,8 @@ class URI
      * Sets the host name to use.
      *
      * @return $this
+     *
+     * @TODO PSR-7: Should be `withHost($host)`.
      */
     public function setHost(string $str)
     {
@@ -737,6 +757,8 @@ class URI
      * @param int $port
      *
      * @return $this
+     *
+     * @TODO PSR-7: Should be `withPort($port)`.
      */
     public function setPort(?int $port = null)
     {
@@ -761,6 +783,8 @@ class URI
      * Sets the path portion of the URI.
      *
      * @return $this
+     *
+     * @TODO PSR-7: Should be `withPath($port)`.
      */
     public function setPath(string $path)
     {
@@ -824,6 +848,8 @@ class URI
      * to clean the various parts of the query keys and values.
      *
      * @return $this
+     *
+     * @TODO PSR-7: Should be `withQuery($query)`.
      */
     public function setQuery(string $query)
     {
@@ -854,6 +880,8 @@ class URI
      * portion of the URI.
      *
      * @return URI
+     *
+     * @TODO: PSR-7: Should be `withQueryParams(array $query)`
      */
     public function setQueryArray(array $query)
     {
@@ -865,7 +893,9 @@ class URI
     /**
      * Adds a single new element to the query vars.
      *
-     * @param int|string $value
+     * Note: Method not in PSR-7
+     *
+     * @param int|string|null $value
      *
      * @return $this
      */
@@ -878,6 +908,8 @@ class URI
 
     /**
      * Removes one or more query vars from the URI.
+     *
+     * Note: Method not in PSR-7
      *
      * @param string ...$params
      *
@@ -895,6 +927,8 @@ class URI
     /**
      * Filters the query variables so that only the keys passed in
      * are kept. The rest are removed from the object.
+     *
+     * Note: Method not in PSR-7
      *
      * @param string ...$params
      *
@@ -923,6 +957,8 @@ class URI
      * @see https://tools.ietf.org/html/rfc3986#section-3.5
      *
      * @return $this
+     *
+     * @TODO PSR-7: Should be `withFragment($fragment)`.
      */
     public function setFragment(string $string)
     {
