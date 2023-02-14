@@ -62,7 +62,7 @@ class Session implements SessionInterface
     protected $sessionExpiration = 7200;
 
     /**
-     * The location to save sessions to, driver dependent..
+     * The location to save sessions to, driver dependent.
      *
      * For the 'files' driver, it's a path to a writable directory.
      * WARNING: Only absolute paths are supported!
@@ -161,12 +161,9 @@ class Session implements SessionInterface
      *
      * Extract configuration settings and save them here.
      */
-    public function __construct(SessionHandlerInterface $driver, App $config)
+    public function __construct(SessionHandlerInterface $driver, SessionConfig $session)
     {
         $this->driver = $driver;
-
-        /** @var SessionConfig|null $session */
-        $session = config('Session');
 
         // Store Session configurations
         $this->sessionDriverName        = $session->driver;

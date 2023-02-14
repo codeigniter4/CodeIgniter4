@@ -13,7 +13,6 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Exceptions\SessionException;
-use Config\App as AppConfig;
 use Config\Session as SessionConfig;
 use Redis;
 use RedisException;
@@ -67,19 +66,16 @@ class RedisHandler extends BaseHandler
      *
      * @throws SessionException
      */
-    public function __construct(AppConfig $config, string $ipAddress)
+    public function __construct(SessionConfig $config, string $ipAddress)
     {
         parent::__construct($config, $ipAddress);
 
-        /** @var SessionConfig|null $session */
-        $session = config('Session');
-
         // Store Session configurations
-        $this->sessionExpiration = empty($session->expiration)
+        $this->sessionExpiration = empty($config->expiration)
             ? (int) ini_get('session.gc_maxlifetime')
-            : (int) $session->expiration;
+            : (int) $config->expiration;
         // Add sessionCookieName for multiple session cookies.
-        $this->keyPrefix .= $session->cookieName . ':';
+        $this->keyPrefix .= $config->cookieName . ':';
 
         $this->setSavePath();
 

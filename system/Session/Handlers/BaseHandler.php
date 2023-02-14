@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Session\Handlers;
 
-use Config\App as AppConfig;
 use Config\Cookie as CookieConfig;
 use Config\Session as SessionConfig;
 use Psr\Log\LoggerAwareTrait;
@@ -105,15 +104,12 @@ abstract class BaseHandler implements SessionHandlerInterface
      */
     protected $ipAddress;
 
-    public function __construct(AppConfig $config, string $ipAddress)
+    public function __construct(SessionConfig $config, string $ipAddress)
     {
-        /** @var SessionConfig|null $session */
-        $session = config('Session');
-
         // Store Session configurations
-        $this->cookieName = $session->cookieName;
-        $this->matchIP    = $session->matchIP;
-        $this->savePath   = $session->savePath;
+        $this->cookieName = $config->cookieName;
+        $this->matchIP    = $config->matchIP;
+        $this->savePath   = $config->savePath;
 
         /** @var CookieConfig $cookie */
         $cookie = config('Cookie');

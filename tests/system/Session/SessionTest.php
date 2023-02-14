@@ -62,7 +62,7 @@ final class SessionTest extends CIUnitTestCase
         }
         Factories::injectMock('config', 'Session', $sessionConfig);
 
-        $session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);
+        $session = new MockSession(new FileHandler($sessionConfig, '127.0.0.1'), $sessionConfig);
         $session->setLogger(new TestLogger(new LoggerConfig()));
 
         return $session;

@@ -34,6 +34,7 @@ use Config\Logger;
 use Config\Modules;
 use Config\Routing;
 use Config\Services;
+use Config\Session as SessionConfig;
 use Kint;
 use RuntimeException;
 use stdClass;
@@ -517,20 +518,20 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     protected function injectSessionMock()
     {
-        $appConfig = new App();
+        $sessionConfig = new SessionConfig();
 
         $defaults = [
-            'sessionDriver'            => FileHandler::class,
-            'sessionCookieName'        => 'ci_session',
-            'sessionExpiration'        => 7200,
-            'sessionSavePath'          => '',
-            'sessionMatchIP'           => false,
-            'sessionTimeToUpdate'      => 300,
-            'sessionRegenerateDestroy' => false,
+            'driver'            => FileHandler::class,
+            'cookieName'        => 'ci_session',
+            'expiration'        => 7200,
+            'savePath'          => '',
+            'matchIP'           => false,
+            'timeToUpdate'      => 300,
+            'regenerateDestroy' => false,
         ];
 
         foreach ($defaults as $key => $config) {
-            $appConfig->{$key} = $config;
+            $sessionConfig->{$key} = $config;
         }
 
         $cookie = new Cookie();
@@ -546,7 +547,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         }
         Factories::injectMock('config', 'Cookie', $cookie);
 
-        $session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);
+        $session = new MockSession(new FileHandler($sessionConfig, '127.0.0.1'), $sessionConfig);
         $session->setLogger(new TestLogger(new Logger()));
         BaseService::injectMock('session', $session);
     }
