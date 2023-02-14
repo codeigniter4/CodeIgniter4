@@ -34,11 +34,15 @@ class URI
      * Current URI string
      *
      * @var string
+     *
+     * @deprecated Not used.
      */
     protected $uriString;
 
     /**
      * The Current baseURL.
+     *
+     * @deprecated Use SiteURI instead.
      */
     private ?string $baseURL = null;
 
@@ -773,6 +777,8 @@ class URI
      * Sets the current baseURL.
      *
      * @interal
+     *
+     * @deprecated Use SiteURI instead.
      */
     public function setBaseURL(string $baseURL): void
     {
@@ -783,6 +789,8 @@ class URI
      * Returns the current baseURL.
      *
      * @interal
+     *
+     * @deprecated Use SiteURI instead.
      */
     public function getBaseURL(): string
     {
