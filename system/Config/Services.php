@@ -653,10 +653,10 @@ class Services extends BaseService
         /** @var SessionConfig|null $sessionConfig */
         $sessionConfig = config('Session');
 
-        $driverName = $sessionConfig->driver ?? $config->sessionDriver;
+        $driverName = $sessionConfig->driver;
 
         if ($driverName === DatabaseHandler::class) {
-            $DBGroup = $sessionConfig->DBGroup ?? $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
+            $DBGroup = $sessionConfig->DBGroup ?? config(Database::class)->defaultGroup;
             $db      = Database::connect($DBGroup);
 
             $driver = $db->getPlatform();

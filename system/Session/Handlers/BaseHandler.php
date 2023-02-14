@@ -111,16 +111,9 @@ abstract class BaseHandler implements SessionHandlerInterface
         $session = config('Session');
 
         // Store Session configurations
-        if ($session instanceof SessionConfig) {
-            $this->cookieName = $session->cookieName;
-            $this->matchIP    = $session->matchIP;
-            $this->savePath   = $session->savePath;
-        } else {
-            // `Config/Session.php` is absence
-            $this->cookieName = $config->sessionCookieName;
-            $this->matchIP    = $config->sessionMatchIP;
-            $this->savePath   = $config->sessionSavePath;
-        }
+        $this->cookieName = $session->cookieName;
+        $this->matchIP    = $session->matchIP;
+        $this->savePath   = $session->savePath;
 
         /** @var CookieConfig $cookie */
         $cookie = config('Cookie');

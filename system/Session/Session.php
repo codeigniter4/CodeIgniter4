@@ -169,24 +169,13 @@ class Session implements SessionInterface
         $session = config('Session');
 
         // Store Session configurations
-        if ($session instanceof SessionConfig) {
-            $this->sessionDriverName        = $session->driver;
-            $this->sessionCookieName        = $session->cookieName ?? $this->sessionCookieName;
-            $this->sessionExpiration        = $session->expiration ?? $this->sessionExpiration;
-            $this->sessionSavePath          = $session->savePath;
-            $this->sessionMatchIP           = $session->matchIP ?? $this->sessionMatchIP;
-            $this->sessionTimeToUpdate      = $session->timeToUpdate ?? $this->sessionTimeToUpdate;
-            $this->sessionRegenerateDestroy = $session->regenerateDestroy ?? $this->sessionRegenerateDestroy;
-        } else {
-            // `Config/Session.php` is absence
-            $this->sessionDriverName        = $config->sessionDriver;
-            $this->sessionCookieName        = $config->sessionCookieName ?? $this->sessionCookieName;
-            $this->sessionExpiration        = $config->sessionExpiration ?? $this->sessionExpiration;
-            $this->sessionSavePath          = $config->sessionSavePath;
-            $this->sessionMatchIP           = $config->sessionMatchIP ?? $this->sessionMatchIP;
-            $this->sessionTimeToUpdate      = $config->sessionTimeToUpdate ?? $this->sessionTimeToUpdate;
-            $this->sessionRegenerateDestroy = $config->sessionRegenerateDestroy ?? $this->sessionRegenerateDestroy;
-        }
+        $this->sessionDriverName        = $session->driver;
+        $this->sessionCookieName        = $session->cookieName ?? $this->sessionCookieName;
+        $this->sessionExpiration        = $session->expiration ?? $this->sessionExpiration;
+        $this->sessionSavePath          = $session->savePath;
+        $this->sessionMatchIP           = $session->matchIP ?? $this->sessionMatchIP;
+        $this->sessionTimeToUpdate      = $session->timeToUpdate ?? $this->sessionTimeToUpdate;
+        $this->sessionRegenerateDestroy = $session->regenerateDestroy ?? $this->sessionRegenerateDestroy;
 
         /** @var CookieConfig $cookie */
         $cookie = config('Cookie');

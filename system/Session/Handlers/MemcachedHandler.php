@@ -58,19 +58,17 @@ class MemcachedHandler extends BaseHandler
     {
         parent::__construct($config, $ipAddress);
 
-        /** @var SessionConfig|null $session */
+        /** @var SessionConfig $session */
         $session = config('Session');
 
-        $this->sessionExpiration = ($session instanceof SessionConfig)
-            ? $session->expiration : $config->sessionExpiration;
+        $this->sessionExpiration = $session->expiration;
 
         if (empty($this->savePath)) {
             throw SessionException::forEmptySavepath();
         }
 
         // Add sessionCookieName for multiple session cookies.
-        $this->keyPrefix .= ($session instanceof SessionConfig)
-            ? $session->cookieName : $config->sessionCookieName . ':';
+        $this->keyPrefix .= $session->cookieName . ':';
 
         if ($this->matchIP === true) {
             $this->keyPrefix .= $this->ipAddress . ':';

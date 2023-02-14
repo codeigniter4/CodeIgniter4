@@ -77,16 +77,9 @@ class DatabaseHandler extends BaseHandler
         $session = config('Session');
 
         // Store Session configurations
-        if ($session instanceof SessionConfig) {
-            $this->DBGroup = $session->DBGroup ?? config(Database::class)->defaultGroup;
-            // Add sessionCookieName for multiple session cookies.
-            $this->idPrefix = $session->cookieName . ':';
-        } else {
-            // `Config/Session.php` is absence
-            $this->DBGroup = $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
-            // Add sessionCookieName for multiple session cookies.
-            $this->idPrefix = $config->sessionCookieName . ':';
-        }
+        $this->DBGroup = $session->DBGroup ?? config(Database::class)->defaultGroup;
+        // Add sessionCookieName for multiple session cookies.
+        $this->idPrefix = $session->cookieName . ':';
 
         $this->table = $this->savePath;
         if (empty($this->table)) {

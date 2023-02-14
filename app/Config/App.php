@@ -3,7 +3,6 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
-use CodeIgniter\Session\Handlers\FileHandler;
 
 class App extends BaseConfig
 {
@@ -135,112 +134,6 @@ class App extends BaseConfig
      * and the HTTP Strict Transport Security header will be set.
      */
     public bool $forceGlobalSecureRequests = false;
-
-    /**
-     * --------------------------------------------------------------------------
-     * Session Driver
-     * --------------------------------------------------------------------------
-     *
-     * The session storage driver to use:
-     * - `CodeIgniter\Session\Handlers\FileHandler`
-     * - `CodeIgniter\Session\Handlers\DatabaseHandler`
-     * - `CodeIgniter\Session\Handlers\MemcachedHandler`
-     * - `CodeIgniter\Session\Handlers\RedisHandler`
-     *
-     * @deprecated use Config\Session::$driver instead.
-     */
-    public string $sessionDriver = FileHandler::class;
-
-    /**
-     * --------------------------------------------------------------------------
-     * Session Cookie Name
-     * --------------------------------------------------------------------------
-     *
-     * The session cookie name, must contain only [0-9a-z_-] characters
-     *
-     * @deprecated use Config\Session::$cookieName  instead.
-     */
-    public string $sessionCookieName = 'ci_session';
-
-    /**
-     * --------------------------------------------------------------------------
-     * Session Expiration
-     * --------------------------------------------------------------------------
-     *
-     * The number of SECONDS you want the session to last.
-     * Setting to 0 (zero) means expire when the browser is closed.
-     *
-     * @deprecated use Config\Session::$expiration instead.
-     */
-    public int $sessionExpiration = 7200;
-
-    /**
-     * --------------------------------------------------------------------------
-     * Session Save Path
-     * --------------------------------------------------------------------------
-     *
-     * The location to save sessions to and is driver dependent.
-     *
-     * For the 'files' driver, it's a path to a writable directory.
-     * WARNING: Only absolute paths are supported!
-     *
-     * For the 'database' driver, it's a table name.
-     * Please read up the manual for the format with other session drivers.
-     *
-     * IMPORTANT: You are REQUIRED to set a valid save path!
-     *
-     * @deprecated use Config\Session::$savePath instead.
-     */
-    public string $sessionSavePath = WRITEPATH . 'session';
-
-    /**
-     * --------------------------------------------------------------------------
-     * Session Match IP
-     * --------------------------------------------------------------------------
-     *
-     * Whether to match the user's IP address when reading the session data.
-     *
-     * WARNING: If you're using the database driver, don't forget to update
-     *          your session table's PRIMARY KEY when changing this setting.
-     *
-     * @deprecated use Config\Session::$matchIP instead.
-     */
-    public bool $sessionMatchIP = false;
-
-    /**
-     * --------------------------------------------------------------------------
-     * Session Time to Update
-     * --------------------------------------------------------------------------
-     *
-     * How many seconds between CI regenerating the session ID.
-     *
-     * @deprecated use Config\Session::$timeToUpdate instead.
-     */
-    public int $sessionTimeToUpdate = 300;
-
-    /**
-     * --------------------------------------------------------------------------
-     * Session Regenerate Destroy
-     * --------------------------------------------------------------------------
-     *
-     * Whether to destroy session data associated with the old session ID
-     * when auto-regenerating the session ID. When set to FALSE, the data
-     * will be later deleted by the garbage collector.
-     *
-     * @deprecated use Config\Session::$regenerateDestroy instead.
-     */
-    public bool $sessionRegenerateDestroy = false;
-
-    /**
-     * --------------------------------------------------------------------------
-     * Session Database Group
-     * --------------------------------------------------------------------------
-     *
-     * DB Group for the database session.
-     *
-     * @deprecated use Config\Session::$DBGroup instead.
-     */
-    public ?string $sessionDBGroup = null;
 
     /**
      * --------------------------------------------------------------------------
