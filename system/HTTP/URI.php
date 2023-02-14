@@ -797,6 +797,8 @@ class URI
      * Sets the path portion of the URI based on segments.
      *
      * @return $this
+     *
+     * @deprecated This method will be private.
      */
     public function refreshPath()
     {
