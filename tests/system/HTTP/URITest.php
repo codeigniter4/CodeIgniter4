@@ -808,32 +808,37 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('foo/banana/baz', $uri->getPath());
     }
 
-    public function testSetSegmentFallback()
+    public function testSetSegmentNewOne()
     {
         $base = 'http://example.com';
+        $uri  = new URI($base);
 
-        $uri = new URI($base);
+        // Can set the next segment.
         $uri->setSegment(1, 'first');
-        $uri->setSegment(3, 'third');
+        // Can set the next segment.
+        $uri->setSegment(2, 'third');
 
         $this->assertSame('first/third', $uri->getPath());
 
+        // Can replace the existing segment.
         $uri->setSegment(2, 'second');
 
         $this->assertSame('first/second', $uri->getPath());
 
+        // Can set the next segment.
         $uri->setSegment(3, 'third');
 
         $this->assertSame('first/second/third', $uri->getPath());
 
-        $uri->setSegment(5, 'fifth');
+        // Can set the next segment.
+        $uri->setSegment(4, 'fourth');
 
-        $this->assertSame('first/second/third/fifth', $uri->getPath());
+        $this->assertSame('first/second/third/fourth', $uri->getPath());
 
-        // sixth or seventh was not set
+        // Cannot set the next next segment.
         $this->expectException(HTTPException::class);
 
-        $uri->setSegment(8, 'eighth');
+        $uri->setSegment(6, 'six');
     }
 
     public function testSetBadSegment()
