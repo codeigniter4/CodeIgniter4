@@ -78,7 +78,7 @@ class SiteURI extends URI
         $this->baseURL   = $baseURL;
         $this->indexPage = $configApp->indexPage;
 
-        $this->setBaseSeegments();
+        $this->setBaseSegments();
 
         // Check for an index page
         $indexPage = '';
@@ -105,7 +105,7 @@ class SiteURI extends URI
     /**
      * Sets baseSegments.
      */
-    private function setBaseSeegments(): void
+    private function setBaseSegments(): void
     {
         $basePath           = (new URI($this->baseURL))->getPath();
         $this->baseSegments = $this->convertToSegments($basePath);
