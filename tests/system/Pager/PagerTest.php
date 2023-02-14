@@ -168,6 +168,8 @@ final class PagerTest extends CIUnitTestCase
 
     public function testStoreWithSegments()
     {
+        $this->createPager('/3?page=3&foo=bar');
+
         $_GET['page'] = 3;
         $_GET['foo']  = 'bar';
 
