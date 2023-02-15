@@ -496,7 +496,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
     public function testSlashItem()
     {
         $this->assertSame('en/', slash_item('defaultLocale')); // en
-        $this->assertSame('7200/', slash_item('sessionExpiration')); // int 7200
+        $this->assertSame('7200/', slash_item('CSRFExpire')); // int 7200
         $this->assertSame('', slash_item('negotiateLocale')); // false
     }
 
