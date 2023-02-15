@@ -12,6 +12,7 @@
 namespace CodeIgniter\HTTP;
 
 use BadMethodCallException;
+use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
@@ -66,6 +67,16 @@ final class SiteURITest extends CIUnitTestCase
         $uri = new SiteURI($config);
 
         $this->assertSame('http://example.com/', (string) $uri);
+    }
+
+    public function testConstructorInvalidBaseURL()
+    {
+        $this->expectException(ConfigException::class);
+
+        $config          = new App();
+        $config->baseURL = 'invalid';
+
+        new SiteURI($config);
     }
 
     public function testSetPath()
