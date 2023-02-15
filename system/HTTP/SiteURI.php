@@ -115,6 +115,9 @@ class SiteURI extends URI
         }
     }
 
+    /**
+     * @deprecated
+     */
     public function setURI(?string $uri = null)
     {
         throw new BadMethodCallException('Cannot use this method.');
