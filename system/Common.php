@@ -817,11 +817,12 @@ if (! function_exists('model')) {
     /**
      * More simple way of getting model instances from Factories
      *
-     * @template T of Model
+     * @template ModelTemplate of Model
      *
-     * @param class-string<T> $name
+     * @param class-string<ModelTemplate>|string $name
      *
-     * @return T
+     * @return ModelTemplate|null
+     * @phpstan-return ($name is class-string<ModelTemplate> ? ModelTemplate : object|null)
      */
     function model(string $name, bool $getShared = true, ?ConnectionInterface &$conn = null)
     {
