@@ -132,6 +132,16 @@ class SiteURI extends URI
     }
 
     /**
+     * Returns the baseURL.
+     *
+     * @interal
+     */
+    public function getBaseURL(): string
+    {
+        return $this->baseURL;
+    }
+
+    /**
      * Returns the URI path relative to baseURL.
      *
      * @return string The Route path.

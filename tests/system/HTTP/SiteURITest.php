@@ -250,4 +250,12 @@ final class SiteURITest extends CIUnitTestCase
 
         $uri->setURI('http://another.site.example.jp/');
     }
+
+    public function testGetBaseURL()
+    {
+        $config = new App();
+        $uri    = new SiteURI($config);
+
+        $this->assertSame('http://example.com/', $uri->getBaseURL());
+    }
 }
