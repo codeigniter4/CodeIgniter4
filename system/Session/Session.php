@@ -180,11 +180,11 @@ class Session implements SessionInterface
      *
      * Extract configuration settings and save them here.
      */
-    public function __construct(SessionHandlerInterface $driver, SessionConfig $session)
+    public function __construct(SessionHandlerInterface $driver, SessionConfig $config)
     {
         $this->driver = $driver;
 
-        $this->config = $session;
+        $this->config = $config;
 
         /** @var CookieConfig $cookie */
         $cookie = config('Cookie');
