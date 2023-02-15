@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Typography &mdash; CodeIgniter 4.3.1 documentation</title>
+  <title>File Collections &mdash; CodeIgniter 4.3.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -21,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Working with Uploaded Files" href="uploaded_files.html" />
-    <link rel="prev" title="Times and Dates" href="time.html" /> 
+    <link rel="next" title="Honeypot Class" href="honeypot.html" />
+    <link rel="prev" title="Working with Files" href="files.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -175,7 +175,7 @@
 <li class="toctree-l2"><a class="reference internal" href="email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="encryption.html">Encryption Service</a></li>
 <li class="toctree-l2"><a class="reference internal" href="files.html">Working with Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_collections.html">File Collections</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">File Collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="honeypot.html">Honeypot Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="images.html">Image Manipulation Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pagination.html">Pagination</a></li>
@@ -184,7 +184,7 @@
 <li class="toctree-l2"><a class="reference internal" href="sessions.html">Session Library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="throttler.html">Throttler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="time.html">Times and Dates</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typography.html">Typography</a></li>
 <li class="toctree-l2"><a class="reference internal" href="uploaded_files.html">Working with Uploaded Files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="uri.html">Working with URIs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="user_agent.html">User Agent Class</a></li>
@@ -262,13 +262,13 @@
 
       <div class="wy-nav-content">
         <div class="rst-content">
-<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/libraries/typography.rst">Edit this page</a>
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/libraries/file_collections.rst">Edit this page</a>
 
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Library Reference</a></li>
-      <li class="breadcrumb-item active">Typography</li>
+      <li class="breadcrumb-item active">File Collections</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -277,117 +277,174 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="typography">
-<h1>Typography<a class="headerlink" href="#typography" title="Permalink to this headline"></a></h1>
-<p>The Typography library contains methods that help you format text
-in semantically relevant ways.</p>
+  <section id="file-collections">
+<h1>File Collections<a class="headerlink" href="#file-collections" title="Permalink to this headline"></a></h1>
+<p>Working with groups of files can be cumbersome, so the framework supplies the <code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> class to facilitate
+locating and working with groups of files across the filesystem.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#loading-the-library" id="id1">Loading the Library</a></p></li>
-<li><p><a class="reference internal" href="#available-static-functions" id="id2">Available static functions</a></p></li>
+<li><p><a class="reference internal" href="#basic-usage" id="id1">Basic Usage</a></p></li>
+<li><p><a class="reference internal" href="#starting-a-collection" id="id2">Starting a Collection</a></p>
+<ul>
+<li><p><a class="reference internal" href="#construct-string-files" id="id3">__construct(string[] $files = [])</a></p></li>
+<li><p><a class="reference internal" href="#define" id="id4">define()</a></p></li>
+<li><p><a class="reference internal" href="#set-array-files" id="id5">set(array $files)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#inputting-files" id="id6">Inputting Files</a></p>
+<ul>
+<li><p><a class="reference internal" href="#add-string-string-paths-bool-recursive-true" id="id7">add(string[]|string $paths, bool $recursive = true)</a></p></li>
+<li><p><a class="reference internal" href="#addfile-string-file-addfiles-array-files" id="id8">addFile(string $file) / addFiles(array $files)</a></p></li>
+<li><p><a class="reference internal" href="#removefile-string-file-removefiles-array-files" id="id9">removeFile(string $file) / removeFiles(array $files)</a></p></li>
+<li><p><a class="reference internal" href="#adddirectory-string-directory-bool-recursive-false" id="id10">addDirectory(string $directory, bool $recursive = false)</a></p></li>
+<li><p><a class="reference internal" href="#adddirectories-array-directories-bool-recursive-false" id="id11">addDirectories(array $directories, bool $recursive = false)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#filtering-files" id="id12">Filtering Files</a></p>
+<ul>
+<li><p><a class="reference internal" href="#removepattern-string-pattern-string-scope-null" id="id13">removePattern(string $pattern, string $scope = null)</a></p></li>
+<li><p><a class="reference internal" href="#retainpattern-string-pattern-string-scope-null" id="id14">retainPattern(string $pattern, string $scope = null)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#retrieving-files" id="id15">Retrieving Files</a></p>
+<ul>
+<li><p><a class="reference internal" href="#get-string" id="id16">get(): string[]</a></p></li>
+</ul>
+</li>
 </ul>
 </div>
-<section id="loading-the-library">
-<h2><a class="toc-backref" href="#id1">Loading the Library</a><a class="headerlink" href="#loading-the-library" title="Permalink to this headline"></a></h2>
-<p>Like all services in CodeIgniter, it can be loaded via <code class="docutils literal notranslate"><span class="pre">Config\Services</span></code>, though you usually will not need
-to load it manually:</p>
+<section id="basic-usage">
+<h2><a class="toc-backref" href="#id1">Basic Usage</a><a class="headerlink" href="#basic-usage" title="Permalink to this headline"></a></h2>
+<p>At its most basic, <code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> is an index
+of files you set or build:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$typography</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">typography</span><span class="p">();</span>
+<span class="nv">$files</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileCollection</span><span class="p">([</span>
+    <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;index.php&#39;</span><span class="p">,</span>
+    <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;spark&#39;</span><span class="p">,</span>
+<span class="p">]);</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">addDirectory</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Filters&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>After you have input the files you would like to work with you may remove files or use the filtering commands to remove
+or retain files matching a certain regex or glob-style pattern:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removeFile</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Filters/DevelopToolbar&#39;</span><span class="p">);</span>
+
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removePattern</span><span class="p">(</span><span class="s1">&#39;#\.gitkeep#&#39;</span><span class="p">);</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">&#39;*.php&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>When your collection is complete, you can use <code class="docutils literal notranslate"><span class="pre">get()</span></code> to retrieve the final list of file paths, or take advantage of
+<code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> being countable and iterable to work directly with each <code class="docutils literal notranslate"><span class="pre">File</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="s1">&#39;My files: &#39;</span> <span class="o">.</span> <span class="nb">implode</span><span class="p">(</span><span class="nx">PHP_EOL</span><span class="p">,</span> <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">());</span>
+<span class="k">echo</span> <span class="s1">&#39;I have &#39;</span> <span class="o">.</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$files</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39; files!&#39;</span><span class="p">;</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$files</span> <span class="k">as</span> <span class="nv">$file</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s1">&#39;Moving &#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getBasename</span><span class="p">()</span> <span class="o">.</span> <span class="s1">&#39;, &#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">(</span><span class="s1">&#39;mb&#39;</span><span class="p">);</span>
+    <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITABLE</span> <span class="o">.</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Below are the specific methods for working with a <code class="docutils literal notranslate"><span class="pre">FileCollection</span></code>.</p>
+</section>
+<section id="starting-a-collection">
+<h2><a class="toc-backref" href="#id2">Starting a Collection</a><a class="headerlink" href="#starting-a-collection" title="Permalink to this headline"></a></h2>
+<section id="construct-string-files">
+<h3><a class="toc-backref" href="#id3">__construct(string[] $files = [])</a><a class="headerlink" href="#construct-string-files" title="Permalink to this headline"></a></h3>
+<p>The constructor accepts an optional array of file paths to use as the initial collection. These are passed to
+<code class="docutils literal notranslate"><span class="pre">add()</span></code> so any files supplied by child classes in the <code class="docutils literal notranslate"><span class="pre">$files</span></code> will remain.</p>
+</section>
+<section id="define">
+<h3><a class="toc-backref" href="#id4">define()</a><a class="headerlink" href="#define" title="Permalink to this headline"></a></h3>
+<p>Allows child classes to define their own initial files. This method is called by the constructor and allows
+predefined collections without having to use their methods. Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Files\FileCollection</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">ConfigCollection</span> <span class="k">extends</span> <span class="nx">FileCollection</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">define</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">&#39;*.php&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now you may use the <code class="docutils literal notranslate"><span class="pre">ConfigCollection</span></code> anywhere in your project to access all App Config files without
+having to re-call the collection methods every time.</p>
+</section>
+<section id="set-array-files">
+<h3><a class="toc-backref" href="#id5">set(array $files)</a><a class="headerlink" href="#set-array-files" title="Permalink to this headline"></a></h3>
+<p>Sets the list of input files to the provided string array of file paths. This will remove any existing
+files from the collection, so <code class="docutils literal notranslate"><span class="pre">$collection-&gt;set([])</span></code> is essentially a hard reset.</p>
+</section>
+</section>
+<section id="inputting-files">
+<h2><a class="toc-backref" href="#id6">Inputting Files</a><a class="headerlink" href="#inputting-files" title="Permalink to this headline"></a></h2>
+<section id="add-string-string-paths-bool-recursive-true">
+<h3><a class="toc-backref" href="#id7">add(string[]|string $paths, bool $recursive = true)</a><a class="headerlink" href="#add-string-string-paths-bool-recursive-true" title="Permalink to this headline"></a></h3>
+<p>Adds all files indicated by the path or array of paths. If the path resolves to a directory then <code class="docutils literal notranslate"><span class="pre">$recursive</span></code>
+will include sub-directories.</p>
+</section>
+<section id="addfile-string-file-addfiles-array-files">
+<h3><a class="toc-backref" href="#id8">addFile(string $file) / addFiles(array $files)</a><a class="headerlink" href="#addfile-string-file-addfiles-array-files" title="Permalink to this headline"></a></h3>
+<p>Adds the file or files to the current list of input files. Files are absolute paths to actual files.</p>
+</section>
+<section id="removefile-string-file-removefiles-array-files">
+<h3><a class="toc-backref" href="#id9">removeFile(string $file) / removeFiles(array $files)</a><a class="headerlink" href="#removefile-string-file-removefiles-array-files" title="Permalink to this headline"></a></h3>
+<p>Removes the file or files from the current list of input files.</p>
+</section>
+<section id="adddirectory-string-directory-bool-recursive-false">
+<h3><a class="toc-backref" href="#id10">addDirectory(string $directory, bool $recursive = false)</a><a class="headerlink" href="#adddirectory-string-directory-bool-recursive-false" title="Permalink to this headline"></a></h3>
+</section>
+<section id="adddirectories-array-directories-bool-recursive-false">
+<h3><a class="toc-backref" href="#id11">addDirectories(array $directories, bool $recursive = false)</a><a class="headerlink" href="#adddirectories-array-directories-bool-recursive-false" title="Permalink to this headline"></a></h3>
+<p>Adds all files from the directory or directories, optionally recursing into sub-directories. Directories are
+absolute paths to actual directories.</p>
+</section>
+</section>
+<section id="filtering-files">
+<h2><a class="toc-backref" href="#id12">Filtering Files</a><a class="headerlink" href="#filtering-files" title="Permalink to this headline"></a></h2>
+<section id="removepattern-string-pattern-string-scope-null">
+<h3><a class="toc-backref" href="#id13">removePattern(string $pattern, string $scope = null)</a><a class="headerlink" href="#removepattern-string-pattern-string-scope-null" title="Permalink to this headline"></a></h3>
+</section>
+<section id="retainpattern-string-pattern-string-scope-null">
+<h3><a class="toc-backref" href="#id14">retainPattern(string $pattern, string $scope = null)</a><a class="headerlink" href="#retainpattern-string-pattern-string-scope-null" title="Permalink to this headline"></a></h3>
+<p>Filters the current file list through the pattern (and optional scope), removing or retaining matched
+files. <code class="docutils literal notranslate"><span class="pre">$pattern</span></code> may be a complete regex (like <code class="docutils literal notranslate"><span class="pre">'#[A-Za-z]+\.php#'</span></code>) or a pseudo-regex similar
+to <code class="docutils literal notranslate"><span class="pre">glob()</span></code> (like <code class="docutils literal notranslate"><span class="pre">*.css</span></code>).
+If a <code class="docutils literal notranslate"><span class="pre">$scope</span></code> is provided then only files in or under that directory will be considered (i.e. files
+outside of <code class="docutils literal notranslate"><span class="pre">$scope</span></code> are always retained). When no scope is provided then all files are subject.</p>
+<p>Examples:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$files</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileCollection</span><span class="p">();</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// Adds all Config files and directories</span>
+
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removePattern</span><span class="p">(</span><span class="s1">&#39;*tion.php&#39;</span><span class="p">);</span> <span class="c1">// Would remove Encryption.php, Validation.php, and boot/production.php</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removePattern</span><span class="p">(</span><span class="s1">&#39;*tion.php&#39;</span><span class="p">,</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config/boot&#39;</span><span class="p">);</span> <span class="c1">// Would only remove boot/production.php</span>
+
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">&#39;#A.+php$#&#39;</span><span class="p">);</span> <span class="c1">// Would keep only Autoload.php</span>
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">&#39;#d.+php$#&#39;</span><span class="p">,</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config/boot&#39;</span><span class="p">);</span> <span class="c1">// Would keep everything but boot/production.php and boot/testing.php</span>
 </pre></div>
 </div>
 </section>
-<section id="available-static-functions">
-<h2><a class="toc-backref" href="#id2">Available static functions</a><a class="headerlink" href="#available-static-functions" title="Permalink to this headline"></a></h2>
-<p>The following functions are available:</p>
-<dl class="php function">
-<dt class="sig sig-object php" id="autoTypography">
-<span class="sig-name descname"><span class="pre">autoTypography</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$reduce_linebreaks</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#autoTypography" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
-<li><p><strong>$reduce_linebreaks</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to reduce multiple instances of double newlines to two</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>HTML-formatted typography-safe string</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
-</dd>
-</dl>
-<p>Formats text so that it is semantically and typographically correct
-HTML.</p>
-<p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$string</span> <span class="o">=</span> <span class="nv">$typography</span><span class="o">-&gt;</span><span class="na">autoTypography</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
-</pre></div>
-</div>
+</section>
+<section id="retrieving-files">
+<h2><a class="toc-backref" href="#id15">Retrieving Files</a><a class="headerlink" href="#retrieving-files" title="Permalink to this headline"></a></h2>
+<section id="get-string">
+<h3><a class="toc-backref" href="#id16">get(): string[]</a><a class="headerlink" href="#get-string" title="Permalink to this headline"></a></h3>
+<p>Returns an array of all the loaded input files.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Typographic formatting can be processor intensive, particularly if
-you have a lot of content being formatted. If you choose to use this
-function you may want to consider <a class="reference internal" href="../general/caching.html"><span class="doc">caching</span></a> your
-pages.</p>
+<p><code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> is an <code class="docutils literal notranslate"><span class="pre">IteratorAggregate</span></code> so you can work with it directly (e.g. <code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">($collection</span> <span class="pre">as</span> <span class="pre">$file)</span></code>).</p>
 </div>
-</dd></dl>
-
-<dl class="php function">
-<dt class="sig sig-object php" id="formatCharacters">
-<span class="sig-name descname"><span class="pre">formatCharacters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#formatCharacters" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>String with formatted characters.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
-</dd>
-</dl>
-<p>This function mainly converts double and single quotes
-to curly entities, but it also converts em-dashes,
-double spaces, and ampersands.</p>
-<p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$string</span> <span class="o">=</span> <span class="nv">$typography</span><span class="o">-&gt;</span><span class="na">formatCharacters</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="php function">
-<dt class="sig sig-object php" id="nl2brExceptPre">
-<span class="sig-name descname"><span class="pre">nl2brExceptPre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nl2brExceptPre" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>String with HTML-formatted line breaks</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
-</dd>
-</dl>
-<p>Converts newlines to <code class="docutils literal notranslate"><span class="pre">&lt;br</span> <span class="pre">/&gt;</span></code> tags unless they appear within <code class="docutils literal notranslate"><span class="pre">&lt;pre&gt;</span></code> tags.
-This function is identical to the native PHP <code class="docutils literal notranslate"><span class="pre">nl2br()</span></code> function,
-except that it ignores <code class="docutils literal notranslate"><span class="pre">&lt;pre&gt;</span></code> tags.</p>
-<p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$string</span> <span class="o">=</span> <span class="nv">$typography</span><span class="o">-&gt;</span><span class="na">nl2brExceptPre</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
-</pre></div>
-</div>
-</dd></dl>
-
+</section>
 </section>
 </section>
 
@@ -395,8 +452,8 @@ except that it ignores <code class="docutils literal notranslate"><span class="p
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="time.html" class="btn btn-neutral float-left" title="Times and Dates" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="uploaded_files.html" class="btn btn-neutral float-right" title="Working with Uploaded Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="files.html" class="btn btn-neutral float-left" title="Working with Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="honeypot.html" class="btn btn-neutral float-right" title="Honeypot Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
