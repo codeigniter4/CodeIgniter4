@@ -34,15 +34,28 @@ but may leave the methods empty if they are not needed. A skeleton filter class 
 Before Filters
 ==============
 
+Replacing Request
+-----------------
+
 From any filter, you can return the ``$request`` object and it will replace the current Request, allowing you
 to make changes that will still be present when the controller executes.
 
-Since before filters are executed prior to your controller being executed, you may at times want to stop the
-actions in the controller from happening. Also, when you have a series of filters you may also want to
+Stopping Later Filters
+----------------------
+
+Also, when you have a series of filters you may also want to
 stop the execution of the later filters after a certain filter. You can easily do this by returning
 **any non-empty** result. If the before filter returns an empty result, the controller actions or the later
-filters will still be executed. An exception to the non-empty result rule is the ``Request`` instance.
+filters will still be executed.
+
+An exception to the non-empty result rule is the ``Request`` instance.
 Returning it in the before filter will not stop the execution but only replace the current ``$request`` object.
+
+Returning Response
+------------------
+
+Since before filters are executed prior to your controller being executed, you may at times want to stop the
+actions in the controller from happening.
 
 This is typically used to perform redirects, like in this example:
 
