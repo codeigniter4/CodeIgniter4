@@ -100,6 +100,16 @@ The Cookie config items in **app/Config/App.php** are no longer used.
 2. Remove the properties (from ``$cookiePrefix`` to ``$cookieSameSite``) in
    **app/Config/App.php**.
 
+app/Config/Session.php
+----------------------
+
+The Session config items in **app/Config/App.php** are no longer used.
+
+1. Copy **app/Config/Session.php** from the new framework to your **app/Config**
+   directory, and configure it.
+2. Remove the properties (from ``$sessionDriver`` to ``$sessionDBGroup``) in
+   **app/Config/App.php**.
+
 Breaking Enhancements
 *********************
 
