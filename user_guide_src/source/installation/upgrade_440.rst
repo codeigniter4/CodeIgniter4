@@ -15,6 +15,19 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Breaking Changes
 ****************
 
+.. _upgrade-440-uri-setsegment:
+
+URI::setSegment() Change
+========================
+
+Dut to a bug, in previous versions an exception was not thrown if the last segment
+``+2`` was specified. This bug has been fixed.
+
+If your code depends on this bug, fix the segment number.
+
+.. literalinclude:: upgrade_440/002.php
+   :lines: 2-
+
 Mandatory File Changes
 **********************
 

@@ -562,9 +562,9 @@ class URI
      */
     public function setSegment(int $number, $value)
     {
-        // The segment should treat the array as 1-based for the user
-        // but we still have to deal with a zero-based array.
-        $number--;
+        if ($number < 1) {
+            throw HTTPException::forURISegmentOutOfRange($number);
+        }
 
         if ($number > count($this->segments) + 1) {
             if ($this->silent) {
@@ -573,6 +573,10 @@ class URI
 
             throw HTTPException::forURISegmentOutOfRange($number);
         }
+
+        // The segment should treat the array as 1-based for the user
+        // but we still have to deal with a zero-based array.
+        $number--;
 
         $this->segments[$number] = $value;
         $this->refreshPath();
