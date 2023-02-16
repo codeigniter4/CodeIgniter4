@@ -70,20 +70,13 @@ class SiteURI extends URI
      */
     private string $routePath;
 
-    public function __construct(App $configApp)
+    /**
+     * @param string $relativePath URI path relative to baseURL. May include
+     *                             queries or fragments.
+     */
+    public function __construct(App $configApp, string $relativePath = '')
     {
-        // It's possible the user forgot a trailing slash on their
-        // baseURL, so let's help them out.
-        $baseURL = rtrim($configApp->baseURL, '/ ') . '/';
-
-        // Validate baseURL
-        if (filter_var($baseURL, FILTER_VALIDATE_URL) === false) {
-            throw new ConfigException(
-                'Config\App::$baseURL is invalid.'
-            );
-        }
-
-        $this->baseURL   = $baseURL;
+        $this->baseURL   = $this->normalizeBaseURL($configApp);
         $this->indexPage = $configApp->indexPage;
 
         $this->setBaseSegments();
@@ -91,10 +84,17 @@ class SiteURI extends URI
         // Check for an index page
         $indexPage = '';
         if ($configApp->indexPage !== '') {
-            $indexPage = $configApp->indexPage . '/';
+            $indexPage = $configApp->indexPage;
+
+            // Check if we need a separator
+            if ($relativePath !== '' && $relativePath[0] !== '/' && $relativePath[0] !== '?') {
+                $indexPage .= '/';
+            }
         }
 
-        $tempUri = $this->baseURL . $indexPage;
+        $relativePath = URI::removeDotSegments($relativePath);
+
+        $tempUri = $this->baseURL . $indexPage . $relativePath;
         $uri     = new URI($tempUri);
 
         if ($configApp->forceGlobalSecureRequests) {
@@ -107,7 +107,25 @@ class SiteURI extends URI
         }
         $this->applyParts($parts);
 
-        $this->setPath('/');
+        $parts     = explode('?', $relativePath);
+        $routePath = $parts[0];
+        $this->setRoutePath($routePath);
+    }
+
+    private function normalizeBaseURL(App $configApp): string
+    {
+        // It's possible the user forgot a trailing slash on their
+        // baseURL, so let's help them out.
+        $baseURL = rtrim($configApp->baseURL, '/ ') . '/';
+
+        // Validate baseURL
+        if (filter_var($baseURL, FILTER_VALIDATE_URL) === false) {
+            throw new ConfigException(
+                'Config\App::$baseURL is invalid.'
+            );
+        }
+
+        return $baseURL;
     }
 
     /**
@@ -248,13 +266,21 @@ class SiteURI extends URI
      */
     public function setPath(string $path)
     {
+        $this->setRoutePath($path);
+
+        return $this;
+    }
+
+    /**
+     * Sets the route path (and segments).
+     */
+    private function setRoutePath(string $path): void
+    {
         $this->routePath = $this->filterPath($path);
 
         $this->segments = $this->convertToSegments($this->routePath);
 
         $this->refreshPath();
-
-        return $this;
     }
 
     /**

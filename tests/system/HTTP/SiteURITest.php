@@ -37,6 +37,27 @@ final class SiteURITest extends CIUnitTestCase
         $this->assertSame('/index.php/', $uri->getPath());
     }
 
+    public function testConstructorRelativePath()
+    {
+        $config = new App();
+
+        $uri = new SiteURI($config, 'one/two');
+
+        $this->assertSame('http://example.com/index.php/one/two', (string) $uri);
+        $this->assertSame('/index.php/one/two', $uri->getPath());
+    }
+
+    public function testConstructorRelativePathWithQuery()
+    {
+        $config = new App();
+
+        $uri = new SiteURI($config, 'one/two?foo=1&bar=2');
+
+        $this->assertSame('http://example.com/index.php/one/two?foo=1&bar=2', (string) $uri);
+        $this->assertSame('/index.php/one/two', $uri->getPath());
+        $this->assertSame('foo=1&bar=2', $uri->getQuery());
+    }
+
     public function testConstructorSubfolder()
     {
         $config          = new App();
@@ -47,6 +68,18 @@ final class SiteURITest extends CIUnitTestCase
         $this->assertInstanceOf(SiteURI::class, $uri);
         $this->assertSame('http://example.com/ci4/index.php/', (string) $uri);
         $this->assertSame('/ci4/index.php/', $uri->getPath());
+    }
+
+    public function testConstructorSubfolderRelativePathWithQuery()
+    {
+        $config          = new App();
+        $config->baseURL = 'http://example.com/ci4/';
+
+        $uri = new SiteURI($config, 'one/two?foo=1&bar=2');
+
+        $this->assertSame('http://example.com/ci4/index.php/one/two?foo=1&bar=2', (string) $uri);
+        $this->assertSame('/ci4/index.php/one/two', $uri->getPath());
+        $this->assertSame('foo=1&bar=2', $uri->getQuery());
     }
 
     public function testConstructorForceGlobalSecureRequests()
