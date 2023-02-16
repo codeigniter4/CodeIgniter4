@@ -73,8 +73,10 @@ class SiteURI extends URI
     /**
      * @param string $relativePath URI path relative to baseURL. May include
      *                             queries or fragments.
+     * @param string $host         Hostname. If it is not in $allowedHostnames,
+     *                             just be ignored.
      */
-    public function __construct(App $configApp, string $relativePath = '')
+    public function __construct(App $configApp, string $relativePath = '', string $host = '')
     {
         $this->baseURL   = $this->normalizeBaseURL($configApp);
         $this->indexPage = $configApp->indexPage;
@@ -97,8 +99,14 @@ class SiteURI extends URI
         $tempUri = $this->baseURL . $indexPage . $relativePath;
         $uri     = new URI($tempUri);
 
+        // Update scheme
         if ($configApp->forceGlobalSecureRequests) {
             $uri->setScheme('https');
+        }
+
+        // Update host
+        if ($host !== '' && $this->checkHost($host, $configApp->allowedHostnames)) {
+            $uri->setHost($host);
         }
 
         $parts = parse_url((string) $uri);
@@ -107,9 +115,15 @@ class SiteURI extends URI
         }
         $this->applyParts($parts);
 
+        // Set routePath
         $parts     = explode('?', $relativePath);
         $routePath = $parts[0];
         $this->setRoutePath($routePath);
+    }
+
+    private function checkHost(string $host, array $allowedHostnames): bool
+    {
+        return in_array($host, $allowedHostnames, true);
     }
 
     private function normalizeBaseURL(App $configApp): string

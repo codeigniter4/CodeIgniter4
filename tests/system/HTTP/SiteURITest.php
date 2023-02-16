@@ -58,6 +58,18 @@ final class SiteURITest extends CIUnitTestCase
         $this->assertSame('foo=1&bar=2', $uri->getQuery());
     }
 
+    public function testConstructorHost()
+    {
+        $config                   = new App();
+        $config->allowedHostnames = ['sub.example.com'];
+
+        $uri = new SiteURI($config, '', 'sub.example.com');
+
+        $this->assertInstanceOf(SiteURI::class, $uri);
+        $this->assertSame('http://sub.example.com/index.php/', (string) $uri);
+        $this->assertSame('/index.php/', $uri->getPath());
+    }
+
     public function testConstructorSubfolder()
     {
         $config          = new App();
