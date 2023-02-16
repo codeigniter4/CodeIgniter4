@@ -99,6 +99,8 @@ class Connection extends BaseConnection
 
         $this->mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
 
+        $this->mysqli->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
+
         if (isset($this->strictOn)) {
             if ($this->strictOn) {
                 $this->mysqli->options(
