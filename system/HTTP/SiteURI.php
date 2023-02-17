@@ -125,6 +125,7 @@ class SiteURI extends URI
 
         // Set routePath
         $parts     = explode('?', $relativePath);
+        $parts     = explode('#', $parts[0]);
         $routePath = $parts[0];
         $this->setRoutePath($routePath);
     }

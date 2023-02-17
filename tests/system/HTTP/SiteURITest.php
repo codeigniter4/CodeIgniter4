@@ -58,6 +58,30 @@ final class SiteURITest extends CIUnitTestCase
         $this->assertSame('foo=1&bar=2', $uri->getQuery());
     }
 
+    public function testConstructorRelativePathWithFragment()
+    {
+        $config = new App();
+
+        $uri = new SiteURI($config, 'one/two#sec1');
+
+        $this->assertSame('http://example.com/index.php/one/two#sec1', (string) $uri);
+        $this->assertSame('/index.php/one/two', $uri->getPath());
+        $this->assertSame('', $uri->getQuery());
+        $this->assertSame('sec1', $uri->getFragment());
+    }
+
+    public function testConstructorRelativePathWithQueryAndFragment()
+    {
+        $config = new App();
+
+        $uri = new SiteURI($config, 'one/two?foo=1&bar=2#sec1');
+
+        $this->assertSame('http://example.com/index.php/one/two?foo=1&bar=2#sec1', (string) $uri);
+        $this->assertSame('/index.php/one/two', $uri->getPath());
+        $this->assertSame('foo=1&bar=2', $uri->getQuery());
+        $this->assertSame('sec1', $uri->getFragment());
+    }
+
     public function testConstructorHost()
     {
         $config                   = new App();
