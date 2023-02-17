@@ -543,13 +543,14 @@ class URI
      */
     public function getSegment(int $number, string $default = ''): string
     {
+
+        if ($number > count($this->segments) + 1 && ! $this->silent) {
+            throw HTTPException::forURISegmentOutOfRange($number);
+        }
+
         // The segment should treat the array as 1-based for the user
         // but we still have to deal with a zero-based array.
         $number--;
-
-        if ($number > count($this->segments) && ! $this->silent) {
-            throw HTTPException::forURISegmentOutOfRange($number);
-        }
 
         return $this->segments[$number] ?? $default;
     }
