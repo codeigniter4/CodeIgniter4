@@ -74,7 +74,7 @@ final class SiteURITest extends CIUnitTestCase
     {
         $config = new App();
 
-        $uri = new SiteURI($config, '', '', 'https');
+        $uri = new SiteURI($config, '', null, 'https');
 
         $this->assertInstanceOf(SiteURI::class, $uri);
         $this->assertSame('https://example.com/index.php/', (string) $uri);

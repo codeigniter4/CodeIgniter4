@@ -71,18 +71,18 @@ class SiteURI extends URI
     private string $routePath;
 
     /**
-     * @param string $relativePath URI path relative to baseURL. May include
-     *                             queries or fragments.
-     * @param string $host         Optional hostname. If it is not in $allowedHostnames,
-     *                             just be ignored.
-     * @param string $scheme       Optional scheme. 'http' or 'https'.
-     * @phpstan-param 'http'|'https'|'' $scheme
+     * @param string      $relativePath URI path relative to baseURL. May include
+     *                                  queries or fragments.
+     * @param string|null $host         Optional hostname. If it is not in
+     *                                  $allowedHostnames, just be ignored.
+     * @param string|null $scheme       Optional scheme. 'http' or 'https'.
+     * @phpstan-param 'http'|'https'|null $scheme
      */
     public function __construct(
         App $configApp,
         string $relativePath = '',
-        string $host = '',
-        string $scheme = ''
+        ?string $host = null,
+        ?string $scheme = null
     ) {
         $this->baseURL   = $this->normalizeBaseURL($configApp);
         $this->indexPage = $configApp->indexPage;
@@ -106,14 +106,14 @@ class SiteURI extends URI
         $uri     = new URI($tempUri);
 
         // Update scheme
-        if ($scheme !== '') {
+        if ($scheme !== null) {
             $uri->setScheme($scheme);
         } elseif ($configApp->forceGlobalSecureRequests) {
             $uri->setScheme('https');
         }
 
         // Update host
-        if ($host !== '' && $this->checkHost($host, $configApp->allowedHostnames)) {
+        if ($host !== null && $this->checkHost($host, $configApp->allowedHostnames)) {
             $uri->setHost($host);
         }
 
