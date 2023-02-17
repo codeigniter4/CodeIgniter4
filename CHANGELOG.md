@@ -1,5 +1,52 @@
 # Changelog
 
+## [v4.3.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.2) (2023-02-18)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.1...v4.3.2)
+
+### Breaking Changes
+
+* fix: base_url() removes trailing slash in baseURL by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7200
+
+### Fixed Bugs
+
+* docs: fix incorrect sample code in view_parser by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7103
+* docs: add missing items in upgrade_430.rst/v4.3.0.rst by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7119
+* fix: remove `All` from `Options All -Indexes` in .htaccess by @sba in https://github.com/codeigniter4/CodeIgniter4/pull/7093
+* fix: bug on stuck content-type header in Feature Testing by @baycik in https://github.com/codeigniter4/CodeIgniter4/pull/7112
+* fix: ordering `Validation` show error by call `setRule()` by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/7149
+* fix: remove parameter $relative in `uri_string()` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7135
+* fix: [QueryBuilder] where() generates incorrect SQL when using RawSql by @sclubricants in https://github.com/codeigniter4/CodeIgniter4/pull/7147
+* fix: [QueryBuilder] RawSql passed to set() disappears without error by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7148
+* fix: [Parser] local_currency causes "Passing null to parameter" by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7157
+* fix: [Parser] `!` does not work if delimiters are changed by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7142
+* fix: Throttler token time calculation by @rumpfc in https://github.com/codeigniter4/CodeIgniter4/pull/7160
+* fix: [QueryBuilder] getOperatorFromWhereKey() misses EXISTS, BETWEEN by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7155
+* docs: Correcting documentation mistakes in upgrading from one version to another by @objecttothis in https://github.com/codeigniter4/CodeIgniter4/pull/7191
+* fix: [Session] `Redis` connect to protocol `TLS` by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/7187
+* fix: Autoloader may not add Composer package's namespaces by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7193
+* fix: add try/catch to real_path() in clean_path() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7195
+* fix: cannot create shared View instance when using debugbar by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7172
+* fix: RouteCollection::getRegisteredControllers() may not return all controllers by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7174
+* fix: `spark routes` shows incorrect hostname routes by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7176
+* docs: add missing composer.json in Mandatory File Changes by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7170
+* fix: stack trace displayed when Exception handler runs out of memory is useless by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7212
+* fix: support for display of error message using wildcard (*) by @sammyskills in https://github.com/codeigniter4/CodeIgniter4/pull/7226
+* fix: routing behavior when $uriProtocol is QUERY_STRING by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7199
+* fix: site_url() does not use alt Config by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7215
+* docs: add missing @method having() in Model by @paul45 in https://github.com/codeigniter4/CodeIgniter4/pull/7258
+
+### Enhancements
+
+* add `application/vnd.microsoft.portable-executable` and `application/x-dosexec` by @totoprayogo1916 in https://github.com/codeigniter4/CodeIgniter4/pull/7144
+
+### Refactoring
+
+* refactor: add PHPDoc types in RouteCollection by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7129
+* refactor: URI::parseStr() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7154
+* refactor: error_exception.php by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7171
+* [Rector] Apply Rector to app/Views by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/7169
+* refactor: Update PHPDoc Common::config by @maniaba in https://github.com/codeigniter4/CodeIgniter4/pull/7224
+
 ## [v4.3.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.1) (2023-01-14)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.0...v4.3.1)
 
