@@ -21,6 +21,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Paths;
+use Config\Services;
 use ErrorException;
 use Psr\Log\LogLevel;
 use Throwable;
@@ -71,15 +72,15 @@ class Exceptions
     private ?Throwable $exceptionCaughtByExceptionHandler = null;
 
     /**
-     * @param CLIRequest|IncomingRequest $request
+     * @param CLIRequest|IncomingRequest|null $request
+     *
+     * @deprecated The parameter $request and $response are deprecated. No longer used.
      */
-    public function __construct(ExceptionsConfig $config, $request, ResponseInterface $response)
+    public function __construct(ExceptionsConfig $config, $request, ResponseInterface $response) /** @phpstan-ignore-line */
     {
         $this->ob_level = ob_get_level();
         $this->viewPath = rtrim($config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
         $this->config   = $config;
-        $this->request  = $request;
-        $this->response = $response;
 
         // workaround for upgraded users
         // This causes "Deprecated: Creation of dynamic property" in PHP 8.2.
@@ -118,6 +119,9 @@ class Exceptions
         $this->exceptionCaughtByExceptionHandler = $exception;
 
         [$statusCode, $exitCode] = $this->determineCodes($exception);
+
+        $this->request  = Services::request();
+        $this->response = Services::response();
 
         if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true)) {
             log_message('critical', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
