@@ -543,6 +543,9 @@ class URI
      */
     public function getSegment(int $number, string $default = ''): string
     {
+        if ($number < 1) {
+            throw HTTPException::forURISegmentOutOfRange($number);
+        }
 
         if ($number > count($this->segments) + 1 && ! $this->silent) {
             throw HTTPException::forURISegmentOutOfRange($number);
