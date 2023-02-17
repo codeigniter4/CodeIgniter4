@@ -20,6 +20,15 @@ BREAKING
 Behavior Changes
 ================
 
+URI::setSegment() and Non-Existent Segment
+------------------------------------------
+
+An exception is now thrown when you set the last ``+2`` segment.
+In previous versions, an exception was thrown only if the last segment ``+3``
+or more was specified. See :ref:`upgrade-440-uri-setsegment`.
+
+The next segment (``+1``) of the current last segment can be set as before.
+
 Interface Changes
 =================
 
