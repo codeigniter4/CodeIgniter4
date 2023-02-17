@@ -78,8 +78,12 @@ class SiteURI extends URI
      * @param string $scheme       Optional scheme. 'http' or 'https'.
      * @phpstan-param 'http'|'https'|'' $scheme
      */
-    public function __construct(App $configApp, string $relativePath = '', string $host = '', string $scheme = '')
-    {
+    public function __construct(
+        App $configApp,
+        string $relativePath = '',
+        string $host = '',
+        string $scheme = ''
+    ) {
         $this->baseURL   = $this->normalizeBaseURL($configApp);
         $this->indexPage = $configApp->indexPage;
 
