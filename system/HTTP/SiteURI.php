@@ -73,10 +73,12 @@ class SiteURI extends URI
     /**
      * @param string $relativePath URI path relative to baseURL. May include
      *                             queries or fragments.
-     * @param string $host         Hostname. If it is not in $allowedHostnames,
+     * @param string $host         Optional hostname. If it is not in $allowedHostnames,
      *                             just be ignored.
+     * @param string $scheme       Optional scheme. 'http' or 'https'.
+     * @phpstan-param 'http'|'https'|'' $scheme
      */
-    public function __construct(App $configApp, string $relativePath = '', string $host = '')
+    public function __construct(App $configApp, string $relativePath = '', string $host = '', string $scheme = '')
     {
         $this->baseURL   = $this->normalizeBaseURL($configApp);
         $this->indexPage = $configApp->indexPage;
@@ -100,7 +102,9 @@ class SiteURI extends URI
         $uri     = new URI($tempUri);
 
         // Update scheme
-        if ($configApp->forceGlobalSecureRequests) {
+        if ($scheme !== '') {
+            $uri->setScheme($scheme);
+        } elseif ($configApp->forceGlobalSecureRequests) {
             $uri->setScheme('https');
         }
 

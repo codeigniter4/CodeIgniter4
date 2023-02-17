@@ -70,6 +70,16 @@ final class SiteURITest extends CIUnitTestCase
         $this->assertSame('/index.php/', $uri->getPath());
     }
 
+    public function testConstructorScheme()
+    {
+        $config = new App();
+
+        $uri = new SiteURI($config, '', '', 'https');
+
+        $this->assertInstanceOf(SiteURI::class, $uri);
+        $this->assertSame('https://example.com/index.php/', (string) $uri);
+    }
+
     public function testConstructorSubfolder()
     {
         $config          = new App();
