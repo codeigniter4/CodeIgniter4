@@ -285,7 +285,7 @@ final class SiteURITest extends CIUnitTestCase
         $uri    = new SiteURI($config);
         $uri->setPath('test/method');
 
-        $uri->getSegment(3);
+        $uri->getSegment(4);
     }
 
     public function testGetTotalSegments()

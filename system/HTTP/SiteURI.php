@@ -192,21 +192,17 @@ class SiteURI extends URI
     }
 
     /**
-     * Returns the URI segments of the path as an array.
-     */
-    public function getSegments(): array
-    {
-        return $this->segments;
-    }
-
-    /**
-     * Returns the value of a specific segment of the URI path relative to baseURL.
+     * Returns the value of a specific segment of the URI path.
+     * Allows to get only existing segments or the next one.
      *
-     * @param int    $number  Segment number
+     * @param int    $number  Segment number starting at 1
      * @param string $default Default value
      *
-     * @return string The value of the segment. If no segment is found,
-     *                throws HTTPException
+     * @return string The value of the segment. If you specify the last +1
+     *                segment, the $default value. If you specify the last +2
+     *                or more throws HTTPException.
+     *
+     * @TODO remove this method after merging #7267
      */
     public function getSegment(int $number, string $default = ''): string
     {
@@ -214,7 +210,7 @@ class SiteURI extends URI
             throw HTTPException::forURISegmentOutOfRange($number);
         }
 
-        if ($number > count($this->segments) && ! $this->silent) {
+        if ($number > count($this->segments) + 1 && ! $this->silent) {
             throw HTTPException::forURISegmentOutOfRange($number);
         }
 
@@ -223,48 +219,6 @@ class SiteURI extends URI
         $number--;
 
         return $this->segments[$number] ?? $default;
-    }
-
-    /**
-     * Set the value of a specific segment of the URI path relative to baseURL.
-     * Allows to set only existing segments or add new one.
-     *
-     * @param int    $number The segment number. Starting with 1.
-     * @param string $value  The segment value.
-     *
-     * @return $this
-     */
-    public function setSegment(int $number, $value)
-    {
-        if ($number < 1) {
-            throw HTTPException::forURISegmentOutOfRange($number);
-        }
-
-        if ($number > count($this->segments) + 1) {
-            if ($this->silent) {
-                return $this;
-            }
-
-            throw HTTPException::forURISegmentOutOfRange($number);
-        }
-
-        // The segment should treat the array as 1-based for the user,
-        // but we still have to deal with a zero-based array.
-        $number--;
-
-        $this->segments[$number] = $value;
-
-        $this->refreshPath();
-
-        return $this;
-    }
-
-    /**
-     * Returns the total number of segments.
-     */
-    public function getTotalSegments(): int
-    {
-        return count($this->segments);
     }
 
     /**
