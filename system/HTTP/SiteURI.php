@@ -22,9 +22,17 @@ use Config\App;
 class SiteURI extends URI
 {
     /**
-     * The baseURL.
+     * The current baseURL.
      */
     private string $baseURL;
+
+    /**
+     * The path part of baseURL.
+     *
+     * The baseURL "http://example.com/" → '/'
+     * The baseURL "http://localhost:8888/ci431/public/" → '/ci431/public/'
+     */
+    private string $basePathWithoutIndexPage;
 
     /**
      * The Index File.
@@ -84,10 +92,10 @@ class SiteURI extends URI
         ?string $host = null,
         ?string $scheme = null
     ) {
-        $this->baseURL   = $this->normalizeBaseURL($configApp);
+        $baseURL         = $this->normalizeBaseURL($configApp);
         $this->indexPage = $configApp->indexPage;
 
-        $this->setBaseSegments();
+        $this->setBasePath($baseURL);
 
         // Check for an index page
         $indexPage = '';
@@ -102,7 +110,7 @@ class SiteURI extends URI
 
         $relativePath = URI::removeDotSegments($relativePath);
 
-        $tempUri = $this->baseURL . $indexPage . $relativePath;
+        $tempUri = $baseURL . $indexPage . $relativePath;
         $uri     = new URI($tempUri);
 
         // Update scheme
@@ -128,6 +136,13 @@ class SiteURI extends URI
         $parts     = explode('#', $parts[0]);
         $routePath = $parts[0];
         $this->setRoutePath($routePath);
+
+        // Set baseURL
+        $this->baseURL = URI::createURIString(
+            $this->getScheme(),
+            $this->getAuthority(),
+            $this->basePathWithoutIndexPage,
+        );
     }
 
     private function checkHost(string $host, array $allowedHostnames): bool
@@ -152,12 +167,13 @@ class SiteURI extends URI
     }
 
     /**
-     * Sets baseSegments.
+     * Sets basePathWithoutIndexPage and baseSegments.
      */
-    private function setBaseSegments(): void
+    private function setBasePath(string $baseURL): void
     {
-        $basePath           = (new URI($this->baseURL))->getPath();
-        $this->baseSegments = $this->convertToSegments($basePath);
+        $this->basePathWithoutIndexPage = (new URI($baseURL))->getPath();
+
+        $this->baseSegments = $this->convertToSegments($this->basePathWithoutIndexPage);
 
         if ($this->indexPage) {
             $this->baseSegments[] = $this->indexPage;

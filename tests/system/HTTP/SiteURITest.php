@@ -35,6 +35,7 @@ final class SiteURITest extends CIUnitTestCase
         $this->assertInstanceOf(SiteURI::class, $uri);
         $this->assertSame('http://example.com/index.php/', (string) $uri);
         $this->assertSame('/index.php/', $uri->getPath());
+        $this->assertSame('http://example.com/', $uri->getBaseURL());
     }
 
     public function testConstructorRelativePath()
@@ -92,6 +93,7 @@ final class SiteURITest extends CIUnitTestCase
         $this->assertInstanceOf(SiteURI::class, $uri);
         $this->assertSame('http://sub.example.com/index.php/', (string) $uri);
         $this->assertSame('/index.php/', $uri->getPath());
+        $this->assertSame('http://sub.example.com/', $uri->getBaseURL());
     }
 
     public function testConstructorScheme()
@@ -102,6 +104,7 @@ final class SiteURITest extends CIUnitTestCase
 
         $this->assertInstanceOf(SiteURI::class, $uri);
         $this->assertSame('https://example.com/index.php/', (string) $uri);
+        $this->assertSame('https://example.com/', $uri->getBaseURL());
     }
 
     public function testConstructorSubfolder()
@@ -114,6 +117,7 @@ final class SiteURITest extends CIUnitTestCase
         $this->assertInstanceOf(SiteURI::class, $uri);
         $this->assertSame('http://example.com/ci4/index.php/', (string) $uri);
         $this->assertSame('/ci4/index.php/', $uri->getPath());
+        $this->assertSame('http://example.com/ci4/', $uri->getBaseURL());
     }
 
     public function testConstructorSubfolderRelativePathWithQuery()
@@ -136,6 +140,7 @@ final class SiteURITest extends CIUnitTestCase
         $uri = new SiteURI($config);
 
         $this->assertSame('https://example.com/index.php/', (string) $uri);
+        $this->assertSame('https://example.com/', $uri->getBaseURL());
     }
 
     public function testConstructorIndexPageEmpty()
@@ -146,6 +151,7 @@ final class SiteURITest extends CIUnitTestCase
         $uri = new SiteURI($config);
 
         $this->assertSame('http://example.com/', (string) $uri);
+        $this->assertSame('http://example.com/', $uri->getBaseURL());
     }
 
     public function testConstructorInvalidBaseURL()
