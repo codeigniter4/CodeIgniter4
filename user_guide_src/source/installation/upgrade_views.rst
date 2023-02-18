@@ -28,6 +28,7 @@ Upgrade Guide
     - from ``$this->load->view('directory_name/file_name')`` to ``return view('directory_name/file_name');``
     - from ``$content = $this->load->view('file', $data, TRUE);`` to ``$content = view('file', $data);``
 3. (optional) You can change the echo syntax in views from ``<?php echo $title; ?>`` to ``<?= $title ?>``
+4. Remove the line ``defined('BASEPATH') OR exit('No direct script access allowed');`` if it exists.
 
 Code Example
 ============

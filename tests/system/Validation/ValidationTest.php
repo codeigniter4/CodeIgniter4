@@ -102,6 +102,27 @@ class ValidationTest extends CIUnitTestCase
         ], $this->validation->getRules());
     }
 
+    public function testSetRuleMultipleWithIndividual()
+    {
+        $this->validation->setRule('username', 'Username', 'required|min_length[3]');
+        $this->validation->setRule('password', 'Password', ['required', 'min_length[8]', 'alpha_numeric_punct']);
+
+        $this->assertSame([
+            'username' => [
+                'label' => 'Username',
+                'rules' => 'required|min_length[3]',
+            ],
+            'password' => [
+                'label' => 'Password',
+                'rules' => [
+                    'required',
+                    'min_length[8]',
+                    'alpha_numeric_punct',
+                ],
+            ],
+        ], $this->validation->getRules());
+    }
+
     public function testSetRuleAddsRule()
     {
         $this->validation->setRules([
@@ -113,13 +134,13 @@ class ValidationTest extends CIUnitTestCase
         $this->validation->setRule('foo', null, 'foo|foz');
 
         $this->assertSame([
-            'foo' => [
-                'label' => null,
-                'rules' => 'foo|foz',
-            ],
             'bar' => [
                 'label' => null,
                 'rules' => 'bar|baz',
+            ],
+            'foo' => [
+                'label' => null,
+                'rules' => 'foo|foz',
             ],
         ], $this->validation->getRules());
     }
@@ -138,6 +159,24 @@ class ValidationTest extends CIUnitTestCase
             'foo' => [
                 'label' => null,
                 'rules' => 'foo|foz',
+            ],
+        ], $this->validation->getRules());
+    }
+
+    public function testSetRuleOverwritesRuleReverse()
+    {
+        $this->validation->setRule('foo', null, 'foo|foz');
+        $this->validation->setRules([
+            'foo' => [
+                'label' => null,
+                'rules' => 'bar|baz',
+            ],
+        ]);
+
+        $this->assertSame([
+            'foo' => [
+                'label' => null,
+                'rules' => 'bar|baz',
             ],
         ], $this->validation->getRules());
     }

@@ -21,12 +21,15 @@ updating records, deleting records, and more.
 Accessing Models
 ****************
 
-Models are typically stored in the ``app/Models`` directory. They should have a namespace that matches their
+Models are typically stored in the **app/Models** directory. They should have a namespace that matches their
 location within the directory, like ``namespace App\Models``.
 
 You can access models within your classes by creating a new instance or using the :php:func:`model()` helper function.
 
 .. literalinclude:: model/001.php
+
+The ``model()`` uses ``Factories::models()`` internally.
+See :ref:`factories-example` for details on the first parameter.
 
 CodeIgniter's Model
 *******************
@@ -724,7 +727,7 @@ Additionally, each model may allow (default) or deny callbacks class-wide by set
 
 .. literalinclude:: model/052.php
 
-You may also change this setting temporarily for a single model call sing the ``allowCallbacks()`` method:
+You may also change this setting temporarily for a single model call using the ``allowCallbacks()`` method:
 
 .. literalinclude:: model/053.php
 

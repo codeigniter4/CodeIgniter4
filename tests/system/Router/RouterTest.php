@@ -39,6 +39,7 @@ final class RouterTest extends CIUnitTestCase
         $this->collection      = new RouteCollection(Services::locator(), $moduleConfig);
 
         $routes = [
+            '/'                                               => 'Home::index',
             'users'                                           => 'Users::index',
             'user-setting/show-list'                          => 'User_setting::show_list',
             'user-setting/(:segment)'                         => 'User_setting::detail/$1',
@@ -56,20 +57,20 @@ final class RouterTest extends CIUnitTestCase
             'objects/(:segment)/sort/(:segment)/([A-Z]{3,7})' => 'AdminList::objectsSortCreate/$1/$2/$3',
             '(:segment)/(:segment)/(:segment)'                => '$2::$3/$1',
         ];
-
         $this->collection->map($routes);
+
         $this->request = Services::request();
         $this->request->setMethod('get');
     }
 
-    public function testEmptyURIMatchesDefaults()
+    public function testEmptyURIMatchesRoot()
     {
         $router = new Router($this->collection, $this->request);
 
         $router->handle('');
 
-        $this->assertSame($this->collection->getDefaultController(), $router->controllerName());
-        $this->assertSame($this->collection->getDefaultMethod(), $router->methodName());
+        $this->assertSame('\Home', $router->controllerName());
+        $this->assertSame('index', $router->methodName());
     }
 
     public function testZeroAsURIPath()

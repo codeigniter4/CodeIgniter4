@@ -200,21 +200,21 @@ an associative array of values, like a record from a database:
 
 .. literalinclude:: view_parser/008.php
 
-The value for the pseudo-variable ``blog_entry`` is an associative
+The value for the pseudo-variable ``blog_entries`` is an associative
 array. The key/value pairs defined inside it will be exposed inside
 the variable pair loop for that variable.
 
 A **blog_template.php** that might work for the above::
 
     <h1>{blog_title} - {blog_heading}</h1>
-    {blog_entry}
+    {blog_entries}
         <div>
             <h2>{title}</h2>
             <p>{body}</p>
         </div>
-    {/blog_entry}
+    {/blog_entries}
 
-If you would like the other pseudo-variables accessible inside the ``blog_entry``
+If you would like the other pseudo-variables accessible inside the ``blog_entries``
 scope, then make sure that the ``cascadeData`` option is set to true.
 
 Comments
@@ -389,8 +389,9 @@ limit_chars       limit            Limits the number of characters to $limit.   
 
 limit_words       limit            Limits the number of words to $limit.                       { v|limit_words(20) }
 
-local_currency    currency, locale Displays a localized version of a currency. "currency"      { v|local_currency(EUR,en_US) }
-                                   valueis any 3-letter ISO 4217 currency code.
+local_currency    currency,        Displays a localized version of a currency. "currency"      { v|local_currency(EUR,en_US) }
+                  locale,          valueis any 3-letter ISO 4217 currency code.
+                  fraction
 
 local_number      type, precision, Displays a localized version of a number. "type" can be     { v|local_number(decimal,2,en_US) }
                   locale           one of: decimal, currency, percent, scientific, spellout,

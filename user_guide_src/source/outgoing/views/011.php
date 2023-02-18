@@ -2,9 +2,7 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
-
-class Blog extends Controller
+class Blog extends BaseController
 {
     public function index()
     {

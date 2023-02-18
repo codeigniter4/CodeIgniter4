@@ -2,9 +2,9 @@
 
 class MyRules
 {
-    public function even(string $str, ?string &$error = null): bool
+    public function even($value, ?string &$error = null): bool
     {
-        if ((int) $str % 2 !== 0) {
+        if ((int) $value % 2 !== 0) {
             $error = lang('myerrors.evenError');
 
             return false;

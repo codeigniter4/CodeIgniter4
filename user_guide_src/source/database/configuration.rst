@@ -118,14 +118,15 @@ Explanation of Values:
 **database**    The name of the database you want to connect to.
 
                 .. note:: CodeIgniter doesn't support dots (``.``) in the database, table, and column names.
-**DBDriver**    The database driver name. e.g.,: ``MySQLi``, ``Postgres``, etc. The case must match the driver name
+**DBDriver**    The database driver name. e.g.,: ``MySQLi``, ``Postgres``, etc. The case must match the driver name.
+                You can set a fully qualified classname to use your custom driver.
 **DBPrefix**    An optional table prefix which will added to the table name when running
                 :doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
                 installations to share one database.
 **pConnect**    true/false (boolean) - Whether to use a persistent connection.
 **DBDebug**     true/false (boolean) - Whether to throw exceptions or not when database errors occur.
 **charset**     The character set used in communicating with the database.
-**DBCollat**    The character collation used in communicating with the database (``MySQLi`` only)
+**DBCollat**    The character collation used in communicating with the database (``MySQLi`` only).
 **swapPre**     A default table prefix that should be swapped with ``DBPrefix``. This is useful for distributed
                 applications where you might run manually written queries, and need the prefix to still be
                 customizable by the end user.

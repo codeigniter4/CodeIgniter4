@@ -62,8 +62,8 @@ class IncomingRequest extends Request
      *
      * Note: This WILL NOT match the actual URL in the browser since for
      * everything this cares about (and the router, etc) is the portion
-     * AFTER the script name. So, if hosted in a sub-folder this will
-     * appear different than actual URL. If you need that use getPath().
+     * AFTER the baseURL. So, if hosted in a sub-folder this will
+     * appear different than actual URI path. If you need that use getPath().
      *
      * @deprecated Will be protected. Use getUri() instead.
      *
@@ -72,7 +72,7 @@ class IncomingRequest extends Request
     public $uri;
 
     /**
-     * The detected path (relative to SCRIPT_NAME).
+     * The detected URI path (relative to the baseURL).
      *
      * Note: current_url() uses this to build its URI,
      * so this becomes the source for the "current URL"
@@ -329,7 +329,7 @@ class IncomingRequest extends Request
         $uri = $_SERVER['QUERY_STRING'] ?? @getenv('QUERY_STRING');
 
         if (trim($uri, '/') === '') {
-            return '';
+            return '/';
         }
 
         if (strncmp($uri, '/', 1) === 0) {
@@ -443,7 +443,7 @@ class IncomingRequest extends Request
      * instance, this can be used to change the "current URL"
      * for testing.
      *
-     * @param string   $path   URI path relative to SCRIPT_NAME
+     * @param string   $path   URI path relative to baseURL
      * @param App|null $config Optional alternate config to use
      *
      * @return $this
@@ -451,6 +451,9 @@ class IncomingRequest extends Request
     public function setPath(string $path, ?App $config = null)
     {
         $this->path = $path;
+
+        // @TODO remove this. The path of the URI object should be a full URI path,
+        //      not a URI path relative to baseURL.
         $this->uri->setPath($path);
 
         $config ??= $this->config;
@@ -481,8 +484,11 @@ class IncomingRequest extends Request
                 $this->uri->setScheme('https');
             }
         } elseif (! is_cli()) {
+            // Do not change exit() to exception; Request is initialized before
+            // setting the exception handler, so if an exception is raised, an
+            // error will be displayed even if in the production environment.
             // @codeCoverageIgnoreStart
-            exit('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
+            exit('You have an empty or invalid baseURL. The baseURL value must be set in app/Config/App.php, or through the .env file.');
             // @codeCoverageIgnoreEnd
         }
 
@@ -511,7 +517,7 @@ class IncomingRequest extends Request
     }
 
     /**
-     * Returns the path relative to SCRIPT_NAME,
+     * Returns the URI path relative to baseURL,
      * running detection as necessary.
      */
     public function getPath(): string

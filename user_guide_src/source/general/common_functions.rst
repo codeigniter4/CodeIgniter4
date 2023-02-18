@@ -104,8 +104,13 @@ Service Accessors
     :param string                   $name: The model classname.
     :param boolean                  $getShared: Whether to return a shared instance.
     :param ConnectionInterface|null $conn: The database connection.
-    :returns: More simple way of getting model instances
+    :returns: The model instances
     :rtype: object
+
+    More simple way of getting model instances.
+
+    The ``model()`` uses ``Factories::models()`` internally.
+    See :ref:`factories-example` for details on the first parameter ``$name``.
 
     See also the :ref:`Using CodeIgniter's Model <accessing-models>`.
 
@@ -312,7 +317,7 @@ Miscellaneous Functions
 
 .. php:function:: redirect(string $route)
 
-    :param  string  $route: The reverse-routed or named route to redirect the user to.
+    :param  string  $route: The route name or Controller::method to redirect the user to.
     :rtype: RedirectResponse
 
     .. important:: When you use this function, an instance of ``RedirectResponse`` must be returned
@@ -320,18 +325,40 @@ Miscellaneous Functions
         the :doc:`Controller Filter <../incoming/filters>`. If you forget to return it,
         no redirection will occur.
 
-    Returns a RedirectResponse instance allowing you to easily create redirects:
+    Returns a RedirectResponse instance allowing you to easily create redirects.
+
+    **Redirect to a URI path**
+
+    When you want to pass a URI path (relative to baseURL), use ``redirect()->to()``:
 
     .. literalinclude:: common_functions/005.php
+        :lines: 2-
+
+    **Redirect to a Defined Route**
+
+    When you want to pass a :ref:`route name <using-named-routes>` or Controller::method
+    for :ref:`reverse routing <reverse-routing>`, use ``redirect()->route()``:
+
+    .. literalinclude:: common_functions/013.php
+        :lines: 2-
+
+    When passing an argument into the function, it is treated as a route name or
+    Controller::method for reverse routing, not a relative/full URI,
+    treating it the same as using ``redirect()->route()``:
+
+    .. literalinclude:: common_functions/006.php
+        :lines: 2-
+
+    **Redirect Back**
+
+    When you want to redirect back, use ``redirect()->back()``:
+
+    .. literalinclude:: common_functions/014.php
+        :lines: 2-
 
     .. note:: ``redirect()->back()`` is not the same as browser "back" button.
         It takes a visitor to "the last page viewed during the Session" when the Session is available.
         If the Session hasn’t been loaded, or is otherwise unavailable, then a sanitized version of HTTP_REFERER will be used.
-
-    When passing an argument into the function, it is treated as a named/reverse-routed route, not a relative/full URI,
-    treating it the same as using ``redirect()->route()``:
-
-    .. literalinclude:: common_functions/006.php
 
 .. php:function:: remove_invisible_characters($str[, $urlEncoded = true])
 
@@ -367,26 +394,29 @@ Miscellaneous Functions
 
 .. php:function:: route_to($method[, ...$params])
 
-    :param   string  $method: The named route alias, or name of the controller/method to match.
-    :param   int|string   $params: One or more parameters to be passed to be matched in the route. The last parameter allows you to set the locale.
+    :param   string       $method: Route name or Controller::method
+    :param   int|string   ...$params: One or more parameters to be passed to the route. The last parameter allows you to set the locale.
+    :returns: a route (URI path)
+    :rtype: string
 
     .. note:: This function requires the controller/method to have a route defined in **app/Config/routes.php**.
+
+    .. important:: ``route_to()`` returns a *route*, not a full URI path for your site.
+        If your **baseURL** contains sub folders, the return value is not the same
+        as the URI to link. In that case, just use :php:func:`url_to()` instead.
+        See also :ref:`urls-url-structure`.
 
     Generates a route for you based on a controller::method combination. Will take parameters into effect, if provided.
 
     .. literalinclude:: common_functions/009.php
 
-    Generates a route for you based on a named route alias.
+    Generates a route for you based on a route name.
 
     .. literalinclude:: common_functions/010.php
 
     Since v4.3.0, when you use ``{locale}`` in your route, you can optionally specify the locale value as the last parameter.
 
     .. literalinclude:: common_functions/011.php
-
-    .. note:: ``route_to()`` returns a route, not a full URI path for your site.
-        If your **baseURL** contains sub folders, the return value is not the same
-        as the URI to link. In that case, just use :php:func:`url_to()` instead.
 
 .. php:function:: service($name[, ...$params])
 

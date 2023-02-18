@@ -7,7 +7,10 @@ $query = $this->db->table('user2')
 
 $additionalUpdateField = ['updated_at' => new RawSql('CURRENT_TIMESTAMP')];
 
-$sql = $builder->setQueryAsData($query)->onConstraint('email')->updateFields($additionalUpdateField, true)->upsertBatch();
+$sql = $builder->setQueryAsData($query)
+    ->onConstraint('email')
+    ->updateFields($additionalUpdateField, true)
+    ->upsertBatch();
 /* MySQLi produces:
     INSERT INTO `db_user` (`country`, `email`, `name`)
     SELECT user2.name, user2.email, user2.country

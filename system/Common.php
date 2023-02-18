@@ -10,6 +10,7 @@
  */
 
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
@@ -31,6 +32,7 @@ use CodeIgniter\Session\Session;
 use CodeIgniter\Test\TestLogger;
 use Config\App;
 use Config\Database;
+use Config\DocTypes;
 use Config\Logger;
 use Config\Services;
 use Config\View;
@@ -47,8 +49,7 @@ if (! function_exists('app_timezone')) {
      */
     function app_timezone(): string
     {
-        /** @var App $config */
-        $config = config('App');
+        $config = config(App::class);
 
         return $config->appTimezone;
     }
@@ -90,7 +91,11 @@ if (! function_exists('clean_path')) {
     function clean_path(string $path): string
     {
         // Resolve relative paths
-        $path = realpath($path) ?: $path;
+        try {
+            $path = realpath($path) ?: $path;
+        } catch (ErrorException|ValueError $e) {
+            $path = 'error file path: ' . urlencode($path);
+        }
 
         switch (true) {
             case strpos($path, APPPATH) === 0:
@@ -199,7 +204,12 @@ if (! function_exists('config')) {
     /**
      * More simple way of getting config instances from Factories
      *
-     * @return object|null
+     * @template ConfigTemplate of BaseConfig
+     *
+     * @param class-string<ConfigTemplate>|string $name
+     *
+     * @return ConfigTemplate|null
+     * @phpstan-return ($name is class-string<ConfigTemplate> ? ConfigTemplate : object|null)
      */
     function config(string $name, bool $getShared = true)
     {
@@ -491,7 +501,7 @@ if (! function_exists('force_https')) {
             Services::session(null, true)->regenerate(); // @codeCoverageIgnore
         }
 
-        $baseURL = config('App')->baseURL;
+        $baseURL = config(App::class)->baseURL;
 
         if (strpos($baseURL, 'https://') === 0) {
             $authority = substr($baseURL, strlen('https://'));
@@ -807,11 +817,12 @@ if (! function_exists('model')) {
     /**
      * More simple way of getting model instances from Factories
      *
-     * @template T of Model
+     * @template ModelTemplate of Model
      *
-     * @param class-string<T> $name
+     * @param class-string<ModelTemplate>|string $name
      *
-     * @return T
+     * @return ModelTemplate|null
+     * @phpstan-return ($name is class-string<ModelTemplate> ? ModelTemplate : object|null)
      */
     function model(string $name, bool $getShared = true, ?ConnectionInterface &$conn = null)
     {
@@ -859,7 +870,7 @@ if (! function_exists('redirect')) {
      *
      * If more control is needed, you must use $response->redirect explicitly.
      *
-     * @param string $route
+     * @param string|null $route Route name or Controller::method
      */
     function redirect(?string $route = null): RedirectResponse
     {
@@ -881,7 +892,7 @@ if (! function_exists('_solidus')) {
      */
     function _solidus(): string
     {
-        if (config('DocTypes')->html5 ?? false) {
+        if (config(DocTypes::class)->html5 ?? false) {
             return '';
         }
 
@@ -941,18 +952,18 @@ if (! function_exists('response')) {
 
 if (! function_exists('route_to')) {
     /**
-     * Given a controller/method string and any params,
+     * Given a route name or controller/method string and any params,
      * will attempt to build the relative URL to the
      * matching route.
      *
      * NOTE: This requires the controller/method to
      * have a route defined in the routes Config file.
      *
-     * @param string     $method    Named route or Controller::method
+     * @param string     $method    Route name or Controller::method
      * @param int|string ...$params One or more parameters to be passed to the route.
      *                              The last parameter allows you to set the locale.
      *
-     * @return false|string
+     * @return false|string The route (URI path relative to baseURL) or false if not found.
      */
     function route_to(string $method, ...$params)
     {
@@ -968,8 +979,6 @@ if (! function_exists('session')) {
      * Examples:
      *    session()->set('foo', 'bar');
      *    $foo = session('bar');
-     *
-     * @param string $val
      *
      * @return array|bool|float|int|object|Session|string|null
      * @phpstan-return ($val is null ? Session : array|bool|float|int|object|string|null)
@@ -1060,7 +1069,7 @@ if (! function_exists('slash_item')) {
      */
     function slash_item(string $item): ?string
     {
-        $config = config('App');
+        $config = config(App::class);
 
         if (! property_exists($config, $item)) {
             return null;
@@ -1162,10 +1171,8 @@ if (! function_exists('view')) {
      */
     function view(string $name, array $data = [], array $options = []): string
     {
-        /** @var CodeIgniter\View\View $renderer */
         $renderer = Services::renderer();
 
-        /** @var \CodeIgniter\Config\View $config */
         $config   = config(View::class);
         $saveData = $config->saveData;
 

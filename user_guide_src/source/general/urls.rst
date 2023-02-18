@@ -15,6 +15,8 @@ Your URLs can be defined using the :doc:`URI Routing </incoming/routing>` featur
 
 The :doc:`URI Library <../libraries/uri>` and the :doc:`URL Helper <../helpers/url_helper>` contain functions that make it easy to work with your URI data.
 
+.. _urls-url-structure:
+
 URL Structure
 =============
 

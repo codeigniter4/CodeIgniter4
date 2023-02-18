@@ -2,9 +2,9 @@
 
 use CodeIgniter\HTTP\IncomingRequest;
 
-$request = service('request');
+$request = request();
 
-// the URI being requested (i.e., /about)
+// the URI path being requested (i.e., /about)
 $request->getUri()->getPath();
 
 // Retrieve $_GET and $_POST variables
@@ -22,7 +22,9 @@ $request->getJSON();
 $request->getServer('Host');
 
 // Retrieve an HTTP Request header, with case-insensitive names
-$request->getHeader('host');
-$request->getHeader('Content-Type');
+$request->header('host');
+$request->header('Content-Type');
 
-$request->getMethod();  // get, post, put, etc
+// Checks the HTTP method
+$request->is('get');
+$request->is('post');

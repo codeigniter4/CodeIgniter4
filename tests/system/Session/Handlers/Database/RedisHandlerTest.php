@@ -54,6 +54,41 @@ final class RedisHandlerTest extends CIUnitTestCase
         return new RedisHandler(new AppConfig(), $this->userIpAddress);
     }
 
+    public function testSavePathWithoutProtocol()
+    {
+        $handler = $this->getInstance(
+            ['savePath' => '127.0.0.1:6379']
+        );
+
+        $savePath = $this->getPrivateProperty($handler, 'savePath');
+
+        $this->assertSame('tcp', $savePath['protocol']);
+    }
+
+    public function testSavePathTLSAuth()
+    {
+        $handler = $this->getInstance(
+            ['savePath' => 'tls://127.0.0.1:6379?auth=password']
+        );
+
+        $savePath = $this->getPrivateProperty($handler, 'savePath');
+
+        $this->assertSame('tls', $savePath['protocol']);
+        $this->assertSame('password', $savePath['password']);
+    }
+
+    public function testSavePathTCPAuth()
+    {
+        $handler = $this->getInstance(
+            ['savePath' => 'tcp://127.0.0.1:6379?auth=password']
+        );
+
+        $savePath = $this->getPrivateProperty($handler, 'savePath');
+
+        $this->assertSame('tcp', $savePath['protocol']);
+        $this->assertSame('password', $savePath['password']);
+    }
+
     public function testSavePathTimeoutFloat()
     {
         $handler = $this->getInstance(
@@ -80,6 +115,19 @@ final class RedisHandlerTest extends CIUnitTestCase
     {
         $handler = $this->getInstance();
         $this->assertTrue($handler->open($this->sessionSavePath, $this->sessionName));
+    }
+
+    public function testOpenWithDefaultProtocol()
+    {
+        $default = $this->sessionSavePath;
+
+        $this->sessionSavePath = '127.0.0.1:6379';
+
+        $handler = $this->getInstance();
+        $this->assertTrue($handler->open($this->sessionSavePath, $this->sessionName));
+
+        // Rollback to default
+        $this->sessionSavePath = $default;
     }
 
     public function testWrite()

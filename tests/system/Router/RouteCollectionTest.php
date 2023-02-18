@@ -1782,15 +1782,16 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testGetRegisteredControllersReturnsAllControllers()
     {
         $collection = $this->getCollector();
-        $collection->get('test', '\App\Controllers\Hello::get');
-        $collection->post('test', '\App\Controllers\Hello::post');
-        $collection->post('hello', '\App\Controllers\Test::hello');
+        $collection->get('test', '\App\Controllers\HelloGet::get');
+        $collection->post('test', '\App\Controllers\HelloPost::post');
+        $collection->post('hello', '\App\Controllers\TestPost::hello');
 
         $routes = $collection->getRegisteredControllers('*');
 
         $expects = [
-            '\App\Controllers\Hello',
-            '\App\Controllers\Test',
+            '\App\Controllers\HelloGet',
+            '\App\Controllers\HelloPost',
+            '\App\Controllers\TestPost',
         ];
         $this->assertSame($expects, $routes);
     }

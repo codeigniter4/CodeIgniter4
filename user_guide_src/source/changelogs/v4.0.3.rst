@@ -31,3 +31,7 @@ Bugs Fixed
 - Default pagination templates fixed to use the correct locale.
 - Lots of tweaks and corrections in the user guide.
 - Fixed locating files in custom namespaces that were occassionally not found. Primarily affected console commands.
+
+See the repo's
+`CHANGELOG_4.0.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.0.md>`_
+for a complete list of bugs fixed.

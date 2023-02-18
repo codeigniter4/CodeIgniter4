@@ -22,4 +22,6 @@ Bugs Fixed
 - Fixed a bug when the ``CodeIgniter\Database\SQLSRV\PreparedQuery::_getResult()`` was returning the bool value instead of the resource.
 - Fixed a bug in the error handler where in cases the callback cannot process the error level it does not pass the error to PHP's standard error handler.
 
-See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.
+See the repo's
+`CHANGELOG_4.2.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.2.md>`_
+for a complete list of bugs fixed.

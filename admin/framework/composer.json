@@ -13,7 +13,7 @@
         "psr/log": "^1.1"
     },
     "require-dev": {
-        "kint-php/kint": "^5.0.1",
+        "kint-php/kint": "^5.0.3",
         "codeigniter/coding-standard": "^1.5",
         "fakerphp/faker": "^1.9",
         "friendsofphp/php-cs-fixer": "3.13.0",
@@ -42,6 +42,11 @@
         "ext-fileinfo": "Improves mime type detection for files",
         "ext-readline": "Improves CLI::input() usability"
     },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
     "autoload": {
         "psr-4": {
             "CodeIgniter\\": "system/"
@@ -51,9 +56,6 @@
         ]
     },
     "scripts": {
-        "post-update-cmd": [
-            "CodeIgniter\\ComposerScripts::postUpdate"
-        ],
         "test": "phpunit"
     },
     "support": {

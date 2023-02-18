@@ -73,6 +73,31 @@ Mock Config Classes
 
 - Add **types** to the properties in these Config classes. You may need to fix the property values to match the property types.
 
+composer.json
+=============
+
+If you installed CodeIgnter manually, and are using Composer,
+you need to remove the following lines, and run ``composer update``.
+
+.. code-block:: text
+
+    {
+        ...
+        "require": {
+            ...
+            "kint-php/kint": "^4.2",  <-- Remove this line
+            ...
+        },
+        ...
+        "scripts": {
+            "post-update-cmd": [
+                "CodeIgniter\\ComposerScripts::postUpdate"  <-- Remove this line
+            ],
+            "test": "phpunit"
+        },
+        ...
+    }
+
 Breaking Changes
 ****************
 
@@ -324,6 +349,17 @@ Config
     - Added to handle session configuration.
 - app/Config/Validation.php
     - The default Validation Rules have been changed to Strict Rules for better security. See :ref:`validation-traditional-and-strict-rules`.
+
+View Files
+----------
+
+The following view files have been changed to HTML5 compatible tags.
+Also, error messages are now defined in the **Errors** language file.
+
+- app/Views/errors/html/error_404.php
+- app/Views/errors/html/error_exception.php
+- app/Views/errors/html/production.php
+- app/Views/welcome_message.php
 
 All Changes
 ===========

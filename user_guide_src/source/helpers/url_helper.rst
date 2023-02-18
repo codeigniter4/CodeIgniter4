@@ -64,6 +64,10 @@ The following functions are available:
     .. note:: Since v4.3.0, if you set ``Config\App::$allowedHostnames``,
         this returns the URL with the hostname set in it if the current URL matches.
 
+    .. note:: In previous versions, this returned the base URL without a trailing
+        slash (``/``) when called with no argument. The bug was fixed and
+        since v4.3.2 it returns the base URL with a trailing slash.
+
     Returns your site base URL, as specified in your config file. Example:
 
     .. literalinclude:: url_helper/003.php
@@ -94,7 +98,9 @@ The following functions are available:
     :returns: The current URL
     :rtype:    string|\\CodeIgniter\\HTTP\\URI
 
-    Returns the full URL (including segments) of the page being currently viewed.
+    Returns the full URL of the page being currently viewed.
+    When returning string, the query and fragment parts of the URL are removed.
+    When returning URI, the query and fragment parts are preserved.
 
     However for security reasons, it is created based on the ``Config\App`` settings,
     and not intended to match the browser URL.
@@ -102,9 +108,10 @@ The following functions are available:
     Since v4.3.0, if you set ``Config\App::$allowedHostnames``,
     this returns the URL with the hostname set in it if the current URL matches.
 
-    .. note:: Calling this function is the same as doing this:
+    .. note:: Calling ``current_url()`` is the same as doing this:
 
         .. literalinclude:: url_helper/006.php
+           :lines: 2-
 
     .. important:: Prior to v4.1.2, this function had a bug causing it to ignore the configuration on ``Config\App::$indexPage``.
 
@@ -116,37 +123,42 @@ The following functions are available:
 
     Returns the full URL (including segments) of the page the user was previously on.
 
-    .. note:: Due to security issues of blindly trusting the HTTP_REFERER system variable, CodeIgniter will
+    .. note:: Due to security issues of blindly trusting the ``HTTP_REFERER`` system variable, CodeIgniter will
         store previously visited pages in the session if it's available. This ensures that we always
         use a known and trusted source. If the session hasn't been loaded, or is otherwise unavailable,
-        then a sanitized version of HTTP_REFERER will be used.
+        then a sanitized version of ``HTTP_REFERER`` will be used.
 
-.. php:function:: uri_string([$relative = false])
+.. php:function:: uri_string()
 
-    :param    boolean    $relative: True if you would like the string relative to baseURL
     :returns: A URI string
-    :rtype:    string
+    :rtype:   string
 
-    Returns the path part of the current URL.
-    For example, if your URL was this::
+    Returns the path part of the current URL relative to baseURL.
+
+    For example, when your baseURL is **http://some-site.com/** and the current URL is::
 
         http://some-site.com/blog/comments/123
 
     The function would return::
 
-        /blog/comments/123
+        blog/comments/123
 
-    Or with the optional relative parameter::
+    When your baseURL is **http://some-site.com/subfolder/** and the current URL is::
 
-        app.baseURL = http://some-site.com/subfolder/
+        http://some-site.com/subfolder/blog/comments/123
 
-        uri_string(); // "/subfolder/blog/comments/123"
-        uri_string(true); // "blog/comments/123"
+    The function would return::
+
+        blog/comments/123
+
+    .. note:: In previous versions, the parameter ``$relative = false`` was defined.
+        However, due to a bug, this function always returned a path relative to baseURL.
+        Since v4.3.2, the parameter has been removed.
 
 .. php:function:: index_page([$altConfig = null])
 
     :param \\Config\\App $altConfig: Alternate configuration to use
-    :returns: 'index_page' value
+    :returns:  The ``indexPage`` value
     :rtype:    string
 
     Returns your site **indexPage**, as specified in your config file.
@@ -175,7 +187,7 @@ The following functions are available:
     be a string or an array.
 
     .. note:: If you are building links that are internal to your application
-        do not include the base URL (`http://...`). This will be added
+        do not include the base URL (``http://...``). This will be added
         automatically from the information specified in your config file.
         Include only the URI segments you wish appended to the URL.
 
@@ -299,12 +311,12 @@ The following functions are available:
 
     .. literalinclude:: url_helper/016.php
 
-    .. note:: The only URLs recognized are those that start with "www." or with "://".
+    .. note:: The only URLs recognized are those that start with ``www.`` or with ``://``.
 
 .. php:function:: url_title($str[, $separator = '-'[, $lowercase = false]])
 
     :param  string  $str: Input string
-    :param  string  $separator: Word separator (usually '-' or '_')
+    :param  string  $separator: Word separator (usually ``'-'`` or ``'_'``)
     :param  bool    $lowercase: Whether to transform the output string to lowercase
     :returns: URL-formatted string
     :rtype: string
@@ -316,7 +328,7 @@ The following functions are available:
     .. literalinclude:: url_helper/017.php
 
     The second parameter determines the word delimiter. By default dashes
-    are used. Preferred options are: **-** (dash) or **_** (underscore).
+    are used. Preferred options are: ``-`` (dash) or ``_`` (underscore).
 
     Example:
 
@@ -332,7 +344,7 @@ The following functions are available:
 .. php:function:: mb_url_title($str[, $separator = '-'[, $lowercase = false]])
 
     :param  string  $str: Input string
-    :param  string  $separator: Word separator (usually '-' or '_')
+    :param  string  $separator: Word separator (usually ``'-'`` or ``'_'``)
     :param  bool    $lowercase: Whether to transform the output string to lowercase
     :returns: URL-formatted string
     :rtype: string
@@ -343,11 +355,11 @@ The following functions are available:
 .. php:function:: prep_url([$str = ''[, $secure = false]])
 
     :param  string   $str: URL string
-    :param  boolean  $secure: true for https://
+    :param  boolean  $secure: true for ``https://``
     :returns: Protocol-prefixed URL string
     :rtype: string
 
-    This function will add *http://* or *https://* in the event that a protocol prefix
+    This function will add ``http://`` or ``https://`` in the event that a protocol prefix
     is missing from a URL.
 
     Pass the URL string to the function like this:
@@ -356,8 +368,8 @@ The following functions are available:
 
 .. php:function:: url_to($controller[, ...$args])
 
-    :param  string  $controller: Named route or Controller::method
-    :param  mixed   ...$args:    One or more parameters to be passed to the route
+    :param  string  $controller: Route name or Controller::method
+    :param  mixed   ...$args:    One or more parameters to be passed to the route. The last parameter allows you to set the locale.
     :returns: Absolute URL
     :rtype: string
 
@@ -375,18 +387,25 @@ The following functions are available:
     This is useful because you can still change your routes after putting links
     into your views.
 
+    Since v4.3.0, when you use ``{locale}`` in your route, you can optionally specify the locale value as the last parameter.
+
+    .. literalinclude:: url_helper/025.php
+
     For full details, see the :ref:`reverse-routing` and :ref:`using-named-routes`.
 
 .. php:function:: url_is($path)
 
-    :param string $path: The path to check the current URI path against.
+    :param string $path: The URL path relative to baseURL to check the current URI path against.
     :rtype: boolean
 
     Compares the current URL's path against the given path to see if they match. Example:
 
     .. literalinclude:: url_helper/023.php
 
-    This would match ``http://example.com/admin``. You can use the ``*`` wildcard to match
+    This would match **http://example.com/admin**. It would match **http://example.com/subdir/admin**
+    if your baseURL is ``http://example.com/subdir/``.
+
+    You can use the ``*`` wildcard to match
     any other applicable characters in the URL:
 
     .. literalinclude:: url_helper/024.php

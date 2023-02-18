@@ -41,7 +41,8 @@ Downloads
 Namespaces
 ==========
 
-- CI4 is built for PHP 7.4+, and everything in the framework is namespaced, except for the helpers.
+- CI4 is built for PHP 7.4+, and everything in the framework is namespaced,
+  except for the helper and lang files.
 
 Application Structure
 =====================
@@ -49,6 +50,9 @@ Application Structure
 - The **application** folder is renamed as **app** and the framework still has **system** folders,
   with the same interpretation as before.
 - The framework now provides for a **public** folder, intended as the document root for your app.
+- The ``defined('BASEPATH') OR exit('No direct script access allowed');`` line is not necessary
+  because files outside the **public** folder are not accessible in the standard configuration.
+  And CI4 no longer defines the constant ``BASEPATH``, so remove the line in all files.
 - There is also a **writable** folder, to hold cache data, logs, and session data.
 - The **app** folder looks very similar to **application** for CI3, with some
   name changes, and some subfolders moved to the **writable** folder.
@@ -97,13 +101,17 @@ Class Loading
   namespaces; with Composer autoloading support.
 - You can configure the class loading to support whatever application structure
   you are most comfortable with, including the "HMVC" style.
+- CI4 provides :doc:`../concepts/factories` that can load a class and share the
+  instance like ``$this->load`` in CI3.
 
 Libraries
 =========
 
 - Your app classes can still go inside **app/Libraries**, but they don't have to.
 - Instead of CI3's ``$this->load->library('x');`` you can now use
-  ``$this->x = new X();``, following namespaced conventions for your component.
+  ``$this->x = new \App\Libraries\X();``, following namespaced conventions for
+  your component. Alternatively, you can use :doc:`../concepts/factories`:
+  ``$this->x = \CodeIgniter\Config\Factories::libraries('X');``.
 
 Helpers
 =======
@@ -128,12 +136,14 @@ Helpers
   will be :doc:`../helpers/filesystem_helper` in CI4.
 - `String Helper <https://www.codeigniter.com/userguide3/helpers/string_helper.html>`_ functions
   in CI3 are included in :doc:`../helpers/text_helper` in CI4.
-- In CI4, ``redirect()`` returns a ``RedirectResponse`` instance instead of redirecting and terminating script execution. You must return it.
+- In CI4, ``redirect()`` is completely changed from CI3's.
     - `redirect() Documentation CodeIgniter 3.X <https://codeigniter.com/userguide3/helpers/url_helper.html#redirect>`_
     - `redirect() Documentation CodeIgniter 4.X <../general/common_functions.html#redirect>`_
+    - In CI4, ``redirect()`` returns a ``RedirectResponse`` instance instead of redirecting and terminating script execution. You must return it.
+    - You need to change CI3's ``redirect('login/form')`` to ``return redirect()->to('login/form')``.
 
-Events
-======
+Hooks
+=====
 
 - `Hooks <https://www.codeigniter.com/userguide3/general/hooks.html>`_ have been
   replaced by :doc:`../extending/events`.
@@ -157,8 +167,10 @@ Upgrading Libraries
 *******************
 
 - Your app classes can still go inside **app/Libraries**, but they don't have to.
-- Instead of CI3's ``$this->load->library('x');`` you can now use ``$this->x = new X();``,
-  following namespaced conventions for your component.
+- Instead of CI3's ``$this->load->library('x');`` you can now use
+  ``$this->x = new \App\Libraries\X();``, following namespaced conventions for
+  your component. Alternatively, you can use :doc:`../concepts/factories`:
+  ``$this->x = \CodeIgniter\Config\Factories::libraries('X');``.
 - Some libraries from CodeIgniter 3 no longer exists in Version 4. For all these
   libraries, you have to find a new way to implement your functions. These
   libraries are `Calendaring <http://codeigniter.com/userguide3/libraries/calendar.html>`_,

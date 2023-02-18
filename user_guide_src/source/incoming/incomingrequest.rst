@@ -45,7 +45,7 @@ be checked with the ``isAJAX()`` and ``isCLI()`` methods:
 is()
 ====
 
-    .. versionadded:: 4.3.0
+.. versionadded:: 4.3.0
 
 Since v4.3.0, you can use the ``is()`` method. It returns boolean.
 
@@ -473,7 +473,7 @@ The methods provided by the parent classes that are available are:
 
     .. php:method:: getPath()
 
-        :returns:        The current URI path relative to ``$_SERVER['SCRIPT_NAME']``
+        :returns:        The current URI path relative to baseURL
         :rtype:    string
 
         This is the safest method to determine the "current URI", since ``IncomingRequest::$uri``

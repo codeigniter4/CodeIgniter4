@@ -64,6 +64,8 @@ Deprecations
 Bugs Fixed
 ----------
 
-See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.
-
 - ``BaseConnection::query()`` now returns ``false`` for failed queries (unless ``DBDebug==true``, in which case an exception will be thrown) and returns boolean values for write-type queries as specified in the docs.
+
+See the repo's
+`CHANGELOG_4.1.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.1.md>`_
+for a complete list of bugs fixed.

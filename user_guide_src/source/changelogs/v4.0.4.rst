@@ -9,6 +9,11 @@ Release Date: July 15, 2020
     :local:
     :depth: 2
 
+BREAKING
+--------
+
+- Added ``$arguments`` parameter to ``after()`` and ``before()`` in ``FilterInterface``. This is a breaking change, so all code implementing the ``FilterInterface`` must be updated.
+
 Enhancements
 ------------
 
@@ -24,11 +29,11 @@ Enhancements
 - New :doc:`command() helper function </cli/spark_commands>` to programatically run your CLI commands. Useful for testing and cron jobs.
 - New command, ``make:seeder`` to generate a :doc:`Database Seed class </dbmgmt/seeds>` skeleton file.
 - Colors now available on the CLI within Windows, as well as other Windows-related CLI improvements.
-- New helper :doc:`mb_url_title </helpers/url_helper>` that functions like ``url_title`` but automatically escapes and extended URL characters.
+- New helper :doc:`mb_url_title() </helpers/url_helper>` that functions like ``url_title()`` but automatically escapes and extended URL characters.
 - :doc:`Image library </libraries/images>` now supports ``webp`` images.
 - Added Unicode support for regular expressions in the Router.
-- Added support for removing hidden folders in the :doc:`delete_files </helpers/filesystem_helper>` helper
-- ``fetchGlobal`` in the Request class now supports applying filters to arrays of data, not just the first item.
+- Added support for removing hidden folders in the :doc:`delete_files() </helpers/filesystem_helper>` helper.
+- ``fetchGlobal()`` in the Request class now supports applying filters to arrays of data, not just the first item.
 - ``file`` validation now works with arrays of files.
 - URI class now supports a ``setSilent()`` method that will disable the throwing of Exceptions.
 - New argument to ``URI::getSegment()`` that allows us to change the default value returned if nothing exists.
@@ -40,24 +45,27 @@ Bugs Fixed
 ----------
 
 - Fixed location for the SQLite3 database which by default will be now located in a ``writable`` folder instead of the ``public`` folder.
-- Fixed bug where ``force_https`` could add ``https://`` a second time.
+- Fixed bug where ``force_https()`` could add ``https://`` a second time.
 - Fixed a bug with CurlRequest that could result in incorrect "100 Continue" headers.
-- Image::save() bug fixed when ``$target`` parameter was ``null``
-- fixes for ``set_checkbox()`` and ``set_radio()`` when the $default parameter is set to ``true``
-- fix for result object handling in Model class .
-- fixed escape character SQLite database
-- fix for inserts on Postgres and Entities when the primary key was null
+- Image::save() bug fixed when ``$target`` parameter was ``null``.
+- fixes for ``set_checkbox()`` and ``set_radio()`` when the $default parameter is set to ``true``.
+- fix for result object handling in Model class.
+- fixed escape character SQLite database.
+- fix for inserts on Postgres and Entities when the primary key was null.
 - CLI scripts can now correctly recognize dashes within arguments.
-- CURLRequest now properly sets content length with multipart data
-- Misc. stability improvements for the ImageMagick handler
-- setting validation errors within a config file should now work
+- CURLRequest now properly sets content length with multipart data.
+- Misc. stability improvements for the ImageMagick handler.
+- setting validation errors within a config file should now work.
 - Unicode characters are not escaped when saving JSON from Entities.
-- redirecting with a custom HTTP code should work correctly now
-- Time::setTimezone now working correctly
-- added full outer join support for Postgres
+- redirecting with a custom HTTP code should work correctly now.
+- ``Time::setTimezone()`` now working correctly.
+- added full outer join support for Postgres.
 - some cast items in the Entity (like array, json) were not being set correctly during a ``fill()`` process.
-- Fixed bug in Image GD handler that would try to compress images twice in certain cases
-- Ensure get translation output logic work on selected locale, dashed locale, and fallback "en"
-- Fix is_unique/is_not_unique validation called on POST/PUT via API in Postgresql
-- Added ``$arguments`` parameter to after() and before() in FilterInterface. This is a breaking change, so all code implementing the FilterInterface must be updated
-- Fixed a bug where filter arguments were not passed to after()
+- Fixed bug in Image GD handler that would try to compress images twice in certain cases.
+- Ensure get translation output logic work on selected locale, dashed locale, and fallback "en".
+- Fix ``is_unique``/``is_not_unique`` validation called on POST/PUT via API in PostgreSQL.
+- Fixed a bug where filter arguments were not passed to ``after()``.
+
+See the repo's
+`CHANGELOG_4.0.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.0.md>`_
+for a complete list of bugs fixed.

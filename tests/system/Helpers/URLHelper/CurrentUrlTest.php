@@ -63,6 +63,10 @@ final class CurrentUrlTest extends CIUnitTestCase
 
         $this->config->baseURL = 'http://example.com/public';
 
+        // URI object are updated in IncomingRequest constructor.
+        $request = Services::incomingrequest($this->config);
+        Services::injectMock('request', $request);
+
         $this->assertSame('http://example.com/public/index.php/', current_url());
     }
 
@@ -163,7 +167,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame(8080, $uri->getPort());
     }
 
-    public function testUriStringAbsolute()
+    public function testUriString()
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
@@ -183,18 +187,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         Services::injectMock('request', $request);
     }
 
-    public function testUriStringRelative()
-    {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
-
-        $uri = 'http://example.com/assets/image.jpg';
-        $this->setService($uri);
-
-        $this->assertSame('assets/image.jpg', uri_string(true));
-    }
-
-    public function testUriStringNoTrailingSlashAbsolute()
+    public function testUriStringNoTrailingSlash()
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
@@ -207,33 +200,12 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('assets/image.jpg', uri_string());
     }
 
-    public function testUriStringNoTrailingSlashRelative()
-    {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
-
-        $this->config->baseURL = 'http://example.com';
-
-        $uri = 'http://example.com/assets/image.jpg';
-        $this->setService($uri);
-
-        $this->assertSame('assets/image.jpg', uri_string(true));
-    }
-
-    public function testUriStringEmptyAbsolute()
+    public function testUriStringEmpty()
     {
         $uri = 'http://example.com/';
         $this->setService($uri);
 
-        $this->assertSame('/', uri_string());
-    }
-
-    public function testUriStringEmptyRelative()
-    {
-        $uri = 'http://example.com/';
-        $this->setService($uri);
-
-        $this->assertSame('', uri_string(true));
+        $this->assertSame('', uri_string());
     }
 
     public function testUriStringSubfolderAbsolute()
@@ -260,7 +232,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $uri = 'http://example.com/subfolder/assets/image.jpg';
         $this->setService($uri);
 
-        $this->assertSame('assets/image.jpg', uri_string(true));
+        $this->assertSame('assets/image.jpg', uri_string());
     }
 
     public function urlIsProvider()

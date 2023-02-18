@@ -21,7 +21,7 @@ use Closure;
  * add a number of additional methods to customize how the routes are defined.
  *
  * The RouteCollection provides the Router with the routes so that it can determine
- * which controller should be ran.
+ * which controller should be run.
  */
 interface RouteCollectionInterface
 {
@@ -157,7 +157,7 @@ interface RouteCollectionInterface
     public function getHTTPVerb();
 
     /**
-     * Attempts to look up a route based on it's destination.
+     * Attempts to look up a route based on its destination.
      *
      * If a route exists:
      *
@@ -172,7 +172,7 @@ interface RouteCollectionInterface
      * @param string     $search    Named route or Controller::method
      * @param int|string ...$params
      *
-     * @return false|string
+     * @return false|string The route (URI path relative to baseURL) or false if not found.
      */
     public function reverseRoute(string $search, ...$params);
 

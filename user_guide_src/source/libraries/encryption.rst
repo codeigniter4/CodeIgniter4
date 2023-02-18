@@ -84,6 +84,8 @@ an instance of the ``Config\Encryption`` class.
 Configuration to Maintain Compatibility with CI3
 ------------------------------------------------
 
+.. versionadded:: 4.3.0
+
 Since v4.3.0, you can decrypt data encrypted with CI3's Encryption.
 If you need to decrypt such data, use the following settings to maintain compatibility.
 

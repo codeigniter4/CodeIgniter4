@@ -613,7 +613,7 @@ RedisHandler Driver
 
 .. note:: Since Redis doesn't have a locking mechanism exposed, locks for
     this driver are emulated by a separate value that is kept for up
-    to 300 seconds.
+    to 300 seconds. With ``v4.3.2`` or above, You can connect ``Redis`` with **TLS** protocol.
 
 Redis is a storage engine typically used for caching and popular because
 of its high performance, which is also probably your reason to use the
@@ -671,8 +671,8 @@ deleted after Y seconds have passed (but not necessarily that it won't
 expire earlier than that time). This happens very rarely, but should be
 considered as it may result in loss of sessions.
 
-Configure RedisHandler
-----------------------
+Configure MemcachedHandler
+--------------------------
 
 The ``$savePath`` format is fairly straightforward here,
 being just a ``host:port`` pair:

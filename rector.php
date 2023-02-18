@@ -40,6 +40,7 @@ use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
+use Rector\PHPUnit\Rector\MethodCall\AssertPropertyExistsRector;
 use Rector\PHPUnit\Rector\MethodCall\GetMockBuilderGetMockToCreateMockRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
@@ -74,13 +75,14 @@ return static function (RectorConfig $rectorConfig): void {
 
     // is there a file you need to skip?
     $rectorConfig->skip([
-        __DIR__ . '/app/Views',
         __DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
         __DIR__ . '/system/ThirdParty',
         __DIR__ . '/tests/system/Config/fixtures',
         __DIR__ . '/tests/_support',
         JsonThrowOnErrorRector::class,
         StringifyStrNeedlesRector::class,
+        // assertObjectHasAttribute() is deprecated
+        AssertPropertyExistsRector::class,
 
         RemoveUnusedPrivateMethodRector::class => [
             // private method called via getPrivateMethodInvoker

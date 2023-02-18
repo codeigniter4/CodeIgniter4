@@ -112,8 +112,9 @@ class RouteCollection implements RouteCollectionInterface
      *     verb => [
      *         routeName => [
      *             'route' => [
-     *                 routeKey(or from) => handler,
-     *             ]
+     *                 routeKey(regex) => handler,
+     *             ],
+     *             'redirect' => statusCode,
      *         ]
      *     ],
      * ]
@@ -138,7 +139,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * [
      *     verb => [
-     *         routeKey(or from) => [
+     *         routeKey(regex) => [
      *             key => value,
      *         ]
      *     ],
@@ -527,6 +528,8 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * Returns one or all routes options
+     *
+     * @return array<string, int|string> [key => value]
      */
     public function getRoutesOptions(?string $from = null, ?string $verb = null): array
     {
@@ -719,7 +722,7 @@ class RouteCollection implements RouteCollectionInterface
      *      POST        /photos/{id}        update
      *
      * @param string     $name    The name of the resource/controller to route to.
-     * @param array|null $options An list of possible ways to customize the routing.
+     * @param array|null $options A list of possible ways to customize the routing.
      */
     public function resource(string $name, ?array $options = null): RouteCollectionInterface
     {
@@ -813,7 +816,7 @@ class RouteCollection implements RouteCollectionInterface
      *      POST        /photos/delete/{id} delete          deleting the specified photo object
      *
      * @param string     $name    The name of the controller to route to.
-     * @param array|null $options An list of possible ways to customize the routing.
+     * @param array|null $options A list of possible ways to customize the routing.
      */
     public function presenter(string $name, ?array $options = null): RouteCollectionInterface
     {
@@ -1040,11 +1043,11 @@ class RouteCollection implements RouteCollectionInterface
      *      // Equals 'path/$param1/$param2'
      *      reverseRoute('Controller::method', $param1, $param2);
      *
-     * @param string     $search    Named route or Controller::method
+     * @param string     $search    Route name or Controller::method
      * @param int|string ...$params One or more parameters to be passed to the route.
      *                              The last parameter allows you to set the locale.
      *
-     * @return false|string
+     * @return false|string The route (URI path relative to baseURL) or false if not found.
      */
     public function reverseRoute(string $search, ...$params)
     {
@@ -1149,12 +1152,17 @@ class RouteCollection implements RouteCollectionInterface
      *    'role:admin,manager'
      *
      * has a filter of "role", with parameters of ['admin', 'manager'].
+     *
+     * @param string $search routeKey
+     *
+     * @return array<int, string> filter_name or filter_name:arguments like 'role:admin,manager'
+     * @phpstan-return list<string>
      */
     public function getFiltersForRoute(string $search, ?string $verb = null): array
     {
         $options = $this->loadRoutesOptions($verb);
 
-        if (! array_key_exists($search, $options)) {
+        if (! array_key_exists($search, $options) || ! array_key_exists('filter', $options[$search])) {
             return [];
         }
 
@@ -1162,7 +1170,7 @@ class RouteCollection implements RouteCollectionInterface
             return [$options[$search]['filter']];
         }
 
-        return $options[$search]['filter'] ?? [];
+        return $options[$search]['filter'];
     }
 
     /**
@@ -1308,13 +1316,12 @@ class RouteCollection implements RouteCollectionInterface
         // Hostname limiting?
         if (! empty($options['hostname'])) {
             // @todo determine if there's a way to whitelist hosts?
-            if (isset($this->httpHost) && strtolower($this->httpHost) !== strtolower($options['hostname'])) {
+            if (! $this->checkHostname($options['hostname'])) {
                 return;
             }
 
             $overwrite = true;
         }
-
         // Limiting to subdomains?
         elseif (! empty($options['subdomain'])) {
             // If we don't match the current subdomain, then
@@ -1385,6 +1392,22 @@ class RouteCollection implements RouteCollectionInterface
         if (isset($options['redirect']) && is_numeric($options['redirect'])) {
             $this->routes['*'][$name]['redirect'] = $options['redirect'];
         }
+    }
+
+    /**
+     * Compares the hostname passed in against the current hostname
+     * on this page request.
+     *
+     * @param string $hostname Hostname in route options
+     */
+    private function checkHostname($hostname): bool
+    {
+        // CLI calls can't be on hostname.
+        if (! isset($this->httpHost)) {
+            return false;
+        }
+
+        return strtolower($this->httpHost) === strtolower($hostname);
     }
 
     private function processArrayCallableSyntax(string $from, array $to): string
@@ -1459,7 +1482,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     /**
-     * Examines the HTTP_HOST to get a best match for the subdomain. It
+     * Examines the HTTP_HOST to get the best match for the subdomain. It
      * won't be perfect, but should work for our needs.
      *
      * It's especially not perfect since it's possible to register a domain
@@ -1520,6 +1543,16 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * Load routes options based on verb
+     *
+     * @return array<string, array<string, array|int|string>> [routeKey(or from) => [key => value]]
+     * @phpstan-return array<
+     *     string,
+     *     array{
+     *         filter?: string|list<string>, namespace?: string, hostname?: string,
+     *         subdomain?: string, offset?: int, priority?: int, as?: string,
+     *         redirect?: string
+     *     }
+     * >
      */
     protected function loadRoutesOptions(?string $verb = null): array
     {
@@ -1559,41 +1592,52 @@ class RouteCollection implements RouteCollectionInterface
      * Get all controllers in Route Handlers
      *
      * @param string|null $verb HTTP verb. `'*'` returns all controllers in any verb.
+     *
+     * @return array<int, string> controller name list
+     * @phpstan-return list<string>
      */
     public function getRegisteredControllers(?string $verb = '*'): array
     {
-        $routes = [];
+        $controllers = [];
 
         if ($verb === '*') {
-            $rawRoutes = [];
-
             foreach ($this->defaultHTTPMethods as $tmpVerb) {
-                $rawRoutes = array_merge($rawRoutes, $this->routes[$tmpVerb]);
-            }
-
-            foreach ($rawRoutes as $route) {
-                $key     = key($route['route']);
-                $handler = $route['route'][$key];
-
-                $routes[$key] = $handler;
+                foreach ($this->routes[$tmpVerb] as $route) {
+                    $routeKey   = key($route['route']);
+                    $controller = $this->getControllerName($route['route'][$routeKey]);
+                    if ($controller !== null) {
+                        $controllers[] = $controller;
+                    }
+                }
             }
         } else {
             $routes = $this->getRoutes($verb);
-        }
 
-        $controllers = [];
-
-        foreach ($routes as $handler) {
-            if (! is_string($handler)) {
-                continue;
+            foreach ($routes as $handler) {
+                $controller = $this->getControllerName($handler);
+                if ($controller !== null) {
+                    $controllers[] = $controller;
+                }
             }
-
-            [$controller] = explode('::', $handler, 2);
-
-            $controllers[] = $controller;
         }
 
         return array_unique($controllers);
+    }
+
+    /**
+     * @param Closure|string $handler Handler
+     *
+     * @return string|null Controller classname
+     */
+    private function getControllerName($handler)
+    {
+        if (! is_string($handler)) {
+            return null;
+        }
+
+        [$controller] = explode('::', $handler, 2);
+
+        return $controller;
     }
 
     /**

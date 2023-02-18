@@ -5,12 +5,12 @@
     xmlns="https://www.phpdoc.org"
     xsi:noNamespaceSchemaLocation="https://docs.phpdoc.org/latest/phpdoc.xsd"
 >
-    <title>CodeIgniter v4.0.0 API</title>
+    <title>CodeIgniter v4.3 API</title>
     <paths>
         <output>api/build/</output>
         <cache>api/cache/</cache>
     </paths>
-    <version number="4.0.0">
+    <version number="4.3.x">
         <api format="php">
             <source dsn=".">
                 <path>system</path>
