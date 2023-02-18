@@ -1,7 +1,7 @@
 Version 4.3.2
 #############
 
-Release Date: Unreleased
+Release Date: February 18, 2023
 
 **4.3.2 release of CodeIgniter4**
 
@@ -23,17 +23,11 @@ without a trailing slash (``/``) like ``http://localhost:8080``. Now it returns
 baseURL with a trailing slash. This is the same behavior as ``base_url()`` in
 CodeIgniter 3.
 
-Message Changes
-***************
-
 Changes
 *******
 
 - The parameter ``$relative`` in :php:func:`uri_string()` was removed. Due to a bug,
   the function always returned a path relative to baseURL. No behavior changes.
-
-Deprecations
-************
 
 Bugs Fixed
 **********
