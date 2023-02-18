@@ -183,6 +183,14 @@ class SiteURI extends URI
     /**
      * @deprecated
      */
+    public function setBaseURL(string $baseURL): void
+    {
+        throw new BadMethodCallException('Cannot use this method.');
+    }
+
+    /**
+     * @deprecated
+     */
     public function setURI(?string $uri = null)
     {
         throw new BadMethodCallException('Cannot use this method.');

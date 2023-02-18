@@ -336,6 +336,16 @@ final class SiteURITest extends CIUnitTestCase
         $uri->setURI('http://another.site.example.jp/');
     }
 
+    public function testSetBaseURI()
+    {
+        $this->expectException(BadMethodCallException::class);
+
+        $config = new App();
+        $uri    = new SiteURI($config);
+
+        $uri->setBaseURL('http://another.site.example.jp/');
+    }
+
     public function testGetBaseURL()
     {
         $config = new App();
