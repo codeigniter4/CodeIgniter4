@@ -29,7 +29,6 @@ use Throwable;
  * @property string     $DBDriver
  * @property string     $DBPrefix
  * @property string     $DSN
- * @property bool       $DBTypeNative
  * @property array|bool $encrypt
  * @property array      $failover
  * @property string     $hostname
@@ -339,13 +338,6 @@ abstract class BaseConnection implements ConnectionInterface
      * @var string
      */
     protected $queryClass = Query::class;
-
-    /**
-     * Use MYSQLI_OPT_INT_AND_FLOAT_NATIVE
-     *
-     * @var bool
-     */
-    protected $DBTypeNative = false;
 
     /**
      * Saves our connection settings.

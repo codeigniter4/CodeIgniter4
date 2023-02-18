@@ -73,6 +73,13 @@ class Connection extends BaseConnection
     public $resultMode = MYSQLI_STORE_RESULT;
 
     /**
+     * Use MYSQLI_OPT_INT_AND_FLOAT_NATIVE
+     *
+     * @var bool
+     */
+    public $numberNative = false;
+
+    /**
      * Connect to the database.
      *
      * @return false|mysqli
@@ -99,8 +106,8 @@ class Connection extends BaseConnection
 
         $this->mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
         
-        if(isset($this->DBTypeNative) && $this->DBTypeNative){
-            $this->mysqli->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE,1);
+        if (isset($this->numberNative) && $this->numberNative) {
+            $this->mysqli->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
         }
 
         if (isset($this->strictOn)) {
