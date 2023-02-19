@@ -60,8 +60,7 @@ Others
 ------
 
 - **Database:** Added the ``numberNative`` attribute to the Database Config for MySQLi to keep the variable type obtained after SQL Query consistent with the type set in the database.
-  See `configuration.rst <https://github.com/codeigniter4/CodeIgniter4/blob/4.4/user_guide_src/source/database/configuration.rst>`_  
-  for details.
+  See :ref:`Database Configuration <database-configuration-explanation-of-values>`.
 
 Model
 =====
