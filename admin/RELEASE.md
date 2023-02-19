@@ -76,7 +76,7 @@ git clone git@github.com:codeigniter4/userguide.git
   **index.rst**
 * Create **user_guide_src/source/installation/upgrade_{ver}.rst**, fill in the
   "All Changes" section, and add it to **upgrading.rst**
-    * git diff --name-status master -- . ':!system'
+    * git diff --name-status origin/master -- . ':!system'
 * Commit the changes with "Prep for 4.x.x release" and push to origin
 * Create a new PR from `release-4.x.x` to `develop`:
     * Title: "Prep for 4.x.x release"
