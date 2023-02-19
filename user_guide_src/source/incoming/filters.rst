@@ -6,7 +6,7 @@ Controller Filters
     :local:
     :depth: 2
 
-Controller Filters allow you to perform actions either before or after the controllers execute. Unlike :doc:`events </extending/events>`,
+Controller Filters allow you to perform actions either before or after the controllers execute. Unlike :doc:`events <../extending/events>`,
 you can choose the specific URIs in which the filters will be applied to. Incoming filters may
 modify the Request while after filters can act on and even modify the Response, allowing for a lot of flexibility
 and power. Some common examples of tasks that might be performed with filters are:
@@ -60,7 +60,7 @@ This is typically used to perform redirects, like in this example:
 .. literalinclude:: filters/002.php
 
 If a ``Response`` instance is returned, the Response will be sent back to the client and script execution will stop.
-This can be useful for implementing rate limiting for APIs. See :doc:`Throttler </libraries/throttler>` for an
+This can be useful for implementing rate limiting for APIs. See :doc:`Throttler <../libraries/throttler>` for an
 example.
 
 .. _after-filters:
@@ -165,7 +165,7 @@ In this example, the array ``['dual', 'noreturn']`` will be passed in ``$argumen
 Confirming Filters
 ******************
 
-CodeIgniter has the following :doc:`command </cli/spark_commands>` to check the filters for a route.
+CodeIgniter has the following :doc:`command <../cli/spark_commands>` to check the filters for a route.
 
 .. _spark-filter-check:
 
