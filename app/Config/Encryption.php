@@ -63,7 +63,7 @@ class Encryption extends BaseConfig
      *
      * Set to aes-128-cbc for CI3 Encryption compatibility.
      */
-    public string $cipher = 'aes-256-ctr';
+    public string $cipher = 'AES-256-CTR';
 
     /**
      * Whether the cipher-text should be raw. If set to false, then it will be base64 encoded.
