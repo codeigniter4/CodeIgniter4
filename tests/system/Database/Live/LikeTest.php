@@ -129,7 +129,14 @@ final class LikeTest extends CIUnitTestCase
     public function testLikeRawSqlAndCountAllResultsAndGet()
     {
         $builder = $this->db->table('job');
-        $builder->like(new RawSql('name'), 'Developer');
+
+        if ($this->db->DBDriver === 'OCI8') {
+            $key = new RawSql('"name"');
+        } else {
+            $key = new RawSql('name');
+        }
+
+        $builder->like($key, 'Developer');
         $count   = $builder->countAllResults(false);
         $results = $builder->get()->getResult();
 
@@ -143,7 +150,14 @@ final class LikeTest extends CIUnitTestCase
     public function testLikeRawSqlAndGetAndCountAllResults()
     {
         $builder = $this->db->table('job');
-        $builder->like(new RawSql('name'), 'Developer');
+
+        if ($this->db->DBDriver === 'OCI8') {
+            $key = new RawSql('"name"');
+        } else {
+            $key = new RawSql('name');
+        }
+
+        $builder->like($key, 'Developer');
         $results = $builder->get(null, 0, false)->getResult();
         $count   = $builder->countAllResults();
 
