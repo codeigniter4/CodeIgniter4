@@ -108,9 +108,9 @@ default group's configuration settings. The values should be name following this
 Explanation of Values:
 **********************
 
-===============  ===========================================================================================================
+================ ===========================================================================================================
  Name Config     Description
-===============  ===========================================================================================================
+================ ===========================================================================================================
 **dsn**          The DSN connect string (an all-in-one configuration sequence).
 **hostname**     The hostname of your database server. Often this is 'localhost'.
 **username**     The username used to connect to the database. (``SQLite3`` does not use this.)
@@ -150,8 +150,8 @@ Explanation of Values:
                      See `SQLite documentation <https://www.sqlite.org/pragma.html#pragma_foreign_keys>`_.
                      To enforce Foreign Key constraint, set this config item to true.
 **busyTimeout**  milliseconds (int) - Sleeps for a specified amount of time when a table is locked (``SQLite3`` only).
-**numberNative** true/false (boolean) - Whether or not to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE (``MySQLi`` only).
-===============  ===========================================================================================================
+**numberNative** milliseconds (int) - Sleeps for a specified amount of time when a table is locked (``SQLite3`` only).
+================ ===========================================================================================================
 
 .. note:: Depending on what database driver you are using (``MySQLi``, ``Postgres``,
     etc.) not all values will be needed. For example, when using ``SQLite3`` you
