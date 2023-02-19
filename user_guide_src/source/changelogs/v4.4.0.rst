@@ -59,6 +59,9 @@ Forge
 Others
 ------
 
+- **numberNative:** Added the ``numberNative`` attribute to the Database setting to keep the variable type obtained after SQL Query consistent with the type set in the DataBase.
+  See `configuration.rst<https://github.com/codeigniter4/CodeIgniter4/blob/4.4/user_guide_src/source/database/configuration.rst>`_ for details.
+
 Model
 =====
 
