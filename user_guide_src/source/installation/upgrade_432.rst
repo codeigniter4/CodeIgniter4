@@ -64,9 +64,6 @@ Content Changes
 The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:
 
-Config
-------
-
 - app/Config/Email.php
 - app/Config/Mimes.php
 - app/Views/errors/html/error_exception.php
