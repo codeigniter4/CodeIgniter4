@@ -59,7 +59,7 @@ Forge
 Others
 ------
 
-- **Database:** Added the ``numberNative`` attribute to the Database Config for MySQLi to keep the variable type obtained after SQL Query consistent with the type set in the database.
+- **MySQLi:** Added the ``numberNative`` attribute to the Database Config to keep the variable type obtained after SQL Query consistent with the type set in the database.
   See :ref:`Database Configuration <database-configuration-explanation-of-values>`.
 
 Model
