@@ -85,6 +85,8 @@ See the changelog: https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHA
 
 ## New Contributors
 *
+
+Full Changelog: https://github.com/codeigniter4/CodeIgniter4/compare/v4.x.x...v4.x.x
 ```
 * Watch for the "Deploy Distributable Repos" action to make sure **framework**, **appstarter**, and **userguide** get updated
 * Run the following commands to install and test `appstarter` and verify the new version:
