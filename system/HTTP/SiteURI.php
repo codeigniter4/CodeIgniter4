@@ -92,23 +92,22 @@ class SiteURI extends URI
         ?string $host = null,
         ?string $scheme = null
     ) {
-        $baseURL         = $this->normalizeBaseURL($configApp);
         $this->indexPage = $configApp->indexPage;
 
+        $baseURL = $this->normalizeBaseURL($configApp);
         $this->setBasePath($baseURL);
+
+        $relativePath = URI::removeDotSegments($relativePath);
+        // Remove starting slash
+        if ($relativePath !== '' && $relativePath[0] === '/') {
+            $relativePath = ltrim($relativePath, '/');
+        }
 
         // Check for an index page
         $indexPage = '';
         if ($configApp->indexPage !== '') {
-            $indexPage = $configApp->indexPage;
-
-            // Check if we need a separator
-            if ($relativePath !== '' && $relativePath[0] !== '/' && $relativePath[0] !== '?') {
-                $indexPage .= '/';
-            }
+            $indexPage = $configApp->indexPage . '/';
         }
-
-        $relativePath = URI::removeDotSegments($relativePath);
 
         $tempUri = $baseURL . $indexPage . $relativePath;
         $uri     = new URI($tempUri);
@@ -254,7 +253,7 @@ class SiteURI extends URI
         return static::createURIString(
             $this->getScheme(),
             $this->getAuthority(),
-            $this->getPath(), // Absolute URIs should use a "/" for an empty path
+            $this->getPath(),
             $this->getQuery(),
             $this->getFragment()
         );
