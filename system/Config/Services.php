@@ -38,6 +38,7 @@ use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Images\Handlers\BaseHandler;
@@ -52,6 +53,7 @@ use CodeIgniter\Session\Handlers\Database\MySQLiHandler;
 use CodeIgniter\Session\Handlers\Database\PostgreHandler;
 use CodeIgniter\Session\Handlers\DatabaseHandler;
 use CodeIgniter\Session\Session;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Throttle\Throttler;
 use CodeIgniter\Typography\Typography;
 use CodeIgniter\Validation\Validation;
@@ -744,12 +746,19 @@ class Services extends BaseService
      *
      * @param string $uri
      *
-     * @return URI
+     * @return URI The current URI if $uri is null.
      */
     public static function uri(?string $uri = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('uri', $uri);
+        }
+
+        if ($uri === null) {
+            $appConfig = config(App::class);
+            $factory   = new SiteURIFactory($appConfig, new Superglobals());
+
+            return $factory->createFromGlobals();
         }
 
         return new URI($uri);

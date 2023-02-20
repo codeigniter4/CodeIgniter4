@@ -1028,8 +1028,11 @@ final class URITest extends CIUnitTestCase
 
     public function testBasedNoIndex(): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/ci/v4/controller/method';
+        $_SERVER['REQUEST_URI']  = '/ci/v4/controller/method';
+        $_SERVER['SCRIPT_NAME']  = '/ci/v4/index.php';
+        $_SERVER['QUERY_STRING'] = '';
+        $_SERVER['HTTP_HOST']    = 'example.com';
+        $_SERVER['PATH_INFO']    = '/controller/method';
 
         $this->resetServices();
 
@@ -1046,20 +1049,24 @@ final class URITest extends CIUnitTestCase
             'http://example.com/ci/v4/controller/method',
             (string) $request->getUri()
         );
-        $this->assertSame('ci/v4/controller/method', $request->getUri()->getPath());
+        $this->assertSame('/ci/v4/controller/method', $request->getUri()->getPath());
+        $this->assertSame('controller/method', $request->getUri()->getRoutePath());
 
         // standalone
         $uri = new URI('http://example.com/ci/v4/controller/method');
         $this->assertSame('http://example.com/ci/v4/controller/method', (string) $uri);
         $this->assertSame('/ci/v4/controller/method', $uri->getPath());
 
-        $this->assertSame($uri->getPath(), '/' . $request->getUri()->getPath());
+        $this->assertSame($uri->getPath(), $request->getUri()->getPath());
     }
 
     public function testBasedWithIndex(): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/ci/v4/index.php/controller/method';
+        $_SERVER['REQUEST_URI']  = '/ci/v4/index.php/controller/method';
+        $_SERVER['SCRIPT_NAME']  = '/ci/v4/index.php';
+        $_SERVER['QUERY_STRING'] = '';
+        $_SERVER['HTTP_HOST']    = 'example.com';
+        $_SERVER['PATH_INFO']    = '/controller/method';
 
         $this->resetServices();
 
@@ -1077,7 +1084,7 @@ final class URITest extends CIUnitTestCase
             (string) $request->getUri()
         );
         $this->assertSame(
-            'ci/v4/index.php/controller/method',
+            '/ci/v4/index.php/controller/method',
             $request->getUri()->getPath()
         );
 
@@ -1089,26 +1096,26 @@ final class URITest extends CIUnitTestCase
         );
         $this->assertSame('/ci/v4/index.php/controller/method', $uri->getPath());
 
-        $this->assertSame($uri->getPath(), '/' . $request->getUri()->getPath());
+        $this->assertSame($uri->getPath(), $request->getUri()->getPath());
     }
 
     public function testForceGlobalSecureRequests(): void
     {
         $this->resetServices();
 
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/ci/v4/controller/method';
+        $_SERVER['REQUEST_URI']  = '/ci/v4/controller/method';
+        $_SERVER['SCRIPT_NAME']  = '/ci/v4/index.php';
+        $_SERVER['QUERY_STRING'] = '';
+        $_SERVER['HTTP_HOST']    = 'example.com';
+        $_SERVER['PATH_INFO']    = '/controller/method';
 
         $config                            = new App();
         $config->baseURL                   = 'http://example.com/ci/v4';
-        $config->indexPage                 = 'index.php';
+        $config->indexPage                 = '';
         $config->forceGlobalSecureRequests = true;
-
         Factories::injectMock('config', 'App', $config);
 
-        $uri     = new URI('http://example.com/ci/v4/controller/method');
-        $request = new IncomingRequest($config, $uri, 'php://input', new UserAgent());
-
+        $request = Services::request($config);
         Services::injectMock('request', $request);
 
         // Detected by request

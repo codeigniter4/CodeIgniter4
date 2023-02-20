@@ -94,11 +94,6 @@ class URI
     /**
      * URI path.
      *
-     * Note: The constructor of the IncomingRequest class changes the path of
-     *      the URI object held by the IncomingRequest class to a path relative
-     *      to the baseURL. If the baseURL contains subfolders, this value
-     *      will be different from the current URI path.
-     *
      * @var string
      */
     protected $path;

@@ -29,7 +29,8 @@ final class NegotiateTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->request   = new IncomingRequest(new App(), new URI(), null, new UserAgent());
+        $config          = new App();
+        $this->request   = new IncomingRequest($config, new SiteURI($config), null, new UserAgent());
         $this->negotiate = new Negotiate($this->request);
     }
 
