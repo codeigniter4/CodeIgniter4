@@ -11,25 +11,6 @@ This class is the parent class that both the :doc:`Request Class </incoming/requ
 negotiation methods, may apply only to a request or response, and not the other one, but they have
 been included here to keep the header methods together.
 
-What is Content Negotiation?
-============================
-
-At it's heart Content Negotiation is simply a part of the HTTP specification that allows a single
-resource to serve more than one type of content, allowing the clients to request the type of
-data that works best for them.
-
-A classic example of this is a browser that cannot display PNG files can request only GIF or
-JPEG images. When the server receives the request, it looks at the available file types the client
-is requesting and selects the best match from the image formats that it supports, in this case
-likely choosing a JPEG image to return.
-
-This same negotiation can happen with four types of data:
-
-* **Media/Document Type** - this could be image format, or HTML vs. XML or JSON.
-* **Character Set** - The character set the returned document should be set in. Typically is UTF-8.
-* **Document Encoding** - Typically the type of compression used on the results.
-* **Document Language** - For sites that support multiple languages, this helps determine which to return.
-
 ***************
 Class Reference
 ***************
