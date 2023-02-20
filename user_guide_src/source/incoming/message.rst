@@ -7,9 +7,7 @@ requests and responses, including the message body, protocol version, utilities 
 the headers, and methods for handling content negotiation.
 
 This class is the parent class that both the :doc:`Request Class </incoming/request>` and the
-:doc:`Response Class </outgoing/response>` extend from. As such, some methods, such as the content
-negotiation methods, may apply only to a request or response, and not the other one, but they have
-been included here to keep the header methods together.
+:doc:`Response Class </outgoing/response>` extend from.
 
 ***************
 Class Reference
