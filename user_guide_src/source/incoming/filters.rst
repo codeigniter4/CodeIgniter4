@@ -114,6 +114,9 @@ run on every request. Filters can be specified by adding their alias to either t
 
 .. literalinclude:: filters/005.php
 
+Except for a Few URIs
+---------------------
+
 There are times where you want to apply a filter to almost every request, but have a few that should be left alone.
 One common example is if you need to exclude a few URI's from the CSRF protection filter to allow requests from
 third-party websites to hit one or two specific URI's, while keeping the rest of them protected. To do this, add
