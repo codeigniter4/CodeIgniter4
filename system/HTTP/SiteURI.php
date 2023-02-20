@@ -363,4 +363,87 @@ class SiteURI extends URI
             $this->password = $parts['pass'];
         }
     }
+
+    /**
+     * For baser_url() helper.
+     *
+     * @param array|string $relativePath URI string or array of URI segments
+     * @param string|null  $scheme       URI scheme. E.g., http, ftp
+     */
+    public function baseUrl($relativePath = '', ?string $scheme = null): string
+    {
+        $relativePath = $this->stringifyRelativePath($relativePath);
+
+        $config            = clone config(App::class);
+        $config->indexPage = '';
+
+        $host = $this->getHost();
+
+        $uri = new self($config, $relativePath, $host, $scheme);
+
+        return URI::createURIString(
+            $uri->getScheme(),
+            $uri->getAuthority(),
+            $this->adjustPathTrailingSlash($uri, $relativePath),
+            $uri->getQuery(),
+            $uri->getFragment()
+        );
+    }
+
+    /**
+     * @param array|string $relativePath URI string or array of URI segments
+     */
+    private function stringifyRelativePath($relativePath): string
+    {
+        if (is_array($relativePath)) {
+            $relativePath = implode('/', $relativePath);
+        }
+
+        return $relativePath;
+    }
+
+    /**
+     * For site_url() helper.
+     *
+     * @param array|string $relativePath URI string or array of URI segments
+     * @param string|null  $scheme       URI scheme. E.g., http, ftp
+     * @param App|null     $config       Alternate configuration to use
+     */
+    public function siteUrl($relativePath = '', ?string $scheme = null, ?App $config = null): string
+    {
+        $relativePath = $this->stringifyRelativePath($relativePath);
+
+        // Check current host.
+        $host = $config === null ? $this->getHost() : null;
+
+        $config ??= config(App::class);
+
+        $uri = new self($config, $relativePath, $host, $scheme);
+
+        // Adjust path
+        $path = $this->adjustPathTrailingSlash($uri, $relativePath);
+        if ($config->indexPage !== '' && $relativePath === '') {
+            $path = rtrim($path, '/');
+        }
+
+        return URI::createURIString(
+            $uri->getScheme(),
+            $uri->getAuthority(),
+            $path,
+            $uri->getQuery(),
+            $uri->getFragment()
+        );
+    }
+
+    private function adjustPathTrailingSlash(self $uri, string $relativePath): string
+    {
+        $parts = parse_url($this->getBaseURL() . $relativePath);
+        $path  = $parts['path'] ?? '';
+
+        if (substr($path, -1) === '/' && substr($uri->getPath(), -1) !== '/') {
+            return $uri->getPath() . '/';
+        }
+
+        return $uri->getPath();
+    }
 }

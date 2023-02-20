@@ -13,7 +13,9 @@ namespace CodeIgniter\Helpers\URLHelper;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\SiteURIFactory;
+use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
@@ -40,7 +42,6 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->config            = new App();
         $this->config->baseURL   = 'http://example.com/';
         $this->config->indexPage = 'index.php';
-        Factories::injectMock('config', 'App', $this->config);
     }
 
     protected function tearDown(): void
@@ -61,19 +62,21 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->config->baseURL = 'http://example.com/public';
 
         $uri = 'http://example.com/public';
-        $this->setRequest($uri);
+        $this->createRequest($uri);
 
         $this->assertSame($uri2, previous_url());
     }
 
-    private function setRequest(string $uri): void
+    private function createRequest(string $uri): void
     {
-        $uri = new URI($uri);
-        Services::injectMock('uri', $uri);
+        $factory = new SiteURIFactory($_SERVER, $this->config);
 
-        // Since we're on a CLI, we must provide our own URI
-        $request = Services::request($this->config);
+        $uri = $factory->createFromString($uri);
+
+        $request = new IncomingRequest($this->config, $uri, null, new UserAgent());
         Services::injectMock('request', $request);
+
+        Factories::injectMock('config', 'App', $this->config);
     }
 
     public function testPreviousURLUsesRefererIfNeeded(): void
@@ -85,7 +88,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->config->baseURL = 'http://example.com/public';
 
         $uri = 'http://example.com/public';
-        $this->setRequest($uri);
+        $this->createRequest($uri);
 
         $this->assertSame($uri1, previous_url());
     }
@@ -95,7 +98,7 @@ final class MiscUrlTest extends CIUnitTestCase
     public function testIndexPage(): void
     {
         $uri = 'http://example.com/';
-        $this->setRequest($uri);
+        $this->createRequest($uri);
 
         $this->assertSame('index.php', index_page());
     }
@@ -105,7 +108,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->config->indexPage = 'banana.php';
 
         $uri = 'http://example.com/';
-        $this->setRequest($uri);
+        $this->createRequest($uri);
 
         $this->assertSame('banana.php', index_page($this->config));
     }
@@ -166,7 +169,7 @@ final class MiscUrlTest extends CIUnitTestCase
     public function testAnchor($expected = '', $uri = '', $title = '', $attributes = ''): void
     {
         $uriString = 'http://example.com/';
-        $this->setRequest($uriString);
+        $this->createRequest($uriString);
 
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
@@ -233,7 +236,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->config->indexPage = '';
 
         $uriString = 'http://example.com/';
-        $this->setRequest($uriString);
+        $this->createRequest($uriString);
 
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
@@ -290,7 +293,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->config->indexPage = '';
 
         $uriString = 'http://example.com/';
-        $this->setRequest($uriString);
+        $this->createRequest($uriString);
 
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
@@ -334,7 +337,7 @@ final class MiscUrlTest extends CIUnitTestCase
     public function testAnchorExamples($expected = '', $uri = '', $title = '', $attributes = ''): void
     {
         $uriString = 'http://example.com/';
-        $this->setRequest($uriString);
+        $this->createRequest($uriString);
 
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
@@ -392,7 +395,7 @@ final class MiscUrlTest extends CIUnitTestCase
     public function testAnchorPopup($expected = '', $uri = '', $title = '', $attributes = false): void
     {
         $uriString = 'http://example.com/';
-        $this->setRequest($uriString);
+        $this->createRequest($uriString);
 
         $this->assertSame($expected, anchor_popup($uri, $title, $attributes, $this->config));
     }
@@ -431,7 +434,7 @@ final class MiscUrlTest extends CIUnitTestCase
     public function testMailto($expected = '', $email = '', $title = '', $attributes = ''): void
     {
         $uriString = 'http://example.com/';
-        $this->setRequest($uriString);
+        $this->createRequest($uriString);
 
         $this->assertSame($expected, mailto($email, $title, $attributes));
     }
@@ -470,7 +473,7 @@ final class MiscUrlTest extends CIUnitTestCase
     public function testSafeMailto($expected = '', $email = '', $title = '', $attributes = ''): void
     {
         $uriString = 'http://example.com/';
-        $this->setRequest($uriString);
+        $this->createRequest($uriString);
 
         $this->assertSame($expected, safe_mailto($email, $title, $attributes));
     }

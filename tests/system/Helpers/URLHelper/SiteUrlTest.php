@@ -13,7 +13,10 @@ namespace CodeIgniter\Helpers\URLHelper;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
@@ -39,7 +42,6 @@ final class SiteUrlTest extends CIUnitTestCase
         Services::reset(true);
 
         $this->config = new App();
-        Factories::injectMock('config', 'App', $this->config);
     }
 
     protected function tearDown(): void
@@ -47,6 +49,23 @@ final class SiteUrlTest extends CIUnitTestCase
         parent::tearDown();
 
         $_SERVER = [];
+    }
+
+    private function createRequest(?App $config = null, $body = null, ?string $path = null): void
+    {
+        $config ??= new App();
+
+        $factory = new SiteURIFactory($_SERVER, $config);
+        $uri     = $factory->createFromGlobals();
+
+        if ($path !== null) {
+            $uri->setPath($path);
+        }
+
+        $request = new IncomingRequest($config, $uri, $body, new UserAgent());
+        Services::injectMock('request', $request);
+
+        Factories::injectMock('config', 'App', $config);
     }
 
     /**
@@ -76,6 +95,8 @@ final class SiteUrlTest extends CIUnitTestCase
         $this->config->baseURL                   = $baseURL;
         $this->config->indexPage                 = $indexPage;
         $this->config->forceGlobalSecureRequests = $secure;
+
+        $this->createRequest($this->config);
 
         $this->assertSame($expectedSiteUrl, site_url($path, $scheme, $this->config));
         $this->assertSame($expectedBaseUrl, base_url($path, $scheme));
@@ -333,10 +354,14 @@ final class SiteUrlTest extends CIUnitTestCase
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/test';
 
+        $this->createRequest($this->config);
+
         $this->assertSame('http://example.com/', base_url());
 
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/test/page';
+
+        $this->createRequest($this->config);
 
         $this->assertSame('http://example.com/', base_url());
         $this->assertSame('http://example.com/profile', base_url('profile'));
@@ -348,11 +373,17 @@ final class SiteUrlTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI'] = '/ci/v4/x/y';
 
         $this->config->baseURL = 'http://example.com/ci/v4/';
-        $request               = Services::request($this->config);
-        Services::injectMock('request', $request);
 
-        $this->assertSame('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $this->config));
-        $this->assertSame('http://example.com/ci/v4/controller/method', base_url('controller/method', null));
+        $this->createRequest($this->config);
+
+        $this->assertSame(
+            'http://example.com/ci/v4/index.php/controller/method',
+            site_url('controller/method', null, $this->config)
+        );
+        $this->assertSame(
+            'http://example.com/ci/v4/controller/method',
+            base_url('controller/method', null)
+        );
     }
 
     public function testBaseURLWithCLIRequest(): void
@@ -360,8 +391,8 @@ final class SiteUrlTest extends CIUnitTestCase
         unset($_SERVER['HTTP_HOST'], $_SERVER['REQUEST_URI']);
 
         $this->config->baseURL = 'http://example.com/';
-        $request               = Services::clirequest($this->config);
-        Services::injectMock('request', $request);
+
+        $this->createRequest($this->config);
 
         $this->assertSame(
             'http://example.com/index.php/controller/method',
@@ -381,11 +412,8 @@ final class SiteUrlTest extends CIUnitTestCase
 
         $this->config->baseURL          = 'http://example.com/public/';
         $this->config->allowedHostnames = ['www.example.jp'];
-        Services::injectMock('config', $this->config);
 
-        // URI object are updated in IncomingRequest constructor.
-        $request = Services::incomingrequest($this->config);
-        Services::injectMock('request', $request);
+        $this->createRequest($this->config);
 
         $this->assertSame(
             'http://www.example.jp/public/index.php/controller/method',
@@ -402,9 +430,7 @@ final class SiteUrlTest extends CIUnitTestCase
         $this->config->baseURL          = 'http://example.com/public/';
         $this->config->allowedHostnames = ['www.example.jp'];
 
-        // URI object are updated in IncomingRequest constructor.
-        $request = Services::incomingrequest($this->config);
-        Services::injectMock('request', $request);
+        $this->createRequest($this->config);
 
         $altConfig          = clone $this->config;
         $altConfig->baseURL = 'http://alt.example.com/public/';
@@ -424,9 +450,7 @@ final class SiteUrlTest extends CIUnitTestCase
         $this->config->baseURL          = 'http://example.com/public/';
         $this->config->allowedHostnames = ['www.example.jp'];
 
-        // URI object are updated in IncomingRequest constructor.
-        $request = Services::incomingrequest($this->config);
-        Services::injectMock('request', $request);
+        $this->createRequest($this->config);
 
         $this->assertSame(
             'http://www.example.jp/public/controller/method',
