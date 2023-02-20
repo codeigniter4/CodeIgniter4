@@ -50,6 +50,17 @@ final class SiteURITest extends CIUnitTestCase
         $this->assertSame('/index.php/one/two', $uri->getPath());
     }
 
+    public function testConstructorRelativePathStartWithSlash()
+    {
+        $config = new App();
+
+        $uri = new SiteURI($config, '/one/two');
+
+        $this->assertSame('http://example.com/index.php/one/two', (string) $uri);
+        $this->assertSame('one/two', $uri->getRoutePath());
+        $this->assertSame('/index.php/one/two', $uri->getPath());
+    }
+
     public function testConstructorRelativePathWithQuery()
     {
         $config = new App();
@@ -181,6 +192,22 @@ final class SiteURITest extends CIUnitTestCase
         $uri = new SiteURI($config);
 
         $uri->setPath('test/method');
+
+        $this->assertSame('http://example.com/index.php/test/method', (string) $uri);
+        $this->assertSame('test/method', $uri->getRoutePath());
+        $this->assertSame('/index.php/test/method', $uri->getPath());
+        $this->assertSame(['test', 'method'], $uri->getSegments());
+        $this->assertSame('test', $uri->getSegment(1));
+        $this->assertSame(2, $uri->getTotalSegments());
+    }
+
+    public function testSetPathStartWithSlash()
+    {
+        $config = new App();
+
+        $uri = new SiteURI($config);
+
+        $uri->setPath('/test/method');
 
         $this->assertSame('http://example.com/index.php/test/method', (string) $uri);
         $this->assertSame('test/method', $uri->getRoutePath());
