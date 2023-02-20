@@ -34,6 +34,7 @@ final class SiteURITest extends CIUnitTestCase
 
         $this->assertInstanceOf(SiteURI::class, $uri);
         $this->assertSame('http://example.com/index.php/', (string) $uri);
+        $this->assertSame('/', $uri->getRoutePath());
         $this->assertSame('/index.php/', $uri->getPath());
         $this->assertSame('http://example.com/', $uri->getBaseURL());
     }
@@ -45,6 +46,7 @@ final class SiteURITest extends CIUnitTestCase
         $uri = new SiteURI($config, 'one/two');
 
         $this->assertSame('http://example.com/index.php/one/two', (string) $uri);
+        $this->assertSame('one/two', $uri->getRoutePath());
         $this->assertSame('/index.php/one/two', $uri->getPath());
     }
 
@@ -55,6 +57,7 @@ final class SiteURITest extends CIUnitTestCase
         $uri = new SiteURI($config, 'one/two?foo=1&bar=2');
 
         $this->assertSame('http://example.com/index.php/one/two?foo=1&bar=2', (string) $uri);
+        $this->assertSame('one/two', $uri->getRoutePath());
         $this->assertSame('/index.php/one/two', $uri->getPath());
         $this->assertSame('foo=1&bar=2', $uri->getQuery());
     }
@@ -66,6 +69,7 @@ final class SiteURITest extends CIUnitTestCase
         $uri = new SiteURI($config, 'one/two#sec1');
 
         $this->assertSame('http://example.com/index.php/one/two#sec1', (string) $uri);
+        $this->assertSame('one/two', $uri->getRoutePath());
         $this->assertSame('/index.php/one/two', $uri->getPath());
         $this->assertSame('', $uri->getQuery());
         $this->assertSame('sec1', $uri->getFragment());
@@ -78,6 +82,7 @@ final class SiteURITest extends CIUnitTestCase
         $uri = new SiteURI($config, 'one/two?foo=1&bar=2#sec1');
 
         $this->assertSame('http://example.com/index.php/one/two?foo=1&bar=2#sec1', (string) $uri);
+        $this->assertSame('one/two', $uri->getRoutePath());
         $this->assertSame('/index.php/one/two', $uri->getPath());
         $this->assertSame('foo=1&bar=2', $uri->getQuery());
         $this->assertSame('sec1', $uri->getFragment());
@@ -92,6 +97,7 @@ final class SiteURITest extends CIUnitTestCase
 
         $this->assertInstanceOf(SiteURI::class, $uri);
         $this->assertSame('http://sub.example.com/index.php/', (string) $uri);
+        $this->assertSame('/', $uri->getRoutePath());
         $this->assertSame('/index.php/', $uri->getPath());
         $this->assertSame('http://sub.example.com/', $uri->getBaseURL());
     }
@@ -116,6 +122,7 @@ final class SiteURITest extends CIUnitTestCase
 
         $this->assertInstanceOf(SiteURI::class, $uri);
         $this->assertSame('http://example.com/ci4/index.php/', (string) $uri);
+        $this->assertSame('/', $uri->getRoutePath());
         $this->assertSame('/ci4/index.php/', $uri->getPath());
         $this->assertSame('http://example.com/ci4/', $uri->getBaseURL());
     }
@@ -128,6 +135,7 @@ final class SiteURITest extends CIUnitTestCase
         $uri = new SiteURI($config, 'one/two?foo=1&bar=2');
 
         $this->assertSame('http://example.com/ci4/index.php/one/two?foo=1&bar=2', (string) $uri);
+        $this->assertSame('one/two', $uri->getRoutePath());
         $this->assertSame('/ci4/index.php/one/two', $uri->getPath());
         $this->assertSame('foo=1&bar=2', $uri->getQuery());
     }
@@ -152,6 +160,8 @@ final class SiteURITest extends CIUnitTestCase
 
         $this->assertSame('http://example.com/', (string) $uri);
         $this->assertSame('http://example.com/', $uri->getBaseURL());
+        $this->assertSame('/', $uri->getRoutePath());
+        $this->assertSame('/', $uri->getPath());
     }
 
     public function testConstructorInvalidBaseURL()
