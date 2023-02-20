@@ -9,6 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\BooleanAnd\SimplifyEmptyArrayCheckRector;
 use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
@@ -72,6 +73,11 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->phpstanConfig(__DIR__ . '/phpstan.neon.dist');
+
+    if (getenv('GITHUB_ACTION') !== false) {
+        $rectorConfig->cacheClass(FileCacheStorage::class);
+        $rectorConfig->cacheDirectory('/tmp/rector');
+    }
 
     // is there a file you need to skip?
     $rectorConfig->skip([
