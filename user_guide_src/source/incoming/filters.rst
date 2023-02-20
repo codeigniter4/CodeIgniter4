@@ -152,8 +152,8 @@ a list of URI patterns that filter should apply to:
 
 .. literalinclude:: filters/009.php
 
-Filter arguments
-=================
+Filter Arguments
+================
 
 When configuring filters, additional arguments may be passed to a filter when setting up the route:
 
