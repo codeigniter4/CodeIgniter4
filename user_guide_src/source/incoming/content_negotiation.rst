@@ -2,13 +2,6 @@
 Content Negotiation
 ###################
 
-Content negotiation is a way to determine what type of content to return to the client based on what the client
-can handle, and what the server can handle. This can be used to determine whether the client is wanting HTML or JSON
-returned, whether the image should be returned as a jpg or png, what type of compression is supported and more. This
-is done by analyzing four different headers which can each support multiple value options, each with their own priority.
-Trying to match this up manually can be pretty challenging. CodeIgniter provides the ``Negotiator`` class that
-can handle this for you.
-
 .. contents::
     :local:
     :depth: 2
@@ -16,6 +9,14 @@ can handle this for you.
 ****************************
 What is Content Negotiation?
 ****************************
+
+Content negotiation is a way to determine what type of content to return to the client based on what the client
+can handle, and what the server can handle. This can be used to determine whether the client is wanting HTML or JSON
+returned, whether the image should be returned as a JPEG or PNG, what type of compression is supported and more. This
+is done by analyzing four different headers which can each support multiple value options, each with their own priority.
+
+Trying to match this up manually can be pretty challenging. CodeIgniter provides the ``Negotiator`` class that
+can handle this for you.
 
 At it's heart Content Negotiation is simply a part of the HTTP specification that allows a single
 resource to serve more than one type of content, allowing the clients to request the type of
