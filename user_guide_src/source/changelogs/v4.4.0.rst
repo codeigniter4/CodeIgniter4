@@ -62,6 +62,9 @@ Others
 Model
 =====
 
+- Added special getter/setter to Entity to avoid method name conflicts.
+  See :ref:`entities-special-getter-setter`.
+
 Libraries
 =========
 

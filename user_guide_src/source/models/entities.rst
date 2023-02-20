@@ -131,6 +131,25 @@ business logic and create objects that are pleasant to use.
 
 .. literalinclude:: entities/007.php
 
+.. _entities-special-getter-setter:
+
+Special Getter/Setter
+---------------------
+
+.. versionadded:: 4.4.0
+
+For example, if your Entity's parent class already has a ``getParent()`` method
+defined, and your Entity also has a column named ``parent``, when you try to add
+business logic to the ``getParent()`` method in your Entity class, the method is
+already defined.
+
+In such a case, you can use the special getter/setter. Instead of ``getX()``/``setX()``,
+set ``_getX()``/``_setX()``.
+
+In the above example, if your Entity has the ``_getParent()`` method, the method
+will be used when you get ``$entity->parent``, and the ``_setParent()`` method
+will be used when you set ``$entity->parent``.
+
 Data Mapping
 ============
 
