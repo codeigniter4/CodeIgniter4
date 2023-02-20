@@ -134,18 +134,20 @@ URI's you can use an array of URI patterns:
 $methods
 ========
 
-You can apply filters to all requests of a certain HTTP method, like POST, GET, PUT, etc. In this array, you would
-specify the method name in lowercase. It's value would be an array of filters to run. Unlike the ``$globals`` or the
-``$filters`` properties, these will only run as before filters:
-
-.. literalinclude:: filters/008.php
-
-In addition to the standard HTTP methods, this also supports one special case: 'cli'. The 'cli' method would apply to
-all requests that were run from the command line.
-
 .. Warning:: If you use ``$methods`` filters, you should :ref:`disable Auto Routing (Legacy) <use-defined-routes-only>`
     because :ref:`auto-routing-legacy` permits any HTTP method to access a controller.
     Accessing the controller with a method you don't expect could bypass the filter.
+
+You can apply filters to all requests of a certain HTTP method, like POST, GET, PUT, etc. In this array, you would
+specify the method name in **lowercase**. It's value would be an array of filters to run:
+
+.. literalinclude:: filters/008.php
+
+.. note:: Unlike the ``$globals`` or the
+    ``$filters`` properties, these will only run as before filters.
+
+In addition to the standard HTTP methods, this also supports one special case: ``cli``. The ``cli`` method would apply to
+all requests that were run from the command line.
 
 $filters
 ========
