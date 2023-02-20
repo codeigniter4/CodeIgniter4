@@ -1,6 +1,6 @@
-*******************
+###################
 Content Negotiation
-*******************
+###################
 
 Content negotiation is a way to determine what type of content to return to the client based on what the client
 can handle, and what the server can handle. This can be used to determine whether the client is wanting HTML or JSON
@@ -13,9 +13,9 @@ can handle this for you.
     :local:
     :depth: 2
 
-=================
+*****************
 Loading the Class
-=================
+*****************
 
 You can load an instance of the class manually through the Service class:
 
@@ -32,9 +32,9 @@ method:
 When accessed this way, the first parameter is the type of content you're trying to find a match for, while the
 second is an array of supported values.
 
-===========
+***********
 Negotiating
-===========
+***********
 
 In this section, we will discuss the 4 types of content that can be negotiated and show how that would look using
 both of the methods described above to access the negotiator.
