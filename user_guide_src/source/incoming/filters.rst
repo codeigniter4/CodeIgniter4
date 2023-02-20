@@ -120,7 +120,7 @@ Except for a Few URIs
 There are times where you want to apply a filter to almost every request, but have a few that should be left alone.
 One common example is if you need to exclude a few URI's from the CSRF protection filter to allow requests from
 third-party websites to hit one or two specific URI's, while keeping the rest of them protected. To do this, add
-an array with the 'except' key and a URI to match as the value alongside the alias:
+an array with the ``except`` key and a URI to match as the value alongside the alias:
 
 .. literalinclude:: filters/006.php
 
@@ -150,7 +150,7 @@ all requests that were run from the command line.
 $filters
 ========
 
-This property is an array of filter aliases. For each alias, you can specify before and after arrays that contain
+This property is an array of filter aliases. For each alias, you can specify ``before`` and ``after`` arrays that contain
 a list of URI patterns that filter should apply to:
 
 .. literalinclude:: filters/009.php
