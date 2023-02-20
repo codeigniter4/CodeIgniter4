@@ -125,7 +125,7 @@ an array with the ``except`` key and a URI to match as the value alongside the a
 .. literalinclude:: filters/006.php
 
 Any place you can use a URI in the filter settings, you can use a regular expression or, like in this example, use
-an asterisk for a wildcard that will match all characters after that. In this example, any URL's starting with ``api/``
+an asterisk (``*``) for a wildcard that will match all characters after that. In this example, any URL's starting with ``api/``
 would be exempted from CSRF protection, but the site's forms would all be protected. If you need to specify multiple
 URI's you can use an array of URI patterns:
 
