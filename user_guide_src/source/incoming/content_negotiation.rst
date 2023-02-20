@@ -9,6 +9,10 @@ is done by analyzing four different headers which can each support multiple valu
 Trying to match this up manually can be pretty challenging. CodeIgniter provides the ``Negotiator`` class that
 can handle this for you.
 
+.. contents::
+    :local:
+    :depth: 2
+
 =================
 Loading the Class
 =================
