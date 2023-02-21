@@ -30,6 +30,12 @@ they work in sequence and don't get in each other's way.
 The autoloader is always active, being registered with ``spl_autoload_register()`` at the
 beginning of the framework's execution.
 
+.. important:: You should always be careful about the case of filenames. Many
+    developers develop on case-insensitive file systems on Windows or macOS.
+    However, most server environments use case-sensitive file systems. If the
+    file name case is incorrect, the autoloader cannot find the file on the
+    server.
+
 Configuration
 *************
 
