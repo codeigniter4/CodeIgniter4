@@ -198,7 +198,7 @@ you may add them directly in forge:
 
 .. literalinclude:: forge/012.php
 
-You can specify the desired action for the "on delete" and "on update" properties of the constraint as well as the name:
+You can specify the desired action for the "on update" and "on delete" properties of the constraint as well as the name:
 
 .. literalinclude:: forge/013.php
 
