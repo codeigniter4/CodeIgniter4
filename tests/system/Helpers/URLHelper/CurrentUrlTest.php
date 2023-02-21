@@ -61,10 +61,10 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     public function testCurrentURLReturnsBasicURL(): void
     {
-        $_SERVER['REQUEST_URI'] = '/public';
+        $_SERVER['REQUEST_URI'] = '/public/';
         $_SERVER['SCRIPT_NAME'] = '/public/index.php';
 
-        $this->config->baseURL = 'http://example.com/public';
+        $this->config->baseURL = 'http://example.com/public/';
 
         $this->createRequest($this->config);
 
@@ -74,10 +74,10 @@ final class CurrentUrlTest extends CIUnitTestCase
     public function testCurrentURLReturnsAllowedHostname(): void
     {
         $_SERVER['HTTP_HOST']   = 'www.example.jp';
-        $_SERVER['REQUEST_URI'] = '/public';
+        $_SERVER['REQUEST_URI'] = '/public/';
         $_SERVER['SCRIPT_NAME'] = '/public/index.php';
 
-        $this->config->baseURL          = 'http://example.com/public';
+        $this->config->baseURL          = 'http://example.com/public/';
         $this->config->allowedHostnames = ['www.example.jp'];
 
         $this->createRequest($this->config);
@@ -105,10 +105,10 @@ final class CurrentUrlTest extends CIUnitTestCase
     public function testCurrentURLReturnsBaseURLIfNotAllowedHostname(): void
     {
         $_SERVER['HTTP_HOST']   = 'invalid.example.org';
-        $_SERVER['REQUEST_URI'] = '/public';
+        $_SERVER['REQUEST_URI'] = '/public/';
         $_SERVER['SCRIPT_NAME'] = '/public/index.php';
 
-        $this->config->baseURL          = 'http://example.com/public';
+        $this->config->baseURL          = 'http://example.com/public/';
         $this->config->allowedHostnames = ['www.example.jp'];
 
         $this->createRequest($this->config);
@@ -118,8 +118,7 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     public function testCurrentURLReturnsObject(): void
     {
-        // Since we're on a CLI, we must provide our own URI
-        $this->config->baseURL = 'http://example.com/public';
+        $this->config->baseURL = 'http://example.com/public/';
 
         $this->createRequest($this->config);
 
@@ -132,7 +131,7 @@ final class CurrentUrlTest extends CIUnitTestCase
     public function testCurrentURLEquivalence(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/public';
+        $_SERVER['REQUEST_URI'] = '/public/';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
 
         $this->config->indexPage = '';
@@ -148,8 +147,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI'] = '/foo/public/bar?baz=quip';
         $_SERVER['SCRIPT_NAME'] = '/foo/public/index.php';
 
-        // Since we're on a CLI, we must provide our own URI
-        $this->config->baseURL = 'http://example.com/foo/public';
+        $this->config->baseURL = 'http://example.com/foo/public/';
 
         $this->createRequest($this->config);
 
@@ -169,7 +167,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI'] = '/foo/public/bar?baz=quip';
         $_SERVER['SCRIPT_NAME'] = '/foo/public/index.php';
 
-        $this->config->baseURL = 'http://example.com:8080/foo/public';
+        $this->config->baseURL = 'http://example.com:8080/foo/public/';
 
         $this->createRequest($this->config);
 
@@ -210,7 +208,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
 
-        $this->config->baseURL   = 'http://example.com';
+        $this->config->baseURL   = 'http://example.com/';
         $this->config->indexPage = '';
 
         $this->createRequest($this->config);
