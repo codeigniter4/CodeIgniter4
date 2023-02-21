@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Helpers;
 
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Filters;
@@ -35,11 +35,11 @@ final class FormHelperTest extends CIUnitTestCase
 
     private function setRequest(): void
     {
-        $uri = new URI('http://example.com/');
-        Services::injectMock('uri', $uri);
-
         $config            = new App();
         $config->indexPage = 'index.php';
+
+        $uri = new SiteURI($config);
+        Services::injectMock('uri', $uri);
 
         $request = Services::request($config);
         Services::injectMock('request', $request);
