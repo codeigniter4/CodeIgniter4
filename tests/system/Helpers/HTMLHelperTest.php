@@ -39,6 +39,8 @@ final class HTMLHelperTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        $this->resetServices();
+
         helper('html');
 
         $this->tracks = [
