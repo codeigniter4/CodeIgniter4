@@ -609,7 +609,7 @@ you may add them directly in forge:</p>
 <span class="c1">// gives CONSTRAINT `TABLENAME_users_id_foreign` FOREIGN KEY(`users_id`, `users_name`) REFERENCES `users`(`id`, `name`)</span>
 </pre></div>
 </div>
-<p>You can specify the desired action for the “on update” and “on update” properties of the constraint as well as the name:</p>
+<p>You can specify the desired action for the “on update” and “on delete” properties of the constraint as well as the name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addForeignKey</span><span class="p">(</span><span class="s1">&#39;users_id&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;CASCADE&#39;</span><span class="p">,</span> <span class="s1">&#39;CASCADE&#39;</span><span class="p">,</span> <span class="s1">&#39;my_fk_name&#39;</span><span class="p">);</span>
