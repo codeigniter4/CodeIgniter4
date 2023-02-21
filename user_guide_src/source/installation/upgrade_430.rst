@@ -324,7 +324,7 @@ Config
     - The property ``$html5`` to determine whether to remove the solidus (``/``) character for void HTML
       elements (e.g. ``<input>``) is added, and set to ``true`` by default for HTML5 compatibility.
 - app/Config/Encryption.php
-    - The new property ``$rawData``,  ``$encryptKeyInfo``, and ``$authKeyInfo`` are added for for CI3
+    - The new property ``$rawData``,  ``$encryptKeyInfo``, and ``$authKeyInfo`` are added for CI3
       Encryption compatibility. See :ref:`encryption-compatible-with-ci3`.
 - app/Config/Exceptions.php
     - Two additional public properties were added: ``$logDeprecations`` and ``$deprecationLogLevel``.
