@@ -13,6 +13,9 @@ classes that your project is using. Keeping track of where every single file is,
 hard-coding that location into your files in a series of ``requires()`` is a massive
 headache and very error-prone. That's where autoloaders come in.
 
+CodeIgniter4 Autoloader
+***********************
+
 CodeIgniter provides a very flexible autoloader that can be used with very little configuration.
 It can locate individual namespaced classes that adhere to
 `PSR-4 <https://www.php-fig.org/psr/psr-4/>`_ autoloading
