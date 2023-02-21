@@ -75,6 +75,8 @@ class SiteURI extends URI
      *
      * If the baseURL contains sub folders, this value will be different from
      * the current URI path.
+     *
+     * This value never starts with '/'.
      */
     private string $routePath;
 
@@ -98,18 +100,27 @@ class SiteURI extends URI
         $this->setBasePath($baseURL);
 
         $relativePath = URI::removeDotSegments($relativePath);
-        // Remove starting slash
-        if ($relativePath !== '' && $relativePath[0] === '/') {
+        // Remove starting slash unless it is `/`.
+        if ($relativePath !== '' && $relativePath[0] === '/' && $relativePath !== '/') {
             $relativePath = ltrim($relativePath, '/');
         }
+
+        $tempPath = $relativePath;
 
         // Check for an index page
         $indexPage = '';
         if ($configApp->indexPage !== '') {
-            $indexPage = $configApp->indexPage . '/';
+            $indexPage = $configApp->indexPage;
+
+            // Check if we need a separator
+            if ($relativePath !== '' && $relativePath[0] !== '/' && $relativePath[0] !== '?') {
+                $indexPage .= '/';
+            }
+        } elseif ($relativePath === '/') {
+            $tempPath = '';
         }
 
-        $tempUri = $baseURL . $indexPage . $relativePath;
+        $tempUri = $baseURL . $indexPage . $tempPath;
         $uri     = new URI($tempUri);
 
         // Update scheme
@@ -305,15 +316,11 @@ class SiteURI extends URI
         $allSegments = array_merge($this->baseSegments, $this->segments);
         $this->path  = '/' . $this->filterPath(implode('/', $allSegments));
 
-        $this->routePath = $this->filterPath(implode('/', $this->segments));
-
-        if ($this->routePath === '') {
-            $this->routePath = '/';
-
-            if ($this->indexPage !== '') {
-                $this->path .= '/';
-            }
+        if ($this->routePath === '/' && $this->path !== '/') {
+            $this->path .= '/';
         }
+
+        $this->routePath = $this->filterPath(implode('/', $this->segments));
 
         return $this;
     }

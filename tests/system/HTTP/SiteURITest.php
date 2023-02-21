@@ -33,8 +33,21 @@ final class SiteURITest extends CIUnitTestCase
         $uri = new SiteURI($config);
 
         $this->assertInstanceOf(SiteURI::class, $uri);
+        $this->assertSame('http://example.com/index.php', (string) $uri);
+        $this->assertSame('', $uri->getRoutePath());
+        $this->assertSame('/index.php', $uri->getPath());
+        $this->assertSame('http://example.com/', $uri->getBaseURL());
+    }
+
+    public function testConstructorPathSlash()
+    {
+        $config = new App();
+
+        $uri = new SiteURI($config, '/');
+
+        $this->assertInstanceOf(SiteURI::class, $uri);
         $this->assertSame('http://example.com/index.php/', (string) $uri);
-        $this->assertSame('/', $uri->getRoutePath());
+        $this->assertSame('', $uri->getRoutePath());
         $this->assertSame('/index.php/', $uri->getPath());
         $this->assertSame('http://example.com/', $uri->getBaseURL());
     }
@@ -107,9 +120,9 @@ final class SiteURITest extends CIUnitTestCase
         $uri = new SiteURI($config, '', 'sub.example.com');
 
         $this->assertInstanceOf(SiteURI::class, $uri);
-        $this->assertSame('http://sub.example.com/index.php/', (string) $uri);
-        $this->assertSame('/', $uri->getRoutePath());
-        $this->assertSame('/index.php/', $uri->getPath());
+        $this->assertSame('http://sub.example.com/index.php', (string) $uri);
+        $this->assertSame('', $uri->getRoutePath());
+        $this->assertSame('/index.php', $uri->getPath());
         $this->assertSame('http://sub.example.com/', $uri->getBaseURL());
     }
 
@@ -120,7 +133,7 @@ final class SiteURITest extends CIUnitTestCase
         $uri = new SiteURI($config, '', null, 'https');
 
         $this->assertInstanceOf(SiteURI::class, $uri);
-        $this->assertSame('https://example.com/index.php/', (string) $uri);
+        $this->assertSame('https://example.com/index.php', (string) $uri);
         $this->assertSame('https://example.com/', $uri->getBaseURL());
     }
 
@@ -132,9 +145,9 @@ final class SiteURITest extends CIUnitTestCase
         $uri = new SiteURI($config);
 
         $this->assertInstanceOf(SiteURI::class, $uri);
-        $this->assertSame('http://example.com/ci4/index.php/', (string) $uri);
-        $this->assertSame('/', $uri->getRoutePath());
-        $this->assertSame('/ci4/index.php/', $uri->getPath());
+        $this->assertSame('http://example.com/ci4/index.php', (string) $uri);
+        $this->assertSame('', $uri->getRoutePath());
+        $this->assertSame('/ci4/index.php', $uri->getPath());
         $this->assertSame('http://example.com/ci4/', $uri->getBaseURL());
     }
 
@@ -158,7 +171,7 @@ final class SiteURITest extends CIUnitTestCase
 
         $uri = new SiteURI($config);
 
-        $this->assertSame('https://example.com/index.php/', (string) $uri);
+        $this->assertSame('https://example.com/index.php', (string) $uri);
         $this->assertSame('https://example.com/', $uri->getBaseURL());
     }
 
@@ -171,7 +184,20 @@ final class SiteURITest extends CIUnitTestCase
 
         $this->assertSame('http://example.com/', (string) $uri);
         $this->assertSame('http://example.com/', $uri->getBaseURL());
-        $this->assertSame('/', $uri->getRoutePath());
+        $this->assertSame('', $uri->getRoutePath());
+        $this->assertSame('/', $uri->getPath());
+    }
+
+    public function testConstructorIndexPageEmptyWithPathSlash()
+    {
+        $config            = new App();
+        $config->indexPage = '';
+
+        $uri = new SiteURI($config, '/');
+
+        $this->assertSame('http://example.com/', (string) $uri);
+        $this->assertSame('http://example.com/', $uri->getBaseURL());
+        $this->assertSame('', $uri->getRoutePath());
         $this->assertSame('/', $uri->getPath());
     }
 
@@ -242,8 +268,23 @@ final class SiteURITest extends CIUnitTestCase
 
         $uri->setPath('');
 
+        $this->assertSame('http://example.com/index.php', (string) $uri);
+        $this->assertSame('', $uri->getRoutePath());
+        $this->assertSame('/index.php', $uri->getPath());
+        $this->assertSame([], $uri->getSegments());
+        $this->assertSame(0, $uri->getTotalSegments());
+    }
+
+    public function testSetPathSlash()
+    {
+        $config = new App();
+
+        $uri = new SiteURI($config);
+
+        $uri->setPath('/');
+
         $this->assertSame('http://example.com/index.php/', (string) $uri);
-        $this->assertSame('/', $uri->getRoutePath());
+        $this->assertSame('', $uri->getRoutePath());
         $this->assertSame('/index.php/', $uri->getPath());
         $this->assertSame([], $uri->getSegments());
         $this->assertSame(0, $uri->getTotalSegments());
@@ -322,7 +363,7 @@ final class SiteURITest extends CIUnitTestCase
         $config = new App();
         $uri    = new SiteURI($config);
 
-        $this->assertSame('/', $uri->getRoutePath());
+        $this->assertSame('', $uri->getRoutePath());
     }
 
     public function testGetSegments()
