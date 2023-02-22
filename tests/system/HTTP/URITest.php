@@ -658,8 +658,7 @@ final class URITest extends CIUnitTestCase
     public function testResolveRelativeURI($rel, $expected)
     {
         $base = 'http://a/b/c/d';
-
-        $uri = new URI($base);
+        $uri  = new URI($base);
 
         $new = $uri->resolveRelativeURI($rel);
 
@@ -674,8 +673,7 @@ final class URITest extends CIUnitTestCase
      */
     public function testResolveRelativeURIHTTPS($rel, $expected)
     {
-        $base = 'https://a/b/c/d';
-
+        $base     = 'https://a/b/c/d';
         $expected = str_replace('http:', 'https:', $expected);
 
         $uri = new URI($base);
@@ -688,8 +686,7 @@ final class URITest extends CIUnitTestCase
     public function testResolveRelativeURIWithNoBase()
     {
         $base = 'http://a';
-
-        $uri = new URI($base);
+        $uri  = new URI($base);
 
         $new = $uri->resolveRelativeURI('x');
 
@@ -699,8 +696,7 @@ final class URITest extends CIUnitTestCase
     public function testAddQueryVar()
     {
         $base = 'http://example.com/foo';
-
-        $uri = new URI($base);
+        $uri  = new URI($base);
 
         $uri->addQuery('bar', 'baz');
 
@@ -712,8 +708,7 @@ final class URITest extends CIUnitTestCase
      */
     public function testSetQueryDecode()
     {
-        $base = 'http://example.com/foo';
-
+        $base    = 'http://example.com/foo';
         $uri     = new URI($base);
         $encoded = urlencode('you+alice+to+the+little');
 
@@ -727,8 +722,7 @@ final class URITest extends CIUnitTestCase
     public function testAddQueryVarRespectsExistingQueryVars()
     {
         $base = 'http://example.com/foo?bar=baz';
-
-        $uri = new URI($base);
+        $uri  = new URI($base);
 
         $uri->addQuery('baz', 'foz');
 
@@ -738,8 +732,7 @@ final class URITest extends CIUnitTestCase
     public function testStripQueryVars()
     {
         $base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
-
-        $uri = new URI($base);
+        $uri  = new URI($base);
 
         $uri->stripQuery('bar', 'baz');
 
@@ -749,8 +742,7 @@ final class URITest extends CIUnitTestCase
     public function testKeepQueryVars()
     {
         $base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
-
-        $uri = new URI($base);
+        $uri  = new URI($base);
 
         $uri->keepQuery('bar', 'baz');
 
@@ -769,8 +761,7 @@ final class URITest extends CIUnitTestCase
     public function testGetQueryExcept()
     {
         $base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
-
-        $uri = new URI($base);
+        $uri  = new URI($base);
 
         $this->assertSame('foo=bar&baz=foz', $uri->getQuery(['except' => ['bar']]));
     }
@@ -778,8 +769,7 @@ final class URITest extends CIUnitTestCase
     public function testGetQueryOnly()
     {
         $base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
-
-        $uri = new URI($base);
+        $uri  = new URI($base);
 
         $this->assertSame('bar=baz', $uri->getQuery(['only' => ['bar']]));
         $this->assertSame('foo=bar&baz=foz', $uri->getQuery(['except' => 'bar']));
@@ -788,8 +778,7 @@ final class URITest extends CIUnitTestCase
     public function testGetQueryWithStrings()
     {
         $base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
-
-        $uri = new URI($base);
+        $uri  = new URI($base);
 
         $this->assertSame('bar=baz', $uri->getQuery(['only' => 'bar']));
     }
@@ -862,10 +851,8 @@ final class URITest extends CIUnitTestCase
 
     public function testSetBadSegmentSilent()
     {
-        $base = 'http://example.com/foo/bar/baz';
-
-        $uri = new URI($base);
-
+        $base     = 'http://example.com/foo/bar/baz';
+        $uri      = new URI($base);
         $segments = $uri->getSegments();
         $uri->setSilent()->setSegment(6, 'banana');
 
