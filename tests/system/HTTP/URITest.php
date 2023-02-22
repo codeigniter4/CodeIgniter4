@@ -352,6 +352,7 @@ final class URITest extends CIUnitTestCase
     {
         $uri = new URI();
         $uri->setPath($path);
+
         $this->assertSame($expected, $uri->getPath());
     }
 
@@ -466,6 +467,7 @@ final class URITest extends CIUnitTestCase
     public function testAuthorityReturnsExceptedValues($url, $expected)
     {
         $uri = new URI($url);
+
         $this->assertSame($expected, $uri->getAuthority());
     }
 
