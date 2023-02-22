@@ -286,9 +286,10 @@
 <li><p><a class="reference internal" href="#i-have-to-include-index-php-in-my-url" id="id2">I have to include index.php in my URL</a></p></li>
 <li><p><a class="reference internal" href="#only-the-default-page-loads" id="id3">Only the default page loads</a></p></li>
 <li><p><a class="reference internal" href="#no-input-file-specified" id="id4">No input file specified</a></p></li>
-<li><p><a class="reference internal" href="#the-tutorial-gives-404-errors-everywhere" id="id5">The tutorial gives 404 errors everywhere :(</a></p></li>
-<li><p><a class="reference internal" href="#what-s-with-an-unhelpful-whoops-page" id="id6">What’s with an unhelpful “Whoops!” page?</a></p></li>
-<li><p><a class="reference internal" href="#codeigniter-error-logs" id="id7">CodeIgniter Error Logs</a></p></li>
+<li><p><a class="reference internal" href="#my-app-works-fine-locally-but-not-on-the-production-server" id="id5">My app works fine locally but not on the production server</a></p></li>
+<li><p><a class="reference internal" href="#the-tutorial-gives-404-errors-everywhere" id="id6">The tutorial gives 404 errors everywhere :(</a></p></li>
+<li><p><a class="reference internal" href="#what-s-with-an-unhelpful-whoops-page" id="id7">What’s with an unhelpful “Whoops!” page?</a></p></li>
+<li><p><a class="reference internal" href="#codeigniter-error-logs" id="id8">CodeIgniter Error Logs</a></p></li>
 </ul>
 </div>
 <section id="how-do-i-know-if-my-install-is-working">
@@ -360,8 +361,17 @@ do this open your <strong>app/Config/App.php</strong> file and change this:</p>
 </pre></div>
 </div>
 </section>
+<section id="my-app-works-fine-locally-but-not-on-the-production-server">
+<h2><a class="toc-backref" href="#id5">My app works fine locally but not on the production server</a><a class="headerlink" href="#my-app-works-fine-locally-but-not-on-the-production-server" title="Permalink to this headline"></a></h2>
+<p>Make sure that the case of the folder and file names matches the code.</p>
+<p>Many developers develop on case-insensitive file systems on Windows or macOS.
+However, most server environments use case-sensitive file systems.</p>
+<p>For example, when you have <strong>app/Controllers/Product.php</strong>, you must use
+<code class="docutils literal notranslate"><span class="pre">Product</span></code> as the short classname, not <code class="docutils literal notranslate"><span class="pre">product</span></code>.</p>
+<p>If the file name case is incorrect, the file is not found on the server.</p>
+</section>
 <section id="the-tutorial-gives-404-errors-everywhere">
-<h2><a class="toc-backref" href="#id5">The tutorial gives 404 errors everywhere :(</a><a class="headerlink" href="#the-tutorial-gives-404-errors-everywhere" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">The tutorial gives 404 errors everywhere :(</a><a class="headerlink" href="#the-tutorial-gives-404-errors-everywhere" title="Permalink to this headline"></a></h2>
 <p>You can’t follow the tutorial using PHP’s built-in web server.
 It doesn’t process the <strong>.htaccess</strong> file needed to route
 requests properly.</p>
@@ -369,7 +379,7 @@ requests properly.</p>
 CodeIgniter equivalent, <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">serve</span></code> from your project root.</p>
 </section>
 <section id="what-s-with-an-unhelpful-whoops-page">
-<h2><a class="toc-backref" href="#id6">What’s with an unhelpful “Whoops!” page?</a><a class="headerlink" href="#what-s-with-an-unhelpful-whoops-page" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">What’s with an unhelpful “Whoops!” page?</a><a class="headerlink" href="#what-s-with-an-unhelpful-whoops-page" title="Permalink to this headline"></a></h2>
 <p>You find that your app is displaying a page with “Whoops!” and
 then the text line “We seem to have hit a snag. Please try again later…”.</p>
 <p>That is a sign that you are in production mode and have hit an
@@ -381,7 +391,7 @@ the webapp, for better security.</p>
 After that, reload the page. You will see the error and the back trace.</p>
 </section>
 <section id="codeigniter-error-logs">
-<h2><a class="toc-backref" href="#id7">CodeIgniter Error Logs</a><a class="headerlink" href="#codeigniter-error-logs" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8">CodeIgniter Error Logs</a><a class="headerlink" href="#codeigniter-error-logs" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter logs error messages, according to the settings in <strong>app/Config/Logger.php</strong>.</p>
 <p>You can adjust the error threshold to see more or fewer messages. See <a class="reference internal" href="../general/logging.html#logging-configuration"><span class="std std-ref">Logging</span></a> for details.</p>
 <p>The default configuration has daily log files stored in <strong>writable/logs</strong>.

@@ -281,10 +281,11 @@
 <h1>Autoloading Files<a class="headerlink" href="#autoloading-files" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#configuration" id="id1">Configuration</a></p></li>
-<li><p><a class="reference internal" href="#namespaces" id="id2">Namespaces</a></p></li>
-<li><p><a class="reference internal" href="#classmap" id="id3">Classmap</a></p></li>
-<li><p><a class="reference internal" href="#composer-support" id="id4">Composer Support</a></p></li>
+<li><p><a class="reference internal" href="#codeigniter4-autoloader" id="id1">CodeIgniter4 Autoloader</a></p></li>
+<li><p><a class="reference internal" href="#configuration" id="id2">Configuration</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id3">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#classmap" id="id4">Classmap</a></p></li>
+<li><p><a class="reference internal" href="#composer-support" id="id5">Composer Support</a></p></li>
 </ul>
 </div>
 <p>Every application consists of a large number of classes in many different locations.
@@ -293,6 +294,8 @@ number of libraries, models, and other entities to make it work. You might have 
 classes that your project is using. Keeping track of where every single file is, and
 hard-coding that location into your files in a series of <code class="docutils literal notranslate"><span class="pre">requires()</span></code> is a massive
 headache and very error-prone. That’s where autoloaders come in.</p>
+<section id="codeigniter4-autoloader">
+<h2><a class="toc-backref" href="#id1">CodeIgniter4 Autoloader</a><a class="headerlink" href="#codeigniter4-autoloader" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter provides a very flexible autoloader that can be used with very little configuration.
 It can locate individual namespaced classes that adhere to
 <a class="reference external" href="https://www.php-fig.org/psr/psr-4/">PSR-4</a> autoloading
@@ -304,13 +307,22 @@ Because they’re all registered through
 they work in sequence and don’t get in each other’s way.</p>
 <p>The autoloader is always active, being registered with <code class="docutils literal notranslate"><span class="pre">spl_autoload_register()</span></code> at the
 beginning of the framework’s execution.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You should always be careful about the case of filenames. Many
+developers develop on case-insensitive file systems on Windows or macOS.
+However, most server environments use case-sensitive file systems. If the
+file name case is incorrect, the autoloader cannot find the file on the
+server.</p>
+</div>
+</section>
 <section id="configuration">
-<h2><a class="toc-backref" href="#id1">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
 <p>Initial configuration is done in <strong>app/Config/Autoload.php</strong>. This file contains two primary
 arrays: one for the classmap, and one for PSR-4 compatible namespaces.</p>
 </section>
 <section id="namespaces">
-<h2><a class="toc-backref" href="#id2">Namespaces</a><a class="headerlink" href="#namespaces" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Namespaces</a><a class="headerlink" href="#namespaces" title="Permalink to this headline"></a></h2>
 <p>The recommended method for organizing your classes is to create one or more namespaces for your
 application’s files. This is most important for any business-logic related classes, entity classes,
 etc. The <code class="docutils literal notranslate"><span class="pre">psr4</span></code> array in the configuration file allows you to map the namespace to the directory
@@ -351,7 +363,7 @@ namespace has changed.</p>
 </div>
 </section>
 <section id="classmap">
-<h2><a class="toc-backref" href="#id3">Classmap</a><a class="headerlink" href="#classmap" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Classmap</a><a class="headerlink" href="#classmap" title="Permalink to this headline"></a></h2>
 <p>The classmap is used extensively by CodeIgniter to eke the last ounces of performance out of the system
 by not hitting the file-system with extra <code class="docutils literal notranslate"><span class="pre">is_file()</span></code> calls. You can use the classmap to link to
 third-party libraries that are not namespaced:</p>
@@ -365,7 +377,7 @@ third-party libraries that are not namespaced:</p>
 <p>The key of each row is the name of the class that you want to locate. The value is the path to locate it at.</p>
 </section>
 <section id="composer-support">
-<h2><a class="toc-backref" href="#id4">Composer Support</a><a class="headerlink" href="#composer-support" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Composer Support</a><a class="headerlink" href="#composer-support" title="Permalink to this headline"></a></h2>
 <p>Composer support is automatically initialized by default. By default, it looks for Composer’s autoload file at
 <code class="docutils literal notranslate"><span class="pre">ROOTPATH</span> <span class="pre">.</span> <span class="pre">'vendor/autoload.php'</span></code>. If you need to change the location of that file for any reason, you can modify
 the value defined in <strong>app/Config/Constants.php</strong>.</p>
