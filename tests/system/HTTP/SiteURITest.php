@@ -68,19 +68,17 @@ final class SiteURITest extends CIUnitTestCase
     public function provideURIs()
     {
         return [
-            // $baseURL, $indexPage, $relativePath, $expectedURI, $expectedRoutePath,
-            // $expectedPath, $expectedQuery, $expectedFragment
             '' => [
-                'http://example.com/',
-                'index.php',
-                '',
-                'http://example.com/index.php',
-                '',
-                '/index.php',
-                '',
-                '',
-                [],
-                0,
+                'http://example.com/',          // $baseURL
+                'index.php',                    // $indexPage
+                '',                             // $relativePath
+                'http://example.com/index.php', // $expectedURI
+                '',                             // $expectedRoutePath
+                '/index.php',                   // $expectedPath
+                '',                             // $expectedQuery
+                '',                             // $expectedFragment
+                [],                             // $expectedSegments
+                0,                              // $expectedTotalSegments
             ],
             '/' => [
                 'http://example.com/',
@@ -171,19 +169,17 @@ final class SiteURITest extends CIUnitTestCase
     public function provideRelativePathWithQueryOrFragment()
     {
         return [
-            // $baseURL, $indexPage, $relativePath, $expectedURI, $expectedRoutePath,
-            // $expectedPath, $expectedQuery, $expectedFragment
             'one/two?foo=1&bar=2' => [
-                'http://example.com/',
-                'index.php',
-                'one/two?foo=1&bar=2',
-                'http://example.com/index.php/one/two?foo=1&bar=2',
-                'one/two',
-                '/index.php/one/two',
-                'foo=1&bar=2',
-                '',
-                ['one', 'two'],
-                2,
+                'http://example.com/',                              // $baseURL
+                'index.php',                                        // $indexPage
+                'one/two?foo=1&bar=2',                              // $relativePath
+                'http://example.com/index.php/one/two?foo=1&bar=2', // $expectedURI
+                'one/two',                                          // $expectedRoutePath
+                '/index.php/one/two',                               // $expectedPath
+                'foo=1&bar=2',                                      // $expectedQuery
+                '',                                                 // $expectedFragment
+                ['one', 'two'],                                     // $expectedSegments
+                2,                                                  // $expectedTotalSegments
             ],
             'one/two#sec1' => [
                 'http://example.com/',
