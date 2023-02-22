@@ -1,17 +1,42 @@
-*******************
+###################
 Content Negotiation
-*******************
+###################
+
+.. contents::
+    :local:
+    :depth: 2
+
+****************************
+What is Content Negotiation?
+****************************
 
 Content negotiation is a way to determine what type of content to return to the client based on what the client
 can handle, and what the server can handle. This can be used to determine whether the client is wanting HTML or JSON
-returned, whether the image should be returned as a jpg or png, what type of compression is supported and more. This
+returned, whether the image should be returned as a JPEG or PNG, what type of compression is supported and more. This
 is done by analyzing four different headers which can each support multiple value options, each with their own priority.
+
 Trying to match this up manually can be pretty challenging. CodeIgniter provides the ``Negotiator`` class that
 can handle this for you.
 
-=================
+At it's heart Content Negotiation is simply a part of the HTTP specification that allows a single
+resource to serve more than one type of content, allowing the clients to request the type of
+data that works best for them.
+
+A classic example of this is a browser that cannot display PNG files can request only GIF or
+JPEG images. When the server receives the request, it looks at the available file types the client
+is requesting and selects the best match from the image formats that it supports, in this case
+likely choosing a JPEG image to return.
+
+This same negotiation can happen with four types of data:
+
+* **Media/Document Type** - this could be image format, or HTML vs. XML or JSON.
+* **Character Set** - The character set the returned document should be set in. Typically is UTF-8.
+* **Document Encoding** - Typically the type of compression used on the results.
+* **Document Language** - For sites that support multiple languages, this helps determine which to return.
+
+*****************
 Loading the Class
-=================
+*****************
 
 You can load an instance of the class manually through the Service class:
 
@@ -28,9 +53,9 @@ method:
 When accessed this way, the first parameter is the type of content you're trying to find a match for, while the
 second is an array of supported values.
 
-===========
+***********
 Negotiating
-===========
+***********
 
 In this section, we will discuss the 4 types of content that can be negotiated and show how that would look using
 both of the methods described above to access the negotiator.
