@@ -283,27 +283,9 @@
 requests and responses, including the message body, protocol version, utilities for working with
 the headers, and methods for handling content negotiation.</p>
 <p>This class is the parent class that both the <a class="reference internal" href="request.html"><span class="doc">Request Class</span></a> and the
-<a class="reference internal" href="../outgoing/response.html"><span class="doc">Response Class</span></a> extend from. As such, some methods, such as the content
-negotiation methods, may apply only to a request or response, and not the other one, but they have
-been included here to keep the header methods together.</p>
-<section id="what-is-content-negotiation">
-<h2>What is Content Negotiation?<a class="headerlink" href="#what-is-content-negotiation" title="Permalink to this headline"></a></h2>
-<p>At it’s heart Content Negotiation is simply a part of the HTTP specification that allows a single
-resource to serve more than one type of content, allowing the clients to request the type of
-data that works best for them.</p>
-<p>A classic example of this is a browser that cannot display PNG files can request only GIF or
-JPEG images. When the server receives the request, it looks at the available file types the client
-is requesting and selects the best match from the image formats that it supports, in this case
-likely choosing a JPEG image to return.</p>
-<p>This same negotiation can happen with four types of data:</p>
-<ul class="simple">
-<li><p><strong>Media/Document Type</strong> - this could be image format, or HTML vs. XML or JSON.</p></li>
-<li><p><strong>Character Set</strong> - The character set the returned document should be set in. Typically is UTF-8.</p></li>
-<li><p><strong>Document Encoding</strong> - Typically the type of compression used on the results.</p></li>
-<li><p><strong>Document Language</strong> - For sites that support multiple languages, this helps determine which to return.</p></li>
-</ul>
+<a class="reference internal" href="../outgoing/response.html"><span class="doc">Response Class</span></a> extend from.</p>
 <section id="namespace-CodeIgniter\HTTP">
-<span id="class-reference"></span><h3>Class Reference<a class="headerlink" href="#namespace-CodeIgniter\HTTP" title="Permalink to this headline"></a></h3>
+<span id="class-reference"></span><h2>Class Reference<a class="headerlink" href="#namespace-CodeIgniter\HTTP" title="Permalink to this headline"></a></h2>
 <dl class="php class">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Message">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\HTTP\</span></span><span class="sig-name descname"><span class="pre">Message</span></span><a class="headerlink" href="#CodeIgniter\HTTP\Message" title="Permalink to this definition"></a></dt>
@@ -648,7 +630,6 @@ Acceptable values are <code class="docutils literal notranslate"><span class="pr
 
 </section>
 </section>
-</section>
 
 
            </div>
@@ -662,7 +643,7 @@ Acceptable values are <code class="docutils literal notranslate"><span class="pr
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 21, 2023.
+      <span class="lastupdated">Last updated on Feb 22, 2023.
       </span></p>
   </div>
 
