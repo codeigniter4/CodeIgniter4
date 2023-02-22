@@ -138,6 +138,32 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($url, (string) $uri);
     }
 
+    public function testSimpleUriWithPath()
+    {
+        $url = 'http://example.com/one/two';
+        $uri = new URI($url);
+
+        $this->assertSame($url, (string) $uri);
+
+        $url = 'http://example.com/one/two/';
+        $uri = new URI($url);
+
+        $this->assertSame($url, (string) $uri);
+    }
+
+    public function testSimpleUriWithPathDoubleSlashes()
+    {
+        $url = 'http://example.com/one/two//';
+        $uri = new URI($url);
+
+        $this->assertSame('http://example.com/one/two/', (string) $uri);
+
+        $url = 'http://example.com//one/two/';
+        $uri = new URI($url);
+
+        $this->assertSame('http://example.com/one/two/', (string) $uri);
+    }
+
     public function testEmptyUri()
     {
         $url = '';
@@ -979,6 +1005,7 @@ final class URITest extends CIUnitTestCase
         $url = 'http://example.com/';
         $uri = new URI($url);
 
+        $this->assertSame('/', $uri->getPath());
         $this->assertSame([], $uri->getSegments());
         $this->assertSame(0, $uri->getTotalSegments());
     }
