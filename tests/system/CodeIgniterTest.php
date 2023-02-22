@@ -756,9 +756,9 @@ final class CodeIgniterTest extends CIUnitTestCase
         array $testingUrls
     ) {
         // Suppress command() output
-        CITestStreamFilter::$buffer = '';
-        $outputStreamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $errorStreamFilter          = stream_filter_append(STDERR, 'CITestStreamFilter');
+        CITestStreamFilter::registration();
+        CITestStreamFilter::addOutputFilter();
+        CITestStreamFilter::addErrorFilter();
 
         // Create cache config with cacheQueryString value from the dataProvider
         $cacheConfig                   = new Cache();
@@ -808,8 +808,8 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame($expectedPagesInCache, $newPagesCached);
 
         // Remove stream filters
-        stream_filter_remove($outputStreamFilter);
-        stream_filter_remove($errorStreamFilter);
+        CITestStreamFilter::removeOutputFilter();
+        CITestStreamFilter::removeErrorFilter();
     }
 
     public function cacheQueryStringProvider(): array

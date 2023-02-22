@@ -6,7 +6,9 @@ use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
-    public $methods = [
+    // ...
+
+    public array $methods = [
         'post' => ['foo', 'bar'],
         'get'  => ['baz'],
     ];
