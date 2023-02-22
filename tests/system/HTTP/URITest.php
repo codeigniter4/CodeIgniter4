@@ -184,10 +184,10 @@ final class URITest extends CIUnitTestCase
         $url = 'http://example.com/path';
         $uri = new URI($url);
 
-        $expected = 'https://example.com/path';
-
         $uri->setScheme('https');
+
         $this->assertSame('https', $uri->getScheme());
+        $expected = 'https://example.com/path';
         $this->assertSame($expected, (string) $uri);
     }
 
@@ -196,10 +196,10 @@ final class URITest extends CIUnitTestCase
         $url = 'http://example.com/path';
         $uri = new URI($url);
 
-        $expected = 'http://user@example.com/path';
-
         $uri->setUserInfo('user', 'password');
+
         $this->assertSame('user', $uri->getUserInfo());
+        $expected = 'http://user@example.com/path';
         $this->assertSame($expected, (string) $uri);
     }
 
@@ -208,17 +208,16 @@ final class URITest extends CIUnitTestCase
         $url = 'http://example.com/path';
         $uri = new URI($url);
 
-        $expected = 'http://user@example.com/path';
-
         $uri->setUserInfo('user', 'password');
+
         $this->assertSame('user', $uri->getUserInfo());
+        $expected = 'http://user@example.com/path';
         $this->assertSame($expected, (string) $uri);
 
         $uri->showPassword();
 
-        $expected = 'http://user:password@example.com/path';
-
         $this->assertSame('user:password', $uri->getUserInfo());
+        $expected = 'http://user:password@example.com/path';
         $this->assertSame($expected, (string) $uri);
     }
 
@@ -227,10 +226,10 @@ final class URITest extends CIUnitTestCase
         $url = 'http://example.com/path';
         $uri = new URI($url);
 
-        $expected = 'http://another.com/path';
-
         $uri->setHost('another.com');
+
         $this->assertSame('another.com', $uri->getHost());
+        $expected = 'http://another.com/path';
         $this->assertSame($expected, (string) $uri);
     }
 
@@ -239,10 +238,10 @@ final class URITest extends CIUnitTestCase
         $url = 'http://example.com/path';
         $uri = new URI($url);
 
-        $expected = 'http://example.com:9000/path';
-
         $uri->setPort(9000);
+
         $this->assertSame(9000, $uri->getPort());
+        $expected = 'http://example.com:9000/path';
         $this->assertSame($expected, (string) $uri);
     }
 
@@ -306,10 +305,10 @@ final class URITest extends CIUnitTestCase
         $url = 'http://example.com/path';
         $uri = new URI($url);
 
-        $expected = 'http://example.com/somewhere/else';
-
         $uri->setPath('somewhere/else');
+
         $this->assertSame('somewhere/else', $uri->getPath());
+        $expected = 'http://example.com/somewhere/else';
         $this->assertSame($expected, (string) $uri);
     }
 
@@ -362,10 +361,10 @@ final class URITest extends CIUnitTestCase
         $url = 'http://example.com/path';
         $uri = new URI($url);
 
-        $expected = 'http://example.com/path#good-stuff';
-
         $uri->setFragment('#good-stuff');
+
         $this->assertSame('good-stuff', $uri->getFragment());
+        $expected = 'http://example.com/path#good-stuff';
         $this->assertSame($expected, (string) $uri);
     }
 
@@ -374,10 +373,10 @@ final class URITest extends CIUnitTestCase
         $url = 'http://example.com/path';
         $uri = new URI($url);
 
-        $expected = 'http://example.com/path?key=value&second_key=value.2';
-
         $uri->setQuery('?key=value&second.key=value.2');
+
         $this->assertSame('key=value&second_key=value.2', $uri->getQuery());
+        $expected = 'http://example.com/path?key=value&second_key=value.2';
         $this->assertSame($expected, (string) $uri);
     }
 
@@ -386,10 +385,10 @@ final class URITest extends CIUnitTestCase
         $url = 'http://example.com/path';
         $uri = new URI($url);
 
-        $expected = 'http://example.com/path?key=value&second.key=value.2';
-
         $uri->useRawQueryString()->setQuery('?key=value&second.key=value.2');
+
         $this->assertSame('key=value&second.key=value.2', $uri->getQuery());
+        $expected = 'http://example.com/path?key=value&second.key=value.2';
         $this->assertSame($expected, (string) $uri);
     }
 
@@ -398,10 +397,10 @@ final class URITest extends CIUnitTestCase
         $url = 'http://example.com/path';
         $uri = new URI($url);
 
-        $expected = 'http://example.com/path?key=value&second_key=value.2';
-
         $uri->setQueryArray(['key' => 'value', 'second.key' => 'value.2']);
+
         $this->assertSame('key=value&second_key=value.2', $uri->getQuery());
+        $expected = 'http://example.com/path?key=value&second_key=value.2';
         $this->assertSame($expected, (string) $uri);
     }
 
@@ -410,10 +409,10 @@ final class URITest extends CIUnitTestCase
         $url = 'http://example.com/path';
         $uri = new URI($url);
 
-        $expected = 'http://example.com/path?key=value&second.key=value.2';
-
         $uri->useRawQueryString()->setQueryArray(['key' => 'value', 'second.key' => 'value.2']);
+
         $this->assertSame('key=value&second.key=value.2', $uri->getQuery());
+        $expected = 'http://example.com/path?key=value&second.key=value.2';
         $this->assertSame($expected, (string) $uri);
     }
 
