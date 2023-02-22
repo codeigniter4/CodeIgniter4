@@ -142,7 +142,9 @@ final class URITest extends CIUnitTestCase
     {
         $url = '';
         $uri = new URI($url);
-        $this->assertSame('http://' . $url, (string) $uri);
+
+        $this->assertSame('http://', (string) $uri);
+
         $url = '/';
         $uri = new URI($url);
 
