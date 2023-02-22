@@ -798,9 +798,18 @@ final class URITest extends CIUnitTestCase
      */
     public function testNoExtraSlashes()
     {
-        $this->assertSame('http://entirely.different.com/subfolder', (string) (new URI('entirely.different.com/subfolder')));
-        $this->assertSame('http://localhost/subfolder', (string) (new URI('localhost/subfolder')));
-        $this->assertSame('http://localtest.me/subfolder', (string) (new URI('localtest.me/subfolder')));
+        $this->assertSame(
+            'http://entirely.different.com/subfolder',
+            (string) (new URI('entirely.different.com/subfolder'))
+        );
+        $this->assertSame(
+            'http://localhost/subfolder',
+            (string) (new URI('localhost/subfolder'))
+        );
+        $this->assertSame(
+            'http://localtest.me/subfolder',
+            (string) (new URI('localtest.me/subfolder'))
+        );
     }
 
     public function testSetSegment()
@@ -880,7 +889,10 @@ final class URITest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         // going through request
-        $this->assertSame('http://example.com/ci/v4/controller/method', (string) $request->getUri());
+        $this->assertSame(
+            'http://example.com/ci/v4/controller/method',
+            (string) $request->getUri()
+        );
         $this->assertSame('ci/v4/controller/method', $request->getUri()->getPath());
 
         // standalone
@@ -907,12 +919,21 @@ final class URITest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         // going through request
-        $this->assertSame('http://example.com/ci/v4/index.php/controller/method', (string) $request->getUri());
-        $this->assertSame('ci/v4/index.php/controller/method', $request->getUri()->getPath());
+        $this->assertSame(
+            'http://example.com/ci/v4/index.php/controller/method',
+            (string) $request->getUri()
+        );
+        $this->assertSame(
+            'ci/v4/index.php/controller/method',
+            $request->getUri()->getPath()
+        );
 
         // standalone
         $uri = new URI('http://example.com/ci/v4/index.php/controller/method');
-        $this->assertSame('http://example.com/ci/v4/index.php/controller/method', (string) $uri);
+        $this->assertSame(
+            'http://example.com/ci/v4/index.php/controller/method',
+            (string) $uri
+        );
         $this->assertSame('/ci/v4/index.php/controller/method', $uri->getPath());
 
         $this->assertSame($uri->getPath(), '/' . $request->getUri()->getPath());
@@ -938,13 +959,19 @@ final class URITest extends CIUnitTestCase
         Services::injectMock('request', $request);
 
         // Detected by request
-        $this->assertSame('https://example.com/ci/v4/controller/method', (string) $request->getUri());
+        $this->assertSame(
+            'https://example.com/ci/v4/controller/method',
+            (string) $request->getUri()
+        );
 
         // Standalone
         $uri = new URI('http://example.com/ci/v4/controller/method');
         $this->assertSame('https://example.com/ci/v4/controller/method', (string) $uri);
 
-        $this->assertSame(trim($uri->getPath(), '/'), trim($request->getUri()->getPath(), '/'));
+        $this->assertSame(
+            trim($uri->getPath(), '/'),
+            trim($request->getUri()->getPath(), '/')
+        );
     }
 
     public function testZeroAsURIPath()
