@@ -345,8 +345,8 @@ final class URITest extends CIUnitTestCase
     /**
      * @dataProvider invalidPaths
      *
-     * @param mixed $path
-     * @param mixed $expected
+     * @param string $path
+     * @param string $expected
      */
     public function testPathGetsFiltered($path, $expected)
     {
@@ -461,8 +461,8 @@ final class URITest extends CIUnitTestCase
     /**
      * @dataProvider authorityInfo
      *
-     * @param mixed $url
-     * @param mixed $expected
+     * @param string $url
+     * @param string $expected
      */
     public function testAuthorityReturnsExceptedValues($url, $expected)
     {
@@ -488,8 +488,8 @@ final class URITest extends CIUnitTestCase
     /**
      * @dataProvider defaultPorts
      *
-     * @param mixed $scheme
-     * @param mixed $port
+     * @param string $scheme
+     * @param int    $port
      */
     public function testAuthorityRemovesDefaultPorts($scheme, $port)
     {
@@ -611,8 +611,8 @@ final class URITest extends CIUnitTestCase
     /**
      * @dataProvider defaultDots
      *
-     * @param mixed $path
-     * @param mixed $expected
+     * @param string $path
+     * @param string $expected
      */
     public function testRemoveDotSegments($path, $expected)
     {
@@ -652,8 +652,8 @@ final class URITest extends CIUnitTestCase
     /**
      * @dataProvider defaultResolutions
      *
-     * @param mixed $rel
-     * @param mixed $expected
+     * @param string $rel
+     * @param string $expected
      */
     public function testResolveRelativeURI($rel, $expected)
     {
@@ -669,8 +669,8 @@ final class URITest extends CIUnitTestCase
     /**
      * @dataProvider defaultResolutions
      *
-     * @param mixed $rel
-     * @param mixed $expected
+     * @param string $rel
+     * @param string $expected
      */
     public function testResolveRelativeURIHTTPS($rel, $expected)
     {
