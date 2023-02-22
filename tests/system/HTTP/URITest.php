@@ -26,16 +26,6 @@ use Config\App;
  */
 final class URITest extends CIUnitTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    protected function tearDown(): void
-    {
-        Factories::reset('config');
-    }
-
     public function testConstructorSetsAllParts()
     {
         $uri = new URI('http://username:password@hostname:9090/path?arg=value#anchor');
