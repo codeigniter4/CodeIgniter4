@@ -752,8 +752,8 @@ final class URITest extends CIUnitTestCase
     public function testEmptyQueryVars()
     {
         $base = 'http://example.com/foo';
+        $uri  = new URI($base);
 
-        $uri = new URI($base);
         $uri->setQuery('foo=&bar=baz&baz=foz');
 
         $this->assertSame('http://example.com/foo?foo=&bar=baz&baz=foz', (string) $uri);
@@ -806,8 +806,8 @@ final class URITest extends CIUnitTestCase
     public function testSetSegment()
     {
         $base = 'http://example.com/foo/bar/baz';
+        $uri  = new URI($base);
 
-        $uri = new URI($base);
         $uri->setSegment(2, 'banana');
 
         $this->assertSame('foo/banana/baz', $uri->getPath());
@@ -846,8 +846,8 @@ final class URITest extends CIUnitTestCase
         $this->expectException(HTTPException::class);
 
         $base = 'http://example.com/foo/bar/baz';
+        $uri  = new URI($base);
 
-        $uri = new URI($base);
         $uri->setSegment(6, 'banana');
     }
 
