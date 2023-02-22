@@ -9,6 +9,12 @@ A CodeIgniter 4 app can be run in a number of different ways: hosted on a web se
 using virtualization, or using CodeIgniter's command line tool for testing.
 This section addresses how to use each technique, and explains some of the pros and cons of them.
 
+.. important:: You should always be careful about the case of filenames. Many
+    developers develop on case-insensitive file systems on Windows or macOS.
+    However, most server environments use case-sensitive file systems. If the
+    file name case is incorrect, code that works locally will not work on the
+    server.
+
 If you're new to CodeIgniter, please read the :doc:`Getting Started </intro/index>`
 section of the User Guide to begin learning how to build dynamic PHP applications. Enjoy!
 
