@@ -60,6 +60,7 @@ final class URITest extends CIUnitTestCase
     public function testSegmentOutOfRange()
     {
         $this->expectException(HTTPException::class);
+
         $uri = new URI('http://hostname/path/to/script');
         $uri->getSegment(5);
     }
@@ -68,12 +69,14 @@ final class URITest extends CIUnitTestCase
     {
         $url = 'http://abc.com/a123/b/c';
         $uri = new URI($url);
+
         $this->assertSame('', $uri->setSilent()->getSegment(22));
     }
 
     public function testSegmentOutOfRangeWithDefaultValue()
     {
         $this->expectException(HTTPException::class);
+
         $url = 'http://abc.com/a123/b/c';
         $uri = new URI($url);
         $uri->getSegment(22, 'something');
@@ -83,6 +86,7 @@ final class URITest extends CIUnitTestCase
     {
         $url = 'http://abc.com/a123/b/c';
         $uri = new URI($url);
+
         $this->assertSame('something', $uri->setSilent()->getSegment(22, 'something'));
     }
 
@@ -126,10 +130,12 @@ final class URITest extends CIUnitTestCase
     {
         $url = 'http://example.com';
         $uri = new URI($url);
+
         $this->assertSame($url, (string) $uri);
 
         $url = 'http://example.com/';
         $uri = new URI($url);
+
         $this->assertSame($url, (string) $uri);
     }
 
@@ -140,12 +146,14 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('http://' . $url, (string) $uri);
         $url = '/';
         $uri = new URI($url);
+
         $this->assertSame('http://', (string) $uri);
     }
 
     public function testMalformedUri()
     {
         $this->expectException(HTTPException::class);
+
         $url = 'http://abc:a123';
         new URI($url);
     }
@@ -154,6 +162,7 @@ final class URITest extends CIUnitTestCase
     {
         $url = 'http://foo.bar/baz';
         $uri = new URI($url);
+
         $this->assertSame('http', $uri->getScheme());
         $this->assertSame('foo.bar', $uri->getAuthority());
         $this->assertSame('/baz', $uri->getPath());
@@ -165,6 +174,7 @@ final class URITest extends CIUnitTestCase
         $url = 'example.com';
         $uri = new URI('http://' . $url);
         $uri->setScheme('x');
+
         $this->assertSame('x://' . $url, (string) $uri);
     }
 
@@ -245,6 +255,7 @@ final class URITest extends CIUnitTestCase
 
         $this->expectException(HTTPException::class);
         $this->expectExceptionMessage(lang('HTTP.invalidPort', ['70000']));
+
         $uri->setPort(70000);
     }
 
@@ -265,6 +276,7 @@ final class URITest extends CIUnitTestCase
 
         $this->expectException(HTTPException::class);
         $this->expectExceptionMessage(lang('HTTP.invalidPort', [-1]));
+
         $uri->setPort(-1);
     }
 
@@ -275,12 +287,14 @@ final class URITest extends CIUnitTestCase
 
         $this->expectException(HTTPException::class);
         $this->expectExceptionMessage(lang('HTTP.invalidPort', [0]));
+
         $uri->setPort(0);
     }
 
     public function testCatchesBadPort()
     {
         $this->expectException(HTTPException::class);
+
         $url = 'http://username:password@hostname:90909/path?arg=value#anchor';
         $uri = new URI();
         $uri->setURI($url);
@@ -407,6 +421,7 @@ final class URITest extends CIUnitTestCase
         $uri = new URI($url);
 
         $this->expectException(HTTPException::class);
+
         $uri->setQuery('?key=value#fragment');
     }
 
@@ -936,6 +951,7 @@ final class URITest extends CIUnitTestCase
     {
         $url = 'http://example.com/0';
         $uri = new URI($url);
+
         $this->assertSame($url, (string) $uri);
         $this->assertSame('/0', $uri->getPath());
     }
@@ -944,6 +960,7 @@ final class URITest extends CIUnitTestCase
     {
         $url = 'http://example.com/';
         $uri = new URI($url);
+
         $this->assertSame([], $uri->getSegments());
         $this->assertSame(0, $uri->getTotalSegments());
     }
@@ -963,6 +980,7 @@ final class URITest extends CIUnitTestCase
     {
         $url = ':';
         $uri = new URI();
+
         $uri->setSilent()->setURI($url);
 
         $this->assertTrue(true);
