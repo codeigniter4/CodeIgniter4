@@ -151,7 +151,25 @@ final class EncryptionTest extends CIUnitTestCase
         $this->assertNull($this->encryption->bogus);
     }
 
-    public function testDecryptEncryptedDataByCI3()
+    public function testDecryptEncryptedDataByCI3AES128CBC()
+    {
+        $config                 = new EncryptionConfig();
+        $config->driver         = 'OpenSSL';
+        $config->key            = hex2bin('64c70b0b8d45b80b9eba60b8b3c8a34d0193223d20fea46f8644b848bf7ce67f');
+        $config->cipher         = 'AES-128-CBC'; // CI3's default config
+        $config->rawData        = false;
+        $config->encryptKeyInfo = 'encryption';
+        $config->authKeyInfo    = 'authentication';
+        $encrypter              = Services::encrypter($config, false);
+
+        $encrypted = '211c55b9d1948187557bff88c1e77e0f6b965e3711d477d97fb0b60907a7336028714dbb8dfe90598039e9bc7147b54e552d739b378cd864fb91dde9ad6d4ffalIvVxFDDLTPBYGaHLNDzUSJExBKbQJ0NW27KDaR83bYqz8MDz/mXXpE+HHdaWjEE';
+        $decrypted = $encrypter->decrypt($encrypted);
+
+        $expected = 'This is a plain-text message.';
+        $this->assertSame($expected, $decrypted);
+    }
+
+    public function testDecryptEncryptedDataByCI3AES256CTR()
     {
         $config                 = new EncryptionConfig();
         $config->driver         = 'OpenSSL';

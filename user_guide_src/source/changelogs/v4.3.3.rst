@@ -1,0 +1,32 @@
+Version 4.3.3
+#################
+
+Release Date: Unreleased
+
+**4.3.3 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+BREAKING
+********
+
+Message Changes
+***************
+
+Changes
+*******
+
+Deprecations
+************
+
+Bugs Fixed
+**********
+
+- **Config:** Added missing ``Config\Encryption::$cipher``.
+- **UserGuide:** Fixed the sample code for :ref:`encryption-compatible-with-ci3`.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.
