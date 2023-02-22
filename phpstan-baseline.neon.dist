@@ -21,11 +21,6 @@ parameters:
 			path: system/Cache/Handlers/FileHandler.php
 
 		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 1
-			path: system/Cache/Handlers/MemcachedHandler.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\RedisHandler\\:\\:\\$redis \\(Redis\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Cache/Handlers/RedisHandler.php
@@ -49,16 +44,6 @@ parameters:
 			message: "#^Call to an undefined method CodeIgniter\\\\Database\\\\QueryInterface\\:\\:getOriginalQuery\\(\\)\\.$#"
 			count: 1
 			path: system/Database/BaseConnection.php
-
-		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 2
-			path: system/Database/BaseResult.php
-
-		-
-			message: "#^While loop condition is always true\\.$#"
-			count: 2
-			path: system/Database/BaseResult.php
 
 		-
 			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\ConnectionInterface\\:\\:\\$DBDriver\\.$#"
@@ -261,19 +246,9 @@ parameters:
 			path: system/Router/Router.php
 
 		-
-			message: "#^Strict comparison using \\=\\=\\= between string and true will always evaluate to false\\.$#"
-			count: 1
-			path: system/Session/Handlers/RedisHandler.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Session\\\\Session\\:\\:\\$sessionExpiration \\(int\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Session/Session.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: system/Test/CIUnitTestCase.php
 
 		-
 			message: "#^Access to an undefined property object\\:\\:\\$createdField\\.$#"
