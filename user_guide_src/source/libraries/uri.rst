@@ -213,6 +213,10 @@ You can also set a different default value for a particular segment by using the
 
 .. literalinclude:: uri/024.php
 
+.. note:: You can get the last +1 segment. When you try to get the last +2 or
+    more segment, an exception will be thrown by default. You could prevent
+    throwing exceptions with the ``setSilent()`` method.
+
 You can get a count of the total segments:
 
 .. literalinclude:: uri/025.php
