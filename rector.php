@@ -117,7 +117,7 @@ return static function (RectorConfig $rectorConfig): void {
         ],
 
         // temporary skip as remove on variable check from @param doc
-        // ref https://github.com/rectorphp/rector-src/pull/3402
+        // @see https://github.com/rectorphp/rector-src/pull/3402
         RemoveAlwaysTrueIfConditionRector::class,
     ]);
 
