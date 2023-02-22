@@ -366,8 +366,8 @@ You don’t need to worry about it.</p>
 <p>The example above uses the configuration settings found in <strong>app/Config/Encryption.php</strong>.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 14%" />
-<col style="width: 86%" />
+<col style="width: 16%" />
+<col style="width: 84%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Option</p></th>
@@ -381,20 +381,23 @@ You don’t need to worry about it.</p>
 <tr class="row-odd"><td><p>driver</p></td>
 <td><p>Preferred handler, e.g., OpenSSL or Sodium (<code class="docutils literal notranslate"><span class="pre">OpenSSL</span></code>)</p></td>
 </tr>
-<tr class="row-even"><td><p>blockSize</p></td>
-<td><p>Padding length in bytes for SodiumHandler (<code class="docutils literal notranslate"><span class="pre">16</span></code>)</p></td>
-</tr>
-<tr class="row-odd"><td><p>digest</p></td>
+<tr class="row-even"><td><p>digest</p></td>
 <td><p>Message digest algorithm (<code class="docutils literal notranslate"><span class="pre">SHA512</span></code>)</p></td>
 </tr>
-<tr class="row-even"><td><p>encryptKeyInfo</p></td>
-<td><p>Encryption key info (<code class="docutils literal notranslate"><span class="pre">''</span></code>). This is only used by OpenSSLHandler.</p></td>
+<tr class="row-odd"><td><p>blockSize</p></td>
+<td><p>[<strong>SodiumHandler</strong> only] Padding length in bytes (<code class="docutils literal notranslate"><span class="pre">16</span></code>)</p></td>
 </tr>
-<tr class="row-odd"><td><p>authKeyInfo</p></td>
-<td><p>Authentication key info (<code class="docutils literal notranslate"><span class="pre">''</span></code>). This is only used by OpenSSLHandler.</p></td>
+<tr class="row-even"><td><p>cipher</p></td>
+<td><p>[<strong>OpenSSLHandler</strong> only] Cipher to use (<code class="docutils literal notranslate"><span class="pre">AES-256-CTR</span></code>)</p></td>
 </tr>
-<tr class="row-even"><td><p>rawData</p></td>
-<td><p>Whether the cipher-text should be raw (<code class="docutils literal notranslate"><span class="pre">true</span></code>). This is only used by OpenSSLHandler.</p></td>
+<tr class="row-odd"><td><p>encryptKeyInfo</p></td>
+<td><p>[<strong>OpenSSLHandler</strong> only] Encryption key info (<code class="docutils literal notranslate"><span class="pre">''</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>authKeyInfo</p></td>
+<td><p>[<strong>OpenSSLHandler</strong> only] Authentication key info (<code class="docutils literal notranslate"><span class="pre">''</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>rawData</p></td>
+<td><p>[<strong>OpenSSLHandler</strong> only] Whether the cipher-text should be raw (<code class="docutils literal notranslate"><span class="pre">true</span></code>)</p></td>
 </tr>
 </tbody>
 </table>
@@ -424,8 +427,12 @@ If you need to decrypt such data, use the following settings to maintain compati
 
 <span class="nv">$config</span>         <span class="o">=</span> <span class="k">new</span> <span class="nx">Encryption</span><span class="p">();</span>
 <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">driver</span> <span class="o">=</span> <span class="s1">&#39;OpenSSL&#39;</span><span class="p">;</span>
-<span class="c1">// Your CI3&#39;s encryption_key</span>
-<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">key</span>            <span class="o">=</span> <span class="nb">hex2bin</span><span class="p">(</span><span class="s1">&#39;64c70b0b8d45b80b9eba60b8b3c8a34d0193223d20fea46f8644b848bf7ce67f&#39;</span><span class="p">);</span>
+
+<span class="c1">// Your CI3&#39;s &#39;encryption_key&#39;</span>
+<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">key</span> <span class="o">=</span> <span class="nb">hex2bin</span><span class="p">(</span><span class="s1">&#39;64c70b0b8d45b80b9eba60b8b3c8a34d0193223d20fea46f8644b848bf7ce67f&#39;</span><span class="p">);</span>
+<span class="c1">// Your CI3&#39;s &#39;cipher&#39; and &#39;mode&#39;</span>
+<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">cipher</span> <span class="o">=</span> <span class="s1">&#39;AES-128-CBC&#39;</span><span class="p">;</span>
+
 <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">rawData</span>        <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
 <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">encryptKeyInfo</span> <span class="o">=</span> <span class="s1">&#39;encryption&#39;</span><span class="p">;</span>
 <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">authKeyInfo</span>    <span class="o">=</span> <span class="s1">&#39;authentication&#39;</span><span class="p">;</span>
@@ -696,7 +703,7 @@ the operating system’s sources (<em>i.e.</em> <code class="docutils literal no
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nv">$encryption</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">([</span><span class="s1">&#39;cipher&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;3des&#39;</span><span class="p">]);</span>
+<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nv">$encryption</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">([</span><span class="s1">&#39;cipher&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AES-256-CTR&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>Please refer to the <a class="reference internal" href="#configuration"><span class="std std-ref">Configuring the Library</span></a> section for detailed info.</p>
@@ -706,7 +713,7 @@ the operating system’s sources (<em>i.e.</em> <code class="docutils literal no
 
 <dl class="php interface">
 <dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">CodeIgniter\\Encryption\\EncrypterInterface</span></span></dt>
+<span class="sig-name descname"><span class="pre">CodeIgniter\Encryption\EncrypterInterface</span></span></dt>
 <dd><dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\Encryption\Encryption::encrypt">
 <span class="sig-name descname"><span class="pre">encrypt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$params</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Encryption\Encryption::encrypt" title="Permalink to this definition"></a></dt>
