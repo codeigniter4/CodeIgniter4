@@ -122,7 +122,6 @@ final class URITest extends CIUnitTestCase
         $uri = new URI($url);
 
         $expected = 'http://username@hostname:9090/path?arg=value#anchor';
-
         $this->assertSame($expected, (string) $uri);
     }
 
@@ -497,7 +496,6 @@ final class URITest extends CIUnitTestCase
         $uri = new URI($url);
 
         $expected = "{$scheme}://example.com/path";
-
         $this->assertSame($expected, (string) $uri);
     }
 
