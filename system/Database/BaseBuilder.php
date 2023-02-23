@@ -3082,6 +3082,10 @@ class BaseBuilder
                     continue;
                 }
 
+                if ($qbkey instanceof RawSql) {
+                    continue;
+                }
+
                 if ($qbkey['condition'] instanceof RawSql) {
                     $qbkey = $qbkey['condition'];
 
