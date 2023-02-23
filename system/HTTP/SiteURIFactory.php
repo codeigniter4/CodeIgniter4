@@ -71,8 +71,9 @@ class SiteURIFactory
         }
 
         $relativePath = $parts['path'] . $query . $fragment;
+        $host         = $this->getValidHost($parts['host']);
 
-        return new SiteURI($this->appConfig, $relativePath, $parts['host'], $parts['scheme']);
+        return new SiteURI($this->appConfig, $relativePath, $host, $parts['scheme']);
     }
 
     /**
@@ -231,21 +232,30 @@ class SiteURIFactory
     }
 
     /**
-     * @return string|null The current hostname. Returns null if no host header.
+     * @return string|null The current hostname. Returns null if no valid host.
      */
     private function getHost(): ?string
     {
-        $host = null;
-
         $httpHostPort = $this->server['HTTP_HOST'] ?? null;
+
         if ($httpHostPort !== null) {
             [$httpHost] = explode(':', $httpHostPort, 2);
 
-            if (in_array($httpHost, $this->appConfig->allowedHostnames, true)) {
-                $host = $httpHost;
-            }
+            return $this->getValidHost($httpHost);
         }
 
-        return $host;
+        return null;
+    }
+
+    /**
+     * @return string|null The valid hostname. Returns null if not valid.
+     */
+    private function getValidHost(string $host): ?string
+    {
+        if (in_array($host, $this->appConfig->allowedHostnames, true)) {
+            return $host;
+        }
+
+        return null;
     }
 }
