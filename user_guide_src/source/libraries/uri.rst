@@ -206,9 +206,9 @@ URI Segments
 
 Each section of the path between the slashes is a single segment.
 
-.. note:: URI Segments mean only the URI path part relative to the baseURL. If
-    your baseURL contains sub folders, the values will be different from the
-    current URI path.
+.. note:: In the case of your site URI, URI Segments mean only the URI path part
+    relative to the baseURL. If your baseURL contains sub folders, the values
+    will be different from the current URI path.
 
 The URI class provides a simple way to determine
 what the values of the segments are. The segments start at 1 being the furthest left of the path.
