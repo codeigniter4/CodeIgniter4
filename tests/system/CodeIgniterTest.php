@@ -761,7 +761,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         CITestStreamFilter::addErrorFilter();
 
         // Create cache config with cacheQueryString value from the dataProvider
-        $cacheConfig                   = new Cache();
+        $cacheConfig                   = config(Cache::class);
         $cacheConfig->cacheQueryString = $cacheQueryStringValue;
 
         // Clear cache before starting the test
@@ -773,15 +773,16 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Generate request to each URL from the testing array
         foreach ($testingUrls as $testingUrl) {
+            $this->resetServices();
             $_SERVER['REQUEST_URI'] = '/' . $testingUrl;
-            $routes                 = Services::routes(true);
-            $routes->add($testingUrl, static function () {
-                // Don't cache the page in the run() function because CodeIgniter
-                // class will create default $cacheConfig and overwrite settings
-                // from the dataProvider
-                CodeIgniter::cache(0);
+            $this->codeigniter      = new MockCodeIgniter(new App());
+
+            $routes    = Services::routes(true);
+            $routePath = explode('?', $testingUrl)[0];
+            $string    = 'This is a test page, to check cache configuration';
+            $routes->add($routePath, static function () use ($string) {
+                CodeIgniter::cache(60);
                 $response = Services::response();
-                $string   = 'This is a test page, to check cache configuration';
 
                 return $response->setBody($string);
             });
@@ -792,9 +793,15 @@ final class CodeIgniterTest extends CIUnitTestCase
 
             // Cache the page output using default caching function and $cacheConfig
             // with value from the data provider
+            ob_start();
             $this->codeigniter->run();
-            // Cache the page using our own $cacheConfig confugration
-            $this->codeigniter->cachePage($cacheConfig);
+            $output = ob_get_clean();
+
+            $this->assertSame($string, $output);
+
+            if (count(ob_list_handlers()) > 1) {
+                ob_end_clean();
+            }
         }
 
         // Calculate how much cached items exist in the cache after the test requests
