@@ -965,7 +965,7 @@ class CodeIgniter
 
             unset($override);
 
-            $cacheConfig = new Cache();
+            $cacheConfig = config(Cache::class);
             $this->gatherOutput($cacheConfig, $returned);
             if ($this->returnResponse) {
                 return $this->response;
