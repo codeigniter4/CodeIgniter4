@@ -24,7 +24,7 @@ class SiteURI extends URI
     /**
      * The current baseURL.
      */
-    private string $baseURL;
+    private URI $baseURL;
 
     /**
      * The path part of baseURL.
@@ -96,32 +96,54 @@ class SiteURI extends URI
     ) {
         $this->indexPage = $configApp->indexPage;
 
+        $this->baseURL = $this->determineBaseURL($configApp, $host, $scheme);
+
+        $this->setBasePath();
+
+        // Fix routePath, query, fragment
+        [$routePath, $query, $fragment] = $this->parseRelativePath($relativePath);
+
+        // Fix indexPage and routePath
+        $indexPageRoutePath = $this->getIndexPageRoutePath($routePath);
+
+        // Fix the current URI
+        $uri = $this->baseURL . $indexPageRoutePath;
+
+        // applyParts
+        $parts = parse_url($uri);
+        if ($parts === false) {
+            throw HTTPException::forUnableToParseURI($uri);
+        }
+        $parts['query']    = $query;
+        $parts['fragment'] = $fragment;
+        $this->applyParts($parts);
+
+        $this->setRoutePath($routePath);
+    }
+
+    private function parseRelativePath(string $relativePath): array
+    {
+        $parts = parse_url('http://dummy/' . $relativePath);
+        if ($parts === false) {
+            throw HTTPException::forUnableToParseURI($relativePath);
+        }
+
+        $routePath = $relativePath === '/' ? '/' : ltrim($parts['path'], '/');
+
+        $query    = $parts['query'] ?? '';
+        $fragment = $parts['fragment'] ?? '';
+
+        return [$routePath, $query, $fragment];
+    }
+
+    private function determineBaseURL(
+        App $configApp,
+        ?string $host,
+        ?string $scheme
+    ): URI {
         $baseURL = $this->normalizeBaseURL($configApp);
-        $this->setBasePath($baseURL);
 
-        $relativePath = URI::removeDotSegments($relativePath);
-        // Remove starting slash unless it is `/`.
-        if ($relativePath !== '' && $relativePath[0] === '/' && $relativePath !== '/') {
-            $relativePath = ltrim($relativePath, '/');
-        }
-
-        $tempPath = $relativePath;
-
-        // Check for an index page
-        $indexPage = '';
-        if ($configApp->indexPage !== '') {
-            $indexPage = $configApp->indexPage;
-
-            // Check if we need a separator
-            if ($relativePath !== '' && $relativePath[0] !== '/' && $relativePath[0] !== '?') {
-                $indexPage .= '/';
-            }
-        } elseif ($relativePath === '/') {
-            $tempPath = '';
-        }
-
-        $tempUri = $baseURL . $indexPage . $tempPath;
-        $uri     = new URI($tempUri);
+        $uri = new URI($baseURL);
 
         // Update scheme
         if ($scheme !== null) {
@@ -135,24 +157,34 @@ class SiteURI extends URI
             $uri->setHost($host);
         }
 
-        $parts = parse_url((string) $uri);
-        if ($parts === false) {
-            throw HTTPException::forUnableToParseURI($uri);
+        return $uri;
+    }
+
+    private function getIndexPageRoutePath(string $routePath): string
+    {
+        // Remove starting slash unless it is `/`.
+        if ($routePath !== '' && $routePath[0] === '/' && $routePath !== '/') {
+            $routePath = ltrim($routePath, '/');
         }
-        $this->applyParts($parts);
 
-        // Set routePath
-        $parts     = explode('?', $relativePath);
-        $parts     = explode('#', $parts[0]);
-        $routePath = $parts[0];
-        $this->setRoutePath($routePath);
+        // Check for an index page
+        $indexPage = '';
+        if ($this->indexPage !== '') {
+            $indexPage = $this->indexPage;
 
-        // Set baseURL
-        $this->baseURL = URI::createURIString(
-            $this->getScheme(),
-            $this->getAuthority(),
-            $this->basePathWithoutIndexPage,
-        );
+            // Check if we need a separator
+            if ($routePath !== '' && $routePath[0] !== '/' && $routePath[0] !== '?') {
+                $indexPage .= '/';
+            }
+        }
+
+        $indexPageRoutePath = $indexPage . $routePath;
+
+        if ($indexPageRoutePath === '/') {
+            $indexPageRoutePath = '';
+        }
+
+        return $indexPageRoutePath;
     }
 
     private function checkHost(string $host, array $allowedHostnames): bool
@@ -179,9 +211,9 @@ class SiteURI extends URI
     /**
      * Sets basePathWithoutIndexPage and baseSegments.
      */
-    private function setBasePath(string $baseURL): void
+    private function setBasePath(): void
     {
-        $this->basePathWithoutIndexPage = (new URI($baseURL))->getPath();
+        $this->basePathWithoutIndexPage = $this->baseURL->getPath();
 
         $this->baseSegments = $this->convertToSegments($this->basePathWithoutIndexPage);
 
@@ -213,7 +245,7 @@ class SiteURI extends URI
      */
     public function getBaseURL(): string
     {
-        return $this->baseURL;
+        return (string) $this->baseURL;
     }
 
     /**
@@ -285,13 +317,17 @@ class SiteURI extends URI
     /**
      * Sets the route path (and segments).
      */
-    private function setRoutePath(string $path): void
+    private function setRoutePath(string $routePath): void
     {
-        $this->routePath = $this->filterPath($path);
+        $routePath = $this->filterPath($routePath);
+
+        $indexPageRoutePath = $this->getIndexPageRoutePath($routePath);
+
+        $this->path = $this->basePathWithoutIndexPage . $indexPageRoutePath;
+
+        $this->routePath = ltrim($routePath, '/');
 
         $this->segments = $this->convertToSegments($this->routePath);
-
-        $this->refreshPath();
     }
 
     /**
