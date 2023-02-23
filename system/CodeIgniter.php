@@ -734,7 +734,7 @@ class CodeIgniter
      * Caches the full response from the current request. Used for
      * full-page caching for very high performance.
      *
-     * @return mixed
+     * @return bool
      */
     public function cachePage(Cache $config)
     {
@@ -920,7 +920,7 @@ class CodeIgniter
      *  2. PHP CLI: accessed by CLI via php public/index.php, arguments become URI segments,
      *      sent to Controllers via Routes, output varies
      *
-     * @param mixed $class
+     * @param Controller $class
      *
      * @return false|ResponseInterface|string|void
      */
