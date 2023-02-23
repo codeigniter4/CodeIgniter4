@@ -696,6 +696,26 @@ class Services extends BaseService
     }
 
     /**
+     * The Factory for SiteURI.
+     *
+     * @return SiteURIFactory
+     */
+    public static function siteurifactory(
+        ?App $config = null,
+        ?Superglobals $superglobals = null,
+        bool $getShared = true
+    ) {
+        if ($getShared) {
+            return static::getSharedInstance('siteurifactory', $config, $superglobals);
+        }
+
+        $config ??= config('App');
+        $superglobals ??= new Superglobals();
+
+        return new SiteURIFactory($config, $superglobals);
+    }
+
+    /**
      * The Throttler class provides a simple method for implementing
      * rate limiting in your applications.
      *
@@ -756,7 +776,7 @@ class Services extends BaseService
 
         if ($uri === null) {
             $appConfig = config(App::class);
-            $factory   = new SiteURIFactory($appConfig, new Superglobals());
+            $factory   = AppServices::siteurifactory($appConfig, new Superglobals());
 
             return $factory->createFromGlobals();
         }
