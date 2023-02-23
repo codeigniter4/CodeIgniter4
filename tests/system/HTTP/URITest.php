@@ -125,49 +125,66 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
-    public function testSimpleUri()
+    /**
+     * @dataProvider provideURLs
+     */
+    public function testSimpleUri(string $url, string $expectedURL, string $expectedPath)
     {
-        $url = 'http://example.com';
         $uri = new URI($url);
 
-        $this->assertSame($url, (string) $uri);
-        $this->assertSame('', $uri->getPath());
-
-        $url = 'http://example.com/';
-        $uri = new URI($url);
-
-        $this->assertSame($url, (string) $uri);
-        $this->assertSame('/', $uri->getPath());
+        $this->assertSame($expectedURL, (string) $uri);
+        $this->assertSame($expectedPath, $uri->getPath());
     }
 
-    public function testSimpleUriWithPath()
+    public function provideURLs(): array
     {
-        $url = 'http://example.com/one/two';
-        $uri = new URI($url);
-
-        $this->assertSame($url, (string) $uri);
-        $this->assertSame('/one/two', $uri->getPath());
-
-        $url = 'http://example.com/one/two/';
-        $uri = new URI($url);
-
-        $this->assertSame($url, (string) $uri);
-        $this->assertSame('/one/two/', $uri->getPath());
-    }
-
-    public function testSimpleUriWithPathDoubleSlashes()
-    {
-        $url = 'http://example.com/one/two//';
-        $uri = new URI($url);
-
-        $this->assertSame('http://example.com/one/two/', (string) $uri);
-        $this->assertSame('/one/two/', $uri->getPath());
-
-        $url = 'http://example.com//one/two/';
-        $uri = new URI($url);
-
-        $this->assertSame('http://example.com/one/two/', (string) $uri);
-        $this->assertSame('/one/two/', $uri->getPath());
+        return [
+            '' => [
+                'http://example.com', // url
+                'http://example.com', // expectedURL
+                '',                   // expectedPath
+            ],
+            '/' => [
+                'http://example.com/',
+                'http://example.com/',
+                '/',
+            ],
+            '/one/two' => [
+                'http://example.com/one/two',
+                'http://example.com/one/two',
+                '/one/two',
+            ],
+            '/one/two/' => [
+                'http://example.com/one/two/',
+                'http://example.com/one/two/',
+                '/one/two/',
+            ],
+            '/one/two//' => [
+                'http://example.com/one/two//',
+                'http://example.com/one/two/',
+                '/one/two/',
+            ],
+            '//one/two//' => [
+                'http://example.com//one/two//',
+                'http://example.com/one/two/',
+                '/one/two/',
+            ],
+            '//one//two//' => [
+                'http://example.com//one//two//',
+                'http://example.com/one/two/',
+                '/one/two/',
+            ],
+            '///one/two' => [
+                'http://example.com///one/two', // url
+                'http://example.com/one/two',   // expectedURL
+                '/one/two',                     // expectedPath
+            ],
+            '/one/two///' => [
+                'http://example.com/one/two///',
+                'http://example.com/one/two/',
+                '/one/two/',
+            ],
+        ];
     }
 
     public function testEmptyUri()
@@ -342,6 +359,76 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('somewhere/else', $uri->getPath());
         $expected = 'http://example.com/somewhere/else';
         $this->assertSame($expected, (string) $uri);
+    }
+
+    /**
+     * @dataProvider providePaths
+     */
+    public function testSetPath(string $path, string $expectedURL, string $expectedPath)
+    {
+        $url = 'http://example.com/';
+        $uri = new URI($url);
+
+        $uri->setPath($path);
+
+        $this->assertSame($expectedURL, (string) $uri);
+        $this->assertSame($expectedPath, $uri->getPath());
+    }
+
+    public function providePaths(): array
+    {
+        return [
+            '' => [
+                '',                   // path
+                'http://example.com', // expectedURL
+                '',                   // expectedPath
+            ],
+            '/' => [
+                '/',
+                'http://example.com/',
+                '/',
+            ],
+            '/one/two' => [
+                '/one/two',
+                'http://example.com/one/two',
+                '/one/two',
+            ],
+            '//one/two' => [
+                '//one/two',
+                'http://example.com/one/two',
+                '/one/two',
+            ],
+            '/one/two/' => [
+                '/one/two/',
+                'http://example.com/one/two/',
+                '/one/two/',
+            ],
+            '/one/two//' => [
+                '/one/two//',
+                'http://example.com/one/two/',
+                '/one/two/',
+            ],
+            '//one/two//' => [
+                '//one/two//',
+                'http://example.com/one/two/',
+                '/one/two/',
+            ],
+            '//one//two//' => [
+                '//one//two//',
+                'http://example.com/one/two/',
+                '/one/two/',
+            ],
+            '///one/two' => [
+                '///one/two',
+                'http://example.com/one/two',
+                '/one/two',
+            ],
+            '/one/two///' => [
+                '/one/two///',                 // path
+                'http://example.com/one/two/', // expectedURL
+                '/one/two/',                   // expectedPath
+            ],
+        ];
     }
 
     public function invalidPaths()
