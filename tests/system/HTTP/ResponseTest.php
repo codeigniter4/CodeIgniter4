@@ -172,7 +172,7 @@ final class ResponseTest extends CIUnitTestCase
         $response->setLink($pager);
 
         $this->assertSame(
-            '<http://example.com/test/index.php?page=1>; rel="first",<http://example.com/test/index.php?page=2>; rel="prev",<http://example.com/test/index.php?page=4>; rel="next",<http://example.com/test/index.php?page=20>; rel="last"',
+            '<http://example.com/test/index.php/?page=1>; rel="first",<http://example.com/test/index.php/?page=2>; rel="prev",<http://example.com/test/index.php/?page=4>; rel="next",<http://example.com/test/index.php/?page=20>; rel="last"',
             $response->header('Link')->getValue()
         );
 
@@ -180,7 +180,7 @@ final class ResponseTest extends CIUnitTestCase
         $response->setLink($pager);
 
         $this->assertSame(
-            '<http://example.com/test/index.php?page=2>; rel="next",<http://example.com/test/index.php?page=20>; rel="last"',
+            '<http://example.com/test/index.php/?page=2>; rel="next",<http://example.com/test/index.php/?page=20>; rel="last"',
             $response->header('Link')->getValue()
         );
 
@@ -188,7 +188,7 @@ final class ResponseTest extends CIUnitTestCase
         $response->setLink($pager);
 
         $this->assertSame(
-            '<http://example.com/test/index.php?page=1>; rel="first",<http://example.com/test/index.php?page=19>; rel="prev"',
+            '<http://example.com/test/index.php/?page=1>; rel="first",<http://example.com/test/index.php/?page=19>; rel="prev"',
             $response->header('Link')->getValue()
         );
     }
