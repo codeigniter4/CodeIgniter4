@@ -122,7 +122,7 @@ class CodeIgniter
     /**
      * Cache expiration time
      *
-     * @var int
+     * @var int seconds
      */
     protected static $cacheTTL = 0;
 
