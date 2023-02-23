@@ -83,8 +83,7 @@ class SiteURI extends URI
     /**
      * @param string      $relativePath URI path relative to baseURL. May include
      *                                  queries or fragments.
-     * @param string|null $host         Optional hostname. If it is not in
-     *                                  $allowedHostnames, just be ignored.
+     * @param string|null $host         Optional current hostname.
      * @param string|null $scheme       Optional scheme. 'http' or 'https'.
      * @phpstan-param 'http'|'https'|null $scheme
      */
@@ -153,7 +152,7 @@ class SiteURI extends URI
         }
 
         // Update host
-        if ($host !== null && $this->checkHost($host, $configApp->allowedHostnames)) {
+        if ($host !== null) {
             $uri->setHost($host);
         }
 
@@ -185,11 +184,6 @@ class SiteURI extends URI
         }
 
         return $indexPageRoutePath;
-    }
-
-    private function checkHost(string $host, array $allowedHostnames): bool
-    {
-        return in_array($host, $allowedHostnames, true);
     }
 
     private function normalizeBaseURL(App $configApp): string
