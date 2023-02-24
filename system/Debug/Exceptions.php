@@ -61,7 +61,7 @@ class Exceptions
     /**
      * The request.
      *
-     * @var RequestInterface
+     * @var RequestInterface|null
      */
     protected $request;
 
