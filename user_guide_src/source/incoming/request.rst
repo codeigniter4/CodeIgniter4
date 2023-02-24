@@ -24,11 +24,11 @@ Class Reference
     .. php:method:: getIPAddress()
 
         :returns: The user's IP Address, if it can be detected. If the IP address
-                    is not a valid IP address, then will return 0.0.0.0.
+                    is not a valid IP address, then will return ``0.0.0.0``.
         :rtype:   string
 
         Returns the IP address for the current user. If the IP address is not valid, the method
-        will return '0.0.0.0':
+        will return ``0.0.0.0``:
 
         .. literalinclude:: request/001.php
 
@@ -43,7 +43,7 @@ Class Reference
         .. important:: This method is deprecated. It will be removed in future releases.
 
         :param    string $ip: IP address
-        :param    string $which: IP protocol ('ipv4' or 'ipv6')
+        :param    string $which: IP protocol (``ipv4`` or ``ipv6``)
         :returns: true if the address is valid, false if not
         :rtype:   bool
 
@@ -54,7 +54,7 @@ Class Reference
 
             .. literalinclude:: request/002.php
 
-        Accepts an optional second string parameter of 'ipv4' or 'ipv6' to specify
+        Accepts an optional second string parameter of ``ipv4`` or ``ipv6`` to specify
         an IP format. The default checks for both formats.
 
     .. php:method:: getMethod([$upper = false])
