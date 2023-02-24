@@ -85,7 +85,7 @@ class Exceptions
         $this->ob_level = ob_get_level();
         $this->viewPath = rtrim($config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
 
-        $this->config   = $config;
+        $this->config = $config;
 
         // workaround for upgraded users
         // This causes "Deprecated: Creation of dynamic property" in PHP 8.2.
