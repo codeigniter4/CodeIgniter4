@@ -384,7 +384,7 @@ class SiteURI extends URI
         return URI::createURIString(
             $uri->getScheme(),
             $uri->getAuthority(),
-            $this->adjustPathTrailingSlash($uri, $relativePath),
+            $uri->getPath(),
             $uri->getQuery(),
             $uri->getFragment()
         );
@@ -420,30 +420,12 @@ class SiteURI extends URI
 
         $uri = new self($config, $relativePath, $host, $scheme);
 
-        // Adjust path
-        $path = $this->adjustPathTrailingSlash($uri, $relativePath);
-        if ($config->indexPage !== '' && $relativePath === '') {
-            $path = rtrim($path, '/');
-        }
-
         return URI::createURIString(
             $uri->getScheme(),
             $uri->getAuthority(),
-            $path,
+            $uri->getPath(),
             $uri->getQuery(),
             $uri->getFragment()
         );
-    }
-
-    private function adjustPathTrailingSlash(self $uri, string $relativePath): string
-    {
-        $parts = parse_url($this->getBaseURL() . $relativePath);
-        $path  = $parts['path'] ?? '';
-
-        if (substr($path, -1) === '/' && substr($uri->getPath(), -1) !== '/') {
-            return $uri->getPath() . '/';
-        }
-
-        return $uri->getPath();
     }
 }
