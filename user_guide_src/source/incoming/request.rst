@@ -10,8 +10,8 @@ This class
 provides the common functionality they both need, but both cases have custom classes that extend
 from the Request class to add specific functionality. In practice, you will need to use these classes.
 
-See the documentation for the :doc:`IncomingRequest Class </incoming/incomingrequest>` and
-:doc:`CURLRequest Class </libraries/curlrequest>` for more usage details.
+See the documentation for the :doc:`IncomingRequest Class <./incomingrequest>` and
+:doc:`CURLRequest Class <../libraries/curlrequest>` for more usage details.
 
 ***************
 Class Reference
@@ -96,7 +96,7 @@ Class Reference
         :rtype:   mixed
 
         This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()`` methods from the
-        :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches server data (``$_SERVER``):
+        :doc:`IncomingRequest Class <./incomingrequest>`, only it fetches server data (``$_SERVER``):
 
         .. literalinclude:: request/004.php
 
@@ -114,7 +114,7 @@ Class Reference
         :rtype:   mixed
 
         This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()`` methods from the
-        :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches env data (``$_ENV``):
+        :doc:`IncomingRequest Class <./incomingrequest>`, only it fetches env data (``$_ENV``):
 
         .. literalinclude:: request/006.php
 
