@@ -13,6 +13,7 @@ from the Request class to add specific functionality. In practice, you will need
 See the documentation for the :doc:`IncomingRequest Class </incoming/incomingrequest>` and
 :doc:`CURLRequest Class </libraries/curlrequest>` for more usage details.
 
+***************
 Class Reference
 ***************
 
