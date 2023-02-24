@@ -161,12 +161,10 @@ a list of URI patterns that filter should apply to:
 
 .. literalinclude:: filters/009.php
 
-<<<<<<< HEAD
 .. _filters-filters-filter-arguments:
-=======
+
 Filter Arguments
 ================
->>>>>>> upstream/develop
 
 Filter Arguments
 ----------------
