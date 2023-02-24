@@ -53,7 +53,7 @@ final class CodeIgniterTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        if (count(ob_list_handlers()) > 1) {
+        if (ob_get_level() > 1) {
             ob_end_clean();
         }
 
@@ -799,7 +799,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
             $this->assertSame($string, $output);
 
-            if (count(ob_list_handlers()) > 1) {
+            if (ob_get_level() > 1) {
                 ob_end_clean();
             }
         }
