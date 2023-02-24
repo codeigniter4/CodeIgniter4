@@ -253,36 +253,6 @@ class SiteURI extends URI
     }
 
     /**
-     * Returns the value of a specific segment of the URI path.
-     * Allows to get only existing segments or the next one.
-     *
-     * @param int    $number  Segment number starting at 1
-     * @param string $default Default value
-     *
-     * @return string The value of the segment. If you specify the last +1
-     *                segment, the $default value. If you specify the last +2
-     *                or more throws HTTPException.
-     *
-     * @TODO remove this method after merging #7267
-     */
-    public function getSegment(int $number, string $default = ''): string
-    {
-        if ($number < 1) {
-            throw HTTPException::forURISegmentOutOfRange($number);
-        }
-
-        if ($number > count($this->segments) + 1 && ! $this->silent) {
-            throw HTTPException::forURISegmentOutOfRange($number);
-        }
-
-        // The segment should treat the array as 1-based for the user
-        // but we still have to deal with a zero-based array.
-        $number--;
-
-        return $this->segments[$number] ?? $default;
-    }
-
-    /**
      * Formats the URI as a string.
      */
     public function __toString(): string
