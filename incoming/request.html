@@ -298,14 +298,14 @@ from the Request class to add specific functionality. In practice, you will need
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The user’s IP Address, if it can be detected. If the IP address
-is not a valid IP address, then will return 0.0.0.0.</p>
+is not a valid IP address, then will return <code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code>.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the IP address for the current user. If the IP address is not valid, the method
-will return ‘0.0.0.0’:</p>
+will return <code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getIPAddress</span><span class="p">();</span>
@@ -332,7 +332,7 @@ return the reported client IP address by the HTTP header for the allowed IP addr
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$ip</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – IP address</p></li>
-<li><p><strong>$which</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – IP protocol (‘ipv4’ or ‘ipv6’)</p></li>
+<li><p><strong>$which</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – IP protocol (<code class="docutils literal notranslate"><span class="pre">ipv4</span></code> or <code class="docutils literal notranslate"><span class="pre">ipv6</span></code>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -357,7 +357,7 @@ on whether it is valid or not.</p>
 </pre></div>
 </div>
 </div>
-<p>Accepts an optional second string parameter of ‘ipv4’ or ‘ipv6’ to specify
+<p>Accepts an optional second string parameter of <code class="docutils literal notranslate"><span class="pre">ipv4</span></code> or <code class="docutils literal notranslate"><span class="pre">ipv6</span></code> to specify
 an IP format. The default checks for both formats.</p>
 </dd></dl>
 
