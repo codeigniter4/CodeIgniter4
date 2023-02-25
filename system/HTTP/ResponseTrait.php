@@ -345,8 +345,8 @@ trait ResponseTrait
      */
     public function noCache()
     {
-        $this->removeHeader('Cache-control');
-        $this->setHeader('Cache-control', ['no-store', 'max-age=0', 'no-cache']);
+        $this->removeHeader('Cache-Control');
+        $this->setHeader('Cache-Control', ['no-store', 'max-age=0', 'no-cache']);
 
         return $this;
     }
@@ -399,7 +399,7 @@ trait ResponseTrait
             unset($options['last-modified']);
         }
 
-        $this->setHeader('Cache-control', $options);
+        $this->setHeader('Cache-Control', $options);
 
         return $this;
     }
