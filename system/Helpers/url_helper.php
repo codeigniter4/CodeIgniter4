@@ -147,8 +147,19 @@ if (! function_exists('base_url')) {
             : $request->getUri()->getBaseURL();
 
         $config->indexPage = '';
+        
+        
+        $addTimestamp = '';
 
-        return site_url($relativePath, $scheme, $config);
+        if(env('CI_ENVIRONMENT')!='production') {
+            $array = explode('.', $relativePath);
+            $extension = array_pop($array);
+            if(in_array($extension, ['png', 'jpg', 'css', 'js', 'ico'])) {
+                $addTimestamp = '?t='.time();
+            }
+        }
+
+        return site_url($relativePath, $scheme, $config).$addTimestamp;
     }
 }
 
