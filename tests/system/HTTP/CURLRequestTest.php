@@ -742,14 +742,14 @@ Pragma: no-cache
 Set-Cookie: PHPSESSID=80pd3hlg38mvjnelpvokp9lad0; path=/
 Content-Type: application/xml; charset=utf-8
 Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>";
-
         $request->setOutput($output);
+
         $response = $request->get('answer');
 
         $this->assertSame('<title>Update success! config</title>', $response->getBody());
 
         $responseHeaderKeys = [
-            'Cache-control',
+            'Cache-Control',
             'Content-Type',
             'Server',
             'Connection',

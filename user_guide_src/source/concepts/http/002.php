@@ -6,7 +6,7 @@ $response = response();
 
 $response->setStatusCode(Response::HTTP_OK);
 $response->setBody($output);
-$response->setHeader('Content-type', 'text/html');
+$response->setHeader('Content-Type', 'text/html');
 $response->noCache();
 
 // Sends the output to the browser
