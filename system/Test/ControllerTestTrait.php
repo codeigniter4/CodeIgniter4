@@ -100,7 +100,8 @@ trait ControllerTestTrait
         }
 
         if (! $this->uri instanceof URI) {
-            $this->uri = Services::uri($this->appConfig->baseURL ?? 'http://example.com/', false);
+            $factory   = Services::siteurifactory($_SERVER, $this->appConfig, false);
+            $this->uri = $factory->createFromGlobals();
         }
 
         if (empty($this->request)) {
