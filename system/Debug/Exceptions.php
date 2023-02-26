@@ -531,9 +531,6 @@ class Exceptions
                     case is_resource($value):
                         return sprintf('resource (%s)', get_resource_type($value));
 
-                    case is_string($value):
-                        return var_export(clean_path($value), true);
-
                     default:
                         return var_export($value, true);
                 }
