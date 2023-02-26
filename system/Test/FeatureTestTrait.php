@@ -183,6 +183,8 @@ trait FeatureTestTrait
     /**
      * Performs a GET request.
      *
+     * @param string $path URI path relative to baseURL. May include query.
+     *
      * @return TestResponse
      *
      * @throws RedirectException
@@ -278,6 +280,7 @@ trait FeatureTestTrait
         $_SERVER['QUERY_STRING'] = $query;
 
         $uri->setPath($path);
+        $uri->setQuery($query);
 
         Services::injectMock('uri', $uri);
 
