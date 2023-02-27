@@ -94,11 +94,18 @@ Changes
 
 - **Config:** The deprecated Cookie items in **app/Config/App.php** has been removed.
 - **DownloadResponse:** When generating response headers, does not replace the ``Content-Disposition`` header if it was previously specified.
+- **Autoloader:** Before v4.4.0, CodeIgniter autoloader did not allow special
+  characters that are illegal in filenames on certain operating systems.
+  The symbols that can be used are ``/``, ``_``, ``.``, ``:``, ``\`` and space.
+  So if you installed CodeIgniter under the folder that contains the special
+  characters like ``(``, ``)``, etc., CodeIgniter didn't work. Since v4.4.0,
+  this restriction has been removed.
 
 Deprecations
 ************
 
 - **Entity:** ``Entity::setAttributes()`` is deprecated. Use ``Entity::injectRawData()`` instead.
+- **Autoloader:** ``Autoloader::sanitizeFilename()`` is deprecated.
 
 Bugs Fixed
 **********
