@@ -620,6 +620,12 @@ what the values of the segments are. The segments start at 1 being the furthest 
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setSilent</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can get the last +1 segment. When you try to get the last +2 or
+more segment, an exception will be thrown by default. You could prevent
+throwing exceptions with the <code class="docutils literal notranslate"><span class="pre">setSilent()</span></code> method.</p>
+</div>
 <p>You can get a count of the total segments:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -670,7 +676,7 @@ that will prevent throwing exceptions.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 25, 2023.
+      <span class="lastupdated">Last updated on Feb 27, 2023.
       </span></p>
   </div>
 
