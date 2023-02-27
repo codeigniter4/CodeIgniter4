@@ -205,6 +205,21 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame('es', $request->getLocale());
     }
 
+    public function testSetValidLocales()
+    {
+        $config                   = new App();
+        $config->supportedLocales = ['en', 'es'];
+        $config->defaultLocale    = 'es';
+        $config->baseURL          = 'http://example.com/';
+
+        $request = new IncomingRequest($config, new URI(), null, new UserAgent());
+
+        $request->setValidLocales(['ja']);
+        $request->setLocale('ja');
+
+        $this->assertSame('ja', $request->getLocale());
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/2774
      */

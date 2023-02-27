@@ -549,6 +549,18 @@ class IncomingRequest extends Request
     }
 
     /**
+     * Set the valid locales.
+     *
+     * @return $this
+     */
+    public function setValidLocales(array $locales)
+    {
+        $this->validLocales = $locales;
+
+        return $this;
+    }
+
+    /**
      * Gets the current locale, with a fallback to the default
      * locale if none is set.
      */
