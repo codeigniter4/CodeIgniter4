@@ -78,6 +78,7 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
         __DIR__ . '/system/ThirdParty',
         __DIR__ . '/tests/system/Config/fixtures',
+        __DIR__ . '/tests/system/Filters/fixtures',
         __DIR__ . '/tests/_support',
         JsonThrowOnErrorRector::class,
         StringifyStrNeedlesRector::class,
