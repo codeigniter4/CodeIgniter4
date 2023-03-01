@@ -233,12 +233,11 @@ class RedisHandler extends BaseHandler
      */
     public function getMetaData(string $key)
     {
-        $key   = static::validateKey($key, $this->prefix);
         $value = $this->get($key);
 
         if ($value !== null) {
             $time = Time::now()->getTimestamp();
-            $ttl  = $this->redis->ttl($key);
+            $ttl  = $this->redis->ttl(static::validateKey($key, $this->prefix));
 
             return [
                 'expire' => $ttl > 0 ? $time + $ttl : null,
