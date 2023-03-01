@@ -827,6 +827,41 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertSame('username', $fieldNames[1]);
     }
 
+    public function testAddColumnNull()
+    {
+        $this->forge->dropTable('forge_test_table', true);
+
+        $this->forge->addField([
+            'col1' => ['type' => 'VARCHAR', 'constraint' => 255],
+            'col2' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => true],
+            'col3' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => false],
+        ]);
+        $this->forge->createTable('forge_test_table');
+
+        $this->forge->addColumn('forge_test_table', [
+            'col4' => ['type' => 'VARCHAR', 'constraint' => 255],
+            'col5' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => true],
+            'col6' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => false],
+        ]);
+
+        $this->db->resetDataCache();
+
+        $col1 = $this->getMetaData('col1', 'forge_test_table');
+        $this->assertFalse($col1->nullable);
+        $col2 = $this->getMetaData('col2', 'forge_test_table');
+        $this->assertTrue($col2->nullable);
+        $col3 = $this->getMetaData('col3', 'forge_test_table');
+        $this->assertFalse($col3->nullable);
+        $col4 = $this->getMetaData('col4', 'forge_test_table');
+        $this->assertTrue($col4->nullable);
+        $col5 = $this->getMetaData('col5', 'forge_test_table');
+        $this->assertTrue($col5->nullable);
+        $col6 = $this->getMetaData('col6', 'forge_test_table');
+        $this->assertFalse($col6->nullable);
+
+        $this->forge->dropTable('forge_test_table', true);
+    }
+
     public function testAddFields()
     {
         $tableName = 'forge_test_fields';
