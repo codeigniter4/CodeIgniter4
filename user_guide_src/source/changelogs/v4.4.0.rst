@@ -85,6 +85,7 @@ Others
   ``product/15`` where ``15`` is an arbitrary number.
   See :ref:`controller-default-method-fallback` for details.
 - **Filters:** Now you can use Filter Arguments with :ref:`$filters property <filters-filters-filter-arguments>`.
+- **Request:** Added ``IncomingRequest::setValidLocales()`` method to set valid locales.
 
 Message Changes
 ***************
