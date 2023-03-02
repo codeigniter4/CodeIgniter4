@@ -628,7 +628,7 @@ var ciDebugBar = {
     routerLink: function () {
         var row, _location;
         var rowGet = this.toolbar.querySelectorAll('td[data-debugbar-route="GET"]');
-        var patt   = /\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/;
+        var patt   = /\((?>(?:[^)(]+|\((?>(?:[^)(]+|\([^)(]*\))*+)\))*+)\)/;
 
         for (var i = 0; i < rowGet.length; i++)
         {
