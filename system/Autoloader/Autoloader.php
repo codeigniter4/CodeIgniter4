@@ -306,8 +306,6 @@ class Autoloader
      */
     protected function includeFile(string $file)
     {
-        $file = $this->sanitizeFilename($file);
-
         if (is_file($file)) {
             include_once $file;
 
@@ -327,6 +325,8 @@ class Autoloader
      * and end of filename.
      *
      * @return string The sanitized filename
+     *
+     * @deprecated No longer used. See https://github.com/codeigniter4/CodeIgniter4/issues/7055
      */
     public function sanitizeFilename(string $filename): string
     {

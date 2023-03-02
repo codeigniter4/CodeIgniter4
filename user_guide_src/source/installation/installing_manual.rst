@@ -22,9 +22,12 @@ Installation
 Download the `latest version <https://github.com/CodeIgniter4/framework/releases/latest>`_,
 and extract it to become your project root.
 
-.. note:: CodeIgniter autoloader does not allow special characters that are illegal in filenames on certain operating systems.
+.. note:: Before v4.4.0, CodeIgniter autoloader did not allow special
+    characters that are illegal in filenames on certain operating systems.
     The symbols that can be used are ``/``, ``_``, ``.``, ``:``, ``\`` and space.
-    So if you install CodeIgniter under the folder that contains the special characters like ``(``, ``)``, etc., CodeIgniter won't work.
+    So if you installed CodeIgniter under the folder that contains the special
+    characters like ``(``, ``)``, etc., CodeIgniter didn't work. Since v4.4.0,
+    this restriction has been removed.
 
 Initial Configuration
 =====================
