@@ -1883,7 +1883,10 @@ class Email
             $crypto = stream_socket_enable_crypto(
                 $this->SMTPConnect,
                 true,
-                STREAM_CRYPTO_METHOD_TLSv1_0_CLIENT | STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT | STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT
+                STREAM_CRYPTO_METHOD_TLSv1_0_CLIENT
+                | STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT
+                | STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT
+                | STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT
             );
 
             if ($crypto !== true) {

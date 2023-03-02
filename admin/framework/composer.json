@@ -13,7 +13,7 @@
         "psr/log": "^1.1"
     },
     "require-dev": {
-        "kint-php/kint": "^5.0.3",
+        "kint-php/kint": "^5.0.4",
         "codeigniter/coding-standard": "^1.5",
         "fakerphp/faker": "^1.9",
         "friendsofphp/php-cs-fixer": "3.13.0",
