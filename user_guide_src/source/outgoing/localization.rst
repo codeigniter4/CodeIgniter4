@@ -54,6 +54,9 @@ will be used to set the locale.
 
 Should you ever need to set the locale directly you may use ``IncomingRequest::setLocale(string $locale)``.
 
+Since v4.4.0, ``IncomingRequest::setValidLocales()`` has been added to set
+(and reset) valid locales that are set from ``Config\App::$supportedLocales`` setting.
+
 Content Negotiation
 -------------------
 
