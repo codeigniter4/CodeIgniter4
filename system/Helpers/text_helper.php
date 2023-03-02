@@ -567,10 +567,10 @@ if (! function_exists('random_string')) {
                 return substr(str_shuffle(str_repeat($pool, (int) ceil($len / strlen($pool)))), 0, $len);
 
             case 'md5':
-                return md5(uniqid((string) mt_rand(), true));
+				return md5(uniqid((string) random_bytes(16), true));
 
             case 'sha1':
-                return sha1(uniqid((string) mt_rand(), true));
+				return sha1(uniqid((string) random_bytes(16), true));
 
             case 'crypto':
                 if ($len % 2 !== 0) {
@@ -582,7 +582,7 @@ if (! function_exists('random_string')) {
                 return bin2hex(random_bytes($len / 2));
         }
         // 'basic' type treated as default
-        return (string) mt_rand();
+		return (string) random_bytes(16);
     }
 }
 
