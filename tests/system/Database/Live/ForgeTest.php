@@ -848,6 +848,7 @@ final class ForgeTest extends CIUnitTestCase
             'name' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
+                'null'       => true,
             ],
             'active' => [
                 'type'       => 'INTEGER',
@@ -889,7 +890,7 @@ final class ForgeTest extends CIUnitTestCase
                     'name'        => 'name',
                     'type'        => 'varchar',
                     'max_length'  => 255,
-                    'nullable'    => false,
+                    'nullable'    => true,
                     'default'     => null,
                     'primary_key' => 0,
                 ],
@@ -929,7 +930,7 @@ final class ForgeTest extends CIUnitTestCase
                 2 => [
                     'name'       => 'name',
                     'type'       => 'character varying',
-                    'nullable'   => false,
+                    'nullable'   => true,
                     'default'    => null,
                     'max_length' => '255',
                 ],
@@ -965,7 +966,7 @@ final class ForgeTest extends CIUnitTestCase
                     'max_length'  => null,
                     'default'     => null,
                     'primary_key' => false,
-                    'nullable'    => false,
+                    'nullable'    => true,
                 ],
                 3 => [
                     'name'        => 'active',
@@ -983,24 +984,28 @@ final class ForgeTest extends CIUnitTestCase
                     'type'       => 'int',
                     'default'    => null,
                     'max_length' => 10,
+                    'nullable'   => false,
                 ],
                 1 => [
                     'name'       => 'username',
                     'type'       => 'varchar',
                     'default'    => null,
                     'max_length' => 255,
+                    'nullable'   => false,
                 ],
                 2 => [
                     'name'       => 'name',
                     'type'       => 'varchar',
                     'default'    => null,
                     'max_length' => 255,
+                    'nullable'   => true,
                 ],
                 3 => [
                     'name'       => 'active',
                     'type'       => 'int',
                     'default'    => '((0))', // Why?
                     'max_length' => 10,
+                    'nullable'   => false,
                 ],
             ];
         } elseif ($this->db->DBDriver === 'OCI8') {
@@ -1023,8 +1028,8 @@ final class ForgeTest extends CIUnitTestCase
                     'name'       => 'name',
                     'type'       => 'VARCHAR2',
                     'max_length' => '255',
-                    'default'    => '',
-                    'nullable'   => false,
+                    'default'    => null,
+                    'nullable'   => true,
                 ],
                 3 => [
                     'name'       => 'active',
