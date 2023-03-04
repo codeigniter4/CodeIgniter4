@@ -192,7 +192,7 @@ trait RequestTrait
      *
      * @param array|string|null $index  Index for item to be fetched from $_SERVER
      * @param int|null          $filter A filter name to be applied
-     * @param null              $flags
+     * @param array|int|null    $flags
      *
      * @return mixed
      */
@@ -204,9 +204,9 @@ trait RequestTrait
     /**
      * Fetch an item from the $_ENV array.
      *
-     * @param null $index  Index for item to be fetched from $_ENV
-     * @param null $filter A filter name to be applied
-     * @param null $flags
+     * @param array|string|null $index  Index for item to be fetched from $_ENV
+     * @param int|null          $filter A filter name to be applied
+     * @param array|int|null    $flags
      *
      * @return mixed
      */
