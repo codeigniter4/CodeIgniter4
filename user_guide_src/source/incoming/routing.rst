@@ -22,7 +22,7 @@ First, let's look at Defined Route Routing. If you want to use Auto Routing, see
 Setting Routing Rules
 *********************
 
-Routing rules are defined in the **app/Config/Routes.php** file. In it you'll see that
+Routing rules are defined in the **app/Routes.php** file. In it you'll see that
 it creates an instance of the RouteCollection class (``$routes``) that permits you to specify your own routing criteria.
 Routes can be specified using placeholders or Regular Expressions.
 
@@ -408,7 +408,7 @@ The value for the filter can be a string or an array of strings:
 
 See :doc:`Controller Filters <filters>` for more information on setting up filters.
 
-.. Warning:: If you set filters to routes in **app/Config/Routes.php**
+.. Warning:: If you set filters to routes in **app/Routes.php**
     (not in **app/Config/Filters.php**), it is recommended to disable Auto Routing (Legacy).
     When :ref:`auto-routing-legacy` is enabled, it may be possible that a controller can be accessed
     via a different URL than the configured route,
@@ -545,7 +545,7 @@ Routes Configuration Options
 ****************************
 
 The RoutesCollection class provides several options that affect all routes, and can be modified to meet your
-application's needs. These options are available at the top of **app/Config/Routes.php**.
+application's needs. These options are available in **app/Config/Routing.php**.
 
 .. _routing-default-namespace:
 
@@ -569,8 +569,7 @@ Translate URI Dashes
 ====================
 
 This option enables you to automatically replace dashes (``-``) with underscores in the controller and method
-URI segments, thus saving you additional route entries if you need to do that. This is required because the
-dash isn't a valid class or method name character and would cause a fatal error if you try to use it:
+URI segments when used in Auto Routing, thus saving you additional route entries if you need to do that. This is required because the dash isn't a valid class or method name character and would cause a fatal error if you try to use it:
 
 .. literalinclude:: routing/049.php
 
@@ -585,7 +584,7 @@ When no defined route is found that matches the URI, the system will attempt to 
 controllers and methods when Auto Routing is enabled.
 
 You can disable this automatic matching, and restrict routes
-to only those defined by you, by setting the ``setAutoRoute()`` option to false:
+to only those defined by you, by setting the ``$autoRoute`` option to false:
 
 .. literalinclude:: routing/050.php
 
@@ -600,6 +599,8 @@ what happens by specifying an action to happen with the ``set404Override()`` met
 a valid class/method pair, just like you would show in any route, or a Closure:
 
 .. literalinclude:: routing/051.php
+
+Using the ``set404Override`` method within the routes file, you can use closures. Defining the override in the Routing file is restricted to class/method pairs.
 
 .. note:: The ``set404Override()`` method does not change the Response status code to ``404``.
     If you don't set the status code in the controller you set, the default status code ``200``
@@ -642,9 +643,9 @@ and execute the corresponding controller methods.
 Enable Auto Routing
 ===================
 
-To use it, you need to change the setting ``setAutoRoute()`` option to true in **app/Config/Routes.php**::
+To use it, you need to change the setting ``$autoRoute`` option to true in **app/Config/Routing.php**::
 
-    $routes->setAutoRoute(true);
+    public bool $autoRoute = true;
 
 And you need to change the property ``$autoRoutesImproved`` to ``true`` in **app/Config/Feature.php**::
 
@@ -676,7 +677,7 @@ See :ref:`Auto Routing in Controllers <controller-auto-routing-improved>` for mo
 Configuration Options
 =====================
 
-These options are available at the top of **app/Config/Routes.php**.
+These options are available at the top of **app/Routes.php**.
 
 Default Controller
 ------------------
@@ -719,7 +720,7 @@ Auto Routing (Legacy)
 Auto Routing (Legacy) is a routing system from CodeIgniter 3.
 It can automatically route HTTP requests based on conventions and execute the corresponding controller methods.
 
-It is recommended that all routes are defined in the **app/Config/Routes.php** file,
+It is recommended that all routes are defined in the **app/Routes.php** file,
 or to use :ref:`auto-routing-improved`,
 
 .. warning:: To prevent misconfiguration and miscoding, we recommend that you do not use
@@ -733,7 +734,7 @@ Enable Auto Routing (Legacy)
 
 Since v4.2.0, the auto-routing is disabled by default.
 
-To use it, you need to change the setting ``setAutoRoute()`` option to true in **app/Config/Routes.php**::
+To use it, you need to change the setting ``setAutoRoute()`` option to true in **app/Routes.php**::
 
     $routes->setAutoRoute(true);
 
@@ -760,7 +761,7 @@ See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>`
 Configuration Options (Legacy)
 ==============================
 
-These options are available at the top of **app/Config/Routes.php**.
+These options are available at the top of **app/Routes.php**.
 
 Default Controller (Legacy)
 ---------------------------

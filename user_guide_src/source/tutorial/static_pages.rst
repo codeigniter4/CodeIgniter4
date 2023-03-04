@@ -136,10 +136,9 @@ We have made the controller. The next thing is to set routing rules.
 Routing associates a URI with a controller's method.
 
 Let's do that. Open the routing file located at
-**app/Config/Routes.php** and look for the "Route Definitions"
-section of the configuration file.
+**app/Routes.php**.
 
-The only uncommented line there to start with should be:
+The only line there to start with should be:
 
 .. literalinclude:: static_pages/003.php
 

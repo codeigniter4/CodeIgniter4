@@ -16,6 +16,7 @@ use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
 use Config\Modules;
+use Config\Routing;
 use Config\Services;
 use InvalidArgumentException;
 use Locale;
@@ -87,6 +88,12 @@ class RouteCollection implements RouteCollectionInterface
      * @var Closure|string
      */
     protected $override404;
+
+    /**
+     * An array of files that would contain route definitions.
+     * @var array
+     */
+    protected array $routeFiles = [];
 
     /**
      * Defined placeholders that can be used
@@ -242,12 +249,22 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Constructor
      */
-    public function __construct(FileLocator $locator, Modules $moduleConfig)
+    public function __construct(FileLocator $locator, Modules $moduleConfig, Routing $routing)
     {
         $this->fileLocator  = $locator;
         $this->moduleConfig = $moduleConfig;
 
         $this->httpHost = Services::request()->getServer('HTTP_HOST');
+
+        // Setup based on config file. Let routes file override.
+        $this->defaultNamespace   = $routing->defaultNamespace;
+        $this->defaultController  = $routing->defaultController;
+        $this->defaultMethod      = $routing->defaultMethod;
+        $this->translateURIDashes = $routing->translateURIDashes;
+        $this->override404        = $routing->override404;
+        $this->autoRoute          = $routing->autoRoute;
+        $this->routeFiles         = $routing->routeFiles;
+        $this->prioritize         = $routing->prioritize;
     }
 
     /**
@@ -263,8 +280,25 @@ class RouteCollection implements RouteCollectionInterface
             return $this;
         }
 
+        // Include the passed in routesFile if it doesn't exist.
+        // Only keeping that around for BC purposes for now.
+        $routeFiles = $this->routeFiles;
+        if (! in_array($routesFile, $routeFiles, true)) {
+            $routeFiles[] = $routesFile;
+        }
+
+        // We need this var in local scope
+        // so route files can access it.
         $routes = $this;
-        require $routesFile;
+
+        foreach($routeFiles as $routesFile) {
+            if (! is_file($routesFile)) {
+                log_message('warning', 'Routes file not found: ' . $routesFile . '.');
+                continue;
+            }
+
+            require $routesFile;
+        }
 
         $this->discoverRoutes();
 
@@ -288,14 +322,9 @@ class RouteCollection implements RouteCollectionInterface
         if ($this->moduleConfig->shouldDiscover('routes')) {
             $files = $this->fileLocator->search('Config/Routes.php');
 
-            $excludes = [
-                APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Routes.php',
-                SYSTEMPATH . 'Config' . DIRECTORY_SEPARATOR . 'Routes.php',
-            ];
-
             foreach ($files as $file) {
                 // Don't include our main file again...
-                if (in_array($file, $excludes, true)) {
+                if (in_array($file, $this->routeFiles, true)) {
                     continue;
                 }
 

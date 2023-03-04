@@ -16,6 +16,21 @@ SECURITY
 - **Text Helper:** The :php:func:`random_string()` type **alpha**, **alnum**,
   **numeric** and **nozero** are now cryptographically secure.
 
+BREAKING
+********
+
+Message Changes
+***************
+
+Changes
+*******
+
+- **Config:** Routing settings have been moved to ``Config\Routing`` config file.
+- The default location for new projects Routes.php file has been moved to `app/Routes.php`. This can be modified in the `Config/Routing.php` file.
+
+Deprecations
+************
+
 Bugs Fixed
 **********
 

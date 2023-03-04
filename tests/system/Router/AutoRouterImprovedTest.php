@@ -35,7 +35,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $moduleConfig          = new Modules();
         $moduleConfig->enabled = false;
-        $this->collection      = new RouteCollection(Services::locator(), $moduleConfig);
+        $this->collection      = new RouteCollection(Services::locator(), $moduleConfig, new \Config\Routing());
     }
 
     private function createNewAutoRouter(string $httpVerb = 'get'): AutoRouterImproved

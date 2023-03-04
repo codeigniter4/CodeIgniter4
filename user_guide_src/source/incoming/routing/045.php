@@ -1,6 +1,7 @@
 <?php
 
-$routes->setDefaultNamespace('');
+// In app/Config/Routing.php
+public string $defaultNamespace = '';
 
 // Controller is \Users
 $routes->get('users', 'Users::index');

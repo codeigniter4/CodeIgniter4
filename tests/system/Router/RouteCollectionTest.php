@@ -49,7 +49,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             $moduleConfig->enabled = false;
         }
 
-        return (new RouteCollection($loader, $moduleConfig))->setHTTPVerb('get');
+        return (new RouteCollection($loader, $moduleConfig, new \Config\Routing()))->setHTTPVerb('get');
     }
 
     public function testBasicAdd()
