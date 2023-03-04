@@ -317,6 +317,12 @@
 </dl>
 <p>Generates a random string based on the type and length you specify.
 Useful for creating passwords or generating random hashes.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Except for type <strong>crypto</strong>, no cryptographically secure
+strings are generated. Therefore, it must not be used for cryptographic
+purposes or purposes that requires return values to be unguessable.</p>
+</div>
 <p>The first parameter specifies the type of string, the second parameter
 specifies the length. The following choices are available:</p>
 <ul class="simple">
@@ -975,7 +981,7 @@ at the end.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 02, 2023.
+      <span class="lastupdated">Last updated on Mar 04, 2023.
       </span></p>
   </div>
 
