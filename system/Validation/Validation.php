@@ -729,7 +729,11 @@ class Validation implements ValidationInterface
      */
     public function getErrors(): array
     {
-        return $this->errors;
+        if (empty($this->errors) && ! is_cli() && isset($_SESSION, $_SESSION['_ci_validation_errors'])) {
+            $this->errors = unserialize($_SESSION['_ci_validation_errors']);
+        }
+
+        return $this->errors ?? [];
     }
 
     /**

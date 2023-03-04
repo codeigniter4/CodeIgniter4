@@ -114,7 +114,7 @@ class RedirectResponse extends Response
 
         if ($validation->getErrors()) {
             $session = Services::session();
-            $session->setFlashdata('_ci_validation_errors', $validation->getErrors());
+            $session->setFlashdata('_ci_validation_errors', serialize($validation->getErrors()));
         }
 
         return $this;
