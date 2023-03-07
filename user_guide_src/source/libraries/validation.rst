@@ -571,7 +571,7 @@ error message. This is used with the ``showError()`` method where a field must b
 Configuration
 =============
 
-Once you have your views created, you need to let the Validation library know about them. Open ``Config/Validation.php``.
+Once you have your views created, you need to let the Validation library know about them. Open **app/Config/Validation.php**.
 Inside, you'll find the ``$templates`` property where you can list as many custom views as you want, and provide an
 short alias they can be referenced by. If we were to add our example file from above, it would look something like:
 
@@ -602,7 +602,7 @@ autoloader can find it. These files are called RuleSets.
 Adding a RuleSet
 ----------------
 
-To add a new RuleSet, edit **Config/Validation.php** and
+To add a new RuleSet, edit **app/Config/Validation.php** and
 add the new file to the ``$ruleSets`` array:
 
 .. literalinclude:: validation/033.php
@@ -618,7 +618,7 @@ a boolean true or false value signifying true if it passed the test or false if 
 
 .. literalinclude:: validation/034.php
 
-By default, the system will look within ``CodeIgniter\Language\en\Validation.php`` for the language strings used
+By default, the system will look within **system/Language/en/Validation.php** for the language strings used
 within errors. In custom rules, you may provide error messages by accepting a ``&$error`` variable by reference in the
 second parameter:
 
