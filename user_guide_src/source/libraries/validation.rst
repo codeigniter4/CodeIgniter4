@@ -1,5 +1,6 @@
 .. _validation:
 
+##########
 Validation
 ##########
 
@@ -10,6 +11,7 @@ helps minimize the amount of code you'll write.
     :local:
     :depth: 2
 
+********
 Overview
 ********
 
@@ -42,6 +44,7 @@ messages, various control structures are usually placed within the form
 HTML. Form validation, while simple to create, is generally very messy
 and tedious to implement.
 
+************************
 Form Validation Tutorial
 ************************
 
@@ -197,6 +200,7 @@ Then add validation rules in the controller (**Form.php**):
 
 If you submit the form you should see the success page or the form with error messages.
 
+*********************
 Config for Validation
 *********************
 
@@ -238,6 +242,7 @@ If you want to use traditional rules, you need to change the rule classes in **a
 
 .. literalinclude:: validation/003.php
 
+*******************
 Loading the Library
 *******************
 
@@ -251,6 +256,7 @@ for including multiple Rulesets, and collections of rules that can be easily reu
 .. note:: You may never need to use this method, as both the :doc:`Controller </incoming/controllers>` and
     the :doc:`Model </models/model>` provide methods to make validation even easier.
 
+************************
 Setting Validation Rules
 ************************
 
@@ -311,6 +317,7 @@ data to be validated:
     is not HTML form post (``Content-Type: multipart/form-data``),
     or gets data from :ref:`$request->getVar() <incomingrequest-getting-data>`.
 
+***********************
 Working with Validation
 ***********************
 
@@ -426,6 +433,7 @@ So it will ignore the row in the database that has ``id=4`` when it verifies the
 This can also be used to create more dynamic rules at runtime, as long as you take care that any dynamic
 keys passed in don't conflict with your form data.
 
+*******************
 Working With Errors
 *******************
 
@@ -532,6 +540,7 @@ When specifying a field with a wildcard, all errors matching the mask will be ch
 
 .. _validation-customizing-error-display:
 
+*************************
 Customizing Error Display
 *************************
 
@@ -580,6 +589,7 @@ right after the name of the field the error should belong to::
 
     <?= $validation->showError('username', 'my_single') ?>
 
+*********************
 Creating Custom Rules
 *********************
 
@@ -654,6 +664,7 @@ Or you can use the following parameters:
 
 .. literalinclude:: validation/041.php
 
+***************
 Available Rules
 ***************
 
