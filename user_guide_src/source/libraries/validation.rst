@@ -434,7 +434,7 @@ This can also be used to create more dynamic rules at runtime, as long as you ta
 keys passed in don't conflict with your form data.
 
 *******************
-Working With Errors
+Working with Errors
 *******************
 
 The Validation library provides several methods to help you set error messages, provide
