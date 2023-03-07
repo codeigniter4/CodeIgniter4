@@ -319,7 +319,7 @@
 Useful for creating passwords or generating random hashes.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Except for type <strong>crypto</strong>, no cryptographically secure
+<p>Except for type <strong>numeric</strong> and <strong>crypto</strong>, no cryptographically secure
 strings are generated. Therefore, it must not be used for cryptographic
 purposes or purposes that requires return values to be unguessable.</p>
 </div>
@@ -339,6 +339,11 @@ specifies the length. The following choices are available:</p>
 <p class="admonition-title">Note</p>
 <p>When you use <strong>crypto</strong>, you must set an even number to the second parameter.
 Since v4.2.2, if you set an odd number, <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> will be thrown.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.3.3, <strong>numeric</strong> uses <code class="docutils literal notranslate"><span class="pre">random_int()</span></code>. In the previous
+versions, it used <code class="docutils literal notranslate"><span class="pre">str_shuffle()</span></code> that is not cryptographically secure.</p>
 </div>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -981,7 +986,7 @@ at the end.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2023.
+      <span class="lastupdated">Last updated on Mar 07, 2023.
       </span></p>
   </div>
 
