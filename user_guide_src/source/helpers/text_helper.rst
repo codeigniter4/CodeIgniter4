@@ -30,7 +30,7 @@ The following functions are available:
     Generates a random string based on the type and length you specify.
     Useful for creating passwords or generating random hashes.
 
-    .. warning:: Except for type **crypto**, no cryptographically secure
+    .. warning:: Except for type **numeric** and **crypto**, no cryptographically secure
         strings are generated. Therefore, it must not be used for cryptographic
         purposes or purposes that requires return values to be unguessable.
 
@@ -48,6 +48,9 @@ The following functions are available:
 
     .. note:: When you use **crypto**, you must set an even number to the second parameter.
         Since v4.2.2, if you set an odd number, ``InvalidArgumentException`` will be thrown.
+
+    .. note:: Since v4.3.3, **numeric** uses ``random_int()``. In the previous
+        versions, it used ``str_shuffle()`` that is not cryptographically secure.
 
     Usage example:
 
