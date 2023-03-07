@@ -693,6 +693,11 @@ drivers to handle removal of tables with foreign keys.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">addColumn()</span></code> method is used to modify an existing table. It
 accepts the same field array as <a class="reference internal" href="#adding-fields"><span class="std std-ref">Creating Tables</span></a>, and can
 be used to add additional fields.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unlike when creating a table, if <code class="docutils literal notranslate"><span class="pre">null</span></code> is not specified, the column
+will be <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, not <code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">NULL</span></code>.</p>
+</div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
