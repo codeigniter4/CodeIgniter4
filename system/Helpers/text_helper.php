@@ -543,7 +543,6 @@ if (! function_exists('random_string')) {
     {
         switch ($type) {
             case 'alnum':
-            case 'numeric':
             case 'nozero':
             case 'alpha':
                 switch ($type) {
@@ -555,16 +554,18 @@ if (! function_exists('random_string')) {
                         $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                         break;
 
-                    case 'numeric':
-                        $pool = '0123456789';
-                        break;
-
                     case 'nozero':
                         $pool = '123456789';
                         break;
                 }
 
                 return substr(str_shuffle(str_repeat($pool, (int) ceil($len / strlen($pool)))), 0, $len);
+
+            case 'numeric':
+                $max  = 10 ** $len - 1;
+                $rand = random_int(0, $max);
+
+                return sprintf('%0' . $len . 'd', $rand);
 
             case 'md5':
                 return md5(uniqid((string) mt_rand(), true));
