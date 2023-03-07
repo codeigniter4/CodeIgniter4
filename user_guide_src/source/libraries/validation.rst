@@ -440,7 +440,7 @@ Working with Errors
 The Validation library provides several methods to help you set error messages, provide
 custom error messages, and retrieve one or more errors to display.
 
-By default, error messages are derived from language strings in ``system/Language/en/Validation.php``, where
+By default, error messages are derived from language strings in **system/Language/en/Validation.php**, where
 each rule has an entry.
 
 .. _validation-custom-errors:
@@ -479,7 +479,7 @@ Translation Of Messages And Validation Labels
 =============================================
 
 To use translated strings from language files, we can simply use the dot syntax.
-Let's say we have a file with translations located here: ``app/Languages/en/Rules.php``.
+Let's say we have a file with translations located here: **app/Languages/en/Rules.php**.
 We can simply use the language lines defined in this file, like this:
 
 .. literalinclude:: validation/025.php
