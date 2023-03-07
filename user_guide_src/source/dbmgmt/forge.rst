@@ -254,6 +254,9 @@ The ``addColumn()`` method is used to modify an existing table. It
 accepts the same field array as :ref:`Creating Tables <adding-fields>`, and can
 be used to add additional fields.
 
+.. note:: Unlike when creating a table, if ``null`` is not specified, the column
+    will be ``NULL``, not ``NOT NULL``.
+
 .. literalinclude:: forge/022.php
 
 If you are using MySQL or CUBIRD, then you can take advantage of their
