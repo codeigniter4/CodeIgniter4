@@ -538,6 +538,25 @@ When specifying a field with a wildcard, all errors matching the mask will be ch
 
 .. literalinclude:: validation/029.php
 
+.. _validation-redirect-and-validation-errors:
+
+Redirect and Validation Errors
+==============================
+
+PHP shares nothing between requests. So when you redirect if a validation fails,
+there will be no validation errors in the redirected request because the validation
+has run in the previous request.
+
+In that case, you need to use Form helper function :php:func:`validation_errors()`,
+:php:func:`validation_list_errors()` and :php:func:`validation_show_error()`.
+These functions check the validation errors that are stored in the session.
+
+To store the validation errors in the session, you need to use ``withInput()``
+with :php:func:`redirect() <redirect>`:
+
+.. literalinclude:: validation/042.php
+   :lines: 2-
+
 .. _validation-customizing-error-display:
 
 *************************
