@@ -13,7 +13,8 @@ SECURITY
 ********
 
 - **Email:** Added missing TLS 1.3 support.
-- **Text Helper:** The :php:func:`random_string()` type **numeric** is now cryptographically secure.
+- **Text Helper:** The :php:func:`random_string()` type **alpha**, **alnum**,
+  **numeric** and **nozero** are now cryptographically secure.
 
 BREAKING
 ********
