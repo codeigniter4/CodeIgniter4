@@ -475,7 +475,7 @@ at least 6 characters."
 
 .. note:: When using label-style error messages, if you pass the second parameter to ``setRules()``, it will be overwritten with the value of the first parameter.
 
-Translation Of Messages And Validation Labels
+Translation of Messages and Validation Labels
 =============================================
 
 To use translated strings from language files, we can simply use the dot syntax.
