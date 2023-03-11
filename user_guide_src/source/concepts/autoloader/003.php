@@ -8,7 +8,7 @@ class Autoload extends AutoloadConfig
 {
     // ...
     public $classmap = [
-        'Markdown' => APPPATH . 'third_party/markdown.php',
+        'Markdown' => APPPATH . 'ThirdParty/markdown.php',
     ];
 
     // ...
