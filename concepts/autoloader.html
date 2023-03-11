@@ -325,19 +325,28 @@ arrays: one for the classmap, and one for PSR-4 compatible namespaces.</p>
 <h2><a class="toc-backref" href="#id3">Namespaces</a><a class="headerlink" href="#namespaces" title="Permalink to this headline"></a></h2>
 <p>The recommended method for organizing your classes is to create one or more namespaces for your
 application’s files. This is most important for any business-logic related classes, entity classes,
-etc. The <code class="docutils literal notranslate"><span class="pre">psr4</span></code> array in the configuration file allows you to map the namespace to the directory
+etc. The <code class="docutils literal notranslate"><span class="pre">$psr4</span></code> array in the configuration file allows you to map the namespace to the directory
 those classes can be found in:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;App&#39;</span>         <span class="o">=&gt;</span> <span class="nx">APPPATH</span><span class="p">,</span>
-    <span class="s1">&#39;CodeIgniter&#39;</span> <span class="o">=&gt;</span> <span class="nx">SYSTEMPATH</span><span class="p">,</span>
-<span class="p">];</span>
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\AutoloadConfig</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Autoload</span> <span class="k">extends</span> <span class="nx">AutoloadConfig</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="k">public</span> <span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nx">APP_NAMESPACE</span> <span class="o">=&gt;</span> <span class="nx">APPPATH</span><span class="p">,</span> <span class="c1">// For custom app namespace</span>
+        <span class="s1">&#39;Config&#39;</span>      <span class="o">=&gt;</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>The key of each row is the namespace itself. This does not need a trailing back slash.
-The value is the location to the directory the classes can be found in. They should
-have a trailing slash.</p>
+The value is the location to the directory the classes can be found in.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You can check the namespace configuration by <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">namespaces</span></code> command:</p>
@@ -345,13 +354,11 @@ have a trailing slash.</p>
 </pre></div>
 </div>
 </div>
-<p>By default, the application folder is namespace to the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace. While you are not forced to namespace the controllers,
-libraries, or models in the application directory, if you do, they will be found under the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace.
-You may change this namespace by editing the <strong>app/Config/Constants.php</strong> file and setting the
+<p>By default, the application directory is namespace to the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace. You must namespace the controllers,
+libraries, or models in the application directory, and they will be found under the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace.</p>
+<p>You may change this namespace by editing the <strong>app/Config/Constants.php</strong> file and setting the
 new namespace value under the <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code> setting:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nb">define</span><span class="p">(</span><span class="s1">&#39;APP_NAMESPACE&#39;</span><span class="p">,</span> <span class="s1">&#39;App&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;APP_NAMESPACE&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;APP_NAMESPACE&#39;</span><span class="p">,</span> <span class="s1">&#39;App&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You will need to modify any existing files that are referencing the current namespace.</p>
@@ -369,9 +376,19 @@ by not hitting the file-system with extra <code class="docutils literal notransl
 third-party libraries that are not namespaced:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$classmap</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;Markdown&#39;</span> <span class="o">=&gt;</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;third_party/markdown.php&#39;</span><span class="p">,</span>
-<span class="p">];</span>
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\AutoloadConfig</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Autoload</span> <span class="k">extends</span> <span class="nx">AutoloadConfig</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="k">public</span> <span class="nv">$classmap</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;Markdown&#39;</span> <span class="o">=&gt;</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;ThirdParty/markdown.php&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>The key of each row is the name of the class that you want to locate. The value is the path to locate it at.</p>
