@@ -67,6 +67,7 @@ You may change this namespace by editing the **app/Config/Constants.php** file a
 new namespace value under the ``APP_NAMESPACE`` setting:
 
 .. literalinclude:: autoloader/002.php
+   :lines: 2-
 
 You will need to modify any existing files that are referencing the current namespace.
 
