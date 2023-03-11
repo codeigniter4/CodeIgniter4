@@ -1,3 +1,3 @@
 <?php
 
-define('APP_NAMESPACE', 'App');
+defined('APP_NAMESPACE') || define('APP_NAMESPACE', 'App');
