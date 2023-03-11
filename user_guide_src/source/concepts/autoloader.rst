@@ -60,8 +60,9 @@ have a trailing slash.
 
     > php spark namespaces
 
-By default, the application folder is namespace to the ``App`` namespace. While you are not forced to namespace the controllers,
-libraries, or models in the application directory, if you do, they will be found under the ``App`` namespace.
+By default, the application folder is namespace to the ``App`` namespace. You must namespace the controllers,
+libraries, or models in the application directory, and they will be found under the ``App`` namespace.
+
 You may change this namespace by editing the **app/Config/Constants.php** file and setting the
 new namespace value under the ``APP_NAMESPACE`` setting:
 
