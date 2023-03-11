@@ -47,7 +47,7 @@ Namespaces
 
 The recommended method for organizing your classes is to create one or more namespaces for your
 application's files. This is most important for any business-logic related classes, entity classes,
-etc. The ``psr4`` array in the configuration file allows you to map the namespace to the directory
+etc. The ``$psr4`` array in the configuration file allows you to map the namespace to the directory
 those classes can be found in:
 
 .. literalinclude:: autoloader/001.php
