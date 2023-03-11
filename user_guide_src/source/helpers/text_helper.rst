@@ -30,10 +30,9 @@ The following functions are available:
     Generates a random string based on the type and length you specify.
     Useful for creating passwords or generating random hashes.
 
-    .. warning:: Except for type **alpha**, **alnum**, **numeric**, **nozero**,
-        and **crypto**, no cryptographically secure
-        strings are generated. Therefore, it must not be used for cryptographic
-        purposes or purposes that requires return values to be unguessable.
+    .. warning:: For types: **basic**, **md5**, and **sha1**, generated strings
+        are not cryptographically secure. Therefore, these types cannot be used
+        for cryptographic purposes or purposes requiring unguessable return values.
 
     The first parameter specifies the type of string, the second parameter
     specifies the length. The following choices are available:
