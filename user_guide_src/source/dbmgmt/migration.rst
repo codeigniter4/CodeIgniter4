@@ -124,7 +124,7 @@ You can use (migrate) with the following options:
 
 - ``-g`` - to chose database group, otherwise default database group will be used.
 - ``-n`` - to choose namespace, otherwise (App) namespace will be used.
-- ``--all`` - to migrate all namespaces to the latest migration
+- ``--all`` - to migrate all namespaces to the latest migration.
 
 This example will migrate ``Acme\Blog`` namespace with any new migrations on the test database group::
 
@@ -145,7 +145,7 @@ You can use (rollback) with the following options:
 
 - ``-g`` - to choose database group, otherwise default database group will be used.
 - ``-b`` - to choose a batch: natural numbers specify the batch.
-- ``-f`` - to force a bypass confirmation question, it is only asked in a production environment
+- ``-f`` - to force a bypass confirmation question, it is only asked in a production environment.
 
 refresh
 =======
@@ -158,8 +158,8 @@ You can use (refresh) with the following options:
 
 - ``-g`` - to choose database group, otherwise default database group will be used.
 - ``-n`` - to choose namespace, otherwise (App) namespace will be used.
-- ``--all`` - to refresh all namespaces
-- ``-f`` - to force a bypass confirmation question, it is only asked in a production environment
+- ``--all`` - to refresh all namespaces.
+- ``-f`` - to force a bypass confirmation question, it is only asked in a production environment.
 
 status
 ======
