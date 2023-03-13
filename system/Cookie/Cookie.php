@@ -96,7 +96,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      * Default attributes for a Cookie object. The keys here are the
      * lowercase attribute names. Do not camelCase!
      *
-     * @var array<string,bool|int|object|string>
+     * @var array<string, bool|int|object|string>
      */
     private static array $defaults = [
         'prefix'   => '',
@@ -124,9 +124,9 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      *
      * This method is called from Response::__construct().
      *
-     * @param array<string,bool|int|object|string>|CookieConfig $config
+     * @param array<string, bool|int|object|string>|CookieConfig $config
      *
-     * @return array<string,bool|int|object|string> The old defaults array. Useful for resetting.
+     * @return array<string, bool|int|object|string> The old defaults array. Useful for resetting.
      */
     public static function setDefaults($config = [])
     {
@@ -197,7 +197,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      *
      * @param string                               $name    The cookie's name
      * @param string                               $value   The cookie's value
-     * @param array<string,bool|int|object|string> $options The cookie's options
+     * @param array<string, bool|int|object|string> $options The cookie's options
      *
      * @throws CookieException
      */
