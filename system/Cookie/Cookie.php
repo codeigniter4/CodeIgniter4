@@ -195,8 +195,8 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * Construct a new Cookie instance.
      *
-     * @param string                               $name    The cookie's name
-     * @param string                               $value   The cookie's value
+     * @param string                                $name    The cookie's name
+     * @param string                                $value   The cookie's value
      * @param array<string, bool|int|object|string> $options The cookie's options
      *
      * @throws CookieException
