@@ -1,6 +1,6 @@
-====================
+####################
 HTTP Method Spoofing
-====================
+####################
 
 When working with HTML forms you can only use GET or POST HTTP verbs. In most cases, this is just fine. However, to
 support REST-ful routing you need to support other, more correct, verbs, like DELETE or PUT. Since the browsers
