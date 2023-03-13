@@ -11,7 +11,7 @@ To spoof the method, a hidden input is added to the form with the name of ``_met
 that you want the request to be::
 
     <form action="" method="post">
-        <input type="hidden" name="_method" value="PUT" />
+        <input type="hidden" name="_method" value="PUT">
     </form>
 
 This form is converted into a PUT request and is a true PUT request as far as the routing and the IncomingRequest
