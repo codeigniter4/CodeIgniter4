@@ -304,7 +304,21 @@ final class SiteUrlTest extends CIUnitTestCase
         ];
     }
 
-    // base_url
+    public function testSiteURLWithEmptyStringScheme()
+    {
+        $this->config->baseURL                   = 'http://example.com/';
+        $this->config->indexPage                 = 'index.php';
+        $this->config->forceGlobalSecureRequests = false;
+
+        $this->assertSame(
+            '//example.com/index.php/test',
+            site_url('test', '', $this->config)
+        );
+        $this->assertSame(
+            '//example.com/img/test.jpg',
+            base_url('img/test.jpg', '')
+        );
+    }
 
     /**
      * These tests are only really relevant to show that base_url()
