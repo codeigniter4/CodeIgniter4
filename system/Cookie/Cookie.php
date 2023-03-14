@@ -126,7 +126,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      *
      * @param array<string, bool|int|object|string>|CookieConfig $config
      *
-     * @return array<string, bool|int|object|string> The old defaults array. Useful for resetting.
+     * @return array<string, mixed> The old defaults array. Useful for resetting.
      */
     public static function setDefaults($config = [])
     {
