@@ -143,7 +143,7 @@ interface CookieInterface
      * Gets the options that are passable to the `setcookie` variant
      * available on PHP 7.3+
      *
-     * @return array<string, bool|int|object|string>
+     * @return array<string, bool|int|string>
      */
     public function getOptions(): array;
 
