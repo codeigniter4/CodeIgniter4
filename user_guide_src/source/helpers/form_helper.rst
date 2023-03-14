@@ -534,7 +534,7 @@ The following functions are available:
     that are stored in the session. To store the errors in the session, you need to use ``withInput()`` with :php:func:`redirect() <redirect>`.
 
     The returned array is the same as ``Validation::getErrors()``.
-    See :ref:`Validation <validation-getting-all-errors>` for details.
+    See :ref:`Validation <validation-redirect-and-validation-errors>` for details.
 
     Example::
 

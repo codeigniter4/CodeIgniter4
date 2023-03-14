@@ -1,6 +1,6 @@
-====================
+####################
 HTTP Method Spoofing
-====================
+####################
 
 When working with HTML forms you can only use GET or POST HTTP verbs. In most cases, this is just fine. However, to
 support REST-ful routing you need to support other, more correct, verbs, like DELETE or PUT. Since the browsers
@@ -11,7 +11,7 @@ To spoof the method, a hidden input is added to the form with the name of ``_met
 that you want the request to be::
 
     <form action="" method="post">
-        <input type="hidden" name="_method" value="PUT" />
+        <input type="hidden" name="_method" value="PUT">
     </form>
 
 This form is converted into a PUT request and is a true PUT request as far as the routing and the IncomingRequest

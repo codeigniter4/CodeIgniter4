@@ -1,5 +1,6 @@
 .. _validation:
 
+##########
 Validation
 ##########
 
@@ -10,6 +11,7 @@ helps minimize the amount of code you'll write.
     :local:
     :depth: 2
 
+********
 Overview
 ********
 
@@ -42,6 +44,7 @@ messages, various control structures are usually placed within the form
 HTML. Form validation, while simple to create, is generally very messy
 and tedious to implement.
 
+************************
 Form Validation Tutorial
 ************************
 
@@ -197,6 +200,7 @@ Then add validation rules in the controller (**Form.php**):
 
 If you submit the form you should see the success page or the form with error messages.
 
+*********************
 Config for Validation
 *********************
 
@@ -238,6 +242,7 @@ If you want to use traditional rules, you need to change the rule classes in **a
 
 .. literalinclude:: validation/003.php
 
+*******************
 Loading the Library
 *******************
 
@@ -251,6 +256,7 @@ for including multiple Rulesets, and collections of rules that can be easily reu
 .. note:: You may never need to use this method, as both the :doc:`Controller </incoming/controllers>` and
     the :doc:`Model </models/model>` provide methods to make validation even easier.
 
+************************
 Setting Validation Rules
 ************************
 
@@ -311,6 +317,7 @@ data to be validated:
     is not HTML form post (``Content-Type: multipart/form-data``),
     or gets data from :ref:`$request->getVar() <incomingrequest-getting-data>`.
 
+***********************
 Working with Validation
 ***********************
 
@@ -426,13 +433,14 @@ So it will ignore the row in the database that has ``id=4`` when it verifies the
 This can also be used to create more dynamic rules at runtime, as long as you take care that any dynamic
 keys passed in don't conflict with your form data.
 
-Working With Errors
+*******************
+Working with Errors
 *******************
 
 The Validation library provides several methods to help you set error messages, provide
 custom error messages, and retrieve one or more errors to display.
 
-By default, error messages are derived from language strings in ``system/Language/en/Validation.php``, where
+By default, error messages are derived from language strings in **system/Language/en/Validation.php**, where
 each rule has an entry.
 
 .. _validation-custom-errors:
@@ -467,11 +475,11 @@ at least 6 characters."
 
 .. note:: When using label-style error messages, if you pass the second parameter to ``setRules()``, it will be overwritten with the value of the first parameter.
 
-Translation Of Messages And Validation Labels
+Translation of Messages and Validation Labels
 =============================================
 
 To use translated strings from language files, we can simply use the dot syntax.
-Let's say we have a file with translations located here: ``app/Languages/en/Rules.php``.
+Let's say we have a file with translations located here: **app/Languages/en/Rules.php**.
 We can simply use the language lines defined in this file, like this:
 
 .. literalinclude:: validation/025.php
@@ -530,8 +538,28 @@ When specifying a field with a wildcard, all errors matching the mask will be ch
 
 .. literalinclude:: validation/029.php
 
+.. _validation-redirect-and-validation-errors:
+
+Redirect and Validation Errors
+==============================
+
+PHP shares nothing between requests. So when you redirect if a validation fails,
+there will be no validation errors in the redirected request because the validation
+has run in the previous request.
+
+In that case, you need to use Form helper function :php:func:`validation_errors()`,
+:php:func:`validation_list_errors()` and :php:func:`validation_show_error()`.
+These functions check the validation errors that are stored in the session.
+
+To store the validation errors in the session, you need to use ``withInput()``
+with :php:func:`redirect() <redirect>`:
+
+.. literalinclude:: validation/042.php
+   :lines: 2-
+
 .. _validation-customizing-error-display:
 
+*************************
 Customizing Error Display
 *************************
 
@@ -562,7 +590,7 @@ error message. This is used with the ``showError()`` method where a field must b
 Configuration
 =============
 
-Once you have your views created, you need to let the Validation library know about them. Open ``Config/Validation.php``.
+Once you have your views created, you need to let the Validation library know about them. Open **app/Config/Validation.php**.
 Inside, you'll find the ``$templates`` property where you can list as many custom views as you want, and provide an
 short alias they can be referenced by. If we were to add our example file from above, it would look something like:
 
@@ -580,6 +608,7 @@ right after the name of the field the error should belong to::
 
     <?= $validation->showError('username', 'my_single') ?>
 
+*********************
 Creating Custom Rules
 *********************
 
@@ -592,7 +621,7 @@ autoloader can find it. These files are called RuleSets.
 Adding a RuleSet
 ----------------
 
-To add a new RuleSet, edit **Config/Validation.php** and
+To add a new RuleSet, edit **app/Config/Validation.php** and
 add the new file to the ``$ruleSets`` array:
 
 .. literalinclude:: validation/033.php
@@ -608,7 +637,7 @@ a boolean true or false value signifying true if it passed the test or false if 
 
 .. literalinclude:: validation/034.php
 
-By default, the system will look within ``CodeIgniter\Language\en\Validation.php`` for the language strings used
+By default, the system will look within **system/Language/en/Validation.php** for the language strings used
 within errors. In custom rules, you may provide error messages by accepting a ``&$error`` variable by reference in the
 second parameter:
 
@@ -654,6 +683,7 @@ Or you can use the following parameters:
 
 .. literalinclude:: validation/041.php
 
+***************
 Available Rules
 ***************
 
