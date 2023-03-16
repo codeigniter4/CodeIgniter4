@@ -15,6 +15,7 @@ use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cookie as CookieConfig;
 use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
 use Generator;
 use LogicException;
