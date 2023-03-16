@@ -168,7 +168,7 @@ final class CookieTest extends CIUnitTestCase
     /**
      * @dataProvider invalidExpiresProvider
      *
-     * @param int|object $expires
+     * @param DateTimeInterface|int|string $expires
      */
     public function testInvalidExpires($expires): void
     {

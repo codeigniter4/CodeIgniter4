@@ -162,7 +162,7 @@ interface CookieInterface
     /**
      * Returns the array representation of the Cookie object.
      *
-     * @return array<string, bool|int|object|string>
+     * @return array<string, bool|int|string>
      */
     public function toArray(): array;
 }
