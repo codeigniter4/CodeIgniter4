@@ -18,10 +18,10 @@ Behavior Changes
 base_url()
 ----------
 
-Due to a bug, in previous versions :php:func:`base_url()` without argument returned baseURL
-without a trailing slash (``/``) like ``http://localhost:8080``. Now it returns
-baseURL with a trailing slash. This is the same behavior as ``base_url()`` in
-CodeIgniter 3.
+- Due to a bug, in previous versions :php:func:`base_url()` without argument
+  returned baseURL without a trailing slash (``/``) like ``http://localhost:8080``.
+- Now it returns baseURL with a trailing slash. This is the same behavior as
+  ``base_url()`` in CodeIgniter 3.
 
 Changes
 *******
