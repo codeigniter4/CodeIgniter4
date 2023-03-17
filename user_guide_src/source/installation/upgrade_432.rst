@@ -18,7 +18,7 @@ Breaking Changes
 base_url()
 ==========
 
-The :php:func:`base_url()` behavior has been fix. In previous versions, when you
+The :php:func:`base_url()` behavior has been fixed. In previous versions, when you
 call ``base_url()`` **without argument**, it returned baseURL without a trailing
 slash (``/``). Now it returns baseURL with a trailing slash. For example:
 
