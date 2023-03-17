@@ -32,6 +32,9 @@ Bugs Fixed
 
 - **Config:** Added missing ``Config\Encryption::$cipher``.
 - **UserGuide:** Fixed the sample code for :ref:`encryption-compatible-with-ci3`.
+- **UserGuide:** Added a missing breaking change in ``uri_string()`` in
+  :ref:`ChangeLog <v432-uri-string>` and
+  :ref:`Upgrading Guide <upgrade-432-uri-string>` v4.3.2.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

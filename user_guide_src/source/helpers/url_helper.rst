@@ -155,6 +155,10 @@ The following functions are available:
         However, due to a bug, this function always returned a path relative to baseURL.
         Since v4.3.2, the parameter has been removed.
 
+    .. note:: In previous versions, when you navigate to the baseURL, this function
+        returned ``/``. Since v4.3.2, the bug has been fixed and it returns an
+        empty string(``''``).
+
 .. php:function:: index_page([$altConfig = null])
 
     :param \\Config\\App $altConfig: Alternate configuration to use

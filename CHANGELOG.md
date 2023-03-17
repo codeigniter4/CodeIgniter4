@@ -6,6 +6,7 @@
 ### Breaking Changes
 
 * fix: base_url() removes trailing slash in baseURL by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7200
+* fix: remove parameter $relative in `uri_string()` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7135
 
 ### Fixed Bugs
 
@@ -14,7 +15,6 @@
 * fix: remove `All` from `Options All -Indexes` in .htaccess by @sba in https://github.com/codeigniter4/CodeIgniter4/pull/7093
 * fix: bug on stuck content-type header in Feature Testing by @baycik in https://github.com/codeigniter4/CodeIgniter4/pull/7112
 * fix: ordering `Validation` show error by call `setRule()` by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/7149
-* fix: remove parameter $relative in `uri_string()` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7135
 * fix: [QueryBuilder] where() generates incorrect SQL when using RawSql by @sclubricants in https://github.com/codeigniter4/CodeIgniter4/pull/7147
 * fix: [QueryBuilder] RawSql passed to set() disappears without error by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7148
 * fix: [Parser] local_currency causes "Passing null to parameter" by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7157
