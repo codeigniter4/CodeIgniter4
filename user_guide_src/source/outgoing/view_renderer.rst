@@ -6,6 +6,7 @@ View Renderer
     :local:
     :depth: 2
 
+***********************
 Using the View Renderer
 ***********************
 
@@ -102,6 +103,7 @@ Several options can be passed to the ``render()`` or ``renderString()`` methods:
 .. note:: ``saveData`` as defined by the interface must be a boolean, but implementing
     classes (like ``View`` below) may extend this to include ``null`` values.
 
+***************
 Class Reference
 ***************
 
