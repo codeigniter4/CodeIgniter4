@@ -497,6 +497,12 @@ then a sanitized version of <code class="docutils literal notranslate"><span cla
 However, due to a bug, this function always returned a path relative to baseURL.
 Since v4.3.2, the parameter has been removed.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In previous versions, when you navigate to the baseURL, this function
+returned <code class="docutils literal notranslate"><span class="pre">/</span></code>. Since v4.3.2, the bug has been fixed and it returns an
+empty string(<code class="docutils literal notranslate"><span class="pre">''</span></code>).</p>
+</div>
 </dd></dl>
 
 <dl class="php function">
