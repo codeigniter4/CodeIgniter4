@@ -46,6 +46,20 @@ script. You will have to give each escaped value a unique parameter name.
 No special meaning is attached to parameters whose value is an array. It is up
 to you to process the array appropriately in your PHP code.
 
+Setting View Parameters
+=======================
+
+The :php:meth:`setVar() <CodeIgniter\\View\\View::setVar()>` method sets a view parameter.
+
+.. literalinclude:: view_renderer/008.php
+   :lines: 2-
+
+The :php:meth:`setData() <CodeIgniter\\View\\View::setData()>` method sets multiple view
+parameters at once.
+
+.. literalinclude:: view_renderer/007.php
+   :lines: 2-
+
 Method Chaining
 ===============
 
