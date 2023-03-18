@@ -29,7 +29,9 @@ can instantiate it directly:
     in your library's constructor.
 
 Then you can use any of the three standard methods that it provides:
-**render(viewpath, options, save)**, **setVar(name, value, context)** and **setData(data, context)**.
+:php:meth:`render() <CodeIgniter\\View\\View::render()>`,
+:php:meth:`setVar() <CodeIgniter\\View\\View::setVar()>` and
+:php:meth:`setData() <CodeIgniter\\View\\View::setData()>`.
 
 What It Does
 ============
