@@ -10,7 +10,7 @@ View Renderer
 Using the View Renderer
 ***********************
 
-The ``view()`` function is a convenience function that grabs an instance of the
+The :php:func:`view()` function is a convenience function that grabs an instance of the
 ``renderer`` service, sets the data, and renders the view. While this is often
 exactly what you want, you may find times where you want to work with it more directly.
 In that case you can access the View service directly:
@@ -84,7 +84,7 @@ If you don't want the data to be escaped, you can pass ``null`` or ``'raw'`` as 
    :lines: 2-
 
 If you choose not to escape data, or you are passing in an object instance, you can manually escape the data within
-the view with the ``esc()`` function. The first parameter is the string to escape. The second parameter is the
+the view with the :php:func:`esc()` function. The first parameter is the string to escape. The second parameter is the
 context to escape the data for (see below)::
 
     <?= esc($object->getStat()) ?>
