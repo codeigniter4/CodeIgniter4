@@ -130,7 +130,6 @@ Class Reference
 .. php:class:: View
 
     .. php:method:: render($view[, $options[, $saveData = false]])
-        :noindex:
 
         :param  string       $view: File name of the view source
         :param  array        $options: Array of options, as key/value pairs
@@ -144,7 +143,6 @@ Class Reference
            :lines: 2-
 
     .. php:method:: renderString($view[, $options[, $saveData = false]])
-        :noindex:
 
         :param  string       $view: Contents of the view to render, for instance content retrieved from a database
         :param  array        $options: Array of options, as key/value pairs
@@ -163,7 +161,6 @@ Class Reference
         appropriately!
 
     .. php:method:: setData([$data[, $context = null]])
-        :noindex:
 
         :param  array   $data: Array of view data strings, as key/value pairs
         :param  string  $context: The context to use for data escaping.
@@ -182,7 +179,6 @@ Class Reference
         until the view is rendered.
 
     .. php:method:: setVar($name[, $value = null[, $context = null]])
-        :noindex:
 
         :param  string  $name: Name of the view data variable
         :param  mixed   $value: The value of this view data
