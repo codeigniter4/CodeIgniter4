@@ -284,30 +284,27 @@
 <li><p><a class="reference internal" href="#using-the-view-renderer" id="id1">Using the View Renderer</a></p>
 <ul>
 <li><p><a class="reference internal" href="#what-it-does" id="id2">What It Does</a></p></li>
-<li><p><a class="reference internal" href="#method-chaining" id="id3">Method Chaining</a></p></li>
-<li><p><a class="reference internal" href="#escaping-data" id="id4">Escaping Data</a></p></li>
-<li><p><a class="reference internal" href="#view-renderer-options" id="id5">View Renderer Options</a></p></li>
+<li><p><a class="reference internal" href="#setting-view-parameters" id="id3">Setting View Parameters</a></p></li>
+<li><p><a class="reference internal" href="#method-chaining" id="id4">Method Chaining</a></p></li>
+<li><p><a class="reference internal" href="#escaping-data" id="id5">Escaping Data</a></p></li>
+<li><p><a class="reference internal" href="#view-renderer-options" id="id6">View Renderer Options</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#namespace-CodeIgniter\View" id="id6">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\View" id="id7">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="using-the-view-renderer">
 <h2><a class="toc-backref" href="#id1">Using the View Renderer</a><a class="headerlink" href="#using-the-view-renderer" title="Permalink to this headline"></a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">view()</span></code> function is a convenience function that grabs an instance of the
+<p>The <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a> function is a convenience function that grabs an instance of the
 <code class="docutils literal notranslate"><span class="pre">renderer</span></code> service, sets the data, and renders the view. While this is often
 exactly what you want, you may find times where you want to work with it more directly.
 In that case you can access the View service directly:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$view</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">renderer</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$view</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">renderer</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>Alternately, if you are not using the <code class="docutils literal notranslate"><span class="pre">View</span></code> class as your default renderer, you
 can instantiate it directly:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\View</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\View</span><span class="p">();</span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -317,7 +314,9 @@ access to the View class from a library, you should set that as a dependency
 in your library’s constructor.</p>
 </div>
 <p>Then you can use any of the three standard methods that it provides:
-<strong>render(viewpath, options, save)</strong>, <strong>setVar(name, value, context)</strong> and <strong>setData(data, context)</strong>.</p>
+<a class="reference internal" href="#CodeIgniter\View\View::render" title="CodeIgniter\View\View::render"><code class="xref php php-meth docutils literal notranslate"><span class="pre">render()</span></code></a>,
+<a class="reference internal" href="#CodeIgniter\View\View::setVar" title="CodeIgniter\View\View::setVar"><code class="xref php php-meth docutils literal notranslate"><span class="pre">setVar()</span></code></a> and
+<a class="reference internal" href="#CodeIgniter\View\View::setData" title="CodeIgniter\View\View::setData"><code class="xref php php-meth docutils literal notranslate"><span class="pre">setData()</span></code></a>.</p>
 <section id="what-it-does">
 <h3><a class="toc-backref" href="#id2">What It Does</a><a class="headerlink" href="#what-it-does" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">View</span></code> class processes conventional HTML/PHP scripts stored in the application’s view path,
@@ -331,31 +330,39 @@ script. You will have to give each escaped value a unique parameter name.</p>
 <p>No special meaning is attached to parameters whose value is an array. It is up
 to you to process the array appropriately in your PHP code.</p>
 </section>
+<section id="setting-view-parameters">
+<h3><a class="toc-backref" href="#id3">Setting View Parameters</a><a class="headerlink" href="#setting-view-parameters" title="Permalink to this headline"></a></h3>
+<p>The <a class="reference internal" href="#CodeIgniter\View\View::setVar" title="CodeIgniter\View\View::setVar"><code class="xref php php-meth docutils literal notranslate"><span class="pre">setVar()</span></code></a> method sets a view parameter.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$view</span><span class="o">-&gt;</span><span class="na">setVar</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;Joe&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="#CodeIgniter\View\View::setData" title="CodeIgniter\View\View::setData"><code class="xref php php-meth docutils literal notranslate"><span class="pre">setData()</span></code></a> method sets multiple view
+parameters at once.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$view</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;George&#39;</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Boss&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+</section>
 <section id="method-chaining">
-<h3><a class="toc-backref" href="#id3">Method Chaining</a><a class="headerlink" href="#method-chaining" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4">Method Chaining</a><a class="headerlink" href="#method-chaining" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">setVar()</span></code> and <code class="docutils literal notranslate"><span class="pre">setData()</span></code> methods are chainable, allowing you to combine a
 number of different calls together in a chain:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$view</span><span class="o">-&gt;</span><span class="na">setVar</span><span class="p">(</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="nv">$one</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$view</span><span class="o">-&gt;</span><span class="na">setVar</span><span class="p">(</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="nv">$one</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">setVar</span><span class="p">(</span><span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="nv">$two</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;myView&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="escaping-data">
-<h3><a class="toc-backref" href="#id4">Escaping Data</a><a class="headerlink" href="#escaping-data" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">Escaping Data</a><a class="headerlink" href="#escaping-data" title="Permalink to this headline"></a></h3>
 <p>When you pass data to the <code class="docutils literal notranslate"><span class="pre">setVar()</span></code> and <code class="docutils literal notranslate"><span class="pre">setData()</span></code> functions you have the option to escape the data to protect
 against cross-site scripting attacks. As the last parameter in either method, you can pass the desired context to
 escape the data for. See below for context descriptions.</p>
 <p>If you don’t want the data to be escaped, you can pass <code class="docutils literal notranslate"><span class="pre">null</span></code> or <code class="docutils literal notranslate"><span class="pre">'raw'</span></code> as the final parameter to each function:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$view</span><span class="o">-&gt;</span><span class="na">setVar</span><span class="p">(</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="nv">$one</span><span class="p">,</span> <span class="s1">&#39;raw&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$view</span><span class="o">-&gt;</span><span class="na">setVar</span><span class="p">(</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="nv">$one</span><span class="p">,</span> <span class="s1">&#39;raw&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you choose not to escape data, or you are passing in an object instance, you can manually escape the data within
-the view with the <code class="docutils literal notranslate"><span class="pre">esc()</span></code> function. The first parameter is the string to escape. The second parameter is the
+the view with the <a class="reference internal" href="../general/common_functions.html#esc" title="esc"><code class="xref php php-func docutils literal notranslate"><span class="pre">esc()</span></code></a> function. The first parameter is the string to escape. The second parameter is the
 context to escape the data for (see below):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$object</span><span class="o">-&gt;</span><span class="na">getStat</span><span class="p">())</span> <span class="cp">?&gt;</span>
 </pre></div>
@@ -382,7 +389,7 @@ context as the second parameter. Valid contexts are <code class="docutils litera
 </section>
 </section>
 <section id="view-renderer-options">
-<h3><a class="toc-backref" href="#id5">View Renderer Options</a><a class="headerlink" href="#view-renderer-options" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">View Renderer Options</a><a class="headerlink" href="#view-renderer-options" title="Permalink to this headline"></a></h3>
 <p>Several options can be passed to the <code class="docutils literal notranslate"><span class="pre">render()</span></code> or <code class="docutils literal notranslate"><span class="pre">renderString()</span></code> methods:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">cache</span></code> - the time in seconds, to save a view’s results; ignored for renderString()</p></li>
@@ -391,19 +398,19 @@ context as the second parameter. Valid contexts are <code class="docutils litera
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">saveData</span></code> as defined by the interface must be a boolean, but implementing
+<p><code class="docutils literal notranslate"><span class="pre">saveData()</span></code> as defined by the interface must be a boolean, but implementing
 classes (like <code class="docutils literal notranslate"><span class="pre">View</span></code> below) may extend this to include <code class="docutils literal notranslate"><span class="pre">null</span></code> values.</p>
 </div>
 </section>
 </section>
 <section id="namespace-CodeIgniter\View">
-<span id="class-reference"></span><h2><a class="toc-backref" href="#id6">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\View" title="Permalink to this headline"></a></h2>
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id7">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\View" title="Permalink to this headline"></a></h2>
 <dl class="php class">
 <dt class="sig sig-object php" id="CodeIgniter\View\View">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\View\</span></span><span class="sig-name descname"><span class="pre">View</span></span><a class="headerlink" href="#CodeIgniter\View\View" title="Permalink to this definition"></a></dt>
 <dd><dl class="php method">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$view</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$options</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$saveData</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\View\View::render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$view</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$options</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$saveData</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\View\View::render" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -420,16 +427,14 @@ classes (like <code class="docutils literal notranslate"><span class="pre">View<
 </dd>
 </dl>
 <p>Builds the output based upon a file name and any data that has already been set:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">echo</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;myview&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;myview&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">renderString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$view</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$options</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$saveData</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\View\View::renderString">
+<span class="sig-name descname"><span class="pre">renderString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$view</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$options</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$saveData</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\View\View::renderString" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -446,9 +451,7 @@ classes (like <code class="docutils literal notranslate"><span class="pre">View<
 </dd>
 </dl>
 <p>Builds the output based upon a view fragment and any data that has already been set:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">echo</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;My Sharona&lt;/div&gt;&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;My Sharona&lt;/div&gt;&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -461,8 +464,8 @@ and that you <strong>must</strong> validate any such data, and probably escape i
 appropriately!</p>
 </div>
 <dl class="php method">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">setData</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$context</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\View\View::setData">
+<span class="sig-name descname"><span class="pre">setData</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$context</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\View\View::setData" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -478,9 +481,7 @@ appropriately!</p>
 </dd>
 </dl>
 <p>Sets several pieces of view data at once:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$view</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;George&#39;</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Boss&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$view</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;George&#39;</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Boss&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>Supported escape contexts: <code class="docutils literal notranslate"><span class="pre">html</span></code>, <code class="docutils literal notranslate"><span class="pre">css</span></code>, <code class="docutils literal notranslate"><span class="pre">js</span></code>, <code class="docutils literal notranslate"><span class="pre">url</span></code>, or <code class="docutils literal notranslate"><span class="pre">attr</span></code> or <code class="docutils literal notranslate"><span class="pre">raw</span></code>.
@@ -490,8 +491,8 @@ until the view is rendered.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">setVar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$context</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\View\View::setVar">
+<span class="sig-name descname"><span class="pre">setVar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$context</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\View\View::setVar" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -508,9 +509,7 @@ until the view is rendered.</p>
 </dd>
 </dl>
 <p>Sets a single piece of view data:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$view</span><span class="o">-&gt;</span><span class="na">setVar</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;Joe&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$view</span><span class="o">-&gt;</span><span class="na">setVar</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;Joe&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Supported escape contexts: <code class="docutils literal notranslate"><span class="pre">html</span></code>, <code class="docutils literal notranslate"><span class="pre">css</span></code>, <code class="docutils literal notranslate"><span class="pre">js</span></code>, <code class="docutils literal notranslate"><span class="pre">url</span></code>, <code class="docutils literal notranslate"><span class="pre">attr</span></code> or <code class="docutils literal notranslate"><span class="pre">raw</span></code>.
