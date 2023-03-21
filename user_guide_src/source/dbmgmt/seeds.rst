@@ -7,6 +7,14 @@ you need to populate the database with sample data that you can develop against,
 Seeders can contain static data that you don't want to include in a migration, like countries, or geo-coding tables,
 event or setting information, and more.
 
+.. contents::
+    :local:
+    :depth: 2
+
+****************
+Database Seeders
+****************
+
 Database seeders are simple classes that must have a **run()** method, and extend ``CodeIgniter\Database\Seeder``.
 Within the **run()** the class can create any form of data that it needs to. It has access to the database
 connection and the forge through ``$this->db`` and ``$this->forge``, respectively. Seed files must be
