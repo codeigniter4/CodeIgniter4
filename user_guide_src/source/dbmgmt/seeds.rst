@@ -4,10 +4,10 @@ Database Seeding
 
 Database seeding is a simple way to add data into your database. It is especially useful during development where
 you need to populate the database with sample data that you can develop against, but it is not limited to that.
-Seeds can contain static data that you don't want to include in a migration, like countries, or geo-coding tables,
+Seeders can contain static data that you don't want to include in a migration, like countries, or geo-coding tables,
 event or setting information, and more.
 
-Database seeds are simple classes that must have a **run()** method, and extend ``CodeIgniter\Database\Seeder``.
+Database seeders are simple classes that must have a **run()** method, and extend ``CodeIgniter\Database\Seeder``.
 Within the **run()** the class can create any form of data that it needs to. It has access to the database
 connection and the forge through ``$this->db`` and ``$this->forge``, respectively. Seed files must be
 stored within the **app/Database/Seeds** directory. The name of the file must match the name of the class.
