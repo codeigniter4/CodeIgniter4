@@ -14,8 +14,9 @@ stored within the **app/Database/Seeds** directory. The name of the file must ma
 
 .. literalinclude:: seeds/001.php
 
+***************
 Nesting Seeders
-===============
+***************
 
 Seeders can call other seeders, with the **call()** method. This allows you to easily organize a central seeder,
 but organize the tasks into separate seeder files:
@@ -27,23 +28,25 @@ anywhere the autoloader can find them. This is great for more modular code bases
 
 .. literalinclude:: seeds/003.php
 
+*************
 Using Seeders
-=============
+*************
 
 You can grab a copy of the main seeder through the database config class:
 
 .. literalinclude:: seeds/004.php
 
 Command Line Seeding
---------------------
+====================
 
 You can also seed data from the command line, as part of the Migrations CLI tools, if you don't want to create
 a dedicated controller::
 
     > php spark db:seed TestSeeder
 
-Creating Seed Files
--------------------
+*********************
+Creating Seeder Files
+*********************
 
 Using the command line, you can easily generate seed files.
 
