@@ -65,7 +65,11 @@ Using the command line, you can easily generate seed files.
 
 You can supply the ``root`` namespace where the seed file will be stored by supplying the ``--namespace`` option::
 
+    For Unix:
     > php spark make:seeder MySeeder --namespace Acme\\Blog
+
+    For Windows:
+    > php spark make:seeder MySeeder --namespace Acme\Blog
 
 If ``Acme\Blog`` is mapped to **app/Blog** directory, then this command will generate **MySeeder.php** at **app/Blog/Database/Seeds** directory.
 
