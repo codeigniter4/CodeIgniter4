@@ -269,7 +269,6 @@ Class Reference
         and strip the tags.
 
     .. php:method:: setHeader($header, $value)
-        :noindex:
 
         :param    string    $header: Header name
         :param    string    $value: Header value

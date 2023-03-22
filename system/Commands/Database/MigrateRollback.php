@@ -57,7 +57,7 @@ class MigrateRollback extends BaseCommand
      * @var array
      */
     protected $options = [
-        '-b' => 'Specify a batch to roll back to; e.g. "3" to return to batch #3 or "-2" to roll back twice',
+        '-b' => 'Specify a batch to roll back to; e.g. "3" to return to batch #3',
         '-g' => 'Set database group',
         '-f' => 'Force command - this option allows you to bypass the confirmation question when running this command in a production environment',
     ];

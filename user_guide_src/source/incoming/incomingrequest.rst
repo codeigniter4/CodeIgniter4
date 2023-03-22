@@ -417,7 +417,6 @@ The methods provided by the parent classes that are available are:
         Although GET data will be preferred in case of name conflict.
 
     .. php:method:: getCookie([$index = null[, $filter = null[, $flags = null]]])
-        :noindex:
 
         :param    mixed    $index: COOKIE name
         :param  int     $filter: The type of filter to apply. A list of filters can be
@@ -440,7 +439,6 @@ The methods provided by the parent classes that are available are:
             your configured ``Config\Cookie::$prefix`` value.
 
     .. php:method:: getServer([$index = null[, $filter = null[, $flags = null]]])
-        :noindex:
 
         :param    mixed    $index: Value name
         :param  int     $filter: The type of filter to apply. A list of filters can be

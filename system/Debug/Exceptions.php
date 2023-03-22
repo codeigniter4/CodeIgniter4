@@ -123,6 +123,11 @@ class Exceptions
         $this->request  = Services::request();
         $this->response = Services::response();
 
+        // Get the first exception.
+        while ($prevException = $exception->getPrevious()) {
+            $exception = $prevException;
+        }
+
         if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true)) {
             log_message('critical', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
                 'message' => $exception->getMessage(),

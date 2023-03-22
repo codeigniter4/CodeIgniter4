@@ -341,6 +341,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $this->invoke($controller, 'respondNoContent', ['']);
 
+        $this->assertStringStartsWith('application/json', $this->response->getHeaderLine('Content-Type'));
         $this->assertSame('No Content', $this->response->getReason());
         $this->assertSame(204, $this->response->getStatusCode());
     }
