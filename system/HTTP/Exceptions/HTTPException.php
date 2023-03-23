@@ -77,9 +77,9 @@ class HTTPException extends FrameworkException
      *
      * @return HTTPException
      */
-    public static function forInvalidHTTPProtocol(string $protocols)
+    public static function forInvalidHTTPProtocol(string $invalidVersion)
     {
-        return new static(lang('HTTP.invalidHTTPProtocol', [$protocols]));
+        return new static(lang('HTTP.invalidHTTPProtocol', [$invalidVersion]));
     }
 
     /**
