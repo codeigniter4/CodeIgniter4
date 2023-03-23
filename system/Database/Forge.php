@@ -897,13 +897,19 @@ class Forge
             $this->_attributeDefault($attributes, $field);
 
             if (isset($attributes['NULL'])) {
+                $nullString = ' ' . $this->null;
+
                 if ($attributes['NULL'] === true) {
-                    $field['null'] = empty($this->null) ? '' : ' ' . $this->null;
+                    $field['null'] = empty($this->null) ? '' : $nullString;
+                } elseif ($attributes['NULL'] === $nullString) {
+                    $field['null'] = $nullString;
+                } elseif ($attributes['NULL'] === '') {
+                    $field['null'] = '';
                 } else {
-                    $field['null'] = ' NOT NULL';
+                    $field['null'] = ' NOT ' . $this->null;
                 }
             } elseif ($createTable === true) {
-                $field['null'] = ' NOT NULL';
+                $field['null'] = ' NOT ' . $this->null;
             }
 
             $this->_attributeAutoIncrement($attributes, $field);
