@@ -56,6 +56,9 @@ final class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        $forge = Database::forge();
+        $forge->dropTable('foo', true);
+
         $this->setUpMethods[] = 'setUpAddNamespace';
 
         parent::setUp();

@@ -14,6 +14,7 @@ namespace CodeIgniter\Commands\Database;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
+use Config\Database;
 
 /**
  * @group DatabaseLive
@@ -29,6 +30,9 @@ final class MigrateStatusTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        $forge = Database::forge();
+        $forge->dropTable('foo', true);
+
         parent::setUp();
 
         if (! is_file($this->migrationFileFrom)) {

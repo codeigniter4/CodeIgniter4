@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\DatabaseTestCase;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Config\Database;
 use Config\Services;
 
 /**
@@ -55,6 +56,9 @@ final class DatabaseTestCaseMigrationOnce2Test extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        $forge = Database::forge();
+        $forge->dropTable('foo', true);
+
         $this->setUpMethods[] = 'setUpAddNamespace';
 
         parent::setUp();
