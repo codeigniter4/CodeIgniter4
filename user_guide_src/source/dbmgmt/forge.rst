@@ -294,6 +294,15 @@ change the name, you can add a "name" key into the field defining array.
 
 .. literalinclude:: forge/026.php
 
+.. note:: The ``modifyColumn()`` may unexpectedly change ``NULL``/``NOT NULL``.
+    So it is recommended to always specify ``null`` value.
+
+.. note:: Due to a bug, prior v4.3.3, SQLite3 may not set ``NOT NULL`` even if you
+    specify ``'null' => false``.
+
+.. note:: Due to a bug, prior v4.3.3, Postgres and SQLSRV set ``NOT NULL`` even
+    if you specify ``'null' => false``.
+
 .. _db-forge-adding-keys-to-a-table:
 
 Adding Keys to a Table
