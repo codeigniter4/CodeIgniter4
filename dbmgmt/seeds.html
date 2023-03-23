@@ -281,10 +281,24 @@
 <h1>Database Seeding<a class="headerlink" href="#database-seeding" title="Permalink to this headline"></a></h1>
 <p>Database seeding is a simple way to add data into your database. It is especially useful during development where
 you need to populate the database with sample data that you can develop against, but it is not limited to that.
-Seeds can contain static data that you don’t want to include in a migration, like countries, or geo-coding tables,
+Seeders can contain static data that you don’t want to include in a migration, like countries, or geo-coding tables,
 event or setting information, and more.</p>
-<p>Database seeds are simple classes that must have a <strong>run()</strong> method, and extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\Seeder</span></code>.
-Within the <strong>run()</strong> the class can create any form of data that it needs to. It has access to the database
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#database-seeders" id="id1">Database Seeders</a></p></li>
+<li><p><a class="reference internal" href="#nesting-seeders" id="id2">Nesting Seeders</a></p></li>
+<li><p><a class="reference internal" href="#using-seeders" id="id3">Using Seeders</a></p>
+<ul>
+<li><p><a class="reference internal" href="#command-line-seeding" id="id4">Command Line Seeding</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#creating-seeder-files" id="id5">Creating Seeder Files</a></p></li>
+</ul>
+</div>
+<section id="database-seeders">
+<h2><a class="toc-backref" href="#id1">Database Seeders</a><a class="headerlink" href="#database-seeders" title="Permalink to this headline"></a></h2>
+<p>Database seeders are simple classes that must have a <code class="docutils literal notranslate"><span class="pre">run()</span></code> method, and extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\Seeder</span></code>.
+Within the <code class="docutils literal notranslate"><span class="pre">run()</span></code> the class can create any form of data that it needs to. It has access to the database
 connection and the forge through <code class="docutils literal notranslate"><span class="pre">$this-&gt;db</span></code> and <code class="docutils literal notranslate"><span class="pre">$this-&gt;forge</span></code>, respectively. Seed files must be
 stored within the <strong>app/Database/Seeds</strong> directory. The name of the file must match the name of the class.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -311,9 +325,10 @@ stored within the <strong>app/Database/Seeds</strong> directory. The name of the
 <span class="p">}</span>
 </pre></div>
 </div>
+</section>
 <section id="nesting-seeders">
-<h2>Nesting Seeders<a class="headerlink" href="#nesting-seeders" title="Permalink to this headline"></a></h2>
-<p>Seeders can call other seeders, with the <strong>call()</strong> method. This allows you to easily organize a central seeder,
+<h2><a class="toc-backref" href="#id2">Nesting Seeders</a><a class="headerlink" href="#nesting-seeders" title="Permalink to this headline"></a></h2>
+<p>Seeders can call other seeders, with the <code class="docutils literal notranslate"><span class="pre">call()</span></code> method. This allows you to easily organize a central seeder,
 but organize the tasks into separate seeder files:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -332,7 +347,7 @@ but organize the tasks into separate seeder files:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>You can also use a fully-qualified class name in the <strong>call()</strong> method, allowing you to keep your seeders
+<p>You can also use a fully-qualified class name in the <code class="docutils literal notranslate"><span class="pre">call()</span></code> method, allowing you to keep your seeders
 anywhere the autoloader can find them. This is great for more modular code bases:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -352,7 +367,7 @@ anywhere the autoloader can find them. This is great for more modular code bases
 </div>
 </section>
 <section id="using-seeders">
-<h2>Using Seeders<a class="headerlink" href="#using-seeders" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Using Seeders</a><a class="headerlink" href="#using-seeders" title="Permalink to this headline"></a></h2>
 <p>You can grab a copy of the main seeder through the database config class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -361,27 +376,31 @@ anywhere the autoloader can find them. This is great for more modular code bases
 </pre></div>
 </div>
 <section id="command-line-seeding">
-<h3>Command Line Seeding<a class="headerlink" href="#command-line-seeding" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4">Command Line Seeding</a><a class="headerlink" href="#command-line-seeding" title="Permalink to this headline"></a></h3>
 <p>You can also seed data from the command line, as part of the Migrations CLI tools, if you don’t want to create
 a dedicated controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">seed</span> <span class="nx">TestSeeder</span>
 </pre></div>
 </div>
 </section>
-<section id="creating-seed-files">
-<h3>Creating Seed Files<a class="headerlink" href="#creating-seed-files" title="Permalink to this headline"></a></h3>
+</section>
+<section id="creating-seeder-files">
+<h2><a class="toc-backref" href="#id5">Creating Seeder Files</a><a class="headerlink" href="#creating-seeder-files" title="Permalink to this headline"></a></h2>
 <p>Using the command line, you can easily generate seed files.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">seeder</span> <span class="nx">user</span> <span class="o">--</span><span class="nx">suffix</span>
 <span class="c1">// Output: UserSeeder.php file located at app/Database/Seeds directory.</span>
 </pre></div>
 </div>
-<p>You can supply the <strong>root</strong> namespace where the seed file will be stored by supplying the <code class="docutils literal notranslate"><span class="pre">--namespace</span></code> option:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">seeder</span> <span class="nx">MySeeder</span> <span class="o">--</span><span class="k">namespace</span> <span class="nx">Acme\\Blog</span>
+<p>You can supply the <code class="docutils literal notranslate"><span class="pre">root</span></code> namespace where the seed file will be stored by supplying the <code class="docutils literal notranslate"><span class="pre">--namespace</span></code> option:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">For</span> <span class="nx">Unix</span><span class="o">:</span>
+<span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">seeder</span> <span class="nx">MySeeder</span> <span class="o">--</span><span class="k">namespace</span> <span class="nx">Acme\\Blog</span>
+
+<span class="k">For</span> <span class="nx">Windows</span><span class="o">:</span>
+<span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">seeder</span> <span class="nx">MySeeder</span> <span class="o">--</span><span class="k">namespace</span> <span class="nx">Acme\Blog</span>
 </pre></div>
 </div>
-<p>If <code class="docutils literal notranslate"><span class="pre">Acme\Blog</span></code> is mapped to <code class="docutils literal notranslate"><span class="pre">app/Blog</span></code> directory, then this command will generate <code class="docutils literal notranslate"><span class="pre">MySeeder.php</span></code> at <code class="docutils literal notranslate"><span class="pre">app/Blog/Database/Seeds</span></code> directory.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">Acme\Blog</span></code> is mapped to <strong>app/Blog</strong> directory, then this command will generate <strong>MySeeder.php</strong> at <strong>app/Blog/Database/Seeds</strong> directory.</p>
 <p>Supplying the <code class="docutils literal notranslate"><span class="pre">--force</span></code> option will overwrite existing files in destination.</p>
-</section>
 </section>
 </section>
 
@@ -397,7 +416,7 @@ a dedicated controller:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 20, 2023.
+      <span class="lastupdated">Last updated on Mar 23, 2023.
       </span></p>
   </div>
 
