@@ -16,6 +16,7 @@ use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use LogicException;
 use RuntimeException;
 use stdClass;
 use Tests\Support\Database\Seeds\CITestSeeder;
@@ -1347,11 +1348,17 @@ final class ForgeTest extends CIUnitTestCase
     {
         $fields = $this->db->getFieldData($table);
 
-        return $fields[array_search(
+        $name = array_search(
             $column,
             array_column($fields, 'name'),
             true
-        )];
+        );
+
+        if ($name === false) {
+            throw new LogicException('Column not found: ' . $column);
+        }
+
+        return $fields[$name];
     }
 
     public function testConnectWithArrayGroup()
