@@ -153,7 +153,7 @@ class Forge
      *
      * @internal Used for marking nullable fields. Not covered by BC promise.
      */
-    protected $null = '';
+    protected $null = 'NULL';
 
     /**
      * DEFAULT value representation in CREATE/ALTER TABLE statements
