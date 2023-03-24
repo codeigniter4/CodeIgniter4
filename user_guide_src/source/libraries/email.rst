@@ -66,13 +66,6 @@ Email properties. Then save the file and it will be used automatically.
 You will NOT need to use the ``$email->initialize()`` method if
 you set your preferences in the config file.
 
-Reviewing Preferences
----------------------
-
-The settings used for the last successful send are available from the
-instance property ``$archive``. This is helpful for testing and debugging
-to determine that actual values at the time of the ``send()`` call.
-
 SSL versus TLS for SMTP Protocol
 --------------------------------
 
@@ -99,6 +92,13 @@ If your configuration requires you to connect to port 587, you should most likel
 ``SMTPCrypto`` to ``tls`` as this will implement the ``STARTTLS`` command while communicating
 with the SMTP server to switch from clear-text to an encrypted channel. The initial communication
 will be made in clear-text and the channel will be upgraded to TLS with the ``STARTTLS`` command.
+
+Reviewing Preferences
+---------------------
+
+The settings used for the last successful send are available from the
+instance property ``$archive``. This is helpful for testing and debugging
+to determine that actual values at the time of the ``send()`` call.
 
 Email Preferences
 =================
