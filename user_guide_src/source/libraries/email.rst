@@ -74,7 +74,7 @@ instance property ``$archive``. This is helpful for testing and debugging
 to determine that actual values at the time of the ``send()`` call.
 
 SSL versus TLS for SMTP Protocol
-================================
+--------------------------------
 
 To protect the username, password and email content while communicating with the SMTP server,
 encryption on the channel should be used. Two different standards are widely deployed and
