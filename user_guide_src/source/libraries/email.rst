@@ -18,7 +18,7 @@ CodeIgniter's robust Email Class supports the following features:
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 ***********************
 Using the Email Library
