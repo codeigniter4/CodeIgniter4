@@ -110,10 +110,8 @@ class Forge extends BaseForge
             }
 
             $nullable = true; // Nullable by default.
-            if (isset($data['null'])) {
-                if ($data['null'] === false || $data['null'] === ' NOT ' . $this->null) {
-                    $nullable = false;
-                }
+            if (isset($data['null']) && ($data['null'] === false || $data['null'] === ' NOT ' . $this->null)) {
+                $nullable = false;
             }
             $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
                 . ($nullable === true ? ' DROP' : ' SET') . ' NOT NULL';
