@@ -44,6 +44,9 @@ messages are sent. You can either set them manually as described here,
 or automatically via preferences stored in your config file, described
 below:
 
+Setting Email Preferences by Passing an Array
+---------------------------------------------
+
 Preferences are set by passing an array of preference values to the
 email initialize method. Here is an example of how you might set some
 preferences:
