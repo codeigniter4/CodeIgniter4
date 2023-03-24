@@ -1280,6 +1280,7 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testModifyColumnNullTrue()
     {
+        // @TODO remove this in `4.4` branch
         if ($this->db->DBDriver === 'SQLSRV') {
             $this->markTestSkipped('SQLSRV does not support getFieldData() nullable.');
         }
@@ -1313,6 +1314,7 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testModifyColumnNullFalse()
     {
+        // @TODO remove this in `4.4` branch
         if ($this->db->DBDriver === 'SQLSRV') {
             $this->markTestSkipped('SQLSRV does not support getFieldData() nullable.');
         }
