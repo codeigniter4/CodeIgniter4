@@ -170,7 +170,7 @@ call basis, by providing an optional second parameter to the adding method call.
 Runtime Configuration
 ---------------------
 
-If your application needs to make changes at run-time, you can access the instance at ``$this->response->CSP`` in your controllers. The
+If your application needs to make changes at run-time, you can access the instance at ``$this->response->getCSP()`` in your controllers. The
 class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
 Examples are shown below, with different combinations of parameters, though all accept either a directive
 name or an array of them:
