@@ -16,12 +16,20 @@ getResult()
 ===========
 
 This method returns the query result as an array of **objects**, or
-**an empty array** on failure. Typically you'll use this in a foreach
+**an empty array** on failure.
+
+Getting an Array of stdClass
+----------------------------
+
+Typically you'll use this in a foreach
 loop, like this:
 
 .. literalinclude:: results/001.php
 
 The above method is an alias of ``getResultObject()``.
+
+Getting an Array of Array
+-------------------------
 
 You can pass in the string 'array' if you wish to get your results
 as an array of arrays:
@@ -29,6 +37,9 @@ as an array of arrays:
 .. literalinclude:: results/002.php
 
 The above usage is an alias of ``getResultArray()``.
+
+Getting an Array of Custom Object
+---------------------------------
 
 You can also pass a string to ``getResult()`` which represents a class to
 instantiate for each result object
