@@ -26,7 +26,7 @@ loop, like this:
 
 .. literalinclude:: results/001.php
 
-The above method is an alias of ``getResultObject()``.
+The above method is an alias of :php:meth:`CodeIgniter\\Database\\BaseResult::getResultObject()`.
 
 Getting an Array of Array
 -------------------------
@@ -36,7 +36,7 @@ as an array of arrays:
 
 .. literalinclude:: results/002.php
 
-The above usage is an alias of ``getResultArray()``.
+The above usage is an alias of `getResultArray()`_.
 
 Getting an Array of Custom Object
 ---------------------------------
@@ -46,7 +46,7 @@ instantiate for each result object
 
 .. literalinclude:: results/003.php
 
-The above method is an alias of ``getCustomResultObject()``.
+The above method is an alias of `getCustomResultObject()`_.
 
 getResultArray()
 ================
@@ -283,7 +283,7 @@ Class Reference
         Returns the query results as an array of rows, where each
         row is an object of type ``stdClass``.
 
-        Usage: see `Result Arrays`_.
+        Usage: see `Getting an Array of stdClass`_.
 
     .. php:method:: getCustomResultObject($class_name)
 
