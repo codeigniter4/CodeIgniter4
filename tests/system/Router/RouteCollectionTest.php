@@ -49,7 +49,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             $moduleConfig->enabled = false;
         }
 
-        $routerConfig = new \Config\Routing();
+        $routerConfig                   = new \Config\Routing();
         $routerConfig->defaultNamespace = '\\';
 
         return (new RouteCollection($loader, $moduleConfig, $routerConfig))->setHTTPVerb('get');

@@ -91,7 +91,6 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * An array of files that would contain route definitions.
-     * @var array
      */
     protected array $routeFiles = [];
 
@@ -291,9 +290,10 @@ class RouteCollection implements RouteCollectionInterface
         // so route files can access it.
         $routes = $this;
 
-        foreach($routeFiles as $routesFile) {
+        foreach ($routeFiles as $routesFile) {
             if (! is_file($routesFile)) {
                 log_message('warning', 'Routes file not found: ' . $routesFile . '.');
+
                 continue;
             }
 
