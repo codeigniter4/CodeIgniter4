@@ -135,7 +135,7 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working with Databases</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../database/examples.html">Quick Start: Usage Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../database/configuration.html">Database Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../database/connecting.html">Connecting to a Database</a></li>
@@ -502,7 +502,11 @@ that wish to use them. The tools primarily provide access to the same methods th
 <li><p><code class="docutils literal notranslate"><span class="pre">--all</span></code> - to migrate all namespaces to the latest migration.</p></li>
 </ul>
 <p>This example will migrate <code class="docutils literal notranslate"><span class="pre">Acme\Blog</span></code> namespace with any new migrations on the test database group:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span> <span class="o">-</span><span class="nx">g</span> <span class="nx">test</span> <span class="o">-</span><span class="nx">n</span> <span class="nx">Acme\\Blog</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">For</span> <span class="nx">Unix</span><span class="o">:</span>
+<span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span> <span class="o">-</span><span class="nx">g</span> <span class="nx">test</span> <span class="o">-</span><span class="nx">n</span> <span class="nx">Acme\\Blog</span>
+
+<span class="k">For</span> <span class="nx">Windows</span><span class="o">:</span>
+<span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span> <span class="o">-</span><span class="nx">g</span> <span class="nx">test</span> <span class="o">-</span><span class="nx">n</span> <span class="nx">Acme\Blog</span>
 </pre></div>
 </div>
 <p>When using the <code class="docutils literal notranslate"><span class="pre">--all</span></code> option, it will scan through all namespaces attempting to find any migrations that have
@@ -767,7 +771,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 23, 2023.
+      <span class="lastupdated">Last updated on Mar 25, 2023.
       </span></p>
   </div>
 

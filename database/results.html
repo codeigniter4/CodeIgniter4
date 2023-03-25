@@ -135,7 +135,7 @@
 </li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Working With Databases</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Working with Databases</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="examples.html">Quick Start: Usage Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html">Database Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="connecting.html">Connecting to a Database</a></li>
@@ -267,7 +267,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">Working With Databases</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Working with Databases</a></li>
       <li class="breadcrumb-item active">Generating Query Results</li>
       <li class="wy-breadcrumbs-aside">
       </li>
@@ -284,33 +284,39 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="#result-arrays" id="id1">Result Arrays</a></p>
 <ul>
-<li><p><a class="reference internal" href="#getresult" id="id2">getResult()</a></p></li>
-<li><p><a class="reference internal" href="#getresultarray" id="id3">getResultArray()</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#result-rows" id="id4">Result Rows</a></p>
+<li><p><a class="reference internal" href="#getresult" id="id2">getResult()</a></p>
 <ul>
-<li><p><a class="reference internal" href="#getrow" id="id5">getRow()</a></p></li>
-<li><p><a class="reference internal" href="#getrowarray" id="id6">getRowArray()</a></p></li>
-<li><p><a class="reference internal" href="#getunbufferedrow" id="id7">getUnbufferedRow()</a></p></li>
+<li><p><a class="reference internal" href="#getting-an-array-of-stdclass" id="id3">Getting an Array of stdClass</a></p></li>
+<li><p><a class="reference internal" href="#getting-an-array-of-array" id="id4">Getting an Array of Array</a></p></li>
+<li><p><a class="reference internal" href="#getting-an-array-of-custom-object" id="id5">Getting an Array of Custom Object</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#custom-result-objects" id="id8">Custom Result Objects</a></p>
+<li><p><a class="reference internal" href="#getresultarray" id="id6">getResultArray()</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#result-rows" id="id7">Result Rows</a></p>
 <ul>
-<li><p><a class="reference internal" href="#getcustomresultobject" id="id9">getCustomResultObject()</a></p></li>
-<li><p><a class="reference internal" href="#getcustomrowobject" id="id10">getCustomRowObject()</a></p></li>
+<li><p><a class="reference internal" href="#getrow" id="id8">getRow()</a></p></li>
+<li><p><a class="reference internal" href="#getrowarray" id="id9">getRowArray()</a></p></li>
+<li><p><a class="reference internal" href="#getunbufferedrow" id="id10">getUnbufferedRow()</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#result-helper-methods" id="id11">Result Helper Methods</a></p>
+<li><p><a class="reference internal" href="#custom-result-objects" id="id11">Custom Result Objects</a></p>
 <ul>
-<li><p><a class="reference internal" href="#getfieldcount" id="id12">getFieldCount()</a></p></li>
-<li><p><a class="reference internal" href="#getfieldnames" id="id13">getFieldNames()</a></p></li>
-<li><p><a class="reference internal" href="#getnumrows" id="id14">getNumRows()</a></p></li>
-<li><p><a class="reference internal" href="#freeresult" id="id15">freeResult()</a></p></li>
-<li><p><a class="reference internal" href="#dataseek" id="id16">dataSeek()</a></p></li>
+<li><p><a class="reference internal" href="#getcustomresultobject" id="id12">getCustomResultObject()</a></p></li>
+<li><p><a class="reference internal" href="#getcustomrowobject" id="id13">getCustomRowObject()</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#namespace-CodeIgniter\Database" id="id17">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#result-helper-methods" id="id14">Result Helper Methods</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getfieldcount" id="id15">getFieldCount()</a></p></li>
+<li><p><a class="reference internal" href="#getfieldnames" id="id16">getFieldNames()</a></p></li>
+<li><p><a class="reference internal" href="#getnumrows" id="id17">getNumRows()</a></p></li>
+<li><p><a class="reference internal" href="#freeresult" id="id18">freeResult()</a></p></li>
+<li><p><a class="reference internal" href="#dataseek" id="id19">dataSeek()</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\Database" id="id20">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="result-arrays">
@@ -318,7 +324,10 @@
 <section id="getresult">
 <h3><a class="toc-backref" href="#id2">getResult()</a><a class="headerlink" href="#getresult" title="Permalink to this headline"></a></h3>
 <p>This method returns the query result as an array of <strong>objects</strong>, or
-<strong>an empty array</strong> on failure. Typically you’ll use this in a foreach
+<strong>an empty array</strong> on failure.</p>
+<section id="getting-an-array-of-stdclass">
+<h4><a class="toc-backref" href="#id3">Getting an Array of stdClass</a><a class="headerlink" href="#getting-an-array-of-stdclass" title="Permalink to this headline"></a></h4>
+<p>Typically you’ll use this in a foreach
 loop, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -331,7 +340,10 @@ loop, like this:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The above method is an alias of <code class="docutils literal notranslate"><span class="pre">getResultObject()</span></code>.</p>
+<p>The above method is an alias of <a class="reference internal" href="#CodeIgniter\Database\BaseResult::getResultObject" title="CodeIgniter\Database\BaseResult::getResultObject"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\Database\BaseResult::getResultObject()</span></code></a>.</p>
+</section>
+<section id="getting-an-array-of-array">
+<h4><a class="toc-backref" href="#id4">Getting an Array of Array</a><a class="headerlink" href="#getting-an-array-of-array" title="Permalink to this headline"></a></h4>
 <p>You can pass in the string ‘array’ if you wish to get your results
 as an array of arrays:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -345,7 +357,10 @@ as an array of arrays:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The above usage is an alias of <code class="docutils literal notranslate"><span class="pre">getResultArray()</span></code>.</p>
+<p>The above usage is an alias of <a class="reference internal" href="#getresultarray">getResultArray()</a>.</p>
+</section>
+<section id="getting-an-array-of-custom-object">
+<h4><a class="toc-backref" href="#id5">Getting an Array of Custom Object</a><a class="headerlink" href="#getting-an-array-of-custom-object" title="Permalink to this headline"></a></h4>
 <p>You can also pass a string to <code class="docutils literal notranslate"><span class="pre">getResult()</span></code> which represents a class to
 instantiate for each result object</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -358,10 +373,11 @@ instantiate for each result object</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The above method is an alias of <code class="docutils literal notranslate"><span class="pre">getCustomResultObject()</span></code>.</p>
+<p>The above method is an alias of <a class="reference internal" href="#getcustomresultobject">getCustomResultObject()</a>.</p>
+</section>
 </section>
 <section id="getresultarray">
-<h3><a class="toc-backref" href="#id3">getResultArray()</a><a class="headerlink" href="#getresultarray" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">getResultArray()</a><a class="headerlink" href="#getresultarray" title="Permalink to this headline"></a></h3>
 <p>This method returns the query result as a pure array, or an empty
 array when no result is produced. Typically you’ll use this in a foreach
 loop, like this:</p>
@@ -379,9 +395,9 @@ loop, like this:</p>
 </section>
 </section>
 <section id="result-rows">
-<h2><a class="toc-backref" href="#id4">Result Rows</a><a class="headerlink" href="#result-rows" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">Result Rows</a><a class="headerlink" href="#result-rows" title="Permalink to this headline"></a></h2>
 <section id="getrow">
-<h3><a class="toc-backref" href="#id5">getRow()</a><a class="headerlink" href="#getrow" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">getRow()</a><a class="headerlink" href="#getrow" title="Permalink to this headline"></a></h3>
 <p>This method returns a single result row. If your query has more than
 one row, it returns only the first row. The result is returned as an
 <strong>object</strong>. Here’s a usage example:</p>
@@ -418,7 +434,7 @@ to instantiate the row with:</p>
 </div>
 </section>
 <section id="getrowarray">
-<h3><a class="toc-backref" href="#id6">getRowArray()</a><a class="headerlink" href="#getrowarray" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">getRowArray()</a><a class="headerlink" href="#getrowarray" title="Permalink to this headline"></a></h3>
 <p>Identical to the above <code class="docutils literal notranslate"><span class="pre">row()</span></code> method, except it returns an array.
 Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -469,7 +485,7 @@ result sets.</p>
 </div>
 </section>
 <section id="getunbufferedrow">
-<h3><a class="toc-backref" href="#id7">getUnbufferedRow()</a><a class="headerlink" href="#getunbufferedrow" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">getUnbufferedRow()</a><a class="headerlink" href="#getunbufferedrow" title="Permalink to this headline"></a></h3>
 <p>This method returns a single result row without prefetching the whole
 result in memory as <code class="docutils literal notranslate"><span class="pre">row()</span></code> does. If your query has more than one row,
 it returns the current row and moves the internal data pointer ahead.</p>
@@ -527,7 +543,7 @@ the returned value’s type:</p>
 </section>
 </section>
 <section id="custom-result-objects">
-<h2><a class="toc-backref" href="#id8">Custom Result Objects</a><a class="headerlink" href="#custom-result-objects" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id11">Custom Result Objects</a><a class="headerlink" href="#custom-result-objects" title="Permalink to this headline"></a></h2>
 <p>You can have the results returned as an instance of a custom class instead
 of a <code class="docutils literal notranslate"><span class="pre">stdClass</span></code> or array, as the <code class="docutils literal notranslate"><span class="pre">getResult()</span></code> and <code class="docutils literal notranslate"><span class="pre">getResultArray()</span></code>
 methods allow. If the class is not already loaded into memory, the Autoloader
@@ -570,7 +586,7 @@ then you should provide a <code class="docutils literal notranslate"><span class
 take a class name to return the results as: <code class="docutils literal notranslate"><span class="pre">getFirstRow()</span></code>, <code class="docutils literal notranslate"><span class="pre">getLastRow()</span></code>,
 <code class="docutils literal notranslate"><span class="pre">getNextRow()</span></code>, and <code class="docutils literal notranslate"><span class="pre">getPreviousRow()</span></code>.</p>
 <section id="getcustomresultobject">
-<h3><a class="toc-backref" href="#id9">getCustomResultObject()</a><a class="headerlink" href="#getcustomresultobject" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">getCustomResultObject()</a><a class="headerlink" href="#getcustomresultobject" title="Permalink to this headline"></a></h3>
 <p>Returns the entire result set as an array of instances of the class requested.
 The only parameter is the name of the class to instantiate.</p>
 <p>Example:</p>
@@ -589,7 +605,7 @@ The only parameter is the name of the class to instantiate.</p>
 </div>
 </section>
 <section id="getcustomrowobject">
-<h3><a class="toc-backref" href="#id10">getCustomRowObject()</a><a class="headerlink" href="#getcustomrowobject" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13">getCustomRowObject()</a><a class="headerlink" href="#getcustomrowobject" title="Permalink to this headline"></a></h3>
 <p>Returns a single row from your query results. The first parameter is the row
 number of the results. The second parameter is the class name to instantiate.</p>
 <p>Example:</p>
@@ -615,9 +631,9 @@ number of the results. The second parameter is the class name to instantiate.</p
 </section>
 </section>
 <section id="result-helper-methods">
-<h2><a class="toc-backref" href="#id11">Result Helper Methods</a><a class="headerlink" href="#result-helper-methods" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id14">Result Helper Methods</a><a class="headerlink" href="#result-helper-methods" title="Permalink to this headline"></a></h2>
 <section id="getfieldcount">
-<h3><a class="toc-backref" href="#id12">getFieldCount()</a><a class="headerlink" href="#getfieldcount" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id15">getFieldCount()</a><a class="headerlink" href="#getfieldcount" title="Permalink to this headline"></a></h3>
 <p>The number of FIELDS (columns) returned by the query. Make sure to call
 the method using your query result object:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -629,7 +645,7 @@ the method using your query result object:</p>
 </div>
 </section>
 <section id="getfieldnames">
-<h3><a class="toc-backref" href="#id13">getFieldNames()</a><a class="headerlink" href="#getfieldnames" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16">getFieldNames()</a><a class="headerlink" href="#getfieldnames" title="Permalink to this headline"></a></h3>
 <p>Returns an array with the names of the FIELDS (columns) returned by the query.
 Make sure to call the method using your query result object:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -641,7 +657,7 @@ Make sure to call the method using your query result object:</p>
 </div>
 </section>
 <section id="getnumrows">
-<h3><a class="toc-backref" href="#id14">getNumRows()</a><a class="headerlink" href="#getnumrows" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id17">getNumRows()</a><a class="headerlink" href="#getnumrows" title="Permalink to this headline"></a></h3>
 <p>The number of records returned by the query. Make sure to call
 the method using your query result object:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -659,7 +675,7 @@ return a count of the resulting record array, which can be inefficient.</p>
 </div>
 </section>
 <section id="freeresult">
-<h3><a class="toc-backref" href="#id15">freeResult()</a><a class="headerlink" href="#freeresult" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id18">freeResult()</a><a class="headerlink" href="#freeresult" title="Permalink to this headline"></a></h3>
 <p>It frees the memory associated with the result and deletes the result
 resource ID. Normally PHP frees its memory automatically at the end of
 script execution. However, if you are running a lot of queries in a
@@ -685,7 +701,7 @@ result has been generated in order to cut down on memory consumption.</p>
 </div>
 </section>
 <section id="dataseek">
-<h3><a class="toc-backref" href="#id16">dataSeek()</a><a class="headerlink" href="#dataseek" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id19">dataSeek()</a><a class="headerlink" href="#dataseek" title="Permalink to this headline"></a></h3>
 <p>This method sets the internal pointer for the next result row to be
 fetched. It is only useful in combination with <code class="docutils literal notranslate"><span class="pre">getUnbufferedRow()</span></code>.</p>
 <p>It accepts a positive integer value, which defaults to 0 and returns
@@ -705,7 +721,7 @@ Most notably - you won’t be able to use it with PDO.</p>
 </section>
 </section>
 <section id="namespace-CodeIgniter\Database">
-<span id="class-reference"></span><h2><a class="toc-backref" href="#id17">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Database" title="Permalink to this headline"></a></h2>
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id20">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Database" title="Permalink to this headline"></a></h2>
 <dl class="php class">
 <dt class="sig sig-object php" id="CodeIgniter\Database\BaseResult">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\Database\</span></span><span class="sig-name descname"><span class="pre">BaseResult</span></span><a class="headerlink" href="#CodeIgniter\Database\BaseResult" title="Permalink to this definition"></a></dt>
@@ -759,7 +775,7 @@ row is itself an associative array.</p>
 </dl>
 <p>Returns the query results as an array of rows, where each
 row is an object of type <code class="docutils literal notranslate"><span class="pre">stdClass</span></code>.</p>
-<p>Usage: see <a class="reference internal" href="#result-arrays">Result Arrays</a>.</p>
+<p>Usage: see <a class="reference internal" href="#getting-an-array-of-stdclass">Getting an Array of stdClass</a>.</p>
 </dd></dl>
 
 <dl class="php method">
@@ -1086,7 +1102,7 @@ field meta-data.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 23, 2023.
+      <span class="lastupdated">Last updated on Mar 25, 2023.
       </span></p>
   </div>
 
