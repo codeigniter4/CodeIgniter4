@@ -214,7 +214,7 @@ life, and is most secure when generated on the fly. To make this simple, you can
 
 If you don't like this auto replacement functionality, you can turn it off with setting ``$autoNonce = false`` in **app/Config/ContentSecurityPolicy.php**.
 
-In this case, you can use the functions, ``csp_script_nonce()`` and ``csp_style_nonce()``::
+In this case, you can use the functions, :php:func:`csp_script_nonce()` and :php:func:`csp_style_nonce()`::
 
     // Original
     <script <?= csp_script_nonce() ?>>
