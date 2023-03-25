@@ -6,7 +6,7 @@ There are several ways to generate query results:
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 *************
 Result Arrays
