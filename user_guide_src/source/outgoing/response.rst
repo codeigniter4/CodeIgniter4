@@ -180,7 +180,7 @@ name or an array of them:
 The first parameter to each of the "add" methods is an appropriate string value,
 or an array of them.
 
-The ``reportOnly`` method allows you to specify the default reporting treatment
+The ``reportOnly()`` method allows you to specify the default reporting treatment
 for subsequent sources, unless over-ridden. For instance, you could specify
 that youtube.com was allowed, and then provide several allowed but reported sources:
 
