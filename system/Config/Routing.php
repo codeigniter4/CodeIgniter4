@@ -17,6 +17,17 @@ namespace CodeIgniter\Config;
 class Routing extends BaseConfig
 {
     /**
+     * An array of files that contain route definitions.
+     * Route files are read in order, with the first match
+     * found taking precedence.
+     *
+     * Default: APPPATH . 'Config/Routes.php'
+     */
+    public array $routeFiles = [
+        APPPATH . 'Routes.php',
+    ];
+
+    /**
      * The default namespace to use for Controllers when no other
      * namespace has been specified.
      *
@@ -84,15 +95,4 @@ class Routing extends BaseConfig
      * Default: false
      */
     public bool $prioritize = false;
-
-    /**
-     * An array of files that contain route definitions.
-     * Route files are read in order, with the first match
-     * found taking precedence.
-     *
-     * Default: APPPATH . 'Config/Routes.php'
-     */
-    public array $routeFiles = [
-        APPPATH .DIRECTORY_SEPARATOR . 'Routes.php',
-    ];
 }
