@@ -1,7 +1,7 @@
 Version 4.3.3
 #################
 
-Release Date: Unreleased
+Release Date: March 26, 2023
 
 **4.3.3 release of CodeIgniter4**
 
@@ -15,18 +15,6 @@ SECURITY
 - **Email:** Added missing TLS 1.3 support.
 - **Text Helper:** The :php:func:`random_string()` type **alpha**, **alnum**,
   **numeric** and **nozero** are now cryptographically secure.
-
-BREAKING
-********
-
-Message Changes
-***************
-
-Changes
-*******
-
-Deprecations
-************
 
 Bugs Fixed
 **********

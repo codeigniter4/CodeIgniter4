@@ -46,4 +46,6 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- app/Common.php
+- app/Config/Encryption.php
+- composer.json
