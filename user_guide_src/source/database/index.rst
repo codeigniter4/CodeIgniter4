@@ -1,5 +1,5 @@
 ######################
-Working With Databases
+Working with Databases
 ######################
 
 CodeIgniter comes with a full-featured and very fast abstracted database
