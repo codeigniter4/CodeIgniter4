@@ -69,14 +69,16 @@ the existing content.
 * Update **user_guide_src/source/conf.py** with the new `version = '4.x'` (if applicable)
   and `release = '4.x.x'`
 * Replace **CHANGELOG.md** with the new version generated above
-* Set the date in **user_guide_src/source/changelogs/{version}.rst** to format
-  `Release Date: January 31, 2021`
+* Update **user_guide_src/source/changelogs/{version}.rst**
+  * Set the date to format `Release Date: January 31, 2021`
+  * Remove the section titles that have no items
 * Create a new changelog for the next version at
   **user_guide_src/source/changelogs/{next_version}.rst** and add it to
   **index.rst**
-* Create **user_guide_src/source/installation/upgrade_{ver}.rst**, fill in the
-  "All Changes" section, and add it to **upgrading.rst**
+* Update **user_guide_src/source/installation/upgrade_{ver}.rst**
+  * fill in the "All Changes" section, and add it to **upgrading.rst**
     * git diff --name-status origin/master -- . ':!system'
+  * Remove the section titles that have no items
 * Commit the changes with "Prep for 4.x.x release" and push to origin
 * Create a new PR from `release-4.x.x` to `develop`:
   * Title: "Prep for 4.x.x release"
