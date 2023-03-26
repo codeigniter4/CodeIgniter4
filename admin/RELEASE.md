@@ -32,8 +32,8 @@ To auto-generate, navigate to the
 [Releases](https://github.com/codeigniter4/CodeIgniter4/releases) page,
 click the "Draft a new release" button.
 
-* Tag: "v4.x.x" (Create new tag)
-* Target: develop
+* Tag: `v4.x.x` (Create new tag)
+* Target: `develop`
 
 Click the "Generate release notes" button.
 
@@ -79,18 +79,18 @@ the existing content.
   * fill in the "All Changes" section, and add it to **upgrading.rst**
     * git diff --name-status origin/master -- . ':!system'
   * Remove the section titles that have no items
-* Commit the changes with "Prep for 4.x.x release" and push to origin
+* Commit the changes with `Prep for 4.x.x release` and push to origin
 * Create a new PR from `release-4.x.x` to `develop`:
-  * Title: "Prep for 4.x.x release"
-  * Decription: "Updates changelog and version references for `4.x.x`." (plus checklist)
+  * Title: `Prep for 4.x.x release`
+  * Decription: `Updates changelog and version references for 4.x.x.` (plus checklist)
 * Let all tests run, then review and merge the PR
 * Create a new PR from `develop` to `master`:
-  * Title: "4.x.x Ready code"
+  * Title: `4.x.x Ready code`
   * Description: blank
 * Merge the PR then create a new Release:
-  * Version: "v4.x.x"
-  * Target: master
-  * Title: "CodeIgniter 4.x.x"
+  * Version: `v4.x.x`
+  * Target: `master`
+  * Title: `CodeIgniter 4.x.x`
   * Description:
     ```
     CodeIgniter 4.x.x release.
