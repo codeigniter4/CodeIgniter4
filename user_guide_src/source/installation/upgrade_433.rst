@@ -12,12 +12,6 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-Breaking Changes
-****************
-
-Mandatory File Changes
-**********************
-
 Project Files
 *************
 
