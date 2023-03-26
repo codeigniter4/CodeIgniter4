@@ -139,6 +139,7 @@ the existing content.
     git push origin HEAD
     ```
 * Publish any Security Advisories that were resolved from private forks
+  (note: publishing is restricted to administrators):
 * Announce the release on the forums and Slack channel
   (note: this forum is restricted to administrators):
   * Make a new topic in the "News & Discussion" forums:
