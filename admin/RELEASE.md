@@ -79,17 +79,17 @@ the existing content.
     * git diff --name-status origin/master -- . ':!system'
 * Commit the changes with "Prep for 4.x.x release" and push to origin
 * Create a new PR from `release-4.x.x` to `develop`:
-    * Title: "Prep for 4.x.x release"
-    * Decription: "Updates changelog and version references for `4.x.x`." (plus checklist)
+  * Title: "Prep for 4.x.x release"
+  * Decription: "Updates changelog and version references for `4.x.x`." (plus checklist)
 * Let all tests run, then review and merge the PR
 * Create a new PR from `develop` to `master`:
-    * Title: "4.x.x Ready code"
-    * Description: blank
+  * Title: "4.x.x Ready code"
+  * Description: blank
 * Merge the PR then create a new Release:
-    * Version: "v4.x.x"
-    * Target: master
-    * Title: "CodeIgniter 4.x.x"
-    * Description:
+  * Version: "v4.x.x"
+  * Target: master
+  * Title: "CodeIgniter 4.x.x"
+  * Description:
     ```
     CodeIgniter 4.x.x release.
 
@@ -110,9 +110,9 @@ the existing content.
     composer test && composer info codeigniter4/framework
     ```
 * Verify that the user guide actions succeeded:
-    * "[Deploy Distributable Repos](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/deploy-distributables.yml)", the main repo
-    * "[Deploy Production](https://github.com/codeigniter4/userguide/actions/workflows/deploy.yml)", UG repo
-    * "[pages-build-deployment](https://github.com/codeigniter4/userguide/actions/workflows/pages/pages-build-deployment)", UG repo
+  * "[Deploy Distributable Repos](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/deploy-distributables.yml)", the main repo
+  * "[Deploy Production](https://github.com/codeigniter4/userguide/actions/workflows/deploy.yml)", UG repo
+  * "[pages-build-deployment](https://github.com/codeigniter4/userguide/actions/workflows/pages/pages-build-deployment)", UG repo
 * Fast-forward `develop` branch to catch the merge commit from `master`
     ```console
     git fetch origin
@@ -139,18 +139,18 @@ the existing content.
 * Publish any Security Advisories that were resolved from private forks
 * Announce the release on the forums and Slack channel
   (note: this forum is restricted to administrators):
-    * Make a new topic in the "News & Discussion" forums:
-      https://forum.codeigniter.com/forum-2.html
-    * The content is somewhat organic, but should include any major features and
-      changes as well as a link to the User Guide's changelog
+  * Make a new topic in the "News & Discussion" forums:
+    https://forum.codeigniter.com/forum-2.html
+  * The content is somewhat organic, but should include any major features and
+    changes as well as a link to the User Guide's changelog
 
 ## After Publishing Security Advisory
 
 * Send a PR to [PHP Security Advisories Database](https://github.com/FriendsOfPHP/security-advisories).
-    * E.g. https://github.com/FriendsOfPHP/security-advisories/pull/606
-    * See https://github.com/FriendsOfPHP/security-advisories#contributing
-    * Don't forget to run `php -d memory_limit=-1 validator.php`, before
-      submitting the PR
+  * E.g. https://github.com/FriendsOfPHP/security-advisories/pull/606
+  * See https://github.com/FriendsOfPHP/security-advisories#contributing
+  * Don't forget to run `php -d memory_limit=-1 validator.php`, before
+    submitting the PR
 
 ## Appendix
 
@@ -180,13 +180,13 @@ sudo pip3 install sphinx_rtd_theme
   **./CodeIgniter4.x.x.epub**
 * Commit the changes with "Update for 4.x.x" and push to origin
 * Create a new PR from `release-4.x.x` to `develop`:
-    * Title: "Update for 4.x.x"
-    * Description: blank
+  * Title: "Update for 4.x.x"
+  * Description: blank
 * Merge the PR
 * Create a new Release:
-    * Version: "v4.x.x"
-    * Title: "CodeIgniter 4.x.x User Guide"
-    * Description: "CodeIgniter 4.x.x User Guide"
+  * Version: "v4.x.x"
+  * Title: "CodeIgniter 4.x.x User Guide"
+  * Description: "CodeIgniter 4.x.x User Guide"
 * Watch for the "github pages" Environment to make sure the deployment succeeds
 
 The User Guide website should update itself via the deploy GitHub Action. Should
