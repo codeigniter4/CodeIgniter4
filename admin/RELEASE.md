@@ -72,9 +72,6 @@ the existing content.
 * Update **user_guide_src/source/changelogs/{version}.rst**
   * Set the date to format `Release Date: January 31, 2021`
   * Remove the section titles that have no items
-* Create a new changelog for the next version at
-  **user_guide_src/source/changelogs/{next_version}.rst** and add it to
-  **index.rst**
 * Update **user_guide_src/source/installation/upgrade_{ver}.rst**
   * fill in the "All Changes" section, and add it to **upgrading.rst**
     * git diff --name-status origin/master -- . ':!system'
@@ -146,6 +143,11 @@ the existing content.
     https://forum.codeigniter.com/forum-2.html
   * The content is somewhat organic, but should include any major features and
     changes as well as a link to the User Guide's changelog
+* Create a PR for new changelog and upgrade for the next version
+  * Create **user_guide_src/source/changelogs/{next_version}.rst** and add it to
+    **index.rst** (See next-changelog-*.rst)
+  * Create **user_guide_src/source/installation/upgrade_{next_version}.rst** and add it to
+    **upgrading.rst**
 
 ## After Publishing Security Advisory
 
