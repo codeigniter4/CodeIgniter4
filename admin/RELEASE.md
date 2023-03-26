@@ -49,10 +49,10 @@ the existing content.
 * Work off direct clones of the repos so the release branches persist for a time
 * Clone both **codeigniter4/CodeIgniter4** and **codeigniter4/userguide** and
   resolve any necessary PRs
-```console
-git clone git@github.com:codeigniter4/CodeIgniter4.git
-git clone git@github.com:codeigniter4/userguide.git
-```
+    ```console
+    git clone git@github.com:codeigniter4/CodeIgniter4.git
+    git clone git@github.com:codeigniter4/userguide.git
+    ```
 * Vet the **admin/** folders for any removed hidden files (Action deploy scripts
   *do not remove these*)
 * Merge any Security Advisory PRs in private forks
@@ -90,52 +90,52 @@ git clone git@github.com:codeigniter4/userguide.git
     * Target: master
     * Title: "CodeIgniter 4.x.x"
     * Description:
-```
-CodeIgniter 4.x.x release.
+    ```
+    CodeIgniter 4.x.x release.
 
-See the changelog: https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md
+    See the changelog: https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md
 
-## New Contributors
-*
+    ## New Contributors
+    *
 
-Full Changelog: https://github.com/codeigniter4/CodeIgniter4/compare/v4.x.x...v4.x.x
-```
+    Full Changelog: https://github.com/codeigniter4/CodeIgniter4/compare/v4.x.x...v4.x.x
+    ```
 * Watch for the "Deploy Distributable Repos" action to make sure **framework**,
   **appstarter**, and **userguide** get updated
 * Run the following commands to install and test `appstarter` and verify the new
   version:
-```console
-composer create-project codeigniter4/appstarter release-test
-cd release-test
-composer test && composer info codeigniter4/framework
-```
+    ```console
+    composer create-project codeigniter4/appstarter release-test
+    cd release-test
+    composer test && composer info codeigniter4/framework
+    ```
 * Verify that the user guide actions succeeded:
     * "[Deploy Distributable Repos](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/deploy-distributables.yml)", the main repo
     * "[Deploy Production](https://github.com/codeigniter4/userguide/actions/workflows/deploy.yml)", UG repo
     * "[pages-build-deployment](https://github.com/codeigniter4/userguide/actions/workflows/pages/pages-build-deployment)", UG repo
 * Fast-forward `develop` branch to catch the merge commit from `master`
-```console
-git fetch origin
-git checkout develop
-git merge origin/develop
-git merge origin/master
-git push origin HEAD
-```
+    ```console
+    git fetch origin
+    git checkout develop
+    git merge origin/develop
+    git merge origin/master
+    git push origin HEAD
+    ```
 * Update the next minor upgrade branch `4.x`:
-```console
-git fetch origin
-git checkout 4.x
-git merge origin/4.x
-git merge origin/develop
-git push origin HEAD
-```
+    ```console
+    git fetch origin
+    git checkout 4.x
+    git merge origin/4.x
+    git merge origin/develop
+    git push origin HEAD
+    ```
 * [Minor version only] Create the next minor upgrade branch `4.x`:
-```console
-git fetch origin
-git switch develop
-git switch -c 4.x
-git push origin HEAD
-```
+    ```console
+    git fetch origin
+    git switch develop
+    git switch -c 4.x
+    git push origin HEAD
+    ```
 * Publish any Security Advisories that were resolved from private forks
 * Announce the release on the forums and Slack channel
   (note: this forum is restricted to administrators):
