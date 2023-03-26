@@ -124,11 +124,15 @@ You can use (migrate) with the following options:
 
 - ``-g`` - to chose database group, otherwise default database group will be used.
 - ``-n`` - to choose namespace, otherwise (App) namespace will be used.
-- ``--all`` - to migrate all namespaces to the latest migration
+- ``--all`` - to migrate all namespaces to the latest migration.
 
 This example will migrate ``Acme\Blog`` namespace with any new migrations on the test database group::
 
+    For Unix:
     > php spark migrate -g test -n Acme\\Blog
+
+    For Windows:
+    > php spark migrate -g test -n Acme\Blog
 
 When using the ``--all`` option, it will scan through all namespaces attempting to find any migrations that have
 not been run. These will all be collected and then sorted as a group by date created. This should help
@@ -144,8 +148,8 @@ Rolls back all migrations, taking the database group to a blank slate, effective
 You can use (rollback) with the following options:
 
 - ``-g`` - to choose database group, otherwise default database group will be used.
-- ``-b`` - to choose a batch: natural numbers specify the batch, negatives indicate a relative batch
-- ``-f`` - to force a bypass confirmation question, it is only asked in a production environment
+- ``-b`` - to choose a batch: natural numbers specify the batch.
+- ``-f`` - to force a bypass confirmation question, it is only asked in a production environment.
 
 refresh
 =======
@@ -158,8 +162,8 @@ You can use (refresh) with the following options:
 
 - ``-g`` - to choose database group, otherwise default database group will be used.
 - ``-n`` - to choose namespace, otherwise (App) namespace will be used.
-- ``--all`` - to refresh all namespaces
-- ``-f`` - to force a bypass confirmation question, it is only asked in a production environment
+- ``--all`` - to refresh all namespaces.
+- ``-f`` - to force a bypass confirmation question, it is only asked in a production environment.
 
 status
 ======

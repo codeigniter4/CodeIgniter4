@@ -543,7 +543,6 @@ if (! function_exists('random_string')) {
     {
         switch ($type) {
             case 'alnum':
-            case 'numeric':
             case 'nozero':
             case 'alpha':
                 switch ($type) {
@@ -555,16 +554,18 @@ if (! function_exists('random_string')) {
                         $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                         break;
 
-                    case 'numeric':
-                        $pool = '0123456789';
-                        break;
-
                     case 'nozero':
                         $pool = '123456789';
                         break;
                 }
 
-                return substr(str_shuffle(str_repeat($pool, (int) ceil($len / strlen($pool)))), 0, $len);
+                return _from_random($len, $pool);
+
+            case 'numeric':
+                $max  = 10 ** $len - 1;
+                $rand = random_int(0, $max);
+
+                return sprintf('%0' . $len . 'd', $rand);
 
             case 'md5':
                 return md5(uniqid((string) mt_rand(), true));
@@ -583,6 +584,69 @@ if (! function_exists('random_string')) {
         }
         // 'basic' type treated as default
         return (string) mt_rand();
+    }
+}
+
+if (! function_exists('_from_random')) {
+    /**
+     * The following function was derived from code of Symfony (v6.2.7 - 2023-02-28)
+     * https://github.com/symfony/symfony/blob/80cac46a31d4561804c17d101591a4f59e6db3a2/src/Symfony/Component/String/ByteString.php#L45
+     * Code subject to the MIT license (https://github.com/symfony/symfony/blob/v6.2.7/LICENSE).
+     * Copyright (c) 2004-present Fabien Potencier
+     *
+     * The following method was derived from code of the Hack Standard Library (v4.40 - 2020-05-03)
+     * https://github.com/hhvm/hsl/blob/80a42c02f036f72a42f0415e80d6b847f4bf62d5/src/random/private.php#L16
+     * Code subject to the MIT license (https://github.com/hhvm/hsl/blob/master/LICENSE).
+     * Copyright (c) 2004-2020, Facebook, Inc. (https://www.facebook.com/)
+     *
+     * @internal Outside the framework this should not be used directly.
+     */
+    function _from_random(int $length, string $pool): string
+    {
+        if ($length <= 0) {
+            throw new InvalidArgumentException(
+                sprintf('A strictly positive length is expected, "%d" given.', $length)
+            );
+        }
+
+        $poolSize = \strlen($pool);
+        $bits     = (int) ceil(log($poolSize, 2.0));
+        if ($bits <= 0 || $bits > 56) {
+            throw new InvalidArgumentException(
+                'The length of the alphabet must in the [2^1, 2^56] range.'
+            );
+        }
+
+        $string = '';
+
+        while ($length > 0) {
+            $urandomLength = (int) ceil(2 * $length * $bits / 8.0);
+            $data          = random_bytes($urandomLength);
+            $unpackedData  = 0;
+            $unpackedBits  = 0;
+
+            for ($i = 0; $i < $urandomLength && $length > 0; $i++) {
+                // Unpack 8 bits
+                $unpackedData = ($unpackedData << 8) | \ord($data[$i]);
+                $unpackedBits += 8;
+
+                // While we have enough bits to select a character from the alphabet, keep
+                // consuming the random data
+                for (; $unpackedBits >= $bits && $length > 0; $unpackedBits -= $bits) {
+                    $index = ($unpackedData & ((1 << $bits) - 1));
+                    $unpackedData >>= $bits;
+                    // Unfortunately, the alphabet size is not necessarily a power of two.
+                    // Worst case, it is 2^k + 1, which means we need (k+1) bits and we
+                    // have around a 50% chance of missing as k gets larger
+                    if ($index < $poolSize) {
+                        $string .= $pool[$index];
+                        $length--;
+                    }
+                }
+            }
+        }
+
+        return $string;
     }
 }
 

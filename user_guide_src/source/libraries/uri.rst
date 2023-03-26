@@ -204,7 +204,13 @@ to an on-page anchor. Media URI's can make use of them in various other ways.
 URI Segments
 ============
 
-Each section of the path between the slashes is a single segment. The URI class provides a simple way to determine
+Each section of the path between the slashes is a single segment.
+
+.. note:: In the case of your site URI, URI Segments mean only the URI path part
+    relative to the baseURL. If your baseURL contains sub folders, the values
+    will be different from the current URI path.
+
+The URI class provides a simple way to determine
 what the values of the segments are. The segments start at 1 being the furthest left of the path.
 
 .. literalinclude:: uri/023.php
@@ -212,6 +218,10 @@ what the values of the segments are. The segments start at 1 being the furthest 
 You can also set a different default value for a particular segment by using the second parameter of the ``getSegment()`` method. The default is empty string.
 
 .. literalinclude:: uri/024.php
+
+.. note:: You can get the last +1 segment. When you try to get the last +2 or
+    more segment, an exception will be thrown by default. You could prevent
+    throwing exceptions with the ``setSilent()`` method.
 
 You can get a count of the total segments:
 

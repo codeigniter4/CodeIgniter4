@@ -198,6 +198,16 @@ final class RedisHandlerTest extends AbstractHandlerTest
         $this->assertIsArray($this->handler->getCacheInfo());
     }
 
+    public function testGetMetadataNotNull(): void
+    {
+        $this->handler->save(self::$key1, 'value');
+
+        $metadata = $this->handler->getMetaData(self::$key1);
+
+        $this->assertNotNull($metadata);
+        $this->assertIsArray($metadata);
+    }
+
     public function testIsSupported()
     {
         $this->assertTrue($this->handler->isSupported());

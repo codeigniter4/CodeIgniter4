@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Tests\Support\Database\Seeds\CITestSeeder;
@@ -120,5 +121,47 @@ final class LikeTest extends CIUnitTestCase
 
         $this->assertCount(1, $spaces);
         $this->assertCount(1, $tabs);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/7268
+     */
+    public function testLikeRawSqlAndCountAllResultsAndGet()
+    {
+        $builder = $this->db->table('job');
+
+        if ($this->db->DBDriver === 'OCI8') {
+            $key = new RawSql('"name"');
+        } else {
+            $key = new RawSql('name');
+        }
+
+        $builder->like($key, 'Developer');
+        $count   = $builder->countAllResults(false);
+        $results = $builder->get()->getResult();
+
+        $this->assertSame(1, $count);
+        $this->assertSame('Developer', $results[0]->name);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/7268
+     */
+    public function testLikeRawSqlAndGetAndCountAllResults()
+    {
+        $builder = $this->db->table('job');
+
+        if ($this->db->DBDriver === 'OCI8') {
+            $key = new RawSql('"name"');
+        } else {
+            $key = new RawSql('name');
+        }
+
+        $builder->like($key, 'Developer');
+        $results = $builder->get(null, 0, false)->getResult();
+        $count   = $builder->countAllResults();
+
+        $this->assertSame(1, $count);
+        $this->assertSame('Developer', $results[0]->name);
     }
 }

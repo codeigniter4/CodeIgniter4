@@ -19,6 +19,12 @@ Let's Make our First Controller
 Create a file at **app/Controllers/Pages.php** with the following
 code.
 
+.. important:: You should always be careful about the case of filenames. Many
+    developers develop on case-insensitive file systems on Windows or macOS.
+    However, most server environments use case-sensitive file systems. If the
+    file name case is incorrect, code that works locally will not work on the
+    server.
+
 .. literalinclude:: static_pages/001.php
 
 You have created a class named ``Pages``, with a ``view()`` method that accepts

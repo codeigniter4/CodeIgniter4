@@ -18,7 +18,7 @@ Breaking Changes
 base_url()
 ==========
 
-The :php:func:`base_url()` behavior has been fix. In previous versions, when you
+The :php:func:`base_url()` behavior has been fixed. In previous versions, when you
 call ``base_url()`` **without argument**, it returned baseURL without a trailing
 slash (``/``). Now it returns baseURL with a trailing slash. For example:
 
@@ -26,6 +26,21 @@ slash (``/``). Now it returns baseURL with a trailing slash. For example:
 - after: ``http://example.com/``
 
 If you have code to call ``base_url()`` without argument, you may need to adjust the URLs.
+
+.. _upgrade-432-uri-string:
+
+uri_string()
+============
+
+The :php:func:`uri_string()` behavior has been fixed. In previous versions, when you
+navigate to the baseURL, it returned ``/``. Now it returns an empty string (``''``).
+
+If you have code to call ``uri_string()``, you may need to adjust it.
+
+.. note:: The :php:func:`uri_string()` returns a URI path relative to baseURL.
+    It is not a full URI path if the baseURL contains subfolders.
+    If you use it for HTML links, it is better to use it with :php:func:`site_url()`
+    like ``site_url(uri_string())``.
 
 Mandatory File Changes
 **********************
@@ -64,10 +79,6 @@ Content Changes
 The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:
 
-Config
-------
-
-- app/Config/Email.php
 - app/Config/Mimes.php
 - app/Views/errors/html/error_exception.php
 - composer.json
@@ -80,7 +91,6 @@ This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
 - app/Config/App.php
-- app/Config/Email.php
 - app/Config/Mimes.php
 - app/Views/errors/html/error_exception.php
 - composer.json

@@ -6,7 +6,7 @@ use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
-    public $aliases = [
+    public array $aliases = [
         'csrf' => \CodeIgniter\Filters\CSRF::class,
     ];
 

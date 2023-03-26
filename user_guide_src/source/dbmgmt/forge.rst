@@ -198,7 +198,7 @@ you may add them directly in forge:
 
 .. literalinclude:: forge/012.php
 
-You can specify the desired action for the "on update" and "on update" properties of the constraint as well as the name:
+You can specify the desired action for the "on update" and "on delete" properties of the constraint as well as the name:
 
 .. literalinclude:: forge/013.php
 
@@ -253,6 +253,9 @@ $forge->addColumn()
 The ``addColumn()`` method is used to modify an existing table. It
 accepts the same field array as :ref:`Creating Tables <adding-fields>`, and can
 be used to add additional fields.
+
+.. note:: Unlike when creating a table, if ``null`` is not specified, the column
+    will be ``NULL``, not ``NOT NULL``.
 
 .. literalinclude:: forge/022.php
 

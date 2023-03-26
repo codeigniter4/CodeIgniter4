@@ -19,7 +19,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 abstract class AbstractHandlerTest extends CIUnitTestCase
 {
-    protected $handler;
+    protected BaseHandler $handler;
     protected static $key1  = 'key1';
     protected static $key2  = 'key2';
     protected static $key3  = 'key3';

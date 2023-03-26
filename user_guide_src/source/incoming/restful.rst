@@ -1,5 +1,6 @@
+#########################
 RESTful Resource Handling
-#######################################################
+#########################
 
 .. contents::
     :local:
@@ -22,8 +23,9 @@ most "RESTful" your application would be considered.
 CodeIgniter makes it easy to create RESTful APIs for your resources,
 with its resource routes and `ResourceController`.
 
+***************
 Resource Routes
-============================================================
+***************
 
 You can quickly create a handful of RESTful routes for a single resource with the ``resource()`` method. This
 creates the five most common routes needed for full CRUD of a resource: create a new resource, update an existing one,
@@ -43,7 +45,7 @@ generate update and delete methods that work with HTML forms:
 .. literalinclude:: restful/002.php
 
 Change the Controller Used
---------------------------
+==========================
 
 You can specify the controller that should be used by passing in the ``controller`` option with the name of
 the controller that should be used:
@@ -51,7 +53,7 @@ the controller that should be used:
 .. literalinclude:: restful/003.php
 
 Change the Placeholder Used
----------------------------
+===========================
 
 By default, the ``(:segment)`` placeholder is used when a resource ID is needed. You can change this by passing
 in the ``placeholder`` option with the new string to use:
@@ -59,7 +61,7 @@ in the ``placeholder`` option with the new string to use:
 .. literalinclude:: restful/004.php
 
 Limit the Routes Made
----------------------
+=====================
 
 You can restrict the routes generated with the ``only`` option. This should be **an array** or **comma separated list** of method names that should
 be created. Only routes that match one of these methods will be created. The rest will be ignored:
@@ -72,8 +74,9 @@ Otherwise you can remove unused routes with the ``except`` option. This should a
 
 Valid methods are: ``index``, ``show``, ``create``, ``update``, ``new``, ``edit`` and ``delete``.
 
+******************
 ResourceController
-============================================================
+******************
 
 The ``ResourceController`` provides a convenient starting point for your RESTful API,
 with methods that correspond to the resource routes above.
@@ -87,8 +90,9 @@ The routing for this would be:
 
 .. literalinclude:: restful/008.php
 
+****************
 Presenter Routes
-============================================================
+****************
 
 You can quickly create a presentation controller which aligns
 with a resource controller, using the ``presenter()`` method. This
@@ -111,7 +115,7 @@ controller. You need to distinguish them, for instance:
 The second parameter accepts an array of options that can be used to modify the routes that are generated.
 
 Change the Controller Used
---------------------------
+==========================
 
 You can specify the controller that should be used by passing in the ``controller`` option with the name of
 the controller that should be used:
@@ -119,7 +123,7 @@ the controller that should be used:
 .. literalinclude:: restful/011.php
 
 Change the Placeholder Used
----------------------------
+===========================
 
 By default, the ``(:segment)`` placeholder is used when a resource ID is needed. You can change this by passing
 in the ``placeholder`` option with the new string to use:
@@ -127,7 +131,7 @@ in the ``placeholder`` option with the new string to use:
 .. literalinclude:: restful/012.php
 
 Limit the Routes Made
----------------------
+=====================
 
 You can restrict the routes generated with the ``only`` option. This should be **an array** or **comma separated list** of method names that should
 be created. Only routes that match one of these methods will be created. The rest will be ignored:
@@ -140,8 +144,9 @@ Otherwise you can remove unused routes with the ``except`` option. This should a
 
 Valid methods are: ``index``, ``show``, ``new``, ``create``, ``edit``, ``update``, ``remove`` and ``delete``.
 
+*****************
 ResourcePresenter
-============================================================
+*****************
 
 The ``ResourcePresenter`` provides a convenient starting point for presenting views
 of your resource, and processing data from forms in those views,
@@ -156,8 +161,9 @@ The routing for this would be:
 
 .. literalinclude:: restful/016.php
 
+*******************************
 Presenter/Controller Comparison
-=============================================================
+*******************************
 
 This table presents a comparison of the default routes created by `resource()`
 and `presenter()` with their corresponding Controller functions.

@@ -1,11 +1,39 @@
 # Changelog
 
+## [v4.3.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.3) (2023-03-26)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.2...v4.3.3)
+
+### Fixed Bugs
+
+* docs: fix $systemDirectory path in existing project. by @jozefrebjak in https://github.com/codeigniter4/CodeIgniter4/pull/7289
+* docs: fix message.rst and improve content_negotiation.rst by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7280
+* fix: Encryption CI3 compatibility by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7273
+* fix: [QueryBuilder] RawSql causes error when using like() and countAllResults() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7277
+* fix: handling of null bytes in `Exceptions::renderBacktrace()` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/7306
+* fix: incorrect metadata querying of Redis cache by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/7307
+* fix: [Email] add missing TLS 1.3 support by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7317
+* docs: add warning to random_string() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7333
+* fix: random_string() numeric by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7336
+* docs: add note for addColumn() and NULL by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7342
+* fix: respondNoContent() returns Kint script in development mode by @anggadarkprince in https://github.com/codeigniter4/CodeIgniter4/pull/7347
+* fix: use first exception in exceptionHandler() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7341
+* fix: random_string() alpha alnum nozero by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7344
+* fix: migrate:rollback -b negative number by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7350
+* fix: site_url() does not support protocol-relative links by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7353
+* docs: add uri_string() BC in v4.3.2 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7356
+* fix: Cache FileHandler error when there is a folder in cache dir by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7361
+
+### Refactoring
+
+* refactor: consistent header name case by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7299
+
 ## [v4.3.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.2) (2023-02-18)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.1...v4.3.2)
 
 ### Breaking Changes
 
 * fix: base_url() removes trailing slash in baseURL by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7200
+* fix: remove parameter $relative in `uri_string()` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7135
 
 ### Fixed Bugs
 
@@ -14,7 +42,6 @@
 * fix: remove `All` from `Options All -Indexes` in .htaccess by @sba in https://github.com/codeigniter4/CodeIgniter4/pull/7093
 * fix: bug on stuck content-type header in Feature Testing by @baycik in https://github.com/codeigniter4/CodeIgniter4/pull/7112
 * fix: ordering `Validation` show error by call `setRule()` by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/7149
-* fix: remove parameter $relative in `uri_string()` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7135
 * fix: [QueryBuilder] where() generates incorrect SQL when using RawSql by @sclubricants in https://github.com/codeigniter4/CodeIgniter4/pull/7147
 * fix: [QueryBuilder] RawSql passed to set() disappears without error by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7148
 * fix: [Parser] local_currency causes "Passing null to parameter" by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7157

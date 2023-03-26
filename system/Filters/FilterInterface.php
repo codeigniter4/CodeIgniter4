@@ -29,7 +29,7 @@ interface FilterInterface
      * sent back to the client, allowing for error pages,
      * redirects, etc.
      *
-     * @param null $arguments
+     * @param array|null $arguments
      *
      * @return mixed
      */
@@ -41,7 +41,7 @@ interface FilterInterface
      * to stop execution of other after filters, short of
      * throwing an Exception or Error.
      *
-     * @param null $arguments
+     * @param array|null $arguments
      *
      * @return mixed
      */

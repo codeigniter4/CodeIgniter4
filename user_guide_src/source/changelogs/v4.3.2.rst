@@ -18,16 +18,21 @@ Behavior Changes
 base_url()
 ----------
 
-Due to a bug, in previous versions :php:func:`base_url()` without argument returned baseURL
-without a trailing slash (``/``) like ``http://localhost:8080``. Now it returns
-baseURL with a trailing slash. This is the same behavior as ``base_url()`` in
-CodeIgniter 3.
+- Due to a bug, in previous versions :php:func:`base_url()` without argument
+  returned baseURL without a trailing slash (``/``) like ``http://localhost:8080``.
+- Now it returns baseURL with a trailing slash. This is the same behavior as
+  ``base_url()`` in CodeIgniter 3.
 
-Changes
-*******
+.. _v432-uri-string:
+
+uri_string()
+------------
 
 - The parameter ``$relative`` in :php:func:`uri_string()` was removed. Due to a bug,
-  the function always returned a path relative to baseURL. No behavior changes.
+  the function always returned a path relative to baseURL.
+- When baseURL is accessed, it will now return an empty string (``''``). This is
+  the same behavior as ``uri_string()`` in CodeIgniter 3. In previous versions
+  it returned ``/``.
 
 Bugs Fixed
 **********

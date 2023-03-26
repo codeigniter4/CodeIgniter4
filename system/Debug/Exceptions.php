@@ -119,6 +119,11 @@ class Exceptions
 
         [$statusCode, $exitCode] = $this->determineCodes($exception);
 
+        // Get the first exception.
+        while ($prevException = $exception->getPrevious()) {
+            $exception = $prevException;
+        }
+
         if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true)) {
             log_message('critical', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
                 'message' => $exception->getMessage(),
@@ -530,9 +535,6 @@ class Exceptions
 
                     case is_resource($value):
                         return sprintf('resource (%s)', get_resource_type($value));
-
-                    case is_string($value):
-                        return var_export(clean_path($value), true);
 
                     default:
                         return var_export($value, true);

@@ -6,7 +6,7 @@ Controller Filters
     :local:
     :depth: 2
 
-Controller Filters allow you to perform actions either before or after the controllers execute. Unlike :doc:`events </extending/events>`,
+Controller Filters allow you to perform actions either before or after the controllers execute. Unlike :doc:`events <../extending/events>`,
 you can choose the specific URIs in which the filters will be applied to. Incoming filters may
 modify the Request while after filters can act on and even modify the Response, allowing for a lot of flexibility
 and power. Some common examples of tasks that might be performed with filters are:
@@ -60,7 +60,7 @@ This is typically used to perform redirects, like in this example:
 .. literalinclude:: filters/002.php
 
 If a ``Response`` instance is returned, the Response will be sent back to the client and script execution will stop.
-This can be useful for implementing rate limiting for APIs. See :doc:`Throttler </libraries/throttler>` for an
+This can be useful for implementing rate limiting for APIs. See :doc:`Throttler <../libraries/throttler>` for an
 example.
 
 .. _after-filters:
@@ -114,15 +114,18 @@ run on every request. Filters can be specified by adding their alias to either t
 
 .. literalinclude:: filters/005.php
 
+Except for a Few URIs
+---------------------
+
 There are times where you want to apply a filter to almost every request, but have a few that should be left alone.
 One common example is if you need to exclude a few URI's from the CSRF protection filter to allow requests from
 third-party websites to hit one or two specific URI's, while keeping the rest of them protected. To do this, add
-an array with the 'except' key and a URI to match as the value alongside the alias:
+an array with the ``except`` key and a URI to match as the value alongside the alias:
 
 .. literalinclude:: filters/006.php
 
 Any place you can use a URI in the filter settings, you can use a regular expression or, like in this example, use
-an asterisk for a wildcard that will match all characters after that. In this example, any URL's starting with ``api/``
+an asterisk (``*``) for a wildcard that will match all characters after that. In this example, any URL's starting with ``api/``
 would be exempted from CSRF protection, but the site's forms would all be protected. If you need to specify multiple
 URI's you can use an array of URI patterns:
 
@@ -131,29 +134,31 @@ URI's you can use an array of URI patterns:
 $methods
 ========
 
-You can apply filters to all requests of a certain HTTP method, like POST, GET, PUT, etc. In this array, you would
-specify the method name in lowercase. It's value would be an array of filters to run. Unlike the ``$globals`` or the
-``$filters`` properties, these will only run as before filters:
-
-.. literalinclude:: filters/008.php
-
-In addition to the standard HTTP methods, this also supports one special case: 'cli'. The 'cli' method would apply to
-all requests that were run from the command line.
-
 .. Warning:: If you use ``$methods`` filters, you should :ref:`disable Auto Routing (Legacy) <use-defined-routes-only>`
     because :ref:`auto-routing-legacy` permits any HTTP method to access a controller.
     Accessing the controller with a method you don't expect could bypass the filter.
 
+You can apply filters to all requests of a certain HTTP method, like POST, GET, PUT, etc. In this array, you would
+specify the method name in **lowercase**. It's value would be an array of filters to run:
+
+.. literalinclude:: filters/008.php
+
+.. note:: Unlike the ``$globals`` or the
+    ``$filters`` properties, these will only run as before filters.
+
+In addition to the standard HTTP methods, this also supports one special case: ``cli``. The ``cli`` method would apply to
+all requests that were run from the command line.
+
 $filters
 ========
 
-This property is an array of filter aliases. For each alias, you can specify before and after arrays that contain
+This property is an array of filter aliases. For each alias, you can specify ``before`` and ``after`` arrays that contain
 a list of URI patterns that filter should apply to:
 
 .. literalinclude:: filters/009.php
 
-Filter arguments
-=================
+Filter Arguments
+================
 
 When configuring filters, additional arguments may be passed to a filter when setting up the route:
 
@@ -165,7 +170,7 @@ In this example, the array ``['dual', 'noreturn']`` will be passed in ``$argumen
 Confirming Filters
 ******************
 
-CodeIgniter has the following :doc:`command </cli/spark_commands>` to check the filters for a route.
+CodeIgniter has the following :doc:`command <../cli/spark_commands>` to check the filters for a route.
 
 .. _spark-filter-check:
 

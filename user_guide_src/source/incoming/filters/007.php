@@ -6,7 +6,9 @@ use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
-    public $globals = [
+    // ...
+
+    public array $globals = [
         'before' => [
             'csrf' => ['except' => ['foo/*', 'bar/*']],
         ],

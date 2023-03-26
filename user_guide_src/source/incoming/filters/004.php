@@ -6,7 +6,7 @@ use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
 {
-    public $aliases = [
+    public array $aliases = [
         'apiPrep' => [
             \App\Filters\Negotiate::class,
             \App\Filters\ApiAuth::class,

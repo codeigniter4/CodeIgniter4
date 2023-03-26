@@ -56,6 +56,19 @@ If you see "No input file specified", try to change the rewrite rule like the fo
 
     RewriteRule ^([\s\S]*)$ index.php?/$1 [L,NC,QSA]
 
+My app works fine locally but not on the production server
+----------------------------------------------------------
+
+Make sure that the case of the folder and file names matches the code.
+
+Many developers develop on case-insensitive file systems on Windows or macOS.
+However, most server environments use case-sensitive file systems.
+
+For example, when you have **app/Controllers/Product.php**, you must use
+``Product`` as the short classname, not ``product``.
+
+If the file name case is incorrect, the file is not found on the server.
+
 The tutorial gives 404 errors everywhere :(
 -------------------------------------------
 

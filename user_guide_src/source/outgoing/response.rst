@@ -140,6 +140,13 @@ visit the following sites:
 Turning CSP On
 --------------
 
+.. important:: The :ref:`Debug Toolbar <the-debug-toolbar>` may use Kint, which
+    outputs inline scripts. Therefore, when CSP is turned on, CSP nonce is
+    automatically output for the Debug Toolbar. However, if you are not using
+    CSP nonce, this will change the CSP header to something you do not intend,
+    and it will behave differently than in production; if you want to verify CSP
+    behavior, turn off the Debug Toolbar.
+
 By default, support for this is off. To enable support in your application, edit the ``CSPEnabled`` value in
 **app/Config/App.php**:
 
