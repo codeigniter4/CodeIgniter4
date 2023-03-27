@@ -35,6 +35,8 @@ Redirect Status Code
   always be used when you don't specify a status code. In previous versions,
   302 might be changed.
 
+.. _v434-forge-modifycolumn:
+
 Forge::modifyColumn()
 ---------------------
 

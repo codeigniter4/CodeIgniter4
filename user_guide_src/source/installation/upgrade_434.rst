@@ -25,6 +25,18 @@ Redirect Status Code
   :ref:`ChangeLog v4.3.4 <v434-redirect-status-code>` and if the code is not
   what you want, :ref:`specify status codes <response-redirect-status-code>`.
 
+Forge::modifyColumn() and NULL
+==============================
+
+A bug fix may have changed the NULL constraint in the result of
+:ref:`$forge->modifyColumn() <db-forge-modifyColumn>`. See
+:ref:`Change Log <v434-forge-modifycolumn>`.
+To set the desired NULL constraint, change ``Forge::modifyColumn()`` to always
+specify the ``null`` value.
+
+Note that the bug may have changed unexpected NULL constraints in previous
+versions.
+
 Breaking Enhancements
 *********************
 
