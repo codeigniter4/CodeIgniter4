@@ -91,6 +91,8 @@ Others
 Message Changes
 ***************
 
+- Improved ``HTTP.invalidHTTPProtocol`` error message.
+
 Changes
 *******
 

@@ -21,7 +21,7 @@ return [
     'invalidNegotiationType' => '"{0}" is not a valid negotiation type. Must be one of: media, charset, encoding, language.',
 
     // Message
-    'invalidHTTPProtocol' => 'Invalid HTTP Protocol Version. Must be one of: {0}',
+    'invalidHTTPProtocol' => 'Invalid HTTP Protocol Version: {0}',
 
     // Negotiate
     'emptySupportedNegotiations' => 'You must provide an array of supported values to all Negotiations.',
