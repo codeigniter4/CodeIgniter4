@@ -1,5 +1,5 @@
 ##############################
-Upgrading from 4.3.2 to 4.3.3
+Upgrading from 4.3.3 to 4.3.4
 ##############################
 
 Please refer to the upgrade instructions corresponding to your installation method.
@@ -11,6 +11,15 @@ Please refer to the upgrade instructions corresponding to your installation meth
 .. contents::
     :local:
     :depth: 2
+
+Mandatory File Changes
+**********************
+
+Breaking Changes
+****************
+
+Breaking Enhancements
+*********************
 
 Project Files
 *************
@@ -30,9 +39,7 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- app/Config/Encryption.php
-    - The missing property ``$cipher`` is added for CI3
-      Encryption compatibility. See :ref:`encryption-compatible-with-ci3`.
+- @TODO
 
 All Changes
 ===========
@@ -40,6 +47,4 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- app/Common.php
-- app/Config/Encryption.php
-- composer.json
+- @TODO
