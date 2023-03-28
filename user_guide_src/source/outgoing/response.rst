@@ -170,7 +170,7 @@ call basis, by providing an optional second parameter to the adding method call.
 Runtime Configuration
 ---------------------
 
-If your application needs to make changes at run-time, you can access the instance at ``$this->response->CSP`` in your controllers. The
+If your application needs to make changes at run-time, you can access the instance at ``$this->response->getCSP()`` in your controllers. The
 class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
 Examples are shown below, with different combinations of parameters, though all accept either a directive
 name or an array of them:
@@ -180,7 +180,7 @@ name or an array of them:
 The first parameter to each of the "add" methods is an appropriate string value,
 or an array of them.
 
-The ``reportOnly`` method allows you to specify the default reporting treatment
+The ``reportOnly()`` method allows you to specify the default reporting treatment
 for subsequent sources, unless over-ridden. For instance, you could specify
 that youtube.com was allowed, and then provide several allowed but reported sources:
 
@@ -214,7 +214,7 @@ life, and is most secure when generated on the fly. To make this simple, you can
 
 If you don't like this auto replacement functionality, you can turn it off with setting ``$autoNonce = false`` in **app/Config/ContentSecurityPolicy.php**.
 
-In this case, you can use the functions, ``csp_script_nonce()`` and ``csp_style_nonce()``::
+In this case, you can use the functions, :php:func:`csp_script_nonce()` and :php:func:`csp_style_nonce()`::
 
     // Original
     <script <?= csp_script_nonce() ?>>
