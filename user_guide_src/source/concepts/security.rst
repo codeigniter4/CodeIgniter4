@@ -84,6 +84,7 @@ CodeIgniter provisions
 
 - :php:func:`esc()` function
 - :doc:`../libraries/validation` library
+- Support for :ref:`content-security-policy`
 
 ***********************************
 A4 Insecure Direct Object Reference
