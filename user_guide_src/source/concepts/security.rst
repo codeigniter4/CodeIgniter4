@@ -62,6 +62,7 @@ CodeIgniter provisions
 
 - :doc:`Session <../libraries/sessions>` library
 - :doc:`Security </libraries/security>` library provides for CSRF validation
+- An official authentication and authorization framework :ref:`CodeIgniter Shield <shield>`
 - Easy to add third party authentication
 
 *****************************
@@ -104,6 +105,7 @@ CodeIgniter provisions
 ======================
 
 - :doc:`../libraries/validation` library
+- An official authentication and authorization framework :ref:`CodeIgniter Shield <shield>`
 - Easy to add third party authentication
 
 ****************************
