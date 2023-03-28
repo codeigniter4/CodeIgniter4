@@ -38,8 +38,8 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
-- :doc:`HTTP library <../incoming/incomingrequest>` provides for input field filtering & content metadata
-- Validation library
+- :doc:`HTTP library <../incoming/incomingrequest>` provides for :ref:`input field filtering <incomingrequest-filtering-input-data>` & content metadata
+- :doc:`../libraries/validation` library
 
 *********************************************
 A2 Weak authentication and session management
@@ -81,8 +81,8 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
-- esc function
-- Validation library
+- :php:func:`esc()` function
+- :doc:`../libraries/validation` library
 
 ***********************************
 A4 Insecure Direct Object Reference
@@ -103,7 +103,7 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
-- Validation library
+- :doc:`../libraries/validation` library
 - Easy to add third party authentication
 
 ****************************
@@ -144,7 +144,7 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
-- Session keys stored encrypted
+- :doc:`Session <../libraries/sessions>` keys stored encrypted
 
 ****************************************
 A7 Missing Function Level Access Control
@@ -165,8 +165,8 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
-- Public folder, with application and system outside
-- :doc:`Security </libraries/security>` library provides for CSRF validation
+- :ref:`Public <application-structure-public>` folder, with application and system outside
+- :doc:`Security </libraries/security>` library provides for :ref:`CSRF validation <cross-site-request-forgery>`
 
 ************************************
 A8 Cross Site Request Forgery (CSRF)
@@ -185,7 +185,7 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
-- :doc:`Security </libraries/security>` library provides for CSRF validation
+- :doc:`Security </libraries/security>` library provides for :ref:`CSRF validation <cross-site-request-forgery>`
 
 **********************************************
 A9 Using Components with Known Vulnerabilities
@@ -222,4 +222,4 @@ CodeIgniter provisions
 ======================
 
 - :doc:`HTTP library <../incoming/incomingrequest>` provides for ...
-- :doc:`Session <../libraries/sessions>` library provides flashdata
+- :doc:`Session <../libraries/sessions>` library provides :ref:`sessions-flashdata`
