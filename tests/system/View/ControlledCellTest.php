@@ -21,6 +21,7 @@ use Tests\Support\View\Cells\MultiplierCell;
 use Tests\Support\View\Cells\RenderedExtraDataNotice;
 use Tests\Support\View\Cells\RenderedNotice;
 use Tests\Support\View\Cells\SimpleNotice;
+use Tests\Support\View\Cells\AwesomeCell;
 
 /**
  * @internal
@@ -34,6 +35,13 @@ final class ControlledCellTest extends CIUnitTestCase
         $result = view_cell(GreetingCell::class);
 
         $this->assertStringContainsString('Hello World', $result);
+    }
+
+    public function testCellRendersViewWithActualClassName()
+    {
+        $result = view_cell(AwesomeCell::class);
+
+        $this->assertStringContainsString('Found!', $result);
     }
 
     public function testCellWithNamedView()
