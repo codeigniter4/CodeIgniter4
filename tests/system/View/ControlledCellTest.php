@@ -14,6 +14,7 @@ namespace CodeIgniter\View;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use Tests\Support\View\Cells\AdditionCell;
+use Tests\Support\View\Cells\AwesomeCell;
 use Tests\Support\View\Cells\ColorsCell;
 use Tests\Support\View\Cells\GreetingCell;
 use Tests\Support\View\Cells\ListerCell;
@@ -21,7 +22,6 @@ use Tests\Support\View\Cells\MultiplierCell;
 use Tests\Support\View\Cells\RenderedExtraDataNotice;
 use Tests\Support\View\Cells\RenderedNotice;
 use Tests\Support\View\Cells\SimpleNotice;
-use Tests\Support\View\Cells\AwesomeCell;
 
 /**
  * @internal
