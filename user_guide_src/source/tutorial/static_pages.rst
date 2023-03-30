@@ -69,7 +69,7 @@ output the ``$title`` variable, which we'll define later in the controller.
 Now, create a footer at **app/Views/templates/footer.php** that
 includes the following code::
 
-        <em>&copy; 2021</em>
+        <em>&copy; 2022</em>
     </body>
     </html>
 
