@@ -765,6 +765,64 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame(200, $response->getStatusCode());
     }
 
+    /**
+     * See: https://github.com/codeigniter4/CodeIgniter4/issues/7394
+     */
+    public function testResponseHeadersWithMultipleRequests()
+    {
+        $request = $this->getRequest([
+            'base_uri' => 'http://www.foo.com/api/v1/',
+        ]);
+
+        $output = "HTTP/2.0 200 OK
+Server: ddos-guard
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Content-Type: application/xml; charset=utf-8
+Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello</title>";
+        $request->setOutput($output);
+
+        $response = $request->get('answer');
+
+        $this->assertSame('<title>Hello</title>', $response->getBody());
+
+        $responseHeaderKeys = [
+            'Cache-Control',
+            'Content-Type',
+            'Server',
+            'Expires',
+            'Pragma',
+            'Transfer-Encoding',
+        ];
+        $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
+
+        $this->assertSame(200, $response->getStatusCode());
+
+        $output = "HTTP/2.0 200 OK
+Server: ddos-guard
+Expires: Thu, 19 Nov 1982 08:52:00 GMT
+Content-Type: application/xml; charset=utf-8
+Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello</title>";
+        $request->setOutput($output);
+
+        $response = $request->get('answer');
+
+        $this->assertSame('<title>Hello</title>', $response->getBody());
+
+        $responseHeaderKeys = [
+            'Cache-Control',
+            'Content-Type',
+            'Server',
+            'Expires',
+            'Pragma',
+            'Transfer-Encoding',
+        ];
+        $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
+
+        $this->assertSame(200, $response->getStatusCode());
+    }
+
     public function testSplitResponse()
     {
         $request = $this->getRequest([

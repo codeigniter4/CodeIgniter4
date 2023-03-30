@@ -766,15 +766,71 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame('<title>Update success! config</title>', $response->getBody());
 
         $responseHeaderKeys = [
-            'Cache-Control',
-            'Content-Type',
             'Server',
             'Connection',
             'Keep-Alive',
             'Set-Cookie',
             'Date',
             'Expires',
+            'Cache-Control',
             'Pragma',
+            'Content-Type',
+            'Transfer-Encoding',
+        ];
+        $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
+
+        $this->assertSame(200, $response->getStatusCode());
+    }
+
+    /**
+     * See: https://github.com/codeigniter4/CodeIgniter4/issues/7394
+     */
+    public function testResponseHeadersWithMultipleRequests()
+    {
+        $request = $this->getRequest([
+            'base_uri' => 'http://www.foo.com/api/v1/',
+        ]);
+
+        $output = "HTTP/2.0 200 OK
+Server: ddos-guard
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Content-Type: application/xml; charset=utf-8
+Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello1</title>";
+        $request->setOutput($output);
+
+        $response = $request->get('answer1');
+
+        $this->assertSame('<title>Hello1</title>', $response->getBody());
+
+        $responseHeaderKeys = [
+            'Server',
+            'Expires',
+            'Cache-Control',
+            'Pragma',
+            'Content-Type',
+            'Transfer-Encoding',
+        ];
+        $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
+
+        $this->assertSame(200, $response->getStatusCode());
+
+        $output = "HTTP/2.0 200 OK
+Server: ddos-guard
+Expires: Thu, 19 Nov 1982 08:52:00 GMT
+Content-Type: application/xml; charset=utf-8
+Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
+        $request->setOutput($output);
+
+        $response = $request->get('answer2');
+
+        $this->assertSame('<title>Hello2</title>', $response->getBody());
+
+        $responseHeaderKeys = [
+            'Server',
+            'Expires',
+            'Content-Type',
             'Transfer-Encoding',
         ];
         $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
