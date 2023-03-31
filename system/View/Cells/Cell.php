@@ -75,7 +75,7 @@ class Cell
         if (empty($view)) {
             // According to the docs, the name of the view file should be the
             // snake_cased version of the cell's class name, but for backward
-            // compactibility, the name also accepts '_cell' being omitted.
+            // compatibility, the name also accepts '_cell' being omitted.
             $ref      = new ReflectionClass($this);
             $view     = decamelize($ref->getShortName());
             $viewPath = dirname($ref->getFileName()) . DIRECTORY_SEPARATOR . $view . '.php';
