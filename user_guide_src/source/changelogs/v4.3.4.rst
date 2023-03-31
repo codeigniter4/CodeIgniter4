@@ -21,6 +21,9 @@ Changes
 Deprecations
 ************
 
+- **Text Helper:** :php:func:`random_string()`'s type ``basic``, ``md5``, and
+  ``sha1`` are deprecated. They are not cryptographically secure.
+
 Bugs Fixed
 **********
 

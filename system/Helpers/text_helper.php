@@ -538,6 +538,8 @@ if (! function_exists('random_string')) {
      *
      * @param string $type Type of random string.  basic, alpha, alnum, numeric, nozero, md5, sha1, and crypto
      * @param int    $len  Number of characters
+     *
+     * @deprecated The type 'basic', 'md5', and 'sha1' are deprecated. They are not cryptographically secure.
      */
     function random_string(string $type = 'alnum', int $len = 8): string
     {
