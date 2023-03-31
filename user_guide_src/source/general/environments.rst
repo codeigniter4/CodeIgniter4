@@ -13,6 +13,20 @@ tools loaded that you don't in production environments, etc.
     :local:
     :depth: 2
 
+************************
+The Defined Environments
+************************
+
+By default, CodeIgniter has three environments defined.
+
+- ``production`` for production
+- ``development`` for development
+- ``testing`` for PHPUnit testing
+
+The environment ``testing`` is reserved for PHPUnit testing. It has special
+conditions built into the framework at various places to assist with that.
+You can't use it for your development.
+
 .. _environment-constant:
 
 The ENVIRONMENT Constant
