@@ -108,8 +108,14 @@ In addition to affecting some basic framework behavior (see the next
 section), you may use this constant in your own development to
 differentiate between which environment you are running in.
 
+*******************
+Adding Environments
+*******************
+
+To add custom environments, you just need to add boot files for them.
+
 Boot Files
-----------
+==========
 
 CodeIgniter requires that a PHP script matching the environment's name is located
 under **APPPATH/Config/Boot**. These files can contain any customizations that
@@ -121,6 +127,12 @@ a fresh install:
 * development.php
 * production.php
 * testing.php
+
+For example, if you want to add ``staging`` environment for staging, all you need
+to do is:
+
+1. copy **APPPATH/Config/Boot/production.php** to **staging.php**.
+2. customize settings in **staging.php** if you want.
 
 *************************************
 Effects on Default Framework Behavior
