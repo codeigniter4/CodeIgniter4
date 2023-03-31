@@ -104,8 +104,9 @@ a fresh install:
 * production.php
 * testing.php
 
+*************************************
 Effects on Default Framework Behavior
-=====================================
+*************************************
 
 There are some places in the CodeIgniter system where the ``ENVIRONMENT``
 constant is used. This section describes how default framework behavior
