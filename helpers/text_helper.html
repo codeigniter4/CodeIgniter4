@@ -321,18 +321,19 @@ Useful for creating passwords or generating random hashes.</p>
 <p class="admonition-title">Warning</p>
 <p>For types: <strong>basic</strong>, <strong>md5</strong>, and <strong>sha1</strong>, generated strings
 are not cryptographically secure. Therefore, these types cannot be used
-for cryptographic purposes or purposes requiring unguessable return values.</p>
+for cryptographic purposes or purposes requiring unguessable return values.
+Since v4.3.3, these types are deprecated.</p>
 </div>
 <p>The first parameter specifies the type of string, the second parameter
 specifies the length. The following choices are available:</p>
 <ul class="simple">
 <li><p><strong>alpha</strong>: A string with lower and uppercase letters only.</p></li>
 <li><p><strong>alnum</strong>: Alphanumeric string with lower and uppercase characters.</p></li>
-<li><p><strong>basic</strong>: A random number based on <code class="docutils literal notranslate"><span class="pre">mt_rand()</span></code> (length ignored).</p></li>
+<li><p><strong>basic</strong>: [deprecated] A random number based on <code class="docutils literal notranslate"><span class="pre">mt_rand()</span></code> (length ignored).</p></li>
 <li><p><strong>numeric</strong>: Numeric string.</p></li>
 <li><p><strong>nozero</strong>: Numeric string with no zeros.</p></li>
-<li><p><strong>md5</strong>: An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">md5()</span></code> (fixed length of 32).</p></li>
-<li><p><strong>sha1</strong>: An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">sha1()</span></code> (fixed length of 40).</p></li>
+<li><p><strong>md5</strong>: [deprecated] An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">md5()</span></code> (fixed length of 32).</p></li>
+<li><p><strong>sha1</strong>: [deprecated] An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">sha1()</span></code> (fixed length of 40).</p></li>
 <li><p><strong>crypto</strong>: A random string based on <code class="docutils literal notranslate"><span class="pre">random_bytes()</span></code>.</p></li>
 </ul>
 <div class="admonition note">
