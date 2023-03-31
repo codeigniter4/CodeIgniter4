@@ -298,13 +298,19 @@ BCC batches.</p></li>
 <li><p><a class="reference internal" href="#using-the-email-library" id="id2">Using the Email Library</a></p>
 <ul>
 <li><p><a class="reference internal" href="#sending-email" id="id3">Sending Email</a></p></li>
-<li><p><a class="reference internal" href="#setting-email-preferences" id="id4">Setting Email Preferences</a></p></li>
-<li><p><a class="reference internal" href="#ssl-versus-tls-for-smtp-protocol" id="id5">SSL versus TLS for SMTP Protocol</a></p></li>
-<li><p><a class="reference internal" href="#email-preferences" id="id6">Email Preferences</a></p></li>
-<li><p><a class="reference internal" href="#overriding-word-wrapping" id="id7">Overriding Word Wrapping</a></p></li>
+<li><p><a class="reference internal" href="#setting-email-preferences" id="id4">Setting Email Preferences</a></p>
+<ul>
+<li><p><a class="reference internal" href="#setting-email-preferences-by-passing-an-array" id="id5">Setting Email Preferences by Passing an Array</a></p></li>
+<li><p><a class="reference internal" href="#setting-email-preferences-in-a-config-file" id="id6">Setting Email Preferences in a Config File</a></p></li>
+<li><p><a class="reference internal" href="#ssl-versus-tls-for-smtp-protocol" id="id7">SSL versus TLS for SMTP Protocol</a></p></li>
+<li><p><a class="reference internal" href="#reviewing-preferences" id="id8">Reviewing Preferences</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#namespace-CodeIgniter\Email" id="id8">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#email-preferences" id="id9">Email Preferences</a></p></li>
+<li><p><a class="reference internal" href="#overriding-word-wrapping" id="id10">Overriding Word Wrapping</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\Email" id="id11">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="using-the-email-library">
@@ -336,6 +342,8 @@ set your preferences in the <strong>app/Config/Email.php</strong> file.</p>
 messages are sent. You can either set them manually as described here,
 or automatically via preferences stored in your config file, described
 below:</p>
+<section id="setting-email-preferences-by-passing-an-array">
+<h4><a class="toc-backref" href="#id5">Setting Email Preferences by Passing an Array</a><a class="headerlink" href="#setting-email-preferences-by-passing-an-array" title="Permalink to this headline"></a></h4>
 <p>Preferences are set by passing an array of preference values to the
 email initialize method. Here is an example of how you might set some
 preferences:</p>
@@ -354,8 +362,9 @@ preferences:</p>
 <p>Most of the preferences have default values that will be used
 if you do not set them.</p>
 </div>
+</section>
 <section id="setting-email-preferences-in-a-config-file">
-<h4>Setting Email Preferences in a Config File<a class="headerlink" href="#setting-email-preferences-in-a-config-file" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id6">Setting Email Preferences in a Config File</a><a class="headerlink" href="#setting-email-preferences-in-a-config-file" title="Permalink to this headline"></a></h4>
 <p>If you prefer not to set preferences using the above method, you can
 instead put them into the config file. Simply open the
 <strong>app/Config/Email.php</strong> file, and set your configs in the
@@ -363,15 +372,8 @@ Email properties. Then save the file and it will be used automatically.
 You will NOT need to use the <code class="docutils literal notranslate"><span class="pre">$email-&gt;initialize()</span></code> method if
 you set your preferences in the config file.</p>
 </section>
-<section id="reviewing-preferences">
-<h4>Reviewing Preferences<a class="headerlink" href="#reviewing-preferences" title="Permalink to this headline"></a></h4>
-<p>The settings used for the last successful send are available from the
-instance property <code class="docutils literal notranslate"><span class="pre">$archive</span></code>. This is helpful for testing and debugging
-to determine that actual values at the time of the <code class="docutils literal notranslate"><span class="pre">send()</span></code> call.</p>
-</section>
-</section>
 <section id="ssl-versus-tls-for-smtp-protocol">
-<h3><a class="toc-backref" href="#id5">SSL versus TLS for SMTP Protocol</a><a class="headerlink" href="#ssl-versus-tls-for-smtp-protocol" title="Permalink to this headline"></a></h3>
+<h4><a class="toc-backref" href="#id7">SSL versus TLS for SMTP Protocol</a><a class="headerlink" href="#ssl-versus-tls-for-smtp-protocol" title="Permalink to this headline"></a></h4>
 <p>To protect the username, password and email content while communicating with the SMTP server,
 encryption on the channel should be used. Two different standards are widely deployed and
 it is important to understand the differences when trying to troubleshoot email sending
@@ -392,8 +394,15 @@ secured using TLS from the start and the <code class="docutils literal notransla
 with the SMTP server to switch from clear-text to an encrypted channel. The initial communication
 will be made in clear-text and the channel will be upgraded to TLS with the <code class="docutils literal notranslate"><span class="pre">STARTTLS</span></code> command.</p>
 </section>
+<section id="reviewing-preferences">
+<h4><a class="toc-backref" href="#id8">Reviewing Preferences</a><a class="headerlink" href="#reviewing-preferences" title="Permalink to this headline"></a></h4>
+<p>The settings used for the last successful send are available from the
+instance property <code class="docutils literal notranslate"><span class="pre">$archive</span></code>. This is helpful for testing and debugging
+to determine that actual values at the time of the <code class="docutils literal notranslate"><span class="pre">send()</span></code> call.</p>
+</section>
+</section>
 <section id="email-preferences">
-<h3><a class="toc-backref" href="#id6">Email Preferences</a><a class="headerlink" href="#email-preferences" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">Email Preferences</a><a class="headerlink" href="#email-preferences" title="Permalink to this headline"></a></h3>
 <p>The following is a list of all the preferences that can be set when
 sending email.</p>
 <table class="docutils align-default">
@@ -526,7 +535,7 @@ paths otherwise they will not work.</p></td>
 </table>
 </section>
 <section id="overriding-word-wrapping">
-<h3><a class="toc-backref" href="#id7">Overriding Word Wrapping</a><a class="headerlink" href="#overriding-word-wrapping" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">Overriding Word Wrapping</a><a class="headerlink" href="#overriding-word-wrapping" title="Permalink to this headline"></a></h3>
 <p>If you have word wrapping enabled (recommended to comply with RFC 822)
 and you have a very long link in your email it can get wrapped too,
 causing it to become un-clickable by the person receiving it.
@@ -545,7 +554,7 @@ message like this:</p>
 </section>
 </section>
 <section id="namespace-CodeIgniter\Email">
-<span id="class-reference"></span><h2><a class="toc-backref" href="#id8">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Email" title="Permalink to this headline"></a></h2>
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id11">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Email" title="Permalink to this headline"></a></h2>
 <dl class="php class">
 <dt class="sig sig-object php" id="CodeIgniter\Email\Email">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\Email\</span></span><span class="sig-name descname"><span class="pre">Email</span></span><a class="headerlink" href="#CodeIgniter\Email\Email" title="Permalink to this definition"></a></dt>
@@ -1035,7 +1044,7 @@ Valid options are: <strong>headers</strong>, <strong>subject</strong>, <strong>b
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 30, 2023.
+      <span class="lastupdated">Last updated on Mar 31, 2023.
       </span></p>
   </div>
 
