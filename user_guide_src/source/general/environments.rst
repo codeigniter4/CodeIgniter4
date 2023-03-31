@@ -20,7 +20,7 @@ The ENVIRONMENT Constant
 
 By default, CodeIgniter comes with the ``ENVIRONMENT`` constant set to use
 the value provided in ``$_SERVER['CI_ENVIRONMENT']``, otherwise defaulting to
-``production``. This can be set in several ways depending on your server setup.
+``production``.
 
 .. note:: The environment ``testing`` is reserved for PHPUnit testing.
     It has special conditions built into the framework at various places to assist with that.
@@ -29,6 +29,8 @@ the value provided in ``$_SERVER['CI_ENVIRONMENT']``, otherwise defaulting to
 .. note:: You can check the current environment by ``spark env`` command::
 
     > php spark env
+
+This can be set in several ways depending on your server setup.
 
 .env
 ----
