@@ -148,7 +148,7 @@ constant is used. This section describes how default framework behavior
 is affected.
 
 Error Reporting
----------------
+===============
 
 Setting the ``ENVIRONMENT`` constant to a value of ``development`` will cause
 all PHP errors to be rendered to the browser when they occur.
