@@ -27,6 +27,9 @@ The environment ``testing`` is reserved for PHPUnit testing. It has special
 conditions built into the framework at various places to assist with that.
 You can't use it for your development.
 
+If you want another environment, e.g., for staging, you can add custom environments.
+See `Adding Environments`_.
+
 *******************
 Setting Environment
 *******************
