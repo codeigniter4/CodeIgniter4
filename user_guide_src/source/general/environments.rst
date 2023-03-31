@@ -23,9 +23,9 @@ By default, CodeIgniter has three environments defined.
 - ``development`` for development
 - ``testing`` for PHPUnit testing
 
-The environment ``testing`` is reserved for PHPUnit testing. It has special
-conditions built into the framework at various places to assist with that.
-You can't use it for your development.
+.. important:: The environment ``testing`` is reserved for PHPUnit testing. It
+    has special conditions built into the framework at various places to assist
+    with that. You can't use it for your development.
 
 If you want another environment, e.g., for staging, you can add custom environments.
 See `Adding Environments`_.
