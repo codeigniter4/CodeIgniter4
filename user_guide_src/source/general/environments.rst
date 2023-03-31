@@ -44,10 +44,6 @@ the value provided in ``$_SERVER['CI_ENVIRONMENT']``, otherwise defaulting to
     It has special conditions built into the framework at various places to assist with that.
     You can't use it for your development.
 
-.. note:: You can check the current environment by ``spark env`` command::
-
-    > php spark env
-
 This can be set in several ways depending on your server setup.
 
 .env
@@ -133,6 +129,16 @@ to do is:
 
 1. copy **APPPATH/Config/Boot/production.php** to **staging.php**.
 2. customize settings in **staging.php** if you want.
+
+**********************************
+Confirming the Current Environment
+**********************************
+
+To confirm the current environment, simply echo the constant ``ENVIRONMENT``.
+
+You can also check the current environment by ``spark env`` command::
+
+    > php spark env
 
 *************************************
 Effects on Default Framework Behavior
