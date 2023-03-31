@@ -79,7 +79,7 @@ class Cell
             $ref      = new ReflectionClass($this);
             $view     = decamelize($ref->getShortName());
             $viewPath = dirname($ref->getFileName()) . DIRECTORY_SEPARATOR . $view . '.php';
-            $view     = file_exists($viewPath) ? $viewPath : str_replace('_cell', '', $view);
+            $view     = is_file($viewPath) ? $viewPath : str_replace('_cell', '', $view);
         }
 
         // Locate our view, preferring the directory of the class.
