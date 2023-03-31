@@ -36,13 +36,9 @@ Setting Environment
 The ENVIRONMENT Constant
 ========================
 
-By default, CodeIgniter comes with the ``ENVIRONMENT`` constant set to use
-the value provided in ``$_SERVER['CI_ENVIRONMENT']``, otherwise defaulting to
-``production``.
-
-.. note:: The environment ``testing`` is reserved for PHPUnit testing.
-    It has special conditions built into the framework at various places to assist with that.
-    You can't use it for your development.
+To set your environment, CodeIgniter comes with the ``ENVIRONMENT`` constant.
+If you set ``$_SERVER['CI_ENVIRONMENT']``, the value will be used,
+otherwise defaulting to ``production``.
 
 This can be set in several ways depending on your server setup.
 
