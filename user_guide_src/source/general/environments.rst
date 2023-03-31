@@ -35,7 +35,7 @@ This can be set in several ways depending on your server setup.
 .env
 ----
 
-The simplest method to set the variable is in your :doc:`.env file </general/configuration>`.
+The simplest method to set the variable is in your :ref:`.env file <dotenv-file>`.
 
 .. code-block:: ini
 
