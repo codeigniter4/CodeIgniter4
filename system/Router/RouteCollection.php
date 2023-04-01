@@ -95,6 +95,12 @@ class RouteCollection implements RouteCollectionInterface
     protected array $routeFiles = [];
 
     /**
+     * The path to the file that contains
+     * the route definitions within "modules".
+     */
+    protected string $modulePath;
+
+    /**
      * Defined placeholders that can be used
      * within the
      *
@@ -263,6 +269,7 @@ class RouteCollection implements RouteCollectionInterface
         $this->override404        = $routing->override404;
         $this->autoRoute          = $routing->autoRoute;
         $this->routeFiles         = $routing->routeFiles;
+        $this->modulePath         = $routing->modulePath;
         $this->prioritize         = $routing->prioritize;
     }
 
@@ -320,7 +327,12 @@ class RouteCollection implements RouteCollectionInterface
         $routes = $this;
 
         if ($this->moduleConfig->shouldDiscover('routes')) {
-            $files = $this->fileLocator->search('Config/Routes.php');
+            if (empty($this->modulePath)) {
+                log_message('warning', 'Routes module path is not set in Config/Routing.php.');
+                return;
+            }
+
+            $files = $this->fileLocator->search($this->modulePath);
 
             foreach ($files as $file) {
                 // Don't include our main file again...

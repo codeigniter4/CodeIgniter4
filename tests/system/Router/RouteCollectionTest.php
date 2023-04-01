@@ -51,6 +51,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routerConfig                   = new \Config\Routing();
         $routerConfig->defaultNamespace = '\\';
+        $routerConfig->modulePath       = 'Config/Routes.php';
 
         return (new RouteCollection($loader, $moduleConfig, $routerConfig))->setHTTPVerb('get');
     }

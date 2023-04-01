@@ -34,6 +34,7 @@ To clean up the routing system, the following changes were made:
     - New ``app/Config/Routing.php`` file that holds the settings that used to be in the Routes file.
     - The ``app/Config/Routes.php`` file was simplified so that it only contains the routes without settings and verbiage to clutter the file.
     - The ``app/Config/Routes.php`` file was moved to ``app/Routes.php`` to make it easier to find. When upgrading, you can change the ``app/Config/Routing.php` file, ``$routeFiles`` property to point to the old location if you prefer.
+    - Any module ``Routes.php`` files are expected to be in the namespace's root directory now. To adjust this to match the functionality of existing projects, you can cahnge the ``$modulePath`` property in ``app/Config/Routing.php`` to ``'Config/Routes.php'``.
     - The environment-specific routes files are no longer loaded automatically. To load those, you must add them to the ``$routeFiles`` property in ``app/Config/Routing.php``.
 
 Config

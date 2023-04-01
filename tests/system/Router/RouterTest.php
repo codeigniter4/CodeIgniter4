@@ -36,7 +36,12 @@ final class RouterTest extends CIUnitTestCase
 
         $moduleConfig          = new Modules();
         $moduleConfig->enabled = false;
-        $this->collection      = new RouteCollection(Services::locator(), $moduleConfig);
+
+        $routerConfig                   = new \Config\Routing();
+        $routerConfig->defaultNamespace = '\\';
+        $routerConfig->modulePath       = 'Config/Routes.php';
+
+        $this->collection      = new RouteCollection(Services::locator(), $moduleConfig, $routerConfig);
 
         $routes = [
             '/'                                               => 'Home::index',

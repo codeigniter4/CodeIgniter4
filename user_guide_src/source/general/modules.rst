@@ -154,6 +154,8 @@ the **Modules** config file, described above.
 When working with modules, it can be a problem if the routes in the application contain wildcards.
 In that case, see :ref:`routing-priority`.
 
+By default, route files are named **Routes.php** and are located in the root directory of the module. You can change this by setting the ``$modulePath`` variable in the **Routing** config file to path to the file, relative to the module's root directory. For example, if you wanted to put your routes in a file named **Routes.php** in the module's ``Config`` directory, you would set the ``$modulePath`` variable to ``Config/Routes.php``.
+
 Filters
 =======
 
