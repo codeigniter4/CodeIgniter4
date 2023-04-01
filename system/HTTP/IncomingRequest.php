@@ -707,7 +707,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter Filter Constant
      * @param array|int|null    $flags  Option
      *
-     * @return array|bool|int|object|null
+     * @return array|bool|float|int|object|string|null
      */
     public function getRawInputVar($index = null, ?int $filter = null, $flags = null)
     {
