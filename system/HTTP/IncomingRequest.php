@@ -761,7 +761,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter A filter name to apply.
      * @param array|int|null    $flags
      *
-     * @return array|bool|string|null
+     * @return array|bool|float|int|object|string|null
      */
     public function getGet($index = null, $filter = null, $flags = null)
     {
@@ -775,7 +775,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter A filter name to apply
      * @param array|int|null    $flags
      *
-     * @return array|bool|string|null
+     * @return array|bool|float|int|object|string|null
      */
     public function getPost($index = null, $filter = null, $flags = null)
     {
@@ -789,7 +789,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter A filter name to apply
      * @param array|int|null    $flags
      *
-     * @return array|bool|string|null
+     * @return array|bool|float|int|object|string|null
      */
     public function getPostGet($index = null, $filter = null, $flags = null)
     {
@@ -811,7 +811,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter A filter name to apply
      * @param array|int|null    $flags
      *
-     * @return array|bool|string|null
+     * @return array|bool|float|int|object|string|null
      */
     public function getGetPost($index = null, $filter = null, $flags = null)
     {
@@ -833,7 +833,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter A filter name to be applied
      * @param array|int|null    $flags
      *
-     * @return array|bool|string|null
+     * @return array|bool|float|int|object|string|null
      */
     public function getCookie($index = null, $filter = null, $flags = null)
     {
