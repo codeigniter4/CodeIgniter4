@@ -88,11 +88,8 @@ class CellGenerator extends BaseCommand
         // Form the view name
         $segments = explode('\\', $this->qualifyClassName());
 
-        $view = array_pop($segments);
-        $view = str_replace('Cell', '', decamelize($view));
-        if (strpos($view, '_cell') === false) {
-            $view .= '_cell';
-        }
+        $view       = array_pop($segments);
+        $view       = decamelize($view);
         $segments[] = $view;
         $view       = implode('\\', $segments);
 
