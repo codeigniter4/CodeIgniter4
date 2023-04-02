@@ -73,7 +73,7 @@ final class CellGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('class Another extends Cell', $contents);
 
         // Check the view was generated
-        $file = APPPATH . 'Cells/another_cell.php';
+        $file = APPPATH . 'Cells/another.php';
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
     }
