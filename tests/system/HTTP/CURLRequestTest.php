@@ -749,15 +749,15 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame('<title>Update success! config</title>', $response->getBody());
 
         $responseHeaderKeys = [
-            'Cache-Control',
-            'Content-Type',
             'Server',
             'Connection',
             'Keep-Alive',
             'Set-Cookie',
             'Date',
             'Expires',
+            'Cache-Control',
             'Pragma',
+            'Content-Type',
             'Transfer-Encoding',
         ];
         $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
@@ -780,19 +780,19 @@ Expires: Thu, 19 Nov 1981 08:52:00 GMT
 Cache-Control: no-store, no-cache, must-revalidate
 Pragma: no-cache
 Content-Type: application/xml; charset=utf-8
-Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello</title>";
+Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello1</title>";
         $request->setOutput($output);
 
-        $response = $request->get('answer');
+        $response = $request->get('answer1');
 
-        $this->assertSame('<title>Hello</title>', $response->getBody());
+        $this->assertSame('<title>Hello1</title>', $response->getBody());
 
         $responseHeaderKeys = [
-            'Cache-Control',
-            'Content-Type',
             'Server',
             'Expires',
+            'Cache-Control',
             'Pragma',
+            'Content-Type',
             'Transfer-Encoding',
         ];
         $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
@@ -803,19 +803,17 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello</title>";
 Server: ddos-guard
 Expires: Thu, 19 Nov 1982 08:52:00 GMT
 Content-Type: application/xml; charset=utf-8
-Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello</title>";
+Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         $request->setOutput($output);
 
-        $response = $request->get('answer');
+        $response = $request->get('answer2');
 
-        $this->assertSame('<title>Hello</title>', $response->getBody());
+        $this->assertSame('<title>Hello2</title>', $response->getBody());
 
         $responseHeaderKeys = [
-            'Cache-Control',
-            'Content-Type',
             'Server',
             'Expires',
-            'Pragma',
+            'Content-Type',
             'Transfer-Encoding',
         ];
         $this->assertSame($responseHeaderKeys, array_keys($response->headers()));

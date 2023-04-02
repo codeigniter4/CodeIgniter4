@@ -469,10 +469,8 @@ class CURLRequest extends OutgoingRequest
      */
     protected function setResponseHeaders(array $headers = [])
     {
-        if ($this->shareOptions === false) {
-            foreach ($this->response->headers() as $header) {
-                $this->response->removeHeader($header->getName());
-            }
+        foreach ($this->response->headers() as $header) {
+            $this->response->removeHeader($header->getName());
         }
 
         foreach ($headers as $header) {
