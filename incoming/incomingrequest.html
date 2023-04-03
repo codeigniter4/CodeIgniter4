@@ -847,7 +847,7 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$_REQUEST</span></code> if no parameters supplied, otherwise the REQUEST value if found, or null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed|null</span></code></span></p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|bool|float|int|object|string|null</span></code></span></p>
 </dd>
 </dl>
 <p>The first parameter will contain the name of the REQUEST item you are looking for:</p>
@@ -907,7 +907,7 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$_GET</span></code> if no parameters supplied, otherwise the GET value if found, or null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed|null</span></code></span></p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|bool|float|int|object|string|null</span></code></span></p>
 </dd>
 </dl>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">getVar()</span></code>, only it fetches GET data.</p>
@@ -930,7 +930,7 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$_POST</span></code> if no parameters supplied, otherwise the POST value if found, or null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><p>mixed|null</p>
+<dd class="field-odd"><p><p>array|bool|float|int|object|string|null</p>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">getVar()</span></code>, only it fetches POST data.</p>
 </p>
 </dd>
@@ -955,7 +955,7 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 otherwise looks for POST value, if nothing found looks for GET value, if no value found returns null</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed|null</span></code></span></p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|bool|float|int|object|string|null</span></code></span></p>
 </dd>
 </dl>
 <p>This method works pretty much the same way as <code class="docutils literal notranslate"><span class="pre">getPost()</span></code> and <code class="docutils literal notranslate"><span class="pre">getGet()</span></code>, only combined.
@@ -988,7 +988,7 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 otherwise looks for GET value, if nothing found looks for POST value, if no value found returns null</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed|null</span></code></span></p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|bool|float|int|object|string|null</span></code></span></p>
 </dd>
 </dl>
 <p>This method works pretty much the same way as <code class="docutils literal notranslate"><span class="pre">getPost()</span></code> and <code class="docutils literal notranslate"><span class="pre">getGet()</span></code>, only combined.
@@ -1009,7 +1009,7 @@ Although GET data will be preferred in case of name conflict.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – COOKIE name</p></li>
+<li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string|null</span></code></span>) – COOKIE name</p></li>
 <li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be
 found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
 <li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Flags to apply. A list of flags can be found
@@ -1020,7 +1020,7 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code> if no parameters supplied, otherwise the COOKIE value if found or null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|bool|float|int|object|string|null</span></code></span></p>
 </dd>
 </dl>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">getPost()</span></code> and <code class="docutils literal notranslate"><span class="pre">getGet()</span></code>, only it fetches cookie data:</p>
@@ -1050,7 +1050,7 @@ your configured <code class="docutils literal notranslate"><span class="pre">Con
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Value name</p></li>
+<li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string|null</span></code></span>) – Value name</p></li>
 <li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be
 found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
 <li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Flags to apply. A list of flags can be found
@@ -1061,7 +1061,7 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> item value if found, null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|bool|float|int|object|string|null</span></code></span></p>
 </dd>
 </dl>
 <p>This method is identical to the <code class="docutils literal notranslate"><span class="pre">getPost()</span></code>, <code class="docutils literal notranslate"><span class="pre">getGet()</span></code> and <code class="docutils literal notranslate"><span class="pre">getCookie()</span></code>
@@ -1094,7 +1094,7 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 <dd class="field-even"><p>The User Agent string, as found in the SERVER data, or null if not found.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
+<dd class="field-odd"><p><span><a class="reference internal" href="../libraries/user_agent.html#CodeIgniter\HTTP\UserAgent" title="CodeIgniter\HTTP\UserAgent"><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\UserAgent</span></code></a></span></p>
 </dd>
 </dl>
 <p>This method returns the User Agent string from the SERVER data:</p>
@@ -1158,7 +1158,7 @@ update the underlying <code class="docutils literal notranslate"><span class="pr
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 31, 2023.
+      <span class="lastupdated">Last updated on Apr 03, 2023.
       </span></p>
   </div>
 
