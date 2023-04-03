@@ -244,7 +244,7 @@ trait RequestTrait
      * @param int|null          $filter Filter constant
      * @param array|int|null    $flags  Options
      *
-     * @return array|bool|string|null
+     * @return array|bool|float|int|object|string|null
      */
     public function fetchGlobal(string $method, $index = null, ?int $filter = null, $flags = null)
     {
