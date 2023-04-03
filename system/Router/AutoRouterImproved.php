@@ -104,6 +104,14 @@ final class AutoRouterImproved implements AutoRouterInterface
         $this->method     = $this->defaultMethod;
     }
 
+    private function createSegments(string $uri)
+    {
+        $segments = explode('/', $uri);
+        $segments = array_filter($segments, static fn ($segment) => $segment !== '');
+        // numerically reindex the array, removing gaps
+        return array_values($segments);
+    }
+
     /**
      * Finds controller, method and params from the URI.
      *
@@ -111,7 +119,7 @@ final class AutoRouterImproved implements AutoRouterInterface
      */
     public function getRoute(string $uri): array
     {
-        $segments = explode('/', $uri);
+        $segments = $this->createSegments($uri);
 
         // Check for Module Routes.
         if (
@@ -275,10 +283,6 @@ final class AutoRouterImproved implements AutoRouterInterface
      */
     private function scanControllers(array $segments): array
     {
-        $segments = array_filter($segments, static fn ($segment) => $segment !== '');
-        // numerically reindex the array, removing gaps
-        $segments = array_values($segments);
-
         // Loop through our segments and return as soon as a controller
         // is found or when such a directory doesn't exist
         $c = count($segments);
