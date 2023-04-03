@@ -144,8 +144,8 @@ jobs:
         if: ${{ contains(inputs.extra-extensions, 'imagick') }}
         run: |
           sudo apt-get update
-          sudo apt-get install --reinstall libgs9-common fonts-noto-mono libgs9:amd64 libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 gsfonts libopenjp2-7:amd64 fonts-droid-fallback fonts-dejavu-core
-          sudo apt-get install -y imagemagick
+          sudo apt-get install --reinstall libgs9-common fonts-noto-mono libgs9:amd64 libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 libopenjp2-7:amd64 fonts-droid-fallback fonts-dejavu-core
+          sudo apt-get install -y gsfonts libmagickwand-dev imagemagick
           sudo apt-get install --fix-broken
 
       - name: Checkout
