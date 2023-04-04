@@ -794,24 +794,24 @@ final class TableTest extends CIUnitTestCase
     public function orderedColumnUsecases(): array
     {
         return [
-            [
-                'heading' => ['id' => 'ID', 'name' => 'Name', 'age' => 'Age'],
-                'row' => ['name' => 'Max', 'age' => 30, 'id' => 5],
+            'reorder example #1' => [
+                'heading'              => ['id' => 'ID', 'name' => 'Name', 'age' => 'Age'],
+                'row'                  => ['name' => 'Max', 'age' => 30, 'id' => 5],
                 'expectContainsString' => '<td>5</td><td>Max</td><td>30</td>'
             ],
-            [
-                'heading' => ['id' => 'ID', 'age' => 'Age', 'name' => 'Name'],
-                'row' => ['name' => 'Fred', 'age' => 30, 'id' => 5],
+            'reorder example #2' => [
+                'heading'              => ['id' => 'ID', 'age' => 'Age', 'name' => 'Name'],
+                'row'                  => ['name' => 'Fred', 'age' => 30, 'id' => 5],
                 'expectContainsString' => '<td>5</td><td>30</td><td>Fred</td>'
             ],
-            [
-                'heading' => ['id' => 'ID', 'name' => 'Name'],
-                'row' => ['name' => 'Fred', 'age' => 30, 'id' => 5],
+            '2 col heading, 3 col data row' => [
+                'heading'              => ['id' => 'ID', 'name' => 'Name'],
+                'row'                  => ['name' => 'Fred', 'age' => 30, 'id' => 5],
                 'expectContainsString' => '<td>5</td><td>Fred</td>'
             ],
-            [
-                'heading' => ['id' => 'ID', 'age' => 'Age', 'name' => 'Name'],
-                'row' => ['name' => 'Fred', 'id' => 5],
+            '3 col heading, 2 col data row' => [
+                'heading'              => ['id' => 'ID', 'age' => 'Age', 'name' => 'Name'],
+                'row'                  => ['name' => 'Fred', 'id' => 5],
                 'expectContainsString' => '<td>5</td><td></td><td>Fred</td>'
             ]
         ];

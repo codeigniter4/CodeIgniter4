@@ -85,8 +85,6 @@ class Table
 
     /**
      * Order each inserted row by heading keys
-     * 
-     * @var bool
      */
     public bool $rowKeysSyncWithHeadingKeys = false;
 
@@ -168,7 +166,7 @@ class Table
 
         // Turn off the auto-heading feature since it's doubtful we
         // will want headings from a one-dimensional array
-        $this->autoHeading = false;
+        $this->autoHeading                = false;
         $this->rowKeysSyncWithHeadingKeys = false;
 
         if ($columnLimit === 0) {
@@ -217,7 +215,7 @@ class Table
     {
         $tmpRow = $this->_prepArgs(func_get_args());
 
-        if ($this->rowKeysSyncWithHeadingKeys && !empty($this->heading)) {
+        if ($this->rowKeysSyncWithHeadingKeys && ! empty($this->heading)) {
             // each key has an index
             $keyIndex = array_flip(array_keys($this->heading));
 
@@ -225,13 +223,13 @@ class Table
             $missingKeys = array_diff_key($keyIndex, $tmpRow);
 
             // Remove all keys which don't exist in $keyIndex
-            $tmpRow = array_filter($tmpRow, static fn($k) => array_key_exists($k, $keyIndex), ARRAY_FILTER_USE_KEY);
+            $tmpRow = array_filter($tmpRow, static fn ($k) => array_key_exists($k, $keyIndex), ARRAY_FILTER_USE_KEY);
 
             // add missing keys to row, but use $this->emptyCells
-            $tmpRow = array_merge($tmpRow, array_map(fn($v) => ['data' => $this->emptyCells], $missingKeys));
+            $tmpRow = array_merge($tmpRow, array_map(fn ($v) => ['data' => $this->emptyCells], $missingKeys));
 
             // order keys by $keyIndex values
-            uksort($tmpRow, static fn($k1, $k2) => $keyIndex[$k1] <=> $keyIndex[$k2]);
+            uksort($tmpRow, static fn ($k1, $k2) => $keyIndex[$k1] <=> $keyIndex[$k2]);
         }
         $this->rows[] = $tmpRow;
 
@@ -240,13 +238,9 @@ class Table
 
     /**
      * Set to true if each row column should be synced by keys defined in heading.
-     * 
+     *
      * If a row has a key which does not exist in heading, it will be filtered out
      * If a row does not have a key which exists in heading, the field will stay empty
-     * 
-     * @param bool $orderByKey 
-     * 
-     * @return Table
      */
     public function setSyncRowKeysWithHeadingKeys(bool $orderByKey): Table
     {
@@ -480,7 +474,6 @@ class Table
 
         foreach ($data as &$row) {
             $this->addRow($row);
-            //$this->rows[] = $this->_prepArgs($row);
         }
     }
 
