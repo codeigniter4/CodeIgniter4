@@ -11,7 +11,7 @@ tools loaded that you don't in production environments, etc.
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 ************************
 The Defined Environments
