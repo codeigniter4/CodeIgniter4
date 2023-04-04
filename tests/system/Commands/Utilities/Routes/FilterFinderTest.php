@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
+use Config\Routing;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
@@ -52,7 +53,7 @@ final class FilterFinderTest extends CIUnitTestCase
 
     private function createRouteCollection(array $routes = []): RouteCollection
     {
-        $collection = new RouteCollection(Services::locator(), $this->moduleConfig);
+        $collection = new RouteCollection(Services::locator(), $this->moduleConfig, new Routing());
 
         $routes = ($routes !== []) ? $routes : [
             'users'                   => 'Users::index',

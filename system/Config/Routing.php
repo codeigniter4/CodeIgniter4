@@ -28,16 +28,6 @@ class Routing extends BaseConfig
     ];
 
     /**
-     * When discovering routes within "modules", or namespaces other
-     * than "App", this is the path relative to the module's root
-     * directory.
-     *
-     * Default: 'Routes.php'
-     * Legacy: 'Config/Routes.php'
-     */
-    public string $modulePath = 'Routes.php';
-
-    /**
      * The default namespace to use for Controllers when no other
      * namespace has been specified.
      *
