@@ -7,9 +7,9 @@ $data = [
         'size'  => 'Small',
     ],
     [
-        'size'  => 'Large',
-        'age'   => '24',
-        'name'  => 'Mary',
+        'size' => 'Large',
+        'age'  => '24',
+        'name' => 'Mary',
     ],
     [
         'color' => 'Green',
