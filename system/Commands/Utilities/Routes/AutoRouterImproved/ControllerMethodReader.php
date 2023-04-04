@@ -85,23 +85,7 @@ final class ControllerMethodReader
                             continue;
                         }
 
-                        $params      = [];
-                        $routeParams = '';
-                        $refParams   = $method->getParameters();
-
-                        foreach ($refParams as $param) {
-                            $required = true;
-                            if ($param->isOptional()) {
-                                $required = false;
-
-                                $routeParams .= '[/..]';
-                            } else {
-                                $routeParams .= '/..';
-                            }
-
-                            // [variable_name => required?]
-                            $params[$param->getName()] = $required;
-                        }
+                        [$params, $routeParams] = $this->getParameters($method);
 
                         // Route for the default method.
                         $output[] = [
@@ -117,23 +101,7 @@ final class ControllerMethodReader
 
                     $route = $classInUri . '/' . $methodInUri;
 
-                    $params      = [];
-                    $routeParams = '';
-                    $refParams   = $method->getParameters();
-
-                    foreach ($refParams as $param) {
-                        $required = true;
-                        if ($param->isOptional()) {
-                            $required = false;
-
-                            $routeParams .= '[/..]';
-                        } else {
-                            $routeParams .= '/..';
-                        }
-
-                        // [variable_name => required?]
-                        $params[$param->getName()] = $required;
-                    }
+                    [$params, $routeParams] = $this->getParameters($method);
 
                     // If it is the default controller, the method will not be
                     // routed.
@@ -153,6 +121,29 @@ final class ControllerMethodReader
         }
 
         return $output;
+    }
+
+    private function getParameters(ReflectionMethod $method): array
+    {
+        $params      = [];
+        $routeParams = '';
+        $refParams   = $method->getParameters();
+
+        foreach ($refParams as $param) {
+            $required = true;
+            if ($param->isOptional()) {
+                $required = false;
+
+                $routeParams .= '[/..]';
+            } else {
+                $routeParams .= '/..';
+            }
+
+            // [variable_name => required?]
+            $params[$param->getName()] = $required;
+        }
+
+        return [$params, $routeParams];
     }
 
     /**
