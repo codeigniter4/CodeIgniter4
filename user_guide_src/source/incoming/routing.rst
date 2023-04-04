@@ -22,7 +22,7 @@ First, let's look at Defined Route Routing. If you want to use Auto Routing, see
 Setting Routing Rules
 *********************
 
-Routing rules are defined in the **app/Routes.php** file. In it you'll see that
+Routing rules are defined in the **app/Config/Routes.php** file. In it you'll see that
 it creates an instance of the RouteCollection class (``$routes``) that permits you to specify your own routing criteria.
 Routes can be specified using placeholders or Regular Expressions.
 
@@ -408,7 +408,7 @@ The value for the filter can be a string or an array of strings:
 
 See :doc:`Controller Filters <filters>` for more information on setting up filters.
 
-.. Warning:: If you set filters to routes in **app/Routes.php**
+.. Warning:: If you set filters to routes in **app/Config/Routes.php**
     (not in **app/Config/Filters.php**), it is recommended to disable Auto Routing (Legacy).
     When :ref:`auto-routing-legacy` is enabled, it may be possible that a controller can be accessed
     via a different URL than the configured route,
@@ -677,7 +677,7 @@ See :ref:`Auto Routing in Controllers <controller-auto-routing-improved>` for mo
 Configuration Options
 =====================
 
-These options are available at the top of **app/Routes.php**.
+These options are available at the top of **app/Config/Routes.php**.
 
 Default Controller
 ------------------
@@ -720,7 +720,7 @@ Auto Routing (Legacy)
 Auto Routing (Legacy) is a routing system from CodeIgniter 3.
 It can automatically route HTTP requests based on conventions and execute the corresponding controller methods.
 
-It is recommended that all routes are defined in the **app/Routes.php** file,
+It is recommended that all routes are defined in the **app/Config/Routes.php** file,
 or to use :ref:`auto-routing-improved`,
 
 .. warning:: To prevent misconfiguration and miscoding, we recommend that you do not use
@@ -734,7 +734,7 @@ Enable Auto Routing (Legacy)
 
 Since v4.2.0, the auto-routing is disabled by default.
 
-To use it, you need to change the setting ``setAutoRoute()`` option to true in **app/Routes.php**::
+To use it, you need to change the setting ``$autoRoute`` option to true in **app/Config/Routing.php**::
 
     $routes->setAutoRoute(true);
 
@@ -761,7 +761,7 @@ See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>`
 Configuration Options (Legacy)
 ==============================
 
-These options are available at the top of **app/Routes.php**.
+These options are available at the top of **app/Config/Routes.php**.
 
 Default Controller (Legacy)
 ---------------------------
