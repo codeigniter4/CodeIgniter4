@@ -308,3 +308,14 @@ GeneratorTrait
 
 All generator commands must use the ``GeneratorTrait`` to fully utilize its methods that are used in code
 generation.
+
+*************************************
+Accessing a Custom Generator Template
+*************************************
+
+By default, all generator templates will be looked up at the ``CodeIgniter\Commands\Generators\Views`` namespace.
+To declare a custom location for your custom generator template, you will need to add it to the ``app/Config/Generators.php``
+file. For example, if you have a command ``make:awesome-command`` and your generator template is located within your *app*
+directory ``app/Commands/Generators/Views/awesomecommand.tpl.php``, you would update the config file like so:
+
+.. literalinclude:: cli_generators/001.php
