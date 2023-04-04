@@ -797,23 +797,23 @@ final class TableTest extends CIUnitTestCase
             'reorder example #1' => [
                 'heading'              => ['id' => 'ID', 'name' => 'Name', 'age' => 'Age'],
                 'row'                  => ['name' => 'Max', 'age' => 30, 'id' => 5],
-                'expectContainsString' => '<td>5</td><td>Max</td><td>30</td>'
+                'expectContainsString' => '<td>5</td><td>Max</td><td>30</td>',
             ],
             'reorder example #2' => [
                 'heading'              => ['id' => 'ID', 'age' => 'Age', 'name' => 'Name'],
                 'row'                  => ['name' => 'Fred', 'age' => 30, 'id' => 5],
-                'expectContainsString' => '<td>5</td><td>30</td><td>Fred</td>'
+                'expectContainsString' => '<td>5</td><td>30</td><td>Fred</td>',
             ],
             '2 col heading, 3 col data row' => [
                 'heading'              => ['id' => 'ID', 'name' => 'Name'],
                 'row'                  => ['name' => 'Fred', 'age' => 30, 'id' => 5],
-                'expectContainsString' => '<td>5</td><td>Fred</td>'
+                'expectContainsString' => '<td>5</td><td>Fred</td>',
             ],
             '3 col heading, 2 col data row' => [
                 'heading'              => ['id' => 'ID', 'age' => 'Age', 'name' => 'Name'],
                 'row'                  => ['name' => 'Fred', 'id' => 5],
-                'expectContainsString' => '<td>5</td><td></td><td>Fred</td>'
-            ]
+                'expectContainsString' => '<td>5</td><td></td><td>Fred</td>',
+            ],
         ];
     }
 }
