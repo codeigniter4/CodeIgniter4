@@ -88,6 +88,15 @@ mentioned in heading, it places an empty cell for that spot.
 
 .. literalinclude:: table/019.php
 
+.. important:: You must call ``setSyncRowKeysWithHeadingKeys(true)`` and
+    ``setHeading([...])`` before adding any rows via ``addRow([...])`` where
+    the rearrangement of columns takes place.
+
+You get the same result by using the result array is input in ``generate()``
+
+.. literalinclude:: table/020.php
+
+
 ***************
 Class Reference
 ***************
