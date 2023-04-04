@@ -235,6 +235,45 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame(['15'], $params);
     }
 
+    public function testAutoRouteFallbackToDefaultControllerOneParam()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('subfolder/15');
+
+        $this->assertSame('Subfolder/', $directory);
+        $this->assertSame('\CodeIgniter\Router\Controllers\Subfolder\Home', $controller);
+        $this->assertSame('getIndex', $method);
+        $this->assertSame(['15'], $params);
+    }
+
+    public function testAutoRouteFallbackToDefaultControllerTwoParams()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('subfolder/15/20');
+
+        $this->assertSame('Subfolder/', $directory);
+        $this->assertSame('\CodeIgniter\Router\Controllers\Subfolder\Home', $controller);
+        $this->assertSame('getIndex', $method);
+        $this->assertSame(['15', '20'], $params);
+    }
+
+    public function testAutoRouteFallbackToDefaultControllerNoParams()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('subfolder');
+
+        $this->assertSame('Subfolder/', $directory);
+        $this->assertSame('\CodeIgniter\Router\Controllers\Subfolder\Home', $controller);
+        $this->assertSame('getIndex', $method);
+        $this->assertSame([], $params);
+    }
+
     public function testAutoRouteRejectsSingleDot()
     {
         $this->expectException(PageNotFoundException::class);
