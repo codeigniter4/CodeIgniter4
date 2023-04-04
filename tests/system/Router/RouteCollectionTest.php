@@ -15,6 +15,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
+use Config\Routing;
 use Tests\Support\Controllers\Hello;
 
 /**
@@ -49,7 +50,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             $moduleConfig->enabled = false;
         }
 
-        $routerConfig                   = new \Config\Routing();
+        $routerConfig                   = new Routing();
         $routerConfig->defaultNamespace = '\\';
 
         return (new RouteCollection($loader, $moduleConfig, $routerConfig))->setHTTPVerb('get');

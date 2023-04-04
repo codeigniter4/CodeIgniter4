@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
-use Config\Routing;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
@@ -26,6 +25,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ConfigFromArrayTrait;
 use Config\Filters as FiltersConfig;
 use Config\Modules;
+use Config\Routing;
 
 /**
  * @internal

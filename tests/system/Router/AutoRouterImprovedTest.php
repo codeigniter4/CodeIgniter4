@@ -19,6 +19,7 @@ use CodeIgniter\Router\Controllers\Index;
 use CodeIgniter\Router\Controllers\Mycontroller;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
+use Config\Routing;
 
 /**
  * @internal
@@ -35,7 +36,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $moduleConfig          = new Modules();
         $moduleConfig->enabled = false;
-        $this->collection      = new RouteCollection(Services::locator(), $moduleConfig, new \Config\Routing());
+        $this->collection      = new RouteCollection(Services::locator(), $moduleConfig, new Routing());
     }
 
     private function createNewAutoRouter(string $httpVerb = 'get'): AutoRouterImproved
