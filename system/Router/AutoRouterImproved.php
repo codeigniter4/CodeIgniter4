@@ -88,7 +88,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         string $httpVerb
     ) {
         $this->protectedControllers = $protectedControllers;
-        $this->namespace            = rtrim($namespace, '\\') . '\\';
+        $this->namespace            = rtrim($namespace, '\\');
         $this->translateURIDashes   = $translateURIDashes;
         $this->httpVerb             = $httpVerb;
         $this->defaultController    = $defaultController;
@@ -119,7 +119,7 @@ final class AutoRouterImproved implements AutoRouterInterface
      */
     private function searchFirstController(array $segments): bool
     {
-        $controller = '\\' . trim($this->namespace, '\\');
+        $controller = '\\' . $this->namespace;
 
         while ($segments !== []) {
             $segment = array_shift($segments);
@@ -161,7 +161,7 @@ final class AutoRouterImproved implements AutoRouterInterface
                 $segments
             );
 
-            $controller = '\\' . trim($this->namespace, '\\')
+            $controller = '\\' . $this->namespace
                 . '\\' . implode('\\', $namespaces)
                 . '\\' . $this->defaultController;
 
@@ -177,7 +177,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         }
 
         // Check for the default controller in Controllers directory.
-        $controller = '\\' . trim($this->namespace, '\\')
+        $controller = '\\' . $this->namespace
             . '\\' . $this->defaultController;
 
         if (class_exists($controller)) {
@@ -288,10 +288,14 @@ final class AutoRouterImproved implements AutoRouterInterface
 
         $namespaces = implode('\\', $segments);
 
-        $dir = substr($namespaces, strlen($this->namespace));
+        $dir = str_replace(
+            '\\',
+            '/',
+            ltrim(substr($namespaces, strlen($this->namespace)), '\\')
+        );
 
         if ($dir !== '') {
-            $this->directory = substr($namespaces, strlen($this->namespace)) . '/';
+            $this->directory = $dir . '/';
         }
     }
 

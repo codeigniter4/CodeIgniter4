@@ -167,6 +167,19 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame([], $params);
     }
 
+    public function testAutoRouteFindsControllerWithSubSubfolder()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('subfolder/sub/mycontroller/somemethod');
+
+        $this->assertSame('Subfolder/Sub/', $directory);
+        $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Sub\Mycontroller::class, $controller);
+        $this->assertSame('getSomemethod', $method);
+        $this->assertSame([], $params);
+    }
+
     public function testAutoRouteFindsDashedSubfolder()
     {
         $router = $this->createNewAutoRouter();
