@@ -22,4 +22,3 @@ $table->setHeading(['name' => 'Name', 'color' => 'Color', 'size' => 'Size'])
     ->setSyncRowKeysWithHeadingKeys(true);
 
 echo $table->generate($data);
-?>
