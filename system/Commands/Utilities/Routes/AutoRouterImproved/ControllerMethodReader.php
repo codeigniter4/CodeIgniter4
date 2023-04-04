@@ -73,7 +73,8 @@ final class ControllerMethodReader
                             $classInUri,
                             $classname,
                             $methodName,
-                            $httpVerb
+                            $httpVerb,
+                            $method
                         );
 
                         if ($routeForDefaultController !== []) {
@@ -180,7 +181,8 @@ final class ControllerMethodReader
         string $uriByClass,
         string $classname,
         string $methodName,
-        string $httpVerb
+        string $httpVerb,
+        ReflectionMethod $method
     ): array {
         $output = [];
 
@@ -189,12 +191,18 @@ final class ControllerMethodReader
             $routeWithoutController = rtrim(preg_replace($pattern, '', $uriByClass), '/');
             $routeWithoutController = $routeWithoutController ?: '/';
 
+            [$params, $routeParams] = $this->getParameters($method);
+
+            if ($routeWithoutController === '/' && $routeParams !== '') {
+                $routeWithoutController = '';
+            }
+
             $output[] = [
                 'method'       => $httpVerb,
                 'route'        => $routeWithoutController,
-                'route_params' => '',
+                'route_params' => $routeParams,
                 'handler'      => '\\' . $classname . '::' . $methodName,
-                'params'       => [],
+                'params'       => $params,
             ];
         }
 
