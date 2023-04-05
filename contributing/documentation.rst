@@ -137,7 +137,7 @@ To a Function
     :php:func:`dot_array_search()`
 
 To a Method
-=============
+===========
 
 ::
 
