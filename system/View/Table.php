@@ -166,7 +166,7 @@ class Table
 
         // Turn off the auto-heading feature since it's doubtful we
         // will want headings from a one-dimensional array
-        $this->autoHeading                = false;
+        $this->autoHeading         = false;
         $this->syncRowsWithHeading = false;
 
         if ($columnLimit === 0) {
