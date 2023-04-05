@@ -161,3 +161,13 @@ Deprecated
 
     .. deprecated:: 4.3.0
        Use :php:meth:`CodeIgniter\\Database\\BaseBuilder::setData()` instead.
+
+***************
+Text Decoration
+***************
+
+As a general rule, we use ``**`` for in-line file paths, and `````` for source code.
+
+E.g.::
+
+    Open the **app/Config/Filters.php** file and update the ``$methods`` property like the following:
