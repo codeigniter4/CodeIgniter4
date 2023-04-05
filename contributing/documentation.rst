@@ -21,7 +21,7 @@ To see the rendered HTML, ePub, PDF, etc., you will need to install Sphinx
 along with the PHP domain extension for Sphinx. The underlying requirement
 is to have Python installed.
 
-You can read more about installing all tools in /user_guide_src/README.rst
+You can read more about installing all tools in **user_guide_src/README.rst**
 
 *****************
 Table of Contents
