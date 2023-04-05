@@ -8,12 +8,6 @@ Markdown or Textile, you will quickly grasp reStructuredText.  The focus is
 on readability and user friendliness.
 While they can be quite technical, we always write for humans!
 
-A local table of contents should always be included, like the one below.
-It is created automatically by inserting the following::
-
-    .. contents::
-        :local:
-        :depth: 2
 
 .. contents::
   :local:
@@ -27,6 +21,17 @@ along with the PHP domain extension for Sphinx. The underlying requirement
 is to have Python installed.
 
 You can read more about installing all tools in /user_guide_src/README.rst
+
+*****************
+Table of Contents
+*****************
+
+A local table of contents should always be included, like the one below.
+It is created automatically by inserting the following::
+
+    .. contents::
+        :local:
+        :depth: 2
 
 *****************************************
 Page and Section Headings and Subheadings
