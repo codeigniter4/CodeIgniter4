@@ -273,7 +273,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @return $this
      */
-    public function loadRoutes(string $routesFile = APPPATH . 'Routes.php')
+    public function loadRoutes(string $routesFile = APPPATH . 'Config/Routes.php')
     {
         if ($this->didDiscover) {
             return $this;
