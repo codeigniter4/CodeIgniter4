@@ -63,6 +63,8 @@ One of today's best practices for application setup is to use Environment Variab
 
 Environment Variables should also be used for anything private such as passwords, API keys, or other sensitive data.
 
+.. _dotenv-file:
+
 Environment Variables and CodeIgniter
 =====================================
 

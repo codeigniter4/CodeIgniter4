@@ -321,7 +321,7 @@ The methods provided by the parent classes that are available are:
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns:   ``$_REQUEST`` if no parameters supplied, otherwise the REQUEST value if found, or null if not
-        :rtype: mixed|null
+        :rtype: array|bool|float|int|object|string|null
 
         The first parameter will contain the name of the REQUEST item you are looking for:
 
@@ -360,7 +360,7 @@ The methods provided by the parent classes that are available are:
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns:       ``$_GET`` if no parameters supplied, otherwise the GET value if found, or null if not
-        :rtype: mixed|null
+        :rtype: array|bool|float|int|object|string|null
 
         This method is identical to ``getVar()``, only it fetches GET data.
 
@@ -372,7 +372,7 @@ The methods provided by the parent classes that are available are:
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns:       ``$_POST`` if no parameters supplied, otherwise the POST value if found, or null if not
-        :rtype: mixed|null
+        :rtype: array|bool|float|int|object|string|null
 
             This method is identical to ``getVar()``, only it fetches POST data.
 
@@ -385,7 +385,7 @@ The methods provided by the parent classes that are available are:
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns:       ``$_POST`` and ``$_GET`` combined if no parameters specified (prefer POST value on conflict),
                         otherwise looks for POST value, if nothing found looks for GET value, if no value found returns null
-        :rtype: mixed|null
+        :rtype: array|bool|float|int|object|string|null
 
         This method works pretty much the same way as ``getPost()`` and ``getGet()``, only combined.
         It will search through both POST and GET streams for data, looking first in POST, and
@@ -405,7 +405,7 @@ The methods provided by the parent classes that are available are:
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns:       ``$_GET`` and ``$_POST`` combined if no parameters specified (prefer GET value on conflict),
                         otherwise looks for GET value, if nothing found looks for POST value, if no value found returns null
-        :rtype: mixed|null
+        :rtype: array|bool|float|int|object|string|null
 
         This method works pretty much the same way as ``getPost()`` and ``getGet()``, only combined.
         It will search through both GET and POST streams for data, looking first in GET, and
@@ -418,13 +418,13 @@ The methods provided by the parent classes that are available are:
 
     .. php:method:: getCookie([$index = null[, $filter = null[, $flags = null]]])
 
-        :param    mixed    $index: COOKIE name
+        :param  array|string|null    $index: COOKIE name
         :param  int     $filter: The type of filter to apply. A list of filters can be
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns:        ``$_COOKIE`` if no parameters supplied, otherwise the COOKIE value if found or null if not
-        :rtype:    mixed
+        :rtype: array|bool|float|int|object|string|null
 
         This method is identical to ``getPost()`` and ``getGet()``, only it fetches cookie data:
 
@@ -440,13 +440,13 @@ The methods provided by the parent classes that are available are:
 
     .. php:method:: getServer([$index = null[, $filter = null[, $flags = null]]])
 
-        :param    mixed    $index: Value name
+        :param  array|string|null    $index: Value name
         :param  int     $filter: The type of filter to apply. A list of filters can be
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns:        ``$_SERVER`` item value if found, null if not
-        :rtype:    mixed
+        :rtype: array|bool|float|int|object|string|null
 
         This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()``
         methods, only it fetches getServer data (``$_SERVER``):
@@ -463,7 +463,7 @@ The methods provided by the parent classes that are available are:
         :param  int $filter: The type of filter to apply. A list of filters can be
                     found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :returns:  The User Agent string, as found in the SERVER data, or null if not found.
-        :rtype: mixed
+        :rtype: CodeIgniter\\HTTP\\UserAgent
 
         This method returns the User Agent string from the SERVER data:
 

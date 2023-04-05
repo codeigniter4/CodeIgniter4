@@ -584,7 +584,7 @@ class IncomingRequest extends Request
      *
      * @param array|string|null $index
      * @param int|null          $filter Filter constant
-     * @param mixed             $flags
+     * @param array|int|null    $flags
      *
      * @return array|bool|float|int|stdClass|string|null
      */
@@ -719,7 +719,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter Filter Constant
      * @param array|int|null    $flags  Option
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function getRawInputVar($index = null, ?int $filter = null, $flags = null)
     {
@@ -771,9 +771,9 @@ class IncomingRequest extends Request
      *
      * @param array|string|null $index  Index for item to fetch from $_GET.
      * @param int|null          $filter A filter name to apply.
-     * @param mixed|null        $flags
+     * @param array|int|null    $flags
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function getGet($index = null, $filter = null, $flags = null)
     {
@@ -785,9 +785,9 @@ class IncomingRequest extends Request
      *
      * @param array|string|null $index  Index for item to fetch from $_POST.
      * @param int|null          $filter A filter name to apply
-     * @param mixed             $flags
+     * @param array|int|null    $flags
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function getPost($index = null, $filter = null, $flags = null)
     {
@@ -799,9 +799,9 @@ class IncomingRequest extends Request
      *
      * @param array|string|null $index  Index for item to fetch from $_POST or $_GET
      * @param int|null          $filter A filter name to apply
-     * @param mixed             $flags
+     * @param array|int|null    $flags
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function getPostGet($index = null, $filter = null, $flags = null)
     {
@@ -821,9 +821,9 @@ class IncomingRequest extends Request
      *
      * @param array|string|null $index  Index for item to be fetched from $_GET or $_POST
      * @param int|null          $filter A filter name to apply
-     * @param mixed             $flags
+     * @param array|int|null    $flags
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function getGetPost($index = null, $filter = null, $flags = null)
     {
@@ -843,9 +843,9 @@ class IncomingRequest extends Request
      *
      * @param array|string|null $index  Index for item to be fetched from $_COOKIE
      * @param int|null          $filter A filter name to be applied
-     * @param mixed             $flags
+     * @param array|int|null    $flags
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function getCookie($index = null, $filter = null, $flags = null)
     {
