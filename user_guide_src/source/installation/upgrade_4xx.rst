@@ -207,6 +207,3 @@ Upgrading Libraries
     upgrade_sessions
     upgrade_validations
     upgrade_view_parser
-
-.. note::
-    More upgrade guides coming soon
