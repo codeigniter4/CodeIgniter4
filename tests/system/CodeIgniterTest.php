@@ -22,6 +22,7 @@ use Config\App;
 use Config\Cache;
 use Config\Filters as FiltersConfig;
 use Config\Modules;
+use Config\Routing;
 use Tests\Support\Filters\Customfilter;
 
 /**
@@ -165,7 +166,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         // Inject mock router.
-        $routes = new RouteCollection(Services::locator(), new Modules());
+        $routes = new RouteCollection(Services::locator(), new Modules(), new Routing());
         $routes->setAutoRoute(false);
         $routes->set404Override(static function () {
             echo '404 Override by Closure.';
