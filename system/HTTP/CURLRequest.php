@@ -29,6 +29,13 @@ class CURLRequest extends OutgoingRequest
     protected $response;
 
     /**
+     * The original response object associated with this request
+     *
+     * @var ResponseInterface|null
+     */
+    protected $responseOrig;
+
+    /**
      * The URI associated with this request
      *
      * @var URI
@@ -105,7 +112,7 @@ class CURLRequest extends OutgoingRequest
 
         parent::__construct('GET', $uri);
 
-        $this->response       = $response;
+        $this->responseOrig   = $response;
         $this->baseURI        = $uri->useRawQueryString();
         $this->defaultOptions = $options;
 
@@ -125,6 +132,8 @@ class CURLRequest extends OutgoingRequest
      */
     public function request($method, string $url, array $options = []): ResponseInterface
     {
+        $this->response = clone $this->responseOrig;
+
         $this->parseOptions($options);
 
         $url = $this->prepareURL($url);
@@ -469,10 +478,6 @@ class CURLRequest extends OutgoingRequest
      */
     protected function setResponseHeaders(array $headers = [])
     {
-        foreach ($this->response->headers() as $header) {
-            $this->response->removeHeader($header->getName());
-        }
-
         foreach ($headers as $header) {
             if (($pos = strpos($header, ':')) !== false) {
                 $title = substr($header, 0, $pos);
