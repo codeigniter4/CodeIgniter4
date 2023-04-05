@@ -125,15 +125,21 @@ You can reference a page like the following::
 To a URL
 ========
 
+::
+
     `CodeIgniter 4 framework <https://github.com/codeigniter4/framework>`_
 
 To a Function
 =============
 
+::
+
     :php:func:`dot_array_search()`
 
 To a Method
 =============
+
+::
 
     :php:meth:`CodeIgniter\\HTTP\\Response::setCookie()`
 
@@ -144,10 +150,14 @@ Other Directives
 New Feature
 ===========
 
+::
+
     .. versionadded:: 4.3.0
 
 Deprecated
 ==========
+
+::
 
     .. deprecated:: 4.3.0
        Use :php:meth:`CodeIgniter\\Database\\BaseBuilder::setData()` instead.
