@@ -612,6 +612,8 @@ right after the name of the field the error should belong to::
 Creating Custom Rules
 *********************
 
+.. _validation-using-rule-classes:
+
 Using Rule Classes
 ==================
 

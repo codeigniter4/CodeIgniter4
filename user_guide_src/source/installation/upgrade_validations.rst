@@ -15,6 +15,9 @@ What has been changed
 =====================
 - If you want to change validation error display, you have to set CI4 :ref:`validation View templates <validation-customizing-error-display>`.
 - CI4 validation has no Callbacks nor Callable in CI3.
+  Use :ref:`Rule Classes <validation-using-rule-classes>` or
+  :ref:`Closure Rule <validation-using-closure-rule>`
+  instead.
 - CI4 validation format rules do not permit empty string.
 - CI4 validation never changes your data.
 - Since v4.3.0, :php:func:`validation_errors()` has been introduced, but the API is different from CI3's.
