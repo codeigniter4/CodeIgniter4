@@ -3,11 +3,12 @@ Writing CodeIgniter Documentation
 #################################
 
 CodeIgniter uses Sphinx to generate its documentation in a variety of formats,
-using reStructuredText to handle the formatting.  If you are familiar with
+using `reStructuredText`_ to handle the formatting.  If you are familiar with
 Markdown or Textile, you will quickly grasp reStructuredText.  The focus is
 on readability and user friendliness.
 While they can be quite technical, we always write for humans!
 
+.. _reStructuredText: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
 
 .. contents::
   :local:
