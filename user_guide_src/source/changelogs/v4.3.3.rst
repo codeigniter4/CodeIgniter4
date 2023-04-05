@@ -16,18 +16,6 @@ SECURITY
 - **Text Helper:** The :php:func:`random_string()` type **alpha**, **alnum**,
   **numeric** and **nozero** are now cryptographically secure.
 
-BREAKING
-********
-
-Message Changes
-***************
-
-Changes
-*******
-
-Deprecations
-************
-
 Bugs Fixed
 **********
 

@@ -584,7 +584,7 @@ When no defined route is found that matches the URI, the system will attempt to 
 controllers and methods when Auto Routing is enabled.
 
 You can disable this automatic matching, and restrict routes
-to only those defined by you, by setting the ``$autoRoute`` option to false:
+to only those defined by you, by setting the ``$autoRoute`` property to false:
 
 .. literalinclude:: routing/050.php
 
@@ -600,7 +600,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:
 
 .. literalinclude:: routing/051.php
 
-Using the ``set404Override`` method within the routes file, you can use closures. Defining the override in the Routing file is restricted to class/method pairs.
+Using the ``$override404`` property within the routing config file, you can use closures. Defining the override in the Routing file is restricted to class/method pairs.
 
 .. note:: The ``set404Override()`` method does not change the Response status code to ``404``.
     If you don't set the status code in the controller you set, the default status code ``200``

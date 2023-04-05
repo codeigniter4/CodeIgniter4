@@ -136,7 +136,7 @@ We have made the controller. The next thing is to set routing rules.
 Routing associates a URI with a controller's method.
 
 Let's do that. Open the routing file located at
-**app/Routes.php**.
+**app/Config/Routes.php**.
 
 The only line there to start with should be:
 
