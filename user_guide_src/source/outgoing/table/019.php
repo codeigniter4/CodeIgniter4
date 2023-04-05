@@ -3,7 +3,7 @@
 $table = new \CodeIgniter\View\Table();
 
 $table->setHeading(['name' => 'Name', 'color' => 'Color', 'size' => 'Size'])
-    ->setSyncRowKeysWithHeadingKeys(true)
+    ->setSyncRowsWithHeading(true)
     ->addRow(['color' => 'Blue', 'name' => 'Fred', 'size' => 'Small'])
     ->addRow(['size' => 'Large', 'age' => '24', 'name' => 'Mary'])
     ->addRow(['color' => 'Green']);

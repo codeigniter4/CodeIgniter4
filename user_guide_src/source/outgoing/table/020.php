@@ -19,6 +19,6 @@ $data = [
 $table = new \CodeIgniter\View\Table();
 
 $table->setHeading(['name' => 'Name', 'color' => 'Color', 'size' => 'Size'])
-    ->setSyncRowKeysWithHeadingKeys(true);
+    ->setSyncRowsWithHeading(true);
 
 echo $table->generate($data);

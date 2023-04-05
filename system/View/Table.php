@@ -86,7 +86,7 @@ class Table
     /**
      * Order each inserted row by heading keys
      */
-    public bool $rowKeysSyncWithHeadingKeys = false;
+    public bool $syncRowsWithHeading = false;
 
     /**
      * Set the template from the table config file if it exists
@@ -167,7 +167,7 @@ class Table
         // Turn off the auto-heading feature since it's doubtful we
         // will want headings from a one-dimensional array
         $this->autoHeading                = false;
-        $this->rowKeysSyncWithHeadingKeys = false;
+        $this->syncRowsWithHeading = false;
 
         if ($columnLimit === 0) {
             return $array;
@@ -215,7 +215,7 @@ class Table
     {
         $tmpRow = $this->_prepArgs(func_get_args());
 
-        if ($this->rowKeysSyncWithHeadingKeys && ! empty($this->heading)) {
+        if ($this->syncRowsWithHeading && ! empty($this->heading)) {
             // each key has an index
             $keyIndex = array_flip(array_keys($this->heading));
 
@@ -242,9 +242,9 @@ class Table
      * If a row has a key which does not exist in heading, it will be filtered out
      * If a row does not have a key which exists in heading, the field will stay empty
      */
-    public function setSyncRowKeysWithHeadingKeys(bool $orderByKey): Table
+    public function setSyncRowsWithHeading(bool $orderByKey): Table
     {
-        $this->rowKeysSyncWithHeadingKeys = $orderByKey;
+        $this->syncRowsWithHeading = $orderByKey;
 
         return $this;
     }

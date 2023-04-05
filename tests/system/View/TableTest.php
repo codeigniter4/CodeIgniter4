@@ -770,7 +770,7 @@ final class TableTest extends CIUnitTestCase
     public function testAddRowAndGenerateWithOrderedColumns(array $heading, array $row, string $expectContainsString): void
     {
         $this->table->setHeading($heading);
-        $this->table->setSyncRowKeysWithHeadingKeys(true);
+        $this->table->setSyncRowsWithHeading(true);
         $this->table->addRow($row);
 
         $generated = $this->table->generate();
@@ -784,7 +784,7 @@ final class TableTest extends CIUnitTestCase
     public function testGenerateDataWithOrderedColumns(array $heading, array $row, string $expectContainsString): void
     {
         $this->table->setHeading($heading);
-        $this->table->setSyncRowKeysWithHeadingKeys(true);
+        $this->table->setSyncRowsWithHeading(true);
 
         $generated = $this->table->generate([$row]);
 

@@ -76,7 +76,7 @@ Synchronizing row columns with heading
 
 .. versionadded:: 4.4.0
 
-``setSyncRowKeysWithHeadingKeys(true)`` enables that each data value
+``setSyncRowsWithHeading(true)`` enables that each data value
 is placed in the same column as defined in ``setHeading()`` if an
 associative array was used as parameter. This is especially useful
 when dealing with data loaded via REST API where the order is not to
@@ -88,7 +88,7 @@ mentioned in heading, it places an empty cell for that spot.
 
 .. literalinclude:: table/019.php
 
-.. important:: You must call ``setSyncRowKeysWithHeadingKeys(true)`` and
+.. important:: You must call ``setSyncRowsWithHeading(true)`` and
     ``setHeading([...])`` before adding any rows via ``addRow([...])`` where
     the rearrangement of columns takes place.
 
@@ -215,11 +215,11 @@ Class Reference
 
         .. literalinclude:: table/018.php
     
-    .. php:method:: setSyncRowKeysWithHeadingKeys(bool $orderByKey)
+    .. php:method:: setSyncRowsWithHeading(bool $orderByKey)
 
         :returns:   Table instance (method chaining)
         :rtype:     Table
 
-        Enables each row column to be ordered by heading keys. This gives
-        more control of how data is displayed in the final table. Make
+        Enables each row data key to be ordered by heading keys. This gives
+        more control of data being displaced in the correct column. Make
         sure to set this value before calling the first ``addRow()`` method.
