@@ -681,7 +681,7 @@ The default controller is also used when no matching route has been found, and t
 in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
 **app/Controllers/Admin/Home.php**, it would be used.
 
-.. note:: You cannot access the default controller with the URI of the controller name.
+.. important:: You cannot access the default controller with the URI of the controller name.
     When the default controller is ``Home``, you can access **example.com/**, but if you access **example.com/home**, it will be not found.
 
 See :ref:`Auto Routing in Controllers <controller-auto-routing-improved>` for more info.
@@ -698,7 +698,7 @@ In this example, if the user were to visit **example.com/products**, and a ``Pro
 
 .. literalinclude:: routing/048.php
 
-.. note:: You cannot access the controller with the URI of the default method name.
+.. important:: You cannot access the controller with the URI of the default method name.
     In the example above, you can access **example.com/products**, but if you access **example.com/products/listall**, it will be not found.
 
 .. _auto-routing-legacy:
