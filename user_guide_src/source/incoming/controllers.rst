@@ -187,7 +187,7 @@ controllers. You can extend this class in any new controller.
 
 .. literalinclude:: controllers/020.php
 
-Then save the file to your **app/Controllers/** directory.
+Then save the file to your **app/Controllers** directory.
 
 .. important:: The file must be called **Helloworld.php**, with a capital ``H``. When you use Auto Routing, Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase.
 
@@ -218,7 +218,7 @@ class so that it can inherit all its methods.
 
 .. note::
     The system will attempt to match the URI against Controllers by matching each segment against
-    folders/files in **app/Controllers/**, when a match wasn't found against defined routes.
+    folders/files in **app/Controllers**, when a match wasn't found against defined routes.
     That's why your folders/files MUST start with a capital letter and the rest MUST be lowercase.
 
     If you want another naming convention you need to manually define it using the
@@ -319,7 +319,7 @@ If you are building a large application you might want to hierarchically
 organize or structure your controllers into sub-directories. CodeIgniter
 permits you to do this.
 
-Simply create sub-directories under the main **app/Controllers/**,
+Simply create sub-directories under the main **app/Controllers**,
 and place your controller classes within them.
 
 .. important:: Folder names MUST start with an uppercase letter and ONLY the first character can be uppercase.
@@ -333,7 +333,8 @@ To call the above controller your URI will look something like this::
 
     example.com/index.php/products/shoes/show/123
 
-.. note:: You cannot have directories with the same name in **app/Controllers/** and **public/**.
+.. note:: You cannot have directories with the same name in **app/Controllers**
+    and **public**.
     This is because if there is a directory, the web server will search for it and
     it will not be routed to CodeIgniter.
 
@@ -381,7 +382,7 @@ For security reasons be sure to declare any new utility methods as ``protected``
 
 .. literalinclude:: controllers/008.php
 
-Then save the file to your **app/Controllers/** directory.
+Then save the file to your **app/Controllers** directory.
 
 .. important:: The file must be called **Helloworld.php**, with a capital ``H``. When you use Auto Routing, Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase.
 
@@ -410,7 +411,7 @@ class so that it can inherit all its methods.
 
 .. note::
     The system will attempt to match the URI against Controllers by matching each segment against
-    folders/files in **app/Controllers/**, when a match wasn't found against defined routes.
+    folders/files in **app/Controllers**, when a match wasn't found against defined routes.
     That's why your folders/files MUST start with a capital letter and the rest MUST be lowercase.
 
     If you want another naming convention you need to manually define it using the
@@ -488,7 +489,7 @@ If you are building a large application you might want to hierarchically
 organize or structure your controllers into sub-directories. CodeIgniter
 permits you to do this.
 
-Simply create sub-directories under the main **app/Controllers/**,
+Simply create sub-directories under the main **app/Controllers**,
 and place your controller classes within them.
 
 .. important:: Folder names MUST start with an uppercase letter and ONLY the first character can be uppercase.
@@ -502,7 +503,7 @@ To call the above controller your URI will look something like this::
 
     example.com/index.php/products/shoes/show/123
 
-.. note:: You cannot have directories with the same name in **app/Controllers/** and **public/**.
+.. note:: You cannot have directories with the same name in **app/Controllers** and **public/**.
     This is because if there is a directory, the web server will search for it and
     it will not be routed to CodeIgniter.
 
