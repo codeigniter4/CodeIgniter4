@@ -3,17 +3,12 @@ Writing CodeIgniter Documentation
 #################################
 
 CodeIgniter uses Sphinx to generate its documentation in a variety of formats,
-using reStructuredText to handle the formatting.  If you are familiar with
+using `reStructuredText`_ to handle the formatting.  If you are familiar with
 Markdown or Textile, you will quickly grasp reStructuredText.  The focus is
 on readability and user friendliness.
 While they can be quite technical, we always write for humans!
 
-A local table of contents should always be included, like the one below.
-It is created automatically by inserting the following::
-
-    .. contents::
-        :local:
-        :depth: 2
+.. _reStructuredText: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
 
 .. contents::
   :local:
@@ -26,7 +21,18 @@ To see the rendered HTML, ePub, PDF, etc., you will need to install Sphinx
 along with the PHP domain extension for Sphinx. The underlying requirement
 is to have Python installed.
 
-You can read more about installing all tools in /user_guide_src/README.rst
+You can read more about installing all tools in **user_guide_src/README.rst**
+
+*****************
+Table of Contents
+*****************
+
+A local table of contents should always be included, like the one below.
+It is created automatically by inserting the following::
+
+    .. contents::
+        :local:
+        :depth: 2
 
 *****************************************
 Page and Section Headings and Subheadings
@@ -119,15 +125,21 @@ You can reference a page like the following::
 To a URL
 ========
 
+::
+
     `CodeIgniter 4 framework <https://github.com/codeigniter4/framework>`_
 
 To a Function
 =============
 
+::
+
     :php:func:`dot_array_search()`
 
 To a Method
-=============
+===========
+
+::
 
     :php:meth:`CodeIgniter\\HTTP\\Response::setCookie()`
 
@@ -138,10 +150,24 @@ Other Directives
 New Feature
 ===========
 
+::
+
     .. versionadded:: 4.3.0
 
 Deprecated
 ==========
 
+::
+
     .. deprecated:: 4.3.0
        Use :php:meth:`CodeIgniter\\Database\\BaseBuilder::setData()` instead.
+
+***************
+Text Decoration
+***************
+
+As a general rule, we use ``**`` for in-line file paths, and `````` for source code.
+
+E.g.::
+
+    Open the **app/Config/Filters.php** file and update the ``$methods`` property like the following:
