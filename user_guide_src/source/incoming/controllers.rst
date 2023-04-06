@@ -278,12 +278,17 @@ Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
     Auto Routing (Improved) does not execute the method, and it results in 404
     Not Found.
 
-Defining a Default Controller
-=============================
+Default Controller
+==================
 
-CodeIgniter can be told to load a default controller when a URI is not
-present, as will be the case when only your site root URL is requested. Let's try it
-with the ``Helloworld`` controller.
+The Default Controller is a special controller that is used when a URI end with
+a directory name or when a URI is not present, as will be the case when only your
+site root URL is requested.
+
+Defining a Default Controller
+-----------------------------
+
+Let's try it with the ``Helloworld`` controller.
 
 To specify a default controller open your **app/Config/Routes.php**
 file and set this variable:
@@ -299,10 +304,13 @@ A few lines further down **Routes.php** in the "Route Definitions" section, comm
 If you now browse to your site without specifying any URI segments you'll
 see the "Hello World" message.
 
-.. note:: The line ``$routes->get('/', 'Home::index');`` is an optimization that you will want to use in a "real-world" app. But for demonstration purposes we don't want to use that feature. ``$routes->get()`` is explained in :doc:`URI Routing <routing>`
+.. important:: When you use Auto Routing (Improved), you must remove the line
+    ``$routes->get('/', 'Home::index');``. Because defined routes take
+    precedence over Auto Routing, and controllers defined in the defined routes
+    are denied access by Auto Routing (Improved) for security reasons.
 
 For more information, please refer to the :ref:`routes-configuration-options` section of the
-:doc:`URI Routing <routing>` documentation.
+:ref:`URI Routing <routing-auto-routing-improved-configuration-options>` documentation.
 
 Organizing Your Controllers into Sub-directories
 ================================================
