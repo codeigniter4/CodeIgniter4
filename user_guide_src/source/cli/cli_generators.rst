@@ -313,8 +313,8 @@ generation.
 Declaring the Location of a Custom Generator Command Template
 *************************************************************
 
-The default order of lookup for generator templates is first, the template defined in the **app/Config/Generators.php** file,
-and if not found, the template will be looked up at the ``CodeIgniter\Commands\Generators\Views`` namespace.
+The default order of lookup for generator templates is (1) the template defined in the **app/Config/Generators.php** file,
+and (2) if not found, the template found at the ``CodeIgniter\Commands\Generators\Views`` namespace.
 
 To declare the template location for your custom generator command, you will need to add it to the **app/Config/Generators.php**
 file. For example, if you have a command ``make:awesome-command`` and your generator template is located within your *app*
