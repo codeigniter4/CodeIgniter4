@@ -767,7 +767,7 @@ final class TableTest extends CIUnitTestCase
     /**
      * @dataProvider orderedColumnUsecases
      */
-    public function testAddRowAndGenerateWithOrderedColumns(array $heading, array $row, string $expectContainsString): void
+    public function testAddRowAndGenerateOrderedColumns(array $heading, array $row, string $expectContainsString): void
     {
         $this->table->setHeading($heading);
         $this->table->setSyncRowsWithHeading(true);
@@ -781,7 +781,7 @@ final class TableTest extends CIUnitTestCase
     /**
      * @dataProvider orderedColumnUsecases
      */
-    public function testGenerateDataWithOrderedColumns(array $heading, array $row, string $expectContainsString): void
+    public function testGenerateOrderedColumns(array $heading, array $row, string $expectContainsString): void
     {
         $this->table->setHeading($heading);
         $this->table->setSyncRowsWithHeading(true);
@@ -791,9 +791,9 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString($expectContainsString, $generated);
     }
 
-    public function orderedColumnUsecases(): array
+    public function orderedColumnUsecases(): iterable
     {
-        return [
+        yield from [
             'reorder example #1' => [
                 'heading'              => ['id' => 'ID', 'name' => 'Name', 'age' => 'Age'],
                 'row'                  => ['name' => 'Max', 'age' => 30, 'id' => 5],

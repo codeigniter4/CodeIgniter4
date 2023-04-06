@@ -71,20 +71,22 @@ to the Table constructor:
 
 .. literalinclude:: table/008.php
 
-Synchronizing row columns with heading
-======================================
+.. _table-sync-rows-with-headings:
+
+Synchronizing Rows with Headings
+================================
 
 .. versionadded:: 4.4.0
 
-``setSyncRowsWithHeading(true)`` enables that each data value
+The ``setSyncRowsWithHeading(true)`` method enables that each data value
 is placed in the same column as defined in ``setHeading()`` if an
 associative array was used as parameter. This is especially useful
 when dealing with data loaded via REST API where the order is not to
 your liking, or if the API returned too much data.
 
-If a data row contains a ``key`` which does not exist the heading,
-the value will be filtered out. Vise versa if a data row does not have key
-mentioned in heading, it places an empty cell for that spot.
+If a data row contains a key that is not present in the heading, its value is
+filtered. Conversely, if a data row does not have a key listed in the heading,
+an empty cell will be placed in its place.
 
 .. literalinclude:: table/019.php
 
@@ -92,7 +94,7 @@ mentioned in heading, it places an empty cell for that spot.
     ``setHeading([...])`` before adding any rows via ``addRow([...])`` where
     the rearrangement of columns takes place.
 
-You get the same result by using the result array is input in ``generate()``
+Using an array as input to ``generate()`` produces the same result:
 
 .. literalinclude:: table/020.php
 
