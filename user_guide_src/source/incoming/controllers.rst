@@ -218,8 +218,8 @@ class so that it can inherit all its methods.
 
 .. note::
     The system will attempt to match the URI against Controllers by matching each segment against
-    folders/files in **app/Controllers**, when a match wasn't found against defined routes.
-    That's why your folders/files MUST start with a capital letter and the rest MUST be lowercase.
+    directories/files in **app/Controllers**, when a match wasn't found against defined routes.
+    That's why your directories/files MUST start with a capital letter and the rest MUST be lowercase.
 
     If you want another naming convention you need to manually define it using the
     :ref:`Defined Route Routing <defined-route-routing>`.
@@ -322,10 +322,10 @@ permits you to do this.
 Simply create sub-directories under the main **app/Controllers**,
 and place your controller classes within them.
 
-.. important:: Folder names MUST start with an uppercase letter and ONLY the first character can be uppercase.
+.. important:: Directory names MUST start with an uppercase letter and ONLY the first character can be uppercase.
 
 When using this feature the first segment of your URI must
-specify the folder. For example, let's say you have a controller located here::
+specify the directory. For example, let's say you have a controller located here::
 
     app/Controllers/Products/Shoes.php
 
@@ -411,8 +411,8 @@ class so that it can inherit all its methods.
 
 .. note::
     The system will attempt to match the URI against Controllers by matching each segment against
-    folders/files in **app/Controllers**, when a match wasn't found against defined routes.
-    That's why your folders/files MUST start with a capital letter and the rest MUST be lowercase.
+    directories/files in **app/Controllers**, when a match wasn't found against defined routes.
+    That's why your directories/files MUST start with a capital letter and the rest MUST be lowercase.
 
     If you want another naming convention you need to manually define it using the
     :ref:`Defined Route Routing <defined-route-routing>`.
@@ -492,10 +492,10 @@ permits you to do this.
 Simply create sub-directories under the main **app/Controllers**,
 and place your controller classes within them.
 
-.. important:: Folder names MUST start with an uppercase letter and ONLY the first character can be uppercase.
+.. important:: Directory names MUST start with an uppercase letter and ONLY the first character can be uppercase.
 
 When using this feature the first segment of your URI must
-specify the folder. For example, let's say you have a controller located here::
+specify the directory. For example, let's say you have a controller located here::
 
     app/Controllers/Products/Shoes.php
 
