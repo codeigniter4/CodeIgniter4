@@ -34,6 +34,24 @@ Mandatory File Changes
 Config Files
 ============
 
+.. _upgrade-440-config-routing:
+
+app/Config/Routing.php
+----------------------
+
+To clean up the routing system, the following changes were made:
+
+- New **app/Config/Routing.php** file that holds the settings that used to be in the Routes file.
+- The **app/Config/Routes.php** file was simplified so that it only contains the routes without settings and verbiage to clutter the file.
+- The environment-specific routes files are no longer loaded automatically.
+
+So you need to do:
+
+1. Copy **app/Config/Routing.php** from the new framework to your **app/Config**
+   directory, and configure it.
+2. Remove all settings in **app/Config/Routes.php** that are no longer needed.
+3. If you use the environment-specific routes files, add them to the ``$routeFiles`` property in **app/Config/Routing.php**.
+
 app/Config/Cookie.php
 ---------------------
 
@@ -61,14 +79,6 @@ Content Changes
 
 The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:
-
-Routing
--------
-
-To clean up the routing system, the following changes were made:
-    - New ``app/Config/Routing.php`` file that holds the settings that used to be in the Routes file.
-    - The ``app/Config/Routes.php`` file was simplified so that it only contains the routes without settings and verbiage to clutter the file.
-    - The environment-specific routes files are no longer loaded automatically. To load those, you must add them to the ``$routeFiles`` property in ``app/Config/Routing.php``.
 
 Config
 ------
