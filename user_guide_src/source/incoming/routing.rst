@@ -547,6 +547,10 @@ Routes Configuration Options
 The RoutesCollection class provides several options that affect all routes, and can be modified to meet your
 application's needs. These options are available in **app/Config/Routing.php**.
 
+.. note:: The config file **app/Config/Routing.php** has been added since v4.4.0.
+    In previous versions, the setter methods were used in **app/Config/Routes.php**
+    to change settings.
+
 .. _routing-default-namespace:
 
 Default Namespace
