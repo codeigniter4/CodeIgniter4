@@ -300,6 +300,7 @@ etc. You can also scaffold a complete set of files with just one command.</p>
 </li>
 <li><p><a class="reference internal" href="#scaffolding-a-complete-set-of-stock-code" id="id40">Scaffolding a Complete Set of Stock Code</a></p></li>
 <li><p><a class="reference internal" href="#generatortrait" id="id41">GeneratorTrait</a></p></li>
+<li><p><a class="reference internal" href="#declaring-the-location-of-a-custom-generator-command-template" id="id42">Declaring the Location of a Custom Generator Command Template</a></p></li>
 </ul>
 </div>
 <section id="introduction">
@@ -633,6 +634,29 @@ and it will be passed to the model generator.</p>
 <p>All generator commands must use the <code class="docutils literal notranslate"><span class="pre">GeneratorTrait</span></code> to fully utilize its methods that are used in code
 generation.</p>
 </section>
+<section id="declaring-the-location-of-a-custom-generator-command-template">
+<h2><a class="toc-backref" href="#id42">Declaring the Location of a Custom Generator Command Template</a><a class="headerlink" href="#declaring-the-location-of-a-custom-generator-command-template" title="Permalink to this headline"></a></h2>
+<p>The default order of lookup for generator templates is (1) the template defined in the <strong>app/Config/Generators.php</strong> file,
+and (2) if not found, the template found at the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Commands\Generators\Views</span></code> namespace.</p>
+<p>To declare the template location for your custom generator command, you will need to add it to the <strong>app/Config/Generators.php</strong>
+file. For example, if you have a command <code class="docutils literal notranslate"><span class="pre">make:awesome-command</span></code> and your generator template is located within your <em>app</em>
+directory <strong>app/Commands/Generators/Views/awesomecommand.tpl.php</strong>, you would update the config file like so:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Generators</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">array</span> <span class="nv">$views</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1">// ..</span>
+        <span class="s1">&#39;make:awesome-command&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;App\Commands\Generators\Views\awesomecommand.tpl.php&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -647,7 +671,7 @@ generation.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 06, 2023.
+      <span class="lastupdated">Last updated on Apr 07, 2023.
       </span></p>
   </div>
 
