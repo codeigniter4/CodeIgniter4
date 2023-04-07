@@ -65,6 +65,10 @@ The Cookie config items in **app/Config/App.php** are no longer used.
 Breaking Enhancements
 *********************
 
+- The method signature of ``RouteCollection::__construct()`` has been changed.
+  The third parameter ``Routing $routing`` has been added. Extending classes
+  should likewise add the parameter so as not to break LSP.
+
 Project Files
 *************
 
