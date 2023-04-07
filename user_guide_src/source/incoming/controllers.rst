@@ -368,8 +368,8 @@ In the above example, CodeIgniter would attempt to find a controller named **Hel
 
 .. note:: When a controller's short name matches the first segment of a URI, it will be loaded.
 
-Let's try it: Hello World!
-==========================
+Let's try it: Hello World! (Legacy)
+===================================
 
 Let's create a simple controller so you can see it in action. Using your text editor, create a file called **Helloworld.php**,
 and put the following code in it. You will notice that the ``Helloworld`` Controller is extending the ``BaseController``. you can
@@ -420,8 +420,8 @@ class so that it can inherit all its methods.
 
     .. literalinclude:: controllers/012.php
 
-Methods
-=======
+Methods (Legacy)
+================
 
 In the above example, the method name is ``index()``. The ``index()`` method
 is always loaded by default if the **second segment** of the URI is
@@ -442,8 +442,8 @@ Now load the following URL to see the comment method::
 
 You should see your new message.
 
-Passing URI Segments to Your Methods
-====================================
+Passing URI Segments to Your Methods (Legacy)
+=============================================
 
 If your URI contains more than two segments they will be passed to your
 method as parameters.
@@ -482,8 +482,8 @@ see the "Hello World" message.
 For more information, please refer to the :ref:`routes-configuration-options` section of the
 :doc:`URI Routing <routing>` documentation.
 
-Organizing Your Controllers into Sub-directories
-================================================
+Organizing Your Controllers into Sub-directories (Legacy)
+=========================================================
 
 If you are building a large application you might want to hierarchically
 organize or structure your controllers into sub-directories. CodeIgniter
