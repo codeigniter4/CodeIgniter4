@@ -118,17 +118,19 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertNull(env('p4'));
     }
 
+    private function createRouteCollection(): RouteCollection
+    {
+        return new RouteCollection(Services::locator(), new Modules(), new Routing());
+    }
+
     public function testRedirectReturnsRedirectResponse()
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $response = $this->createMock(Response::class);
-        $routes   = new RouteCollection(
-            Services::locator(),
-            new Modules(),
-            new Routing()
-        );
         Services::injectMock('response', $response);
+
+        $routes = $this->createRouteCollection();
         Services::injectMock('routes', $routes);
 
         $routes->add('home/base', 'Controller::index', ['as' => 'base']);
@@ -391,7 +393,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
 
-        $this->routes = new RouteCollection(Services::locator(), new Modules(), new Routing());
+        $this->routes = $this->createRouteCollection();
         Services::injectMock('routes', $this->routes);
 
         $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
@@ -426,7 +428,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
 
-        $this->routes = new RouteCollection(Services::locator(), new Modules(), new Routing());
+        $this->routes = $this->createRouteCollection();
         Services::injectMock('routes', $this->routes);
 
         $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
@@ -461,7 +463,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
 
-        $this->routes = new RouteCollection(Services::locator(), new Modules(), new Routing());
+        $this->routes = $this->createRouteCollection();
         Services::injectMock('routes', $this->routes);
 
         $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
