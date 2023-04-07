@@ -60,7 +60,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
 
         // Inject mock router.
         $this->routes = Services::routes();
-        $this->routes->presenter('work', ['controller' => Worker2::class]);
+        $this->routes->presenter('work', ['controller' => '\\' . Worker2::class]);
         Services::injectMock('routes', $this->routes);
 
         $config            = new App();
