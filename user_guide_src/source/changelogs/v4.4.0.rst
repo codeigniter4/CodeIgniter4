@@ -87,7 +87,7 @@ Others
   See :ref:`controller-default-method-fallback` for details.
 - **Filters:** Now you can use Filter Arguments with :ref:`$filters property <filters-filters-filter-arguments>`.
 - **Request:** Added ``IncomingRequest::setValidLocales()`` method to set valid locales.
-- **Table:** Addedd ``Table::setSyncRowsWithHeading()`` method to synchronize row columns with heading. See :ref:`table-sync-rows-with-headings` for details.
+- **Table:** Added ``Table::setSyncRowsWithHeading()`` method to synchronize row columns with heading. See :ref:`table-sync-rows-with-headings` for details.
 
 Message Changes
 ***************

@@ -242,7 +242,7 @@ class Table
      * If a row has a key which does not exist in heading, it will be filtered out
      * If a row does not have a key which exists in heading, the field will stay empty
      *
-     * @return Table
+     * @return $this
      */
     public function setSyncRowsWithHeading(bool $orderByKey)
     {
