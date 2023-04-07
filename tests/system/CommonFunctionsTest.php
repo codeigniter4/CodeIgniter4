@@ -32,6 +32,7 @@ use Config\App;
 use Config\Cookie;
 use Config\Logger;
 use Config\Modules;
+use Config\Routing;
 use Config\Services;
 use Kint;
 use RuntimeException;
@@ -124,7 +125,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $response = $this->createMock(Response::class);
         $routes   = new RouteCollection(
             Services::locator(),
-            new Modules()
+            new Modules(),
+            new Routing()
         );
         Services::injectMock('response', $response);
         Services::injectMock('routes', $routes);
@@ -389,7 +391,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
 
-        $this->routes = new RouteCollection(Services::locator(), new Modules());
+        $this->routes = new RouteCollection(Services::locator(), new Modules(), new Routing());
         Services::injectMock('routes', $this->routes);
 
         $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
@@ -424,7 +426,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
 
-        $this->routes = new RouteCollection(Services::locator(), new Modules());
+        $this->routes = new RouteCollection(Services::locator(), new Modules(), new Routing());
         Services::injectMock('routes', $this->routes);
 
         $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
@@ -459,7 +461,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
 
-        $this->routes = new RouteCollection(Services::locator(), new Modules());
+        $this->routes = new RouteCollection(Services::locator(), new Modules(), new Routing());
         Services::injectMock('routes', $this->routes);
 
         $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
