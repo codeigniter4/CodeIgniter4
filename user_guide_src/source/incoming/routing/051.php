@@ -1,7 +1,12 @@
 <?php
 
 // In app/Config/Routing.php
-$override404 = 'App\Errors::show404';
+class Routing extends BaseRouting
+{
+    // ...
+    public $override404 = 'App\Errors::show404';
+    // ...
+}
 
 // Would execute the show404 method of the App\Errors class
 $routes->set404Override('App\Errors::show404');

@@ -1,7 +1,12 @@
 <?php
 
 // In app/Config/Routing.php
-$defaultNamespace = '';
+class Routing extends BaseRouting
+{
+    // ...
+    public string $defaultNamespace = '';
+    // ...
+}
 
 // Controller is \Users
 $routes->get('users', 'Users::index');
