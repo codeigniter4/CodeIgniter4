@@ -456,12 +456,17 @@ Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
 
 .. literalinclude:: controllers/014.php
 
-Defining a Default Controller
-=============================
+Default Controller (Legacy)
+===========================
 
-CodeIgniter can be told to load a default controller when a URI is not
-present, as will be the case when only your site root URL is requested. Let's try it
-with the ``Helloworld`` controller.
+The Default Controller is a special controller that is used when a URI end with
+a directory name or when a URI is not present, as will be the case when only your
+site root URL is requested.
+
+Defining a Default Controller (Legacy)
+--------------------------------------
+
+Let's try it with the ``Helloworld`` controller.
 
 To specify a default controller open your **app/Config/Routes.php**
 file and set this variable:
@@ -480,7 +485,7 @@ see the "Hello World" message.
 .. note:: The line ``$routes->get('/', 'Home::index');`` is an optimization that you will want to use in a "real-world" app. But for demonstration purposes we don't want to use that feature. ``$routes->get()`` is explained in :doc:`URI Routing <routing>`
 
 For more information, please refer to the :ref:`routes-configuration-options` section of the
-:doc:`URI Routing <routing>` documentation.
+:ref:`URI Routing <routing-auto-routing-legacy-configuration-options>` documentation.
 
 Organizing Your Controllers into Sub-directories (Legacy)
 =========================================================

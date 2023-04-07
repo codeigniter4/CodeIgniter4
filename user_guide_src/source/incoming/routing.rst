@@ -757,6 +757,8 @@ and executes ``index()`` method with passing ``'1'`` as the first argument.
 
 See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>` for more info.
 
+.. _routing-auto-routing-legacy-configuration-options:
+
 Configuration Options (Legacy)
 ==============================
 
@@ -765,11 +767,17 @@ These options are available at the top of **app/Config/Routes.php**.
 Default Controller (Legacy)
 ---------------------------
 
+For Site Root URI (Legacy)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
 the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
 which matches the controller at **app/Controllers/Home.php**:
 
 .. literalinclude:: routing/047.php
+
+For Directory URI (Legacy)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The default controller is also used when no matching route has been found, and the URI would point to a directory
 in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
