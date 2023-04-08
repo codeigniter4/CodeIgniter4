@@ -36,6 +36,11 @@ final class AutoRouteCollector
     private array $protectedControllers;
 
     /**
+     * @var string URI prefix for Module Routing
+     */
+    private string $prefix;
+
+    /**
      * @param string $namespace namespace to search
      */
     public function __construct(
@@ -43,13 +48,15 @@ final class AutoRouteCollector
         string $defaultController,
         string $defaultMethod,
         array $httpMethods,
-        array $protectedControllers
+        array $protectedControllers,
+        string $prefix = ''
     ) {
         $this->namespace            = $namespace;
         $this->defaultController    = $defaultController;
         $this->defaultMethod        = $defaultMethod;
         $this->httpMethods          = $httpMethods;
         $this->protectedControllers = $protectedControllers;
+        $this->prefix               = $prefix;
     }
 
     /**
@@ -82,9 +89,16 @@ final class AutoRouteCollector
             $routes = $this->addFilters($routes);
 
             foreach ($routes as $item) {
+                $route = $item['route'] . $item['route_params'];
+                if ($this->prefix !== '' && $route === '/') {
+                    $route = $this->prefix;
+                } elseif ($this->prefix !== '') {
+                    $route = $this->prefix . '/' . $route;
+                }
+
                 $tbody[] = [
                     strtoupper($item['method']) . '(auto)',
-                    $item['route'] . $item['route_params'],
+                    $route,
                     '',
                     $item['handler'],
                     $item['before'],

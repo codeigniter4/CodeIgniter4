@@ -18,6 +18,7 @@ use CodeIgniter\Commands\Utilities\Routes\AutoRouteCollector;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\AutoRouteCollector as AutoRouteCollectorImproved;
 use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
 use CodeIgniter\Commands\Utilities\Routes\SampleURIGenerator;
+use Config\Routing;
 use Config\Services;
 
 /**
@@ -152,6 +153,22 @@ class Routes extends BaseCommand
                 );
 
                 $autoRoutes = $autoRouteCollector->get();
+
+                // Check for Module Routes.
+                if ($routingConfig = config(Routing::class)) {
+                    foreach ($routingConfig->moduleRoutes as $uri => $namespace) {
+                        $autoRouteCollector = new AutoRouteCollectorImproved(
+                            $namespace,
+                            $collection->getDefaultController(),
+                            $collection->getDefaultMethod(),
+                            $methods,
+                            $collection->getRegisteredControllers('*'),
+                            $uri
+                        );
+
+                        $autoRoutes = array_merge($autoRoutes, $autoRouteCollector->get());
+                    }
+                }
             } else {
                 $autoRouteCollector = new AutoRouteCollector(
                     $collection->getDefaultNamespace(),
