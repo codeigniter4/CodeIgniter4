@@ -114,12 +114,12 @@ final class AutoRouterImproved implements AutoRouterInterface
         $segments = explode('/', $uri);
 
         // Check for Module Routes.
-        if ($routingConfig = config(Routing::class)) {
-            if (array_key_exists($segments[0], $routingConfig->moduleRoutes)) {
-                $uriSegment = array_shift($segments);
-
-                $this->namespace = rtrim($routingConfig->moduleRoutes[$uriSegment], '\\') . '\\';
-            }
+        if (
+            ($routingConfig = config(Routing::class))
+            && array_key_exists($segments[0], $routingConfig->moduleRoutes)
+        ) {
+            $uriSegment      = array_shift($segments);
+            $this->namespace = rtrim($routingConfig->moduleRoutes[$uriSegment], '\\') . '\\';
         }
 
         // WARNING: Directories get shifted out of the segments array.
