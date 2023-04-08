@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Router;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Router\Controllers\Dash_folder\Dash_controller;
@@ -39,11 +40,11 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->collection      = new RouteCollection(Services::locator(), $moduleConfig, new Routing());
     }
 
-    private function createNewAutoRouter(string $httpVerb = 'get'): AutoRouterImproved
+    private function createNewAutoRouter(string $httpVerb = 'get', $namespace = 'CodeIgniter\Router\Controllers'): AutoRouterImproved
     {
         return new AutoRouterImproved(
             [],
-            'CodeIgniter\Router\Controllers',
+            $namespace,
             $this->collection->getDefaultController(),
             $this->collection->getDefaultMethod(),
             true,
@@ -59,6 +60,27 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         [$directory, $controller, $method, $params]
             = $router->getRoute('/');
+
+        $this->assertNull($directory);
+        $this->assertSame('\\' . Index::class, $controller);
+        $this->assertSame('getIndex', $method);
+        $this->assertSame([], $params);
+    }
+
+    public function testAutoRouteFindsModuleDefaultControllerAndMethodGet()
+    {
+        $config               = config(Routing::class);
+        $config->moduleRoutes = [
+            'test' => 'CodeIgniter\Router\Controllers',
+        ];
+        Factories::injectMock('config', Routing::class, $config);
+
+        $this->collection->setDefaultController('Index');
+
+        $router = $this->createNewAutoRouter('get', 'App/Controllers');
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('test');
 
         $this->assertNull($directory);
         $this->assertSame('\\' . Index::class, $controller);

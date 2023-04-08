@@ -13,6 +13,7 @@ namespace CodeIgniter\Router;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Router\Exceptions\MethodNotFoundException;
+use Config\Routing;
 use ReflectionClass;
 use ReflectionException;
 
@@ -111,6 +112,15 @@ final class AutoRouterImproved implements AutoRouterInterface
     public function getRoute(string $uri): array
     {
         $segments = explode('/', $uri);
+
+        // Check for Module Routes.
+        if ($routingConfig = config(Routing::class)) {
+            if (array_key_exists($segments[0], $routingConfig->moduleRoutes)) {
+                $uriSegment = array_shift($segments);
+
+                $this->namespace = rtrim($routingConfig->moduleRoutes[$uriSegment], '\\') . '\\';
+            }
+        }
 
         // WARNING: Directories get shifted out of the segments array.
         $nonDirSegments = $this->scanControllers($segments);

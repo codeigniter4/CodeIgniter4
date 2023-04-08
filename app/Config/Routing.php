@@ -97,4 +97,17 @@ class Routing extends BaseRouting
      * Default: false
      */
     public bool $prioritize = false;
+
+    /**
+     * Map of URI segments and namespaces. For Auto Routing (Improved).
+     *
+     * The key is the first URI segment. The value is the controller namespace.
+     * E.g.,
+     *   [
+     *       'blog' => 'Acme\Blog\Controllers',
+     *   ]
+     *
+     * @var array [ uri_segment => namespace ]
+     */
+    public array $moduleRoutes = [];
 }
