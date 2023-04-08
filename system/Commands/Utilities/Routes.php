@@ -166,7 +166,7 @@ class Routes extends BaseCommand
                             $uri
                         );
 
-                        $autoRoutes = array_merge($autoRoutes, $autoRouteCollector->get());
+                        $autoRoutes = [...$autoRoutes, ...$autoRouteCollector->get()];
                     }
                 }
             } else {
