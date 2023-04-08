@@ -86,7 +86,7 @@ class Table
     /**
      * Order each inserted row by heading keys
      */
-    public bool $syncRowsWithHeading = false;
+    private bool $syncRowsWithHeading = false;
 
     /**
      * Set the template from the table config file if it exists
