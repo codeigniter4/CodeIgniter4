@@ -93,6 +93,11 @@ final class ControllerMethodReader
                         continue;
                     }
 
+                    // Skip the default controller.
+                    if (class_basename($class) === $defaultController) {
+                        continue;
+                    }
+
                     $route = $classInUri . '/' . $methodInUri;
 
                     $params      = [];
