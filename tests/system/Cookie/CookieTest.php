@@ -15,7 +15,6 @@ use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cookie as CookieConfig;
 use DateTimeImmutable;
-use DateTimeInterface;
 use DateTimeZone;
 use Generator;
 use LogicException;
@@ -169,7 +168,7 @@ final class CookieTest extends CIUnitTestCase
     /**
      * @dataProvider invalidExpiresProvider
      *
-     * @param DateTimeInterface|int|string $expires
+     * @param bool|float|string $expires
      */
     public function testInvalidExpires($expires): void
     {
