@@ -28,6 +28,19 @@ If your code depends on this bug, fix the segment number.
 .. literalinclude:: upgrade_440/002.php
    :lines: 2-
 
+When you extend Exceptions
+==========================
+
+If you are extending ``CodeIgniter\Debug\Exceptions`` and have not overridden
+the ``exceptionHandler()`` method, defining the new ``Config\Exceptions::handler()``
+method in your **app/Config/Exceptions.php** will cause the specified Exception
+Handler to be executed.
+
+Your overridden code will no longer be executed, so make any necessary changes
+by defining your own exception handler.
+
+See :ref:`custom-exception-handlers` for the detail.
+
 Mandatory File Changes
 **********************
 
@@ -65,7 +78,9 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- @TODO
+- app/Config/Exceptions.php
+    - Added the new method ``handler()`` that define custom Exception Handlers.
+      See :ref:`custom-exception-handlers`.
 
 All Changes
 ===========

@@ -62,7 +62,10 @@ Application Structure
 Routing
 =======
 
-- The Auto Routing is disabled by default. If you want to use the Auto Routing in the same way as CI3, you need to enable :ref:`auto-routing-legacy`.
+- The Auto Routing is disabled by default. You need to :ref:`define all routes
+  <defined-route-routing>` by default.
+- If you want to use the Auto Routing in the same way as CI3, you need to enable
+  :ref:`auto-routing-legacy`.
 - CI4 also has an optional new more secure :ref:`auto-routing-improved`.
 
 Model, View and Controller
@@ -204,6 +207,3 @@ Upgrading Libraries
     upgrade_sessions
     upgrade_validations
     upgrade_view_parser
-
-.. note::
-    More upgrade guides coming soon
