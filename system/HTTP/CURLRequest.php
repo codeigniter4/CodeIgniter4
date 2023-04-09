@@ -112,7 +112,7 @@ class CURLRequest extends OutgoingRequest
 
         parent::__construct('GET', $uri);
 
-        $this->responseOrig   = $response;
+        $this->responseOrig   = $response ?? new Response(config('App'));
         $this->baseURI        = $uri->useRawQueryString();
         $this->defaultOptions = $options;
 
