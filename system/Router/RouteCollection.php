@@ -292,7 +292,7 @@ class RouteCollection implements RouteCollectionInterface
 
         foreach ($routeFiles as $routesFile) {
             if (! is_file($routesFile)) {
-                log_message('warning', 'Routes file not found: ' . $routesFile . '.');
+                log_message('warning', sprintf('Routes file not found: "%s"', $routesFile));
 
                 continue;
             }
