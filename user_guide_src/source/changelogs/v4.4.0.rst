@@ -32,6 +32,10 @@ The next segment (``+1``) of the current last segment can be set as before.
 Interface Changes
 =================
 
+.. note:: As long as you have not extended the relevant CodeIgniter core classes
+    or implemented these interfaces, all these changes are backward compatible
+    and require no intervention.
+
 Method Signature Changes
 ========================
 
@@ -87,6 +91,7 @@ Others
   See :ref:`controller-default-method-fallback` for details.
 - **Filters:** Now you can use Filter Arguments with :ref:`$filters property <filters-filters-filter-arguments>`.
 - **Request:** Added ``IncomingRequest::setValidLocales()`` method to set valid locales.
+- **Error Handling:** Now you can use :ref:`custom-exception-handlers`.
 
 Message Changes
 ***************
@@ -109,6 +114,9 @@ Deprecations
 ************
 
 - **Entity:** ``Entity::setAttributes()`` is deprecated. Use ``Entity::injectRawData()`` instead.
+- **Error Handling:** Many methods and properties in ``CodeIgniter\Debug\Exceptions``
+  are deprecated. Because these methods have been moved to ``BaseExceptionHandler`` or
+  ``ExceptionHandler``.
 - **Autoloader:** ``Autoloader::sanitizeFilename()`` is deprecated.
 
 Bugs Fixed

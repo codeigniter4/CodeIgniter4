@@ -168,3 +168,40 @@ This feature also works with user deprecations:
 
 For testing your application you may want to always throw on deprecations. You may configure this by
 setting the environment variable ``CODEIGNITER_SCREAM_DEPRECATIONS`` to a truthy value.
+
+.. _custom-exception-handlers:
+
+Custom Exception Handlers
+=========================
+
+.. versionadded:: 4.4.0
+
+If you need more control over how exceptions are displayed you can now define your own handlers and
+specify when they apply.
+
+Defining the New Handler
+------------------------
+
+The first step is to create a new class which implements ``CodeIgniter\Debug\ExceptionHandlerInterface``.
+You can also extend ``CodeIgniter\Debug\BaseExceptionHandler``.
+This class includes a number of utility methods that are used by the default exception handler.
+The new handler must implement a single method: ``handle()``:
+
+.. literalinclude:: errors/015.php
+
+This example defines the minimum amount of code typically needed - display a view and exit with the proper
+exit code. However, the ``BaseExceptionHandler`` provides a number of other helper functions and objects.
+
+Configuring the New Handler
+---------------------------
+
+Telling CodeIgniter to use your new exception handler class is done in the **app/Config/Exceptions.php**
+configuration file's ``handler()`` method:
+
+.. literalinclude:: errors/016.php
+
+You can use any logic your application needs to determine whether it should handle the exception, but the
+two most common are checking on the HTTP status code or the type of exception. If your class should handle
+it then return a new instance of that class:
+
+.. literalinclude:: errors/017.php
