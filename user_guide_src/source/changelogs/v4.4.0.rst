@@ -88,6 +88,8 @@ Others
   the ``Content-Disposition: inline`` header to display the file in the browser.
   See :ref:`open-file-in-browser` for details.
 - **View:** Added optional 2nd parameter ``$saveData`` on ``renderSection()`` to prevent from auto cleans the data after displaying. See :ref:`View Layouts <creating-a-layout>` for details.
+- **Auto Routing (Improved)**: Now you can route to Modules.
+  See :ref:`auto-routing-improved-module-routing` for details.
 - **Auto Routing (Improved)**: Now you can use URI without a method name like
   ``product/15`` where ``15`` is an arbitrary number.
   See :ref:`controller-default-method-fallback` for details.
