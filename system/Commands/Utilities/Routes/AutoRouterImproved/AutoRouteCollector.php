@@ -90,6 +90,8 @@ final class AutoRouteCollector
 
             foreach ($routes as $item) {
                 $route = $item['route'] . $item['route_params'];
+
+                // For module routing
                 if ($this->prefix !== '' && $route === '/') {
                     $route = $this->prefix;
                 } elseif ($this->prefix !== '') {
@@ -115,13 +117,22 @@ final class AutoRouteCollector
         $filterCollector = new FilterCollector(true);
 
         foreach ($routes as &$route) {
+            $routePath = $route['route'];
+
+            // For module routing
+            if ($this->prefix !== '' && $route === '/') {
+                $routePath = $this->prefix;
+            } elseif ($this->prefix !== '') {
+                $routePath = $this->prefix . '/' . $routePath;
+            }
+
             // Search filters for the URI with all params
             $sampleUri      = $this->generateSampleUri($route);
-            $filtersLongest = $filterCollector->get($route['method'], $route['route'] . $sampleUri);
+            $filtersLongest = $filterCollector->get($route['method'], $routePath . $sampleUri);
 
             // Search filters for the URI without optional params
             $sampleUri       = $this->generateSampleUri($route, false);
-            $filtersShortest = $filterCollector->get($route['method'], $route['route'] . $sampleUri);
+            $filtersShortest = $filterCollector->get($route['method'], $routePath . $sampleUri);
 
             // Get common array elements
             $filters['before'] = array_intersect($filtersLongest['before'], $filtersShortest['before']);
