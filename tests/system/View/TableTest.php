@@ -763,6 +763,59 @@ final class TableTest extends CIUnitTestCase
 
         $this->assertStringContainsString('<td>Fred</td><td><strong>Blue</strong></td><td>Small</td>', $generated);
     }
+
+    /**
+     * @dataProvider orderedColumnUsecases
+     */
+    public function testAddRowAndGenerateOrderedColumns(array $heading, array $row, string $expectContainsString): void
+    {
+        $this->table->setHeading($heading);
+        $this->table->setSyncRowsWithHeading(true);
+        $this->table->addRow($row);
+
+        $generated = $this->table->generate();
+
+        $this->assertStringContainsString($expectContainsString, $generated);
+    }
+
+    /**
+     * @dataProvider orderedColumnUsecases
+     */
+    public function testGenerateOrderedColumns(array $heading, array $row, string $expectContainsString): void
+    {
+        $this->table->setHeading($heading);
+        $this->table->setSyncRowsWithHeading(true);
+
+        $generated = $this->table->generate([$row]);
+
+        $this->assertStringContainsString($expectContainsString, $generated);
+    }
+
+    public function orderedColumnUsecases(): iterable
+    {
+        yield from [
+            'reorder example #1' => [
+                'heading'              => ['id' => 'ID', 'name' => 'Name', 'age' => 'Age'],
+                'row'                  => ['name' => 'Max', 'age' => 30, 'id' => 5],
+                'expectContainsString' => '<td>5</td><td>Max</td><td>30</td>',
+            ],
+            'reorder example #2' => [
+                'heading'              => ['id' => 'ID', 'age' => 'Age', 'name' => 'Name'],
+                'row'                  => ['name' => 'Fred', 'age' => 30, 'id' => 5],
+                'expectContainsString' => '<td>5</td><td>30</td><td>Fred</td>',
+            ],
+            '2 col heading, 3 col data row' => [
+                'heading'              => ['id' => 'ID', 'name' => 'Name'],
+                'row'                  => ['name' => 'Fred', 'age' => 30, 'id' => 5],
+                'expectContainsString' => '<td>5</td><td>Fred</td>',
+            ],
+            '3 col heading, 2 col data row' => [
+                'heading'              => ['id' => 'ID', 'age' => 'Age', 'name' => 'Name'],
+                'row'                  => ['name' => 'Fred', 'id' => 5],
+                'expectContainsString' => '<td>5</td><td></td><td>Fred</td>',
+            ],
+        ];
+    }
 }
 
 // We need this for the _set_from_db_result() test
