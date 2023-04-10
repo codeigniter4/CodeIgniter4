@@ -27,6 +27,8 @@ Deprecations
 Bugs Fixed
 **********
 
+- **CURLRequest:** Fixed a bug where the response class was shared between requests.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.

@@ -29,6 +29,13 @@ class CURLRequest extends OutgoingRequest
     protected $response;
 
     /**
+     * The original response object associated with this request
+     *
+     * @var ResponseInterface|null
+     */
+    protected $responseOrig;
+
+    /**
      * The URI associated with this request
      *
      * @var URI
@@ -105,7 +112,7 @@ class CURLRequest extends OutgoingRequest
 
         parent::__construct('GET', $uri);
 
-        $this->response       = $response;
+        $this->responseOrig   = $response ?? new Response(config('App'));
         $this->baseURI        = $uri->useRawQueryString();
         $this->defaultOptions = $options;
 
@@ -125,6 +132,8 @@ class CURLRequest extends OutgoingRequest
      */
     public function request($method, string $url, array $options = []): ResponseInterface
     {
+        $this->response = clone $this->responseOrig;
+
         $this->parseOptions($options);
 
         $url = $this->prepareURL($url);
