@@ -281,7 +281,7 @@ Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
 Default Controller
 ==================
 
-The Default Controller is a special controller that is used when a URI end with
+The Default Controller is a special controller that is used when a URI ends with
 a directory name or when a URI is not present, as will be the case when only your
 site root URL is requested.
 
