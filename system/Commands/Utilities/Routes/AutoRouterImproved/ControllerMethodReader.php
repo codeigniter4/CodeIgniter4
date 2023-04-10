@@ -79,7 +79,7 @@ final class ControllerMethodReader
                         if ($routeForDefaultController !== []) {
                             // The controller is the default controller. It only
                             // has a route for the default method. Other methods
-                            // will be routed even if they exist.
+                            // will not be routed even if they exist.
                             $output = [...$output, ...$routeForDefaultController];
 
                             continue;
