@@ -66,7 +66,7 @@ final class ResourceControllerTest extends CIUnitTestCase
 
         // Inject mock router.
         $this->routes = Services::routes();
-        $this->routes->resource('work', ['controller' => Worker::class]);
+        $this->routes->resource('work', ['controller' => '\\' . Worker::class]);
         Services::injectMock('routes', $this->routes);
 
         $config            = new App();

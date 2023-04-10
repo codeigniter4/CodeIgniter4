@@ -25,6 +25,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ConfigFromArrayTrait;
 use Config\Filters as FiltersConfig;
 use Config\Modules;
+use Config\Routing;
 
 /**
  * @internal
@@ -52,7 +53,7 @@ final class FilterFinderTest extends CIUnitTestCase
 
     private function createRouteCollection(array $routes = []): RouteCollection
     {
-        $collection = new RouteCollection(Services::locator(), $this->moduleConfig);
+        $collection = new RouteCollection(Services::locator(), $this->moduleConfig, new Routing());
 
         $routes = ($routes !== []) ? $routes : [
             'users'                   => 'Users::index',

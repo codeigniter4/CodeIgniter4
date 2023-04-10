@@ -19,6 +19,7 @@ use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Validation\Validation;
 use Config\App;
 use Config\Modules;
+use Config\Routing;
 use Config\Services;
 
 /**
@@ -47,7 +48,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
 
-        $this->routes = new RouteCollection(Services::locator(), new Modules());
+        $this->routes = new RouteCollection(Services::locator(), new Modules(), new Routing());
         Services::injectMock('routes', $this->routes);
 
         $this->request = new MockIncomingRequest(

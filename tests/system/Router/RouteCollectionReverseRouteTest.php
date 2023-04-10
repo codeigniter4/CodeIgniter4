@@ -15,6 +15,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
+use Config\Routing;
 use Generator;
 
 /**
@@ -49,7 +50,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
             $moduleConfig->enabled = false;
         }
 
-        return (new RouteCollection($loader, $moduleConfig))->setHTTPVerb('get');
+        return (new RouteCollection($loader, $moduleConfig, new Routing()))->setHTTPVerb('get');
     }
 
     public function testReverseRoutingFindsSimpleMatch()

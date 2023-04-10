@@ -18,6 +18,7 @@ use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
+use Config\Routing;
 use Tests\Support\Filters\Customfilter;
 
 /**
@@ -36,7 +37,11 @@ final class RouterTest extends CIUnitTestCase
 
         $moduleConfig          = new Modules();
         $moduleConfig->enabled = false;
-        $this->collection      = new RouteCollection(Services::locator(), $moduleConfig);
+
+        $routerConfig                   = new Routing();
+        $routerConfig->defaultNamespace = '\\';
+
+        $this->collection = new RouteCollection(Services::locator(), $moduleConfig, $routerConfig);
 
         $routes = [
             '/'                                               => 'Home::index',

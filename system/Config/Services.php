@@ -596,7 +596,7 @@ class Services extends BaseService
             return static::getSharedInstance('routes');
         }
 
-        return new RouteCollection(AppServices::locator(), config('Modules'));
+        return new RouteCollection(AppServices::locator(), config('Modules'), config('Routing'));
     }
 
     /**
