@@ -161,6 +161,8 @@ final class ControllerMethodReader
 
     /**
      * Gets a route for the default controller.
+     *
+     * @phpstan-return list<array>
      */
     private function getRouteForDefaultController(
         string $classShortname,
