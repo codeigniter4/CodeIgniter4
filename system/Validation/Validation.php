@@ -56,6 +56,13 @@ class Validation implements ValidationInterface
     protected $data = [];
 
     /**
+     * The data that was actually validated.
+     *
+     * @var array
+     */
+    protected $validated = [];
+
+    /**
      * Any generated errors during validation.
      * 'key' is the alias, 'value' is the message.
      *
@@ -109,7 +116,12 @@ class Validation implements ValidationInterface
      */
     public function run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool
     {
-        $data ??= $this->data;
+        if ($data === null) {
+            $data = $this->data;
+        } else {
+            // Store data to validate.
+            $this->data = $data;
+        }
 
         // i.e. is_unique
         $data['DBGroup'] = $dbGroup;
@@ -171,7 +183,17 @@ class Validation implements ValidationInterface
             }
         }
 
-        return $this->getErrors() === [];
+        if ($this->getErrors() === []) {
+            // Store data that was actually validated.
+            $this->validated = DotArrayFilter::run(
+                array_keys($this->rules),
+                $this->data
+            );
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -186,6 +208,14 @@ class Validation implements ValidationInterface
         $this->reset();
 
         return $this->setRule('check', null, $rule, $errors)->run(['check' => $value]);
+    }
+
+    /**
+     * Returns actually validated data.
+     */
+    public function getValidated(): array
+    {
+        return $this->validated;
     }
 
     /**
@@ -827,6 +857,7 @@ class Validation implements ValidationInterface
     public function reset(): ValidationInterface
     {
         $this->data         = [];
+        $this->validated    = [];
         $this->rules        = [];
         $this->errors       = [];
         $this->customErrors = [];

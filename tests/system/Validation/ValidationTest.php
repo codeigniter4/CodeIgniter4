@@ -234,13 +234,16 @@ class ValidationTest extends CIUnitTestCase
     {
         $this->validation->setRules([]);
         $this->assertFalse($this->validation->run([]));
+        $this->assertSame([], $this->validation->getValidated());
     }
 
     public function testRunDoesTheBasics(): void
     {
         $data = ['foo' => 'notanumber'];
         $this->validation->setRules(['foo' => 'is_numeric']);
+
         $this->assertFalse($this->validation->run($data));
+        $this->assertSame([], $this->validation->getValidated());
     }
 
     public function testClosureRule(): void
@@ -266,6 +269,7 @@ class ValidationTest extends CIUnitTestCase
             ['foo' => 'The value is not "abc"'],
             $this->validation->getErrors()
         );
+        $this->assertSame([], $this->validation->getValidated());
     }
 
     public function testClosureRuleWithParamError(): void
@@ -293,6 +297,7 @@ class ValidationTest extends CIUnitTestCase
             ['foo' => 'The foo value is not "abc"'],
             $this->validation->getErrors()
         );
+        $this->assertSame([], $this->validation->getValidated());
     }
 
     public function testClosureRuleWithLabel(): void
@@ -732,23 +737,22 @@ class ValidationTest extends CIUnitTestCase
 
         $this->assertTrue($result);
         $this->assertSame([], $this->validation->getErrors());
+        $this->assertSame(['role' => 'administrator'], $this->validation->getValidated());
     }
 
     public function testJsonInput(): void
     {
+        $_SERVER['CONTENT_TYPE'] = 'application/json';
+
         $data = [
             'username' => 'admin001',
             'role'     => 'administrator',
             'usepass'  => 0,
         ];
-        $json = json_encode($data);
-
-        $_SERVER['CONTENT_TYPE'] = 'application/json';
-
+        $json            = json_encode($data);
         $config          = new App();
         $config->baseURL = 'http://example.com/';
-
-        $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request         = new IncomingRequest($config, new URI(), $json, new UserAgent());
 
         $rules = [
             'role' => 'required|min_length[5]',
@@ -760,6 +764,7 @@ class ValidationTest extends CIUnitTestCase
 
         $this->assertTrue($result);
         $this->assertSame([], $this->validation->getErrors());
+        $this->assertSame(['role' => 'administrator'], $this->validation->getValidated());
 
         unset($_SERVER['CONTENT_TYPE']);
     }
