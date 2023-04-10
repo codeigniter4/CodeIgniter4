@@ -713,19 +713,17 @@ class ValidationTest extends CIUnitTestCase
 
     public function testRawInput(): void
     {
-        $rawstring = 'username=admin001&role=administrator&usepass=0';
-
-        $data = [
-            'username' => 'admin001',
-            'role'     => 'administrator',
-            'usepass'  => 0,
-        ];
-
+        $rawstring       = 'username=admin001&role=administrator&usepass=0';
         $config          = new App();
         $config->baseURL = 'http://example.com/';
+        $request         = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
 
-        $request = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
-        $this->validation->withRequest($request->withMethod('patch'))->run($data);
+        $rules = [
+            'role' => 'required|min_length[5]',
+        ];
+        $validated = $this->validation->withRequest($request->withMethod('patch'))->setRules($rules)->run();
+
+        $this->assertTrue($validated);
         $this->assertSame([], $this->validation->getErrors());
     }
 
