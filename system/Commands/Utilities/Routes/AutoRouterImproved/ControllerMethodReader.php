@@ -94,7 +94,7 @@ final class ControllerMethodReader
                     }
 
                     // Skip the default controller.
-                    if (class_basename($class) === $defaultController) {
+                    if ($classShortname === $defaultController) {
                         continue;
                     }
 
