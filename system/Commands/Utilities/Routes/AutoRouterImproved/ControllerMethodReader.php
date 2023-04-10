@@ -65,8 +65,9 @@ final class ControllerMethodReader
                     // Remove HTTP verb prefix.
                     $methodInUri = lcfirst(substr($methodName, strlen($httpVerb)));
 
+                    // Check if it is the default method.
                     if ($methodInUri === $defaultMethod) {
-                        $routeWithoutController = $this->getRouteWithoutController(
+                        $routeForDefaultController = $this->getRouteForDefaultController(
                             $classShortname,
                             $defaultController,
                             $classInUri,
@@ -75,8 +76,11 @@ final class ControllerMethodReader
                             $httpVerb
                         );
 
-                        if ($routeWithoutController !== []) {
-                            $output = [...$output, ...$routeWithoutController];
+                        if ($routeForDefaultController !== []) {
+                            // The controller is the default controller. It only
+                            // has a route for the default method. Other methods
+                            // will not be routed even if they exist.
+                            $output = [...$output, ...$routeForDefaultController];
 
                             continue;
                         }
@@ -151,9 +155,11 @@ final class ControllerMethodReader
     }
 
     /**
-     * Gets a route without default controller.
+     * Gets a route for the default controller.
+     *
+     * @phpstan-return list<array>
      */
-    private function getRouteWithoutController(
+    private function getRouteForDefaultController(
         string $classShortname,
         string $defaultController,
         string $uriByClass,
