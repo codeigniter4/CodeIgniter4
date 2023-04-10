@@ -117,6 +117,12 @@ final class ControllerMethodReader
                         $params[$param->getName()] = $required;
                     }
 
+                    // If it is the default controller, the method will not be
+                    // routed.
+                    if ($classShortname === $defaultController) {
+                        $route = 'x ' . $route;
+                    }
+
                     $output[] = [
                         'method'       => $httpVerb,
                         'route'        => $route,
