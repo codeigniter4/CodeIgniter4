@@ -259,9 +259,9 @@ class ValidationTest extends CIUnitTestCase
         );
 
         $data   = ['foo' => 'xyz'];
-        $return = $this->validation->run($data);
+        $result = $this->validation->run($data);
 
-        $this->assertFalse($return);
+        $this->assertFalse($result);
         $this->assertSame(
             ['foo' => 'The value is not "abc"'],
             $this->validation->getErrors()
@@ -286,9 +286,9 @@ class ValidationTest extends CIUnitTestCase
         ]);
 
         $data   = ['foo' => 'xyz'];
-        $return = $this->validation->run($data);
+        $result = $this->validation->run($data);
 
-        $this->assertFalse($return);
+        $this->assertFalse($result);
         $this->assertSame(
             ['foo' => 'The foo value is not "abc"'],
             $this->validation->getErrors()
@@ -309,9 +309,9 @@ class ValidationTest extends CIUnitTestCase
         ]);
 
         $data   = ['secret' => 'xyz'];
-        $return = $this->validation->run($data);
+        $result = $this->validation->run($data);
 
-        $this->assertFalse($return);
+        $this->assertFalse($result);
         $this->assertSame(
             ['secret' => 'The シークレット is invalid'],
             $this->validation->getErrors()
@@ -721,9 +721,9 @@ class ValidationTest extends CIUnitTestCase
         $rules = [
             'role' => 'required|min_length[5]',
         ];
-        $validated = $this->validation->withRequest($request->withMethod('patch'))->setRules($rules)->run();
+        $result = $this->validation->withRequest($request->withMethod('patch'))->setRules($rules)->run();
 
-        $this->assertTrue($validated);
+        $this->assertTrue($result);
         $this->assertSame([], $this->validation->getErrors());
     }
 
@@ -746,12 +746,12 @@ class ValidationTest extends CIUnitTestCase
         $rules = [
             'role' => 'required|min_length[5]',
         ];
-        $validated = $this->validation
+        $result = $this->validation
             ->withRequest($request->withMethod('patch'))
             ->setRules($rules)
             ->run();
 
-        $this->assertTrue($validated);
+        $this->assertTrue($result);
         $this->assertSame([], $this->validation->getErrors());
 
         unset($_SERVER['CONTENT_TYPE']);
@@ -782,12 +782,12 @@ class ValidationTest extends CIUnitTestCase
         $rules = [
             'p' => 'required|array_count[2]',
         ];
-        $validated = $this->validation
+        $result = $this->validation
             ->withRequest($request->withMethod('patch'))
             ->setRules($rules)
             ->run();
 
-        $this->assertFalse($validated);
+        $this->assertFalse($result);
         $this->assertSame(['p' => 'Validation.array_count'], $this->validation->getErrors());
 
         unset($_SERVER['CONTENT_TYPE']);
