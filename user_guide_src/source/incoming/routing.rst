@@ -844,6 +844,25 @@ The *Method* will be like ``GET(auto)``.
 
 ``/..`` in the *Route* column indicates one segment. ``[/..]`` indicates it is optional.
 
+If you see a route starting with ``x`` like the following, it indicates an invalid
+route that won't be routed, but the controller has a public method for routing.
+
+.. code-block:: none
+
+    +-----------+----------------+------+-------------------------------------+----------------+---------------+
+    | Method    | Route          | Name | Handler                             | Before Filters | After Filters |
+    +-----------+----------------+------+-------------------------------------+----------------+---------------+
+    | GET(auto) | x home/foo     |      | \App\Controllers\Home::getFoo       | <unknown>      | <unknown>     |
+    +-----------+----------------+------+-------------------------------------+----------------+---------------+
+
+The above example shows you have the ``\App\Controllers\Home::getFoo()`` method,
+but it is not routed because it is the default controller (``Home`` by default)
+and the default controller name must be omitted in the URI. You should delete
+the ``getFoo()`` method.
+
+.. note:: Prior to v4.3.4, the invalid route is displayed as a normal route
+    due to a bug.
+
 Auto Routing (Legacy)
 ---------------------
 
