@@ -242,6 +242,13 @@ final class AutoRouterImproved implements AutoRouterInterface
             $this->method = $method;
             $this->params = $params;
 
+            // Prevent access to default controller's method
+            if (strtolower($baseControllerName) === strtolower($this->defaultController)) {
+                throw new PageNotFoundException(
+                    'Cannot access the default controller "' . $this->controller . '::' . $this->method . '"'
+                );
+            }
+
             // Prevent access to default method path
             if (strtolower($this->method) === strtolower($this->defaultMethod)) {
                 throw new PageNotFoundException(
