@@ -1394,6 +1394,24 @@ when a controller is found that matches the URI, but no segment exists for the m
 </div>
 <p>The <em>Method</em> will be like <code class="docutils literal notranslate"><span class="pre">GET(auto)</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">/..</span></code> in the <em>Route</em> column indicates one segment. <code class="docutils literal notranslate"><span class="pre">[/..]</span></code> indicates it is optional.</p>
+<p>If you see a route starting with <code class="docutils literal notranslate"><span class="pre">x</span></code> like the following, it indicates an invalid
+route that won’t be routed, but the controller has a public method for routing.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-----------+----------------+------+-------------------------------------+----------------+---------------+
+| Method    | Route          | Name | Handler                             | Before Filters | After Filters |
++-----------+----------------+------+-------------------------------------+----------------+---------------+
+| GET(auto) | x home/foo     |      | \App\Controllers\Home::getFoo       | &lt;unknown&gt;      | &lt;unknown&gt;     |
++-----------+----------------+------+-------------------------------------+----------------+---------------+
+</pre></div>
+</div>
+<p>The above example shows you have the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Home::getFoo()</span></code> method,
+but it is not routed because it is the default controller (<code class="docutils literal notranslate"><span class="pre">Home</span></code> by default)
+and the default controller name must be omitted in the URI. You should delete
+the <code class="docutils literal notranslate"><span class="pre">getFoo()</span></code> method.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to v4.3.4, the invalid route is displayed as a normal route
+due to a bug.</p>
+</div>
 </section>
 <section id="id12">
 <h4>Auto Routing (Legacy)<a class="headerlink" href="#id12" title="Permalink to this headline"></a></h4>
@@ -1438,7 +1456,7 @@ when a controller is found that matches the URI, but no segment exists for the m
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 09, 2023.
+      <span class="lastupdated">Last updated on Apr 11, 2023.
       </span></p>
   </div>
 
