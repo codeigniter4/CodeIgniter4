@@ -217,7 +217,7 @@ final class AutoRouterImproved implements AutoRouterInterface
                 strtolower($baseControllerName) === strtolower($this->defaultController)
             ) {
                 throw new PageNotFoundException(
-                    'Cannot access the default controller "' . $baseControllerName . '" with the controller name URI path.'
+                    'Cannot access the default controller "' . $this->controller . '" with the controller name URI path.'
                 );
             }
         } elseif ($this->searchLastDefaultController($segments)) {
