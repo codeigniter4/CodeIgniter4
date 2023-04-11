@@ -279,44 +279,6 @@ Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
 
 .. literalinclude:: controllers/022.php
 
-.. _controller-default-controller-fallback:
-
-Default Controller Fallback
-===========================
-
-.. versionadded:: 4.4.0
-
-If the controller corresponding to the URI segment of the controller name
-does not exist, and if the default controller (``Home`` by default) exists in
-the directory, the remaining URI segments are passed to the default controller
-for execution.
-
-For example, when you have the following default controller ``Home`` in the
-**app/Controllers/News** directory:
-
-.. literalinclude:: controllers/025.php
-
-Load the following URL::
-
-    example.com/index.php/news/list
-
-The ``News\Home`` controller will be found, and the ``getList()`` method will be
-executed.
-
-.. note:: If there is ``App\Controllers\News`` controller, it takes precedence.
-    The URI segments are searched sequentially and the first controller found
-    is used.
-
-Load the following URL::
-
-    example.com/index.php/news/101
-
-The default ``getIndex()`` method will be passed URI segments 2 (``'101'``):
-
-.. note:: If there are more parameters in the URI than the method parameters,
-    Auto Routing (Improved) does not execute the method, and it results in 404
-    Not Found.
-
 .. _controller-default-method-fallback:
 
 Default Method Fallback
@@ -337,6 +299,31 @@ Load the following URL::
 The method will be passed URI segments 2 and 3 (``'15'`` and ``'edit'``):
 
 .. important:: If there are more parameters in the URI than the method parameters,
+    Auto Routing (Improved) does not execute the method, and it results in 404
+    Not Found.
+
+If the controller corresponding to the URI segment of the controller name
+does not exist, and if the default controller (``Home`` by default) exists in
+the directory, the remaining URI segments are passed to the default controller's
+default method.
+
+For example, when you have the following default controller ``Home`` in the
+**app/Controllers/News** directory:
+
+.. literalinclude:: controllers/025.php
+
+Load the following URL::
+
+    example.com/index.php/news/101
+
+The ``News\Home`` controller and the default ``getIndex()`` method will be found.
+So the default method will be passed URI segments 2 (``'101'``):
+
+.. note:: If there is ``App\Controllers\News`` controller, it takes precedence.
+    The URI segments are searched sequentially and the first controller found
+    is used.
+
+.. note:: If there are more parameters in the URI than the method parameters,
     Auto Routing (Improved) does not execute the method, and it results in 404
     Not Found.
 
