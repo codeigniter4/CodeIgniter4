@@ -234,13 +234,16 @@ class ValidationTest extends CIUnitTestCase
     {
         $this->validation->setRules([]);
         $this->assertFalse($this->validation->run([]));
+        $this->assertSame([], $this->validation->getValidated());
     }
 
     public function testRunDoesTheBasics(): void
     {
         $data = ['foo' => 'notanumber'];
         $this->validation->setRules(['foo' => 'is_numeric']);
+
         $this->assertFalse($this->validation->run($data));
+        $this->assertSame([], $this->validation->getValidated());
     }
 
     public function testClosureRule(): void
@@ -259,13 +262,14 @@ class ValidationTest extends CIUnitTestCase
         );
 
         $data   = ['foo' => 'xyz'];
-        $return = $this->validation->run($data);
+        $result = $this->validation->run($data);
 
-        $this->assertFalse($return);
+        $this->assertFalse($result);
         $this->assertSame(
             ['foo' => 'The value is not "abc"'],
             $this->validation->getErrors()
         );
+        $this->assertSame([], $this->validation->getValidated());
     }
 
     public function testClosureRuleWithParamError(): void
@@ -286,13 +290,14 @@ class ValidationTest extends CIUnitTestCase
         ]);
 
         $data   = ['foo' => 'xyz'];
-        $return = $this->validation->run($data);
+        $result = $this->validation->run($data);
 
-        $this->assertFalse($return);
+        $this->assertFalse($result);
         $this->assertSame(
             ['foo' => 'The foo value is not "abc"'],
             $this->validation->getErrors()
         );
+        $this->assertSame([], $this->validation->getValidated());
     }
 
     public function testClosureRuleWithLabel(): void
@@ -309,9 +314,9 @@ class ValidationTest extends CIUnitTestCase
         ]);
 
         $data   = ['secret' => 'xyz'];
-        $return = $this->validation->run($data);
+        $result = $this->validation->run($data);
 
-        $this->assertFalse($return);
+        $this->assertFalse($result);
         $this->assertSame(
             ['secret' => 'The シークレット is invalid'],
             $this->validation->getErrors()
@@ -437,8 +442,9 @@ class ValidationTest extends CIUnitTestCase
             ],
         ];
         $this->validation->setRules(['foo' => 'is_numeric', 'bar' => 'is_numeric'], $messages);
-        $this->validation->run($data);
+        $result = $this->validation->run($data);
 
+        $this->assertFalse($result);
         $this->assertSame('Nope. Not a number.', $this->validation->getError('foo'));
         $this->assertSame('No. Not a number.', $this->validation->getError('bar'));
     }
@@ -464,8 +470,9 @@ class ValidationTest extends CIUnitTestCase
             ['bar'        => 'is_numeric'],
             ['is_numeric' => 'Nope. Not a number.']
         );
-        $this->validation->run($data);
+        $result = $this->validation->run($data);
 
+        $this->assertFalse($result);
         $this->assertSame('Nope. Not a number.', $this->validation->getError('foo'));
         $this->assertSame('Nope. Not a number.', $this->validation->getError('bar'));
     }
@@ -493,7 +500,9 @@ class ValidationTest extends CIUnitTestCase
     {
         $data = ['foo' => 'notanumber'];
         $this->validation->setRules(['foo' => 'is_numeric']);
-        $this->validation->run($data);
+        $result = $this->validation->run($data);
+
+        $this->assertFalse($result);
         $this->assertSame(['foo' => 'Validation.is_numeric'], $this->validation->getErrors());
     }
 
@@ -501,7 +510,9 @@ class ValidationTest extends CIUnitTestCase
     {
         $data = ['foo' => 123];
         $this->validation->setRules(['foo' => 'is_numeric']);
-        $this->validation->run($data);
+        $result = $this->validation->run($data);
+
+        $this->assertTrue($result);
         $this->assertSame([], $this->validation->getErrors());
     }
 
@@ -515,7 +526,7 @@ class ValidationTest extends CIUnitTestCase
     public function testRulesReturnErrors(): void
     {
         $this->validation->setRules(['foo' => 'customError']);
-        $this->validation->run(['foo' => 'bar']);
+        $this->assertFalse($this->validation->run(['foo' => 'bar']));
         $this->assertSame(['foo' => 'My lovely error'], $this->validation->getErrors());
     }
 
@@ -564,6 +575,7 @@ class ValidationTest extends CIUnitTestCase
         $this->validation->reset();
         $this->validation->setRuleGroup('login');
         $this->validation->run(['username' => 'codeigniter']);
+
         $this->assertSame([
             'password' => 'custom password required error msg.',
         ], $this->validation->getErrors());
@@ -713,48 +725,46 @@ class ValidationTest extends CIUnitTestCase
 
     public function testRawInput(): void
     {
-        $rawstring = 'username=admin001&role=administrator&usepass=0';
-
-        $data = [
-            'username' => 'admin001',
-            'role'     => 'administrator',
-            'usepass'  => 0,
-        ];
-
+        $rawstring       = 'username=admin001&role=administrator&usepass=0';
         $config          = new App();
         $config->baseURL = 'http://example.com/';
-
-        $request = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
-        $this->validation->withRequest($request->withMethod('patch'))->run($data);
-        $this->assertSame([], $this->validation->getErrors());
-    }
-
-    public function testJsonInput(): void
-    {
-        $data = [
-            'username' => 'admin001',
-            'role'     => 'administrator',
-            'usepass'  => 0,
-        ];
-        $json = json_encode($data);
-
-        $_SERVER['CONTENT_TYPE'] = 'application/json';
-
-        $config          = new App();
-        $config->baseURL = 'http://example.com/';
-
-        $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request         = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
 
         $rules = [
             'role' => 'required|min_length[5]',
         ];
-        $validated = $this->validation
+        $result = $this->validation->withRequest($request->withMethod('patch'))->setRules($rules)->run();
+
+        $this->assertTrue($result);
+        $this->assertSame([], $this->validation->getErrors());
+        $this->assertSame(['role' => 'administrator'], $this->validation->getValidated());
+    }
+
+    public function testJsonInput(): void
+    {
+        $_SERVER['CONTENT_TYPE'] = 'application/json';
+
+        $data = [
+            'username' => 'admin001',
+            'role'     => 'administrator',
+            'usepass'  => 0,
+        ];
+        $json            = json_encode($data);
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+        $request         = new IncomingRequest($config, new URI(), $json, new UserAgent());
+
+        $rules = [
+            'role' => 'required|min_length[5]',
+        ];
+        $result = $this->validation
             ->withRequest($request->withMethod('patch'))
             ->setRules($rules)
             ->run();
 
-        $this->assertTrue($validated);
+        $this->assertTrue($result);
         $this->assertSame([], $this->validation->getErrors());
+        $this->assertSame(['role' => 'administrator'], $this->validation->getValidated());
 
         unset($_SERVER['CONTENT_TYPE']);
     }
@@ -784,12 +794,12 @@ class ValidationTest extends CIUnitTestCase
         $rules = [
             'p' => 'required|array_count[2]',
         ];
-        $validated = $this->validation
+        $result = $this->validation
             ->withRequest($request->withMethod('patch'))
             ->setRules($rules)
             ->run();
 
-        $this->assertFalse($validated);
+        $this->assertFalse($result);
         $this->assertSame(['p' => 'Validation.array_count'], $this->validation->getErrors());
 
         unset($_SERVER['CONTENT_TYPE']);
@@ -917,7 +927,10 @@ class ValidationTest extends CIUnitTestCase
                 'min_length' => 'Supplied value ({value}) for {field} must have at least {param} characters.',
             ]]
         );
-        $this->validation->run($data);
+        $result = $this->validation->run($data);
+
+        $this->assertFalse($result);
+
         $errors = $this->validation->getErrors();
 
         if (! isset($errors['Username'])) {
@@ -934,8 +947,10 @@ class ValidationTest extends CIUnitTestCase
             'configuration' => 'required|check_object_rule',
         ]);
 
-        $data = (object) ['configuration' => (object) ['first' => 1, 'second' => 2]];
-        $this->validation->run((array) $data);
+        $data   = (object) ['configuration' => (object) ['first' => 1, 'second' => 2]];
+        $result = $this->validation->run((array) $data);
+
+        $this->assertTrue($result);
         $this->assertSame([], $this->validation->getErrors());
 
         $this->validation->reset();
@@ -943,9 +958,10 @@ class ValidationTest extends CIUnitTestCase
             'configuration' => 'required|check_object_rule',
         ]);
 
-        $data = (object) ['configuration' => (object) ['first1' => 1, 'second' => 2]];
-        $this->validation->run((array) $data);
+        $data   = (object) ['configuration' => (object) ['first1' => 1, 'second' => 2]];
+        $result = $this->validation->run((array) $data);
 
+        $this->assertFalse($result);
         $this->assertSame([
             'configuration' => 'Validation.check_object_rule',
         ], $this->validation->getErrors());
@@ -1168,7 +1184,6 @@ class ValidationTest extends CIUnitTestCase
     public function testTranslatedLabelTagReplacement(): void
     {
         $data = ['Username' => 'Pizza'];
-
         $this->validation->setRules(
             ['Username' => [
                 'label' => 'Foo.bar',
@@ -1178,8 +1193,10 @@ class ValidationTest extends CIUnitTestCase
                 'min_length' => 'Foo.bar.min_length2',
             ]]
         );
+        $result = $this->validation->run($data);
 
-        $this->validation->run($data);
+        $this->assertFalse($result);
+
         $errors = $this->validation->getErrors();
 
         if (! isset($errors['Username'])) {
@@ -1507,8 +1524,9 @@ class ValidationTest extends CIUnitTestCase
             'debit_amount'            => '1500',
             'beneficiaries_accounts'  => [],
         ];
-        $this->validation->run($data);
+        $result = $this->validation->run($data);
 
+        $this->assertFalse($result);
         $this->assertSame([
             'beneficiaries_accounts.*.account_number' => 'The BENEFICIARY ACCOUNT NUMBER field must be exactly 5 characters in length.',
             'beneficiaries_accounts.*.credit_amount'  => 'The CREDIT AMOUNT field is required.',
@@ -1538,8 +1556,9 @@ class ValidationTest extends CIUnitTestCase
                 ],
             ],
         ];
-        $this->validation->run($data);
+        $result = $this->validation->run($data);
 
+        $this->assertFalse($result);
         $this->assertSame([
             'beneficiaries_accounts.account_3.account_number' => 'The BENEFICIARY ACCOUNT NUMBER field must be exactly 5 characters in length.',
             'beneficiaries_accounts.account_2.credit_amount'  => 'The CREDIT AMOUNT field is required.',

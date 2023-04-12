@@ -78,6 +78,9 @@ Model
 Libraries
 =========
 
+- **Validation:** Added ``Validation::getValidated()`` method that gets
+  the actual validated data. See :ref:`validation-getting-validated-data` for details.
+
 Helpers and Functions
 =====================
 
