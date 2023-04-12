@@ -279,6 +279,40 @@ Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
 
 .. literalinclude:: controllers/022.php
 
+Default Controller
+==================
+
+The Default Controller is a special controller that is used when a URI ends with
+a directory name or when a URI is not present, as will be the case when only your
+site root URL is requested.
+
+Defining a Default Controller
+-----------------------------
+
+Let's try it with the ``Helloworld`` controller.
+
+To specify a default controller open your **app/Config/Routes.php**
+file and set this variable:
+
+.. literalinclude:: controllers/015.php
+
+Where ``Helloworld`` is the name of the controller class you want to be used.
+
+A few lines further down **Routes.php** in the "Route Definitions" section, comment out the line:
+
+.. literalinclude:: controllers/016.php
+
+If you now browse to your site without specifying any URI segments you'll
+see the "Hello World" message.
+
+.. important:: When you use Auto Routing (Improved), you must remove the line
+    ``$routes->get('/', 'Home::index');``. Because defined routes take
+    precedence over Auto Routing, and controllers defined in the defined routes
+    are denied access by Auto Routing (Improved) for security reasons.
+
+For more information, please refer to the :ref:`routes-configuration-options` section of the
+:ref:`URI Routing <routing-auto-routing-improved-configuration-options>` documentation.
+
 .. _controller-default-method-fallback:
 
 Default Method Fallback
@@ -326,40 +360,6 @@ So the default method will be passed URI segments 2 (``'101'``):
 .. note:: If there are more parameters in the URI than the method parameters,
     Auto Routing (Improved) does not execute the method, and it results in 404
     Not Found.
-
-Default Controller
-==================
-
-The Default Controller is a special controller that is used when a URI ends with
-a directory name or when a URI is not present, as will be the case when only your
-site root URL is requested.
-
-Defining a Default Controller
------------------------------
-
-Let's try it with the ``Helloworld`` controller.
-
-To specify a default controller open your **app/Config/Routes.php**
-file and set this variable:
-
-.. literalinclude:: controllers/015.php
-
-Where ``Helloworld`` is the name of the controller class you want to be used.
-
-A few lines further down **Routes.php** in the "Route Definitions" section, comment out the line:
-
-.. literalinclude:: controllers/016.php
-
-If you now browse to your site without specifying any URI segments you'll
-see the "Hello World" message.
-
-.. important:: When you use Auto Routing (Improved), you must remove the line
-    ``$routes->get('/', 'Home::index');``. Because defined routes take
-    precedence over Auto Routing, and controllers defined in the defined routes
-    are denied access by Auto Routing (Improved) for security reasons.
-
-For more information, please refer to the :ref:`routes-configuration-options` section of the
-:ref:`URI Routing <routing-auto-routing-improved-configuration-options>` documentation.
 
 Organizing Your Controllers into Sub-directories
 ================================================
