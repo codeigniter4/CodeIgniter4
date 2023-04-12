@@ -1,5 +1,5 @@
 <?php
 
-$this->validate($request, [
+$validation->setRules([
     'foo' => 'required|even',
 ]);
