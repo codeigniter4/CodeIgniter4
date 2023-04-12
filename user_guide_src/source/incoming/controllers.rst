@@ -336,6 +336,9 @@ The method will be passed URI segments 2 and 3 (``'15'`` and ``'edit'``):
     Auto Routing (Improved) does not execute the method, and it results in 404
     Not Found.
 
+Fallback to Default Controller
+------------------------------
+
 If the controller corresponding to the URI segment of the controller name
 does not exist, and if the default controller (``Home`` by default) exists in
 the directory, the remaining URI segments are passed to the default controller's
