@@ -298,6 +298,23 @@ To give a labeled error message you can set up as:
 
 .. _validation-withrequest:
 
+Setting Rules for Array Data
+============================
+
+If your data is in a nested associative array, you can use "dot array syntax" to
+easily validate your data:
+
+.. literalinclude:: validation/009.php
+
+You can use the ``*`` wildcard symbol to match any one level of the array:
+
+.. literalinclude:: validation/010.php
+
+"dot array syntax" can also be useful when you have single dimension array data.
+For example, data returned by multi select dropdown:
+
+.. literalinclude:: validation/011.php
+
 withRequest()
 =============
 
@@ -320,23 +337,6 @@ data to be validated:
 ***********************
 Working with Validation
 ***********************
-
-Validating Keys that are Arrays
-===============================
-
-If your data is in a nested associative array, you can use "dot array syntax" to
-easily validate your data:
-
-.. literalinclude:: validation/009.php
-
-You can use the '*' wildcard symbol to match any one level of the array:
-
-.. literalinclude:: validation/010.php
-
-"dot array syntax" can also be useful when you have single dimension array data.
-For example, data returned by multi select dropdown:
-
-.. literalinclude:: validation/011.php
 
 Validating 1 Value
 ==================
