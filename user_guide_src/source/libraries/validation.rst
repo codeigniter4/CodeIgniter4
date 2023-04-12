@@ -359,6 +359,20 @@ This method returns true if the validation is successful.
 
 .. literalinclude:: validation/043.php
 
+Running Multiple Validations
+============================
+
+.. note:: ``run()`` method will not reset error state. Should a previous run fail,
+   ``run()`` will always return false and ``getErrors()`` will return
+   all previous errors until explicitly reset.
+
+If you intend to run multiple validations, for instance on different data sets or with different
+rules after one another, you might need to call ``$validation->reset()`` before each run to get rid of
+errors from previous run. Be aware that ``reset()`` will invalidate any data, rule or custom error
+you previously set, so ``setRules()``, ``setRuleGroup()`` etc. need to be repeated:
+
+.. literalinclude:: validation/019.php
+
 Validating 1 Value
 ==================
 
@@ -421,20 +435,6 @@ This method gets a rule group from the validation configuration:
 This method sets a rule group from the validation configuration to the validation service:
 
 .. literalinclude:: validation/018.php
-
-Running Multiple Validations
-============================
-
-.. note:: ``run()`` method will not reset error state. Should a previous run fail,
-   ``run()`` will always return false and ``getErrors()`` will return
-   all previous errors until explicitly reset.
-
-If you intend to run multiple validations, for instance on different data sets or with different
-rules after one another, you might need to call ``$validation->reset()`` before each run to get rid of
-errors from previous run. Be aware that ``reset()`` will invalidate any data, rule or custom error
-you previously set, so ``setRules()``, ``setRuleGroup()`` etc. need to be repeated:
-
-.. literalinclude:: validation/019.php
 
 Validation Placeholders
 =======================
