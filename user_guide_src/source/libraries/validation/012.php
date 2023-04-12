@@ -1,3 +1,5 @@
 <?php
 
-$validation->check($value, 'required');
+if ($validation->check($value, 'required')) {
+    // $value is valid.
+}
