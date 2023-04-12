@@ -324,6 +324,10 @@ final class AutoRouterImproved implements AutoRouterInterface
         // Ensure the controller does not have _remap() method.
         $this->checkRemap();
 
+        // Ensure the URI segments for the controller and method do not contain
+        // underscores when $translateURIDashes is true.
+        $this->checkUnderscore($uri);
+
         // Check parameter count
         try {
             $this->checkParameters($uri);
@@ -430,6 +434,28 @@ final class AutoRouterImproved implements AutoRouterInterface
             );
         } catch (ReflectionException $e) {
             // Do nothing.
+        }
+    }
+
+    private function checkUnderscore(string $uri): void
+    {
+        if ($this->translateURIDashes === false) {
+            return;
+        }
+
+        $paramPos = $this->paramPos ?? count($this->segments);
+
+        for ($i = 0; $i < $paramPos; $i++) {
+            if (strpos($this->segments[$i], '_') !== false) {
+                throw new PageNotFoundException(
+                    'AutoRouterImproved prohibits access to the URI'
+                    . ' containing underscores ("' . $this->segments[$i] . '")'
+                    . ' when $translateURIDashes is enabled.'
+                    . ' Please use the dash.'
+                    . ' Handler:' . $this->controller . '::' . $this->method
+                    . ', URI:' . $uri
+                );
+            }
         }
     }
 
