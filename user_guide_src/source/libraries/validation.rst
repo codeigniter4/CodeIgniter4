@@ -128,6 +128,9 @@ this code and save it to your **app/Controllers/** folder:
     In previous versions, you need to use
     ``if (strtolower($this->request->getMethod()) !== 'post')``.
 
+.. note:: The :ref:`$this->validator->getValidated() <validation-getting-validated-data>`
+    method can be used since v4.4.0.
+
 The Routes
 ==========
 
@@ -331,14 +334,20 @@ data to be validated:
 
 .. literalinclude:: validation/008.php
 
-.. note:: This method gets JSON data from
+.. warning:: When you use this method, you should use the
+    :ref:`getValidated() <validation-getting-validated-data>` method to get the
+    validated data. Because this method gets JSON data from
     :ref:`$request->getJSON() <incomingrequest-getting-json-data>`
     when the request is a JSON request (``Content-Type: application/json``),
     or gets Raw data from
     :ref:`$request->getRawInput() <incomingrequest-retrieving-raw-data>`
     when the request is a PUT, PATCH, DELETE request and
     is not HTML form post (``Content-Type: multipart/form-data``),
-    or gets data from :ref:`$request->getVar() <incomingrequest-getting-data>`.
+    or gets data from :ref:`$request->getVar() <incomingrequest-getting-data>`,
+    and an attacker could change what data is validated.
+
+.. note:: The :ref:`getValidated() <validation-getting-validated-data>`
+    method can be used since v4.4.0.
 
 ***********************
 Working with Validation
@@ -392,6 +401,8 @@ This method returns an array of only those elements that have been validated by
 the validation rules.
 
 .. literalinclude:: validation/043.php
+
+.. literalinclude:: validation/045.php
 
 Saving Sets of Validation Rules to the Config File
 ==================================================

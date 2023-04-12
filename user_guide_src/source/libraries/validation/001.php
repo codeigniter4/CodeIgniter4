@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-use Config\Services;
-
 class Form extends BaseController
 {
     protected $helpers = ['form'];
@@ -19,6 +17,9 @@ class Form extends BaseController
         if (! $this->validate($rules)) {
             return view('signup');
         }
+
+        // If you want to get the validated data.
+        $validData = $this->validator->getValidated();
 
         return view('success');
     }

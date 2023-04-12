@@ -98,18 +98,23 @@ and in the optional second parameter, an array of custom error messages to displ
 if the items are not valid. Internally, this uses the controller's
 ``$this->request`` instance to get the data to be validated.
 
-.. warning::
-    The ``validate()`` method uses :ref:`Validation::withRequest() <validation-withrequest>` method.
-    It validates data from :ref:`$request->getJSON() <incomingrequest-getting-json-data>`
-    or :ref:`$request->getRawInput() <incomingrequest-retrieving-raw-data>`
-    or :ref:`$request->getVar() <incomingrequest-getting-data>`.
-    Which data is used depends on the request. Remember that an attacker is free to send any request to
-    the server.
-
 The :doc:`Validation Library docs </libraries/validation>` have details on
 rule and message array formats, as well as available rules:
 
 .. literalinclude:: controllers/004.php
+
+.. warning:: When you use the ``validate()`` method, you should use the
+    :ref:`getValidated() <validation-getting-validated-data>` method to get the
+    validated data. Because the ``validate()`` method uses the
+    :ref:`Validation::withRequest() <validation-withrequest>` method internally,
+    and it validates data from
+    :ref:`$request->getJSON() <incomingrequest-getting-json-data>`
+    or :ref:`$request->getRawInput() <incomingrequest-retrieving-raw-data>`
+    or :ref:`$request->getVar() <incomingrequest-getting-data>`, and an attacker
+    could change what data is validated.
+
+.. note:: The :ref:`$this->validator->getValidated() <validation-getting-validated-data>`
+    method can be used since v4.4.0.
 
 If you find it simpler to keep the rules in the configuration file, you can replace
 the ``$rules`` array with the name of the group as defined in **app/Config/Validation.php**:
