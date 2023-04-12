@@ -65,6 +65,11 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame('\\' . Index::class, $controller);
         $this->assertSame('getIndex', $method);
         $this->assertSame([], $params);
+        $this->assertSame([
+            'controller' => null,
+            'method'     => null,
+            'params'     => null,
+        ], $router->getPos());
     }
 
     public function testAutoRouteFindsModuleDefaultControllerAndMethodGet()
@@ -114,6 +119,11 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame('\\' . Mycontroller::class, $controller);
         $this->assertSame('getSomemethod', $method);
         $this->assertSame([], $params);
+        $this->assertSame([
+            'controller' => 0,
+            'method'     => 1,
+            'params'     => null,
+        ], $router->getPos());
     }
 
     public function testFindsControllerAndMethodAndParam()
@@ -127,6 +137,11 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame('\\' . Mycontroller::class, $controller);
         $this->assertSame('getSomemethod', $method);
         $this->assertSame(['a'], $params);
+        $this->assertSame([
+            'controller' => 0,
+            'method'     => 1,
+            'params'     => 2,
+        ], $router->getPos());
     }
 
     public function testUriParamCountIsGreaterThanMethodParams()
@@ -165,6 +180,11 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Mycontroller::class, $controller);
         $this->assertSame('getSomemethod', $method);
         $this->assertSame([], $params);
+        $this->assertSame([
+            'controller' => 1,
+            'method'     => 2,
+            'params'     => null,
+        ], $router->getPos());
     }
 
     public function testAutoRouteFindsControllerWithSubSubfolder()
@@ -246,6 +266,11 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame('\\' . Index::class, $controller);
         $this->assertSame('getIndex', $method);
         $this->assertSame(['15'], $params);
+        $this->assertSame([
+            'controller' => 0,
+            'method'     => null,
+            'params'     => 1,
+        ], $router->getPos());
     }
 
     public function testAutoRouteFallbackToDefaultControllerOneParam()
@@ -259,6 +284,11 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Home::class, $controller);
         $this->assertSame('getIndex', $method);
         $this->assertSame(['15'], $params);
+        $this->assertSame([
+            'controller' => null,
+            'method'     => null,
+            'params'     => 1,
+        ], $router->getPos());
     }
 
     public function testAutoRouteFallbackToDefaultControllerTwoParams()
@@ -272,6 +302,11 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Home::class, $controller);
         $this->assertSame('getIndex', $method);
         $this->assertSame(['15', '20'], $params);
+        $this->assertSame([
+            'controller' => null,
+            'method'     => null,
+            'params'     => 1,
+        ], $router->getPos());
     }
 
     public function testAutoRouteFallbackToDefaultControllerNoParams()
@@ -285,6 +320,11 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Home::class, $controller);
         $this->assertSame('getIndex', $method);
         $this->assertSame([], $params);
+        $this->assertSame([
+            'controller' => null,
+            'method'     => null,
+            'params'     => null,
+        ], $router->getPos());
     }
 
     public function testAutoRouteRejectsSingleDot()
