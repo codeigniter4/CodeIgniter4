@@ -345,6 +345,19 @@ Validate one value against a rule:
 
 .. literalinclude:: validation/012.php
 
+.. _validation-getting-validated-data:
+
+Getting Validated Data
+======================
+
+.. versionadded:: 4.4.0
+
+The actual validated data can be retrieved with the ``getValidated()`` method.
+This method returns an array of only those elements that have been validated by
+the validation rules.
+
+.. literalinclude:: validation/043.php
+
 Saving Sets of Validation Rules to the Config File
 ==================================================
 
