@@ -66,8 +66,6 @@ inside the controller:
 
 .. literalinclude:: controllers/001.php
 
-.. _controllers-validating-data:
-
 forceHTTPS
 **********
 
@@ -84,10 +82,12 @@ modify this by passing the duration (in seconds) as the first parameter:
 
 .. note:: A number of :doc:`time-based constants </general/common_functions>` are always available for you to use, including ``YEAR``, ``MONTH``, and more.
 
-.. _controller-validate:
+.. _controllers-validating-data:
 
 Validating Data
 ***************
+
+.. _controller-validate:
 
 $this->validate()
 =================

@@ -265,8 +265,11 @@ given field, cascading them in order. To set validation rules you
 will use the ``setRule()``, ``setRules()``, or ``withRequest()``
 methods.
 
+Setting a Single Rule
+=====================
+
 setRule()
-=========
+---------
 
 This method sets a single rule. It has the method signature::
 
@@ -285,8 +288,11 @@ the form input name.
     broken in extending classes overriding this method, the child class's method should also be modified
     to remove the typehint.
 
+Setting Multiple Rules
+======================
+
 setRules()
-==========
+----------
 
 Like ``setRule()``, but accepts an array of field names and their rules:
 
@@ -297,6 +303,23 @@ To give a labeled error message you can set up as:
 .. literalinclude:: validation/007.php
 
 .. _validation-withrequest:
+
+Setting Rules for Array Data
+============================
+
+If your data is in a nested associative array, you can use "dot array syntax" to
+easily validate your data:
+
+.. literalinclude:: validation/009.php
+
+You can use the ``*`` wildcard symbol to match any one level of the array:
+
+.. literalinclude:: validation/010.php
+
+"dot array syntax" can also be useful when you have single dimension array data.
+For example, data returned by multi select dropdown:
+
+.. literalinclude:: validation/011.php
 
 withRequest()
 =============
@@ -321,25 +344,37 @@ data to be validated:
 Working with Validation
 ***********************
 
-Validating Keys that are Arrays
-===============================
+Running Validation
+==================
 
-If your data is in a nested associative array, you can use "dot array syntax" to
-easily validate your data:
+The ``run()`` method runs validation. It has the method signature::
 
-.. literalinclude:: validation/009.php
+    run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool
 
-You can use the '*' wildcard symbol to match any one level of the array:
+The ``$data`` is an array of data to validate. The optional second parameter
+``$group`` is the :ref:`predefined group of rules <validation-array>` to apply.
+The optional third parameter ``$dbGroup`` is the database group to use.
 
-.. literalinclude:: validation/010.php
+This method returns true if the validation is successful.
 
-"dot array syntax" can also be useful when you have single dimension array data.
-For example, data returned by multi select dropdown:
+.. literalinclude:: validation/043.php
 
-.. literalinclude:: validation/011.php
+Running Multiple Validations
+============================
 
-Validate 1 Value
-================
+.. note:: ``run()`` method will not reset error state. Should a previous run fail,
+   ``run()`` will always return false and ``getErrors()`` will return
+   all previous errors until explicitly reset.
+
+If you intend to run multiple validations, for instance on different data sets or with different
+rules after one another, you might need to call ``$validation->reset()`` before each run to get rid of
+errors from previous run. Be aware that ``reset()`` will invalidate any data, rule or custom error
+you previously set, so ``setRules()``, ``setRuleGroup()`` etc. need to be repeated:
+
+.. literalinclude:: validation/019.php
+
+Validating 1 Value
+==================
 
 Validate one value against a rule:
 
@@ -355,7 +390,7 @@ the validation.
 
 .. _validation-array:
 
-How to save your rules
+How to Save Your Rules
 ----------------------
 
 To store your validation rules, simply create a new public property in the ``Config\Validation``
@@ -364,9 +399,15 @@ rules. As shown earlier, the validation array will have this prototype:
 
 .. literalinclude:: validation/013.php
 
+How to Specify Rule Group
+-------------------------
+
 You can specify the group to use when you call the ``run()`` method:
 
 .. literalinclude:: validation/014.php
+
+How to Save Error Messages
+--------------------------
 
 You can also store custom error messages in this configuration file by naming the
 property the same as the group, and appended with ``_errors``. These will automatically
@@ -378,7 +419,7 @@ Or pass all settings in an array:
 
 .. literalinclude:: validation/016.php
 
-See below for details on the formatting of the array.
+See :ref:`validation-custom-errors` for details on the formatting of the array.
 
 Getting & Setting Rule Groups
 -----------------------------
@@ -394,20 +435,6 @@ This method gets a rule group from the validation configuration:
 This method sets a rule group from the validation configuration to the validation service:
 
 .. literalinclude:: validation/018.php
-
-Running Multiple Validations
-============================
-
-.. note:: ``run()`` method will not reset error state. Should a previous run fail,
-   ``run()`` will always return false and ``getErrors()`` will return
-   all previous errors until explicitly reset.
-
-If you intend to run multiple validations, for instance on different data sets or with different
-rules after one another, you might need to call ``$validation->reset()`` before each run to get rid of
-errors from previous run. Be aware that ``reset()`` will invalidate any data, rule or custom error
-you previously set, so ``setRules()``, ``setRuleGroup()`` etc. need to be repeated:
-
-.. literalinclude:: validation/019.php
 
 Validation Placeholders
 =======================
