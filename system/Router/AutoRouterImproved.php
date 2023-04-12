@@ -76,6 +76,24 @@ final class AutoRouterImproved implements AutoRouterInterface
     private array $segments = [];
 
     /**
+     * The position of the Controller in the URI segments.
+     * Null for the default controller.
+     */
+    private ?int $controllerPos = null;
+
+    /**
+     * The position of the Method in the URI segments.
+     * Null for the default method.
+     */
+    private ?int $methodPos = null;
+
+    /**
+     * The position of the first Parameter in the URI segments.
+     * Null for the no parameters.
+     */
+    private ?int $paramPos = null;
+
+    /**
      * @param class-string[] $protectedControllers
      * @param string         $defaultController    Short classname
      *
@@ -121,9 +139,13 @@ final class AutoRouterImproved implements AutoRouterInterface
 
         $controller = '\\' . $this->namespace;
 
+        $controllerPos = -1;
+
         while ($segments !== []) {
             $segment = array_shift($segments);
-            $class   = $this->translateURIDashes(ucfirst($segment));
+            $controllerPos++;
+
+            $class = $this->translateURIDashes(ucfirst($segment));
 
             // as soon as we encounter any segment that is not PSR-4 compliant, stop searching
             if (! $this->isValidSegment($class)) {
@@ -133,9 +155,14 @@ final class AutoRouterImproved implements AutoRouterInterface
             $controller .= '\\' . $class;
 
             if (class_exists($controller)) {
-                $this->controller = $controller;
+                $this->controller    = $controller;
+                $this->controllerPos = $controllerPos;
+
                 // The first item may be a method name.
                 $this->params = $segments;
+                if ($segments !== []) {
+                    $this->paramPos = $this->controllerPos + 1;
+                }
 
                 return true;
             }
@@ -153,9 +180,15 @@ final class AutoRouterImproved implements AutoRouterInterface
     {
         $segments = $this->segments;
 
-        $params = [];
+        $segmentCount = count($this->segments);
+        $paramPos     = null;
+        $params       = [];
 
         while ($segments !== []) {
+            if ($segmentCount > count($segments)) {
+                $paramPos = count($segments);
+            }
+
             $namespaces = array_map(
                 fn ($segment) => $this->translateURIDashes(ucfirst($segment)),
                 $segments
@@ -168,6 +201,10 @@ final class AutoRouterImproved implements AutoRouterInterface
             if (class_exists($controller)) {
                 $this->controller = $controller;
                 $this->params     = $params;
+
+                if ($params !== []) { // @phpstan-ignore-line
+                    $this->paramPos = $paramPos;
+                }
 
                 return true;
             }
@@ -183,6 +220,10 @@ final class AutoRouterImproved implements AutoRouterInterface
         if (class_exists($controller)) {
             $this->controller = $controller;
             $this->params     = $params;
+
+            if ($params !== []) { // @phpstan-ignore-line
+                $this->paramPos = 0;
+            }
 
             return true;
         }
@@ -232,6 +273,7 @@ final class AutoRouterImproved implements AutoRouterInterface
             throw new PageNotFoundException('No controller is found for: ' . $uri);
         }
 
+        // The first item may be a method name.
         $params = $this->params;
 
         $methodParam = array_shift($params);
@@ -245,6 +287,15 @@ final class AutoRouterImproved implements AutoRouterInterface
             // Method is found.
             $this->method = $method;
             $this->params = $params;
+
+            // Update the positions.
+            $this->methodPos = $this->paramPos;
+            if ($params === []) {
+                $this->paramPos = null;
+            }
+            if ($this->paramPos !== null) {
+                $this->paramPos++;
+            }
 
             // Prevent access to default controller's method
             if (strtolower($baseControllerName) === strtolower($this->defaultController)) {
@@ -283,6 +334,20 @@ final class AutoRouterImproved implements AutoRouterInterface
         $this->setDirectory();
 
         return [$this->directory, $this->controller, $this->method, $this->params];
+    }
+
+    /**
+     * @internal For test purpose only.
+     *
+     * @return array<string, int|null>
+     */
+    public function getPos(): array
+    {
+        return [
+            'controller' => $this->controllerPos,
+            'method'     => $this->methodPos,
+            'params'     => $this->paramPos,
+        ];
     }
 
     /**
