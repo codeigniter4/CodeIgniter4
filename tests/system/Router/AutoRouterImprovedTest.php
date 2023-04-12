@@ -352,4 +352,66 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $router->getRoute('remap/test', 'get');
     }
+
+    public function testRejectsURIWithUnderscoreFolder()
+    {
+        $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage(
+            'AutoRouterImproved prohibits access to the URI containing underscores ("dash_folder")'
+        );
+
+        $router = $this->createNewAutoRouter();
+
+        $router->getRoute('dash_folder');
+    }
+
+    public function testRejectsURIWithUnderscoreController()
+    {
+        $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage(
+            'AutoRouterImproved prohibits access to the URI containing underscores ("dash_controller")'
+        );
+
+        $router = $this->createNewAutoRouter();
+
+        $router->getRoute('dash-folder/dash_controller/dash-method');
+    }
+
+    public function testRejectsURIWithUnderscoreMethod()
+    {
+        $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage(
+            'AutoRouterImproved prohibits access to the URI containing underscores ("dash_method")'
+        );
+
+        $router = $this->createNewAutoRouter();
+
+        $router->getRoute('dash-folder/dash-controller/dash_method');
+    }
+
+    public function testPermitsURIWithUnderscoreParam()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('mycontroller/somemethod/a_b');
+
+        $this->assertNull($directory);
+        $this->assertSame('\\' . Mycontroller::class, $controller);
+        $this->assertSame('getSomemethod', $method);
+        $this->assertSame(['a_b'], $params);
+    }
+
+    public function testDoesNotTranslateDashInParam()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('mycontroller/somemethod/a-b');
+
+        $this->assertNull($directory);
+        $this->assertSame('\\' . Mycontroller::class, $controller);
+        $this->assertSame('getSomemethod', $method);
+        $this->assertSame(['a-b'], $params);
+    }
 }
