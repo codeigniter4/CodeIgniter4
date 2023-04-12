@@ -201,9 +201,10 @@ class Validation implements ValidationInterface
      * determining whether validation was successful or not.
      *
      * @param array|bool|float|int|object|string|null $value
+     * @param array|string                            $rule
      * @param string[]                                $errors
      */
-    public function check($value, string $rule, array $errors = []): bool
+    public function check($value, $rule, array $errors = []): bool
     {
         $this->reset();
 
