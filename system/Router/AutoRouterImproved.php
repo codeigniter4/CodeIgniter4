@@ -373,10 +373,10 @@ final class AutoRouterImproved implements AutoRouterInterface
         return (bool) preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $segment);
     }
 
-    private function translateURIDashes(string $classname): string
+    private function translateURIDashes(string $segment): string
     {
         return $this->translateURIDashes
-            ? str_replace('-', '_', $classname)
-            : $classname;
+            ? str_replace('-', '_', $segment)
+            : $segment;
     }
 }
