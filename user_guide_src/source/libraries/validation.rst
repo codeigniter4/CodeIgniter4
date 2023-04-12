@@ -338,8 +338,8 @@ For example, data returned by multi select dropdown:
 
 .. literalinclude:: validation/011.php
 
-Validate 1 Value
-================
+Validating 1 Value
+==================
 
 Validate one value against a rule:
 
