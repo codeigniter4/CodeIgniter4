@@ -376,7 +376,10 @@ you previously set, so ``setRules()``, ``setRuleGroup()`` etc. need to be repeat
 Validating 1 Value
 ==================
 
-Validate one value against the rules:
+The ``check()`` method validates one value against the rules.
+The first parameter ``$value`` is the value to validate. The second parameter
+``$rule`` is the validation rules.
+The optional third parameter ``$errors`` is the the custom error message.
 
 .. literalinclude:: validation/012.php
 
