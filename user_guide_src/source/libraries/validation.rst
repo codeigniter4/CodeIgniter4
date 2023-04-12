@@ -344,6 +344,21 @@ data to be validated:
 Working with Validation
 ***********************
 
+Running Validation
+==================
+
+The ``run()`` method runs validation. It has the method signature::
+
+    run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool
+
+The ``$data`` is an array of data to validate. The optional second parameter
+``$group`` is the :ref:`predefined group of rules <validation-array>` to apply.
+The optional third parameter ``$dbGroup`` is the database group to use.
+
+This method returns true if the validation is successful.
+
+.. literalinclude:: validation/043.php
+
 Validating 1 Value
 ==================
 
