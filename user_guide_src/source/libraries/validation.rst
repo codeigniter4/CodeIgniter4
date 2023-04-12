@@ -366,7 +366,7 @@ The optional third parameter ``$dbGroup`` is the database group to use.
 
 This method returns true if the validation is successful.
 
-.. literalinclude:: validation/044.php
+.. literalinclude:: validation/043.php
 
 Running Multiple Validations
 ============================
@@ -400,7 +400,7 @@ The actual validated data can be retrieved with the ``getValidated()`` method.
 This method returns an array of only those elements that have been validated by
 the validation rules.
 
-.. literalinclude:: validation/043.php
+.. literalinclude:: validation/044.php
 
 .. literalinclude:: validation/045.php
 
