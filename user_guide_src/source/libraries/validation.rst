@@ -361,7 +361,7 @@ the validation.
 
 .. _validation-array:
 
-How to save your rules
+How to Save Your Rules
 ----------------------
 
 To store your validation rules, simply create a new public property in the ``Config\Validation``
