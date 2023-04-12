@@ -726,6 +726,32 @@ In this example, if the user were to visit **example.com/products**, and a ``Pro
 .. important:: You cannot access the controller with the URI of the default method name.
     In the example above, you can access **example.com/products**, but if you access **example.com/products/listall**, it will be not found.
 
+.. _auto-routing-improved-module-routing:
+
+Module Routing
+==============
+
+.. versionadded:: 4.4.0
+
+You can use auto routing even if you use :doc:`../general/modules` and place
+the controllers in a different namespace.
+
+To route to a module, the ``$moduleRoutes`` property in **app/Config/Routing.php**
+must be set::
+
+    public array $moduleRoutes = [
+        'blog' => 'Acme\Blog\Controllers',
+    ];
+
+The key is the first URI segment for the module, and the value is the controller
+namespace. In the above configuration, **http://localhost:8080/blog/foo/bar**
+will be routed to ``Acme\Blog\Controllers\Foo::getBar()``.
+
+.. note:: If you define ``$moduleRoutes``, the routing for the module takes
+    precedence. In the above example, even if you have the ``App\Controllers\Blog``
+    controller, **http://localhost:8080/blog** will be routed to the default
+    controller ``Acme\Blog\Controllers\Home``.
+
 .. _auto-routing-legacy:
 
 Auto Routing (Legacy)
