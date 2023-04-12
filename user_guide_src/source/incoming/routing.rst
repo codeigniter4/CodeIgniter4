@@ -678,6 +678,8 @@ and executes ``getHello()`` method with passing ``'1'`` as the first argument.
 
 See :ref:`Auto Routing in Controllers <controller-auto-routing-improved>` for more info.
 
+.. _routing-auto-routing-improved-configuration-options:
+
 Configuration Options
 =====================
 
@@ -686,17 +688,25 @@ These options are available at the top of **app/Config/Routes.php**.
 Default Controller
 ------------------
 
+For Site Root URI
+^^^^^^^^^^^^^^^^^
+
 When a user visits the root of your site (i.e., **example.com**) the controller to use is determined by the value set by
-the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
+the ``setDefaultController()`` method, unless a route exists for it explicitly.
+
+The default value for this is ``Home``
 which matches the controller at **app/Controllers/Home.php**:
 
 .. literalinclude:: routing/047.php
+
+For Directory URI
+^^^^^^^^^^^^^^^^^
 
 The default controller is also used when no matching route has been found, and the URI would point to a directory
 in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
 **app/Controllers/Admin/Home.php**, it would be used.
 
-.. note:: You cannot access the default controller with the URI of the controller name.
+.. important:: You cannot access the default controller with the URI of the controller name.
     When the default controller is ``Home``, you can access **example.com/**, but if you access **example.com/home**, it will be not found.
 
 See :ref:`Auto Routing in Controllers <controller-auto-routing-improved>` for more info.
@@ -713,7 +723,7 @@ In this example, if the user were to visit **example.com/products**, and a ``Pro
 
 .. literalinclude:: routing/048.php
 
-.. note:: You cannot access the controller with the URI of the default method name.
+.. important:: You cannot access the controller with the URI of the default method name.
     In the example above, you can access **example.com/products**, but if you access **example.com/products/listall**, it will be not found.
 
 .. _auto-routing-legacy:
@@ -762,6 +772,8 @@ and executes ``index()`` method with passing ``'1'`` as the first argument.
 
 See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>` for more info.
 
+.. _routing-auto-routing-legacy-configuration-options:
+
 Configuration Options (Legacy)
 ==============================
 
@@ -770,11 +782,17 @@ These options are available at the top of **app/Config/Routes.php**.
 Default Controller (Legacy)
 ---------------------------
 
+For Site Root URI (Legacy)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
 the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
 which matches the controller at **app/Controllers/Home.php**:
 
 .. literalinclude:: routing/047.php
+
+For Directory URI (Legacy)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The default controller is also used when no matching route has been found, and the URI would point to a directory
 in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
