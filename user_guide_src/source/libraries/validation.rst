@@ -390,7 +390,7 @@ Or pass all settings in an array:
 
 .. literalinclude:: validation/016.php
 
-See below for details on the formatting of the array.
+See :ref:`validation-custom-errors` for details on the formatting of the array.
 
 Getting & Setting Rule Groups
 -----------------------------
