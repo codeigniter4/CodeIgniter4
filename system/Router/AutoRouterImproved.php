@@ -71,6 +71,11 @@ final class AutoRouterImproved implements AutoRouterInterface
     private string $defaultMethod;
 
     /**
+     * The URI segments.
+     */
+    private array $segments = [];
+
+    /**
      * @param class-string[] $protectedControllers
      * @param string         $defaultController    Short classname
      *
@@ -108,12 +113,12 @@ final class AutoRouterImproved implements AutoRouterInterface
      * If there is a controller corresponding to the first segment, the search
      * ends there. The remaining segments are parameters to the controller.
      *
-     * @param array $segments URI segments
-     *
      * @return bool true if a controller class is found.
      */
-    private function searchFirstController(array $segments): bool
+    private function searchFirstController(): bool
     {
+        $segments = $this->segments;
+
         $controller = '\\' . $this->namespace;
 
         while ($segments !== []) {
@@ -142,12 +147,12 @@ final class AutoRouterImproved implements AutoRouterInterface
     /**
      * Search for the last default controller corresponding to the URI segments.
      *
-     * @param array $segments URI segments
-     *
      * @return bool true if a controller class is found.
      */
-    private function searchLastDefaultController(array $segments): bool
+    private function searchLastDefaultController(): bool
     {
+        $segments = $this->segments;
+
         $params = [];
 
         while ($segments !== []) {
@@ -195,19 +200,19 @@ final class AutoRouterImproved implements AutoRouterInterface
         $defaultMethod = strtolower($httpVerb) . ucfirst($this->defaultMethod);
         $this->method  = $defaultMethod;
 
-        $segments = $this->createSegments($uri);
+        $this->segments = $this->createSegments($uri);
 
         // Check for Module Routes.
         if (
-            $segments !== []
+            $this->segments !== []
             && ($routingConfig = config(Routing::class))
-            && array_key_exists($segments[0], $routingConfig->moduleRoutes)
+            && array_key_exists($this->segments[0], $routingConfig->moduleRoutes)
         ) {
-            $uriSegment      = array_shift($segments);
+            $uriSegment      = array_shift($this->segments);
             $this->namespace = rtrim($routingConfig->moduleRoutes[$uriSegment], '\\');
         }
 
-        if ($this->searchFirstController($segments)) {
+        if ($this->searchFirstController()) {
             // Controller is found.
             $baseControllerName = class_basename($this->controller);
 
@@ -219,7 +224,7 @@ final class AutoRouterImproved implements AutoRouterInterface
                     'Cannot access the default controller "' . $this->controller . '" with the controller name URI path.'
                 );
             }
-        } elseif ($this->searchLastDefaultController($segments)) {
+        } elseif ($this->searchLastDefaultController()) {
             // The default Controller is found.
             $baseControllerName = class_basename($this->controller);
         } else {
