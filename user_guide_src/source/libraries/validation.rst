@@ -370,9 +370,15 @@ rules. As shown earlier, the validation array will have this prototype:
 
 .. literalinclude:: validation/013.php
 
+How to Specify Rule Group
+-------------------------
+
 You can specify the group to use when you call the ``run()`` method:
 
 .. literalinclude:: validation/014.php
+
+How to Save Error Messages
+--------------------------
 
 You can also store custom error messages in this configuration file by naming the
 property the same as the group, and appended with ``_errors``. These will automatically
