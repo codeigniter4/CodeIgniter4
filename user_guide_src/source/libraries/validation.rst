@@ -265,8 +265,11 @@ given field, cascading them in order. To set validation rules you
 will use the ``setRule()``, ``setRules()``, or ``withRequest()``
 methods.
 
+Setting a Single Rule
+=====================
+
 setRule()
-=========
+---------
 
 This method sets a single rule. It has the method signature::
 
@@ -285,8 +288,11 @@ the form input name.
     broken in extending classes overriding this method, the child class's method should also be modified
     to remove the typehint.
 
+Setting Multiple Rules
+======================
+
 setRules()
-==========
+----------
 
 Like ``setRule()``, but accepts an array of field names and their rules:
 
