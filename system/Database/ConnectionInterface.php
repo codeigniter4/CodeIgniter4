@@ -12,6 +12,8 @@
 namespace CodeIgniter\Database;
 
 /**
+ * @property Query $lastQuery
+ *
  * @template TConnection of object|resource
  * @template TResult of object|resource
  */
@@ -62,7 +64,7 @@ interface ConnectionInterface
     /**
      * Select a specific database table to use.
      *
-     * @return mixed
+     * @return bool
      */
     public function setDatabase(string $databaseName);
 
@@ -98,7 +100,7 @@ interface ConnectionInterface
      * Should automatically handle different connections for read/write
      * queries if needed.
      *
-     * @param mixed ...$binds
+     * @param array|string|null ...$binds
      *
      * @return BaseResult|bool|Query
      * @phpstan-return BaseResult<TConnection, TResult>|bool|Query
@@ -127,7 +129,7 @@ interface ConnectionInterface
     /**
      * Returns the last query's statement object.
      *
-     * @return mixed
+     * @return Query
      */
     public function getLastQuery();
 
@@ -150,7 +152,7 @@ interface ConnectionInterface
      *
      * @param array ...$params
      *
-     * @return mixed
+     * @return array|bool|float|int|object|resource|string|null
      */
     public function callFunction(string $functionName, ...$params);
 
