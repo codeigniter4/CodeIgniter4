@@ -12,6 +12,25 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
+SECURITY
+********
+
+When Using $this->validate()
+============================
+
+There was a known potential vulnerability in :ref:`$this->validate() <controller-validate>` in the Controller to bypass validation.
+The attack could allow developers to misinterpret unvalidated empty data as
+validated and proceed with processing.
+
+The :ref:`Validation::getValidated() <validation-getting-validated-data>`
+method has been added to ensure that validated data is obtained.
+
+Therefore, when you use ``$this->validate()`` in your Controllers, you should
+use the new ``Validation::getValidated()`` method to get the validated data.
+
+.. literalinclude:: ../libraries/validation/045.php
+   :lines: 2-
+
 Breaking Changes
 ****************
 
