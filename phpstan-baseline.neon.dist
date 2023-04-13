@@ -61,11 +61,6 @@ parameters:
 			path: system/Database/Migration.php
 
 		-
-			message: "#^Property CodeIgniter\\\\Database\\\\BaseConnection\\<mysqli,mysqli_result\\>\\:\\:\\$strictOn \\(bool\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
 			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\<mysqli, mysqli_result\\>\\:\\:\\$mysqli\\.$#"
 			count: 3
 			path: system/Database/MySQLi/PreparedQuery.php
