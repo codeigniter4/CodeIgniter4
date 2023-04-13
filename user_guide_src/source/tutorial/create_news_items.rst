@@ -3,7 +3,7 @@ Create News Items
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 You now know how you can read data from a database using CodeIgniter, but
 you haven't written any information to the database yet. In this section,
@@ -35,15 +35,16 @@ View
 To input data into the database, you need to create a form where you can
 input the information to be stored. This means you'll be needing a form
 with two fields, one for the title and one for the text. You'll derive
-the slug from our title in the model. Create a new view at
-**app/Views/news/create.php**::
+the slug from our title in the model.
+
+Create a new view at **app/Views/news/create.php**::
 
     <h2><?= esc($title) ?></h2>
 
     <?= session()->getFlashdata('error') ?>
     <?= validation_list_errors() ?>
 
-    <form action="/news/create" method="post">
+    <form action="/news" method="post">
         <?= csrf_field() ?>
 
         <label for="title">Title</label>
@@ -75,40 +76,58 @@ old input data when errors occur.
 Controller
 ==========
 
-Go back to your ``News`` controller. You're going to do two things here,
-check whether the form was submitted and whether the submitted data
-passed the validation rules.
-You'll use the :ref:`validation method in Controller <controller-validatedata>` to do this.
+Go back to your ``News`` controller.
+
+Create a Method to Display the Form
+-----------------------------------
+
+First, create a method to display the HTML form you have created.
 
 .. literalinclude:: create_news_items/002.php
 
+We load the :doc:`Form helper <../helpers/form_helper>` with the
+:php:func:`helper()` function. Most helper functions require the helper to be
+loaded before use.
+
+Then it returns the created form view.
+
+Create a Method to Create a News Item
+-------------------------------------
+
+Next, create a method to create a news item from the submitted data.
+
+You're going to do three things here:
+
+1. checks whether the submitted data passed the validation rules.
+2. saves the news item to the database.
+3. returns a success page.
+
+.. literalinclude:: create_news_items/005.php
+
 The code above adds a lot of functionality.
 
-First we load the :doc:`Form helper <../helpers/form_helper>` with the :php:func:`helper()` function.
-Most helper functions require the helper to be loaded before use.
+Validate the Data
+^^^^^^^^^^^^^^^^^
 
-Next, we check if we deal with the **POST** request with the
-:doc:`IncomingRequest <../incoming/incomingrequest>` object ``$this->request``.
-It is set in the controller by the framework.
-The :ref:`IncomingRequest::is() <incomingrequest-is>` method checks the type of the request.
-Since the route for **create()** endpoint handles both: **GET** and **POST** requests we can safely assume that if the request is not POST then it is a GET type.
-the form is loaded and returned to display.
-
-Then, we get the necessary items from the POST data by the user and set them in the ``$post`` variable.
-We also use the :doc:`IncomingRequest <../incoming/incomingrequest>` object ``$this->request``.
-
-After that, the Controller-provided helper function :ref:`validateData() <controller-validatedata>`
-is used to validate ``$post`` data.
+You'll use the Controller-provided helper function :ref:`validate() <controller-validate>` to validate the submitted data.
 In this case, the title and body fields are required and in the specific length.
 CodeIgniter has a powerful validation library as demonstrated
 above. You can read more about the :doc:`Validation library <../libraries/validation>`.
 
-If the validation fails, the form is loaded and returned to display.
+If the validation fails, we call the ``new()`` method you just created and return
+the HTML form.
 
-If the validation passed all the rules, the ``NewsModel`` is loaded and called. This
-takes care of passing the news item into the model. The :ref:`model-save` method handles
-inserting or updating the record automatically, based on whether it finds an array key
-matching the primary key.
+Save the News Item
+^^^^^^^^^^^^^^^^^^
+
+If the validation passed all the rules, we get the validated data by
+:ref:`$this->validator->getValidated() <validation-getting-validated-data>` and
+set them in the ``$post`` variable.
+
+The ``NewsModel`` is loaded and called. This takes care of passing the news item
+into the model. The :ref:`model-save` method handles inserting or updating the
+record automatically, based on whether it finds an array key matching the primary
+key.
 
 This contains a new function :php:func:`url_title()`. This function -
 provided by the :doc:`URL helper <../helpers/url_helper>` - strips down
@@ -116,8 +135,11 @@ the string you pass it, replacing all spaces by dashes (``-``) and makes
 sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.
 
-After this, view files are loaded and returned to display a success message. Create a view at
-**app/Views/news/success.php** and write a success message.
+Return Success Page
+^^^^^^^^^^^^^^^^^^^
+
+After this, view files are loaded and returned to display a success message.
+Create a view at **app/Views/news/success.php** and write a success message.
 
 This could be as simple as::
 
@@ -151,11 +173,20 @@ Routing
 
 Before you can start adding news items into your CodeIgniter application
 you have to add an extra rule to **app/Config/Routes.php** file. Make sure your
-file contains the following. This makes sure CodeIgniter sees ``create()``
-as a method instead of a news item's slug. You can read more about different
-routing types in :doc:`../incoming/routing`.
+file contains the following:
 
 .. literalinclude:: create_news_items/004.php
+
+The route directive for ``'news/new'`` is placed before the directive for ``'news/(:segment)'`` to ensure that the form to create a news item is displayed.
+
+The ``$routes->post()`` line defines the router for a POST request. It matches
+only a POST request to the URI path **/news**, and it maps to the ``create()`` method of
+the ``News`` class.
+
+You can read more about different routing types in :ref:`defined-route-routing`.
+
+Create a News Item
+******************
 
 Now point your browser to your local development environment where you
 installed CodeIgniter and add **/news/create** to the URL.

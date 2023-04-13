@@ -9,7 +9,7 @@ class News extends BaseController
 {
     // ...
 
-    public function view($slug = null)
+    public function show($slug = null)
     {
         $model = model(NewsModel::class);
 

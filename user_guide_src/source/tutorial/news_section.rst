@@ -162,7 +162,7 @@ The news overview page is now done, but a page to display individual
 news items is still absent. The model created earlier is made in such
 a way that it can easily be used for this functionality. You only need to
 add some code to the controller and create a new view. Go back to the
-``News`` controller and update the ``view()`` method with the following:
+``News`` controller and update the ``show()`` method with the following:
 
 .. literalinclude:: news_section/006.php
 
@@ -179,13 +179,13 @@ The only thing left to do is create the corresponding view at
 Routing
 *******
 
-Modify your routing file
-(**app/Config/Routes.php**) so it looks as follows.
-This makes sure the requests reach the ``News`` controller instead of
-going directly to the ``Pages`` controller. The first line routes URI's
-with a slug to the ``view()`` method in the ``News`` controller.
+Modify your **app/Config/Routes.php** file, so it looks as follows:
 
 .. literalinclude:: news_section/008.php
+
+This makes sure the requests reach the ``News`` controller instead of
+going directly to the ``Pages`` controller. The second ``$routes->get()`` line
+routes URI's with a slug to the ``show()`` method in the ``News`` controller.
 
 Point your browser to your "news" page, i.e., **localhost:8080/news**,
 you should see a list of the news items, each of which has a link

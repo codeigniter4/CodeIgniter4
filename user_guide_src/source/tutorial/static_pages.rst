@@ -135,17 +135,16 @@ Routing
 We have made the controller. The next thing is to set routing rules.
 Routing associates a URI with a controller's method.
 
-Let's do that. Open the routing file located at
-**app/Config/Routes.php**.
+Let's do that. Open the routes file located at **app/Config/Routes.php**.
 
-The only line there to start with should be:
+The only route directive there to start with should be:
 
 .. literalinclude:: static_pages/003.php
 
 This directive says that any incoming request without any content
 specified should be handled by the ``index()`` method inside the ``Home`` controller.
 
-Add the following lines, **after** the route directive for '/'.
+Add the following lines, **after** the route directive for ``'/'``.
 
 .. literalinclude:: static_pages/004.php
    :lines: 2-
