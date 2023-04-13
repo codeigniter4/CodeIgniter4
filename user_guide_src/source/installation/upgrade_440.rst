@@ -60,6 +60,12 @@ by defining your own exception handler.
 
 See :ref:`custom-exception-handlers` for the detail.
 
+Interface Changes
+=================
+
+Some interface changes have been made. Classes that implement them should update
+their APIs to reflect the changes. See :ref:`v440-interface-changes` for details.
+
 Mandatory File Changes
 **********************
 
