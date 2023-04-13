@@ -462,14 +462,16 @@ See :ref:`validation-custom-errors` for details on the formatting of the array.
 Getting & Setting Rule Groups
 -----------------------------
 
-**Get Rule Group**
+Get Rule Group
+^^^^^^^^^^^^^^
 
 This method gets a rule group from the validation configuration:
 
 .. literalinclude:: validation/017.php
    :lines: 2-
 
-**Set Rule Group**
+Set Rule Group
+^^^^^^^^^^^^^^
 
 This method sets a rule group from the validation configuration to the validation service:
 
