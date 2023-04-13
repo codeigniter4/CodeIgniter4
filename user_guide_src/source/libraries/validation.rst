@@ -395,10 +395,19 @@ you previously set, so ``setRules()``, ``setRuleGroup()`` etc. need to be repeat
 Validating 1 Value
 ==================
 
-Validate one value against a rule:
+The ``check()`` method validates one value against the rules.
+The first parameter ``$value`` is the value to validate. The second parameter
+``$rule`` is the validation rules.
+The optional third parameter ``$errors`` is the the custom error message.
 
 .. literalinclude:: validation/012.php
    :lines: 2-
+
+.. note:: Prior to v4.4.0, this method's second parameter, ``$rule``, was
+    typehinted to accept ``string``. In v4.4.0 and after, the typehint was
+    removed to allow arrays, too.
+
+.. note:: This method calls the ``setRule()`` method to set the rules internally.
 
 .. _validation-getting-validated-data:
 

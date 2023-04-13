@@ -39,7 +39,10 @@ Interface Changes
 Method Signature Changes
 ========================
 
-- The third parameter ``Routing $routing`` has been added to ``RouteCollection::__construct()``.
+- **Routing:** The third parameter ``Routing $routing`` has been added to
+  ``RouteCollection::__construct()``.
+- **Validation:** The method signature of ``Validation::check()`` has been changed.
+  The ``string`` typehint on the ``$rule`` parameter was removed.
 
 Enhancements
 ************

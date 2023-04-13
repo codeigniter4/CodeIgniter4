@@ -200,10 +200,11 @@ class Validation implements ValidationInterface
      * Runs the validation process, returning true or false
      * determining whether validation was successful or not.
      *
-     * @param array|bool|float|int|object|string|null $value
-     * @param string[]                                $errors
+     * @param array|bool|float|int|object|string|null $value  The data to validate.
+     * @param array|string                            $rule   The validation rules.
+     * @param string[]                                $errors The custom error message.
      */
-    public function check($value, string $rule, array $errors = []): bool
+    public function check($value, $rule, array $errors = []): bool
     {
         $this->reset();
 
@@ -450,7 +451,8 @@ class Validation implements ValidationInterface
      *        'rule' => 'message',
      *    ]
      *
-     * @param array|string $rules
+     * @param array|string $rules  The validation rules.
+     * @param array        $errors The custom error message.
      *
      * @return $this
      *
