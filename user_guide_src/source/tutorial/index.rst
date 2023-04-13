@@ -76,7 +76,7 @@ Setting Development Mode
 
 By default, CodeIgniter starts up in production mode. This is a safety feature
 to keep your site a bit more secure in case settings are messed up once it is live.
-So first let's fix that. Copy or rename the ``env`` file to ``.env``. Open it up.
+So first let's fix that. Copy or rename the **env** file to **.env**. Open it up.
 
 This file contains server-specific settings. This means you never will need to
 commit any sensitive information to your version control system. It includes

@@ -51,7 +51,7 @@ The seed records might be something like::
 Connect to Your Database
 ************************
 
-The local configuration file, ``.env``, that you created when you installed
+The local configuration file, **.env**, that you created when you installed
 CodeIgniter, should have the database property settings uncommented and
 set appropriately for the database you want to use. Make sure you've configured
 your database properly as described in :doc:`../database/configuration`::
@@ -101,7 +101,7 @@ query; :doc:`Query Builder <../database/query_builder>` does this for you.
 
 The two methods used here, ``findAll()`` and ``first()``, are provided
 by the ``CodeIgniter\Model`` class. They already know the table to use based on the ``$table``
-property we set in **NewsModel** class, earlier. They are helper methods
+property we set in ``NewsModel`` class, earlier. They are helper methods
 that use the Query Builder to run their commands on the current table, and
 returning an array of results in the format of your choice. In this example,
 ``findAll()`` returns an array of array.
@@ -126,7 +126,7 @@ access to the current ``Request`` and ``Response`` objects, as well as the
 Next, there are two methods, one to view all news items, and one for a specific
 news item.
 
-Next, the :php:func:`model()` function is used to create the **NewsModel** instance.
+Next, the :php:func:`model()` function is used to create the ``NewsModel`` instance.
 This is a helper function. You can read more about it in :doc:`../general/common_functions`.
 You could also write ``$model = new NewsModel();``, if you don't use it.
 
@@ -187,7 +187,7 @@ with a slug to the ``view()`` method in the ``News`` controller.
 
 .. literalinclude:: news_section/008.php
 
-Point your browser to your "news" page, i.e., ``localhost:8080/news``,
+Point your browser to your "news" page, i.e., **localhost:8080/news**,
 you should see a list of the news items, each of which has a link
 to display just the one article.
 

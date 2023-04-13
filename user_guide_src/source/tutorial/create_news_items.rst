@@ -75,7 +75,7 @@ old input data when errors occur.
 Controller
 ==========
 
-Go back to your **News** controller. You're going to do two things here,
+Go back to your ``News`` controller. You're going to do two things here,
 check whether the form was submitted and whether the submitted data
 passed the validation rules.
 You'll use the :ref:`validation method in Controller <controller-validatedata>` to do this.
@@ -105,7 +105,7 @@ above. You can read more about the :doc:`Validation library <../libraries/valida
 
 If the validation fails, the form is loaded and returned to display.
 
-If the validation passed all the rules, the **NewsModel** is loaded and called. This
+If the validation passed all the rules, the ``NewsModel`` is loaded and called. This
 takes care of passing the news item into the model. The :ref:`model-save` method handles
 inserting or updating the record automatically, based on whether it finds an array key
 matching the primary key.
@@ -131,11 +131,11 @@ to allow data to be saved properly. The ``save()`` method that was
 used will determine whether the information should be inserted
 or if the row already exists and should be updated, based on the presence
 of a primary key. In this case, there is no ``id`` field passed to it,
-so it will insert a new row into it's table, **news**.
+so it will insert a new row into it's table, ``news``.
 
 However, by default the insert and update methods in the Model will
 not actually save any data because it doesn't know what fields are
-safe to be updated. Edit the **NewsModel** to provide it a list of updatable
+safe to be updated. Edit the ``NewsModel`` to provide it a list of updatable
 fields in the ``$allowedFields`` property.
 
 .. literalinclude:: create_news_items/003.php
@@ -158,7 +158,7 @@ routing types in :doc:`../incoming/routing`.
 .. literalinclude:: create_news_items/004.php
 
 Now point your browser to your local development environment where you
-installed CodeIgniter and add ``/news/create`` to the URL.
+installed CodeIgniter and add **/news/create** to the URL.
 Add some news and check out the different pages you made.
 
 .. image:: ../images/tutorial3.png

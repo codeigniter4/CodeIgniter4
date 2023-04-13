@@ -160,7 +160,7 @@ arguments.
 More information about routing can be found in the :doc:`../incoming/routing`.
 
 Here, the second rule in the ``$routes`` object matches a GET request
-to the URI path ``/pages``, and it maps to the ``index()`` method of the ``Pages`` class.
+to the URI path **/pages**, and it maps to the ``index()`` method of the ``Pages`` class.
 
 The third rule in the ``$routes`` object matches a GET request to a URI segment
 using the placeholder ``(:segment)``, and passes the parameter to the
@@ -170,8 +170,8 @@ Running the App
 ***************
 
 Ready to test? You cannot run the app using PHP's built-in server,
-since it will not properly process the ``.htaccess`` rules that are provided in
-``public``, and which eliminate the need to specify "**index.php/**"
+since it will not properly process the **.htaccess** rules that are provided in
+**public**, and which eliminate the need to specify "**index.php/**"
 as part of a URL. CodeIgniter has its own command that you can use though.
 
 From the command line, at the root of your project::
@@ -179,9 +179,9 @@ From the command line, at the root of your project::
     > php spark serve
 
 will start a web server, accessible on port 8080. If you set the location field
-in your browser to ``localhost:8080``, you should see the CodeIgniter welcome page.
+in your browser to **localhost:8080**, you should see the CodeIgniter welcome page.
 
-Now visit ``localhost:8080/home``. Did it get routed correctly to the ``view()``
+Now visit **localhost:8080/home**. Did it get routed correctly to the ``view()``
 method in the ``Pages`` controller? Awesome!
 
 You should see something like the following:
