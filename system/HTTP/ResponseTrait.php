@@ -30,8 +30,6 @@ use InvalidArgumentException;
  * Additional methods to make a PSR-7 Response class
  * compliant with the framework's own ResponseInterface.
  *
- * @property array $statusCodes
- *
  * @see https://github.com/php-fig/http-message/blob/master/src/ResponseInterface.php
  */
 trait ResponseTrait
