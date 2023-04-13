@@ -71,6 +71,9 @@ are the place where you retrieve, insert, and update information in your
 database or other data stores. They provide access to your data.
 You can read more about it in :doc:`../models/model`.
 
+Create NewsModel
+================
+
 Open up the **app/Models** directory and create a new file called
 **NewsModel.php** and add the following code.
 
@@ -80,6 +83,9 @@ This code looks similar to the controller code that was used earlier. It
 creates a new model by extending ``CodeIgniter\Model`` and loads the database
 library. This will make the database class available through the
 ``$this->db`` object.
+
+Add NewsModel::getNews() Method
+===============================
 
 Now that the database and a model have been set up, you'll need a method
 to get all of our posts from our database. To do this, the database
@@ -112,8 +118,12 @@ Display the News
 Now that the queries are written, the model should be tied to the views
 that are going to display the news items to the user. This could be done
 in our ``Pages`` controller created earlier, but for the sake of clarity,
-a new ``News`` controller is defined. Create the new controller at
-**app/Controllers/News.php**.
+a new ``News`` controller is defined.
+
+Create News Controller
+======================
+
+Create the new controller at **app/Controllers/News.php**.
 
 .. literalinclude:: news_section/003.php
 
@@ -134,6 +144,9 @@ You can see that the ``$slug`` variable is passed to the model's
 method in the second method. The model is using this slug to identify the
 news item to be returned.
 
+Complete News::index() Method
+=============================
+
 Now the data is retrieved by the controller through our model, but
 nothing is displayed yet. The next thing to do is, passing this data to
 the views. Modify the ``index()`` method to look like this:
@@ -143,8 +156,12 @@ the views. Modify the ``index()`` method to look like this:
 The code above gets all news records from the model and assigns it to a
 variable. The value for the title is also assigned to the ``$data['title']``
 element and all data is passed to the views. You now need to create a
-view to render the news items. Create **app/Views/news/index.php**
-and add the next piece of code.
+view to render the news items.
+
+Create news/index View File
+===========================
+
+Create **app/Views/news/index.php** and add the next piece of code.
 
 .. literalinclude:: news_section/005.php
 
@@ -157,6 +174,9 @@ Here, each news item is looped and displayed to the user. You can see we
 wrote our template in PHP mixed with HTML. If you prefer to use a template
 language, you can use CodeIgniter's :doc:`View
 Parser </outgoing/view_parser>` or a third party parser.
+
+Complete News::show() Method
+============================
 
 The news overview page is now done, but a page to display individual
 news items is still absent. The model created earlier is made in such
@@ -171,13 +191,17 @@ the ``PageNotFoundException`` class.
 
 Instead of calling the ``getNews()`` method without a parameter, the
 ``$slug`` variable is passed, so it will return the specific news item.
+
+Create news/view View File
+==========================
+
 The only thing left to do is create the corresponding view at
 **app/Views/news/view.php**. Put the following code in this file.
 
 .. literalinclude:: news_section/007.php
 
-Routing
-*******
+Adding Routing Rules
+********************
 
 Modify your **app/Config/Routes.php** file, so it looks as follows:
 

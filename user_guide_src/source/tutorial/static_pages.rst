@@ -16,6 +16,9 @@ It is the glue of your web application.
 Let's Make our First Controller
 *******************************
 
+Create Pages Controller
+=======================
+
 Create a file at **app/Controllers/Pages.php** with the following
 code.
 
@@ -46,6 +49,9 @@ methods and properties defined in the ``CodeIgniter\Controller`` class
 The **controller is what will become the center of every request** to
 your web application. Like any PHP class, you refer to
 it within your controllers as ``$this``.
+
+Create Views
+============
 
 Now that you've created your first method, it's time to make some basic page
 templates. We will be creating two "views" (page templates) that act as
@@ -80,14 +86,20 @@ includes the following code::
 Adding Logic to the Controller
 ******************************
 
+Create home.php and about.php
+=============================
+
 Earlier you set up a controller with a ``view()`` method. The method
-accepts one parameter, which is the name of the page to be loaded. The
-static page bodies will be located in the **app/Views/pages**
-directory.
+accepts one parameter, which is the name of the page to be loaded.
+
+The static page bodies will be located in the **app/Views/pages** directory.
 
 In that directory, create two files named **home.php** and **about.php**.
 Within those files, type some text - anything you'd like - and save them.
 If you like to be particularly un-original, try "Hello World!".
+
+Complete Pages::view() Method
+=============================
 
 In order to load those pages, you'll have to check whether the requested
 page actually exists. This will be the body of the ``view()`` method
@@ -129,8 +141,8 @@ view.
     throw errors on case-sensitive platforms. You can read more about it in
     :doc:`../outgoing/views`.
 
-Routing
-*******
+Setting Routing Rules
+*********************
 
 We have made the controller. The next thing is to set routing rules.
 Routing associates a URI with a controller's method.

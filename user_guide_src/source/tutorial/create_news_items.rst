@@ -29,8 +29,8 @@ You can read more about the CSRF protection in :doc:`Security <../libraries/secu
 Create a Form
 *************
 
-View
-====
+Create news/create View File
+============================
 
 To input data into the database, you need to create a form where you can
 input the information to be stored. This means you'll be needing a form
@@ -56,12 +56,12 @@ The :php:func:`csrf_field()` function creates a hidden input with a CSRF token t
 The :php:func:`set_value()` function provided by the :doc:`../helpers/form_helper` is used to show
 old input data when errors occur.
 
-Controller
-==========
+News Controller
+===============
 
 Go back to your ``News`` controller.
 
-Create a Method to Display the Form
+Add News::new() to Display the Form
 -----------------------------------
 
 First, create a method to display the HTML form you have created.
@@ -74,8 +74,8 @@ loaded before use.
 
 Then it returns the created form view.
 
-Create a Method to Create a News Item
--------------------------------------
+Add News::create() to Create a News Item
+----------------------------------------
 
 Next, create a method to create a news item from the submitted data.
 
@@ -128,8 +128,8 @@ This could be as simple as::
 
     <p>News item created successfully.</p>
 
-Model Updating
-**************
+NewsModel Updating
+******************
 
 The only thing that remains is ensuring that your model is set up
 to allow data to be saved properly. The ``save()`` method that was
@@ -151,8 +151,8 @@ never need to do that, since it is an auto-incrementing field in the database.
 This helps protect against Mass Assignment Vulnerabilities. If your model is
 handling your timestamps, you would also leave those out.
 
-Routing
-*******
+Adding Routing Rules
+********************
 
 Before you can start adding news items into your CodeIgniter application
 you have to add an extra rule to **app/Config/Routes.php** file. Make sure your
