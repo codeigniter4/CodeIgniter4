@@ -34,7 +34,7 @@ abstract class BaseHandler implements SessionHandlerInterface
     /**
      * Lock placeholder.
      *
-     * @var bool
+     * @var bool|string
      */
     protected $lock = false;
 
