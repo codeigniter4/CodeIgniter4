@@ -71,7 +71,7 @@ are the place where you retrieve, insert, and update information in your
 database or other data stores. They provide access to your data.
 You can read more about it in :doc:`../models/model`.
 
-Open up the **app/Models/** directory and create a new file called
+Open up the **app/Models** directory and create a new file called
 **NewsModel.php** and add the following code.
 
 .. literalinclude:: news_section/001.php

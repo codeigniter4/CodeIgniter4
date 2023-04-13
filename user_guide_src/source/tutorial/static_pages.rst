@@ -82,7 +82,7 @@ Adding Logic to the Controller
 
 Earlier you set up a controller with a ``view()`` method. The method
 accepts one parameter, which is the name of the page to be loaded. The
-static page bodies will be located in the **app/Views/pages/**
+static page bodies will be located in the **app/Views/pages**
 directory.
 
 In that directory, create two files named **home.php** and **about.php**.
