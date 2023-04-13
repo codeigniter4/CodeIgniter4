@@ -7,11 +7,17 @@ class UserController extends BaseController
     public function updateUser(int $userID)
     {
         if (! $this->validate('userRules')) {
+            // The validation failed.
             return view('users/update', [
                 'errors' => $this->validator->getErrors(),
             ]);
         }
 
-        // do something here if successful...
+        // The validation was successful.
+
+        // Get the validated data.
+        $validData = $this->validator->getValidated();
+
+        // ...
     }
 }
