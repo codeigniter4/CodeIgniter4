@@ -37,26 +37,9 @@ input the information to be stored. This means you'll be needing a form
 with two fields, one for the title and one for the text. You'll derive
 the slug from our title in the model.
 
-Create a new view at **app/Views/news/create.php**::
+Create a new view at **app/Views/news/create.php**:
 
-    <h2><?= esc($title) ?></h2>
-
-    <?= session()->getFlashdata('error') ?>
-    <?= validation_list_errors() ?>
-
-    <form action="/news" method="post">
-        <?= csrf_field() ?>
-
-        <label for="title">Title</label>
-        <input type="input" name="title" value="<?= set_value('title') ?>">
-        <br>
-
-        <label for="body">Text</label>
-        <textarea name="body" cols="45" rows="4"><?= set_value('body') ?></textarea>
-        <br>
-
-        <input type="submit" name="submit" value="Create news item">
-    </form>
+.. literalinclude:: create_news_items/006.php
 
 There are probably only four things here that look unfamiliar.
 
