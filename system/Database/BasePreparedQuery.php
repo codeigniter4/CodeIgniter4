@@ -18,11 +18,11 @@ use CodeIgniter\Events\Events;
 use ErrorException;
 
 /**
- * @template TConnection of object|resource
- * @template TStatement of object|resource
- * @template TResult of object|resource
  *
  * @implements PreparedQueryInterface<TConnection, TStatement, TResult>
+ * @template TConnection
+ * @template TStatement
+ * @template TResult
  */
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {

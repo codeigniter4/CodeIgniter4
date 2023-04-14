@@ -15,10 +15,10 @@ use CodeIgniter\Entity\Entity;
 use stdClass;
 
 /**
- * @template TConnection of object|resource
- * @template TResult of object|resource
  *
  * @implements ResultInterface<TConnection, TResult>
+ * @template TConnection
+ * @template TResult
  */
 abstract class BaseResult implements ResultInterface
 {
