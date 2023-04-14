@@ -44,7 +44,7 @@ class Connection extends BaseConnection
      * FALSE or SQLSRV_CURSOR_FORWARD would increase performance,
      * but would disable num_rows() (and possibly insert_id())
      *
-     * @var bool|string
+     * @var false|string
      */
     public $scrollable;
 

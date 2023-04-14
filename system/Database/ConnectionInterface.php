@@ -12,8 +12,6 @@
 namespace CodeIgniter\Database;
 
 /**
- * @property Query $lastQuery
- *
  * @template TConnection of object|resource
  * @template TResult of object|resource
  */
@@ -100,7 +98,7 @@ interface ConnectionInterface
      * Should automatically handle different connections for read/write
      * queries if needed.
      *
-     * @param array|string|null ...$binds
+     * @param array|string|null $binds
      *
      * @return BaseResult|bool|Query
      * @phpstan-return BaseResult<TConnection, TResult>|bool|Query
