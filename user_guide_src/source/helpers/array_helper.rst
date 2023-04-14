@@ -111,3 +111,27 @@ The following functions are available:
     will be supplying an initial ``$id``, it will be prepended to all keys.
 
     .. literalinclude:: array_helper/011.php
+
+.. php:function:: array_group_by(array $array, array $indexes[, bool $includeEmpty = false]): array
+
+    :param array $array:        Data rows (most likely from query results)
+    :param array $indexes:      Indexes to group values. Follows dot syntax
+    :param bool  $includeEmpty: If true, ``null`` and ``''`` values are not filtered out
+    :rtype: array
+    :returns: An array grouped by indexes values
+
+    This function allows you to group data rows together by index values.
+    The depth of returned array equals the number of indexes passed as parameter.
+
+    The example shows some data (i.e. loaded from an API) with nested arrays.
+
+    .. literalinclude:: array_helper/012.php
+    
+    We want to group them first by "gender", then by "hr.department" (max depth = 2).
+    First the result when excluding empty values:
+
+    .. literalinclude:: array_helper/013.php
+    
+    And here the same code, but this time we want to include empty values:
+
+    .. literalinclude:: array_helper/014.php
