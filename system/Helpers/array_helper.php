@@ -218,3 +218,49 @@ if (! function_exists('array_flatten_with_dots')) {
         return $flattened;
     }
 }
+
+if (! function_exists('array_group_by')) {
+    /**
+     * Groups all rows by their index values. Result's depth equals number of indexes
+     *
+     * @param array $array        Data array (i.e. from query result)
+     * @param array $indexes      Indexes to group by. Dot syntax used. Returns $array if empty
+     * @param bool  $includeEmpty If true, null and '' are also added as valid keys to group
+     *
+     * @return array Result array where rows are grouped together by indexes values.
+     */
+    function array_group_by(array $array, array $indexes, bool $includeEmpty = false): array
+    {
+        if (empty($indexes)) {
+            return $array;
+        }
+
+        $result = [];
+
+        foreach ($array as $row) {
+            $currentLevel = &$result;
+            $valid        = true;
+
+            foreach ($indexes as $index) {
+                $value = dot_array_search($index, $row);
+
+                if (! $includeEmpty && empty($value)) {
+                    $valid = false;
+                    break;
+                }
+
+                if (! array_key_exists($value, $currentLevel)) {
+                    $currentLevel[$value] = [];
+                }
+
+                $currentLevel = &$currentLevel[$value];
+            }
+
+            if ($valid) {
+                $currentLevel[] = $row;
+            }
+        }
+
+        return $result;
+    }
+}

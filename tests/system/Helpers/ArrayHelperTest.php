@@ -498,4 +498,798 @@ final class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
     }
+
+    /**
+     * @dataProvider arrayGroupByIncludeEmptyProvider
+     */
+    public function testArrayGroupByIncludeEmpty(array $indexes, array $data, array $expected): void
+    {
+        $actual = array_group_by($data, $indexes, true);
+
+        $this->assertSame($expected, $actual, 'array including empty not the same');
+    }
+
+    /**
+     * @dataProvider arrayGroupByExcludeEmptyProvider
+     */
+    public function testArrayGroupByExcludeEmpty(array $indexes, array $data, array $expected): void
+    {
+        $actual = array_group_by($data, $indexes, false);
+
+        $this->assertSame($expected, $actual, 'array excluding empty not the same');
+    }
+
+    public function arrayGroupByIncludeEmptyProvider(): iterable
+    {
+        yield 'simple group-by test' => [
+            ['color'],
+            [
+                [
+                    'id'    => 1,
+                    'item'  => 'ball',
+                    'color' => 'blue',
+                ],
+                [
+                    'id'    => 2,
+                    'item'  => 'book',
+                    'color' => 'red',
+                ],
+                [
+                    'id'   => 3,
+                    'item' => 'bird',
+                    'age'  => 5,
+                ],
+                [
+                    'id'    => 4,
+                    'item'  => 'jeans',
+                    'color' => 'blue',
+                ],
+            ],
+            [
+                'blue' => [
+                    [
+                        'id'    => 1,
+                        'item'  => 'ball',
+                        'color' => 'blue',
+                    ],
+                    [
+                        'id'    => 4,
+                        'item'  => 'jeans',
+                        'color' => 'blue',
+                    ],
+                ],
+                'red' => [
+                    [
+                        'id'    => 2,
+                        'item'  => 'book',
+                        'color' => 'red',
+                    ],
+                ],
+                '' => [
+                    [
+                        'id'   => 3,
+                        'item' => 'bird',
+                        'age'  => 5,
+                    ],
+                ],
+            ],
+        ];
+
+        yield '2 index data' => [
+            ['gender', 'country'],
+            [
+                [
+                    'id'         => 1,
+                    'first_name' => 'Scarface',
+                    'gender'     => 'Male',
+                    'country'    => 'Germany',
+                ],
+                [
+                    'id'         => 2,
+                    'first_name' => 'Fletch',
+                    'gender'     => 'Male',
+                    'country'    => 'France',
+                ],
+                [
+                    'id'         => 3,
+                    'first_name' => 'Wrennie',
+                    'gender'     => 'Female',
+                    'country'    => 'France',
+                ],
+                [
+                    'id'         => 4,
+                    'first_name' => 'Virgilio',
+                    'gender'     => 'Male',
+                    'country'    => 'France',
+                ],
+                [
+                    'id'         => 5,
+                    'first_name' => 'Cathlene',
+                    'gender'     => 'Polygender',
+                    'country'    => 'France',
+                ],
+                [
+                    'id'         => 6,
+                    'first_name' => 'Far',
+                    'gender'     => 'Male',
+                    'country'    => 'Canada',
+                ],
+                [
+                    'id'         => 7,
+                    'first_name' => 'Dolores',
+                    'gender'     => 'Female',
+                    'country'    => 'Canada',
+                ],
+                [
+                    'id'         => 8,
+                    'first_name' => 'Sissy',
+                    'gender'     => 'Female',
+                    'country'    => null,
+                ],
+                [
+                    'id'         => 9,
+                    'first_name' => 'Chlo',
+                    'gender'     => 'Female',
+                    'country'    => 'France',
+                ],
+                [
+                    'id'         => 10,
+                    'first_name' => 'Gabbie',
+                    'gender'     => 'Male',
+                    'country'    => 'Canada',
+                ],
+            ],
+            [
+                'Male' => [
+                    'Germany' => [
+                        [
+                            'id'         => 1,
+                            'first_name' => 'Scarface',
+                            'gender'     => 'Male',
+                            'country'    => 'Germany',
+                        ],
+                    ],
+                    'France' => [
+                        [
+                            'id'         => 2,
+                            'first_name' => 'Fletch',
+                            'gender'     => 'Male',
+                            'country'    => 'France',
+                        ],
+                        [
+                            'id'         => 4,
+                            'first_name' => 'Virgilio',
+                            'gender'     => 'Male',
+                            'country'    => 'France',
+                        ],
+                    ],
+                    'Canada' => [
+                        [
+                            'id'         => 6,
+                            'first_name' => 'Far',
+                            'gender'     => 'Male',
+                            'country'    => 'Canada',
+                        ],
+                        [
+                            'id'         => 10,
+                            'first_name' => 'Gabbie',
+                            'gender'     => 'Male',
+                            'country'    => 'Canada',
+                        ],
+                    ],
+                ],
+                'Female' => [
+                    'France' => [
+                        [
+                            'id'         => 3,
+                            'first_name' => 'Wrennie',
+                            'gender'     => 'Female',
+                            'country'    => 'France',
+                        ],
+                        [
+                            'id'         => 9,
+                            'first_name' => 'Chlo',
+                            'gender'     => 'Female',
+                            'country'    => 'France',
+                        ],
+                    ],
+                    'Canada' => [
+                        [
+                            'id'         => 7,
+                            'first_name' => 'Dolores',
+                            'gender'     => 'Female',
+                            'country'    => 'Canada',
+                        ],
+                    ],
+                    '' => [
+                        [
+                            'id'         => 8,
+                            'first_name' => 'Sissy',
+                            'gender'     => 'Female',
+                            'country'    => null,
+                        ],
+                    ],
+                ],
+                'Polygender' => [
+                    'France' => [
+                        [
+                            'id'         => 5,
+                            'first_name' => 'Cathlene',
+                            'gender'     => 'Polygender',
+                            'country'    => 'France',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        yield 'nested data with dot syntax' => [
+            ['gender', 'hr.department'],
+            [
+                [
+                    'id'         => 1,
+                    'first_name' => 'Urbano',
+                    'gender'     => null,
+                    'hr'         => [
+                        'country'    => 'Canada',
+                        'department' => 'Engineering',
+                    ],
+                ],
+                [
+                    'id'         => 2,
+                    'first_name' => 'Case',
+                    'gender'     => 'Male',
+                    'hr'         => [
+                        'country'    => null,
+                        'department' => 'Marketing',
+                    ],
+                ],
+                [
+                    'id'         => 3,
+                    'first_name' => 'Emera',
+                    'gender'     => 'Female',
+                    'hr'         => [
+                        'country'    => 'France',
+                        'department' => 'Engineering',
+                    ],
+                ],
+                [
+                    'id'         => 4,
+                    'first_name' => 'Richy',
+                    'gender'     => null,
+                    'hr'         => [
+                        'country'    => null,
+                        'department' => 'Sales',
+                    ],
+                ],
+                [
+                    'id'         => 5,
+                    'first_name' => 'Mandy',
+                    'gender'     => null,
+                    'hr'         => [
+                        'country'    => 'France',
+                        'department' => 'Sales',
+                    ],
+                ],
+                [
+                    'id'         => 6,
+                    'first_name' => 'Risa',
+                    'gender'     => 'Female',
+                    'hr'         => [
+                        'country'    => null,
+                        'department' => 'Engineering',
+                    ],
+                ],
+                [
+                    'id'         => 7,
+                    'first_name' => 'Alfred',
+                    'gender'     => 'Male',
+                    'hr'         => [
+                        'country'    => 'France',
+                        'department' => 'Engineering',
+                    ],
+                ],
+                [
+                    'id'         => 8,
+                    'first_name' => 'Tabby',
+                    'gender'     => 'Male',
+                    'hr'         => [
+                        'country'    => 'France',
+                        'department' => 'Marketing',
+                    ],
+                ],
+                [
+                    'id'         => 9,
+                    'first_name' => 'Ario',
+                    'gender'     => 'Male',
+                    'hr'         => [
+                        'country'    => null,
+                        'department' => 'Sales',
+                    ],
+                ],
+                [
+                    'id'         => 10,
+                    'first_name' => 'Somerset',
+                    'gender'     => 'Male',
+                    'hr'         => [
+                        'country'    => 'Germany',
+                        'department' => 'Marketing',
+                    ],
+                ],
+            ],
+            [
+                '' => [
+                    'Engineering' => [
+                        [
+                            'id'         => 1,
+                            'first_name' => 'Urbano',
+                            'gender'     => null,
+                            'hr'         => [
+                                'country'    => 'Canada',
+                                'department' => 'Engineering',
+                            ],
+                        ],
+                    ],
+                    'Sales' => [
+                        [
+                            'id'         => 4,
+                            'first_name' => 'Richy',
+                            'gender'     => null,
+                            'hr'         => [
+                                'country'    => null,
+                                'department' => 'Sales',
+                            ],
+                        ],
+                        [
+                            'id'         => 5,
+                            'first_name' => 'Mandy',
+                            'gender'     => null,
+                            'hr'         => [
+                                'country'    => 'France',
+                                'department' => 'Sales',
+                            ],
+                        ],
+                    ],
+                ],
+                'Male' => [
+                    'Marketing' => [
+                        [
+                            'id'         => 2,
+                            'first_name' => 'Case',
+                            'gender'     => 'Male',
+                            'hr'         => [
+                                'country'    => null,
+                                'department' => 'Marketing',
+                            ],
+                        ],
+                        [
+                            'id'         => 8,
+                            'first_name' => 'Tabby',
+                            'gender'     => 'Male',
+                            'hr'         => [
+                                'country'    => 'France',
+                                'department' => 'Marketing',
+                            ],
+                        ],
+                        [
+                            'id'         => 10,
+                            'first_name' => 'Somerset',
+                            'gender'     => 'Male',
+                            'hr'         => [
+                                'country'    => 'Germany',
+                                'department' => 'Marketing',
+                            ],
+                        ],
+                    ],
+                    'Engineering' => [
+                        [
+                            'id'         => 7,
+                            'first_name' => 'Alfred',
+                            'gender'     => 'Male',
+                            'hr'         => [
+                                'country'    => 'France',
+                                'department' => 'Engineering',
+                            ],
+                        ],
+                    ],
+                    'Sales' => [
+                        [
+                            'id'         => 9,
+                            'first_name' => 'Ario',
+                            'gender'     => 'Male',
+                            'hr'         => [
+                                'country'    => null,
+                                'department' => 'Sales',
+                            ],
+                        ],
+                    ],
+                ],
+                'Female' => [
+                    'Engineering' => [
+                        [
+                            'id'         => 3,
+                            'first_name' => 'Emera',
+                            'gender'     => 'Female',
+                            'hr'         => [
+                                'country'    => 'France',
+                                'department' => 'Engineering',
+                            ],
+                        ],
+                        [
+                            'id'         => 6,
+                            'first_name' => 'Risa',
+                            'gender'     => 'Female',
+                            'hr'         => [
+                                'country'    => null,
+                                'department' => 'Engineering',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public function arrayGroupByExcludeEmptyProvider(): iterable
+    {
+        yield 'simple group-by test' => [
+            ['color'],
+            [
+                [
+                    'id'    => 1,
+                    'item'  => 'ball',
+                    'color' => 'blue',
+                ],
+                [
+                    'id'    => 2,
+                    'item'  => 'book',
+                    'color' => 'red',
+                ],
+                [
+                    'id'   => 3,
+                    'item' => 'bird',
+                    'age'  => 5,
+                ],
+                [
+                    'id'    => 4,
+                    'item'  => 'jeans',
+                    'color' => 'blue',
+                ],
+            ],
+            [
+                'blue' => [
+                    [
+                        'id'    => 1,
+                        'item'  => 'ball',
+                        'color' => 'blue',
+                    ],
+                    [
+                        'id'    => 4,
+                        'item'  => 'jeans',
+                        'color' => 'blue',
+                    ],
+                ],
+                'red' => [
+                    [
+                        'id'    => 2,
+                        'item'  => 'book',
+                        'color' => 'red',
+                    ],
+                ],
+            ],
+        ];
+
+        yield '2 index data' => [
+            ['gender', 'country'],
+            [
+                [
+                    'id'         => 1,
+                    'first_name' => 'Scarface',
+                    'gender'     => 'Male',
+                    'country'    => 'Germany',
+                ],
+                [
+                    'id'         => 2,
+                    'first_name' => 'Fletch',
+                    'gender'     => 'Male',
+                    'country'    => 'France',
+                ],
+                [
+                    'id'         => 3,
+                    'first_name' => 'Wrennie',
+                    'gender'     => 'Female',
+                    'country'    => 'France',
+                ],
+                [
+                    'id'         => 4,
+                    'first_name' => 'Virgilio',
+                    'gender'     => 'Male',
+                    'country'    => 'France',
+                ],
+                [
+                    'id'         => 5,
+                    'first_name' => 'Cathlene',
+                    'gender'     => 'Polygender',
+                    'country'    => 'France',
+                ],
+                [
+                    'id'         => 6,
+                    'first_name' => 'Far',
+                    'gender'     => 'Male',
+                    'country'    => 'Canada',
+                ],
+                [
+                    'id'         => 7,
+                    'first_name' => 'Dolores',
+                    'gender'     => 'Female',
+                    'country'    => 'Canada',
+                ],
+                [
+                    'id'         => 8,
+                    'first_name' => 'Sissy',
+                    'gender'     => 'Female',
+                    'country'    => null,
+                ],
+                [
+                    'id'         => 9,
+                    'first_name' => 'Chlo',
+                    'gender'     => 'Female',
+                    'country'    => 'France',
+                ],
+                [
+                    'id'         => 10,
+                    'first_name' => 'Gabbie',
+                    'gender'     => 'Male',
+                    'country'    => 'Canada',
+                ],
+            ],
+            [
+                'Male' => [
+                    'Germany' => [
+                        [
+                            'id'         => 1,
+                            'first_name' => 'Scarface',
+                            'gender'     => 'Male',
+                            'country'    => 'Germany',
+                        ],
+                    ],
+                    'France' => [
+                        [
+                            'id'         => 2,
+                            'first_name' => 'Fletch',
+                            'gender'     => 'Male',
+                            'country'    => 'France',
+                        ],
+                        [
+                            'id'         => 4,
+                            'first_name' => 'Virgilio',
+                            'gender'     => 'Male',
+                            'country'    => 'France',
+                        ],
+                    ],
+                    'Canada' => [
+                        [
+                            'id'         => 6,
+                            'first_name' => 'Far',
+                            'gender'     => 'Male',
+                            'country'    => 'Canada',
+                        ],
+                        [
+                            'id'         => 10,
+                            'first_name' => 'Gabbie',
+                            'gender'     => 'Male',
+                            'country'    => 'Canada',
+                        ],
+                    ],
+                ],
+                'Female' => [
+                    'France' => [
+                        [
+                            'id'         => 3,
+                            'first_name' => 'Wrennie',
+                            'gender'     => 'Female',
+                            'country'    => 'France',
+                        ],
+                        [
+                            'id'         => 9,
+                            'first_name' => 'Chlo',
+                            'gender'     => 'Female',
+                            'country'    => 'France',
+                        ],
+                    ],
+                    'Canada' => [
+                        [
+                            'id'         => 7,
+                            'first_name' => 'Dolores',
+                            'gender'     => 'Female',
+                            'country'    => 'Canada',
+                        ],
+                    ],
+                ],
+                'Polygender' => [
+                    'France' => [
+                        [
+                            'id'         => 5,
+                            'first_name' => 'Cathlene',
+                            'gender'     => 'Polygender',
+                            'country'    => 'France',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        yield 'nested data with dot syntax' => [
+            ['gender', 'hr.department'],
+            [
+                [
+                    'id'         => 1,
+                    'first_name' => 'Urbano',
+                    'gender'     => null,
+                    'hr'         => [
+                        'country'    => 'Canada',
+                        'department' => 'Engineering',
+                    ],
+                ],
+                [
+                    'id'         => 2,
+                    'first_name' => 'Case',
+                    'gender'     => 'Male',
+                    'hr'         => [
+                        'country'    => null,
+                        'department' => 'Marketing',
+                    ],
+                ],
+                [
+                    'id'         => 3,
+                    'first_name' => 'Emera',
+                    'gender'     => 'Female',
+                    'hr'         => [
+                        'country'    => 'France',
+                        'department' => 'Engineering',
+                    ],
+                ],
+                [
+                    'id'         => 4,
+                    'first_name' => 'Richy',
+                    'gender'     => null,
+                    'hr'         => [
+                        'country'    => null,
+                        'department' => 'Sales',
+                    ],
+                ],
+                [
+                    'id'         => 5,
+                    'first_name' => 'Mandy',
+                    'gender'     => null,
+                    'hr'         => [
+                        'country'    => 'France',
+                        'department' => 'Sales',
+                    ],
+                ],
+                [
+                    'id'         => 6,
+                    'first_name' => 'Risa',
+                    'gender'     => 'Female',
+                    'hr'         => [
+                        'country'    => null,
+                        'department' => 'Engineering',
+                    ],
+                ],
+                [
+                    'id'         => 7,
+                    'first_name' => 'Alfred',
+                    'gender'     => 'Male',
+                    'hr'         => [
+                        'country'    => 'France',
+                        'department' => 'Engineering',
+                    ],
+                ],
+                [
+                    'id'         => 8,
+                    'first_name' => 'Tabby',
+                    'gender'     => 'Male',
+                    'hr'         => [
+                        'country'    => 'France',
+                        'department' => 'Marketing',
+                    ],
+                ],
+                [
+                    'id'         => 9,
+                    'first_name' => 'Ario',
+                    'gender'     => 'Male',
+                    'hr'         => [
+                        'country'    => null,
+                        'department' => 'Sales',
+                    ],
+                ],
+                [
+                    'id'         => 10,
+                    'first_name' => 'Somerset',
+                    'gender'     => 'Male',
+                    'hr'         => [
+                        'country'    => 'Germany',
+                        'department' => 'Marketing',
+                    ],
+                ],
+            ],
+            [
+                'Male' => [
+                    'Marketing' => [
+                        [
+                            'id'         => 2,
+                            'first_name' => 'Case',
+                            'gender'     => 'Male',
+                            'hr'         => [
+                                'country'    => null,
+                                'department' => 'Marketing',
+                            ],
+                        ],
+                        [
+                            'id'         => 8,
+                            'first_name' => 'Tabby',
+                            'gender'     => 'Male',
+                            'hr'         => [
+                                'country'    => 'France',
+                                'department' => 'Marketing',
+                            ],
+                        ],
+                        [
+                            'id'         => 10,
+                            'first_name' => 'Somerset',
+                            'gender'     => 'Male',
+                            'hr'         => [
+                                'country'    => 'Germany',
+                                'department' => 'Marketing',
+                            ],
+                        ],
+                    ],
+                    'Engineering' => [
+                        [
+                            'id'         => 7,
+                            'first_name' => 'Alfred',
+                            'gender'     => 'Male',
+                            'hr'         => [
+                                'country'    => 'France',
+                                'department' => 'Engineering',
+                            ],
+                        ],
+                    ],
+                    'Sales' => [
+                        [
+                            'id'         => 9,
+                            'first_name' => 'Ario',
+                            'gender'     => 'Male',
+                            'hr'         => [
+                                'country'    => null,
+                                'department' => 'Sales',
+                            ],
+                        ],
+                    ],
+                ],
+                'Female' => [
+                    'Engineering' => [
+                        [
+                            'id'         => 3,
+                            'first_name' => 'Emera',
+                            'gender'     => 'Female',
+                            'hr'         => [
+                                'country'    => 'France',
+                                'department' => 'Engineering',
+                            ],
+                        ],
+                        [
+                            'id'         => 6,
+                            'first_name' => 'Risa',
+                            'gender'     => 'Female',
+                            'hr'         => [
+                                'country'    => null,
+                                'department' => 'Engineering',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
 }
