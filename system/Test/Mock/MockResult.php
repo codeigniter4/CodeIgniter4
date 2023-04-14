@@ -63,6 +63,7 @@ class MockResult extends BaseResult
      */
     public function dataSeek($n = 0)
     {
+        return true;
     }
 
     /**
