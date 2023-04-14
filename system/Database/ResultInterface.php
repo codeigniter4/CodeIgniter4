@@ -13,10 +13,6 @@ namespace CodeIgniter\Database;
 
 use stdClass;
 
-/**
- * @template TConnection of object|resource
- * @template TResult of object|resource
- */
 interface ResultInterface
 {
     /**

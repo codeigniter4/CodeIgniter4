@@ -15,8 +15,6 @@ use CodeIgniter\Entity\Entity;
 use stdClass;
 
 /**
- *
- * @implements ResultInterface<TConnection, TResult>
  * @template TConnection
  * @template TResult
  */

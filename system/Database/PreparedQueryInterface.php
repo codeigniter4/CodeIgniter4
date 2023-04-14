@@ -13,11 +13,6 @@ namespace CodeIgniter\Database;
 
 use BadMethodCallException;
 
-/**
- * @template TConnection of object|resource
- * @template TStatement of object|resource
- * @template TResult of object|resource
- */
 interface PreparedQueryInterface
 {
     /**
@@ -25,7 +20,7 @@ interface PreparedQueryInterface
      * prepared query. Upon success, will return a Results object.
      *
      * @return bool|ResultInterface
-     * @phpstan-return bool|ResultInterface<TConnection, TResult>
+     * @phpstan-return bool|ResultInterface
      */
     public function execute(...$data);
 
