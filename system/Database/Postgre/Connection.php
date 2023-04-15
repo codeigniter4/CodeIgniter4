@@ -533,7 +533,7 @@ class Connection extends BaseConnection
      *
      * Overrides BaseConnection::isWriteType, adding additional read query types.
      *
-     * @param mixed $sql
+     * @param string $sql
      */
     public function isWriteType($sql): bool
     {
