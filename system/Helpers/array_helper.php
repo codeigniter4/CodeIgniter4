@@ -258,8 +258,8 @@ if (! function_exists('array_group_by')) {
                 }
 
                 if (! array_key_exists($value, $currentLevel)) {
-					$currentLevel[$value] = [];
-				}
+                    $currentLevel[$value] = [];
+                }
 
                 $currentLevel = &$currentLevel[$value];
             }
