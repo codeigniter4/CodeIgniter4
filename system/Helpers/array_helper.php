@@ -249,8 +249,8 @@ if (! function_exists('array_group_by')) {
                 }
 
                 if (is_bool($value)) {
-					$value = intval($value);
-				}
+                    $value = (int) $value;
+                }
 
                 if (! $includeEmpty && $value === '') {
                     $valid = false;
