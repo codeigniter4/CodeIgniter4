@@ -212,7 +212,7 @@ class Validation implements ValidationInterface
     }
 
     /**
-     * Returns actually validated data.
+     * Returns the actual validated data.
      */
     public function getValidated(): array
     {

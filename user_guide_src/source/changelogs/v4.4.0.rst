@@ -29,12 +29,16 @@ or more was specified. See :ref:`upgrade-440-uri-setsegment`.
 
 The next segment (``+1``) of the current last segment can be set as before.
 
+.. _v440-interface-changes:
+
 Interface Changes
 =================
 
 .. note:: As long as you have not extended the relevant CodeIgniter core classes
     or implemented these interfaces, all these changes are backward compatible
     and require no intervention.
+
+- **Validation:** Added the ``getValidated()`` method in ``ValidationInterface``.
 
 Method Signature Changes
 ========================
