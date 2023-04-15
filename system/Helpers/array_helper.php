@@ -231,7 +231,7 @@ if (! function_exists('array_group_by')) {
      */
     function array_group_by(array $array, array $indexes, bool $includeEmpty = false): array
     {
-        if (empty($indexes)) {
+        if ($indexes === []) {
             return $array;
         }
 
@@ -244,12 +244,16 @@ if (! function_exists('array_group_by')) {
             foreach ($indexes as $index) {
                 $value = dot_array_search($index, $row);
 
-                if (! $includeEmpty && empty($value)) {
+                if (is_array($value) || is_object($value) || (! $includeEmpty && ($value === null || $value === ''))) {
                     $valid = false;
                     break;
                 }
 
-                if (! array_key_exists($value, $currentLevel)) {
+                if ($value === null) {
+                    $value = '';
+                }
+
+                if (! isset($currentLevel[$value])) {
                     $currentLevel[$value] = [];
                 }
 
