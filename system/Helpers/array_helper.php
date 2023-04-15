@@ -244,18 +244,22 @@ if (! function_exists('array_group_by')) {
             foreach ($indexes as $index) {
                 $value = dot_array_search($index, $row);
 
-                if (is_array($value) || is_object($value) || (! $includeEmpty && ($value === null || $value === ''))) {
+                if (is_array($value) || is_object($value) || $value === null) {
+                    $value = '';
+                }
+
+                if (is_bool($value)) {
+					$value = intval($value);
+				}
+
+                if (! $includeEmpty && $value === '') {
                     $valid = false;
                     break;
                 }
 
-                if ($value === null) {
-                    $value = '';
-                }
-
-                if (! isset($currentLevel[$value])) {
-                    $currentLevel[$value] = [];
-                }
+                if (! array_key_exists($value, $currentLevel)) {
+					$currentLevel[$value] = [];
+				}
 
                 $currentLevel = &$currentLevel[$value];
             }
