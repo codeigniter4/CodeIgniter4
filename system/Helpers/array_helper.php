@@ -245,7 +245,7 @@ if (! function_exists('array_group_by')) {
     }
 }
 
-if (!function_exists('_array_attach_indexed_value')) {
+if (! function_exists('_array_attach_indexed_value')) {
     /**
      * Used by `array_group_by` to recursively attach $row to the $indexes path of values found by
      * `dot_array_search`
@@ -256,6 +256,7 @@ if (!function_exists('_array_attach_indexed_value')) {
     {
         if (($index = array_shift($indexes)) === null) {
             $result[] = $row;
+
             return $result;
         }
 
@@ -278,6 +279,7 @@ if (!function_exists('_array_attach_indexed_value')) {
         }
 
         $result[$value] = _array_attach_indexed_value($result[$value], $row, $indexes, $includeEmpty);
+
         return $result;
     }
 }
