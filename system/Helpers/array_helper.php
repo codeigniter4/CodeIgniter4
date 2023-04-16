@@ -238,38 +238,46 @@ if (! function_exists('array_group_by')) {
         $result = [];
 
         foreach ($array as $row) {
-            $currentLevel = &$result;
-            $valid        = true;
-
-            foreach ($indexes as $index) {
-                $value = dot_array_search($index, $row);
-
-                if (is_array($value) || is_object($value) || $value === null) {
-                    $value = '';
-                }
-
-                if (is_bool($value)) {
-                    $value = (int) $value;
-                }
-
-                if (! $includeEmpty && $value === '') {
-                    $valid = false;
-                    break;
-                }
-
-                // @phpstan-ignore-next-line
-                if (! array_key_exists($value, $currentLevel)) {
-                    $currentLevel[$value] = [];
-                }
-
-                $currentLevel = &$currentLevel[$value];
-            }
-
-            if ($valid) {
-                $currentLevel[] = $row;
-            }
+            $result = _array_attach_indexed_value($result, $row, $indexes, $includeEmpty);
         }
 
+        return $result;
+    }
+}
+
+if (!function_exists('_array_attach_indexed_value')) {
+    /**
+     * Used by `array_group_by` to recursively attach $row to the $indexes path of values found by
+     * `dot_array_search`
+     *
+     * @internal This should not be used on its own
+     */
+    function _array_attach_indexed_value(array $result, array $row, array $indexes, bool $includeEmpty): array
+    {
+        if (($index = array_shift($indexes)) === null) {
+            $result[] = $row;
+            return $result;
+        }
+
+        $value = dot_array_search($index, $row);
+
+        if (is_array($value) || is_object($value) || $value === null) {
+            $value = '';
+        }
+
+        if (is_bool($value)) {
+            $value = (int) $value;
+        }
+
+        if (! $includeEmpty && $value === '') {
+            return $result;
+        }
+
+        if (! array_key_exists($value, $result)) {
+            $result[$value] = [];
+        }
+
+        $result[$value] = _array_attach_indexed_value($result[$value], $row, $indexes, $includeEmpty);
         return $result;
     }
 }
