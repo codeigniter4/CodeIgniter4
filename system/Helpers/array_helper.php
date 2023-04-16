@@ -257,6 +257,7 @@ if (! function_exists('array_group_by')) {
                     break;
                 }
 
+                // @phpstan-ignore-next-line
                 if (! array_key_exists($value, $currentLevel)) {
                     $currentLevel[$value] = [];
                 }
