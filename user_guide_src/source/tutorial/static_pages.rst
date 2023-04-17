@@ -16,6 +16,9 @@ It is the glue of your web application.
 Let's Make our First Controller
 *******************************
 
+Create Pages Controller
+=======================
+
 Create a file at **app/Controllers/Pages.php** with the following
 code.
 
@@ -46,6 +49,9 @@ methods and properties defined in the ``CodeIgniter\Controller`` class
 The **controller is what will become the center of every request** to
 your web application. Like any PHP class, you refer to
 it within your controllers as ``$this``.
+
+Create Views
+============
 
 Now that you've created your first method, it's time to make some basic page
 templates. We will be creating two "views" (page templates) that act as
@@ -80,14 +86,20 @@ includes the following code::
 Adding Logic to the Controller
 ******************************
 
+Create home.php and about.php
+=============================
+
 Earlier you set up a controller with a ``view()`` method. The method
-accepts one parameter, which is the name of the page to be loaded. The
-static page bodies will be located in the **app/Views/pages/**
-directory.
+accepts one parameter, which is the name of the page to be loaded.
+
+The static page bodies will be located in the **app/Views/pages** directory.
 
 In that directory, create two files named **home.php** and **about.php**.
 Within those files, type some text - anything you'd like - and save them.
 If you like to be particularly un-original, try "Hello World!".
+
+Complete Pages::view() Method
+=============================
 
 In order to load those pages, you'll have to check whether the requested
 page actually exists. This will be the body of the ``view()`` method
@@ -129,23 +141,22 @@ view.
     throw errors on case-sensitive platforms. You can read more about it in
     :doc:`../outgoing/views`.
 
-Routing
-*******
+Setting Routing Rules
+*********************
 
 We have made the controller. The next thing is to set routing rules.
 Routing associates a URI with a controller's method.
 
-Let's do that. Open the routing file located at
-**app/Config/Routes.php**.
+Let's do that. Open the routes file located at **app/Config/Routes.php**.
 
-The only line there to start with should be:
+The only route directive there to start with should be:
 
 .. literalinclude:: static_pages/003.php
 
 This directive says that any incoming request without any content
 specified should be handled by the ``index()`` method inside the ``Home`` controller.
 
-Add the following lines, **after** the route directive for '/'.
+Add the following lines, **after** the route directive for ``'/'``.
 
 .. literalinclude:: static_pages/004.php
    :lines: 2-
@@ -160,7 +171,7 @@ arguments.
 More information about routing can be found in the :doc:`../incoming/routing`.
 
 Here, the second rule in the ``$routes`` object matches a GET request
-to the URI path ``/pages``, and it maps to the ``index()`` method of the ``Pages`` class.
+to the URI path **/pages**, and it maps to the ``index()`` method of the ``Pages`` class.
 
 The third rule in the ``$routes`` object matches a GET request to a URI segment
 using the placeholder ``(:segment)``, and passes the parameter to the
@@ -170,8 +181,8 @@ Running the App
 ***************
 
 Ready to test? You cannot run the app using PHP's built-in server,
-since it will not properly process the ``.htaccess`` rules that are provided in
-``public``, and which eliminate the need to specify "**index.php/**"
+since it will not properly process the **.htaccess** rules that are provided in
+**public**, and which eliminate the need to specify "**index.php/**"
 as part of a URL. CodeIgniter has its own command that you can use though.
 
 From the command line, at the root of your project::
@@ -179,9 +190,9 @@ From the command line, at the root of your project::
     > php spark serve
 
 will start a web server, accessible on port 8080. If you set the location field
-in your browser to ``localhost:8080``, you should see the CodeIgniter welcome page.
+in your browser to **localhost:8080**, you should see the CodeIgniter welcome page.
 
-Now visit ``localhost:8080/home``. Did it get routed correctly to the ``view()``
+Now visit **localhost:8080/home**. Did it get routed correctly to the ``view()``
 method in the ``Pages`` controller? Awesome!
 
 You should see something like the following:
