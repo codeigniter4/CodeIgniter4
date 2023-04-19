@@ -271,7 +271,7 @@ class TimeDifference
      *
      * @param string $name
      *
-     * @return bool|float|int|null
+     * @return float|int|null
      */
     public function __get($name)
     {
