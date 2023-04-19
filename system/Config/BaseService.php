@@ -173,7 +173,7 @@ class BaseService
      *
      * $key must be a name matching a service.
      *
-     * @param array|object|string|null ...$params
+     * @param array|bool|float|int|object|string|null ...$params
      *
      * @return object
      */
