@@ -69,7 +69,7 @@ class FileHandler extends BaseHandler
 
         if (! empty($this->savePath)) {
             $this->savePath = rtrim($this->savePath, '/\\');
-            ini_set('session.save_path', $this->savePath);
+            if(!headers_sent()) ini_set('session.save_path', $this->savePath);
         } else {
             $sessionPath = rtrim(ini_get('session.save_path'), '/\\');
 
@@ -316,7 +316,7 @@ class FileHandler extends BaseHandler
         if (($bits = $SIDLength * $bitsPerCharacter) < 160) {
             // Add as many more characters as necessary to reach at least 160 bits
             $SIDLength += (int) ceil((160 % $bits) / $bitsPerCharacter);
-            ini_set('session.sid_length', (string) $SIDLength);
+            if(!headers_sent()) ini_set('session.sid_length', (string) $SIDLength);
         }
 
         switch ($bitsPerCharacter) {

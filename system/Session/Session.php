@@ -299,7 +299,7 @@ class Session implements SessionInterface
         if (empty($this->sessionCookieName)) {
             $this->sessionCookieName = ini_get('session.name');
         } else {
-            ini_set('session.name', $this->sessionCookieName);
+            if(!headers_sent()) ini_set('session.name', $this->sessionCookieName);
         }
 
         $sameSite = $this->cookie->getSameSite() ?: ucfirst(Cookie::SAMESITE_LAX);
@@ -313,24 +313,24 @@ class Session implements SessionInterface
             'samesite' => $sameSite,
         ];
 
-        ini_set('session.cookie_samesite', $sameSite);
-        session_set_cookie_params($params);
+        if(!headers_sent()) ini_set('session.cookie_samesite', $sameSite);
+        if(!headers_sent()) session_set_cookie_params($params);
 
         if (! isset($this->sessionExpiration)) {
             $this->sessionExpiration = (int) ini_get('session.gc_maxlifetime');
         } elseif ($this->sessionExpiration > 0) {
-            ini_set('session.gc_maxlifetime', (string) $this->sessionExpiration);
+            if(!headers_sent()) ini_set('session.gc_maxlifetime', (string) $this->sessionExpiration);
         }
 
         if (! empty($this->sessionSavePath)) {
-            ini_set('session.save_path', $this->sessionSavePath);
+            if(!headers_sent()) ini_set('session.save_path', $this->sessionSavePath);
         }
 
         // Security is king
-        ini_set('session.use_trans_sid', '0');
-        ini_set('session.use_strict_mode', '1');
-        ini_set('session.use_cookies', '1');
-        ini_set('session.use_only_cookies', '1');
+        if(!headers_sent()) ini_set('session.use_trans_sid', '0');
+        if(!headers_sent()) ini_set('session.use_strict_mode', '1');
+        if(!headers_sent()) ini_set('session.use_cookies', '1');
+        if(!headers_sent()) ini_set('session.use_only_cookies', '1');
 
         $this->configureSidLength();
     }
@@ -362,7 +362,7 @@ class Session implements SessionInterface
             $bits = ($sidLength * $bitsPerCharacter);
             // Add as many more characters as necessary to reach at least 160 bits
             $sidLength += (int) ceil((160 % $bits) / $bitsPerCharacter);
-            ini_set('session.sid_length', (string) $sidLength);
+            if(!headers_sent()) ini_set('session.sid_length', (string) $sidLength);
         }
 
         // Yes, 4,5,6 are the only known possible values as of 2016-10-27
@@ -910,7 +910,7 @@ class Session implements SessionInterface
      */
     protected function setSaveHandler()
     {
-        session_set_save_handler($this->driver, true);
+        if(!headers_sent()) session_set_save_handler($this->driver, true);
     }
 
     /**
@@ -925,7 +925,7 @@ class Session implements SessionInterface
             return;
         }
 
-        session_start(); // @codeCoverageIgnore
+        @session_start(); // @codeCoverageIgnore
     }
 
     /**
