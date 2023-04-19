@@ -30,10 +30,8 @@ interface RouteCollectionInterface
      *
      * @param array|Closure|string $to
      * @param array                $options
-     *
-     * @return mixed
      */
-    public function add(string $from, $to, ?array $options = null);
+    public function add(string $from, $to, ?array $options = null): self;
 
     /**
      * Registers a new constraint with the system. Constraints are used
@@ -45,34 +43,26 @@ interface RouteCollectionInterface
      *
      * @param array|string $placeholder
      * @param string       $pattern
-     *
-     * @return mixed
      */
-    public function addPlaceholder($placeholder, ?string $pattern = null);
+    public function addPlaceholder($placeholder, ?string $pattern = null): self;
 
     /**
      * Sets the default namespace to use for Controllers when no other
      * namespace has been specified.
-     *
-     * @return mixed
      */
-    public function setDefaultNamespace(string $value);
+    public function setDefaultNamespace(string $value): self;
 
     /**
      * Sets the default controller to use when no other controller has been
      * specified.
-     *
-     * @return mixed
      */
-    public function setDefaultController(string $value);
+    public function setDefaultController(string $value): self;
 
     /**
      * Sets the default method to call on the controller when no other
      * method has been set in the route.
-     *
-     * @return mixed
      */
-    public function setDefaultMethod(string $value);
+    public function setDefaultMethod(string $value): self;
 
     /**
      * Tells the system whether to convert dashes in URI strings into
@@ -80,10 +70,8 @@ interface RouteCollectionInterface
      * create more meaning and make it easier for the search engine to
      * find words and meaning in the URI for better SEO. But it
      * doesn't work well with PHP method names....
-     *
-     * @return mixed
      */
-    public function setTranslateURIDashes(bool $value);
+    public function setTranslateURIDashes(bool $value): self;
 
     /**
      * If TRUE, the system will attempt to match the URI against
