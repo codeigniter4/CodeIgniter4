@@ -172,7 +172,7 @@ class DatabaseHandler extends BaseHandler
     /**
      * Decodes column data
      *
-     * @param mixed $data
+     * @param string $data
      *
      * @return false|string
      */

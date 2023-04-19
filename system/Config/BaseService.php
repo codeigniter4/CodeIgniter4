@@ -173,9 +173,9 @@ class BaseService
      *
      * $key must be a name matching a service.
      *
-     * @param mixed ...$params
+     * @param array|bool|float|int|object|string|null ...$params
      *
-     * @return mixed
+     * @return object
      */
     protected static function getSharedInstance(string $key, ...$params)
     {
@@ -239,7 +239,7 @@ class BaseService
      * Provides the ability to perform case-insensitive calling of service
      * names.
      *
-     * @return mixed
+     * @return object|null
      */
     public static function __callStatic(string $name, array $arguments)
     {
@@ -296,7 +296,7 @@ class BaseService
     /**
      * Inject mock object for testing.
      *
-     * @param mixed $mock
+     * @param object $mock
      */
     public static function injectMock(string $name, $mock)
     {
@@ -309,7 +309,7 @@ class BaseService
      * looks for the service method in each, returning an instance of
      * the service, if available.
      *
-     * @return mixed
+     * @return object|null
      *
      * @deprecated
      *
