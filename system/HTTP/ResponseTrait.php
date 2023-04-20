@@ -509,13 +509,21 @@ trait ResponseTrait
         }
 
         // IIS environment likely? Use 'refresh' for better compatibility
-        if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false) {
+        if (
+            $method === 'auto'
+            && isset($_SERVER['SERVER_SOFTWARE'])
+            && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false
+        ) {
             $method = 'refresh';
         }
 
         // override status code for HTTP/1.1 & higher
         // reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
-        if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $this->getProtocolVersion() >= 1.1 && $method !== 'refresh') {
+        if (
+            isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD'])
+            && $this->getProtocolVersion() >= 1.1
+            && $method !== 'refresh'
+        ) {
             $code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303 : ($code === 302 ? 307 : $code);
         }
 
