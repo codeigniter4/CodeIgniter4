@@ -269,23 +269,84 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame(302, $response->getStatusCode());
     }
 
-    public function testRedirectSetsCode()
-    {
-        $response = new Response(new App());
+    /**
+     * @dataProvider provideForRedirect
+     */
+    public function testRedirect(
+        string $server,
+        string $protocol,
+        string $method,
+        ?int $code,
+        int $expectedCode
+    ) {
+        $_SERVER['SERVER_SOFTWARE'] = $server;
+        $_SERVER['SERVER_PROTOCOL'] = $protocol;
+        $_SERVER['REQUEST_METHOD']  = $method;
 
-        $response->redirect('example.com', 'auto', 307);
+        $response = new Response(new App());
+        $response->redirect('example.com', 'auto', $code);
 
         $this->assertTrue($response->hasHeader('location'));
         $this->assertSame('example.com', $response->getHeaderLine('Location'));
-        $this->assertSame(307, $response->getStatusCode());
+        $this->assertSame($expectedCode, $response->getStatusCode());
     }
 
-    public function testRedirectWithIIS()
+    public function provideForRedirect()
     {
+        yield from [
+            ['Apache/2.4.17', 'HTTP/1.1', 'GET', null, 307],
+            ['Apache/2.4.17', 'HTTP/1.1', 'GET', 307, 307],
+            ['Apache/2.4.17', 'HTTP/1.1', 'GET', 302, 307],
+            ['Apache/2.4.17', 'HTTP/1.1', 'POST', null, 303],
+            ['Apache/2.4.17', 'HTTP/1.1', 'POST', 307, 303],
+            ['Apache/2.4.17', 'HTTP/1.1', 'POST', 302, 303],
+            ['Apache/2.4.17', 'HTTP/1.1', 'HEAD', null, 303],
+            ['Apache/2.4.17', 'HTTP/1.1', 'HEAD', 307, 303],
+            ['Apache/2.4.17', 'HTTP/1.1', 'HEAD', 302, 303],
+            ['Apache/2.4.17', 'HTTP/1.1', 'OPTION', null, 303],
+            ['Apache/2.4.17', 'HTTP/1.1', 'OPTION', 307, 303],
+            ['Apache/2.4.17', 'HTTP/1.1', 'OPTION', 302, 303],
+            ['Apache/2.4.17', 'HTTP/1.1', 'PUT', null, 303],
+            ['Apache/2.4.17', 'HTTP/1.1', 'PUT', 307, 303],
+            ['Apache/2.4.17', 'HTTP/1.1', 'PUT', 302, 303],
+            ['Apache/2.4.17', 'HTTP/1.1', 'DELETE', null, 303],
+            ['Apache/2.4.17', 'HTTP/1.1', 'DELETE', 307, 303],
+            ['Apache/2.4.17', 'HTTP/1.1', 'DELETE', 302, 303],
+        ];
+    }
+
+    /**
+     * @dataProvider provideForRedirectWithIIS
+     */
+    public function testRedirectWithIIS(
+        string $protocol,
+        string $method,
+        ?int $code,
+        int $expectedCode
+    ) {
         $_SERVER['SERVER_SOFTWARE'] = 'Microsoft-IIS';
-        $response                   = new Response(new App());
-        $response->redirect('example.com', 'auto', 307);
+        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+        $_SERVER['REQUEST_METHOD']  = 'POST';
+
+        $response = new Response(new App());
+        $response->redirect('example.com', 'auto', $code);
+
         $this->assertSame('0;url=example.com', $response->getHeaderLine('Refresh'));
+        $this->assertSame($expectedCode, $response->getStatusCode());
+
+        unset($_SERVER['SERVER_SOFTWARE']);
+    }
+
+    public function provideForRedirectWithIIS()
+    {
+        yield from [
+            ['HTTP/1.1', 'GET', null, 302],
+            ['HTTP/1.1', 'GET', 307, 307],
+            ['HTTP/1.1', 'GET', 302, 302],
+            ['HTTP/1.1', 'POST', null, 302],
+            ['HTTP/1.1', 'POST', 307, 307],
+            ['HTTP/1.1', 'POST', 302, 302],
+        ];
     }
 
     public function testSetCookieFails()
