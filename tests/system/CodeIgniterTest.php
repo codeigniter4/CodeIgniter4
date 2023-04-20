@@ -457,6 +457,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
+        // addRedirect() sets status code 302 by default.
         $routes->addRedirect('example', 'pages/notset');
 
         $router = Services::router($routes, Services::incomingrequest());
@@ -468,7 +469,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
         $this->assertSame('http://example.com/pages/notset', $response->header('Location')->getValue());
-        $this->assertSame(307, $response->getStatusCode());
+        $this->assertSame(302, $response->getStatusCode());
     }
 
     public function testRunRedirectionWithGETAndHTTPCode301()
@@ -516,7 +517,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         ob_get_clean();
 
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
-        $this->assertSame(303, $response->getStatusCode());
+        $this->assertSame(301, $response->getStatusCode());
     }
 
     public function testStoresPreviousURL()

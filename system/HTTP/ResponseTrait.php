@@ -503,11 +503,6 @@ trait ResponseTrait
      */
     public function redirect(string $uri, string $method = 'auto', ?int $code = null)
     {
-        // Assume 302 status code response; override if needed
-        if (empty($code)) {
-            $code = 302;
-        }
-
         // IIS environment likely? Use 'refresh' for better compatibility
         if (
             $method === 'auto'
@@ -515,16 +510,20 @@ trait ResponseTrait
             && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false
         ) {
             $method = 'refresh';
+        } elseif ($method !== 'refresh' && $code === null) {
+            // override status code for HTTP/1.1 & higher
+            if (
+                isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD'])
+                && $this->getProtocolVersion() >= 1.1
+            ) {
+                $code = ($_SERVER['REQUEST_METHOD'] !== 'GET')
+                    ? 303 // reference: https://en.wikipedia.org/wiki/Post/Redirect/Get
+                    : 307;
+            }
         }
 
-        // override status code for HTTP/1.1 & higher
-        // reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
-        if (
-            isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD'])
-            && $this->getProtocolVersion() >= 1.1
-            && $method !== 'refresh'
-        ) {
-            $code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303 : ($code === 302 ? 307 : $code);
+        if ($code === null) {
+            $code = 302;
         }
 
         switch ($method) {
