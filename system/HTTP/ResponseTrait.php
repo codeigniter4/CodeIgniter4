@@ -494,8 +494,8 @@ trait ResponseTrait
     /**
      * Perform a redirect to a new URL, in two flavors: header or location.
      *
-     * @param string $uri  The URI to redirect to
-     * @param int    $code The type of redirection, defaults to 302
+     * @param string   $uri  The URI to redirect to
+     * @param int|null $code The type of redirection, defaults to 302
      *
      * @return $this
      *
