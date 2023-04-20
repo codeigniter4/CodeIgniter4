@@ -915,7 +915,7 @@ class CLI
      *
      * **IMPORTANT:** The index here is one-based instead of zero-based.
      *
-     * @return mixed
+     * @return string|null
      */
     public static function getSegment(int $index)
     {
