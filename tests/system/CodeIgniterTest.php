@@ -446,12 +446,14 @@ final class CodeIgniterTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/3041
      */
-    public function testRunRedirectionWithURINotSet()
+    public function testRunRedirectionWithGET()
     {
         $_SERVER['argv'] = ['index.php', 'example'];
         $_SERVER['argc'] = 2;
 
-        $_SERVER['REQUEST_URI'] = '/example';
+        $_SERVER['REQUEST_URI']     = '/example';
+        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+        $_SERVER['REQUEST_METHOD']  = 'GET';
 
         // Inject mock router.
         $routes = Services::routes();
@@ -463,11 +465,37 @@ final class CodeIgniterTest extends CIUnitTestCase
         ob_start();
         $this->codeigniter->run();
         ob_get_clean();
+
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
         $this->assertSame('http://example.com/pages/notset', $response->header('Location')->getValue());
+        $this->assertSame(307, $response->getStatusCode());
     }
 
-    public function testRunRedirectionWithHTTPCode303()
+    public function testRunRedirectionWithGETAndHTTPCode301()
+    {
+        $_SERVER['argv'] = ['index.php', 'example'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI']     = '/example';
+        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+        $_SERVER['REQUEST_METHOD']  = 'GET';
+
+        // Inject mock router.
+        $routes = Services::routes();
+        $routes->addRedirect('example', 'pages/notset', 301);
+
+        $router = Services::router($routes, Services::incomingrequest());
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->run();
+        ob_get_clean();
+
+        $response = $this->getPrivateProperty($this->codeigniter, 'response');
+        $this->assertSame(301, $response->getStatusCode());
+    }
+
+    public function testRunRedirectionWithPOSTAndHTTPCode301()
     {
         $_SERVER['argv'] = ['index.php', 'example'];
         $_SERVER['argc'] = 2;
