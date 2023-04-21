@@ -294,7 +294,7 @@ final class ResponseTest extends CIUnitTestCase
     public function provideForRedirect()
     {
         yield from [
-            ['Apache/2.4.17', 'HTTP/1.1', 'GET', null, 307],
+            ['Apache/2.4.17', 'HTTP/1.1', 'GET', null, 302],
             ['Apache/2.4.17', 'HTTP/1.1', 'GET', 307, 307],
             ['Apache/2.4.17', 'HTTP/1.1', 'GET', 302, 302],
             ['Apache/2.4.17', 'HTTP/1.1', 'POST', null, 303],
@@ -519,7 +519,7 @@ final class ResponseTest extends CIUnitTestCase
         $response->getStatusCode();
     }
 
-    public function testTemporaryRedirect11()
+    public function testTemporaryRedirectHTTP11()
     {
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
         $_SERVER['REQUEST_METHOD']  = 'POST';
@@ -531,7 +531,7 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame(303, $response->getStatusCode());
     }
 
-    public function testTemporaryRedirectGet11()
+    public function testTemporaryRedirectGetHTTP11()
     {
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
         $_SERVER['REQUEST_METHOD']  = 'GET';
@@ -540,7 +540,7 @@ final class ResponseTest extends CIUnitTestCase
         $response->setProtocolVersion('HTTP/1.1');
         $response->redirect('/foo');
 
-        $this->assertSame(307, $response->getStatusCode());
+        $this->assertSame(302, $response->getStatusCode());
     }
 
     // Make sure cookies are set by RedirectResponse this way

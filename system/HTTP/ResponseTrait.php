@@ -516,9 +516,14 @@ trait ResponseTrait
                 isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD'])
                 && $this->getProtocolVersion() >= 1.1
             ) {
-                $code = (in_array($_SERVER['REQUEST_METHOD'], ['POST', 'PUT', 'DELETE'], true))
-                    ? 303 // reference: https://en.wikipedia.org/wiki/Post/Redirect/Get
-                    : 307;
+                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                    $code = 302;
+                } elseif (in_array($_SERVER['REQUEST_METHOD'], ['POST', 'PUT', 'DELETE'], true)) {
+                    // reference: https://en.wikipedia.org/wiki/Post/Redirect/Get
+                    $code = 303;
+                } else {
+                    $code = 307;
+                }
             }
         }
 
