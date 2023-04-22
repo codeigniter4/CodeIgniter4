@@ -420,11 +420,11 @@ if (! function_exists('form_button')) {
      * @param array|string        $data
      * @param array|object|string $extra string, array, object that can be cast to array
      */
-    function form_button($data = '', string $content = '', $extra = ''): string
+    function form_button($data = '', string $content = '', $extra = '', string $type = null): string
     {
         $defaults = [
             'name' => is_array($data) ? '' : $data,
-            'type' => 'button',
+            'type' => $type ?? 'submit',
         ];
 
         if (is_array($data) && isset($data['content'])) {
