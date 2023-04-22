@@ -30,8 +30,10 @@ interface RouteCollectionInterface
      *
      * @param array|Closure|string $to
      * @param array                $options
+     *
+     * @return RouteCollectionInterface
      */
-    public function add(string $from, $to, ?array $options = null): self;
+    public function add(string $from, $to, ?array $options = null);
 
     /**
      * Registers a new constraint with the system. Constraints are used
@@ -43,26 +45,34 @@ interface RouteCollectionInterface
      *
      * @param array|string $placeholder
      * @param string       $pattern
+     *
+     * @return RouteCollectionInterface
      */
-    public function addPlaceholder($placeholder, ?string $pattern = null): self;
+    public function addPlaceholder($placeholder, ?string $pattern = null);
 
     /**
      * Sets the default namespace to use for Controllers when no other
      * namespace has been specified.
+     *
+     * @return RouteCollectionInterface
      */
-    public function setDefaultNamespace(string $value): self;
+    public function setDefaultNamespace(string $value);
 
     /**
      * Sets the default controller to use when no other controller has been
      * specified.
+     *
+     * @return RouteCollectionInterface
      */
-    public function setDefaultController(string $value): self;
+    public function setDefaultController(string $value);
 
     /**
      * Sets the default method to call on the controller when no other
      * method has been set in the route.
+     *
+     * @return RouteCollectionInterface
      */
-    public function setDefaultMethod(string $value): self;
+    public function setDefaultMethod(string $value);
 
     /**
      * Tells the system whether to convert dashes in URI strings into
@@ -70,8 +80,10 @@ interface RouteCollectionInterface
      * create more meaning and make it easier for the search engine to
      * find words and meaning in the URI for better SEO. But it
      * doesn't work well with PHP method names....
+     *
+     * @return RouteCollectionInterface
      */
-    public function setTranslateURIDashes(bool $value): self;
+    public function setTranslateURIDashes(bool $value);
 
     /**
      * If TRUE, the system will attempt to match the URI against
