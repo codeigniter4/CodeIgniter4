@@ -105,7 +105,7 @@ abstract class BaseCommand
     /**
      * Can be used by a command to run other commands.
      *
-     * @return mixed
+     * @return int|void
      *
      * @throws ReflectionException
      */
@@ -205,7 +205,7 @@ abstract class BaseCommand
     /**
      * Makes it simple to access our protected properties.
      *
-     * @return mixed
+     * @return array|Commands|LoggerInterface|string|null
      */
     public function __get(string $key)
     {

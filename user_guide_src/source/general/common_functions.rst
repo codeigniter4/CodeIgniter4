@@ -396,12 +396,12 @@ Miscellaneous Functions
 
     :param   string       $method: Route name or Controller::method
     :param   int|string   ...$params: One or more parameters to be passed to the route. The last parameter allows you to set the locale.
-    :returns: a route (URI path)
+    :returns: a route path (URI path relative to baseURL)
     :rtype: string
 
     .. note:: This function requires the controller/method to have a route defined in **app/Config/routes.php**.
 
-    .. important:: ``route_to()`` returns a *route*, not a full URI path for your site.
+    .. important:: ``route_to()`` returns a *route* path, not a full URI path for your site.
         If your **baseURL** contains sub folders, the return value is not the same
         as the URI to link. In that case, just use :php:func:`url_to()` instead.
         See also :ref:`urls-url-structure`.
