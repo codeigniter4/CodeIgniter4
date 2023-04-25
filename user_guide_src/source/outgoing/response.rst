@@ -59,6 +59,59 @@ parameter. This is not case-sensitive.
 
 .. literalinclude:: response/006.php
 
+.. _response-redirect:
+
+Redirect
+========
+
+If you want to create a redirect, use the :php:func:`redirect()` function. It
+returns a ``RedirectResponse`` instance.
+
+.. important:: If you want to redirect, an instance of ``RedirectResponse`` must
+    be returned in a method of the :doc:`Controller <../incoming/controllers>` or
+    the :doc:`Controller Filter <../incoming/filters>`. Note that the ``__construct()``
+    or the ``initController()`` method cannot return any value.
+    If you forget to return ``RedirectResponse``, no redirection will occur.
+
+Redirect to a URI path
+----------------------
+
+When you want to pass a URI path (relative to baseURL), use ``redirect()->to()``:
+
+.. literalinclude:: ../general/common_functions/005.php
+    :lines: 2-
+
+.. note:: If there is a fragment in your URL that you want to remove, you can use the refresh parameter in this function.
+    Like ``return redirect()->to('to', null, 'refresh');``.
+
+Redirect to a Defined Route
+---------------------------
+
+When you want to pass a :ref:`route name <using-named-routes>` or Controller::method
+for :ref:`reverse routing <reverse-routing>`, use ``redirect()->route()``:
+
+.. literalinclude:: ../general/common_functions/013.php
+    :lines: 2-
+
+When passing an argument into the function, it is treated as a route name or
+Controller::method for reverse routing, not a relative/full URI,
+treating it the same as using ``redirect()->route()``:
+
+.. literalinclude:: ../general/common_functions/006.php
+    :lines: 2-
+
+Redirect Back
+-------------
+
+When you want to redirect back, use ``redirect()->back()``:
+
+.. literalinclude:: ../general/common_functions/014.php
+    :lines: 2-
+
+.. note:: ``redirect()->back()`` is not the same as browser "back" button.
+    It takes a visitor to "the last page viewed during the Session" when the Session is available.
+    If the Session hasn’t been loaded, or is otherwise unavailable, then a sanitized version of HTTP_REFERER will be used.
+
 .. _force-file-download:
 
 Force File Download
