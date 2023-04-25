@@ -112,6 +112,26 @@ When you want to redirect back, use ``redirect()->back()``:
     It takes a visitor to "the last page viewed during the Session" when the Session is available.
     If the Session hasn’t been loaded, or is otherwise unavailable, then a sanitized version of HTTP_REFERER will be used.
 
+.. _response-redirect-status-code:
+
+Redirect Status Code
+--------------------
+
+The default HTTP status code for GET requests is 302. However, when using HTTP/1.1
+or later, 303 is used for POST/PUT/DELETE requests and 307 for all other requests.
+
+You can specify the status code:
+
+.. literalinclude:: ./response/032.php
+    :lines: 2-
+
+.. note:: Due to a bug, in v4.3.3 or previous versions, the status code of the
+    actual redirect response might be changed even if a status code was specified.
+    See :ref:`ChangeLog v4.3.4 <v434-redirect-status-code>`.
+
+If you don't know HTTP status code for redirection, it is recommended to read
+`Redirections in HTTP <https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections>`_.
+
 .. _force-file-download:
 
 Force File Download
