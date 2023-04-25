@@ -334,6 +334,10 @@ Miscellaneous Functions
     .. literalinclude:: common_functions/005.php
         :lines: 2-
 
+    .. note:: Usually this method will not clean up the fragment in the URL.
+        If there is a fragment in your URL that you want to remove, you can use the refresh parameter in this function.
+        Like ``return redirect()->to('to', null, 'refresh');```.
+
     **Redirect to a Defined Route**
 
     When you want to pass a :ref:`route name <using-named-routes>` or Controller::method
