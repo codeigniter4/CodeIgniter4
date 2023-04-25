@@ -78,7 +78,7 @@ Redirect to a URI path
 
 When you want to pass a URI path (relative to baseURL), use ``redirect()->to()``:
 
-.. literalinclude:: ../general/common_functions/005.php
+.. literalinclude:: ./response/028.php
     :lines: 2-
 
 .. note:: If there is a fragment in your URL that you want to remove, you can use the refresh parameter in this function.
@@ -90,14 +90,14 @@ Redirect to a Defined Route
 When you want to pass a :ref:`route name <using-named-routes>` or Controller::method
 for :ref:`reverse routing <reverse-routing>`, use ``redirect()->route()``:
 
-.. literalinclude:: ../general/common_functions/013.php
+.. literalinclude:: ./response/029.php
     :lines: 2-
 
 When passing an argument into the function, it is treated as a route name or
 Controller::method for reverse routing, not a relative/full URI,
 treating it the same as using ``redirect()->route()``:
 
-.. literalinclude:: ../general/common_functions/006.php
+.. literalinclude:: ./response/030.php
     :lines: 2-
 
 Redirect Back
@@ -105,7 +105,7 @@ Redirect Back
 
 When you want to redirect back, use ``redirect()->back()``:
 
-.. literalinclude:: ../general/common_functions/014.php
+.. literalinclude:: ./response/031.php
     :lines: 2-
 
 .. note:: ``redirect()->back()`` is not the same as browser "back" button.
