@@ -532,6 +532,39 @@ default group’s configuration settings. The values should be name following th
 <span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">database</span> <span class="o">=</span> <span class="s1">&#39;ci4&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
+<p>But you cannot add a new property by setting environment variables, nor change a
+scalar value to an array. See <a class="reference internal" href="../general/configuration.html#env-var-replacements-for-data"><span class="std std-ref">Environment Variables as Replacements for Data</span></a> for details.</p>
+<p>So if you want to use SSL with MySQL, you need a hack. For example, set the array
+values as a JSON string in your <strong>.env</strong> file:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">encrypt</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ssl_verify&quot;</span><span class="o">:</span><span class="k">true</span><span class="p">,</span><span class="s2">&quot;ssl_ca&quot;</span><span class="o">:</span><span class="s2">&quot;/var/www/html/BaltimoreCyberTrustRoot.crt.pem&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>and decode it in the constructor in the Config class:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\Config</span><span class="p">;</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Database Configuration</span>
+<span class="sd"> */</span>
+<span class="k">class</span> <span class="nc">Database</span> <span class="k">extends</span> <span class="nx">Config</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// ...</span>
+
+        <span class="nv">$array</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">default</span><span class="p">[</span><span class="s1">&#39;encrypt&#39;</span><span class="p">],</span> <span class="k">true</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">is_array</span><span class="p">(</span><span class="nv">$array</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">default</span><span class="p">[</span><span class="s1">&#39;encrypt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$array</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </section>
 <section id="explanation-of-values">
 <h2><a class="toc-backref" href="#id6">Explanation of Values:</a><a class="headerlink" href="#explanation-of-values" title="Permalink to this headline"></a></h2>

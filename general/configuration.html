@@ -464,6 +464,11 @@ prefix followed by a dot (.), and then the variable name itself.</p>
 <h2><a class="toc-backref" href="#id8">Configuration Classes and Environment Variables</a><a class="headerlink" href="#configuration-classes-and-environment-variables" title="Permalink to this headline"></a></h2>
 <p>When you instantiate a configuration class, any <em>namespaced</em> environment variables
 are considered for merging into the configuration object’s properties.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You cannot add a new property by setting environment variables,
+nor change a scalar value to an array. See <a class="reference internal" href="#env-var-replacements-for-data"><span class="std std-ref">Environment Variables as Replacements for Data</span></a>.</p>
+</div>
 <p>If the prefix of a namespaced variable exactly matches the namespace of the configuration
 class, then the trailing part of the setting (after the dot) is treated as a configuration
 property. If it matches an existing configuration property, the environment variable’s
@@ -495,16 +500,18 @@ the value from <strong>.env</strong> replaces the configuration file value.</p>
 <p>When using the <em>short prefix</em> the property names must still exactly match the class defined name.</p>
 </div>
 <section id="environment-variables-as-replacements-for-data">
-<h3><a class="toc-backref" href="#id9">Environment Variables as Replacements for Data</a><a class="headerlink" href="#environment-variables-as-replacements-for-data" title="Permalink to this headline"></a></h3>
+<span id="env-var-replacements-for-data"></span><h3><a class="toc-backref" href="#id9">Environment Variables as Replacements for Data</a><a class="headerlink" href="#environment-variables-as-replacements-for-data" title="Permalink to this headline"></a></h3>
 <p>It is very important to always remember that environment variables contained in your <strong>.env</strong> are
-<strong>only replacements for existing data</strong>. This means that you cannot expect to fill your <strong>.env</strong> with all
-the replacements for your configurations but have nothing to receive these replacements in the
-related configuration file(s).</p>
-<p>The <strong>.env</strong> only serves to fill or replace the values in your configuration files. That said, your
-configuration files should have a container or receiving property for those. Adding so many variables in
-your <strong>.env</strong> with nothing to contain them in the receiving end is useless.</p>
-<p>Simply put, you cannot just put <code class="docutils literal notranslate"><span class="pre">app.myNewConfig</span> <span class="pre">=</span> <span class="pre">foo</span></code> in your <strong>.env</strong> and expect your <code class="docutils literal notranslate"><span class="pre">Config\App</span></code>
-to magically have that property and value at run time.</p>
+<strong>only replacements for existing data</strong>.</p>
+<p>Simply put, you can change only the property value that exists in the Config class
+by setting it in your <strong>.env</strong>.</p>
+<p>You cannot add a property that is not defined in the Config class, nor can you
+change it to an array if the value of the defined property is a scalar.</p>
+<p>For example, you cannot just put <code class="docutils literal notranslate"><span class="pre">app.myNewConfig</span> <span class="pre">=</span> <span class="pre">foo</span></code> in your <strong>.env</strong> and
+expect your <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> to magically have that property and value at run time.</p>
+<p>When you have the property <code class="docutils literal notranslate"><span class="pre">$default</span> <span class="pre">=</span> <span class="pre">['encrypt'</span> <span class="pre">=&gt;</span> <span class="pre">false]</span></code> in your
+<code class="docutils literal notranslate"><span class="pre">Config\Database</span></code>, you cannot change the <code class="docutils literal notranslate"><span class="pre">encrypt</span></code> value to an array even if
+you put <code class="docutils literal notranslate"><span class="pre">database.default.encrypt.ssl_verify</span> <span class="pre">=</span> <span class="pre">true</span></code> in your <strong>.env</strong>.</p>
 </section>
 <section id="treating-environment-variables-as-arrays">
 <h3><a class="toc-backref" href="#id10">Treating Environment Variables as Arrays</a><a class="headerlink" href="#treating-environment-variables-as-arrays" title="Permalink to this headline"></a></h3>
