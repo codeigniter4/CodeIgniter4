@@ -118,8 +118,9 @@ Explanation of Values:
 **database**    The name of the database you want to connect to.
 
                 .. note:: CodeIgniter doesn't support dots (``.``) in the database, table, and column names.
-**DBDriver**    The database driver name. e.g.,: ``MySQLi``, ``Postgres``, etc. The case must match the driver name.
+**DBDriver**    The database driver name. The case must match the driver name.
                 You can set a fully qualified classname to use your custom driver.
+                Supported drivers: ``MySQLi``, ``Postgre``, ``SQLite3``, ``SQLSRV``, and ``OCI8``.
 **DBPrefix**    An optional table prefix which will added to the table name when running
                 :doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
                 installations to share one database.
@@ -130,7 +131,7 @@ Explanation of Values:
 **swapPre**     A default table prefix that should be swapped with ``DBPrefix``. This is useful for distributed
                 applications where you might run manually written queries, and need the prefix to still be
                 customizable by the end user.
-**schema**      The database schema, default value varies by driver. (Used by ``Postgres`` and ``SQLSRV``.)
+**schema**      The database schema, default value varies by driver. (Used by ``Postgre`` and ``SQLSRV``.)
 **encrypt**     Whether or not to use an encrypted connection.
                 ``SQLSRV`` driver accepts true/false
                 ``MySQLi`` driver accepts an array with the following options:
@@ -152,7 +153,7 @@ Explanation of Values:
 **busyTimeout** milliseconds (int) - Sleeps for a specified amount of time when a table is locked (``SQLite3`` only).
 =============== ===========================================================================================================
 
-.. note:: Depending on what database driver you are using (``MySQLi``, ``Postgres``,
+.. note:: Depending on what database driver you are using (``MySQLi``, ``Postgre``,
     etc.) not all values will be needed. For example, when using ``SQLite3`` you
     will not need to supply a username or password, and the database name
     will be the path to your database file.
