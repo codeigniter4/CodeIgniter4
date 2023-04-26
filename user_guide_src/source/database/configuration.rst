@@ -104,6 +104,20 @@ default group's configuration settings. The values should be name following this
     database.default.password = '';
     database.default.database = 'ci4';
 
+But you cannot add a new property by setting environment variables, nor change a
+scalar value to an array. See :ref:`env-var-replacements-for-data` for details.
+
+So if you want to use SSL with MySQL, you need a hack. For example, set the array
+values as a JSON string in your **.env** file:
+
+::
+
+    database.default.encrypt = {"ssl_verify":true,"ssl_ca":"/var/www/html/BaltimoreCyberTrustRoot.crt.pem"}
+
+and decode it in the constructor in the Config class:
+
+.. literalinclude:: configuration/009.php
+
 **********************
 Explanation of Values:
 **********************
