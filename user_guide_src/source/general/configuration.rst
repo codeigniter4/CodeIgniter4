@@ -200,7 +200,7 @@ change it to an array if the value of the defined property is a scalar.
 For example, you cannot just put ``app.myNewConfig = foo`` in your **.env** and
 expect your ``Config\App`` to magically have that property and value at run time.
 
-When you have the property ``$default = ['encrypt'  => false]`` in your
+When you have the property ``$default = ['encrypt' => false]`` in your
 ``Config\Database``, you cannot change the ``encrypt`` value to an array even if
 you put ``database.default.encrypt.ssl_verify = true`` in your **.env**.
 
