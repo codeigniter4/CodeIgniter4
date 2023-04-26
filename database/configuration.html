@@ -567,8 +567,9 @@ default group’s configuration settings. The values should be name following th
 </td>
 </tr>
 <tr class="row-odd"><td><p><strong>DBDriver</strong></p></td>
-<td><p>The database driver name. e.g.,: <code class="docutils literal notranslate"><span class="pre">MySQLi</span></code>, <code class="docutils literal notranslate"><span class="pre">Postgres</span></code>, etc. The case must match the driver name.
-You can set a fully qualified classname to use your custom driver.</p></td>
+<td><p>The database driver name. The case must match the driver name.
+You can set a fully qualified classname to use your custom driver.
+Supported drivers: <code class="docutils literal notranslate"><span class="pre">MySQLi</span></code>, <code class="docutils literal notranslate"><span class="pre">Postgre</span></code>, <code class="docutils literal notranslate"><span class="pre">SQLite3</span></code>, <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code>, and <code class="docutils literal notranslate"><span class="pre">OCI8</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>DBPrefix</strong></p></td>
 <td><p>An optional table prefix which will added to the table name when running
@@ -593,7 +594,7 @@ applications where you might run manually written queries, and need the prefix t
 customizable by the end user.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>schema</strong></p></td>
-<td><p>The database schema, default value varies by driver. (Used by <code class="docutils literal notranslate"><span class="pre">Postgres</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code>.)</p></td>
+<td><p>The database schema, default value varies by driver. (Used by <code class="docutils literal notranslate"><span class="pre">Postgre</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code>.)</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>encrypt</strong></p></td>
 <td><p>Whether or not to use an encrypted connection.
@@ -633,7 +634,7 @@ To enforce Foreign Key constraint, set this config item to true.</p>
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Depending on what database driver you are using (<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code>, <code class="docutils literal notranslate"><span class="pre">Postgres</span></code>,
+<p>Depending on what database driver you are using (<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code>, <code class="docutils literal notranslate"><span class="pre">Postgre</span></code>,
 etc.) not all values will be needed. For example, when using <code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> you
 will not need to supply a username or password, and the database name
 will be the path to your database file.</p>
