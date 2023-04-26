@@ -284,31 +284,61 @@
 <p><strong>4.3.4 release of CodeIgniter4</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p></li>
-<li><p><a class="reference internal" href="#message-changes" id="id2">Message Changes</a></p></li>
-<li><p><a class="reference internal" href="#changes" id="id3">Changes</a></p></li>
-<li><p><a class="reference internal" href="#deprecations" id="id4">Deprecations</a></p></li>
-<li><p><a class="reference internal" href="#bugs-fixed" id="id5">Bugs Fixed</a></p></li>
+<li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p>
+<ul>
+<li><p><a class="reference internal" href="#behavior-changes" id="id2">Behavior Changes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#redirect-status-code" id="id3">Redirect Status Code</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#message-changes" id="id4">Message Changes</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id5">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id6">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id7">Bugs Fixed</a></p></li>
 </ul>
 </div>
 <section id="breaking">
 <h2><a class="toc-backref" href="#id1">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this headline"></a></h2>
+<section id="behavior-changes">
+<h3><a class="toc-backref" href="#id2">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Permalink to this headline"></a></h3>
+<section id="redirect-status-code">
+<span id="v434-redirect-status-code"></span><h4><a class="toc-backref" href="#id3">Redirect Status Code</a><a class="headerlink" href="#redirect-status-code" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p>Due to a bug, in previous versions, when using HTTP/1.1 or later the status
+code of the actual redirect response might be changed even if a status code was
+specified. For example, for a GET request, 302 would change to 307; for a POST
+request, 307 and 302 would change to 303.</p></li>
+<li><p>Starting with this version, if you specify a status code in
+<a class="reference internal" href="../outgoing/response.html#response-redirect-status-code"><span class="std std-ref">redirect</span></a>, that code will always be used
+in the response.</p></li>
+<li><p>The default code for GET requests has been corrected from 307 to 302 when using
+HTTP/1.1 or later.</p></li>
+<li><p>The default code for HEAD and OPTIONS requests has been corrected from 303 to
+307 when using HTTP/1.1 or later.</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">$routes-&gt;addRedirect()</span></code>, 302 is specified by default. Therefor 302 will
+always be used when you don’t specify a status code. In previous versions,
+302 might be changed.</p></li>
+</ul>
+</section>
+</section>
 </section>
 <section id="message-changes">
-<h2><a class="toc-backref" href="#id2">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this headline"></a></h2>
 </section>
 <section id="changes">
-<h2><a class="toc-backref" href="#id3">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
 </section>
 <section id="deprecations">
-<h2><a class="toc-backref" href="#id4">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p><strong>Text Helper:</strong> <a class="reference internal" href="../helpers/text_helper.html#random_string" title="random_string"><code class="xref php php-func docutils literal notranslate"><span class="pre">random_string()</span></code></a>’s type <code class="docutils literal notranslate"><span class="pre">basic</span></code>, <code class="docutils literal notranslate"><span class="pre">md5</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">sha1</span></code> are deprecated. They are not cryptographically secure.</p></li>
 </ul>
 </section>
 <section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id5">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p><strong>CURLRequest:</strong> Fixed a bug where the response class was shared between requests.</p></li>
 </ul>
