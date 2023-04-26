@@ -32,7 +32,7 @@ A bug fix may have changed the NULL constraint in the result of
 :ref:`$forge->modifyColumn() <db-forge-modifyColumn>`. See
 :ref:`Change Log <v434-forge-modifycolumn>`.
 To set the desired NULL constraint, change ``Forge::modifyColumn()`` to always
-specify the ``null`` value.
+specify the ``null`` key.
 
 Note that the bug may have changed unexpected NULL constraints in previous
 versions.

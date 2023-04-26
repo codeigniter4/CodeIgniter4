@@ -297,7 +297,7 @@ change the name, you can add a "name" key into the field defining array.
 .. literalinclude:: forge/026.php
 
 .. note:: The ``modifyColumn()`` may unexpectedly change ``NULL``/``NOT NULL``.
-    So it is recommended to always specify ``null`` value. Unlike when creating
+    So it is recommended to always specify the value for ``null`` key. Unlike when creating
     a table, if ``null`` is not specified, the column will be ``NULL``, not
     ``NOT NULL``.
 

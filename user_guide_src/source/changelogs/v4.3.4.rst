@@ -44,11 +44,11 @@ Forge::modifyColumn()
   to a bug, in previous versions, SQLite3/Postgres/SQLSRV might change
   ``NULL``/``NOT NULL`` unpredictably.
 - In previous versions, the OCI8 driver did not change ``NULL``/``NOT NULL``
-  when you don't specify ``null`` value.
+  when you don't specify the ``null`` key.
 - Now in all database drivers ``$forge->modifyColumn()`` always sets ``NULL``
-  when you don't specify ``null`` value.
+  when you don't specify the ``null`` key.
 - The ``NULL``/``NOT NULL`` change may still be unexpectedly, it is recommended
-  to always specifiy ``null`` value.
+  to always specify the ``null`` key.
 
 Message Changes
 ***************
