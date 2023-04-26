@@ -82,7 +82,7 @@ When you want to pass a URI path (relative to baseURL), use ``redirect()->to()``
     :lines: 2-
 
 .. note:: If there is a fragment in your URL that you want to remove, you can use the refresh parameter in this function.
-    Like ``return redirect()->to('to', null, 'refresh');``.
+    Like ``return redirect()->to('admin/home', null, 'refresh');``.
 
 Redirect to a Defined Route
 ---------------------------
