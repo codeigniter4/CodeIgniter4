@@ -150,6 +150,9 @@ Configuration Classes and Environment Variables
 When you instantiate a configuration class, any *namespaced* environment variables
 are considered for merging into the configuration object's properties.
 
+.. important:: You cannot add a new property by setting environment variables,
+    nor change a scalar value to an array. See :ref:`env-var-replacements-for-data`.
+
 If the prefix of a namespaced variable exactly matches the namespace of the configuration
 class, then the trailing part of the setting (after the dot) is treated as a configuration
 property. If it matches an existing configuration property, the environment variable's
@@ -180,20 +183,26 @@ Since v4.1.5, you can also write with underscores::
 
 .. note:: When using the *short prefix* the property names must still exactly match the class defined name.
 
+.. _env-var-replacements-for-data:
+
 Environment Variables as Replacements for Data
 ==============================================
 
 It is very important to always remember that environment variables contained in your **.env** are
-**only replacements for existing data**. This means that you cannot expect to fill your **.env** with all
-the replacements for your configurations but have nothing to receive these replacements in the
-related configuration file(s).
+**only replacements for existing data**.
 
-The **.env** only serves to fill or replace the values in your configuration files. That said, your
-configuration files should have a container or receiving property for those. Adding so many variables in
-your **.env** with nothing to contain them in the receiving end is useless.
+Simply put, you can change only the property value that exists in the Config class
+by setting it in your **.env**.
 
-Simply put, you cannot just put ``app.myNewConfig = foo`` in your **.env** and expect your ``Config\App``
-to magically have that property and value at run time.
+You cannot add a property that is not defined in the Config class, nor can you
+change it to an array if the value of the defined property is a scalar.
+
+For example, you cannot just put ``app.myNewConfig = foo`` in your **.env** and
+expect your ``Config\App`` to magically have that property and value at run time.
+
+When you have the property ``$default = ['encrypt' => false]`` in your
+``Config\Database``, you cannot change the ``encrypt`` value to an array even if
+you put ``database.default.encrypt.ssl_verify = true`` in your **.env**.
 
 Treating Environment Variables as Arrays
 ========================================

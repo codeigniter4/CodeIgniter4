@@ -356,10 +356,10 @@ abstract class BaseResult implements ResultInterface
     /**
      * Assigns an item into a particular column slot.
      *
-     * @param mixed $key
-     * @param mixed $value
+     * @param array|string               $key
+     * @param array|object|stdClass|null $value
      *
-     * @return mixed
+     * @return void
      */
     public function setRow($key, $value = null)
     {
@@ -507,7 +507,7 @@ abstract class BaseResult implements ResultInterface
      * internally before fetching results to make sure the result set
      * starts at zero.
      *
-     * @return mixed
+     * @return bool
      */
     abstract public function dataSeek(int $n = 0);
 
@@ -516,7 +516,7 @@ abstract class BaseResult implements ResultInterface
      *
      * Overridden by driver classes.
      *
-     * @return mixed
+     * @return array|false|null
      */
     abstract protected function fetchAssoc();
 

@@ -18,6 +18,13 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+Redirect Status Code
+====================
+
+- Due to a bug fix, the status codes of redirects may be changed. See
+  :ref:`ChangeLog v4.3.4 <v434-redirect-status-code>` and if the code is not
+  what you want, :ref:`specify status codes <response-redirect-status-code>`.
+
 Breaking Enhancements
 *********************
 

@@ -80,7 +80,7 @@ class Result extends BaseResult
      *
      * Overridden by driver classes.
      *
-     * @return mixed
+     * @return array|false
      */
     protected function fetchAssoc()
     {
