@@ -81,7 +81,8 @@ When you want to pass a URI path (relative to baseURL), use ``redirect()->to()``
 .. literalinclude:: ./response/028.php
     :lines: 2-
 
-.. note:: If there is a fragment in your URL that you want to remove, you can use the refresh parameter in the method.
+.. note:: If there is a fragment in your URL that you want to remove, you can
+    use the refresh parameter in the method.
     Like ``return redirect()->to('admin/home', null, 'refresh');``.
 
 Redirect to a Defined Route
