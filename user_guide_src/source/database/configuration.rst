@@ -104,6 +104,9 @@ default group's configuration settings. The values should be name following this
     database.default.password = '';
     database.default.database = 'ci4';
 
+.. important:: You cannot add a new property by setting environment variables,
+    nor change a scalar value to an array. See :ref:`env-var-replacements-for-data`.
+
 **********************
 Explanation of Values:
 **********************
