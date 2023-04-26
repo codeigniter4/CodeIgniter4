@@ -915,6 +915,11 @@ no redirection will occur.</p>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">to</span><span class="p">(</span><span class="s1">&#39;admin/home&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If there is a fragment in your URL that you want to remove, you can use the refresh parameter in this function.
+Like <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">redirect()-&gt;to('to',</span> <span class="pre">null,</span> <span class="pre">'refresh');</span></code>.</p>
+</div>
 <p><strong>Redirect to a Defined Route</strong></p>
 <p>When you want to pass a <a class="reference internal" href="../incoming/routing.html#using-named-routes"><span class="std std-ref">route name</span></a> or Controller::method
 for <a class="reference internal" href="../incoming/routing.html#reverse-routing"><span class="std std-ref">reverse routing</span></a>, use <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;route()</span></code>:</p>
@@ -1290,7 +1295,7 @@ instance every time.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 20, 2023.
+      <span class="lastupdated">Last updated on Apr 26, 2023.
       </span></p>
   </div>
 
