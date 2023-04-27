@@ -129,7 +129,7 @@ You can specify a custom view name by setting the ``view`` property in the class
 
     use CodeIgniter\View\Cells\Cell;
 
-    class AlertMessage extends Cell
+    class AlertMessageCell extends Cell
     {
         public $type;
         public $message;
@@ -147,7 +147,7 @@ If you need more control over the rendering of the HTML, you can implement a ``r
 
     use CodeIgniter\View\Cells\Cell;
 
-    class AlertMessage extends Cell
+    class AlertMessageCell extends Cell
     {
         public $type;
         public $message;
@@ -168,7 +168,7 @@ If you need to perform additional logic for one or more properties you can use c
 
     use CodeIgniter\View\Cells\Cell;
 
-    class AlertMessage extends Cell
+    class AlertMessageCell extends Cell
     {
         protected $type;
         protected $message;
