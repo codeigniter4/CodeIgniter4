@@ -302,15 +302,19 @@
 <section id="calling-a-view-cell">
 <span id="app-cells"></span><h2><a class="toc-backref" href="#id3">Calling a View Cell</a><a class="headerlink" href="#calling-a-view-cell" title="Permalink to this headline"></a></h2>
 <p>No matter which type of View Cell you are using, you can call it from any view by using the <code class="docutils literal notranslate"><span class="pre">view_cell()</span></code> helper method. The first parameter is the name of the class and method to call, and the second parameter is an array of parameters to pass to the method. The method must return a string, which will be inserted into the view where the <code class="docutils literal notranslate"><span class="pre">view_cell()</span></code> method was called.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;App\Cells\MyClass::myMethod&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;param1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;param2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value2&#39;</span><span class="p">]);</span> <span class="cp">?&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;App\Cells\MyClass::myMethod&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;param1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;param2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value2&#39;</span><span class="p">])</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>If you do not include the full namespace for the class, it will assume in can be found in the <code class="docutils literal notranslate"><span class="pre">App\Cells</span></code> namespace. So, the above example would attempt to find the <code class="docutils literal notranslate"><span class="pre">MyClass</span></code> class in <code class="docutils literal notranslate"><span class="pre">app/Cells/MyClass.php</span></code>. If it is not found there, all namespaces will be scanned until it is found, searching within a <code class="docutils literal notranslate"><span class="pre">Cells</span></code> subdirectory of each namespace.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;MyClass::myMethod&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;param1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;param2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value2&#39;</span><span class="p">]);</span> <span class="cp">?&gt;</span>
+<p>If you do not include the full namespace for the class, it will assume in can be found in the <code class="docutils literal notranslate"><span class="pre">App\Cells</span></code> namespace. So, the following example would attempt to find the <code class="docutils literal notranslate"><span class="pre">MyClass</span></code> class in <code class="docutils literal notranslate"><span class="pre">app/Cells/MyClass.php</span></code>. If it is not found there, all namespaces will be scanned until it is found, searching within a <code class="docutils literal notranslate"><span class="pre">Cells</span></code> subdirectory of each namespace.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;MyClass::myMethod&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;param1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;param2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value2&#39;</span><span class="p">])</span> <span class="cp">?&gt;</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Namespace omission is available since v4.3.0 and later.</p>
 </div>
 <p>You can also pass the parameters along as a key/value string:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;MyClass::myMethod&#39;</span><span class="p">,</span> <span class="s1">&#39;param1=value1, param2=value2&#39;</span><span class="p">);</span> <span class="cp">?&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;MyClass::myMethod&#39;</span><span class="p">,</span> <span class="s1">&#39;param1=value1, param2=value2&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </section>
@@ -321,7 +325,7 @@
 
 <span class="k">class</span> <span class="nc">AlertMessage</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">show</span><span class="p">(</span><span class="nv">$params</span><span class="p">)</span><span class="o">:</span> <span class="nx">string</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">show</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span><span class="o">:</span> <span class="nx">string</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="s2">&quot;&lt;div class=&quot;</span><span class="nx">alert</span> <span class="nx">alert</span><span class="o">-</span><span class="p">{</span><span class="nv">$params</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]}</span><span class="s2">&quot;&gt;</span><span class="si">{</span><span class="nv">$params</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/div&gt;&quot;</span><span class="p">;</span>
     <span class="p">}</span>
@@ -329,13 +333,15 @@
 </pre></div>
 </div>
 <p>You would call it from within a view like:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;AlertMessage::show&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;success&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The user has been updated.&#39;</span><span class="p">]);</span> <span class="cp">?&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;AlertMessage::show&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;success&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The user has been updated.&#39;</span><span class="p">])</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <p>Additionally, you can use parameter names that match the parameter variables in the method for better readability.
 When you use it this way, all of the parameters must always be specified in the view cell call:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;\App\Libraries\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;category=codeigniter, limit=5&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In a View.</span>
+<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;category=codeigniter, limit=5&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
+// In a Cell.
 public function recentPosts(string $category, int $limit)
 {
     $posts = $this-&gt;blogModel-&gt;where(&#39;category&#39;, $category)
@@ -350,6 +356,9 @@ public function recentPosts(string $category, int $limit)
 </section>
 <section id="controlled-cells">
 <span id="id1"></span><h2><a class="toc-backref" href="#id5">Controlled Cells</a><a class="headerlink" href="#controlled-cells" title="Permalink to this headline"></a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
 <p>Controlled Cells have two primary goals: to make it as fast as possible to build the cell, and provide additional logic and flexibility to your views, if they need it. The class must extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\View\Cells\Cell</span></code>. They should have a view file in the same folder. By convention the class name should be PascalCase and the view should be the snake_cased version of the class name. So, for example, if you have a <code class="docutils literal notranslate"><span class="pre">MyCell</span></code> class, the view file should be <code class="docutils literal notranslate"><span class="pre">my_cell.php</span></code>.</p>
 <section id="creating-a-controlled-cell">
 <h3><a class="toc-backref" href="#id6">Creating a Controlled Cell</a><a class="headerlink" href="#creating-a-controlled-cell" title="Permalink to this headline"></a></h3>
@@ -366,19 +375,19 @@ public function recentPosts(string $category, int $limit)
 <span class="p">}</span>
 
 <span class="c1">// app/Cells/alert_message_cell.php</span>
-<span class="o">&lt;</span><span class="nx">div</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;alert alert-&lt;?= </span><span class="si">$type</span><span class="s2">; ?&gt;&quot;</span><span class="o">&gt;</span>
-    <span class="o">&lt;?=</span> <span class="nv">$message</span><span class="p">;</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;</span><span class="nx">div</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;alert alert-&lt;?= esc(</span><span class="si">$type</span><span class="s2">, &#39;attr&#39;) ?&gt;&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$message</span><span class="p">)</span> <span class="cp">?&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+// Called in main View:
+<span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;AlertMessageCell&#39;</span><span class="p">,</span> <span class="s1">&#39;type=warning, message=Failed.&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </section>
 <section id="generating-cell-via-command">
 <span id="id2"></span><h3><a class="toc-backref" href="#id7">Generating Cell via Command</a><a class="headerlink" href="#generating-cell-via-command" title="Permalink to this headline"></a></h3>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 4.3.0.</span></p>
-</div>
 <p>You can also create a controlled cell via a built in command from the CLI. The command is <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">make:cell</span></code>. It takes one argument, the name of the cell to create. The name should be in PascalCase, and the class will be created in the <code class="docutils literal notranslate"><span class="pre">app/Cells</span></code> directory. The view file will also be created in the <code class="docutils literal notranslate"><span class="pre">app/Cells</span></code> directory.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">cell</span> <span class="nx">AlertMessage</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">cell</span> <span class="nx">AlertMessageCell</span>
 </pre></div>
 </div>
 </section>
@@ -389,7 +398,7 @@ public function recentPosts(string $category, int $limit)
 
 <span class="k">use</span> <span class="nx">CodeIgniter\View\Cells\Cell</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">AlertMessage</span> <span class="k">extends</span> <span class="nx">Cell</span>
+<span class="k">class</span> <span class="nc">AlertMessageCell</span> <span class="k">extends</span> <span class="nx">Cell</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$type</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$message</span><span class="p">;</span>
@@ -406,7 +415,7 @@ public function recentPosts(string $category, int $limit)
 
 <span class="k">use</span> <span class="nx">CodeIgniter\View\Cells\Cell</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">AlertMessage</span> <span class="k">extends</span> <span class="nx">Cell</span>
+<span class="k">class</span> <span class="nc">AlertMessageCell</span> <span class="k">extends</span> <span class="nx">Cell</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$type</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$message</span><span class="p">;</span>
@@ -426,7 +435,7 @@ public function recentPosts(string $category, int $limit)
 
 <span class="k">use</span> <span class="nx">CodeIgniter\View\Cells\Cell</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">AlertMessage</span> <span class="k">extends</span> <span class="nx">Cell</span>
+<span class="k">class</span> <span class="nc">AlertMessageCell</span> <span class="k">extends</span> <span class="nx">Cell</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$type</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$message</span><span class="p">;</span>
@@ -452,7 +461,7 @@ public function recentPosts(string $category, int $limit)
 
 <span class="k">use</span> <span class="nx">CodeIgniter\View\Cells\Cell</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">RecentPosts</span> <span class="k">extends</span> <span class="nx">Cell</span>
+<span class="k">class</span> <span class="nc">RecentPostsCell</span> <span class="k">extends</span> <span class="nx">Cell</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$posts</span><span class="p">;</span>
 
@@ -462,11 +471,11 @@ public function recentPosts(string $category, int $limit)
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="c1">// app/Cells/recent_posts.php</span>
+<span class="c1">// app/Cells/recent_posts_cell.php</span>
 <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
     <span class="o">&lt;?</span><span class="nx">php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$posts</span> <span class="k">as</span> <span class="nv">$post</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
         <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">linkPost</span><span class="p">(</span><span class="nv">$post</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-    <span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span>
+    <span class="cp">&lt;?php</span> <span class="k">endforeach</span> <span class="cp">?&gt;</span>
 <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
 </pre></div>
 </div>
@@ -478,7 +487,7 @@ public function recentPosts(string $category, int $limit)
 
 <span class="k">use</span> <span class="nx">CodeIgniter\View\Cells\Cell</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">RecentPosts</span> <span class="k">extends</span> <span class="nx">Cell</span>
+<span class="k">class</span> <span class="nc">RecentPostsCell</span> <span class="k">extends</span> <span class="nx">Cell</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$posts</span><span class="p">;</span>
 
@@ -490,12 +499,12 @@ public function recentPosts(string $category, int $limit)
 </pre></div>
 </div>
 <p>You can pass additional parameters to the <code class="docutils literal notranslate"><span class="pre">mount()</span></code> method by passing them as an array to the <code class="docutils literal notranslate"><span class="pre">view_cell()</span></code> helper function. Any of the parameters sent that match a parameter name of the <code class="docutils literal notranslate"><span class="pre">mount</span></code> method will be passed in.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// app/Cells/RecentPosts.php</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// app/Cells/RecentPostsCell.php</span>
 <span class="k">namespace</span> <span class="nx">App\Cells</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\View\Cells\Cell</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">RecentPosts</span> <span class="k">extends</span> <span class="nx">Cell</span>
+<span class="k">class</span> <span class="nc">RecentPostsCell</span> <span class="k">extends</span> <span class="nx">Cell</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$posts</span><span class="p">;</span>
 
@@ -510,7 +519,7 @@ public function recentPosts(string $category, int $limit)
 <span class="p">}</span>
 
 <span class="c1">// Called in main View:</span>
-<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;RecentPosts::show&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;categoryId&#39;</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">]);</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;RecentPostsCell&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;categoryId&#39;</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">])</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </section>
@@ -520,13 +529,13 @@ public function recentPosts(string $category, int $limit)
 <p>You can cache the results of the view cell call by passing the number of seconds to cache the data for as the
 third parameter. This will use the currently configured cache engine.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Cache the view for 5 minutes</span>
-<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;\App\Libraries\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;limit=5&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;App\Cells\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;limit=5&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <p>You can provide a custom name to use instead of the auto-generated one if you like, by passing the new name
 as the fourth parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Cache the view for 5 minutes</span>
-<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;\App\Libraries\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;limit=5&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="s1">&#39;newcacheid&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;App\Cells\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;limit=5&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="s1">&#39;newcacheid&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </section>
@@ -544,7 +553,7 @@ as the fourth parameter:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 26, 2023.
+      <span class="lastupdated">Last updated on Apr 27, 2023.
       </span></p>
   </div>
 
