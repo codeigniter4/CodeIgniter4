@@ -58,8 +58,10 @@ You would call it from within a view like:
 Additionally, you can use parameter names that match the parameter variables in the method for better readability.
 When you use it this way, all of the parameters must always be specified in the view cell call::
 
-    <?= view_cell('\App\Libraries\Blog::recentPosts', 'category=codeigniter, limit=5') ?>
+    // In a View.
+    <?= view_cell('Blog::recentPosts', 'category=codeigniter, limit=5') ?>
 
+    // In a Cell.
     public function recentPosts(string $category, int $limit)
     {
         $posts = $this->blogModel->where('category', $category)
