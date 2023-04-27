@@ -267,10 +267,10 @@ third parameter. This will use the currently configured cache engine.
 ::
 
     // Cache the view for 5 minutes
-    <?= view_cell('\App\Libraries\Blog::recentPosts', 'limit=5', 300) ?>
+    <?= view_cell('App\Cells\Blog::recentPosts', 'limit=5', 300) ?>
 
 You can provide a custom name to use instead of the auto-generated one if you like, by passing the new name
 as the fourth parameter::
 
     // Cache the view for 5 minutes
-    <?= view_cell('\App\Libraries\Blog::recentPosts', 'limit=5', 300, 'newcacheid') ?>
+    <?= view_cell('App\Cells\Blog::recentPosts', 'limit=5', 300, 'newcacheid') ?>
