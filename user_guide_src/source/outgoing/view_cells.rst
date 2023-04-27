@@ -42,7 +42,7 @@ Simple Cells are classes that return a string from the chosen method. An example
 
     class AlertMessage
     {
-        public function show($params): string
+        public function show(array $params): string
         {
             return "<div class="alert alert-{$params['type']}">{$params['message']}</div>";
         }
