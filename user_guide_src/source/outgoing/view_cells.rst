@@ -164,6 +164,10 @@ Computed Properties
 If you need to perform additional logic for one or more properties you can use computed properties. These require setting the property to either ``protected`` or ``private`` and implementing a public method whose name consists of the property name surrounded by ``get`` and ``Property``.
 ::
 
+    // In a View. Initialize the protected properties.
+    view_cell('AlertMessageCell', ['type' => 'note', 'message' => 'test']);
+
+    // app/Cells/AlertMessageCell.php
     namespace App\Cells;
 
     use CodeIgniter\View\Cells\Cell;
@@ -172,6 +176,17 @@ If you need to perform additional logic for one or more properties you can use c
     {
         protected $type;
         protected $message;
+        private $computed;
+
+        public function mount()
+        {
+            $this->computed = sprintf('%s - %s', $this->type, $this->message);
+        }
+
+        public function getComputedProperty(): string
+        {
+            return $this->computed;
+        }
 
         public function getTypeProperty(): string
         {
@@ -183,6 +198,16 @@ If you need to perform additional logic for one or more properties you can use c
             return $this->message;
         }
     }
+
+    // app/Cells/alert_message_cell.php
+    <div>
+        <p>type - <?= esc($type) ?></p>
+        <p>message - <?= esc($message) ?></p>
+        <p>computed: <?= esc($computed) ?></p>
+    </div>
+
+.. important:: You can't set properties that are declared as private during cell
+    initialization.
 
 Presentation Methods
 ====================
