@@ -26,6 +26,7 @@ class Generators extends BaseConfig
      * @var array<string, string>
      */
     public array $views = [
+        'make:cell'         => 'CodeIgniter\Commands\Generators\Views\cell.tpl.php',
         'make:command'      => 'CodeIgniter\Commands\Generators\Views\command.tpl.php',
         'make:config'       => 'CodeIgniter\Commands\Generators\Views\config.tpl.php',
         'make:controller'   => 'CodeIgniter\Commands\Generators\Views\controller.tpl.php',
