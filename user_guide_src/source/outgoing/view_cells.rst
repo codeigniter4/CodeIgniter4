@@ -74,6 +74,8 @@ When you use it this way, all of the parameters must always be specified in the 
 Controlled Cells
 ****************
 
+.. versionadded:: 4.3.0
+
 Controlled Cells have two primary goals: to make it as fast as possible to build the cell, and provide additional logic and flexibility to your views, if they need it. The class must extend ``CodeIgniter\View\Cells\Cell``. They should have a view file in the same folder. By convention the class name should be PascalCase and the view should be the snake_cased version of the class name. So, for example, if you have a ``MyCell`` class, the view file should be ``my_cell.php``.
 
 Creating a Controlled Cell
@@ -102,8 +104,6 @@ At the most basic level, all you need to implement within the class are public p
 
 Generating Cell via Command
 ===========================
-
-.. versionadded:: 4.3.0
 
 You can also create a controlled cell via a built in command from the CLI. The command is ``php spark make:cell``. It takes one argument, the name of the cell to create. The name should be in PascalCase, and the class will be created in the ``app/Cells`` directory. The view file will also be created in the ``app/Cells`` directory.
 
