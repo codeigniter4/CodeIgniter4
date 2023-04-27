@@ -375,7 +375,7 @@ class Filters
     /**
      * Returns the arguments for a specified key, or all.
      *
-     * @return array|bool|float|int|object|string|null
+     * @return array<string, string>|string
      */
     public function getArguments(?string $key = null)
     {
