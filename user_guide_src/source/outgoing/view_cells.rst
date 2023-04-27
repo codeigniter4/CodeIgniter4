@@ -100,8 +100,8 @@ At the most basic level, all you need to implement within the class are public p
     }
 
     // app/Cells/alert_message_cell.php
-    <div class="alert alert-<?= $type; ?>">
-        <?= $message; ?>
+    <div class="alert alert-<?= esc($type, 'attr') ?>">
+        <?= esc($message) ?>
     </div>
 
 .. _generating-cell-via-command:
