@@ -747,7 +747,7 @@ will be <code class="docutils literal notranslate"><span class="pre">NULL</span>
 <section id="modifying-a-field-in-a-table">
 <h3><a class="toc-backref" href="#id20">Modifying a Field in a Table</a><a class="headerlink" href="#modifying-a-field-in-a-table" title="Permalink to this headline"></a></h3>
 <section id="forge-modifycolumn">
-<h4>$forge-&gt;modifyColumn()<a class="headerlink" href="#forge-modifycolumn" title="Permalink to this headline"></a></h4>
+<span id="db-forge-modifycolumn"></span><h4>$forge-&gt;modifyColumn()<a class="headerlink" href="#forge-modifycolumn" title="Permalink to this headline"></a></h4>
 <p>The usage of this method is identical to <code class="docutils literal notranslate"><span class="pre">addColumn()</span></code>, except it
 alters an existing column rather than adding a new one. In order to
 change the name, you can add a “name” key into the field defining array.</p>
@@ -757,11 +757,29 @@ change the name, you can add a “name” key into the field defining array.</p>
     <span class="s1">&#39;old_name&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;new_name&#39;</span><span class="p">,</span>
         <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">];</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">modifyColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="nv">$fields</span><span class="p">);</span>
-<span class="c1">// gives ALTER TABLE `table_name` CHANGE `old_name` `new_name` TEXT</span>
+<span class="c1">// gives ALTER TABLE `table_name` CHANGE `old_name` `new_name` TEXT NOT NULL</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">modifyColumn()</span></code> may unexpectedly change <code class="docutils literal notranslate"><span class="pre">NULL</span></code>/<code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">NULL</span></code>.
+So it is recommended to always specify the value for <code class="docutils literal notranslate"><span class="pre">null</span></code> key. Unlike when creating
+a table, if <code class="docutils literal notranslate"><span class="pre">null</span></code> is not specified, the column will be <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, not
+<code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">NULL</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Due to a bug, prior v4.3.3, SQLite3 may not set <code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">NULL</span></code> even if you
+specify <code class="docutils literal notranslate"><span class="pre">'null'</span> <span class="pre">=&gt;</span> <span class="pre">false</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Due to a bug, prior v4.3.3, Postgres and SQLSRV set <code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">NULL</span></code> even
+if you specify <code class="docutils literal notranslate"><span class="pre">'null'</span> <span class="pre">=&gt;</span> <span class="pre">false</span></code>.</p>
 </div>
 </section>
 </section>
