@@ -21,7 +21,7 @@ class Migration_some_migration extends \CodeIgniter\Database\Migration
                 'constraint' => 255,
             ],
         ]);
-        $this->forge->createTable('foo', true);
+        $this->forge->createTable('foo');
 
         $this->db->table('foo')->insert([
             'key' => 'foobar',

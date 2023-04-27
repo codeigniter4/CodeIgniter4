@@ -203,10 +203,12 @@ class Forge extends BaseForge
                     . " DEFAULT {$data['default']} FOR " . $this->db->escapeIdentifiers($data['name']);
             }
 
-            if (isset($data['null'])) {
-                $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                    . ($data['null'] === true ? ' DROP' : '') . " {$data['type']}{$data['length']} NOT NULL";
+            $nullable = true; // Nullable by default.
+            if (isset($data['null']) && ($data['null'] === false || $data['null'] === ' NOT ' . $this->null)) {
+                $nullable = false;
             }
+            $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
+                . " {$data['type']}{$data['length']} " . ($nullable === true ? '' : 'NOT') . ' NULL';
 
             if (! empty($data['comment'])) {
                 $sqls[] = 'EXEC sys.sp_addextendedproperty '

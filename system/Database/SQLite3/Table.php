@@ -183,14 +183,14 @@ class Table
      *
      * @return Table
      */
-    public function modifyColumn(array $field)
+    public function modifyColumn(array $fields)
     {
-        $field = $field[0];
+        foreach ($fields as $field) {
+            $oldName = $field['name'];
+            unset($field['name']);
 
-        $oldName = $field['name'];
-        unset($field['name']);
-
-        $this->fields[$oldName] = $field;
+            $this->fields[$oldName] = $field;
+        }
 
         return $this;
     }
