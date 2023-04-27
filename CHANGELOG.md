@@ -1,5 +1,23 @@
 # Changelog
 
+## [v4.3.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.4) (2023-04-27)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.3...v4.3.4)
+
+### Breaking Changes
+
+* fix: redirect status code by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7445
+
+### Fixed Bugs
+
+* fix: view cell cannot locate the auto-generated view file by @sammyskills in https://github.com/codeigniter4/CodeIgniter4/pull/7392
+* fix: CURLRequest - clear response headers between requests by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/7398
+* fix: [Auto Routing Improved] spark routes shows invalid routes by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7419
+* fix: remove $insertID in make:model template by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7443
+
+### Refactoring
+
+* refactor: Security::getPostedToken() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7377
+
 ## [v4.3.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.3) (2023-03-26)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.2...v4.3.3)
 
