@@ -14,6 +14,7 @@
 * fix: CURLRequest - clear response headers between requests by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/7398
 * fix: [Auto Routing Improved] spark routes shows invalid routes by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7419
 * fix: remove $insertID in make:model template by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7443
+* fix: add missing 'make:cell' in app/Config/Generators.php by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7458
 
 ### Refactoring
 
