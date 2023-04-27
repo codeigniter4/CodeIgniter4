@@ -431,7 +431,11 @@ public function recentPosts(string $category, int $limit)
 <section id="computed-properties">
 <h3><a class="toc-backref" href="#id10">Computed Properties</a><a class="headerlink" href="#computed-properties" title="Permalink to this headline"></a></h3>
 <p>If you need to perform additional logic for one or more properties you can use computed properties. These require setting the property to either <code class="docutils literal notranslate"><span class="pre">protected</span></code> or <code class="docutils literal notranslate"><span class="pre">private</span></code> and implementing a public method whose name consists of the property name surrounded by <code class="docutils literal notranslate"><span class="pre">get</span></code> and <code class="docutils literal notranslate"><span class="pre">Property</span></code>.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Cells</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In a View. Initialize the protected properties.</span>
+<span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;AlertMessageCell&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;note&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;test&#39;</span><span class="p">]);</span>
+
+<span class="c1">// app/Cells/AlertMessageCell.php</span>
+<span class="k">namespace</span> <span class="nx">App\Cells</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\View\Cells\Cell</span><span class="p">;</span>
 
@@ -439,6 +443,17 @@ public function recentPosts(string $category, int $limit)
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$type</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$message</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$computed</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">mount</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">computed</span> <span class="o">=</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s1">&#39;%s - %s&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">type</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">message</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getComputedProperty</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">computed</span><span class="p">;</span>
+    <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">getTypeProperty</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span>
     <span class="p">{</span>
@@ -450,7 +465,19 @@ public function recentPosts(string $category, int $limit)
         <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">message</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
+
+<span class="c1">// app/Cells/alert_message_cell.php</span>
+<span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">type</span> <span class="o">-</span> <span class="o">&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$type</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>message - <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$message</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>computed: <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$computed</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You can’t set properties that are declared as private during cell
+initialization.</p>
 </div>
 </section>
 <section id="presentation-methods">
