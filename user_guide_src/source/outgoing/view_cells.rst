@@ -26,6 +26,8 @@ If you do not include the full namespace for the class, it will assume in can be
 
     <?= view_cell('MyClass::myMethod', ['param1' => 'value1', 'param2' => 'value2']); ?>
 
+.. note:: Namespace omission is available since v4.3.0 and later.
+
 You can also pass the parameters along as a key/value string:
 ::
 
