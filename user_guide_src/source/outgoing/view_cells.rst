@@ -21,7 +21,7 @@ No matter which type of View Cell you are using, you can call it from any view b
 
     <?= view_cell('App\Cells\MyClass::myMethod', ['param1' => 'value1', 'param2' => 'value2']); ?>
 
-If you do not include the full namespace for the class, it will assume in can be found in the ``App\Cells`` namespace. So, the above example would attempt to find the ``MyClass`` class in ``app/Cells/MyClass.php``. If it is not found there, all namespaces will be scanned until it is found, searching within a ``Cells`` subdirectory of each namespace.
+If you do not include the full namespace for the class, it will assume in can be found in the ``App\Cells`` namespace. So, the following example would attempt to find the ``MyClass`` class in ``app/Cells/MyClass.php``. If it is not found there, all namespaces will be scanned until it is found, searching within a ``Cells`` subdirectory of each namespace.
 ::
 
     <?= view_cell('MyClass::myMethod', ['param1' => 'value1', 'param2' => 'value2']); ?>
