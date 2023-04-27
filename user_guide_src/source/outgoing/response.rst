@@ -59,6 +59,80 @@ parameter. This is not case-sensitive.
 
 .. literalinclude:: response/006.php
 
+.. _response-redirect:
+
+Redirect
+========
+
+If you want to create a redirect, use the :php:func:`redirect()` function. It
+returns a ``RedirectResponse`` instance.
+
+.. important:: If you want to redirect, an instance of ``RedirectResponse`` must
+    be returned in a method of the :doc:`Controller <../incoming/controllers>` or
+    the :doc:`Controller Filter <../incoming/filters>`. Note that the ``__construct()``
+    or the ``initController()`` method cannot return any value.
+    If you forget to return ``RedirectResponse``, no redirection will occur.
+
+Redirect to a URI path
+----------------------
+
+When you want to pass a URI path (relative to baseURL), use ``redirect()->to()``:
+
+.. literalinclude:: ./response/028.php
+    :lines: 2-
+
+.. note:: If there is a fragment in your URL that you want to remove, you can
+    use the refresh parameter in the method.
+    Like ``return redirect()->to('admin/home', null, 'refresh');``.
+
+Redirect to a Defined Route
+---------------------------
+
+When you want to pass a :ref:`route name <using-named-routes>` or Controller::method
+for :ref:`reverse routing <reverse-routing>`, use ``redirect()->route()``:
+
+.. literalinclude:: ./response/029.php
+    :lines: 2-
+
+When passing an argument into the function, it is treated as a route name or
+Controller::method for reverse routing, not a relative/full URI,
+treating it the same as using ``redirect()->route()``:
+
+.. literalinclude:: ./response/030.php
+    :lines: 2-
+
+Redirect Back
+-------------
+
+When you want to redirect back, use ``redirect()->back()``:
+
+.. literalinclude:: ./response/031.php
+    :lines: 2-
+
+.. note:: ``redirect()->back()`` is not the same as browser "back" button.
+    It takes a visitor to "the last page viewed during the Session" when the Session is available.
+    If the Session hasn’t been loaded, or is otherwise unavailable, then a sanitized version of HTTP_REFERER will be used.
+
+.. _response-redirect-status-code:
+
+Redirect Status Code
+--------------------
+
+The default HTTP status code for GET requests is 302. However, when using HTTP/1.1
+or later, 303 is used for POST/PUT/DELETE requests and 307 for all other requests.
+
+You can specify the status code:
+
+.. literalinclude:: ./response/032.php
+    :lines: 2-
+
+.. note:: Due to a bug, in v4.3.3 or previous versions, the status code of the
+    actual redirect response might be changed even if a status code was specified.
+    See :ref:`ChangeLog v4.3.4 <v434-redirect-status-code>`.
+
+If you don't know HTTP status code for redirection, it is recommended to read
+`Redirections in HTTP <https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections>`_.
+
 .. _force-file-download:
 
 Force File Download
@@ -170,7 +244,7 @@ call basis, by providing an optional second parameter to the adding method call.
 Runtime Configuration
 ---------------------
 
-If your application needs to make changes at run-time, you can access the instance at ``$this->response->CSP`` in your controllers. The
+If your application needs to make changes at run-time, you can access the instance at ``$this->response->getCSP()`` in your controllers. The
 class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
 Examples are shown below, with different combinations of parameters, though all accept either a directive
 name or an array of them:
@@ -180,7 +254,7 @@ name or an array of them:
 The first parameter to each of the "add" methods is an appropriate string value,
 or an array of them.
 
-The ``reportOnly`` method allows you to specify the default reporting treatment
+The ``reportOnly()`` method allows you to specify the default reporting treatment
 for subsequent sources, unless over-ridden. For instance, you could specify
 that youtube.com was allowed, and then provide several allowed but reported sources:
 
@@ -214,7 +288,7 @@ life, and is most secure when generated on the fly. To make this simple, you can
 
 If you don't like this auto replacement functionality, you can turn it off with setting ``$autoNonce = false`` in **app/Config/ContentSecurityPolicy.php**.
 
-In this case, you can use the functions, ``csp_script_nonce()`` and ``csp_style_nonce()``::
+In this case, you can use the functions, :php:func:`csp_script_nonce()` and :php:func:`csp_style_nonce()`::
 
     // Original
     <script <?= csp_script_nonce() ?>>

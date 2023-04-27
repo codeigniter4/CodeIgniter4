@@ -30,8 +30,6 @@ use InvalidArgumentException;
  * Additional methods to make a PSR-7 Response class
  * compliant with the framework's own ResponseInterface.
  *
- * @property array $statusCodes
- *
  * @see https://github.com/php-fig/http-message/blob/master/src/ResponseInterface.php
  */
 trait ResponseTrait
@@ -496,8 +494,8 @@ trait ResponseTrait
     /**
      * Perform a redirect to a new URL, in two flavors: header or location.
      *
-     * @param string $uri  The URI to redirect to
-     * @param int    $code The type of redirection, defaults to 302
+     * @param string   $uri  The URI to redirect to
+     * @param int|null $code The type of redirection, defaults to 302
      *
      * @return $this
      *
@@ -505,20 +503,32 @@ trait ResponseTrait
      */
     public function redirect(string $uri, string $method = 'auto', ?int $code = null)
     {
-        // Assume 302 status code response; override if needed
-        if (empty($code)) {
-            $code = 302;
-        }
-
         // IIS environment likely? Use 'refresh' for better compatibility
-        if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false) {
+        if (
+            $method === 'auto'
+            && isset($_SERVER['SERVER_SOFTWARE'])
+            && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false
+        ) {
             $method = 'refresh';
+        } elseif ($method !== 'refresh' && $code === null) {
+            // override status code for HTTP/1.1 & higher
+            if (
+                isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD'])
+                && $this->getProtocolVersion() >= 1.1
+            ) {
+                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                    $code = 302;
+                } elseif (in_array($_SERVER['REQUEST_METHOD'], ['POST', 'PUT', 'DELETE'], true)) {
+                    // reference: https://en.wikipedia.org/wiki/Post/Redirect/Get
+                    $code = 303;
+                } else {
+                    $code = 307;
+                }
+            }
         }
 
-        // override status code for HTTP/1.1 & higher
-        // reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
-        if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $this->getProtocolVersion() >= 1.1 && $method !== 'refresh') {
-            $code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303 : ($code === 302 ? 307 : $code);
+        if ($code === null) {
+            $code = 302;
         }
 
         switch ($method) {

@@ -44,7 +44,7 @@ class Connection extends BaseConnection
      * FALSE or SQLSRV_CURSOR_FORWARD would increase performance,
      * but would disable num_rows() (and possibly insert_id())
      *
-     * @var mixed
+     * @var false|string
      */
     public $scrollable;
 
@@ -436,7 +436,7 @@ class Connection extends BaseConnection
     /**
      * Select a specific database table to use.
      *
-     * @return mixed
+     * @return bool
      */
     public function setDatabase(?string $databaseName = null)
     {
@@ -485,7 +485,7 @@ class Connection extends BaseConnection
     /**
      * Returns the last error encountered by this connection.
      *
-     * @return mixed
+     * @return array<string, int|string>
      *
      * @deprecated Use `error()` instead.
      */
@@ -546,7 +546,7 @@ class Connection extends BaseConnection
      *
      * Overrides BaseConnection::isWriteType, adding additional read query types.
      *
-     * @param mixed $sql
+     * @param string $sql
      */
     public function isWriteType($sql): bool
     {

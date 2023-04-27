@@ -58,7 +58,7 @@ Example:
 $db->getPlatform()
 ==================
 
-Outputs the database platform you are running (MySQL, MS SQL, Postgres,
+Outputs the database platform (DBDriver) you are running (MySQLi, SQLSRV, Postgre,
 etc...):
 
 .. literalinclude:: helpers/003.php

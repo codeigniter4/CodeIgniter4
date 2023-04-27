@@ -18,7 +18,7 @@ CodeIgniter's robust Email Class supports the following features:
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 ***********************
 Using the Email Library
@@ -44,6 +44,9 @@ messages are sent. You can either set them manually as described here,
 or automatically via preferences stored in your config file, described
 below:
 
+Setting Email Preferences by Passing an Array
+---------------------------------------------
+
 Preferences are set by passing an array of preference values to the
 email initialize method. Here is an example of how you might set some
 preferences:
@@ -63,15 +66,8 @@ Email properties. Then save the file and it will be used automatically.
 You will NOT need to use the ``$email->initialize()`` method if
 you set your preferences in the config file.
 
-Reviewing Preferences
----------------------
-
-The settings used for the last successful send are available from the
-instance property ``$archive``. This is helpful for testing and debugging
-to determine that actual values at the time of the ``send()`` call.
-
 SSL versus TLS for SMTP Protocol
-================================
+--------------------------------
 
 To protect the username, password and email content while communicating with the SMTP server,
 encryption on the channel should be used. Two different standards are widely deployed and
@@ -96,6 +92,13 @@ If your configuration requires you to connect to port 587, you should most likel
 ``SMTPCrypto`` to ``tls`` as this will implement the ``STARTTLS`` command while communicating
 with the SMTP server to switch from clear-text to an encrypted channel. The initial communication
 will be made in clear-text and the channel will be upgraded to TLS with the ``STARTTLS`` command.
+
+Reviewing Preferences
+---------------------
+
+The settings used for the last successful send are available from the
+instance property ``$archive``. This is helpful for testing and debugging
+to determine that actual values at the time of the ``send()`` call.
 
 Email Preferences
 =================

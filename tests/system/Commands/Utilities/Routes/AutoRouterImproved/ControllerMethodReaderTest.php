@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved;
 
+use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\Home;
 use CodeIgniter\Test\CIUnitTestCase;
 use Tests\Support\Controllers\Newautorouting;
 use Tests\Support\Controllers\Remap;
@@ -22,13 +23,13 @@ use Tests\Support\Controllers\Remap;
  */
 final class ControllerMethodReaderTest extends CIUnitTestCase
 {
-    private function createControllerMethodReader(): ControllerMethodReader
-    {
+    private function createControllerMethodReader(
+        string $namespace = 'Tests\Support\Controllers'
+    ): ControllerMethodReader {
         $methods = [
             'get',
             'post',
         ];
-        $namespace = 'Tests\Support\Controllers';
 
         return new ControllerMethodReader($namespace, $methods);
     }
@@ -57,6 +58,41 @@ final class ControllerMethodReaderTest extends CIUnitTestCase
                     'b' => true,
                     'c' => false,
                 ],
+            ],
+        ];
+
+        $this->assertSame($expected, $routes);
+    }
+
+    public function testReadDefaultController()
+    {
+        $reader = $this->createControllerMethodReader(
+            'CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers'
+        );
+
+        $routes = $reader->read(Home::class);
+
+        $expected = [
+            0 => [
+                'method'       => 'get',
+                'route'        => '/',
+                'route_params' => '',
+                'handler'      => '\CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\Home::getIndex',
+                'params'       => [],
+            ],
+            [
+                'method'       => 'post',
+                'route'        => '/',
+                'route_params' => '',
+                'handler'      => '\CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\Home::postIndex',
+                'params'       => [],
+            ],
+            [
+                'method'       => 'get',
+                'route'        => 'x home/foo',
+                'route_params' => '',
+                'handler'      => '\CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\Home::getFoo',
+                'params'       => [],
             ],
         ];
 

@@ -320,45 +320,8 @@ Miscellaneous Functions
     :param  string  $route: The route name or Controller::method to redirect the user to.
     :rtype: RedirectResponse
 
-    .. important:: When you use this function, an instance of ``RedirectResponse`` must be returned
-        in the method of the :doc:`Controller <../incoming/controllers>` or
-        the :doc:`Controller Filter <../incoming/filters>`. If you forget to return it,
-        no redirection will occur.
-
     Returns a RedirectResponse instance allowing you to easily create redirects.
-
-    **Redirect to a URI path**
-
-    When you want to pass a URI path (relative to baseURL), use ``redirect()->to()``:
-
-    .. literalinclude:: common_functions/005.php
-        :lines: 2-
-
-    **Redirect to a Defined Route**
-
-    When you want to pass a :ref:`route name <using-named-routes>` or Controller::method
-    for :ref:`reverse routing <reverse-routing>`, use ``redirect()->route()``:
-
-    .. literalinclude:: common_functions/013.php
-        :lines: 2-
-
-    When passing an argument into the function, it is treated as a route name or
-    Controller::method for reverse routing, not a relative/full URI,
-    treating it the same as using ``redirect()->route()``:
-
-    .. literalinclude:: common_functions/006.php
-        :lines: 2-
-
-    **Redirect Back**
-
-    When you want to redirect back, use ``redirect()->back()``:
-
-    .. literalinclude:: common_functions/014.php
-        :lines: 2-
-
-    .. note:: ``redirect()->back()`` is not the same as browser "back" button.
-        It takes a visitor to "the last page viewed during the Session" when the Session is available.
-        If the Session hasn’t been loaded, or is otherwise unavailable, then a sanitized version of HTTP_REFERER will be used.
+    See :ref:`response-redirect` for details.
 
 .. php:function:: remove_invisible_characters($str[, $urlEncoded = true])
 
@@ -396,12 +359,12 @@ Miscellaneous Functions
 
     :param   string       $method: Route name or Controller::method
     :param   int|string   ...$params: One or more parameters to be passed to the route. The last parameter allows you to set the locale.
-    :returns: a route (URI path)
+    :returns: a route path (URI path relative to baseURL)
     :rtype: string
 
     .. note:: This function requires the controller/method to have a route defined in **app/Config/routes.php**.
 
-    .. important:: ``route_to()`` returns a *route*, not a full URI path for your site.
+    .. important:: ``route_to()`` returns a *route* path, not a full URI path for your site.
         If your **baseURL** contains sub folders, the return value is not the same
         as the URI to link. In that case, just use :php:func:`url_to()` instead.
         See also :ref:`urls-url-structure`.

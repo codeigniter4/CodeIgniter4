@@ -31,7 +31,7 @@ class PostgreHandler extends DatabaseHandler
     /**
      * Decodes column data
      *
-     * @param mixed $data
+     * @param string $data
      *
      * @return false|string
      */

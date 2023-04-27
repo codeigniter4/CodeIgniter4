@@ -14,6 +14,7 @@ namespace CodeIgniter\View;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
 use Tests\Support\View\Cells\AdditionCell;
+use Tests\Support\View\Cells\AwesomeCell;
 use Tests\Support\View\Cells\ColorsCell;
 use Tests\Support\View\Cells\GreetingCell;
 use Tests\Support\View\Cells\ListerCell;
@@ -34,6 +35,13 @@ final class ControlledCellTest extends CIUnitTestCase
         $result = view_cell(GreetingCell::class);
 
         $this->assertStringContainsString('Hello World', $result);
+    }
+
+    public function testCellRendersViewWithActualClassName()
+    {
+        $result = view_cell(AwesomeCell::class);
+
+        $this->assertStringContainsString('Found!', $result);
     }
 
     public function testCellWithNamedView()

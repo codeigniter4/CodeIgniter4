@@ -285,6 +285,8 @@ Used to remove multiple columns from a table.
 Modifying a Field in a Table
 ============================
 
+.. _db-forge-modifyColumn:
+
 $forge->modifyColumn()
 ----------------------
 
@@ -293,6 +295,17 @@ alters an existing column rather than adding a new one. In order to
 change the name, you can add a "name" key into the field defining array.
 
 .. literalinclude:: forge/026.php
+
+.. note:: The ``modifyColumn()`` may unexpectedly change ``NULL``/``NOT NULL``.
+    So it is recommended to always specify the value for ``null`` key. Unlike when creating
+    a table, if ``null`` is not specified, the column will be ``NULL``, not
+    ``NOT NULL``.
+
+.. note:: Due to a bug, prior v4.3.3, SQLite3 may not set ``NOT NULL`` even if you
+    specify ``'null' => false``.
+
+.. note:: Due to a bug, prior v4.3.3, Postgres and SQLSRV set ``NOT NULL`` even
+    if you specify ``'null' => false``.
 
 .. _db-forge-adding-keys-to-a-table:
 

@@ -73,8 +73,13 @@ class Cell
 
         // If no view is specified, we'll try to guess it based on the class name.
         if (empty($view)) {
-            $view = decamelize((new ReflectionClass($this))->getShortName());
-            $view = str_replace('_cell', '', $view);
+            // According to the docs, the name of the view file should be the
+            // snake_cased version of the cell's class name, but for backward
+            // compatibility, the name also accepts '_cell' being omitted.
+            $ref      = new ReflectionClass($this);
+            $view     = decamelize($ref->getShortName());
+            $viewPath = dirname($ref->getFileName()) . DIRECTORY_SEPARATOR . $view . '.php';
+            $view     = is_file($viewPath) ? $viewPath : str_replace('_cell', '', $view);
         }
 
         // Locate our view, preferring the directory of the class.

@@ -456,7 +456,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Create a persistent database connection.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return false|TConnection
      */
     public function persistentConnect()
     {
@@ -558,7 +559,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Should automatically handle different connections for read/write
      * queries if needed.
      *
-     * @param mixed ...$binds
+     * @param array|string|null $binds
      *
      * @return BaseResult|bool|Query BaseResult when “read” type query, bool when “write” type query, Query when prepared query
      * @phpstan-return BaseResult<TConnection, TResult>|bool|Query
@@ -1747,7 +1748,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Accessor for properties if they exist.
      *
-     * @return mixed
+     * @return array|bool|float|int|object|resource|string|null
      */
     public function __get(string $key)
     {
