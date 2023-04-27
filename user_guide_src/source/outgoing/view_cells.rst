@@ -256,7 +256,7 @@ You can pass additional parameters to the ``mount()`` method by passing them as 
     }
 
     // Called in main View:
-    <?= view_cell('RecentPosts::show', ['categoryId' => 5]); ?>
+    <?= view_cell('RecentPosts', ['categoryId' => 5]); ?>
 
 ************
 Cell Caching
