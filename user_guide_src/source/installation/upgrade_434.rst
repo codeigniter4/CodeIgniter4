@@ -12,9 +12,6 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-Mandatory File Changes
-**********************
-
 Breaking Changes
 ****************
 
@@ -36,9 +33,6 @@ specify the ``null`` key.
 
 Note that the bug may have changed unexpected NULL constraints in previous
 versions.
-
-Breaking Enhancements
-*********************
 
 Project Files
 *************
