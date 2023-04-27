@@ -16,7 +16,9 @@ use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use LogicException;
 use RuntimeException;
+use stdClass;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
@@ -1279,6 +1281,91 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertTrue($this->db->fieldExists('altered', 'forge_test_three'));
 
         $this->forge->dropTable('forge_test_three', true);
+    }
+
+    public function testModifyColumnNullTrue()
+    {
+        // @TODO remove this in `4.4` branch
+        if ($this->db->DBDriver === 'SQLSRV') {
+            $this->markTestSkipped('SQLSRV does not support getFieldData() nullable.');
+        }
+
+        $this->forge->dropTable('forge_test_modify', true);
+
+        $this->forge->addField([
+            'col1' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => true],
+            'col2' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => true],
+            'col3' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => true],
+        ]);
+        $this->forge->createTable('forge_test_modify');
+
+        $this->forge->modifyColumn('forge_test_modify', [
+            'col1' => ['type' => 'VARCHAR', 'constraint' => 1],
+            'col2' => ['type' => 'VARCHAR', 'constraint' => 1, 'null' => true],
+            'col3' => ['type' => 'VARCHAR', 'constraint' => 1, 'null' => false],
+        ]);
+
+        $this->db->resetDataCache();
+
+        $col1 = $this->getMetaData('col1', 'forge_test_modify');
+        $this->assertTrue($col1->nullable);
+        $col2 = $this->getMetaData('col2', 'forge_test_modify');
+        $this->assertTrue($col2->nullable);
+        $col3 = $this->getMetaData('col3', 'forge_test_modify');
+        $this->assertFalse($col3->nullable);
+
+        $this->forge->dropTable('forge_test_modify', true);
+    }
+
+    public function testModifyColumnNullFalse()
+    {
+        // @TODO remove this in `4.4` branch
+        if ($this->db->DBDriver === 'SQLSRV') {
+            $this->markTestSkipped('SQLSRV does not support getFieldData() nullable.');
+        }
+
+        $this->forge->dropTable('forge_test_modify', true);
+
+        $this->forge->addField([
+            'col1' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => false],
+            'col2' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => false],
+            'col3' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => false],
+        ]);
+        $this->forge->createTable('forge_test_modify');
+
+        $this->forge->modifyColumn('forge_test_modify', [
+            'col1' => ['type' => 'VARCHAR', 'constraint' => 1],
+            'col2' => ['type' => 'VARCHAR', 'constraint' => 1, 'null' => true],
+            'col3' => ['type' => 'VARCHAR', 'constraint' => 1, 'null' => false],
+        ]);
+
+        $this->db->resetDataCache();
+
+        $col1 = $this->getMetaData('col1', 'forge_test_modify');
+        $this->assertTrue($col1->nullable); // Nullable by default.
+        $col2 = $this->getMetaData('col2', 'forge_test_modify');
+        $this->assertTrue($col2->nullable);
+        $col3 = $this->getMetaData('col3', 'forge_test_modify');
+        $this->assertFalse($col3->nullable);
+
+        $this->forge->dropTable('forge_test_modify', true);
+    }
+
+    private function getMetaData(string $column, string $table): stdClass
+    {
+        $fields = $this->db->getFieldData($table);
+
+        $name = array_search(
+            $column,
+            array_column($fields, 'name'),
+            true
+        );
+
+        if ($name === false) {
+            throw new LogicException('Column not found: ' . $column);
+        }
+
+        return $fields[$name];
     }
 
     public function testConnectWithArrayGroup()

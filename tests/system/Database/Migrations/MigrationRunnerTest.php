@@ -349,6 +349,9 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
     public function testRegressSuccess()
     {
+        $forge = Database::forge();
+        $forge->dropTable('foo', true);
+
         $runner = new MigrationRunner($this->config);
         $runner->setSilent(false)
             ->setNamespace('Tests\Support\MigrationTestMigrations')
@@ -368,6 +371,9 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
     public function testLatestTriggersEvent()
     {
+        $forge = Database::forge();
+        $forge->dropTable('foo', true);
+
         $runner = new MigrationRunner($this->config);
         $runner->setSilent(false)
             ->setNamespace('Tests\Support\MigrationTestMigrations');
@@ -387,6 +393,9 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
     public function testRegressTriggersEvent()
     {
+        $forge = Database::forge();
+        $forge->dropTable('foo', true);
+
         $runner = new MigrationRunner($this->config);
         $runner->setSilent(false)
             ->setNamespace('Tests\Support\MigrationTestMigrations');

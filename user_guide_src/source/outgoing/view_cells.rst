@@ -19,17 +19,19 @@ Calling a View Cell
 No matter which type of View Cell you are using, you can call it from any view by using the ``view_cell()`` helper method. The first parameter is the name of the class and method to call, and the second parameter is an array of parameters to pass to the method. The method must return a string, which will be inserted into the view where the ``view_cell()`` method was called.
 ::
 
-    <?= view_cell('App\Cells\MyClass::myMethod', ['param1' => 'value1', 'param2' => 'value2']); ?>
+    <?= view_cell('App\Cells\MyClass::myMethod', ['param1' => 'value1', 'param2' => 'value2']) ?>
 
-If you do not include the full namespace for the class, it will assume in can be found in the ``App\Cells`` namespace. So, the above example would attempt to find the ``MyClass`` class in ``app/Cells/MyClass.php``. If it is not found there, all namespaces will be scanned until it is found, searching within a ``Cells`` subdirectory of each namespace.
+If you do not include the full namespace for the class, it will assume in can be found in the ``App\Cells`` namespace. So, the following example would attempt to find the ``MyClass`` class in ``app/Cells/MyClass.php``. If it is not found there, all namespaces will be scanned until it is found, searching within a ``Cells`` subdirectory of each namespace.
 ::
 
-    <?= view_cell('MyClass::myMethod', ['param1' => 'value1', 'param2' => 'value2']); ?>
+    <?= view_cell('MyClass::myMethod', ['param1' => 'value1', 'param2' => 'value2']) ?>
+
+.. note:: Namespace omission is available since v4.3.0 and later.
 
 You can also pass the parameters along as a key/value string:
 ::
 
-    <?= view_cell('MyClass::myMethod', 'param1=value1, param2=value2'); ?>
+    <?= view_cell('MyClass::myMethod', 'param1=value1, param2=value2') ?>
 
 ************
 Simple Cells
@@ -42,7 +44,7 @@ Simple Cells are classes that return a string from the chosen method. An example
 
     class AlertMessage
     {
-        public function show($params): string
+        public function show(array $params): string
         {
             return "<div class="alert alert-{$params['type']}">{$params['message']}</div>";
         }
@@ -51,13 +53,15 @@ Simple Cells are classes that return a string from the chosen method. An example
 You would call it from within a view like:
 ::
 
-    <?= view_cell('AlertMessage::show', ['type' => 'success', 'message' => 'The user has been updated.']); ?>
+    <?= view_cell('AlertMessage::show', ['type' => 'success', 'message' => 'The user has been updated.']) ?>
 
 Additionally, you can use parameter names that match the parameter variables in the method for better readability.
 When you use it this way, all of the parameters must always be specified in the view cell call::
 
-    <?= view_cell('\App\Libraries\Blog::recentPosts', 'category=codeigniter, limit=5') ?>
+    // In a View.
+    <?= view_cell('Blog::recentPosts', 'category=codeigniter, limit=5') ?>
 
+    // In a Cell.
     public function recentPosts(string $category, int $limit)
     {
         $posts = $this->blogModel->where('category', $category)
@@ -73,6 +77,8 @@ When you use it this way, all of the parameters must always be specified in the 
 ****************
 Controlled Cells
 ****************
+
+.. versionadded:: 4.3.0
 
 Controlled Cells have two primary goals: to make it as fast as possible to build the cell, and provide additional logic and flexibility to your views, if they need it. The class must extend ``CodeIgniter\View\Cells\Cell``. They should have a view file in the same folder. By convention the class name should be PascalCase and the view should be the snake_cased version of the class name. So, for example, if you have a ``MyCell`` class, the view file should be ``my_cell.php``.
 
@@ -94,22 +100,23 @@ At the most basic level, all you need to implement within the class are public p
     }
 
     // app/Cells/alert_message_cell.php
-    <div class="alert alert-<?= $type; ?>">
-        <?= $message; ?>
+    <div class="alert alert-<?= esc($type, 'attr') ?>">
+        <?= esc($message) ?>
     </div>
+
+    // Called in main View:
+    <?= view_cell('AlertMessageCell', 'type=warning, message=Failed.') ?>
 
 .. _generating-cell-via-command:
 
 Generating Cell via Command
 ===========================
 
-.. versionadded:: 4.3.0
-
 You can also create a controlled cell via a built in command from the CLI. The command is ``php spark make:cell``. It takes one argument, the name of the cell to create. The name should be in PascalCase, and the class will be created in the ``app/Cells`` directory. The view file will also be created in the ``app/Cells`` directory.
 
 ::
 
-    > php spark make:cell AlertMessage
+    > php spark make:cell AlertMessageCell
 
 Using a Different View
 ======================
@@ -122,7 +129,7 @@ You can specify a custom view name by setting the ``view`` property in the class
 
     use CodeIgniter\View\Cells\Cell;
 
-    class AlertMessage extends Cell
+    class AlertMessageCell extends Cell
     {
         public $type;
         public $message;
@@ -140,7 +147,7 @@ If you need more control over the rendering of the HTML, you can implement a ``r
 
     use CodeIgniter\View\Cells\Cell;
 
-    class AlertMessage extends Cell
+    class AlertMessageCell extends Cell
     {
         public $type;
         public $message;
@@ -157,14 +164,29 @@ Computed Properties
 If you need to perform additional logic for one or more properties you can use computed properties. These require setting the property to either ``protected`` or ``private`` and implementing a public method whose name consists of the property name surrounded by ``get`` and ``Property``.
 ::
 
+    // In a View. Initialize the protected properties.
+    view_cell('AlertMessageCell', ['type' => 'note', 'message' => 'test']);
+
+    // app/Cells/AlertMessageCell.php
     namespace App\Cells;
 
     use CodeIgniter\View\Cells\Cell;
 
-    class AlertMessage extends Cell
+    class AlertMessageCell extends Cell
     {
         protected $type;
         protected $message;
+        private $computed;
+
+        public function mount()
+        {
+            $this->computed = sprintf('%s - %s', $this->type, $this->message);
+        }
+
+        public function getComputedProperty(): string
+        {
+            return $this->computed;
+        }
 
         public function getTypeProperty(): string
         {
@@ -177,6 +199,16 @@ If you need to perform additional logic for one or more properties you can use c
         }
     }
 
+    // app/Cells/alert_message_cell.php
+    <div>
+        <p>type - <?= esc($type) ?></p>
+        <p>message - <?= esc($message) ?></p>
+        <p>computed: <?= esc($computed) ?></p>
+    </div>
+
+.. important:: You can't set properties that are declared as private during cell
+    initialization.
+
 Presentation Methods
 ====================
 
@@ -188,7 +220,7 @@ Sometimes you need to perform additional logic for the view, but you don't want 
 
     use CodeIgniter\View\Cells\Cell;
 
-    class RecentPosts extends Cell
+    class RecentPostsCell extends Cell
     {
         protected $posts;
 
@@ -198,11 +230,11 @@ Sometimes you need to perform additional logic for the view, but you don't want 
         }
     }
 
-    // app/Cells/recent_posts.php
+    // app/Cells/recent_posts_cell.php
     <ul>
         <?php foreach ($posts as $post): ?>
             <li><?= $this->linkPost($post) ?></li>
-        <?php endforeach; ?>
+        <?php endforeach ?>
     </ul>
 
 Performing Setup Logic
@@ -216,7 +248,7 @@ If you need to perform additional logic before the view is rendered, you can imp
 
     use CodeIgniter\View\Cells\Cell;
 
-    class RecentPosts extends Cell
+    class RecentPostsCell extends Cell
     {
         protected $posts;
 
@@ -229,12 +261,12 @@ If you need to perform additional logic before the view is rendered, you can imp
 You can pass additional parameters to the ``mount()`` method by passing them as an array to the ``view_cell()`` helper function. Any of the parameters sent that match a parameter name of the ``mount`` method will be passed in.
 ::
 
-    // app/Cells/RecentPosts.php
+    // app/Cells/RecentPostsCell.php
     namespace App\Cells;
 
     use CodeIgniter\View\Cells\Cell;
 
-    class RecentPosts extends Cell
+    class RecentPostsCell extends Cell
     {
         protected $posts;
 
@@ -249,7 +281,7 @@ You can pass additional parameters to the ``mount()`` method by passing them as 
     }
 
     // Called in main View:
-    <?= view_cell('RecentPosts::show', ['categoryId' => 5]); ?>
+    <?= view_cell('RecentPostsCell', ['categoryId' => 5]) ?>
 
 ************
 Cell Caching
@@ -260,10 +292,10 @@ third parameter. This will use the currently configured cache engine.
 ::
 
     // Cache the view for 5 minutes
-    <?= view_cell('\App\Libraries\Blog::recentPosts', 'limit=5', 300) ?>
+    <?= view_cell('App\Cells\Blog::recentPosts', 'limit=5', 300) ?>
 
 You can provide a custom name to use instead of the auto-generated one if you like, by passing the new name
 as the fourth parameter::
 
     // Cache the view for 5 minutes
-    <?= view_cell('\App\Libraries\Blog::recentPosts', 'limit=5', 300, 'newcacheid') ?>
+    <?= view_cell('App\Cells\Blog::recentPosts', 'limit=5', 300, 'newcacheid') ?>
