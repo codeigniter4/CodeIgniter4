@@ -195,7 +195,7 @@ Sometimes you need to perform additional logic for the view, but you don't want 
 
     use CodeIgniter\View\Cells\Cell;
 
-    class RecentPosts extends Cell
+    class RecentPostsCell extends Cell
     {
         protected $posts;
 
@@ -205,7 +205,7 @@ Sometimes you need to perform additional logic for the view, but you don't want 
         }
     }
 
-    // app/Cells/recent_posts.php
+    // app/Cells/recent_posts_cell.php
     <ul>
         <?php foreach ($posts as $post): ?>
             <li><?= $this->linkPost($post) ?></li>
@@ -223,7 +223,7 @@ If you need to perform additional logic before the view is rendered, you can imp
 
     use CodeIgniter\View\Cells\Cell;
 
-    class RecentPosts extends Cell
+    class RecentPostsCell extends Cell
     {
         protected $posts;
 
@@ -236,12 +236,12 @@ If you need to perform additional logic before the view is rendered, you can imp
 You can pass additional parameters to the ``mount()`` method by passing them as an array to the ``view_cell()`` helper function. Any of the parameters sent that match a parameter name of the ``mount`` method will be passed in.
 ::
 
-    // app/Cells/RecentPosts.php
+    // app/Cells/RecentPostsCell.php
     namespace App\Cells;
 
     use CodeIgniter\View\Cells\Cell;
 
-    class RecentPosts extends Cell
+    class RecentPostsCell extends Cell
     {
         protected $posts;
 
@@ -256,7 +256,7 @@ You can pass additional parameters to the ``mount()`` method by passing them as 
     }
 
     // Called in main View:
-    <?= view_cell('RecentPosts', ['categoryId' => 5]) ?>
+    <?= view_cell('RecentPostsCell', ['categoryId' => 5]) ?>
 
 ************
 Cell Caching
