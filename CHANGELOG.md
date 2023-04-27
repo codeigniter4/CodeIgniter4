@@ -6,6 +6,7 @@
 ### Breaking Changes
 
 * fix: redirect status code by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7445
+* fix: [SQLite3][Postgres][SQLSRV][OCI8] Forge::modifyColumn() changes NULL constraint incorrectly by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7371
 
 ### Fixed Bugs
 
