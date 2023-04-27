@@ -113,7 +113,7 @@ You can also create a controlled cell via a built in command from the CLI. The c
 
 ::
 
-    > php spark make:cell AlertMessage
+    > php spark make:cell AlertMessageCell
 
 Using a Different View
 ======================
