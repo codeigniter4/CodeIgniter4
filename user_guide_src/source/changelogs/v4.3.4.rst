@@ -1,7 +1,7 @@
 Version 4.3.4
 #############
 
-Release Date: Unreleased
+Release Date: April 27, 2023
 
 **4.3.4 release of CodeIgniter4**
 
@@ -49,12 +49,6 @@ Forge::modifyColumn()
   when you don't specify the ``null`` key.
 - The ``NULL``/``NOT NULL`` change may still be unexpectedly, it is recommended
   to always specify the ``null`` key.
-
-Message Changes
-***************
-
-Changes
-*******
 
 Deprecations
 ************
