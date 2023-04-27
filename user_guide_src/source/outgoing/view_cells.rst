@@ -104,6 +104,9 @@ At the most basic level, all you need to implement within the class are public p
         <?= esc($message) ?>
     </div>
 
+    // Called in main View:
+    <?= view_cell('AlertMessageCell', 'type=warning, message=Failed.') ?>
+
 .. _generating-cell-via-command:
 
 Generating Cell via Command
