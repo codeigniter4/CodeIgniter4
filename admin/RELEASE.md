@@ -145,9 +145,9 @@ the existing content.
     changes as well as a link to the User Guide's changelog
 * Create a PR for new changelog and upgrade for the next version
   * Create **user_guide_src/source/changelogs/{next_version}.rst** and add it to
-    **index.rst** (See next-changelog-*.rst)
+    **index.rst** (See **next-changelog-*.rst**)
   * Create **user_guide_src/source/installation/upgrade_{next_version}.rst** and add it to
-    **upgrading.rst**
+    **upgrading.rst** (See **next-upgrading-guide.rst**)
 
 ## After Publishing Security Advisory
 
