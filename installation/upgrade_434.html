@@ -22,7 +22,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Upgrading from 4.3.2 to 4.3.3" href="upgrade_433.html" />
-    <link rel="prev" title="Backward Compatibility Notes" href="backward_compatibility_notes.html" /> 
+    <link rel="prev" title="Upgrading from 4.3.4 to 4.3.5" href="upgrade_435.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -288,29 +288,24 @@
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#mandatory-file-changes" id="id1">Mandatory File Changes</a></p></li>
-<li><p><a class="reference internal" href="#breaking-changes" id="id2">Breaking Changes</a></p>
+<li><p><a class="reference internal" href="#breaking-changes" id="id1">Breaking Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#redirect-status-code" id="id3">Redirect Status Code</a></p></li>
-<li><p><a class="reference internal" href="#forge-modifycolumn-and-null" id="id4">Forge::modifyColumn() and NULL</a></p></li>
+<li><p><a class="reference internal" href="#redirect-status-code" id="id2">Redirect Status Code</a></p></li>
+<li><p><a class="reference internal" href="#forge-modifycolumn-and-null" id="id3">Forge::modifyColumn() and NULL</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#breaking-enhancements" id="id5">Breaking Enhancements</a></p></li>
-<li><p><a class="reference internal" href="#project-files" id="id6">Project Files</a></p>
+<li><p><a class="reference internal" href="#project-files" id="id4">Project Files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#content-changes" id="id7">Content Changes</a></p></li>
-<li><p><a class="reference internal" href="#all-changes" id="id8">All Changes</a></p></li>
+<li><p><a class="reference internal" href="#content-changes" id="id5">Content Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id6">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
-<section id="mandatory-file-changes">
-<h2><a class="toc-backref" href="#id1">Mandatory File Changes</a><a class="headerlink" href="#mandatory-file-changes" title="Permalink to this headline"></a></h2>
-</section>
 <section id="breaking-changes">
-<h2><a class="toc-backref" href="#id2">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
 <section id="redirect-status-code">
-<h3><a class="toc-backref" href="#id3">Redirect Status Code</a><a class="headerlink" href="#redirect-status-code" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2">Redirect Status Code</a><a class="headerlink" href="#redirect-status-code" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Due to a bug fix, the status codes of redirects may be changed. See
 <a class="reference internal" href="../changelogs/v4.3.4.html#v434-redirect-status-code"><span class="std std-ref">ChangeLog v4.3.4</span></a> and if the code is not
@@ -318,7 +313,7 @@ what you want, <a class="reference internal" href="../outgoing/response.html#res
 </ul>
 </section>
 <section id="forge-modifycolumn-and-null">
-<h3><a class="toc-backref" href="#id4">Forge::modifyColumn() and NULL</a><a class="headerlink" href="#forge-modifycolumn-and-null" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3">Forge::modifyColumn() and NULL</a><a class="headerlink" href="#forge-modifycolumn-and-null" title="Permalink to this headline"></a></h3>
 <p>A bug fix may have changed the NULL constraint in the result of
 <a class="reference internal" href="../dbmgmt/forge.html#db-forge-modifycolumn"><span class="std std-ref">$forge-&gt;modifyColumn()</span></a>. See
 <a class="reference internal" href="../changelogs/v4.3.4.html#v434-forge-modifycolumn"><span class="std std-ref">Change Log</span></a>.
@@ -328,17 +323,14 @@ specify the <code class="docutils literal notranslate"><span class="pre">null</s
 versions.</p>
 </section>
 </section>
-<section id="breaking-enhancements">
-<h2><a class="toc-backref" href="#id5">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
-</section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id6">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
 <p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
 these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
 <p>There are some third-party CodeIgniter modules available to assist with merging changes to
 the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 <section id="content-changes">
-<h3><a class="toc-backref" href="#id7">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
 <p>The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:</p>
 <section id="config">
@@ -349,7 +341,7 @@ and it is recommended that you merge the updated versions with your application:
 </section>
 </section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id8">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
@@ -366,7 +358,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="backward_compatibility_notes.html" class="btn btn-neutral float-left" title="Backward Compatibility Notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upgrade_435.html" class="btn btn-neutral float-left" title="Upgrading from 4.3.4 to 4.3.5" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="upgrade_433.html" class="btn btn-neutral float-right" title="Upgrading from 4.3.2 to 4.3.3" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
@@ -374,7 +366,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 27, 2023.
+      <span class="lastupdated">Last updated on Apr 28, 2023.
       </span></p>
   </div>
 
