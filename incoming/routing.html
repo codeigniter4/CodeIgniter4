@@ -805,7 +805,7 @@ with the name of the route:</p>
 
 <span class="cm">&lt;!-- Generate the URI to link to user ID 15, gallery 12: --&gt;</span>
 <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">url_to</span><span class="p">(</span><span class="s1">&#39;user_gallery&#39;</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>View Gallery<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<span class="cm">&lt;!-- Result: &#39;http://example.com//users/15/gallery/12&#39; --&gt;</span>
+<span class="cm">&lt;!-- Result: &#39;http://example.com/users/15/gallery/12&#39; --&gt;</span>
 </pre></div>
 </div>
 <p>This has the added benefit of making the views more readable, too.</p>
@@ -1249,8 +1249,8 @@ the <code class="docutils literal notranslate"><span class="pre">setDefaultContr
 which matches the controller at <strong>app/Controllers/Home.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// example.com routes to app/Controllers/Welcome.php</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Welcome&#39;</span><span class="p">);</span>
+<span class="c1">// example.com routes to app/Controllers/Home.php</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Home&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -1342,8 +1342,8 @@ the <code class="docutils literal notranslate"><span class="pre">setDefaultContr
 which matches the controller at <strong>app/Controllers/Home.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// example.com routes to app/Controllers/Welcome.php</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Welcome&#39;</span><span class="p">);</span>
+<span class="c1">// example.com routes to app/Controllers/Home.php</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Home&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -1469,7 +1469,7 @@ due to a bug.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 28, 2023.
+      <span class="lastupdated">Last updated on Apr 29, 2023.
       </span></p>
   </div>
 
