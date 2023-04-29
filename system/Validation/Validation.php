@@ -40,10 +40,18 @@ class Validation implements ValidationInterface
     protected $ruleSetInstances = [];
 
     /**
-     * Stores the actual rules that should
-     * be ran against $data.
+     * Stores the actual rules that should be run against $data.
      *
      * @var array
+     *
+     * [
+     *     field1 => [
+     *         'label' => label,
+     *         'rules' => [
+     *              rule1, rule2, ...
+     *          ],
+     *     ],
+     * ]
      */
     protected $rules = [];
 
@@ -133,8 +141,7 @@ class Validation implements ValidationInterface
         // Run through each rule. If we have any field set for
         // this rule, then we need to run them through!
         foreach ($this->rules as $field => $setup) {
-            // Blast $rSetup apart, unless it's already an array.
-            $rules = $setup['rules'] ?? $setup;
+            $rules = $setup['rules'];
 
             if (is_string($rules)) {
                 $rules = $this->splitRules($rules);
@@ -482,6 +489,14 @@ class Validation implements ValidationInterface
                 if (! array_key_exists('rules', $rule)) {
                     $rule = ['rules' => $rule];
                 }
+            }
+
+            if (isset($rule['rules']) && is_string($rule['rules'])) {
+                $rule['rules'] = $this->splitRules($rule['rules']);
+            }
+
+            if (is_string($rule)) {
+                $rule = ['rules' => $this->splitRules($rule)];
             }
         }
 

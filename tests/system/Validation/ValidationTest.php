@@ -86,7 +86,12 @@ class ValidationTest extends CIUnitTestCase
             'bar' => 'baz|belch',
         ];
         $this->validation->setRules($rules);
-        $this->assertSame($rules, $this->validation->getRules());
+
+        $expected = [
+            'foo' => ['rules' => ['bar', 'baz']],
+            'bar' => ['rules' => ['baz', 'belch']],
+        ];
+        $this->assertSame($expected, $this->validation->getRules());
     }
 
     public function testSetRuleStoresRule()
@@ -97,7 +102,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame([
             'foo' => [
                 'label' => null,
-                'rules' => 'bar|baz',
+                'rules' => ['bar', 'baz'],
             ],
         ], $this->validation->getRules());
     }
@@ -110,7 +115,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame([
             'username' => [
                 'label' => 'Username',
-                'rules' => 'required|min_length[3]',
+                'rules' => ['required', 'min_length[3]'],
             ],
             'password' => [
                 'label' => 'Password',
@@ -136,11 +141,11 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame([
             'bar' => [
                 'label' => null,
-                'rules' => 'bar|baz',
+                'rules' => ['bar', 'baz'],
             ],
             'foo' => [
                 'label' => null,
-                'rules' => 'foo|foz',
+                'rules' => ['foo', 'foz'],
             ],
         ], $this->validation->getRules());
     }
@@ -158,7 +163,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame([
             'foo' => [
                 'label' => null,
-                'rules' => 'foo|foz',
+                'rules' => ['foo', 'foz'],
             ],
         ], $this->validation->getRules());
     }
@@ -176,7 +181,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame([
             'foo' => [
                 'label' => null,
-                'rules' => 'bar|baz',
+                'rules' => ['bar', 'baz'],
             ],
         ], $this->validation->getRules());
     }
@@ -549,7 +554,7 @@ class ValidationTest extends CIUnitTestCase
     {
         $this->validation->setRuleGroup('groupA');
         $this->assertSame([
-            'foo' => 'required|min_length[5]',
+            'foo' => ['rules' => ['required', 'min_length[5]']],
         ], $this->validation->getRules());
     }
 
