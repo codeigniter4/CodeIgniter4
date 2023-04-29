@@ -64,7 +64,7 @@ The first value tells the Request class that we do want to negotiate a locale, s
 
 Once this is enabled, the system will automatically negotiate the correct language based upon an array
 of locales that you have defined in ``$supportLocales``. If no match is found between the languages
-that you support, and the requested language, the first item in $supportedLocales will be used. In
+that you support, and the requested language, the first item in ``$supportedLocales`` will be used. In
 the following example, the ``en`` locale would be used if no match is found:
 
 .. literalinclude:: localization/003.php
