@@ -4,7 +4,7 @@ Localization
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 ********************
 Working With Locales
