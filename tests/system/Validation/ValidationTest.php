@@ -1391,7 +1391,7 @@ class ValidationTest extends CIUnitTestCase
     protected function placeholderReplacementResultDetermination(string $placeholder = 'id', ?array $data = null)
     {
         if ($data === null) {
-            $data = [$placeholder => 'placeholder-value'];
+            $data = [$placeholder => '12'];
         }
 
         $validationRules = $this->getPrivateMethodInvoker($this->validation, 'fillPlaceholders')($this->validation->getRules(), $data);
@@ -1426,6 +1426,7 @@ class ValidationTest extends CIUnitTestCase
 
     public function testPlaceholderReplacementSetSingleRuleString()
     {
+        $this->validation->setRule('id', null, 'required|is_natural_no_zero');
         $this->validation->setRule('foo', null, 'required|filter[{id}]');
 
         $this->placeholderReplacementResultDetermination();
@@ -1433,6 +1434,7 @@ class ValidationTest extends CIUnitTestCase
 
     public function testPlaceholderReplacementSetSingleRuleArray()
     {
+        $this->validation->setRule('id', null, ['required', 'is_natural_no_zero']);
         $this->validation->setRule('foo', null, ['required', 'filter[{id}]']);
 
         $this->placeholderReplacementResultDetermination();
@@ -1441,6 +1443,7 @@ class ValidationTest extends CIUnitTestCase
     public function testPlaceholderReplacementSetMultipleRulesSimpleString()
     {
         $this->validation->setRules([
+            'id'  => 'required|is_natural_no_zero',
             'foo' => 'required|filter[{id}]',
         ]);
 
@@ -1450,6 +1453,7 @@ class ValidationTest extends CIUnitTestCase
     public function testPlaceholderReplacementSetMultipleRulesSimpleArray()
     {
         $this->validation->setRules([
+            'id'  => ['required', 'is_natural_no_zero'],
             'foo' => ['required', 'filter[{id}]'],
         ]);
 
@@ -1459,6 +1463,9 @@ class ValidationTest extends CIUnitTestCase
     public function testPlaceholderReplacementSetMultipleRulesComplexString()
     {
         $this->validation->setRules([
+            'id' => [
+                'rules' => 'required|is_natural_no_zero',
+            ],
             'foo' => [
                 'rules' => 'required|filter[{id}]',
             ],
@@ -1470,6 +1477,9 @@ class ValidationTest extends CIUnitTestCase
     public function testPlaceholderReplacementSetMultipleRulesComplexArray()
     {
         $this->validation->setRules([
+            'id' => [
+                'rules' => ['required', 'is_natural_no_zero'],
+            ],
             'foo' => [
                 'rules' => ['required', 'filter[{id}]'],
             ],

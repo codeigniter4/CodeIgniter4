@@ -16,8 +16,10 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
+use Config\Services;
 use Config\Validation as ValidationConfig;
 use InvalidArgumentException;
+use LogicException;
 use TypeError;
 
 /**
@@ -660,45 +662,68 @@ class Validation implements ValidationInterface
      *
      * and the following rule:
      *
-     *  'required|is_unique[users,email,id,{id}]'
+     *  'is_unique[users,email,id,{id}]'
      *
      * The value of {id} would be replaced with the actual id in the form data:
      *
-     *  'required|is_unique[users,email,id,13]'
+     *  'is_unique[users,email,id,13]'
      */
     protected function fillPlaceholders(array $rules, array $data): array
     {
-        $replacements = [];
+        foreach ($rules as &$rule) {
+            $ruleSet = $rule['rules'];
 
-        foreach ($data as $key => $value) {
-            $replacements["{{$key}}"] = $value;
-        }
+            foreach ($ruleSet as &$row) {
+                if (is_string($row)) {
+                    $placeholderFields = $this->retrievePlaceholders($row, $data);
 
-        if ($replacements !== []) {
-            foreach ($rules as &$rule) {
-                $ruleSet = $rule['rules'] ?? $rule;
+                    foreach ($placeholderFields as $field) {
+                        $validator ??= Services::validation(null, false);
 
-                if (is_array($ruleSet)) {
-                    foreach ($ruleSet as &$row) {
-                        if (is_string($row)) {
-                            $row = strtr($row, $replacements);
+                        $placeholderRules = $rules[$field]['rules'] ?? null;
+
+                        // Check if the validation rule for the placeholder exists
+                        if ($placeholderRules === null) {
+                            throw new LogicException(
+                                'No validation rules for the placeholder: ' . $field
+                            );
                         }
+
+                        // Check if the rule does not have placeholders
+                        foreach ($placeholderRules as $placeholderRule) {
+                            if ($this->retrievePlaceholders($placeholderRule, $data)) {
+                                throw new LogicException(
+                                    'The placeholder field cannot use placeholder: ' . $field
+                                );
+                            }
+                        }
+
+                        // Validate the placeholder field
+                        if (! $validator->check($data[$field], implode('|', $placeholderRules))) {
+                            // if fails, do nothing
+                            continue;
+                        }
+
+                        // Replace the placeholder in the rule
+                        $ruleSet = str_replace('{' . $field . '}', $data[$field], $ruleSet);
                     }
                 }
-
-                if (is_string($ruleSet)) {
-                    $ruleSet = strtr($ruleSet, $replacements);
-                }
-
-                if (isset($rule['rules'])) {
-                    $rule['rules'] = $ruleSet;
-                } else {
-                    $rule = $ruleSet;
-                }
             }
+
+            $rule['rules'] = $ruleSet;
         }
 
         return $rules;
+    }
+
+    /**
+     * Retrieves valid placeholder fields.
+     */
+    private function retrievePlaceholders(string $rule, array $data): array
+    {
+        preg_match_all('/{(.+?)}/', $rule, $matches);
+
+        return array_intersect($matches[1], array_keys($data));
     }
 
     /**
