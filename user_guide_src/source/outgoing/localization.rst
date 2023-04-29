@@ -52,7 +52,7 @@ method that will automatically perform :doc:`content negotiation </incoming/cont
 determine the correct locale to use. The second method allows you to specify a segment in your routes that
 will be used to set the locale.
 
-Should you ever need to set the locale directly you may use ``IncomingRequest::setLocale(string $locale)``.
+Should you ever need to set the locale directly, see `Setting the Locale`_.
 
 Content Negotiation
 -------------------
@@ -90,6 +90,18 @@ file:
 .. literalinclude:: localization/018.php
 
 .. note:: The ``useSupportedLocalesOnly()`` method can be used since v4.3.0.
+
+Setting the Locale
+==================
+
+If you want to set the locale directly, you may use
+``IncomingRequest::setLocale(string $locale)``.
+You must set supported locales in **app/Config/App.php**:
+
+.. literalinclude:: localization/003.php
+
+Any attempt to set a locale not included in this array will result in the default
+locale being set.
 
 Retrieving the Current Locale
 =============================
