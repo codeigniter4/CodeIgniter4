@@ -30,6 +30,11 @@ supported language::
 Configuring the Locale
 ======================
 
+.. _setting-the-default-locale:
+
+Setting the Default Locale
+--------------------------
+
 Every site will have a default language/locale they operate in. This can be set in **app/Config/App.php**:
 
 .. literalinclude:: localization/001.php
@@ -100,8 +105,8 @@ You must set supported locales in **app/Config/App.php**:
 
 .. literalinclude:: localization/003.php
 
-Any attempt to set a locale not included in this array will result in the default
-locale being set.
+.. note:: Any attempt to set a locale not included in this array will result in
+    the :ref:`default locale <setting-the-default-locale>` being set.
 
 Retrieving the Current Locale
 =============================
