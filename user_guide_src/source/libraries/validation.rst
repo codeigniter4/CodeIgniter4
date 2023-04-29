@@ -436,6 +436,8 @@ This method sets a rule group from the validation configuration to the validatio
 
 .. literalinclude:: validation/018.php
 
+.. _validation-placeholders:
+
 Validation Placeholders
 =======================
 
@@ -445,6 +447,9 @@ the name of the field (or array key) that was passed in as ``$data`` surrounded 
 replaced by the **value** of the matched incoming field. An example should clarify this:
 
 .. literalinclude:: validation/020.php
+
+.. note:: Since v4.3.5, you must set the validation rules for the placeholder
+    field (``id``).
 
 In this set of rules, it states that the email address should be unique in the database, except for the row
 that has an id matching the placeholder's value. Assuming that the form POST data had the following:
@@ -456,6 +461,9 @@ then the ``{id}`` placeholder would be replaced with the number **4**, giving th
 .. literalinclude:: validation/022.php
 
 So it will ignore the row in the database that has ``id=4`` when it verifies the email is unique.
+
+.. note:: Since v4.3.5, if the placeholder (``id``) value does not pass the
+    validation, the placeholder would not be replaced.
 
 This can also be used to create more dynamic rules at runtime, as long as you take care that any dynamic
 keys passed in don't conflict with your form data.
