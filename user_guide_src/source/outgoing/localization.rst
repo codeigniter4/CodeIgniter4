@@ -52,7 +52,7 @@ method that will automatically perform :doc:`content negotiation </incoming/cont
 determine the correct locale to use. The second method allows you to specify a segment in your routes that
 will be used to set the locale.
 
-Should you ever need to set the locale directly, see `Setting the Locale`_.
+Should you ever need to set the locale directly, see `Setting the Current Locale`_.
 
 Content Negotiation
 -------------------
@@ -91,8 +91,8 @@ file:
 
 .. note:: The ``useSupportedLocalesOnly()`` method can be used since v4.3.0.
 
-Setting the Locale
-==================
+Setting the Current Locale
+==========================
 
 If you want to set the locale directly, you may use
 ``IncomingRequest::setLocale(string $locale)``.
