@@ -21,6 +21,8 @@ use ErrorException;
  * @template TConnection
  * @template TStatement
  * @template TResult
+ *
+ * @implements PreparedQueryInterface<TConnection, TStatement, TResult>
  */
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {
@@ -109,7 +111,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      * prepared query. Upon success, will return a Results object.
      *
      * @return bool|ResultInterface
-     * @phpstan-return bool|ResultInterface
+     * @phpstan-return bool|ResultInterface<TConnection, TResult>
      *
      * @throws DatabaseException
      */

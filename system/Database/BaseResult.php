@@ -17,6 +17,8 @@ use stdClass;
 /**
  * @template TConnection
  * @template TResult
+ *
+ * @implements ResultInterface<TConnection, TResult>
  */
 abstract class BaseResult implements ResultInterface
 {
