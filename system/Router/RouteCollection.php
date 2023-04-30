@@ -117,16 +117,18 @@ class RouteCollection implements RouteCollectionInterface
      * [
      *     verb => [
      *         routeKey(regex) => [
-     *             'name'     => routeName
-     *             'handler'  => handler,
-     *              'from'    => from,
+     *             'name'    => routeName
+     *             'handler' => handler,
+     *             'from'    => from,
      *         ],
-     *         // redirect route
-     *         or routeKey(regex)(from) => [
+     *     ],
+     *     // redirect route
+     *     '*' => [
+     *          routeKey(regex)(from) => [
      *             'name'     => routeName
      *             'handler'  => [routeKey(regex)(to) => handler],
+     *             'from'     => from,
      *             'redirect' => statusCode,
-     *             'from'    => from,
      *         ],
      *     ],
      * ]
