@@ -119,12 +119,14 @@ class RouteCollection implements RouteCollectionInterface
      *         routeKey(regex) => [
      *             'name'     => routeName
      *             'handler'  => handler,
+     *              'from'    => from,
      *         ],
      *         // redirect route
      *         or routeKey(regex)(from) => [
      *             'name'     => routeName
      *             'handler'  => [routeKey(regex)(to) => handler],
      *             'redirect' => statusCode,
+     *             'from'    => from,
      *         ],
      *     ],
      * ]
@@ -1470,6 +1472,7 @@ class RouteCollection implements RouteCollectionInterface
         $this->routes[$verb][$routeKey] = [
             'name'    => $name,
             'handler' => $to,
+            'from'    => $from,
         ];
         $this->routesOptions[$verb][$routeKey] = $options;
         $this->routesNames[$verb][$name]       = $routeKey;
