@@ -31,7 +31,7 @@ interface FilterInterface
      *
      * @param array|null $arguments
      *
-     * @return RequestInterface|ResponseInterface|string|void
+     * @return mixed
      */
     public function before(RequestInterface $request, $arguments = null);
 
@@ -43,7 +43,7 @@ interface FilterInterface
      *
      * @param array|null $arguments
      *
-     * @return ResponseInterface|void
+     * @return mixed
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null);
 }
