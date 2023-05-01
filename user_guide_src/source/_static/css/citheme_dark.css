@@ -170,11 +170,20 @@
     }
 
     .rst-content table.docutils thead, .rst-content table.field-list thead, .wy-table thead {
-        color: rgb(192, 186, 178) !important;
+        color: #c0bab2 !important;
     }
 
     .wy-table thead th, .rst-content table.docutils thead th, .rst-content table.field-list thead th {
-        border: solid 2px #e1e4e5 !important;
+        border: solid 1px #c0bab2 !important;
+    }
+
+    .rst-content table.docutils td, .wy-table-bordered-all td {
+        border-bottom: 1px solid #c0bab2 !important;
+        border-left: 1px solid #c0bab2 !important;
+    }
+
+    .rst-content table.docutils, .wy-table-bordered-all {
+        border: solid 1px #c0bab2 !important;
     }
 
     .wy-table thead p, .rst-content table.docutils thead p, .rst-content table.field-list thead p {
