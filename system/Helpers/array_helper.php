@@ -262,7 +262,7 @@ if (! function_exists('_array_attach_indexed_value')) {
 
         $value = dot_array_search($index, $row);
 
-        if (is_array($value) || is_object($value) || $value === null) {
+        if (! is_scalar($value)) {
             $value = '';
         }
 
