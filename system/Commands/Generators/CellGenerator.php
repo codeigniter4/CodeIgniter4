@@ -74,16 +74,13 @@ class CellGenerator extends BaseCommand
      */
     public function run(array $params)
     {
-        // Generate the Class first
-        $this->component     = 'Cell';
-        $this->directory     = 'Cells';
+        $this->component = 'Cell';
+        $this->directory = 'Cells';
+
+        // Generate the class
         $this->template      = 'cell.tpl.php';
         $this->classNameLang = 'CLI.generator.className.cell';
-
         $this->generateClass($params);
-
-        // Generate the View
-        $this->classNameLang = 'CLI.generator.viewName.cell';
 
         // Form the view name
         $segments = explode('\\', $this->qualifyClassName());
@@ -93,8 +90,9 @@ class CellGenerator extends BaseCommand
         $segments[] = $view;
         $view       = implode('\\', $segments);
 
-        $this->template = 'cell_view.tpl.php';
-
+        // Generate the view
+        $this->template      = 'cell_view.tpl.php';
+        $this->classNameLang = 'CLI.generator.viewName.cell';
         $this->generateView($view, $params);
     }
 }
