@@ -52,14 +52,15 @@ final class CellGeneratorTest extends CIUnitTestCase
 
         // Check the class was generated
         $file = APPPATH . 'Cells/RecentCell.php';
+        $this->assertStringContainsString('File created: ' . clean_path($file), $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
-        $contents = $this->getFileContents($file);
-        $this->assertStringContainsString('class RecentCell extends Cell', $contents);
+        $this->assertStringContainsString('class RecentCell extends Cell', $this->getFileContents($file));
 
         // Check the view was generated
         $file = APPPATH . 'Cells/recent_cell.php';
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('File created: ' . clean_path($file), $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
+        $this->assertSame("<div>\n    <!-- Your HTML here -->\n</div>\n", $this->getFileContents($file));
     }
 
     public function testGenerateCellSimpleName()
@@ -68,13 +69,14 @@ final class CellGeneratorTest extends CIUnitTestCase
 
         // Check the class was generated
         $file = APPPATH . 'Cells/Another.php';
+        $this->assertStringContainsString('File created: ' . clean_path($file), $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
-        $contents = $this->getFileContents($file);
-        $this->assertStringContainsString('class Another extends Cell', $contents);
+        $this->assertStringContainsString('class Another extends Cell', $this->getFileContents($file));
 
         // Check the view was generated
         $file = APPPATH . 'Cells/another.php';
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('File created: ' . clean_path($file), $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
+        $this->assertSame("<div>\n    <!-- Your HTML here -->\n</div>\n", $this->getFileContents($file));
     }
 }

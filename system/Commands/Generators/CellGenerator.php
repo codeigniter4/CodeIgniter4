@@ -93,6 +93,7 @@ class CellGenerator extends BaseCommand
         $segments[] = $view;
         $view       = implode('\\', $segments);
 
+        $this->name     = 'make:cell_view';
         $this->template = 'cell_view.tpl.php';
 
         $this->generateView($view, $params);
