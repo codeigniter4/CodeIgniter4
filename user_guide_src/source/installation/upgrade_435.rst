@@ -21,9 +21,8 @@ Breaking Changes
 Validation Placeholders
 =======================
 
-- To use :ref:`validation-placeholders` securely, when you use validation placeholders
-  and if you don't set the validation rules for the placeholder field, you need
-  to set the validation rules for it.
+- To use :ref:`validation-placeholders` securely, please remember to create a validation rule for the field you will use as a placeholder.
+  
 
 Session::stop()
 ===============
