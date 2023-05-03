@@ -323,12 +323,7 @@ class RouteCollection implements RouteCollectionInterface
             $files = $this->fileLocator->search('Config/Routes.php');
 
             foreach ($files as $file) {
-                // Don't include our main file again...
-                if (in_array($file, $this->routeFiles, true)) {
-                    continue;
-                }
-
-                include $file;
+                include_once $file;
             }
         }
 
