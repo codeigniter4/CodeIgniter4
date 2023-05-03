@@ -12,6 +12,7 @@
 namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorTrait;
 
 /**
@@ -77,22 +78,42 @@ class CellGenerator extends BaseCommand
         $this->component = 'Cell';
         $this->directory = 'Cells';
 
+        $this->params = $params;
+
+        $className = $this->qualifyClassName();
+        $viewName  = $this->generateViewCellName($className);
+
+        if (strtolower($className) === strtolower($viewName)) {
+            $message1 = 'You cannot use a single word as the name of the cell.';
+            $message2 = 'This operation will error in case-insensitive operating systems, like Windows.';
+            $padding  = strlen($message2) - strlen($message1);
+
+            CLI::error($message1 . str_repeat(' ', $padding), 'light_gray', 'red');
+            CLI::error($message2, 'light_gray', 'red');
+            CLI::newLine();
+
+            return 1;
+        }
+
         // Generate the class
         $this->template      = 'cell.tpl.php';
         $this->classNameLang = 'CLI.generator.className.cell';
         $this->generateClass($params);
 
-        // Form the view name
-        $segments = explode('\\', $this->qualifyClassName());
-
-        $view       = array_pop($segments);
-        $view       = decamelize($view);
-        $segments[] = $view;
-        $view       = implode('\\', $segments);
-
         // Generate the view
         $this->template      = 'cell_view.tpl.php';
         $this->classNameLang = 'CLI.generator.viewName.cell';
-        $this->generateView($view, $params);
+        $this->generateView($viewName, $params);
+
+        return 0;
+    }
+
+    private function generateViewCellName(string $className): string
+    {
+        $segments   = explode('\\', $className);
+        $viewName   = decamelize(array_pop($segments));
+        $segments[] = $viewName;
+
+        return implode('\\', $segments);
     }
 }
