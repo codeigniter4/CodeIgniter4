@@ -24,6 +24,9 @@ Deprecations
 Bugs Fixed
 **********
 
+- **make:cell** Fixed generation of view cells if given cell name is a single word. Use of single-word cell names
+    is now forbidden in order to be interoperational with all platforms.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.

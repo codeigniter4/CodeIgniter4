@@ -59,7 +59,7 @@ Usage:
 
 Argument:
 =========
-* ``name``: The name of the cell class. It should be in PascalCase.
+* ``name``: The name of the cell class. It should be in PascalCase and NOT a single word.
 
 Options:
 ========
