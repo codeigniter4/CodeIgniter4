@@ -62,19 +62,11 @@ final class CellGeneratorTest extends CIUnitTestCase
         $this->assertFileExists($file);
     }
 
-    public function testGenerateCellSimpleName()
+    public function testGenerateCellSimpleNameGeneratesError()
     {
         command('make:cell Another');
 
-        // Check the class was generated
-        $file = APPPATH . 'Cells/Another.php';
-        $this->assertFileExists($file);
-        $contents = $this->getFileContents($file);
-        $this->assertStringContainsString('class Another extends Cell', $contents);
-
-        // Check the view was generated
-        $file = APPPATH . 'Cells/another.php';
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
-        $this->assertFileExists($file);
+        $this->assertStringContainsString('You cannot use a single word as the name of the cell.', $this->getStreamFilterBuffer());
+        $this->assertFileDoesNotExist(APPPATH . 'Cells/Another.php');
     }
 }
