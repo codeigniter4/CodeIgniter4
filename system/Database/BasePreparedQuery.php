@@ -18,9 +18,9 @@ use CodeIgniter\Events\Events;
 use ErrorException;
 
 /**
- * @template TConnection of object|resource
- * @template TStatement of object|resource
- * @template TResult of object|resource
+ * @template TConnection
+ * @template TStatement
+ * @template TResult
  *
  * @implements PreparedQueryInterface<TConnection, TStatement, TResult>
  */
