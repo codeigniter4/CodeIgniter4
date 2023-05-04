@@ -4,7 +4,7 @@ Localization
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 ********************
 Working With Locales
@@ -30,6 +30,11 @@ supported language::
 Configuring the Locale
 ======================
 
+.. _setting-the-default-locale:
+
+Setting the Default Locale
+--------------------------
+
 Every site will have a default language/locale they operate in. This can be set in **app/Config/App.php**:
 
 .. literalinclude:: localization/001.php
@@ -52,7 +57,7 @@ method that will automatically perform :doc:`content negotiation </incoming/cont
 determine the correct locale to use. The second method allows you to specify a segment in your routes that
 will be used to set the locale.
 
-Should you ever need to set the locale directly you may use ``IncomingRequest::setLocale(string $locale)``.
+Should you ever need to set the locale directly, see `Setting the Current Locale`_.
 
 Since v4.4.0, ``IncomingRequest::setValidLocales()`` has been added to set
 (and reset) valid locales that are set from ``Config\App::$supportedLocales`` setting.
@@ -67,7 +72,7 @@ The first value tells the Request class that we do want to negotiate a locale, s
 
 Once this is enabled, the system will automatically negotiate the correct language based upon an array
 of locales that you have defined in ``$supportLocales``. If no match is found between the languages
-that you support, and the requested language, the first item in $supportedLocales will be used. In
+that you support, and the requested language, the first item in ``$supportedLocales`` will be used. In
 the following example, the ``en`` locale would be used if no match is found:
 
 .. literalinclude:: localization/003.php
@@ -93,6 +98,18 @@ file:
 .. literalinclude:: localization/018.php
 
 .. note:: The ``useSupportedLocalesOnly()`` method can be used since v4.3.0.
+
+Setting the Current Locale
+==========================
+
+If you want to set the locale directly, you may use
+``IncomingRequest::setLocale(string $locale)``.
+You must set supported locales in **app/Config/App.php**:
+
+.. literalinclude:: localization/003.php
+
+.. note:: Any attempt to set a locale not included in this array will result in
+    the :ref:`default locale <setting-the-default-locale>` being set.
 
 Retrieving the Current Locale
 =============================

@@ -80,7 +80,6 @@ html_theme_options = {
 	'includehidden': False,
 	'logo_only': True,
 	'display_version': False,
-	'style_nav_header_background': '#DD4814',
 }
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
@@ -106,7 +105,9 @@ htmlhelp_basename = 'CodeIgniterdoc'
 html_copy_source = False
 
 # A list of CSS files.
-html_css_files = []
+html_css_files = [
+    'css/citheme_dark.css'
+]
 
 # A list of JS files.
 html_js_files = [

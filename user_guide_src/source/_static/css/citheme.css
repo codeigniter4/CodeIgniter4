@@ -139,6 +139,10 @@ h2, h3 {
 	background: #252525;
 }
 
+.wy-side-nav-search {
+    background: #dd4814;
+}
+
 .wy-side-nav-search .logo {
 	width: 100% !important;
 }

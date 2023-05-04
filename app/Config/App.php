@@ -94,6 +94,8 @@ class App extends BaseConfig
      * by the application in descending order of priority. If no match is
      * found, the first locale will be used.
      *
+     * IncomingRequest::setLocale() also uses this list.
+     *
      * @var string[]
      */
     public array $supportedLocales = ['en'];

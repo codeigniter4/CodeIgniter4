@@ -15,8 +15,8 @@ use CodeIgniter\Entity\Entity;
 use stdClass;
 
 /**
- * @template TConnection of object|resource
- * @template TResult of object|resource
+ * @template TConnection
+ * @template TResult
  *
  * @implements ResultInterface<TConnection, TResult>
  */
@@ -499,6 +499,8 @@ abstract class BaseResult implements ResultInterface
 
     /**
      * Frees the current result.
+     *
+     * @return void
      */
     abstract public function freeResult();
 
@@ -525,7 +527,7 @@ abstract class BaseResult implements ResultInterface
      *
      * Overridden by child classes.
      *
-     * @return object
+     * @return Entity|false|object|stdClass
      */
     abstract protected function fetchObject(string $className = 'stdClass');
 }

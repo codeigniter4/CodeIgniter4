@@ -46,8 +46,8 @@ use Throwable;
  * @property bool       $transFailure
  * @property bool       $transStatus
  *
- * @template TConnection of object|resource
- * @template TResult of object|resource
+ * @template TConnection
+ * @template TResult
  *
  * @implements ConnectionInterface<TConnection, TResult>
  */
