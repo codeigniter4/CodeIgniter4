@@ -264,6 +264,11 @@ class RouteCollection implements RouteCollectionInterface
         $this->autoRoute          = $routing->autoRoute;
         $this->routeFiles         = $routing->routeFiles;
         $this->prioritize         = $routing->prioritize;
+
+        // Normalize the path string in routeFiles array.
+        foreach ($this->routeFiles as $routeKey => $routesFile) {
+            $this->routeFiles[$routeKey] = realpath($routesFile) ?: $routesFile;
+        }
     }
 
     /**
