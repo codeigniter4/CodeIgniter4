@@ -128,11 +128,14 @@ class Connection extends BaseConnection
             return $this->dataCache['version'];
         }
 
-        if (! $this->connID || ($pgVersion = pg_version($this->connID)) === false) {
+        if (! $this->connID) {
             $this->initialize();
         }
 
-        return isset($pgVersion['server']) ? $this->dataCache['version'] = $pgVersion['server'] : false;
+        $pgVersion                  = pg_version($this->connID);
+        $this->dataCache['version'] = $pgVersion['server'] ?? '';
+
+        return $this->dataCache['version'];
     }
 
     /**
