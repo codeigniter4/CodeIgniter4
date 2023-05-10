@@ -56,6 +56,8 @@ Method Signature Changes
 Enhancements
 ************
 
+- The Debug Toolbar now has a new "Hot Reload" feature that can be used to automatically reload the page when a file is changed. See :ref:`debug-toolbar-hot-reload`.
+
 Commands
 ========
 

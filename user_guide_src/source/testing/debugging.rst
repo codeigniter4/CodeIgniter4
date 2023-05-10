@@ -172,3 +172,14 @@ The ``getVarData()`` method should return an array containing arrays of key/valu
 outer array's key is the name of the section on the Vars tab:
 
 .. literalinclude:: debugging/006.php
+
+Hot Reloading
+=============
+
+The Debug Toolbar includes a feature called Hot Reloading that allows you to make changes to your application's code and have them automatically reloaded in the browser without having to refresh the page. This is a great time-saver during development.
+
+To enable Hot Reloading while you are developing, you can click the button on the left side of the toolbar that looks like a refresh icon. This will enable Hot Reloading for all pages until you disable it.
+
+Hot Reloading works by scanning the files within the ``app`` directory every second and looking for changes. If it finds any, it will send a message to the browser to reload the page. It does not scan any other directories, so if you are making changes to files outside of the ``app`` directory, you will need to manually refresh the page.
+
+If you need to watch files outside of the ``app`` directory, or are finding it slow due to the size of your project, you can specify the directories to scan and the file extensions to scan for in the ``$toolbarRefreshDirs`` and ``$toolbarRefreshExtensions`` properties of the **app/Config/Toolbar.php** configuration file.

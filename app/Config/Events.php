@@ -44,5 +44,11 @@ Events::on('pre_system', static function () {
     if (CI_DEBUG && ! is_cli()) {
         Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
         Services::toolbar()->respond();
+        // Hot Reload route - for framework use on the hot reloader.
+        if (ENVIRONMENT === 'development') {
+            Services::routes()->get('__hot-reload', function() {
+                (new \CodeIgniter\HotReloader\HotReloader())->run();
+            });
+        }
     }
 });
