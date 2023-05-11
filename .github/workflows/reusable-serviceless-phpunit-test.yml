@@ -13,6 +13,10 @@ on:
         description: The PHP version the workflow should run
         type: string
         required: true
+      os:
+        description: The GitHub-hosted runner for the job
+        type: string
+        required: true
       job-id:
         description: Job ID to be used as part of cache key and artifact name
         type: string
@@ -49,9 +53,15 @@ on:
 jobs:
   tests:
     name: ${{ inputs.job-name }}
-    runs-on: ubuntu-22.04
+    runs-on: ${{ inputs.os }}
 
     steps:
+      - name: Set Git to use LF
+        if: ${{ contains(inputs.os, 'windows') }}
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+
       - name: Install latest ImageMagick
         if: ${{ contains(inputs.extra-extensions, 'imagick') }}
         run: |
@@ -68,7 +78,7 @@ jobs:
         with:
           php-version: ${{ inputs.php-version }}
           tools: composer
-          extensions: gd, ${{ inputs.extra-extensions }}
+          extensions: intl, gd, ${{ inputs.extra-extensions }}
           coverage: ${{ env.COVERAGE_DRIVER }}
         env:
           COVERAGE_DRIVER: ${{ inputs.enable-coverage && 'xdebug' || 'none' }}
@@ -76,14 +86,16 @@ jobs:
       - name: Setup global environment variables
         run: |
           echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
-          echo "ARTIFACT_NAME=${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME=${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-os-${{ inputs.os }}" >> $GITHUB_ENV
+        shell: bash
 
       - name: Cache Composer dependencies
         uses: actions/cache@v3
         with:
           path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
-          key: ${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-${{ hashFiles('**/composer.*') }}
+          key: ${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-os-${{ inputs.os }}-${{ hashFiles('**/composer.*') }}
           restore-keys: |
+            ${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-os-${{ inputs.os }}-
             ${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-
             ${{ inputs.job-id || github.job }}-
 
@@ -107,10 +119,12 @@ jobs:
         env:
           COVERAGE_OPTION: ${{ inputs.enable-coverage && format('--coverage-php build/cov/coverage-{0}.cov', env.ARTIFACT_NAME) || '--no-coverage' }}
           GROUP_OPTION: ${{ inputs.group-name && format('--group {0}', inputs.group-name) || '' }}
+        shell: bash
 
       - name: Run tests
-        run: script -e -c "vendor/bin/phpunit --color=always ${{ env.EXTRA_PHPUNIT_OPTIONS }}"
+        run: vendor/bin/phpunit --color=always ${{ env.EXTRA_PHPUNIT_OPTIONS }}
         env:
+          DB: SQLite3
           TACHYCARDIA_MONITOR_GA: ${{ inputs.enable-profiling && 'enabled' || '' }}
           TERM: xterm-256color
 

@@ -27,5 +27,6 @@ jobs:
     with:
       job-name: Automatic Code Review [PHP 8.1]
       php-version: '8.1'
+      os: ubuntu-22.04
       job-id: auto-review-tests
       group-name: AutoReview
