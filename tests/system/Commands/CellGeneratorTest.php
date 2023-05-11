@@ -46,35 +46,54 @@ final class CellGeneratorTest extends CIUnitTestCase
         return file_get_contents($filepath) ?: '';
     }
 
-    public function testGenerateCell()
+    public function testGenerateCell(): void
     {
         command('make:cell RecentCell');
 
         // Check the class was generated
         $file = APPPATH . 'Cells/RecentCell.php';
+        $this->assertStringContainsString('File created: ' . clean_path($file), $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
-        $contents = $this->getFileContents($file);
-        $this->assertStringContainsString('class RecentCell extends Cell', $contents);
+        $this->assertStringContainsString('class RecentCell extends Cell', $this->getFileContents($file));
 
         // Check the view was generated
-        $file = APPPATH . 'Cells/recent_cell.php';
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
+        $file = APPPATH . 'Cells/recent.php';
+        $this->assertStringContainsString('File created: ' . clean_path($file), $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
+        $this->assertSame("<div>\n    <!-- Your HTML here -->\n</div>\n", $this->getFileContents($file));
     }
 
-    public function testGenerateCellSimpleName()
+    public function testGenerateCellSimpleName(): void
     {
         command('make:cell Another');
 
         // Check the class was generated
-        $file = APPPATH . 'Cells/Another.php';
+        $file = APPPATH . 'Cells/AnotherCell.php';
+        $this->assertStringContainsString('File created: ' . clean_path($file), $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
-        $contents = $this->getFileContents($file);
-        $this->assertStringContainsString('class Another extends Cell', $contents);
+        $this->assertStringContainsString('class AnotherCell extends Cell', $this->getFileContents($file));
 
         // Check the view was generated
         $file = APPPATH . 'Cells/another.php';
-        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('File created: ' . clean_path($file), $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
+        $this->assertSame("<div>\n    <!-- Your HTML here -->\n</div>\n", $this->getFileContents($file));
+    }
+
+    public function testGenerateCellWithCellInBetween(): void
+    {
+        command('make:cell PippoCellular');
+
+        // Check the class was generated
+        $file = APPPATH . 'Cells/PippoCellularCell.php';
+        $this->assertStringContainsString('File created: ' . clean_path($file), $this->getStreamFilterBuffer());
+        $this->assertFileExists($file);
+        $this->assertStringContainsString('class PippoCellularCell extends Cell', $this->getFileContents($file));
+
+        // Check the view was generated
+        $file = APPPATH . 'Cells/pippo_cellular.php';
+        $this->assertStringContainsString('File created: ' . clean_path($file), $this->getStreamFilterBuffer());
+        $this->assertFileExists($file);
+        $this->assertSame("<div>\n    <!-- Your HTML here -->\n</div>\n", $this->getFileContents($file));
     }
 }
