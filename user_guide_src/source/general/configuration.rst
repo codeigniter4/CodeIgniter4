@@ -107,7 +107,7 @@ The loaded environment variables are accessed using any of the following:
 .. warning:: Note that your settings from the **.env** file are added to Environment Variables. As a side effect, this means that if your CodeIgniter application is (for example) generating a ``var_dump($_ENV)`` or ``phpinfo()`` (for debugging or other valid reasons) **your secure credentials are publicly exposed**.
 
 Nesting Variables
-=================
+-----------------
 
 To save on typing, you can reuse variables that you've already specified in the file by wrapping the
 variable name within ``${...}``:
@@ -119,7 +119,7 @@ variable name within ``${...}``:
     TMP_DIR="${BASE_DIR}/tmp"
 
 Namespaced Variables
-====================
+--------------------
 
 There will be times when you will have several variables with the same name.
 The system needs a way of knowing what the correct setting should be.
