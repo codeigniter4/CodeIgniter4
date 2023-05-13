@@ -81,7 +81,7 @@ It has a large collection of variables your project might use that have been ass
 empty, dummy, or default values. You can use this file as a starting place for your
 application by either renaming the template to **.env**, or by making a copy of it named **.env**.
 
-.. important:: Make sure the **.env** file is NOT tracked by your version control system. For *git* that means adding it to **.gitignore**. Failure to do so could result in sensitive credentials being exposed to the public.
+.. warning:: Make sure the **.env** file is NOT tracked by your version control system. For *git* that means adding it to **.gitignore**. Failure to do so could result in sensitive credentials being exposed to the public.
 
 Setting Variables
 -----------------
