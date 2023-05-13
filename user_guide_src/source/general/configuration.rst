@@ -65,19 +65,25 @@ Environment Variables should also be used for anything private such as passwords
 
 .. _dotenv-file:
 
-Environment Variables and CodeIgniter
-=====================================
+Dotenv File
+===========
 
 CodeIgniter makes it simple and painless to set Environment Variables by using a "dotenv" file. The term comes from the file name, which starts with a dot before the text "env".
 
-CodeIgniter expects **.env** to be at the root of your project alongside the
-``app`` directories. There is a template file distributed with CodeIgniter that's
-located at the project root named **env** (Notice there's no dot (**.**) at the start?).
+Creating Dotenv File
+--------------------
+
+CodeIgniter expects the **.env** file to be at the root of your project alongside the
+**app** directories. There is a template file distributed with CodeIgniter that's
+located at the project root named **env** (Notice there's no dot (``.``) at the start?).
 It has a large collection of variables your project might use that have been assigned
 empty, dummy, or default values. You can use this file as a starting place for your
 application by either renaming the template to **.env**, or by making a copy of it named **.env**.
 
 .. important:: Make sure the **.env** file is NOT tracked by your version control system. For *git* that means adding it to **.gitignore**. Failure to do so could result in sensitive credentials being exposed to the public.
+
+Setting Variables
+-----------------
 
 Settings are stored in **.env** files as a simple a collection of name/value pairs separated by an equal sign.
 ::
@@ -88,7 +94,12 @@ Settings are stored in **.env** files as a simple a collection of name/value pai
 
 When your application runs, **.env** will be loaded automatically, and the variables put
 into the environment. If a variable already exists in the environment, it will NOT be
-overwritten. The loaded Environment variables are accessed using any of the following:
+overwritten.
+
+Getting Variables
+-----------------
+
+The loaded environment variables are accessed using any of the following:
 ``getenv()``, ``$_SERVER``, or ``$_ENV``.
 
 .. literalinclude:: configuration/005.php
