@@ -76,6 +76,7 @@ Creating Dotenv File
 CodeIgniter expects the **.env** file to be at the root of your project alongside the
 **app** directories. There is a template file distributed with CodeIgniter that's
 located at the project root named **env** (Notice there's no dot (``.``) at the start?).
+
 It has a large collection of variables your project might use that have been assigned
 empty, dummy, or default values. You can use this file as a starting place for your
 application by either renaming the template to **.env**, or by making a copy of it named **.env**.
