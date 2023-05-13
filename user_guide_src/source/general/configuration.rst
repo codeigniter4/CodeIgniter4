@@ -115,9 +115,9 @@ variable name within ``${...}``:
 
 ::
 
-    BASE_DIR="/var/webroot/project-root"
-    CACHE_DIR="${BASE_DIR}/cache"
-    TMP_DIR="${BASE_DIR}/tmp"
+    BASE_DIR = "/var/webroot/project-root"
+    CACHE_DIR = "${BASE_DIR}/cache"
+    TMP_DIR = "${BASE_DIR}/tmp"
 
 Namespaced Variables
 --------------------
@@ -134,7 +134,7 @@ prefix followed by a dot (.), and then the variable name itself.
 
     // not namespaced variables
     name = "George"
-    db=my_db
+    db = my_db
 
     // namespaced variables
     address.city = "Berlin"
