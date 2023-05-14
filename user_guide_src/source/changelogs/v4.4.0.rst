@@ -91,6 +91,9 @@ Libraries
 Helpers and Functions
 =====================
 
+- **Array:** Added :php:func:`array_group_by()` helper function to group data
+  values together. Supports dot-notation syntax.
+
 Others
 ======
 
