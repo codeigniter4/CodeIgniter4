@@ -551,10 +551,10 @@ class Entity implements JsonSerializable
      */
     protected function isMappedDbColumn(string $key): bool
     {
-        $maybeColumnName = $this->mapProperty($key);
+        $dbColumn = $this->mapProperty($key);
 
         // Property name which has mapped column name
-        if ($key !== $maybeColumnName) {
+        if ($key !== $dbColumn) {
             return false;
         }
 
