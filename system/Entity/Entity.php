@@ -553,7 +553,7 @@ class Entity implements JsonSerializable
     {
         $dbColumn = $this->mapProperty($key);
 
-        // Property name which has mapped column name
+        // The $key is a property name which has mapped db column name
         if ($key !== $dbColumn) {
             return false;
         }
