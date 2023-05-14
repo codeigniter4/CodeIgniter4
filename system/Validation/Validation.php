@@ -239,7 +239,7 @@ class Validation implements ValidationInterface
             }
 
             // Otherwise remove the if_exist rule and continue the process
-            $rules = array_diff($rules, ['if_exist']);
+            $rules = array_filter($rules, static fn ($rule) => $rule instanceof Closure || $rule !== 'if_exist');
         }
 
         if (in_array('permit_empty', $rules, true)) {
@@ -250,7 +250,7 @@ class Validation implements ValidationInterface
                 $passed = true;
 
                 foreach ($rules as $rule) {
-                    if (preg_match('/(.*?)\[(.*)\]/', $rule, $match)) {
+                    if (! $this->isClosure($rule) && preg_match('/(.*?)\[(.*)\]/', $rule, $match)) {
                         $rule  = $match[1];
                         $param = $match[2];
 
@@ -275,7 +275,7 @@ class Validation implements ValidationInterface
                 }
             }
 
-            $rules = array_diff($rules, ['permit_empty']);
+            $rules = array_filter($rules, static fn ($rule) => $rule instanceof Closure || $rule !== 'permit_empty');
         }
 
         foreach ($rules as $i => $rule) {
