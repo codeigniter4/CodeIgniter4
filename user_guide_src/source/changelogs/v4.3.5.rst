@@ -24,6 +24,8 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Validation:** Fixed a bug where a closure used in combination with ``permit_empty`` or ``if_exist`` rules was causing an error.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.

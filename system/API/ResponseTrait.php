@@ -13,7 +13,6 @@ namespace CodeIgniter\API;
 
 use CodeIgniter\Format\FormatterInterface;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 
@@ -21,9 +20,6 @@ use Config\Services;
  * Provides common, more readable, methods to provide
  * consistent HTTP responses under a variety of common
  * situations when working as an API.
- *
- * @property RequestInterface  $request
- * @property ResponseInterface $response
  */
 trait ResponseTrait
 {
