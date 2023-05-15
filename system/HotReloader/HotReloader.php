@@ -6,7 +6,6 @@ class HotReloader
 {
     public function run()
     {
-        ini_set('output_buffering', 'Off');
         ini_set('zlib.output_compression', 'Off');
 
         header("Cache-Control: no-store");
