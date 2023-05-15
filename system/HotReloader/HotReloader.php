@@ -32,6 +32,8 @@ class HotReloader
 
                 $this->sendEvent('reload', ['time' => date('Y-m-d H:i:s')]);
                 break;
+            } elseif (rand(1, 10) > 8) {
+                $this->sendEvent('ping', ['time' => date('Y-m-d H:i:s')]);
             }
 
             sleep(1);
