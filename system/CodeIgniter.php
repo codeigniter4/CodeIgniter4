@@ -1154,7 +1154,7 @@ class CodeIgniter
         $buffer = '';
 
         while (ob_get_level() > $this->bufferLevel) {
-            $buffer = ob_get_contents();
+            $buffer .= ob_get_contents();
             ob_end_clean();
         }
 
