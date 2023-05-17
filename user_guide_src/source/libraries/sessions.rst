@@ -353,11 +353,12 @@ destroy()
 ---------
 
 To clear the current session (for example, during a logout), you may
-simply use either PHP's `session_destroy() <https://www.php.net/session_destroy>`_
-function, or the library's ``destroy()`` method. Both will work in exactly the
-same way:
+simply use the library's ``destroy()`` method:
 
 .. literalinclude:: sessions/037.php
+
+This method will work in exactly the same way as PHP's
+`session_destroy() <https://www.php.net/session_destroy>`_ function.
 
 .. note:: This must be the last session-related operation that you do
     during the same request. All session data (including flashdata and
