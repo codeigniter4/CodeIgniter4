@@ -85,7 +85,7 @@ Image Quality
 
 ``save()`` can take an additional parameter ``$quality`` to alter the resulting image
 quality. Values range from 0 to 100 with 90 being the framework default. This parameter
-only applies to JPEG and WEBP images and will be ignored otherwise:
+only applies to JPEG and WEBP images, will be ignored otherwise:
 
 .. literalinclude:: images/005.php
 
