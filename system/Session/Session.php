@@ -226,7 +226,7 @@ class Session implements SessionInterface
         }
 
         if (session_status() === PHP_SESSION_ACTIVE) {
-            $this->logger->warning('Session: Sessions is enabled, and one exists.Please don\'t $session->start();');
+            $this->logger->warning('Session: Sessions is enabled, and one exists. Please don\'t $session->start();');
 
             return;
         }
