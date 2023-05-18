@@ -87,7 +87,7 @@ Image Quality
 quality. Values range from 0 to 100 with 90 being the framework default. This parameter
 only applies to JPEG and WEBP images, will be ignored otherwise:
 
-.. note:: Parameter ``$quality`` for WebP can be used since ``v4.4.0``
+.. note:: The parameter ``$quality`` for WebP can be used since v4.4.0.
 
 .. literalinclude:: images/005.php
 

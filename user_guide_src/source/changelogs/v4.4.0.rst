@@ -87,7 +87,7 @@ Libraries
 
 - **Validation:** Added ``Validation::getValidated()`` method that gets
   the actual validated data. See :ref:`validation-getting-validated-data` for details.
-- **Images:** Now WebP images can be used option ``$quality`` for compression.
+- **Images:** The option ``$quality`` can now be used to compress WebP images.
 
 Helpers and Functions
 =====================
