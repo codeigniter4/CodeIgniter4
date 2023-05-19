@@ -9,6 +9,12 @@ Release Date: Unreleased
     :local:
     :depth: 3
 
+SECURITY
+********
+
+- Fixed that ``Session::stop()`` did not destroy the session.
+  See :ref:`Session Library <session-stop>` for details.
+
 BREAKING
 ********
 
@@ -20,6 +26,9 @@ Changes
 
 Deprecations
 ************
+
+- **Session:** The :ref:`Session::stop() <session-stop>` method is deprecated.
+  Use the :ref:`Session::destroy() <session-destroy>` instead.
 
 Bugs Fixed
 **********

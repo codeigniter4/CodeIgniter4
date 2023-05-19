@@ -18,6 +18,18 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+Session::stop()
+===============
+
+Prior to v4.3.5, the ``Session::stop()`` method did not destroy the session due
+to a bug. This method has been modified to destroy the session, and now deprecated
+because it is exactly the same as the ``Session::destroy()`` method. So use the
+:ref:`Session::destroy <session-destroy>` method instead.
+
+If you have code to depend on the bug, replace it with ``session_regenerate_id(true)``.
+
+See also :ref:`Session Library <session-stop>`.
+
 Breaking Enhancements
 *********************
 
