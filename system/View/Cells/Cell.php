@@ -12,8 +12,8 @@
 namespace CodeIgniter\View\Cells;
 
 use CodeIgniter\Traits\PropertiesTrait;
+use LogicException;
 use ReflectionClass;
-use RuntimeException;
 
 /**
  * Class Cell
@@ -66,7 +66,7 @@ class Cell
      * current scope and captures the output buffer instead of
      * relying on the view service.
      *
-     * @throws RuntimeException
+     * @throws LogicException
      */
     final protected function view(?string $view, array $data = []): string
     {
@@ -90,16 +90,19 @@ class Cell
             $view = $directory . $view . '.php';
         }
 
-        foreach ([$view, $possibleView1 ?? '', $possibleView2 ?? ''] as $candidateView) {
-            if (is_file($candidateView)) {
-                $foundView = $candidateView;
-                break;
-            }
+        $candidateViews = array_filter(
+            [$view, $possibleView1 ?? '', $possibleView2 ?? ''],
+            static fn (string $path): bool => $path !== '' && is_file($path)
+        );
+
+        if ($candidateViews === []) {
+            throw new LogicException(sprintf(
+                'Cannot locate the view file for the "%s" cell.',
+                static::class
+            ));
         }
 
-        if (! isset($foundView)) {
-            throw new RuntimeException('Cannot locate the view file for the cell.');
-        }
+        $foundView = current($candidateViews);
 
         return (function () use ($properties, $foundView): string {
             extract($properties);

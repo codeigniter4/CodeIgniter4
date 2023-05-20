@@ -13,7 +13,7 @@ namespace CodeIgniter\View;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
-use RuntimeException;
+use LogicException;
 use Tests\Support\View\Cells\AdditionCell;
 use Tests\Support\View\Cells\AwesomeCell;
 use Tests\Support\View\Cells\BadCell;
@@ -69,8 +69,8 @@ final class ControlledCellTest extends CIUnitTestCase
 
     public function testCellThrowsExceptionWhenCannotFindTheViewFile()
     {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Cannot locate the view file for the cell.');
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Cannot locate the view file for the "Tests\\Support\\View\\Cells\\BadCell" cell.');
 
         view_cell(BadCell::class);
     }
