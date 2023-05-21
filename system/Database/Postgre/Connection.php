@@ -133,7 +133,9 @@ class Connection extends BaseConnection
         }
 
         $pgVersion                  = pg_version($this->connID);
-        $this->dataCache['version'] = $pgVersion['server'] ?? '';
+        $this->dataCache['version'] = isset($pgVersion['server']) ?
+            (preg_match('/^(\d+\.\d+)/', $pgVersion['server'], $matches) ? $matches[1] : '') :
+            '';
 
         return $this->dataCache['version'];
     }
