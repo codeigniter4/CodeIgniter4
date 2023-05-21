@@ -1,5 +1,5 @@
 ##############################
-Upgrading from 4.3.3 to 4.3.4
+Upgrading from 4.3.4 to 4.3.5
 ##############################
 
 Please refer to the upgrade instructions corresponding to your installation method.
@@ -15,24 +15,22 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Breaking Changes
 ****************
 
-Redirect Status Code
-====================
+Validation Placeholders
+=======================
 
-- Due to a bug fix, the status codes of redirects may be changed. See
-  :ref:`ChangeLog v4.3.4 <v434-redirect-status-code>` and if the code is not
-  what you want, :ref:`specify status codes <response-redirect-status-code>`.
+- To use :ref:`validation-placeholders` securely, please remember to create a validation rule for the field you will use as a placeholder.
 
-Forge::modifyColumn() and NULL
-==============================
+Session::stop()
+===============
 
-A bug fix may have changed the NULL constraint in the result of
-:ref:`$forge->modifyColumn() <db-forge-modifyColumn>`. See
-:ref:`Change Log <v434-forge-modifycolumn>`.
-To set the desired NULL constraint, change ``Forge::modifyColumn()`` to always
-specify the ``null`` key.
+Prior to v4.3.5, the ``Session::stop()`` method did not destroy the session due
+to a bug. This method has been modified to destroy the session, and now deprecated
+because it is exactly the same as the ``Session::destroy()`` method. So use the
+:ref:`Session::destroy <session-destroy>` method instead.
 
-Note that the bug may have changed unexpected NULL constraints in previous
-versions.
+If you have code to depend on the bug, replace it with ``session_regenerate_id(true)``.
+
+See also :ref:`Session Library <session-stop>`.
 
 Project Files
 *************
@@ -63,4 +61,3 @@ many will be simple comments or formatting that have no effect on the runtime:
 - app/Config/App.php
 - app/Config/Generators.php
 - composer.json
-- public/index.php

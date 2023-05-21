@@ -232,7 +232,7 @@ class Session implements SessionInterface
         }
 
         if (session_status() === PHP_SESSION_ACTIVE) {
-            $this->logger->warning('Session: Sessions is enabled, and one exists.Please don\'t $session->start();');
+            $this->logger->warning('Session: Sessions is enabled, and one exists. Please don\'t $session->start();');
 
             return;
         }
@@ -272,21 +272,13 @@ class Session implements SessionInterface
     }
 
     /**
-     * Does a full stop of the session:
+     * Destroys the current session.
      *
-     * - destroys the session
-     * - unsets the session id
-     * - destroys the session cookie
+     * @deprecated Use destroy() instead.
      */
     public function stop()
     {
-        setcookie(
-            $this->sessionCookieName,
-            session_id(),
-            ['expires' => 1, 'path' => $this->cookie->getPath(), 'domain' => $this->cookie->getDomain(), 'secure' => $this->cookie->isSecure(), 'httponly' => true]
-        );
-
-        session_regenerate_id(true);
+        $this->destroy();
     }
 
     /**

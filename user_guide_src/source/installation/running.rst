@@ -25,7 +25,7 @@ Initial Configuration
 
 #. Open the **app/Config/App.php** file with a text editor and
    set your base URL to ``$baseURL``. If you need more flexibility, the baseURL may
-   be set within the **.env** file as ``app.baseURL = 'http://example.com/'``.
+   be set within the :ref:`.env <dotenv-file>` file as ``app.baseURL = 'http://example.com/'``.
    (Always use a trailing slash on your base URL!)
 
     .. note:: If you don't set the ``baseURL`` correctly, in development mode,

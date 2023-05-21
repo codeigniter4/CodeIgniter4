@@ -235,15 +235,15 @@ trait GeneratorTrait
         $component = singular($this->component);
 
         /**
-         * @see https://regex101.com/r/a5KNCR/1
+         * @see https://regex101.com/r/a5KNCR/2
          */
-        $pattern = sprintf('/([a-z][a-z0-9_\/\\\\]+)(%s)/i', $component);
+        $pattern = sprintf('/([a-z][a-z0-9_\/\\\\]+)(%s)$/i', $component);
 
         if (preg_match($pattern, $class, $matches) === 1) {
             $class = $matches[1] . ucfirst($matches[2]);
         }
 
-        if ($this->enabledSuffixing && $this->getOption('suffix') && ! strripos($class, $component)) {
+        if ($this->enabledSuffixing && $this->getOption('suffix') && preg_match($pattern, $class) !== 1) {
             $class .= ucfirst($component);
         }
 

@@ -345,6 +345,11 @@ intend to reuse that same key in the same request, you'd want to use
 Destroying a Session
 ====================
 
+.. _session-destroy:
+
+destroy()
+---------
+
 To clear the current session (for example, during a logout), you may
 simply use either PHP's `session_destroy() <https://www.php.net/session_destroy>`_
 function, or the library's ``destroy()`` method. Both will work in exactly the
@@ -357,11 +362,20 @@ same way:
     tempdata) will be destroyed permanently and functions will be
     unusable during the same request after you destroy the session.
 
-You may also use the ``stop()`` method to completely kill the session
-by removing the old session ID, destroying all data, and destroying
-the cookie that contained the session ID:
+.. _session-stop:
 
-.. literalinclude:: sessions/038.php
+stop()
+------
+
+.. deprecated:: 4.3.5
+
+The session class also has the ``stop()`` method.
+
+.. warning:: Prior to v4.3.5, this method did not destroy the session due to a bug.
+
+Starting with v4.3.5, this method has been modified to destroy the session.
+However, it is deprecated because it is exactly the same as the ``destroy()``
+method. Use the ``destroy()`` method instead.
 
 Accessing Session Metadata
 ==========================
