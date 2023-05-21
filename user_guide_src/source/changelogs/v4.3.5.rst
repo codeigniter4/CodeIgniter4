@@ -24,6 +24,12 @@ Message Changes
 Changes
 *******
 
+- **make:cell** When creating a new cell, the controller would always have the ``Cell`` suffixed to the class name.
+    For the view file, the final ``_cell`` is always removed.
+- **Cells** For compatibility with previous versions, view filenames ending with ``_cell`` can still be
+    located by the ``Cell`` as long as auto-detection of view file is enabled (via setting the ``$view`` property
+    to an empty string).
+
 Deprecations
 ************
 
@@ -34,6 +40,8 @@ Bugs Fixed
 **********
 
 - **Validation:** Fixed a bug where a closure used in combination with ``permit_empty`` or ``if_exist`` rules was causing an error.
+- **make:cell** Fixed generating view files as classes.
+- **make:cell** Fixed treatment of single word class input for case-insensitive OS.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

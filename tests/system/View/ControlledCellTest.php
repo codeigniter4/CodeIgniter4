@@ -13,8 +13,10 @@ namespace CodeIgniter\View;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
+use LogicException;
 use Tests\Support\View\Cells\AdditionCell;
 use Tests\Support\View\Cells\AwesomeCell;
+use Tests\Support\View\Cells\BadCell;
 use Tests\Support\View\Cells\ColorsCell;
 use Tests\Support\View\Cells\GreetingCell;
 use Tests\Support\View\Cells\ListerCell;
@@ -63,6 +65,14 @@ final class ControlledCellTest extends CIUnitTestCase
         $result = view_cell(RenderedExtraDataNotice::class);
 
         $this->assertStringContainsString('42, 23, 16, 15, 8, 4', $result);
+    }
+
+    public function testCellThrowsExceptionWhenCannotFindTheViewFile()
+    {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Cannot locate the view file for the "Tests\\Support\\View\\Cells\\BadCell" cell.');
+
+        view_cell(BadCell::class);
     }
 
     public function testCellWithParameters()
