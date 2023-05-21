@@ -360,7 +360,16 @@ public function recentPosts(string $category, int $limit)
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.3.0.</span></p>
 </div>
-<p>Controlled Cells have two primary goals: to make it as fast as possible to build the cell, and provide additional logic and flexibility to your views, if they need it. The class must extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\View\Cells\Cell</span></code>. They should have a view file in the same folder. By convention the class name should be PascalCase and the view should be the snake_cased version of the class name. So, for example, if you have a <code class="docutils literal notranslate"><span class="pre">MyCell</span></code> class, the view file should be <code class="docutils literal notranslate"><span class="pre">my_cell.php</span></code>.</p>
+<p>Controlled cells have two primary goals: to make it as fast as possible to build the cell, and provide additional logic and
+flexibility to your views, if they need it. The class must extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\View\Cells\Cell</span></code>. They should have a view file
+in the same folder. By convention, the class name should be in PascalCase suffixed with <code class="docutils literal notranslate"><span class="pre">Cell</span></code> and the view should be
+the snake_cased version of the class name, without the suffix. For example, if you have a <code class="docutils literal notranslate"><span class="pre">MyCell</span></code> class, the view file
+should be <code class="docutils literal notranslate"><span class="pre">my.php</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to v4.3.5, the generated view file ends with <code class="docutils literal notranslate"><span class="pre">_cell.php</span></code>. Though v4.3.5 and newer will generate view files
+without the <code class="docutils literal notranslate"><span class="pre">_cell</span></code> suffix, existing view files will still be located and loaded.</p>
+</div>
 <section id="creating-a-controlled-cell">
 <h3><a class="toc-backref" href="#id6">Creating a Controlled Cell</a><a class="headerlink" href="#creating-a-controlled-cell" title="Permalink to this headline"></a></h3>
 <p>At the most basic level, all you need to implement within the class are public properties. These properties will be made available to the view file automatically. Implementing the AlertMessage from above as a Controlled Cell would look like this:</p>
@@ -375,7 +384,7 @@ public function recentPosts(string $category, int $limit)
     <span class="k">public</span> <span class="nv">$message</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="c1">// app/Cells/alert_message_cell.php</span>
+<span class="c1">// app/Cells/alert_message.php</span>
 <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;alert alert-&lt;?= esc(</span><span class="si">$type</span><span class="s2">, &#39;attr&#39;) ?&gt;&quot;</span><span class="o">&gt;</span>
     <span class="o">&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$message</span><span class="p">)</span> <span class="cp">?&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
@@ -467,7 +476,7 @@ public function recentPosts(string $category, int $limit)
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="c1">// app/Cells/alert_message_cell.php</span>
+<span class="c1">// app/Cells/alert_message.php</span>
 <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">type</span> <span class="o">-</span> <span class="o">&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$type</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>message - <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$message</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
@@ -499,7 +508,7 @@ initialization.</p>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="c1">// app/Cells/recent_posts_cell.php</span>
+<span class="c1">// app/Cells/recent_posts.php</span>
 <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
     <span class="o">&lt;?</span><span class="nx">php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$posts</span> <span class="k">as</span> <span class="nv">$post</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
         <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">linkPost</span><span class="p">(</span><span class="nv">$post</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
@@ -581,7 +590,7 @@ as the fourth parameter:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 19, 2023.
+      <span class="lastupdated">Last updated on May 21, 2023.
       </span></p>
   </div>
 
