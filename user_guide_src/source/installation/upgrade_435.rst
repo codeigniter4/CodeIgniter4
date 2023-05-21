@@ -18,6 +18,12 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+Validation Placeholders
+=======================
+
+- To use :ref:`validation-placeholders` securely, please remember to create a validation rule for the field you will use as a placeholder.
+  
+
 Session::stop()
 ===============
 

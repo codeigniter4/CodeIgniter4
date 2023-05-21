@@ -12,6 +12,9 @@ Release Date: Unreleased
 SECURITY
 ********
 
+- *Remote Code Execution Vulnerability in Validation Placeholders* was fixed.
+  See the `Security advisory GHSA-m6m8-6gq8-c9fj <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-m6m8-6gq8-c9fj>`_
+  for more information.
 - Fixed that ``Session::stop()`` did not destroy the session.
   See :ref:`Session Library <session-stop>` for details.
 
