@@ -342,6 +342,30 @@ intend to reuse that same key in the same request, you'd want to use
 
 .. literalinclude:: sessions/036.php
 
+Closing a Session
+=================
+
+.. _session-close:
+
+close()
+-------
+
+.. versionadded:: 4.4.0
+
+To close the current session manually after you no longer need it, use the
+``close()`` method:
+
+.. literalinclude:: sessions/044.php
+
+You do not have to close the session manually, PHP will close it automatically
+after your script terminated. But as session data is locked to prevent concurrent
+writes only one request may operate on a session at any time. You may improve
+your site performance by closing the session as soon as all changes to session
+data are done.
+
+This method will work in exactly the same way as PHP's
+`session_write_close() <https://www.php.net/session_write_close>`_ function.
+
 Destroying a Session
 ====================
 
@@ -543,7 +567,7 @@ DatabaseHandler Driver
     supported, due to lack of advisory locking mechanisms on other
     platforms. Using sessions without locks can cause all sorts of
     problems, especially with heavy usage of AJAX, and we will not
-    support such cases. Use ``session_write_close()`` after you've
+    support such cases. Use the :ref:`session-close` method after you've
     done processing session data if you're having performance
     issues.
 

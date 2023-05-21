@@ -444,6 +444,20 @@ class Session implements SessionInterface
     }
 
     /**
+     * Writes session data and close the current session.
+     *
+     * @return void
+     */
+    public function close()
+    {
+        if (ENVIRONMENT === 'testing') {
+            return;
+        }
+
+        session_write_close();
+    }
+
+    /**
      * Sets user data into the session.
      *
      * If $data is a string, then it is interpreted as a session property
