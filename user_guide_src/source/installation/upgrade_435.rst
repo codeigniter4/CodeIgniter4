@@ -12,9 +12,6 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-Mandatory File Changes
-**********************
-
 Breaking Changes
 ****************
 
@@ -22,7 +19,6 @@ Validation Placeholders
 =======================
 
 - To use :ref:`validation-placeholders` securely, please remember to create a validation rule for the field you will use as a placeholder.
-  
 
 Session::stop()
 ===============
@@ -35,9 +31,6 @@ because it is exactly the same as the ``Session::destroy()`` method. So use the
 If you have code to depend on the bug, replace it with ``session_regenerate_id(true)``.
 
 See also :ref:`Session Library <session-stop>`.
-
-Breaking Enhancements
-*********************
 
 Project Files
 *************
@@ -57,7 +50,7 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- @TODO
+- app/Config/Generators.php
 
 All Changes
 ===========
@@ -65,4 +58,6 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- app/Config/App.php
+- app/Config/Generators.php
+- composer.json
