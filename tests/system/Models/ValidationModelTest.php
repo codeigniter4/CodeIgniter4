@@ -242,6 +242,7 @@ final class ValidationModelTest extends LiveModelTestCase
     {
         $config = new class () extends Validation {
             public $grouptest = [
+                'id'   => 'is_natural_no_zero',
                 'name' => [
                     'required',
                     'min_length[3]',

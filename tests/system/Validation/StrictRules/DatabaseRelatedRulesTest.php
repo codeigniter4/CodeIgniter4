@@ -121,7 +121,10 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
             'email' => 'derek@world.co.uk',
         ];
 
-        $this->validation->setRules(['email' => 'is_unique[user.email,id,{id}]']);
+        $this->validation->setRules([
+            'id'    => 'is_natural_no_zero',
+            'email' => 'is_unique[user.email,id,{id}]',
+        ]);
         $this->assertTrue($this->validation->run($data));
     }
 
@@ -221,7 +224,10 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
             'id'    => $row->id,
             'email' => 'derek@world.co.uk',
         ];
-        $this->validation->setRules(['email' => 'is_not_unique[user.email,id,{id}]']);
+        $this->validation->setRules([
+            'id'    => 'is_natural_no_zero',
+            'email' => 'is_not_unique[user.email,id,{id}]',
+        ]);
         $this->assertTrue($this->validation->run($data));
     }
 

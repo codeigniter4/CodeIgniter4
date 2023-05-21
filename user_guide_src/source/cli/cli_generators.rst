@@ -59,12 +59,11 @@ Usage:
 
 Argument:
 =========
-* ``name``: The name of the cell class. It should be in PascalCase.
+* ``name``: The name of the cell class. It should be in PascalCase. **[REQUIRED]**
 
 Options:
 ========
 * ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
-* ``--suffix``: Append the component suffix to the generated class name.
 * ``--force``: Set this flag to overwrite existing files on destination.
 
 make:command

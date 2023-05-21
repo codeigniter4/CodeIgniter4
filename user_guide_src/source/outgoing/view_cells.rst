@@ -80,7 +80,14 @@ Controlled Cells
 
 .. versionadded:: 4.3.0
 
-Controlled Cells have two primary goals: to make it as fast as possible to build the cell, and provide additional logic and flexibility to your views, if they need it. The class must extend ``CodeIgniter\View\Cells\Cell``. They should have a view file in the same folder. By convention the class name should be PascalCase and the view should be the snake_cased version of the class name. So, for example, if you have a ``MyCell`` class, the view file should be ``my_cell.php``.
+Controlled cells have two primary goals: to make it as fast as possible to build the cell, and provide additional logic and
+flexibility to your views, if they need it. The class must extend ``CodeIgniter\View\Cells\Cell``. They should have a view file
+in the same folder. By convention, the class name should be in PascalCase suffixed with ``Cell`` and the view should be
+the snake_cased version of the class name, without the suffix. For example, if you have a ``MyCell`` class, the view file
+should be ``my.php``.
+
+.. note:: Prior to v4.3.5, the generated view file ends with ``_cell.php``. Though v4.3.5 and newer will generate view files
+    without the ``_cell`` suffix, existing view files will still be located and loaded.
 
 Creating a Controlled Cell
 ==========================
@@ -99,7 +106,7 @@ At the most basic level, all you need to implement within the class are public p
         public $message;
     }
 
-    // app/Cells/alert_message_cell.php
+    // app/Cells/alert_message.php
     <div class="alert alert-<?= esc($type, 'attr') ?>">
         <?= esc($message) ?>
     </div>
@@ -199,7 +206,7 @@ If you need to perform additional logic for one or more properties you can use c
         }
     }
 
-    // app/Cells/alert_message_cell.php
+    // app/Cells/alert_message.php
     <div>
         <p>type - <?= esc($type) ?></p>
         <p>message - <?= esc($message) ?></p>
@@ -230,7 +237,7 @@ Sometimes you need to perform additional logic for the view, but you don't want 
         }
     }
 
-    // app/Cells/recent_posts_cell.php
+    // app/Cells/recent_posts.php
     <ul>
         <?php foreach ($posts as $post): ?>
             <li><?= $this->linkPost($post) ?></li>
