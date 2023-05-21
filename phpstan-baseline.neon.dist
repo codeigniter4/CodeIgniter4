@@ -66,11 +66,6 @@ parameters:
 			path: system/Database/MySQLi/PreparedQuery.php
 
 		-
-			message: "#^Strict comparison using \\=\\=\\= between array<string, int|string|null> and false will always evaluate to false\\.$#"
-			count: 1
-			path: system/Database/Postgre/Connection.php
-
-		-
 			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$schema\\.$#"
 			count: 2
 			path: system/Database/SQLSRV/Builder.php
