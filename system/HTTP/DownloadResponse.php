@@ -252,6 +252,13 @@ class DownloadResponse extends Response
      */
     public function send()
     {
+        // Turn off output buffering completely, even if php.ini output_buffering is not off
+        if (ENVIRONMENT !== 'testing') {
+            while (ob_get_level() > 0) {
+                ob_end_clean();
+            }
+        }
+
         $this->buildHeaders();
         $this->sendHeaders();
         $this->sendBody();
