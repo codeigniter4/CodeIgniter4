@@ -173,6 +173,8 @@ outer array's key is the name of the section on the Vars tab:
 
 .. literalinclude:: debugging/006.php
 
+.. _debug-toolbar-hot-reload:
+
 Hot Reloading
 =============
 
