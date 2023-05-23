@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\HotReloader;
 
 use CodeIgniter\Exceptions\FrameworkException;
@@ -10,7 +19,7 @@ use RecursiveIteratorIterator;
 /**
  * @internal
  */
-class DirectoryHasher
+final class DirectoryHasher
 {
     /**
      * Generates an md5 value of all directories that are watched by the
@@ -53,8 +62,8 @@ class DirectoryHasher
         }
 
         $directory = new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS);
-        $filter = new IteratorFilter($directory);
-        $iterator = new RecursiveIteratorIterator($filter);
+        $filter    = new IteratorFilter($directory);
+        $iterator  = new RecursiveIteratorIterator($filter);
 
         $hashes = [];
 

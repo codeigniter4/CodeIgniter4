@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\HotReloader;
 
 use RecursiveFilterIterator;
@@ -8,7 +17,7 @@ use RecursiveIterator;
 /**
  * @internal
  */
-class IteratorFilter extends RecursiveFilterIterator implements RecursiveIterator
+final class IteratorFilter extends RecursiveFilterIterator implements RecursiveIterator
 {
     private array $watchedExtensions = [];
 
@@ -37,6 +46,7 @@ class IteratorFilter extends RecursiveFilterIterator implements RecursiveIterato
 
         // Only consume files of interest.
         $ext = trim(strtolower($this->current()->getExtension()), '. ');
-        return in_array($ext, $this->watchedExtensions);
+
+        return in_array($ext, $this->watchedExtensions, true);
     }
 }

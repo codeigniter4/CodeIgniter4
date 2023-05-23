@@ -1,16 +1,28 @@
 <?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Tests\System\HotReloader;
 
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\HotReloader\DirectoryHasher;
 use CodeIgniter\Test\CIUnitTestCase;
 
-class DirectoryHasherTest extends CIUnitTestCase
+/**
+ * @internal
+ */
+final class DirectoryHasherTest extends CIUnitTestCase
 {
     protected DirectoryHasher $hasher;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -38,7 +50,7 @@ class DirectoryHasherTest extends CIUnitTestCase
         $hash1 = $this->hasher->hashDirectory(APPPATH);
         $hash2 = $this->hasher->hashDirectory(SYSTEMPATH);
 
-        $this->assertNotEquals($hash1, $hash2);
+        $this->assertNotSame($hash1, $hash2);
     }
 
     public function testRepeatableHashes()
@@ -46,13 +58,13 @@ class DirectoryHasherTest extends CIUnitTestCase
         $hash1 = $this->hasher->hashDirectory(APPPATH);
         $hash2 = $this->hasher->hashDirectory(APPPATH);
 
-        $this->assertEquals($hash1, $hash2);
+        $this->assertSame($hash1, $hash2);
     }
 
     public function testHash()
     {
         $expected = md5(implode('', $this->hasher->hashApp()));
 
-        $this->assertEquals($expected, $this->hasher->hash());
+        $this->assertSame($expected, $this->hasher->hash());
     }
 }

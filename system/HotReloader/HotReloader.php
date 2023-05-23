@@ -1,28 +1,37 @@
 <?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\HotReloader;
 
 /**
  * @internal
  */
-class HotReloader
+final class HotReloader
 {
     public function run()
     {
         ini_set('zlib.output_compression', 'Off');
 
-        header("Cache-Control: no-store");
-        header("Content-Type: text/event-stream");
+        header('Cache-Control: no-store');
+        header('Content-Type: text/event-stream');
         header('Access-Control-Allow-Methods: GET');
 
         ob_end_clean();
         set_time_limit(0);
 
-        $hasher = new DirectoryHasher();
+        $hasher  = new DirectoryHasher();
         $appHash = $hasher->hash();
 
         while (true) {
-            if( connection_status() != CONNECTION_NORMAL or connection_aborted() ) {
+            if (connection_status() !== CONNECTION_NORMAL || connection_aborted()) {
                 break;
             }
 
@@ -34,7 +43,8 @@ class HotReloader
 
                 $this->sendEvent('reload', ['time' => date('Y-m-d H:i:s')]);
                 break;
-            } elseif (rand(1, 10) > 8) {
+            }
+            if (mt_rand(1, 10) > 8) {
                 $this->sendEvent('ping', ['time' => date('Y-m-d H:i:s')]);
             }
 
@@ -48,7 +58,7 @@ class HotReloader
     private function sendEvent(string $event, array $data): void
     {
         echo "event: {$event}\n";
-        echo "data: " . json_encode($data) ."\n\n";
+        echo 'data: ' . json_encode($data) . "\n\n";
 
         ob_flush();
         flush();
