@@ -29,6 +29,11 @@ $finder = Finder::create()
         'ThirdParty',
         'Validation/Views',
     ])
+    ->notPath([
+        '_support/View/Cells/multiplier.php',
+        '_support/View/Cells/colors.php',
+        '_support/View/Cells/addition.php',
+    ])
     ->notName('#Foobar.php$#')
     ->append([
         __FILE__,
