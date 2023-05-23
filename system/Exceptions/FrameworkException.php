@@ -33,6 +33,11 @@ class FrameworkException extends RuntimeException implements ExceptionInterface
         return new static(lang('Core.invalidFile', [$path]));
     }
 
+    public static function forInvalidDirectory(string $path)
+    {
+        return new static(lang('Core.invalidDirectory', [$path]));
+    }
+
     public static function forCopyError(string $path)
     {
         return new static(lang('Core.copyError', [$path]));
