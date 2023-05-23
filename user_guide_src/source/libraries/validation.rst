@@ -696,6 +696,11 @@ If your method needs to work with parameters, the function will need a minimum o
 2. the parameter string (``$params``)
 3. an array with all of the data that was submitted the form (``$data``)
 
+.. warning:: The other field values in ``$data`` is unvalidated (or maybe invalid)
+    data. Using unvalidated input data is a source of vulnerability. You must
+    perform the necessary validation within your custom rules before using the
+    data in ``$data``.
+
 The ``$data`` array is especially handy
 for rules like ``required_with`` that needs to check the value of another submitted field to base its result on:
 
