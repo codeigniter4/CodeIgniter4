@@ -113,6 +113,6 @@ class Toolbar extends BaseConfig
      * used to determine if the hot-reload feature should reload the page or not.
      */
     public array $watchedExtensions = [
-        'php', 'css', 'js', 'html', 'svg', 'json', 'env'
+        'php', 'css', 'js', 'html', 'svg', 'json', 'env',
     ];
 }

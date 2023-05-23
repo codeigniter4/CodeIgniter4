@@ -4,6 +4,7 @@ namespace Config;
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
+use CodeIgniter\HotReloader\HotReloader;
 
 /*
  * --------------------------------------------------------------------
@@ -46,8 +47,8 @@ Events::on('pre_system', static function () {
         Services::toolbar()->respond();
         // Hot Reload route - for framework use on the hot reloader.
         if (ENVIRONMENT === 'development') {
-            Services::routes()->get('__hot-reload', function() {
-                (new \CodeIgniter\HotReloader\HotReloader())->run();
+            Services::routes()->get('__hot-reload', static function() {
+                (new HotReloader())->run();
             });
         }
     }

@@ -7,6 +7,9 @@ use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
+/**
+ * @internal
+ */
 class DirectoryHasher
 {
     /**

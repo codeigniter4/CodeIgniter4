@@ -2,6 +2,9 @@
 
 namespace CodeIgniter\HotReloader;
 
+/**
+ * @internal
+ */
 class HotReloader
 {
     public function run()

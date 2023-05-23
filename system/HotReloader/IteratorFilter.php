@@ -5,7 +5,10 @@ namespace CodeIgniter\HotReloader;
 use RecursiveFilterIterator;
 use RecursiveIterator;
 
-class IteratorFilter extends RecursiveFilterIterator
+/**
+ * @internal
+ */
+class IteratorFilter extends RecursiveFilterIterator implements RecursiveIterator
 {
     private array $watchedExtensions = [];
 
