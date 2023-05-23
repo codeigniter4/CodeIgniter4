@@ -54,10 +54,6 @@ final class CodeIgniterTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        if (ob_get_level() > 1) {
-            ob_end_clean();
-        }
-
         $this->resetServices();
     }
 
@@ -71,6 +67,16 @@ final class CodeIgniterTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
+    }
+
+    public function testOutputBufferingControl()
+    {
+        ob_start();
+        $this->codeigniter->run();
+        ob_get_clean();
+
+        // 1 phpunit output buffering level
+        $this->assertSame(1, ob_get_level());
     }
 
     public function testRunEmptyDefaultRouteReturnResponse()
@@ -828,10 +834,6 @@ final class CodeIgniterTest extends CIUnitTestCase
             $output = ob_get_clean();
 
             $this->assertSame($string, $output);
-
-            if (ob_get_level() > 1) {
-                ob_end_clean();
-            }
         }
 
         // Calculate how much cached items exist in the cache after the test requests

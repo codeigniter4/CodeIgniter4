@@ -144,14 +144,6 @@ trait FeatureTestTrait
      */
     public function call(string $method, string $path, ?array $params = null)
     {
-        $buffer = \ob_get_level();
-
-        // Clean up any open output buffers
-        // not relevant to unit testing
-        if (\ob_get_level() > 0 && (! isset($this->clean) || $this->clean === true)) {
-            \ob_end_clean(); // @codeCoverageIgnore
-        }
-
         // Simulate having a blank session
         $_SESSION                  = [];
         $_SERVER['REQUEST_METHOD'] = $method;
@@ -180,22 +172,8 @@ trait FeatureTestTrait
             ->setRequest($request)
             ->run($routes, true);
 
-        $output = \ob_get_contents();
-        if (empty($response->getBody()) && ! empty($output)) {
-            $response->setBody($output);
-        }
-
         // Reset directory if it has been set
         Services::router()->setDirectory(null);
-
-        // Ensure the output buffer is identical so no tests are risky
-        while (\ob_get_level() > $buffer) {
-            \ob_end_clean(); // @codeCoverageIgnore
-        }
-
-        while (\ob_get_level() < $buffer) {
-            \ob_start(); // @codeCoverageIgnore
-        }
 
         return new TestResponse($response);
     }

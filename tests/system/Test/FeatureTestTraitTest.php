@@ -74,6 +74,24 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertSame(200, $response->response()->getStatusCode());
     }
 
+    public function testClosureWithEcho()
+    {
+        $this->withRoutes([
+            [
+                'get',
+                'home',
+                static function () { echo 'test echo'; },
+            ],
+        ]);
+
+        $response = $this->get('home');
+        $this->assertInstanceOf(TestResponse::class, $response);
+        $this->assertInstanceOf(Response::class, $response->response());
+        $this->assertTrue($response->isOK());
+        $this->assertSame('test echo', $response->response()->getBody());
+        $this->assertSame(200, $response->response()->getStatusCode());
+    }
+
     public function testCallPost()
     {
         $this->withRoutes([

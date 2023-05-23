@@ -36,6 +36,7 @@ use Kint\Renderer\CliRenderer;
 use Kint\Renderer\RichRenderer;
 use Locale;
 use LogicException;
+use Throwable;
 
 /**
  * This class is the core of the framework, and will analyse the
@@ -163,6 +164,11 @@ class CodeIgniter
      * Whether to return Response object or send response.
      */
     protected bool $returnResponse = false;
+
+    /**
+     * Application output buffering level
+     */
+    protected int $bufferLevel;
 
     /**
      * Constructor.
@@ -367,6 +373,7 @@ class CodeIgniter
         try {
             return $this->handleRequest($routes, $cacheConfig, $returnResponse);
         } catch (RedirectException $e) {
+            $this->outputBufferingEnd();
             $logger = Services::logger();
             $logger->info('REDIRECTED ROUTE at ' . $e->getMessage());
 
@@ -389,6 +396,10 @@ class CodeIgniter
             if ($return instanceof ResponseInterface) {
                 return $return;
             }
+        } catch (Throwable $e) {
+            $this->outputBufferingEnd();
+
+            throw $e;
         }
     }
 
@@ -810,7 +821,7 @@ class CodeIgniter
         $this->benchmark->stop('bootstrap');
         $this->benchmark->start('routing');
 
-        ob_start();
+        $this->outputBufferingStart();
 
         $this->controller = $this->router->handle($path);
         $this->method     = $this->router->methodName();
@@ -979,15 +990,8 @@ class CodeIgniter
         // Display 404 Errors
         $this->response->setStatusCode($e->getCode());
 
-        if (ENVIRONMENT !== 'testing') {
-            if (ob_get_level() > 0) {
-                ob_end_flush(); // @codeCoverageIgnore
-            }
-        }
-        // When testing, one is for phpunit, another is for test case.
-        elseif (ob_get_level() > 2) {
-            ob_end_flush(); // @codeCoverageIgnore
-        }
+        echo $this->outputBufferingEnd();
+        flush();
 
         // Throws new PageNotFoundException and remove exception message on production.
         throw PageNotFoundException::forPageNotFound(
@@ -1006,21 +1010,9 @@ class CodeIgniter
      */
     protected function gatherOutput(?Cache $cacheConfig = null, $returned = null)
     {
-        $this->output = ob_get_contents();
-        // If buffering is not null.
-        // Clean (erase) the output buffer and turn off output buffering
-        if (ob_get_length()) {
-            ob_end_clean();
-        }
+        $this->output = $this->outputBufferingEnd();
 
         if ($returned instanceof DownloadResponse) {
-            // Turn off output buffering completely, even if php.ini output_buffering is not off
-            if (ENVIRONMENT !== 'testing') {
-                while (ob_get_level() > 0) {
-                    ob_end_clean();
-                }
-            }
-
             $this->response = $returned;
 
             return;
@@ -1149,5 +1141,23 @@ class CodeIgniter
         $this->context = $context;
 
         return $this;
+    }
+
+    protected function outputBufferingStart(): void
+    {
+        $this->bufferLevel = ob_get_level();
+        ob_start();
+    }
+
+    protected function outputBufferingEnd(): string
+    {
+        $buffer = '';
+
+        while (ob_get_level() > $this->bufferLevel) {
+            $buffer .= ob_get_contents();
+            ob_end_clean();
+        }
+
+        return $buffer;
     }
 }

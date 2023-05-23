@@ -142,6 +142,8 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Output Buffering:** Bug fix with output buffering.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.

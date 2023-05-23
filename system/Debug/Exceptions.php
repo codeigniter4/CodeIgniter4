@@ -296,10 +296,6 @@ class Exceptions
             exit(1);
         }
 
-        if (ob_get_level() > $this->ob_level + 1) {
-            ob_end_clean();
-        }
-
         echo(function () use ($exception, $statusCode, $viewFile): string {
             $vars = $this->collectVars($exception, $statusCode);
             extract($vars, EXTR_SKIP);
