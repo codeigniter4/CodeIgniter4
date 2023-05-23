@@ -47,7 +47,7 @@ Events::on('pre_system', static function () {
         Services::toolbar()->respond();
         // Hot Reload route - for framework use on the hot reloader.
         if (ENVIRONMENT === 'development') {
-            Services::routes()->get('__hot-reload', static function() {
+            Services::routes()->get('__hot-reload', static function () {
                 (new HotReloader())->run();
             });
         }
