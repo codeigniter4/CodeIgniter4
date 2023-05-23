@@ -68,6 +68,11 @@
       <code>#[ReturnTypeWillChange]</code>
     </MissingImmutableAnnotation>
   </file>
+  <file src="system/Test/ControllerResponse.php">
+    <UnsupportedPropertyReferenceUsage>
+      <code><![CDATA[$this->dom = &$this->domParser]]></code>
+    </UnsupportedPropertyReferenceUsage>
+  </file>
   <file src="tests/_support/Config/Filters.php">
     <UndefinedGlobalVariable>
       <code>$filters</code>
