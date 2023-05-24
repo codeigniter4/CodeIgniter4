@@ -8,6 +8,8 @@
     autoloader="psalm_autoload.php"
     cacheDirectory="build/psalm/"
     errorBaseline="psalm-baseline.xml"
+    findUnusedBaselineEntry="false"
+    findUnusedCode="false"
 >
     <projectFiles>
         <directory name="app/" />
