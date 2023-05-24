@@ -142,11 +142,10 @@ final class CodeIgniterTest extends CIUnitTestCase
         $router = Services::router($routes, Services::incomingrequest());
         Services::injectMock('router', $router);
 
-        ob_start();
-        $this->codeigniter->run($routes);
-        $output = ob_get_clean();
+        $response = $this->codeigniter->run($routes, true);
 
-        $this->assertStringContainsString('Oops', $output);
+        $this->assertStringContainsString('Oops', $response->getBody());
+        $this->assertSame(567, $response->getStatusCode());
     }
 
     public function testRun404OverrideReturnResponse()
