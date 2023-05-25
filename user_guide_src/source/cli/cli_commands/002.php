@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class AppInfo extends BaseCommand
 {
-    protected $group       = 'demo';
+    protected $group       = 'Demo';
     protected $name        = 'app:info';
     protected $description = 'Displays basic application information.';
 

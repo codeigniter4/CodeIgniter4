@@ -49,7 +49,7 @@ should contain the following code:
 
 .. literalinclude:: cli_commands/002.php
 
-If you run the **list** command, you will see the new command listed under its own ``demo`` group. If you take
+If you run the **list** command, you will see the new command listed under its own ``Demo`` group. If you take
 a close look, you should see how this works fairly easily. The ``$group`` property simply tells it how to organize
 this command with all of the other commands that exist, telling it what heading to list it under.
 
