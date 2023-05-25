@@ -8,7 +8,8 @@ interface (CLI).
 
 .. note:: It is recommended to use Spark Commands for CLI scripts instead of
     calling controllers via CLI.
-    See the :doc:`spark_commands` page for detailed information.
+    See the :doc:`spark_commands` and :doc:`cli_commands` page for detailed
+    information.
 
 .. contents::
     :local:
