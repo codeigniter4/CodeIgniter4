@@ -127,14 +127,25 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
 
         A method to show command help: (usage,arguments,description,options)
 
+    .. php:method:: setPad(string $item, int $max, int $extra = 2, int $indent = 0): string
+
+        :param string   $item: The string item.
+        :param integer  $max: The max size.
+        :param integer  $extra: How many extra spaces to add at the end.
+        :param integer  $indent: The indent spaces.
+
+        Pads our string out so that all titles are the same length to nicely line
+        up descriptions:
+
+        .. literalinclude:: cli_commands/007.php
+            :lines: 2-
+
     .. php:method:: getPad($array, $pad)
 
         .. deprecated:: 4.0.5
-            Use :php:meth:`CodeIgniter\\CLI\\setPad()` instead.
+            Use :php:meth:`CodeIgniter\\CLI\\BaseCommand::setPad()` instead.
 
         :param array    $array: The  $key => $value array.
         :param integer  $pad: The pad spaces.
 
-        A method to calculate padding for ``$key => $value`` array output. The padding can be used to output a will formatted table in CLI:
-
-        .. literalinclude:: cli_commands/007.php
+        A method to calculate padding for ``$key => $value`` array output. The padding can be used to output a will formatted table in CLI.
