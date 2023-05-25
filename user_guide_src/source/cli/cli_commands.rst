@@ -129,6 +129,9 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
 
     .. php:method:: getPad($array, $pad)
 
+        .. deprecated:: 4.0.5
+            Use :php:meth:`CodeIgniter\\CLI\\setPad()` instead.
+
         :param array    $array: The  $key => $value array.
         :param integer  $pad: The pad spaces.
 
