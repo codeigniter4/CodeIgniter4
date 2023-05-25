@@ -1854,7 +1854,7 @@ class Email
 
         $ssl = '';
 
-        if (in_array($this->SMTPCrypto, ['tls','ssl'], true)) {
+        if (in_array($this->SMTPCrypto, ['tls', 'ssl'], true)) {
             $ssl = $this->SMTPCrypto . '://';
         }
 
