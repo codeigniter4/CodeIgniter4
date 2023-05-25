@@ -92,7 +92,7 @@ For example, ``return EXIT_ERROR;``
 
 This approach can help with debugging at the system level, if the command, for example, is run via crontab.
 
-You can use the ``EXIT_*`` exit code constants defined in the ``app/Config/Constants.php`` file.
+You can use the ``EXIT_*`` exit code constants defined in the **app/Config/Constants.php** file.
 
 ***********
 BaseCommand
