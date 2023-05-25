@@ -33,7 +33,7 @@ The following properties should be used in order to get listed in CLI commands a
 File Location
 =============
 
-Commands must be stored within a directory named **Commands**. However, that directory can be located anywhere
+Commands must be stored within a directory named **Commands**. However, that directory can be located in the PSR-4 namespaces
 that the :doc:`Autoloader </concepts/autoloader>` can locate it. This could be in **app/Commands**, or
 a directory that you keep commands in to use in all of your project development, like **Acme/Commands**.
 
