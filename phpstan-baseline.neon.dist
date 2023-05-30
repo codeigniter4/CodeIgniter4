@@ -121,11 +121,6 @@ parameters:
 			path: system/HTTP/Files/UploadedFile.php
 
 		-
-			message: "#^Property CodeIgniter\\\\HTTP\\\\IncomingRequest\\:\\:\\$locale \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/HTTP/IncomingRequest.php
-
-		-
 			message: "#^Property CodeIgniter\\\\HTTP\\\\Message\\:\\:\\$protocolVersion \\(string\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/HTTP/Message.php
