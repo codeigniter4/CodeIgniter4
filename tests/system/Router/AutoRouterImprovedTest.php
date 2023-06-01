@@ -167,6 +167,19 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame([], $params);
     }
 
+    public function testAutoRouteFindsControllerWithSubSubfolder()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('subfolder/sub/mycontroller/somemethod');
+
+        $this->assertSame('Subfolder/Sub/', $directory);
+        $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Sub\Mycontroller::class, $controller);
+        $this->assertSame('getSomemethod', $method);
+        $this->assertSame([], $params);
+    }
+
     public function testAutoRouteFindsDashedSubfolder()
     {
         $router = $this->createNewAutoRouter();
@@ -233,6 +246,45 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame('\\' . Index::class, $controller);
         $this->assertSame('getIndex', $method);
         $this->assertSame(['15'], $params);
+    }
+
+    public function testAutoRouteFallbackToDefaultControllerOneParam()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('subfolder/15');
+
+        $this->assertSame('Subfolder/', $directory);
+        $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Home::class, $controller);
+        $this->assertSame('getIndex', $method);
+        $this->assertSame(['15'], $params);
+    }
+
+    public function testAutoRouteFallbackToDefaultControllerTwoParams()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('subfolder/15/20');
+
+        $this->assertSame('Subfolder/', $directory);
+        $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Home::class, $controller);
+        $this->assertSame('getIndex', $method);
+        $this->assertSame(['15', '20'], $params);
+    }
+
+    public function testAutoRouteFallbackToDefaultControllerNoParams()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('subfolder');
+
+        $this->assertSame('Subfolder/', $directory);
+        $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Home::class, $controller);
+        $this->assertSame('getIndex', $method);
+        $this->assertSame([], $params);
     }
 
     public function testAutoRouteRejectsSingleDot()

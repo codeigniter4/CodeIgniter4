@@ -104,8 +104,10 @@ Others
 - **View:** Added optional 2nd parameter ``$saveData`` on ``renderSection()`` to prevent from auto cleans the data after displaying. See :ref:`View Layouts <creating-a-layout>` for details.
 - **Auto Routing (Improved)**: Now you can route to Modules.
   See :ref:`auto-routing-improved-module-routing` for details.
-- **Auto Routing (Improved)**: Now you can use URI without a method name like
-  ``product/15`` where ``15`` is an arbitrary number.
+- **Auto Routing (Improved):** If a controller is found that corresponds to a URI
+  segment and that controller does not have a method defined for the URI segment,
+  the default method will now be executed. This addition allows for more flexible
+  handling of URIs in auto routing.
   See :ref:`controller-default-method-fallback` for details.
 - **Filters:** Now you can use Filter Arguments with :ref:`$filters property <filters-filters-filter-arguments>`.
 - **Request:** Added ``IncomingRequest::setValidLocales()`` method to set valid locales.
