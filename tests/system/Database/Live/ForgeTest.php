@@ -1513,7 +1513,7 @@ final class ForgeTest extends CIUnitTestCase
     public function testAddTextColumnWithConstraint()
     {
         // some DBMS do not allow a constraint for type TEXT
-        $result = $this->forge->addColumn('user', [
+        $this->forge->addColumn('user', [
             'text_with_constraint' => ['type' => 'text', 'constraint' => 255, 'default' => ''],
         ]);
 
