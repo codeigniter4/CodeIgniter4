@@ -178,13 +178,18 @@ class View implements RendererInterface
 
         // Was it cached?
         if (isset($this->renderVars['options']['cache'])) {
-            $cacheName = $this->renderVars['options']['cache_name'] ?? str_replace('.php', '', $this->renderVars['view']);
+            $cacheName = $this->renderVars['options']['cache_name']
+                ?? str_replace('.php', '', $this->renderVars['view']);
             $cacheName = str_replace(['\\', '/'], '', $cacheName);
 
             $this->renderVars['cacheName'] = $cacheName;
 
             if ($output = cache($this->renderVars['cacheName'])) {
-                $this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
+                $this->logPerformance(
+                    $this->renderVars['start'],
+                    microtime(true),
+                    $this->renderVars['view']
+                );
 
                 return $output;
             }
@@ -193,7 +198,11 @@ class View implements RendererInterface
         $this->renderVars['file'] = $this->viewPath . $this->renderVars['view'];
 
         if (! is_file($this->renderVars['file'])) {
-            $this->renderVars['file'] = $this->loader->locateFile($this->renderVars['view'], 'Views', empty($fileExt) ? 'php' : $fileExt);
+            $this->renderVars['file'] = $this->loader->locateFile(
+                $this->renderVars['view'],
+                'Views',
+                empty($fileExt) ? 'php' : $fileExt
+            );
         }
 
         // locateFile will return an empty string if the file cannot be found.
@@ -233,7 +242,11 @@ class View implements RendererInterface
 
         $output = $this->decorateOutput($output);
 
-        $this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
+        $this->logPerformance(
+            $this->renderVars['start'],
+            microtime(true),
+            $this->renderVars['view']
+        );
 
         if (($this->debug && (! isset($options['debug']) || $options['debug'] === true))
             && in_array(DebugToolbar::class, service('filters')->getFiltersClass()['after'], true)
@@ -253,7 +266,11 @@ class View implements RendererInterface
 
         // Should we cache?
         if (isset($this->renderVars['options']['cache'])) {
-            cache()->save($this->renderVars['cacheName'], $output, (int) $this->renderVars['options']['cache']);
+            cache()->save(
+                $this->renderVars['cacheName'],
+                $output,
+                (int) $this->renderVars['options']['cache']
+            );
         }
 
         $this->tempData = null;
