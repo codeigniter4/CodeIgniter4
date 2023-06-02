@@ -258,57 +258,6 @@ redirect and is recommended in most cases:
 If a redirect route is matched during a page load, the user will be immediately redirected to the new page before a
 controller can be loaded.
 
-Grouping Routes
-===============
-
-You can group your routes under a common name with the ``group()`` method. The group name becomes a segment that
-appears prior to the routes defined inside of the group. This allows you to reduce the typing needed to build out an
-extensive set of routes that all share the opening string, like when building an admin area:
-
-.. literalinclude:: routing/023.php
-
-This would prefix the **users** and **blog** URIs with **admin**, handling URLs like **admin/users** and **admin/blog**.
-
-Setting Namespace
------------------
-
-If you need to assign options to a group, like a :ref:`assigning-namespace`, do it before the callback:
-
-.. literalinclude:: routing/024.php
-
-This would handle a resource route to the ``App\API\v1\Users`` controller with the **api/users** URI.
-
-Setting Filters
----------------
-
-You can also use a specific :doc:`filter <filters>` for a group of routes. This will always
-run the filter before or after the controller. This is especially handy during authentication or api logging:
-
-.. literalinclude:: routing/025.php
-
-The value for the filter must match one of the aliases defined within **app/Config/Filters.php**.
-
-Setting Other Options
----------------------
-
-At some point, you may want to group routes for the purpose of applying filters or other route
-config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass
-an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the
-given route config options:
-
-.. literalinclude:: routing/027.php
-
-Nesting Groups
---------------
-
-It is possible to nest groups within groups for finer organization if you need it:
-
-.. literalinclude:: routing/026.php
-
-This would handle the URL at **admin/users/list**.
-
-.. note:: Options passed to the outer ``group()`` (for example ``namespace`` and ``filter``) are not merged with the inner ``group()`` options.
-
 Environment Restrictions
 ========================
 
@@ -511,6 +460,57 @@ This can be beneficial when developing APIs with the first URI segment being the
 be used when the first parameter is a language string:
 
 .. literalinclude:: routing/042.php
+
+Grouping Routes
+***************
+
+You can group your routes under a common name with the ``group()`` method. The group name becomes a segment that
+appears prior to the routes defined inside of the group. This allows you to reduce the typing needed to build out an
+extensive set of routes that all share the opening string, like when building an admin area:
+
+.. literalinclude:: routing/023.php
+
+This would prefix the **users** and **blog** URIs with **admin**, handling URLs like **admin/users** and **admin/blog**.
+
+Setting Namespace
+=================
+
+If you need to assign options to a group, like a :ref:`assigning-namespace`, do it before the callback:
+
+.. literalinclude:: routing/024.php
+
+This would handle a resource route to the ``App\API\v1\Users`` controller with the **api/users** URI.
+
+Setting Filters
+===============
+
+You can also use a specific :doc:`filter <filters>` for a group of routes. This will always
+run the filter before or after the controller. This is especially handy during authentication or api logging:
+
+.. literalinclude:: routing/025.php
+
+The value for the filter must match one of the aliases defined within **app/Config/Filters.php**.
+
+Setting Other Options
+=====================
+
+At some point, you may want to group routes for the purpose of applying filters or other route
+config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass
+an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the
+given route config options:
+
+.. literalinclude:: routing/027.php
+
+Nesting Groups
+==============
+
+It is possible to nest groups within groups for finer organization if you need it:
+
+.. literalinclude:: routing/026.php
+
+This would handle the URL at **admin/users/list**.
+
+.. note:: Options passed to the outer ``group()`` (for example ``namespace`` and ``filter``) are not merged with the inner ``group()`` options.
 
 .. _routing-priority:
 
