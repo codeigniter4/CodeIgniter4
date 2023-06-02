@@ -171,8 +171,11 @@ class View implements RendererInterface
         // multiple views are called in a view, it won't
         // clean it unless we mean it to.
         $saveData ??= $this->saveData;
-        $fileExt                     = pathinfo($view, PATHINFO_EXTENSION);
-        $realPath                    = empty($fileExt) ? $view . '.php' : $view; // allow Views as .html, .tpl, etc (from CI3)
+
+        $fileExt = pathinfo($view, PATHINFO_EXTENSION);
+        // allow Views as .html, .tpl, etc (from CI3)
+        $realPath = empty($fileExt) ? $view . '.php' : $view;
+
         $this->renderVars['view']    = $realPath;
         $this->renderVars['options'] = $options ?? [];
 
