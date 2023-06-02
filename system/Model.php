@@ -800,11 +800,7 @@ class Model extends BaseModel
             return parent::__get($name);
         }
 
-        if (isset($this->builder()->{$name})) {
-            return $this->builder()->{$name};
-        }
-
-        return null;
+        return $this->builder()->{$name} ?? null;
     }
 
     /**

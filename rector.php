@@ -12,9 +12,7 @@
 use Rector\CodeQuality\Rector\BooleanAnd\SimplifyEmptyArrayCheckRector;
 use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
-use Rector\CodeQuality\Rector\For_\ForToForeachRector;
 use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
-use Rector\CodeQuality\Rector\FuncCall\AddPregQuoteDelimiterRector;
 use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
 use Rector\CodeQuality\Rector\FuncCall\SimplifyRegexPatternRector;
 use Rector\CodeQuality\Rector\FuncCall\SimplifyStrposLowerRector;
@@ -125,7 +123,6 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(RemoveAlwaysElseRector::class);
     $rectorConfig->rule(PassStrictParameterToFunctionParameterRector::class);
     $rectorConfig->rule(CountArrayToEmptyArrayComparisonRector::class);
-    $rectorConfig->rule(ForToForeachRector::class);
     $rectorConfig->rule(ChangeNestedForeachIfsToEarlyContinueRector::class);
     $rectorConfig->rule(ChangeIfElseValueAssignToEarlyReturnRector::class);
     $rectorConfig->rule(SimplifyStrposLowerRector::class);
@@ -140,7 +137,6 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(UnnecessaryTernaryExpressionRector::class);
     $rectorConfig->rule(RemoveErrorSuppressInTryCatchStmtsRector::class);
     $rectorConfig->rule(RemoveVarTagFromClassConstantRector::class);
-    $rectorConfig->rule(AddPregQuoteDelimiterRector::class);
     $rectorConfig->rule(SimplifyRegexPatternRector::class);
     $rectorConfig->rule(FuncGetArgsToVariadicParamRector::class);
     $rectorConfig->rule(MakeInheritedMethodVisibilitySameAsParentRector::class);

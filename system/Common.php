@@ -744,11 +744,7 @@ if (! function_exists('is_windows')) {
             $mocked = $mock;
         }
 
-        if (isset($mocked)) {
-            return $mocked;
-        }
-
-        return DIRECTORY_SEPARATOR === '\\';
+        return $mocked ?? DIRECTORY_SEPARATOR === '\\';
     }
 }
 
