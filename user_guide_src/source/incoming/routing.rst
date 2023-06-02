@@ -96,6 +96,32 @@ You can also specify the namespace with the ``namespace`` option:
 
 See :ref:`assigning-namespace` for details.
 
+Array Callable Syntax
+=====================
+
+.. versionadded:: 4.2.0
+
+Since v4.2.0, you can use array callable syntax to specify the controller:
+
+.. literalinclude:: routing/013.php
+   :lines: 2-
+
+Or using ``use`` keyword:
+
+.. literalinclude:: routing/014.php
+   :lines: 2-
+
+If there are placeholders, it will automatically set the parameters in the specified order:
+
+.. literalinclude:: routing/015.php
+   :lines: 2-
+
+But the auto-configured parameters may not be correct if you use regular expressions in routes.
+In such a case, you can specify the parameters manually:
+
+.. literalinclude:: routing/016.php
+   :lines: 2-
+
 Placeholders
 ============
 
@@ -146,33 +172,6 @@ routes. With the examples URLs from above:
 .. literalinclude:: routing/012.php
 
 will only match **product/123** and generate 404 errors for other example.
-
-
-Array Callable Syntax
-=====================
-
-.. versionadded:: 4.2.0
-
-Since v4.2.0, you can use array callable syntax to specify the controller:
-
-.. literalinclude:: routing/013.php
-   :lines: 2-
-
-Or using ``use`` keyword:
-
-.. literalinclude:: routing/014.php
-   :lines: 2-
-
-If there are placeholders, it will automatically set the parameters in the specified order:
-
-.. literalinclude:: routing/015.php
-   :lines: 2-
-
-But the auto-configured parameters may not be correct if you use regular expressions in routes.
-In such a case, you can specify the parameters manually:
-
-.. literalinclude:: routing/016.php
-   :lines: 2-
 
 Custom Placeholders
 ===================
