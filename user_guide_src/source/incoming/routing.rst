@@ -288,6 +288,16 @@ run the filter before or after the controller. This is especially handy during a
 
 The value for the filter must match one of the aliases defined within **app/Config/Filters.php**.
 
+Setting Other Options
+---------------------
+
+At some point, you may want to group routes for the purpose of applying filters or other route
+config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass
+an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the
+given route config options:
+
+.. literalinclude:: routing/027.php
+
 Nesting Groups
 --------------
 
@@ -298,16 +308,6 @@ It is possible to nest groups within groups for finer organization if you need i
 This would handle the URL at **admin/users/list**.
 
 .. note:: Options passed to the outer ``group()`` (for example ``namespace`` and ``filter``) are not merged with the inner ``group()`` options.
-
-Setting Other Options
----------------------
-
-At some point, you may want to group routes for the purpose of applying filters or other route
-config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass
-an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the
-given route config options:
-
-.. literalinclude:: routing/027.php
 
 Environment Restrictions
 ========================
