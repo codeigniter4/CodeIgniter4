@@ -4,7 +4,7 @@ URI Routing
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 What is URI Routing?
 ********************
