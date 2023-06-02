@@ -68,8 +68,8 @@ and the ``productLookupByID()`` method passing in the match as a variable to the
 
 .. literalinclude:: routing/009.php
 
-HTTP verbs
-==========
+HTTP verb Routes
+================
 
 You can use any standard HTTP verb (GET, POST, PUT, DELETE, OPTIONS, etc):
 
@@ -213,8 +213,8 @@ For those of you who don't know regular expressions and want to learn more about
 
 .. note:: You can also mix and match placeholders with regular expressions.
 
-Closures
-========
+Using Closures
+==============
 
 You can use an anonymous function, or Closure, as the destination that a route maps to. This function will be
 executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
@@ -224,8 +224,8 @@ a simple view:
 
 .. _view-routes:
 
-Views
-=====
+View Routes
+===========
 
 .. versionadded:: 4.3.0
 
