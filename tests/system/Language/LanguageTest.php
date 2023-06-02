@@ -179,7 +179,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertNotContains('More', $this->lang->loaded());
         $this->assertCount(3, $result);
 
-        $result = $this->lang->loadem('More', 'en');
+        $this->lang->loadem('More', 'en');
         $this->assertContains('More', $this->lang->loaded());
         $this->assertCount(1, $this->lang->loaded());
     }

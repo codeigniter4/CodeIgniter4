@@ -566,7 +566,7 @@ class IncomingRequest extends Request
      */
     public function getLocale(): string
     {
-        return $this->locale ?? $this->defaultLocale;
+        return $this->locale;
     }
 
     /**

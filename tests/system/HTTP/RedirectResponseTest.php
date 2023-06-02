@@ -294,7 +294,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         }
 
         $response = new RedirectResponse(new App());
-        $response = $response->withHeaders();
+        $response->withHeaders();
 
         $this->assertEmpty($baseResponse->headers());
     }
