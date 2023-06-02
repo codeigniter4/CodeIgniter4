@@ -319,7 +319,7 @@ available from the command line:
     See the :doc:`../cli/spark_commands` page for detailed information.
 
 Global Options
-==============
+**************
 
 All of the methods for creating a route (``get()``, ``post()``, :doc:`resource() <restful>` etc) can take an array of options that
 can modify the generated routes, or further restrict them. The ``$options`` array is always the last parameter:
@@ -329,7 +329,7 @@ can modify the generated routes, or further restrict them. The ``$options`` arra
 .. _applying-filters:
 
 Applying Filters
-----------------
+================
 
 You can alter the behavior of specific routes by supplying filters to run before or after the controller. This is especially handy during authentication or api logging.
 The value for the filter can be a string or an array of strings:
@@ -347,7 +347,7 @@ See :doc:`Controller filters <filters>` for more information on setting up filte
     See :ref:`use-defined-routes-only` to disable auto-routing.
 
 Alias Filter
-^^^^^^^^^^^^
+------------
 
 You specify an alias defined in **app/Config/Filters.php** for the filter value:
 
@@ -358,7 +358,7 @@ You may also supply arguments to be passed to the alias filter's ``before()`` an
 .. literalinclude:: routing/035.php
 
 Classname Filter
-^^^^^^^^^^^^^^^^
+----------------
 
 .. versionadded:: 4.1.5
 
@@ -367,7 +367,7 @@ You specify a filter classname for the filter value:
 .. literalinclude:: routing/036.php
 
 Multiple Filters
-^^^^^^^^^^^^^^^^
+----------------
 
 .. versionadded:: 4.1.5
 
@@ -380,7 +380,7 @@ You specify an array for the filter value:
 .. _assigning-namespace:
 
 Assigning Namespace
--------------------
+===================
 
 While a :ref:`routing-default-namespace` will be prepended to the generated controllers, you can also specify
 a different namespace to be used in any options array, with the ``namespace`` option. The value should be the
@@ -393,7 +393,7 @@ For any methods that create multiple routes, the new namespace is attached to al
 or, in the case of ``group()``, all routes generated while in the closure.
 
 Limit to Hostname
------------------
+=================
 
 You can restrict groups of routes to function only in certain domain or sub-domains of your application
 by passing the "hostname" option along with the desired domain to allow it on as part of the options array:
@@ -404,7 +404,7 @@ This example would only allow the specified hosts to work if the domain exactly 
 It would not work under the main site at **example.com**.
 
 Limit to Subdomains
--------------------
+===================
 
 When the ``subdomain`` option is present, the system will restrict the routes to only be available on that
 sub-domain. The route will only be matched if the subdomain is the one the application is being viewed through:
@@ -421,7 +421,7 @@ that does not have any subdomain present, this will not be matched:
     to separate suffixes or www) can potentially lead to false positives.
 
 Offsetting the Matched Parameters
----------------------------------
+=================================
 
 You can offset the matched parameters in your route by any numeric value with the ``offset`` option, with the
 value being the number of segments to offset.
