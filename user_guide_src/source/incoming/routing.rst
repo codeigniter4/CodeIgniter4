@@ -79,8 +79,11 @@ You can supply multiple verbs that a route should match by passing them in as an
 
 .. literalinclude:: routing/004.php
 
+Specifying Route Handlers
+=========================
+
 Controller's Namespace
-======================
+----------------------
 
 If a controller name is stated without beginning with ``\``, the :ref:`routing-default-namespace` will be prepended:
 
@@ -97,7 +100,7 @@ You can also specify the namespace with the ``namespace`` option:
 See :ref:`assigning-namespace` for details.
 
 Array Callable Syntax
-=====================
+---------------------
 
 .. versionadded:: 4.2.0
 
@@ -122,8 +125,20 @@ In such a case, you can specify the parameters manually:
 .. literalinclude:: routing/016.php
    :lines: 2-
 
+Using Closures
+--------------
+
+You can use an anonymous function, or Closure, as the destination that a route maps to. This function will be
+executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
+a simple view:
+
+.. literalinclude:: routing/020.php
+
+Specifying Route Paths
+======================
+
 Placeholders
-============
+------------
 
 A typical route might look something like this:
 
@@ -174,7 +189,7 @@ routes. With the examples URLs from above:
 will only match **product/123** and generate 404 errors for other example.
 
 Custom Placeholders
-===================
+-------------------
 
 You can create your own placeholders that can be used in your routes file to fully customize the experience
 and readability.
@@ -186,7 +201,7 @@ This must be called before you add the route:
 .. literalinclude:: routing/017.php
 
 Regular Expressions
-===================
+-------------------
 
 If you prefer you can use regular expressions to define your routing rules. Any valid regular expression
 is allowed, as are back-references.
@@ -211,15 +226,6 @@ For those of you who don't know regular expressions and want to learn more about
 `regular-expressions.info <https://www.regular-expressions.info/>`_ might be a good starting point.
 
 .. note:: You can also mix and match placeholders with regular expressions.
-
-Using Closures
-==============
-
-You can use an anonymous function, or Closure, as the destination that a route maps to. This function will be
-executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
-a simple view:
-
-.. literalinclude:: routing/020.php
 
 .. _view-routes:
 
