@@ -268,36 +268,6 @@ routes defined within this closure are only accessible from the given environmen
 
 .. literalinclude:: routing/028.php
 
-.. _reverse-routing:
-
-Reverse Routing
-===============
-
-Reverse routing allows you to define the controller and method, as well as any parameters, that a link should go
-to, and have the router lookup the current route to it. This allows route definitions to change without you having
-to update your application code. This is typically used within views to create links.
-
-For example, if you have a route to a photo gallery that you want to link to, you can use the :php:func:`url_to()` helper
-function to get the route that should be used. The first parameter is the fully qualified Controller and method,
-separated by a double colon (``::``), much like you would use when writing the initial route itself. Any parameters that
-should be passed to the route are passed in next:
-
-.. literalinclude:: routing/029.php
-
-.. _using-named-routes:
-
-Using Named Routes
-==================
-
-You can name routes to make your application less fragile. This applies a name to a route that can be called
-later, and even if the route definition changes, all of the links in your application built with :php:func:`url_to()`
-will still work without you having to make any changes. A route is named by passing in the ``as`` option
-with the name of the route:
-
-.. literalinclude:: routing/030.php
-
-This has the added benefit of making the views more readable, too.
-
 Routes with any HTTP verbs
 ==========================
 
@@ -460,6 +430,36 @@ This can be beneficial when developing APIs with the first URI segment being the
 be used when the first parameter is a language string:
 
 .. literalinclude:: routing/042.php
+
+.. _reverse-routing:
+
+Reverse Routing
+***************
+
+Reverse routing allows you to define the controller and method, as well as any parameters, that a link should go
+to, and have the router lookup the current route to it. This allows route definitions to change without you having
+to update your application code. This is typically used within views to create links.
+
+For example, if you have a route to a photo gallery that you want to link to, you can use the :php:func:`url_to()` helper
+function to get the route that should be used. The first parameter is the fully qualified Controller and method,
+separated by a double colon (``::``), much like you would use when writing the initial route itself. Any parameters that
+should be passed to the route are passed in next:
+
+.. literalinclude:: routing/029.php
+
+.. _using-named-routes:
+
+Named Routes
+************
+
+You can name routes to make your application less fragile. This applies a name to a route that can be called
+later, and even if the route definition changes, all of the links in your application built with :php:func:`url_to()`
+will still work without you having to make any changes. A route is named by passing in the ``as`` option
+with the name of the route:
+
+.. literalinclude:: routing/030.php
+
+This has the added benefit of making the views more readable, too.
 
 Grouping Routes
 ***************
