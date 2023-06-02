@@ -269,11 +269,17 @@ extensive set of routes that all share the opening string, like when building an
 
 This would prefix the **users** and **blog** URIs with **admin**, handling URLs like **admin/users** and **admin/blog**.
 
+Setting Namespace
+-----------------
+
 If you need to assign options to a group, like a :ref:`assigning-namespace`, do it before the callback:
 
 .. literalinclude:: routing/024.php
 
 This would handle a resource route to the ``App\API\v1\Users`` controller with the **api/users** URI.
+
+Setting Filters
+---------------
 
 You can also use a specific :doc:`filter <filters>` for a group of routes. This will always
 run the filter before or after the controller. This is especially handy during authentication or api logging:
@@ -282,6 +288,9 @@ run the filter before or after the controller. This is especially handy during a
 
 The value for the filter must match one of the aliases defined within **app/Config/Filters.php**.
 
+Nesting Groups
+--------------
+
 It is possible to nest groups within groups for finer organization if you need it:
 
 .. literalinclude:: routing/026.php
@@ -289,6 +298,9 @@ It is possible to nest groups within groups for finer organization if you need i
 This would handle the URL at **admin/users/list**.
 
 .. note:: Options passed to the outer ``group()`` (for example ``namespace`` and ``filter``) are not merged with the inner ``group()`` options.
+
+Setting Other Options
+---------------------
 
 At some point, you may want to group routes for the purpose of applying filters or other route
 config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass
