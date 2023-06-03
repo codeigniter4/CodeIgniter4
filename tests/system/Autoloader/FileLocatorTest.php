@@ -94,21 +94,23 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertSame($expected, $this->locator->locateFile($file, 'Controllers'));
     }
 
-    public function testLocateFileReplacesFolderName()
+    public function testLocateFileWithFolderNameInFile()
     {
         $file = '\App\Views/errors/html/error_404.php';
 
         $expected = APPPATH . 'Views/errors/html/error_404.php';
 
+        // This works because $file contains `Views`.
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
-    public function testLocateFileReplacesFolderNameLegacy()
+    public function testLocateFileNotNamespacedWithFolderNameInFile()
     {
         $file = 'Views/welcome_message.php'; // not namespaced
 
         $expected = APPPATH . 'Views/welcome_message.php';
 
+        // This works because $file contains `Views`.
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
