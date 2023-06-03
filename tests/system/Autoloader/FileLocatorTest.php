@@ -53,7 +53,7 @@ final class FileLocatorTest extends CIUnitTestCase
 
     public function testLocateFileWorksWithLegacyStructure()
     {
-        $file = 'Controllers/Home';
+        $file = 'Controllers/Home'; // not namespaced
 
         $expected = APPPATH . 'Controllers/Home.php';
 
@@ -62,14 +62,14 @@ final class FileLocatorTest extends CIUnitTestCase
 
     public function testLocateFileWithLegacyStructureNotFound()
     {
-        $file = 'Unknown';
+        $file = 'Unknown'; // not namespaced
 
         $this->assertFalse($this->locator->locateFile($file));
     }
 
     public function testLocateFileWorksInAppDirectory()
     {
-        $file = 'welcome_message';
+        $file = 'welcome_message'; // not namespaced
 
         $expected = APPPATH . 'Views/welcome_message.php';
 
@@ -78,7 +78,7 @@ final class FileLocatorTest extends CIUnitTestCase
 
     public function testLocateFileWorksInAppDirectoryWithoutFolder()
     {
-        $file = 'Common';
+        $file = 'Common'; // not namespaced
 
         $expected = APPPATH . 'Common.php';
 
@@ -87,7 +87,7 @@ final class FileLocatorTest extends CIUnitTestCase
 
     public function testLocateFileWorksInNestedAppDirectory()
     {
-        $file = 'Controllers/Home';
+        $file = 'Controllers/Home'; // not namespaced
 
         $expected = APPPATH . 'Controllers/Home.php';
 
@@ -105,7 +105,7 @@ final class FileLocatorTest extends CIUnitTestCase
 
     public function testLocateFileReplacesFolderNameLegacy()
     {
-        $file = 'Views/welcome_message.php';
+        $file = 'Views/welcome_message.php'; // not namespaced
 
         $expected = APPPATH . 'Views/welcome_message.php';
 
