@@ -91,6 +91,7 @@ final class FileLocatorTest extends CIUnitTestCase
 
         $expected = APPPATH . 'Controllers/Home.php';
 
+        // This works because $file contains `Controllers`.
         $this->assertSame($expected, $this->locator->locateFile($file, 'Controllers'));
     }
 
@@ -120,6 +121,7 @@ final class FileLocatorTest extends CIUnitTestCase
 
         $expected = APPPATH . 'Views/errors/html/error_404.php';
 
+        // The namespace `Errors` (APPPATH . 'Views/errors') + the folder (`html`) + `error_404`
         $this->assertSame($expected, $this->locator->locateFile($file, 'html'));
     }
 
