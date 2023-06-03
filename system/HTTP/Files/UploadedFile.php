@@ -42,6 +42,13 @@ class UploadedFile extends File implements UploadedFileInterface
     protected $originalName;
 
     /**
+     * The webkit relative path of the file as provided by the client for directory uploads.
+     * 
+     * @var string
+     */
+    protected $clientPath;
+
+    /**
      * The filename given to a file during a move.
      *
      * @var string
@@ -75,15 +82,17 @@ class UploadedFile extends File implements UploadedFileInterface
      *
      * @param string $path         The temporary location of the uploaded file.
      * @param string $originalName The client-provided filename.
+     * @param string $clientPath   The webkit relative path as provided by the client for directory uploads.
      * @param string $mimeType     The type of file as provided by PHP
      * @param int    $size         The size of the file, in bytes
      * @param int    $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
      */
-    public function __construct(string $path, string $originalName, ?string $mimeType = null, ?int $size = null, ?int $error = null)
+    public function __construct(string $path, string $originalName, ?string $clientPath = null, ?string $mimeType = null, ?int $size = null, ?int $error = null)
     {
         $this->path             = $path;
         $this->name             = $originalName;
         $this->originalName     = $originalName;
+        $this->clientPath       = $clientPath;
         $this->originalMimeType = $mimeType;
         $this->size             = $size;
         $this->error            = $error;
@@ -265,6 +274,17 @@ class UploadedFile extends File implements UploadedFileInterface
     public function getClientName(): string
     {
         return $this->originalName;
+    }
+
+    /**
+     * PHP 8.1+  
+     * Gets the webkit relative path of the file as provided by the client during directory upload.
+     * 
+     * @return string The webkit relative path of the file as provided by the client during directory upload, or none if PHP version is below 8.1
+     */
+    public function getClientPath(): string
+    {
+        return $this->clientPath;
     }
 
     /**
