@@ -51,7 +51,7 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->locator = new FileLocator($autoloader);
     }
 
-    public function testLocateFileNotNamespacedWorks()
+    public function testLocateFileNotNamespacedFindsInAppDirectory()
     {
         $file = 'Controllers/Home'; // not namespaced
 
@@ -67,7 +67,7 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertFalse($this->locator->locateFile($file));
     }
 
-    public function testLocateFileNotNamespacedWorksInAppDirectory()
+    public function testLocateFileNotNamespacedFindsWithFolderInAppDirectory()
     {
         $file = 'welcome_message'; // not namespaced
 
@@ -76,7 +76,7 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
-    public function testLocateFileNotNamespacedWorksInAppDirectoryWithoutFolder()
+    public function testLocateFileNotNamespacedFindesWithoutFolderInAppDirectory()
     {
         $file = 'Common'; // not namespaced
 
