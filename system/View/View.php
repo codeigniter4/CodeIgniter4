@@ -251,8 +251,10 @@ class View implements RendererInterface
             $this->renderVars['view']
         );
 
-        if (($this->debug && (! isset($options['debug']) || $options['debug'] === true))
-            && in_array(DebugToolbar::class, service('filters')->getFiltersClass()['after'], true)
+        $afterFilters = service('filters')->getFiltersClass()['after'];
+        if (
+            ($this->debug && (! isset($options['debug']) || $options['debug'] === true))
+            && in_array(DebugToolbar::class, $afterFilters, true)
         ) {
             $toolbarCollectors = config(Toolbar::class)->collectors;
 
