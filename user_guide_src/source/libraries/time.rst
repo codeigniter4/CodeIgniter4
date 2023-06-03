@@ -11,7 +11,7 @@ is the ``Time`` class and lives in the ``CodeIgniter\I18n`` namespace.
 
 .. note:: Prior to v4.3.0, the Time class extended ``DateTime`` and some inherited methods changed
     the current object state. The bug was fixed in v4.3.0. If you need the old Time class for backward
-    compatibility, you can use deprecated ``TimeLegay`` class for the time being.
+    compatibility, you can use deprecated ``TimeLegacy`` class for the time being.
 
 .. contents::
     :local:
