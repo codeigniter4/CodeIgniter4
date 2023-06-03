@@ -67,7 +67,7 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertFalse($this->locator->locateFile($file));
     }
 
-    public function testLocateFileWorksInApplicationDirectory()
+    public function testLocateFileWorksInAppDirectory()
     {
         $file = 'welcome_message';
 
@@ -76,7 +76,7 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
-    public function testLocateFileWorksInApplicationDirectoryWithoutFolder()
+    public function testLocateFileWorksInAppDirectoryWithoutFolder()
     {
         $file = 'Common';
 
@@ -85,7 +85,7 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->assertSame($expected, $this->locator->locateFile($file));
     }
 
-    public function testLocateFileWorksInNestedApplicationDirectory()
+    public function testLocateFileWorksInNestedAppDirectory()
     {
         $file = 'Controllers/Home';
 
