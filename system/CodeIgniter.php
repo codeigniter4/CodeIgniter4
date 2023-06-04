@@ -310,8 +310,6 @@ class CodeIgniter
      * makes all of the pieces work together.
      *
      * @return ResponseInterface|void
-     *
-     * @throws RedirectException
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
