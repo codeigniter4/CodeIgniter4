@@ -138,7 +138,7 @@ Deprecations
   are deprecated. Because these methods have been moved to ``BaseExceptionHandler`` or
   ``ExceptionHandler``.
 - **Autoloader:** ``Autoloader::sanitizeFilename()`` is deprecated.
-- **CodeIgniter:** ``CodeIgniter::$returnResponse`` property is deprecated. no longer used.
+- **CodeIgniter:** ``CodeIgniter::$returnResponse`` property is deprecated. No longer used.
 
 Bugs Fixed
 **********
