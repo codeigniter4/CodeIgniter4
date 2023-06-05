@@ -28,11 +28,12 @@ interface UploadedFileInterface
      *
      * @param string $path         The temporary location of the uploaded file.
      * @param string $originalName The client-provided filename.
+     * @param string $clientPath   The webkit relative path of the uploaded file.
      * @param string $mimeType     The type of file as provided by PHP
      * @param int    $size         The size of the file, in bytes
      * @param int    $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
      */
-    public function __construct(string $path, string $originalName, ?string $mimeType = null, ?int $size = null, ?int $error = null);
+    public function __construct(string $path, string $originalName, ?string $clientPath, ?string $mimeType = null, ?int $size = null, ?int $error = null);
 
     /**
      * Move the uploaded file to a new location.
@@ -108,6 +109,12 @@ interface UploadedFileInterface
      * Gets the temporary filename where the file was uploaded to.
      */
     public function getTempName(): string;
+
+    /**
+     * (PHP 8.1+)
+     * Returns the webkit relative path of the uploaded file on directory uploads.
+     */
+    public function getClientPath(): string;
 
     /**
      * Returns the original file extension, based on the file name that

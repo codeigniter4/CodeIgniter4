@@ -180,6 +180,7 @@ class FileCollection
         return new UploadedFile(
             $array['tmp_name'] ?? null,
             $array['name'] ?? null,
+            $array['full_path'] ?? null,
             $array['type'] ?? null,
             $array['size'] ?? null,
             $array['error'] ?? null
