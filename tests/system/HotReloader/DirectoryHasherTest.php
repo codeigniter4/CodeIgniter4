@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace Tests\System\HotReloader;
+namespace CodeIgniter\HotReloader;
 
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\HotReloader\DirectoryHasher;
@@ -20,7 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class DirectoryHasherTest extends CIUnitTestCase
 {
-    protected DirectoryHasher $hasher;
+    private DirectoryHasher $hasher;
 
     protected function setUp(): void
     {
