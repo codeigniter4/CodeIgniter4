@@ -21,5 +21,5 @@ interface AutoRouterInterface
      *
      * @return array [directory_name, controller_name, controller_method, params]
      */
-    public function getRoute(string $uri): array;
+    public function getRoute(string $uri, string $httpVerb): array;
 }

@@ -60,8 +60,10 @@ final class AutoRouterImproved implements AutoRouterInterface
 
     /**
      * HTTP verb for the request.
+     *
+     * @deprecated No longer used.
      */
-    private string $httpVerb;
+    private string $httpVerb; // @phpstan-ignore-line
 
     /**
      * The namespace for controllers.
@@ -74,15 +76,17 @@ final class AutoRouterImproved implements AutoRouterInterface
     private string $defaultController;
 
     /**
-     * The name of the default method
+     * The name of the default method without HTTP verb prefix.
      */
     private string $defaultMethod;
 
     /**
      * @param class-string[] $protectedControllers
      * @param string         $defaultController    Short classname
+     *
+     * @deprecated $httpVerb is deprecated. No longer used.
      */
-    public function __construct(
+    public function __construct(// @phpstan-ignore-line
         array $protectedControllers,
         string $namespace,
         string $defaultController,
@@ -93,13 +97,11 @@ final class AutoRouterImproved implements AutoRouterInterface
         $this->protectedControllers = $protectedControllers;
         $this->namespace            = rtrim($namespace, '\\') . '\\';
         $this->translateURIDashes   = $translateURIDashes;
-        $this->httpVerb             = $httpVerb;
         $this->defaultController    = $defaultController;
-        $this->defaultMethod        = $httpVerb . ucfirst($defaultMethod);
+        $this->defaultMethod        = $defaultMethod;
 
         // Set the default values
         $this->controller = $this->defaultController;
-        $this->method     = $this->defaultMethod;
     }
 
     /**
@@ -107,8 +109,11 @@ final class AutoRouterImproved implements AutoRouterInterface
      *
      * @return array [directory_name, controller_name, controller_method, params]
      */
-    public function getRoute(string $uri): array
+    public function getRoute(string $uri, string $httpVerb): array
     {
+        $defaultMethod = $httpVerb . ucfirst($this->defaultMethod);
+        $this->method  = $defaultMethod;
+
         $segments = explode('/', $uri);
 
         // WARNING: Directories get shifted out of the segments array.
@@ -144,10 +149,10 @@ final class AutoRouterImproved implements AutoRouterInterface
             $methodSegment = $this->translateURIDashes(array_shift($nonDirSegments));
 
             // Prefix HTTP verb
-            $this->method = $this->httpVerb . ucfirst($methodSegment);
+            $this->method = $httpVerb . ucfirst($methodSegment);
 
             // Prevent access to default method path
-            if (strtolower($this->method) === strtolower($this->defaultMethod)) {
+            if (strtolower($this->method) === strtolower($defaultMethod)) {
                 throw new PageNotFoundException(
                     'Cannot access the default method "' . $this->method . '" with the method name URI path.'
                 );

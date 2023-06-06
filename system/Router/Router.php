@@ -504,7 +504,7 @@ class Router implements RouterInterface
     public function autoRoute(string $uri)
     {
         [$this->directory, $this->controller, $this->method, $this->params]
-            = $this->autoRouter->getRoute($uri);
+            = $this->autoRouter->getRoute($uri, $this->collection->getHTTPVerb());
     }
 
     /**
