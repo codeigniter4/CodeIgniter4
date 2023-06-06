@@ -9,15 +9,13 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Router\Exceptions;
+namespace CodeIgniter\HTTP\Exceptions;
 
 use CodeIgniter\Exceptions\HTTPExceptionInterface;
 use Exception;
 
 /**
  * RedirectException
- *
- * @deprecated Use \CodeIgniter\HTTP\Exceptions\RedirectException instead
  */
 class RedirectException extends Exception implements HTTPExceptionInterface
 {

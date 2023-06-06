@@ -13,8 +13,8 @@ namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
