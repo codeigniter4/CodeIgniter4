@@ -162,6 +162,8 @@ class CodeIgniter
 
     /**
      * Whether to return Response object or send response.
+     *
+     * @deprecated No longer used.
      */
     protected bool $returnResponse = false;
 
@@ -321,8 +323,6 @@ class CodeIgniter
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
-        $this->returnResponse = $returnResponse;
-
         if ($this->context === null) {
             throw new LogicException(
                 'Context must be set before run() is called. If you are upgrading from 4.1.x, '
@@ -341,37 +341,8 @@ class CodeIgniter
 
         $this->spoofRequestMethod();
 
-        if ($this->request instanceof IncomingRequest && strtolower($this->request->getMethod()) === 'cli') {
-            $this->response->setStatusCode(405)->setBody('Method Not Allowed');
-
-            if ($this->returnResponse) {
-                return $this->response;
-            }
-
-            $this->sendResponse();
-
-            return;
-        }
-
-        Events::trigger('pre_system');
-
-        // Check for a cached page. Execution will stop
-        // if the page has been cached.
-        $cacheConfig = config(Cache::class);
-        $response    = $this->displayCache($cacheConfig);
-        if ($response instanceof ResponseInterface) {
-            if ($returnResponse) {
-                return $response;
-            }
-
-            $this->response->send();
-            $this->callExit(EXIT_SUCCESS);
-
-            return;
-        }
-
         try {
-            return $this->handleRequest($routes, $cacheConfig, $returnResponse);
+            $this->response = $this->handleRequest($routes, config(Cache::class), $returnResponse);
         } catch (RedirectException $e) {
             $this->outputBufferingEnd();
             $logger = Services::logger();
@@ -380,27 +351,20 @@ class CodeIgniter
             // If the route is a 'redirect' route, it throws
             // the exception with the $to as the message
             $this->response->redirect(base_url($e->getMessage()), 'auto', $e->getCode());
-
-            if ($this->returnResponse) {
-                return $this->response;
-            }
-
-            $this->sendResponse();
-
-            $this->callExit(EXIT_SUCCESS);
-
-            return;
         } catch (PageNotFoundException $e) {
-            $return = $this->display404errors($e);
-
-            if ($return instanceof ResponseInterface) {
-                return $return;
-            }
+            $this->response = $this->display404errors($e);
         } catch (Throwable $e) {
             $this->outputBufferingEnd();
 
             throw $e;
         }
+
+        if ($returnResponse) {
+            return $this->response;
+        }
+
+        $this->sendResponse();
+        $this->callExit(EXIT_SUCCESS);
     }
 
     /**
@@ -455,7 +419,17 @@ class CodeIgniter
      */
     protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
     {
-        $this->returnResponse = $returnResponse;
+        if ($this->request instanceof IncomingRequest && strtolower($this->request->getMethod()) === 'cli') {
+            return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
+        }
+
+        Events::trigger('pre_system');
+
+        // Check for a cached page. Execution will stop
+        // if the page has been cached.
+        if (($response = $this->displayCache($cacheConfig)) instanceof ResponseInterface) {
+            return $response;
+        }
 
         $routeFilter = $this->tryToRouteIt($routes);
 
@@ -486,7 +460,7 @@ class CodeIgniter
 
             // If a ResponseInterface instance is returned then send it back to the client and stop
             if ($possibleResponse instanceof ResponseInterface) {
-                return $this->returnResponse ? $possibleResponse : $possibleResponse->send();
+                return $possibleResponse;
             }
 
             if ($possibleResponse instanceof Request) {
@@ -560,10 +534,6 @@ class CodeIgniter
         }
 
         unset($uri);
-
-        if (! $this->returnResponse) {
-            $this->sendResponse();
-        }
 
         // Is there a post-system event?
         Events::trigger('post_system');
@@ -978,13 +948,8 @@ class CodeIgniter
 
             $cacheConfig = config(Cache::class);
             $this->gatherOutput($cacheConfig, $returned);
-            if ($this->returnResponse) {
-                return $this->response;
-            }
 
-            $this->sendResponse();
-
-            return;
+            return $this->response;
         }
 
         // Display 404 Errors
