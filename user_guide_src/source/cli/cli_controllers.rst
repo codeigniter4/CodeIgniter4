@@ -6,6 +6,11 @@ As well as calling an application's :doc:`Controllers </incoming/controllers>`
 via the URL in a browser they can also be loaded via the command-line
 interface (CLI).
 
+.. note:: It is recommended to use Spark Commands for CLI scripts instead of
+    calling controllers via CLI.
+    See the :doc:`spark_commands` and :doc:`cli_commands` page for detailed
+    information.
+
 .. contents::
     :local:
     :depth: 2
@@ -85,6 +90,3 @@ If you want to make sure running via CLI, check the return value of :php:func:`i
 However, CodeIgniter provides additional tools to make creating CLI-accessible
 scripts even more pleasant, include CLI-only routing, and a library that helps
 you with CLI-only tools.
-
-.. note:: It is recommended to use Spark Commands for CLI scripts instead of calling controllers via CLI.
-    See the :doc:`spark_commands` page for detailed information.
