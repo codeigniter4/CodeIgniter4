@@ -59,13 +59,6 @@ final class AutoRouterImproved implements AutoRouterInterface
     private bool $translateURIDashes;
 
     /**
-     * HTTP verb for the request.
-     *
-     * @deprecated No longer used.
-     */
-    private string $httpVerb; // @phpstan-ignore-line
-
-    /**
      * The namespace for controllers.
      */
     private string $namespace;
