@@ -42,7 +42,7 @@ final class FileCollectionTest extends CIUnitTestCase
                 'type'      => 'text/plain',
                 'size'      => '124',
                 'tmp_name'  => '/tmp/myTempFile.txt',
-                'full_path' => 'tmp/myTempFile.txt',
+                'full_path' => 'someDir/someFile.txt',
                 'error'     => 0,
             ],
         ];
@@ -55,7 +55,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertInstanceOf(UploadedFile::class, $file);
 
         $this->assertSame('someFile.txt', $file->getName());
-        $this->assertSame('tmp/myTempFile.txt', $file->getClientPath());
+        $this->assertSame('someDir/someFile.txt', $file->getClientPath());
         $this->assertSame(124, $file->getSize());
     }
 
