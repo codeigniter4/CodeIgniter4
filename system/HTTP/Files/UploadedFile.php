@@ -87,7 +87,7 @@ class UploadedFile extends File implements UploadedFileInterface
      * @param int    $size         The size of the file, in bytes
      * @param int    $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
      */
-    public function __construct(string $path, string $originalName, ?string $clientPath, ?string $mimeType = null, ?int $size = null, ?int $error = null)
+    public function __construct(string $path, string $originalName, ?string $clientPath = null, ?string $mimeType = null, ?int $size = null, ?int $error = null)
     {
         $this->path             = $path;
         $this->clientPath       = $clientPath;
