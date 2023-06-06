@@ -51,64 +51,67 @@ final class FileLocatorTest extends CIUnitTestCase
         $this->locator = new FileLocator($autoloader);
     }
 
-    public function testLocateFileWorksWithLegacyStructure()
+    public function testLocateFileNotNamespacedFindsInAppDirectory()
     {
-        $file = 'Controllers/Home';
+        $file = 'Controllers/Home'; // not namespaced
 
         $expected = APPPATH . 'Controllers/Home.php';
 
         $this->assertSame($expected, $this->locator->locateFile($file));
     }
 
-    public function testLocateFileWithLegacyStructureNotFound()
+    public function testLocateFileNotNamespacedNotFound()
     {
-        $file = 'Unknown';
+        $file = 'Unknown'; // not namespaced
 
         $this->assertFalse($this->locator->locateFile($file));
     }
 
-    public function testLocateFileWorksInApplicationDirectory()
+    public function testLocateFileNotNamespacedFindsWithFolderInAppDirectory()
     {
-        $file = 'welcome_message';
+        $file = 'welcome_message'; // not namespaced
 
         $expected = APPPATH . 'Views/welcome_message.php';
 
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
-    public function testLocateFileWorksInApplicationDirectoryWithoutFolder()
+    public function testLocateFileNotNamespacedFindesWithoutFolderInAppDirectory()
     {
-        $file = 'Common';
+        $file = 'Common'; // not namespaced
 
         $expected = APPPATH . 'Common.php';
 
         $this->assertSame($expected, $this->locator->locateFile($file));
     }
 
-    public function testLocateFileWorksInNestedApplicationDirectory()
+    public function testLocateFileNotNamespacedWorksInNestedAppDirectory()
     {
-        $file = 'Controllers/Home';
+        $file = 'Controllers/Home'; // not namespaced
 
         $expected = APPPATH . 'Controllers/Home.php';
 
+        // This works because $file contains `Controllers`.
         $this->assertSame($expected, $this->locator->locateFile($file, 'Controllers'));
     }
 
-    public function testLocateFileReplacesFolderName()
+    public function testLocateFileWithFolderNameInFile()
     {
         $file = '\App\Views/errors/html/error_404.php';
 
         $expected = APPPATH . 'Views/errors/html/error_404.php';
 
+        // This works because $file contains `Views`.
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
-    public function testLocateFileReplacesFolderNameLegacy()
+    public function testLocateFileNotNamespacedWithFolderNameInFile()
     {
-        $file = 'Views/welcome_message.php';
+        $file = 'Views/welcome_message.php'; // not namespaced
 
         $expected = APPPATH . 'Views/welcome_message.php';
 
+        // This works because $file contains `Views`.
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
@@ -118,6 +121,7 @@ final class FileLocatorTest extends CIUnitTestCase
 
         $expected = APPPATH . 'Views/errors/html/error_404.php';
 
+        // The namespace `Errors` (APPPATH . 'Views/errors') + the folder (`html`) + `error_404`
         $this->assertSame($expected, $this->locator->locateFile($file, 'html'));
     }
 
