@@ -4,7 +4,7 @@ URI Routing
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 What is URI Routing?
 ********************
@@ -68,8 +68,8 @@ and the ``productLookupByID()`` method passing in the match as a variable to the
 
 .. literalinclude:: routing/009.php
 
-HTTP verbs
-==========
+HTTP verb Routes
+================
 
 You can use any standard HTTP verb (GET, POST, PUT, DELETE, OPTIONS, etc):
 
@@ -79,8 +79,11 @@ You can supply multiple verbs that a route should match by passing them in as an
 
 .. literalinclude:: routing/004.php
 
+Specifying Route Handlers
+=========================
+
 Controller's Namespace
-======================
+----------------------
 
 If a controller name is stated without beginning with ``\``, the :ref:`routing-default-namespace` will be prepended:
 
@@ -96,8 +99,46 @@ You can also specify the namespace with the ``namespace`` option:
 
 See :ref:`assigning-namespace` for details.
 
+Array Callable Syntax
+---------------------
+
+.. versionadded:: 4.2.0
+
+Since v4.2.0, you can use array callable syntax to specify the controller:
+
+.. literalinclude:: routing/013.php
+   :lines: 2-
+
+Or using ``use`` keyword:
+
+.. literalinclude:: routing/014.php
+   :lines: 2-
+
+If there are placeholders, it will automatically set the parameters in the specified order:
+
+.. literalinclude:: routing/015.php
+   :lines: 2-
+
+But the auto-configured parameters may not be correct if you use regular expressions in routes.
+In such a case, you can specify the parameters manually:
+
+.. literalinclude:: routing/016.php
+   :lines: 2-
+
+Using Closures
+--------------
+
+You can use an anonymous function, or Closure, as the destination that a route maps to. This function will be
+executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
+a simple view:
+
+.. literalinclude:: routing/020.php
+
+Specifying Route Paths
+======================
+
 Placeholders
-============
+------------
 
 A typical route might look something like this:
 
@@ -147,35 +188,8 @@ routes. With the examples URLs from above:
 
 will only match **product/123** and generate 404 errors for other example.
 
-
-Array Callable Syntax
-=====================
-
-.. versionadded:: 4.2.0
-
-Since v4.2.0, you can use array callable syntax to specify the controller:
-
-.. literalinclude:: routing/013.php
-   :lines: 2-
-
-Or using ``use`` keyword:
-
-.. literalinclude:: routing/014.php
-   :lines: 2-
-
-If there are placeholders, it will automatically set the parameters in the specified order:
-
-.. literalinclude:: routing/015.php
-   :lines: 2-
-
-But the auto-configured parameters may not be correct if you use regular expressions in routes.
-In such a case, you can specify the parameters manually:
-
-.. literalinclude:: routing/016.php
-   :lines: 2-
-
 Custom Placeholders
-===================
+-------------------
 
 You can create your own placeholders that can be used in your routes file to fully customize the experience
 and readability.
@@ -187,7 +201,7 @@ This must be called before you add the route:
 .. literalinclude:: routing/017.php
 
 Regular Expressions
-===================
+-------------------
 
 If you prefer you can use regular expressions to define your routing rules. Any valid regular expression
 is allowed, as are back-references.
@@ -213,19 +227,10 @@ For those of you who don't know regular expressions and want to learn more about
 
 .. note:: You can also mix and match placeholders with regular expressions.
 
-Closures
-========
-
-You can use an anonymous function, or Closure, as the destination that a route maps to. This function will be
-executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
-a simple view:
-
-.. literalinclude:: routing/020.php
-
 .. _view-routes:
 
-Views
-=====
+View Routes
+===========
 
 .. versionadded:: 4.3.0
 
@@ -258,45 +263,6 @@ redirect and is recommended in most cases:
 If a redirect route is matched during a page load, the user will be immediately redirected to the new page before a
 controller can be loaded.
 
-Grouping Routes
-===============
-
-You can group your routes under a common name with the ``group()`` method. The group name becomes a segment that
-appears prior to the routes defined inside of the group. This allows you to reduce the typing needed to build out an
-extensive set of routes that all share the opening string, like when building an admin area:
-
-.. literalinclude:: routing/023.php
-
-This would prefix the **users** and **blog** URIs with **admin**, handling URLs like **admin/users** and **admin/blog**.
-
-If you need to assign options to a group, like a :ref:`assigning-namespace`, do it before the callback:
-
-.. literalinclude:: routing/024.php
-
-This would handle a resource route to the ``App\API\v1\Users`` controller with the **api/users** URI.
-
-You can also use a specific :doc:`filter <filters>` for a group of routes. This will always
-run the filter before or after the controller. This is especially handy during authentication or api logging:
-
-.. literalinclude:: routing/025.php
-
-The value for the filter must match one of the aliases defined within **app/Config/Filters.php**.
-
-It is possible to nest groups within groups for finer organization if you need it:
-
-.. literalinclude:: routing/026.php
-
-This would handle the URL at **admin/users/list**.
-
-.. note:: Options passed to the outer ``group()`` (for example ``namespace`` and ``filter``) are not merged with the inner ``group()`` options.
-
-At some point, you may want to group routes for the purpose of applying filters or other route
-config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass
-an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the
-given route config options:
-
-.. literalinclude:: routing/027.php
-
 Environment Restrictions
 ========================
 
@@ -306,36 +272,6 @@ This can be done with the ``environment()`` method. The first parameter is the n
 routes defined within this closure are only accessible from the given environment:
 
 .. literalinclude:: routing/028.php
-
-.. _reverse-routing:
-
-Reverse Routing
-===============
-
-Reverse routing allows you to define the controller and method, as well as any parameters, that a link should go
-to, and have the router lookup the current route to it. This allows route definitions to change without you having
-to update your application code. This is typically used within views to create links.
-
-For example, if you have a route to a photo gallery that you want to link to, you can use the :php:func:`url_to()` helper
-function to get the route that should be used. The first parameter is the fully qualified Controller and method,
-separated by a double colon (``::``), much like you would use when writing the initial route itself. Any parameters that
-should be passed to the route are passed in next:
-
-.. literalinclude:: routing/029.php
-
-.. _using-named-routes:
-
-Using Named Routes
-==================
-
-You can name routes to make your application less fragile. This applies a name to a route that can be called
-later, and even if the route definition changes, all of the links in your application built with :php:func:`url_to()`
-will still work without you having to make any changes. A route is named by passing in the ``as`` option
-with the name of the route:
-
-.. literalinclude:: routing/030.php
-
-This has the added benefit of making the views more readable, too.
 
 Routes with any HTTP verbs
 ==========================
@@ -388,9 +324,9 @@ available from the command line:
     See the :doc:`../cli/spark_commands` page for detailed information.
 
 Global Options
-==============
+**************
 
-All of the methods for creating a route (add, get, post, :doc:`resource <restful>` etc) can take an array of options that
+All of the methods for creating a route (``get()``, ``post()``, :doc:`resource() <restful>` etc) can take an array of options that
 can modify the generated routes, or further restrict them. The ``$options`` array is always the last parameter:
 
 .. literalinclude:: routing/033.php
@@ -398,7 +334,7 @@ can modify the generated routes, or further restrict them. The ``$options`` arra
 .. _applying-filters:
 
 Applying Filters
-----------------
+================
 
 You can alter the behavior of specific routes by supplying filters to run before or after the controller. This is especially handy during authentication or api logging.
 The value for the filter can be a string or an array of strings:
@@ -416,7 +352,7 @@ See :doc:`Controller filters <filters>` for more information on setting up filte
     See :ref:`use-defined-routes-only` to disable auto-routing.
 
 Alias Filter
-^^^^^^^^^^^^
+------------
 
 You specify an alias defined in **app/Config/Filters.php** for the filter value:
 
@@ -427,7 +363,7 @@ You may also supply arguments to be passed to the alias filter's ``before()`` an
 .. literalinclude:: routing/035.php
 
 Classname Filter
-^^^^^^^^^^^^^^^^
+----------------
 
 .. versionadded:: 4.1.5
 
@@ -436,7 +372,7 @@ You specify a filter classname for the filter value:
 .. literalinclude:: routing/036.php
 
 Multiple Filters
-^^^^^^^^^^^^^^^^
+----------------
 
 .. versionadded:: 4.1.5
 
@@ -449,7 +385,7 @@ You specify an array for the filter value:
 .. _assigning-namespace:
 
 Assigning Namespace
--------------------
+===================
 
 While a :ref:`routing-default-namespace` will be prepended to the generated controllers, you can also specify
 a different namespace to be used in any options array, with the ``namespace`` option. The value should be the
@@ -462,7 +398,7 @@ For any methods that create multiple routes, the new namespace is attached to al
 or, in the case of ``group()``, all routes generated while in the closure.
 
 Limit to Hostname
------------------
+=================
 
 You can restrict groups of routes to function only in certain domain or sub-domains of your application
 by passing the "hostname" option along with the desired domain to allow it on as part of the options array:
@@ -473,7 +409,7 @@ This example would only allow the specified hosts to work if the domain exactly 
 It would not work under the main site at **example.com**.
 
 Limit to Subdomains
--------------------
+===================
 
 When the ``subdomain`` option is present, the system will restrict the routes to only be available on that
 sub-domain. The route will only be matched if the subdomain is the one the application is being viewed through:
@@ -490,7 +426,7 @@ that does not have any subdomain present, this will not be matched:
     to separate suffixes or www) can potentially lead to false positives.
 
 Offsetting the Matched Parameters
----------------------------------
+=================================
 
 You can offset the matched parameters in your route by any numeric value with the ``offset`` option, with the
 value being the number of segments to offset.
@@ -499,6 +435,87 @@ This can be beneficial when developing APIs with the first URI segment being the
 be used when the first parameter is a language string:
 
 .. literalinclude:: routing/042.php
+
+.. _reverse-routing:
+
+Reverse Routing
+***************
+
+Reverse routing allows you to define the controller and method, as well as any parameters, that a link should go
+to, and have the router lookup the current route to it. This allows route definitions to change without you having
+to update your application code. This is typically used within views to create links.
+
+For example, if you have a route to a photo gallery that you want to link to, you can use the :php:func:`url_to()` helper
+function to get the route that should be used. The first parameter is the fully qualified Controller and method,
+separated by a double colon (``::``), much like you would use when writing the initial route itself. Any parameters that
+should be passed to the route are passed in next:
+
+.. literalinclude:: routing/029.php
+
+.. _using-named-routes:
+
+Named Routes
+************
+
+You can name routes to make your application less fragile. This applies a name to a route that can be called
+later, and even if the route definition changes, all of the links in your application built with :php:func:`url_to()`
+will still work without you having to make any changes. A route is named by passing in the ``as`` option
+with the name of the route:
+
+.. literalinclude:: routing/030.php
+
+This has the added benefit of making the views more readable, too.
+
+Grouping Routes
+***************
+
+You can group your routes under a common name with the ``group()`` method. The group name becomes a segment that
+appears prior to the routes defined inside of the group. This allows you to reduce the typing needed to build out an
+extensive set of routes that all share the opening string, like when building an admin area:
+
+.. literalinclude:: routing/023.php
+
+This would prefix the **users** and **blog** URIs with **admin**, handling URLs like **admin/users** and **admin/blog**.
+
+Setting Namespace
+=================
+
+If you need to assign options to a group, like a :ref:`assigning-namespace`, do it before the callback:
+
+.. literalinclude:: routing/024.php
+
+This would handle a resource route to the ``App\API\v1\Users`` controller with the **api/users** URI.
+
+Setting Filters
+===============
+
+You can also use a specific :doc:`filter <filters>` for a group of routes. This will always
+run the filter before or after the controller. This is especially handy during authentication or api logging:
+
+.. literalinclude:: routing/025.php
+
+The value for the filter must match one of the aliases defined within **app/Config/Filters.php**.
+
+Setting Other Options
+=====================
+
+At some point, you may want to group routes for the purpose of applying filters or other route
+config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass
+an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the
+given route config options:
+
+.. literalinclude:: routing/027.php
+
+Nesting Groups
+==============
+
+It is possible to nest groups within groups for finer organization if you need it:
+
+.. literalinclude:: routing/026.php
+
+This would handle the URL at **admin/users/list**.
+
+.. note:: Options passed to the outer ``group()`` (for example ``namespace`` and ``filter``) are not merged with the inner ``group()`` options.
 
 .. _routing-priority:
 
