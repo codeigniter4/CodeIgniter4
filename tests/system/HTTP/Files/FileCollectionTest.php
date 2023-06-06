@@ -38,12 +38,11 @@ final class FileCollectionTest extends CIUnitTestCase
     {
         $_FILES = [
             'userfile' => [
-                'name'      => 'someFile.txt',
-                'type'      => 'text/plain',
-                'size'      => '124',
-                'tmp_name'  => '/tmp/myTempFile.txt',
-                'full_path' => 'someDir/someFile.txt',
-                'error'     => 0,
+                'name'     => 'someFile.txt',
+                'type'     => 'text/plain',
+                'size'     => '124',
+                'tmp_name' => '/tmp/myTempFile.txt',
+                'error'    => 0,
             ],
         ];
 
@@ -56,12 +55,6 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $this->assertSame('someFile.txt', $file->getName());
         $this->assertSame(124, $file->getSize());
-
-        if (version_compare(PHP_VERSION, '8.1', '>=')) {
-            $this->assertSame('someDir/someFile.txt', $file->getClientPath());
-        } else {
-            $this->assertNull($file->getClientPath());
-        }
     }
 
     public function testAllReturnsValidMultipleFilesSameName()
@@ -458,6 +451,41 @@ final class FileCollectionTest extends CIUnitTestCase
         $file       = $collection->getFile('userfile');
 
         $this->assertSame(UPLOAD_ERR_OK, $file->getError());
+    }
+
+    public function testClientPathReturnsValidFullPath()
+    {
+        $_FILES = [
+            'userfile' => [
+                'name'      => 'someFile.txt',
+                'type'      => 'text/plain',
+                'size'      => '124',
+                'tmp_name'  => '/tmp/myTempFile.txt',
+                'full_path' => 'someDir/someFile.txt',
+            ],
+        ];
+
+        $collection = new FileCollection();
+        $file       = $collection->getFile('userfile');
+
+        $this->assertSame('someDir/someFile.txt', $file->getClientPath());
+    }
+
+    public function testClientPathReturnsNullWhenFullPathIsNull()
+    {
+        $_FILES = [
+            'userfile' => [
+                'name'     => 'someFile.txt',
+                'type'     => 'text/plain',
+                'size'     => '124',
+                'tmp_name' => '/tmp/myTempFile.txt',
+            ],
+        ];
+
+        $collection = new FileCollection();
+        $file       = $collection->getFile('userfile');
+
+        $this->assertNull($file->getClientPath());
     }
 
     public function testFileReturnsValidSingleFile()
