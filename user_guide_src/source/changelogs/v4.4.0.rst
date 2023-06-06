@@ -89,6 +89,9 @@ Libraries
   the actual validated data. See :ref:`validation-getting-validated-data` for details.
 - **Images:** The option ``$quality`` can now be used to compress WebP images.
 
+- **Uploaded Files:** Added ``UploadedFiles::getClientPath()`` method that returns
+  the value of the `full_path` index of the file if it was uploaded via directory upload.
+
 Helpers and Functions
 =====================
 
