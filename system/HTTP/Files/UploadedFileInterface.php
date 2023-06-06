@@ -114,7 +114,7 @@ interface UploadedFileInterface
      * (PHP 8.1+)
      * Returns the webkit relative path of the uploaded file on directory uploads.
      */
-    public function getClientPath(): string|null;
+    public function getClientPath(): ?string;
 
     /**
      * Returns the original file extension, based on the file name that
