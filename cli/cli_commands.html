@@ -312,8 +312,8 @@ and must extend <code class="docutils literal notranslate"><span class="pre">Cod
 <p><strong>Help description will be automatically generated according to the above parameters.</strong></p>
 <section id="file-location">
 <h3><a class="toc-backref" href="#id2">File Location</a><a class="headerlink" href="#file-location" title="Permalink to this headline"></a></h3>
-<p>Commands must be stored within a directory named <strong>Commands</strong>. However, that directory can be located anywhere
-that the <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader</span></a> can locate it. This could be in <strong>app/Commands</strong>, or
+<p>Commands must be stored within a directory named <strong>Commands</strong>. However, that directory has to be located in the PSR-4 namespaces
+so that the <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader</span></a> can locate it. This could be in <strong>app/Commands</strong>, or
 a directory that you keep commands in to use in all of your project development, like <strong>Acme/Commands</strong>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -335,7 +335,7 @@ should contain the following code:</p>
 
 <span class="k">class</span> <span class="nc">AppInfo</span> <span class="k">extends</span> <span class="nx">BaseCommand</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$group</span>       <span class="o">=</span> <span class="s1">&#39;demo&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$group</span>       <span class="o">=</span> <span class="s1">&#39;Demo&#39;</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$name</span>        <span class="o">=</span> <span class="s1">&#39;app:info&#39;</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$description</span> <span class="o">=</span> <span class="s1">&#39;Displays basic application information.&#39;</span><span class="p">;</span>
 
@@ -346,7 +346,7 @@ should contain the following code:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>If you run the <strong>list</strong> command, you will see the new command listed under its own <code class="docutils literal notranslate"><span class="pre">demo</span></code> group. If you take
+<p>If you run the <strong>list</strong> command, you will see the new command listed under its own <code class="docutils literal notranslate"><span class="pre">Demo</span></code> group. If you take
 a close look, you should see how this works fairly easily. The <code class="docutils literal notranslate"><span class="pre">$group</span></code> property simply tells it how to organize
 this command with all of the other commands that exist, telling it what heading to list it under.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">$name</span></code> property is the name this command can be called by. The only requirement is that it must not contain
@@ -402,7 +402,7 @@ from the string. These parameters can be used to customize how your scripts beha
 you can terminate the command by using the <code class="docutils literal notranslate"><span class="pre">return</span></code> language construct with an exit code in the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method.</p>
 <p>For example, <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">EXIT_ERROR;</span></code></p>
 <p>This approach can help with debugging at the system level, if the command, for example, is run via crontab.</p>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">EXIT_*</span></code> exit code constants defined in the <code class="docutils literal notranslate"><span class="pre">app/Config/Constants.php</span></code> file.</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">EXIT_*</span></code> exit code constants defined in the <strong>app/Config/Constants.php</strong> file.</p>
 </section>
 </section>
 </section>
@@ -463,9 +463,44 @@ be familiar with when creating your own commands. It also has a <a class="refere
 </dd></dl>
 
 <dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\CLI\BaseCommand::setPad">
+<span class="sig-name descname"><span class="pre">setPad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$item</span></em>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$max</span></em>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$extra</span> <span class="pre">=</span> <span class="pre">2</span></em>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$indent</span> <span class="pre">=</span> <span class="pre">0</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\CLI\BaseCommand::setPad" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$item</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The string item.</p></li>
+<li><p><strong>$max</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">integer</span></code></span>) – The max size.</p></li>
+<li><p><strong>$extra</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">integer</span></code></span>) – How many extra spaces to add at the end.</p></li>
+<li><p><strong>$indent</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">integer</span></code></span>) – The indent spaces.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Pads our string out so that all titles are the same length to nicely line
+up descriptions:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+
+<span class="nv">$length</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">array_map</span><span class="p">(</span><span class="s1">&#39;strlen&#39;</span><span class="p">,</span> <span class="nb">array_keys</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">)));</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span> <span class="k">as</span> <span class="nv">$option</span> <span class="o">=&gt;</span> <span class="nv">$description</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">setPad</span><span class="p">(</span><span class="nv">$option</span><span class="p">,</span> <span class="nv">$length</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;green&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="nv">$description</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="cm">/*</span>
+<span class="cm"> * Output will be:</span>
+<span class="cm"> *  -n     Set migration namespace</span>
+<span class="cm"> *  -g     Set database group</span>
+<span class="cm"> *  --all  Set for all namespaces, will ignore (-n) option</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\CLI\BaseCommand::getPad">
 <span class="sig-name descname"><span class="pre">getPad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$array</span></em>, <em class="sig-param"><span class="pre">$pad</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\BaseCommand::getPad" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.0.5: </span>Use <a class="reference internal" href="#CodeIgniter\CLI\BaseCommand::setPad" title="CodeIgniter\CLI\BaseCommand::setPad"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\CLI\BaseCommand::setPad()</span></code></a> instead.</p>
+</div>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$array</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – The  $key =&gt; $value array.</p></li>
@@ -473,21 +508,7 @@ be familiar with when creating your own commands. It also has a <a class="refere
 </ul>
 </dd>
 </dl>
-<p>A method to calculate padding for <code class="docutils literal notranslate"><span class="pre">$key</span> <span class="pre">=&gt;</span> <span class="pre">$value</span></code> array output. The padding can be used to output a will formatted table in CLI:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$pad</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getPad</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
-
-<span class="k">foreach</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span> <span class="k">as</span> <span class="nv">$option</span> <span class="o">=&gt;</span> <span class="nv">$description</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="nv">$tab</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="nb">str_pad</span><span class="p">(</span><span class="nv">$option</span><span class="p">,</span> <span class="nv">$pad</span><span class="p">),</span> <span class="s1">&#39;green&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="nv">$description</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="cm">/*</span>
-<span class="cm"> * Output will be:</span>
-<span class="cm"> * -n        Set migration namespace</span>
-<span class="cm"> * -r        override file</span>
-<span class="cm"> */</span>
-</pre></div>
-</div>
+<p>A method to calculate padding for <code class="docutils literal notranslate"><span class="pre">$key</span> <span class="pre">=&gt;</span> <span class="pre">$value</span></code> array output. The padding can be used to output a will formatted table in CLI.</p>
 </dd></dl>
 
 </dd></dl>
@@ -507,7 +528,7 @@ be familiar with when creating your own commands. It also has a <a class="refere
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 03, 2023.
+      <span class="lastupdated">Last updated on Jun 06, 2023.
       </span></p>
   </div>
 
