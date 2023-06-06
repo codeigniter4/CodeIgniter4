@@ -441,7 +441,7 @@ class Entity implements JsonSerializable
      *
      * @param array|bool|float|int|object|string|null $value
      *
-     * @return $this
+     * @return void
      *
      * @throws Exception
      */
@@ -472,7 +472,7 @@ class Entity implements JsonSerializable
         if (method_exists($this, $method) && $method !== 'setAttributes') {
             $this->{$method}($value);
 
-            return $this;
+            return;
         }
 
         // Otherwise, just the value. This allows for creation of new
@@ -480,8 +480,6 @@ class Entity implements JsonSerializable
         // saved. Useful for grabbing values through joins, assigning
         // relationships, etc.
         $this->attributes[$dbColumn] = $value;
-
-        return $this;
     }
 
     /**
