@@ -465,7 +465,7 @@ class Entity implements JsonSerializable
         if (method_exists($this, '_' . $method)) {
             $this->{'_' . $method}($value);
 
-            return $this;
+            return;
         }
 
         // If a "`set` + $key" method exists, it is also a setter.
