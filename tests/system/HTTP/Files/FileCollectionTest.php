@@ -55,8 +55,13 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertInstanceOf(UploadedFile::class, $file);
 
         $this->assertSame('someFile.txt', $file->getName());
-        $this->assertSame('someDir/someFile.txt', $file->getClientPath());
         $this->assertSame(124, $file->getSize());
+
+        if (version_compare(PHP_VERSION, '8.1', '>=')) {
+            $this->assertSame('someDir/someFile.txt', $file->getClientPath());
+        } else {
+            $this->assertNull($file->getClientPath());
+        }
     }
 
     public function testAllReturnsValidMultipleFilesSameName()
