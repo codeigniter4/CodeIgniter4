@@ -24,6 +24,7 @@ use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\Router\Exceptions\RedirectException as DeprecatedRedirectException;
 use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Router\Router;
 use Config\App;
@@ -343,7 +344,7 @@ class CodeIgniter
 
         try {
             $this->response = $this->handleRequest($routes, config(Cache::class), $returnResponse);
-        } catch (RedirectException $e) {
+        } catch (RedirectException|DeprecatedRedirectException $e) {
             $this->outputBufferingEnd();
             $logger = Services::logger();
             $logger->info('REDIRECTED ROUTE at ' . $e->getMessage());

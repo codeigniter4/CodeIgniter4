@@ -14,6 +14,7 @@ namespace CodeIgniter;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
@@ -568,6 +569,29 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
         $this->assertSame(301, $response->getStatusCode());
+    }
+
+    /**
+     * test for deprecated \CodeIgniter\Router\Exceptions\RedirectException for backward compatibility
+     */
+    public function testRedirectExceptionDeprecated(): void
+    {
+        $_SERVER['argv'] = ['index.php', '/'];
+        $_SERVER['argc'] = 2;
+
+        // Inject mock router.
+        $routes = Services::routes();
+        $routes->get('/', static function () {
+            throw new RedirectException('redirect-exception', 503);
+        });
+
+        $router = Services::router($routes, Services::incomingrequest());
+        Services::injectMock('router', $router);
+
+        $response = $this->codeigniter->run($routes, true);
+
+        $this->assertSame(503, $response->getStatusCode());
+        $this->assertSame('http://example.com/redirect-exception', $response->getHeaderLine('Location'));
     }
 
     public function testStoresPreviousURL()
