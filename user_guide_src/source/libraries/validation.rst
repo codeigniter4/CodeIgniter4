@@ -697,8 +697,8 @@ If your method needs to work with parameters, the function will need a minimum o
 3. an array with all of the data that was submitted the form (``$data``)
 4. (optional) a custom error string (``&$error``), just as described above.
 
-.. warning:: The other field values in ``$data`` is unvalidated (or maybe invalid)
-    data. Using unvalidated input data is a source of vulnerability. You must
+.. warning:: The field values in ``$data`` are unvalidated (or may be invalid).
+    Using unvalidated input data is a source of vulnerability. You must
     perform the necessary validation within your custom rules before using the
     data in ``$data``.
 
