@@ -21,6 +21,9 @@ Breaking Changes
 Breaking Enhancements
 *********************
 
+- The method signatures of ``ValidationInterface::check()`` and ``Validation::check()``
+  have been changed. If you implement or extend them, update the signatures.
+
 Project Files
 *************
 
