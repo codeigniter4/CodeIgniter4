@@ -136,7 +136,7 @@ final class ConnectTest extends CIUnitTestCase
             $this->group3['username'],
             $this->group3['password']
         );
-        $this->assertSame("host=127.0.0.1 port=5432 user=postgres password='pass;word' dbname=tests", $this->getPrivateProperty($db, 'DSN'));
+        $this->assertSame($expect, $this->getPrivateProperty($db, 'DSN'));
     }
 
     public function testDSNStringEstablishedDuringConnectionForPostgre()
