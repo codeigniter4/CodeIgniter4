@@ -187,23 +187,6 @@ class Validation implements ValidationInterface
     }
 
     /**
-     * Runs the validation process, returning true or false
-     * determining whether validation was successful or not.
-     *
-     * @TODO the method signature is not good. Should make the checkValue()
-     *      method this method.
-     *
-     * @param array|bool|float|int|object|string|null $value
-     * @param string[]                                $errors
-     */
-    public function check($value, string $rule, array $errors = []): bool
-    {
-        $this->reset();
-
-        return $this->setRule('check', null, $rule, $errors)->run(['check' => $value]);
-    }
-
-    /**
      * Runs the validation process, returning true or false determining whether
      * validation was successful or not.
      *
@@ -212,7 +195,7 @@ class Validation implements ValidationInterface
      * @param string[]                                $errors
      * @param string|null                             $dbGroup The database group to use.
      */
-    private function checkValue($value, $rules, array $errors = [], $dbGroup = null): bool
+    public function check($value, $rules, array $errors = [], $dbGroup = null): bool
     {
         $this->reset();
 
@@ -732,7 +715,7 @@ class Validation implements ValidationInterface
 
                         // Validate the placeholder field
                         $dbGroup = $data['DBGroup'] ?? null;
-                        if (! $validator->checkValue($data[$field], $placeholderRules, [], $dbGroup)) {
+                        if (! $validator->check($data[$field], $placeholderRules, [], $dbGroup)) {
                             // if fails, do nothing
                             continue;
                         }
