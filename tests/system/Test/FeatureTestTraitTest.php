@@ -120,6 +120,36 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello Mars!');
     }
 
+    public function testCallValidationTwice()
+    {
+        $this->withRoutes([
+            [
+                'post',
+                'section/create',
+                static function () {
+                    $validation = Services::validation();
+                    $validation->setRule('title', 'title', 'required|min_length[3]');
+
+                    $post = Services::request()->getPost();
+
+                    if ($validation->run($post)) {
+                        return 'Okay';
+                    }
+
+                    return 'Invalid';
+                },
+            ],
+        ]);
+
+        $response = $this->post('section/create', ['foo' => 'Mars']);
+
+        $response->assertSee('Invalid');
+
+        $response = $this->post('section/create', ['title' => 'Section Title']);
+
+        $response->assertSee('Okay');
+    }
+
     public function testCallPut()
     {
         $this->withRoutes([

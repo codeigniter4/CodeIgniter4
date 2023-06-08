@@ -16,6 +16,7 @@ use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Validation\Validation;
 use Config\Database;
 use Config\Services;
+use InvalidArgumentException;
 use Tests\Support\Validation\TestRules;
 
 /**
@@ -82,7 +83,17 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    public function testIsUniqueIgnoresParams(): void
+    public function testIsUniqueWithInvalidDBGroup(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('invalidGroup is not a valid database connection group');
+
+        $this->validation->setRules(['email' => 'is_unique[user.email]']);
+        $data = ['email' => 'derek@world.co.uk'];
+        $this->assertTrue($this->validation->run($data, null, 'invalidGroup'));
+    }
+
+    public function testIsUniqueWithIgnoreValue(): void
     {
         $db = Database::connect();
         $db
@@ -102,7 +113,7 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    public function testIsUniqueIgnoresParamsPlaceholders(): void
+    public function testIsUniqueWithIgnoreValuePlaceholder(): void
     {
         $this->hasInDatabase('user', [
             'name'    => 'Derek',

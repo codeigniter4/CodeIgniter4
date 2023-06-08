@@ -123,6 +123,9 @@ class Validation implements ValidationInterface
      * @param array|null  $data    The array of data to validate.
      * @param string|null $group   The predefined group of rules to apply.
      * @param string|null $dbGroup The database group to use.
+     *
+     * @TODO Type ?string for $dbGroup should be removed.
+     *      See https://github.com/codeigniter4/CodeIgniter4/issues/6723
      */
     public function run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool
     {
@@ -133,7 +136,7 @@ class Validation implements ValidationInterface
             $this->data = $data;
         }
 
-        // i.e. is_unique
+        // `DBGroup` is a reserved name. For is_unique and is_not_unique
         $data['DBGroup'] = $dbGroup;
 
         $this->loadRuleSets();
@@ -206,18 +209,28 @@ class Validation implements ValidationInterface
     }
 
     /**
-     * Runs the validation process, returning true or false
-     * determining whether validation was successful or not.
+     * Runs the validation process, returning true or false determining whether
+     * validation was successful or not.
      *
-     * @param array|bool|float|int|object|string|null $value  The data to validate.
-     * @param array|string                            $rule   The validation rules.
-     * @param string[]                                $errors The custom error message.
+     * @param array|bool|float|int|object|string|null $value   The data to validate.
+     * @param array|string                            $rules   The validation rules.
+     * @param string[]                                $errors  The custom error message.
+     * @param string|null                             $dbGroup The database group to use.
      */
-    public function check($value, $rule, array $errors = []): bool
+    public function check($value, $rules, array $errors = [], $dbGroup = null): bool
     {
         $this->reset();
 
-        return $this->setRule('check', null, $rule, $errors)->run(['check' => $value]);
+        return $this->setRule(
+            'check',
+            null,
+            $rules,
+            $errors
+        )->run(
+            ['check' => $value],
+            null,
+            $dbGroup
+        );
     }
 
     /**
@@ -711,6 +724,7 @@ class Validation implements ValidationInterface
 
                     foreach ($placeholderFields as $field) {
                         $validator ??= Services::validation(null, false);
+                        assert($validator instanceof Validation);
 
                         $placeholderRules = $rules[$field]['rules'] ?? null;
 
@@ -731,7 +745,8 @@ class Validation implements ValidationInterface
                         }
 
                         // Validate the placeholder field
-                        if (! $validator->check($data[$field], implode('|', $placeholderRules))) {
+                        $dbGroup = $data['DBGroup'] ?? null;
+                        if (! $validator->check($data[$field], $placeholderRules, [], $dbGroup)) {
                             // if fails, do nothing
                             continue;
                         }
