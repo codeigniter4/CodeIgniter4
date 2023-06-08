@@ -148,9 +148,6 @@ class FeatureTestCase extends CIUnitTestCase
      * instance that can be used to run many assertions against.
      *
      * @return FeatureResponse
-     *
-     * @throws Exception
-     * @throws RedirectException
      */
     public function call(string $method, string $path, ?array $params = null)
     {
