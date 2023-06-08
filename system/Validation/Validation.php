@@ -116,6 +116,9 @@ class Validation implements ValidationInterface
      * @param array|null  $data    The array of data to validate.
      * @param string|null $group   The predefined group of rules to apply.
      * @param string|null $dbGroup The database group to use.
+     *
+     * @TODO Type ?string for $dbGroup should be removed.
+     *      See https://github.com/codeigniter4/CodeIgniter4/issues/6723
      */
     public function run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool
     {
