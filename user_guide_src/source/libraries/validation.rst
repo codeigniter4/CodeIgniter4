@@ -690,13 +690,22 @@ Your new custom rule could now be used just like any other rule:
 Allowing Parameters
 -------------------
 
-If your method needs to work with parameters, the function will need a minimum of three parameters: the value to validate,
-the parameter string, and an array with all of the data that was submitted the form. The ``$data`` array is especially handy
+If your method needs to work with parameters, the function will need a minimum of three parameters:
+
+1. the value to validate (``$value``)
+2. the parameter string (``$params``)
+3. an array with all of the data that was submitted the form (``$data``)
+4. (optional) a custom error string (``&$error``), just as described above.
+
+.. warning:: The field values in ``$data`` are unvalidated (or may be invalid).
+    Using unvalidated input data is a source of vulnerability. You must
+    perform the necessary validation within your custom rules before using the
+    data in ``$data``.
+
+The ``$data`` array is especially handy
 for rules like ``required_with`` that needs to check the value of another submitted field to base its result on:
 
 .. literalinclude:: validation/037.php
-
-Custom errors can be returned as the fourth parameter ``&$error``, just as described above.
 
 .. _validation-using-closure-rule:
 
