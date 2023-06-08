@@ -90,12 +90,12 @@ class UploadedFile extends File implements UploadedFileInterface
     public function __construct(string $path, string $originalName, ?string $mimeType = null, ?int $size = null, ?int $error = null, ?string $clientPath = null)
     {
         $this->path             = $path;
-        $this->clientPath       = $clientPath;
         $this->name             = $originalName;
         $this->originalName     = $originalName;
         $this->originalMimeType = $mimeType;
         $this->size             = $size;
         $this->error            = $error;
+        $this->clientPath       = $clientPath;
 
         parent::__construct($path, false);
     }
