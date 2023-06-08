@@ -285,27 +285,72 @@
 <p><strong>{version} release of CodeIgniter4</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p></li>
-<li><p><a class="reference internal" href="#message-changes" id="id2">Message Changes</a></p></li>
-<li><p><a class="reference internal" href="#changes" id="id3">Changes</a></p></li>
-<li><p><a class="reference internal" href="#deprecations" id="id4">Deprecations</a></p></li>
-<li><p><a class="reference internal" href="#bugs-fixed" id="id5">Bugs Fixed</a></p></li>
+<li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p>
+<ul>
+<li><p><a class="reference internal" href="#interface-changes" id="id2">Interface Changes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#validationinterface-check" id="id3">ValidationInterface::check()</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#method-signature-changes" id="id4">Method Signature Changes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#validation-check" id="id5">Validation::check()</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#message-changes" id="id6">Message Changes</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id7">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id8">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id9">Bugs Fixed</a></p></li>
 </ul>
 </div>
 <section id="breaking">
 <h2><a class="toc-backref" href="#id1">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this headline"></a></h2>
+<section id="interface-changes">
+<h3><a class="toc-backref" href="#id2">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this headline"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As long as you have not extended the relevant CodeIgniter core classes
+or implemented these interfaces, all these changes are backward compatible
+and require no intervention.</p>
+</div>
+<section id="validationinterface-check">
+<h4><a class="toc-backref" href="#id3">ValidationInterface::check()</a><a class="headerlink" href="#validationinterface-check" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p>The second parameter has changed from <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">$rule</span></code> to <code class="docutils literal notranslate"><span class="pre">$rules</span></code>.</p></li>
+<li><p>The optional fourth parameter <code class="docutils literal notranslate"><span class="pre">$dbGroup</span> <span class="pre">=</span> <span class="pre">null</span></code> has been added.</p></li>
+</ul>
+</section>
+</section>
+<section id="method-signature-changes">
+<h3><a class="toc-backref" href="#id4">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this headline"></a></h3>
+<section id="validation-check">
+<h4><a class="toc-backref" href="#id5">Validation::check()</a><a class="headerlink" href="#validation-check" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p>The second parameter has changed from <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">$rule</span></code> to <code class="docutils literal notranslate"><span class="pre">$rules</span></code>.</p></li>
+<li><p>The optional fourth parameter <code class="docutils literal notranslate"><span class="pre">$dbGroup</span> <span class="pre">=</span> <span class="pre">null</span></code> has been added.</p></li>
+</ul>
+</section>
+</section>
 </section>
 <section id="message-changes">
-<h2><a class="toc-backref" href="#id2">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this headline"></a></h2>
 </section>
 <section id="changes">
-<h2><a class="toc-backref" href="#id3">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
 </section>
 <section id="deprecations">
-<h2><a class="toc-backref" href="#id4">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
 </section>
 <section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id5">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><strong>Validation:</strong> Fixed a bug that <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code> is ignored when checking
+the value of a placeholder.</p></li>
+<li><p><strong>Validation:</strong> Fixed a bug that <code class="docutils literal notranslate"><span class="pre">check()</span></code> cannot specify non-default
+database group.</p></li>
+</ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
 for a complete list of bugs fixed.</p>
