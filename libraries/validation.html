@@ -1366,8 +1366,21 @@ second parameter:</p>
 </section>
 <section id="allowing-parameters">
 <h4>Allowing Parameters<a class="headerlink" href="#allowing-parameters" title="Permalink to this headline"></a></h4>
-<p>If your method needs to work with parameters, the function will need a minimum of three parameters: the value to validate,
-the parameter string, and an array with all of the data that was submitted the form. The <code class="docutils literal notranslate"><span class="pre">$data</span></code> array is especially handy
+<p>If your method needs to work with parameters, the function will need a minimum of three parameters:</p>
+<ol class="arabic simple">
+<li><p>the value to validate (<code class="docutils literal notranslate"><span class="pre">$value</span></code>)</p></li>
+<li><p>the parameter string (<code class="docutils literal notranslate"><span class="pre">$params</span></code>)</p></li>
+<li><p>an array with all of the data that was submitted the form (<code class="docutils literal notranslate"><span class="pre">$data</span></code>)</p></li>
+<li><p>(optional) a custom error string (<code class="docutils literal notranslate"><span class="pre">&amp;$error</span></code>), just as described above.</p></li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The field values in <code class="docutils literal notranslate"><span class="pre">$data</span></code> are unvalidated (or may be invalid).
+Using unvalidated input data is a source of vulnerability. You must
+perform the necessary validation within your custom rules before using the
+data in <code class="docutils literal notranslate"><span class="pre">$data</span></code>.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">$data</span></code> array is especially handy
 for rules like <code class="docutils literal notranslate"><span class="pre">required_with</span></code> that needs to check the value of another submitted field to base its result on:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1406,7 +1419,6 @@ for rules like <code class="docutils literal notranslate"><span class="pre">requ
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Custom errors can be returned as the fourth parameter <code class="docutils literal notranslate"><span class="pre">&amp;$error</span></code>, just as described above.</p>
 </section>
 </section>
 <section id="using-closure-rule">
@@ -1890,7 +1902,7 @@ an image based on the mime type.</p></td>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 06, 2023.
+      <span class="lastupdated">Last updated on Jun 08, 2023.
       </span></p>
   </div>
 
