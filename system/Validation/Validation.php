@@ -190,6 +190,9 @@ class Validation implements ValidationInterface
      * Runs the validation process, returning true or false
      * determining whether validation was successful or not.
      *
+     * @TODO the method signature is not good. Should make the checkValue()
+     *      method this method.
+     *
      * @param array|bool|float|int|object|string|null $value
      * @param string[]                                $errors
      */
@@ -198,6 +201,31 @@ class Validation implements ValidationInterface
         $this->reset();
 
         return $this->setRule('check', null, $rule, $errors)->run(['check' => $value]);
+    }
+
+    /**
+     * Runs the validation process, returning true or false determining whether
+     * validation was successful or not.
+     *
+     * @param array|bool|float|int|object|string|null $value
+     * @param array|string                            $rules
+     * @param string[]                                $errors
+     * @param string|null                             $dbGroup The database group to use.
+     */
+    private function checkValue($value, $rules, array $errors = [], $dbGroup = null): bool
+    {
+        $this->reset();
+
+        return $this->setRule(
+            'check',
+            null,
+            $rules,
+            $errors
+        )->run(
+            ['check' => $value],
+            null,
+            $dbGroup
+        );
     }
 
     /**
@@ -682,6 +710,7 @@ class Validation implements ValidationInterface
 
                     foreach ($placeholderFields as $field) {
                         $validator ??= Services::validation(null, false);
+                        assert($validator instanceof Validation);
 
                         $placeholderRules = $rules[$field]['rules'] ?? null;
 
@@ -702,7 +731,8 @@ class Validation implements ValidationInterface
                         }
 
                         // Validate the placeholder field
-                        if (! $validator->check($data[$field], implode('|', $placeholderRules))) {
+                        $dbGroup = $data['DBGroup'] ?? null;
+                        if (! $validator->checkValue($data[$field], $placeholderRules, [], $dbGroup)) {
                             // if fails, do nothing
                             continue;
                         }
