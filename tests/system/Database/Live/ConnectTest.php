@@ -39,7 +39,7 @@ final class ConnectTest extends CIUnitTestCase
 
         $this->group1 = $config->default;
         $this->group2 = $config->default;
-        $this->group3 = $config->default;
+        $this->group3 = $config->tests;
         $this->tests  = $config->tests;
 
         $this->group1['DBDriver'] = 'MySQLi';
@@ -127,7 +127,15 @@ final class ConnectTest extends CIUnitTestCase
 
         $db = Database::connect($this->group3);
         $db->connect();
+
         $this->assertSame('Postgre', $this->getPrivateProperty($db, 'DBDriver'));
+
+        $expect = sprintf(
+            "host=%s port=5432 user=%s password='%s' dbname=tests",
+            $this->group3['hostname'],
+            $this->group3['username'],
+            $this->group3['password']
+        );
         $this->assertSame("host=127.0.0.1 port=5432 user=postgres password='pass;word' dbname=tests", $this->getPrivateProperty($db, 'DSN'));
     }
 
@@ -138,13 +146,22 @@ final class ConnectTest extends CIUnitTestCase
         }
 
         $this->group3['DSN'] = sprintf(
-            'pgsql:host=127.0.0.1;port=5432;user=%s;password=%s;dbname=tests',
+            'pgsql:host=%s;port=5432;user=%s;password=%s;dbname=tests',
+            $this->group3['hostname'],
             $this->group3['username'],
             $this->group3['password']
         );
         $db = Database::connect($this->group3);
         $db->connect();
+
         $this->assertSame('Postgre', $this->getPrivateProperty($db, 'DBDriver'));
-        $this->assertSame('host=127.0.0.1 port=5432 user=postgres password=pass;word dbname=tests', $this->getPrivateProperty($db, 'DSN'));
+
+        $expect = sprintf(
+            'host=%s port=5432 user=%s password=%s dbname=tests',
+            $this->group3['hostname'],
+            $this->group3['username'],
+            $this->group3['password']
+        );
+        $this->assertSame($expect, $this->getPrivateProperty($db, 'DSN'));
     }
 }
