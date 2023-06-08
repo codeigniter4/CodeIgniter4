@@ -175,6 +175,9 @@ trait FeatureTestTrait
         // Make sure filters are reset between tests
         Services::injectMock('filters', Services::filters(null, false));
 
+        // Make sure validation is reset between tests
+        Services::injectMock('validation', Services::validation(null, false));
+
         $response = $this->app
             ->setContext('web')
             ->setRequest($request)
