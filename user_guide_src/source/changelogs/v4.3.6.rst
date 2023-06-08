@@ -12,6 +12,28 @@ Release Date: Unreleased
 BREAKING
 ********
 
+Interface Changes
+=================
+
+.. note:: As long as you have not extended the relevant CodeIgniter core classes
+    or implemented these interfaces, all these changes are backward compatible
+    and require no intervention.
+
+ValidationInterface::check()
+----------------------------
+
+- The second parameter has changed from ``string $rule`` to ``$rules``.
+- The optional fourth parameter ``$dbGroup = null`` has been added.
+
+Method Signature Changes
+========================
+
+Validation::check()
+-------------------
+
+- The second parameter has changed from ``string $rule`` to ``$rules``.
+- The optional fourth parameter ``$dbGroup = null`` has been added.
+
 Message Changes
 ***************
 
@@ -23,6 +45,11 @@ Deprecations
 
 Bugs Fixed
 **********
+
+- **Validation:** Fixed a bug that ``$DBGroup`` is ignored when checking
+  the value of a placeholder.
+- **Validation:** Fixed a bug that ``check()`` cannot specify non-default
+  database group.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
