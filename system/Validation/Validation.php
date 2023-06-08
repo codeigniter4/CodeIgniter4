@@ -124,7 +124,7 @@ class Validation implements ValidationInterface
     {
         $data ??= $this->data;
 
-        // i.e. is_unique
+        // `DBGroup` is a reserved name. For is_unique and is_not_unique
         $data['DBGroup'] = $dbGroup;
 
         $this->loadRuleSets();
