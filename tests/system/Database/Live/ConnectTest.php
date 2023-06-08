@@ -16,6 +16,7 @@ use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use ErrorException;
 
 /**
  * @group DatabaseLive
@@ -119,31 +120,46 @@ final class ConnectTest extends CIUnitTestCase
         $this->assertGreaterThanOrEqual(0, count($db1->listTables()));
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/7550
+     */
     public function testFinalDSNEstablishedDuringConnectionForPostgre()
     {
         if ($this->db->DBDriver !== 'Postgre') {
             $this->markTestSkipped('Testing only on Postgre, as it has a specific implementation of DSN handling during connect.');
         }
 
+        $this->expectException(ErrorException::class);
+
         $db = Database::connect($this->group3);
-        $db->connect();
 
-        $this->assertSame('Postgre', $this->getPrivateProperty($db, 'DBDriver'));
+        try {
+            $db->connect();
+        } catch (ErrorException $e) {
+            $this->assertSame('Postgre', $this->getPrivateProperty($db, 'DBDriver'));
 
-        $expect = sprintf(
-            "host=%s port=5432 user=%s password='%s' dbname=tests",
-            $this->group3['hostname'],
-            $this->group3['username'],
-            $this->group3['password']
-        );
-        $this->assertSame($expect, $this->getPrivateProperty($db, 'DSN'));
+            $expect = sprintf(
+                "host=%s port=5432 user=%s password='%s' dbname=tests",
+                $this->group3['hostname'],
+                $this->group3['username'],
+                $this->group3['password']
+            );
+            $this->assertSame($expect, $this->getPrivateProperty($db, 'DSN'));
+
+            throw $e;
+        }
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/7550
+     */
     public function testDSNStringEstablishedDuringConnectionForPostgre()
     {
         if ($this->db->DBDriver !== 'Postgre') {
             $this->markTestSkipped('Testing only on Postgre, as it has a specific implementation of DSN handling during connect.');
         }
+
+        $this->expectException(ErrorException::class);
 
         $this->group3['DSN'] = sprintf(
             'pgsql:host=%s;port=5432;user=%s;password=%s;dbname=tests',
@@ -152,16 +168,22 @@ final class ConnectTest extends CIUnitTestCase
             $this->group3['password']
         );
         $db = Database::connect($this->group3);
-        $db->connect();
 
-        $this->assertSame('Postgre', $this->getPrivateProperty($db, 'DBDriver'));
+        try {
+            $db->connect();
+        } catch (ErrorException $e) {
+            $this->assertSame('Postgre', $this->getPrivateProperty($db, 'DBDriver'));
 
-        $expect = sprintf(
-            'host=%s port=5432 user=%s password=%s dbname=tests',
-            $this->group3['hostname'],
-            $this->group3['username'],
-            $this->group3['password']
-        );
-        $this->assertSame($expect, $this->getPrivateProperty($db, 'DSN'));
+            $expect = sprintf(
+                'host=%s port=5432 user=%s password=%s dbname=tests',
+                $this->group3['hostname'],
+                $this->group3['username'],
+                $this->group3['password']
+            );
+            $this->assertSame($expect, $this->getPrivateProperty($db, 'DSN'));
+
+            throw $e;
+        }
+
     }
 }
