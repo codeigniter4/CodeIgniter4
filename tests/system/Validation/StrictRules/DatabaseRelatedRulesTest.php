@@ -82,7 +82,7 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    public function testIsUniqueIgnoresParams(): void
+    public function testIsUniqueWithIgnoreValue(): void
     {
         $db = Database::connect();
         $db
@@ -102,7 +102,7 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run($data));
     }
 
-    public function testIsUniqueIgnoresParamsPlaceholders(): void
+    public function testIsUniqueWithIgnoreValuePlaceholder(): void
     {
         $this->hasInDatabase('user', [
             'name'    => 'Derek',
