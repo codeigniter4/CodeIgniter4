@@ -28,7 +28,6 @@ final class ConnectTest extends CIUnitTestCase
 
     private $group1;
     private $group2;
-    private $group3;
     private $tests;
 
     protected function setUp(): void
