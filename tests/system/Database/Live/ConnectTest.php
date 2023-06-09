@@ -28,6 +28,7 @@ final class ConnectTest extends CIUnitTestCase
 
     private $group1;
     private $group2;
+    private $group3;
     private $tests;
 
     protected function setUp(): void
@@ -38,10 +39,14 @@ final class ConnectTest extends CIUnitTestCase
 
         $this->group1 = $config->default;
         $this->group2 = $config->default;
+        $this->group3 = $config->default;
         $this->tests  = $config->tests;
 
         $this->group1['DBDriver'] = 'MySQLi';
         $this->group2['DBDriver'] = 'Postgre';
+
+        $this->group3['DBDriver'] = 'Postgre';
+        $this->group3['password'] = 'pass;word';
     }
 
     public function testConnectWithMultipleCustomGroups()
@@ -112,5 +117,34 @@ final class ConnectTest extends CIUnitTestCase
         $this->assertSame($this->tests['failover'][0]['DBPrefix'], $this->getPrivateProperty($db1, 'DBPrefix'));
 
         $this->assertGreaterThanOrEqual(0, count($db1->listTables()));
+    }
+
+    public function testFinalDSNEstablishedDuringConnectionForPostgre()
+    {
+        if ($this->db->DBDriver !== 'Postgre') {
+            $this->markTestSkipped('Testing only on Postgre, as it has a specific implementation of DSN handling during connect.');
+        }
+
+        $db = Database::connect($this->group3);
+        $db->connect();
+        $this->assertSame('Postgre', $this->getPrivateProperty($db, 'DBDriver'));
+        $this->assertSame("host=127.0.0.1 port=5432 user=postgres password='pass;word' dbname=tests", $this->getPrivateProperty($db, 'DSN'));
+    }
+
+    public function testDSNStringEstablishedDuringConnectionForPostgre()
+    {
+        if ($this->db->DBDriver !== 'Postgre') {
+            $this->markTestSkipped('Testing only on Postgre, as it has a specific implementation of DSN handling during connect.');
+        }
+
+        $this->group3['DSN'] = sprintf(
+            'pgsql:host=127.0.0.1;port=5432;user=%s;password=%s;dbname=tests',
+            $this->group3['username'],
+            $this->group3['password']
+        );
+        $db = Database::connect($this->group3);
+        $db->connect();
+        $this->assertSame('Postgre', $this->getPrivateProperty($db, 'DBDriver'));
+        $this->assertSame('host=127.0.0.1 port=5432 user=postgres password=pass;word dbname=tests', $this->getPrivateProperty($db, 'DSN'));
     }
 }

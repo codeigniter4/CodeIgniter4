@@ -69,8 +69,13 @@ class Connection extends BaseConnection
             $this->DSN = mb_substr($this->DSN, 6);
         }
 
-        // Convert semicolons to spaces.
-        $this->DSN = str_replace(';', ' ', $this->DSN);
+        // Convert semicolons to spaces in DSN format like:
+        // pgsql:host=localhost;port=5432;dbname=database_name
+        $this->DSN = str_replace(
+            [';port=', ';user=', ';password=', ';dbname='],
+            [' port=', ' user=', ' password=', ' dbname='],
+            $this->DSN
+        );
 
         $this->connID = $persistent === true ? pg_pconnect($this->DSN) : pg_connect($this->DSN);
 
