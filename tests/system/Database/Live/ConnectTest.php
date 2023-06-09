@@ -39,14 +39,10 @@ final class ConnectTest extends CIUnitTestCase
 
         $this->group1 = $config->default;
         $this->group2 = $config->default;
-        $this->group3 = $config->tests;
         $this->tests  = $config->tests;
 
         $this->group1['DBDriver'] = 'MySQLi';
         $this->group2['DBDriver'] = 'Postgre';
-
-        $this->group3['DBDriver'] = 'Postgre';
-        $this->group3['password'] = 'pass;word';
     }
 
     public function testConnectWithMultipleCustomGroups()
