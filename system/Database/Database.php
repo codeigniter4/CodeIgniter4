@@ -16,7 +16,7 @@ use InvalidArgumentException;
 /**
  * Database Connection Factory
  *
- * Creates and returns an instance of the appropriate DatabaseConnection
+ * Creates and returns an instance of the appropriate Database Connection.
  */
 class Database
 {
@@ -32,8 +32,7 @@ class Database
     protected $connections = [];
 
     /**
-     * Parses the connection binds and returns an instance of the driver
-     * ready to go.
+     * Parses the connection binds and creates a Database Connection instance.
      *
      * @return BaseConnection
      *
@@ -83,7 +82,7 @@ class Database
     }
 
     /**
-     * Parse universal DSN string
+     * Parses universal DSN string
      *
      * @throws InvalidArgumentException
      */
