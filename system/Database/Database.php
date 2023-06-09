@@ -120,21 +120,22 @@ class Database
     }
 
     /**
-     * Initialize database driver.
+     * Creates a database object.
      *
      * @param string       $driver   Driver name. FQCN can be used.
-     * @param array|object $argument
+     * @param string       $class    'Connection'|'Forge'|'Utils'
+     * @param array|object $argument The constructor parameter.
      *
      * @return BaseConnection|BaseUtils|Forge
      */
     protected function initDriver(string $driver, string $class, $argument): object
     {
-        $class = $driver . '\\' . $class;
-
         if (strpos($driver, '\\') === false) {
-            $class = "CodeIgniter\\Database\\{$class}";
+            $classname = "CodeIgniter\\Database\\{$driver}\\{$class}";
+        } else {
+            $classname = $driver . '\\' . $class;
         }
 
-        return new $class($argument);
+        return new $classname($argument);
     }
 }
