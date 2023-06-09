@@ -16,7 +16,6 @@ use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
-use ErrorException;
 
 /**
  * @group DatabaseLive
