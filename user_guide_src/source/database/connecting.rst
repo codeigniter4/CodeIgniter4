@@ -46,7 +46,7 @@ To choose a specific group from your config file you can do this:
 
 .. literalinclude:: connecting/003.php
 
-Where group_name is the name of the connection group from your config
+Where ``group_name`` is the name of the connection group from your config
 file.
 
 Multiple Connections to Same Database
