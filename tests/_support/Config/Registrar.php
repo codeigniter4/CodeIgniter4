@@ -111,7 +111,7 @@ class Registrar
             'DBPrefix' => 'db_',
             'pConnect' => false,
             'DBDebug'  => true,
-            'charset'  => 'utf8',
+            'charset'  => 'AL32UTF8',
             'DBCollat' => 'utf8_general_ci',
             'swapPre'  => '',
             'encrypt'  => false,
