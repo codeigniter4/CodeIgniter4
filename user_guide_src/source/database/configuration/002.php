@@ -1,13 +1,18 @@
 <?php
 
-// PDO
-$default = [
-    'DSN' => 'pgsql:host=localhost;port=5432;dbname=database_name',
-    // ...
-];
+namespace Config;
 
-// Oracle
-$default = [
-    'DSN' => '//localhost/XE',
+use CodeIgniter\Database\Config;
+
+class Database extends Config
+{
     // ...
-];
+
+    // OCI8
+    public array $default = [
+        'DSN' => '//localhost/XE',
+        // ...
+    ];
+
+    // ...
+}

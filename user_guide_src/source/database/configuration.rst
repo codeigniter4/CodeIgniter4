@@ -35,15 +35,15 @@ while connecting to specify a group name.
 DSN
 ---
 
-Some database drivers (such as PDO, PostgreSQL, Oracle, ODBC) might
-require a full DSN string to be provided. If that is the case, you
-should use the 'DSN' configuration setting, as if you're using the
-driver's underlying native PHP extension, like this:
+Some database drivers (such as Postgre, OCI8) requires a full DSN string to connect.
+But if you do not specify a DSN string for a driver that requires it, CodeIgniter
+will try to build it with the rest of the provided settings.
+
+If you specify a DSN, you should use the ``'DSN'`` configuration setting, as if
+you're using the driver's underlying native PHP extension, like this:
 
 .. literalinclude:: configuration/002.php
-
-.. note:: If you do not specify a DSN string for a driver that requires it, CodeIgniter
-    will try to build it with the rest of the provided settings.
+    :lines: 11-15
 
 DSN in Universal Manner
 ^^^^^^^^^^^^^^^^^^^^^^^
