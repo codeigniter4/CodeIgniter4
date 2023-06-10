@@ -6,6 +6,12 @@ Connecting to your Database
     :local:
     :depth: 2
 
+Connecting to a Database
+========================
+
+Connecting to the Default Group
+-------------------------------
+
 You can connect to your database by adding this line of code in any
 function where it is needed, or in your class constructor to make the
 database available globally in that class.
