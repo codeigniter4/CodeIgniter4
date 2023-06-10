@@ -97,7 +97,7 @@ or re-establish it.
 
 .. literalinclude:: connecting/007.php
 
-Manually closing the Connection
+Manually Closing the Connection
 ===============================
 
 While CodeIgniter intelligently takes care of closing your database
