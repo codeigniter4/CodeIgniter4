@@ -26,7 +26,7 @@ prototype:
 The name of the class property is the connection name, and can be used
 while connecting to specify a group name.
 
-.. note:: The default location of the SQLite3 database is in the ``writable`` folder.
+.. note:: The default location of the SQLite3 database is in the **writable** folder.
     If you want to change the location, you must set the full path to the new folder.
 
 DSN
@@ -78,15 +78,15 @@ variable located in the config file:
 
 .. literalinclude:: configuration/007.php
 
-.. note:: The name 'test' is arbitrary. It can be anything you want. By
-    default we've used the word "default" for the primary connection,
+.. note:: The name ``test`` is arbitrary. It can be anything you want. By
+    default we've used the word ``default`` for the primary connection,
     but it too can be renamed to something more relevant to your project.
 
 Changing Databases Automatically
 ================================
 
 You could modify the config file to detect the environment and automatically
-update the `defaultGroup` value to the correct one by adding the required logic
+update the ``defaultGroup`` value to the correct one by adding the required logic
 within the class' constructor:
 
 .. literalinclude:: configuration/008.php
