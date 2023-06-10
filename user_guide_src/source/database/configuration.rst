@@ -125,7 +125,7 @@ Explanation of Values:
 =============== ===========================================================================================================
  Name Config    Description
 =============== ===========================================================================================================
-**dsn**         The DSN connect string (an all-in-one configuration sequence).
+**DSN**         The DSN connect string (an all-in-one configuration sequence).
 **hostname**    The hostname of your database server. Often this is 'localhost'.
 **username**    The username used to connect to the database. (``SQLite3`` does not use this.)
 **password**    The password used to connect to the database. (``SQLite3`` does not use this.)
