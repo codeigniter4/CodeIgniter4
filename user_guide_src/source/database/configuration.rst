@@ -51,11 +51,16 @@ DSN in Universal Manner
 You can also set a Data Source Name in universal manner (URL like). In that case DSNs must have this prototype:
 
 .. literalinclude:: configuration/003.php
+    :lines: 11-14
 
 To override default config values when connecting with a universal version of the DSN string,
 add the config variables as a query string:
 
 .. literalinclude:: configuration/004.php
+    :lines: 11-15
+
+.. literalinclude:: configuration/010.php
+    :lines: 11-15
 
 .. note:: If you provide a DSN string and it is missing some valid settings (e.g., the
     database character set), which are present in the rest of the configuration
