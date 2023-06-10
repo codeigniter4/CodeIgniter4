@@ -36,8 +36,8 @@ Available Parameters
 #. ``$getShared``: true/false (boolean). Whether to return the shared connection (see
    Connecting to Multiple Databases below).
 
-Manually Connecting to a Database
----------------------------------
+Connecting to Specific Group
+----------------------------
 
 The first parameter of this function can **optionally** be used to
 specify a particular database group from your config file. Examples:
