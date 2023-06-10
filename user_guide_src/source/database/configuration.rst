@@ -82,8 +82,8 @@ variable located in the config file:
     default we've used the word "default" for the primary connection,
     but it too can be renamed to something more relevant to your project.
 
-defaultGroup
-============
+Changing Databases Automatically
+================================
 
 You could modify the config file to detect the environment and automatically
 update the `defaultGroup` value to the correct one by adding the required logic
