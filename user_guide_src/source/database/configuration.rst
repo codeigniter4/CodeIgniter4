@@ -4,7 +4,7 @@ Database Configuration
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 .. note::
     See :ref:`requirements-supported-databases` for currently supported database drivers.
