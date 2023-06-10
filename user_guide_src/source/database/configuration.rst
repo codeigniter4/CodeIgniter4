@@ -18,6 +18,9 @@ connection values (username, password, database name, etc.). The config
 file is located at **app/Config/Database.php**. You can also set
 database connection values in the **.env** file. See below for more details.
 
+Setting Default Database
+========================
+
 The config settings are stored in a class property that is an array with this
 prototype:
 
@@ -30,7 +33,7 @@ while connecting to specify a group name.
     If you want to change the location, you must set the full path to the new folder.
 
 DSN
-===
+---
 
 Some database drivers (such as PDO, PostgreSQL, Oracle, ODBC) might
 require a full DSN string to be provided. If that is the case, you
@@ -41,6 +44,9 @@ driver's underlying native PHP extension, like this:
 
 .. note:: If you do not specify a DSN string for a driver that requires it, CodeIgniter
     will try to build it with the rest of the provided settings.
+
+DSN in Universal Manner
+^^^^^^^^^^^^^^^^^^^^^^^
 
 You can also set a Data Source Name in universal manner (URL like). In that case DSNs must have this prototype:
 
@@ -56,7 +62,7 @@ add the config variables as a query string:
     fields, CodeIgniter will append them.
 
 Failovers
-=========
+---------
 
 You can also specify failovers for the situation when the main connection cannot connect for some reason.
 These failovers can be specified by setting the failover for a connection like this:
@@ -64,6 +70,9 @@ These failovers can be specified by setting the failover for a connection like t
 .. literalinclude:: configuration/005.php
 
 You can specify as many failovers as you like.
+
+Setting Multiple Databases
+==========================
 
 You may optionally store multiple sets of connection
 values. If, for example, you run multiple environments (development,
