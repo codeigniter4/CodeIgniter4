@@ -48,6 +48,9 @@ Changes
 Deprecations
 ************
 
+- **AutoRouterImproved:** The constructor parameter ``$httpVerb`` is deprecated.
+  No longer used.
+
 Bugs Fixed
 **********
 
