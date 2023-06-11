@@ -824,7 +824,7 @@ required_without        Yes        The field is required when any of other      
 string                  No         A generic alternative to the alpha* rules
                                    that confirms the element is a string
 timezone                No         Fails if field does match a timezone per
-                                   ``timezone_identifiers_list``
+                                   `timezone_identifiers_list()`_
 valid_base64            No         Fails if field contains anything other than
                                    valid Base64 characters.
 valid_json              No         Fails if field does not contain a valid JSON
@@ -872,6 +872,8 @@ valid_cc_number         Yes        Verifies that the credit card number matches 
 .. note:: You can also use any native PHP functions that return boolean and
     permit at least one parameter, the field data to validate.
     The Validation library **never alters the data** to validate.
+
+.. _timezone_identifiers_list(): https://www.php.net/manual/en/function.timezone-identifiers-list.php
 
 .. _rules-for-file-uploads:
 
