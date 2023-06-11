@@ -759,15 +759,16 @@ alpha_numeric_space     No         Fails if field contains anything other than
                                    alphanumeric or space characters.
 alpha_numeric_punct     No         Fails if field contains anything other than
                                    alphanumeric, space, or this limited set of
-                                   punctuation characters: ~ (tilde),
-                                   ! (exclamation), # (number), $ (dollar),
-                                   % (percent), & (ampersand), * (asterisk),
-                                   - (dash), _ (underscore), + (plus),
-                                   = (equals), | (vertical bar), : (colon),
-                                   . (period).
+                                   punctuation characters: ``~`` (tilde),
+                                   ``!`` (exclamation), ``#`` (number),
+                                   ``$`` (dollar), ``% (percent), & (ampersand),
+                                   ``*`` (asterisk), ``-`` (dash),
+                                   ``_`` (underscore), ``+`` (plus),
+                                   ``=`` (equals), ``|`` (vertical bar),
+                                   ``:`` (colon), ``.`` (period).
 decimal                 No         Fails if field contains anything other than
-                                   a decimal number.
-                                   Also accepts a + or  - sign for the number.
+                                   a decimal number. Also accepts a ``+`` or
+                                   ``-`` sign for the number.
 differs                 Yes        Fails if field does not differ from the one   ``differs[field_name]``
                                    in the parameter.
 exact_length            Yes        Fails if field is not exactly the parameter   ``exact_length[5]`` or ``exact_length[5,8,12]``
@@ -833,8 +834,8 @@ valid_email             No         Fails if field does not contain a valid
 valid_emails            No         Fails if any value provided in a comma
                                    separated list is not a valid email.
 valid_ip                No         Fails if the supplied IP is not valid.        ``valid_ip[ipv6]``
-                                   Accepts an optional parameter of 'ipv4' or
-                                   'ipv6' to specify an IP format.
+                                   Accepts an optional parameter of ``ipv4`` or
+                                   ``ipv6`` to specify an IP format.
 valid_url               No         Fails if field does not contain (loosely) a
                                    URL. Includes simple strings that could be
                                    hostnames, like "codeigniter".
@@ -849,22 +850,23 @@ valid_date              No         Fails if field does not contain a valid date.
 valid_cc_number         Yes        Verifies that the credit card number matches  ``valid_cc_number[amex]``
                                    the format used by the specified provider.
                                    Current supported providers are:
-                                   American Express (amex),
-                                   China Unionpay (unionpay),
-                                   Diners Club CarteBlance (carteblanche),
-                                   Diners Club (dinersclub),
-                                   Discover Card (discover),
-                                   Interpayment (interpayment), JCB (jcb),
-                                   Maestro (maestro), Dankort (dankort),
-                                   NSPK MIR (mir),
-                                   Troy (troy), MasterCard (mastercard),
-                                   Visa (visa), UATP (uatp), Verve (verve),
-                                   CIBC Convenience Card (cibc),
-                                   Royal Bank of Canada Client Card (rbc),
-                                   TD Canada Trust Access Card (tdtrust),
-                                   Scotiabank Scotia Card (scotia),
-                                   BMO ABM Card (bmoabm),
-                                   HSBC Canada Card (hsbc)
+                                   American Express (``amex``),
+                                   China Unionpay (``unionpay``),
+                                   Diners Club CarteBlance (``carteblanche``),
+                                   Diners Club (``dinersclub``),
+                                   Discover Card (``discover``),
+                                   Interpayment (``interpayment``),
+                                   JCB (``jcb``), Maestro (``maestro``),
+                                   Dankort (``dankort``), NSPK MIR (``mir``),
+                                   Troy (``troy``), MasterCard (``mastercard``),
+                                   Visa (``visa``), UATP (``uatp``),
+                                   Verve (``verve``),
+                                   CIBC Convenience Card (``cibc``),
+                                   Royal Bank of Canada Client Card (``rbc``),
+                                   TD Canada Trust Access Card (``tdtrust``),
+                                   Scotiabank Scotia Card (``scotia``),
+                                   BMO ABM Card (``bmoabm``),
+                                   HSBC Canada Card (``hsbc``)
 ======================= ========== ============================================= ===================================================
 
 .. note:: You can also use any native PHP functions that return boolean and
