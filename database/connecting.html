@@ -282,24 +282,28 @@
 <h1>Connecting to your Database<a class="headerlink" href="#connecting-to-your-database" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#available-parameters" id="id1">Available Parameters</a></p></li>
-<li><p><a class="reference internal" href="#manually-connecting-to-a-database" id="id2">Manually Connecting to a Database</a></p></li>
-<li><p><a class="reference internal" href="#multiple-connections-to-same-database" id="id3">Multiple Connections to Same Database</a></p>
+<li><p><a class="reference internal" href="#connecting-to-a-database" id="id1">Connecting to a Database</a></p>
 <ul>
-<li><p><a class="reference internal" href="#connecting-to-multiple-databases" id="id4">Connecting to Multiple Databases</a></p></li>
-<li><p><a class="reference internal" href="#connecting-with-custom-settings" id="id5">Connecting with Custom Settings</a></p></li>
-<li><p><a class="reference internal" href="#reconnecting-keeping-the-connection-alive" id="id6">Reconnecting / Keeping the Connection Alive</a></p></li>
-<li><p><a class="reference internal" href="#manually-closing-the-connection" id="id7">Manually closing the Connection</a></p></li>
+<li><p><a class="reference internal" href="#connecting-to-the-default-group" id="id2">Connecting to the Default Group</a></p></li>
+<li><p><a class="reference internal" href="#available-parameters" id="id3">Available Parameters</a></p></li>
+<li><p><a class="reference internal" href="#connecting-to-specific-group" id="id4">Connecting to Specific Group</a></p></li>
+<li><p><a class="reference internal" href="#multiple-connections-to-same-database" id="id5">Multiple Connections to Same Database</a></p></li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#connecting-to-multiple-databases" id="id6">Connecting to Multiple Databases</a></p></li>
+<li><p><a class="reference internal" href="#connecting-with-custom-settings" id="id7">Connecting with Custom Settings</a></p></li>
+<li><p><a class="reference internal" href="#reconnecting-keeping-the-connection-alive" id="id8">Reconnecting / Keeping the Connection Alive</a></p></li>
+<li><p><a class="reference internal" href="#manually-closing-the-connection" id="id9">Manually Closing the Connection</a></p></li>
 </ul>
 </div>
+<section id="connecting-to-a-database">
+<h2><a class="toc-backref" href="#id1">Connecting to a Database</a><a class="headerlink" href="#connecting-to-a-database" title="Permalink to this headline"></a></h2>
+<section id="connecting-to-the-default-group">
+<h3><a class="toc-backref" href="#id2">Connecting to the Default Group</a><a class="headerlink" href="#connecting-to-the-default-group" title="Permalink to this headline"></a></h3>
 <p>You can connect to your database by adding this line of code in any
 function where it is needed, or in your class constructor to make the
 database available globally in that class.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$db</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>If the above function does <strong>not</strong> contain any information in the first
@@ -307,50 +311,45 @@ parameter, it will connect to the default group specified in your database confi
 file. For most people, this is the preferred method of use.</p>
 <p>A convenience method exists that is purely a wrapper around the above line
 and is provided for your convenience:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$db</span> <span class="o">=</span> <span class="nx">db_connect</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span> <span class="o">=</span> <span class="nx">db_connect</span><span class="p">();</span>
 </pre></div>
 </div>
+</section>
 <section id="available-parameters">
-<h2><a class="toc-backref" href="#id1">Available Parameters</a><a class="headerlink" href="#available-parameters" title="Permalink to this headline"></a></h2>
+<h3><a class="toc-backref" href="#id3">Available Parameters</a><a class="headerlink" href="#available-parameters" title="Permalink to this headline"></a></h3>
 <p><strong>\Config\Database::connect($group = null, bool $getShared = true): BaseConnection</strong></p>
 <ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">$group</span></code>: The database group name, a string that must match the config class’ property name. Default value is <code class="docutils literal notranslate"><span class="pre">$config-&gt;defaultGroup</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$group</span></code>: The database group name, a string that must match the config class’ property name. Default value is <code class="docutils literal notranslate"><span class="pre">Config\Database::$defaultGroup</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$getShared</span></code>: true/false (boolean). Whether to return the shared connection (see
 Connecting to Multiple Databases below).</p></li>
 </ol>
 </section>
-<section id="manually-connecting-to-a-database">
-<h2><a class="toc-backref" href="#id2">Manually Connecting to a Database</a><a class="headerlink" href="#manually-connecting-to-a-database" title="Permalink to this headline"></a></h2>
+<section id="connecting-to-specific-group">
+<h3><a class="toc-backref" href="#id4">Connecting to Specific Group</a><a class="headerlink" href="#connecting-to-specific-group" title="Permalink to this headline"></a></h3>
 <p>The first parameter of this function can <strong>optionally</strong> be used to
 specify a particular database group from your config file. Examples:</p>
 <p>To choose a specific group from your config file you can do this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$db</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">(</span><span class="s1">&#39;group_name&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">(</span><span class="s1">&#39;group_name&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Where group_name is the name of the connection group from your config
+<p>Where <code class="docutils literal notranslate"><span class="pre">group_name</span></code> is the name of the connection group from your config
 file.</p>
 </section>
 <section id="multiple-connections-to-same-database">
-<h2><a class="toc-backref" href="#id3">Multiple Connections to Same Database</a><a class="headerlink" href="#multiple-connections-to-same-database" title="Permalink to this headline"></a></h2>
+<h3><a class="toc-backref" href="#id5">Multiple Connections to Same Database</a><a class="headerlink" href="#multiple-connections-to-same-database" title="Permalink to this headline"></a></h3>
 <p>By default, the <code class="docutils literal notranslate"><span class="pre">connect()</span></code> method will return the same instance of the
 database connection every time. If you need to have a separate connection
 to the same database, send <code class="docutils literal notranslate"><span class="pre">false</span></code> as the second parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$db</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">(</span><span class="s1">&#39;group_name&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">(</span><span class="s1">&#39;group_name&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
+</section>
+</section>
 <section id="connecting-to-multiple-databases">
-<h3><a class="toc-backref" href="#id4">Connecting to Multiple Databases</a><a class="headerlink" href="#connecting-to-multiple-databases" title="Permalink to this headline"></a></h3>
+<h2><a class="toc-backref" href="#id6">Connecting to Multiple Databases</a><a class="headerlink" href="#connecting-to-multiple-databases" title="Permalink to this headline"></a></h2>
 <p>If you need to connect to more than one database simultaneously you can
 do so as follows:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$db1</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">(</span><span class="s1">&#39;group_one&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db1</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">(</span><span class="s1">&#39;group_one&#39;</span><span class="p">);</span>
 <span class="nv">$db2</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">(</span><span class="s1">&#39;group_two&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -365,13 +364,11 @@ can switch to a different database when you need to, like this:
 </div>
 </section>
 <section id="connecting-with-custom-settings">
-<h3><a class="toc-backref" href="#id5">Connecting with Custom Settings</a><a class="headerlink" href="#connecting-with-custom-settings" title="Permalink to this headline"></a></h3>
+<h2><a class="toc-backref" href="#id7">Connecting with Custom Settings</a><a class="headerlink" href="#connecting-with-custom-settings" title="Permalink to this headline"></a></h2>
 <p>You can pass in an array of database settings instead of a group name to get
 a connection that uses your custom settings. The array passed in must be
 the same format as the groups are defined in the configuration file:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$custom</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$custom</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;DSN&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
     <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
@@ -395,7 +392,7 @@ the same format as the groups are defined in the configuration file:</p>
 </div>
 </section>
 <section id="reconnecting-keeping-the-connection-alive">
-<h3><a class="toc-backref" href="#id6">Reconnecting / Keeping the Connection Alive</a><a class="headerlink" href="#reconnecting-keeping-the-connection-alive" title="Permalink to this headline"></a></h3>
+<h2><a class="toc-backref" href="#id8">Reconnecting / Keeping the Connection Alive</a><a class="headerlink" href="#reconnecting-keeping-the-connection-alive" title="Permalink to this headline"></a></h2>
 <p>If the database server’s idle timeout is exceeded while you’re doing
 some heavy PHP lifting (processing an image, for instance), you should
 consider pinging the server by using the <code class="docutils literal notranslate"><span class="pre">reconnect()</span></code> method before
@@ -406,22 +403,17 @@ or re-establish it.</p>
 <p>If you are using MySQLi database driver, the <code class="docutils literal notranslate"><span class="pre">reconnect()</span></code> method
 does not ping the server but it closes the connection then connects again.</p>
 </div>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">reconnect</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">reconnect</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
 <section id="manually-closing-the-connection">
-<h3><a class="toc-backref" href="#id7">Manually closing the Connection</a><a class="headerlink" href="#manually-closing-the-connection" title="Permalink to this headline"></a></h3>
+<h2><a class="toc-backref" href="#id9">Manually Closing the Connection</a><a class="headerlink" href="#manually-closing-the-connection" title="Permalink to this headline"></a></h2>
 <p>While CodeIgniter intelligently takes care of closing your database
 connections, you can explicitly close the connection.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">close</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">close</span><span class="p">();</span>
 </pre></div>
 </div>
-</section>
 </section>
 </section>
 
@@ -437,7 +429,7 @@ connections, you can explicitly close the connection.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 10, 2023.
+      <span class="lastupdated">Last updated on Jun 11, 2023.
       </span></p>
   </div>
 
