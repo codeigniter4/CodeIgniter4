@@ -780,8 +780,8 @@ greater_than_equal_to   Yes        Fails if field is less than the parameter    
 hex                     No         Fails if field contains anything other than
                                    hexadecimal characters.
 if_exist                No         If this rule is present, validation will
-                                   only return possible errors if the field key
-                                   exists, regardless of its value.
+                                   check the field only when the field key
+                                   exists in the data to validate.
 in_list                 Yes        Fails if field is not within a predetermined  ``in_list[red,blue,green]``
                                    list.
 integer                 No         Fails if field contains anything other than
