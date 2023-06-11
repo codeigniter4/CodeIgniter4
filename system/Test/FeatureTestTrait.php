@@ -12,11 +12,10 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Events\Events;
+use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\URI;
-use CodeIgniter\Router\Exceptions\RedirectException;
-use CodeIgniter\Router\RouteCollection;
 use Config\App;
 use Config\Services;
 use Exception;
