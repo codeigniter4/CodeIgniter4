@@ -114,6 +114,9 @@ Or using ``use`` keyword:
 .. literalinclude:: routing/014.php
    :lines: 2-
 
+Array Callable Syntax and Placeholders
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 If there are placeholders, it will automatically set the parameters in the specified order:
 
 .. literalinclude:: routing/015.php
