@@ -64,13 +64,10 @@ class Connection extends BaseConnection
             $this->buildDSN();
         }
 
-        // Strip pgsql if exists
+        // Convert DSN string
         if (mb_strpos($this->DSN, 'pgsql:') === 0) {
-            $this->DSN = mb_substr($this->DSN, 6);
+            $this->convertDSN();
         }
-
-        // Convert semicolons to spaces.
-        $this->DSN = str_replace(';', ' ', $this->DSN);
 
         $this->connID = $persistent === true ? pg_pconnect($this->DSN) : pg_connect($this->DSN);
 
@@ -90,6 +87,44 @@ class Connection extends BaseConnection
         }
 
         return $this->connID;
+    }
+
+    /**
+     * Converts the DSN with semicolon syntax.
+     */
+    private function convertDSN()
+    {
+        // Strip pgsql
+        $this->DSN = mb_substr($this->DSN, 6);
+
+        // Convert semicolons to spaces in DSN format like:
+        // pgsql:host=localhost;port=5432;dbname=database_name
+        // https://www.php.net/manual/en/function.pg-connect.php
+        $allowedParams = ['host', 'port', 'dbname', 'user', 'password', 'connect_timeout', 'options', 'sslmode', 'service'];
+
+        $parameters = explode(';', $this->DSN);
+
+        $output            = '';
+        $previousParameter = '';
+
+        foreach ($parameters as $parameter) {
+            [$key, $value] = explode('=', $parameter, 2);
+            if (in_array($key, $allowedParams, true)) {
+                if ($previousParameter !== '') {
+                    if (array_search($key, $allowedParams, true) < array_search($previousParameter, $allowedParams, true)) {
+                        $output .= ';';
+                    } else {
+                        $output .= ' ';
+                    }
+                }
+                $output .= $parameter;
+                $previousParameter = $key;
+            } else {
+                $output .= ';' . $parameter;
+            }
+        }
+
+        $this->DSN = $output;
     }
 
     /**

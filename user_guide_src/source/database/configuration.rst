@@ -4,7 +4,7 @@ Database Configuration
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 .. note::
     See :ref:`requirements-supported-databases` for currently supported database drivers.
@@ -18,6 +18,9 @@ connection values (username, password, database name, etc.). The config
 file is located at **app/Config/Database.php**. You can also set
 database connection values in the **.env** file. See below for more details.
 
+Setting Default Database
+========================
+
 The config settings are stored in a class property that is an array with this
 prototype:
 
@@ -26,37 +29,45 @@ prototype:
 The name of the class property is the connection name, and can be used
 while connecting to specify a group name.
 
-.. note:: The default location of the SQLite3 database is in the ``writable`` folder.
+.. note:: The default location of the SQLite3 database is in the **writable** folder.
     If you want to change the location, you must set the full path to the new folder.
 
 DSN
-===
+---
 
-Some database drivers (such as PDO, PostgreSQL, Oracle, ODBC) might
-require a full DSN string to be provided. If that is the case, you
-should use the 'DSN' configuration setting, as if you're using the
-driver's underlying native PHP extension, like this:
+Some database drivers (such as Postgre, OCI8) requires a full DSN string to connect.
+But if you do not specify a DSN string for a driver that requires it, CodeIgniter
+will try to build it with the rest of the provided settings.
+
+If you specify a DSN, you should use the ``'DSN'`` configuration setting, as if
+you're using the driver's underlying native PHP extension, like this:
 
 .. literalinclude:: configuration/002.php
+    :lines: 11-15
 
-.. note:: If you do not specify a DSN string for a driver that requires it, CodeIgniter
-    will try to build it with the rest of the provided settings.
+DSN in Universal Manner
+^^^^^^^^^^^^^^^^^^^^^^^
 
 You can also set a Data Source Name in universal manner (URL like). In that case DSNs must have this prototype:
 
 .. literalinclude:: configuration/003.php
+    :lines: 11-14
 
 To override default config values when connecting with a universal version of the DSN string,
 add the config variables as a query string:
 
 .. literalinclude:: configuration/004.php
+    :lines: 11-15
+
+.. literalinclude:: configuration/010.php
+    :lines: 11-15
 
 .. note:: If you provide a DSN string and it is missing some valid settings (e.g., the
     database character set), which are present in the rest of the configuration
     fields, CodeIgniter will append them.
 
 Failovers
-=========
+---------
 
 You can also specify failovers for the situation when the main connection cannot connect for some reason.
 These failovers can be specified by setting the failover for a connection like this:
@@ -64,6 +75,9 @@ These failovers can be specified by setting the failover for a connection like t
 .. literalinclude:: configuration/005.php
 
 You can specify as many failovers as you like.
+
+Setting Multiple Databases
+==========================
 
 You may optionally store multiple sets of connection
 values. If, for example, you run multiple environments (development,
@@ -78,15 +92,15 @@ variable located in the config file:
 
 .. literalinclude:: configuration/007.php
 
-.. note:: The name 'test' is arbitrary. It can be anything you want. By
-    default we've used the word "default" for the primary connection,
+.. note:: The name ``test`` is arbitrary. It can be anything you want. By
+    default we've used the word ``default`` for the primary connection,
     but it too can be renamed to something more relevant to your project.
 
-defaultGroup
-============
+Changing Databases Automatically
+================================
 
 You could modify the config file to detect the environment and automatically
-update the `defaultGroup` value to the correct one by adding the required logic
+update the ``defaultGroup`` value to the correct one by adding the required logic
 within the class' constructor:
 
 .. literalinclude:: configuration/008.php
@@ -127,7 +141,7 @@ Explanation of Values:
 ================ ===========================================================================================================
  Name Config     Description
 ================ ===========================================================================================================
-**dsn**          The DSN connect string (an all-in-one configuration sequence).
+**DSN**          The DSN connect string (an all-in-one configuration sequence).
 **hostname**     The hostname of your database server. Often this is 'localhost'.
 **username**     The username used to connect to the database. (``SQLite3`` does not use this.)
 **password**     The password used to connect to the database. (``SQLite3`` does not use this.)

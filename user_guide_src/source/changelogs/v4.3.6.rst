@@ -50,6 +50,7 @@ Bugs Fixed
   the value of a placeholder.
 - **Validation:** Fixed a bug that ``check()`` cannot specify non-default
   database group.
+- **Database:** Fixed a bug where semicolon character (``;``) in one of the Postgre connection parameters would break the DSN string.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

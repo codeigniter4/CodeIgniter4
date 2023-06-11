@@ -37,7 +37,7 @@ class Config extends BaseConfig
     protected static $factory;
 
     /**
-     * Creates the default
+     * Returns the database connection
      *
      * @param array|BaseConnection|string|null $group The name of the connection group to use,
      *                                                or an array of configuration settings.
