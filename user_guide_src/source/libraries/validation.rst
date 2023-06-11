@@ -768,20 +768,20 @@ alpha_numeric_punct     No         Fails if field contains anything other than
 decimal                 No         Fails if field contains anything other than
                                    a decimal number.
                                    Also accepts a + or  - sign for the number.
-differs                 Yes        Fails if field does not differ from the one   differs[field_name]
+differs                 Yes        Fails if field does not differ from the one   ``differs[field_name]``
                                    in the parameter.
-exact_length            Yes        Fails if field is not exactly the parameter   exact_length[5] or exact_length[5,8,12]
+exact_length            Yes        Fails if field is not exactly the parameter   ``exact_length[5]`` or ``exact_length[5,8,12]``
                                    value. One or more comma-separated values.
-greater_than            Yes        Fails if field is less than or equal to       greater_than[8]
+greater_than            Yes        Fails if field is less than or equal to       ``greater_than[8]``
                                    the parameter value or not numeric.
-greater_than_equal_to   Yes        Fails if field is less than the parameter     greater_than_equal_to[5]
+greater_than_equal_to   Yes        Fails if field is less than the parameter     ``greater_than_equal_to[5]``
                                    value, or not numeric.
 hex                     No         Fails if field contains anything other than
                                    hexadecimal characters.
 if_exist                No         If this rule is present, validation will
                                    only return possible errors if the field key
                                    exists, regardless of its value.
-in_list                 Yes        Fails if field is not within a predetermined  in_list[red,blue,green]
+in_list                 Yes        Fails if field is not within a predetermined  ``in_list[red,blue,green]``
                                    list.
 integer                 No         Fails if field contains anything other than
                                    an integer.
@@ -789,36 +789,36 @@ is_natural              No         Fails if field contains anything other than
                                    a natural number: 0, 1, 2, 3, etc.
 is_natural_no_zero      No         Fails if field contains anything other than
                                    a natural number, except zero: 1, 2, 3, etc.
-is_not_unique           Yes        Checks the database to see if the given value is_not_unique[table.field,where_field,where_value]
+is_not_unique           Yes        Checks the database to see if the given value ``is_not_unique[table.field,where_field,where_value]``
                                    exist. Can ignore records by field/value to
                                    filter (currently accept only one filter).
-is_unique               Yes        Checks if this field value exists in the      is_unique[table.field,ignore_field,ignore_value]
+is_unique               Yes        Checks if this field value exists in the      ``is_unique[table.field,ignore_field,ignore_value]``
                                    database. Optionally set a column and value
                                    to ignore, useful when updating records to
                                    ignore itself.
-less_than               Yes        Fails if field is greater than or equal to    less_than[8]
+less_than               Yes        Fails if field is greater than or equal to    ``less_than[8]``
                                    the parameter value or not numeric.
-less_than_equal_to      Yes        Fails if field is greater than the parameter  less_than_equal_to[8]
+less_than_equal_to      Yes        Fails if field is greater than the parameter  ``less_than_equal_to[8]``
                                    value or not numeric.
 matches                 Yes        The value must match the value of the field
-                                   in the parameter.                             matches[field]
-max_length              Yes        Fails if field is longer than the parameter   max_length[8]
+                                   in the parameter.                             ``matches[field]``
+max_length              Yes        Fails if field is longer than the parameter   ``max_length[8]``
                                    value.
-min_length              Yes        Fails if field is shorter than the parameter  min_length[3]
+min_length              Yes        Fails if field is shorter than the parameter  ``min_length[3]``
                                    value.
-not_in_list             Yes        Fails if field is within a predetermined      not_in_list[red,blue,green]
+not_in_list             Yes        Fails if field is within a predetermined      ``not_in_list[red,blue,green]``
                                    list.
 numeric                 No         Fails if field contains anything other than
                                    numeric characters.
-regex_match             Yes        Fails if field does not match the regular     regex_match[/regex/]
+regex_match             Yes        Fails if field does not match the regular     ``regex_match[/regex/]``
                                    expression.
 permit_empty            No         Allows the field to receive an empty array,
                                    empty string, null or false.
 required                No         Fails if the field is an empty array, empty
                                    string, null or false.
-required_with           Yes        The field is required when any of the other   required_with[field1,field2]
+required_with           Yes        The field is required when any of the other   ``required_with[field1,field2]``
                                    required fields are present in the data.
-required_without        Yes        The field is required when any of other       required_without[field1,field2]
+required_without        Yes        The field is required when any of other       ``required_without[field1,field2]``
                                    fields do not pass ``required`` checks.
 string                  No         A generic alternative to the alpha* rules
                                    that confirms the element is a string
@@ -832,21 +832,21 @@ valid_email             No         Fails if field does not contain a valid
                                    email address.
 valid_emails            No         Fails if any value provided in a comma
                                    separated list is not a valid email.
-valid_ip                No         Fails if the supplied IP is not valid.        valid_ip[ipv6]
+valid_ip                No         Fails if the supplied IP is not valid.        ``valid_ip[ipv6]``
                                    Accepts an optional parameter of 'ipv4' or
                                    'ipv6' to specify an IP format.
 valid_url               No         Fails if field does not contain (loosely) a
                                    URL. Includes simple strings that could be
                                    hostnames, like "codeigniter".
-valid_url_strict        Yes        Fails if field does not contain a valid URL.  valid_url_strict[https]
+valid_url_strict        Yes        Fails if field does not contain a valid URL.  ``valid_url_strict[https]``
                                    You can optionally specify a list of valid
                                    schemas. If not specified, ``http,https``
                                    are valid. This rule uses
                                    PHP's ``FILTER_VALIDATE_URL``.
-valid_date              No         Fails if field does not contain a valid date. valid_date[d/m/Y]
+valid_date              No         Fails if field does not contain a valid date. ``valid_date[d/m/Y]``
                                    Accepts an optional parameter to matches
                                    a date format.
-valid_cc_number         Yes        Verifies that the credit card number matches  valid_cc_number[amex]
+valid_cc_number         Yes        Verifies that the credit card number matches  ``valid_cc_number[amex]``
                                    the format used by the specified provider.
                                    Current supported providers are:
                                    American Express (amex),
@@ -892,25 +892,25 @@ file upload related rules::
 ======================= ========== ============================================= ===================================================
 Rule                    Parameter  Description                                   Example
 ======================= ========== ============================================= ===================================================
-uploaded                Yes         Fails if the name of the parameter does not  uploaded[field_name]
+uploaded                Yes         Fails if the name of the parameter does not  ``uploaded[field_name]``
                                     match the name of any uploaded files.
-max_size                Yes         Fails if the uploaded file named in the      max_size[field_name,2048]
+max_size                Yes         Fails if the uploaded file named in the      ``max_size[field_name,2048]``
                                     parameter is larger than the second
                                     parameter in kilobytes (kb). Or if the file
                                     is larger than allowed maximum size declared
                                     in php.ini config file -
                                     ``upload_max_filesize`` directive.
-max_dims                Yes         Fails if the maximum width and height of an  max_dims[field_name,300,150]
+max_dims                Yes         Fails if the maximum width and height of an  ``max_dims[field_name,300,150]``
                                     uploaded image exceed values. The first
                                     parameter is the field name. The second is
                                     the width, and the third is the height. Will
                                     also fail if the file cannot be determined
                                     to be an image.
-mime_in                 Yes         Fails if the file's mime type is not one     mime_in[field_name,image/png,image/jpeg]
+mime_in                 Yes         Fails if the file's mime type is not one     ``mime_in[field_name,image/png,image/jpeg]``
                                     listed in the parameters.
-ext_in                  Yes         Fails if the file's extension is not one     ext_in[field_name,png,jpg,gif]
+ext_in                  Yes         Fails if the file's extension is not one     ``ext_in[field_name,png,jpg,gif]``
                                     listed in the parameters.
-is_image                Yes         Fails if the file cannot be determined to be is_image[field_name]
+is_image                Yes         Fails if the file cannot be determined to be ``is_image[field_name]``
                                     an image based on the mime type.
 ======================= ========== ============================================= ===================================================
 
