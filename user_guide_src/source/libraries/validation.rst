@@ -833,20 +833,25 @@ valid_email             No         Fails if field does not contain a valid
                                    email address.
 valid_emails            No         Fails if any value provided in a comma
                                    separated list is not a valid email.
-valid_ip                No         Fails if the supplied IP is not valid.        ``valid_ip[ipv6]``
+valid_ip                Yes        Fails if the supplied IP is not valid.        ``valid_ip[ipv6]``
                                    Accepts an optional parameter of ``ipv4`` or
                                    ``ipv6`` to specify an IP format.
 valid_url               No         Fails if field does not contain (loosely) a
                                    URL. Includes simple strings that could be
                                    hostnames, like "codeigniter".
+                                   **Normally,** ``valid_url_strict`` **should
+                                   be used.**
 valid_url_strict        Yes        Fails if field does not contain a valid URL.  ``valid_url_strict[https]``
                                    You can optionally specify a list of valid
                                    schemas. If not specified, ``http,https``
-                                   are valid. This rule uses
-                                   PHP's ``FILTER_VALIDATE_URL``.
-valid_date              No         Fails if field does not contain a valid date. ``valid_date[d/m/Y]``
-                                   Accepts an optional parameter to matches
-                                   a date format.
+                                   are valid. This rule uses PHP's
+                                   ``FILTER_VALIDATE_URL``.
+valid_date              Yes        Fails if field does not contain a valid date. ``valid_date[d/m/Y]``
+                                   Any string that `strtotime()`_ accepts is
+                                   valid if you don't specify an optional
+                                   parameter to matches a date format.
+                                   **So it is usually necessary to specify
+                                   the parameter.**
 valid_cc_number         Yes        Verifies that the credit card number matches  ``valid_cc_number[amex]``
                                    the format used by the specified provider.
                                    Current supported providers are:
@@ -874,6 +879,7 @@ valid_cc_number         Yes        Verifies that the credit card number matches 
     The Validation library **never alters the data** to validate.
 
 .. _timezone_identifiers_list(): https://www.php.net/manual/en/function.timezone-identifiers-list.php
+.. _strtotime(): https://www.php.net/manual/en/function.strtotime.php
 
 .. _rules-for-file-uploads:
 
