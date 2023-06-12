@@ -347,6 +347,19 @@ class Rules
     }
 
     /**
+     * Is the field required for required_with?
+     *
+     * @params string|null $fields
+     *
+     * @used-by required_with(), Validation::processRequiredWith()
+     * @internal
+     */
+    public function isRequiredForRequiredWith(?string $fields, array $data): bool
+    {
+        return $this->nonStrictRules->isRequiredForRequiredWith($fields, $data);
+    }
+
+    /**
      * The field is required when all of the other fields are present
      * in the data but not required.
      *

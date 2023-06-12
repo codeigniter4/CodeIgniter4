@@ -272,6 +272,19 @@ class Rules
         // Still here? Then we fail this test if
         // any of the fields are present in $data
         // as $fields is the list
+        return ! $this->isRequiredForRequiredWith($fields, $data);
+    }
+
+    /**
+     * Is the field required for required_with?
+     *
+     * @params string|null $fields
+     *
+     * @used-by required_with(), Validation::processRequiredWith()
+     * @internal
+     */
+    public function isRequiredForRequiredWith(?string $fields, array $data): bool
+    {
         $requiredFields = [];
 
         foreach (explode(',', $fields) as $field) {
@@ -283,7 +296,7 @@ class Rules
             }
         }
 
-        return empty($requiredFields);
+        return ! empty($requiredFields);
     }
 
     /**

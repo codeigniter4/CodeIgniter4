@@ -234,6 +234,11 @@ class Validation implements ValidationInterface
             throw new InvalidArgumentException('You must supply the parameter: data.');
         }
 
+        $rules = $this->processRequiredWith($rules, $data);
+        if ($rules === true) {
+            return true;
+        }
+
         $rules = $this->processIfExist($field, $rules, $data);
         if ($rules === true) {
             return true;
@@ -315,6 +320,37 @@ class Validation implements ValidationInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param array|null $data The array of data to validate, with `DBGroup`.
+     *
+     * @return array|true The modified rules or true if we return early
+     */
+    private function processRequiredWith(array $rules, ?array $data)
+    {
+        foreach ($rules as $rule) {
+            if (! $this->isClosure($rule) && preg_match('/(.*?)\[(.*)\]/', $rule, $match)) {
+                $rule  = $match[1];
+                $param = $match[2];
+
+                if ($rule === 'required_with') {
+                    // Check if this filed is required.
+                    foreach ($this->ruleSetInstances as $set) {
+                        if (! method_exists($set, 'isRequiredForRequiredWith')) {
+                            continue;
+                        }
+
+                        $required = $set->isRequiredForRequiredWith($param, $data);
+                        if (! $required) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $rules;
     }
 
     /**
