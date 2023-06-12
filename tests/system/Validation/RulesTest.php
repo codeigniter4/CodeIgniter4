@@ -615,6 +615,33 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
+     * @dataProvider RequiredWithAndOtherRuleProvider
+     */
+    public function testRequiredWithAndOtherRule(bool $expected, array $data): void
+    {
+        $this->validation->setRules([
+            'testField' => 'required_with[otherField]|valid_date',
+        ]);
+
+        $result = $this->validation->run($data);
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function RequiredWithAndOtherRuleProvider(): Generator
+    {
+        yield from [
+            [true, []],
+            [true, ['testField' => '2023-06-12']],
+            [true, ['testField' => '2023-06-12', 'otherField' => 'yes']],
+            [true, ['testField' => '2023-06-12', 'otherField' => '']],
+            [true, ['testField' => '', 'otherField' => '']],
+            [false, ['testField' => '', 'otherField' => 'yes']],
+            [false, ['otherField' => 'yes']],
+        ];
+    }
+
+    /**
      * @dataProvider requiredWithoutProvider
      */
     public function testRequiredWithout(?string $field, ?string $check, bool $expected): void
