@@ -263,7 +263,6 @@ class Rules
         // If the field is present we can safely assume that
         // the field is here, no matter whether the corresponding
         // search field is present or not.
-        $fields  = explode(',', $fields);
         $present = $this->required($str ?? '');
 
         if ($present) {
@@ -272,10 +271,10 @@ class Rules
 
         // Still here? Then we fail this test if
         // any of the fields are present in $data
-        // as $fields is the lis
+        // as $fields is the list
         $requiredFields = [];
 
-        foreach ($fields as $field) {
+        foreach (explode(',', $fields) as $field) {
             if (
                 (array_key_exists($field, $data) && ! empty($data[$field]))
                 || (strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))
@@ -308,8 +307,7 @@ class Rules
         // If the field is present we can safely assume that
         // the field is here, no matter whether the corresponding
         // search field is present or not.
-        $otherFields = explode(',', $otherFields);
-        $present     = $this->required($str ?? '');
+        $present = $this->required($str ?? '');
 
         if ($present) {
             return true;
@@ -317,7 +315,7 @@ class Rules
 
         // Still here? Then we fail this test if
         // any of the fields are not present in $data
-        foreach ($otherFields as $otherField) {
+        foreach (explode(',', $otherFields) as $otherField) {
             if ((strpos($otherField, '.') === false) && (! array_key_exists($otherField, $data) || empty($data[$otherField]))) {
                 return false;
             }
