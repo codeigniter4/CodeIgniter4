@@ -615,6 +615,44 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/7557
+     *
+     * @dataProvider RequiredWithAndOtherRuleProvider
+     */
+    public function testRequiredWithAndOtherRule(bool $expected, array $data): void
+    {
+        $this->validation->setRules([
+            'mustBeADate' => 'required_with[otherField]|permit_empty|valid_date',
+        ]);
+
+        $result = $this->validation->run($data);
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function RequiredWithAndOtherRuleProvider(): Generator
+    {
+        yield from [
+            // `otherField` and `mustBeADate` do not exist
+            [true, []],
+            // `mustBeADate` does not exist
+            [false, ['otherField' => 'exists']],
+            // ``otherField` does not exist
+            [true, ['mustBeADate' => '2023-06-12']],
+            [true, ['mustBeADate' => '']],
+            [true, ['mustBeADate' => null]],
+            [true, ['mustBeADate' => []]],
+            // `otherField` and `mustBeADate` exist
+            [true, ['mustBeADate' => '', 'otherField' => '']],
+            [true, ['mustBeADate' => '2023-06-12', 'otherField' => 'exists']],
+            [true, ['mustBeADate' => '2023-06-12', 'otherField' => '']],
+            [false, ['mustBeADate' => '', 'otherField' => 'exists']],
+            [false, ['mustBeADate' => [], 'otherField' => 'exists']],
+            [false, ['mustBeADate' => null, 'otherField' => 'exists']],
+        ];
+    }
+
+    /**
      * @dataProvider requiredWithoutProvider
      */
     public function testRequiredWithout(?string $field, ?string $check, bool $expected): void
