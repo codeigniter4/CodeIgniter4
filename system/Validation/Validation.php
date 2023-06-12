@@ -218,16 +218,16 @@ class Validation implements ValidationInterface
      * so that we can collect all of the first errors.
      *
      * @param array|string $value
-     * @param array|null   $rules
-     * @param array|null   $data          The array of data to validate, with `DBGroup`.
+     * @param array        $rules
+     * @param array        $data          The array of data to validate, with `DBGroup`.
      * @param string|null  $originalField The original asterisk field name like "foo.*.bar".
      */
     protected function processRules(
         string $field,
         ?string $label,
         $value,
-        $rules = null,
-        ?array $data = null,
+        $rules = null,       // @TODO remove `= null`
+        ?array $data = null, // @TODO remove `= null`
         ?string $originalField = null
     ): bool {
         if ($data === null) {
@@ -318,12 +318,11 @@ class Validation implements ValidationInterface
     }
 
     /**
-     * @param array|null $rules
-     * @param array|null $data  The array of data to validate, with `DBGroup`.
+     * @param array|null $data The array of data to validate, with `DBGroup`.
      *
      * @return array|true The modified rules or true if we return early
      */
-    private function processIfExist(string $field, $rules, ?array $data)
+    private function processIfExist(string $field, array $rules, ?array $data)
     {
         if (in_array('if_exist', $rules, true)) {
             $flattenedData = array_flatten_with_dots($data);
@@ -359,12 +358,11 @@ class Validation implements ValidationInterface
 
     /**
      * @param array|string $value
-     * @param array|null   $rules
      * @param array|null   $data  The array of data to validate, with `DBGroup`.
      *
      * @return array|true The modified rules or true if we return early
      */
-    private function processPermitEmpty($value, $rules = null, ?array $data = null)
+    private function processPermitEmpty($value, array $rules, ?array $data = null)
     {
         if (in_array('permit_empty', $rules, true)) {
             if (
