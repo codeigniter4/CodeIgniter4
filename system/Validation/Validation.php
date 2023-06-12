@@ -345,8 +345,6 @@ class Validation implements ValidationInterface
                 $dataIsExisting = array_key_exists($ifExistField, $flattenedData);
             }
 
-            unset($ifExistField, $flattenedData);
-
             if (! $dataIsExisting) {
                 // we return early if `if_exist` is not satisfied. we have nothing to do here.
                 return true;
