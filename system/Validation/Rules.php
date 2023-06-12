@@ -276,7 +276,10 @@ class Rules
         $requiredFields = [];
 
         foreach ($fields as $field) {
-            if ((array_key_exists($field, $data) && ! empty($data[$field])) || (strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))) {
+            if (
+                (array_key_exists($field, $data) && ! empty($data[$field]))
+                || (strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))
+            ) {
                 $requiredFields[] = $field;
             }
         }
