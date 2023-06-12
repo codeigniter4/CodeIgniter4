@@ -278,12 +278,12 @@ class Rules
     /**
      * Is the field required for required_with?
      *
-     * @params string|null $fields
+     * @params string $fields Comma separated field names
      *
      * @used-by required_with(), Validation::processRequiredWith()
      * @internal
      */
-    public function isRequiredForRequiredWith(?string $fields, array $data): bool
+    public function isRequiredForRequiredWith(string $fields, array $data): bool
     {
         $requiredFields = [];
 

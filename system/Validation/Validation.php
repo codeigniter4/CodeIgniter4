@@ -323,11 +323,11 @@ class Validation implements ValidationInterface
     }
 
     /**
-     * @param array|null $data The array of data to validate, with `DBGroup`.
+     * @param array $data The array of data to validate, with `DBGroup`.
      *
      * @return array|true The modified rules or true if we return early
      */
-    private function processRequiredWith(array $rules, ?array $data)
+    private function processRequiredWith(array $rules, array $data)
     {
         foreach ($rules as $rule) {
             if (! $this->isClosure($rule) && preg_match('/(.*?)\[(.*)\]/', $rule, $match)) {
@@ -354,11 +354,11 @@ class Validation implements ValidationInterface
     }
 
     /**
-     * @param array|null $data The array of data to validate, with `DBGroup`.
+     * @param array $data The array of data to validate, with `DBGroup`.
      *
      * @return array|true The modified rules or true if we return early
      */
-    private function processIfExist(string $field, array $rules, ?array $data)
+    private function processIfExist(string $field, array $rules, array $data)
     {
         if (in_array('if_exist', $rules, true)) {
             $flattenedData = array_flatten_with_dots($data);
@@ -394,11 +394,11 @@ class Validation implements ValidationInterface
 
     /**
      * @param array|string $value
-     * @param array|null   $data  The array of data to validate, with `DBGroup`.
+     * @param array        $data  The array of data to validate, with `DBGroup`.
      *
      * @return array|true The modified rules or true if we return early
      */
-    private function processPermitEmpty($value, array $rules, ?array $data = null)
+    private function processPermitEmpty($value, array $rules, array $data)
     {
         if (in_array('permit_empty', $rules, true)) {
             if (
