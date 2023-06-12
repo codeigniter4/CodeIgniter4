@@ -85,7 +85,8 @@ Specifying Route Handlers
 Controller's Namespace
 ----------------------
 
-If a controller name is stated without beginning with ``\``, the :ref:`routing-default-namespace` will be prepended:
+When you specify a controller and method name as a string,
+if a controller name is stated without beginning with ``\``, the :ref:`routing-default-namespace` will be prepended:
 
 .. literalinclude:: routing/063.php
 
@@ -113,6 +114,14 @@ Or using ``use`` keyword:
 
 .. literalinclude:: routing/014.php
    :lines: 2-
+
+If you forget ``use App\Controllers\Home;``, the controller classname is interpreted
+as ``Config\Home``, not ``App\Controllers\Home`` because **app/Config/Routes.php**
+has ``namespace Config;`` at the top.
+
+.. note:: When you use Array Callable Syntax, the classname is always interpreted
+    as a fully qualified classname. So :ref:`routing-default-namespace` and
+    :ref:`namespace option <assigning-namespace>` have no effect.
 
 Array Callable Syntax and Placeholders
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
