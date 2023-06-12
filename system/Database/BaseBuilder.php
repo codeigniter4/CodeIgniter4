@@ -1997,7 +1997,7 @@ class BaseBuilder
         }
 
         if (isset($this->QBOptions['setQueryAsData'])) {
-            $data = $this->QBOptions['setQueryAsData'];
+            $data = $this->QBOptions['setQueryAsData'] . "\n";
         } else {
             $data = 'VALUES ' . implode(', ', $this->formatValues($values)) . "\n";
         }
