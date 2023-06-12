@@ -316,9 +316,13 @@ class Rules
         // Still here? Then we fail this test if
         // any of the fields are not present in $data
         foreach (explode(',', $otherFields) as $otherField) {
-            if ((strpos($otherField, '.') === false) && (! array_key_exists($otherField, $data) || empty($data[$otherField]))) {
+            if (
+                (strpos($otherField, '.') === false)
+                && (! array_key_exists($otherField, $data) || empty($data[$otherField]))
+            ) {
                 return false;
             }
+
             if (strpos($otherField, '.') !== false) {
                 if ($field === null) {
                     throw new InvalidArgumentException('You must supply the parameters: field.');
