@@ -320,15 +320,15 @@ define an array of routes and then pass it as the first parameter to the ``map()
 Command-Line Only Routes
 ========================
 
+.. note:: It is recommended to use Spark Commands for CLI scripts instead of calling controllers via CLI.
+    See the :doc:`../cli/cli_commands` page for detailed information.
+
 You can create routes that work only from the command-line, and are inaccessible from the web browser, with the
 ``cli()`` method. Any route created by any of the HTTP-verb-based
 route methods will also be inaccessible from the CLI, but routes created by the ``add()`` method will still be
 available from the command line:
 
 .. literalinclude:: routing/032.php
-
-.. note:: It is recommended to use Spark Commands for CLI scripts instead of calling controllers via CLI.
-    See the :doc:`../cli/cli_commands` page for detailed information.
 
 .. warning:: If you enable :ref:`auto-routing-legacy` and place the command file in **app/Controllers**,
     anyone could access the command with the help of Auto Routing (Legacy) via HTTP.
