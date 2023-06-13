@@ -298,8 +298,13 @@ class Rules
      * @param string|null $otherFields The param fields of required_without[].
      * @param string|null $field       This rule param fields aren't present, this field is required.
      */
-    public function required_without($str = null, ?string $otherFields = null, array $data = [], ?string $error = null, ?string $field = null): bool
-    {
+    public function required_without(
+        $str = null,
+        ?string $otherFields = null,
+        array $data = [],
+        ?string $error = null,
+        ?string $field = null
+    ): bool {
         if ($otherFields === null || empty($data)) {
             throw new InvalidArgumentException('You must supply the parameters: otherFields, data.');
         }
