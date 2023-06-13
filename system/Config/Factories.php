@@ -24,6 +24,7 @@ use Config\Services;
  * instantiation checks.
  *
  * @method static BaseConfig|null config(...$arguments)
+ * @method static Model|null      models(string $name, array $options = [], ?ConnectionInterface &$conn = null)
  */
 class Factories
 {
@@ -68,23 +69,6 @@ class Factories
      * @phpstan-var  array<string, array<class-string, object>>
      */
     protected static $instances = [];
-
-    /**
-     * This method is only to prevent PHPStan error.
-     * If we have a solution, we can remove this method.
-     * See https://github.com/codeigniter4/CodeIgniter4/pull/5358
-     *
-     * @template T of Model
-     *
-     * @phpstan-param class-string<T> $name
-     *
-     * @return Model
-     * @phpstan-return T
-     */
-    public static function models(string $name, array $options = [], ?ConnectionInterface &$conn = null)
-    {
-        return self::__callStatic('models', [$name, $options, $conn]);
-    }
 
     /**
      * Loads instances based on the method component name. Either
