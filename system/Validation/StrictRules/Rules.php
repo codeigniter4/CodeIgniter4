@@ -347,7 +347,7 @@ class Rules
     }
 
     /**
-     * The field is required when all of the other fields are present
+     * The field is required when all the other fields are present
      * in the data but not required.
      *
      * Example (field is required when the id or email field is missing):
@@ -358,8 +358,13 @@ class Rules
      * @param string|null                             $otherFields The param fields of required_without[].
      * @param string|null                             $field       This rule param fields aren't present, this field is required.
      */
-    public function required_without($str = null, ?string $otherFields = null, array $data = [], ?string $error = null, ?string $field = null): bool
-    {
+    public function required_without(
+        $str = null,
+        ?string $otherFields = null,
+        array $data = [],
+        ?string $error = null,
+        ?string $field = null
+    ): bool {
         return $this->nonStrictRules->required_without($str, $otherFields, $data, $error, $field);
     }
 }

@@ -615,6 +615,68 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/7557
+     *
+     * @dataProvider RequiredWithAndOtherRulesProvider
+     */
+    public function testRequiredWithAndOtherRules(bool $expected, array $data): void
+    {
+        $this->validation->setRules([
+            'mustBeADate' => 'required_with[otherField]|permit_empty|valid_date',
+        ]);
+
+        $result = $this->validation->run($data);
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function RequiredWithAndOtherRulesProvider(): Generator
+    {
+        yield from [
+            // `otherField` and `mustBeADate` do not exist
+            [true, []],
+            // `mustBeADate` does not exist
+            [false, ['otherField' => 'exists']],
+            // ``otherField` does not exist
+            [true, ['mustBeADate' => '2023-06-12']],
+            [true, ['mustBeADate' => '']],
+            [true, ['mustBeADate' => null]],
+            [true, ['mustBeADate' => []]],
+            // `otherField` and `mustBeADate` exist
+            [true, ['mustBeADate' => '', 'otherField' => '']],
+            [true, ['mustBeADate' => '2023-06-12', 'otherField' => 'exists']],
+            [true, ['mustBeADate' => '2023-06-12', 'otherField' => '']],
+            [false, ['mustBeADate' => '', 'otherField' => 'exists']],
+            [false, ['mustBeADate' => [], 'otherField' => 'exists']],
+            [false, ['mustBeADate' => null, 'otherField' => 'exists']],
+        ];
+    }
+
+    /**
+     * @dataProvider RequiredWithAndOtherRuleWithValueZeroProvider
+     */
+    public function testRequiredWithAndOtherRuleWithValueZero(bool $expected, array $data): void
+    {
+        $this->validation->setRules([
+            'married'      => ['rules' => ['in_list[0,1]']],
+            'partner_name' => ['rules' => ['permit_empty', 'required_with[married]', 'alpha_space']],
+        ]);
+
+        $result = $this->validation->run($data);
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function RequiredWithAndOtherRuleWithValueZeroProvider(): Generator
+    {
+        yield from [
+            [true, ['married' => '0', 'partner_name' => '']],
+            [true, ['married' => '1', 'partner_name' => 'Foo']],
+            [false, ['married' => '1', 'partner_name' => '']],
+        ];
+    }
+
+    /**
      * @dataProvider requiredWithoutProvider
      */
     public function testRequiredWithout(?string $field, ?string $check, bool $expected): void
