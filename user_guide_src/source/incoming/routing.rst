@@ -875,6 +875,8 @@ The *Method* will be like ``GET(auto)``.
 
 ``/..`` in the *Route* column indicates one segment. ``[/..]`` indicates it is optional.
 
+.. note:: When auto-routing is enabled, if you have the route ``home``, it can be also accessd by ``Home``, or maybe by ``hOme``, ``hoMe``, ``HOME``, etc. But the command shows only ``home``.
+
 If you see a route starting with ``x`` like the following, it indicates an invalid
 route that won't be routed, but the controller has a public method for routing.
 
