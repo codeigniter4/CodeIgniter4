@@ -333,9 +333,6 @@ available from the command line:
 .. warning:: If you enable :ref:`auto-routing-legacy` and place the command file in **app/Controllers**,
     anyone could access the command with the help of Auto Routing (Legacy) via HTTP.
 
-.. note:: It is recommended to use Spark Commands instead of CLI routes.
-    See the :doc:`../cli/spark_commands` page for detailed information.
-
 Global Options
 **************
 
