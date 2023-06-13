@@ -150,7 +150,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * The current method that the script is being called by.
      *
-     * @var string HTTP verb (lower case) or `*`
+     * @var string HTTP verb (lower case) like `get`,`post` or `*`
      */
     protected $HTTPVerb = '*';
 
