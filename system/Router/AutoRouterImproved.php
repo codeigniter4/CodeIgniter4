@@ -254,9 +254,9 @@ final class AutoRouterImproved implements AutoRouterInterface
                     'Cannot access the default method "' . $this->method . '" with the method name URI path.'
                 );
             }
-        } elseif (method_exists($this->controller, $this->defaultMethod)) {
+        } elseif (method_exists($this->controller, $defaultMethod)) {
             // The default method is found.
-            $this->method = $this->defaultMethod;
+            $this->method = $defaultMethod;
         } else {
             // No method is found.
             throw PageNotFoundException::forControllerNotFound($this->controller, $method);
