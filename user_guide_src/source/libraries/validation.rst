@@ -818,9 +818,9 @@ permit_empty            No         Allows the field to receive an empty array,
 required                No         Fails if the field is an empty array, empty
                                    string, null or false.
 required_with           Yes        The field is required when any of the other   ``required_with[field1,field2]``
-                                   required fields are present in the data.
-required_without        Yes        The field is required when any of other       ``required_without[field1,field2]``
-                                   fields do not pass ``required`` checks.
+                                   fields is not `empty()`_ in the data.
+required_without        Yes        The field is required when any of the other   ``required_without[field1,field2]``
+                                   fields is `empty()`_ in the data.
 string                  No         A generic alternative to the alpha* rules
                                    that confirms the element is a string
 timezone                No         Fails if field does match a timezone per
@@ -880,6 +880,7 @@ valid_cc_number         Yes        Verifies that the credit card number matches 
 
 .. _timezone_identifiers_list(): https://www.php.net/manual/en/function.timezone-identifiers-list.php
 .. _strtotime(): https://www.php.net/manual/en/function.strtotime.php
+.. _empty(): https://www.php.net/manual/en/function.empty.php
 
 .. _rules-for-file-uploads:
 
