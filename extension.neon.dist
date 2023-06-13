@@ -1,0 +1,5 @@
+services:
+  -
+    class: Utils\PHPStan\Type\FactoriesFunctionDynamicReturnTypeExtension
+    tags:
+      - phpstan.broker.dynamicFunctionReturnTypeExtension

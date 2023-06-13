@@ -13,6 +13,7 @@ services:
 			- phpstan.rules.rule
 
 includes:
+	- extension.neon.dist
 	- phpstan-baseline.neon.dist
 
 parameters:
