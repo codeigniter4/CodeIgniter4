@@ -34,5 +34,10 @@
                 <directory name="tests/_support/View/Cells" />
             </errorLevel>
         </UndefinedGlobalVariable>
+        <UndefinedFunction>
+            <errorLevel type="suppress">
+                <directory name="tests/_support/PHPStan" />
+            </errorLevel>
+        </UndefinedFunction>
     </issueHandlers>
 </psalm>
