@@ -31,7 +31,8 @@ If you expect a GET request, you use the ``get()`` method:
 
 .. literalinclude:: routing/001.php
 
-A route takes the URI path (``/``) on the left, and maps it to the controller and method (``Home::index``) on the right,
+A route takes the **Route Path** (URI path relative to the BaseURL. ``/``) on the left,
+and maps it to the **Route Handler** (controller and method ``Home::index``) on the right,
 along with any parameters that should be passed to the controller.
 
 The controller and method should
@@ -534,7 +535,7 @@ Route Priority
 
 Routes are registered in the routing table in the order in which they are defined. This means that when a URI is accessed, the first matching route will be executed.
 
-.. note:: If a route (the URI path) is defined more than once with different handlers, only the first defined route is registered.
+.. note:: If a route path is defined more than once with different handlers, only the first defined route is registered.
 
 You can check registered routes in the routing table by running the :ref:`spark routes <routing-spark-routes>` command.
 
@@ -851,9 +852,9 @@ The output is like the following:
 
 The *Method* column shows the HTTP method that the route is listening for.
 
-The *Route* column shows the route (URI path) to match. The route of a defined route is expressed as a regular expression.
+The *Route* column shows the route path to match. The route of a defined route is expressed as a regular expression.
 
-Since v4.3.0, the *Name* column shows the route name. ``»`` indicates the name is the same as the route.
+Since v4.3.0, the *Name* column shows the route name. ``»`` indicates the name is the same as the route path.
 
 .. important:: The system is not perfect. If you use Custom Placeholders, *Filters* might not be correct. If you want to check filters for a route, you can use :ref:`spark filter:check <spark-filter-check>` command.
 
