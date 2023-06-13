@@ -289,20 +289,21 @@
 <ul>
 <li><p><a class="reference internal" href="#interface-changes" id="id2">Interface Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#validationinterface-check" id="id3">ValidationInterface::check()</a></p></li>
+<li><p><a class="reference internal" href="#autorouterinterface" id="id3">AutoRouterInterface</a></p></li>
+<li><p><a class="reference internal" href="#validationinterface-check" id="id4">ValidationInterface::check()</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#method-signature-changes" id="id4">Method Signature Changes</a></p>
+<li><p><a class="reference internal" href="#method-signature-changes" id="id5">Method Signature Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#validation-check" id="id5">Validation::check()</a></p></li>
+<li><p><a class="reference internal" href="#validation-check" id="id6">Validation::check()</a></p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#message-changes" id="id6">Message Changes</a></p></li>
-<li><p><a class="reference internal" href="#changes" id="id7">Changes</a></p></li>
-<li><p><a class="reference internal" href="#deprecations" id="id8">Deprecations</a></p></li>
-<li><p><a class="reference internal" href="#bugs-fixed" id="id9">Bugs Fixed</a></p></li>
+<li><p><a class="reference internal" href="#message-changes" id="id7">Message Changes</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id8">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id9">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id10">Bugs Fixed</a></p></li>
 </ul>
 </div>
 <section id="breaking">
@@ -315,8 +316,12 @@
 or implemented these interfaces, all these changes are backward compatible
 and require no intervention.</p>
 </div>
+<section id="autorouterinterface">
+<h4><a class="toc-backref" href="#id3">AutoRouterInterface</a><a class="headerlink" href="#autorouterinterface" title="Permalink to this headline"></a></h4>
+<p>Now <code class="docutils literal notranslate"><span class="pre">AutoRouterInterface::getRoute()</span></code> has the new second parameter <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">$httpVerb</span></code>.</p>
+</section>
 <section id="validationinterface-check">
-<h4><a class="toc-backref" href="#id3">ValidationInterface::check()</a><a class="headerlink" href="#validationinterface-check" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id4">ValidationInterface::check()</a><a class="headerlink" href="#validationinterface-check" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p>The second parameter has changed from <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">$rule</span></code> to <code class="docutils literal notranslate"><span class="pre">$rules</span></code>.</p></li>
 <li><p>The optional fourth parameter <code class="docutils literal notranslate"><span class="pre">$dbGroup</span> <span class="pre">=</span> <span class="pre">null</span></code> has been added.</p></li>
@@ -324,9 +329,9 @@ and require no intervention.</p>
 </section>
 </section>
 <section id="method-signature-changes">
-<h3><a class="toc-backref" href="#id4">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this headline"></a></h3>
 <section id="validation-check">
-<h4><a class="toc-backref" href="#id5">Validation::check()</a><a class="headerlink" href="#validation-check" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id6">Validation::check()</a><a class="headerlink" href="#validation-check" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p>The second parameter has changed from <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">$rule</span></code> to <code class="docutils literal notranslate"><span class="pre">$rules</span></code>.</p></li>
 <li><p>The optional fourth parameter <code class="docutils literal notranslate"><span class="pre">$dbGroup</span> <span class="pre">=</span> <span class="pre">null</span></code> has been added.</p></li>
@@ -335,22 +340,28 @@ and require no intervention.</p>
 </section>
 </section>
 <section id="message-changes">
-<h2><a class="toc-backref" href="#id6">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this headline"></a></h2>
 </section>
 <section id="changes">
-<h2><a class="toc-backref" href="#id7">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
 </section>
 <section id="deprecations">
-<h2><a class="toc-backref" href="#id8">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><strong>AutoRouterImproved:</strong> The constructor parameter <code class="docutils literal notranslate"><span class="pre">$httpVerb</span></code> is deprecated.
+No longer used.</p></li>
+</ul>
 </section>
 <section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id9">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id10">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p><strong>Validation:</strong> Fixed a bug that <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code> is ignored when checking
 the value of a placeholder.</p></li>
 <li><p><strong>Validation:</strong> Fixed a bug that <code class="docutils literal notranslate"><span class="pre">check()</span></code> cannot specify non-default
 database group.</p></li>
 <li><p><strong>Database:</strong> Fixed a bug where semicolon character (<code class="docutils literal notranslate"><span class="pre">;</span></code>) in one of the Postgre connection parameters would break the DSN string.</p></li>
+<li><p><strong>AutoRouting Improved:</strong> Fixed a bug that feature testing may not find
+controller/method.</p></li>
 </ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
