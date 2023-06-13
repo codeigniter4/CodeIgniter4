@@ -92,6 +92,8 @@ return static function (RectorConfig $rectorConfig): void {
         RemoveUnusedConstructorParamRector::class => [
             // there are deprecated parameters
             __DIR__ . '/system/Debug/Exceptions.php',
+            // @TODO remove if deprecated $httpVerb is removed
+            __DIR__ . '/system/Router/AutoRouterImproved.php',
         ],
 
         // call on purpose for nothing happen check

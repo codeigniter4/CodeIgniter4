@@ -19,6 +19,11 @@ Interface Changes
     or implemented these interfaces, all these changes are backward compatible
     and require no intervention.
 
+AutoRouterInterface
+-------------------
+
+Now ``AutoRouterInterface::getRoute()`` has the new second parameter ``string $httpVerb``.
+
 ValidationInterface::check()
 ----------------------------
 
@@ -43,6 +48,9 @@ Changes
 Deprecations
 ************
 
+- **AutoRouterImproved:** The constructor parameter ``$httpVerb`` is deprecated.
+  No longer used.
+
 Bugs Fixed
 **********
 
@@ -51,6 +59,8 @@ Bugs Fixed
 - **Validation:** Fixed a bug that ``check()`` cannot specify non-default
   database group.
 - **Database:** Fixed a bug where semicolon character (``;``) in one of the Postgre connection parameters would break the DSN string.
+- **AutoRouting Improved:** Fixed a bug that feature testing may not find
+  controller/method.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

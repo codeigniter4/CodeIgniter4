@@ -126,7 +126,7 @@ class Router implements RouterInterface
         $this->controller = $this->collection->getDefaultController();
         $this->method     = $this->collection->getDefaultMethod();
 
-        $this->collection->setHTTPVerb(strtolower($request->getMethod() ?? $_SERVER['REQUEST_METHOD']));
+        $this->collection->setHTTPVerb($request->getMethod() ?? $_SERVER['REQUEST_METHOD']);
 
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
 
@@ -504,7 +504,7 @@ class Router implements RouterInterface
     public function autoRoute(string $uri)
     {
         [$this->directory, $this->controller, $this->method, $this->params]
-            = $this->autoRouter->getRoute($uri);
+            = $this->autoRouter->getRoute($uri, $this->collection->getHTTPVerb());
     }
 
     /**
