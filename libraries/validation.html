@@ -1491,8 +1491,10 @@ There can be no spaces before and after <code class="docutils literal notranslat
     <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;is_unique[supplier.name,uuid, </span><span class="si">{</span><span class="nv">$uuid</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span>  <span class="c1">// is not ok</span>
     <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;is_unique[supplier.name,uuid,</span><span class="si">{</span><span class="nv">$uuid</span><span class="si">}</span><span class="s2"> ]&quot;</span><span class="p">,</span>  <span class="c1">// is not ok</span>
     <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;is_unique[supplier.name,uuid,</span><span class="si">{</span><span class="nv">$uuid</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span>   <span class="c1">// is ok</span>
-    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;is_unique[supplier.name,uuid,{uuid}]&#39;</span><span class="p">,</span>  <span class="c1">// is ok - see &quot;Validation Placeholders&quot;</span>
+    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;is_unique[supplier.name,uuid,{uuid}]&#39;</span><span class="p">,</span>    <span class="c1">// is ok - see &quot;Validation Placeholders&quot;</span>
 <span class="p">]);</span>
+<span class="c1">// Warning: If `$uuid` is a user input, be sure to validate the format of the value before using it.</span>
+<span class="c1">// Otherwise, it is vulnerable.</span>
 </pre></div>
 </div>
 <section id="rules-for-general-use">
@@ -1500,10 +1502,10 @@ There can be no spaces before and after <code class="docutils literal notranslat
 <p>The following is a list of all the native rules that are available to use:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 18%" />
+<col style="width: 17%" />
 <col style="width: 8%" />
-<col style="width: 35%" />
-<col style="width: 40%" />
+<col style="width: 34%" />
+<col style="width: 41%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Rule</p></th>
@@ -1548,44 +1550,45 @@ alphanumeric or space characters.</p></td>
 <td><p>No</p></td>
 <td><p>Fails if field contains anything other than
 alphanumeric, space, or this limited set of
-punctuation characters: ~ (tilde),
-! (exclamation), # (number), $ (dollar),
-% (percent), &amp; (ampersand), * (asterisk),
-- (dash), _ (underscore), + (plus),
-= (equals), | (vertical bar), : (colon),
-. (period).</p></td>
+punctuation characters: <code class="docutils literal notranslate"><span class="pre">~</span></code> (tilde),
+<code class="docutils literal notranslate"><span class="pre">!</span></code> (exclamation), <code class="docutils literal notranslate"><span class="pre">#</span></code> (number),
+<code class="docutils literal notranslate"><span class="pre">$</span></code> (dollar), <code class="docutils literal notranslate"><span class="pre">%</span> <span class="pre">(percent),</span> <span class="pre">&amp;</span> <span class="pre">(ampersand),</span>
+<span class="pre">``*</span></code> (asterisk), <code class="docutils literal notranslate"><span class="pre">-</span></code> (dash),
+<code class="docutils literal notranslate"><span class="pre">_</span></code> (underscore), <code class="docutils literal notranslate"><span class="pre">+</span></code> (plus),
+<code class="docutils literal notranslate"><span class="pre">=</span></code> (equals), <code class="docutils literal notranslate"><span class="pre">|</span></code> (vertical bar),
+<code class="docutils literal notranslate"><span class="pre">:</span></code> (colon), <code class="docutils literal notranslate"><span class="pre">.</span></code> (period).</p></td>
 <td></td>
 </tr>
 <tr class="row-even"><td><p>decimal</p></td>
 <td><p>No</p></td>
 <td><p>Fails if field contains anything other than
-a decimal number.
-Also accepts a + or  - sign for the number.</p></td>
+a decimal number. Also accepts a <code class="docutils literal notranslate"><span class="pre">+</span></code> or
+<code class="docutils literal notranslate"><span class="pre">-</span></code> sign for the number.</p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>differs</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if field does not differ from the one
 in the parameter.</p></td>
-<td><p>differs[field_name]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">differs[field_name]</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>exact_length</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if field is not exactly the parameter
 value. One or more comma-separated values.</p></td>
-<td><p>exact_length[5] or exact_length[5,8,12]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact_length[5]</span></code> or <code class="docutils literal notranslate"><span class="pre">exact_length[5,8,12]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>greater_than</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if field is less than or equal to
 the parameter value or not numeric.</p></td>
-<td><p>greater_than[8]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">greater_than[8]</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>greater_than_equal_to</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if field is less than the parameter
 value, or not numeric.</p></td>
-<td><p>greater_than_equal_to[5]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">greater_than_equal_to[5]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>hex</p></td>
 <td><p>No</p></td>
@@ -1596,15 +1599,15 @@ hexadecimal characters.</p></td>
 <tr class="row-even"><td><p>if_exist</p></td>
 <td><p>No</p></td>
 <td><p>If this rule is present, validation will
-only return possible errors if the field key
-exists, regardless of its value.</p></td>
+check the field only when the field key
+exists in the data to validate.</p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>in_list</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if field is not within a predetermined
 list.</p></td>
-<td><p>in_list[red,blue,green]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">in_list[red,blue,green]</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>integer</p></td>
 <td><p>No</p></td>
@@ -1629,7 +1632,7 @@ a natural number, except zero: 1, 2, 3, etc.</p></td>
 <td><p>Checks the database to see if the given value
 exist. Can ignore records by field/value to
 filter (currently accept only one filter).</p></td>
-<td><p>is_not_unique[table.field,where_field,where_value]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">is_not_unique[table.field,where_field,where_value]</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>is_unique</p></td>
 <td><p>Yes</p></td>
@@ -1637,43 +1640,43 @@ filter (currently accept only one filter).</p></td>
 database. Optionally set a column and value
 to ignore, useful when updating records to
 ignore itself.</p></td>
-<td><p>is_unique[table.field,ignore_field,ignore_value]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">is_unique[table.field,ignore_field,ignore_value]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>less_than</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if field is greater than or equal to
 the parameter value or not numeric.</p></td>
-<td><p>less_than[8]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">less_than[8]</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>less_than_equal_to</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if field is greater than the parameter
 value or not numeric.</p></td>
-<td><p>less_than_equal_to[8]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">less_than_equal_to[8]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>matches</p></td>
 <td><p>Yes</p></td>
 <td><p>The value must match the value of the field
 in the parameter.</p></td>
-<td><p>matches[field]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">matches[field]</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>max_length</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if field is longer than the parameter
 value.</p></td>
-<td><p>max_length[8]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">max_length[8]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>min_length</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if field is shorter than the parameter
 value.</p></td>
-<td><p>min_length[3]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">min_length[3]</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>not_in_list</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if field is within a predetermined
 list.</p></td>
-<td><p>not_in_list[red,blue,green]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">not_in_list[red,blue,green]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>numeric</p></td>
 <td><p>No</p></td>
@@ -1685,7 +1688,7 @@ numeric characters.</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if field does not match the regular
 expression.</p></td>
-<td><p>regex_match[/regex/]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">regex_match[/regex/]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>permit_empty</p></td>
 <td><p>No</p></td>
@@ -1702,14 +1705,14 @@ string, null or false.</p></td>
 <tr class="row-odd"><td><p>required_with</p></td>
 <td><p>Yes</p></td>
 <td><p>The field is required when any of the other
-required fields are present in the data.</p></td>
-<td><p>required_with[field1,field2]</p></td>
+fields is not <a class="reference external" href="https://www.php.net/manual/en/function.empty.php">empty()</a> in the data.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">required_with[field1,field2]</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>required_without</p></td>
 <td><p>Yes</p></td>
-<td><p>The field is required when any of other
-fields do not pass <code class="docutils literal notranslate"><span class="pre">required</span></code> checks.</p></td>
-<td><p>required_without[field1,field2]</p></td>
+<td><p>The field is required when any of the other
+fields is <a class="reference external" href="https://www.php.net/manual/en/function.empty.php">empty()</a> in the data.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">required_without[field1,field2]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>string</p></td>
 <td><p>No</p></td>
@@ -1720,7 +1723,7 @@ that confirms the element is a string</p></td>
 <tr class="row-even"><td><p>timezone</p></td>
 <td><p>No</p></td>
 <td><p>Fails if field does match a timezone per
-<code class="docutils literal notranslate"><span class="pre">timezone_identifiers_list</span></code></p></td>
+<a class="reference external" href="https://www.php.net/manual/en/function.timezone-identifiers-list.php">timezone_identifiers_list()</a></p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>valid_base64</p></td>
@@ -1748,17 +1751,19 @@ separated list is not a valid email.</p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>valid_ip</p></td>
-<td><p>No</p></td>
+<td><p>Yes</p></td>
 <td><p>Fails if the supplied IP is not valid.
-Accepts an optional parameter of ‘ipv4’ or
-‘ipv6’ to specify an IP format.</p></td>
-<td><p>valid_ip[ipv6]</p></td>
+Accepts an optional parameter of <code class="docutils literal notranslate"><span class="pre">ipv4</span></code> or
+<code class="docutils literal notranslate"><span class="pre">ipv6</span></code> to specify an IP format.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">valid_ip[ipv6]</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>valid_url</p></td>
 <td><p>No</p></td>
 <td><p>Fails if field does not contain (loosely) a
 URL. Includes simple strings that could be
-hostnames, like “codeigniter”.</p></td>
+hostnames, like “codeigniter”.
+<strong>Normally,</strong> <code class="docutils literal notranslate"><span class="pre">valid_url_strict</span></code> <strong>should
+be used.</strong></p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>valid_url_strict</p></td>
@@ -1766,39 +1771,43 @@ hostnames, like “codeigniter”.</p></td>
 <td><p>Fails if field does not contain a valid URL.
 You can optionally specify a list of valid
 schemas. If not specified, <code class="docutils literal notranslate"><span class="pre">http,https</span></code>
-are valid. This rule uses
-PHP’s <code class="docutils literal notranslate"><span class="pre">FILTER_VALIDATE_URL</span></code>.</p></td>
-<td><p>valid_url_strict[https]</p></td>
+are valid. This rule uses PHP’s
+<code class="docutils literal notranslate"><span class="pre">FILTER_VALIDATE_URL</span></code>.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">valid_url_strict[https]</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>valid_date</p></td>
-<td><p>No</p></td>
+<td><p>Yes</p></td>
 <td><p>Fails if field does not contain a valid date.
-Accepts an optional parameter to matches
-a date format.</p></td>
-<td><p>valid_date[d/m/Y]</p></td>
+Any string that <a class="reference external" href="https://www.php.net/manual/en/function.strtotime.php">strtotime()</a> accepts is
+valid if you don’t specify an optional
+parameter to matches a date format.
+<strong>So it is usually necessary to specify
+the parameter.</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">valid_date[d/m/Y]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>valid_cc_number</p></td>
 <td><p>Yes</p></td>
 <td><p>Verifies that the credit card number matches
 the format used by the specified provider.
 Current supported providers are:
-American Express (amex),
-China Unionpay (unionpay),
-Diners Club CarteBlance (carteblanche),
-Diners Club (dinersclub),
-Discover Card (discover),
-Interpayment (interpayment), JCB (jcb),
-Maestro (maestro), Dankort (dankort),
-NSPK MIR (mir),
-Troy (troy), MasterCard (mastercard),
-Visa (visa), UATP (uatp), Verve (verve),
-CIBC Convenience Card (cibc),
-Royal Bank of Canada Client Card (rbc),
-TD Canada Trust Access Card (tdtrust),
-Scotiabank Scotia Card (scotia),
-BMO ABM Card (bmoabm),
-HSBC Canada Card (hsbc)</p></td>
-<td><p>valid_cc_number[amex]</p></td>
+American Express (<code class="docutils literal notranslate"><span class="pre">amex</span></code>),
+China Unionpay (<code class="docutils literal notranslate"><span class="pre">unionpay</span></code>),
+Diners Club CarteBlance (<code class="docutils literal notranslate"><span class="pre">carteblanche</span></code>),
+Diners Club (<code class="docutils literal notranslate"><span class="pre">dinersclub</span></code>),
+Discover Card (<code class="docutils literal notranslate"><span class="pre">discover</span></code>),
+Interpayment (<code class="docutils literal notranslate"><span class="pre">interpayment</span></code>),
+JCB (<code class="docutils literal notranslate"><span class="pre">jcb</span></code>), Maestro (<code class="docutils literal notranslate"><span class="pre">maestro</span></code>),
+Dankort (<code class="docutils literal notranslate"><span class="pre">dankort</span></code>), NSPK MIR (<code class="docutils literal notranslate"><span class="pre">mir</span></code>),
+Troy (<code class="docutils literal notranslate"><span class="pre">troy</span></code>), MasterCard (<code class="docutils literal notranslate"><span class="pre">mastercard</span></code>),
+Visa (<code class="docutils literal notranslate"><span class="pre">visa</span></code>), UATP (<code class="docutils literal notranslate"><span class="pre">uatp</span></code>),
+Verve (<code class="docutils literal notranslate"><span class="pre">verve</span></code>),
+CIBC Convenience Card (<code class="docutils literal notranslate"><span class="pre">cibc</span></code>),
+Royal Bank of Canada Client Card (<code class="docutils literal notranslate"><span class="pre">rbc</span></code>),
+TD Canada Trust Access Card (<code class="docutils literal notranslate"><span class="pre">tdtrust</span></code>),
+Scotiabank Scotia Card (<code class="docutils literal notranslate"><span class="pre">scotia</span></code>),
+BMO ABM Card (<code class="docutils literal notranslate"><span class="pre">bmoabm</span></code>),
+HSBC Canada Card (<code class="docutils literal notranslate"><span class="pre">hsbc</span></code>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">valid_cc_number[amex]</span></code></p></td>
 </tr>
 </tbody>
 </table>
@@ -1843,7 +1852,7 @@ file upload related rules:</p>
 <td><p>Yes</p></td>
 <td><p>Fails if the name of the parameter does not
 match the name of any uploaded files.</p></td>
-<td><p>uploaded[field_name]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">uploaded[field_name]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>max_size</p></td>
 <td><p>Yes</p></td>
@@ -1853,7 +1862,7 @@ parameter in kilobytes (kb). Or if the file
 is larger than allowed maximum size declared
 in php.ini config file -
 <code class="docutils literal notranslate"><span class="pre">upload_max_filesize</span></code> directive.</p></td>
-<td><p>max_size[field_name,2048]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">max_size[field_name,2048]</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>max_dims</p></td>
 <td><p>Yes</p></td>
@@ -1863,25 +1872,25 @@ parameter is the field name. The second is
 the width, and the third is the height. Will
 also fail if the file cannot be determined
 to be an image.</p></td>
-<td><p>max_dims[field_name,300,150]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">max_dims[field_name,300,150]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>mime_in</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if the file’s mime type is not one
 listed in the parameters.</p></td>
-<td><p>mime_in[field_name,image/png,image/jpeg]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mime_in[field_name,image/png,image/jpeg]</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>ext_in</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if the file’s extension is not one
 listed in the parameters.</p></td>
-<td><p>ext_in[field_name,png,jpg,gif]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ext_in[field_name,png,jpg,gif]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>is_image</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if the file cannot be determined to be
 an image based on the mime type.</p></td>
-<td><p>is_image[field_name]</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">is_image[field_name]</span></code></p></td>
 </tr>
 </tbody>
 </table>
