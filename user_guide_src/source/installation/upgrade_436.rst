@@ -18,6 +18,9 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+- ``AutoRouterInterface::getRoute()`` has the new second parameter ``string $httpVerb``.
+  If you implement it, add the parameter.
+
 Breaking Enhancements
 *********************
 
