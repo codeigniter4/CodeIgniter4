@@ -617,9 +617,9 @@ class RulesTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/7557
      *
-     * @dataProvider RequiredWithAndOtherRuleProvider
+     * @dataProvider RequiredWithAndOtherRulesProvider
      */
-    public function testRequiredWithAndOtherRule(bool $expected, array $data): void
+    public function testRequiredWithAndOtherRules(bool $expected, array $data): void
     {
         $this->validation->setRules([
             'mustBeADate' => 'required_with[otherField]|permit_empty|valid_date',
@@ -630,7 +630,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    public function RequiredWithAndOtherRuleProvider(): Generator
+    public function RequiredWithAndOtherRulesProvider(): Generator
     {
         yield from [
             // `otherField` and `mustBeADate` do not exist
@@ -649,6 +649,30 @@ class RulesTest extends CIUnitTestCase
             [false, ['mustBeADate' => '', 'otherField' => 'exists']],
             [false, ['mustBeADate' => [], 'otherField' => 'exists']],
             [false, ['mustBeADate' => null, 'otherField' => 'exists']],
+        ];
+    }
+
+    /**
+     * @dataProvider RequiredWithAndOtherRuleWithValueZeroProvider
+     */
+    public function testRequiredWithAndOtherRuleWithValueZero(bool $expected, array $data): void
+    {
+        $this->validation->setRules([
+            'married'      => ['rules' => ['in_list[0,1]']],
+            'partner_name' => ['rules' => ['permit_empty', 'required_with[married]', 'alpha_space']],
+        ]);
+
+        $result = $this->validation->run($data);
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function RequiredWithAndOtherRuleWithValueZeroProvider(): Generator
+    {
+        yield from [
+            [true, ['married' => '0', 'partner_name' => '']],
+            [true, ['married' => '1', 'partner_name' => 'Foo']],
+            [false, ['married' => '1', 'partner_name' => '']],
         ];
     }
 
