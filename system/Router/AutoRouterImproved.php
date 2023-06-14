@@ -202,7 +202,7 @@ final class AutoRouterImproved implements AutoRouterInterface
                 $this->controller = $controller;
                 $this->params     = $params;
 
-                if ($params !== []) { // @phpstan-ignore-line
+                if ($params !== []) {
                     $this->paramPos = $paramPos;
                 }
 
@@ -221,7 +221,7 @@ final class AutoRouterImproved implements AutoRouterInterface
             $this->controller = $controller;
             $this->params     = $params;
 
-            if ($params !== []) { // @phpstan-ignore-line
+            if ($params !== []) {
                 $this->paramPos = 0;
             }
 
