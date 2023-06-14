@@ -883,7 +883,7 @@ class ValidationTest extends CIUnitTestCase
     public function testSplitRulesTrue(): void
     {
         $this->validation->setRules([
-            'phone' => 'required|regex_match[/^(01[2689]|09)[0-9]{8}$/]|numeric',
+            'phone' => 'required|regex_match[/^(01[2689]|09)\d{8}$/]|numeric',
         ]);
         $this->assertTrue($this->validation->run(['phone' => '0987654321']));
     }
@@ -891,7 +891,7 @@ class ValidationTest extends CIUnitTestCase
     public function testSplitRulesFalse(): void
     {
         $this->validation->setRules([
-            'phone' => 'required|regex_match[/^(01[2689]|09)[0-9]{8}$/]|numeric',
+            'phone' => 'required|regex_match[/^(01[2689]|09)\d{8}$/]|numeric',
         ]);
         $this->assertFalse($this->validation->run(['phone' => '09876543214']));
     }
@@ -909,8 +909,8 @@ class ValidationTest extends CIUnitTestCase
     public function testSplitRegex(): void
     {
         $method = $this->getPrivateMethodInvoker($this->validation, 'splitRules');
-        $result = $method('required|regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]|max_length[10]');
-        $this->assertSame('regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]', $result[1]);
+        $result = $method('required|regex_match[/^\d{4}[\-\.\[\/]\d{2}[\-\.\[\/]\d{2}/]|max_length[10]');
+        $this->assertSame('regex_match[/^\d{4}[\-\.\[\/]\d{2}[\-\.\[\/]\d{2}/]', $result[1]);
     }
 
     public function testTagReplacement(): void
@@ -1365,18 +1365,18 @@ class ValidationTest extends CIUnitTestCase
         ];
 
         yield [
-            'required|regex_match[/^(01[2689]|09)[0-9]{8}$/]|numeric',
-            ['required', 'regex_match[/^(01[2689]|09)[0-9]{8}$/]', 'numeric'],
+            'required|regex_match[/^(01[2689]|09)\d{8}$/]|numeric',
+            ['required', 'regex_match[/^(01[2689]|09)\d{8}$/]', 'numeric'],
         ];
 
         yield [
-            'required|regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]|max_length[10]',
-            ['required', 'regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]', 'max_length[10]'],
+            'required|regex_match[/^\d{4}[\-\.\[\/]\d{2}[\-\.\[\/]\d{2}/]|max_length[10]',
+            ['required', 'regex_match[/^\d{4}[\-\.\[\/]\d{2}[\-\.\[\/]\d{2}/]', 'max_length[10]'],
         ];
 
         yield [
-            'required|regex_match[/^(01|2689|09)[0-9]{8}$/]|numeric',
-            ['required', 'regex_match[/^(01|2689|09)[0-9]{8}$/]', 'numeric'],
+            'required|regex_match[/^(01|2689|09)\d{8}$/]|numeric',
+            ['required', 'regex_match[/^(01|2689|09)\d{8}$/]', 'numeric'],
         ];
     }
 

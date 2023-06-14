@@ -662,7 +662,7 @@ if (! function_exists('increment_string')) {
      */
     function increment_string(string $str, string $separator = '_', int $first = 1): string
     {
-        preg_match('/(.+)' . preg_quote($separator, '/') . '([0-9]+)$/', $str, $match);
+        preg_match('/(.+)' . preg_quote($separator, '/') . '(\d+)$/', $str, $match);
 
         return isset($match[2]) ? $match[1] . $separator . ((int) $match[2] + 1) : $str . $separator . $first;
     }

@@ -98,7 +98,7 @@ class RouteCollection implements RouteCollectionInterface
         'any'      => '.*',
         'segment'  => '[^/]+',
         'alphanum' => '[a-zA-Z0-9]+',
-        'num'      => '[0-9]+',
+        'num'      => '\d+',
         'alpha'    => '[a-zA-Z]+',
         'hash'     => '[^/]+',
     ];

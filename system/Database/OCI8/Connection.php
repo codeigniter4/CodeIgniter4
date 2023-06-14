@@ -53,7 +53,7 @@ class Connection extends BaseConnection
     protected $validDSNs = [
         'tns' => '/^\(DESCRIPTION=(\(.+\)){2,}\)$/', // TNS
         // Easy Connect string (Oracle 10g+)
-        'ec' => '/^(\/\/)?[a-z0-9.:_-]+(:[1-9][0-9]{0,4})?(\/[a-z0-9$_]+)?(:[^\/])?(\/[a-z0-9$_]+)?$/i',
+        'ec' => '/^(\/\/)?[a-z0-9.:_-]+(:[1-9]\d{0,4})?(\/[a-z0-9$_]+)?(:[^\/])?(\/[a-z0-9$_]+)?$/i',
         'in' => '/^[a-z0-9$_]+$/i', // Instance name (defined in tnsnames.ora)
     ];
 
