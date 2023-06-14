@@ -331,7 +331,8 @@ class CodeIgniter
             );
         }
 
-        static::$cacheTTL = 0;
+        static::$cacheTTL  = 0;
+        $this->bufferLevel = ob_get_level();
 
         $this->startBenchmark();
 
