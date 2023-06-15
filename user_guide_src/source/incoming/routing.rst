@@ -535,7 +535,7 @@ Route Priority
 
 Routes are registered in the routing table in the order in which they are defined. This means that when a URI is accessed, the first matching route will be executed.
 
-.. note:: If a route path is defined more than once with different handlers, only the first defined route is registered.
+.. warning:: If a route path is defined more than once with different handlers, only the first defined route is registered.
 
 You can check registered routes in the routing table by running the :ref:`spark routes <routing-spark-routes>` command.
 
