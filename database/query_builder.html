@@ -2627,7 +2627,7 @@ executing it first using a method like <code class="docutils literal notranslate
 run the query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// Note that the second parameter of the ``get_compiled_select`` method is false</span>
+<span class="c1">// Note that the parameter of the `getCompiledSelect()` method is false</span>
 <span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">([</span><span class="s1">&#39;field1&#39;</span><span class="p">,</span> <span class="s1">&#39;field2&#39;</span><span class="p">])</span>
     <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;field3&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">getCompiledSelect</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
@@ -2640,7 +2640,7 @@ run the query:</p>
 <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getResultArray</span><span class="p">();</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would execute and return an array of results of the following query:</span>
-<span class="cm"> * SELECT field1, field1 from mytable where field3 = 5;</span>
+<span class="cm"> * SELECT field1, field2 FROM mytable WHERE field3 = 5;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -4227,7 +4227,7 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 13, 2023.
+      <span class="lastupdated">Last updated on Jun 15, 2023.
       </span></p>
   </div>
 
