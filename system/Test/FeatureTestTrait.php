@@ -137,9 +137,6 @@ trait FeatureTestTrait
      * instance that can be used to run many assertions against.
      *
      * @return TestResponse
-     *
-     * @throws RedirectException
-     * @throws Exception
      */
     public function call(string $method, string $path, ?array $params = null)
     {
