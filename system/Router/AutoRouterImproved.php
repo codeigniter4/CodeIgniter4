@@ -104,7 +104,9 @@ final class AutoRouterImproved implements AutoRouterInterface
      */
     public function getRoute(string $uri, string $httpVerb): array
     {
-        $defaultMethod = strtolower($httpVerb) . ucfirst($this->defaultMethod);
+        $httpVerb = strtolower($httpVerb);
+
+        $defaultMethod = $httpVerb . ucfirst($this->defaultMethod);
         $this->method  = $defaultMethod;
 
         $segments = explode('/', $uri);
