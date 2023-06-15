@@ -105,7 +105,7 @@ final class SelectTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('users', $this->db);
 
-        $sql = 'REGEXP_SUBSTR(ral_anno,"\d{1,2}([,.]\d{1,3})([,.]\d{1,3})") AS ral';
+        $sql = 'REGEXP_SUBSTR(ral_anno,"[0-9]{1,2}([,.][0-9]{1,3})([,.][0-9]{1,3})") AS ral';
         $builder->select(new RawSql($sql));
 
         $expected = 'SELECT ' . $sql . ' FROM "users"';
@@ -134,12 +134,12 @@ final class SelectTest extends CIUnitTestCase
         $builder = new BaseBuilder('ob_human_resources', $this->db);
 
         $builder->select(
-            'REGEXP_SUBSTR(ral_anno,"\d{1,2}([,.]\d{1,3})([,.]\d{1,3})") AS ral',
+            'REGEXP_SUBSTR(ral_anno,"[0-9]{1,2}([,.][0-9]{1,3})([,.][0-9]{1,3})") AS ral',
             false
         );
 
         $expected = <<<'SQL'
-            SELECT REGEXP_SUBSTR(ral_anno,"\d{1,2}([,.]\d{1,3})([,.]\d{1,3})") AS ral
+            SELECT REGEXP_SUBSTR(ral_anno,"[0-9]{1,2}([,.][0-9]{1,3})([,.][0-9]{1,3})") AS ral
             FROM "ob_human_resources"
             SQL;
         $this->assertSame($expected, $builder->getCompiledSelect());

@@ -63,7 +63,7 @@ class FormatRulesTest extends CIUnitTestCase
 
         $this->validation->setRules([
             'foo'   => 'regex_match[/[a-z]/]',
-            'phone' => 'regex_match[/^(01[2689]|09)\d{8}$/]',
+            'phone' => 'regex_match[/^(01[2689]|09)[0-9]{8}$/]',
         ]);
 
         $this->assertTrue($this->validation->run($data));
@@ -78,7 +78,7 @@ class FormatRulesTest extends CIUnitTestCase
 
         $this->validation->setRules([
             'foo'   => 'regex_match[\d]',
-            'phone' => 'regex_match[/^(01[2689]|09)\d{8}$/]',
+            'phone' => 'regex_match[/^(01[2689]|09)[0-9]{8}$/]',
         ]);
 
         $this->assertFalse($this->validation->run($data));

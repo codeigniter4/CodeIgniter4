@@ -112,6 +112,8 @@ return static function (RectorConfig $rectorConfig): void {
         GetMockBuilderGetMockToCreateMockRector::class => [
             __DIR__ . '/tests/system/Email/EmailTest.php',
         ],
+
+        SimplifyRegexPatternRector::class,
     ]);
 
     // auto import fully qualified class names

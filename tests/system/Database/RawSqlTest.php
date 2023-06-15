@@ -22,7 +22,7 @@ final class RawSqlTest extends CIUnitTestCase
 {
     public function testCanConvertToString()
     {
-        $expected = 'REGEXP_SUBSTR(ral_anno,"\d{1,2}([,.]\d{1,3})([,.]\d{1,3})") AS ral';
+        $expected = 'REGEXP_SUBSTR(ral_anno,"[0-9]{1,2}([,.][0-9]{1,3})([,.][0-9]{1,3})") AS ral';
         $rawSql   = new RawSql($expected);
 
         $this->assertSame($expected, (string) $rawSql);
@@ -47,6 +47,6 @@ final class RawSqlTest extends CIUnitTestCase
 
         $key = $rawSql->getBindingKey();
 
-        $this->assertMatchesRegularExpression('/\ARawSql\d+\z/', $key);
+        $this->assertMatchesRegularExpression('/\ARawSql[0-9]+\z/', $key);
     }
 }

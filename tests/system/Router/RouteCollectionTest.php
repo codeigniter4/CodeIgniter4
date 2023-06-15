@@ -12,7 +12,6 @@
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
-use CodeIgniter\controller;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
@@ -89,7 +88,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes  = $routes->getRoutes();
         $expects = [
-            'product/(\d+)/(\d+)' => '\Tests\Support\Controllers\Hello::index/$2/$1',
+            'product/([0-9]+)/([0-9]+)' => '\Tests\Support\Controllers\Hello::index/$2/$1',
         ];
         $this->assertSame($expects, $routes);
     }
@@ -102,7 +101,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes  = $routes->getRoutes();
         $expects = [
-            'product/(\d+)/(\d+)' => '\Tests\Support\Controllers\Hello::index/$1/$2',
+            'product/([0-9]+)/([0-9]+)' => '\Tests\Support\Controllers\Hello::index/$1/$2',
         ];
         $this->assertSame($expects, $routes);
     }
@@ -238,7 +237,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->add('home', 'controller');
 
         $expects = [
-            'home' => '\\' . controller::class,
+            'home' => '\CodeIgniter\controller',
         ];
 
         $routes = $routes->getRoutes();
@@ -616,10 +615,10 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->resource('photos', ['placeholder' => ':num']);
 
         $expected = [
-            'photos'            => '\Photos::index',
-            'photos/new'        => '\Photos::new',
-            'photos/(\d+)/edit' => '\Photos::edit/$1',
-            'photos/(\d+)'      => '\Photos::show/$1',
+            'photos'               => '\Photos::index',
+            'photos/new'           => '\Photos::new',
+            'photos/([0-9]+)/edit' => '\Photos::edit/$1',
+            'photos/([0-9]+)'      => '\Photos::show/$1',
         ];
 
         $this->assertSame($expected, $routes->getRoutes());
@@ -634,10 +633,10 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->resource('photos');
 
         $expected = [
-            'photos'            => '\Photos::index',
-            'photos/new'        => '\Photos::new',
-            'photos/(\d+)/edit' => '\Photos::edit/$1',
-            'photos/(\d+)'      => '\Photos::show/$1',
+            'photos'               => '\Photos::index',
+            'photos/new'           => '\Photos::new',
+            'photos/([0-9]+)/edit' => '\Photos::edit/$1',
+            'photos/([0-9]+)'      => '\Photos::show/$1',
         ];
 
         $this->assertSame($expected, $routes->getRoutes());
@@ -1400,7 +1399,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes = $this->getCollector();
 
         $routes->get('users/(:num)', 'users/show/$1', ['offset' => 1]);
-        $expected = ['users/(\d+)' => '\users/show/$2'];
+        $expected = ['users/([0-9]+)' => '\users/show/$2'];
         $this->assertSame($expected, $routes->getRoutes());
     }
 
