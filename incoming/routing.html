@@ -374,7 +374,7 @@
 </li>
 <li><p><a class="reference internal" href="#confirming-routes" id="id67">Confirming Routes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#routes" id="id68">routes</a></p>
+<li><p><a class="reference internal" href="#spark-routes" id="id68">spark routes</a></p>
 <ul>
 <li><p><a class="reference internal" href="#id11" id="id69">Auto Routing (Improved)</a></p></li>
 <li><p><a class="reference internal" href="#id12" id="id70">Auto Routing (Legacy)</a></p></li>
@@ -405,7 +405,8 @@ If you expect a GET request, you use the <code class="docutils literal notransla
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>A route takes the URI path (<code class="docutils literal notranslate"><span class="pre">/</span></code>) on the left, and maps it to the controller and method (<code class="docutils literal notranslate"><span class="pre">Home::index</span></code>) on the right,
+<p>A route takes the <strong>Route Path</strong> (URI path relative to the BaseURL. <code class="docutils literal notranslate"><span class="pre">/</span></code>) on the left,
+and maps it to the <strong>Route Handler</strong> (controller and method <code class="docutils literal notranslate"><span class="pre">Home::index</span></code>) on the right,
 along with any parameters that should be passed to the controller.</p>
 <p>The controller and method should
 be listed in the same way that you would use a static method, by separating the class
@@ -442,7 +443,7 @@ The ID will be set to <code class="docutils literal notranslate"><span class="pr
 and the <code class="docutils literal notranslate"><span class="pre">productLookup()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>A URL with <strong>product</strong> as the first segment, and a number in the second will be mapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Catalog</span></code> class
@@ -818,6 +819,11 @@ define an array of routes and then pass it as the first parameter to the <code c
 </section>
 <section id="command-line-only-routes">
 <span id="id3"></span><h3><a class="toc-backref" href="#id30">Command-Line Only Routes</a><a class="headerlink" href="#command-line-only-routes" title="Permalink to this headline"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is recommended to use Spark Commands for CLI scripts instead of calling controllers via CLI.
+See the <a class="reference internal" href="../cli/cli_commands.html"><span class="doc">Creating Spark Commands</span></a> page for detailed information.</p>
+</div>
 <p>You can create routes that work only from the command-line, and are inaccessible from the web browser, with the
 <code class="docutils literal notranslate"><span class="pre">cli()</span></code> method. Any route created by any of the HTTP-verb-based
 route methods will also be inaccessible from the CLI, but routes created by the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method will still be
@@ -827,20 +833,10 @@ available from the command line:</p>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">cli</span><span class="p">(</span><span class="s1">&#39;migrate&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Database::migrate&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>It is recommended to use Spark Commands for CLI scripts instead of calling controllers via CLI.
-See the <a class="reference internal" href="../cli/cli_commands.html"><span class="doc">Creating Spark Commands</span></a> page for detailed information.</p>
-</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>If you enable <a class="reference internal" href="#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> and place the command file in <strong>app/Controllers</strong>,
 anyone could access the command with the help of Auto Routing (Legacy) via HTTP.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>It is recommended to use Spark Commands instead of CLI routes.
-See the <a class="reference internal" href="../cli/spark_commands.html"><span class="doc">Spark Commands</span></a> page for detailed information.</p>
 </div>
 </section>
 </section>
@@ -1113,9 +1109,9 @@ given route config options:</p>
 <section id="route-priority">
 <span id="routing-priority"></span><h2><a class="toc-backref" href="#id47">Route Priority</a><a class="headerlink" href="#route-priority" title="Permalink to this headline"></a></h2>
 <p>Routes are registered in the routing table in the order in which they are defined. This means that when a URI is accessed, the first matching route will be executed.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If a route (the URI path) is defined more than once with different handlers, only the first defined route is registered.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If a route path is defined more than once with different handlers, only the first defined route is registered.</p>
 </div>
 <p>You can check registered routes in the routing table by running the <a class="reference internal" href="#routing-spark-routes"><span class="std std-ref">spark routes</span></a> command.</p>
 <section id="changing-route-priority">
@@ -1451,8 +1447,8 @@ when a controller is found that matches the URI, but no segment exists for the m
 <section id="confirming-routes">
 <h2><a class="toc-backref" href="#id67">Confirming Routes</a><a class="headerlink" href="#confirming-routes" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter has the following <a class="reference internal" href="../cli/spark_commands.html"><span class="doc">command</span></a> to display all routes.</p>
-<section id="routes">
-<span id="routing-spark-routes"></span><h3><a class="toc-backref" href="#id68">routes</a><a class="headerlink" href="#routes" title="Permalink to this headline"></a></h3>
+<section id="spark-routes">
+<span id="routing-spark-routes"></span><h3><a class="toc-backref" href="#id68">spark routes</a><a class="headerlink" href="#spark-routes" title="Permalink to this headline"></a></h3>
 <p>Displays all routes and filters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">routes</span>
 </pre></div>
@@ -1467,8 +1463,8 @@ when a controller is found that matches the URI, but no segment exists for the m
 </pre></div>
 </div>
 <p>The <em>Method</em> column shows the HTTP method that the route is listening for.</p>
-<p>The <em>Route</em> column shows the route (URI path) to match. The route of a defined route is expressed as a regular expression.</p>
-<p>Since v4.3.0, the <em>Name</em> column shows the route name. <code class="docutils literal notranslate"><span class="pre">»</span></code> indicates the name is the same as the route.</p>
+<p>The <em>Route</em> column shows the route path to match. The route of a defined route is expressed as a regular expression.</p>
+<p>Since v4.3.0, the <em>Name</em> column shows the route name. <code class="docutils literal notranslate"><span class="pre">»</span></code> indicates the name is the same as the route path.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>The system is not perfect. If you use Custom Placeholders, <em>Filters</em> might not be correct. If you want to check filters for a route, you can use <a class="reference internal" href="filters.html#spark-filter-check"><span class="std std-ref">spark filter:check</span></a> command.</p>
@@ -1485,6 +1481,10 @@ when a controller is found that matches the URI, but no segment exists for the m
 </div>
 <p>The <em>Method</em> will be like <code class="docutils literal notranslate"><span class="pre">GET(auto)</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">/..</span></code> in the <em>Route</em> column indicates one segment. <code class="docutils literal notranslate"><span class="pre">[/..]</span></code> indicates it is optional.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When auto-routing is enabled and you have the route <code class="docutils literal notranslate"><span class="pre">home</span></code>, it can be also accessed by <code class="docutils literal notranslate"><span class="pre">Home</span></code>, or maybe by <code class="docutils literal notranslate"><span class="pre">hOme</span></code>, <code class="docutils literal notranslate"><span class="pre">hoMe</span></code>, <code class="docutils literal notranslate"><span class="pre">HOME</span></code>, etc. but the command will show only <code class="docutils literal notranslate"><span class="pre">home</span></code>.</p>
+</div>
 <p>If you see a route starting with <code class="docutils literal notranslate"><span class="pre">x</span></code> like the following, it indicates an invalid
 route that won’t be routed, but the controller has a public method for routing.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-----------+----------------+------+-------------------------------------+----------------+---------------+
@@ -1518,7 +1518,7 @@ due to a bug.</p>
 <p><code class="docutils literal notranslate"><span class="pre">[/...]</span></code> in the <em>Route</em> column indicates any number of segments.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When auto-routing is enabled, if you have the route <code class="docutils literal notranslate"><span class="pre">home</span></code>, it can be also accessd by <code class="docutils literal notranslate"><span class="pre">Home</span></code>, or maybe by <code class="docutils literal notranslate"><span class="pre">hOme</span></code>, <code class="docutils literal notranslate"><span class="pre">hoMe</span></code>, <code class="docutils literal notranslate"><span class="pre">HOME</span></code>, etc. But the command shows only <code class="docutils literal notranslate"><span class="pre">home</span></code>.</p>
+<p>When auto-routing is enabled and you have the route <code class="docutils literal notranslate"><span class="pre">home</span></code>, it can be also accessed by <code class="docutils literal notranslate"><span class="pre">Home</span></code>, or maybe by <code class="docutils literal notranslate"><span class="pre">hOme</span></code>, <code class="docutils literal notranslate"><span class="pre">hoMe</span></code>, <code class="docutils literal notranslate"><span class="pre">HOME</span></code>, etc. but the command will show only <code class="docutils literal notranslate"><span class="pre">home</span></code>.</p>
 </div>
 </section>
 <section id="sort-by-handler">
@@ -1547,7 +1547,7 @@ due to a bug.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 15, 2023.
+      <span class="lastupdated">Last updated on Jun 16, 2023.
       </span></p>
   </div>
 
