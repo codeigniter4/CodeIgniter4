@@ -31,7 +31,8 @@ If you expect a GET request, you use the ``get()`` method:
 
 .. literalinclude:: routing/001.php
 
-A route takes the URI path (``/``) on the left, and maps it to the controller and method (``Home::index``) on the right,
+A route takes the **Route Path** (URI path relative to the BaseURL. ``/``) on the left,
+and maps it to the **Route Handler** (controller and method ``Home::index``) on the right,
 along with any parameters that should be passed to the controller.
 
 The controller and method should
@@ -320,6 +321,9 @@ define an array of routes and then pass it as the first parameter to the ``map()
 Command-Line Only Routes
 ========================
 
+.. note:: It is recommended to use Spark Commands for CLI scripts instead of calling controllers via CLI.
+    See the :doc:`../cli/cli_commands` page for detailed information.
+
 You can create routes that work only from the command-line, and are inaccessible from the web browser, with the
 ``cli()`` method. Any route created by any of the HTTP-verb-based
 route methods will also be inaccessible from the CLI, but routes created by the ``add()`` method will still be
@@ -327,14 +331,8 @@ available from the command line:
 
 .. literalinclude:: routing/032.php
 
-.. note:: It is recommended to use Spark Commands for CLI scripts instead of calling controllers via CLI.
-    See the :doc:`../cli/cli_commands` page for detailed information.
-
 .. warning:: If you enable :ref:`auto-routing-legacy` and place the command file in **app/Controllers**,
     anyone could access the command with the help of Auto Routing (Legacy) via HTTP.
-
-.. note:: It is recommended to use Spark Commands instead of CLI routes.
-    See the :doc:`../cli/spark_commands` page for detailed information.
 
 Global Options
 **************
@@ -537,7 +535,7 @@ Route Priority
 
 Routes are registered in the routing table in the order in which they are defined. This means that when a URI is accessed, the first matching route will be executed.
 
-.. note:: If a route (the URI path) is defined more than once with different handlers, only the first defined route is registered.
+.. warning:: If a route path is defined more than once with different handlers, only the first defined route is registered.
 
 You can check registered routes in the routing table by running the :ref:`spark routes <routing-spark-routes>` command.
 
@@ -834,8 +832,8 @@ CodeIgniter has the following :doc:`command </cli/spark_commands>` to display al
 
 .. _routing-spark-routes:
 
-routes
-======
+spark routes
+============
 
 Displays all routes and filters::
 
@@ -854,9 +852,9 @@ The output is like the following:
 
 The *Method* column shows the HTTP method that the route is listening for.
 
-The *Route* column shows the route (URI path) to match. The route of a defined route is expressed as a regular expression.
+The *Route* column shows the route path to match. The route of a defined route is expressed as a regular expression.
 
-Since v4.3.0, the *Name* column shows the route name. ``»`` indicates the name is the same as the route.
+Since v4.3.0, the *Name* column shows the route name. ``»`` indicates the name is the same as the route path.
 
 .. important:: The system is not perfect. If you use Custom Placeholders, *Filters* might not be correct. If you want to check filters for a route, you can use :ref:`spark filter:check <spark-filter-check>` command.
 
@@ -876,6 +874,8 @@ When you use Auto Routing (Improved), the output is like the following:
 The *Method* will be like ``GET(auto)``.
 
 ``/..`` in the *Route* column indicates one segment. ``[/..]`` indicates it is optional.
+
+.. note:: When auto-routing is enabled and you have the route ``home``, it can be also accessed by ``Home``, or maybe by ``hOme``, ``hoMe``, ``HOME``, etc. but the command will show only ``home``.
 
 If you see a route starting with ``x`` like the following, it indicates an invalid
 route that won't be routed, but the controller has a public method for routing.
@@ -913,7 +913,7 @@ The *Method* will be ``auto``.
 
 ``[/...]`` in the *Route* column indicates any number of segments.
 
-.. note:: When auto-routing is enabled, if you have the route ``home``, it can be also accessd by ``Home``, or maybe by ``hOme``, ``hoMe``, ``HOME``, etc. But the command shows only ``home``.
+.. note:: When auto-routing is enabled and you have the route ``home``, it can be also accessed by ``Home``, or maybe by ``hOme``, ``hoMe``, ``HOME``, etc. but the command will show only ``home``.
 
 .. _routing-spark-routes-sort-by-handler:
 
