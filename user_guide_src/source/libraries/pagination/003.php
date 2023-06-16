@@ -9,9 +9,10 @@ $data = [
 ];
 
 // You can move the conditions to a separate method.
-// Model method
 class UserModel extends Model
 {
+    // ...
+
     public function banned()
     {
         $this->builder()->where('ban', 1);

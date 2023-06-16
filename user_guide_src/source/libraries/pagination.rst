@@ -39,13 +39,34 @@ The first element is the results from the database, **users**, which is retrieve
 the Model will hold on to the instance it used and store it in the public property, ``$pager``. So, we grab
 that and assign it to the ``$pager`` variable in the view.
 
-.. important:: It is important to understand that the ``Model::paginate()`` method uses the **Model** and **QueryBuilder** methods.
-    Therefore, trying to use ``$db->query()`` and ``Model::paginate()`` **will not work** because ``$db->query()`` executes
-    the query immediately and is not associated with a QueryBuilder.
+Customizing Query for Pagination
+================================
 
-To define conditions for pagination in a model, you can:
+To customize a query for pagination in a model, you can add
+:doc:`Query Builder <../database/query_builder>` methods before ``paginate()``
+method.
+
+To add WHERE conditions:
 
 .. literalinclude:: pagination/003.php
+    :lines: 2-
+
+You can join another table:
+
+.. literalinclude:: pagination/016.php
+    :lines: 2-
+
+.. important:: It is important to understand that the ``Model::paginate()`` method
+    uses the **Model** and the **Query Builder** instance in the Model.
+    Therefore, trying to use ``Model::paginate()`` with :ref:`db-query`
+    **will not work** because ``$db->query()`` executes the query immediately
+    and is not associated with the Query Builder.
+
+If you need a complicated SQL query that you cannot write with Query Builder,
+try using :ref:`db-query` and `Manual Pagination`_.
+
+Displaying Pager Links
+======================
 
 Within the view, we then need to tell it where to display the resulting links::
 
