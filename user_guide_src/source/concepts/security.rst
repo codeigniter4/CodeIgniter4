@@ -148,6 +148,10 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
+- The config for global secure access (``Config\App::$forceGlobalSecureRequests``)
+- :php:func:`force_https()` function
+- :doc:`../libraries/encryption`
+- The :ref:`database config <database-config-explanation-of-values>` (``encrypt``)
 
 ****************************************
 A7 Missing Function Level Access Control
