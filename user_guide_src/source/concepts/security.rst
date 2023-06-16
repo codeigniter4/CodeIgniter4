@@ -148,7 +148,6 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
-- :doc:`Session <../libraries/sessions>` keys stored encrypted
 
 ****************************************
 A7 Missing Function Level Access Control
