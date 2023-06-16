@@ -86,7 +86,7 @@ class BaseConfig
     /**
      * Initialization an environment-specific configuration setting
      *
-     * @param mixed $property
+     * @param array|bool|float|int|string|null $property
      *
      * @return void
      */
