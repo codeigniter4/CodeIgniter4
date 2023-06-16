@@ -38,8 +38,9 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
-- :doc:`HTTP library <../incoming/incomingrequest>` provides for :ref:`input field filtering <incomingrequest-filtering-input-data>` & content metadata
+- :ref:`invalidchars` filter
 - :doc:`../libraries/validation` library
+- :doc:`HTTP library <../incoming/incomingrequest>` provides for :ref:`input field filtering <incomingrequest-filtering-input-data>` & content metadata
 
 *********************************************
 A2 Weak authentication and session management
