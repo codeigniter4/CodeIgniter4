@@ -15,11 +15,16 @@ Query Basics
 Regular Queries
 ===============
 
-To submit a query, use the **query** function:
+.. _db-query:
+
+$db->query()
+------------
+
+To submit a query, use the ``query()`` method:
 
 .. literalinclude:: queries/001.php
 
-The ``query()`` function returns a database result **object** when "read"
+The ``query()`` method returns a database result **object** when "read"
 type queries are run which you can use to :doc:`show your
 results <results>`. When "write" type queries are run it simply
 returns true or false depending on success or failure. When retrieving
@@ -33,6 +38,11 @@ this:
 
 Simplified Queries
 ==================
+
+.. _db-simplequery:
+
+$db->simpleQuery()
+------------------
 
 The ``simpleQuery()`` method is a simplified version of the
 ``$db->query()`` method. It DOES
