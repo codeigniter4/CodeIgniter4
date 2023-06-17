@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upgrading from 4.3.5 to 4.3.6 &mdash; CodeIgniter 4.3.5 documentation</title>
+  <title>Upgrading from 4.3.5 to 4.3.6 &mdash; CodeIgniter 4.3.6 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
@@ -289,57 +289,38 @@
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#mandatory-file-changes" id="id1">Mandatory File Changes</a></p></li>
-<li><p><a class="reference internal" href="#breaking-changes" id="id2">Breaking Changes</a></p></li>
-<li><p><a class="reference internal" href="#breaking-enhancements" id="id3">Breaking Enhancements</a></p></li>
-<li><p><a class="reference internal" href="#project-files" id="id4">Project Files</a></p>
+<li><p><a class="reference internal" href="#breaking-changes" id="id1">Breaking Changes</a></p></li>
+<li><p><a class="reference internal" href="#breaking-enhancements" id="id2">Breaking Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#project-files" id="id3">Project Files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#content-changes" id="id5">Content Changes</a></p></li>
-<li><p><a class="reference internal" href="#all-changes" id="id6">All Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id4">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
-<section id="mandatory-file-changes">
-<h2><a class="toc-backref" href="#id1">Mandatory File Changes</a><a class="headerlink" href="#mandatory-file-changes" title="Permalink to this headline"></a></h2>
-</section>
 <section id="breaking-changes">
-<h2><a class="toc-backref" href="#id2">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">AutoRouterInterface::getRoute()</span></code> has the new second parameter <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">$httpVerb</span></code>.
 If you implement it, add the parameter.</p></li>
 </ul>
 </section>
 <section id="breaking-enhancements">
-<h2><a class="toc-backref" href="#id3">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>The method signatures of <code class="docutils literal notranslate"><span class="pre">ValidationInterface::check()</span></code> and <code class="docutils literal notranslate"><span class="pre">Validation::check()</span></code>
 have been changed. If you implement or extend them, update the signatures.</p></li>
 </ul>
 </section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id4">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
-<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
-these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
-<p>There are some third-party CodeIgniter modules available to assist with merging changes to
-the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
-<section id="content-changes">
-<h3><a class="toc-backref" href="#id5">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
-<p>The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:</p>
-<section id="config">
-<h4>Config<a class="headerlink" href="#config" title="Permalink to this headline"></a></h4>
-<ul class="simple">
-<li><p>&#64;TODO</p></li>
-</ul>
-</section>
-</section>
+<h2><a class="toc-backref" href="#id3">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<p>Version 4.3.6 did not alter any executable code in project files.</p>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id6">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>&#64;TODO</p></li>
+<li><p>composer.json</p></li>
 </ul>
 </section>
 </section>
@@ -357,7 +338,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 16, 2023.
+      <span class="lastupdated">Last updated on Jun 17, 2023.
       </span></p>
   </div>
 
