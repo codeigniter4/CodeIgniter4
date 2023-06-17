@@ -46,15 +46,27 @@ To customize a query for pagination in a model, you can add
 :doc:`Query Builder <../database/query_builder>` methods before ``paginate()``
 method.
 
-To add WHERE conditions:
+Adding WHERE
+------------
+
+If you want to add WHERE conditions, you can specify conditions directly:
 
 .. literalinclude:: pagination/003.php
     :lines: 2-
 
+You can move the conditions to a separate method:
+
+.. literalinclude:: pagination/017.php
+
+.. literalinclude:: pagination/018.php
+    :lines: 2-
+
+Adding JOIN
+-----------
+
 You can join another table:
 
 .. literalinclude:: pagination/016.php
-    :lines: 2-
 
 .. important:: It is important to understand that the ``Model::paginate()`` method
     uses the **Model** and the **Query Builder** instance in the Model.

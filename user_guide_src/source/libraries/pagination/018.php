@@ -4,6 +4,6 @@
 $model = new \App\Models\UserModel();
 
 $data = [
-    'users' => $model->where('ban', 1)->paginate(10),
+    'users' => $model->banned()->paginate(10),
     'pager' => $model->pager,
 ];
