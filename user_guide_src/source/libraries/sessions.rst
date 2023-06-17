@@ -39,7 +39,7 @@ but does not take any configuration options.
 
 .. literalinclude:: sessions/002.php
 
-How do Sessions work?
+How Do Sessions Work?
 =====================
 
 When a page is loaded, the session class will check to see if a valid
@@ -59,7 +59,7 @@ automatic.
 .. note:: Under CLI, the Session library will automatically halt itself,
     as this is a concept based entirely on the HTTP protocol.
 
-A note about concurrency
+A Note about Concurrency
 ------------------------
 
 Unless you're developing a website with heavy AJAX usage, you can skip this
@@ -627,7 +627,7 @@ RedisHandler Driver
 
 .. note:: Since Redis doesn't have a locking mechanism exposed, locks for
     this driver are emulated by a separate value that is kept for up
-    to 300 seconds. With ``v4.3.2`` or above, You can connect ``Redis`` with **TLS** protocol.
+    to 300 seconds. With ``v4.3.2`` or above, you can connect ``Redis`` with **TLS** protocol.
 
 Redis is a storage engine typically used for caching and popular because
 of its high performance, which is also probably your reason to use the
