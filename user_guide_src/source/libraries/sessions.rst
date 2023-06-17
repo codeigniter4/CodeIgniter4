@@ -435,7 +435,7 @@ Preference                     Default                                      Opti
     unexpected results or be changed in the future. Please configure
     everything properly.
 
-.. note:: If ``sessionExpiration`` is set to ``0``, the ``session.gc_maxlifetime``
+.. note:: If ``expiration`` is set to ``0``, the ``session.gc_maxlifetime``
     setting set by PHP in session management will be used as-is
     (often the default value of ``1440``). This needs to be changed in
     ``php.ini`` or via ``ini_set()`` as needed.
@@ -597,10 +597,10 @@ For PostgreSQL::
 You will also need to add a PRIMARY KEY **depending on your $matchIP
 setting**. The examples below work both on MySQL and PostgreSQL::
 
-    // When sessionMatchIP = true
+    // When $matchIP = true
     ALTER TABLE ci_sessions ADD PRIMARY KEY (id, ip_address);
 
-    // When sessionMatchIP = false
+    // When $matchIP = false
     ALTER TABLE ci_sessions ADD PRIMARY KEY (id);
 
     // To drop a previously created primary key (use when changing the setting)
