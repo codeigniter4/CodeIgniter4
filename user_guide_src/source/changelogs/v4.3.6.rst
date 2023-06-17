@@ -1,9 +1,9 @@
 Version 4.3.6
 #############
 
-Release Date: Unreleased
+Release Date: June 18, 2023
 
-**{version} release of CodeIgniter4**
+**4.3.6 release of CodeIgniter4**
 
 .. contents::
     :local:
@@ -38,12 +38,6 @@ Validation::check()
 
 - The second parameter has changed from ``string $rule`` to ``$rules``.
 - The optional fourth parameter ``$dbGroup = null`` has been added.
-
-Message Changes
-***************
-
-Changes
-*******
 
 Deprecations
 ************
