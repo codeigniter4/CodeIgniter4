@@ -33,8 +33,8 @@ The following properties should be used in order to get listed in CLI commands a
 File Location
 =============
 
-Commands must be stored within a directory named **Commands**. However, that directory can be located anywhere
-that the :doc:`Autoloader </concepts/autoloader>` can locate it. This could be in **app/Commands**, or
+Commands must be stored within a directory named **Commands**. However, that directory has to be located in the PSR-4 namespaces
+so that the :doc:`Autoloader </concepts/autoloader>` can locate it. This could be in **app/Commands**, or
 a directory that you keep commands in to use in all of your project development, like **Acme/Commands**.
 
 .. note:: When the commands are executed, the full CodeIgniter CLI environment has been loaded, making it
@@ -49,7 +49,7 @@ should contain the following code:
 
 .. literalinclude:: cli_commands/002.php
 
-If you run the **list** command, you will see the new command listed under its own ``demo`` group. If you take
+If you run the **list** command, you will see the new command listed under its own ``Demo`` group. If you take
 a close look, you should see how this works fairly easily. The ``$group`` property simply tells it how to organize
 this command with all of the other commands that exist, telling it what heading to list it under.
 
@@ -92,7 +92,7 @@ For example, ``return EXIT_ERROR;``
 
 This approach can help with debugging at the system level, if the command, for example, is run via crontab.
 
-You can use the ``EXIT_*`` exit code constants defined in the ``app/Config/Constants.php`` file.
+You can use the ``EXIT_*`` exit code constants defined in the **app/Config/Constants.php** file.
 
 ***********
 BaseCommand
@@ -127,11 +127,25 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
 
         A method to show command help: (usage,arguments,description,options)
 
+    .. php:method:: setPad(string $item, int $max, int $extra = 2, int $indent = 0): string
+
+        :param string   $item: The string item.
+        :param integer  $max: The max size.
+        :param integer  $extra: How many extra spaces to add at the end.
+        :param integer  $indent: The indent spaces.
+
+        Pads our string out so that all titles are the same length to nicely line
+        up descriptions:
+
+        .. literalinclude:: cli_commands/007.php
+            :lines: 2-
+
     .. php:method:: getPad($array, $pad)
+
+        .. deprecated:: 4.0.5
+            Use :php:meth:`CodeIgniter\\CLI\\BaseCommand::setPad()` instead.
 
         :param array    $array: The  $key => $value array.
         :param integer  $pad: The pad spaces.
 
-        A method to calculate padding for ``$key => $value`` array output. The padding can be used to output a will formatted table in CLI:
-
-        .. literalinclude:: cli_commands/007.php
+        A method to calculate padding for ``$key => $value`` array output. The padding can be used to output a will formatted table in CLI.

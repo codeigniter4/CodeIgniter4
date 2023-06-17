@@ -12,9 +12,7 @@
 use Rector\CodeQuality\Rector\BooleanAnd\SimplifyEmptyArrayCheckRector;
 use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
-use Rector\CodeQuality\Rector\For_\ForToForeachRector;
 use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
-use Rector\CodeQuality\Rector\FuncCall\AddPregQuoteDelimiterRector;
 use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
 use Rector\CodeQuality\Rector\FuncCall\SimplifyRegexPatternRector;
 use Rector\CodeQuality\Rector\FuncCall\SimplifyStrposLowerRector;
@@ -28,9 +26,9 @@ use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
-use Rector\DeadCode\Rector\MethodCall\RemoveEmptyMethodCallRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
@@ -44,7 +42,6 @@ use Rector\PHPUnit\Rector\MethodCall\AssertPropertyExistsRector;
 use Rector\PHPUnit\Rector\MethodCall\GetMockBuilderGetMockToCreateMockRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
-use Rector\PSR4\Rector\FileWithoutNamespace\NormalizeNamespaceByPSR4ComposerAutoloadRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
@@ -90,9 +87,9 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/tests/system/Test/ReflectionHelperTest.php',
         ],
 
-        // call on purpose for nothing happen check
-        RemoveEmptyMethodCallRector::class => [
-            __DIR__ . '/tests',
+        RemoveUnusedConstructorParamRector::class => [
+            // @TODO remove if deprecated $httpVerb is removed
+            __DIR__ . '/system/Router/AutoRouterImproved.php',
         ],
 
         // check on constant compare
@@ -115,6 +112,8 @@ return static function (RectorConfig $rectorConfig): void {
         GetMockBuilderGetMockToCreateMockRector::class => [
             __DIR__ . '/tests/system/Email/EmailTest.php',
         ],
+
+        SimplifyRegexPatternRector::class,
     ]);
 
     // auto import fully qualified class names
@@ -125,7 +124,6 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(RemoveAlwaysElseRector::class);
     $rectorConfig->rule(PassStrictParameterToFunctionParameterRector::class);
     $rectorConfig->rule(CountArrayToEmptyArrayComparisonRector::class);
-    $rectorConfig->rule(ForToForeachRector::class);
     $rectorConfig->rule(ChangeNestedForeachIfsToEarlyContinueRector::class);
     $rectorConfig->rule(ChangeIfElseValueAssignToEarlyReturnRector::class);
     $rectorConfig->rule(SimplifyStrposLowerRector::class);
@@ -140,12 +138,10 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(UnnecessaryTernaryExpressionRector::class);
     $rectorConfig->rule(RemoveErrorSuppressInTryCatchStmtsRector::class);
     $rectorConfig->rule(RemoveVarTagFromClassConstantRector::class);
-    $rectorConfig->rule(AddPregQuoteDelimiterRector::class);
     $rectorConfig->rule(SimplifyRegexPatternRector::class);
     $rectorConfig->rule(FuncGetArgsToVariadicParamRector::class);
     $rectorConfig->rule(MakeInheritedMethodVisibilitySameAsParentRector::class);
     $rectorConfig->rule(SimplifyEmptyArrayCheckRector::class);
-    $rectorConfig->rule(NormalizeNamespaceByPSR4ComposerAutoloadRector::class);
     $rectorConfig->rule(StringClassNameToClassConstantRector::class);
     $rectorConfig->rule(PrivatizeFinalClassPropertyRector::class);
     $rectorConfig->rule(CompleteDynamicPropertiesRector::class);

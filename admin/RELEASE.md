@@ -149,14 +149,6 @@ the existing content.
   * Create **user_guide_src/source/installation/upgrade_{next_version}.rst** and add it to
     **upgrading.rst** (See **next-upgrading-guide.rst**)
 
-## After Publishing Security Advisory
-
-* Send a PR to [PHP Security Advisories Database](https://github.com/FriendsOfPHP/security-advisories).
-  * E.g. https://github.com/FriendsOfPHP/security-advisories/pull/606
-  * See https://github.com/FriendsOfPHP/security-advisories#contributing
-  * Don't forget to run `php -d memory_limit=-1 validator.php`, before
-    submitting the PR
-
 ## Appendix
 
 ### Sphinx Installation

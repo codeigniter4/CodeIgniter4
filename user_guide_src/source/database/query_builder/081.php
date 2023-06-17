@@ -14,4 +14,9 @@ $data = [
 ];
 
 $builder->insertBatch($data);
-// Produces: INSERT INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date'),  ('Another title', 'Another name', 'Another date')
+/*
+ * Produces:
+ * INSERT INTO mytable (title, name, date)
+ *      VALUES ('My title', 'My name', 'My date'),
+ *      ('Another title', 'Another name', 'Another date')
+ */

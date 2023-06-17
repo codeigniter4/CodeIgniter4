@@ -175,9 +175,9 @@ class Cell
         }
 
         // locate and return an instance of the cell
-        $class = Factories::cells($class);
+        $object = Factories::cells($class);
 
-        if (! is_object($class)) {
+        if (! is_object($object)) {
             throw ViewException::forInvalidCellClass($class);
         }
 
@@ -186,7 +186,7 @@ class Cell
         }
 
         return [
-            $class,
+            $object,
             $method,
         ];
     }

@@ -354,7 +354,7 @@ class GDHandler extends BaseHandler
                     throw ImageException::forInvalidImageCreate(lang('Images.pngNotSupported'));
                 }
 
-                return imagecreatefrompng($path);
+                return @imagecreatefrompng($path);
 
             case IMAGETYPE_WEBP:
                 if (! function_exists('imagecreatefromwebp')) {

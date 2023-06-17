@@ -46,7 +46,7 @@ class FrameworkException extends RuntimeException implements ExceptionInterface
                 'The framework needs the following extension(s) installed and loaded: %s.',
                 $extension
             );
-        // @codeCoverageIgnoreEnd
+            // @codeCoverageIgnoreEnd
         } else {
             $message = lang('Core.missingExtension', [$extension]);
         }

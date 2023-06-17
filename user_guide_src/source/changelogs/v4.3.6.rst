@@ -1,0 +1,61 @@
+Version 4.3.6
+#############
+
+Release Date: June 18, 2023
+
+**4.3.6 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+BREAKING
+********
+
+Interface Changes
+=================
+
+.. note:: As long as you have not extended the relevant CodeIgniter core classes
+    or implemented these interfaces, all these changes are backward compatible
+    and require no intervention.
+
+AutoRouterInterface
+-------------------
+
+Now ``AutoRouterInterface::getRoute()`` has the new second parameter ``string $httpVerb``.
+
+ValidationInterface::check()
+----------------------------
+
+- The second parameter has changed from ``string $rule`` to ``$rules``.
+- The optional fourth parameter ``$dbGroup = null`` has been added.
+
+Method Signature Changes
+========================
+
+Validation::check()
+-------------------
+
+- The second parameter has changed from ``string $rule`` to ``$rules``.
+- The optional fourth parameter ``$dbGroup = null`` has been added.
+
+Deprecations
+************
+
+- **AutoRouterImproved:** The constructor parameter ``$httpVerb`` is deprecated.
+  No longer used.
+
+Bugs Fixed
+**********
+
+- **Validation:** Fixed a bug that ``$DBGroup`` is ignored when checking
+  the value of a placeholder.
+- **Validation:** Fixed a bug that ``check()`` cannot specify non-default
+  database group.
+- **Database:** Fixed a bug where semicolon character (``;``) in one of the Postgre connection parameters would break the DSN string.
+- **AutoRouting Improved:** Fixed a bug that feature testing may not find
+  controller/method.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

@@ -13,6 +13,7 @@ namespace CodeIgniter\Database;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
+use Generator;
 
 /**
  * @internal
@@ -189,5 +190,48 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame('utf8_general_ci', $this->getPrivateProperty($conn, 'DBCollat'));
         $this->assertTrue($this->getPrivateProperty($conn, 'strictOn'));
         $this->assertSame([], $this->getPrivateProperty($conn, 'failover'));
+    }
+
+    /**
+     * @dataProvider convertDSNProvider
+     *
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/7550
+     */
+    public function testConvertDSN(string $input, string $expected)
+    {
+        $this->dsnGroupPostgreNative['DSN'] = $input;
+        $conn                               = Config::connect($this->dsnGroupPostgreNative, false);
+        $this->assertInstanceOf(BaseConnection::class, $conn);
+
+        $method = $this->getPrivateMethodInvoker($conn, 'convertDSN');
+        $method();
+
+        $this->assertSame($expected, $this->getPrivateProperty($conn, 'DSN'));
+    }
+
+    public function convertDSNProvider(): Generator
+    {
+        yield from [
+            [
+                'pgsql:host=localhost;port=5432;dbname=database_name;user=username;password=password',
+                'host=localhost port=5432 dbname=database_name user=username password=password',
+            ],
+            [
+                'pgsql:host=localhost;port=5432;dbname=database_name;user=username;password=we;port=we',
+                'host=localhost port=5432 dbname=database_name user=username password=we;port=we',
+            ],
+            [
+                'pgsql:host=localhost;port=5432;dbname=database_name',
+                'host=localhost port=5432 dbname=database_name',
+            ],
+            [
+                "pgsql:host=localhost;port=5432;dbname=database_name;options='--client_encoding=UTF8'",
+                "host=localhost port=5432 dbname=database_name options='--client_encoding=UTF8'",
+            ],
+            [
+                'pgsql:host=localhost;port=5432;dbname=database_name;something=stupid',
+                'host=localhost port=5432 dbname=database_name;something=stupid',
+            ],
+        ];
     }
 }

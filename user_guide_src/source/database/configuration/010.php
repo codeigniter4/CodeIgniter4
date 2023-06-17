@@ -8,9 +8,9 @@ class Database extends Config
 {
     // ...
 
-    // OCI8
+    // Postgre
     public array $default = [
-        'DSN' => '//localhost/XE',
+        'DSN' => 'Postgre://username:password@hostname:5432/database?charset=utf8&connect_timeout=5&sslmode=1',
         // ...
     ];
 

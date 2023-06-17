@@ -12,6 +12,7 @@
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\controller;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
@@ -237,7 +238,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->add('home', 'controller');
 
         $expects = [
-            'home' => '\CodeIgniter\controller',
+            'home' => '\\' . controller::class,
         ];
 
         $routes = $routes->getRoutes();

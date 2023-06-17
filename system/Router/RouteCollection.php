@@ -150,7 +150,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * The current method that the script is being called by.
      *
-     * @var string
+     * @var string HTTP verb (lower case) like `get`,`post` or `*`
      */
     protected $HTTPVerb = '*';
 
@@ -550,11 +550,13 @@ class RouteCollection implements RouteCollectionInterface
      * Sets the current HTTP verb.
      * Used primarily for testing.
      *
+     * @param string $verb HTTP verb
+     *
      * @return $this
      */
     public function setHTTPVerb(string $verb)
     {
-        $this->HTTPVerb = $verb;
+        $this->HTTPVerb = strtolower($verb);
 
         return $this;
     }

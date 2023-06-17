@@ -1,5 +1,31 @@
 # Changelog
 
+## [v4.3.6](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.6) (2023-06-18)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.5...v4.3.6)
+
+### Breaking Changes
+
+* fix: [Validation] DBGroup is ignored when checking the value of a placeholder by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7549
+* fix: [Auto Routing Improved] feature testing may not find controller/method by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7543
+
+### Fixed Bugs
+
+* fix: feature test with validation by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7548
+* fix: [Postgre] Semicolon in the connection parameters break the DSN string by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/7552
+* fix: [QueryBuilder] incorrect SQL without space before "ON DUPLICATE KEY UPDATE" by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7564
+* fix: wrong classname in exception message in Cell by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7569
+* fix: `imagecreatefrompng()` gd-png: libpng warning by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/7570
+
+### Refactoring
+
+* refactor: remove unneeded code in IncomingRequest by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7525
+* refactor: View by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7534
+* refactor: [Entity] fix incorrect return value by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7542
+* refactor: Database::initDriver() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7553
+* refactor: remove Factories::models() by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/7566
+* refactor: Validation::processRules() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7565
+* refactor: [Auto Routing Improved] ensure $httpVerb is lower case by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7575
+
 ## [v4.3.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.5) (2023-05-21)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.4...v4.3.5)
 

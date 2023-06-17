@@ -6,7 +6,9 @@ use CodeIgniter\Database\Config;
 
 class Database extends Config
 {
-    public $test = [
+    // ...
+
+    public array $test = [
         'DSN'      => '',
         'hostname' => 'localhost',
         'username' => 'root',

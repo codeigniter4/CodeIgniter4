@@ -1,3 +1,3 @@
 <?php
 
-$routes->get('product/(:any)', 'Catalog::productLookup');
+$routes->get('product/(:segment)', 'Catalog::productLookup');
