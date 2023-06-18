@@ -39,7 +39,7 @@ but does not take any configuration options.
 
 .. literalinclude:: sessions/002.php
 
-How do Sessions work?
+How Do Sessions Work?
 =====================
 
 When a page is loaded, the session class will check to see if a valid
@@ -59,7 +59,7 @@ automatic.
 .. note:: Under CLI, the Session library will automatically halt itself,
     as this is a concept based entirely on the HTTP protocol.
 
-A note about concurrency
+A Note about Concurrency
 ------------------------
 
 Unless you're developing a website with heavy AJAX usage, you can skip this
@@ -435,7 +435,7 @@ Preference                     Default                                      Opti
     unexpected results or be changed in the future. Please configure
     everything properly.
 
-.. note:: If ``sessionExpiration`` is set to ``0``, the ``session.gc_maxlifetime``
+.. note:: If ``expiration`` is set to ``0``, the ``session.gc_maxlifetime``
     setting set by PHP in session management will be used as-is
     (often the default value of ``1440``). This needs to be changed in
     ``php.ini`` or via ``ini_set()`` as needed.
@@ -597,10 +597,10 @@ For PostgreSQL::
 You will also need to add a PRIMARY KEY **depending on your $matchIP
 setting**. The examples below work both on MySQL and PostgreSQL::
 
-    // When sessionMatchIP = true
+    // When $matchIP = true
     ALTER TABLE ci_sessions ADD PRIMARY KEY (id, ip_address);
 
-    // When sessionMatchIP = false
+    // When $matchIP = false
     ALTER TABLE ci_sessions ADD PRIMARY KEY (id);
 
     // To drop a previously created primary key (use when changing the setting)
@@ -627,7 +627,7 @@ RedisHandler Driver
 
 .. note:: Since Redis doesn't have a locking mechanism exposed, locks for
     this driver are emulated by a separate value that is kept for up
-    to 300 seconds. With ``v4.3.2`` or above, You can connect ``Redis`` with **TLS** protocol.
+    to 300 seconds. With ``v4.3.2`` or above, you can connect ``Redis`` with **TLS** protocol.
 
 Redis is a storage engine typically used for caching and popular because
 of its high performance, which is also probably your reason to use the
