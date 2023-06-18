@@ -282,72 +282,74 @@
 <h1>Queries<a class="headerlink" href="#queries" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#query-basics" id="id2">Query Basics</a></p>
+<li><p><a class="reference internal" href="#query-basics" id="id4">Query Basics</a></p>
 <ul>
-<li><p><a class="reference internal" href="#regular-queries" id="id3">Regular Queries</a></p></li>
-<li><p><a class="reference internal" href="#simplified-queries" id="id4">Simplified Queries</a></p></li>
+<li><p><a class="reference internal" href="#regular-queries" id="id5">Regular Queries</a></p></li>
+<li><p><a class="reference internal" href="#simplified-queries" id="id6">Simplified Queries</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#working-with-database-prefixes-manually" id="id5">Working with Database Prefixes Manually</a></p>
+<li><p><a class="reference internal" href="#working-with-database-prefixes-manually" id="id7">Working with Database Prefixes Manually</a></p>
 <ul>
-<li><p><a class="reference internal" href="#db-prefixtable" id="id6">$db-&gt;prefixTable()</a></p></li>
-<li><p><a class="reference internal" href="#db-setprefix" id="id7">$db-&gt;setPrefix()</a></p></li>
-<li><p><a class="reference internal" href="#db-getprefix" id="id8">$db-&gt;getPrefix()</a></p></li>
+<li><p><a class="reference internal" href="#db-prefixtable" id="id8">$db-&gt;prefixTable()</a></p></li>
+<li><p><a class="reference internal" href="#db-setprefix" id="id9">$db-&gt;setPrefix()</a></p></li>
+<li><p><a class="reference internal" href="#db-getprefix" id="id10">$db-&gt;getPrefix()</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#protecting-identifiers" id="id9">Protecting Identifiers</a></p>
+<li><p><a class="reference internal" href="#protecting-identifiers" id="id11">Protecting Identifiers</a></p>
 <ul>
-<li><p><a class="reference internal" href="#db-protectidentifiers" id="id10">$db-&gt;protectIdentifiers()</a></p></li>
+<li><p><a class="reference internal" href="#db-protectidentifiers" id="id12">$db-&gt;protectIdentifiers()</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#escaping-values" id="id11">Escaping Values</a></p>
+<li><p><a class="reference internal" href="#escaping-values" id="id13">Escaping Values</a></p>
 <ul>
-<li><p><a class="reference internal" href="#db-escape" id="id12">1. $db-&gt;escape()</a></p></li>
-<li><p><a class="reference internal" href="#db-escapestring" id="id13">2. $db-&gt;escapeString()</a></p></li>
-<li><p><a class="reference internal" href="#db-escapelikestring" id="id14">3. $db-&gt;escapeLikeString()</a></p></li>
+<li><p><a class="reference internal" href="#db-escape" id="id14">1. $db-&gt;escape()</a></p></li>
+<li><p><a class="reference internal" href="#db-escapestring" id="id15">2. $db-&gt;escapeString()</a></p></li>
+<li><p><a class="reference internal" href="#db-escapelikestring" id="id16">3. $db-&gt;escapeLikeString()</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#query-bindings" id="id15">Query Bindings</a></p>
+<li><p><a class="reference internal" href="#query-bindings" id="id17">Query Bindings</a></p>
 <ul>
-<li><p><a class="reference internal" href="#named-bindings" id="id16">Named Bindings</a></p></li>
+<li><p><a class="reference internal" href="#named-bindings" id="id18">Named Bindings</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#handling-errors" id="id17">Handling Errors</a></p>
+<li><p><a class="reference internal" href="#handling-errors" id="id19">Handling Errors</a></p>
 <ul>
-<li><p><a class="reference internal" href="#db-error" id="id18">$db-&gt;error()</a></p></li>
+<li><p><a class="reference internal" href="#db-error" id="id20">$db-&gt;error()</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#prepared-queries" id="id19">Prepared Queries</a></p>
+<li><p><a class="reference internal" href="#prepared-queries" id="id21">Prepared Queries</a></p>
 <ul>
-<li><p><a class="reference internal" href="#preparing-the-query" id="id20">Preparing the Query</a></p></li>
-<li><p><a class="reference internal" href="#executing-the-query" id="id21">Executing the Query</a></p></li>
-<li><p><a class="reference internal" href="#other-methods" id="id22">Other Methods</a></p></li>
+<li><p><a class="reference internal" href="#preparing-the-query" id="id22">Preparing the Query</a></p></li>
+<li><p><a class="reference internal" href="#executing-the-query" id="id23">Executing the Query</a></p></li>
+<li><p><a class="reference internal" href="#other-methods" id="id24">Other Methods</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#working-with-query-objects" id="id23">Working with Query Objects</a></p>
+<li><p><a class="reference internal" href="#working-with-query-objects" id="id25">Working with Query Objects</a></p>
 <ul>
-<li><p><a class="reference internal" href="#db-getlastquery" id="id24">$db-&gt;getLastQuery()</a></p></li>
-<li><p><a class="reference internal" href="#the-query-class" id="id25">The Query Class</a></p></li>
+<li><p><a class="reference internal" href="#db-getlastquery" id="id26">$db-&gt;getLastQuery()</a></p></li>
+<li><p><a class="reference internal" href="#the-query-class" id="id27">The Query Class</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <section id="query-basics">
-<h2><a class="toc-backref" href="#id2">Query Basics</a><a class="headerlink" href="#query-basics" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Query Basics</a><a class="headerlink" href="#query-basics" title="Permalink to this headline"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>CodeIgniter doesn’t support dots (<code class="docutils literal notranslate"><span class="pre">.</span></code>) in the database, table, and column names.</p>
 </div>
 <section id="regular-queries">
-<h3><a class="toc-backref" href="#id3">Regular Queries</a><a class="headerlink" href="#regular-queries" title="Permalink to this headline"></a></h3>
-<p>To submit a query, use the <strong>query</strong> function:</p>
+<h3><a class="toc-backref" href="#id5">Regular Queries</a><a class="headerlink" href="#regular-queries" title="Permalink to this headline"></a></h3>
+<section id="db-query">
+<span id="id1"></span><h4>$db-&gt;query()<a class="headerlink" href="#db-query" title="Permalink to this headline"></a></h4>
+<p>To submit a query, use the <code class="docutils literal notranslate"><span class="pre">query()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$db</span> <span class="o">=</span> <span class="nx">db_connect</span><span class="p">();</span>
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY HERE&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">query()</span></code> function returns a database result <strong>object</strong> when “read”
+<p>The <code class="docutils literal notranslate"><span class="pre">query()</span></code> method returns a database result <strong>object</strong> when “read”
 type queries are run which you can use to <a class="reference internal" href="results.html"><span class="doc">show your
 results</span></a>. When “write” type queries are run it simply
 returns true or false depending on success or failure. When retrieving
@@ -364,8 +366,11 @@ this:</p>
 PL/SQL statements should end with a semi-colon (<code class="docutils literal notranslate"><span class="pre">;</span></code>).</p>
 </div>
 </section>
+</section>
 <section id="simplified-queries">
-<h3><a class="toc-backref" href="#id4">Simplified Queries</a><a class="headerlink" href="#simplified-queries" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Simplified Queries</a><a class="headerlink" href="#simplified-queries" title="Permalink to this headline"></a></h3>
+<section id="db-simplequery">
+<span id="id2"></span><h4>$db-&gt;simpleQuery()<a class="headerlink" href="#db-simplequery" title="Permalink to this headline"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">simpleQuery()</span></code> method is a simplified version of the
 <code class="docutils literal notranslate"><span class="pre">$db-&gt;query()</span></code> method. It DOES
 NOT return a database result set, nor does it set the query timer, or
@@ -393,10 +398,11 @@ So keep that in mind if you’re looking for a boolean value.</p>
 </div>
 </section>
 </section>
+</section>
 <section id="working-with-database-prefixes-manually">
-<h2><a class="toc-backref" href="#id5">Working with Database Prefixes Manually</a><a class="headerlink" href="#working-with-database-prefixes-manually" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">Working with Database Prefixes Manually</a><a class="headerlink" href="#working-with-database-prefixes-manually" title="Permalink to this headline"></a></h2>
 <section id="db-prefixtable">
-<h3><a class="toc-backref" href="#id6">$db-&gt;prefixTable()</a><a class="headerlink" href="#db-prefixtable" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">$db-&gt;prefixTable()</a><a class="headerlink" href="#db-prefixtable" title="Permalink to this headline"></a></h3>
 <p>If you have configured a database prefix and would like to prepend it to
 a table name for use in a native SQL query for example, then you can use
 the following:</p>
@@ -407,7 +413,7 @@ the following:</p>
 </div>
 </section>
 <section id="db-setprefix">
-<h3><a class="toc-backref" href="#id7">$db-&gt;setPrefix()</a><a class="headerlink" href="#db-setprefix" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">$db-&gt;setPrefix()</a><a class="headerlink" href="#db-setprefix" title="Permalink to this headline"></a></h3>
 <p>If for any reason you would like to change the prefix programmatically
 without needing to create a new connection you can use this method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -418,7 +424,7 @@ without needing to create a new connection you can use this method:</p>
 </div>
 </section>
 <section id="db-getprefix">
-<h3><a class="toc-backref" href="#id8">$db-&gt;getPrefix()</a><a class="headerlink" href="#db-getprefix" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">$db-&gt;getPrefix()</a><a class="headerlink" href="#db-getprefix" title="Permalink to this headline"></a></h3>
 <p>You can get the current prefix any time with this method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -428,9 +434,9 @@ without needing to create a new connection you can use this method:</p>
 </section>
 </section>
 <section id="protecting-identifiers">
-<h2><a class="toc-backref" href="#id9">Protecting Identifiers</a><a class="headerlink" href="#protecting-identifiers" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id11">Protecting Identifiers</a><a class="headerlink" href="#protecting-identifiers" title="Permalink to this headline"></a></h2>
 <section id="db-protectidentifiers">
-<h3><a class="toc-backref" href="#id10">$db-&gt;protectIdentifiers()</a><a class="headerlink" href="#db-protectidentifiers" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">$db-&gt;protectIdentifiers()</a><a class="headerlink" href="#db-protectidentifiers" title="Permalink to this headline"></a></h3>
 <p>In many databases, it is advisable to protect table and field names - for
 example with backticks in MySQL. <strong>Query Builder queries are
 automatically protected</strong>, but if you need to manually protect an
@@ -458,12 +464,12 @@ prefixing set <code class="docutils literal notranslate"><span class="pre">true<
 </section>
 </section>
 <section id="escaping-values">
-<h2><a class="toc-backref" href="#id11">Escaping Values</a><a class="headerlink" href="#escaping-values" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id13">Escaping Values</a><a class="headerlink" href="#escaping-values" title="Permalink to this headline"></a></h2>
 <p>It’s a very good security practice to escape your data before submitting
 it into your database. CodeIgniter has three methods that help you do
 this:</p>
 <section id="db-escape">
-<span id="database-queries-db-escape"></span><h3><a class="toc-backref" href="#id12">1. $db-&gt;escape()</a><a class="headerlink" href="#db-escape" title="Permalink to this headline"></a></h3>
+<span id="database-queries-db-escape"></span><h3><a class="toc-backref" href="#id14">1. $db-&gt;escape()</a><a class="headerlink" href="#db-escape" title="Permalink to this headline"></a></h3>
 <p>This function determines the data type so that it can escape only string
 data. It also automatically adds single quotes around the data so you
 don’t have to:</p>
@@ -474,7 +480,7 @@ don’t have to:</p>
 </div>
 </section>
 <section id="db-escapestring">
-<h3><a class="toc-backref" href="#id13">2. $db-&gt;escapeString()</a><a class="headerlink" href="#db-escapestring" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id15">2. $db-&gt;escapeString()</a><a class="headerlink" href="#db-escapestring" title="Permalink to this headline"></a></h3>
 <p>This function escapes the data passed to
 it, regardless of type. Most of the time you’ll use the above
 function rather than this one. Use the function like this:</p>
@@ -485,7 +491,7 @@ function rather than this one. Use the function like this:</p>
 </div>
 </section>
 <section id="db-escapelikestring">
-<h3><a class="toc-backref" href="#id14">3. $db-&gt;escapeLikeString()</a><a class="headerlink" href="#db-escapelikestring" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16">3. $db-&gt;escapeLikeString()</a><a class="headerlink" href="#db-escapelikestring" title="Permalink to this headline"></a></h3>
 <p>This method should be used when
 strings are to be used in LIKE conditions so that LIKE wildcards
 (<code class="docutils literal notranslate"><span class="pre">%</span></code>, <code class="docutils literal notranslate"><span class="pre">_</span></code>) in the string are also properly escaped.</p>
@@ -506,7 +512,7 @@ condition for you, and so you’ll have to manually do that.</p>
 </section>
 </section>
 <section id="query-bindings">
-<h2><a class="toc-backref" href="#id15">Query Bindings</a><a class="headerlink" href="#query-bindings" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id17">Query Bindings</a><a class="headerlink" href="#query-bindings" title="Permalink to this headline"></a></h2>
 <p>Bindings enable you to simplify your query syntax by letting the system
 put the queries together for you. Consider the following example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -532,7 +538,7 @@ values in the array in the second parameter of the query function.</p>
 automatically escaped producing safer queries.
 You don’t have to remember to manually escape data - the engine does it automatically for you.</p>
 <section id="named-bindings">
-<h3><a class="toc-backref" href="#id16">Named Bindings</a><a class="headerlink" href="#named-bindings" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id18">Named Bindings</a><a class="headerlink" href="#named-bindings" title="Permalink to this headline"></a></h3>
 <p>Instead of using the question mark to mark the location of the bound values,
 you can name the bindings, allowing the keys of the values passed in to match
 placeholders in the query:</p>
@@ -553,9 +559,9 @@ placeholders in the query:</p>
 </section>
 </section>
 <section id="handling-errors">
-<h2><a class="toc-backref" href="#id17">Handling Errors</a><a class="headerlink" href="#handling-errors" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id19">Handling Errors</a><a class="headerlink" href="#handling-errors" title="Permalink to this headline"></a></h2>
 <section id="db-error">
-<h3><a class="toc-backref" href="#id18">$db-&gt;error()</a><a class="headerlink" href="#db-error" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id20">$db-&gt;error()</a><a class="headerlink" href="#db-error" title="Permalink to this headline"></a></h3>
 <p>If you need to get the last error that has occurred, the <code class="docutils literal notranslate"><span class="pre">error()</span></code> method
 will return an array containing its code and message. Here’s a quick
 example:</p>
@@ -569,7 +575,7 @@ example:</p>
 </section>
 </section>
 <section id="prepared-queries">
-<h2><a class="toc-backref" href="#id19">Prepared Queries</a><a class="headerlink" href="#prepared-queries" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id21">Prepared Queries</a><a class="headerlink" href="#prepared-queries" title="Permalink to this headline"></a></h2>
 <p>Most database engines support some form of prepared statements, that allow you to prepare a query once, and then run
 that query multiple times with new sets of data. This eliminates the possibility of SQL injection since the data is
 passed to the database in a different format than the query itself. When you need to run the same query multiple times
@@ -578,7 +584,7 @@ out to the database twice as often. Since the Query Builder and Database connect
 for you, the safety aspect is already taken care of for you. There will be times, though, when you need the ability
 to optimize the query by running a prepared statement, or prepared query.</p>
 <section id="preparing-the-query">
-<h3><a class="toc-backref" href="#id20">Preparing the Query</a><a class="headerlink" href="#preparing-the-query" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id22">Preparing the Query</a><a class="headerlink" href="#preparing-the-query" title="Permalink to this headline"></a></h3>
 <p>This can be easily done with the <code class="docutils literal notranslate"><span class="pre">prepare()</span></code> method. This takes a single parameter, which is a Closure that returns
 a query object. Query objects are automatically generated by any of the “final” type queries, including <strong>insert</strong>,
 <strong>update</strong>, <strong>delete</strong>, <strong>replace</strong>, and <strong>get</strong>. This is handled the easiest by using the Query Builder to
@@ -623,7 +629,7 @@ array through in the second parameter:</p>
 </div>
 </section>
 <section id="executing-the-query">
-<h3><a class="toc-backref" href="#id21">Executing the Query</a><a class="headerlink" href="#executing-the-query" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id23">Executing the Query</a><a class="headerlink" href="#executing-the-query" title="Permalink to this headline"></a></h3>
 <p>Once you have a prepared query you can use the <code class="docutils literal notranslate"><span class="pre">execute()</span></code> method to actually run the query. You can pass in as
 many variables as you need in the query parameters. The number of parameters you pass must match the number of
 placeholders in the query. They must also be passed in the same order as the placeholders appear in the original
@@ -652,7 +658,7 @@ query:</p>
 For queries of type “read” it returns a standard <a class="reference internal" href="results.html"><span class="doc">result set</span></a>.</p>
 </section>
 <section id="other-methods">
-<h3><a class="toc-backref" href="#id22">Other Methods</a><a class="headerlink" href="#other-methods" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id24">Other Methods</a><a class="headerlink" href="#other-methods" title="Permalink to this headline"></a></h3>
 <p>In addition to these two primary methods, the prepared query object also has the following methods:</p>
 <section id="close">
 <span id="database-queries-stmt-close"></span><h4>close()<a class="headerlink" href="#close" title="Permalink to this headline"></a></h4>
@@ -690,13 +696,13 @@ close out the prepared statement when you’re done with it:</p>
 </section>
 </section>
 <section id="working-with-query-objects">
-<h2><a class="toc-backref" href="#id23">Working with Query Objects</a><a class="headerlink" href="#working-with-query-objects" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id25">Working with Query Objects</a><a class="headerlink" href="#working-with-query-objects" title="Permalink to this headline"></a></h2>
 <p>Internally, all queries are processed and stored as instances of
 <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\Query</span></code>. This class is responsible for binding
 the parameters, otherwise preparing the query, and storing performance
 data about its query.</p>
 <section id="db-getlastquery">
-<h3><a class="toc-backref" href="#id24">$db-&gt;getLastQuery()</a><a class="headerlink" href="#db-getlastquery" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id26">$db-&gt;getLastQuery()</a><a class="headerlink" href="#db-getlastquery" title="Permalink to this headline"></a></h3>
 <p>When you just need to retrieve the last Query object, use the
 <code class="docutils literal notranslate"><span class="pre">getLastQuery()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -707,7 +713,7 @@ data about its query.</p>
 </div>
 </section>
 <section id="the-query-class">
-<h3><a class="toc-backref" href="#id25">The Query Class</a><a class="headerlink" href="#the-query-class" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id27">The Query Class</a><a class="headerlink" href="#the-query-class" title="Permalink to this headline"></a></h3>
 <p>Each query object stores several pieces of information about the query itself.
 This is used, in part, by the Timeline feature, but is available for your use
 as well.</p>
@@ -737,8 +743,8 @@ binds in it, or prefixes swapped out, etc:</p>
 </pre></div>
 </div>
 </section>
-<section id="id1">
-<h4>hasError()<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h4>
+<section id="id3">
+<h4>hasError()<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h4>
 <p>If an error was encountered during the execution of this query this method
 will return true:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -807,7 +813,7 @@ parameter is the value you want it replaced with:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 17, 2023.
+      <span class="lastupdated">Last updated on Jun 18, 2023.
       </span></p>
   </div>
 

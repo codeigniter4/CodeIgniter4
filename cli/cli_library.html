@@ -320,14 +320,19 @@
 need to ensure your controller can locate it via a <code class="docutils literal notranslate"><span class="pre">use</span></code> statement above your class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="nx">App\Commands</span><span class="p">;</span>
 
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\BaseCommand</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">MyController</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<span class="k">class</span> <span class="nc">MyCommand</span> <span class="k">extends</span> <span class="nx">BaseCommand</span>
 <span class="p">{</span>
     <span class="c1">// ...</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -709,7 +714,7 @@ waiting for a key press.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 17, 2023.
+      <span class="lastupdated">Last updated on Jun 18, 2023.
       </span></p>
   </div>
 

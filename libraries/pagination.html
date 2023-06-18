@@ -287,17 +287,19 @@ and capable of supporting multiple paginators on a single page.</p>
 <li><p><a class="reference internal" href="#loading-the-library" id="id2">Loading the Library</a></p></li>
 <li><p><a class="reference internal" href="#paginating-with-models" id="id3">Paginating with Models</a></p>
 <ul>
-<li><p><a class="reference internal" href="#paginating-multiple-results" id="id4">Paginating Multiple Results</a></p></li>
-<li><p><a class="reference internal" href="#setting-page-manually" id="id5">Setting Page Manually</a></p></li>
-<li><p><a class="reference internal" href="#specifying-the-uri-segment-for-page" id="id6">Specifying the URI Segment for Page</a></p></li>
+<li><p><a class="reference internal" href="#customizing-query-for-pagination" id="id4">Customizing Query for Pagination</a></p></li>
+<li><p><a class="reference internal" href="#displaying-pager-links" id="id5">Displaying Pager Links</a></p></li>
+<li><p><a class="reference internal" href="#paginating-multiple-results" id="id6">Paginating Multiple Results</a></p></li>
+<li><p><a class="reference internal" href="#setting-page-manually" id="id7">Setting Page Manually</a></p></li>
+<li><p><a class="reference internal" href="#specifying-the-uri-segment-for-page" id="id8">Specifying the URI Segment for Page</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#manual-pagination" id="id7">Manual Pagination</a></p></li>
-<li><p><a class="reference internal" href="#paginating-with-only-expected-queries" id="id8">Paginating with Only Expected Queries</a></p></li>
-<li><p><a class="reference internal" href="#customizing-the-links" id="id9">Customizing the Links</a></p>
+<li><p><a class="reference internal" href="#manual-pagination" id="id9">Manual Pagination</a></p></li>
+<li><p><a class="reference internal" href="#paginating-with-only-expected-queries" id="id10">Paginating with Only Expected Queries</a></p></li>
+<li><p><a class="reference internal" href="#customizing-the-links" id="id11">Customizing the Links</a></p>
 <ul>
-<li><p><a class="reference internal" href="#view-configuration" id="id10">View Configuration</a></p></li>
-<li><p><a class="reference internal" href="#creating-the-view" id="id11">Creating the View</a></p></li>
+<li><p><a class="reference internal" href="#view-configuration" id="id12">View Configuration</a></p></li>
+<li><p><a class="reference internal" href="#creating-the-view" id="id13">Creating the View</a></p></li>
 </ul>
 </li>
 </ul>
@@ -323,9 +325,7 @@ It even reads the current page it should display from the current URL via a <cod
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
-
-<span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
@@ -346,27 +346,34 @@ The first element is the results from the database, <strong>users</strong>, whic
 10 users per page. The second item that must be sent to the view is the Pager instance itself. As a convenience,
 the Model will hold on to the instance it used and store it in the public property, <code class="docutils literal notranslate"><span class="pre">$pager</span></code>. So, we grab
 that and assign it to the <code class="docutils literal notranslate"><span class="pre">$pager</span></code> variable in the view.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>It is important to understand that the <code class="docutils literal notranslate"><span class="pre">Model::paginate()</span></code> method uses the <strong>Model</strong> and <strong>QueryBuilder</strong> methods.
-Therefore, trying to use <code class="docutils literal notranslate"><span class="pre">$db-&gt;query()</span></code> and <code class="docutils literal notranslate"><span class="pre">Model::paginate()</span></code> <strong>will not work</strong> because <code class="docutils literal notranslate"><span class="pre">$db-&gt;query()</span></code> executes
-the query immediately and is not associated with a QueryBuilder.</p>
-</div>
-<p>To define conditions for pagination in a model, you can:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="c1">// You can specify conditions directly.</span>
+<section id="customizing-query-for-pagination">
+<h3><a class="toc-backref" href="#id4">Customizing Query for Pagination</a><a class="headerlink" href="#customizing-query-for-pagination" title="Permalink to this headline"></a></h3>
+<p>To customize a query for pagination in a model, you can add
+<a class="reference internal" href="../database/query_builder.html"><span class="doc">Query Builder</span></a> methods before <code class="docutils literal notranslate"><span class="pre">paginate()</span></code>
+method.</p>
+<section id="adding-where">
+<h4>Adding WHERE<a class="headerlink" href="#adding-where" title="Permalink to this headline"></a></h4>
+<p>If you want to add WHERE conditions, you can specify conditions directly:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In your Controller.</span>
 <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Models\UserModel</span><span class="p">();</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;ban&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
     <span class="s1">&#39;pager&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
 <span class="p">];</span>
+</pre></div>
+</div>
+<p>You can move the conditions to a separate method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// You can move the conditions to a separate method.</span>
-<span class="c1">// Model method</span>
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
 <span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
+    <span class="c1">// ...</span>
+
     <span class="k">public</span> <span class="k">function</span> <span class="nf">banned</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;ban&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
@@ -374,6 +381,10 @@ the query immediately and is not associated with a QueryBuilder.</p>
         <span class="k">return</span> <span class="nv">$this</span><span class="p">;</span> <span class="c1">// This will allow the call chain to be used.</span>
     <span class="p">}</span>
 <span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In your Controller.</span>
+<span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Models\UserModel</span><span class="p">();</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">banned</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
@@ -381,6 +392,50 @@ the query immediately and is not associated with a QueryBuilder.</p>
 <span class="p">];</span>
 </pre></div>
 </div>
+</section>
+<section id="adding-join">
+<h4>Adding JOIN<a class="headerlink" href="#adding-join" title="Permalink to this headline"></a></h4>
+<p>You can join another table:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">NewsModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">&#39;news&#39;</span><span class="p">;</span>
+
+    <span class="c1">// ...</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getPagination</span><span class="p">(</span><span class="o">?</span><span class="nx">int</span> <span class="nv">$perPage</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;news.*, category.name&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;news.category_id = category.id&#39;</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s1">&#39;news&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="nv">$perPage</span><span class="p">),</span>
+            <span class="s1">&#39;pager&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">pager</span><span class="p">,</span>
+        <span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>It is important to understand that the <code class="docutils literal notranslate"><span class="pre">Model::paginate()</span></code> method
+uses the <strong>Model</strong> and the <strong>Query Builder</strong> instance in the Model.
+Therefore, trying to use <code class="docutils literal notranslate"><span class="pre">Model::paginate()</span></code> with <a class="reference internal" href="../database/queries.html#db-query"><span class="std std-ref">$db-&gt;query()</span></a>
+<strong>will not work</strong> because <code class="docutils literal notranslate"><span class="pre">$db-&gt;query()</span></code> executes the query immediately
+and is not associated with the Query Builder.</p>
+</div>
+<p>If you need a complicated SQL query that you cannot write with Query Builder,
+try using <a class="reference internal" href="../database/queries.html#db-query"><span class="std std-ref">$db-&gt;query()</span></a> and <a class="reference internal" href="#manual-pagination">Manual Pagination</a>.</p>
+</section>
+</section>
+<section id="displaying-pager-links">
+<h3><a class="toc-backref" href="#id5">Displaying Pager Links</a><a class="headerlink" href="#displaying-pager-links" title="Permalink to this headline"></a></h3>
 <p>Within the view, we then need to tell it where to display the resulting links:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
@@ -396,17 +451,16 @@ instead of the details pagination links:</p>
 </div>
 <p>Behind the scenes, the library loads a view file that determines how the links are formatted, making it simple to
 modify to your needs. See below for details on how to completely customize the output.</p>
+</section>
 <section id="paginating-multiple-results">
-<h3><a class="toc-backref" href="#id4">Paginating Multiple Results</a><a class="headerlink" href="#paginating-multiple-results" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Paginating Multiple Results</a><a class="headerlink" href="#paginating-multiple-results" title="Permalink to this headline"></a></h3>
 <p>If you need to provide links from two different result sets, you can pass group names to most of the pagination
 methods to keep the data separate:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
-
-<span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
@@ -431,7 +485,7 @@ methods to keep the data separate:</p>
 </div>
 </section>
 <section id="setting-page-manually">
-<h3><a class="toc-backref" href="#id5">Setting Page Manually</a><a class="headerlink" href="#setting-page-manually" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Setting Page Manually</a><a class="headerlink" href="#setting-page-manually" title="Permalink to this headline"></a></h3>
 <p>If you need to specify which page of results to return you can specify the page as the 3rd argument. This can be
 handy when you have a different manner than the default <code class="docutils literal notranslate"><span class="pre">$_GET</span></code> variable to control which page to show.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -444,7 +498,7 @@ handy when you have a different manner than the default <code class="docutils li
 </div>
 </section>
 <section id="specifying-the-uri-segment-for-page">
-<h3><a class="toc-backref" href="#id6">Specifying the URI Segment for Page</a><a class="headerlink" href="#specifying-the-uri-segment-for-page" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Specifying the URI Segment for Page</a><a class="headerlink" href="#specifying-the-uri-segment-for-page" title="Permalink to this headline"></a></h3>
 <p>It is also possible to use a URI segment for the page number, instead of the page query parameter. Simply specify the
 segment number to use as the fourth argument. URIs generated by the pager would then look
 like <strong>https://domain.tld/foo/bar/[pageNumber]</strong> instead of <strong>https://domain.tld/foo/bar?page=[pageNumber]</strong>.</p>
@@ -457,7 +511,7 @@ like <strong>https://domain.tld/foo/bar/[pageNumber]</strong> instead of <strong
 </section>
 </section>
 <section id="manual-pagination">
-<h2><a class="toc-backref" href="#id7">Manual Pagination</a><a class="headerlink" href="#manual-pagination" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9">Manual Pagination</a><a class="headerlink" href="#manual-pagination" title="Permalink to this headline"></a></h2>
 <p>You may find times where you just need to create pagination based on known data. You can create links manually
 with the <code class="docutils literal notranslate"><span class="pre">makeLinks()</span></code> method, which takes the current page, the number of results per page, and
 the total number of items as the first, second, and third parameters, respectively:</p>
@@ -465,9 +519,7 @@ the total number of items as the first, second, and third parameters, respective
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
-
-<span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
@@ -519,7 +571,7 @@ the previous section. Specify the segment number to use as the fifth parameter t
 <p>Pagination library uses <strong>page</strong> query parameter for HTTP queries by default (if no group or <code class="docutils literal notranslate"><span class="pre">default</span></code> group name given) or <code class="docutils literal notranslate"><span class="pre">page_[groupName]</span></code> for custom group names.</p>
 </section>
 <section id="paginating-with-only-expected-queries">
-<h2><a class="toc-backref" href="#id8">Paginating with Only Expected Queries</a><a class="headerlink" href="#paginating-with-only-expected-queries" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id10">Paginating with Only Expected Queries</a><a class="headerlink" href="#paginating-with-only-expected-queries" title="Permalink to this headline"></a></h2>
 <p>By default, all GET queries are shown in the pagination links.</p>
 <p>For example, when accessing the URL <strong>https://domain.tld?search=foo&amp;order=asc&amp;hello=i+am+here&amp;page=2</strong>, the page 3 link can be generated, along with the other links, as follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -538,9 +590,9 @@ the previous section. Specify the segment number to use as the fifth parameter t
 <p>The <em>page</em> query is enabled by default. And <code class="docutils literal notranslate"><span class="pre">only()</span></code> acts in all pagination links.</p>
 </section>
 <section id="customizing-the-links">
-<h2><a class="toc-backref" href="#id9">Customizing the Links</a><a class="headerlink" href="#customizing-the-links" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id11">Customizing the Links</a><a class="headerlink" href="#customizing-the-links" title="Permalink to this headline"></a></h2>
 <section id="view-configuration">
-<h3><a class="toc-backref" href="#id10">View Configuration</a><a class="headerlink" href="#view-configuration" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">View Configuration</a><a class="headerlink" href="#view-configuration" title="Permalink to this headline"></a></h3>
 <p>When the links are rendered out to the page, they use a view file to describe the HTML. You can easily change the view
 that is used by editing <strong>app/Config/Pager.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -605,7 +657,7 @@ methods:</p>
 </div>
 </section>
 <section id="creating-the-view">
-<h3><a class="toc-backref" href="#id11">Creating the View</a><a class="headerlink" href="#creating-the-view" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13">Creating the View</a><a class="headerlink" href="#creating-the-view" title="Permalink to this headline"></a></h3>
 <p>When you create a new view, you only need to create the code that is needed for creating the pagination links themselves.
 You should not create unnecessary wrapping divs since it might be used in multiple places and you only limit their
 usefulness. It is easiest to demonstrate creating a new view by showing you the existing <code class="docutils literal notranslate"><span class="pre">default_full</span></code> template:</p>
@@ -782,7 +834,7 @@ result set.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 17, 2023.
+      <span class="lastupdated">Last updated on Jun 18, 2023.
       </span></p>
   </div>
 
