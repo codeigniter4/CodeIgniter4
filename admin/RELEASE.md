@@ -85,7 +85,7 @@ the existing content.
   * Title: `4.x.x Ready code`
   * Description: blank
 * Merge the PR then create a new Release:
-  * Version: `v4.x.x`
+  * Tag: `v4.x.x` (Create new tag)
   * Target: `master`
   * Title: `CodeIgniter 4.x.x`
   * Description:
@@ -97,7 +97,7 @@ the existing content.
     ## New Contributors
     *
 
-    Full Changelog: https://github.com/codeigniter4/CodeIgniter4/compare/v4.x.x...v4.x.x
+    **Full Changelog**: https://github.com/codeigniter4/CodeIgniter4/compare/v4.x.x...v4.x.x
     ```
 * Watch for the "Deploy Distributable Repos" action to make sure **framework**,
   **appstarter**, and **userguide** get updated
