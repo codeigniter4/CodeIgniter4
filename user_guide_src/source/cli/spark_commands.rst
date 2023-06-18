@@ -6,7 +6,7 @@ CodeIgniter ships with the official command **spark** and built-in commands.
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 ****************
 Running Commands
@@ -16,12 +16,42 @@ Running via CLI
 ===============
 
 The commands are run from the command line, in the project root directory.
-The command file **spark** has been provided that is used to run any of the CLI commands::
+The command file **spark** has been provided that is used to run any of the CLI commands.
+
+Showing List of Commands
+------------------------
+
+When called **spark** without specifying a command, a simple help page is displayed
+that also provides a list of available commands and their descriptions, sorted by
+categories::
 
     > php spark
 
-When called without specifying a command, a simple help page is displayed that also provides a list of
-available commands.
+spark list
+^^^^^^^^^^
+
+``php spark`` is the exactly same as the ``list`` command::
+
+    > php spark list
+
+You may also use the ``--simple`` option to get a raw list of all available commands,
+sorted alphabetically::
+
+    > php spark list --simple
+
+Showing Help
+------------
+
+You can get help about any CLI command using the ``help`` command as follows::
+
+    > php spark help db:seed
+
+Since v4.3.0, you can also use the ``--help`` option instead of the ``help`` command::
+
+    > php spark db:seed --help
+
+Running a Command
+-----------------
 
 You should pass the name of the command as the first argument to run that command::
 
@@ -31,16 +61,30 @@ Some commands take additional arguments, which should be provided directly after
 
     > php spark db:seed DevUserSeeder
 
-You may always pass ``--no-header`` to suppress the header output, helpful for parsing results::
-
-    > php spark cache:clear --no-header
-
 For all of the commands CodeIgniter provides, if you do not provide the required arguments, you will be prompted
 for the information it needs to run correctly::
 
-    > php spark make::controller
+    > php spark make:controller
 
     Controller class name :
+
+Suppressing Header Output
+-------------------------
+
+When you run a command, the header with CodeIgniter version and the current time
+is output::
+
+    > php spark env
+
+    CodeIgniter v4.3.5 Command Line Tool - Server Time: 2023-06-16 12:45:31 UTC+00:00
+
+    Your environment is currently set as development.
+
+You may always pass ``--no-header`` to suppress the header output, helpful for parsing results::
+
+    > php spark env --no-header
+
+    Your environment is currently set as development.
 
 Calling Commands
 ================
@@ -55,29 +99,3 @@ it from the command line.
 
 All output from the command that is ran is captured when not run from the command line. It is returned from the command
 so that you can choose to display it or not.
-
-******************
-Using Help Command
-******************
-
-spark help
-==========
-
-You can get help about any CLI command using the ``help`` command as follows::
-
-    > php spark help db:seed
-
-Since v4.3.0, you can also use the ``--help`` option instead of the ``help`` command::
-
-    > php spark db:seed --help
-
-spark list
-==========
-
-Use the ``list`` command to get a list of available commands and their descriptions, sorted by categories::
-
-    > php spark list
-
-You may also use the ``--simple`` option to get a raw list of all available commands, sorted alphabetically::
-
-    > php spark list --simple
