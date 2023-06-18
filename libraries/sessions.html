@@ -289,7 +289,7 @@ in the last section of the table of contents:</p>
 <li><p><a class="reference internal" href="#using-the-session-class" id="id3">Using the Session Class</a></p>
 <ul>
 <li><p><a class="reference internal" href="#initializing-a-session" id="id4">Initializing a Session</a></p></li>
-<li><p><a class="reference internal" href="#how-do-sessions-work" id="id5">How do Sessions work?</a></p></li>
+<li><p><a class="reference internal" href="#how-do-sessions-work" id="id5">How Do Sessions Work?</a></p></li>
 <li><p><a class="reference internal" href="#what-is-session-data" id="id6">What is Session Data?</a></p></li>
 <li><p><a class="reference internal" href="#retrieving-session-data" id="id7">Retrieving Session Data</a></p></li>
 <li><p><a class="reference internal" href="#adding-session-data" id="id8">Adding Session Data</a></p></li>
@@ -341,7 +341,7 @@ but does not take any configuration options.</p>
 </div>
 </section>
 <section id="how-do-sessions-work">
-<h3><a class="toc-backref" href="#id5">How do Sessions work?</a><a class="headerlink" href="#how-do-sessions-work" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">How Do Sessions Work?</a><a class="headerlink" href="#how-do-sessions-work" title="Permalink to this headline"></a></h3>
 <p>When a page is loaded, the session class will check to see if a valid
 session cookie is sent by the user’s browser. If a sessions cookie does
 <strong>not</strong> exist (or if it doesn’t match one stored on the server or has
@@ -359,7 +359,7 @@ automatic.</p>
 as this is a concept based entirely on the HTTP protocol.</p>
 </div>
 <section id="a-note-about-concurrency">
-<h4>A note about concurrency<a class="headerlink" href="#a-note-about-concurrency" title="Permalink to this headline"></a></h4>
+<h4>A Note about Concurrency<a class="headerlink" href="#a-note-about-concurrency" title="Permalink to this headline"></a></h4>
 <p>Unless you’re developing a website with heavy AJAX usage, you can skip this
 section. If you are, however, and if you’re experiencing performance
 issues, then this note is exactly what you’re looking for.</p>
@@ -890,7 +890,7 @@ everything properly.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If <code class="docutils literal notranslate"><span class="pre">sessionExpiration</span></code> is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, the <code class="docutils literal notranslate"><span class="pre">session.gc_maxlifetime</span></code>
+<p>If <code class="docutils literal notranslate"><span class="pre">expiration</span></code> is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, the <code class="docutils literal notranslate"><span class="pre">session.gc_maxlifetime</span></code>
 setting set by PHP in session management will be used as-is
 (often the default value of <code class="docutils literal notranslate"><span class="pre">1440</span></code>). This needs to be changed in
 <code class="docutils literal notranslate"><span class="pre">php.ini</span></code> or via <code class="docutils literal notranslate"><span class="pre">ini_set()</span></code> as needed.</p>
@@ -1082,10 +1082,10 @@ when using long session IDs.</p>
 </div>
 <p>You will also need to add a PRIMARY KEY <strong>depending on your $matchIP
 setting</strong>. The examples below work both on MySQL and PostgreSQL:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// When sessionMatchIP = true</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// When $matchIP = true</span>
 <span class="nx">ALTER</span> <span class="nx">TABLE</span> <span class="nx">ci_sessions</span> <span class="nx">ADD</span> <span class="nx">PRIMARY</span> <span class="nx">KEY</span> <span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">ip_address</span><span class="p">);</span>
 
-<span class="c1">// When sessionMatchIP = false</span>
+<span class="c1">// When $matchIP = false</span>
 <span class="nx">ALTER</span> <span class="nx">TABLE</span> <span class="nx">ci_sessions</span> <span class="nx">ADD</span> <span class="nx">PRIMARY</span> <span class="nx">KEY</span> <span class="p">(</span><span class="nx">id</span><span class="p">);</span>
 
 <span class="c1">// To drop a previously created primary key (use when changing the setting)</span>
@@ -1105,6 +1105,8 @@ setting</strong>. The examples below work both on MySQL and PostgreSQL:</p>
 <span class="p">{</span>
     <span class="c1">// ...</span>
     <span class="k">public</span> <span class="o">?</span><span class="nx">string</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">&#39;groupName&#39;</span><span class="p">;</span>
+
+    <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1124,7 +1126,7 @@ when it generates the code.</p>
 <p class="admonition-title">Note</p>
 <p>Since Redis doesn’t have a locking mechanism exposed, locks for
 this driver are emulated by a separate value that is kept for up
-to 300 seconds. With <code class="docutils literal notranslate"><span class="pre">v4.3.2</span></code> or above, You can connect <code class="docutils literal notranslate"><span class="pre">Redis</span></code> with <strong>TLS</strong> protocol.</p>
+to 300 seconds. With <code class="docutils literal notranslate"><span class="pre">v4.3.2</span></code> or above, you can connect <code class="docutils literal notranslate"><span class="pre">Redis</span></code> with <strong>TLS</strong> protocol.</p>
 </div>
 <p>Redis is a storage engine typically used for caching and popular because
 of its high performance, which is also probably your reason to use the
