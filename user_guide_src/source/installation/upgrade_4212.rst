@@ -15,7 +15,7 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Project Files
 *************
 
-Version ``4.2.12`` did not alter any executable code in project files.
+Version 4.2.12 did not alter any executable code in project files.
 
 All Changes
 ===========

@@ -94,7 +94,7 @@ The following functions are available:
     Takes multiple words in camelCase or PascalCase and converts them to snake_case.
     Example:
 
-    .. literalinclude:: inflector_helper/007.php
+    .. literalinclude:: inflector_helper/014.php
 
 .. php:function:: humanize($string[, $separator = '_'])
 

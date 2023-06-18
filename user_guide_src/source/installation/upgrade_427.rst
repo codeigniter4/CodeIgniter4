@@ -58,7 +58,7 @@ Others
 Project Files
 *************
 
-Version ``4.2.7`` did not alter any executable code in project files.
+Version 4.2.7 did not alter any executable code in project files.
 
 All Changes
 ===========

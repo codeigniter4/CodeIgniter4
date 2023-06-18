@@ -2,9 +2,7 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
-
-class UserController extends Controller
+class UserController extends BaseController
 {
     public function index()
     {
