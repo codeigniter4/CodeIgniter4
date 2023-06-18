@@ -1,5 +1,5 @@
 #############################
-Upgrading from 4.3.6 to 4.3.6
+Upgrading from 4.3.6 to 4.3.7
 #############################
 
 Please refer to the upgrade instructions corresponding to your installation method.
