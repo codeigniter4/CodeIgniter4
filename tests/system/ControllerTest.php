@@ -23,7 +23,6 @@ use Config\App;
 use Config\Services;
 use Config\Validation as ValidationConfig;
 use Psr\Log\LoggerInterface;
-use Tests\Support\Config\Validation;
 
 /**
  * Exercise our core Controller class.

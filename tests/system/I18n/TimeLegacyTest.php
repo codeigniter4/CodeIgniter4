@@ -1125,16 +1125,16 @@ final class TimeLegacyTest extends CIUnitTestCase
     }
 
     // @TODO Uncomment when PHP 8.2.4 Segmentation fault fixed.
-//    public function testUnserializeTimeObject()
-//    {
-//        $time1     = new TimeLegacy('August 28, 2020 10:04:00pm', 'Asia/Manila', 'en');
-//        $timeCache = serialize($time1);
-//        $time2     = unserialize($timeCache);
-//
-//        $this->assertInstanceOf(TimeLegacy::class, $time2);
-//        $this->assertTrue($time2->equals($time1));
-//        $this->assertNotSame($time1, $time2);
-//    }
+    //    public function testUnserializeTimeObject()
+    //    {
+    //        $time1     = new TimeLegacy('August 28, 2020 10:04:00pm', 'Asia/Manila', 'en');
+    //        $timeCache = serialize($time1);
+    //        $time2     = unserialize($timeCache);
+    //
+    //        $this->assertInstanceOf(TimeLegacy::class, $time2);
+    //        $this->assertTrue($time2->equals($time1));
+    //        $this->assertNotSame($time1, $time2);
+    //    }
 
     public function testSetTestNowWithFaLocale()
     {
