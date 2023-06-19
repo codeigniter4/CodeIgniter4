@@ -299,10 +299,12 @@ final class TestResponseTest extends CIUnitTestCase
 
     public function testGetJSON()
     {
-        $this->getTestResponse(['foo' => 'bar']);
-        $formatter = Services::format()->getFormatter('application/json');
+        $data = ['foo' => 'bar'];
+        $this->getTestResponse('');
+        $this->response->setJSON($data, true);
 
-        $this->assertSame($formatter->format(['foo' => 'bar']), $this->testResponse->getJSON());
+        $formatter = Services::format()->getFormatter('application/json');
+        $this->assertSame($formatter->format($data), $this->testResponse->getJSON());
     }
 
     public function testGetJSONEmptyJSON()
@@ -344,20 +346,24 @@ final class TestResponseTest extends CIUnitTestCase
 
     public function testGetXML()
     {
-        $this->getTestResponse(['foo' => 'bar']);
-        $formatter = Services::format()->getFormatter('application/xml');
+        $data = ['foo' => 'bar'];
+        $this->getTestResponse('');
+        $this->response->setXML($data);
 
-        $this->assertSame($formatter->format(['foo' => 'bar']), $this->testResponse->getXML());
+        $formatter = Services::format()->getFormatter('application/xml');
+        $this->assertSame($formatter->format($data), $this->testResponse->getXML());
     }
 
     public function testAssertJSONFragment()
     {
-        $this->getTestResponse([
+        $data = [
             'config' => [
                 'key-a',
                 'key-b',
             ],
-        ]);
+        ];
+        $this->getTestResponse('');
+        $this->response->setJSON($data, true);
 
         $this->testResponse->assertJSONFragment(['config' => ['key-a']]);
         $this->testResponse->assertJSONFragment(['config' => ['key-a']], true);
@@ -365,9 +371,11 @@ final class TestResponseTest extends CIUnitTestCase
 
     public function testAssertJSONFragmentFollowingAssertArraySubset()
     {
-        $this->getTestResponse([
+        $data = [
             'config' => '124',
-        ]);
+        ];
+        $this->getTestResponse('');
+        $this->response->setJSON($data, true);
 
         $this->testResponse->assertJSONFragment(['config' => 124]); // must fail on strict
         $this->testResponse->assertJSONFragment(['config' => '124'], true);
@@ -391,8 +399,8 @@ final class TestResponseTest extends CIUnitTestCase
                 'key-b',
             ],
         ];
-
-        $this->getTestResponse($data);
+        $this->getTestResponse('');
+        $this->response->setJSON($data, true);
 
         $this->testResponse->assertJSONExact($data);
     }
@@ -405,10 +413,10 @@ final class TestResponseTest extends CIUnitTestCase
                 'key-b',
             ],
         ];
+        $this->getTestResponse('');
+        $this->response->setJSON($data, true);
 
-        $this->getTestResponse($data);
         $formatter = Services::format()->getFormatter('application/json');
-
         $this->testResponse->assertJSONExact($formatter->format($data));
     }
 
