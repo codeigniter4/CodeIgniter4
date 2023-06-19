@@ -405,6 +405,20 @@ final class TestResponseTest extends CIUnitTestCase
         $this->testResponse->assertJSONExact($data);
     }
 
+    public function testAssertJsonExactObject()
+    {
+        $data = (object) [
+            'config' => [
+                'key-a',
+                'key-b',
+            ],
+        ];
+        $this->getTestResponse('');
+        $this->response->setJSON($data, true);
+
+        $this->testResponse->assertJSONExact($data);
+    }
+
     public function testAssertJsonExactString()
     {
         $data = [
