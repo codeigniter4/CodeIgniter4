@@ -615,6 +615,11 @@ setting**. The examples below work both on MySQL and PostgreSQL::
     // To drop a previously created primary key (use when changing the setting)
     ALTER TABLE ci_sessions DROP PRIMARY KEY;
 
+.. important:: If you don't add the correct primary key, the following error
+    may occur::
+
+        Uncaught mysqli_sql_exception: Duplicate entry 'ci_session:***' for key 'ci_sessions.PRIMARY'
+
 You can choose the Database group to use by adding a new line to the
 **app/Config/Session.php** file with the name of the group to use:
 
