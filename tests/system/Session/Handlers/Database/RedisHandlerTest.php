@@ -16,7 +16,6 @@ use CodeIgniter\Session\Handlers\RedisHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App as AppConfig;
 use Config\Session as SessionConfig;
-use Redis;
 
 /**
  * @group DatabaseLive

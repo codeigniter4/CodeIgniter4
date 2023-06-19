@@ -12,7 +12,6 @@
 namespace CodeIgniter\Database\Live\SQLite;
 
 use CodeIgniter\Database\Exceptions\DataException;
-use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Database\SQLite3\Forge;
 use CodeIgniter\Database\SQLite3\Table;
 use CodeIgniter\Test\CIUnitTestCase;
