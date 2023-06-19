@@ -305,7 +305,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->assertSame($formatter->format(['foo' => 'bar']), $this->testResponse->getJSON());
     }
 
-    public function testEmptyJSON()
+    public function testGetJSONEmptyJSON()
     {
         $this->getTestResponse('<h1>Hello World</h1>');
         $this->response->setJSON('', true);
@@ -314,7 +314,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->assertSame('""', $this->testResponse->getJSON());
     }
 
-    public function testFalseJSON()
+    public function testGetJSONFalseJSON()
     {
         $this->getTestResponse('<h1>Hello World</h1>');
         $this->response->setJSON(false, true);
@@ -323,7 +323,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->assertSame('false', $this->testResponse->getJSON());
     }
 
-    public function testTrueJSON()
+    public function testGetJSONTrueJSON()
     {
         $this->getTestResponse('<h1>Hello World</h1>');
         $this->response->setJSON(true, true);
@@ -332,7 +332,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->assertSame('true', $this->testResponse->getJSON());
     }
 
-    public function testInvalidJSON()
+    public function testGetJSONInvalidJSON()
     {
         $tmp = ' test " case ';
         $this->getTestResponse('<h1>Hello World</h1>');
@@ -350,7 +350,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->assertSame($formatter->format(['foo' => 'bar']), $this->testResponse->getXML());
     }
 
-    public function testJsonFragment()
+    public function testAssertJSONFragment()
     {
         $this->getTestResponse([
             'config' => [
@@ -383,7 +383,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->testResponse->assertJSONFragment(['foo' => 'bar']);
     }
 
-    public function testJsonExact()
+    public function testAssertJsonExactArray()
     {
         $data = [
             'config' => [
@@ -397,7 +397,7 @@ final class TestResponseTest extends CIUnitTestCase
         $this->testResponse->assertJSONExact($data);
     }
 
-    public function testJsonExactString()
+    public function testAssertJsonExactString()
     {
         $data = [
             'config' => [
