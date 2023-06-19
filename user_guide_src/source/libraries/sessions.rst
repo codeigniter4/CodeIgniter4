@@ -620,8 +620,12 @@ setting**. The examples below work both on MySQL and PostgreSQL::
 
         Uncaught mysqli_sql_exception: Duplicate entry 'ci_session:***' for key 'ci_sessions.PRIMARY'
 
-You can choose the Database group to use by adding a new line to the
-**app/Config/Session.php** file with the name of the group to use:
+Changing Database Group
+^^^^^^^^^^^^^^^^^^^^^^^
+
+The default database group is used by default.
+You can change the database group to use by changing the ``$DBGroup`` property
+in the **app/Config/Session.php** file to the name of the group to use:
 
 .. literalinclude:: sessions/040.php
 
