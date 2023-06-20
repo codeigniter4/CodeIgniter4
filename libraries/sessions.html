@@ -1028,6 +1028,8 @@ an application - it is just another table in your database.</p>
 </div></blockquote>
 <section id="configure-databasehandler">
 <h4>Configure DatabaseHandler<a class="headerlink" href="#configure-databasehandler" title="Permalink to this headline"></a></h4>
+<section id="setting-table-name">
+<h5>Setting Table Name<a class="headerlink" href="#setting-table-name" title="Permalink to this headline"></a></h5>
 <p>In order to use the ‘DatabaseHandler’ session driver, you must also create this
 table that we already mentioned and then set it as your
 <code class="docutils literal notranslate"><span class="pre">$savePath</span></code> value.
@@ -1052,6 +1054,9 @@ you would do this:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+</section>
+<section id="creating-database-table">
+<h5>Creating Database Table<a class="headerlink" href="#creating-database-table" title="Permalink to this headline"></a></h5>
 <p>And then of course, create the database table …</p>
 <p>For MySQL:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">CREATE</span> <span class="nx">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="nx">EXISTS</span> <span class="sb">`ci_sessions`</span> <span class="p">(</span>
@@ -1080,6 +1085,9 @@ you would do this:</p>
 and the session ID and a delimiter. It should be increased as needed, for example,
 when using long session IDs.</p>
 </div>
+</section>
+<section id="adding-primary-key">
+<h5>Adding Primary Key<a class="headerlink" href="#adding-primary-key" title="Permalink to this headline"></a></h5>
 <p>You will also need to add a PRIMARY KEY <strong>depending on your $matchIP
 setting</strong>. The examples below work both on MySQL and PostgreSQL:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// When $matchIP = true</span>
@@ -1092,8 +1100,20 @@ setting</strong>. The examples below work both on MySQL and PostgreSQL:</p>
 <span class="nx">ALTER</span> <span class="nx">TABLE</span> <span class="nx">ci_sessions</span> <span class="nx">DROP</span> <span class="nx">PRIMARY</span> <span class="nx">KEY</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>You can choose the Database group to use by adding a new line to the
-<strong>app/Config/Session.php</strong> file with the name of the group to use:</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If you don’t add the correct primary key, the following error
+may occur:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">Uncaught</span> <span class="nx">mysqli_sql_exception</span><span class="o">:</span> <span class="nx">Duplicate</span> <span class="nx">entry</span> <span class="s1">&#39;ci_session:***&#39;</span> <span class="k">for</span> <span class="nb">key</span> <span class="s1">&#39;ci_sessions.PRIMARY&#39;</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="changing-database-group">
+<h5>Changing Database Group<a class="headerlink" href="#changing-database-group" title="Permalink to this headline"></a></h5>
+<p>The default database group is used by default.
+You can change the database group to use by changing the <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code> property
+in the <strong>app/Config/Session.php</strong> file to the name of the group to use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -1105,11 +1125,12 @@ setting</strong>. The examples below work both on MySQL and PostgreSQL:</p>
 <span class="p">{</span>
     <span class="c1">// ...</span>
     <span class="k">public</span> <span class="o">?</span><span class="nx">string</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">&#39;groupName&#39;</span><span class="p">;</span>
-
-    <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+</section>
+<section id="setting-up-database-table-with-command">
+<h5>Setting Up Database Table with Command<a class="headerlink" href="#setting-up-database-table-with-command" title="Permalink to this headline"></a></h5>
 <p>If you’d rather not do all of this by hand, you can use the <code class="docutils literal notranslate"><span class="pre">make:migration</span> <span class="pre">--session</span></code> command
 from the cli to generate a migration file for you:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">migration</span> <span class="o">--</span><span class="nx">session</span>
@@ -1118,6 +1139,7 @@ from the cli to generate a migration file for you:</p>
 </div>
 <p>This command will take the <code class="docutils literal notranslate"><span class="pre">$savePath</span></code> and <code class="docutils literal notranslate"><span class="pre">$matchIP</span></code> settings into account
 when it generates the code.</p>
+</section>
 </section>
 </section>
 <section id="redishandler-driver">
