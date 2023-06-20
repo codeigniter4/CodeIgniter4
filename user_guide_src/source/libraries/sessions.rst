@@ -559,6 +559,9 @@ However, there are some conditions that must be met:
 Configure DatabaseHandler
 -------------------------
 
+Setting Table Name
+^^^^^^^^^^^^^^^^^^
+
 In order to use the 'DatabaseHandler' session driver, you must also create this
 table that we already mentioned and then set it as your
 ``$savePath`` value.
@@ -566,6 +569,9 @@ For example, if you would like to use 'ci_sessions' as your table name,
 you would do this:
 
 .. literalinclude:: sessions/039.php
+
+Creating Database Table
+^^^^^^^^^^^^^^^^^^^^^^^
 
 And then of course, create the database table ...
 
@@ -594,6 +600,9 @@ For PostgreSQL::
     and the session ID and a delimiter. It should be increased as needed, for example,
     when using long session IDs.
 
+Adding Primary Key
+^^^^^^^^^^^^^^^^^^
+
 You will also need to add a PRIMARY KEY **depending on your $matchIP
 setting**. The examples below work both on MySQL and PostgreSQL::
 
@@ -606,10 +615,22 @@ setting**. The examples below work both on MySQL and PostgreSQL::
     // To drop a previously created primary key (use when changing the setting)
     ALTER TABLE ci_sessions DROP PRIMARY KEY;
 
-You can choose the Database group to use by adding a new line to the
-**app/Config/Session.php** file with the name of the group to use:
+.. important:: If you don't add the correct primary key, the following error
+    may occur::
+
+        Uncaught mysqli_sql_exception: Duplicate entry 'ci_session:***' for key 'ci_sessions.PRIMARY'
+
+Changing Database Group
+^^^^^^^^^^^^^^^^^^^^^^^
+
+The default database group is used by default.
+You can change the database group to use by changing the ``$DBGroup`` property
+in the **app/Config/Session.php** file to the name of the group to use:
 
 .. literalinclude:: sessions/040.php
+
+Setting Up Database Table with Command
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you'd rather not do all of this by hand, you can use the ``make:migration --session`` command
 from the cli to generate a migration file for you::

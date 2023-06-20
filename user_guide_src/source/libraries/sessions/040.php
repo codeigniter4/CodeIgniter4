@@ -9,6 +9,4 @@ class Session extends BaseConfig
 {
     // ...
     public ?string $DBGroup = 'groupName';
-
-    // ...
 }
