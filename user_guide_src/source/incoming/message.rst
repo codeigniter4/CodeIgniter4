@@ -160,6 +160,7 @@ Class Reference
         :returns: The current message instance
         :rtype: CodeIgniter\\HTTP\\Message
 
-        Sets the HTTP protocol version this Message uses. Valid values are ``1.0``, ``1.1`` and ``2.0``:
+        Sets the HTTP protocol version this Message uses. Valid values are
+        ``1.0``, ``1.1``, ``2.0`` and ``3.0``:
 
         .. literalinclude:: message/010.php
