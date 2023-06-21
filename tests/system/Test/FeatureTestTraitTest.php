@@ -466,6 +466,54 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         );
     }
 
+    public function testCallPutWithJsonRequest()
+    {
+        $this->withRoutes([
+            [
+                'put',
+                'home',
+                '\Tests\Support\Controllers\Popcorn::echoJson',
+            ],
+        ]);
+        $data = [
+            'true'   => true,
+            'false'  => false,
+            'int'    => 2,
+            'null'   => null,
+            'float'  => 1.23,
+            'string' => 'foo',
+        ];
+        $response = $this->withBodyFormat('json')
+            ->call('put', 'home', $data);
+
+        $response->assertOK();
+        $response->assertJSONExact($data);
+    }
+
+    public function testCallPutWithJsonRequestAndREQUEST()
+    {
+        $this->withRoutes([
+            [
+                'put',
+                'home',
+                static fn () => json_encode(Services::request()->fetchGlobal('request')),
+            ],
+        ]);
+        $data = [
+            'true'   => true,
+            'false'  => false,
+            'int'    => 2,
+            'null'   => null,
+            'float'  => 1.23,
+            'string' => 'foo',
+        ];
+        $response = $this->withBodyFormat('json')
+            ->call('put', 'home', $data);
+
+        $response->assertOK();
+        $this->assertStringContainsString('[]', $response->getBody());
+    }
+
     public function testCallWithJsonRequest()
     {
         $this->withRoutes([
