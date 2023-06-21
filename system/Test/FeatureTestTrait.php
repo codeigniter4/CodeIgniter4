@@ -371,6 +371,10 @@ trait FeatureTestTrait
      */
     protected function setRequestBody(Request $request, ?array $params = null): Request
     {
+        if ($this->requestBody !== '') {
+            $request->setBody($this->requestBody);
+        }
+
         if ($this->bodyFormat !== '') {
             $formatMime = '';
             if ($this->bodyFormat === 'json') {
@@ -385,13 +389,9 @@ trait FeatureTestTrait
 
             if ($params !== null && $formatMime !== '') {
                 $formatted = Services::format()->getFormatter($formatMime)->format($params);
+                // "withBodyFormat() and $params of call()" has higher priority than withBody().
                 $request->setBody($formatted);
             }
-        }
-
-        // withBody() has higher priority than $params of withBodyFormat().
-        if ($this->requestBody !== '') {
-            $request->setBody($this->requestBody);
         }
 
         return $request;
