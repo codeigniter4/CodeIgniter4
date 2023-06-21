@@ -367,22 +367,11 @@ trait FeatureTestTrait
      * This allows the body to be formatted in a way that the controller is going to
      * expect as in the case of testing a JSON or XML API.
      *
-     * @param array|null $params The parameters to be formatted and put in the body. If this is empty, it will get the
-     *                           what has been loaded into the request global of the request class.
+     * @param array|null $params The parameters to be formatted and put in the body.
      */
     protected function setRequestBody(Request $request, ?array $params = null): Request
     {
-        if (isset($this->requestBody) && $this->requestBody !== '') {
-            $request->setBody($this->requestBody);
-
-            return $request;
-        }
-
         if (isset($this->bodyFormat) && $this->bodyFormat !== '') {
-            if (empty($params)) {
-                $params = $request->fetchGlobal('request');
-            }
-
             $formatMime = '';
             if ($this->bodyFormat === 'json') {
                 $formatMime = 'application/json';
@@ -390,11 +379,19 @@ trait FeatureTestTrait
                 $formatMime = 'application/xml';
             }
 
-            if (! empty($formatMime) && ! empty($params)) {
-                $formatted = Services::format()->getFormatter($formatMime)->format($params);
-                $request->setBody($formatted);
+            if ($formatMime !== '') {
                 $request->setHeader('Content-Type', $formatMime);
             }
+
+            if ($params !== null && $formatMime !== '') {
+                $formatted = Services::format()->getFormatter($formatMime)->format($params);
+                $request->setBody($formatted);
+            }
+        }
+
+        // withBody() has higher priority than $params of withBodyFormat().
+        if (isset($this->requestBody) && $this->requestBody !== '') {
+            $request->setBody($this->requestBody);
         }
 
         return $request;
