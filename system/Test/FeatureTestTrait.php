@@ -344,11 +344,18 @@ trait FeatureTestTrait
             : $this->getPrivateProperty($request->getUri(), 'query');
 
         $request->setGlobal('get', $get);
-        if ($method !== 'get') {
-            $request->setGlobal($method, $params);
+
+        if ($method === 'get') {
+            $request->setGlobal('request', $request->fetchGlobal('get'));
         }
 
-        $request->setGlobal('request', $params);
+        if ($method === 'post') {
+            $request->setGlobal($method, $params);
+            $request->setGlobal(
+                'request',
+                $request->fetchGlobal('post') + $request->fetchGlobal('get')
+            );
+        }
 
         $_SESSION = $this->session ?? [];
 
