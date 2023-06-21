@@ -110,7 +110,7 @@ trait FeatureTestTrait
     /**
      * Set the raw body for the request
      *
-     * @param mixed $body
+     * @param string $body
      *
      * @return $this
      */
