@@ -421,9 +421,19 @@ final class FeatureTestTraitTest extends CIUnitTestCase
                 '\Tests\Support\Controllers\Popcorn::echoJson',
             ],
         ]);
-        $response = $this->withBodyFormat('json')->call('post', 'home', ['foo' => 'bar']);
+        $data = [
+            'true'   => true,
+            'false'  => false,
+            'int'    => 2,
+            'null'   => null,
+            'float'  => 1.23,
+            'string' => 'foo',
+        ];
+        $response = $this->withBodyFormat('json')
+            ->call('post', 'home', $data);
+
         $response->assertOK();
-        $response->assertJSONExact(['foo' => 'bar']);
+        $response->assertJSONExact($data);
     }
 
     public function testSetupRequestBodyWithParams()
@@ -440,10 +450,18 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     {
         $request = $this->setupRequest('post', 'home');
 
-        $request = $this->withBodyFormat('xml')->setRequestBody($request, ['foo' => 'bar']);
+        $data = [
+            'true'   => true,
+            'false'  => false,
+            'int'    => 2,
+            'null'   => null,
+            'float'  => 1.23,
+            'string' => 'foo',
+        ];
+        $request = $this->withBodyFormat('xml')->setRequestBody($request, $data);
 
         $expectedXml = '<?xml version="1.0"?>
-<response><foo>bar</foo></response>
+<response><true>1</true><false/><int>2</int><null/><float>1.23</float><string>foo</string></response>
 ';
 
         $this->assertSame($expectedXml, $request->getBody());
