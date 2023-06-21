@@ -371,7 +371,7 @@ trait FeatureTestTrait
      */
     protected function setRequestBody(Request $request, ?array $params = null): Request
     {
-        if (isset($this->bodyFormat) && $this->bodyFormat !== '') {
+        if ($this->bodyFormat !== '') {
             $formatMime = '';
             if ($this->bodyFormat === 'json') {
                 $formatMime = 'application/json';
@@ -390,7 +390,7 @@ trait FeatureTestTrait
         }
 
         // withBody() has higher priority than $params of withBodyFormat().
-        if (isset($this->requestBody) && $this->requestBody !== '') {
+        if ($this->requestBody !== '') {
             $request->setBody($this->requestBody);
         }
 
