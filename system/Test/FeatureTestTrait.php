@@ -137,6 +137,8 @@ trait FeatureTestTrait
      * Calls a single URI, executes it, and returns a TestResponse
      * instance that can be used to run many assertions against.
      *
+     * @param string $method HTTP verb
+     *
      * @return TestResponse
      */
     public function call(string $method, string $path, ?array $params = null)
@@ -281,6 +283,8 @@ trait FeatureTestTrait
     /**
      * Setup a Request object to use so that CodeIgniter
      * won't try to auto-populate some of the items.
+     *
+     * @param string $method HTTP verb
      */
     protected function setupRequest(string $method, ?string $path = null): IncomingRequest
     {
@@ -324,6 +328,8 @@ trait FeatureTestTrait
      * relevant to the request, like $_POST data.
      *
      * Always populate the GET vars based on the URI.
+     *
+     * @param string $method HTTP verb
      *
      * @return Request
      *
