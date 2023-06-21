@@ -358,6 +358,60 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertTrue($response->isOK());
     }
 
+    public function testCallGetWithParams()
+    {
+        $this->withRoutes([
+            [
+                'get',
+                'home',
+                static fn () => json_encode(Services::request()->getGet()),
+            ],
+        ]);
+        $data = [
+            'true'   => true,
+            'false'  => false,
+            'int'    => 2,
+            'null'   => null,
+            'float'  => 1.23,
+            'string' => 'foo',
+        ];
+        $response = $this->get('home', $data);
+
+        $response->assertOK();
+        $this->assertStringContainsString(
+            // All GET values will be strings.
+            '{"true":"1","false":"","int":"2","null":"","float":"1.23","string":"foo"}',
+            $response->getBody()
+        );
+    }
+
+    public function testCallPostWithParams()
+    {
+        $this->withRoutes([
+            [
+                'post',
+                'home',
+                static fn () => json_encode(Services::request()->getPost()),
+            ],
+        ]);
+        $data = [
+            'true'   => true,
+            'false'  => false,
+            'int'    => 2,
+            'null'   => null,
+            'float'  => 1.23,
+            'string' => 'foo',
+        ];
+        $response = $this->post('home', $data);
+
+        $response->assertOK();
+        $this->assertStringContainsString(
+            // All POST values will be strings.
+            '{"true":"1","false":"","int":"2","null":"","float":"1.23","string":"foo"}',
+            $response->getBody()
+        );
+    }
+
     public function testCallWithJsonRequest()
     {
         $this->withRoutes([
