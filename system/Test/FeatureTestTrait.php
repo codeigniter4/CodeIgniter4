@@ -156,7 +156,7 @@ trait FeatureTestTrait
         $request = $this->setupRequest($method, $path);
         $request = $this->setupHeaders($request);
         $request = $this->populateGlobals($method, $request, $params);
-        $request = $this->setRequestBody($request);
+        $request = $this->setRequestBody($request, $params);
 
         // Initialize the RouteCollection
         if (! $routes = $this->routes) {
@@ -369,12 +369,14 @@ trait FeatureTestTrait
             if (empty($params)) {
                 $params = $request->fetchGlobal('request');
             }
+
             $formatMime = '';
             if ($this->bodyFormat === 'json') {
                 $formatMime = 'application/json';
             } elseif ($this->bodyFormat === 'xml') {
                 $formatMime = 'application/xml';
             }
+
             if (! empty($formatMime) && ! empty($params)) {
                 $formatted = Services::format()->getFormatter($formatMime)->format($params);
                 $request->setBody($formatted);
