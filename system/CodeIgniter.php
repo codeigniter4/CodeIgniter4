@@ -19,6 +19,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
+use CodeIgniter\HTTP\Exceptions\ResponsableInterface;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
@@ -343,14 +344,13 @@ class CodeIgniter
 
         try {
             $this->response = $this->handleRequest($routes, config(Cache::class), $returnResponse);
-        } catch (RedirectException|DeprecatedRedirectException $e) {
+        } catch (ResponsableInterface|DeprecatedRedirectException $e) {
             $this->outputBufferingEnd();
-            $logger = Services::logger();
-            $logger->info('REDIRECTED ROUTE at ' . $e->getMessage());
+            if ($e instanceof DeprecatedRedirectException) {
+                $e = new RedirectException($e->getMessage(), $e->getCode(), $e);
+            }
 
-            // If the route is a 'redirect' route, it throws
-            // the exception with the $to as the message
-            $this->response->redirect(base_url($e->getMessage()), 'auto', $e->getCode());
+            $this->response = $e->getResponse();
         } catch (PageNotFoundException $e) {
             $this->response = $this->display404errors($e);
         } catch (Throwable $e) {
