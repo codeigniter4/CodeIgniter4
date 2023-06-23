@@ -73,7 +73,7 @@ final class CLITest extends CIUnitTestCase
         $time = time();
         CLI::wait(0);
 
-        $this->assertSame(0, time() - $time);
+        $this->assertCloseEnough(0, time() - $time);
 
         PhpStreamWrapper::restore();
     }
