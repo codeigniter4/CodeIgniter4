@@ -231,11 +231,6 @@ parameters:
 			path: system/Router/Router.php
 
 		-
-			message: "#^Property CodeIgniter\\\\Session\\\\Session\\:\\:\\$sessionExpiration \\(int\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
 			message: "#^Access to an undefined property object\\:\\:\\$createdField\\.$#"
 			count: 1
 			path: system/Test/Fabricator.php

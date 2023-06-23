@@ -13,7 +13,7 @@ namespace CodeIgniter\Session\Handlers;
 
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Exceptions\SessionException;
-use Config\App as AppConfig;
+use Config\Session as SessionConfig;
 use ReturnTypeWillChange;
 
 /**
@@ -63,7 +63,7 @@ class FileHandler extends BaseHandler
      */
     protected $sessionIDRegex = '';
 
-    public function __construct(AppConfig $config, string $ipAddress)
+    public function __construct(SessionConfig $config, string $ipAddress)
     {
         parent::__construct($config, $ipAddress);
 

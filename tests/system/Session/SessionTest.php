@@ -17,7 +17,6 @@ use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
-use Config\App as AppConfig;
 use Config\Cookie as CookieConfig;
 use Config\Logger as LoggerConfig;
 use Config\Session as SessionConfig;
@@ -43,8 +42,6 @@ final class SessionTest extends CIUnitTestCase
 
     protected function getInstance($options = [])
     {
-        $appConfig = new AppConfig();
-
         $defaults = [
             'driver'            => FileHandler::class,
             'cookieName'        => 'ci_session',
@@ -62,7 +59,7 @@ final class SessionTest extends CIUnitTestCase
         }
         Factories::injectMock('config', 'Session', $sessionConfig);
 
-        $session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);
+        $session = new MockSession(new FileHandler($sessionConfig, '127.0.0.1'), $sessionConfig);
         $session->setLogger(new TestLogger(new LoggerConfig()));
 
         return $session;
