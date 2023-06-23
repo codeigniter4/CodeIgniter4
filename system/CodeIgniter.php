@@ -338,8 +338,6 @@ class CodeIgniter
         $this->getRequestObject();
         $this->getResponseObject();
 
-        $this->forceSecureAccess();
-
         $this->spoofRequestMethod();
 
         try {
@@ -419,6 +417,8 @@ class CodeIgniter
      */
     protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
     {
+        $this->forceSecureAccess();
+
         if ($this->request instanceof IncomingRequest && strtolower($this->request->getMethod()) === 'cli') {
             return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
         }

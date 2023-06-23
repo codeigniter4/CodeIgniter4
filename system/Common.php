@@ -21,6 +21,7 @@ use CodeIgniter\Debug\Timer;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
@@ -476,22 +477,24 @@ if (! function_exists('force_https')) {
      * @param ResponseInterface $response
      *
      * @throws HTTPException
+     * @throws RedirectException
      */
-    function force_https(int $duration = 31_536_000, ?RequestInterface $request = null, ?ResponseInterface $response = null)
-    {
-        if ($request === null) {
-            $request = Services::request(null, true);
-        }
+    function force_https(
+        int $duration = 31_536_000,
+        ?RequestInterface $request = null,
+        ?ResponseInterface $response = null
+    ) {
+        $request ??= Services::request();
 
         if (! $request instanceof IncomingRequest) {
             return;
         }
 
-        if ($response === null) {
-            $response = Services::response(null, true);
-        }
+        $response ??= Services::response();
 
-        if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure())) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'test')) {
+        if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure()))
+            || $request->getServer('HTTPS') === 'test'
+        ) {
             return; // @codeCoverageIgnore
         }
 
@@ -520,13 +523,14 @@ if (! function_exists('force_https')) {
         );
 
         // Set an HSTS header
-        $response->setHeader('Strict-Transport-Security', 'max-age=' . $duration);
-        $response->redirect($uri);
-        $response->sendHeaders();
+        $response->setHeader('Strict-Transport-Security', 'max-age=' . $duration)
+            ->redirect($uri)
+            ->setStatusCode(307)
+            ->setBody('')
+            ->getCookieStore()
+            ->clear();
 
-        if (ENVIRONMENT !== 'testing') {
-            exit(); // @codeCoverageIgnore
-        }
+        throw new RedirectException($response);
     }
 }
 

@@ -15,6 +15,8 @@ use CodeIgniter\Exceptions\HTTPExceptionInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use Exception;
+use InvalidArgumentException;
+use Throwable;
 
 /**
  * RedirectException
@@ -28,8 +30,35 @@ class RedirectException extends Exception implements ResponsableInterface, HTTPE
      */
     protected $code = 302;
 
+    protected ?ResponseInterface $response = null;
+
+    /**
+     * @param ResponseInterface|string $message
+     */
+    public function __construct($message = '', int $code = 0, ?Throwable $previous = null)
+    {
+        if (! is_string($message) && ! $message instanceof ResponseInterface) {
+            throw new InvalidArgumentException(
+                'RedirectException::__construct() first argument must be a string or ResponseInterface',
+                0,
+                $this
+            );
+        }
+
+        if ($message instanceof ResponseInterface) {
+            $this->response = $message;
+            $message        = '';
+        }
+
+        parent::__construct($message, $code, $previous);
+    }
+
     public function getResponse(): ResponseInterface
     {
+        if (null !== $this->response) {
+            return $this->response;
+        }
+
         $logger   = Services::logger();
         $response = Services::response();
         $logger->info('REDIRECTED ROUTE at ' . $this->getMessage());

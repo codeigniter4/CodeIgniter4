@@ -14,6 +14,7 @@ namespace CodeIgniter;
 use CodeIgniter\Config\BaseService;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
@@ -35,6 +36,7 @@ use Config\Modules;
 use Config\Routing;
 use Config\Services;
 use Config\Session as SessionConfig;
+use Exception;
 use Kint;
 use RuntimeException;
 use stdClass;
@@ -599,10 +601,23 @@ final class CommonFunctionsTest extends CIUnitTestCase
     public function testForceHttpsNullRequestAndResponse()
     {
         $this->assertNull(Services::response()->header('Location'));
+        Services::response()->setCookie('force', 'cookie');
+        Services::response()->setHeader('Force', 'header');
+        Services::response()->setBody('default body');
 
+        try {
+            force_https();
+        } catch (Exception $e) {
+            $this->assertInstanceOf(RedirectException::class, $e);
+            $this->assertSame('https://example.com/', $e->getResponse()->header('Location')->getValue());
+            $this->assertFalse($e->getResponse()->hasCookie('force'));
+            $this->assertSame('header', $e->getResponse()->getHeaderLine('Force'));
+            $this->assertSame('', $e->getResponse()->getBody());
+            $this->assertSame(307, $e->getResponse()->getStatusCode());
+        }
+
+        $this->expectException(RedirectException::class);
         force_https();
-
-        $this->assertSame('https://example.com/', Services::response()->header('Location')->getValue());
     }
 
     /**
