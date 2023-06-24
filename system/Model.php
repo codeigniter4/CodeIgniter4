@@ -792,7 +792,7 @@ class Model extends BaseModel
      *
      * @param string $name Name
      *
-     * @return mixed
+     * @return array|BaseBuilder|bool|int|object|string|null
      */
     public function __get(string $name)
     {
@@ -821,7 +821,7 @@ class Model extends BaseModel
      * Provides direct access to method in the builder (if available)
      * and the database connection.
      *
-     * @return mixed
+     * @return array|BaseBuilder|bool|float|int|object|string|null
      */
     public function __call(string $name, array $params)
     {

@@ -732,7 +732,7 @@ class CodeIgniter
      * Caches the full response from the current request. Used for
      * full-page caching for very high performance.
      *
-     * @return mixed
+     * @return bool
      */
     public function cachePage(Cache $config)
     {
