@@ -12,7 +12,6 @@
 namespace CodeIgniter\HotReloader;
 
 use CodeIgniter\Exceptions\FrameworkException;
-use CodeIgniter\HotReloader\DirectoryHasher;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
