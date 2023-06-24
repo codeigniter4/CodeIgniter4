@@ -198,7 +198,7 @@
         overflow: hidden;
         overflow-y: auto;
         padding: 0 12px 0 12px;
-        
+
         // Give room for OS X scrollbar
         white-space: nowrap;
         z-index: 10000;
@@ -500,4 +500,14 @@
 
 .debug-bar-noverflow {
     overflow: hidden;
+}
+
+/* ENDLESS ROTATE */
+.rotate {
+    animation: rotate 9s linear infinite;
+}
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
 }
