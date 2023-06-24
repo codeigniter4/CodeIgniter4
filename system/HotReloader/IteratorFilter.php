@@ -17,8 +17,8 @@ use RecursiveIterator;
 /**
  * @internal
  *
- * @template-extends RecursiveFilterIterator<RecursiveIterator>
- * @template-implements RecursiveIterator<RecursiveIterator>
+ * @extends RecursiveFilterIterator<RecursiveIterator>
+ * @implements RecursiveIterator<RecursiveIterator>
  */
 final class IteratorFilter extends RecursiveFilterIterator implements RecursiveIterator
 {
