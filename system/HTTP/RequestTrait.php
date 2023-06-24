@@ -13,6 +13,7 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Validation\FormatRules;
+use Config\App;
 
 /**
  * Request Trait
@@ -63,7 +64,7 @@ trait RequestTrait
          * @deprecated $this->proxyIPs property will be removed in the future
          */
         // @phpstan-ignore-next-line
-        $proxyIPs = $this->proxyIPs ?? config('App')->proxyIPs;
+        $proxyIPs = $this->proxyIPs ?? config(App::class)->proxyIPs;
         // @phpstan-ignore-next-line
         if (! empty($proxyIPs) && (! is_array($proxyIPs) || is_int(array_key_first($proxyIPs)))) {
             throw new ConfigException(

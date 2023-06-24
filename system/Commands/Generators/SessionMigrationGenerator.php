@@ -14,6 +14,8 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorTrait;
+use Config\App;
+use Config\Migrations;
 
 /**
  * Generates a migration file for database sessions.
@@ -93,7 +95,7 @@ class SessionMigrationGenerator extends BaseCommand
         $data['session'] = true;
         $data['table']   = $this->getOption('t');
         $data['DBGroup'] = $this->getOption('g');
-        $data['matchIP'] = config('App')->sessionMatchIP ?? false;
+        $data['matchIP'] = config(App::class)->sessionMatchIP ?? false;
 
         $data['table']   = is_string($data['table']) ? $data['table'] : 'ci_sessions';
         $data['DBGroup'] = is_string($data['DBGroup']) ? $data['DBGroup'] : 'default';
@@ -106,6 +108,6 @@ class SessionMigrationGenerator extends BaseCommand
      */
     protected function basename(string $filename): string
     {
-        return gmdate(config('Migrations')->timestampFormat) . basename($filename);
+        return gmdate(config(Migrations::class)->timestampFormat) . basename($filename);
     }
 }

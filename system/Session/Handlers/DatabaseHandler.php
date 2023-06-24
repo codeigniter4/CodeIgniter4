@@ -74,7 +74,7 @@ class DatabaseHandler extends BaseHandler
         parent::__construct($config, $ipAddress);
 
         /** @var SessionConfig|null $session */
-        $session = config('Session');
+        $session = config(SessionConfig::class);
 
         // Store Session configurations
         if ($session instanceof SessionConfig) {

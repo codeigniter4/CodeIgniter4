@@ -14,6 +14,7 @@ namespace CodeIgniter\Test;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
+use Config\App;
 use Faker\Factory;
 use Faker\Generator;
 use InvalidArgumentException;
@@ -114,7 +115,7 @@ class Fabricator
 
         // If no locale was specified then use the App default
         if ($locale === null) {
-            $locale = config('App')->defaultLocale;
+            $locale = config(App::class)->defaultLocale;
         }
 
         // There is no easy way to retrieve the locale from Faker so we will store it

@@ -28,6 +28,7 @@ use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Router\Router;
 use Config\App;
 use Config\Cache;
+use Config\Feature;
 use Config\Kint as KintConfig;
 use Config\Services;
 use Exception;
@@ -268,7 +269,6 @@ class CodeIgniter
 
     private function configureKint(): void
     {
-        /** @var \Config\Kint $config */
         $config = config(KintConfig::class);
 
         Kint::$depth_limit         = $config->maxDepth;
@@ -455,7 +455,7 @@ class CodeIgniter
             // If any filters were specified within the routes file,
             // we need to ensure it's active for the current request
             if ($routeFilter !== null) {
-                $multipleFiltersEnabled = config('Feature')->multipleFilters ?? false;
+                $multipleFiltersEnabled = config(Feature::class)->multipleFilters ?? false;
                 if ($multipleFiltersEnabled) {
                     $filters->enableFilters($routeFilter, 'before');
                     $filters->enableFilters($routeFilter, 'after');
@@ -822,7 +822,7 @@ class CodeIgniter
         $this->benchmark->stop('routing');
 
         // for backward compatibility
-        $multipleFiltersEnabled = config('Feature')->multipleFilters ?? false;
+        $multipleFiltersEnabled = config(Feature::class)->multipleFilters ?? false;
         if (! $multipleFiltersEnabled) {
             return $this->router->getFilter();
         }
