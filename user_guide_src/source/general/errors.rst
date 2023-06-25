@@ -118,6 +118,11 @@ redirect code to use instead of the default (``302``, "temporary redirect"):
 
 .. literalinclude:: errors/011.php
 
+Also, an object of a class that implements ResponseInterface can be used as the first argument.
+This solution is suitable for cases where you need to add additional headers or cookies in the response.
+
+.. literalinclude:: errors/018.php
+
 .. _error-specify-http-status-code:
 
 Specify HTTP Status Code in Your Exception

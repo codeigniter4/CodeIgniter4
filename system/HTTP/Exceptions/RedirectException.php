@@ -12,10 +12,12 @@
 namespace CodeIgniter\HTTP\Exceptions;
 
 use CodeIgniter\Exceptions\HTTPExceptionInterface;
+use CodeIgniter\HTTP\ResponsableInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use Exception;
 use InvalidArgumentException;
+use LogicException;
 use Throwable;
 
 /**
@@ -48,6 +50,16 @@ class RedirectException extends Exception implements ResponsableInterface, HTTPE
         if ($message instanceof ResponseInterface) {
             $this->response = $message;
             $message        = '';
+
+            if ($this->response->getHeaderLine('Location') === '' && $this->response->getHeaderLine('Refresh') === '') {
+                throw new LogicException(
+                    'The Response object passed to RedirectException does not contain a redirect address.'
+                );
+            }
+
+            if ($this->response->getStatusCode() < 301 || $this->response->getStatusCode() > 308) {
+                $this->response->setStatusCode($this->code);
+            }
         }
 
         parent::__construct($message, $code, $previous);

@@ -9,9 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\HTTP\Exceptions;
-
-use CodeIgniter\HTTP\ResponseInterface;
+namespace CodeIgniter\HTTP;
 
 interface ResponsableInterface
 {

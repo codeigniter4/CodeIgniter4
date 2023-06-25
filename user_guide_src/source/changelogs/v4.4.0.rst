@@ -123,6 +123,9 @@ Others
 - **Request:** Added ``IncomingRequest::setValidLocales()`` method to set valid locales.
 - **Table:** Added ``Table::setSyncRowsWithHeading()`` method to synchronize row columns with headings. See :ref:`table-sync-rows-with-headings` for details.
 - **Error Handling:** Now you can use :ref:`custom-exception-handlers`.
+- **RedirectException:** can also take an object that implements ResponseInterface as its first argument.
+- **RedirectException:** implements ResponsableInterface
+- **force_https:** no longer terminates the application, but throws a RedirectException.
 
 Message Changes
 ***************
