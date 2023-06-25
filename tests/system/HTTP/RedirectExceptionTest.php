@@ -18,6 +18,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class RedirectExceptionTest extends TestCase
 {
