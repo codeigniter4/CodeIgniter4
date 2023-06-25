@@ -17,8 +17,7 @@ use RecursiveIterator;
 /**
  * @internal
  *
- * @extends RecursiveFilterIterator<RecursiveIterator>
- * @implements RecursiveIterator<RecursiveIterator>
+ * @psalm-suppress MissingTemplateParam
  */
 final class IteratorFilter extends RecursiveFilterIterator implements RecursiveIterator
 {
