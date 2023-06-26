@@ -321,8 +321,9 @@ XML, ORM, code &amp; buffer overflows.</p>
 <section id="codeigniter-provisions">
 <h3>CodeIgniter provisions<a class="headerlink" href="#codeigniter-provisions" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p><a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">HTTP library</span></a> provides for input field filtering &amp; content metadata</p></li>
-<li><p>Validation library</p></li>
+<li><p><a class="reference internal" href="../incoming/filters.html#invalidchars"><span class="std std-ref">InvalidChars</span></a> filter</p></li>
+<li><p><a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation</span></a> library</p></li>
+<li><p><a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">HTTP library</span></a> provides for <a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-filtering-input-data"><span class="std std-ref">input field filtering</span></a> &amp; content metadata</p></li>
 </ul>
 </section>
 </section>
@@ -345,6 +346,7 @@ getting more privileges than they are entitled to.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../libraries/sessions.html"><span class="doc">Session</span></a> library</p></li>
 <li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for CSRF validation</p></li>
+<li><p>An official authentication and authorization framework <a class="reference internal" href="../libraries/official_packages.html#shield"><span class="std std-ref">CodeIgniter Shield</span></a></p></li>
 <li><p>Easy to add third party authentication</p></li>
 </ul>
 </section>
@@ -364,8 +366,9 @@ that can be malicious when viewed by other users to the web site.</p>
 <section id="id4">
 <h3>CodeIgniter provisions<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p>esc function</p></li>
-<li><p>Validation library</p></li>
+<li><p><a class="reference internal" href="../general/common_functions.html#esc" title="esc"><code class="xref php php-func docutils literal notranslate"><span class="pre">esc()</span></code></a> function</p></li>
+<li><p><a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation</span></a> library</p></li>
+<li><p>Support for <a class="reference internal" href="../outgoing/response.html#content-security-policy"><span class="std std-ref">Content Security Policy</span></a></p></li>
 </ul>
 </section>
 </section>
@@ -386,7 +389,8 @@ for example database records or files.</p>
 <section id="id6">
 <h3>CodeIgniter provisions<a class="headerlink" href="#id6" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p>Validation library</p></li>
+<li><p><a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation</span></a> library</p></li>
+<li><p>An official authentication and authorization framework <a class="reference internal" href="../libraries/official_packages.html#shield"><span class="std std-ref">CodeIgniter Shield</span></a></p></li>
 <li><p>Easy to add third party authentication</p></li>
 </ul>
 </section>
@@ -427,7 +431,10 @@ transmission.</p>
 <section id="id10">
 <h3>CodeIgniter provisions<a class="headerlink" href="#id10" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p>Session keys stored encrypted</p></li>
+<li><p>The config for global secure access (<code class="docutils literal notranslate"><span class="pre">Config\App::$forceGlobalSecureRequests</span></code>)</p></li>
+<li><p><a class="reference internal" href="../general/common_functions.html#force_https" title="force_https"><code class="xref php php-func docutils literal notranslate"><span class="pre">force_https()</span></code></a> function</p></li>
+<li><p><a class="reference internal" href="../libraries/encryption.html"><span class="doc">Encryption Service</span></a></p></li>
+<li><p>The <a class="reference internal" href="../database/configuration.html#database-config-explanation-of-values"><span class="std std-ref">database config</span></a> (<code class="docutils literal notranslate"><span class="pre">encrypt</span></code>)</p></li>
 </ul>
 </section>
 </section>
@@ -448,8 +455,8 @@ transmission.</p>
 <section id="id12">
 <h3>CodeIgniter provisions<a class="headerlink" href="#id12" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p>Public folder, with application and system outside</p></li>
-<li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for CSRF validation</p></li>
+<li><p><a class="reference internal" href="structure.html#application-structure-public"><span class="std std-ref">Public</span></a> folder, with application and system outside</p></li>
+<li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for <a class="reference internal" href="../libraries/security.html#cross-site-request-forgery"><span class="std std-ref">CSRF validation</span></a></p></li>
 </ul>
 </section>
 </section>
@@ -468,7 +475,7 @@ application in which he/she is currently authenticated.</p>
 <section id="id14">
 <h3>CodeIgniter provisions<a class="headerlink" href="#id14" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for CSRF validation</p></li>
+<li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for <a class="reference internal" href="../libraries/security.html#cross-site-request-forgery"><span class="std std-ref">CSRF validation</span></a></p></li>
 </ul>
 </section>
 </section>
@@ -505,7 +512,7 @@ inappropriately.</p>
 <h3>CodeIgniter provisions<a class="headerlink" href="#id18" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">HTTP library</span></a> provides for …</p></li>
-<li><p><a class="reference internal" href="../libraries/sessions.html"><span class="doc">Session</span></a> library provides flashdata</p></li>
+<li><p><a class="reference internal" href="../libraries/sessions.html"><span class="doc">Session</span></a> library provides <a class="reference internal" href="../libraries/sessions.html#sessions-flashdata"><span class="std std-ref">Flashdata</span></a></p></li>
 </ul>
 </section>
 </section>
@@ -523,7 +530,7 @@ inappropriately.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 22, 2023.
+      <span class="lastupdated">Last updated on Jun 26, 2023.
       </span></p>
   </div>
 
