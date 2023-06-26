@@ -796,3 +796,14 @@
 .debug-bar-noverflow {
   overflow: hidden;
 }
+
+/* ENDLESS ROTATE */
+.rotate {
+  animation: rotate 9s linear infinite;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
