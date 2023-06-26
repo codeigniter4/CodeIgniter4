@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HotReloader;
 
+use Config\Toolbar;
 use RecursiveFilterIterator;
 use RecursiveIterator;
 
@@ -27,7 +28,7 @@ final class IteratorFilter extends RecursiveFilterIterator implements RecursiveI
     {
         parent::__construct($iterator);
 
-        $this->watchedExtensions = config('Toolbar')->watchedExtensions;
+        $this->watchedExtensions = config(Toolbar::class)->watchedExtensions;
     }
 
     /**

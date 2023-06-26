@@ -12,6 +12,7 @@
 namespace CodeIgniter\HotReloader;
 
 use CodeIgniter\Exceptions\FrameworkException;
+use Config\Toolbar;
 use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -40,7 +41,7 @@ final class DirectoryHasher
     {
         $hashes = [];
 
-        $watchedDirectories = config('Toolbar')->watchedDirectories;
+        $watchedDirectories = config(Toolbar::class)->watchedDirectories;
 
         foreach ($watchedDirectories as $directory) {
             if (is_dir(ROOTPATH . $directory)) {

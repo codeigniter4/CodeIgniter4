@@ -76,6 +76,7 @@ use Config\Migrations;
 use Config\Modules;
 use Config\Pager as PagerConfig;
 use Config\Paths;
+use Config\Routing;
 use Config\Services as AppServices;
 use Config\Session as SessionConfig;
 use Config\Toolbar as ToolbarConfig;
@@ -599,7 +600,7 @@ class Services extends BaseService
             return static::getSharedInstance('routes');
         }
 
-        return new RouteCollection(AppServices::locator(), config(Modules::class), config('Routing'));
+        return new RouteCollection(AppServices::locator(), config(Modules::class), config(Routing::class));
     }
 
     /**
