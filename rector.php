@@ -92,6 +92,8 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/system/Debug/Exceptions.php',
             // @TODO remove if deprecated $httpVerb is removed
             __DIR__ . '/system/Router/AutoRouterImproved.php',
+            // @TODO remove if deprecated $config is removed
+            __DIR__ . '/system/HTTP/Request.php',
         ],
 
         // check on constant compare
