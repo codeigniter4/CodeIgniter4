@@ -718,18 +718,6 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('Hi there', $response->getBody());
     }
 
-    public function testSendProxied()
-    {
-        $request = $this->getRequest([
-            'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 100,
-        ]);
-
-        $request->setOutput("HTTP/1.1 200 Connection established\x0d\x0a\x0d\x0aHi there");
-        $response = $request->get('answer');
-        $this->assertSame('Hi there', $response->getBody());
-    }
-
     /**
      * See: https://github.com/codeigniter4/CodeIgniter4/issues/3261
      */
@@ -775,6 +763,21 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
 
         $this->assertSame(200, $response->getStatusCode());
+    }
+
+    public function testSendProxied()
+    {
+        $request = $this->getRequest([
+            'base_uri' => 'http://www.foo.com/api/v1/',
+            'delay'    => 100,
+        ]);
+
+        $output = "HTTP/1.1 200 Connection established
+Proxy-Agent: Fortinet-Proxy/1.0\x0d\x0a\x0d\x0aHTTP/1.1 200 OK\x0d\x0a\x0d\x0aHi there";
+        $request->setOutput($output);
+
+        $response = $request->get('answer');
+        $this->assertSame('Hi there', $response->getBody());
     }
 
     /**
