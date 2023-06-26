@@ -186,8 +186,7 @@ class Session implements SessionInterface
 
         $this->config = $config;
 
-        /** @var CookieConfig $cookie */
-        $cookie = config('Cookie');
+        $cookie = config(CookieConfig::class);
 
         $this->cookie = (new Cookie($this->config->cookieName, '', [
             'expires'  => $this->config->expiration === 0 ? 0 : Time::now()->getTimestamp() + $this->config->expiration,

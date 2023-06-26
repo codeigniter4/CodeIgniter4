@@ -158,8 +158,7 @@ class Response extends Message implements ResponseInterface
 
         $this->cookieStore = new CookieStore([]);
 
-        /** @var CookieConfig $cookie */
-        $cookie = config('Cookie');
+        $cookie = config(CookieConfig::class);
 
         Cookie::setDefaults($cookie);
 

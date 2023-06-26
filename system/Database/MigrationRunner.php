@@ -142,7 +142,7 @@ class MigrationRunner
         $this->namespace = APP_NAMESPACE;
 
         // get default database group
-        $config      = config('Database');
+        $config      = config(Database::class);
         $this->group = $config->defaultGroup;
         unset($config);
 
@@ -844,7 +844,7 @@ class MigrationRunner
         }
 
         $instance = new $class();
-        $group    = $instance->getDBGroup() ?? config('Database')->defaultGroup;
+        $group    = $instance->getDBGroup() ?? config(Database::class)->defaultGroup;
 
         if (ENVIRONMENT !== 'testing' && $group === 'tests' && $this->groupFilter !== 'tests') {
             // @codeCoverageIgnoreStart

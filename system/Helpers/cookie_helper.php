@@ -67,8 +67,7 @@ if (! function_exists('get_cookie')) {
     function get_cookie($index, bool $xssClean = false, ?string $prefix = '')
     {
         if ($prefix === '') {
-            /** @var Cookie $cookie */
-            $cookie = config('Cookie');
+            $cookie = config(Cookie::class);
 
             $prefix = $cookie->prefix;
         }

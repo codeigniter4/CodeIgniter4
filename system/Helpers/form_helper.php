@@ -10,7 +10,9 @@
  */
 
 use CodeIgniter\Validation\Exceptions\ValidationException;
+use Config\App;
 use Config\Services;
+use Config\Validation;
 
 // CodeIgniter Form Helpers
 
@@ -50,7 +52,7 @@ if (! function_exists('form_open')) {
             $attributes .= ' method="post"';
         }
         if (stripos($attributes, 'accept-charset=') === false) {
-            $config = config('App');
+            $config = config(App::class);
             $attributes .= ' accept-charset="' . strtolower($config->charset) . '"';
         }
 
@@ -718,7 +720,7 @@ if (! function_exists('validation_list_errors')) {
      */
     function validation_list_errors(string $template = 'list'): string
     {
-        $config = config('Validation');
+        $config = config(Validation::class);
         $view   = Services::renderer();
 
         if (! array_key_exists($template, $config->templates)) {
@@ -738,7 +740,7 @@ if (! function_exists('validation_show_error')) {
      */
     function validation_show_error(string $field, string $template = 'single'): string
     {
-        $config = config('Validation');
+        $config = config(Validation::class);
         $view   = Services::renderer();
 
         $errors = array_filter(validation_errors(), static fn ($key) => preg_match(

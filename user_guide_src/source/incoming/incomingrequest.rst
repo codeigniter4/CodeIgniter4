@@ -173,6 +173,8 @@ You can also use ``getRawInputVar()``, to get the specified variable from raw st
 
 .. literalinclude:: incomingrequest/039.php
 
+.. _incomingrequest-filtering-input-data:
+
 Filtering Input Data
 ====================
 

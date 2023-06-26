@@ -214,6 +214,8 @@ This method also accepts an array of item keys to unset:
 
 .. literalinclude:: sessions/018.php
 
+.. _sessions-flashdata:
+
 Flashdata
 =========
 

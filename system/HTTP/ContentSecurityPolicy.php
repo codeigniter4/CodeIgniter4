@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use Config\App;
 use Config\ContentSecurityPolicy as ContentSecurityPolicyConfig;
 
 /**
@@ -241,7 +242,7 @@ class ContentSecurityPolicy
      */
     public function __construct(ContentSecurityPolicyConfig $config)
     {
-        $appConfig        = config('App');
+        $appConfig        = config(App::class);
         $this->CSPEnabled = $appConfig->CSPEnabled;
 
         foreach (get_object_vars($config) as $setting => $value) {

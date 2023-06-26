@@ -218,6 +218,8 @@ The filters bundled with CodeIgniter4 are: :doc:`Honeypot <../libraries/honeypot
 
 .. note:: The filters are executed in the order defined in the config file. However, if enabled, ``DebugToolbar`` is always executed last because it should be able to capture everything that happens in the other filters.
 
+.. _invalidchars:
+
 InvalidChars
 =============
 

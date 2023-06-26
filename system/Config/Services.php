@@ -61,6 +61,7 @@ use CodeIgniter\View\RendererInterface;
 use CodeIgniter\View\View;
 use Config\App;
 use Config\Cache;
+use Config\ContentSecurityPolicy as ContentSecurityPolicyConfig;
 use Config\ContentSecurityPolicy as CSPConfig;
 use Config\Database;
 use Config\Email as EmailConfig;
@@ -70,8 +71,11 @@ use Config\Filters as FiltersConfig;
 use Config\Format as FormatConfig;
 use Config\Honeypot as HoneypotConfig;
 use Config\Images;
+use Config\Logger as LoggerConfig;
 use Config\Migrations;
+use Config\Modules;
 use Config\Pager as PagerConfig;
+use Config\Paths;
 use Config\Services as AppServices;
 use Config\Session as SessionConfig;
 use Config\Toolbar as ToolbarConfig;
@@ -129,7 +133,7 @@ class Services extends BaseService
             return static::getSharedInstance('clirequest', $config);
         }
 
-        $config ??= config('App');
+        $config ??= config(App::class);
 
         return new CLIRequest($config);
     }
@@ -145,7 +149,7 @@ class Services extends BaseService
             return static::getSharedInstance('codeigniter', $config);
         }
 
-        $config ??= config('App');
+        $config ??= config(App::class);
 
         return new CodeIgniter($config);
     }
@@ -175,7 +179,7 @@ class Services extends BaseService
             return static::getSharedInstance('csp', $config);
         }
 
-        $config ??= config('ContentSecurityPolicy');
+        $config ??= config(ContentSecurityPolicyConfig::class);
 
         return new ContentSecurityPolicy($config);
     }
@@ -192,7 +196,7 @@ class Services extends BaseService
             return static::getSharedInstance('curlrequest', $options, $response, $config);
         }
 
-        $config ??= config('App');
+        $config ??= config(App::class);
         $response ??= new Response($config);
 
         return new CURLRequest(
@@ -217,7 +221,7 @@ class Services extends BaseService
         }
 
         if (empty($config) || ! (is_array($config) || $config instanceof EmailConfig)) {
-            $config = config('Email');
+            $config = config(EmailConfig::class);
         }
 
         return new Email($config);
@@ -236,7 +240,7 @@ class Services extends BaseService
             return static::getSharedInstance('encrypter', $config);
         }
 
-        $config ??= config('Encryption');
+        $config ??= config(EncryptionConfig::class);
         $encryption = new Encryption($config);
 
         return $encryption->initialize($config);
@@ -263,8 +267,7 @@ class Services extends BaseService
             return static::getSharedInstance('exceptions', $config, $request, $response);
         }
 
-        $config ??= config('Exceptions');
-        /** @var ExceptionsConfig $config */
+        $config ??= config(ExceptionsConfig::class);
 
         // @TODO remove instantiation of Response in the future.
         $response ??= AppServices::response();
@@ -286,7 +289,7 @@ class Services extends BaseService
             return static::getSharedInstance('filters', $config);
         }
 
-        $config ??= config('Filters');
+        $config ??= config(FiltersConfig::class);
 
         return new Filters($config, AppServices::request(), AppServices::response());
     }
@@ -302,7 +305,7 @@ class Services extends BaseService
             return static::getSharedInstance('format', $config);
         }
 
-        $config ??= config('Format');
+        $config ??= config(FormatConfig::class);
 
         return new Format($config);
     }
@@ -319,7 +322,7 @@ class Services extends BaseService
             return static::getSharedInstance('honeypot', $config);
         }
 
-        $config ??= config('Honeypot');
+        $config ??= config(HoneypotConfig::class);
 
         return new Honeypot($config);
     }
@@ -336,7 +339,7 @@ class Services extends BaseService
             return static::getSharedInstance('image', $handler, $config);
         }
 
-        $config ??= config('Images');
+        $config ??= config(Images::class);
         assert($config instanceof Images);
 
         $handler = $handler ?: $config->defaultHandler;
@@ -396,7 +399,7 @@ class Services extends BaseService
             return static::getSharedInstance('logger');
         }
 
-        return new Logger(config('Logger'));
+        return new Logger(config(LoggerConfig::class));
     }
 
     /**
@@ -410,7 +413,7 @@ class Services extends BaseService
             return static::getSharedInstance('migrations', $config, $db);
         }
 
-        $config ??= config('Migrations');
+        $config ??= config(Migrations::class);
 
         return new MigrationRunner($config, $db);
     }
@@ -444,7 +447,7 @@ class Services extends BaseService
             return static::getSharedInstance('pager', $config, $view);
         }
 
-        $config ??= config('Pager');
+        $config ??= config(PagerConfig::class);
         $view ??= AppServices::renderer();
 
         return new Pager($config, $view);
@@ -461,8 +464,8 @@ class Services extends BaseService
             return static::getSharedInstance('parser', $viewPath, $config);
         }
 
-        $viewPath = $viewPath ?: config('Paths')->viewDirectory;
-        $config ??= config('View');
+        $viewPath = $viewPath ?: config(Paths::class)->viewDirectory;
+        $config ??= config(ViewConfig::class);
 
         return new Parser($config, $viewPath, AppServices::locator(), CI_DEBUG, AppServices::logger());
     }
@@ -480,8 +483,8 @@ class Services extends BaseService
             return static::getSharedInstance('renderer', $viewPath, $config);
         }
 
-        $viewPath = $viewPath ?: config('Paths')->viewDirectory;
-        $config ??= config('View');
+        $viewPath = $viewPath ?: config(Paths::class)->viewDirectory;
+        $config ??= config(ViewConfig::class);
 
         return new View($config, $viewPath, AppServices::locator(), CI_DEBUG, AppServices::logger());
     }
@@ -540,7 +543,7 @@ class Services extends BaseService
             return static::getSharedInstance('request', $config);
         }
 
-        $config ??= config('App');
+        $config ??= config(App::class);
 
         return new IncomingRequest(
             $config,
@@ -561,7 +564,7 @@ class Services extends BaseService
             return static::getSharedInstance('response', $config);
         }
 
-        $config ??= config('App');
+        $config ??= config(App::class);
 
         return new Response($config);
     }
@@ -577,7 +580,7 @@ class Services extends BaseService
             return static::getSharedInstance('redirectresponse', $config);
         }
 
-        $config ??= config('App');
+        $config ??= config(App::class);
         $response = new RedirectResponse($config);
         $response->setProtocolVersion(AppServices::request()->getProtocolVersion());
 
@@ -596,7 +599,7 @@ class Services extends BaseService
             return static::getSharedInstance('routes');
         }
 
-        return new RouteCollection(AppServices::locator(), config('Modules'), config('Routing'));
+        return new RouteCollection(AppServices::locator(), config(Modules::class), config('Routing'));
     }
 
     /**
@@ -629,7 +632,7 @@ class Services extends BaseService
             return static::getSharedInstance('security', $config);
         }
 
-        $config ??= config('App');
+        $config ??= config(App::class);
 
         return new Security($config);
     }
@@ -649,8 +652,7 @@ class Services extends BaseService
 
         $logger = AppServices::logger();
 
-        /** @var SessionConfig $config */
-        $config = config('Session');
+        $config = config(SessionConfig::class);
         assert($config instanceof SessionConfig, 'Missing "Config/Session.php".');
 
         $driverName = $config->driver;
@@ -722,7 +724,7 @@ class Services extends BaseService
             return static::getSharedInstance('toolbar', $config);
         }
 
-        $config ??= config('Toolbar');
+        $config ??= config(ToolbarConfig::class);
 
         return new Toolbar($config);
     }
@@ -754,7 +756,7 @@ class Services extends BaseService
             return static::getSharedInstance('validation', $config);
         }
 
-        $config ??= config('Validation');
+        $config ??= config(ValidationConfig::class);
 
         return new Validation($config, AppServices::renderer());
     }

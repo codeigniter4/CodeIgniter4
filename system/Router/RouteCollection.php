@@ -1299,8 +1299,7 @@ class RouteCollection implements RouteCollectionInterface
 
         // Check invalid locale
         if ($locale !== null) {
-            /** @var App $config */
-            $config = config('App');
+            $config = config(App::class);
             if (! in_array($locale, $config->supportedLocales, true)) {
                 $locale = null;
             }

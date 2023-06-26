@@ -38,8 +38,9 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
-- :doc:`HTTP library <../incoming/incomingrequest>` provides for input field filtering & content metadata
-- Validation library
+- :ref:`invalidchars` filter
+- :doc:`../libraries/validation` library
+- :doc:`HTTP library <../incoming/incomingrequest>` provides for :ref:`input field filtering <incomingrequest-filtering-input-data>` & content metadata
 
 *********************************************
 A2 Weak authentication and session management
@@ -62,6 +63,7 @@ CodeIgniter provisions
 
 - :doc:`Session <../libraries/sessions>` library
 - :doc:`Security </libraries/security>` library provides for CSRF validation
+- An official authentication and authorization framework :ref:`CodeIgniter Shield <shield>`
 - Easy to add third party authentication
 
 *****************************
@@ -81,8 +83,9 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
-- esc function
-- Validation library
+- :php:func:`esc()` function
+- :doc:`../libraries/validation` library
+- Support for :ref:`content-security-policy`
 
 ***********************************
 A4 Insecure Direct Object Reference
@@ -103,7 +106,8 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
-- Validation library
+- :doc:`../libraries/validation` library
+- An official authentication and authorization framework :ref:`CodeIgniter Shield <shield>`
 - Easy to add third party authentication
 
 ****************************
@@ -144,7 +148,10 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
-- Session keys stored encrypted
+- The config for global secure access (``Config\App::$forceGlobalSecureRequests``)
+- :php:func:`force_https()` function
+- :doc:`../libraries/encryption`
+- The :ref:`database config <database-config-explanation-of-values>` (``encrypt``)
 
 ****************************************
 A7 Missing Function Level Access Control
@@ -165,8 +172,8 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
-- Public folder, with application and system outside
-- :doc:`Security </libraries/security>` library provides for CSRF validation
+- :ref:`Public <application-structure-public>` folder, with application and system outside
+- :doc:`Security </libraries/security>` library provides for :ref:`CSRF validation <cross-site-request-forgery>`
 
 ************************************
 A8 Cross Site Request Forgery (CSRF)
@@ -185,7 +192,7 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
-- :doc:`Security </libraries/security>` library provides for CSRF validation
+- :doc:`Security </libraries/security>` library provides for :ref:`CSRF validation <cross-site-request-forgery>`
 
 **********************************************
 A9 Using Components with Known Vulnerabilities
@@ -222,4 +229,4 @@ CodeIgniter provisions
 ======================
 
 - :doc:`HTTP library <../incoming/incomingrequest>` provides for ...
-- :doc:`Session <../libraries/sessions>` library provides flashdata
+- :doc:`Session <../libraries/sessions>` library provides :ref:`sessions-flashdata`

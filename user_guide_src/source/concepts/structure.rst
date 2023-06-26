@@ -58,6 +58,8 @@ extend the classes, or create new classes, to provide the desired functionality.
 
 All files in this directory live under the ``CodeIgniter`` namespace.
 
+.. _application-structure-public:
+
 public
 ======
 

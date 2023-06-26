@@ -111,8 +111,7 @@ abstract class BaseHandler implements SessionHandlerInterface
         $this->matchIP    = $config->matchIP;
         $this->savePath   = $config->savePath;
 
-        /** @var CookieConfig $cookie */
-        $cookie = config('Cookie');
+        $cookie = config(CookieConfig::class);
 
         // Session cookies have no prefix.
         $this->cookieDomain = $cookie->domain;

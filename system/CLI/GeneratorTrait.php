@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\CLI;
 
+use Config\Generators;
 use Config\Services;
 use Throwable;
 
@@ -267,7 +268,7 @@ trait GeneratorTrait
     protected function renderTemplate(array $data = []): string
     {
         try {
-            return view(config('Generators')->views[$this->name], $data, ['debug' => false]);
+            return view(config(Generators::class)->views[$this->name], $data, ['debug' => false]);
         } catch (Throwable $e) {
             log_message('error', (string) $e);
 
