@@ -725,7 +725,7 @@ final class CURLRequestTest extends CIUnitTestCase
             'delay'    => 100,
         ]);
 
-        $request->setOutput("HTTP/1.1 200 Connection established:\x0d\x0a\x0d\x0aHi there");
+        $request->setOutput("HTTP/1.1 200 Connection established\x0d\x0a\x0d\x0aHi there");
         $response = $request->get('answer');
         $this->assertSame('Hi there', $response->getBody());
     }
