@@ -137,6 +137,7 @@ Changes
 - **Config:** The deprecated Session items in **app/Config/App.php** has been removed.
 - **Config:** Routing settings have been moved to **app/Config/Routing.php** config file.
   See :ref:`Upgrading Guide <upgrade-440-config-routing>`.
+- **Request:** The deprecated property ``$proxyIPs`` has been removed.
 - **DownloadResponse:** When generating response headers, does not replace the ``Content-Disposition`` header if it was previously specified.
 - **Autoloader:** Before v4.4.0, CodeIgniter autoloader did not allow special
   characters that are illegal in filenames on certain operating systems.
