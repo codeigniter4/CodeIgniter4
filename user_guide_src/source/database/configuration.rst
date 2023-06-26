@@ -132,6 +132,8 @@ and decode it in the constructor in the Config class:
 
 .. literalinclude:: configuration/009.php
 
+.. _database-config-explanation-of-values:
+
 **********************
 Explanation of Values:
 **********************
