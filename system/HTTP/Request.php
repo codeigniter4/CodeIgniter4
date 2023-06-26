@@ -35,7 +35,7 @@ class Request extends OutgoingRequest implements RequestInterface
      *
      * @param App $config
      *
-     * @deprecated The $config is no longer needed and will be removed in a future version
+     * @deprecated 4.0.5 The $config is no longer needed and will be removed in a future version
      */
     public function __construct($config = null) // @phpstan-ignore-line
     {
@@ -54,7 +54,7 @@ class Request extends OutgoingRequest implements RequestInterface
      * @param string $ip    IP Address
      * @param string $which IP protocol: 'ipv4' or 'ipv6'
      *
-     * @deprecated Use Validation instead
+     * @deprecated 4.0.5 Use Validation instead
      *
      * @codeCoverageIgnore
      */
@@ -68,7 +68,7 @@ class Request extends OutgoingRequest implements RequestInterface
      *
      * @param bool $upper Whether to return in upper or lower case.
      *
-     * @deprecated The $upper functionality will be removed and this will revert to its PSR-7 equivalent
+     * @deprecated 4.0.5 The $upper functionality will be removed and this will revert to its PSR-7 equivalent
      *
      * @codeCoverageIgnore
      */
@@ -82,7 +82,7 @@ class Request extends OutgoingRequest implements RequestInterface
      *
      * @return $this
      *
-     * @deprecated Use withMethod() instead for immutability
+     * @deprecated 4.0.5 Use withMethod() instead for immutability
      *
      * @codeCoverageIgnore
      */
