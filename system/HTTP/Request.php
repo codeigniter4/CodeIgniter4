@@ -22,6 +22,15 @@ class Request extends OutgoingRequest implements RequestInterface
     use RequestTrait;
 
     /**
+     * Proxy IPs
+     *
+     * @var array<string, string>
+     *
+     * @deprecated 4.0.5 No longer used. Check the App config directly
+     */
+    protected $proxyIPs;
+
+    /**
      * Constructor.
      *
      * @param App $config
