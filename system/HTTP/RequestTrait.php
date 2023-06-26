@@ -60,17 +60,8 @@ trait RequestTrait
             'valid_ip',
         ];
 
-        /**
-         * @deprecated $this->proxyIPs property will be removed in the future
-         */
-        // @phpstan-ignore-next-line
-        $proxyIPs = $this->proxyIPs ?? config(App::class)->proxyIPs;
-        // @phpstan-ignore-next-line
+        $proxyIPs = config(App::class)->proxyIPs;
 
-        // Workaround for old Config\App file. App::$proxyIPs may be empty string.
-        if ($proxyIPs === '') {
-            $proxyIPs = [];
-        }
         if (! empty($proxyIPs) && (! is_array($proxyIPs) || is_int(array_key_first($proxyIPs)))) {
             throw new ConfigException(
                 'You must set an array with Proxy IP address key and HTTP header name value in Config\App::$proxyIPs.'
