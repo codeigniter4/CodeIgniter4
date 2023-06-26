@@ -194,8 +194,7 @@ class Security implements SecurityInterface
         }
 
         if ($this->isCSRFCookie()) {
-            /** @var CookieConfig $cookie */
-            $cookie = config('Cookie');
+            $cookie = config(CookieConfig::class);
 
             $this->configureCookie($cookie);
         } else {
