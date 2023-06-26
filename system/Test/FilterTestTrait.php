@@ -98,7 +98,7 @@ trait FilterTestTrait
         $this->response ??= clone Services::response();
 
         // Create our config and Filters instance to reuse for performance
-        $this->filtersConfig ??= config('Filters');
+        $this->filtersConfig ??= config(FiltersConfig::class);
         $this->filters ??= new Filters($this->filtersConfig, $this->request, $this->response);
 
         if ($this->collection === null) {

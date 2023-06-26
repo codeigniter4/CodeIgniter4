@@ -582,7 +582,7 @@ trait ResponseTrait
         }
 
         /** @var CookieConfig|null $cookieConfig */
-        $cookieConfig = config('Cookie');
+        $cookieConfig = config(CookieConfig::class);
 
         if ($cookieConfig instanceof CookieConfig) {
             $secure ??= $cookieConfig->secure;
