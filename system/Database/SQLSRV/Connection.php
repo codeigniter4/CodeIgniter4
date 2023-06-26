@@ -121,7 +121,7 @@ class Connection extends BaseConnection
             unset($connection['UID'], $connection['PWD']);
         }
 
-        if (strpos($this->hostname, ',') === false && $this->port !== '') {
+        if (strpos($this->hostname, ',') === false && $this->port !== '' && (int)$this->port !== 1433) {
             $this->hostname .= ', ' . $this->port;
         }
 
