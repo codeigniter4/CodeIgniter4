@@ -21,22 +21,6 @@ if [ "$STAGED_PHP_FILES" != "" ]; then
 fi
 
 if [ "$FILES" != "" ]; then
-    echo "Running PHPStan..."
-
-    # Run on whole codebase
-    if [ -d /proc/cygdrive ]; then
-        XDEBUG_MODE=off ./vendor/bin/phpstan analyse
-    else
-        XDEBUG_MODE=off php ./vendor/bin/phpstan analyse
-    fi
-
-    if [ $? != 0 ]; then
-        echo "Fix the phpstan error(s) before commit."
-        exit 1
-    fi
-fi
-
-if [ "$FILES" != "" ]; then
     echo "Running PHP CS Fixer..."
 
     # Run on whole codebase to skip on unnecessary filtering

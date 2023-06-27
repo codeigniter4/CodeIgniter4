@@ -1,3 +1,3 @@
 <?php
 
-throw new \CodeIgniter\HTTP\Exceptions\RedirectException($route);
+throw new \CodeIgniter\HTTP\Exceptions\RedirectException($uri);
