@@ -109,7 +109,7 @@ forcing a redirect to a specific route or URL:
 
 .. literalinclude:: errors/010.php
 
-``$route`` may be a named route, relative URI, or a complete URL. You can also supply a
+``$uri`` may be a URI path relative to baseURL, or a complete URL. You can also supply a
 redirect code to use instead of the default (``302``, "temporary redirect"):
 
 .. literalinclude:: errors/011.php
