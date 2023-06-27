@@ -174,24 +174,14 @@ class Security implements SecurityInterface
         $security = config(SecurityConfig::class);
 
         // Store CSRF-related configurations
-        if ($security instanceof SecurityConfig) {
-            $this->csrfProtection = $security->csrfProtection ?? $this->csrfProtection;
-            $this->tokenName      = $security->tokenName ?? $this->tokenName;
-            $this->headerName     = $security->headerName ?? $this->headerName;
-            $this->regenerate     = $security->regenerate ?? $this->regenerate;
-            $this->redirect       = $security->redirect ?? $this->redirect;
-            $this->rawCookieName  = $security->cookieName ?? $this->rawCookieName;
-            $this->expires        = $security->expires ?? $this->expires;
-            $this->tokenRandomize = $security->tokenRandomize ?? $this->tokenRandomize;
-        } else {
-            // `Config/Security.php` is absence
-            $this->tokenName     = $config->CSRFTokenName ?? $this->tokenName;
-            $this->headerName    = $config->CSRFHeaderName ?? $this->headerName;
-            $this->regenerate    = $config->CSRFRegenerate ?? $this->regenerate;
-            $this->rawCookieName = $config->CSRFCookieName ?? $this->rawCookieName;
-            $this->expires       = $config->CSRFExpire ?? $this->expires;
-            $this->redirect      = $config->CSRFRedirect ?? $this->redirect;
-        }
+        $this->csrfProtection = $security->csrfProtection ?? $this->csrfProtection;
+        $this->tokenName      = $security->tokenName ?? $this->tokenName;
+        $this->headerName     = $security->headerName ?? $this->headerName;
+        $this->regenerate     = $security->regenerate ?? $this->regenerate;
+        $this->redirect       = $security->redirect ?? $this->redirect;
+        $this->rawCookieName  = $security->cookieName ?? $this->rawCookieName;
+        $this->expires        = $security->expires ?? $this->expires;
+        $this->tokenRandomize = $security->tokenRandomize ?? $this->tokenRandomize;
 
         if ($this->isCSRFCookie()) {
             $cookie = config(CookieConfig::class);
