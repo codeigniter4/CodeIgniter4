@@ -104,6 +104,7 @@ Helpers and Functions
 
 - **Array:** Added :php:func:`array_group_by()` helper function to group data
   values together. Supports dot-notation syntax.
+- **Common:** :php:func:`force_https()` no longer terminates the application, but throws a ``RedirectException``.
 
 Others
 ======
@@ -124,8 +125,7 @@ Others
 - **Table:** Added ``Table::setSyncRowsWithHeading()`` method to synchronize row columns with headings. See :ref:`table-sync-rows-with-headings` for details.
 - **Error Handling:** Now you can use :ref:`custom-exception-handlers`.
 - **RedirectException:** can also take an object that implements ResponseInterface as its first argument.
-- **RedirectException:** implements ResponsableInterface
-- **force_https:** no longer terminates the application, but throws a RedirectException.
+- **RedirectException:** implements ResponsableInterface.
 
 Message Changes
 ***************
