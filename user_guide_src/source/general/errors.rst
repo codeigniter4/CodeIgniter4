@@ -104,6 +104,10 @@ This provides an exit code of 8.
 RedirectException
 -----------------
 
+.. note:: Since v4.4.0, the namespace of ``RedirectException`` has been changed.
+    Previously it was ``CodeIgniter\Router\Exceptions\RedirectException``. The
+    previous class is deprecated.
+
 This exception is a special case allowing for overriding of all other response routing and
 forcing a redirect to a specific route or URL:
 
