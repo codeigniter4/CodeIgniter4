@@ -75,6 +75,13 @@ performance.
 If you extend ``RouteCollection`` and use the ``$routes``, update your code to
 match the new array structure.
 
+Method Signature Changes
+========================
+
+Some method signature changes have been made. Classes that extend them should
+update their APIs to reflect the changes. See :ref:`v440-method-signature-changes`
+for details.
+
 Mandatory File Changes
 **********************
 

@@ -40,6 +40,8 @@ Interface Changes
 
 - **Validation:** Added the ``getValidated()`` method in ``ValidationInterface``.
 
+.. _v440-method-signature-changes:
+
 Method Signature Changes
 ========================
 
@@ -52,6 +54,8 @@ Method Signature Changes
 - **Session:** The first parameter of ``__construct()`` in ``BaseHandler``,
   ``DatabaseHandler``, ``FileHandler``, ``MemcachedHandler``, and ``RedisHandler``
   has been changed from ``Config\App`` to ``Config\Session``.
+- **Security:** The first parameter of ``Security::__construct()`` has been
+  changed from ``Config\App`` to ``Config\Security``.
 
 Enhancements
 ************
