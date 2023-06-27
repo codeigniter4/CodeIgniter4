@@ -33,6 +33,7 @@ use Config\Cookie;
 use Config\Logger;
 use Config\Modules;
 use Config\Routing;
+use Config\Security as SecurityConfig;
 use Config\Services;
 use Config\Session as SessionConfig;
 use Kint;
@@ -336,7 +337,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testCSRFToken()
     {
-        Services::injectMock('security', new MockSecurity(new App()));
+        Services::injectMock('security', new MockSecurity(new SecurityConfig()));
 
         $this->assertSame('csrf_test_name', csrf_token());
     }
