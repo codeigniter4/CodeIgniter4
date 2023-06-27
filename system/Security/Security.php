@@ -18,7 +18,6 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Session\Session;
-use Config\App;
 use Config\Cookie as CookieConfig;
 use Config\Security as SecurityConfig;
 use Config\Services;
@@ -188,12 +187,11 @@ class Security implements SecurityInterface
      * Stores our configuration and fires off the init() method to setup
      * initial state.
      */
-    public function __construct(App $config)
+    public function __construct(SecurityConfig $config)
     {
-        $security     = config(SecurityConfig::class);
-        $this->config = $security;
+        $this->config = $config;
 
-        $this->rawCookieName = $security->cookieName;
+        $this->rawCookieName = $config->cookieName;
 
         if ($this->isCSRFCookie()) {
             $cookie = config(CookieConfig::class);

@@ -43,7 +43,7 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testBasicConfigIsSaved()
     {
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity(new SecurityConfig());
 
         $hash = $security->getHash();
 
@@ -55,7 +55,7 @@ final class SecurityTest extends CIUnitTestCase
     {
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
 
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity(new SecurityConfig());
 
         $this->assertSame(
             '8b9218a55906f9dcc1dc263dce7f005a',
@@ -65,7 +65,7 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testGetHashSetsCookieWhenGETWithoutCSRFCookie()
     {
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity(new SecurityConfig());
 
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -80,7 +80,7 @@ final class SecurityTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD']   = 'GET';
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
 
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity(new SecurityConfig());
 
         $security->verify(new Request(new MockAppConfig()));
 
@@ -93,7 +93,7 @@ final class SecurityTest extends CIUnitTestCase
         $_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
 
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity(new SecurityConfig());
         $request  = new IncomingRequest(
             new MockAppConfig(),
             new URI('http://badurl.com'),
@@ -112,7 +112,7 @@ final class SecurityTest extends CIUnitTestCase
         $_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
 
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity(new SecurityConfig());
         $request  = new IncomingRequest(
             new MockAppConfig(),
             new URI('http://badurl.com'),
@@ -131,7 +131,7 @@ final class SecurityTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
 
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity(new SecurityConfig());
         $request  = new IncomingRequest(
             new MockAppConfig(),
             new URI('http://badurl.com'),
@@ -151,7 +151,7 @@ final class SecurityTest extends CIUnitTestCase
         $_POST['foo']                = 'bar';
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
 
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity(new SecurityConfig());
         $request  = new IncomingRequest(
             new MockAppConfig(),
             new URI('http://badurl.com'),
@@ -172,7 +172,7 @@ final class SecurityTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
 
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity(new SecurityConfig());
         $request  = new IncomingRequest(
             new MockAppConfig(),
             new URI('http://badurl.com'),
@@ -193,7 +193,7 @@ final class SecurityTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
 
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity(new SecurityConfig());
         $request  = new IncomingRequest(
             new MockAppConfig(),
             new URI('http://badurl.com'),
@@ -213,7 +213,7 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testSanitizeFilename()
     {
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity(new SecurityConfig());
 
         $filename = './<!--foo-->';
 
@@ -230,7 +230,7 @@ final class SecurityTest extends CIUnitTestCase
         $config->regenerate = false;
         Factories::injectMock('config', 'Security', $config);
 
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity($config);
         $request  = new IncomingRequest(
             new MockAppConfig(),
             new URI('http://badurl.com'),
@@ -255,7 +255,7 @@ final class SecurityTest extends CIUnitTestCase
         $config->regenerate = false;
         Factories::injectMock('config', 'Security', $config);
 
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity(new SecurityConfig());
         $request  = new IncomingRequest(
             new MockAppConfig(),
             new URI('http://badurl.com'),
@@ -281,7 +281,7 @@ final class SecurityTest extends CIUnitTestCase
         $config->regenerate = true;
         Factories::injectMock('config', 'Security', $config);
 
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity(new SecurityConfig());
         $request  = new IncomingRequest(
             new MockAppConfig(),
             new URI('http://badurl.com'),
@@ -298,7 +298,7 @@ final class SecurityTest extends CIUnitTestCase
 
     public function testGetters(): void
     {
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity(new SecurityConfig());
 
         $this->assertIsString($security->getHash());
         $this->assertIsString($security->getTokenName());

@@ -43,6 +43,7 @@ use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
 use Config\App;
 use Config\Exceptions;
+use Config\Security as SecurityConfig;
 use RuntimeException;
 use Tests\Support\Config\Services;
 
@@ -329,7 +330,7 @@ final class ServicesTest extends CIUnitTestCase
     public function testResetSingle()
     {
         Services::injectMock('response', new MockResponse(new App()));
-        Services::injectMock('security', new MockSecurity(new App()));
+        Services::injectMock('security', new MockSecurity(new SecurityConfig()));
         $response = service('response');
         $security = service('security');
         $this->assertInstanceOf(MockResponse::class, $response);
@@ -411,7 +412,7 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testSecurity()
     {
-        Services::injectMock('security', new MockSecurity(new App()));
+        Services::injectMock('security', new MockSecurity(new SecurityConfig()));
 
         $result = Services::security();
         $this->assertInstanceOf(Security::class, $result);

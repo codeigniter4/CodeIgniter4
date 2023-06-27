@@ -77,6 +77,7 @@ use Config\Modules;
 use Config\Pager as PagerConfig;
 use Config\Paths;
 use Config\Routing;
+use Config\Security as SecurityConfig;
 use Config\Services as AppServices;
 use Config\Session as SessionConfig;
 use Config\Toolbar as ToolbarConfig;
@@ -626,6 +627,8 @@ class Services extends BaseService
      * secure, most notably the CSRF protection tools.
      *
      * @return Security
+     *
+     * @TODO replace the first parameter type `?App` with `?SecurityConfig`
      */
     public static function security(?App $config = null, bool $getShared = true)
     {
@@ -633,7 +636,7 @@ class Services extends BaseService
             return static::getSharedInstance('security', $config);
         }
 
-        $config ??= config(App::class);
+        $config = config(SecurityConfig::class);
 
         return new Security($config);
     }
