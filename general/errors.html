@@ -445,14 +445,14 @@ or when it is temporarily lost:</p>
 forcing a redirect to a specific route or URL:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Router\Exceptions\RedirectException</span><span class="p">(</span><span class="nv">$route</span><span class="p">);</span>
+<span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Router\Exceptions\RedirectException</span><span class="p">(</span><span class="nv">$uri</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">$route</span></code> may be a named route, relative URI, or a complete URL. You can also supply a
+<p><code class="docutils literal notranslate"><span class="pre">$uri</span></code> may be a URI path relative to baseURL, or a complete URL. You can also supply a
 redirect code to use instead of the default (<code class="docutils literal notranslate"><span class="pre">302</span></code>, “temporary redirect”):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Router\Exceptions\RedirectException</span><span class="p">(</span><span class="nv">$route</span><span class="p">,</span> <span class="mi">301</span><span class="p">);</span>
+<span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Router\Exceptions\RedirectException</span><span class="p">(</span><span class="nv">$uri</span><span class="p">,</span> <span class="mi">301</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -543,7 +543,7 @@ setting the environment variable <code class="docutils literal notranslate"><spa
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 26, 2023.
+      <span class="lastupdated">Last updated on Jun 27, 2023.
       </span></p>
   </div>
 
