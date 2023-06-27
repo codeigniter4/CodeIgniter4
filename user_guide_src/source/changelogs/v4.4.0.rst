@@ -162,6 +162,10 @@ Deprecations
   ``$sessionExpiration``, ``$sessionSavePath``, ``$sessionMatchIP``,
   ``$sessionTimeToUpdate``, and ``$sessionRegenerateDestroy`` in ``Session`` are
   deprecated, and no longer used. Use ``$config`` instead.
+- **Security:** The property ``$csrfProtection``, ``$tokenRandomize``,
+  ``$tokenName``, ``$headerName``, ``$expires``, ``$regenerate``, and
+  ``$redirect`` in ``Security`` are deprecated, and no longer used. Use
+  ``$config`` instead.
 
 Bugs Fixed
 **********
