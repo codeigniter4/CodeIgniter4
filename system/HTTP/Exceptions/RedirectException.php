@@ -35,7 +35,8 @@ class RedirectException extends Exception implements ResponsableInterface, HTTPE
     protected ?ResponseInterface $response = null;
 
     /**
-     * @param ResponseInterface|string $message
+     * @param ResponseInterface|string $message Response object or a string containing a relative URI.
+     * @param int                      $code    HTTP status code to redirect if $message is a string.
      */
     public function __construct($message = '', int $code = 0, ?Throwable $previous = null)
     {
@@ -67,16 +68,16 @@ class RedirectException extends Exception implements ResponsableInterface, HTTPE
 
     public function getResponse(): ResponseInterface
     {
-        if (null !== $this->response) {
-            return $this->response;
+        if (null === $this->response) {
+            $this->response = Services::response()
+                ->redirect(base_url($this->getMessage()), 'auto', $this->getCode());
         }
 
-        $logger   = Services::logger();
-        $response = Services::response();
-        $logger->info('REDIRECTED ROUTE at ' . $this->getMessage());
+        Services::logger()->info(
+            'REDIRECTED ROUTE at '
+            . ($this->response->getHeaderLine('Location') ?: substr($this->response->getHeaderLine('Refresh'), 6))
+        );
 
-        // If the route is a 'redirect' route, it throws
-        // the exception with the $to as the message
-        return $response->redirect(base_url($this->getMessage()), 'auto', $this->getCode());
+        return $this->response;
     }
 }
