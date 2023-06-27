@@ -135,6 +135,7 @@ Changes
 - **Images:** The default quality for WebP in ``GDHandler`` has been changed from 80 to 90.
 - **Config:** The deprecated Cookie items in **app/Config/App.php** has been removed.
 - **Config:** The deprecated Session items in **app/Config/App.php** has been removed.
+- **Config:** The deprecated CSRF items in **app/Config/App.php** has been removed.
 - **Config:** Routing settings have been moved to **app/Config/Routing.php** config file.
   See :ref:`Upgrading Guide <upgrade-440-config-routing>`.
 - **DownloadResponse:** When generating response headers, does not replace the ``Content-Disposition`` header if it was previously specified.
