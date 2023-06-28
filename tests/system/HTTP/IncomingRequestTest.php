@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
@@ -973,7 +974,8 @@ final class IncomingRequestTest extends CIUnitTestCase
             '10.0.1.200'     => 'X-Forwarded-For',
             '192.168.5.0/24' => 'X-Forwarded-For',
         ];
-        $this->request = new Request($config);
+        Factories::injectMock('config', App::class, $config);
+        $this->request = new Request();
         $this->request->populateHeaders();
 
         // we should see the original forwarded address
@@ -990,7 +992,8 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config->proxyIPs = [
             '2001:db8::2:1' => 'X-Forwarded-For',
         ];
-        $this->request = new Request($config);
+        Factories::injectMock('config', App::class, $config);
+        $this->request = new Request();
         $this->request->populateHeaders();
 
         // we should see the original forwarded address
@@ -1075,7 +1078,8 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $config           = new App();
         $config->proxyIPs = ['192.168.5.0/24' => 'X-Forwarded-For'];
-        $this->request    = new Request($config);
+        Factories::injectMock('config', App::class, $config);
+        $this->request = new Request();
         $this->request->populateHeaders();
 
         // we should see the original forwarded address
@@ -1090,7 +1094,8 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $config           = new App();
         $config->proxyIPs = ['2001:db8:1234::/48' => 'X-Forwarded-For'];
-        $this->request    = new Request($config);
+        Factories::injectMock('config', App::class, $config);
+        $this->request = new Request();
         $this->request->populateHeaders();
 
         // we should see the original forwarded address
@@ -1166,7 +1171,8 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $config           = new App();
         $config->proxyIPs = ['192.168.5.0/28'];
-        $this->request    = new Request($config);
+        Factories::injectMock('config', App::class, $config);
+        $this->request = new Request();
         $this->request->populateHeaders();
 
         $this->request->getIPAddress();

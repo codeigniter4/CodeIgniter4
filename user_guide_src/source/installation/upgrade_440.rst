@@ -72,6 +72,12 @@ Mandatory File Changes
 Config Files
 ============
 
+app/Config/App.php
+------------------
+
+- The property ``$proxyIPs`` must be an array. If you don't use proxy servers,
+  it must be ``public array $proxyIPs = [];``.
+
 .. _upgrade-440-config-routing:
 
 app/Config/Routing.php
