@@ -776,8 +776,13 @@ See <a class="reference internal" href="../outgoing/response.html#content-securi
 </dl>
 <p>Checks to see if the page is currently being accessed via HTTPS. If it is, then
 nothing happens. If it is not, then the user is redirected back to the current URI
-but through HTTPS. Will set the HTTP Strict Transport Security header, which instructs
-modern browsers to automatically modify any HTTP requests to HTTPS requests for the $duration.</p>
+but through HTTPS. Will set the HTTP Strict Transport Security (HTST) header, which instructs
+modern browsers to automatically modify any HTTP requests to HTTPS requests for the <code class="docutils literal notranslate"><span class="pre">$duration</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function is also used when you set
+<code class="docutils literal notranslate"><span class="pre">Config\App:$forceGlobalSecureRequests</span></code> to true.</p>
+</div>
 </dd></dl>
 
 <dl class="php function">
@@ -1241,7 +1246,7 @@ instance every time.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 27, 2023.
+      <span class="lastupdated">Last updated on Jun 28, 2023.
       </span></p>
   </div>
 
