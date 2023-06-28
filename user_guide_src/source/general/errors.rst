@@ -109,11 +109,11 @@ RedirectException
     previous class is deprecated.
 
 This exception is a special case allowing for overriding of all other response routing and
-forcing a redirect to a specific route or URL:
+forcing a redirect to a specific URI:
 
 .. literalinclude:: errors/010.php
 
-``$uri`` may be a URI path relative to baseURL, or a complete URL. You can also supply a
+``$uri`` is a URI path relative to baseURL. You can also supply a
 redirect code to use instead of the default (``302``, "temporary redirect"):
 
 .. literalinclude:: errors/011.php

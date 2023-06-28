@@ -7,7 +7,7 @@ Localization
     :depth: 3
 
 ********************
-Working With Locales
+Working with Locales
 ********************
 
 CodeIgniter provides several tools to help you localize your application for different languages. While full
