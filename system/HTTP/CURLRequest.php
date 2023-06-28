@@ -550,6 +550,12 @@ class CURLRequest extends OutgoingRequest
             }
         }
 
+        // Proxy
+        if (isset($config['proxy'])) {
+            $curlOptions[CURLOPT_HTTPPROXYTUNNEL] = true;
+            $curlOptions[CURLOPT_PROXY]           = $config['proxy'];
+        }
+
         // Debug
         if ($config['debug']) {
             $curlOptions[CURLOPT_VERBOSE] = 1;
