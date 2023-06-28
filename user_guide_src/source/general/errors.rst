@@ -105,7 +105,7 @@ RedirectException
 -----------------
 
 This exception is a special case allowing for overriding of all other response routing and
-forcing a redirect to a specific route or URL:
+forcing a redirect to a specific URI:
 
 .. literalinclude:: errors/010.php
 
