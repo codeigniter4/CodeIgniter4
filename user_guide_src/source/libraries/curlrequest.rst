@@ -296,6 +296,17 @@ has been disabled. Any files that you want to send must be passed as instances o
         ``form_params`` for ``application/x-www-form-urlencoded`` requests, and ``multipart`` for ``multipart/form-data``
         requests.
 
+.. _curlrequest-request-options-proxy:
+
+proxy
+=====
+
+.. versionadded:: 4.4.0
+
+You can set a proxy by passing an associative array as the ``proxy`` option:
+
+.. literalinclude:: curlrequest/035.php
+
 query
 =====
 
