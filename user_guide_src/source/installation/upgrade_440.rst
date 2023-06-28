@@ -66,6 +66,15 @@ Interface Changes
 Some interface changes have been made. Classes that implement them should update
 their APIs to reflect the changes. See :ref:`v440-interface-changes` for details.
 
+RouteCollection::$routes
+========================
+
+The array structure of the protected property ``$routes`` has been modified for
+performance.
+
+If you extend ``RouteCollection`` and use the ``$routes``, update your code to
+match the new array structure.
+
 Mandatory File Changes
 **********************
 
