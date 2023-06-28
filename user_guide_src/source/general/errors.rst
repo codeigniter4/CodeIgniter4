@@ -118,7 +118,7 @@ redirect code to use instead of the default (``302``, "temporary redirect"):
 
 .. literalinclude:: errors/011.php
 
-Also, an object of a class that implements ResponseInterface can be used as the first argument.
+Also, since v4.4.0 an object of a class that implements ResponseInterface can be used as the first argument.
 This solution is suitable for cases where you need to add additional headers or cookies in the response.
 
 .. literalinclude:: errors/018.php
