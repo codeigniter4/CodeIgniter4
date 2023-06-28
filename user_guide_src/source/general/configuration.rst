@@ -15,7 +15,7 @@ the application configuration files in the **app/Config** folder.
     :local:
     :depth: 2
 
-Working With Configuration Files
+Working with Configuration Files
 ********************************
 
 You can access configuration files for your classes in several different ways.

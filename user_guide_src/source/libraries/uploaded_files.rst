@@ -231,7 +231,7 @@ In controller:
 .. note:: Using ``getFiles()`` is more appropriate.
 
 *********************
-Working With the File
+Working with the File
 *********************
 
 Once you've retrieved the UploadedFile instance, you can retrieve information about the file in safe ways, as well as
