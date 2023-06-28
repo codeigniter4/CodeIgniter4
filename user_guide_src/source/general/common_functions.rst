@@ -266,8 +266,11 @@ Miscellaneous Functions
 
     Checks to see if the page is currently being accessed via HTTPS. If it is, then
     nothing happens. If it is not, then the user is redirected back to the current URI
-    but through HTTPS. Will set the HTTP Strict Transport Security header, which instructs
-    modern browsers to automatically modify any HTTP requests to HTTPS requests for the $duration.
+    but through HTTPS. Will set the HTTP Strict Transport Security (HTST) header, which instructs
+    modern browsers to automatically modify any HTTP requests to HTTPS requests for the ``$duration``.
+
+    .. note:: This function is also used when you set
+        ``Config\App:$forceGlobalSecureRequests`` to true.
 
 .. php:function:: function_usable($function_name)
 
