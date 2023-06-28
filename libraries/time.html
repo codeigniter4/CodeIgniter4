@@ -335,8 +335,9 @@ compatibility, you can use deprecated <code class="docutils literal notranslate"
 <section id="instantiating">
 <h2><a class="toc-backref" href="#id2">Instantiating</a><a class="headerlink" href="#instantiating" title="Permalink to this headline"></a></h2>
 <p>There are several ways that a new Time instance can be created. The first is simply to create a new instance
-like any other class. When you do it this way, you can pass in a string representing the desired time. This can
-be any string that PHP’s strtotime function can parse:</p>
+like any other class.</p>
+<p>When you do it this way, you can pass in a string representing the desired time. This can
+be any string that PHP’s <a class="reference external" href="https://www.php.net/manual/en/function.strtotime.php">strtotime()</a> function can parse:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\I18n\Time</span><span class="p">;</span>
@@ -510,7 +511,7 @@ A full listing of values can be found <a class="reference external" href="https:
 <section id="todatetimestring">
 <span id="time-todatetimestring"></span><h3><a class="toc-backref" href="#id17">toDateTimeString()</a><a class="headerlink" href="#todatetimestring" title="Permalink to this headline"></a></h3>
 <p>This is the first of three helper methods to work with the <a class="reference external" href="https://www.php.net/manual/en/class.intldateformatter.php">IntlDateFormatter</a> without having to remember their values.
-This will return a localized version of string formatted as (Y-m-d H:i:s):</p>
+This will return a localized version of string formatted as (<code class="docutils literal notranslate"><span class="pre">Y-m-d</span> <span class="pre">H:i:s</span></code>):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Locale: en</span>
