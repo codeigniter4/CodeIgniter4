@@ -110,9 +110,10 @@ Libraries
 - **Validation:** Added ``Validation::getValidated()`` method that gets
   the actual validated data. See :ref:`validation-getting-validated-data` for details.
 - **Images:** The option ``$quality`` can now be used to compress WebP images.
-
 - **Uploaded Files:** Added ``UploadedFiles::getClientPath()`` method that returns
   the value of the `full_path` index of the file if it was uploaded via directory upload.
+- **CURLRequest:** Added a request option ``proxy``. See
+  :ref:`CURLRequest Class <curlrequest-request-options-proxy>`.
 
 Helpers and Functions
 =====================
