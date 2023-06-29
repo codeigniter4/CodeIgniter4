@@ -23,16 +23,22 @@ to change very little to move over to use Guzzle.
 Config for CURLRequest
 **********************
 
+.. _curlrequest-sharing-options:
+
 Sharing Options
 ===============
 
-Due to historical reasons, by default, the CURLRequest shares all the options between requests.
-If you send more than one request with an instance of the class,
-this behavior may cause an error request with unnecessary headers and body.
+.. note:: Since v4.4.0, the default value has been changed to ``false``. This
+    setting exists only for backward compatibility. New users do not need to
+    change the setting.
 
-You can change the behavior by editing the following config parameter value in **app/Config/CURLRequest.php** to ``false``:
+If you want to share all the options between requests, set ``$shareOptions`` to
+``true`` in **app/Config/CURLRequest.php**:
 
 .. literalinclude:: curlrequest/001.php
+
+If you send more than one request with an instance of the class, this behavior
+may cause an error request with unnecessary headers and body.
 
 .. note:: Before v4.2.0, the request body is not reset even if ``$shareOptions`` is false due to a bug.
 
