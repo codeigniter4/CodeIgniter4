@@ -174,7 +174,7 @@ Explanation of Values:
 **compress**    Whether or not to use client compression (``MySQLi`` only).
 **strictOn**    true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring strict SQL
                 while developing an application (``MySQLi`` only).
-**port**        The database port number - Empty for default port (or dynamic port with ``SQLSRV``)
+**port**        The database port number - Empty string ``''`` for default port (or dynamic port with ``SQLSRV``).
 **foreignKeys** true/false (boolean) - Whether or not to enable Foreign Key constraint (``SQLite3`` only).
 
                 .. important:: SQLite3 Foreign Key constraint is disabled by default.
