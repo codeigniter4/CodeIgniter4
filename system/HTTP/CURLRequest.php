@@ -387,6 +387,10 @@ class CURLRequest extends OutgoingRequest
             $output = substr($output, strpos($output, $breakString) + 4);
         }
 
+        if (strpos($output, 'HTTP/1.1 200 Connection established') === 0) {
+            $output = substr($output, strpos($output, $breakString) + 4);
+        }
+
         // If request and response have Digest
         if (isset($this->config['auth'][2]) && $this->config['auth'][2] === 'digest' && strpos($output, 'WWW-Authenticate: Digest') !== false) {
             $output = substr($output, strpos($output, $breakString) + 4);

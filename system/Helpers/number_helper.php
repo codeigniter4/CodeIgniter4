@@ -173,9 +173,9 @@ if (! function_exists('number_to_roman')) {
     /**
      * Convert a number to a roman numeral.
      *
-     * @param string $num it will convert to int
+     * @param int|string $num it will convert to int
      */
-    function number_to_roman(string $num): ?string
+    function number_to_roman($num): ?string
     {
         static $map = [
             'M'  => 1000,
