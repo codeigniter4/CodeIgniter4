@@ -22,6 +22,7 @@ use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\ResponsableInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RedirectException as DeprecatedRedirectException;
@@ -337,20 +338,17 @@ class CodeIgniter
         $this->getRequestObject();
         $this->getResponseObject();
 
-        $this->forceSecureAccess();
-
         $this->spoofRequestMethod();
 
         try {
             $this->response = $this->handleRequest($routes, config(Cache::class), $returnResponse);
-        } catch (RedirectException|DeprecatedRedirectException $e) {
+        } catch (ResponsableInterface|DeprecatedRedirectException $e) {
             $this->outputBufferingEnd();
-            $logger = Services::logger();
-            $logger->info('REDIRECTED ROUTE at ' . $e->getMessage());
+            if ($e instanceof DeprecatedRedirectException) {
+                $e = new RedirectException($e->getMessage(), $e->getCode(), $e);
+            }
 
-            // If the route is a 'redirect' route, it throws
-            // the exception with the $to as the message
-            $this->response->redirect(base_url($e->getMessage()), 'auto', $e->getCode());
+            $this->response = $e->getResponse();
         } catch (PageNotFoundException $e) {
             $this->response = $this->display404errors($e);
         } catch (Throwable $e) {
@@ -419,6 +417,8 @@ class CodeIgniter
      */
     protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
     {
+        $this->forceSecureAccess();
+
         if ($this->request instanceof IncomingRequest && strtolower($this->request->getMethod()) === 'cli') {
             return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
         }

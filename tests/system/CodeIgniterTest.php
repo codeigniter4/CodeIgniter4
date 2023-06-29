@@ -441,9 +441,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $response = $this->getPrivateProperty($codeigniter, 'response');
         $this->assertNull($response->header('Location'));
 
-        ob_start();
-        $codeigniter->run();
-        ob_get_clean();
+        $response = $codeigniter->run(null, true);
 
         $this->assertSame('https://example.com/', $response->header('Location')->getValue());
     }

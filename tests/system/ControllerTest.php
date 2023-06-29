@@ -12,6 +12,7 @@
 namespace CodeIgniter;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\Response;
@@ -75,10 +76,13 @@ final class ControllerTest extends CIUnitTestCase
         $original = $_SERVER;
         $_SERVER  = ['HTTPS' => 'on'];
         // make sure we can instantiate one
-        $this->controller = new class () extends Controller {
-            protected $forceHTTPS = 1;
-        };
-        $this->controller->initController($this->request, $this->response, $this->logger);
+        try {
+            $this->controller = new class () extends Controller {
+                protected $forceHTTPS = 1;
+            };
+            $this->controller->initController($this->request, $this->response, $this->logger);
+        } catch (RedirectException $e) {
+        }
 
         $this->assertInstanceOf(Controller::class, $this->controller);
         $_SERVER = $original; // restore so code coverage doesn't break

@@ -104,6 +104,7 @@ Helpers and Functions
 
 - **Array:** Added :php:func:`array_group_by()` helper function to group data
   values together. Supports dot-notation syntax.
+- **Common:** :php:func:`force_https()` no longer terminates the application, but throws a ``RedirectException``.
 
 Others
 ======
@@ -123,6 +124,8 @@ Others
 - **Request:** Added ``IncomingRequest::setValidLocales()`` method to set valid locales.
 - **Table:** Added ``Table::setSyncRowsWithHeading()`` method to synchronize row columns with headings. See :ref:`table-sync-rows-with-headings` for details.
 - **Error Handling:** Now you can use :ref:`custom-exception-handlers`.
+- **RedirectException:** can also take an object that implements ResponseInterface as its first argument.
+- **RedirectException:** implements ResponsableInterface.
 
 Message Changes
 ***************
@@ -146,6 +149,10 @@ Changes
   this restriction has been removed.
 - **RouteCollection:** The array structure of the protected property ``$routes``
   has been modified for performance.
+- **HSTS:** Now :php:func:`force_https()` or
+  ``Config\App::$forceGlobalSecureRequests = true`` sets the HTTP status code 307,
+  which allows the HTTP request method to be preserved after the redirect.
+  In previous versions, it was 302.
 
 Deprecations
 ************
