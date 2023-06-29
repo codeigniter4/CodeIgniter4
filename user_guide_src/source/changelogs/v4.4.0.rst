@@ -149,6 +149,10 @@ Changes
   this restriction has been removed.
 - **RouteCollection:** The array structure of the protected property ``$routes``
   has been modified for performance.
+- **HSTS:** Now :php:func:`force_https()` or
+  ``Config\App::$forceGlobalSecureRequests = true`` sets the HTTP status code 307,
+  which allows the HTTP request method to be preserved after the redirect.
+  In previous versions, it was 302.
 
 Deprecations
 ************
