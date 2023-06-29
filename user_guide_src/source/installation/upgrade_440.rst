@@ -66,6 +66,17 @@ Interface Changes
 Some interface changes have been made. Classes that implement them should update
 their APIs to reflect the changes. See :ref:`v440-interface-changes` for details.
 
+Method Signature Changes
+========================
+
+Some method signature changes have been made. Classes that extend them should
+update their APIs to reflect the changes. See :ref:`v440-method-signature-changes`
+for details.
+
+Also, the parameter types of some constructors and ``Services::security()`` have changed.
+If you call them with the parameters, change the parameter values.
+See :ref:`v440-parameter-type-changes` for details.
+
 RouteCollection::$routes
 ========================
 
@@ -113,6 +124,16 @@ The Cookie config items in **app/Config/App.php** are no longer used.
 1. Copy **app/Config/Cookie.php** from the new framework to your **app/Config**
    directory, and configure it.
 2. Remove the properties (from ``$cookiePrefix`` to ``$cookieSameSite``) in
+   **app/Config/App.php**.
+
+app/Config/Security.php
+-----------------------
+
+The CSRF config items in **app/Config/App.php** are no longer used.
+
+1. Copy **app/Config/Security.php** from the new framework to your **app/Config**
+   directory, and configure it.
+2. Remove the properties (from ``$CSRFTokenName`` to ``$CSRFSameSite``) in
    **app/Config/App.php**.
 
 app/Config/Session.php

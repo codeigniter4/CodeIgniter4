@@ -40,18 +40,33 @@ Interface Changes
 
 - **Validation:** Added the ``getValidated()`` method in ``ValidationInterface``.
 
+.. _v440-method-signature-changes:
+
 Method Signature Changes
 ========================
 
-- **Routing:** The third parameter ``Routing $routing`` has been added to
-  ``RouteCollection::__construct()``.
-- **Validation:** The method signature of ``Validation::check()`` has been changed.
-  The ``string`` typehint on the ``$rule`` parameter was removed.
+.. _v440-parameter-type-changes:
+
+Parameter Type Changes
+----------------------
+
+- **Services:** The first parameter of ``Services::security()`` has been
+  changed from ``Config\App`` to ``Config\Security``.
 - **Session:** The second parameter of ``Session::__construct()`` has been
   changed from ``Config\App`` to ``Config\Session``.
 - **Session:** The first parameter of ``__construct()`` in ``BaseHandler``,
   ``DatabaseHandler``, ``FileHandler``, ``MemcachedHandler``, and ``RedisHandler``
   has been changed from ``Config\App`` to ``Config\Session``.
+- **Security:** The first parameter of ``Security::__construct()`` has been
+  changed from ``Config\App`` to ``Config\Security``.
+- **Validation:** The method signature of ``Validation::check()`` has been changed.
+  The ``string`` typehint on the ``$rule`` parameter was removed.
+
+Added Parameters
+----------------
+
+- **Routing:** The third parameter ``Routing $routing`` has been added to
+  ``RouteCollection::__construct()``.
 
 Enhancements
 ************
@@ -138,6 +153,7 @@ Changes
 - **Images:** The default quality for WebP in ``GDHandler`` has been changed from 80 to 90.
 - **Config:** The deprecated Cookie items in **app/Config/App.php** has been removed.
 - **Config:** The deprecated Session items in **app/Config/App.php** has been removed.
+- **Config:** The deprecated CSRF items in **app/Config/App.php** has been removed.
 - **Config:** Routing settings have been moved to **app/Config/Routing.php** config file.
   See :ref:`Upgrading Guide <upgrade-440-config-routing>`.
 - **DownloadResponse:** When generating response headers, does not replace the ``Content-Disposition`` header if it was previously specified.
@@ -168,6 +184,10 @@ Deprecations
   ``$sessionExpiration``, ``$sessionSavePath``, ``$sessionMatchIP``,
   ``$sessionTimeToUpdate``, and ``$sessionRegenerateDestroy`` in ``Session`` are
   deprecated, and no longer used. Use ``$config`` instead.
+- **Security:** The property ``$csrfProtection``, ``$tokenRandomize``,
+  ``$tokenName``, ``$headerName``, ``$expires``, ``$regenerate``, and
+  ``$redirect`` in ``Security`` are deprecated, and no longer used. Use
+  ``$config`` instead.
 
 Bugs Fixed
 **********

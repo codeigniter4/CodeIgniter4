@@ -77,6 +77,7 @@ use Config\Modules;
 use Config\Pager as PagerConfig;
 use Config\Paths;
 use Config\Routing;
+use Config\Security as SecurityConfig;
 use Config\Services as AppServices;
 use Config\Session as SessionConfig;
 use Config\Toolbar as ToolbarConfig;
@@ -627,13 +628,13 @@ class Services extends BaseService
      *
      * @return Security
      */
-    public static function security(?App $config = null, bool $getShared = true)
+    public static function security(?SecurityConfig $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('security', $config);
         }
 
-        $config ??= config(App::class);
+        $config ??= config(SecurityConfig::class);
 
         return new Security($config);
     }

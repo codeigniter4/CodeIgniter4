@@ -13,7 +13,7 @@ namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockSecurity;
-use Config\App;
+use Config\Security as SecurityConfig;
 use Tests\Support\Config\Services;
 
 /**
@@ -32,7 +32,7 @@ final class SecurityHelperTest extends CIUnitTestCase
 
     public function testSanitizeFilenameSimpleSuccess()
     {
-        Services::injectMock('security', new MockSecurity(new App()));
+        Services::injectMock('security', new MockSecurity(new SecurityConfig()));
 
         $this->assertSame('hello.doc', sanitize_filename('hello.doc'));
     }

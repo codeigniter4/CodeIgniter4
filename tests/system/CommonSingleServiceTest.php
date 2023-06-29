@@ -15,7 +15,7 @@ use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockSecurity;
-use Config\App;
+use Config\Security as SecurityConfig;
 use ReflectionClass;
 use ReflectionMethod;
 
@@ -31,7 +31,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
      */
     public function testSingleServiceWithNoParamsSupplied(string $service): void
     {
-        Services::injectMock('security', new MockSecurity(new App()));
+        Services::injectMock('security', new MockSecurity(new SecurityConfig()));
 
         $service1 = single_service($service);
         $service2 = single_service($service);

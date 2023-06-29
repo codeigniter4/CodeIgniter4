@@ -34,6 +34,7 @@ use Config\Cookie;
 use Config\Logger;
 use Config\Modules;
 use Config\Routing;
+use Config\Security as SecurityConfig;
 use Config\Services;
 use Config\Session as SessionConfig;
 use Exception;
@@ -338,7 +339,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testCSRFToken()
     {
-        Services::injectMock('security', new MockSecurity(new App()));
+        Services::injectMock('security', new MockSecurity(new SecurityConfig()));
 
         $this->assertSame('csrf_test_name', csrf_token());
     }
@@ -498,7 +499,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
     public function testSlashItem()
     {
         $this->assertSame('en/', slash_item('defaultLocale')); // en
-        $this->assertSame('7200/', slash_item('CSRFExpire')); // int 7200
         $this->assertSame('', slash_item('negotiateLocale')); // false
     }
 
