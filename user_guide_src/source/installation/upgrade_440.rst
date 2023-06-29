@@ -66,6 +66,17 @@ Interface Changes
 Some interface changes have been made. Classes that implement them should update
 their APIs to reflect the changes. See :ref:`v440-interface-changes` for details.
 
+Method Signature Changes
+========================
+
+Some method signature changes have been made. Classes that extend them should
+update their APIs to reflect the changes. See :ref:`v440-method-signature-changes`
+for details.
+
+Also, the parameter types of some constructors and ``Services::security()`` have changed.
+If you call them with the parameters, change the parameter values.
+See :ref:`v440-parameter-type-changes` for details.
+
 RouteCollection::$routes
 ========================
 
@@ -74,13 +85,6 @@ performance.
 
 If you extend ``RouteCollection`` and use the ``$routes``, update your code to
 match the new array structure.
-
-Method Signature Changes
-========================
-
-Some method signature changes have been made. Classes that extend them should
-update their APIs to reflect the changes. See :ref:`v440-method-signature-changes`
-for details.
 
 Mandatory File Changes
 **********************

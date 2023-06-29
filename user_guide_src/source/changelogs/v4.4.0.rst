@@ -45,12 +45,13 @@ Interface Changes
 Method Signature Changes
 ========================
 
+.. _v440-parameter-type-changes:
+
+Parameter Type Changes
+----------------------
+
 - **Services:** The first parameter of ``Services::security()`` has been
   changed from ``Config\App`` to ``Config\Security``.
-- **Routing:** The third parameter ``Routing $routing`` has been added to
-  ``RouteCollection::__construct()``.
-- **Validation:** The method signature of ``Validation::check()`` has been changed.
-  The ``string`` typehint on the ``$rule`` parameter was removed.
 - **Session:** The second parameter of ``Session::__construct()`` has been
   changed from ``Config\App`` to ``Config\Session``.
 - **Session:** The first parameter of ``__construct()`` in ``BaseHandler``,
@@ -58,6 +59,14 @@ Method Signature Changes
   has been changed from ``Config\App`` to ``Config\Session``.
 - **Security:** The first parameter of ``Security::__construct()`` has been
   changed from ``Config\App`` to ``Config\Security``.
+- **Validation:** The method signature of ``Validation::check()`` has been changed.
+  The ``string`` typehint on the ``$rule`` parameter was removed.
+
+Added Parameters
+----------------
+
+- **Routing:** The third parameter ``Routing $routing`` has been added to
+  ``RouteCollection::__construct()``.
 
 Enhancements
 ************
