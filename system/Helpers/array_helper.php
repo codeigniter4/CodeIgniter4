@@ -103,7 +103,7 @@ if (! function_exists('array_deep_search')) {
     /**
      * Returns the value of an element at a key in an array of uncertain depth.
      *
-     * @param float|int|string $key
+     * @param int|string $key
      *
      * @return array|bool|float|int|object|string|null
      */
