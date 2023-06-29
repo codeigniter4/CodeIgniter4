@@ -153,6 +153,8 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
+- app/Config/CURLRequest.php
+    - The default value of :ref:`$shareOptions <curlrequest-sharing-options>` has been change to ``false``.
 - app/Config/Exceptions.php
     - Added the new method ``handler()`` that define custom Exception Handlers.
       See :ref:`custom-exception-handlers`.
