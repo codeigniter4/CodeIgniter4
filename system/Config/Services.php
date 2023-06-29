@@ -627,16 +627,14 @@ class Services extends BaseService
      * secure, most notably the CSRF protection tools.
      *
      * @return Security
-     *
-     * @TODO replace the first parameter type `?App` with `?SecurityConfig`
      */
-    public static function security(?App $config = null, bool $getShared = true)
+    public static function security(?SecurityConfig $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('security', $config);
         }
 
-        $config = config(SecurityConfig::class);
+        $config ??= config(SecurityConfig::class);
 
         return new Security($config);
     }

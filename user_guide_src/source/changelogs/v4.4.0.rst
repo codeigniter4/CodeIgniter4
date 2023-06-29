@@ -45,6 +45,8 @@ Interface Changes
 Method Signature Changes
 ========================
 
+- **Services:** The first parameter of ``Services::security()`` has been
+  changed from ``Config\App`` to ``Config\Security``.
 - **Routing:** The third parameter ``Routing $routing`` has been added to
   ``RouteCollection::__construct()``.
 - **Validation:** The method signature of ``Validation::check()`` has been changed.
