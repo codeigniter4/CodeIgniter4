@@ -1711,7 +1711,7 @@ abstract class BaseModel
      *
      * @param string $name Name
      *
-     * @return array|bool|int|object|string|null
+     * @return array|bool|float|int|object|string|null
      */
     public function __get(string $name)
     {
