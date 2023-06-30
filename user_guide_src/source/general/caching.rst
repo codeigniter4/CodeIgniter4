@@ -21,8 +21,8 @@ How Does Caching Work?
 
 Caching can be enabled on a per-page basis, and you can set the length
 of time that a page should remain cached before being refreshed. When a
-page is loaded for the first time, the file will be cached using the
-currently configured cache engine. On subsequent page loads, the cache file
+page is loaded for the first time, the page will be cached using the
+currently configured cache engine. On subsequent page loads, the cache
 will be retrieved and sent to the requesting user's browser. If it has
 expired, it will be deleted and refreshed before being sent to the
 browser.
@@ -73,12 +73,12 @@ the order that it appears, so place it wherever it seems most logical to
 you. Once the tag is in place, your pages will begin being cached.
 
 .. important:: If you change configuration options that might affect
-    your output, you have to manually delete your cache files.
+    your output, you have to manually delete your cache.
 
 Deleting Caches
 ===============
 
-If you no longer wish to cache a file you can remove the caching tag and
+If you no longer wish to cache a page you can remove the caching tag and
 it will no longer be refreshed when it expires.
 
 .. note:: Removing the tag will not delete the cache immediately. It will
