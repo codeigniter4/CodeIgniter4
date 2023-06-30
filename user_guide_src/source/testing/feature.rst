@@ -21,6 +21,8 @@ are called if you implement your own methods.
 
 .. literalinclude:: feature/001.php
 
+.. _feature-requesting-a-page:
+
 Requesting a Page
 =================
 
@@ -32,7 +34,8 @@ To do this, you use the ``call()`` method.
 3. The third parameter ``$params`` accepts an array that is used to populate the
    superglobal variables for the HTTP verb you are using. So, a method of **GET**
    would have the **$_GET** variable populated, while a **POST** request would
-   have the **$_POST** array populated.
+   have the **$_POST** array populated. The ``$params`` is also used in
+   :ref:`feature-formatting-the-request`.
 
    .. note:: The ``$params`` array does not make sense for every HTTP verb, but is
       included for consistency.
@@ -82,6 +85,8 @@ to send out emails. You can tell the system to skip any event handling with the 
 
 .. literalinclude:: feature/007.php
 
+.. _feature-formatting-the-request:
+
 Formatting the Request
 -----------------------
 
@@ -95,6 +100,8 @@ body of the request in the given format.
 This will also set the `Content-Type` header for your request accordingly.
 
 .. literalinclude:: feature/008.php
+
+.. _feature-setting-the-body:
 
 Setting the Body
 ----------------
