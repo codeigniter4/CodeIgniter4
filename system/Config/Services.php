@@ -13,6 +13,7 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Cache\PageCache;
 use CodeIgniter\CLI\Commands;
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Database\ConnectionInterface;
@@ -436,6 +437,23 @@ class Services extends BaseService
         $request ??= AppServices::request();
 
         return new Negotiate($request);
+    }
+
+    /**
+     * Return the PageCache.
+     *
+     * @return PageCache
+     */
+    public static function pagecache(?Cache $config = null, ?CacheInterface $cache = null, bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('pagecache', $config, $cache);
+        }
+
+        $config ??= config(Cache::class);
+        $cache ??= AppServices::cache();
+
+        return new PageCache($config, $cache);
     }
 
     /**

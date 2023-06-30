@@ -12,6 +12,7 @@
 namespace CodeIgniter;
 
 use Closure;
+use CodeIgniter\Cache\PageCache;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
@@ -176,12 +177,19 @@ class CodeIgniter
     protected int $bufferLevel;
 
     /**
+     * Web Page Caching
+     */
+    protected PageCache $pageCache;
+
+    /**
      * Constructor.
      */
     public function __construct(App $config)
     {
         $this->startTime = microtime(true);
         $this->config    = $config;
+
+        $this->pageCache = Services::pagecache();
     }
 
     /**
@@ -518,7 +526,7 @@ class CodeIgniter
             // so that we can have live speed updates along the way.
             // Must be run after filters to preserve the Response headers.
             if (static::$cacheTTL > 0) {
-                $this->cachePage($cacheConfig);
+                $this->pageCache->cachePage($this->request, $this->response, static::$cacheTTL);
             }
 
             // Update the performance metrics
@@ -674,27 +682,11 @@ class CodeIgniter
      */
     public function displayCache(Cache $config)
     {
-        if ($cachedResponse = cache()->get($this->generateCacheName($config))) {
-            $cachedResponse = unserialize($cachedResponse);
-            if (! is_array($cachedResponse) || ! isset($cachedResponse['output']) || ! isset($cachedResponse['headers'])) {
-                throw new Exception('Error unserializing page cache');
-            }
-
-            $headers = $cachedResponse['headers'];
-            $output  = $cachedResponse['output'];
-
-            // Clear all default headers
-            foreach (array_keys($this->response->headers()) as $key) {
-                $this->response->removeHeader($key);
-            }
-
-            // Set cached headers
-            foreach ($headers as $name => $value) {
-                $this->response->setHeader($name, $value);
-            }
+        if ($cachedResponse = $this->pageCache->getCachedResponse($this->request, $this->response)) {
+            $this->response = $cachedResponse;
 
             $this->totalTime = $this->benchmark->getElapsedTime('total_execution');
-            $output          = $this->displayPerformanceMetrics($output);
+            $output          = $this->displayPerformanceMetrics($cachedResponse->getBody());
             $this->response->setBody($output);
 
             return $this->response;
@@ -716,6 +708,8 @@ class CodeIgniter
      * full-page caching for very high performance.
      *
      * @return bool
+     *
+     * @deprecated 4.4.0 No longer used.
      */
     public function cachePage(Cache $config)
     {
@@ -741,6 +735,8 @@ class CodeIgniter
 
     /**
      * Generates the cache name to use for our full-page caching.
+     *
+     * @deprecated 4.4.0 No longer used.
      */
     protected function generateCacheName(Cache $config): string
     {
