@@ -69,7 +69,7 @@ if (! function_exists('number_to_amount')) {
      *
      * @see https://simple.wikipedia.org/wiki/Names_for_large_numbers
      *
-     * @param string $num
+     * @param int|string $num
      *
      * @return bool|string
      */
@@ -77,7 +77,7 @@ if (! function_exists('number_to_amount')) {
     {
         // Strip any formatting & ensure numeric input
         try {
-            $num = 0 + str_replace(',', '', $num);
+            $num = 0 + (int) str_replace(',', '', $num);
         } catch (ErrorException $ee) {
             return false;
         }
