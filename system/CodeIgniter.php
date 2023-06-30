@@ -85,7 +85,7 @@ class CodeIgniter
     /**
      * Current request.
      *
-     * @var CLIRequest|IncomingRequest|Request|null
+     * @var CLIRequest|IncomingRequest|null
      */
     protected $request;
 
@@ -471,7 +471,7 @@ class CodeIgniter
                 return $possibleResponse;
             }
 
-            if ($possibleResponse instanceof Request) {
+            if ($possibleResponse instanceof IncomingRequest || $possibleResponse instanceof CLIRequest) {
                 $this->request = $possibleResponse;
             }
         }
@@ -611,9 +611,11 @@ class CodeIgniter
      * Sets a Request object to be used for this request.
      * Used when running certain tests.
      *
+     * @param CLIRequest|IncomingRequest $request
+     *
      * @return $this
      */
-    public function setRequest(Request $request)
+    public function setRequest($request)
     {
         $this->request = $request;
 
