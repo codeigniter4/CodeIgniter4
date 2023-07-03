@@ -96,6 +96,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI'] = '/pages/about';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
 
         // Inject mock router.
         $routes = Services::routes();
@@ -193,6 +194,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI'] = '/pages/about';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
 
         // Inject mock router.
         $routes = Services::routes();
@@ -216,6 +218,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI'] = '/pages/about';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
 
         // Inject mock router.
         $routes = Services::routes();
@@ -244,6 +247,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI'] = '/pages/about';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
 
         // Inject mock router.
         $routes = Services::routes();
@@ -268,6 +272,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI'] = '/pages/about';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
 
         // Inject mock router.
         $routes = Services::routes();
@@ -298,6 +303,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI'] = '/pages/about';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
 
         $routes = Services::routes();
         $routes->add(
@@ -331,6 +337,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI'] = '/pages/about';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
 
         // Inject mock router.
         $routes = Services::routes();
@@ -452,6 +459,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI'] = '/example';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
 
         // Inject mock router.
         $routes = Services::routes();
@@ -475,6 +483,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI'] = '/example';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
 
         // Inject mock router.
         $routes = Services::routes();
@@ -501,6 +510,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI']     = '/example';
+        $_SERVER['SCRIPT_NAME']     = '/index.php';
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
         $_SERVER['REQUEST_METHOD']  = 'GET';
 
@@ -527,6 +537,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI']     = '/example';
+        $_SERVER['SCRIPT_NAME']     = '/index.php';
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
         $_SERVER['REQUEST_METHOD']  = 'GET';
 
@@ -551,6 +562,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI']     = '/example';
+        $_SERVER['SCRIPT_NAME']     = '/index.php';
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
         $_SERVER['REQUEST_METHOD']  = 'POST';
 
@@ -615,6 +627,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI']     = '/example';
+        $_SERVER['SCRIPT_NAME']     = '/index.php';
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
         $_SERVER['REQUEST_METHOD']  = 'GET';
 
@@ -638,6 +651,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI'] = '/image';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
 
         // Inject mock router.
         $routes = Services::routes();
@@ -679,6 +693,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         $_SERVER['REQUEST_URI']     = '/cli';
+        $_SERVER['SCRIPT_NAME']     = 'public/index.php';
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
         $_SERVER['REQUEST_METHOD']  = 'CLI';
 
@@ -698,6 +713,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 1;
 
         $_SERVER['REQUEST_URI']     = '/';
+        $_SERVER['SCRIPT_NAME']     = '/index.php';
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
         $_SERVER['REQUEST_METHOD']  = 'POST';
 
@@ -722,6 +738,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 1;
 
         $_SERVER['REQUEST_URI']     = '/';
+        $_SERVER['SCRIPT_NAME']     = '/index.php';
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
         $_SERVER['REQUEST_METHOD']  = 'POST';
 
@@ -754,6 +771,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         command('cache:clear');
 
         $_SERVER['REQUEST_URI'] = '/test';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
 
         $routes = Services::routes();
         $routes->add('test', static function () {
@@ -832,6 +850,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         foreach ($testingUrls as $testingUrl) {
             $this->resetServices();
             $_SERVER['REQUEST_URI'] = '/' . $testingUrl;
+            $_SERVER['SCRIPT_NAME'] = '/index.php';
             $this->codeigniter      = new MockCodeIgniter(new App());
 
             $routes    = Services::routes(true);
