@@ -156,11 +156,6 @@ parameters:
 			path: system/Helpers/filesystem_helper.php
 
 		-
-			message: "#^Binary operation \"\\+\" between 0 and string results in an error\\.$#"
-			count: 1
-			path: system/Helpers/number_helper.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:\\$image \\(CodeIgniter\\\\Images\\\\Image\\) in empty\\(\\) is not falsy\\.$#"
 			count: 1
 			path: system/Images/Handlers/BaseHandler.php

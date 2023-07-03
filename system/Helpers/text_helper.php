@@ -410,10 +410,10 @@ if (! function_exists('ellipsize')) {
      *
      * This function will strip tags from a string, split it at its max_length and ellipsize
      *
-     * @param string $str       String to ellipsize
-     * @param int    $maxLength Max length of string
-     * @param mixed  $position  int (1|0) or float, .5, .2, etc for position to split
-     * @param string $ellipsis  ellipsis ; Default '...'
+     * @param string    $str       String to ellipsize
+     * @param int       $maxLength Max length of string
+     * @param float|int $position  int (1|0) or float, .5, .2, etc for position to split
+     * @param string    $ellipsis  ellipsis ; Default '...'
      *
      * @return string Ellipsized string
      */
@@ -446,9 +446,9 @@ if (! function_exists('strip_slashes')) {
      *
      * Removes slashes contained in a string or in an array
      *
-     * @param mixed $str string or array
+     * @param array|string $str string or array
      *
-     * @return mixed string or array
+     * @return array|string string or array
      */
     function strip_slashes($str)
     {

@@ -390,20 +390,6 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertJSONExact(['foo' => 'bar']);
     }
 
-    public function testCallWithJsonRequestObject()
-    {
-        $this->withRoutes([
-            [
-                'post',
-                'home',
-                '\Tests\Support\Controllers\Popcorn::echoJson',
-            ],
-        ]);
-        $response = $this->withBodyFormat('json')->call('post', 'home', ['foo' => 'bar']);
-        $response->assertOK();
-        $response->assertJSONExact((object) ['foo' => 'bar']);
-    }
-
     public function testSetupRequestBodyWithParams()
     {
         $request = $this->setupRequest('post', 'home');

@@ -83,7 +83,7 @@ if (! function_exists('delete_cookie')) {
     /**
      * Delete a cookie
      *
-     * @param mixed  $name
+     * @param string $name
      * @param string $domain the cookie domain. Usually: .yourdomain.com
      * @param string $path   the cookie path
      * @param string $prefix the cookie prefix
