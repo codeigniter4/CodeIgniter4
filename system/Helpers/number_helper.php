@@ -91,19 +91,19 @@ if (! function_exists('number_to_amount')) {
             $generalLocale = substr($locale, 0, $underscorePos);
         }
 
-        if ($num > 1_000_000_000_000_000) {
+        if ($num >= 1_000_000_000_000_000) {
             $suffix = lang('Number.quadrillion', [], $generalLocale);
             $num    = round(($num / 1_000_000_000_000_000), $precision);
-        } elseif ($num > 1_000_000_000_000) {
+        } elseif ($num >= 1_000_000_000_000) {
             $suffix = lang('Number.trillion', [], $generalLocale);
             $num    = round(($num / 1_000_000_000_000), $precision);
-        } elseif ($num > 1_000_000_000) {
+        } elseif ($num >= 1_000_000_000) {
             $suffix = lang('Number.billion', [], $generalLocale);
             $num    = round(($num / 1_000_000_000), $precision);
-        } elseif ($num > 1_000_000) {
+        } elseif ($num >= 1_000_000) {
             $suffix = lang('Number.million', [], $generalLocale);
             $num    = round(($num / 1_000_000), $precision);
-        } elseif ($num > 1000) {
+        } elseif ($num >= 1000) {
             $suffix = lang('Number.thousand', [], $generalLocale);
             $num    = round(($num / 1000), $precision);
         }
