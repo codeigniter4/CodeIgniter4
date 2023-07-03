@@ -754,22 +754,20 @@ intend to reuse that same key in the same request, you’d want to use
 <section id="destroy">
 <span id="session-destroy"></span><h4>destroy()<a class="headerlink" href="#destroy" title="Permalink to this headline"></a></h4>
 <p>To clear the current session (for example, during a logout), you may
-simply use either PHP’s <a class="reference external" href="https://www.php.net/session_destroy">session_destroy()</a>
-function, or the library’s <code class="docutils literal notranslate"><span class="pre">destroy()</span></code> method. Both will work in exactly the
-same way:</p>
+simply use the library’s <code class="docutils literal notranslate"><span class="pre">destroy()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nb">session_destroy</span><span class="p">();</span>
-<span class="c1">// or</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">destroy</span><span class="p">();</span>
 </pre></div>
 </div>
+<p>This method will work in exactly the same way as PHP’s
+<a class="reference external" href="https://www.php.net/session_destroy">session_destroy()</a> function.</p>
+<p>This must be the last session-related operation that you do during the same request.
+All session data (including flashdata and tempdata) will be destroyed permanently.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This must be the last session-related operation that you do
-during the same request. All session data (including flashdata and
-tempdata) will be destroyed permanently and functions will be
-unusable during the same request after you destroy the session.</p>
+<p>You do not have to call this method from usual code. Cleanup session
+data rather than destroying the session.</p>
 </div>
 </section>
 <section id="stop">
@@ -1279,7 +1277,7 @@ separate the multiple server paths with commas:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 29, 2023.
+      <span class="lastupdated">Last updated on Jul 03, 2023.
       </span></p>
   </div>
 
