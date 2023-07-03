@@ -222,7 +222,7 @@ parameters:
       - Cache
   skip_violations:
     # Individual class exemptions
-    CodeIgniter\Cache\PageCache:
+    CodeIgniter\Cache\ResponseCache:
       - CodeIgniter\HTTP\CLIRequest
       - CodeIgniter\HTTP\IncomingRequest
       - CodeIgniter\HTTP\ResponseInterface

@@ -684,7 +684,7 @@ class CodeIgniter
      */
     public function displayCache(Cache $config)
     {
-        if ($cachedResponse = $this->pageCache->getCachedResponse($this->request, $this->response)) {
+        if ($cachedResponse = $this->pageCache->get($this->request, $this->response)) {
             $this->response = $cachedResponse;
 
             $this->totalTime = $this->benchmark->getElapsedTime('total_execution');

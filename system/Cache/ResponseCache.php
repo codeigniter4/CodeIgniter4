@@ -94,7 +94,7 @@ class ResponseCache
      *
      * @param CLIRequest|IncomingRequest $request
      */
-    public function getCachedResponse($request, ResponseInterface $response): ?ResponseInterface
+    public function get($request, ResponseInterface $response): ?ResponseInterface
     {
         if ($cachedResponse = $this->cache->get($this->generateCacheKey($request))) {
             $cachedResponse = unserialize($cachedResponse);
