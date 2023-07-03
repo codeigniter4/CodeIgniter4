@@ -72,4 +72,13 @@ final class FeatureTestAutoRoutingImprovedTest extends CIUnitTestCase
 
         $response->assertSee('Saved');
     }
+
+    public function testCallParamsCount()
+    {
+        $response = $this->post('newautorouting/save/1/a/b');
+        $response->assertSee('Saved');
+
+        $response = $this->get('newautorouting');
+        $response->assertSee('Hello');
+    }
 }
