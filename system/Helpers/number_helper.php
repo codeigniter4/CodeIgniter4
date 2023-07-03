@@ -77,7 +77,8 @@ if (! function_exists('number_to_amount')) {
     {
         // Strip any formatting & ensure numeric input
         try {
-            $num = (int) str_replace(',', '', $num);
+            // @phpstan-ignore-next-line
+            $num = 0 + str_replace(',', '', $num);
         } catch (ErrorException $ee) {
             return false;
         }
