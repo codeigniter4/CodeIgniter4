@@ -363,6 +363,9 @@ This method will work in exactly the same way as PHP's
 This must be the last session-related operation that you do during the same request.
 All session data (including flashdata and tempdata) will be destroyed permanently.
 
+.. note:: You do not have to call this method from usual code. Cleanup session
+    data rather than destroying the session.
+
 .. _session-stop:
 
 stop()
