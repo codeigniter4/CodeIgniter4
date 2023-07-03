@@ -385,7 +385,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         );
     }
 
-    public function testCallGetWithParamsAndREQEST()
+    public function testCallGetWithParamsAndREQUEST()
     {
         $this->withRoutes([
             [
