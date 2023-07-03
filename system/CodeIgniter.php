@@ -527,9 +527,7 @@ class CodeIgniter
             // Cache it without the performance metrics replaced
             // so that we can have live speed updates along the way.
             // Must be run after filters to preserve the Response headers.
-            if ($this->pageCache->getTtl() > 0) {
-                $this->pageCache->make($this->request, $this->response);
-            }
+            $this->pageCache->make($this->request, $this->response);
 
             // Update the performance metrics
             $body = $this->response->getBody();

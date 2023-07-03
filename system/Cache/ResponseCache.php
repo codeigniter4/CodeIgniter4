@@ -52,11 +52,6 @@ class ResponseCache
         $this->cache            = $cache;
     }
 
-    public function getTtl(): int
-    {
-        return $this->ttl;
-    }
-
     /**
      * @return $this
      */
@@ -90,12 +85,16 @@ class ResponseCache
     }
 
     /**
-     * Caches the full response from the current request.
+     * Caches the response.
      *
      * @param CLIRequest|IncomingRequest $request
      */
     public function make($request, ResponseInterface $response): bool
     {
+        if ($this->ttl === 0) {
+            return true;
+        }
+
         $headers = [];
 
         foreach ($response->headers() as $header) {
