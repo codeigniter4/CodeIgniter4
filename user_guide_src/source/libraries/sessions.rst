@@ -360,10 +360,8 @@ simply use the library's ``destroy()`` method:
 This method will work in exactly the same way as PHP's
 `session_destroy() <https://www.php.net/session_destroy>`_ function.
 
-.. note:: This must be the last session-related operation that you do
-    during the same request. All session data (including flashdata and
-    tempdata) will be destroyed permanently and functions will be
-    unusable during the same request after you destroy the session.
+This must be the last session-related operation that you do during the same request.
+All session data (including flashdata and tempdata) will be destroyed permanently.
 
 .. _session-stop:
 
