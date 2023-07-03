@@ -52,11 +52,12 @@ Parameter Type Changes
 
 - **Services:** The first parameter of ``Services::security()`` has been
   changed from ``Config\App`` to ``Config\Security``.
-- **Session:** The second parameter of ``Session::__construct()`` has been
-  changed from ``Config\App`` to ``Config\Session``.
-- **Session:** The first parameter of ``__construct()`` in ``BaseHandler``,
-  ``DatabaseHandler``, ``FileHandler``, ``MemcachedHandler``, and ``RedisHandler``
-  has been changed from ``Config\App`` to ``Config\Session``.
+- **Session:**
+    - The second parameter of ``Session::__construct()`` has been changed from
+      ``Config\App`` to ``Config\Session``.
+    - The first parameter of ``__construct()`` in ``BaseHandler``,
+      ``DatabaseHandler``, ``FileHandler``, ``MemcachedHandler``, and ``RedisHandler``
+      has been changed from ``Config\App`` to ``Config\Session``.
 - **Security:** The first parameter of ``Security::__construct()`` has been
   changed from ``Config\App`` to ``Config\Security``.
 - **Validation:** The method signature of ``Validation::check()`` has been changed.
