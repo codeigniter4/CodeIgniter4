@@ -14,7 +14,7 @@ namespace CodeIgniter\Config;
 use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Cache\CacheInterface;
-use CodeIgniter\Cache\PageCache;
+use CodeIgniter\Cache\ResponseCache;
 use CodeIgniter\CLI\Commands;
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Database\ConnectionInterface;
@@ -112,13 +112,13 @@ use Config\View as ConfigView;
  * @method static Logger                     logger($getShared = true)
  * @method static MigrationRunner            migrations(Migrations $config = null, ConnectionInterface $db = null, $getShared = true)
  * @method static Negotiate                  negotiator(RequestInterface $request = null, $getShared = true)
- * @method static PageCache                  pagecache(?Cache $config = null, ?CacheInterface $cache = null, bool $getShared = true)
  * @method static Pager                      pager(ConfigPager $config = null, RendererInterface $view = null, $getShared = true)
  * @method static Parser                     parser($viewPath = null, ConfigView $config = null, $getShared = true)
  * @method static RedirectResponse           redirectresponse(App $config = null, $getShared = true)
  * @method static View                       renderer($viewPath = null, ConfigView $config = null, $getShared = true)
  * @method static IncomingRequest|CLIRequest request(App $config = null, $getShared = true)
  * @method static ResponseInterface          response(App $config = null, $getShared = true)
+ * @method static ResponseCache              responsecache(?Cache $config = null, ?CacheInterface $cache = null, bool $getShared = true)
  * @method static Router                     router(RouteCollectionInterface $routes = null, Request $request = null, $getShared = true)
  * @method static RouteCollection            routes($getShared = true)
  * @method static Security                   security(App $config = null, $getShared = true)

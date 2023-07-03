@@ -20,7 +20,7 @@ use Exception;
 /**
  * Web Page Caching
  */
-class PageCache
+class ResponseCache
 {
     /**
      * Whether to take the URL query string into consideration when generating

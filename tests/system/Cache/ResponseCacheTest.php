@@ -30,7 +30,7 @@ use Exception;
  *
  * @group Others
  */
-final class PageCacheTest extends CIUnitTestCase
+final class ResponseCacheTest extends CIUnitTestCase
 {
     private AppConfig $appConfig;
 
@@ -82,18 +82,18 @@ final class PageCacheTest extends CIUnitTestCase
         return new CLIRequest($appConfig);
     }
 
-    private function createPageCache(?CacheConfig $cacheConfig = null): pageCache
+    private function createResponseCache(?CacheConfig $cacheConfig = null): ResponseCache
     {
         $cache = mock(CacheFactory::class);
 
         $cacheConfig ??= new CacheConfig();
 
-        return new PageCache($cacheConfig, $cache);
+        return new ResponseCache($cacheConfig, $cache);
     }
 
     public function testCachePageIncomingRequest()
     {
-        $pageCache = $this->createPageCache();
+        $pageCache = $this->createResponseCache();
 
         $request = $this->createIncomingRequest('foo/bar');
 
@@ -133,7 +133,7 @@ final class PageCacheTest extends CIUnitTestCase
     {
         $cacheConfig                   = new CacheConfig();
         $cacheConfig->cacheQueryString = true;
-        $pageCache                     = $this->createPageCache($cacheConfig);
+        $pageCache                     = $this->createResponseCache($cacheConfig);
 
         $request = $this->createIncomingRequest('foo/bar', ['foo' => 'bar', 'bar' => 'baz']);
 
@@ -169,7 +169,7 @@ final class PageCacheTest extends CIUnitTestCase
 
     public function testCachePageCLIRequest()
     {
-        $pageCache = $this->createPageCache();
+        $pageCache = $this->createResponseCache();
 
         $request = $this->createCLIRequest(['foo', 'bar']);
 
@@ -202,7 +202,7 @@ final class PageCacheTest extends CIUnitTestCase
 
         $cache       = mock(CacheFactory::class);
         $cacheConfig = new CacheConfig();
-        $pageCache   = new PageCache($cacheConfig, $cache);
+        $pageCache   = new ResponseCache($cacheConfig, $cache);
 
         $request = $this->createIncomingRequest('foo/bar');
 
@@ -228,7 +228,7 @@ final class PageCacheTest extends CIUnitTestCase
 
         $cache       = mock(CacheFactory::class);
         $cacheConfig = new CacheConfig();
-        $pageCache   = new PageCache($cacheConfig, $cache);
+        $pageCache   = new ResponseCache($cacheConfig, $cache);
 
         $request = $this->createIncomingRequest('foo/bar');
 

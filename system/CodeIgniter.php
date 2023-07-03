@@ -12,7 +12,7 @@
 namespace CodeIgniter;
 
 use Closure;
-use CodeIgniter\Cache\PageCache;
+use CodeIgniter\Cache\ResponseCache;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
@@ -179,7 +179,7 @@ class CodeIgniter
     /**
      * Web Page Caching
      */
-    protected PageCache $pageCache;
+    protected ResponseCache $pageCache;
 
     /**
      * Constructor.
@@ -189,7 +189,7 @@ class CodeIgniter
         $this->startTime = microtime(true);
         $this->config    = $config;
 
-        $this->pageCache = Services::pagecache();
+        $this->pageCache = Services::responsecache();
     }
 
     /**
