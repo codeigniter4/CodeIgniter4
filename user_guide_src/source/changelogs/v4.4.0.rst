@@ -193,6 +193,10 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Auto Routing (Improved)**: In previous versions, when ``$translateURIDashes``
+  is true, two URIs correspond to a single controller method, one URI for dashes
+  (e.g., **foo-bar**) and one URI for underscores (e.g., **foo_bar**). This bug
+  has been fixed. Now the URI for underscores (**foo_bar**) is not accessible.
 - **Output Buffering:** Bug fix with output buffering.
 
 See the repo's

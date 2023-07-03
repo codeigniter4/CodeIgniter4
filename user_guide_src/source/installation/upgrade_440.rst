@@ -60,6 +60,19 @@ by defining your own exception handler.
 
 See :ref:`custom-exception-handlers` for the detail.
 
+Auto Routing (Improved) and translateURIDashes
+==============================================
+
+When using Auto Routing (Improved) and ``$translateURIDashes`` is true
+(``$routes->setTranslateURIDashes(true)``), in previous versions due to a bug
+two URIs correspond to a single controller method, one URI for dashes
+(e.g., **foo-bar**) and one URI for underscores (e.g., **foo_bar**).
+
+This bug was fixed and now URIs for underscores (**foo_bar**) is not accessible.
+
+If you have links to URIs for underscores (**foo_bar**), update them with URIs
+for dashes (**foo-bar**).
+
 Interface Changes
 =================
 

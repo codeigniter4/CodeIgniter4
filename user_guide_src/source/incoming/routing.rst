@@ -605,6 +605,12 @@ URI segments when used in Auto Routing, thus saving you additional route entries
 
 .. literalinclude:: routing/049.php
 
+.. note:: When using Auto Routing (Improved), prior to v4.4.0, if
+    ``$translateURIDashes`` is true, two URIs correspond to a single controller
+    method, one URI for dashes (e.g., **foo-bar**) and one URI for underscores
+    (e.g., **foo_bar**). This was incorrect behavior. Since v4.4.0, the URI for
+    underscores (**foo_bar**) is not accessible.
+
 .. _use-defined-routes-only:
 
 Use Defined Routes Only
