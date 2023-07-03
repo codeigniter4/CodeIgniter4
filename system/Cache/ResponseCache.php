@@ -37,12 +37,34 @@ class ResponseCache
      */
     protected $cacheQueryString = false;
 
+    /**
+     * Cache time to live.
+     *
+     * @var int seconds
+     */
+    protected int $ttl = 0;
+
     protected CacheInterface $cache;
 
     public function __construct(CacheConfig $config, CacheInterface $cache)
     {
         $this->cacheQueryString = $config->cacheQueryString;
         $this->cache            = $cache;
+    }
+
+    public function getTtl(): int
+    {
+        return $this->ttl;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setTtl(int $ttl)
+    {
+        $this->ttl = $ttl;
+
+        return $this;
     }
 
     /**
@@ -71,10 +93,8 @@ class ResponseCache
      * Caches the full response from the current request.
      *
      * @param CLIRequest|IncomingRequest $request
-     *
-     * @params int $ttl time to live in seconds.
      */
-    public function make($request, ResponseInterface $response, int $ttl): bool
+    public function make($request, ResponseInterface $response): bool
     {
         $headers = [];
 
@@ -85,7 +105,7 @@ class ResponseCache
         return $this->cache->save(
             $this->generateCacheKey($request),
             serialize(['headers' => $headers, 'output' => $response->getBody()]),
-            $ttl
+            $this->ttl
         );
     }
 

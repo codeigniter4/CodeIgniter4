@@ -128,6 +128,8 @@ class CodeIgniter
      * Cache expiration time
      *
      * @var int seconds
+     *
+     * @deprecated 4.4.0 Moved to ResponseCache::$ttl. No longer used.
      */
     protected static $cacheTTL = 0;
 
@@ -338,7 +340,7 @@ class CodeIgniter
             );
         }
 
-        static::$cacheTTL  = 0;
+        $this->pageCache->setTtl(0);
         $this->bufferLevel = ob_get_level();
 
         $this->startBenchmark();
@@ -525,8 +527,8 @@ class CodeIgniter
             // Cache it without the performance metrics replaced
             // so that we can have live speed updates along the way.
             // Must be run after filters to preserve the Response headers.
-            if (static::$cacheTTL > 0) {
-                $this->pageCache->make($this->request, $this->response, static::$cacheTTL);
+            if ($this->pageCache->getTtl() > 0) {
+                $this->pageCache->make($this->request, $this->response);
             }
 
             // Update the performance metrics
@@ -699,6 +701,8 @@ class CodeIgniter
 
     /**
      * Tells the app that the final output should be cached.
+     *
+     * @deprecated 4.4.0 Moved to ResponseCache::setTtl(). to No longer used.
      */
     public static function cache(int $time)
     {

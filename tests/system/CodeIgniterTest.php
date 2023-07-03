@@ -838,7 +838,7 @@ final class CodeIgniterTest extends CIUnitTestCase
             $routePath = explode('?', $testingUrl)[0];
             $string    = 'This is a test page, to check cache configuration';
             $routes->add($routePath, static function () use ($string) {
-                CodeIgniter::cache(60);
+                Services::responsecache()->setTtl(60);
                 $response = Services::response();
 
                 return $response->setBody($string);
