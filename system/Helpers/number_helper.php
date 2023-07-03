@@ -77,7 +77,7 @@ if (! function_exists('number_to_amount')) {
     {
         // Strip any formatting & ensure numeric input
         try {
-            $num = 0 + (int) str_replace(',', '', $num);
+            $num = (int) str_replace(',', '', $num);
         } catch (ErrorException $ee) {
             return false;
         }
