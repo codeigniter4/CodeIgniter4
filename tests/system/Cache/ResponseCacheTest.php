@@ -101,7 +101,7 @@ final class ResponseCacheTest extends CIUnitTestCase
         $response->setHeader('ETag', 'abcd1234');
         $response->setBody('The response body.');
 
-        $return = $pageCache->cachePage($request, $response, 300);
+        $return = $pageCache->make($request, $response, 300);
 
         $this->assertTrue($return);
 
@@ -141,7 +141,7 @@ final class ResponseCacheTest extends CIUnitTestCase
         $response->setHeader('ETag', 'abcd1234');
         $response->setBody('The response body.');
 
-        $return = $pageCache->cachePage($request, $response, 300);
+        $return = $pageCache->make($request, $response, 300);
 
         $this->assertTrue($return);
 
@@ -176,7 +176,7 @@ final class ResponseCacheTest extends CIUnitTestCase
         $response = new Response($this->appConfig);
         $response->setBody('The response body.');
 
-        $return = $pageCache->cachePage($request, $response, 300);
+        $return = $pageCache->make($request, $response, 300);
 
         $this->assertTrue($return);
 
@@ -210,7 +210,7 @@ final class ResponseCacheTest extends CIUnitTestCase
         $response->setHeader('ETag', 'abcd1234');
         $response->setBody('The response body.');
 
-        $pageCache->cachePage($request, $response, 300);
+        $pageCache->make($request, $response, 300);
 
         $cacheKey = $pageCache->generateCacheKey($request);
 
@@ -236,7 +236,7 @@ final class ResponseCacheTest extends CIUnitTestCase
         $response->setHeader('ETag', 'abcd1234');
         $response->setBody('The response body.');
 
-        $pageCache->cachePage($request, $response, 300);
+        $pageCache->make($request, $response, 300);
 
         $cacheKey = $pageCache->generateCacheKey($request);
 

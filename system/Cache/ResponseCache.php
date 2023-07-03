@@ -74,7 +74,7 @@ class ResponseCache
      *
      * @params int $ttl time to live in seconds.
      */
-    public function cachePage($request, ResponseInterface $response, int $ttl): bool
+    public function make($request, ResponseInterface $response, int $ttl): bool
     {
         $headers = [];
 

@@ -526,7 +526,7 @@ class CodeIgniter
             // so that we can have live speed updates along the way.
             // Must be run after filters to preserve the Response headers.
             if (static::$cacheTTL > 0) {
-                $this->pageCache->cachePage($this->request, $this->response, static::$cacheTTL);
+                $this->pageCache->make($this->request, $this->response, static::$cacheTTL);
             }
 
             // Update the performance metrics
