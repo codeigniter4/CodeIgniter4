@@ -291,16 +291,22 @@ static web pages.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#how-does-caching-work" id="id1">How Does Caching Work?</a></p></li>
-<li><p><a class="reference internal" href="#enabling-caching" id="id2">Enabling Caching</a></p></li>
-<li><p><a class="reference internal" href="#deleting-caches" id="id3">Deleting Caches</a></p></li>
+<li><p><a class="reference internal" href="#configuring-caching" id="id2">Configuring Caching</a></p>
+<ul>
+<li><p><a class="reference internal" href="#setting-cache-engine" id="id3">Setting Cache Engine</a></p></li>
+<li><p><a class="reference internal" href="#setting-cachequerystring" id="id4">Setting $cacheQueryString</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#enabling-caching" id="id5">Enabling Caching</a></p></li>
+<li><p><a class="reference internal" href="#deleting-caches" id="id6">Deleting Caches</a></p></li>
 </ul>
 </div>
 <section id="how-does-caching-work">
 <h2><a class="toc-backref" href="#id1">How Does Caching Work?</a><a class="headerlink" href="#how-does-caching-work" title="Permalink to this headline"></a></h2>
 <p>Caching can be enabled on a per-page basis, and you can set the length
 of time that a page should remain cached before being refreshed. When a
-page is loaded for the first time, the file will be cached using the
-currently configured cache engine. On subsequent page loads, the cache file
+page is loaded for the first time, the page will be cached using the
+currently configured cache engine. On subsequent page loads, the cache
 will be retrieved and sent to the requesting user’s browser. If it has
 expired, it will be deleted and refreshed before being sent to the
 browser.</p>
@@ -310,8 +316,33 @@ browser.</p>
 load speed when caching is enabled.</p>
 </div>
 </section>
+<section id="configuring-caching">
+<h2><a class="toc-backref" href="#id2">Configuring Caching</a><a class="headerlink" href="#configuring-caching" title="Permalink to this headline"></a></h2>
+<section id="setting-cache-engine">
+<h3><a class="toc-backref" href="#id3">Setting Cache Engine</a><a class="headerlink" href="#setting-cache-engine" title="Permalink to this headline"></a></h3>
+<p>Before using Web Page Caching, you must set the cache engine up by editing
+<strong>app/Config/Cache.php</strong>. See <a class="reference internal" href="../libraries/caching.html#libraries-caching-configuring-the-cache"><span class="std std-ref">Configuring the Cache</span></a>
+for details.</p>
+</section>
+<section id="setting-cachequerystring">
+<h3><a class="toc-backref" href="#id4">Setting $cacheQueryString</a><a class="headerlink" href="#setting-cachequerystring" title="Permalink to this headline"></a></h3>
+<p>You can set whether or not to include the query string when generating the cache
+with <code class="docutils literal notranslate"><span class="pre">Config\Cache::$cacheQueryString</span></code>.</p>
+<p>Valid options are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">false</span></code>: (default) Disabled. The query string is not taken into account; the
+same cache is returned for requests with the same URI path but different query
+strings.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">true</span></code>: Enabled, take all query parameters into account. Be aware that this
+may result in numerous cache generated for the same page over and over
+again.</p></li>
+<li><p><strong>array</strong>: Enabled, but only take into account the specified list of query
+parameters. E.g., <code class="docutils literal notranslate"><span class="pre">['q',</span> <span class="pre">'page']</span></code>.</p></li>
+</ul>
+</section>
+</section>
 <section id="enabling-caching">
-<h2><a class="toc-backref" href="#id2">Enabling Caching</a><a class="headerlink" href="#enabling-caching" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Enabling Caching</a><a class="headerlink" href="#enabling-caching" title="Permalink to this headline"></a></h2>
 <p>To enable caching, put the following tag in any of your controller
 methods:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -327,17 +358,12 @@ you. Once the tag is in place, your pages will begin being cached.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>If you change configuration options that might affect
-your output, you have to manually delete your cache files.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Before the cache files can be written you must set the cache
-engine up by editing <strong>app/Config/Cache.php</strong>.</p>
+your output, you have to manually delete your cache.</p>
 </div>
 </section>
 <section id="deleting-caches">
-<h2><a class="toc-backref" href="#id3">Deleting Caches</a><a class="headerlink" href="#deleting-caches" title="Permalink to this headline"></a></h2>
-<p>If you no longer wish to cache a file you can remove the caching tag and
+<h2><a class="toc-backref" href="#id6">Deleting Caches</a><a class="headerlink" href="#deleting-caches" title="Permalink to this headline"></a></h2>
+<p>If you no longer wish to cache a page you can remove the caching tag and
 it will no longer be refreshed when it expires.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
