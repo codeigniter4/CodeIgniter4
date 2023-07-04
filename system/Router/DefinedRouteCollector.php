@@ -26,6 +26,9 @@ final class DefinedRouteCollector
         $this->routeCollection = $routes;
     }
 
+    /**
+     * @phpstan-return Generator<array{method: string, route: string, name: string, handler: string}>
+     */
     public function collect(): Generator
     {
         $methods = [
