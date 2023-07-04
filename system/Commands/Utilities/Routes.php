@@ -123,7 +123,7 @@ class Routes extends BaseCommand
                 $sampleUri = $uriGenerator->get($route['route']);
                 $filters   = $filterCollector->get($route['method'], $sampleUri);
 
-                $routeName = ($route['route'] === $route['name']) ? '»' : $route['route'];
+                $routeName = ($route['route'] === $route['name']) ? '»' : $route['name'];
 
                 $tbody[] = [
                     strtoupper($route['method']),
