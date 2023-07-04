@@ -20,7 +20,7 @@ use Exception;
 /**
  * Web Page Caching
  */
-class ResponseCache
+final class ResponseCache
 {
     /**
      * Whether to take the URL query string into consideration when generating
@@ -35,16 +35,16 @@ class ResponseCache
      *
      * @var bool|string[]
      */
-    protected $cacheQueryString = false;
+    private $cacheQueryString = false;
 
     /**
      * Cache time to live.
      *
      * @var int seconds
      */
-    protected int $ttl = 0;
+    private int $ttl = 0;
 
-    protected CacheInterface $cache;
+    private CacheInterface $cache;
 
     public function __construct(CacheConfig $config, CacheInterface $cache)
     {
