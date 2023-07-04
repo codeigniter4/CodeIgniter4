@@ -18,6 +18,7 @@ use CodeIgniter\Commands\Utilities\Routes\AutoRouteCollector;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\AutoRouteCollector as AutoRouteCollectorImproved;
 use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
 use CodeIgniter\Commands\Utilities\Routes\SampleURIGenerator;
+use CodeIgniter\Router\DefinedRouteCollector;
 use Config\Feature;
 use Config\Routing;
 use Config\Services;
@@ -115,29 +116,23 @@ class Routes extends BaseCommand
         $uriGenerator    = new SampleURIGenerator();
         $filterCollector = new FilterCollector();
 
-        foreach ($methods as $method) {
-            $routes = $collection->getRoutes($method);
+        $definedRouteCollector = new DefinedRouteCollector($collection);
 
-            foreach ($routes as $route => $handler) {
-                if (is_string($handler) || $handler instanceof Closure) {
-                    $sampleUri = $uriGenerator->get($route);
-                    $filters   = $filterCollector->get($method, $sampleUri);
+        foreach ($definedRouteCollector->collect() as $route) {
+            if (is_string($route['handler']) || $route['handler'] instanceof Closure) {
+                $sampleUri = $uriGenerator->get($route['route']);
+                $filters   = $filterCollector->get($route['method'], $sampleUri);
 
-                    if ($handler instanceof Closure) {
-                        $handler = '(Closure)';
-                    }
+                $routeName = ($route['route'] === $route['name']) ? '»' : $route['name'];
 
-                    $routeName = $collection->getRoutesOptions($route)['as'] ?? '»';
-
-                    $tbody[] = [
-                        strtoupper($method),
-                        $route,
-                        $routeName,
-                        $handler,
-                        implode(' ', array_map('class_basename', $filters['before'])),
-                        implode(' ', array_map('class_basename', $filters['after'])),
-                    ];
-                }
+                $tbody[] = [
+                    strtoupper($route['method']),
+                    $route['route'],
+                    $routeName,
+                    $route['handler'],
+                    implode(' ', array_map('class_basename', $filters['before'])),
+                    implode(' ', array_map('class_basename', $filters['after'])),
+                ];
             }
         }
 
