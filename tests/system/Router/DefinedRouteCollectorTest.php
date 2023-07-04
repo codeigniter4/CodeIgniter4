@@ -43,7 +43,7 @@ final class DefinedRouteCollectorTest extends CIUnitTestCase
         return (new RouteCollection($loader, $moduleConfig, new Routing()))->setHTTPVerb('get');
     }
 
-    public function test()
+    public function testCollect()
     {
         $routes = $this->createRouteCollection();
         $routes->get('journals', 'Blogs');
