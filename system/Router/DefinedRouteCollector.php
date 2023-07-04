@@ -17,7 +17,7 @@ use Generator;
 /**
  * Collect all defined routes for display.
  */
-class DefinedRouteCollector
+final class DefinedRouteCollector
 {
     private RouteCollection $routeCollection;
 
