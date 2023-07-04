@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use InvalidArgumentException;
 
 /**
  * @backupGlobals enabled
@@ -899,5 +900,21 @@ final class MiscUrlTest extends CIUnitTestCase
             'http://example.com/index.php/en/path/string/to/13',
             url_to('path-to', 'string', 13, 'en')
         );
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/7651
+     */
+    public function testUrlToMissingArgument()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Missing argument for "([a-zA-Z]+)" in route "([a-zA-Z]+)/login".');
+
+        $routes = Services::routes();
+        $routes->group('(:alpha)', static function ($routes) {
+            $routes->match(['get'], 'login', 'Common\LoginController::loginView', ['as' => 'loginURL']);
+        });
+
+        url_to('loginURL');
     }
 }
