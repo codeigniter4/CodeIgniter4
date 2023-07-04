@@ -55,7 +55,7 @@ Parameter Type Changes
 - **Session:**
     - The second parameter of ``Session::__construct()`` has been changed from
       ``Config\App`` to ``Config\Session``.
-    - The first parameter of ``__construct()`` in ``BaseHandler``,
+    - The first parameter of ``__construct()`` in the database's ``BaseHandler``,
       ``DatabaseHandler``, ``FileHandler``, ``MemcachedHandler``, and ``RedisHandler``
       has been changed from ``Config\App`` to ``Config\Session``.
 - **Security:** The first parameter of ``Security::__construct()`` has been
