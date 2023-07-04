@@ -14,6 +14,9 @@ namespace CodeIgniter\Router;
 use Closure;
 use Generator;
 
+/**
+ * Collect all defined routes for display.
+ */
 class DefinedRouteCollector
 {
     private RouteCollection $routeCollection;
