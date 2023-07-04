@@ -287,17 +287,18 @@ and more.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#the-test-class" id="id1">The Test Class</a></p></li>
-<li><p><a class="reference internal" href="#requesting-a-page" id="id2">Requesting A Page</a></p>
+<li><p><a class="reference internal" href="#requesting-a-page" id="id2">Requesting a Page</a></p>
 <ul>
-<li><p><a class="reference internal" href="#setting-different-routes" id="id3">Setting Different Routes</a></p></li>
-<li><p><a class="reference internal" href="#setting-session-values" id="id4">Setting Session Values</a></p></li>
-<li><p><a class="reference internal" href="#setting-headers" id="id5">Setting Headers</a></p></li>
-<li><p><a class="reference internal" href="#bypassing-events" id="id6">Bypassing Events</a></p></li>
-<li><p><a class="reference internal" href="#formatting-the-request" id="id7">Formatting The Request</a></p></li>
-<li><p><a class="reference internal" href="#setting-the-body" id="id8">Setting the Body</a></p></li>
+<li><p><a class="reference internal" href="#shorthand-methods" id="id3">Shorthand Methods</a></p></li>
+<li><p><a class="reference internal" href="#setting-different-routes" id="id4">Setting Different Routes</a></p></li>
+<li><p><a class="reference internal" href="#setting-session-values" id="id5">Setting Session Values</a></p></li>
+<li><p><a class="reference internal" href="#setting-headers" id="id6">Setting Headers</a></p></li>
+<li><p><a class="reference internal" href="#bypassing-events" id="id7">Bypassing Events</a></p></li>
+<li><p><a class="reference internal" href="#formatting-the-request" id="id8">Formatting the Request</a></p></li>
+<li><p><a class="reference internal" href="#setting-the-body" id="id9">Setting the Body</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#checking-the-response" id="id9">Checking the Response</a></p></li>
+<li><p><a class="reference internal" href="#checking-the-response" id="id10">Checking the Response</a></p></li>
 </ul>
 </div>
 <section id="the-test-class">
@@ -336,12 +337,24 @@ are called if you implement your own methods.</p>
 </div>
 </section>
 <section id="requesting-a-page">
-<h2><a class="toc-backref" href="#id2">Requesting A Page</a><a class="headerlink" href="#requesting-a-page" title="Permalink to this headline"></a></h2>
+<span id="feature-requesting-a-page"></span><h2><a class="toc-backref" href="#id2">Requesting a Page</a><a class="headerlink" href="#requesting-a-page" title="Permalink to this headline"></a></h2>
 <p>Essentially, feature tests simply allows you to call an endpoint on your application and get the results back.
-to do this, you use the <code class="docutils literal notranslate"><span class="pre">call()</span></code> method. The first parameter is the HTTP method to use (most frequently either GET or POST).
-The second parameter is the path on your site to test. The third parameter accepts an array that is used to populate the
-superglobal variables for the HTTP verb you are using. So, a method of <strong>GET</strong> would have the <strong>$_GET</strong> variable
-populated, while a <strong>post</strong> request would have the <strong>$_POST</strong> array populated.</p>
+To do this, you use the <code class="docutils literal notranslate"><span class="pre">call()</span></code> method.</p>
+<ol class="arabic">
+<li><p>The first parameter is the HTTP method to use (most frequently either GET or POST).</p></li>
+<li><p>The second parameter is the URI path on your site to test.</p></li>
+<li><p>The third parameter <code class="docutils literal notranslate"><span class="pre">$params</span></code> accepts an array that is used to populate the
+superglobal variables for the HTTP verb you are using. So, a method of <strong>GET</strong>
+would have the <strong>$_GET</strong> variable populated, while a <strong>POST</strong> request would
+have the <strong>$_POST</strong> array populated. The <code class="docutils literal notranslate"><span class="pre">$params</span></code> is also used in
+<a class="reference internal" href="#feature-formatting-the-request"><span class="std std-ref">Formatting the Request</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$params</span></code> array does not make sense for every HTTP verb, but is
+included for consistency.</p>
+</div>
+</li>
+</ol>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Get a simple page</span>
@@ -354,6 +367,8 @@ populated, while a <strong>post</strong> request would have the <strong>$_POST</
 <span class="p">]);</span>
 </pre></div>
 </div>
+<section id="shorthand-methods">
+<h3><a class="toc-backref" href="#id3">Shorthand Methods</a><a class="headerlink" href="#shorthand-methods" title="Permalink to this headline"></a></h3>
 <p>Shorthand methods for each of the HTTP verbs exist to ease typing and make things clearer:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -365,12 +380,9 @@ populated, while a <strong>post</strong> request would have the <strong>$_POST</
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">$params</span></code> array does not make sense for every HTTP verb, but is included for consistency.</p>
-</div>
+</section>
 <section id="setting-different-routes">
-<h3><a class="toc-backref" href="#id3">Setting Different Routes</a><a class="headerlink" href="#setting-different-routes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4">Setting Different Routes</a><a class="headerlink" href="#setting-different-routes" title="Permalink to this headline"></a></h3>
 <p>You can use a custom collection of routes by passing an array of “routes” into the <code class="docutils literal notranslate"><span class="pre">withRoutes()</span></code> method. This will
 override any existing routes in the system:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -386,7 +398,7 @@ override any existing routes in the system:</p>
 the URI to match, and the routing destination.</p>
 </section>
 <section id="setting-session-values">
-<h3><a class="toc-backref" href="#id4">Setting Session Values</a><a class="headerlink" href="#setting-session-values" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">Setting Session Values</a><a class="headerlink" href="#setting-session-values" title="Permalink to this headline"></a></h3>
 <p>You can set custom session values to use during a single test with the <code class="docutils literal notranslate"><span class="pre">withSession()</span></code> method. This takes an array
 of key/value pairs that should exist within the <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> variable when this request is made, or <code class="docutils literal notranslate"><span class="pre">null</span></code> to indicate
 that the current values of <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> should be used. This is handy for testing authentication and more.</p>
@@ -407,7 +419,7 @@ that the current values of <code class="docutils literal notranslate"><span clas
 </div>
 </section>
 <section id="setting-headers">
-<h3><a class="toc-backref" href="#id5">Setting Headers</a><a class="headerlink" href="#setting-headers" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Setting Headers</a><a class="headerlink" href="#setting-headers" title="Permalink to this headline"></a></h3>
 <p>You can set header values with the <code class="docutils literal notranslate"><span class="pre">withHeaders()</span></code> method. This takes an array of key/value pairs that would be
 passed as a header into the call:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -421,7 +433,7 @@ passed as a header into the call:</p>
 </div>
 </section>
 <section id="bypassing-events">
-<h3><a class="toc-backref" href="#id6">Bypassing Events</a><a class="headerlink" href="#bypassing-events" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Bypassing Events</a><a class="headerlink" href="#bypassing-events" title="Permalink to this headline"></a></h3>
 <p>Events are handy to use in your application, but can be problematic during testing. Especially events that are used
 to send out emails. You can tell the system to skip any event handling with the <code class="docutils literal notranslate"><span class="pre">skipEvents()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -431,11 +443,13 @@ to send out emails. You can tell the system to skip any event handling with the 
 </div>
 </section>
 <section id="formatting-the-request">
-<h3><a class="toc-backref" href="#id7">Formatting The Request</a><a class="headerlink" href="#formatting-the-request" title="Permalink to this headline"></a></h3>
+<span id="feature-formatting-the-request"></span><h3><a class="toc-backref" href="#id8">Formatting the Request</a><a class="headerlink" href="#formatting-the-request" title="Permalink to this headline"></a></h3>
 <p>You can set the format of your request’s body using the <code class="docutils literal notranslate"><span class="pre">withBodyFormat()</span></code> method. Currently this supports either
-<cite>json</cite> or <cite>xml</cite>. This will take the parameters passed into <code class="docutils literal notranslate"><span class="pre">call()</span></code>, <code class="docutils literal notranslate"><span class="pre">post()</span></code>, <code class="docutils literal notranslate"><span class="pre">get()</span></code>… and assign them to the
-body of the request in the given format. This will also set the <cite>Content-Type</cite> header for your request accordingly.
+<code class="docutils literal notranslate"><span class="pre">json</span></code> or <code class="docutils literal notranslate"><span class="pre">xml</span></code>.
 This is useful when testing JSON or XML APIs so that you can set the request in the form that the controller will expect.</p>
+<p>This will take the parameters passed into <code class="docutils literal notranslate"><span class="pre">call()</span></code>, <code class="docutils literal notranslate"><span class="pre">post()</span></code>, <code class="docutils literal notranslate"><span class="pre">get()</span></code>… and assign them to the
+body of the request in the given format.</p>
+<p>This will also set the <cite>Content-Type</cite> header for your request accordingly.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// If your feature test contains this:</span>
@@ -447,14 +461,15 @@ This is useful when testing JSON or XML APIs so that you can set the request in 
 </div>
 </section>
 <section id="setting-the-body">
-<h3><a class="toc-backref" href="#id8">Setting the Body</a><a class="headerlink" href="#setting-the-body" title="Permalink to this headline"></a></h3>
+<span id="feature-setting-the-body"></span><h3><a class="toc-backref" href="#id9">Setting the Body</a><a class="headerlink" href="#setting-the-body" title="Permalink to this headline"></a></h3>
 <p>You can set the body of your request with the <code class="docutils literal notranslate"><span class="pre">withBody()</span></code> method. This allows you to format the body how you want
-to format it. It is recommended that you use this if you have more complicated XMLs to test. This will also not set
-the Content-Type header for you so if you need that, you can set it with the <code class="docutils literal notranslate"><span class="pre">withHeaders()</span></code> method.</p>
+to format it. It is recommended that you use this if you have more complicated XMLs to test.</p>
+<p>This will not set
+the <cite>Content-Type</cite> header for you. If you need that, you can set it with the <code class="docutils literal notranslate"><span class="pre">withHeaders()</span></code> method.</p>
 </section>
 </section>
 <section id="checking-the-response">
-<h2><a class="toc-backref" href="#id9">Checking the Response</a><a class="headerlink" href="#checking-the-response" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id10">Checking the Response</a><a class="headerlink" href="#checking-the-response" title="Permalink to this headline"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">FeatureTestTrait::call()</span></code> returns an instance of a <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code>. See <a class="reference internal" href="response.html"><span class="doc">Testing Responses</span></a> on
 how to use this class to perform additional assertions and verification in your test cases.</p>
 </section>
@@ -472,7 +487,7 @@ how to use this class to perform additional assertions and verification in your 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 03, 2023.
+      <span class="lastupdated">Last updated on Jul 04, 2023.
       </span></p>
   </div>
 
