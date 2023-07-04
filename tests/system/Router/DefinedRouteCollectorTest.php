@@ -82,7 +82,7 @@ final class DefinedRouteCollectorTest extends CIUnitTestCase
                 'method'  => 'get',
                 'route'   => 'about',
                 'name'    => 'about',
-                'handler' => '(Closure)',
+                'handler' => '(View) pages/about',
             ],
         ];
         $this->assertSame($expected, $definedRoutes);

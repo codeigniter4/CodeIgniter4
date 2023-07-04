@@ -51,7 +51,9 @@ final class DefinedRouteCollector
                 if (is_string($handler) || $handler instanceof Closure) {
 
                     if ($handler instanceof Closure) {
-                        $handler = '(Closure)';
+                        $view = $this->routeCollection->getRoutesOptions($route, $method)['view'] ?? false;
+
+                        $handler = $view ? '(View) ' . $view : '(Closure)';
                     }
 
                     $routeName = $this->routeCollection->getRoutesOptions($route)['as'] ?? $route;
