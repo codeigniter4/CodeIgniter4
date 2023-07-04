@@ -1239,6 +1239,11 @@ class RouteCollection implements RouteCollectionInterface
         // Build our resulting string, inserting the $params in
         // the appropriate places.
         foreach ($matches[0] as $index => $pattern) {
+            if (! isset($params[$index])) {
+                throw new InvalidArgumentException(
+                    'Missing argument for "' . $pattern . '" in route "' . $from . '".'
+                );
+            }
             if (! preg_match('#^' . $pattern . '$#u', $params[$index])) {
                 throw RouterException::forInvalidParameterType();
             }
