@@ -866,7 +866,7 @@ class Model extends BaseModel
      *
      * @codeCoverageIgnore
      *
-     * @deprecated since 4.1
+     * @deprecated 4.1.0
      */
     public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = true): array
     {

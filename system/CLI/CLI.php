@@ -520,7 +520,7 @@ class CLI
     /**
      * if operating system === windows
      *
-     * @deprecated v4.3 Use `is_windows()` instead
+     * @deprecated 4.3.0 Use `is_windows()` instead
      */
     public static function isWindows(): bool
     {
