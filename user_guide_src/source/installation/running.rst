@@ -53,7 +53,7 @@ Local Development Server
 ========================
 
 CodeIgniter 4 comes with a local development server, leveraging PHP's built-in web server
-with CodeIgniter routing. You can use the ``serve`` script to launch it,
+with CodeIgniter routing. You can use the ``spark serve`` command to launch it,
 with the following command line in the main directory::
 
     > php spark serve
@@ -87,7 +87,7 @@ Hosting with Apache
 ===================
 
 A CodeIgniter4 webapp is normally hosted on a web server.
-Apache's ``httpd`` is the "standard" platform, and assumed in much of our documentation.
+Apache HTTP Server is the "standard" platform, and assumed in much of our documentation.
 
 Apache is bundled with many platforms, but can also be downloaded in a bundle
 with a database engine and PHP from `Bitnami <https://bitnami.com/stacks/infrastructure>`_.
