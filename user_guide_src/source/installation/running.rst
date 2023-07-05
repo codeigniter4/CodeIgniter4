@@ -229,7 +229,7 @@ Hosting with Nginx
 ==================
 
 Nginx is the second most widely used HTTP server for web hosting.
-Here you can find an example configuration using PHP 7.3 FPM (unix sockets) under Ubuntu Server.
+Here you can find an example configuration using PHP 8.1 FPM (unix sockets) under Ubuntu Server.
 
 default.conf
 ------------
@@ -255,7 +255,7 @@ This configuration enables URLs without "index.php" in them and using CodeIgnite
             include snippets/fastcgi-php.conf;
 
             # With php-fpm:
-            fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+            fastcgi_pass unix:/run/php/php8.1-fpm.sock;
             # With php-cgi:
             # fastcgi_pass 127.0.0.1:9000;
         }
