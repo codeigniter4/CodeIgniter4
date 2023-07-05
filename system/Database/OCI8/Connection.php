@@ -98,7 +98,7 @@ class Connection extends BaseConnection
     public $lastInsertedTableName;
 
     /**
-     * confirm DNS format.
+     * confirm DSN format.
      */
     private function isValidDSN(): bool
     {
