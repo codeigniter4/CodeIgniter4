@@ -53,8 +53,8 @@ Local Development Server
 ========================
 
 CodeIgniter 4 comes with a local development server, leveraging PHP's built-in web server
-with CodeIgniter routing. You can use the ``spark serve`` command to launch it,
-with the following command line in the main directory::
+with CodeIgniter routing. You can launch it, with the following command line 
+in the main directory::
 
     > php spark serve
 
