@@ -45,7 +45,7 @@ Initial Configuration
         run using the "production" environment. See also :ref:`environment-constant`.
 
 .. note:: If you will be running your site using a web server (e.g., Apache or Nginx),
-    you will need to modify the permissions for the ``writable`` folder inside
+    you will need to modify the permissions for the **writable** folder inside
     your project, so that it is writable by the user or account used by your
     web server.
 
@@ -64,8 +64,8 @@ This will launch the server and you can now view your application in your browse
     be used on a production server.
 
 If you need to run the site on a host other than simply localhost, you'll first need to add the host
-to your ``hosts`` file. The exact location of the file varies in each of the main operating systems, though
-all unix-type systems (include OS X) will typically keep the file at **/etc/hosts**.
+to your **hosts** file. The exact location of the file varies in each of the main operating systems, though
+all unix-type systems (include macOS) will typically keep the file at **/etc/hosts**.
 
 The local development server can be customized with three command line options:
 
@@ -99,12 +99,12 @@ The "mod_rewrite" module enables URLs without "index.php" in them, and is assume
 in our user guide.
 
 Make sure that the rewrite module is enabled (uncommented) in the main
-configuration file, e.g., ``apache2/conf/httpd.conf``::
+configuration file, e.g., **apache2/conf/httpd.conf**::
 
     LoadModule rewrite_module modules/mod_rewrite.so
 
-Also make sure that the default document root's <Directory> element enables this too,
-in the "AllowOverride" setting::
+Also make sure that the default document root's ``<Directory>`` element enables this too,
+in the ``AllowOverride`` setting::
 
     <Directory "/opt/lamp/apache2/htdocs">
         Options Indexes FollowSymLinks
@@ -124,18 +124,18 @@ We recommend using "virtual hosting" to run your apps.
 You can set up different aliases for each of the apps you work on,
 
 Make sure that the virtual hosting module is enabled (uncommented) in the main
-configuration file, e.g., ``apache2/conf/httpd.conf``::
+configuration file, e.g., **apache2/conf/httpd.conf**::
 
     LoadModule vhost_alias_module modules/mod_vhost_alias.so
 
-Add a host alias in your "hosts" file, typically ``/etc/hosts`` on unix-type platforms,
-or ``c:/Windows/System32/drivers/etc/hosts`` on Windows.
-Add a line to the file. This could be "myproject.local" or "myproject.test", for instance::
+Add a host alias in your "hosts" file, typically **/etc/hosts** on unix-type platforms,
+or **c:/Windows/System32/drivers/etc/hosts** on Windows.
+Add a line to the file. This could be ``myproject.local`` or ``myproject.test``, for instance::
 
     127.0.0.1 myproject.local
 
-Add a <VirtualHost> element for your webapp inside the virtual hosting configuration,
-e.g., ``apache2/conf/extra/httpd-vhost.conf``::
+Add a ``<VirtualHost>`` element for your webapp inside the virtual hosting configuration,
+e.g., **apache2/conf/extra/httpd-vhost.conf**::
 
     <VirtualHost *:80>
         DocumentRoot "/opt/lamp/apache2/htdocs/myproject/public"
@@ -145,18 +145,18 @@ e.g., ``apache2/conf/extra/httpd-vhost.conf``::
     </VirtualHost>
 
 If your project folder is not a subfolder of the Apache document root, then your
-<VirtualHost> element may need a nested <Directory> element to grant the web server access to the files.
+``<VirtualHost>`` element may need a nested ``<Directory>`` element to grant the web server access to the files.
 
-With mod_userdir (shared hosts)
+With mod_userdir (Shared Hosts)
 --------------------------------
 
 A common practice in shared hosting environments is to use the Apache module "mod_userdir" to enable per-user Virtual Hosts automatically. Additional configuration is required to allow CodeIgniter4 to be run from these per-user directories.
 
 The following assumes that the server is already configured for mod_userdir. A guide to enabling this module is available `in the Apache documentation <https://httpd.apache.org/docs/2.4/howto/public_html.html>`_.
 
-Because CodeIgniter4 expects the server to find the framework front controller at ``/public/index.php`` by default, you must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the per-user web directory).
+Because CodeIgniter4 expects the server to find the framework front controller at **public/index.php** by default, you must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the per-user web directory).
 
-The default user web directory ``~/public_html`` is specified by the ``UserDir`` directive, typically in ``/apache2/mods-available/userdir.conf`` or ``/apache2/conf/extra/httpd-userdir.conf``::
+The default user web directory **~/public_html** is specified by the ``UserDir`` directive, typically in **apache2/mods-available/userdir.conf** or **apache2/conf/extra/httpd-userdir.conf**::
 
     UserDir public_html
 
@@ -164,7 +164,7 @@ So you will need to configure Apache to look for CodeIgniter's public directory 
 
     UserDir "public_html/public" "public_html"
 
-Be sure to specify options and permissions for the CodeIgniter public directory as well. A ``userdir.conf`` might look like::
+Be sure to specify options and permissions for the CodeIgniter public directory as well. A **userdir.conf** might look like::
 
     <IfModule mod_userdir.c>
         UserDir "public_html/public" "public_html"
@@ -221,7 +221,7 @@ See :ref:`Handling Multiple Environments <environment-apache>`.
 Testing
 -------
 
-With the above configuration, your webapp would be accessed with the URL ``http://myproject.local`` in your browser.
+With the above configuration, your webapp would be accessed with the URL **http://myproject.local/** in your browser.
 
 Apache needs to be restarted whenever you change its configuration.
 
@@ -279,7 +279,7 @@ Bootstrapping the App
 In some scenarios you will want to load the framework without actually running the whole
 application. This is particularly useful for unit testing your project, but may also be
 handy for using third-party tools to analyze and modify your code. The framework comes
-with a separate bootstrap script specifically for this scenario: ``system/Test/bootstrap.php``.
+with a separate bootstrap script specifically for this scenario: **system/Test/bootstrap.php**.
 
 Most of the paths to your project are defined during the bootstrap process. You may use
 pre-defined constants to override these, but when using the defaults be sure that your
