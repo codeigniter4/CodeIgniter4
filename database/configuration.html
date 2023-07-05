@@ -536,14 +536,20 @@ within the class’ constructor:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Database\Config</span><span class="p">;</span>
 
+<span class="sd">/**</span>
+<span class="sd"> * Database Configuration</span>
+<span class="sd"> */</span>
 <span class="k">class</span> <span class="nc">Database</span> <span class="k">extends</span> <span class="nx">Config</span>
 <span class="p">{</span>
+    <span class="c1">// ...</span>
     <span class="k">public</span> <span class="nv">$development</span> <span class="o">=</span> <span class="p">[</span><span class="cm">/* ... */</span><span class="p">];</span>
     <span class="k">public</span> <span class="nv">$test</span>        <span class="o">=</span> <span class="p">[</span><span class="cm">/* ... */</span><span class="p">];</span>
     <span class="k">public</span> <span class="nv">$production</span>  <span class="o">=</span> <span class="p">[</span><span class="cm">/* ... */</span><span class="p">];</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
     <span class="p">{</span>
+        <span class="c1">// ...</span>
+
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">defaultGroup</span> <span class="o">=</span> <span class="nx">ENVIRONMENT</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -717,7 +723,7 @@ will be the path to your database file.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 04, 2023.
+      <span class="lastupdated">Last updated on Jul 05, 2023.
       </span></p>
   </div>
 
