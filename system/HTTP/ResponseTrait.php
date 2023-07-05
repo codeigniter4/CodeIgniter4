@@ -307,7 +307,7 @@ trait ResponseTrait
      * @param array|object|string $body
      * @param string              $format Valid: json, xml
      *
-     * @return mixed
+     * @return false|string
      *
      * @throws InvalidArgumentException If the body property is not string or array.
      */
