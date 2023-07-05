@@ -91,7 +91,7 @@ class UserAgent
     /**
      * HTTP Referer
      *
-     * @var mixed
+     * @var bool|string|null
      */
     protected $referrer;
 

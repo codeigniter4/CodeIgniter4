@@ -557,7 +557,7 @@ class URI
      * Set the value of a specific segment of the URI path.
      * Allows to set only existing segments or add new one.
      *
-     * @param mixed $value (string or int)
+     * @param int|string $value (string or int)
      *
      * @return $this
      */
@@ -844,7 +844,7 @@ class URI
     /**
      * Adds a single new element to the query vars.
      *
-     * @param mixed $value
+     * @param int|string $value
      *
      * @return $this
      */

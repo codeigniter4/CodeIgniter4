@@ -159,7 +159,7 @@ class FileCollection
      * Given a file array, will create UploadedFile instances. Will
      * loop over an array and create objects for each.
      *
-     * @return array|UploadedFile
+     * @return UploadedFile|UploadedFile[]
      */
     protected function createFileObject(array $array)
     {
@@ -240,7 +240,7 @@ class FileCollection
      * @param array $index The index sequence we are navigating down
      * @param array $value The portion of the array to process
      *
-     * @return mixed
+     * @return UploadedFile|null
      */
     protected function getValueDotNotationSyntax(array $index, array $value)
     {

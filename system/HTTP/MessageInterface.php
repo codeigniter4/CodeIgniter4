@@ -30,7 +30,7 @@ interface MessageInterface
     /**
      * Sets the body of the current message.
      *
-     * @param mixed $data
+     * @param string $data
      *
      * @return $this
      */
@@ -48,7 +48,7 @@ interface MessageInterface
     /**
      * Appends data to the body of the current message.
      *
-     * @param mixed $data
+     * @param string $data
      *
      * @return $this
      */
