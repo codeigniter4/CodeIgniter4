@@ -1328,7 +1328,7 @@ class RouteCollection implements RouteCollectionInterface
         foreach ($matches[0] as $index => $pattern) {
             if (! isset($params[$index])) {
                 throw new InvalidArgumentException(
-                    'Missing argument for "' . $pattern . '" in route "' . $from . '".'
+                    'Missing argument for "' . $pattern . '" in route "' . $routeKey . '".'
                 );
             }
             if (! preg_match('#^' . $pattern . '$#u', $params[$index])) {
