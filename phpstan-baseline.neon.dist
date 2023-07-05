@@ -26,16 +26,6 @@ parameters:
 			path: system/Cache/Handlers/RedisHandler.php
 
 		-
-			message: "#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getPost\\(\\)\\.$#"
-			count: 1
-			path: system/CodeIgniter.php
-
-		-
-			message: "#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:setLocale\\(\\)\\.$#"
-			count: 1
-			path: system/CodeIgniter.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:\\$db \\(CodeIgniter\\\\Database\\\\BaseConnection\\) in empty\\(\\) is not falsy\\.$#"
 			count: 1
 			path: system/Database/BaseBuilder.php

@@ -222,6 +222,10 @@ parameters:
       - Cache
   skip_violations:
     # Individual class exemptions
+    CodeIgniter\Cache\ResponseCache:
+      - CodeIgniter\HTTP\CLIRequest
+      - CodeIgniter\HTTP\IncomingRequest
+      - CodeIgniter\HTTP\ResponseInterface
     CodeIgniter\Entity\Cast\URICast:
       - CodeIgniter\HTTP\URI
     CodeIgniter\Log\Handlers\ChromeLoggerHandler:

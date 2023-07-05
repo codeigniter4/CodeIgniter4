@@ -52,15 +52,24 @@ Parameter Type Changes
 
 - **Services:** The first parameter of ``Services::security()`` has been
   changed from ``Config\App`` to ``Config\Security``.
-- **Session:** The second parameter of ``Session::__construct()`` has been
-  changed from ``Config\App`` to ``Config\Session``.
-- **Session:** The first parameter of ``__construct()`` in ``BaseHandler``,
-  ``DatabaseHandler``, ``FileHandler``, ``MemcachedHandler``, and ``RedisHandler``
-  has been changed from ``Config\App`` to ``Config\Session``.
+- **Session:**
+    - The second parameter of ``Session::__construct()`` has been changed from
+      ``Config\App`` to ``Config\Session``.
+    - The first parameter of ``__construct()`` in the database's ``BaseHandler``,
+      ``DatabaseHandler``, ``FileHandler``, ``MemcachedHandler``, and ``RedisHandler``
+      has been changed from ``Config\App`` to ``Config\Session``.
 - **Security:** The first parameter of ``Security::__construct()`` has been
   changed from ``Config\App`` to ``Config\Security``.
 - **Validation:** The method signature of ``Validation::check()`` has been changed.
   The ``string`` typehint on the ``$rule`` parameter was removed.
+- **CodeIgniter:** The method signature of ``CodeIgniter::setRequest()`` has been
+  changed. The ``Request`` typehint on the ``$request`` parameter was removed.
+- **FeatureTestCase:**
+    - The method signature of ``FeatureTestCase::populateGlobals()`` has been
+      changed. The ``Request`` typehint on the ``$request`` parameter was removed.
+    - The method signature of ``FeatureTestCase::setRequestBody()`` has been
+      changed. The ``Request`` typehint on the ``$request`` parameter and the
+      return type ``Request`` were removed.
 
 Added Parameters
 ----------------
@@ -179,7 +188,12 @@ Deprecations
   are deprecated. Because these methods have been moved to ``BaseExceptionHandler`` or
   ``ExceptionHandler``.
 - **Autoloader:** ``Autoloader::sanitizeFilename()`` is deprecated.
-- **CodeIgniter:** ``CodeIgniter::$returnResponse`` property is deprecated. No longer used.
+- **CodeIgniter:**
+    - ``CodeIgniter::$returnResponse`` property is deprecated. No longer used.
+    - ``CodeIgniter::$cacheTTL`` property is deprecated. No longer used. Use ``ResponseCache`` instead.
+    - ``CodeIgniter::cache()`` method is deprecated. No longer used. Use ``ResponseCache`` instead.
+    - ``CodeIgniter::cachePage()`` method is deprecated. No longer used. Use ``ResponseCache`` instead.
+    - ``CodeIgniter::generateCacheName()`` method is deprecated. No longer used. Use ``ResponseCache`` instead.
 - **RedirectException:** ``\CodeIgniter\Router\Exceptions\RedirectException`` is deprecated. Use ``\CodeIgniter\HTTP\Exceptions\RedirectException`` instead.
 - **Session:** The property ``$sessionDriverName``, ``$sessionCookieName``,
   ``$sessionExpiration``, ``$sessionSavePath``, ``$sessionMatchIP``,
