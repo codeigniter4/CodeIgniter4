@@ -91,7 +91,7 @@ file types, including:
 
 This is configured in the file **app/Config/Modules.php**.
 
-The auto-discovery system works by scanning for particular directories and files within psr4 namespaces that have been defined in **Config/Autoload.php**.
+The auto-discovery system works by scanning for particular directories and files within psr4 namespaces that have been defined in **Config/Autoload.php** and Composer packages.
 
 The discovery process would look for discoverable items on that path and should, for example, find the routes file at **acme/Blog/Config/Routes.php**.
 
@@ -99,7 +99,7 @@ Enable/Disable Discover
 =======================
 
 You can turn on or off all auto-discovery in the system with the ``$enabled`` class variable. False will disable
-all discovery, optimizing performance, but negating the special capabilities of your modules.
+all discovery, optimizing performance, but negating the special capabilities of your modules and Composer packages.
 
 Specify Discovery Items
 =======================
