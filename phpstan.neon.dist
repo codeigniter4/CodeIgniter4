@@ -36,8 +36,6 @@ parameters:
 		- system/Test/Filters/CITestStreamFilter.php
 		- system/ThirdParty/*
 		- system/Validation/Views/single.php
-	parallel:
-		processTimeout: 300.0
 	scanDirectories:
 		- system/Helpers
 	dynamicConstantNames:
