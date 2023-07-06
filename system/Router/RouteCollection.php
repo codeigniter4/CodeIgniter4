@@ -475,7 +475,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * This setting is passed to the Router class and handled there.
      *
-     * @param callable|null $callable
+     * @param callable|string|null $callable
      */
     public function set404Override($callable = null): RouteCollectionInterface
     {

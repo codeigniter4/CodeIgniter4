@@ -855,7 +855,7 @@ class URI
     /**
      * Adds a single new element to the query vars.
      *
-     * @param mixed $value
+     * @param int|string $value
      *
      * @return $this
      */

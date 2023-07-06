@@ -263,7 +263,7 @@ class CURLRequest extends OutgoingRequest
     /**
      * Set JSON data to be sent.
      *
-     * @param mixed $data
+     * @param array|bool|float|int|object|string|null $data
      *
      * @return $this
      */

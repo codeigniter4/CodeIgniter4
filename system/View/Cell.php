@@ -64,7 +64,10 @@ class Cell
     /**
      * Render a cell, returning its body as a string.
      *
-     * @param array|string|null $params
+     * @param string            $library   Cell class and method name.
+     * @param array|string|null $params    Parameters to pass to the method.
+     * @param int               $ttl       Number of seconds to cache the cell.
+     * @param string|null       $cacheName Cache item name.
      *
      * @throws ReflectionException
      */
@@ -75,6 +78,8 @@ class Cell
         $class = is_object($instance)
             ? get_class($instance)
             : null;
+
+        $params = $this->prepareParams($params);
 
         // Is the output cached?
         $cacheName = ! empty($cacheName)
@@ -92,8 +97,6 @@ class Cell
         if (! method_exists($instance, $method)) {
             throw ViewException::forInvalidCellMethod($class, $method);
         }
-
-        $params = $this->prepareParams($params);
 
         $output = $instance instanceof BaseCell
             ? $this->renderCell($instance, $method, $params)
