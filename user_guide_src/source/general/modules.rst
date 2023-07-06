@@ -93,7 +93,7 @@ This is configured in the file **app/Config/Modules.php**.
 
 The auto-discovery system works by scanning for particular directories and files within psr4 namespaces that have been defined in **Config/Autoload.php**.
 
-The discovery process would look for discoverable items on that path and should, for example, find the routes file at **/acme/Blog/Config/Routes.php**.
+The discovery process would look for discoverable items on that path and should, for example, find the routes file at **acme/Blog/Config/Routes.php**.
 
 Enable/Disable Discover
 =======================
