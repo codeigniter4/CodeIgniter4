@@ -1,7 +1,3 @@
-conditionalTags:
-	PhpParser\NodeVisitor\NodeConnectingVisitor:
-		phpstan.parser.richParserNodeVisitor: true
-
 services:
 	-
 		class: Utils\PHPStan\CheckUseStatementsAfterLicenseRule
