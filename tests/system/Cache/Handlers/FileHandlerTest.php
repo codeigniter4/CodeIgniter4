@@ -78,6 +78,11 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->assertInstanceOf(FileHandler::class, $this->handler);
     }
 
+    /**
+     * chmod('path', 0444) does not work on Windows
+     *
+     * @requires OS Linux|Darwin
+     */
     public function testNewWithNonWritablePath()
     {
         $this->expectException(CacheException::class);
@@ -132,6 +137,11 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->assertNull($this->handler->get(self::$key1));
     }
 
+    /**
+     * chmod('path', 0444) does not work on Windows
+     *
+     * @requires OS Linux|Darwin
+     */
     public function testSave()
     {
         $this->assertTrue($this->handler->save(self::$key1, 'value'));
@@ -265,10 +275,11 @@ final class FileHandlerTest extends AbstractHandlerTest
     /**
      * @dataProvider modeProvider
      *
-     * @param mixed $int
-     * @param mixed $string
+     * permissions given on Windows are fixed to `0666`
+     *
+     * @requires OS Linux|Darwin
      */
-    public function testSaveMode($int, $string)
+    public function testSaveMode(int $int, string $string): void
     {
         // Initialize mode
         $config               = new Cache();
