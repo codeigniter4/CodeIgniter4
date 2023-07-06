@@ -10,7 +10,6 @@
  */
 
 use CodeIgniter\Cache\CacheInterface;
-use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
@@ -27,7 +26,6 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
-use CodeIgniter\Model;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Test\TestLogger;
 use Config\App;
@@ -202,16 +200,15 @@ if (! function_exists('command')) {
 
 if (! function_exists('config')) {
     /**
-     * More simple way of getting config instances from Factories
+     * Simpler way of getting config instances from Factories
      *
-     * @template ConfigTemplate of BaseConfig
+     * @template T of object
      *
-     * @param class-string<ConfigTemplate>|string $name
+     * @param class-string<T>|non-empty-string $name
      *
-     * @return ConfigTemplate|null
-     * @phpstan-return ($name is class-string<ConfigTemplate> ? ConfigTemplate : object|null)
+     * @phpstan-return ($name is class-string<T> ? T : null)
      */
-    function config(string $name, bool $getShared = true)
+    function config(string $name, bool $getShared = true): ?object
     {
         return Factories::config($name, ['getShared' => $getShared]);
     }
@@ -811,16 +808,15 @@ if (! function_exists('log_message')) {
 
 if (! function_exists('model')) {
     /**
-     * More simple way of getting model instances from Factories
+     * Simpler way of getting model instances from Factories
      *
-     * @template ModelTemplate of Model
+     * @template T of object
      *
-     * @param class-string<ModelTemplate>|string $name
+     * @param class-string<T>|non-empty-string $name
      *
-     * @return ModelTemplate|null
-     * @phpstan-return ($name is class-string<ModelTemplate> ? ModelTemplate : object|null)
+     * @phpstan-return ($name is class-string<T> ? T : null)
      */
-    function model(string $name, bool $getShared = true, ?ConnectionInterface &$conn = null)
+    function model(string $name, bool $getShared = true, ?ConnectionInterface &$conn = null): ?object
     {
         return Factories::models($name, ['getShared' => $getShared], $conn);
     }
