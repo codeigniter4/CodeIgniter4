@@ -15,6 +15,7 @@ on:
       - '.github/workflows/test-rector.yml'
       - composer.json
       - rector.php
+      - '**.neon.dist'
 
   push:
     branches:
@@ -28,6 +29,7 @@ on:
       - '.github/workflows/test-rector.yml'
       - composer.json
       - rector.php
+      - '**.neon.dist'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
