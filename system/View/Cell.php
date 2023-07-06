@@ -79,6 +79,8 @@ class Cell
             ? get_class($instance)
             : null;
 
+        $params = $this->prepareParams($params);
+
         // Is the output cached?
         $cacheName = ! empty($cacheName)
             ? $cacheName
@@ -95,8 +97,6 @@ class Cell
         if (! method_exists($instance, $method)) {
             throw ViewException::forInvalidCellMethod($class, $method);
         }
-
-        $params = $this->prepareParams($params);
 
         $output = $instance instanceof BaseCell
             ? $this->renderCell($instance, $method, $params)
