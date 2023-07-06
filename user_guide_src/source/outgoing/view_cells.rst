@@ -16,17 +16,27 @@ CodeIgniter supports two types of View Cells: simple and controlled. Simple View
 Calling a View Cell
 *******************
 
-No matter which type of View Cell you are using, you can call it from any view by using the ``view_cell()`` helper method. The first parameter is the name of the class and method to call, and the second parameter is an array of parameters to pass to the method. The method must return a string, which will be inserted into the view where the ``view_cell()`` method was called.
+No matter which type of View Cell you are using, you can call it from any view by using the ``view_cell()`` helper function.
+
+The first parameter is the name of the class and method to call, and the second parameter is an array of parameters to pass to the method.
 ::
 
     <?= view_cell('App\Cells\MyClass::myMethod', ['param1' => 'value1', 'param2' => 'value2']) ?>
 
-If you do not include the full namespace for the class, it will assume in can be found in the ``App\Cells`` namespace. So, the following example would attempt to find the ``MyClass`` class in ``app/Cells/MyClass.php``. If it is not found there, all namespaces will be scanned until it is found, searching within a ``Cells`` subdirectory of each namespace.
+The Cell method must return a string, which will be inserted into the view where the ``view_cell()`` function was called.
+
+Namespace Omission
+==================
+
+.. versionadded:: 4.3.0
+
+If you do not include the full namespace for the class, it will assume in can be found in the ``App\Cells`` namespace. So, the following example would attempt to find the ``MyClass`` class in **app/Cells/MyClass.php**. If it is not found there, all namespaces will be scanned until it is found, searching within a **Cells** subdirectory of each namespace.
 ::
 
     <?= view_cell('MyClass::myMethod', ['param1' => 'value1', 'param2' => 'value2']) ?>
 
-.. note:: Namespace omission is available since v4.3.0 and later.
+Passing Parameters as Key/Value String
+======================================
 
 You can also pass the parameters along as a key/value string:
 ::
