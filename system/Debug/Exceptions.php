@@ -74,12 +74,7 @@ class Exceptions
 
     private ?Throwable $exceptionCaughtByExceptionHandler = null;
 
-    /**
-     * @param RequestInterface|null $request
-     *
-     * @deprecated The parameter $request and $response are deprecated. No longer used.
-     */
-    public function __construct(ExceptionsConfig $config, $request, ResponseInterface $response) /** @phpstan-ignore-line */
+    public function __construct(ExceptionsConfig $config)
     {
         // For backward compatibility
         $this->ob_level = ob_get_level();

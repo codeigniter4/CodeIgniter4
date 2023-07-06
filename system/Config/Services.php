@@ -257,25 +257,18 @@ class Services extends BaseService
      *  - register_shutdown_function
      *
      * @return Exceptions
-     *
-     * @deprecated The parameter $request and $response are deprecated.
      */
     public static function exceptions(
         ?ExceptionsConfig $config = null,
-        ?IncomingRequest $request = null,
-        ?ResponseInterface $response = null,
         bool $getShared = true
     ) {
         if ($getShared) {
-            return static::getSharedInstance('exceptions', $config, $request, $response);
+            return static::getSharedInstance('exceptions', $config);
         }
 
         $config ??= config(ExceptionsConfig::class);
 
-        // @TODO remove instantiation of Response in the future.
-        $response ??= AppServices::response();
-
-        return new Exceptions($config, $request, $response);
+        return new Exceptions($config);
     }
 
     /**
