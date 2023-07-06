@@ -64,7 +64,10 @@ class Cell
     /**
      * Render a cell, returning its body as a string.
      *
-     * @param array|string|null $params
+     * @param string            $library   Cell class and method name.
+     * @param array|string|null $params    Parameters to pass to the method.
+     * @param int               $ttl       Number of seconds to cache the cell.
+     * @param string|null       $cacheName Cache item name.
      *
      * @throws ReflectionException
      */
