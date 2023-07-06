@@ -289,7 +289,7 @@
 <li><p><a class="reference internal" href="#htaccess" id="id6">.htaccess</a></p></li>
 <li><p><a class="reference internal" href="#removing-the-index-php" id="id7">Removing the index.php</a></p></li>
 <li><p><a class="reference internal" href="#virtual-hosting" id="id8">Virtual Hosting</a></p></li>
-<li><p><a class="reference internal" href="#with-mod-userdir-shared-hosts" id="id9">With mod_userdir (shared hosts)</a></p></li>
+<li><p><a class="reference internal" href="#with-mod-userdir-shared-hosts" id="id9">With mod_userdir (Shared Hosts)</a></p></li>
 <li><p><a class="reference internal" href="#setting-environment" id="id10">Setting Environment</a></p></li>
 <li><p><a class="reference internal" href="#testing" id="id11">Testing</a></p></li>
 </ul>
@@ -352,7 +352,7 @@ run using the “production” environment. See also <a class="reference interna
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you will be running your site using a web server (e.g., Apache or Nginx),
-you will need to modify the permissions for the <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder inside
+you will need to modify the permissions for the <strong>writable</strong> folder inside
 your project, so that it is writable by the user or account used by your
 web server.</p>
 </div>
@@ -360,8 +360,8 @@ web server.</p>
 <section id="local-development-server">
 <h2><a class="toc-backref" href="#id4">Local Development Server</a><a class="headerlink" href="#local-development-server" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter 4 comes with a local development server, leveraging PHP’s built-in web server
-with CodeIgniter routing. You can use the <code class="docutils literal notranslate"><span class="pre">serve</span></code> script to launch it,
-with the following command line in the main directory:</p>
+with CodeIgniter routing. You can launch it, with the following command line
+in the main directory:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span>
 </pre></div>
 </div>
@@ -372,8 +372,8 @@ with the following command line in the main directory:</p>
 be used on a production server.</p>
 </div>
 <p>If you need to run the site on a host other than simply localhost, you’ll first need to add the host
-to your <code class="docutils literal notranslate"><span class="pre">hosts</span></code> file. The exact location of the file varies in each of the main operating systems, though
-all unix-type systems (include OS X) will typically keep the file at <strong>/etc/hosts</strong>.</p>
+to your <strong>hosts</strong> file. The exact location of the file varies in each of the main operating systems, though
+all unix-type systems (including macOS) will typically keep the file at <strong>/etc/hosts</strong>.</p>
 <p>The local development server can be customized with three command line options:</p>
 <ul>
 <li><p>You can use the <code class="docutils literal notranslate"><span class="pre">--host</span></code> CLI option to specify a different host to run the application at:</p>
@@ -398,7 +398,7 @@ set to the path of the PHP executable you want to use:</p>
 <section id="hosting-with-apache">
 <h2><a class="toc-backref" href="#id5">Hosting with Apache</a><a class="headerlink" href="#hosting-with-apache" title="Permalink to this headline"></a></h2>
 <p>A CodeIgniter4 webapp is normally hosted on a web server.
-Apache’s <code class="docutils literal notranslate"><span class="pre">httpd</span></code> is the “standard” platform, and assumed in much of our documentation.</p>
+Apache HTTP Server is the “standard” platform, and assumed in much of our documentation.</p>
 <p>Apache is bundled with many platforms, but can also be downloaded in a bundle
 with a database engine and PHP from <a class="reference external" href="https://bitnami.com/stacks/infrastructure">Bitnami</a>.</p>
 <section id="htaccess">
@@ -406,12 +406,12 @@ with a database engine and PHP from <a class="reference external" href="https://
 <p>The “mod_rewrite” module enables URLs without “index.php” in them, and is assumed
 in our user guide.</p>
 <p>Make sure that the rewrite module is enabled (uncommented) in the main
-configuration file, e.g., <code class="docutils literal notranslate"><span class="pre">apache2/conf/httpd.conf</span></code>:</p>
+configuration file, e.g., <strong>apache2/conf/httpd.conf</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">LoadModule</span> <span class="nx">rewrite_module</span> <span class="nx">modules</span><span class="o">/</span><span class="nx">mod_rewrite</span><span class="o">.</span><span class="nx">so</span>
 </pre></div>
 </div>
-<p>Also make sure that the default document root’s &lt;Directory&gt; element enables this too,
-in the “AllowOverride” setting:</p>
+<p>Also make sure that the default document root’s <code class="docutils literal notranslate"><span class="pre">&lt;Directory&gt;</span></code> element enables this too,
+in the <code class="docutils literal notranslate"><span class="pre">AllowOverride</span></code> setting:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">Directory</span> <span class="s2">&quot;/opt/lamp/apache2/htdocs&quot;</span><span class="o">&gt;</span>
     <span class="nx">Options</span> <span class="nx">Indexes</span> <span class="nx">FollowSymLinks</span>
     <span class="nx">AllowOverride</span> <span class="nx">All</span>
@@ -429,18 +429,18 @@ in the “AllowOverride” setting:</p>
 <p>We recommend using “virtual hosting” to run your apps.
 You can set up different aliases for each of the apps you work on,</p>
 <p>Make sure that the virtual hosting module is enabled (uncommented) in the main
-configuration file, e.g., <code class="docutils literal notranslate"><span class="pre">apache2/conf/httpd.conf</span></code>:</p>
+configuration file, e.g., <strong>apache2/conf/httpd.conf</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">LoadModule</span> <span class="nx">vhost_alias_module</span> <span class="nx">modules</span><span class="o">/</span><span class="nx">mod_vhost_alias</span><span class="o">.</span><span class="nx">so</span>
 </pre></div>
 </div>
-<p>Add a host alias in your “hosts” file, typically <code class="docutils literal notranslate"><span class="pre">/etc/hosts</span></code> on unix-type platforms,
-or <code class="docutils literal notranslate"><span class="pre">c:/Windows/System32/drivers/etc/hosts</span></code> on Windows.
-Add a line to the file. This could be “myproject.local” or “myproject.test”, for instance:</p>
+<p>Add a host alias in your “hosts” file, typically <strong>/etc/hosts</strong> on unix-type platforms,
+or <strong>c:/Windows/System32/drivers/etc/hosts</strong> on Windows.
+Add a line to the file. This could be <code class="docutils literal notranslate"><span class="pre">myproject.local</span></code> or <code class="docutils literal notranslate"><span class="pre">myproject.test</span></code>, for instance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="nx">myproject</span><span class="o">.</span><span class="nx">local</span>
 </pre></div>
 </div>
-<p>Add a &lt;VirtualHost&gt; element for your webapp inside the virtual hosting configuration,
-e.g., <code class="docutils literal notranslate"><span class="pre">apache2/conf/extra/httpd-vhost.conf</span></code>:</p>
+<p>Add a <code class="docutils literal notranslate"><span class="pre">&lt;VirtualHost&gt;</span></code> element for your webapp inside the virtual hosting configuration,
+e.g., <strong>apache2/conf/extra/httpd-vhost.conf</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">VirtualHost</span> <span class="o">*:</span><span class="mi">80</span><span class="o">&gt;</span>
     <span class="nx">DocumentRoot</span> <span class="s2">&quot;/opt/lamp/apache2/htdocs/myproject/public&quot;</span>
     <span class="nx">ServerName</span> <span class="nx">myproject</span><span class="o">.</span><span class="nx">local</span>
@@ -450,14 +450,14 @@ e.g., <code class="docutils literal notranslate"><span class="pre">apache2/conf/
 </pre></div>
 </div>
 <p>If your project folder is not a subfolder of the Apache document root, then your
-&lt;VirtualHost&gt; element may need a nested &lt;Directory&gt; element to grant the web server access to the files.</p>
+<code class="docutils literal notranslate"><span class="pre">&lt;VirtualHost&gt;</span></code> element may need a nested <code class="docutils literal notranslate"><span class="pre">&lt;Directory&gt;</span></code> element to grant the web server access to the files.</p>
 </section>
 <section id="with-mod-userdir-shared-hosts">
-<h3><a class="toc-backref" href="#id9">With mod_userdir (shared hosts)</a><a class="headerlink" href="#with-mod-userdir-shared-hosts" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">With mod_userdir (Shared Hosts)</a><a class="headerlink" href="#with-mod-userdir-shared-hosts" title="Permalink to this headline"></a></h3>
 <p>A common practice in shared hosting environments is to use the Apache module “mod_userdir” to enable per-user Virtual Hosts automatically. Additional configuration is required to allow CodeIgniter4 to be run from these per-user directories.</p>
 <p>The following assumes that the server is already configured for mod_userdir. A guide to enabling this module is available <a class="reference external" href="https://httpd.apache.org/docs/2.4/howto/public_html.html">in the Apache documentation</a>.</p>
-<p>Because CodeIgniter4 expects the server to find the framework front controller at <code class="docutils literal notranslate"><span class="pre">/public/index.php</span></code> by default, you must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the per-user web directory).</p>
-<p>The default user web directory <code class="docutils literal notranslate"><span class="pre">~/public_html</span></code> is specified by the <code class="docutils literal notranslate"><span class="pre">UserDir</span></code> directive, typically in <code class="docutils literal notranslate"><span class="pre">/apache2/mods-available/userdir.conf</span></code> or <code class="docutils literal notranslate"><span class="pre">/apache2/conf/extra/httpd-userdir.conf</span></code>:</p>
+<p>Because CodeIgniter4 expects the server to find the framework front controller at <strong>public/index.php</strong> by default, you must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the per-user web directory).</p>
+<p>The default user web directory <strong>~/public_html</strong> is specified by the <code class="docutils literal notranslate"><span class="pre">UserDir</span></code> directive, typically in <strong>apache2/mods-available/userdir.conf</strong> or <strong>apache2/conf/extra/httpd-userdir.conf</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">UserDir</span> <span class="nx">public_html</span>
 </pre></div>
 </div>
@@ -465,7 +465,7 @@ e.g., <code class="docutils literal notranslate"><span class="pre">apache2/conf/
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">UserDir</span> <span class="s2">&quot;public_html/public&quot;</span> <span class="s2">&quot;public_html&quot;</span>
 </pre></div>
 </div>
-<p>Be sure to specify options and permissions for the CodeIgniter public directory as well. A <code class="docutils literal notranslate"><span class="pre">userdir.conf</span></code> might look like:</p>
+<p>Be sure to specify options and permissions for the CodeIgniter public directory as well. A <strong>userdir.conf</strong> might look like:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">IfModule</span> <span class="nx">mod_userdir</span><span class="o">.</span><span class="nx">c</span><span class="o">&gt;</span>
     <span class="nx">UserDir</span> <span class="s2">&quot;public_html/public&quot;</span> <span class="s2">&quot;public_html&quot;</span>
     <span class="nx">UserDir</span> <span class="nx">disabled</span> <span class="nx">root</span>
@@ -521,14 +521,14 @@ e.g., <code class="docutils literal notranslate"><span class="pre">apache2/conf/
 </section>
 <section id="testing">
 <h3><a class="toc-backref" href="#id11">Testing</a><a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
-<p>With the above configuration, your webapp would be accessed with the URL <code class="docutils literal notranslate"><span class="pre">http://myproject.local</span></code> in your browser.</p>
+<p>With the above configuration, your webapp would be accessed with the URL <strong>http://myproject.local/</strong> in your browser.</p>
 <p>Apache needs to be restarted whenever you change its configuration.</p>
 </section>
 </section>
 <section id="hosting-with-nginx">
 <h2><a class="toc-backref" href="#id12">Hosting with Nginx</a><a class="headerlink" href="#hosting-with-nginx" title="Permalink to this headline"></a></h2>
 <p>Nginx is the second most widely used HTTP server for web hosting.
-Here you can find an example configuration using PHP 7.3 FPM (unix sockets) under Ubuntu Server.</p>
+Here you can find an example configuration using PHP 8.1 FPM (unix sockets) under Ubuntu Server.</p>
 <section id="default-conf">
 <h3><a class="toc-backref" href="#id13">default.conf</a><a class="headerlink" href="#default-conf" title="Permalink to this headline"></a></h3>
 <p>This configuration enables URLs without “index.php” in them and using CodeIgniter’s “404 - File Not Found” for URLs ending with “.php”.</p>
@@ -549,7 +549,7 @@ Here you can find an example configuration using PHP 7.3 FPM (unix sockets) unde
 <span class="w">        </span><span class="kn">include</span><span class="w"> </span><span class="s">snippets/fastcgi-php.conf</span><span class="p">;</span>
 
 <span class="w">        </span><span class="c1"># With php-fpm:</span>
-<span class="w">        </span><span class="kn">fastcgi_pass</span><span class="w"> </span><span class="s">unix:/run/php/php7.3-fpm.sock</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">fastcgi_pass</span><span class="w"> </span><span class="s">unix:/run/php/php8.1-fpm.sock</span><span class="p">;</span>
 <span class="w">        </span><span class="c1"># With php-cgi:</span>
 <span class="w">        </span><span class="c1"># fastcgi_pass 127.0.0.1:9000;</span>
 <span class="w">    </span><span class="p">}</span>
@@ -574,7 +574,7 @@ Here you can find an example configuration using PHP 7.3 FPM (unix sockets) unde
 <p>In some scenarios you will want to load the framework without actually running the whole
 application. This is particularly useful for unit testing your project, but may also be
 handy for using third-party tools to analyze and modify your code. The framework comes
-with a separate bootstrap script specifically for this scenario: <code class="docutils literal notranslate"><span class="pre">system/Test/bootstrap.php</span></code>.</p>
+with a separate bootstrap script specifically for this scenario: <strong>system/Test/bootstrap.php</strong>.</p>
 <p>Most of the paths to your project are defined during the bootstrap process. You may use
 pre-defined constants to override these, but when using the defaults be sure that your
 paths align with the expected directory structure for your installation method.</p>
@@ -593,7 +593,7 @@ paths align with the expected directory structure for your installation method.<
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 05, 2023.
+      <span class="lastupdated">Last updated on Jul 06, 2023.
       </span></p>
   </div>
 
