@@ -142,7 +142,7 @@ If you need to perform additional logic before the view is rendered, you can imp
 
 .. literalinclude:: view_cells/018.php
 
-You can pass additional parameters to the ``mount()`` method by passing them as an array to the ``view_cell()`` helper function. Any of the parameters sent that match a parameter name of the ``mount`` method will be passed in:
+You can pass additional parameters to the ``mount()`` method by passing them as an array to the ``view_cell()`` helper function. Any of the parameters sent that match a parameter name of the ``mount()`` method will be passed in:
 
 .. literalinclude:: view_cells/019.php
 
