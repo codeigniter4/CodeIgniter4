@@ -11,9 +11,9 @@ language files, etc. Modules may contain as few, or as many, of these as you lik
     :local:
     :depth: 2
 
-==========
+**********
 Namespaces
-==========
+**********
 
 The core element of the modules functionality comes from the :doc:`PSR-4 compatible autoloading <../concepts/autoloader>`
 that CodeIgniter uses. While any code can use the PSR-4 autoloader and namespaces, the primary way to take full advantage of
@@ -58,9 +58,9 @@ Of course, there is nothing forcing you to use this exact structure, and you sho
 best suits your module, leaving out directories you don't need, creating new directories for Entities, Interfaces,
 or Repositories, etc.
 
-===========================
+***************************
 Autoloading Non-class Files
-===========================
+***************************
 
 More often than not that your module will not contain only PHP classes but also others like procedural
 functions, bootstrapping files, module constants files, etc. which are not normally loaded the way classes
@@ -73,9 +73,9 @@ your classes. All we need to do is provide the list of paths to those files and 
 
 .. literalinclude:: modules/002.php
 
-==============
+**************
 Auto-Discovery
-==============
+**************
 
 Many times, you will need to specify the full namespace to files you want to include, but CodeIgniter can be
 configured to make integrating modules into your applications simpler by automatically discovering many different
@@ -134,9 +134,9 @@ by editing the ``$discoverInComposer`` variable in **app/Config/Modules.php**:
 
 .. literalinclude:: modules/004.php
 
-==================
+******************
 Working with Files
-==================
+******************
 
 This section will take a look at each of the file types (controllers, views, language files, etc) and how they can
 be used within the module. Some of this information is described in more detail in the relevant location of the user
