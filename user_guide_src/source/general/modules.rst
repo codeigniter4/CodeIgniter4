@@ -73,6 +73,8 @@ your classes. All we need to do is provide the list of paths to those files and 
 
 .. literalinclude:: modules/002.php
 
+.. _auto-discovery:
+
 **************
 Auto-Discovery
 **************
@@ -83,7 +85,7 @@ file types, including:
 
 - :doc:`Events <../extending/events>`
 - :doc:`Filters <../incoming/filters>`
-- :doc:`Registrars <./configuration>`
+- :ref:`registrars`
 - :doc:`Route files <../incoming/routing>`
 - :doc:`Services <../concepts/services>`
 

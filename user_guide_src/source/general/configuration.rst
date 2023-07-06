@@ -288,7 +288,7 @@ There are two ways to implement a Registrar: implicit and explicit.
 Implicit Registrars
 ===================
 
-Any namespace may define registrars by using the **Config/Registrar.php** file, if discovery
+Any namespace may define registrars by using the **Config/Registrar.php** file, if :ref:`auto-discovery`
 is enabled in :doc:`Modules </general/modules>`. These files are classes whose methods are
 named for each configuration class you wish to extend. For example, a third-party module might
 wish to supply an additional template to ``Pager`` without overwriting whatever a develop has
