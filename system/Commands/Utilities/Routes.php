@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Commands\Utilities;
 
-use Closure;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouteCollector;
@@ -119,21 +118,19 @@ class Routes extends BaseCommand
         $definedRouteCollector = new DefinedRouteCollector($collection);
 
         foreach ($definedRouteCollector->collect() as $route) {
-            if (is_string($route['handler']) || $route['handler'] instanceof Closure) {
-                $sampleUri = $uriGenerator->get($route['route']);
-                $filters   = $filterCollector->get($route['method'], $sampleUri);
+            $sampleUri = $uriGenerator->get($route['route']);
+            $filters   = $filterCollector->get($route['method'], $sampleUri);
 
-                $routeName = ($route['route'] === $route['name']) ? '»' : $route['name'];
+            $routeName = ($route['route'] === $route['name']) ? '»' : $route['name'];
 
-                $tbody[] = [
-                    strtoupper($route['method']),
-                    $route['route'],
-                    $routeName,
-                    $route['handler'],
-                    implode(' ', array_map('class_basename', $filters['before'])),
-                    implode(' ', array_map('class_basename', $filters['after'])),
-                ];
-            }
+            $tbody[] = [
+                strtoupper($route['method']),
+                $route['route'],
+                $routeName,
+                $route['handler'],
+                implode(' ', array_map('class_basename', $filters['before'])),
+                implode(' ', array_map('class_basename', $filters['after'])),
+            ];
         }
 
         if ($collection->shouldAutoRoute()) {
