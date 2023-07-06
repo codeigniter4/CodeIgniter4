@@ -65,7 +65,7 @@ This will launch the server and you can now view your application in your browse
 
 If you need to run the site on a host other than simply localhost, you'll first need to add the host
 to your **hosts** file. The exact location of the file varies in each of the main operating systems, though
-all unix-type systems (include macOS) will typically keep the file at **/etc/hosts**.
+all unix-type systems (including macOS) will typically keep the file at **/etc/hosts**.
 
 The local development server can be customized with three command line options:
 
