@@ -50,8 +50,11 @@ Method Signature Changes
 Parameter Type Changes
 ----------------------
 
-- **Services:** The first parameter of ``Services::security()`` has been
-  changed from ``Config\App`` to ``Config\Security``.
+- **Services:**
+    - The first parameter of ``Services::security()`` has been changed from
+      ``Config\App`` to ``Config\Security``.
+    - The first parameter of ``Services::session()`` has been changed from
+      ``Config\App`` to ``Config\Session``.
 - **Session:**
     - The second parameter of ``Session::__construct()`` has been changed from
       ``Config\App`` to ``Config\Session``.
