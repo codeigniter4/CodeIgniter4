@@ -79,7 +79,7 @@ Service Accessors
     If $data is a string, then it simply escapes and returns it.
     If $data is an array, then it loops over it, escaping each 'value' of the key/value pairs.
 
-    Valid context values: html, js, css, url, attr, raw
+    Valid context values: ``html``, ``js``, ``css``, ``url``, ``attr``, ``raw``
 
 .. php:function:: helper($filename)
 
