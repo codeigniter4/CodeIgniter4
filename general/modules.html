@@ -571,7 +571,7 @@ Modules that need to override or add to known configurations in <strong>app/Conf
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">config()</span></code> finds the file in <strong>app/Config/</strong> when there is a class with the same shortname,
 even if you specify a fully qualified class name like <code class="docutils literal notranslate"><span class="pre">config(\Acme\Blog\Config\Blog::class)</span></code>.
-This is because <code class="docutils literal notranslate"><span class="pre">config()</span></code> is a wrapper for the <code class="docutils literal notranslate"><span class="pre">Factories</span></code> class which uses <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> by default. See <a class="reference internal" href="../concepts/factories.html#factories-example"><span class="std std-ref">Factories Example</span></a> for more information.</p>
+This is because <code class="docutils literal notranslate"><span class="pre">config()</span></code> is a wrapper for the <code class="docutils literal notranslate"><span class="pre">Factories</span></code> class which uses <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> by default. See <a class="reference internal" href="../concepts/factories.html#factories-loading-class"><span class="std std-ref">Loading Classes</span></a> for more information.</p>
 </div>
 </section>
 <section id="migrations">
@@ -633,7 +633,7 @@ file follows the same directory structures as the main application directory.</p
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">model()</span></code> finds the file in <strong>app/Models/</strong> when there is a class with the same shortname,
 even if you specify a fully qualified class name like <code class="docutils literal notranslate"><span class="pre">model(\Acme\Blog\Model\PostModel::class)</span></code>.
-This is because <code class="docutils literal notranslate"><span class="pre">model()</span></code> is a wrapper for the <code class="docutils literal notranslate"><span class="pre">Factories</span></code> class which uses <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> by default. See <a class="reference internal" href="../concepts/factories.html#factories-example"><span class="std std-ref">Factories Example</span></a> for more information.</p>
+This is because <code class="docutils literal notranslate"><span class="pre">model()</span></code> is a wrapper for the <code class="docutils literal notranslate"><span class="pre">Factories</span></code> class which uses <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> by default. See <a class="reference internal" href="../concepts/factories.html#factories-loading-class"><span class="std std-ref">Loading Classes</span></a> for more information.</p>
 </div>
 </section>
 <section id="views">
@@ -660,7 +660,7 @@ This is because <code class="docutils literal notranslate"><span class="pre">mod
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 06, 2023.
+      <span class="lastupdated">Last updated on Jul 07, 2023.
       </span></p>
   </div>
 
