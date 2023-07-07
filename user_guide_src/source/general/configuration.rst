@@ -292,9 +292,11 @@ There are two ways to implement a Registrar: **implicit** and **explicit**.
 Implicit Registrars
 ===================
 
-Any namespace may define registrars by using the **Config/Registrar.php** file.
-These files are classes whose methods are
-named for each configuration class you wish to extend.
+Implicit Registrars can change any Config class properties.
+
+Any namespace may define implicit registrars by using the **Config/Registrar.php**
+file. These files are classes whose methods are named for each configuration class
+you wish to extend.
 
 For example, a third-party module or Composer package might
 wish to supply an additional template to ``Config\Pager`` without overwriting whatever a developer has
@@ -309,6 +311,9 @@ overwrite priority.
 
 Explicit Registrars
 ===================
+
+Explicit Registrars can only change the Config class properties in which they are
+registered.
 
 A configuration file can also specify any number of registrars explicitly.
 This is done by adding a ``$registrars`` property to your configuration file,
