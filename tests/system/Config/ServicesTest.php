@@ -243,7 +243,7 @@ final class ServicesTest extends CIUnitTestCase
      */
     public function testNewSession()
     {
-        $actual = Services::session($this->config);
+        $actual = Services::session();
         $this->assertInstanceOf(Session::class, $actual);
     }
 
