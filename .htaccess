@@ -1,0 +1,13 @@
+# It is recommended that the "public" folder be pointed as the document root.
+# However, this file will work (but not perfect) if you have no other choice
+# but to place your CI4 project folder in the document root on a shared server.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+<FilesMatch "^\.">
+    Require all denied
+    Satisfy All
+</FilesMatch>

@@ -20,7 +20,7 @@ git checkout master
 rm -rf *
 
 # Copy common files
-releasable='app public writable env LICENSE spark preload.php'
+releasable='app public writable env LICENSE spark preload.php .htaccess'
 for fff in $releasable;
 do
     cp -Rf ${SOURCE}/$fff ./
