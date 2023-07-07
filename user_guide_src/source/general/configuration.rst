@@ -283,6 +283,8 @@ Registrars
 Registrars provide a means of altering a configuration at runtime across namespaces and files.
 
 Registrars work if :ref:`auto-discovery` is enabled in :doc:`Modules </general/modules>`.
+It alters configuration properties when the Config object is instantiated.
+
 There are two ways to implement a Registrar: **implicit** and **explicit**.
 
 .. note:: Values from **.env** always take priority over Registrars.
