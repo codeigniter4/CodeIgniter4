@@ -54,7 +54,6 @@ use Tests\Support\Config\Services;
  */
 final class ServicesTest extends CIUnitTestCase
 {
-    private App $config;
     private array $original;
 
     protected function setUp(): void
@@ -62,7 +61,6 @@ final class ServicesTest extends CIUnitTestCase
         parent::setUp();
 
         $this->original = $_SERVER;
-        $this->config   = new App();
     }
 
     protected function tearDown(): void
@@ -243,7 +241,7 @@ final class ServicesTest extends CIUnitTestCase
      */
     public function testNewSession()
     {
-        $actual = Services::session($this->config);
+        $actual = Services::session();
         $this->assertInstanceOf(Session::class, $actual);
     }
 

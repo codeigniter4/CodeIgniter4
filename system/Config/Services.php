@@ -661,19 +661,16 @@ class Services extends BaseService
      * Return the session manager.
      *
      * @return Session
-     *
-     * @TODO replace the first parameter type `?App` with `?SessionConfig`
      */
-    public static function session(?App $config = null, bool $getShared = true)
+    public static function session(?SessionConfig $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('session', $config);
         }
 
-        $logger = AppServices::logger();
+        $config ??= config(SessionConfig::class);
 
-        $config = config(SessionConfig::class);
-        assert($config instanceof SessionConfig, 'Missing "Config/Session.php".');
+        $logger = AppServices::logger();
 
         $driverName = $config->driver;
 
