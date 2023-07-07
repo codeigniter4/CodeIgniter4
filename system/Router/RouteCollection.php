@@ -1101,7 +1101,10 @@ class RouteCollection implements RouteCollectionInterface
             ->setData(['segments' => $data], 'raw')
             ->render($view, $options);
 
-        $this->create('get', $from, $to, $options);
+        $routeOptions = $options ?? [];
+        $routeOptions = array_merge($routeOptions, ['view' => $view]);
+
+        $this->create('get', $from, $to, $routeOptions);
 
         return $this;
     }
@@ -1649,7 +1652,7 @@ class RouteCollection implements RouteCollectionInterface
      *     array{
      *         filter?: string|list<string>, namespace?: string, hostname?: string,
      *         subdomain?: string, offset?: int, priority?: int, as?: string,
-     *         redirect?: string
+     *         redirect?: int
      *     }
      * >
      */
