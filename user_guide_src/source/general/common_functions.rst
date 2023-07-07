@@ -128,8 +128,10 @@ Service Accessors
 
     .. literalinclude:: common_functions/002.php
 
-.. note:: If you are using the :doc:`form helper </helpers/form_helper>`, this feature is built-in. You only
-        need to use this function when not using the form helper.
+.. note:: If you are using the :php:func:`set_value()`, :php:func:`set_select()`,
+    :php:func:`set_checkbox()`, and :php:func:`set_radio()` functions in
+    :doc:`form helper </helpers/form_helper>`, this feature is built-in. You only
+    need to use this function when not using the form helper.
 
 .. php:function:: session([$key])
 
