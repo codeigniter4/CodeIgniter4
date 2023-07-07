@@ -18,7 +18,20 @@ Breaking Changes
 Validation Placeholders
 =======================
 
-- To use :ref:`validation-placeholders` securely, please remember to create a validation rule for the field you will use as a placeholder.
+To use :ref:`validation-placeholders` securely, please remember to create a validation rule for the field you will use as a placeholder.
+
+E.g., if you have the following code::
+
+    $validation->setRules([
+        'email' => 'required|max_length[254]|valid_email|is_unique[users.email,id,{id}]',
+    ]);
+
+You need to add the rules for ``{id}``::
+
+    $validation->setRules([
+        'id'    => 'max_length[19]|is_natural_no_zero', // Add this
+        'email' => 'required|max_length[254]|valid_email|is_unique[users.email,id,{id}]',
+    ]);
 
 Session::stop()
 ===============
