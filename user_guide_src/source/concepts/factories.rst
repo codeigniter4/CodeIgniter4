@@ -4,7 +4,7 @@ Factories
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 Introduction
 ************
@@ -41,16 +41,13 @@ On the other hand, Services have code to create instances, so it can create a co
 that needs other services or class instances. When you get a service, Services require a service name,
 not a class name, so the returned instance can be changed without changing the client code.
 
+.. _factories-loading-class:
+
 Loading Classes
 ***************
 
 Loading a Class
 ===============
-
-.. _factories-example:
-
-Model Example
--------------
 
 Take a look at **Models** as an example. You can access the Factory specific to Models
 by using the magic static method of the Factories class, ``Factories::models()``.
@@ -64,7 +61,17 @@ In the following code, if you have ``App\Models\UserModel``, the instance will b
 
 .. literalinclude:: factories/001.php
 
-Or you could also request a specific class:
+If you don't have ``App\Models\UserModel``, it searches for ``Models\UserModel`` in all namespaces.
+
+Next time you ask for the same class anywhere in your code, Factories will be sure
+you get back the instance as before:
+
+.. literalinclude:: factories/003.php
+
+preferApp option
+----------------
+
+You could also request a specific class:
 
 .. literalinclude:: factories/002.php
    :lines: 2-
@@ -77,13 +84,6 @@ If you want to get ``Blog\Models\UserModel``, you need to disable the option ``p
 
 .. literalinclude:: factories/010.php
    :lines: 2-
-
-See :ref:`factories-options` for the details.
-
-Next time you ask for the same class anywhere in your code, Factories will be sure
-you get back the instance as before:
-
-.. literalinclude:: factories/003.php
 
 Loading a Class in Sub-directories
 ==================================

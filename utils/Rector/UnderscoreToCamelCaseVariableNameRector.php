@@ -113,13 +113,16 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
 
     private function updateDocblock(Variable $variable, string $variableName, string $camelCaseName): void
     {
-        $parentClassMethodOrFunction = $this->betterNodeFinder->findParentByTypes($variable, [ClassMethod::class, Function_::class]);
+        $parentFunctionLike = $this->betterNodeFinder->findParentType($variable, ClassMethod::class);
 
-        if ($parentClassMethodOrFunction === null) {
-            return;
+        if ($parentFunctionLike === null) {
+            $parentFunctionLike = $this->betterNodeFinder->findParentType($variable, Function_::class);
+            if ($parentFunctionLike === null) {
+                return;
+            }
         }
 
-        $docComment = $parentClassMethodOrFunction->getDocComment();
+        $docComment = $parentFunctionLike->getDocComment();
         if ($docComment === null) {
             return;
         }
@@ -133,7 +136,7 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
             return;
         }
 
-        $phpDocInfo         = $this->phpDocInfoFactory->createFromNodeOrEmpty($parentClassMethodOrFunction);
+        $phpDocInfo         = $this->phpDocInfoFactory->createFromNodeOrEmpty($parentFunctionLike);
         $paramTagValueNodes = $phpDocInfo->getParamTagValueNodes();
 
         foreach ($paramTagValueNodes as $paramTagValueNode) {
@@ -143,6 +146,6 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
             }
         }
 
-        $parentClassMethodOrFunction->setDocComment(new Doc($phpDocInfo->getPhpDocNode()->__toString()));
+        $parentFunctionLike->setDocComment(new Doc($phpDocInfo->getPhpDocNode()->__toString()));
     }
 }
