@@ -60,13 +60,11 @@ Creating Configuration Files
 
 When you need a new configuration, first you create a new file at your desired location.
 The default file location (recommended for most cases) is **app/Config**.
-The class should use the appropriate namespace, and it should extend
-``CodeIgniter\Config\BaseConfig`` to ensure that it can receive environment-specific settings.
 
 You can put configuration files in any folder you want by using a different namespace.
-This allows you to put configuration files on the production server in a folder
-that is not web-accessible while keeping it under **/app** for easy access
-during development.
+
+The class should use the appropriate namespace, and it should extend
+``CodeIgniter\Config\BaseConfig`` to ensure that it can receive environment-specific settings.
 
 Define the class and fill it with public properties that represent your settings:
 
