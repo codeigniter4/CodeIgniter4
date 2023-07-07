@@ -117,10 +117,10 @@ Service Accessors
 .. php:function:: old($key[, $default = null,[, $escape = 'html']])
 
     :param string $key: The name of the old form data to check for.
-    :param mixed  $default: The default value to return if $key doesn't exist.
-    :param mixed  $escape: An `escape <#esc>`_ context or false to disable it.
+    :param string|null  $default: The default value to return if $key doesn't exist.
+    :param false|string  $escape: An `escape <#esc>`_ context or false to disable it.
     :returns: The value of the defined key, or the default value.
-    :rtype: mixed
+    :rtype: array|string|null
 
     Provides a simple way to access "old input data" from submitting a form.
 
