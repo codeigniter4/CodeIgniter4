@@ -37,7 +37,7 @@ class Exceptions
      *
      * @var int
      *
-     * @deprecated No longer used. Moved to BaseExceptionHandler.
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     public $ob_level;
 
@@ -47,7 +47,7 @@ class Exceptions
      *
      * @var string
      *
-     * @deprecated No longer used. Moved to BaseExceptionHandler.
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     protected $viewPath;
 
@@ -235,7 +235,7 @@ class Exceptions
      *
      * @return string The path and filename of the view file to use
      *
-     * @deprecated No longer used. Moved to ExceptionHandler.
+     * @deprecated 4.4.0 No longer used. Moved to ExceptionHandler.
      */
     protected function determineView(Throwable $exception, string $templatePath): string
     {
@@ -263,7 +263,7 @@ class Exceptions
     /**
      * Given an exception and status code will display the error to the client.
      *
-     * @deprecated No longer used. Moved to BaseExceptionHandler.
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     protected function render(Throwable $exception, int $statusCode)
     {
@@ -305,7 +305,7 @@ class Exceptions
     /**
      * Gathers the variables that will be made available to the view.
      *
-     * @deprecated No longer used. Moved to BaseExceptionHandler.
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     protected function collectVars(Throwable $exception, int $statusCode): array
     {
@@ -466,7 +466,7 @@ class Exceptions
      * Describes memory usage in real-world units. Intended for use
      * with memory_get_usage, etc.
      *
-     * @deprecated No longer used. Moved to BaseExceptionHandler.
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     public static function describeMemory(int $bytes): string
     {
@@ -486,7 +486,7 @@ class Exceptions
      *
      * @return bool|string
      *
-     * @deprecated No longer used. Moved to BaseExceptionHandler.
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     public static function highlightFile(string $file, int $lineNumber, int $lines = 15)
     {
