@@ -37,8 +37,9 @@ By using the ``config()`` function:
 
 .. literalinclude:: configuration/002.php
 
-If no namespace is provided, it will look for the file in all defined namespaces
-as well as **app/Config/**.
+If no namespace is provided, it will look for the file in the **app/Config**
+folder first, and if not found, look for in the **Config** folder in all defined
+namespaces.
 
 All of the configuration files that ship with CodeIgniter are namespaced with
 ``Config``. Using this namespace in your application will provide the best
@@ -61,7 +62,7 @@ Creating Configuration Files
 When you need a new configuration, first you create a new file at your desired location.
 The default file location (recommended for most cases) is **app/Config**.
 
-You can put configuration files in any folder you want by using a different namespace.
+You can put configuration files in any **Config** folder by using a different namespace.
 
 The class should use the appropriate namespace, and it should extend
 ``CodeIgniter\Config\BaseConfig`` to ensure that it can receive environment-specific settings.
