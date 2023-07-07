@@ -18,37 +18,52 @@ the application configuration files in the **app/Config** folder.
 Working with Configuration Files
 ********************************
 
+Getting a Config Object
+=======================
+
 You can access configuration files for your classes in several different ways.
 
-- By using the ``new`` keyword to create an instance:
+new keyword
+-----------
 
-  .. literalinclude:: configuration/001.php
+By using the ``new`` keyword to create an instance:
 
-- By using the ``config()`` function:
+.. literalinclude:: configuration/001.php
 
-  .. literalinclude:: configuration/002.php
+config()
+--------
 
-All configuration object properties are public, so you access the settings like any other property:
+By using the ``config()`` function:
 
-.. literalinclude:: configuration/003.php
+.. literalinclude:: configuration/002.php
 
-If no namespace is provided, it will look for the file in all defined namespaces
-as well as **app/Config/**.
+If no namespace is provided, it will look for the file in the **app/Config**
+folder first, and if not found, look for in the **Config** folder in all defined
+namespaces.
 
 All of the configuration files that ship with CodeIgniter are namespaced with
 ``Config``. Using this namespace in your application will provide the best
 performance since it knows exactly where to find the files.
 
-You can put configuration files in any folder you want by using a different namespace.
-This allows you to put configuration files on the production server in a folder
-that is not web-accessible while keeping it under **/app** for easy access
-during development.
+.. note:: ``config()`` finds the file in **app/Config/** when there is a class with the same shortname,
+    even if you specify a fully qualified class name like ``config(\Acme\Blog\Config\Blog::class)``.
+    This is because ``config()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`factories-loading-class` for more information.
+
+Getting a Config Property
+=========================
+
+All configuration object properties are public, so you access the settings like any other property:
+
+.. literalinclude:: configuration/003.php
 
 Creating Configuration Files
 ****************************
 
 When you need a new configuration, first you create a new file at your desired location.
 The default file location (recommended for most cases) is **app/Config**.
+
+You can put configuration files in any **Config** folder by using a different namespace.
+
 The class should use the appropriate namespace, and it should extend
 ``CodeIgniter\Config\BaseConfig`` to ensure that it can receive environment-specific settings.
 

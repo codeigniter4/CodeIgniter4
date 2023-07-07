@@ -194,7 +194,7 @@ Config files are automatically discovered whenever using the ``config()`` functi
 
 .. note:: ``config()`` finds the file in **app/Config/** when there is a class with the same shortname,
     even if you specify a fully qualified class name like ``config(\Acme\Blog\Config\Blog::class)``.
-    This is because ``config()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`Factories Example <factories-example>` for more information.
+    This is because ``config()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`factories-loading-class` for more information.
 
 Migrations
 ==========
@@ -250,7 +250,7 @@ Model files are automatically discovered whenever using the :php:func:`model()` 
 
 .. note:: ``model()`` finds the file in **app/Models/** when there is a class with the same shortname,
     even if you specify a fully qualified class name like ``model(\Acme\Blog\Model\PostModel::class)``.
-    This is because ``model()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`Factories Example <factories-example>` for more information.
+    This is because ``model()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`factories-loading-class` for more information.
 
 Views
 =====
