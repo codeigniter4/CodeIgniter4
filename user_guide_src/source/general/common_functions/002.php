@@ -2,8 +2,7 @@
 
 // in controller, checking form submittal
 if (! $model->save($user)) {
-    // 'withInput' is what specifies "old data"
-    // should be saved.
+    // 'withInput()' is what specifies "old data" should be saved.
     return redirect()->back()->withInput();
 }
 
