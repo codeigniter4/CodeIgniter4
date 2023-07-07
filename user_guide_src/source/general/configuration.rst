@@ -281,6 +281,7 @@ Registrars
 
 "Registrars" are any other classes which might provide additional configuration properties.
 Registrars provide a means of altering a configuration at runtime across namespaces and files.
+
 There are two ways to implement a Registrar: implicit and explicit.
 
 .. note:: Values from **.env** always take priority over Registrars.
@@ -290,8 +291,10 @@ Implicit Registrars
 
 Any namespace may define registrars by using the **Config/Registrar.php** file, if :ref:`auto-discovery`
 is enabled in :doc:`Modules </general/modules>`. These files are classes whose methods are
-named for each configuration class you wish to extend. For example, a third-party module might
-wish to supply an additional template to ``Pager`` without overwriting whatever a develop has
+named for each configuration class you wish to extend.
+
+For example, a third-party module or Composer package might
+wish to supply an additional template to ``Config\Pager`` without overwriting whatever a developer has
 already configured. In **src/Config/Registrar.php** there would be a ``Registrar`` class with
 the single ``Pager()`` method (note the case-sensitivity):
 
