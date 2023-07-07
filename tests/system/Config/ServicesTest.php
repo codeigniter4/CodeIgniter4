@@ -54,7 +54,6 @@ use Tests\Support\Config\Services;
  */
 final class ServicesTest extends CIUnitTestCase
 {
-    private App $config;
     private array $original;
 
     protected function setUp(): void
@@ -62,7 +61,6 @@ final class ServicesTest extends CIUnitTestCase
         parent::setUp();
 
         $this->original = $_SERVER;
-        $this->config   = new App();
     }
 
     protected function tearDown(): void
