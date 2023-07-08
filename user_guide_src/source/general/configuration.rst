@@ -30,10 +30,12 @@ By using the ``new`` keyword to create an instance:
 
 .. literalinclude:: configuration/001.php
 
+.. _configuration-config:
+
 config()
 --------
 
-By using the ``config()`` function:
+By using the :php:func:`config()` function:
 
 .. literalinclude:: configuration/002.php
 
