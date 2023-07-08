@@ -456,6 +456,8 @@ Cleans out the database table by permanently removing all rows that have 'delete
 
 .. literalinclude:: model/026.php
 
+.. _in-model-validation:
+
 In-Model Validation
 ===================
 
@@ -541,6 +543,8 @@ Getting Validation Result
 
 Now, whenever you call the ``insert()``, ``update()``, or ``save()`` methods, the data will be validated. If it fails,
 the model will return boolean **false**.
+
+.. _model-getting-validation-errors:
 
 Getting Validation Errors
 -------------------------
