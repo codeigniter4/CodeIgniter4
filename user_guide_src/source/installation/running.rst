@@ -1,3 +1,4 @@
+################
 Running Your App
 ################
 
@@ -20,8 +21,9 @@ section of the User Guide to begin learning how to build dynamic PHP application
 
 .. _initial-configuration:
 
+*********************
 Initial Configuration
-=====================
+*********************
 
 #. Open the **app/Config/App.php** file with a text editor and
    set your base URL to ``$baseURL``. If you need more flexibility, the baseURL may
@@ -49,11 +51,12 @@ Initial Configuration
     your project, so that it is writable by the user or account used by your
     web server.
 
+************************
 Local Development Server
-========================
+************************
 
 CodeIgniter 4 comes with a local development server, leveraging PHP's built-in web server
-with CodeIgniter routing. You can launch it, with the following command line 
+with CodeIgniter routing. You can launch it, with the following command line
 in the main directory::
 
     > php spark serve
@@ -83,8 +86,9 @@ The local development server can be customized with three command line options:
 
     > php spark serve --php /usr/bin/php7.6.5.4
 
+*******************
 Hosting with Apache
-===================
+*******************
 
 A CodeIgniter4 webapp is normally hosted on a web server.
 Apache HTTP Server is the "standard" platform, and assumed in much of our documentation.
@@ -93,7 +97,7 @@ Apache is bundled with many platforms, but can also be downloaded in a bundle
 with a database engine and PHP from `Bitnami <https://bitnami.com/stacks/infrastructure>`_.
 
 .htaccess
----------
+=========
 
 The "mod_rewrite" module enables URLs without "index.php" in them, and is assumed
 in our user guide.
@@ -113,12 +117,12 @@ in the ``AllowOverride`` setting::
     </Directory>
 
 Removing the index.php
-----------------------
+======================
 
 See :ref:`CodeIgniter URLs <urls-remove-index-php-apache>`.
 
 Virtual Hosting
----------------
+===============
 
 We recommend using "virtual hosting" to run your apps.
 You can set up different aliases for each of the apps you work on,
@@ -148,7 +152,7 @@ If your project folder is not a subfolder of the Apache document root, then your
 ``<VirtualHost>`` element may need a nested ``<Directory>`` element to grant the web server access to the files.
 
 With mod_userdir (Shared Hosts)
---------------------------------
+===============================
 
 A common practice in shared hosting environments is to use the Apache module "mod_userdir" to enable per-user Virtual Hosts automatically. Additional configuration is required to allow CodeIgniter4 to be run from these per-user directories.
 
@@ -214,25 +218,26 @@ Be sure to specify options and permissions for the CodeIgniter public directory 
     </IfModule>
 
 Setting Environment
--------------------
+===================
 
 See :ref:`Handling Multiple Environments <environment-apache>`.
 
 Testing
--------
+=======
 
 With the above configuration, your webapp would be accessed with the URL **http://myproject.local/** in your browser.
 
 Apache needs to be restarted whenever you change its configuration.
 
+******************
 Hosting with Nginx
-==================
+******************
 
 Nginx is the second most widely used HTTP server for web hosting.
 Here you can find an example configuration using PHP 8.1 FPM (unix sockets) under Ubuntu Server.
 
 default.conf
-------------
+============
 
 This configuration enables URLs without "index.php" in them and using CodeIgniter's "404 - File Not Found" for URLs ending with ".php".
 
@@ -269,12 +274,13 @@ This configuration enables URLs without "index.php" in them and using CodeIgnite
     }
 
 Setting Environment
--------------------
+===================
 
 See :ref:`Handling Multiple Environments <environment-nginx>`.
 
+*********************
 Bootstrapping the App
-=====================
+*********************
 
 In some scenarios you will want to load the framework without actually running the whole
 application. This is particularly useful for unit testing your project, but may also be
