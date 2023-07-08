@@ -286,34 +286,34 @@ of the standard file types within the framework are supported, like controllers,
 language files, etc. Modules may contain as few, or as many, of these as you like.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#namespaces" id="id1">Namespaces</a></p></li>
-<li><p><a class="reference internal" href="#autoloading-non-class-files" id="id2">Autoloading Non-class Files</a></p></li>
-<li><p><a class="reference internal" href="#auto-discovery" id="id3">Auto-Discovery</a></p>
+<li><p><a class="reference internal" href="#namespaces" id="id2">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#autoloading-non-class-files" id="id3">Autoloading Non-class Files</a></p></li>
+<li><p><a class="reference internal" href="#auto-discovery" id="id4">Auto-Discovery</a></p>
 <ul>
-<li><p><a class="reference internal" href="#enable-disable-discover" id="id4">Enable/Disable Discover</a></p></li>
-<li><p><a class="reference internal" href="#specify-discovery-items" id="id5">Specify Discovery Items</a></p></li>
-<li><p><a class="reference internal" href="#discovery-and-composer" id="id6">Discovery and Composer</a></p></li>
+<li><p><a class="reference internal" href="#enable-disable-discover" id="id5">Enable/Disable Discover</a></p></li>
+<li><p><a class="reference internal" href="#specify-discovery-items" id="id6">Specify Discovery Items</a></p></li>
+<li><p><a class="reference internal" href="#discovery-and-composer" id="id7">Discovery and Composer</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#working-with-files" id="id7">Working with Files</a></p>
+<li><p><a class="reference internal" href="#working-with-files" id="id8">Working with Files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#routes" id="id8">Routes</a></p></li>
-<li><p><a class="reference internal" href="#filters" id="id9">Filters</a></p></li>
-<li><p><a class="reference internal" href="#controllers" id="id10">Controllers</a></p></li>
-<li><p><a class="reference internal" href="#config-files" id="id11">Config Files</a></p></li>
-<li><p><a class="reference internal" href="#migrations" id="id12">Migrations</a></p></li>
-<li><p><a class="reference internal" href="#seeds" id="id13">Seeds</a></p></li>
-<li><p><a class="reference internal" href="#helpers" id="id14">Helpers</a></p></li>
-<li><p><a class="reference internal" href="#language-files" id="id15">Language Files</a></p></li>
-<li><p><a class="reference internal" href="#libraries" id="id16">Libraries</a></p></li>
-<li><p><a class="reference internal" href="#models" id="id17">Models</a></p></li>
-<li><p><a class="reference internal" href="#views" id="id18">Views</a></p></li>
+<li><p><a class="reference internal" href="#routes" id="id9">Routes</a></p></li>
+<li><p><a class="reference internal" href="#filters" id="id10">Filters</a></p></li>
+<li><p><a class="reference internal" href="#controllers" id="id11">Controllers</a></p></li>
+<li><p><a class="reference internal" href="#config-files" id="id12">Config Files</a></p></li>
+<li><p><a class="reference internal" href="#migrations" id="id13">Migrations</a></p></li>
+<li><p><a class="reference internal" href="#seeds" id="id14">Seeds</a></p></li>
+<li><p><a class="reference internal" href="#helpers" id="id15">Helpers</a></p></li>
+<li><p><a class="reference internal" href="#language-files" id="id16">Language Files</a></p></li>
+<li><p><a class="reference internal" href="#libraries" id="id17">Libraries</a></p></li>
+<li><p><a class="reference internal" href="#models" id="id18">Models</a></p></li>
+<li><p><a class="reference internal" href="#views" id="id19">Views</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <section id="namespaces">
-<h2><a class="toc-backref" href="#id1">Namespaces</a><a class="headerlink" href="#namespaces" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Namespaces</a><a class="headerlink" href="#namespaces" title="Permalink to this headline"></a></h2>
 <p>The core element of the modules functionality comes from the <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">PSR-4 compatible autoloading</span></a>
 that CodeIgniter uses. While any code can use the PSR-4 autoloader and namespaces, the primary way to take full advantage of
 modules is to namespace your code and add it to <strong>app/Config/Autoload.php</strong>, in the <code class="docutils literal notranslate"><span class="pre">$psr4</span></code> property.</p>
@@ -371,7 +371,7 @@ best suits your module, leaving out directories you don’t need, creating new d
 or Repositories, etc.</p>
 </section>
 <section id="autoloading-non-class-files">
-<h2><a class="toc-backref" href="#id2">Autoloading Non-class Files</a><a class="headerlink" href="#autoloading-non-class-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Autoloading Non-class Files</a><a class="headerlink" href="#autoloading-non-class-files" title="Permalink to this headline"></a></h2>
 <p>More often than not that your module will not contain only PHP classes but also others like procedural
 functions, bootstrapping files, module constants files, etc. which are not normally loaded the way classes
 are loaded. One approach for this is using <code class="docutils literal notranslate"><span class="pre">require</span></code>-ing the file(s) at the start of the file where it
@@ -401,32 +401,32 @@ your classes. All we need to do is provide the list of paths to those files and 
 </div>
 </section>
 <section id="auto-discovery">
-<h2><a class="toc-backref" href="#id3">Auto-Discovery</a><a class="headerlink" href="#auto-discovery" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id4">Auto-Discovery</a><a class="headerlink" href="#auto-discovery" title="Permalink to this headline"></a></h2>
 <p>Many times, you will need to specify the full namespace to files you want to include, but CodeIgniter can be
 configured to make integrating modules into your applications simpler by automatically discovering many different
 file types, including:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../extending/events.html"><span class="doc">Events</span></a></p></li>
 <li><p><a class="reference internal" href="../incoming/filters.html"><span class="doc">Filters</span></a></p></li>
-<li><p><a class="reference internal" href="configuration.html"><span class="doc">Registrars</span></a></p></li>
+<li><p><a class="reference internal" href="configuration.html#registrars"><span class="std std-ref">Registrars</span></a></p></li>
 <li><p><a class="reference internal" href="../incoming/routing.html"><span class="doc">Route files</span></a></p></li>
 <li><p><a class="reference internal" href="../concepts/services.html"><span class="doc">Services</span></a></p></li>
 </ul>
 <p>This is configured in the file <strong>app/Config/Modules.php</strong>.</p>
-<p>The auto-discovery system works by scanning for particular directories and files within psr4 namespaces that have been defined in <strong>Config/Autoload.php</strong>.</p>
-<p>The discovery process would look for discoverable items on that path and should, for example, find the routes file at <strong>/acme/Blog/Config/Routes.php</strong>.</p>
+<p>The auto-discovery system works by scanning for particular directories and files within psr4 namespaces that have been defined in <strong>Config/Autoload.php</strong> and Composer packages.</p>
+<p>The discovery process would look for discoverable items on that path and should, for example, find the routes file at <strong>acme/Blog/Config/Routes.php</strong>.</p>
 <section id="enable-disable-discover">
-<h3><a class="toc-backref" href="#id4">Enable/Disable Discover</a><a class="headerlink" href="#enable-disable-discover" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">Enable/Disable Discover</a><a class="headerlink" href="#enable-disable-discover" title="Permalink to this headline"></a></h3>
 <p>You can turn on or off all auto-discovery in the system with the <code class="docutils literal notranslate"><span class="pre">$enabled</span></code> class variable. False will disable
-all discovery, optimizing performance, but negating the special capabilities of your modules.</p>
+all discovery, optimizing performance, but negating the special capabilities of your modules and Composer packages.</p>
 </section>
 <section id="specify-discovery-items">
-<h3><a class="toc-backref" href="#id5">Specify Discovery Items</a><a class="headerlink" href="#specify-discovery-items" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Specify Discovery Items</a><a class="headerlink" href="#specify-discovery-items" title="Permalink to this headline"></a></h3>
 <p>With the <code class="docutils literal notranslate"><span class="pre">$aliases</span></code> option, you can specify which items are automatically discovered. If the item is not
 present, then no auto-discovery will happen for that item, but the others in the array will still be discovered.</p>
 </section>
 <section id="discovery-and-composer">
-<h3><a class="toc-backref" href="#id6">Discovery and Composer</a><a class="headerlink" href="#discovery-and-composer" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Discovery and Composer</a><a class="headerlink" href="#discovery-and-composer" title="Permalink to this headline"></a></h3>
 <p>Packages installed via Composer using PSR-4 namespaces will also be discovered by default.
 PSR-0 namespaced packages will not be detected.</p>
 <section id="specify-composer-packages">
@@ -501,12 +501,12 @@ by editing the <code class="docutils literal notranslate"><span class="pre">$dis
 </section>
 </section>
 <section id="working-with-files">
-<h2><a class="toc-backref" href="#id7">Working with Files</a><a class="headerlink" href="#working-with-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8">Working with Files</a><a class="headerlink" href="#working-with-files" title="Permalink to this headline"></a></h2>
 <p>This section will take a look at each of the file types (controllers, views, language files, etc) and how they can
 be used within the module. Some of this information is described in more detail in the relevant location of the user
 guide, but is being reproduced here so that it’s easier to grasp how all of the pieces fit together.</p>
 <section id="routes">
-<h3><a class="toc-backref" href="#id8">Routes</a><a class="headerlink" href="#routes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">Routes</a><a class="headerlink" href="#routes" title="Permalink to this headline"></a></h3>
 <p>By default, <a class="reference internal" href="../incoming/routing.html"><span class="doc">routes</span></a> are automatically scanned for within modules. It can be turned off in
 the <strong>Modules</strong> config file, described above.</p>
 <div class="admonition note">
@@ -518,7 +518,7 @@ It will cause errors if you attempt to redefine that class.</p>
 In that case, see <a class="reference internal" href="../incoming/routing.html#routing-priority"><span class="std std-ref">Route Priority</span></a>.</p>
 </section>
 <section id="filters">
-<h3><a class="toc-backref" href="#id9">Filters</a><a class="headerlink" href="#filters" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">Filters</a><a class="headerlink" href="#filters" title="Permalink to this headline"></a></h3>
 <p>By default, <a class="reference internal" href="../incoming/filters.html"><span class="doc">filters</span></a> are automatically scanned for within modules.
 It can be turned off in the <strong>Modules</strong> config file, described above.</p>
 <div class="admonition note">
@@ -534,7 +534,7 @@ It will cause errors if you attempt to redefine that class.</p>
 </div>
 </section>
 <section id="controllers">
-<h3><a class="toc-backref" href="#id10">Controllers</a><a class="headerlink" href="#controllers" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11">Controllers</a><a class="headerlink" href="#controllers" title="Permalink to this headline"></a></h3>
 <p>Controllers outside of the main <strong>app/Controllers</strong> directory cannot be automatically routed by URI detection,
 but must be specified within the Routes file itself:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -553,7 +553,7 @@ but must be specified within the Routes file itself:</p>
 </div>
 </section>
 <section id="config-files">
-<h3><a class="toc-backref" href="#id11">Config Files</a><a class="headerlink" href="#config-files" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">Config Files</a><a class="headerlink" href="#config-files" title="Permalink to this headline"></a></h3>
 <p>No special change is needed when working with configuration files. These are still namespaced classes and loaded
 with the <code class="docutils literal notranslate"><span class="pre">new</span></code> command:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -575,12 +575,12 @@ This is because <code class="docutils literal notranslate"><span class="pre">con
 </div>
 </section>
 <section id="migrations">
-<h3><a class="toc-backref" href="#id12">Migrations</a><a class="headerlink" href="#migrations" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13">Migrations</a><a class="headerlink" href="#migrations" title="Permalink to this headline"></a></h3>
 <p>Migration files will be automatically discovered within defined namespaces. All migrations found across all
 namespaces will be run every time.</p>
 </section>
 <section id="seeds">
-<h3><a class="toc-backref" href="#id13">Seeds</a><a class="headerlink" href="#seeds" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14">Seeds</a><a class="headerlink" href="#seeds" title="Permalink to this headline"></a></h3>
 <p>Seed files can be used from both the CLI and called from within other seed files as long as the full namespace
 is provided. If calling on the CLI, you will need to provide double backslashes:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">For</span> <span class="nx">Unix</span><span class="o">:</span>
@@ -592,7 +592,7 @@ is provided. If calling on the CLI, you will need to provide double backslashes:
 </div>
 </section>
 <section id="helpers">
-<h3><a class="toc-backref" href="#id14">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id15">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this headline"></a></h3>
 <p>Helpers will be automatically discovered within defined namespaces when using the <code class="docutils literal notranslate"><span class="pre">helper()</span></code> function, as long as it
 is within the namespaces <strong>Helpers</strong> directory:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -603,12 +603,12 @@ is within the namespaces <strong>Helpers</strong> directory:</p>
 <p>You can specify namespaces. See <a class="reference internal" href="helpers.html#helpers-loading-from-non-standard-locations"><span class="std std-ref">Loading from Non-standard Locations</span></a> for details.</p>
 </section>
 <section id="language-files">
-<h3><a class="toc-backref" href="#id15">Language Files</a><a class="headerlink" href="#language-files" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16">Language Files</a><a class="headerlink" href="#language-files" title="Permalink to this headline"></a></h3>
 <p>Language files are located automatically from defined namespaces when using the <code class="docutils literal notranslate"><span class="pre">lang()</span></code> method, as long as the
 file follows the same directory structures as the main application directory.</p>
 </section>
 <section id="libraries">
-<h3><a class="toc-backref" href="#id16">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id17">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this headline"></a></h3>
 <p>Libraries are always instantiated by their fully-qualified class name, so no special access is provided:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -617,7 +617,7 @@ file follows the same directory structures as the main application directory.</p
 </div>
 </section>
 <section id="models">
-<h3><a class="toc-backref" href="#id17">Models</a><a class="headerlink" href="#models" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id18">Models</a><a class="headerlink" href="#models" title="Permalink to this headline"></a></h3>
 <p>If you instantiate models with <code class="docutils literal notranslate"><span class="pre">new</span></code> keyword by their fully-qualified class names, no special access is provided:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -637,7 +637,7 @@ This is because <code class="docutils literal notranslate"><span class="pre">mod
 </div>
 </section>
 <section id="views">
-<h3><a class="toc-backref" href="#id18">Views</a><a class="headerlink" href="#views" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id19">Views</a><a class="headerlink" href="#views" title="Permalink to this headline"></a></h3>
 <p>Views can be loaded using the class namespace as described in the <a class="reference internal" href="../outgoing/views.html"><span class="doc">views</span></a> documentation:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
