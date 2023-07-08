@@ -143,9 +143,9 @@ e.g., **apache2/conf/extra/httpd-vhost.conf**::
 
     <VirtualHost *:80>
         DocumentRoot "/opt/lamp/apache2/htdocs/myproject/public"
-        ServerName myproject.local
-        ErrorLog "logs/myproject-error_log"
-        CustomLog "logs/myproject-access_log" common
+        ServerName   myproject.local
+        ErrorLog     "logs/myproject-error_log"
+        CustomLog    "logs/myproject-access_log" common
     </VirtualHost>
 
 If your project folder is not a subfolder of the Apache document root, then your
