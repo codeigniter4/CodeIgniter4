@@ -4,7 +4,7 @@ Using CodeIgniter's Model
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 Models
 ******
