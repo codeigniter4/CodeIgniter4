@@ -106,7 +106,9 @@ The "mod_rewrite" module enables URLs without "index.php" in them, and is assume
 in our user guide.
 
 Make sure that the rewrite module is enabled (uncommented) in the main
-configuration file, e.g., **apache2/conf/httpd.conf**::
+configuration file, e.g., **apache2/conf/httpd.conf**:
+
+.. code-block:: apache
 
     LoadModule rewrite_module modules/mod_rewrite.so
 
@@ -114,7 +116,9 @@ Setting Document Root
 ---------------------
 
 Also make sure that the default document root's ``<Directory>`` element enables this too,
-in the ``AllowOverride`` setting::
+in the ``AllowOverride`` setting:
+
+.. code-block:: apache
 
     <Directory "/opt/lamp/apache2/htdocs">
         Options Indexes FollowSymLinks
@@ -132,7 +136,9 @@ Enabling vhost_alias_module
 ---------------------------
 
 Make sure that the virtual hosting module is enabled (uncommented) in the main
-configuration file, e.g., **apache2/conf/httpd.conf**::
+configuration file, e.g., **apache2/conf/httpd.conf**:
+
+.. code-block:: apache
 
     LoadModule vhost_alias_module modules/mod_vhost_alias.so
 
@@ -151,7 +157,9 @@ Setting VirtualHost
 -------------------
 
 Add a ``<VirtualHost>`` element for your webapp inside the virtual hosting configuration,
-e.g., **apache2/conf/extra/httpd-vhost.conf**::
+e.g., **apache2/conf/extra/httpd-vhost.conf**:
+
+.. code-block:: apache
 
     <VirtualHost *:80>
         DocumentRoot "/opt/lamp/apache2/htdocs/myproject/public"
@@ -179,60 +187,66 @@ The following assumes that the server is already configured for mod_userdir. A g
 
 Because CodeIgniter4 expects the server to find the framework front controller at **public/index.php** by default, you must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the per-user web directory).
 
-The default user web directory **~/public_html** is specified by the ``UserDir`` directive, typically in **apache2/mods-available/userdir.conf** or **apache2/conf/extra/httpd-userdir.conf**::
+The default user web directory **~/public_html** is specified by the ``UserDir`` directive, typically in **apache2/mods-available/userdir.conf** or **apache2/conf/extra/httpd-userdir.conf**:
+
+.. code-block:: apache
 
     UserDir public_html
 
-So you will need to configure Apache to look for CodeIgniter's public directory first before trying to serve the default::
+So you will need to configure Apache to look for CodeIgniter's public directory first before trying to serve the default:
+
+.. code-block:: apache
 
     UserDir "public_html/public" "public_html"
 
-Be sure to specify options and permissions for the CodeIgniter public directory as well. A **userdir.conf** might look like::
+Be sure to specify options and permissions for the CodeIgniter public directory as well. A **userdir.conf** might look like:
+
+.. code-block:: apache
 
     <IfModule mod_userdir.c>
         UserDir "public_html/public" "public_html"
         UserDir disabled root
 
         <Directory /home/*/public_html>
-                AllowOverride All
-                Options MultiViews Indexes FollowSymLinks
-                <Limit GET POST OPTIONS>
-                        # Apache <= 2.2:
-                        # Order allow,deny
-                        # Allow from all
+            AllowOverride All
+            Options MultiViews Indexes FollowSymLinks
+            <Limit GET POST OPTIONS>
+                # Apache <= 2.2:
+                # Order allow,deny
+                # Allow from all
 
-                        # Apache >= 2.4:
-                        Require all granted
-                </Limit>
-                <LimitExcept GET POST OPTIONS>
-                        # Apache <= 2.2:
-                        # Order deny,allow
-                        # Deny from all
+                # Apache >= 2.4:
+                Require all granted
+            </Limit>
+            <LimitExcept GET POST OPTIONS>
+                # Apache <= 2.2:
+                # Order deny,allow
+                # Deny from all
 
-                        # Apache >= 2.4:
-                        Require all denied
-                </LimitExcept>
+                # Apache >= 2.4:
+                Require all denied
+            </LimitExcept>
         </Directory>
 
         <Directory /home/*/public_html/public>
-                AllowOverride All
-                Options MultiViews Indexes FollowSymLinks
-                <Limit GET POST OPTIONS>
-                        # Apache <= 2.2:
-                        # Order allow,deny
-                        # Allow from all
+            AllowOverride All
+            Options MultiViews Indexes FollowSymLinks
+            <Limit GET POST OPTIONS>
+                # Apache <= 2.2:
+                # Order allow,deny
+                # Allow from all
 
-                        # Apache >= 2.4:
-                        Require all granted
-                </Limit>
-                <LimitExcept GET POST OPTIONS>
-                        # Apache <= 2.2:
-                        # Order deny,allow
-                        # Deny from all
+                # Apache >= 2.4:
+                Require all granted
+            </Limit>
+            <LimitExcept GET POST OPTIONS>
+                # Apache <= 2.2:
+                # Order deny,allow
+                # Deny from all
 
-                        # Apache >= 2.4:
-                        Require all denied
-                </LimitExcept>
+                # Apache >= 2.4:
+                Require all denied
+            </LimitExcept>
         </Directory>
     </IfModule>
 
