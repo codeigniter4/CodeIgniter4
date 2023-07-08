@@ -147,8 +147,8 @@ Adding Host Alias
 
 Add a host alias in your "hosts" file, typically **/etc/hosts** on unix-type platforms,
 or **c:/Windows/System32/drivers/etc/hosts** on Windows.
-Add a line to the file.
 
+Add a line to the file.
 This could be ``myproject.local`` or ``myproject.test``, for instance::
 
     127.0.0.1 myproject.local
