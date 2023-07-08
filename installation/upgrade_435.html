@@ -307,9 +307,20 @@
 <h2><a class="toc-backref" href="#id1">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
 <section id="validation-placeholders">
 <h3><a class="toc-backref" href="#id2">Validation Placeholders</a><a class="headerlink" href="#validation-placeholders" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>To use <a class="reference internal" href="../libraries/validation.html#validation-placeholders"><span class="std std-ref">Validation Placeholders</span></a> securely, please remember to create a validation rule for the field you will use as a placeholder.</p></li>
-</ul>
+<p>To use <a class="reference internal" href="../libraries/validation.html#validation-placeholders"><span class="std std-ref">Validation Placeholders</span></a> securely, please remember to create a validation rule for the field you will use as a placeholder.</p>
+<p>E.g., if you have the following code:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
+    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email|is_unique[users.email,id,{id}]&#39;</span><span class="p">,</span>
+<span class="p">]);</span>
+</pre></div>
+</div>
+<p>You need to add the rules for <code class="docutils literal notranslate"><span class="pre">{id}</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
+    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;max_length[19]|is_natural_no_zero&#39;</span><span class="p">,</span> <span class="c1">// Add this</span>
+    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email|is_unique[users.email,id,{id}]&#39;</span><span class="p">,</span>
+<span class="p">]);</span>
+</pre></div>
+</div>
 </section>
 <section id="session-stop">
 <h3><a class="toc-backref" href="#id3">Session::stop()</a><a class="headerlink" href="#session-stop" title="Permalink to this headline"></a></h3>
@@ -363,7 +374,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 07, 2023.
+      <span class="lastupdated">Last updated on Jul 08, 2023.
       </span></p>
   </div>
 

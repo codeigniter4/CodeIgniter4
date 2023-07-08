@@ -556,10 +556,10 @@ form or the success page.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// ...</span>
 
 <span class="nv">$rules</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[10]&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;passconf&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|matches[password]&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[30]&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[255]|min_length[10]&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;passconf&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[255]|matches[password]&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="c1">// ...</span>
@@ -657,8 +657,8 @@ methods.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">$rules</span></code> either takes in a pipe-delimited list of rules or an array collection of rules:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRule</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="s1">&#39;required|min_length[3]&#39;</span><span class="p">);</span>
-<span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRule</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;Password&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;required&#39;</span><span class="p">,</span> <span class="s1">&#39;min_length[8]&#39;</span><span class="p">,</span> <span class="s1">&#39;alpha_numeric_punct&#39;</span><span class="p">]);</span>
+<span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRule</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="s1">&#39;required|max_length[30]|min_length[3]&#39;</span><span class="p">);</span>
+<span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRule</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;Password&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;required&#39;</span><span class="p">,</span> <span class="s1">&#39;max_length[255]&#39;</span><span class="p">,</span> <span class="s1">&#39;min_length[8]&#39;</span><span class="p">,</span> <span class="s1">&#39;alpha_numeric_punct&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>The value you pass to <code class="docutils literal notranslate"><span class="pre">$field</span></code> must match the key of any data array that is sent in. If
@@ -681,13 +681,13 @@ to remove the typehint.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
-    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[10]&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[30]&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[255]|min_length[10]&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 <span class="c1">// or</span>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
-    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;required&#39;</span><span class="p">,</span> <span class="s1">&#39;min_length[10]&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;required&#39;</span><span class="p">,</span> <span class="s1">&#39;max_length[30]&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;required&#39;</span><span class="p">,</span> <span class="s1">&#39;max_length[255]&#39;</span><span class="p">,</span> <span class="s1">&#39;min_length[10]&#39;</span><span class="p">],</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -695,13 +695,13 @@ to remove the typehint.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
-    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="s1">&#39;rules&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">],</span>
-    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Password&#39;</span><span class="p">,</span> <span class="s1">&#39;rules&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[10]&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="s1">&#39;rules&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[30]&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Password&#39;</span><span class="p">,</span> <span class="s1">&#39;rules&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[255]|min_length[10]&#39;</span><span class="p">],</span>
 <span class="p">]);</span>
 <span class="c1">// or</span>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
-    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="s1">&#39;rules&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">],</span>
-    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Password&#39;</span><span class="p">,</span> <span class="s1">&#39;rules&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;required&#39;</span><span class="p">,</span> <span class="s1">&#39;min_length[10]&#39;</span><span class="p">]],</span>
+    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="s1">&#39;rules&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[30]&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Password&#39;</span><span class="p">,</span> <span class="s1">&#39;rules&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;required&#39;</span><span class="p">,</span> <span class="s1">&#39;|max_length[255]&#39;</span><span class="p">,</span> <span class="s1">&#39;min_length[10]&#39;</span><span class="p">]],</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -732,12 +732,12 @@ easily validate your data:</p>
 
 <span class="c1">// Joe Smith</span>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
-    <span class="s1">&#39;contacts.name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;contacts.name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[60]&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 
 <span class="c1">// Fred Flintsone &amp; Wilma</span>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
-    <span class="s1">&#39;contacts.friends.name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;contacts.friends.name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[60]&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -746,7 +746,7 @@ easily validate your data:</p>
 
 <span class="c1">// Fred Flintsone &amp; Wilma</span>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
-    <span class="s1">&#39;contacts.*.name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;contacts.*.name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[60]&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -767,7 +767,7 @@ For example, data returned by multi select dropdown:</p>
 
 <span class="c1">// Rule</span>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
-    <span class="s1">&#39;user_ids.*&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;user_ids.*&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[19]&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -872,10 +872,10 @@ rules. As shown earlier, the validation array will have this prototype:</p>
 <span class="k">class</span> <span class="nc">Validation</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$signup</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;username&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;password&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;pass_confirm&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|matches[password]&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;email&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;username&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[30]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;password&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[255]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;pass_confirm&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[255]|matches[password]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;email&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email&#39;</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -904,10 +904,10 @@ be used for any errors when this group is used:</p>
 <span class="k">class</span> <span class="nc">Validation</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$signup</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;username&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;password&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;pass_confirm&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|matches[password]&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;email&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;username&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[30]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;password&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[255]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;pass_confirm&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[255]|matches[password]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;email&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email&#39;</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="k">public</span> <span class="nv">$signup_errors</span> <span class="o">=</span> <span class="p">[</span>
@@ -932,13 +932,13 @@ be used for any errors when this group is used:</p>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$signup</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[30]&#39;</span><span class="p">,</span>
             <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;You must choose a Username.&#39;</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">],</span>
         <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email&#39;</span><span class="p">,</span>
             <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;valid_email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Please check the Email field. It does not appear to be valid.&#39;</span><span class="p">,</span>
             <span class="p">],</span>
@@ -977,8 +977,8 @@ replaced by the <strong>value</strong> of the matched incoming field. An example
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
-    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;is_natural_no_zero&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email|is_unique[users.email,id,{id}]&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;max_length[19]|is_natural_no_zero&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email|is_unique[users.email,id,{id}]&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -1001,8 +1001,8 @@ that has an id matching the placeholder’s value. Assuming that the form POST d
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
-    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;is_natural_no_zero&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email|is_unique[users.email,id,4]&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;max_length[19]|is_natural_no_zero&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email|is_unique[users.email,id,4]&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -1034,8 +1034,8 @@ instance. If not custom error message is provided, the default value will be use
 
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">(</span>
     <span class="p">[</span>
-        <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|is_unique[users.username]&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[10]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[30]|is_unique[users.username]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|min_length[10]&#39;</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="p">[</span>   <span class="c1">// Errors</span>
         <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
@@ -1054,14 +1054,14 @@ instance. If not custom error message is provided, the default value will be use
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
     <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;label&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Username&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|is_unique[users.username]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[30]|is_unique[users.username]&#39;</span><span class="p">,</span>
         <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;All accounts must have {field} provided&#39;</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">],</span>
     <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;label&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Password&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[10]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[255]|min_length[10]&#39;</span><span class="p">,</span>
         <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;min_length&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Your {field} is too short. You want to get hacked?&#39;</span><span class="p">,</span>
         <span class="p">],</span>
@@ -1095,14 +1095,14 @@ We can simply use the language lines defined in this file, like this:</p>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
     <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;label&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Rules.username&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|is_unique[users.username]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[30]|is_unique[users.username]&#39;</span><span class="p">,</span>
         <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Rules.username.required&#39;</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">],</span>
     <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;label&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Rules.password&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[10]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[255]|min_length[10]&#39;</span><span class="p">,</span>
         <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;min_length&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Rules.password.min_length&#39;</span><span class="p">,</span>
         <span class="p">],</span>
@@ -1359,7 +1359,7 @@ second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
-    <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|even&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[19]|even&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -1488,10 +1488,10 @@ There can be no spaces before and after <code class="docutils literal notranslat
 <span class="c1">// is_unique[table.field,ignore_field,ignore_value]</span>
 
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
-    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;is_unique[supplier.name,uuid, </span><span class="si">{</span><span class="nv">$uuid</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span>  <span class="c1">// is not ok</span>
-    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;is_unique[supplier.name,uuid,</span><span class="si">{</span><span class="nv">$uuid</span><span class="si">}</span><span class="s2"> ]&quot;</span><span class="p">,</span>  <span class="c1">// is not ok</span>
-    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;is_unique[supplier.name,uuid,</span><span class="si">{</span><span class="nv">$uuid</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span>   <span class="c1">// is ok</span>
-    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;is_unique[supplier.name,uuid,{uuid}]&#39;</span><span class="p">,</span>    <span class="c1">// is ok - see &quot;Validation Placeholders&quot;</span>
+    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;max_length[36]|is_unique[supplier.name,uuid, </span><span class="si">{</span><span class="nv">$uuid</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="c1">// is not ok</span>
+    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;max_length[36]|is_unique[supplier.name,uuid,</span><span class="si">{</span><span class="nv">$uuid</span><span class="si">}</span><span class="s2"> ]&quot;</span><span class="p">,</span> <span class="c1">// is not ok</span>
+    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;max_length[36]|is_unique[supplier.name,uuid,</span><span class="si">{</span><span class="nv">$uuid</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span>  <span class="c1">// is ok</span>
+    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;max_length[36]|is_unique[supplier.name,uuid,{uuid}]&#39;</span><span class="p">,</span>   <span class="c1">// is ok - see &quot;Validation Placeholders&quot;</span>
 <span class="p">]);</span>
 <span class="c1">// Warning: If `$uuid` is a user input, be sure to validate the format of the value before using it.</span>
 <span class="c1">// Otherwise, it is vulnerable.</span>
@@ -1911,7 +1911,7 @@ an image based on the mime type.</p></td>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 07, 2023.
+      <span class="lastupdated">Last updated on Jul 08, 2023.
       </span></p>
   </div>
 
