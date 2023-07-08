@@ -13,5 +13,5 @@
 
 // Rule
 $validation->setRules([
-    'user_ids.*' => 'required',
+    'user_ids.*' => 'required|max_length[19]',
 ]);
