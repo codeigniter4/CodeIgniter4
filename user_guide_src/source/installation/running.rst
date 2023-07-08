@@ -122,11 +122,6 @@ in the ``AllowOverride`` setting::
         Require all granted
     </Directory>
 
-Removing the index.php
-======================
-
-See :ref:`CodeIgniter URLs <urls-remove-index-php-apache>`.
-
 Virtual Hosting
 ===============
 
@@ -167,6 +162,13 @@ e.g., **apache2/conf/extra/httpd-vhost.conf**::
 
 If your project folder is not a subfolder of the Apache document root, then your
 ``<VirtualHost>`` element may need a nested ``<Directory>`` element to grant the web server access to the files.
+
+Testing
+=======
+
+With the above configuration, your webapp would be accessed with the URL **http://myproject.local/** in your browser.
+
+Apache needs to be restarted whenever you change its configuration.
 
 With mod_userdir (Shared Hosts)
 ===============================
@@ -234,17 +236,15 @@ Be sure to specify options and permissions for the CodeIgniter public directory 
         </Directory>
     </IfModule>
 
+Removing the index.php
+======================
+
+See :ref:`CodeIgniter URLs <urls-remove-index-php-apache>`.
+
 Setting Environment
 ===================
 
 See :ref:`Handling Multiple Environments <environment-apache>`.
-
-Testing
-=======
-
-With the above configuration, your webapp would be accessed with the URL **http://myproject.local/** in your browser.
-
-Apache needs to be restarted whenever you change its configuration.
 
 ******************
 Hosting with Nginx
