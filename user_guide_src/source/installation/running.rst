@@ -162,14 +162,25 @@ e.g., **apache2/conf/extra/httpd-vhost.conf**:
 .. code-block:: apache
 
     <VirtualHost *:80>
-        DocumentRoot "/opt/lamp/apache2/htdocs/myproject/public"
+        DocumentRoot "/opt/lamp/apache2/myproject/public"
         ServerName   myproject.local
         ErrorLog     "logs/myproject-error_log"
         CustomLog    "logs/myproject-access_log" common
+
+        <Directory "/opt/lamp/apache2/myproject/public">
+            AllowOverride All
+            Require all granted
+        </Directory>
     </VirtualHost>
 
-If your project folder is not a subfolder of the Apache document root, then your
-``<VirtualHost>`` element may need a nested ``<Directory>`` element to grant the web server access to the files.
+The above configuration assumes the project folder is located as follows:
+
+.. code-block:: text
+
+    apache2/
+       ├── myproject/      (Project Folder)
+       │      └── public/  (DocumentRoot for myproject.local)
+       └── htdocs/
 
 Testing
 -------
