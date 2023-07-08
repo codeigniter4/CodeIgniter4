@@ -96,8 +96,11 @@ Apache HTTP Server is the "standard" platform, and assumed in much of our docume
 Apache is bundled with many platforms, but can also be downloaded in a bundle
 with a database engine and PHP from `Bitnami <https://bitnami.com/stacks/infrastructure>`_.
 
-.htaccess
-=========
+Configure Main Config File
+==========================
+
+Enabling mod_rewrite
+--------------------
 
 The "mod_rewrite" module enables URLs without "index.php" in them, and is assumed
 in our user guide.
@@ -106,6 +109,9 @@ Make sure that the rewrite module is enabled (uncommented) in the main
 configuration file, e.g., **apache2/conf/httpd.conf**::
 
     LoadModule rewrite_module modules/mod_rewrite.so
+
+Setting Document Root
+---------------------
 
 Also make sure that the default document root's ``<Directory>`` element enables this too,
 in the ``AllowOverride`` setting::
@@ -127,16 +133,25 @@ Virtual Hosting
 We recommend using "virtual hosting" to run your apps.
 You can set up different aliases for each of the apps you work on,
 
+Enabling vhost_alias_module
+---------------------------
+
 Make sure that the virtual hosting module is enabled (uncommented) in the main
 configuration file, e.g., **apache2/conf/httpd.conf**::
 
     LoadModule vhost_alias_module modules/mod_vhost_alias.so
+
+Adding Host Alias
+-----------------
 
 Add a host alias in your "hosts" file, typically **/etc/hosts** on unix-type platforms,
 or **c:/Windows/System32/drivers/etc/hosts** on Windows.
 Add a line to the file. This could be ``myproject.local`` or ``myproject.test``, for instance::
 
     127.0.0.1 myproject.local
+
+Setting VirtualHost
+-------------------
 
 Add a ``<VirtualHost>`` element for your webapp inside the virtual hosting configuration,
 e.g., **apache2/conf/extra/httpd-vhost.conf**::
