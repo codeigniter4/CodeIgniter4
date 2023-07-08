@@ -122,8 +122,8 @@ in the ``AllowOverride`` setting::
         Require all granted
     </Directory>
 
-Virtual Hosting
-===============
+Hosting with VirtualHost
+========================
 
 We recommend using "virtual hosting" to run your apps.
 You can set up different aliases for each of the apps you work on,
@@ -164,14 +164,14 @@ If your project folder is not a subfolder of the Apache document root, then your
 ``<VirtualHost>`` element may need a nested ``<Directory>`` element to grant the web server access to the files.
 
 Testing
-=======
+-------
 
 With the above configuration, your webapp would be accessed with the URL **http://myproject.local/** in your browser.
 
 Apache needs to be restarted whenever you change its configuration.
 
-With mod_userdir (Shared Hosts)
-===============================
+Hosting with mod_userdir (Shared Hosts)
+=======================================
 
 A common practice in shared hosting environments is to use the Apache module "mod_userdir" to enable per-user Virtual Hosts automatically. Additional configuration is required to allow CodeIgniter4 to be run from these per-user directories.
 
