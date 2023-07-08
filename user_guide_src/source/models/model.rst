@@ -473,6 +473,9 @@ prior to saving to the database with the ``insert()``, ``update()``, or ``save()
     If you want to check required fields, you can change the behavior by configuration.
     See :ref:`clean-validation-rules` for details.
 
+Setting Validation Rules
+------------------------
+
 The first step is to fill out the ``$validationRules`` class property with the fields and rules that should
 be applied. If you have custom error message that you want to use, place them in the ``$validationMessages`` array:
 
@@ -528,8 +531,16 @@ The other way to set the validation message to fields by functions,
 
     .. literalinclude:: model/031.php
 
+Getting Validation Result
+-------------------------
+
 Now, whenever you call the ``insert()``, ``update()``, or ``save()`` methods, the data will be validated. If it fails,
-the model will return boolean **false**. You can use the ``errors()`` method to retrieve the validation errors:
+the model will return boolean **false**.
+
+Getting Validation Errors
+-------------------------
+
+You can use the ``errors()`` method to retrieve the validation errors:
 
 .. literalinclude:: model/032.php
 
