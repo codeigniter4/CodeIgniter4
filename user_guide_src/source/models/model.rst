@@ -481,6 +481,11 @@ be applied. If you have custom error message that you want to use, place them in
 
 .. literalinclude:: model/027.php
 
+If you'd rather organize your rules and error messages within the Validation configuration file, you can do that
+and simply set ``$validationRules`` to the name of the validation rule group you created:
+
+.. literalinclude:: model/034.php
+
 The other way to set the validation rules to fields by functions,
 
 .. php:namespace:: CodeIgniter
@@ -548,11 +553,6 @@ This returns an array with the field names and their associated errors that can 
 errors at the top of the form, or to display them individually:
 
 .. literalinclude:: model/033.php
-
-If you'd rather organize your rules and error messages within the Validation configuration file, you can do that
-and simply set ``$validationRules`` to the name of the validation rule group you created:
-
-.. literalinclude:: model/034.php
 
 Retrieving Validation Rules
 ---------------------------
