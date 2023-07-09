@@ -125,7 +125,11 @@ class Factories
     protected static function locateClass(array $options, string $name): ?string
     {
         // Check for low-hanging fruit
-        if (class_exists($name, false) && self::verifyPreferApp($options, $name) && self::verifyInstanceOf($options, $name)) {
+        if (
+            class_exists($name, false)
+            && self::verifyPreferApp($options, $name)
+            && self::verifyInstanceOf($options, $name)
+        ) {
             return $name;
         }
 
@@ -136,7 +140,10 @@ class Factories
             : rtrim(APP_NAMESPACE, '\\') . '\\' . $options['path'] . '\\' . $basename;
 
         // If an App version was requested then see if it verifies
-        if ($options['preferApp'] && class_exists($appname) && self::verifyInstanceOf($options, $name)) {
+        if (
+            $options['preferApp'] && class_exists($appname)
+            && self::verifyInstanceOf($options, $name)
+        ) {
             return $appname;
         }
 
