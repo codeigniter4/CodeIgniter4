@@ -15,7 +15,10 @@ namespace Utils\Rector;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\ErrorSuppress;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\TryCatch;
+use PhpParser\NodeTraverser;
 use Rector\Core\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -45,29 +48,37 @@ final class RemoveErrorSuppressInTryCatchStmtsRector extends AbstractRector
      */
     public function getNodeTypes(): array
     {
-        return [ErrorSuppress::class];
+        return [TryCatch::class];
     }
 
     /**
-     * @param ErrorSuppress $node
+     * @param TryCatch $node
      */
     public function refactor(Node $node): ?Node
     {
-        $tryCatch = $this->betterNodeFinder->findParentType($node, TryCatch::class);
+        $hasChanged = false;
 
-        // not in try catch
-        if (! $tryCatch instanceof TryCatch) {
-            return null;
+        $this->traverseNodesWithCallable(
+            $node->stmts,
+            static function (Node $subNode) use (&$hasChanged) {
+                if ($subNode instanceof Class_ || $subNode instanceof Function_) {
+                    return NodeTraverser::DONT_TRAVERSE_CURRENT_AND_CHILDREN;
+                }
+
+                if ($subNode instanceof ErrorSuppress) {
+                    $hasChanged = true;
+
+                    return $subNode->expr;
+                }
+
+                return null;
+            }
+        );
+
+        if ($hasChanged) {
+            return $node;
         }
 
-        $inStmts = (bool) $this->betterNodeFinder->findFirst((array) $tryCatch->stmts, static fn (Node $n): bool => $n === $node);
-
-        // not in stmts, means it in catch or finally
-        if (! $inStmts) {
-            return null;
-        }
-
-        // in try { ... } stmts
-        return $node->expr;
+        return null;
     }
 }
