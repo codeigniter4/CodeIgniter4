@@ -111,7 +111,10 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
         return null;
     }
 
-    private function processRenameVariable(FunctionLike|Variable $node): ?Variable
+    /**
+     * @param FunctionLike|Variable $node
+     */
+    private function processRenameVariable(Node $node): ?Variable
     {
         if ($node instanceof FunctionLike) {
             if ($node instanceof Closure) {
