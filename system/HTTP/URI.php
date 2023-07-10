@@ -263,7 +263,7 @@ class URI
      * If $silent == true, then will not throw exceptions and will
      * attempt to continue gracefully.
      *
-     * Note: Method not in PSR-7
+     * @deprecated 4.4.0 Method not in PSR-7
      *
      * @return URI
      */

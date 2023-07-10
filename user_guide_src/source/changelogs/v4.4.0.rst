@@ -216,6 +216,7 @@ Deprecations
   ``$tokenName``, ``$headerName``, ``$expires``, ``$regenerate``, and
   ``$redirect`` in ``Security`` are deprecated, and no longer used. Use
   ``$config`` instead.
+- **URI:** ``URI::setSilent()`` is deprecated.
 
 Bugs Fixed
 **********
