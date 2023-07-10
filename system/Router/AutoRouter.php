@@ -133,6 +133,13 @@ final class AutoRouter implements AutoRouterInterface
                 if (is_string($handler)) {
                     $handler = strtolower($handler);
 
+                    // Like $routes->cli('hello/(:segment)', 'Home::$1')
+                    if (strpos($handler, '::$') !== false) {
+                        throw new PageNotFoundException(
+                            'Cannot access CLI Route: ' . $uri
+                        );
+                    }
+
                     if (strpos($handler, $controller . '::' . $methodName) === 0) {
                         throw new PageNotFoundException(
                             'Cannot access CLI Route: ' . $uri
