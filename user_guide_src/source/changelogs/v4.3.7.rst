@@ -12,6 +12,10 @@ Release Date: Unreleased
 BREAKING
 ********
 
+- **RouteCollection:** The second parameter ``bool $only = false`` has been added
+  to the ``RouteCollection::getRoutes()`` method.
+- **AutoRouting Legacy:** The first parameter of the ``AutoRouter::__construct()``
+  has been changed from ``$protectedControllers`` to ``$cliRoutes``.
 - **FeatureTestTrait:** When using :ref:`withBodyFormat() <feature-formatting-the-request>`,
   the priority of the request body has been changed.
   See :ref:`Upgrading Guide <upgrade-437-feature-testing>` for details.
@@ -27,6 +31,10 @@ Deprecations
 
 Bugs Fixed
 **********
+
+- **AutoRouting Legacy:** Fixed a bug that when you added a route with
+  ``$routes->add()``, the controller's other methods were inaccessible from the
+  web browser.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
