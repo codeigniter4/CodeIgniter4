@@ -503,11 +503,7 @@ class RouteCollection implements RouteCollectionInterface
         if (isset($this->routes[$verb])) {
             // Keep current verb's routes at the beginning, so they're matched
             // before any of the generic, "add" routes.
-            if (! $only) {
-                $collection = $this->routes[$verb] + ($this->routes['*'] ?? []);
-            } else {
-                $collection = $this->routes[$verb];
-            }
+            $collection = ! $only ? $this->routes[$verb] + ($this->routes['*'] ?? []) : $this->routes[$verb];
 
             foreach ($collection as $r) {
                 $key          = key($r['route']);
