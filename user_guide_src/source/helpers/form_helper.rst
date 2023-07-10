@@ -536,6 +536,10 @@ The following functions are available:
     The returned array is the same as ``Validation::getErrors()``.
     See :ref:`Validation <validation-redirect-and-validation-errors>` for details.
 
+    .. note:: This function does not work with :ref:`in-model-validation`. If you
+        want to get the validation errors in model validation, see
+        :ref:`model-getting-validation-errors`.
+
     Example::
 
         <?php $errors = validation_errors(); ?>
@@ -554,6 +558,10 @@ The following functions are available:
     See :ref:`validation-customizing-error-display` for details.
 
     This function uses :php:func:`validation_errors()` internally.
+
+    .. note:: This function does not work with :ref:`in-model-validation`. If you
+        want to get the validation errors in model validation, see
+        :ref:`model-getting-validation-errors`.
 
     Example::
 
@@ -574,6 +582,10 @@ The following functions are available:
     See :ref:`validation-customizing-error-display` for details.
 
     This function uses :php:func:`validation_errors()` internally.
+
+    .. note:: This function does not work with :ref:`in-model-validation`. If you
+        want to get the validation errors in model validation, see
+        :ref:`model-getting-validation-errors`.
 
     Example::
 

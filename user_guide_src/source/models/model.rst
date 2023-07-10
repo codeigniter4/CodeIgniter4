@@ -4,7 +4,7 @@ Using CodeIgniter's Model
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 Models
 ******
@@ -456,6 +456,8 @@ Cleans out the database table by permanently removing all rows that have 'delete
 
 .. literalinclude:: model/026.php
 
+.. _in-model-validation:
+
 In-Model Validation
 ===================
 
@@ -473,10 +475,18 @@ prior to saving to the database with the ``insert()``, ``update()``, or ``save()
     If you want to check required fields, you can change the behavior by configuration.
     See :ref:`clean-validation-rules` for details.
 
+Setting Validation Rules
+------------------------
+
 The first step is to fill out the ``$validationRules`` class property with the fields and rules that should
 be applied. If you have custom error message that you want to use, place them in the ``$validationMessages`` array:
 
 .. literalinclude:: model/027.php
+
+If you'd rather organize your rules and error messages within the Validation configuration file, you can do that
+and simply set ``$validationRules`` to the name of the validation rule group you created:
+
+.. literalinclude:: model/034.php
 
 The other way to set the validation rules to fields by functions,
 
@@ -528,8 +538,18 @@ The other way to set the validation message to fields by functions,
 
     .. literalinclude:: model/031.php
 
+Getting Validation Result
+-------------------------
+
 Now, whenever you call the ``insert()``, ``update()``, or ``save()`` methods, the data will be validated. If it fails,
-the model will return boolean **false**. You can use the ``errors()`` method to retrieve the validation errors:
+the model will return boolean **false**.
+
+.. _model-getting-validation-errors:
+
+Getting Validation Errors
+-------------------------
+
+You can use the ``errors()`` method to retrieve the validation errors:
 
 .. literalinclude:: model/032.php
 
@@ -537,11 +557,6 @@ This returns an array with the field names and their associated errors that can 
 errors at the top of the form, or to display them individually:
 
 .. literalinclude:: model/033.php
-
-If you'd rather organize your rules and error messages within the Validation configuration file, you can do that
-and simply set ``$validationRules`` to the name of the validation rule group you created:
-
-.. literalinclude:: model/034.php
 
 Retrieving Validation Rules
 ---------------------------
@@ -572,6 +587,9 @@ replaced by the **value** of the matched incoming field. An example should clari
 
 .. literalinclude:: model/038.php
 
+.. note:: Since v4.3.5, you must set the validation rules for the placeholder
+    field (``id``).
+
 In this set of rules, it states that the email address should be unique in the database, except for the row
 that has an id matching the placeholder's value. Assuming that the form POST data had the following:
 
@@ -582,6 +600,9 @@ then the ``{id}`` placeholder would be replaced with the number **4**, giving th
 .. literalinclude:: model/040.php
 
 So it will ignore the row in the database that has ``id=4`` when it verifies the email is unique.
+
+.. note:: Since v4.3.5, if the placeholder (``id``) value does not pass the
+    validation, the placeholder would not be replaced.
 
 This can also be used to create more dynamic rules at runtime, as long as you take care that any dynamic
 keys passed in don't conflict with your form data.
