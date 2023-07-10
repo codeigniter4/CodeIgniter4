@@ -14,6 +14,7 @@ namespace CodeIgniter\HTTP;
 use BadMethodCallException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
+use InvalidArgumentException;
 
 /**
  * Abstraction for a uniform resource identifier (URI).
@@ -709,7 +710,7 @@ class URI
      *
      * @return $this
      *
-     * @TODO PSR-7: Should be `withScheme($scheme)`.
+     * @deprecated Use `withScheme()` instead.
      */
     public function setScheme(string $str)
     {
@@ -717,6 +718,34 @@ class URI
         $this->scheme = preg_replace('#:(//)?$#', '', $str);
 
         return $this;
+    }
+
+    /**
+     * Return an instance with the specified scheme.
+     *
+     * This method MUST retain the state of the current instance, and return
+     * an instance that contains the specified scheme.
+     *
+     * Implementations MUST support the schemes "http" and "https" case
+     * insensitively, and MAY accommodate other schemes if required.
+     *
+     * An empty scheme is equivalent to removing the scheme.
+     *
+     * @param string $scheme The scheme to use with the new instance.
+     *
+     * @return static A new instance with the specified scheme.
+     *
+     * @throws InvalidArgumentException for invalid or unsupported schemes.
+     */
+    public function withScheme(string $scheme)
+    {
+        $uri = clone $this;
+
+        $scheme = strtolower($scheme);
+
+        $uri->scheme = preg_replace('#:(//)?$#', '', $scheme);
+
+        return $uri;
     }
 
     /**
