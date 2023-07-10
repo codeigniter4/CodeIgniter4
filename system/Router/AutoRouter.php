@@ -20,7 +20,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 final class AutoRouter implements AutoRouterInterface
 {
     /**
-     * List of CLI routes.
+     * List of CLI routes that do not contain '*' routes.
      *
      * @var array<string, Closure|string> [routeKey => handler]
      */

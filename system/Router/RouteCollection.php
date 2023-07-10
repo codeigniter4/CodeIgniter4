@@ -484,8 +484,10 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * Returns the raw array of available routes.
+     *
+     * @param bool $only Whether to return without '*' routes.
      */
-    public function getRoutes(?string $verb = null): array
+    public function getRoutes(?string $verb = null, bool $only = false): array
     {
         if (empty($verb)) {
             $verb = $this->getHTTPVerb();
@@ -501,7 +503,11 @@ class RouteCollection implements RouteCollectionInterface
         if (isset($this->routes[$verb])) {
             // Keep current verb's routes at the beginning, so they're matched
             // before any of the generic, "add" routes.
-            $collection = $this->routes[$verb] + ($this->routes['*'] ?? []);
+            if (! $only) {
+                $collection = $this->routes[$verb] + ($this->routes['*'] ?? []);
+            } else {
+                $collection = $this->routes[$verb];
+            }
 
             foreach ($collection as $r) {
                 $key          = key($r['route']);
