@@ -325,7 +325,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     public function testOpenCliRoutesFromHttpGot404($from, $to, $httpGet)
     {
         $this->expectException(PageNotFoundException::class);
-        $this->expectExceptionMessage('Cannot access the controller in a CLI Route.');
+        $this->expectExceptionMessage('Cannot access CLI Route: ');
 
         $collection = Services::routes();
         $collection->setAutoRoute(true);
