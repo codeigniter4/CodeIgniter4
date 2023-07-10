@@ -39,6 +39,19 @@ is not used::
 
 Previously, the ``$body`` was used for the request body.
 
+Return value of Validation::loadRuleGroup()
+===========================================
+
+The return value of ``Validation::loadRuleGroup()`` has been changed from
+"**rules array**" to "**array** of **rules array** and **customErrors array**"
+(``[rules, customErrors]``).
+
+If you use the method, update the code like the following::
+
+    $rules = $this->validation->loadRuleGroup($rules);
+        ↓
+    [$rules, $customErrors] = $this->validation->loadRuleGroup($rules);
+
 Breaking Enhancements
 *********************
 

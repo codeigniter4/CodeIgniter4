@@ -15,6 +15,9 @@ BREAKING
 - **FeatureTestTrait:** When using :ref:`withBodyFormat() <feature-formatting-the-request>`,
   the priority of the request body has been changed.
   See :ref:`Upgrading Guide <upgrade-437-feature-testing>` for details.
+- **Validation:** The return value of ``Validation::loadRuleGroup()`` has been
+  changed from "**rules array**" to "**array** of **rules array** and **customErrors array**"
+  (``[rules, customErrors]``).
 
 Message Changes
 ***************
