@@ -178,7 +178,8 @@ class Cell
         }
 
         // locate and return an instance of the cell
-        $object = Factories::cells($class);
+        // @TODO extend Factories to be able to load classes with the same short name.
+        $object = class_exists($class) ? new $class() : Factories::cells($class);
 
         if (! is_object($object)) {
             throw ViewException::forInvalidCellClass($class);
