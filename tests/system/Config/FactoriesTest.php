@@ -398,4 +398,59 @@ final class FactoriesTest extends CIUnitTestCase
 
         $this->assertInstanceOf(EntityModel::class, $model);
     }
+
+    public function testGetComponentInstances()
+    {
+        Factories::config('App');
+        Factories::config(\Config\Database::class);
+
+        $data = Factories::getComponentInstances('config');
+
+        $this->assertIsArray($data);
+        $this->assertArrayHasKey('aliases', $data);
+        $this->assertArrayHasKey('instances', $data);
+
+        return $data;
+    }
+
+    /**
+     * @depends testGetComponentInstances
+     */
+    public function testSetComponentInstances(array $data)
+    {
+        $before = Factories::getComponentInstances('config');
+        $this->assertSame(['aliases' => [], 'instances' => []], $before);
+
+        Factories::setComponentInstances('config', $data);
+
+        $data = Factories::getComponentInstances('config');
+
+        $this->assertIsArray($data);
+        $this->assertArrayHasKey('aliases', $data);
+        $this->assertArrayHasKey('instances', $data);
+
+        return $data;
+    }
+
+    /**
+     * @depends testSetComponentInstances
+     */
+    public function testIsUpdated(array $data)
+    {
+        Factories::reset();
+
+        $updated = $this->getFactoriesStaticProperty('updated');
+
+        $this->assertSame([], $updated);
+        $this->assertFalse(Factories::isUpdated('config'));
+
+        Factories::config('App');
+
+        $this->assertTrue(Factories::isUpdated('config'));
+        $this->assertFalse(Factories::isUpdated('models'));
+
+        Factories::setComponentInstances('config', $data);
+
+        $this->assertFalse(Factories::isUpdated('config'));
+    }
 }
