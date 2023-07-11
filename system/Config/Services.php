@@ -117,7 +117,7 @@ class Services extends BaseService
             return static::getSharedInstance('cache', $config);
         }
 
-        $config ??= new Cache();
+        $config ??= config(Cache::class);
 
         return CacheFactory::getHandler($config);
     }
