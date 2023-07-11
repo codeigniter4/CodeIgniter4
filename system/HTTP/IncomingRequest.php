@@ -236,7 +236,7 @@ class IncomingRequest extends Request
      * Detects the relative path based on
      * the URIProtocol Config setting.
      *
-     * @deprecated Moved to SiteURIFactory.
+     * @deprecated 4.4.0 Moved to SiteURIFactory.
      */
     public function detectPath(string $protocol = ''): string
     {
@@ -268,7 +268,7 @@ class IncomingRequest extends Request
      *
      * @return string The URI it found.
      *
-     * @deprecated Moved to SiteURIFactory.
+     * @deprecated 4.4.0 Moved to SiteURIFactory.
      */
     protected function parseRequestURI(): string
     {
@@ -328,7 +328,7 @@ class IncomingRequest extends Request
      *
      * Will parse QUERY_STRING and automatically detect the URI from it.
      *
-     * @deprecated Moved to SiteURIFactory.
+     * @deprecated 4.4.0 Moved to SiteURIFactory.
      */
     protected function parseQueryString(): string
     {
@@ -502,7 +502,7 @@ class IncomingRequest extends Request
     }
 
     /**
-     * @deprecated Moved to SiteURIFactory.
+     * @deprecated 4.4.0 Moved to SiteURIFactory.
      */
     private function determineHost(App $config, string $baseURL): string
     {
