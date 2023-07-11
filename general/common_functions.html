@@ -331,6 +331,30 @@ or null if no value is found.</p>
 </dd></dl>
 
 <dl class="php function">
+<dt class="sig sig-object php" id="config">
+<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">bool</span> <span class="pre">$getShared</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#config" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The config classname.</p></li>
+<li><p><strong>$getShared</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to return a shared instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The config instances.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">object|null</span></code></span></p>
+</dd>
+</dl>
+<p>More simple way of getting config instances from Factories.</p>
+<p>See <a class="reference internal" href="configuration.html#configuration-config"><span class="std std-ref">Configuration</span></a> and
+<a class="reference internal" href="../concepts/factories.html#factories-config"><span class="std std-ref">Factories</span></a> for details.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">config()</span></code> uses <code class="docutils literal notranslate"><span class="pre">Factories::config()</span></code> internally.
+See <a class="reference internal" href="../concepts/factories.html#factories-loading-class"><span class="std std-ref">Loading Classes</span></a> for details on the first parameter <code class="docutils literal notranslate"><span class="pre">$name</span></code>.</p>
+</dd></dl>
+
+<dl class="php function">
 <dt class="sig sig-object php" id="cookie">
 <span class="sig-name descname"><span class="pre">cookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">array</span> <span class="pre">$options</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cookie" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
@@ -1246,7 +1270,7 @@ instance every time.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 10, 2023.
+      <span class="lastupdated">Last updated on Jul 11, 2023.
       </span></p>
   </div>
 
