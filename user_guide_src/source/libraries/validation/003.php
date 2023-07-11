@@ -2,7 +2,9 @@
 
 namespace Config;
 
-class Validation
+// ...
+
+class Validation extends BaseConfig
 {
     // ...
 
