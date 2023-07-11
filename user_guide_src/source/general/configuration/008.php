@@ -2,6 +2,8 @@
 
 namespace Config;
 
+// ...
+
 class MyConfig extends BaseConfig
 {
     public static $registrars = [
