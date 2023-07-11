@@ -55,4 +55,5 @@ jobs:
             --exclude system/Database/OCI8/Builder.php
             --exclude system/Database/Postgre/Builder.php
             --exclude system/Debug/Exceptions.php
+            --exclude system/HTTP/SiteURI.php
             -- app/ public/ system/

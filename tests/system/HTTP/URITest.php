@@ -240,6 +240,44 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
+    public function testWithScheme()
+    {
+        $url = 'example.com';
+        $uri = new URI('http://' . $url);
+
+        $new = $uri->withScheme('x');
+
+        $this->assertSame('x://' . $url, (string) $new);
+        $this->assertSame('http://' . $url, (string) $uri);
+    }
+
+    public function testWithSchemeSetsHttps()
+    {
+        $url = 'http://example.com/path';
+        $uri = new URI($url);
+
+        $new = $uri->withScheme('https');
+
+        $this->assertSame('https', $new->getScheme());
+        $this->assertSame('http', $uri->getScheme());
+
+        $expected = 'https://example.com/path';
+        $this->assertSame($expected, (string) $new);
+        $expected = 'http://example.com/path';
+        $this->assertSame($expected, (string) $uri);
+    }
+
+    public function testWithSchemeSetsEmpty()
+    {
+        $url = 'example.com';
+        $uri = new URI('http://' . $url);
+
+        $new = $uri->withScheme('');
+
+        $this->assertSame($url, (string) $new);
+        $this->assertSame('http://' . $url, (string) $uri);
+    }
+
     public function testSetUserInfoSetsValue()
     {
         $url = 'http://example.com/path';
