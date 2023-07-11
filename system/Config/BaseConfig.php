@@ -26,6 +26,8 @@ use RuntimeException;
  * from the environment.
  *
  * These can be set within the .env file.
+ *
+ * @phpstan-consistent-constructor
  */
 class BaseConfig
 {
@@ -50,6 +52,21 @@ class BaseConfig
      * @var Modules
      */
     protected static $moduleConfig;
+
+    public static function __set_state(array $array)
+    {
+        static::$override = false;
+        $obj              = new static();
+        static::$override = true;
+
+        $properties = array_keys(get_object_vars($obj));
+
+        foreach ($properties as $property) {
+            $obj->{$property} = $array[$property];
+        }
+
+        return $obj;
+    }
 
     /**
      * Will attempt to get environment variables with names
