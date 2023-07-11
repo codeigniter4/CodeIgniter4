@@ -40,6 +40,11 @@ class BaseConfig
     public static $registrars = [];
 
     /**
+     * Whether to override properties by Env vars and Registrars.
+     */
+    public static bool $override = true;
+
+    /**
      * Has module discovery happened yet?
      *
      * @var bool
@@ -78,23 +83,25 @@ class BaseConfig
     {
         static::$moduleConfig = config(Modules::class);
 
-        $this->registerProperties();
+        if (static::$override) {
+            $this->registerProperties();
 
-        $properties  = array_keys(get_object_vars($this));
-        $prefix      = static::class;
-        $slashAt     = strrpos($prefix, '\\');
-        $shortPrefix = strtolower(substr($prefix, $slashAt === false ? 0 : $slashAt + 1));
+            $properties  = array_keys(get_object_vars($this));
+            $prefix      = static::class;
+            $slashAt     = strrpos($prefix, '\\');
+            $shortPrefix = strtolower(substr($prefix, $slashAt === false ? 0 : $slashAt + 1));
 
-        foreach ($properties as $property) {
-            $this->initEnvValue($this->{$property}, $property, $prefix, $shortPrefix);
+            foreach ($properties as $property) {
+                $this->initEnvValue($this->{$property}, $property, $prefix, $shortPrefix);
 
-            if ($this instanceof Encryption && $property === 'key') {
-                if (strpos($this->{$property}, 'hex2bin:') === 0) {
-                    // Handle hex2bin prefix
-                    $this->{$property} = hex2bin(substr($this->{$property}, 8));
-                } elseif (strpos($this->{$property}, 'base64:') === 0) {
-                    // Handle base64 prefix
-                    $this->{$property} = base64_decode(substr($this->{$property}, 7), true);
+                if ($this instanceof Encryption && $property === 'key') {
+                    if (strpos($this->{$property}, 'hex2bin:') === 0) {
+                        // Handle hex2bin prefix
+                        $this->{$property} = hex2bin(substr($this->{$property}, 8));
+                    } elseif (strpos($this->{$property}, 'base64:') === 0) {
+                        // Handle base64 prefix
+                        $this->{$property} = base64_decode(substr($this->{$property}, 7), true);
+                    }
                 }
             }
         }
