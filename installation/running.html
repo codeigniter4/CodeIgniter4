@@ -286,21 +286,32 @@
 <li><p><a class="reference internal" href="#local-development-server" id="id4">Local Development Server</a></p></li>
 <li><p><a class="reference internal" href="#hosting-with-apache" id="id5">Hosting with Apache</a></p>
 <ul>
-<li><p><a class="reference internal" href="#htaccess" id="id6">.htaccess</a></p></li>
-<li><p><a class="reference internal" href="#removing-the-index-php" id="id7">Removing the index.php</a></p></li>
-<li><p><a class="reference internal" href="#virtual-hosting" id="id8">Virtual Hosting</a></p></li>
-<li><p><a class="reference internal" href="#with-mod-userdir-shared-hosts" id="id9">With mod_userdir (Shared Hosts)</a></p></li>
-<li><p><a class="reference internal" href="#setting-environment" id="id10">Setting Environment</a></p></li>
-<li><p><a class="reference internal" href="#testing" id="id11">Testing</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#hosting-with-nginx" id="id12">Hosting with Nginx</a></p>
+<li><p><a class="reference internal" href="#configure-main-config-file" id="id6">Configure Main Config File</a></p>
 <ul>
-<li><p><a class="reference internal" href="#default-conf" id="id13">default.conf</a></p></li>
-<li><p><a class="reference internal" href="#id2" id="id14">Setting Environment</a></p></li>
+<li><p><a class="reference internal" href="#enabling-mod-rewrite" id="id7">Enabling mod_rewrite</a></p></li>
+<li><p><a class="reference internal" href="#setting-document-root" id="id8">Setting Document Root</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#bootstrapping-the-app" id="id15">Bootstrapping the App</a></p></li>
+<li><p><a class="reference internal" href="#hosting-with-virtualhost" id="id9">Hosting with VirtualHost</a></p>
+<ul>
+<li><p><a class="reference internal" href="#enabling-vhost-alias-module" id="id10">Enabling vhost_alias_module</a></p></li>
+<li><p><a class="reference internal" href="#adding-host-alias" id="id11">Adding Host Alias</a></p></li>
+<li><p><a class="reference internal" href="#setting-virtualhost" id="id12">Setting VirtualHost</a></p></li>
+<li><p><a class="reference internal" href="#testing" id="id13">Testing</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#hosting-with-mod-userdir-shared-hosts" id="id14">Hosting with mod_userdir (Shared Hosts)</a></p></li>
+<li><p><a class="reference internal" href="#removing-the-index-php" id="id15">Removing the index.php</a></p></li>
+<li><p><a class="reference internal" href="#setting-environment" id="id16">Setting Environment</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#hosting-with-nginx" id="id17">Hosting with Nginx</a></p>
+<ul>
+<li><p><a class="reference internal" href="#default-conf" id="id18">default.conf</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id19">Setting Environment</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#bootstrapping-the-app" id="id20">Bootstrapping the App</a></p></li>
 </ul>
 </div>
 <p>A CodeIgniter 4 app can be run in a number of different ways: hosted on a web server,
@@ -401,136 +412,162 @@ set to the path of the PHP executable you want to use:</p>
 Apache HTTP Server is the “standard” platform, and assumed in much of our documentation.</p>
 <p>Apache is bundled with many platforms, but can also be downloaded in a bundle
 with a database engine and PHP from <a class="reference external" href="https://bitnami.com/stacks/infrastructure">Bitnami</a>.</p>
-<section id="htaccess">
-<h3><a class="toc-backref" href="#id6">.htaccess</a><a class="headerlink" href="#htaccess" title="Permalink to this headline"></a></h3>
+<section id="configure-main-config-file">
+<h3><a class="toc-backref" href="#id6">Configure Main Config File</a><a class="headerlink" href="#configure-main-config-file" title="Permalink to this headline"></a></h3>
+<section id="enabling-mod-rewrite">
+<h4><a class="toc-backref" href="#id7">Enabling mod_rewrite</a><a class="headerlink" href="#enabling-mod-rewrite" title="Permalink to this headline"></a></h4>
 <p>The “mod_rewrite” module enables URLs without “index.php” in them, and is assumed
 in our user guide.</p>
 <p>Make sure that the rewrite module is enabled (uncommented) in the main
 configuration file, e.g., <strong>apache2/conf/httpd.conf</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">LoadModule</span> <span class="nx">rewrite_module</span> <span class="nx">modules</span><span class="o">/</span><span class="nx">mod_rewrite</span><span class="o">.</span><span class="nx">so</span>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">LoadModule</span><span class="w"> </span>rewrite_module<span class="w"> </span>modules/mod_rewrite.so
 </pre></div>
 </div>
+</section>
+<section id="setting-document-root">
+<h4><a class="toc-backref" href="#id8">Setting Document Root</a><a class="headerlink" href="#setting-document-root" title="Permalink to this headline"></a></h4>
 <p>Also make sure that the default document root’s <code class="docutils literal notranslate"><span class="pre">&lt;Directory&gt;</span></code> element enables this too,
 in the <code class="docutils literal notranslate"><span class="pre">AllowOverride</span></code> setting:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">Directory</span> <span class="s2">&quot;/opt/lamp/apache2/htdocs&quot;</span><span class="o">&gt;</span>
-    <span class="nx">Options</span> <span class="nx">Indexes</span> <span class="nx">FollowSymLinks</span>
-    <span class="nx">AllowOverride</span> <span class="nx">All</span>
-    <span class="k">Require</span> <span class="nx">all</span> <span class="nx">granted</span>
-<span class="o">&lt;/</span><span class="nx">Directory</span><span class="o">&gt;</span>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Directory</span><span class="w"> </span><span class="s">&quot;/opt/lamp/apache2/htdocs&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nb">Options</span><span class="w"> </span>Indexes<span class="w"> </span>FollowSymLinks
+<span class="w">    </span><span class="nb">AllowOverride</span><span class="w"> </span><span class="k">All</span>
+<span class="w">    </span><span class="nb">Require</span><span class="w"> </span><span class="k">all</span><span class="w"> </span>granted
+<span class="nt">&lt;/Directory&gt;</span>
 </pre></div>
 </div>
 </section>
-<section id="removing-the-index-php">
-<h3><a class="toc-backref" href="#id7">Removing the index.php</a><a class="headerlink" href="#removing-the-index-php" title="Permalink to this headline"></a></h3>
-<p>See <a class="reference internal" href="../general/urls.html#urls-remove-index-php-apache"><span class="std std-ref">CodeIgniter URLs</span></a>.</p>
 </section>
-<section id="virtual-hosting">
-<h3><a class="toc-backref" href="#id8">Virtual Hosting</a><a class="headerlink" href="#virtual-hosting" title="Permalink to this headline"></a></h3>
+<section id="hosting-with-virtualhost">
+<h3><a class="toc-backref" href="#id9">Hosting with VirtualHost</a><a class="headerlink" href="#hosting-with-virtualhost" title="Permalink to this headline"></a></h3>
 <p>We recommend using “virtual hosting” to run your apps.
 You can set up different aliases for each of the apps you work on,</p>
+<section id="enabling-vhost-alias-module">
+<h4><a class="toc-backref" href="#id10">Enabling vhost_alias_module</a><a class="headerlink" href="#enabling-vhost-alias-module" title="Permalink to this headline"></a></h4>
 <p>Make sure that the virtual hosting module is enabled (uncommented) in the main
 configuration file, e.g., <strong>apache2/conf/httpd.conf</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">LoadModule</span> <span class="nx">vhost_alias_module</span> <span class="nx">modules</span><span class="o">/</span><span class="nx">mod_vhost_alias</span><span class="o">.</span><span class="nx">so</span>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">LoadModule</span><span class="w"> </span>vhost_alias_module<span class="w"> </span>modules/mod_vhost_alias.so
 </pre></div>
 </div>
+</section>
+<section id="adding-host-alias">
+<h4><a class="toc-backref" href="#id11">Adding Host Alias</a><a class="headerlink" href="#adding-host-alias" title="Permalink to this headline"></a></h4>
 <p>Add a host alias in your “hosts” file, typically <strong>/etc/hosts</strong> on unix-type platforms,
-or <strong>c:/Windows/System32/drivers/etc/hosts</strong> on Windows.
-Add a line to the file. This could be <code class="docutils literal notranslate"><span class="pre">myproject.local</span></code> or <code class="docutils literal notranslate"><span class="pre">myproject.test</span></code>, for instance:</p>
+or <strong>c:WindowsSystem32driversetchosts</strong> on Windows.</p>
+<p>Add a line to the file.
+This could be <code class="docutils literal notranslate"><span class="pre">myproject.local</span></code> or <code class="docutils literal notranslate"><span class="pre">myproject.test</span></code>, for instance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="nx">myproject</span><span class="o">.</span><span class="nx">local</span>
 </pre></div>
 </div>
+</section>
+<section id="setting-virtualhost">
+<h4><a class="toc-backref" href="#id12">Setting VirtualHost</a><a class="headerlink" href="#setting-virtualhost" title="Permalink to this headline"></a></h4>
 <p>Add a <code class="docutils literal notranslate"><span class="pre">&lt;VirtualHost&gt;</span></code> element for your webapp inside the virtual hosting configuration,
 e.g., <strong>apache2/conf/extra/httpd-vhost.conf</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">VirtualHost</span> <span class="o">*:</span><span class="mi">80</span><span class="o">&gt;</span>
-    <span class="nx">DocumentRoot</span> <span class="s2">&quot;/opt/lamp/apache2/htdocs/myproject/public&quot;</span>
-    <span class="nx">ServerName</span> <span class="nx">myproject</span><span class="o">.</span><span class="nx">local</span>
-    <span class="nx">ErrorLog</span> <span class="s2">&quot;logs/myproject-error_log&quot;</span>
-    <span class="nx">CustomLog</span> <span class="s2">&quot;logs/myproject-access_log&quot;</span> <span class="nx">common</span>
-<span class="o">&lt;/</span><span class="nx">VirtualHost</span><span class="o">&gt;</span>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;VirtualHost</span><span class="w"> </span><span class="s">*:80</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nb">DocumentRoot</span><span class="w"> </span><span class="s2">&quot;/opt/lamp/apache2/myproject/public&quot;</span>
+<span class="w">    </span><span class="nb">ServerName</span><span class="w">   </span>myproject.local
+<span class="w">    </span><span class="nb">ErrorLog</span><span class="w">     </span><span class="s2">&quot;logs/myproject-error_log&quot;</span>
+<span class="w">    </span><span class="nb">CustomLog</span><span class="w">    </span><span class="s2">&quot;logs/myproject-access_log&quot;</span><span class="w"> </span>common
+
+<span class="w">    </span><span class="nt">&lt;Directory</span><span class="w"> </span><span class="s">&quot;/opt/lamp/apache2/myproject/public&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nb">AllowOverride</span><span class="w"> </span><span class="k">All</span>
+<span class="w">        </span><span class="nb">Require</span><span class="w"> </span><span class="k">all</span><span class="w"> </span>granted
+<span class="w">    </span><span class="nt">&lt;/Directory&gt;</span>
+<span class="nt">&lt;/VirtualHost&gt;</span>
 </pre></div>
 </div>
-<p>If your project folder is not a subfolder of the Apache document root, then your
-<code class="docutils literal notranslate"><span class="pre">&lt;VirtualHost&gt;</span></code> element may need a nested <code class="docutils literal notranslate"><span class="pre">&lt;Directory&gt;</span></code> element to grant the web server access to the files.</p>
-</section>
-<section id="with-mod-userdir-shared-hosts">
-<h3><a class="toc-backref" href="#id9">With mod_userdir (Shared Hosts)</a><a class="headerlink" href="#with-mod-userdir-shared-hosts" title="Permalink to this headline"></a></h3>
-<p>A common practice in shared hosting environments is to use the Apache module “mod_userdir” to enable per-user Virtual Hosts automatically. Additional configuration is required to allow CodeIgniter4 to be run from these per-user directories.</p>
-<p>The following assumes that the server is already configured for mod_userdir. A guide to enabling this module is available <a class="reference external" href="https://httpd.apache.org/docs/2.4/howto/public_html.html">in the Apache documentation</a>.</p>
-<p>Because CodeIgniter4 expects the server to find the framework front controller at <strong>public/index.php</strong> by default, you must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the per-user web directory).</p>
-<p>The default user web directory <strong>~/public_html</strong> is specified by the <code class="docutils literal notranslate"><span class="pre">UserDir</span></code> directive, typically in <strong>apache2/mods-available/userdir.conf</strong> or <strong>apache2/conf/extra/httpd-userdir.conf</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">UserDir</span> <span class="nx">public_html</span>
+<p>The above configuration assumes the project folder is located as follows:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>apache2/
+   ├── myproject/      (Project Folder)
+   │      └── public/  (DocumentRoot for myproject.local)
+   └── htdocs/
 </pre></div>
 </div>
-<p>So you will need to configure Apache to look for CodeIgniter’s public directory first before trying to serve the default:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">UserDir</span> <span class="s2">&quot;public_html/public&quot;</span> <span class="s2">&quot;public_html&quot;</span>
-</pre></div>
-</div>
-<p>Be sure to specify options and permissions for the CodeIgniter public directory as well. A <strong>userdir.conf</strong> might look like:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">IfModule</span> <span class="nx">mod_userdir</span><span class="o">.</span><span class="nx">c</span><span class="o">&gt;</span>
-    <span class="nx">UserDir</span> <span class="s2">&quot;public_html/public&quot;</span> <span class="s2">&quot;public_html&quot;</span>
-    <span class="nx">UserDir</span> <span class="nx">disabled</span> <span class="nx">root</span>
-
-    <span class="o">&lt;</span><span class="nx">Directory</span> <span class="o">/</span><span class="nx">home</span><span class="cm">/*/public_html&gt;</span>
-<span class="cm">            AllowOverride All</span>
-<span class="cm">            Options MultiViews Indexes FollowSymLinks</span>
-<span class="cm">            &lt;Limit GET POST OPTIONS&gt;</span>
-<span class="cm">                    # Apache &lt;= 2.2:</span>
-<span class="cm">                    # Order allow,deny</span>
-<span class="cm">                    # Allow from all</span>
-
-<span class="cm">                    # Apache &gt;= 2.4:</span>
-<span class="cm">                    Require all granted</span>
-<span class="cm">            &lt;/Limit&gt;</span>
-<span class="cm">            &lt;LimitExcept GET POST OPTIONS&gt;</span>
-<span class="cm">                    # Apache &lt;= 2.2:</span>
-<span class="cm">                    # Order deny,allow</span>
-<span class="cm">                    # Deny from all</span>
-
-<span class="cm">                    # Apache &gt;= 2.4:</span>
-<span class="cm">                    Require all denied</span>
-<span class="cm">            &lt;/LimitExcept&gt;</span>
-<span class="cm">    &lt;/Directory&gt;</span>
-
-<span class="cm">    &lt;Directory /home/*/</span><span class="nx">public_html</span><span class="o">/</span><span class="k">public</span><span class="o">&gt;</span>
-            <span class="nx">AllowOverride</span> <span class="nx">All</span>
-            <span class="nx">Options</span> <span class="nx">MultiViews</span> <span class="nx">Indexes</span> <span class="nx">FollowSymLinks</span>
-            <span class="o">&lt;</span><span class="nx">Limit</span> <span class="nx">GET</span> <span class="nx">POST</span> <span class="nx">OPTIONS</span><span class="o">&gt;</span>
-                    <span class="c1"># Apache &lt;= 2.2:</span>
-                    <span class="c1"># Order allow,deny</span>
-                    <span class="c1"># Allow from all</span>
-
-                    <span class="c1"># Apache &gt;= 2.4:</span>
-                    <span class="k">Require</span> <span class="nx">all</span> <span class="nx">granted</span>
-            <span class="o">&lt;/</span><span class="nx">Limit</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="nx">LimitExcept</span> <span class="nx">GET</span> <span class="nx">POST</span> <span class="nx">OPTIONS</span><span class="o">&gt;</span>
-                    <span class="c1"># Apache &lt;= 2.2:</span>
-                    <span class="c1"># Order deny,allow</span>
-                    <span class="c1"># Deny from all</span>
-
-                    <span class="c1"># Apache &gt;= 2.4:</span>
-                    <span class="k">Require</span> <span class="nx">all</span> <span class="nx">denied</span>
-            <span class="o">&lt;/</span><span class="nx">LimitExcept</span><span class="o">&gt;</span>
-    <span class="o">&lt;/</span><span class="nx">Directory</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="nx">IfModule</span><span class="o">&gt;</span>
-</pre></div>
-</div>
-</section>
-<section id="setting-environment">
-<h3><a class="toc-backref" href="#id10">Setting Environment</a><a class="headerlink" href="#setting-environment" title="Permalink to this headline"></a></h3>
-<p>See <a class="reference internal" href="../general/environments.html#environment-apache"><span class="std std-ref">Handling Multiple Environments</span></a>.</p>
 </section>
 <section id="testing">
-<h3><a class="toc-backref" href="#id11">Testing</a><a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
+<h4><a class="toc-backref" href="#id13">Testing</a><a class="headerlink" href="#testing" title="Permalink to this headline"></a></h4>
 <p>With the above configuration, your webapp would be accessed with the URL <strong>http://myproject.local/</strong> in your browser.</p>
 <p>Apache needs to be restarted whenever you change its configuration.</p>
 </section>
 </section>
+<section id="hosting-with-mod-userdir-shared-hosts">
+<h3><a class="toc-backref" href="#id14">Hosting with mod_userdir (Shared Hosts)</a><a class="headerlink" href="#hosting-with-mod-userdir-shared-hosts" title="Permalink to this headline"></a></h3>
+<p>A common practice in shared hosting environments is to use the Apache module “mod_userdir” to enable per-user Virtual Hosts automatically. Additional configuration is required to allow CodeIgniter4 to be run from these per-user directories.</p>
+<p>The following assumes that the server is already configured for mod_userdir. A guide to enabling this module is available <a class="reference external" href="https://httpd.apache.org/docs/2.4/howto/public_html.html">in the Apache documentation</a>.</p>
+<p>Because CodeIgniter4 expects the server to find the framework front controller at <strong>public/index.php</strong> by default, you must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the per-user web directory).</p>
+<p>The default user web directory <strong>~/public_html</strong> is specified by the <code class="docutils literal notranslate"><span class="pre">UserDir</span></code> directive, typically in <strong>apache2/mods-available/userdir.conf</strong> or <strong>apache2/conf/extra/httpd-userdir.conf</strong>:</p>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">UserDir</span><span class="w"> </span>public_html
+</pre></div>
+</div>
+<p>So you will need to configure Apache to look for CodeIgniter’s public directory first before trying to serve the default:</p>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">UserDir</span><span class="w"> </span><span class="s2">&quot;public_html/public&quot;</span><span class="w"> </span><span class="s2">&quot;public_html&quot;</span>
+</pre></div>
+</div>
+<p>Be sure to specify options and permissions for the CodeIgniter public directory as well. A <strong>userdir.conf</strong> might look like:</p>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;IfModule</span><span class="w"> </span><span class="s">mod_userdir.c</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nb">UserDir</span><span class="w"> </span><span class="s2">&quot;public_html/public&quot;</span><span class="w"> </span><span class="s2">&quot;public_html&quot;</span>
+<span class="w">    </span><span class="nb">UserDir</span><span class="w"> </span>disabled<span class="w"> </span>root
+
+<span class="w">    </span><span class="nt">&lt;Directory</span><span class="w"> </span><span class="s">/home/*/public_html</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nb">AllowOverride</span><span class="w"> </span><span class="k">All</span>
+<span class="w">        </span><span class="nb">Options</span><span class="w"> </span>MultiViews<span class="w"> </span>Indexes<span class="w"> </span>FollowSymLinks
+<span class="w">        </span><span class="nt">&lt;Limit</span><span class="w"> </span><span class="s">GET POST OPTIONS</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="c"># Apache &lt;= 2.2:</span>
+<span class="w">            </span><span class="c"># Order allow,deny</span>
+<span class="w">            </span><span class="c"># Allow from all</span>
+
+<span class="w">            </span><span class="c"># Apache &gt;= 2.4:</span>
+<span class="w">            </span><span class="nb">Require</span><span class="w"> </span><span class="k">all</span><span class="w"> </span>granted
+<span class="w">        </span><span class="nt">&lt;/Limit&gt;</span>
+<span class="w">        </span><span class="nt">&lt;LimitExcept</span><span class="w"> </span><span class="s">GET POST OPTIONS</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="c"># Apache &lt;= 2.2:</span>
+<span class="w">            </span><span class="c"># Order deny,allow</span>
+<span class="w">            </span><span class="c"># Deny from all</span>
+
+<span class="w">            </span><span class="c"># Apache &gt;= 2.4:</span>
+<span class="w">            </span><span class="nb">Require</span><span class="w"> </span><span class="k">all</span><span class="w"> </span>denied
+<span class="w">        </span><span class="nt">&lt;/LimitExcept&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Directory&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;Directory</span><span class="w"> </span><span class="s">/home/*/public_html/public</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nb">AllowOverride</span><span class="w"> </span><span class="k">All</span>
+<span class="w">        </span><span class="nb">Options</span><span class="w"> </span>MultiViews<span class="w"> </span>Indexes<span class="w"> </span>FollowSymLinks
+<span class="w">        </span><span class="nt">&lt;Limit</span><span class="w"> </span><span class="s">GET POST OPTIONS</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="c"># Apache &lt;= 2.2:</span>
+<span class="w">            </span><span class="c"># Order allow,deny</span>
+<span class="w">            </span><span class="c"># Allow from all</span>
+
+<span class="w">            </span><span class="c"># Apache &gt;= 2.4:</span>
+<span class="w">            </span><span class="nb">Require</span><span class="w"> </span><span class="k">all</span><span class="w"> </span>granted
+<span class="w">        </span><span class="nt">&lt;/Limit&gt;</span>
+<span class="w">        </span><span class="nt">&lt;LimitExcept</span><span class="w"> </span><span class="s">GET POST OPTIONS</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="c"># Apache &lt;= 2.2:</span>
+<span class="w">            </span><span class="c"># Order deny,allow</span>
+<span class="w">            </span><span class="c"># Deny from all</span>
+
+<span class="w">            </span><span class="c"># Apache &gt;= 2.4:</span>
+<span class="w">            </span><span class="nb">Require</span><span class="w"> </span><span class="k">all</span><span class="w"> </span>denied
+<span class="w">        </span><span class="nt">&lt;/LimitExcept&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Directory&gt;</span>
+<span class="nt">&lt;/IfModule&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="removing-the-index-php">
+<h3><a class="toc-backref" href="#id15">Removing the index.php</a><a class="headerlink" href="#removing-the-index-php" title="Permalink to this headline"></a></h3>
+<p>See <a class="reference internal" href="../general/urls.html#urls-remove-index-php-apache"><span class="std std-ref">CodeIgniter URLs</span></a>.</p>
+</section>
+<section id="setting-environment">
+<h3><a class="toc-backref" href="#id16">Setting Environment</a><a class="headerlink" href="#setting-environment" title="Permalink to this headline"></a></h3>
+<p>See <a class="reference internal" href="../general/environments.html#environment-apache"><span class="std std-ref">Handling Multiple Environments</span></a>.</p>
+</section>
+</section>
 <section id="hosting-with-nginx">
-<h2><a class="toc-backref" href="#id12">Hosting with Nginx</a><a class="headerlink" href="#hosting-with-nginx" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id17">Hosting with Nginx</a><a class="headerlink" href="#hosting-with-nginx" title="Permalink to this headline"></a></h2>
 <p>Nginx is the second most widely used HTTP server for web hosting.
 Here you can find an example configuration using PHP 8.1 FPM (unix sockets) under Ubuntu Server.</p>
 <section id="default-conf">
-<h3><a class="toc-backref" href="#id13">default.conf</a><a class="headerlink" href="#default-conf" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id18">default.conf</a><a class="headerlink" href="#default-conf" title="Permalink to this headline"></a></h3>
 <p>This configuration enables URLs without “index.php” in them and using CodeIgniter’s “404 - File Not Found” for URLs ending with “.php”.</p>
 <div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">server</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
@@ -565,12 +602,12 @@ Here you can find an example configuration using PHP 8.1 FPM (unix sockets) unde
 </div>
 </section>
 <section id="id2">
-<h3><a class="toc-backref" href="#id14">Setting Environment</a><a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id19">Setting Environment</a><a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
 <p>See <a class="reference internal" href="../general/environments.html#environment-nginx"><span class="std std-ref">Handling Multiple Environments</span></a>.</p>
 </section>
 </section>
 <section id="bootstrapping-the-app">
-<h2><a class="toc-backref" href="#id15">Bootstrapping the App</a><a class="headerlink" href="#bootstrapping-the-app" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id20">Bootstrapping the App</a><a class="headerlink" href="#bootstrapping-the-app" title="Permalink to this headline"></a></h2>
 <p>In some scenarios you will want to load the framework without actually running the whole
 application. This is particularly useful for unit testing your project, but may also be
 handy for using third-party tools to analyze and modify your code. The framework comes
