@@ -18,18 +18,37 @@ namespace CodeIgniter;
  */
 final class Superglobals
 {
+    private array $server;
+    private array $get;
+
+    public function __construct(?array $server = null, ?array $get = null)
+    {
+        $this->server = $server ?? $_SERVER;
+        $this->get    = $get ?? $_GET;
+    }
+
     public function server(string $key): ?string
     {
-        return $_SERVER[$key] ?? null;
+        return $this->server[$key] ?? null;
     }
 
     public function setServer(string $key, string $value): void
     {
-        $_SERVER[$key] = $value;
+        $this->server[$key] = $value;
+        $_SERVER[$key]      = $value;
+    }
+
+    /**
+     * @return array|string|null
+     */
+    public function get(string $key)
+    {
+        return $this->get[$key] ?? null;
     }
 
     public function setGetArray(array $array): void
     {
-        $_GET = $array;
+        $this->get = $array;
+        $_GET      = $array;
     }
 }
