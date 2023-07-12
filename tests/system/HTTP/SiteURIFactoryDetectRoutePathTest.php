@@ -38,7 +38,7 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
         $_SERVER      = $server;
         $superglobals = new Superglobals();
 
-        return new SiteURIFactory($superglobals, $appConfig);
+        return new SiteURIFactory($appConfig, $superglobals);
     }
 
     public function testDefault()

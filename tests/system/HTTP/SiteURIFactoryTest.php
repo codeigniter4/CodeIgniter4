@@ -36,7 +36,7 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         $config ??= new App();
         $superglobals ??= new Superglobals();
 
-        return new SiteURIFactory($superglobals, $config);
+        return new SiteURIFactory($config, $superglobals);
     }
 
     public function testCreateFromGlobals()

@@ -17,13 +17,13 @@ use Config\App;
 
 class SiteURIFactory
 {
-    private Superglobals $superglobals;
     private App $appConfig;
+    private Superglobals $superglobals;
 
-    public function __construct(Superglobals $superglobals, App $appConfig)
+    public function __construct(App $appConfig, Superglobals $superglobals)
     {
-        $this->superglobals = $superglobals;
         $this->appConfig    = $appConfig;
+        $this->superglobals = $superglobals;
     }
 
     /**
