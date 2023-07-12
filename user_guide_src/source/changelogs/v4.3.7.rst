@@ -17,6 +17,7 @@ Message Changes
 
 Changes
 *******
+* The number helper function ``number_to_amount`` compares the number with greater than or equal. The same behaviour as ``number_to_size`` now. https://github.com/codeigniter4/CodeIgniter4/pull/7648
 
 Deprecations
 ************
