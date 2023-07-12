@@ -12,6 +12,7 @@
 namespace CodeIgniter\Config;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\Database;
 use InvalidArgumentException;
 use ReflectionClass;
 use stdClass;
@@ -402,7 +403,7 @@ final class FactoriesTest extends CIUnitTestCase
     public function testGetComponentInstances()
     {
         Factories::config('App');
-        Factories::config(\Config\Database::class);
+        Factories::config(Database::class);
 
         $data = Factories::getComponentInstances('config');
 

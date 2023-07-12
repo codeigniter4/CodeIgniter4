@@ -467,12 +467,10 @@ class Factories
             ];
         }
 
-        $data = [
+        return [
             'aliases'   => static::$aliases[$component],
             'instances' => self::$instances[$component],
         ];
-
-        return $data;
     }
 
     /**
@@ -494,6 +492,6 @@ class Factories
      */
     public static function isUpdated(string $component): bool
     {
-        return isset(self::$updated[$component]) ? true : false;
+        return isset(self::$updated[$component]);
     }
 }
