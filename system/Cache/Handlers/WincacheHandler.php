@@ -22,6 +22,9 @@ use Exception;
  */
 class WincacheHandler extends BaseHandler
 {
+    /**
+     * Note: Use `CacheFactory::getHandler()` to instantiate.
+     */
     public function __construct(Cache $config)
     {
         $this->prefix = $config->prefix;
