@@ -12,8 +12,8 @@ Release Date: Unreleased
 BREAKING
 ********
 
-- **RouteCollection:** The second parameter ``bool $only = false`` has been added
-  to the ``RouteCollection::getRoutes()`` method.
+- **RouteCollection:** The second parameter ``bool $includeWildcard = true`` has
+  been added to the ``RouteCollection::getRoutes()`` method.
 - **AutoRouting Legacy:** The first parameter of the ``AutoRouter::__construct()``
   has been changed from ``$protectedControllers`` to ``$cliRoutes``.
 - **FeatureTestTrait:** When using :ref:`withBodyFormat() <feature-formatting-the-request>`,
