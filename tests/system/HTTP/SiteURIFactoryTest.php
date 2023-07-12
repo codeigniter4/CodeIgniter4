@@ -31,6 +31,14 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         $_GET = $_SERVER = [];
     }
 
+    private function createSiteURIFactory(?App $config = null, ?Superglobals $superglobals = null): SiteURIFactory
+    {
+        $config ??= new App();
+        $superglobals ??= new Superglobals();
+
+        return new SiteURIFactory($superglobals, $config);
+    }
+
     public function testCreateFromGlobals()
     {
         // http://localhost:8080/index.php/woot?code=good#pos
@@ -42,8 +50,7 @@ final class SiteURIFactoryTest extends CIUnitTestCase
 
         $_GET['code'] = 'good';
 
-        $superglobals = new Superglobals();
-        $factory      = new SiteURIFactory($superglobals, new App());
+        $factory = $this->createSiteURIFactory();
 
         $uri = $factory->createFromGlobals();
 
@@ -68,8 +75,7 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         $config->baseURL          = 'http://example.jp/';
         $config->allowedHostnames = ['users.example.jp'];
 
-        $superglobals = new Superglobals();
-        $factory      = new SiteURIFactory($superglobals, $config);
+        $factory = $this->createSiteURIFactory($config);
 
         $uri = $factory->createFromGlobals();
 
@@ -81,8 +87,7 @@ final class SiteURIFactoryTest extends CIUnitTestCase
 
     public function testCreateFromString()
     {
-        $superglobals = new Superglobals();
-        $factory      = new SiteURIFactory($superglobals, new App());
+        $factory = $this->createSiteURIFactory();
 
         $uriString = 'http://invalid.example.jp/foo/bar?page=3';
         $uri       = $factory->createFromString($uriString);
