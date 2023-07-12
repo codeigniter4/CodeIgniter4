@@ -12,24 +12,18 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Superglobals;
 use Config\App;
 
 class SiteURIFactory
 {
-    /**
-     * @var array Superglobal SERVER array
-     */
-    private array $server;
-
+    private Superglobals $superglobals;
     private App $appConfig;
 
-    /**
-     * @param array $server Superglobal $_SERVER array
-     */
-    public function __construct(array $server, App $appConfig)
+    public function __construct(Superglobals $superglobals, App $appConfig)
     {
-        $this->server    = $server;
-        $this->appConfig = $appConfig;
+        $this->superglobals = $superglobals;
+        $this->appConfig    = $appConfig;
     }
 
     /**
@@ -103,7 +97,7 @@ class SiteURIFactory
 
             case 'PATH_INFO':
             default:
-                $routePath = $this->server[$protocol] ?? $this->parseRequestURI();
+                $routePath = $this->superglobals->server($protocol) ?? $this->parseRequestURI();
                 break;
         }
 
@@ -120,7 +114,10 @@ class SiteURIFactory
      */
     private function parseRequestURI(): string
     {
-        if (! isset($this->server['REQUEST_URI'], $this->server['SCRIPT_NAME'])) {
+        if (
+            $this->superglobals->server('REQUEST_URI') === null
+            || $this->superglobals->server('SCRIPT_NAME') === null
+        ) {
             return '';
         }
 
@@ -128,19 +125,19 @@ class SiteURIFactory
         // string contains a colon followed by a number. So we attach a dummy
         // host since REQUEST_URI does not include the host. This allows us to
         // parse out the query string and path.
-        $parts = parse_url('http://dummy' . $this->server['REQUEST_URI']);
+        $parts = parse_url('http://dummy' . $this->superglobals->server('REQUEST_URI'));
         $query = $parts['query'] ?? '';
         $path  = $parts['path'] ?? '';
 
         // Strip the SCRIPT_NAME path from the URI
         if (
-            $path !== '' && isset($this->server['SCRIPT_NAME'][0])
-            && pathinfo($this->server['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php'
+            $path !== '' && isset($this->superglobals->server('SCRIPT_NAME')[0])
+            && pathinfo($this->superglobals->server('SCRIPT_NAME'), PATHINFO_EXTENSION) === 'php'
         ) {
             // Compare each segment, dropping them until there is no match
             $segments = $keep = explode('/', $path);
 
-            foreach (explode('/', $this->server['SCRIPT_NAME']) as $i => $segment) {
+            foreach (explode('/', $this->superglobals->server('SCRIPT_NAME')) as $i => $segment) {
                 // If these segments are not the same then we're done
                 if (! isset($segments[$i]) || $segment !== $segments[$i]) {
                     break;
@@ -160,28 +157,16 @@ class SiteURIFactory
             $path     = $parts[0];
             $newQuery = $query[1] ?? '';
 
-            $this->server['QUERY_STRING'] = $newQuery;
-            $this->updateServer('QUERY_STRING', $newQuery);
+            $this->superglobals->setServer('QUERY_STRING', $newQuery);
         } else {
-            $this->server['QUERY_STRING'] = $query;
-            $this->updateServer('QUERY_STRING', $query);
+            $this->superglobals->setServer('QUERY_STRING', $query);
         }
 
         // Update our global GET for values likely to have been changed
-        parse_str($this->server['QUERY_STRING'], $get);
-        $this->updateGetArray($get);
+        parse_str($this->superglobals->server('QUERY_STRING'), $get);
+        $this->superglobals->setGetArray($get);
 
         return URI::removeDotSegments($path);
-    }
-
-    private function updateServer(string $key, string $value): void
-    {
-        $_SERVER[$key] = $value;
-    }
-
-    private function updateGetArray(array $array): void
-    {
-        $_GET = $array;
     }
 
     /**
@@ -193,7 +178,7 @@ class SiteURIFactory
      */
     private function parseQueryString(): string
     {
-        $query = $this->server['QUERY_STRING'] ?? @getenv('QUERY_STRING');
+        $query = $this->superglobals->server('QUERY_STRING') ?? @getenv('QUERY_STRING');
 
         if (trim($query, '/') === '') {
             return '/';
@@ -204,15 +189,14 @@ class SiteURIFactory
             $path     = $parts[0];
             $newQuery = $parts[1] ?? '';
 
-            $this->server['QUERY_STRING'] = $newQuery;
-            $this->updateServer('QUERY_STRING', $newQuery);
+            $this->superglobals->setServer('QUERY_STRING', $newQuery);
         } else {
             $path = $query;
         }
 
         // Update our global GET for values likely to have been changed
-        parse_str($this->server['QUERY_STRING'], $get);
-        $this->updateGetArray($get);
+        parse_str($this->superglobals->server('QUERY_STRING'), $get);
+        $this->superglobals->setGetArray($get);
 
         return URI::removeDotSegments($path);
     }
@@ -224,7 +208,7 @@ class SiteURIFactory
      */
     private function createURIFromRoutePath(string $routePath): SiteURI
     {
-        $query = $this->server['QUERY_STRING'] ?? '';
+        $query = $this->superglobals->server('QUERY_STRING') ?? '';
 
         $relativePath = $query !== '' ? $routePath . '?' . $query : $routePath;
 
@@ -236,7 +220,7 @@ class SiteURIFactory
      */
     private function getHost(): ?string
     {
-        $httpHostPort = $this->server['HTTP_HOST'] ?? null;
+        $httpHostPort = $this->superglobals->server('HTTP_HOST') ?? null;
 
         if ($httpHostPort !== null) {
             [$httpHost] = explode(':', $httpHostPort, 2);

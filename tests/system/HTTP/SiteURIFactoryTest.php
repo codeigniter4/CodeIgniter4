@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
@@ -41,7 +42,8 @@ final class SiteURIFactoryTest extends CIUnitTestCase
 
         $_GET['code'] = 'good';
 
-        $factory = new SiteURIFactory($_SERVER, new App());
+        $superglobals = new Superglobals();
+        $factory      = new SiteURIFactory($superglobals, new App());
 
         $uri = $factory->createFromGlobals();
 
@@ -66,7 +68,8 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         $config->baseURL          = 'http://example.jp/';
         $config->allowedHostnames = ['users.example.jp'];
 
-        $factory = new SiteURIFactory($_SERVER, $config);
+        $superglobals = new Superglobals();
+        $factory      = new SiteURIFactory($superglobals, $config);
 
         $uri = $factory->createFromGlobals();
 
@@ -78,7 +81,8 @@ final class SiteURIFactoryTest extends CIUnitTestCase
 
     public function testCreateFromString()
     {
-        $factory = new SiteURIFactory($_SERVER, new App());
+        $superglobals = new Superglobals();
+        $factory      = new SiteURIFactory($superglobals, new App());
 
         $uriString = 'http://invalid.example.jp/foo/bar?page=3';
         $uri       = $factory->createFromString($uriString);

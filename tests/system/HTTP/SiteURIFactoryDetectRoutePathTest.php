@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
@@ -34,7 +35,10 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     {
         $appConfig ??= new App();
 
-        return new SiteURIFactory($server, $appConfig);
+        $_SERVER      = $server;
+        $superglobals = new Superglobals();
+
+        return new SiteURIFactory($superglobals, $appConfig);
     }
 
     public function testDefault()
