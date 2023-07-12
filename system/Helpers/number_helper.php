@@ -69,9 +69,9 @@ if (! function_exists('number_to_amount')) {
      *
      * @see https://simple.wikipedia.org/wiki/Names_for_large_numbers
      *
-     * @param int|string $num Will be cast as int
-     * @param int $precision [optional] The optional number of decimal digits to round to.
-     * @param string $locale [optional]
+     * @param int|string $num       Will be cast as int
+     * @param int        $precision [optional] The optional number of decimal digits to round to.
+     * @param string     $locale    [optional]
      *
      * @return bool|string
      */
