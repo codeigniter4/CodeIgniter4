@@ -12,6 +12,10 @@ Release Date: Unreleased
 BREAKING
 ********
 
+- **FeatureTestTrait:** When using :ref:`withBodyFormat() <feature-formatting-the-request>`,
+  the priority of the request body has been changed.
+  See :ref:`Upgrading Guide <upgrade-437-feature-testing>` for details.
+
 Message Changes
 ***************
 

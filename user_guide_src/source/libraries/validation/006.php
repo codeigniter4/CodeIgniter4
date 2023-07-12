@@ -1,11 +1,11 @@
 <?php
 
 $validation->setRules([
-    'username' => 'required',
-    'password' => 'required|min_length[10]',
+    'username' => 'required|max_length[30]',
+    'password' => 'required|max_length[255]|min_length[10]',
 ]);
 // or
 $validation->setRules([
-    'username' => 'required',
-    'password' => ['required', 'min_length[10]'],
+    'username' => ['required', 'max_length[30]'],
+    'password' => ['required', 'max_length[255]', 'min_length[10]'],
 ]);

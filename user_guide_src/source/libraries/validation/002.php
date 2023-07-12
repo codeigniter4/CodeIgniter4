@@ -3,10 +3,10 @@
 // ...
 
 $rules = [
-    'username' => 'required',
-    'password' => 'required|min_length[10]',
-    'passconf' => 'required|matches[password]',
-    'email'    => 'required|valid_email',
+    'username' => 'required|max_length[30]',
+    'password' => 'required|max_length[255]|min_length[10]',
+    'passconf' => 'required|max_length[255]|matches[password]',
+    'email'    => 'required|max_length[254]|valid_email',
 ];
 
 // ...

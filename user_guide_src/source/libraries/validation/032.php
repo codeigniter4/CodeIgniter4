@@ -2,9 +2,13 @@
 
 namespace Config;
 
-class Validation
+// ...
+
+class Validation extends BaseConfig
 {
-    public $templates = [
+    // ...
+
+    public array $templates = [
         'list'    => 'CodeIgniter\Validation\Views\list',
         'single'  => 'CodeIgniter\Validation\Views\single',
         'my_list' => '_errors_list',

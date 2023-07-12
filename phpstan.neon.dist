@@ -1,7 +1,3 @@
-conditionalTags:
-	PhpParser\NodeVisitor\NodeConnectingVisitor:
-		phpstan.parser.richParserNodeVisitor: true
-
 services:
 	-
 		class: Utils\PHPStan\CheckUseStatementsAfterLicenseRule
@@ -36,12 +32,9 @@ parameters:
 		- system/Test/Filters/CITestStreamFilter.php
 		- system/ThirdParty/*
 		- system/Validation/Views/single.php
-	parallel:
-		processTimeout: 300.0
 	scanDirectories:
 		- system/Helpers
 	dynamicConstantNames:
 		- APP_NAMESPACE
 		- CI_DEBUG
 		- ENVIRONMENT
-		- SODIUM_LIBRARY_VERSION

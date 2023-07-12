@@ -23,6 +23,8 @@ You can grab an instance of the cache engine directly through the Services class
 
 .. literalinclude:: caching/002.php
 
+.. _libraries-caching-configuring-the-cache:
+
 *********************
 Configuring the Cache
 *********************

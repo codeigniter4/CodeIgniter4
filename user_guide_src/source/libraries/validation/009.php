@@ -19,10 +19,10 @@
 
 // Joe Smith
 $validation->setRules([
-    'contacts.name' => 'required',
+    'contacts.name' => 'required|max_length[60]',
 ]);
 
 // Fred Flintsone & Wilma
 $validation->setRules([
-    'contacts.friends.name' => 'required',
+    'contacts.friends.name' => 'required|max_length[60]',
 ]);

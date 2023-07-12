@@ -18,37 +18,54 @@ the application configuration files in the **app/Config** folder.
 Working with Configuration Files
 ********************************
 
+Getting a Config Object
+=======================
+
 You can access configuration files for your classes in several different ways.
 
-- By using the ``new`` keyword to create an instance:
+new keyword
+-----------
 
-  .. literalinclude:: configuration/001.php
+By using the ``new`` keyword to create an instance:
 
-- By using the ``config()`` function:
+.. literalinclude:: configuration/001.php
 
-  .. literalinclude:: configuration/002.php
+.. _configuration-config:
 
-All configuration object properties are public, so you access the settings like any other property:
+config()
+--------
 
-.. literalinclude:: configuration/003.php
+By using the :php:func:`config()` function:
 
-If no namespace is provided, it will look for the file in all defined namespaces
-as well as **app/Config/**.
+.. literalinclude:: configuration/002.php
+
+If no namespace is provided, it will look for the file in the **app/Config**
+folder first, and if not found, look for in the **Config** folder in all defined
+namespaces.
 
 All of the configuration files that ship with CodeIgniter are namespaced with
 ``Config``. Using this namespace in your application will provide the best
 performance since it knows exactly where to find the files.
 
-You can put configuration files in any folder you want by using a different namespace.
-This allows you to put configuration files on the production server in a folder
-that is not web-accessible while keeping it under **/app** for easy access
-during development.
+.. note:: ``config()`` finds the file in **app/Config/** when there is a class with the same shortname,
+    even if you specify a fully qualified class name like ``config(\Acme\Blog\Config\Blog::class)``.
+    This is because ``config()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`factories-loading-class` for more information.
+
+Getting a Config Property
+=========================
+
+All configuration object properties are public, so you access the settings like any other property:
+
+.. literalinclude:: configuration/003.php
 
 Creating Configuration Files
 ****************************
 
 When you need a new configuration, first you create a new file at your desired location.
 The default file location (recommended for most cases) is **app/Config**.
+
+You can put configuration files in any **Config** folder by using a different namespace.
+
 The class should use the appropriate namespace, and it should extend
 ``CodeIgniter\Config\BaseConfig`` to ensure that it can receive environment-specific settings.
 
@@ -266,17 +283,25 @@ Registrars
 
 "Registrars" are any other classes which might provide additional configuration properties.
 Registrars provide a means of altering a configuration at runtime across namespaces and files.
-There are two ways to implement a Registrar: implicit and explicit.
+
+Registrars work if :ref:`auto-discovery` is enabled in :doc:`Modules </general/modules>`.
+It alters configuration properties when the Config object is instantiated.
+
+There are two ways to implement a Registrar: **implicit** and **explicit**.
 
 .. note:: Values from **.env** always take priority over Registrars.
 
 Implicit Registrars
 ===================
 
-Any namespace may define registrars by using the **Config/Registrar.php** file, if discovery
-is enabled in :doc:`Modules </general/modules>`. These files are classes whose methods are
-named for each configuration class you wish to extend. For example, a third-party module might
-wish to supply an additional template to ``Pager`` without overwriting whatever a develop has
+Implicit Registrars can change any Config class properties.
+
+Any namespace may define implicit registrars by using the **Config/Registrar.php**
+file. These files are classes whose methods are named for each configuration class
+you wish to extend.
+
+For example, a third-party module or Composer package might
+wish to supply an additional template to ``Config\Pager`` without overwriting whatever a developer has
 already configured. In **src/Config/Registrar.php** there would be a ``Registrar`` class with
 the single ``Pager()`` method (note the case-sensitivity):
 
@@ -288,6 +313,9 @@ overwrite priority.
 
 Explicit Registrars
 ===================
+
+Explicit Registrars can only change the Config class properties in which they are
+registered.
 
 A configuration file can also specify any number of registrars explicitly.
 This is done by adding a ``$registrars`` property to your configuration file,

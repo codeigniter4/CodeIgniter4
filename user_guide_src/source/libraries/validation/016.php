@@ -2,21 +2,26 @@
 
 namespace Config;
 
-class Validation
+// ...
+
+class Validation extends BaseConfig
 {
-    public $signup = [
+    // ...
+
+    public array $signup = [
         'username' => [
-            'rules'  => 'required',
+            'rules'  => 'required|max_length[30]',
             'errors' => [
                 'required' => 'You must choose a Username.',
             ],
         ],
         'email' => [
-            'rules'  => 'required|valid_email',
+            'rules'  => 'required|max_length[254]|valid_email',
             'errors' => [
                 'valid_email' => 'Please check the Email field. It does not appear to be valid.',
             ],
         ],
     ];
+
     // ...
 }

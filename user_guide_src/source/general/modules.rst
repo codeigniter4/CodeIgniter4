@@ -11,9 +11,9 @@ language files, etc. Modules may contain as few, or as many, of these as you lik
     :local:
     :depth: 2
 
-==========
+**********
 Namespaces
-==========
+**********
 
 The core element of the modules functionality comes from the :doc:`PSR-4 compatible autoloading <../concepts/autoloader>`
 that CodeIgniter uses. While any code can use the PSR-4 autoloader and namespaces, the primary way to take full advantage of
@@ -58,9 +58,9 @@ Of course, there is nothing forcing you to use this exact structure, and you sho
 best suits your module, leaving out directories you don't need, creating new directories for Entities, Interfaces,
 or Repositories, etc.
 
-===========================
+***************************
 Autoloading Non-class Files
-===========================
+***************************
 
 More often than not that your module will not contain only PHP classes but also others like procedural
 functions, bootstrapping files, module constants files, etc. which are not normally loaded the way classes
@@ -73,9 +73,11 @@ your classes. All we need to do is provide the list of paths to those files and 
 
 .. literalinclude:: modules/002.php
 
-==============
+.. _auto-discovery:
+
+**************
 Auto-Discovery
-==============
+**************
 
 Many times, you will need to specify the full namespace to files you want to include, but CodeIgniter can be
 configured to make integrating modules into your applications simpler by automatically discovering many different
@@ -83,21 +85,21 @@ file types, including:
 
 - :doc:`Events <../extending/events>`
 - :doc:`Filters <../incoming/filters>`
-- :doc:`Registrars <./configuration>`
+- :ref:`registrars`
 - :doc:`Route files <../incoming/routing>`
 - :doc:`Services <../concepts/services>`
 
 This is configured in the file **app/Config/Modules.php**.
 
-The auto-discovery system works by scanning for particular directories and files within psr4 namespaces that have been defined in **Config/Autoload.php**.
+The auto-discovery system works by scanning for particular directories and files within psr4 namespaces that have been defined in **Config/Autoload.php** and Composer packages.
 
-The discovery process would look for discoverable items on that path and should, for example, find the routes file at **/acme/Blog/Config/Routes.php**.
+The discovery process would look for discoverable items on that path and should, for example, find the routes file at **acme/Blog/Config/Routes.php**.
 
 Enable/Disable Discover
 =======================
 
 You can turn on or off all auto-discovery in the system with the ``$enabled`` class variable. False will disable
-all discovery, optimizing performance, but negating the special capabilities of your modules.
+all discovery, optimizing performance, but negating the special capabilities of your modules and Composer packages.
 
 Specify Discovery Items
 =======================
@@ -134,9 +136,9 @@ by editing the ``$discoverInComposer`` variable in **app/Config/Modules.php**:
 
 .. literalinclude:: modules/004.php
 
-==================
+******************
 Working with Files
-==================
+******************
 
 This section will take a look at each of the file types (controllers, views, language files, etc) and how they can
 be used within the module. Some of this information is described in more detail in the relevant location of the user
@@ -187,14 +189,14 @@ with the ``new`` command:
 
 .. literalinclude:: modules/008.php
 
-Config files are automatically discovered whenever using the ``config()`` function that is always available.
+Config files are automatically discovered whenever using the :php:func:`config()` function that is always available.
 
 .. note:: We don't recommend you use the same short classname in modules.
     Modules that need to override or add to known configurations in **app/Config/** should use :ref:`registrars`.
 
 .. note:: ``config()`` finds the file in **app/Config/** when there is a class with the same shortname,
     even if you specify a fully qualified class name like ``config(\Acme\Blog\Config\Blog::class)``.
-    This is because ``config()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`Factories Example <factories-example>` for more information.
+    This is because ``config()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`factories-loading-class` for more information.
 
 Migrations
 ==========
@@ -250,7 +252,7 @@ Model files are automatically discovered whenever using the :php:func:`model()` 
 
 .. note:: ``model()`` finds the file in **app/Models/** when there is a class with the same shortname,
     even if you specify a fully qualified class name like ``model(\Acme\Blog\Model\PostModel::class)``.
-    This is because ``model()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`Factories Example <factories-example>` for more information.
+    This is because ``model()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`factories-loading-class` for more information.
 
 Views
 =====

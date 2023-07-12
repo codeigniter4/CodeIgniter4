@@ -18,6 +18,27 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+.. _upgrade-437-feature-testing:
+
+Feature Testing Request Body
+============================
+
+If you call:
+
+1. :ref:`withBody() <feature-setting-the-body>`
+2. and :ref:`withBodyFormat() <feature-formatting-the-request>`
+3. and pass the ``$params`` to :ref:`call() <feature-requesting-a-page>` (or shorthand methods)
+
+the priority for a Request body has been changed. In the unlikely event that you
+have test code affected by this change, modify it.
+
+For example, now the ``$params`` is used to build the request body, and the ``$body``
+is not used::
+
+    $this->withBody($body)->withBodyFormat('json')->call('post', $params)
+
+Previously, the ``$body`` was used for the request body.
+
 Breaking Enhancements
 *********************
 

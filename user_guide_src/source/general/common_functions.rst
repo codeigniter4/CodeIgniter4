@@ -30,6 +30,21 @@ Service Accessors
 
     .. literalinclude:: common_functions/001.php
 
+.. php:function:: config(string $name[, bool $getShared = true])
+
+    :param string $name: The config classname.
+    :param bool $getShared: Whether to return a shared instance.
+    :returns: The config instances.
+    :rtype: object|null
+
+    More simple way of getting config instances from Factories.
+
+    See :ref:`Configuration <configuration-config>` and
+    :ref:`Factories <factories-config>` for details.
+
+    The ``config()`` uses ``Factories::config()`` internally.
+    See :ref:`factories-loading-class` for details on the first parameter ``$name``.
+
 .. php:function:: cookie(string $name[, string $value = ''[, array $options = []]])
 
     :param string $name: Cookie name
@@ -110,7 +125,7 @@ Service Accessors
     More simple way of getting model instances.
 
     The ``model()`` uses ``Factories::models()`` internally.
-    See :ref:`factories-example` for details on the first parameter ``$name``.
+    See :ref:`factories-loading-class` for details on the first parameter ``$name``.
 
     See also the :ref:`Using CodeIgniter's Model <accessing-models>`.
 
