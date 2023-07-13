@@ -461,7 +461,7 @@ class Services extends BaseService
             return static::getSharedInstance('parser', $viewPath, $config);
         }
 
-        $viewPath = $viewPath ?: config(Paths::class)->viewDirectory;
+        $viewPath = $viewPath ?: (new Paths())->viewDirectory;
         $config ??= config(ViewConfig::class);
 
         return new Parser($config, $viewPath, AppServices::locator(), CI_DEBUG, AppServices::logger());
@@ -480,7 +480,7 @@ class Services extends BaseService
             return static::getSharedInstance('renderer', $viewPath, $config);
         }
 
-        $viewPath = $viewPath ?: config(Paths::class)->viewDirectory;
+        $viewPath = $viewPath ?: (new Paths())->viewDirectory;
         $config ??= config(ViewConfig::class);
 
         return new View($config, $viewPath, AppServices::locator(), CI_DEBUG, AppServices::logger());

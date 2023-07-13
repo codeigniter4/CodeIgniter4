@@ -12,6 +12,8 @@ namespace Config;
  * share a system folder between multiple applications, and more.
  *
  * All paths are relative to the project's root folder.
+ *
+ * @immutable
  */
 class Paths
 {
