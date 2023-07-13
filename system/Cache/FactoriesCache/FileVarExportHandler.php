@@ -24,7 +24,7 @@ final class FileVarExportHandler
 
         // Write to temp file first to ensure atomicity
         $tmp = $this->path . "/{$key}." . uniqid('', true) . '.tmp';
-        file_put_contents($tmp, '<?php $val = ' . $val . ';', LOCK_EX);
+        file_put_contents($tmp, '<?php return ' . $val . ';', LOCK_EX);
 
         rename($tmp, $this->path . "/{$key}");
     }
@@ -39,8 +39,6 @@ final class FileVarExportHandler
      */
     public function get(string $key)
     {
-        @include $this->path . "/{$key}";
-
-        return $val ?? false; // @phpstan-ignore-line
+        return @include $this->path . "/{$key}";
     }
 }
