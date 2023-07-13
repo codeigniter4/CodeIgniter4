@@ -162,6 +162,9 @@ status
 Displays a list of all migrations and the date and time they ran, or '--' if they have not been run::
 
   > php spark migrate:status
+
+  ...
+
   +----------------------+-------------------+-----------------------+---------+---------------------+-------+
   | Namespace            | Version           | Filename              | Group   | Migrated On         | Batch |
   +----------------------+-------------------+-----------------------+---------+---------------------+-------+
