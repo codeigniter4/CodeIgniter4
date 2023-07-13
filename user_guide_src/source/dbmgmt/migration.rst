@@ -9,9 +9,9 @@ need to go and run them. You would also have to keep track of which changes
 need to be run against the production machines next time you deploy.
 
 The database table **migrations** tracks which migrations have already been
-run so all you have to do is make sure your migrations are in place and
-call ``$migration->latest()`` to bring the database up to the most recent
-state. You can also use ``$migration->setNamespace(null)->latest()`` to
+run, so all you have to do is make sure your migrations are in place and
+run the ``spark migrate`` command to bring the database up to the most recent
+state. You can also use ``spark migrate --all`` to
 include migrations from all namespaces.
 
 .. contents::
@@ -94,15 +94,6 @@ This will look for any migrations located at both **APPPATH/Database/Migrations*
 **ROOTPATH/MyCompany/Database/Migrations**. This makes it simple to include migrations in your
 re-usable, modular code suites.
 
-*************
-Usage Example
-*************
-
-In this example some simple code is placed in **app/Controllers/Migrate.php**
-to update the schema:
-
-.. literalinclude:: migration/005.php
-
 .. _command-line-tools:
 
 *******************
@@ -110,7 +101,7 @@ Command-Line Tools
 *******************
 
 CodeIgniter ships with several :doc:`commands </cli/spark_commands>` that are available from the command line to help
-you work with migrations. These tools are not required to use migrations but might make things easier for those of you
+you work with migrations. These tools make things easier for those of you
 that wish to use them. The tools primarily provide access to the same methods that are available within the MigrationRunner class.
 
 migrate
