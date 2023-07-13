@@ -39,7 +39,7 @@ class ContentSecurityPolicy extends BaseConfig
 
     // -------------------------------------------------------------------------
     // Sources allowed
-    // Note: once you set a policy to 'none', it cannot be further restricted
+    // NOTE: once you set a policy to 'none', it cannot be further restricted
     // -------------------------------------------------------------------------
 
     /**
