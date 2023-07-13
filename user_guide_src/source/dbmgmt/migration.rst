@@ -188,13 +188,17 @@ creates is the Pascal case version of the filename.
 
   > php spark make:migration <class> [options]
 
-You can use (make:migration) with the following options:
+You can use (``make:migration``) with the following options:
+
+- ``--namespace`` - Set root namespace. Default: ``APP_NAMESPACE``.
+- ``--suffix``    - Append the component title to the class name.
+
+The following options are also available to generate the migration file for
+database sessions:
 
 - ``--session``   - Generates the migration file for database sessions.
 - ``--table``     - Table name to use for database sessions. Default: ``ci_sessions``.
 - ``--dbgroup``   - Database group to use for database sessions. Default: ``default``.
-- ``--namespace`` - Set root namespace. Default: ``APP_NAMESPACE``.
-- ``--suffix``    - Append the component title to the class name.
 
 *********************
 Migration Preferences
