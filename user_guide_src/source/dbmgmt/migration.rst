@@ -227,7 +227,7 @@ Class Reference
         :returns:    An array of migration files
         :rtype:    array
 
-        An array of migration filenames are returned that are found in the **path** property.
+        An array of migration filenames are returned that are found in the ``path`` property.
 
     .. php:method:: latest($group)
 
@@ -257,7 +257,7 @@ Class Reference
         :returns:    ``true`` on success, ``false`` on failure
         :rtype:    bool
 
-        This forces a single file to migrate regardless of order or batches. Method "up" or "down" is detected based on whether it has already been migrated.
+        This forces a single file to migrate regardless of order or batches. Method ``up()`` or ``down()`` is detected based on whether it has already been migrated.
 
         .. note:: This method is recommended only for testing and could cause data consistency issues.
 
