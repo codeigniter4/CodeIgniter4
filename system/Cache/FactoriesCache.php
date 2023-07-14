@@ -22,7 +22,7 @@ final class FactoriesCache
     private $cache;
 
     /**
-     * @param CacheInterface|FileVarExportHandler $cache
+     * @param CacheInterface|FileVarExportHandler|null $cache
      */
     public function __construct($cache = null)
     {
