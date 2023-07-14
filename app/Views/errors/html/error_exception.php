@@ -146,6 +146,12 @@ $errorId = uniqid('error', true);
                         </thead>
                         <tbody>
                         <?php foreach ($GLOBALS[$var] as $key => $value) : ?>
+                            <?php
+                                <!-- Remove $_ENV variables from exposing to the $_SERVER -->
+                                if (in_array($key, array_keys($_ENV))) {
+                                    continue;
+                                }
+                            ?>
                             <tr>
                                 <td><?= esc($key) ?></td>
                                 <td>
