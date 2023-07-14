@@ -122,7 +122,7 @@ The loaded environment variables are accessed using any of the following:
 
 .. literalinclude:: configuration/005.php
 
-.. warning:: Note that your settings from the **.env** file are added to Environment Variables. As a side effect, this means that if your CodeIgniter application is (for example) generating a ``var_dump($_ENV)`` or ``phpinfo()`` (for debugging or other valid reasons) **your secure credentials are publicly exposed**.
+.. warning:: Note that your settings from the **.env** file are added to ``$_SERVER`` and ``$_ENV``. As a side effect, this means that if your CodeIgniter application is (for example) generating a ``var_dump($_ENV)`` or ``phpinfo()`` (for debugging or other valid reasons), or a detailed error report in the ``development`` environment is shown, **your secure credentials are publicly exposed**.
 
 Nesting Variables
 -----------------
