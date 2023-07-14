@@ -45,7 +45,10 @@ the error handler to function as normal, you can throw a new exception within th
 Configuration
 =============
 
-By default, CodeIgniter will display all errors in the ``development`` and ``testing`` environments, and will not
+Error Reporting
+---------------
+
+By default, CodeIgniter will display a detailed error report with all errors in the ``development`` and ``testing`` environments, and will not
 display any errors in the ``production`` environment. You can change this by setting the ``CI_ENVIRONMENT`` variable
 in the **.env** file.
 
