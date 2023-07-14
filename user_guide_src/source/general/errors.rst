@@ -54,6 +54,10 @@ in the **.env** file.
 
 .. important:: Disabling error reporting DOES NOT stop logs from being written if there are errors.
 
+.. warning:: Note that your settings from the **.env** file are added to ``$_SERVER``
+    and ``$_ENV``. As a side effect, this means that if the detailed error report
+    is displayed, **your secure credentials are publicly exposed**.
+
 Logging Exceptions
 ------------------
 
