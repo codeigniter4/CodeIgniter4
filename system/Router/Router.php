@@ -145,7 +145,7 @@ class Router implements RouterInterface
                 );
             } else {
                 $this->autoRouter = new AutoRouter(
-                    $this->collection->getRegisteredControllers('cli'),
+                    $this->collection->getRoutes('cli', false), // @phpstan-ignore-line
                     $this->collection->getDefaultNamespace(),
                     $this->collection->getDefaultController(),
                     $this->collection->getDefaultMethod(),
@@ -393,6 +393,7 @@ class Router implements RouterInterface
      */
     protected function checkRoutes(string $uri): bool
     {
+        // @phpstan-ignore-next-line
         $routes = $this->collection->getRoutes($this->collection->getHTTPVerb());
 
         // Don't waste any time

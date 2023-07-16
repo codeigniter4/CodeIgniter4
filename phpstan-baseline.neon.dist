@@ -197,16 +197,11 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getRegisteredControllers\\(.*\\)\\.$#"
-			count: 2
-			path: system/Router/Router.php
-
-		-
-			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/Router/Router.php
 
 		-
-			message: "#^Method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getRoutes\\(\\) invoked with 1 parameter, 0 required\\.$#"
+			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/Router/Router.php
 
