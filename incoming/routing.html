@@ -824,10 +824,11 @@ define an array of routes and then pass it as the first parameter to the <code c
 <p>It is recommended to use Spark Commands for CLI scripts instead of calling controllers via CLI.
 See the <a class="reference internal" href="../cli/cli_commands.html"><span class="doc">Creating Spark Commands</span></a> page for detailed information.</p>
 </div>
-<p>You can create routes that work only from the command-line, and are inaccessible from the web browser, with the
-<code class="docutils literal notranslate"><span class="pre">cli()</span></code> method. Any route created by any of the HTTP-verb-based
+<p>Any route created by any of the HTTP-verb-based
 route methods will also be inaccessible from the CLI, but routes created by the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method will still be
-available from the command line:</p>
+available from the command line.</p>
+<p>You can create routes that work only from the command-line, and are inaccessible from the web browser, with the
+<code class="docutils literal notranslate"><span class="pre">cli()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">cli</span><span class="p">(</span><span class="s1">&#39;migrate&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Database::migrate&#39;</span><span class="p">);</span>
