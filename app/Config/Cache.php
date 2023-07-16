@@ -95,7 +95,8 @@ class Cache extends BaseConfig
      * A string of reserved characters that will not be allowed in keys or tags.
      * Strings that violate this restriction will cause handlers to throw.
      * Default: {}()/\@:
-     * Note: The default set is required for PSR-6 compliance.
+     *
+     * NOTE: The default set is required for PSR-6 compliance.
      */
     public string $reservedCharacters = '{}()/\@:';
 
