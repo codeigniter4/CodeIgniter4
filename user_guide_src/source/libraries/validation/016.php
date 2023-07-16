@@ -2,9 +2,13 @@
 
 namespace Config;
 
-class Validation
+// ...
+
+class Validation extends BaseConfig
 {
-    public $signup = [
+    // ...
+
+    public array $signup = [
         'username' => [
             'rules'  => 'required|max_length[30]',
             'errors' => [
@@ -18,5 +22,6 @@ class Validation
             ],
         ],
     ];
+
     // ...
 }

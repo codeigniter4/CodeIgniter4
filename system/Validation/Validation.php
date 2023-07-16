@@ -696,7 +696,7 @@ class Validation implements ValidationInterface
      * same format used with setRules(). Additionally, check
      * for {group}_errors for an array of custom error messages.
      *
-     * @return array
+     * @return array<int, array> [rules, customErrors]
      *
      * @throws ValidationException
      */
@@ -724,7 +724,7 @@ class Validation implements ValidationInterface
             $this->customErrors = $this->config->{$errorName};
         }
 
-        return $this->rules;
+        return [$this->rules, $this->customErrors];
     }
 
     /**

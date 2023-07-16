@@ -550,8 +550,10 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * Returns the raw array of available routes.
+     *
+     * @param bool $includeWildcard Whether to include '*' routes.
      */
-    public function getRoutes(?string $verb = null): array
+    public function getRoutes(?string $verb = null, bool $includeWildcard = true): array
     {
         if (empty($verb)) {
             $verb = $this->getHTTPVerb();
@@ -567,7 +569,7 @@ class RouteCollection implements RouteCollectionInterface
         if (isset($this->routes[$verb])) {
             // Keep current verb's routes at the beginning, so they're matched
             // before any of the generic, "add" routes.
-            $collection = $this->routes[$verb] + ($this->routes['*'] ?? []);
+            $collection = $includeWildcard ? $this->routes[$verb] + ($this->routes['*'] ?? []) : $this->routes[$verb];
 
             foreach ($collection as $routeKey => $r) {
                 $routes[$routeKey] = $r['handler'];

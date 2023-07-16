@@ -189,7 +189,7 @@ with the ``new`` command:
 
 .. literalinclude:: modules/008.php
 
-Config files are automatically discovered whenever using the ``config()`` function that is always available.
+Config files are automatically discovered whenever using the :php:func:`config()` function that is always available.
 
 .. note:: We don't recommend you use the same short classname in modules.
     Modules that need to override or add to known configurations in **app/Config/** should use :ref:`registrars`.

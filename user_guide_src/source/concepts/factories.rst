@@ -99,10 +99,12 @@ Convenience Functions
 
 Two shortcut functions for Factories have been provided. These functions are always available.
 
+.. _factories-config:
+
 config()
 ========
 
-The first is ``config()`` which returns a new instance of a Config class. The only required parameter is the class name:
+The first is :php:func:`config()` which returns a new instance of a Config class. The only required parameter is the class name:
 
 .. literalinclude:: factories/008.php
 

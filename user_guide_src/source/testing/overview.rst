@@ -150,7 +150,7 @@ Ensure that a header or cookie was actually emitted:
 .. literalinclude:: overview/009.php
 
 .. note:: the test case with this should be `run as a separate process
-    in PHPunit <https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess>`_.
+    in PHPunit <https://docs.phpunit.de/en/9.6/annotations.html#runinseparateprocess>`_.
 
 assertHeaderNotEmitted($header, $ignoreCase = false)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -160,7 +160,7 @@ Ensure that a header or cookie was not emitted:
 .. literalinclude:: overview/010.php
 
 .. note:: the test case with this should be `run as a separate process
-    in PHPunit <https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess>`_.
+    in PHPunit <https://docs.phpunit.de/en/9.6/annotations.html#runinseparateprocess>`_.
 
 assertCloseEnough($expected, $actual, $message = '', $tolerance = 1)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -113,6 +113,17 @@ final class CellTest extends CIUnitTestCase
         $this->assertSame($expected, $this->cell->render('\Tests\Support\View\SampleClass::hello'));
     }
 
+    public function testDisplayRendersTwoCellsWithSameShortName()
+    {
+        $output = $this->cell->render('\Tests\Support\View\SampleClass::hello');
+
+        $this->assertSame('Hello', $output);
+
+        $output = $this->cell->render('\Tests\Support\View\OtherCells\SampleClass::hello');
+
+        $this->assertSame('Good-bye!', $output);
+    }
+
     public function testDisplayRendersWithValidParamString()
     {
         $params   = 'one=two,three=four';

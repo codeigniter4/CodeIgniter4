@@ -101,26 +101,45 @@ final class NumberHelperTest extends CIUnitTestCase
     public function testThousands()
     {
         $this->assertSame('123 thousand', number_to_amount('123,000', 0, 'en_US'));
+        $this->assertSame('1 thousand', number_to_amount('1000', 0, 'en_US'));
+        $this->assertSame('999 thousand', number_to_amount('999499', 0, 'en_US'));
+        $this->assertSame('1,000 thousand', number_to_amount('999500', 0, 'en_US'));
+        $this->assertSame('1,000 thousand', number_to_amount('999999', 0, 'en_US'));
     }
 
     public function testMillions()
     {
         $this->assertSame('123.4 million', number_to_amount('123,400,000', 1, 'en_US'));
+        $this->assertSame('1 million', number_to_amount('1,000,000', 1, 'en_US'));
+        $this->assertSame('1.5 million', number_to_amount('1,499,999', 1, 'en_US'));
+        $this->assertSame('1.5 million', number_to_amount('1,500,000', 1, 'en_US'));
+        $this->assertSame('1.5 million', number_to_amount('1,549,999', 1, 'en_US'));
+        $this->assertSame('1.6 million', number_to_amount('1,550,000', 1, 'en_US'));
+        $this->assertSame('999.5 million', number_to_amount('999,500,000', 1, 'en_US'));
+        $this->assertSame('1,000 million', number_to_amount('999,500,000', 0, 'en_US'));
+        $this->assertSame('1,000 million', number_to_amount('999,999,999', 1, 'en_US'));
     }
 
     public function testBillions()
     {
         $this->assertSame('123.46 billion', number_to_amount('123,456,000,000', 2, 'en_US'));
+        $this->assertSame('1 billion', number_to_amount('1,000,000,000', 2, 'en_US'));
+        $this->assertSame('1,000 billion', number_to_amount('999,999,999,999', 2, 'en_US'));
     }
 
     public function testTrillions()
     {
         $this->assertSame('123.457 trillion', number_to_amount('123,456,700,000,000', 3, 'en_US'));
+        $this->assertSame('1 trillion', number_to_amount('1,000,000,000,000', 3, 'en_US'));
+        $this->assertSame('1,000 trillion', number_to_amount('999,999,999,999,999', 3, 'en_US'));
     }
 
     public function testQuadrillions()
     {
         $this->assertSame('123.5 quadrillion', number_to_amount('123,456,700,000,000,000', 1, 'en_US'));
+        $this->assertSame('1 quadrillion', number_to_amount('1,000,000,000,000,000', 0, 'en_US'));
+        $this->assertSame('1,000 quadrillion', number_to_amount('999,999,999,999,999,999', 0, 'en_US'));
+        $this->assertSame('1,000 quadrillion', number_to_amount('1,000,000,000,000,000,000', 0, 'en_US'));
     }
 
     public function testCurrencyCurrentLocale()

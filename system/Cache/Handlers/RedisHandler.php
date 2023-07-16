@@ -38,7 +38,7 @@ class RedisHandler extends BaseHandler
     /**
      * Redis connection
      *
-     * @var Redis
+     * @var Redis|null
      */
     protected $redis;
 

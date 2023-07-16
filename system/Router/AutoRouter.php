@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Router;
 
+use Closure;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 /**
@@ -19,11 +20,11 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 final class AutoRouter implements AutoRouterInterface
 {
     /**
-     * List of controllers registered for the CLI verb that should not be accessed in the web.
+     * List of CLI routes that do not contain '*' routes.
      *
-     * @var class-string[]
+     * @var array<string, Closure|string> [routeKey => handler]
      */
-    private array $protectedControllers;
+    private array $cliRoutes;
 
     /**
      * Sub-directory that contains the requested controller class.
@@ -58,17 +59,17 @@ final class AutoRouter implements AutoRouterInterface
     private string $defaultNamespace;
 
     public function __construct(
-        array $protectedControllers,
+        array $cliRoutes,
         string $defaultNamespace,
         string $defaultController,
         string $defaultMethod,
         bool $translateURIDashes,
         string $httpVerb
     ) {
-        $this->protectedControllers = $protectedControllers;
-        $this->defaultNamespace     = $defaultNamespace;
-        $this->translateURIDashes   = $translateURIDashes;
-        $this->httpVerb             = $httpVerb;
+        $this->cliRoutes          = $cliRoutes;
+        $this->defaultNamespace   = $defaultNamespace;
+        $this->translateURIDashes = $translateURIDashes;
+        $this->httpVerb           = $httpVerb;
 
         $this->controller = $defaultController;
         $this->method     = $defaultMethod;
@@ -126,18 +127,31 @@ final class AutoRouter implements AutoRouterInterface
             $controller .= $controllerName;
 
             $controller = strtolower($controller);
+            $methodName = strtolower($this->methodName());
 
-            foreach ($this->protectedControllers as $controllerInRoute) {
-                if (! is_string($controllerInRoute)) {
-                    continue;
-                }
-                if (strtolower($controllerInRoute) !== $controller) {
-                    continue;
-                }
+            foreach ($this->cliRoutes as $handler) {
+                if (is_string($handler)) {
+                    $handler = strtolower($handler);
 
-                throw new PageNotFoundException(
-                    'Cannot access the controller in a CLI Route. Controller: ' . $controllerInRoute
-                );
+                    // Like $routes->cli('hello/(:segment)', 'Home::$1')
+                    if (strpos($handler, '::$') !== false) {
+                        throw new PageNotFoundException(
+                            'Cannot access CLI Route: ' . $uri
+                        );
+                    }
+
+                    if (strpos($handler, $controller . '::' . $methodName) === 0) {
+                        throw new PageNotFoundException(
+                            'Cannot access CLI Route: ' . $uri
+                        );
+                    }
+
+                    if ($handler === $controller) {
+                        throw new PageNotFoundException(
+                            'Cannot access CLI Route: ' . $uri
+                        );
+                    }
+                }
             }
         }
 
