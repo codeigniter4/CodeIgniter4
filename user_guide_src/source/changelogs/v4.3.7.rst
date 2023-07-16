@@ -26,6 +26,10 @@ Message Changes
 Changes
 *******
 
+- The number helper function :php:func:`number_to_amount()`, which previously
+  returned "1000", has been corrected to return "1 thousand" when the number
+  is exactly 1000, for example.
+
 Deprecations
 ************
 

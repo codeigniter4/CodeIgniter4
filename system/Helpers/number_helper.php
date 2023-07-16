@@ -69,7 +69,9 @@ if (! function_exists('number_to_amount')) {
      *
      * @see https://simple.wikipedia.org/wiki/Names_for_large_numbers
      *
-     * @param int|string $num
+     * @param int|string  $num       Will be cast as int
+     * @param int         $precision [optional] The optional number of decimal digits to round to.
+     * @param string|null $locale    [optional]
      *
      * @return bool|string
      */
@@ -91,19 +93,19 @@ if (! function_exists('number_to_amount')) {
             $generalLocale = substr($locale, 0, $underscorePos);
         }
 
-        if ($num > 1_000_000_000_000_000) {
+        if ($num >= 1_000_000_000_000_000) {
             $suffix = lang('Number.quadrillion', [], $generalLocale);
             $num    = round(($num / 1_000_000_000_000_000), $precision);
-        } elseif ($num > 1_000_000_000_000) {
+        } elseif ($num >= 1_000_000_000_000) {
             $suffix = lang('Number.trillion', [], $generalLocale);
             $num    = round(($num / 1_000_000_000_000), $precision);
-        } elseif ($num > 1_000_000_000) {
+        } elseif ($num >= 1_000_000_000) {
             $suffix = lang('Number.billion', [], $generalLocale);
             $num    = round(($num / 1_000_000_000), $precision);
-        } elseif ($num > 1_000_000) {
+        } elseif ($num >= 1_000_000) {
             $suffix = lang('Number.million', [], $generalLocale);
             $num    = round(($num / 1_000_000), $precision);
-        } elseif ($num > 1000) {
+        } elseif ($num >= 1000) {
             $suffix = lang('Number.thousand', [], $generalLocale);
             $num    = round(($num / 1000), $precision);
         }
