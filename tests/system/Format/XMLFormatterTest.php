@@ -115,7 +115,7 @@ final class XMLFormatterTest extends CIUnitTestCase
         $this->assertSame($expectedXML, $this->xmlFormatter->format($input));
     }
 
-    public function invalidTagsProvider()
+    public function invalidTagsProvider(): iterable
     {
         return [
             [

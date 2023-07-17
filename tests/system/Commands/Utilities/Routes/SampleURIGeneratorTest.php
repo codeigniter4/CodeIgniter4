@@ -13,7 +13,6 @@ namespace CodeIgniter\Commands\Utilities\Routes;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
-use Generator;
 
 /**
  * @internal
@@ -34,7 +33,7 @@ final class SampleURIGeneratorTest extends CIUnitTestCase
         $this->assertSame($expected, $uri);
     }
 
-    public function routeKeyProvider(): Generator
+    public function routeKeyProvider(): iterable
     {
         yield from [
             'root'                => ['/', '/'],

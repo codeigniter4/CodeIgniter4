@@ -213,7 +213,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('billions and billions', lang('Core.bazillion', [], 'en'));
     }
 
-    public function MessageBundles()
+    public function MessageBundles(): iterable
     {
         return [
             ['CLI'],

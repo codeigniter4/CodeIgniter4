@@ -13,7 +13,6 @@ namespace CodeIgniter\Validation\StrictRules;
 
 use CodeIgniter\Validation\RulesTest as TraditionalRulesTest;
 use CodeIgniter\Validation\Validation;
-use Generator;
 use Tests\Support\Validation\TestRules;
 
 /**
@@ -51,7 +50,7 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function providePermitEmptyCasesStrict(): Generator
+    public function providePermitEmptyCasesStrict(): iterable
     {
         yield from [
             [
@@ -106,7 +105,7 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideGreaterThanEqualStrict(): Generator
+    public function provideGreaterThanEqualStrict(): iterable
     {
         yield from [
             [0, '0', true],
@@ -132,7 +131,7 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideGreaterThanStrict(): Generator
+    public function provideGreaterThanStrict(): iterable
     {
         yield from [
             [-10, '-11', true],
@@ -159,7 +158,7 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideLessThanStrict(): Generator
+    public function provideLessThanStrict(): iterable
     {
         yield from [
             [-10, '-11', false],
@@ -187,7 +186,7 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideLessThanEqualStrict(): Generator
+    public function provideLessThanEqualStrict(): iterable
     {
         yield from [
             [0, '0', true],

@@ -789,7 +789,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         CITestStreamFilter::removeErrorFilter();
     }
 
-    public function cacheQueryStringProvider(): array
+    public function cacheQueryStringProvider(): iterable
     {
         $testingUrls = [
             'test', // URL #1

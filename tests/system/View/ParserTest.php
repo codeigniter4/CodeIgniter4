@@ -418,7 +418,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame($result, $this->parser->renderString($template));
     }
 
-    public function escValueTypes()
+    public function escValueTypes(): iterable
     {
         return [
             'scalar'     => [42],

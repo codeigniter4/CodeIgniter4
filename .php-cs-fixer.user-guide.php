@@ -29,10 +29,11 @@ $finder = Finder::create()
     ]);
 
 $overrides = [
-    'echo_tag_syntax'             => false,
-    'php_unit_internal_class'     => false,
-    'no_unused_imports'           => false,
-    'class_attributes_separation' => false,
+    'echo_tag_syntax'                    => false,
+    'php_unit_internal_class'            => false,
+    'no_unused_imports'                  => false,
+    'class_attributes_separation'        => false,
+    'php_unit_data_provider_return_type' => true,
 ];
 
 $options = [

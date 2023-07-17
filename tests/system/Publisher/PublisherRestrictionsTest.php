@@ -69,7 +69,7 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
         $this->assertSame($expected, $errors[$file]->getMessage());
     }
 
-    public function fileProvider()
+    public function fileProvider(): iterable
     {
         yield from [
             'php'  => ['index.php'],
@@ -99,7 +99,7 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
         $this->assertInstanceOf(Publisher::class, $publisher);
     }
 
-    public function destinationProvider()
+    public function destinationProvider(): iterable
     {
         return [
             'explicit' => [
