@@ -14,14 +14,13 @@ includes:
 parameters:
 	phpVersion: 80100
 	tmpDir: build/phpstan
-	level: 5
+	level: 6
+	bootstrapFiles:
+		- phpstan-bootstrap.php
 	paths:
 		- app
 		- system
 		- utils/PHPStan
-	treatPhpDocTypesAsCertain: false
-	bootstrapFiles:
-		- phpstan-bootstrap.php
 	excludePaths:
 		- app/Views/errors/cli/*
 		- app/Views/errors/html/*
@@ -38,3 +37,7 @@ parameters:
 		- APP_NAMESPACE
 		- CI_DEBUG
 		- ENVIRONMENT
+	checkMissingIterableValueType: false
+	checkGenericClassInNonGenericObjectType: false
+	checkMissingCallableSignature: true
+	treatPhpDocTypesAsCertain: false
