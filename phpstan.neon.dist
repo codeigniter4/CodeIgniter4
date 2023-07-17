@@ -9,7 +9,7 @@ services:
 			- phpstan.rules.rule
 
 includes:
-	- phpstan-baseline.neon.dist
+	- phpstan-baseline.php
 
 parameters:
 	phpVersion: 80100
