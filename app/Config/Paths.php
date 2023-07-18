@@ -77,17 +77,4 @@ class Paths
      * is used when no value is provided to `Services::renderer()`.
      */
     public string $viewDirectory = __DIR__ . '/../Views';
-
-    public static function __set_state(array $array)
-    {
-        $obj = new self();
-
-        $properties = array_keys(get_object_vars($obj));
-
-        foreach ($properties as $property) {
-            $obj->{$property} = $array[$property];
-        }
-
-        return $obj;
-    }
 }
