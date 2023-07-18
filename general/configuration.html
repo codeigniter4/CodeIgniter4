@@ -441,7 +441,7 @@ overwritten.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Note that your settings from the <strong>.env</strong> file are added to Environment Variables. As a side effect, this means that if your CodeIgniter application is (for example) generating a <code class="docutils literal notranslate"><span class="pre">var_dump($_ENV)</span></code> or <code class="docutils literal notranslate"><span class="pre">phpinfo()</span></code> (for debugging or other valid reasons) <strong>your secure credentials are publicly exposed</strong>.</p>
+<p>Note that your settings from the <strong>.env</strong> file are added to <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> and <code class="docutils literal notranslate"><span class="pre">$_ENV</span></code>. As a side effect, this means that if your CodeIgniter application is (for example) generating a <code class="docutils literal notranslate"><span class="pre">var_dump($_ENV)</span></code> or <code class="docutils literal notranslate"><span class="pre">phpinfo()</span></code> (for debugging or other valid reasons), or a detailed error report in the <code class="docutils literal notranslate"><span class="pre">development</span></code> environment is shown, <strong>your secure credentials are publicly exposed</strong>.</p>
 </div>
 </section>
 <section id="nesting-variables">
