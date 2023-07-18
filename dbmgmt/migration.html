@@ -286,9 +286,9 @@ but you would then be responsible for telling other developers that they
 need to go and run them. You would also have to keep track of which changes
 need to be run against the production machines next time you deploy.</p>
 <p>The database table <strong>migrations</strong> tracks which migrations have already been
-run so all you have to do is make sure your migrations are in place and
-call <code class="docutils literal notranslate"><span class="pre">$migration-&gt;latest()</span></code> to bring the database up to the most recent
-state. You can also use <code class="docutils literal notranslate"><span class="pre">$migration-&gt;setNamespace(null)-&gt;latest()</span></code> to
+run, so all you have to do is make sure your migrations are in place and
+run the <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">migrate</span></code> command to bring the database up to the most recent
+state. You can also use <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">migrate</span> <span class="pre">--all</span></code> to
 include migrations from all namespaces.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -300,18 +300,17 @@ include migrations from all namespaces.</p>
 <li><p><a class="reference internal" href="#namespaces" id="id6">Namespaces</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#usage-example" id="id7">Usage Example</a></p></li>
-<li><p><a class="reference internal" href="#command-line-tools" id="id8">Command-Line Tools</a></p>
+<li><p><a class="reference internal" href="#command-line-tools" id="id7">Command-Line Tools</a></p>
 <ul>
-<li><p><a class="reference internal" href="#migrate" id="id9">migrate</a></p></li>
-<li><p><a class="reference internal" href="#rollback" id="id10">rollback</a></p></li>
-<li><p><a class="reference internal" href="#refresh" id="id11">refresh</a></p></li>
-<li><p><a class="reference internal" href="#status" id="id12">status</a></p></li>
-<li><p><a class="reference internal" href="#make-migration" id="id13">make:migration</a></p></li>
+<li><p><a class="reference internal" href="#migrate" id="id8">migrate</a></p></li>
+<li><p><a class="reference internal" href="#rollback" id="id9">rollback</a></p></li>
+<li><p><a class="reference internal" href="#refresh" id="id10">refresh</a></p></li>
+<li><p><a class="reference internal" href="#status" id="id11">status</a></p></li>
+<li><p><a class="reference internal" href="#make-migration" id="id12">make:migration</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#migration-preferences" id="id14">Migration Preferences</a></p></li>
-<li><p><a class="reference internal" href="#namespace-CodeIgniter\Database" id="id15">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#migration-preferences" id="id13">Migration Preferences</a></p></li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\Database" id="id14">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="migration-file-names">
@@ -458,40 +457,13 @@ configuration file:</p>
 re-usable, modular code suites.</p>
 </section>
 </section>
-<section id="usage-example">
-<h2><a class="toc-backref" href="#id7">Usage Example</a><a class="headerlink" href="#usage-example" title="Permalink to this headline"></a></h2>
-<p>In this example some simple code is placed in <strong>app/Controllers/Migrate.php</strong>
-to update the schema:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
-
-<span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Throwable</span><span class="p">;</span>
-
-<span class="k">class</span> <span class="nc">Migrate</span> <span class="k">extends</span> <span class="nx">Controller</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="nv">$migrate</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">migrations</span><span class="p">();</span>
-
-        <span class="k">try</span> <span class="p">{</span>
-            <span class="nv">$migrate</span><span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
-        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">Throwable</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// Do something with the error here...</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</section>
 <section id="command-line-tools">
-<span id="id1"></span><h2><a class="toc-backref" href="#id8">Command-Line Tools</a><a class="headerlink" href="#command-line-tools" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id7">Command-Line Tools</a><a class="headerlink" href="#command-line-tools" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter ships with several <a class="reference internal" href="../cli/spark_commands.html"><span class="doc">commands</span></a> that are available from the command line to help
-you work with migrations. These tools are not required to use migrations but might make things easier for those of you
+you work with migrations. These tools make things easier for those of you
 that wish to use them. The tools primarily provide access to the same methods that are available within the MigrationRunner class.</p>
 <section id="migrate">
-<h3><a class="toc-backref" href="#id9">migrate</a><a class="headerlink" href="#migrate" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">migrate</a><a class="headerlink" href="#migrate" title="Permalink to this headline"></a></h3>
 <p>Migrates a database group with all available migrations:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span>
 </pre></div>
@@ -515,7 +487,7 @@ not been run. These will all be collected and then sorted as a group by date cre
 to minimize any potential conflicts between the main application and any modules.</p>
 </section>
 <section id="rollback">
-<h3><a class="toc-backref" href="#id10">rollback</a><a class="headerlink" href="#rollback" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">rollback</a><a class="headerlink" href="#rollback" title="Permalink to this headline"></a></h3>
 <p>Rolls back all migrations, taking the database group to a blank slate, effectively migration 0:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span><span class="o">:</span><span class="nx">rollback</span>
 </pre></div>
@@ -528,7 +500,7 @@ to minimize any potential conflicts between the main application and any modules
 </ul>
 </section>
 <section id="refresh">
-<h3><a class="toc-backref" href="#id11">refresh</a><a class="headerlink" href="#refresh" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">refresh</a><a class="headerlink" href="#refresh" title="Permalink to this headline"></a></h3>
 <p>Refreshes the database state by first rolling back all migrations, and then migrating all:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span><span class="o">:</span><span class="nx">refresh</span>
 </pre></div>
@@ -542,9 +514,12 @@ to minimize any potential conflicts between the main application and any modules
 </ul>
 </section>
 <section id="status">
-<h3><a class="toc-backref" href="#id12">status</a><a class="headerlink" href="#status" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11">status</a><a class="headerlink" href="#status" title="Permalink to this headline"></a></h3>
 <p>Displays a list of all migrations and the date and time they ran, or ‘–’ if they have not been run:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span><span class="o">:</span><span class="nx">status</span>
+
+<span class="o">...</span>
+
 <span class="o">+----------------------+-------------------+-----------------------+---------+---------------------+-------+</span>
 <span class="o">|</span> <span class="k">Namespace</span>            <span class="o">|</span> <span class="nx">Version</span>           <span class="o">|</span> <span class="nx">Filename</span>              <span class="o">|</span> <span class="nx">Group</span>   <span class="o">|</span> <span class="nx">Migrated</span> <span class="nx">On</span>         <span class="o">|</span> <span class="nx">Batch</span> <span class="o">|</span>
 <span class="o">+----------------------+-------------------+-----------------------+---------+---------------------+-------+</span>
@@ -560,25 +535,29 @@ to minimize any potential conflicts between the main application and any modules
 </ul>
 </section>
 <section id="make-migration">
-<h3><a class="toc-backref" href="#id13">make:migration</a><a class="headerlink" href="#make-migration" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">make:migration</a><a class="headerlink" href="#make-migration" title="Permalink to this headline"></a></h3>
 <p>Creates a skeleton migration file in <strong>app/Database/Migrations</strong>.
 It automatically prepends the current timestamp. The class name it
 creates is the Pascal case version of the filename.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">migration</span> <span class="o">&lt;</span><span class="nx">class</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>You can use (make:migration) with the following options:</p>
+<p>You can use (<code class="docutils literal notranslate"><span class="pre">make:migration</span></code>) with the following options:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code> - Set root namespace. Default: <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>    - Append the component title to the class name.</p></li>
+</ul>
+<p>The following options are also available to generate the migration file for
+database sessions:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--session</span></code>   - Generates the migration file for database sessions.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--table</span></code>     - Table name to use for database sessions. Default: <code class="docutils literal notranslate"><span class="pre">ci_sessions</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--dbgroup</span></code>   - Database group to use for database sessions. Default: <code class="docutils literal notranslate"><span class="pre">default</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code> - Set root namespace. Default: <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>    - Append the component title to the class name.</p></li>
 </ul>
 </section>
 </section>
 <section id="migration-preferences">
-<h2><a class="toc-backref" href="#id14">Migration Preferences</a><a class="headerlink" href="#migration-preferences" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id13">Migration Preferences</a><a class="headerlink" href="#migration-preferences" title="Permalink to this headline"></a></h2>
 <p>The following is a table of all the config options for migrations, available in <strong>app/Config/Migrations.php</strong>.</p>
 <table class="docutils align-default">
 <colgroup>
@@ -614,7 +593,7 @@ creates is the Pascal case version of the filename.</p>
 </table>
 </section>
 <section id="namespace-CodeIgniter\Database">
-<span id="class-reference"></span><h2><a class="toc-backref" href="#id15">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Database" title="Permalink to this headline"></a></h2>
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id14">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Database" title="Permalink to this headline"></a></h2>
 <dl class="php class">
 <dt class="sig sig-object php" id="CodeIgniter\Database\MigrationRunner">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\Database\</span></span><span class="sig-name descname"><span class="pre">MigrationRunner</span></span><a class="headerlink" href="#CodeIgniter\Database\MigrationRunner" title="Permalink to this definition"></a></dt>
@@ -629,7 +608,7 @@ creates is the Pascal case version of the filename.</p>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
 </dd>
 </dl>
-<p>An array of migration filenames are returned that are found in the <strong>path</strong> property.</p>
+<p>An array of migration filenames are returned that are found in the <code class="docutils literal notranslate"><span class="pre">path</span></code> property.</p>
 </dd></dl>
 
 <dl class="php method">
@@ -696,7 +675,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
-<p>This forces a single file to migrate regardless of order or batches. Method “up” or “down” is detected based on whether it has already been migrated.</p>
+<p>This forces a single file to migrate regardless of order or batches. Method <code class="docutils literal notranslate"><span class="pre">up()</span></code> or <code class="docutils literal notranslate"><span class="pre">down()</span></code> is detected based on whether it has already been migrated.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This method is recommended only for testing and could cause data consistency issues.</p>
@@ -772,7 +751,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 16, 2023.
+      <span class="lastupdated">Last updated on Jul 18, 2023.
       </span></p>
   </div>
 
