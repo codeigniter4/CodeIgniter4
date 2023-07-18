@@ -44,6 +44,8 @@ class FileHandler extends BaseHandler
     protected $mode;
 
     /**
+     * Note: Use `CacheFactory::getHandler()` to instantiate.
+     *
      * @throws CacheException
      */
     public function __construct(Cache $config)
