@@ -10,6 +10,7 @@
          columns="max"
          failOnRisky="true"
          failOnWarning="true"
+         executionOrder="random"
          verbose="true">
 
     <coverage cacheDirectory="build/.phpunit.cache/code-coverage"
