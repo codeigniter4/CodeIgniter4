@@ -198,7 +198,7 @@ jobs:
           GROUP_OPTION: ${{ inputs.group-name && format('--group {0}', inputs.group-name) || '' }}
 
       - name: Run tests
-        run: script -e -c "vendor/bin/phpunit --color=always ${{ env.EXTRA_PHPUNIT_OPTIONS }}"
+        run: script -e -c "vendor/bin/phpunit --color=always ${{ env.EXTRA_PHPUNIT_OPTIONS }} --testdox-text php://stdout"
         env:
           DB: ${{ inputs.db-platform }}
           TACHYCARDIA_MONITOR_GA: ${{ inputs.enable-profiling && 'enabled' || '' }}
