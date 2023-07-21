@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Debug;
 
+use App\Controllers\Home;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\Exceptions\ConfigException;
@@ -157,7 +158,7 @@ final class ExceptionsTest extends CIUnitTestCase
                 'file'     => '/var/www/CodeIgniter4/app/Controllers/Home.php',
                 'line'     => 15,
                 'function' => 'f',
-                'class'    => 'App\\Controllers\\Home',
+                'class'    => Home::class,
                 'type'     => '->',
                 'args'     => [
                     0 => (object) [
@@ -180,7 +181,7 @@ final class ExceptionsTest extends CIUnitTestCase
                 'file'     => '/var/www/CodeIgniter4/system/CodeIgniter.php',
                 'line'     => 932,
                 'function' => 'index',
-                'class'    => 'App\\Controllers\\Home',
+                'class'    => Home::class,
                 'type'     => '->',
                 'args'     => [
                 ],
@@ -206,7 +207,7 @@ final class ExceptionsTest extends CIUnitTestCase
                 'file'     => '/var/www/CodeIgniter4/app/Controllers/Home.php',
                 'line'     => 15,
                 'function' => 'f',
-                'class'    => 'App\\Controllers\\Home',
+                'class'    => Home::class,
                 'type'     => '->',
                 'args'     => [
                 ],
@@ -215,7 +216,7 @@ final class ExceptionsTest extends CIUnitTestCase
                 'file'     => '/var/www/CodeIgniter4/system/CodeIgniter.php',
                 'line'     => 932,
                 'function' => 'index',
-                'class'    => 'App\\Controllers\\Home',
+                'class'    => Home::class,
                 'type'     => '->',
                 'args'     => [
                 ],
