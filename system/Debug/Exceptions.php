@@ -293,7 +293,7 @@ class Exceptions
         $trace = $exception->getTrace();
 
         if ($this->config->sensitiveDataInTrace !== []) {
-            $this->maskSensitiveData($trace, $this->config->sensitiveDataInTrace);
+            $trace = $this->maskSensitiveData($trace, $this->config->sensitiveDataInTrace);
         }
 
         return [
@@ -311,8 +311,10 @@ class Exceptions
      * Mask sensitive data in the trace.
      *
      * @param array|object $trace
+     *
+     * @return array|object
      */
-    protected function maskSensitiveData(&$trace, array $keysToMask, string $path = '')
+    protected function maskSensitiveData($trace, array $keysToMask, string $path = '')
     {
         foreach ($keysToMask as $keyToMask) {
             $explode = explode('/', $keyToMask);
@@ -327,15 +329,17 @@ class Exceptions
             }
         }
 
-        if (is_object($trace)) {
-            $trace = get_object_vars($trace);
-        }
-
         if (is_array($trace)) {
             foreach ($trace as $pathKey => $subarray) {
-                $this->maskSensitiveData($subarray, $keysToMask, $path . '/' . $pathKey);
+                $trace[$pathKey] = $this->maskSensitiveData($subarray, $keysToMask, $path . '/' . $pathKey);
+            }
+        } elseif (is_object($trace)) {
+            foreach ($trace as $pathKey => $subarray) {
+                $trace->{$pathKey} = $this->maskSensitiveData($subarray, $keysToMask, $path . '/' . $pathKey);
             }
         }
+
+        return $trace;
     }
 
     /**
