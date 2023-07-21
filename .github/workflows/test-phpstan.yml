@@ -12,7 +12,8 @@ on:
       - 'system/**.php'
       - 'utils/**.php'
       - composer.json
-      - '**.neon.dist'
+      - phpstan.neon.dist
+      - phpstan-baseline.php
       - '.github/workflows/test-phpstan.yml'
 
   push:
@@ -24,7 +25,8 @@ on:
       - 'system/**.php'
       - 'utils/**.php'
       - composer.json
-      - '**.neon.dist'
+      - phpstan.neon.dist
+      - phpstan-baseline.php
       - '.github/workflows/test-phpstan.yml'
 
 concurrency:
