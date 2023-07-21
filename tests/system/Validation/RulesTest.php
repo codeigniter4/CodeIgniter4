@@ -13,7 +13,6 @@ namespace CodeIgniter\Validation;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
-use Generator;
 use stdClass;
 use Tests\Support\Validation\TestRules;
 
@@ -61,7 +60,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideRequiredCases(): Generator
+    public function provideRequiredCases(): iterable
     {
         yield from [
             [['foo' => null], false],
@@ -82,7 +81,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function ifExistProvider(): Generator
+    public function ifExistProvider(): iterable
     {
         yield from [
             [
@@ -135,7 +134,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function providePermitEmptyCases(): Generator
+    public function providePermitEmptyCases(): iterable
     {
         yield from [
             // If the rule is only `permit_empty`, any value will pass.
@@ -299,7 +298,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideMatchesCases(): Generator
+    public function provideMatchesCases(): iterable
     {
         yield from [
             [['foo' => null, 'bar' => null], true],
@@ -317,7 +316,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideMatchesNestedCases(): Generator
+    public function provideMatchesNestedCases(): iterable
     {
         yield from [
             [['nested' => ['foo' => 'match', 'bar' => 'match']], true],
@@ -352,7 +351,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideEqualsCases(): Generator
+    public function provideEqualsCases(): iterable
     {
         yield from [
             'null'   => [['foo' => null], '', false],
@@ -372,7 +371,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run(['foo' => $data]));
     }
 
-    public function provideMinLengthCases(): Generator
+    public function provideMinLengthCases(): iterable
     {
         yield from [
             'null'    => [null, '2', false],
@@ -406,7 +405,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run(['foo' => $data]));
     }
 
-    public function provideExactLengthCases(): Generator
+    public function provideExactLengthCases(): iterable
     {
         yield from [
             'null'    => [null, false],
@@ -433,7 +432,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function greaterThanProvider(): Generator
+    public function greaterThanProvider(): iterable
     {
         yield from [
             ['-10', '-11', true],
@@ -458,7 +457,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function greaterThanEqualProvider(): Generator
+    public function greaterThanEqualProvider(): iterable
     {
         yield from [
             ['0', '0', true],
@@ -484,7 +483,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function lessThanProvider(): Generator
+    public function lessThanProvider(): iterable
     {
         yield from [
             ['-10', '-11', false],
@@ -510,7 +509,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function lessThanEqualProvider(): Generator
+    public function lessThanEqualProvider(): iterable
     {
         yield from [
             ['0', '0', true],
@@ -546,7 +545,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame(! $expected, $this->validation->run($data));
     }
 
-    public function inListProvider(): Generator
+    public function inListProvider(): iterable
     {
         yield from [
             ['red', 'red,Blue,123', true],
@@ -582,7 +581,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function requiredWithProvider(): Generator
+    public function requiredWithProvider(): iterable
     {
         yield from [
             ['nope', 'bar', false],
@@ -630,7 +629,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    public function RequiredWithAndOtherRulesProvider(): Generator
+    public function RequiredWithAndOtherRulesProvider(): iterable
     {
         yield from [
             // `otherField` and `mustBeADate` do not exist
@@ -667,7 +666,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    public function RequiredWithAndOtherRuleWithValueZeroProvider(): Generator
+    public function RequiredWithAndOtherRuleWithValueZeroProvider(): iterable
     {
         yield from [
             [true, ['married' => '0', 'partner_name' => '']],
@@ -697,7 +696,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function requiredWithoutProvider(): Generator
+    public function requiredWithoutProvider(): iterable
     {
         yield from [
             ['nope', 'bars', false],
@@ -743,7 +742,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($result, $this->validation->run($data));
     }
 
-    public function requiredWithoutMultipleProvider(): Generator
+    public function requiredWithoutMultipleProvider(): iterable
     {
         yield from [
             'all empty' => [
@@ -789,7 +788,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($result, $this->validation->run($data));
     }
 
-    public function requiredWithoutMultipleWithoutFieldsProvider(): Generator
+    public function requiredWithoutMultipleWithoutFieldsProvider(): iterable
     {
         yield from [
             'baz is missing' => [

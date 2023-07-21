@@ -94,7 +94,7 @@ Service Accessors
     If $data is a string, then it simply escapes and returns it.
     If $data is an array, then it loops over it, escaping each 'value' of the key/value pairs.
 
-    Valid context values: html, js, css, url, attr, raw
+    Valid context values: ``html``, ``js``, ``css``, ``url``, ``attr``, ``raw``
 
 .. php:function:: helper($filename)
 
@@ -132,10 +132,10 @@ Service Accessors
 .. php:function:: old($key[, $default = null,[, $escape = 'html']])
 
     :param string $key: The name of the old form data to check for.
-    :param mixed  $default: The default value to return if $key doesn't exist.
-    :param mixed  $escape: An `escape <#esc>`_ context or false to disable it.
+    :param string|null  $default: The default value to return if $key doesn't exist.
+    :param false|string  $escape: An `escape <#esc>`_ context or false to disable it.
     :returns: The value of the defined key, or the default value.
-    :rtype: mixed
+    :rtype: array|string|null
 
     Provides a simple way to access "old input data" from submitting a form.
 
@@ -143,8 +143,10 @@ Service Accessors
 
     .. literalinclude:: common_functions/002.php
 
-.. note:: If you are using the :doc:`form helper </helpers/form_helper>`, this feature is built-in. You only
-        need to use this function when not using the form helper.
+.. note:: If you are using the :php:func:`set_value()`, :php:func:`set_select()`,
+    :php:func:`set_checkbox()`, and :php:func:`set_radio()` functions in
+    :doc:`form helper </helpers/form_helper>`, this feature is built-in. You only
+    need to use this function when not using the form helper.
 
 .. php:function:: session([$key])
 

@@ -18,7 +18,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Services;
-use Generator;
 use PHPUnit\Framework\ExpectationFailedException;
 use Tests\Support\Validation\TestRules;
 use TypeError;
@@ -344,7 +343,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function arrayDataProvider(): Generator
+    public function arrayDataProvider(): iterable
     {
         yield 'list array' => [
             [1, 2, 3, 4, 5],
@@ -396,7 +395,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function isIntInvalidTypeDataProvider(): Generator
+    public function isIntInvalidTypeDataProvider(): iterable
     {
         yield 'array with int' => [
             [555],
@@ -635,7 +634,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->getError('foo'));
     }
 
-    public function rulesSetupProvider(): Generator
+    public function rulesSetupProvider(): iterable
     {
         yield from [
             [
@@ -987,7 +986,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($results, $this->validation->getErrors());
     }
 
-    public function arrayFieldDataProvider(): Generator
+    public function arrayFieldDataProvider(): iterable
     {
         yield from [
             'all_rules_should_pass' => [
@@ -1223,7 +1222,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function dotNotationForIfExistProvider(): Generator
+    public function dotNotationForIfExistProvider(): iterable
     {
         yield 'dot-on-end-fail' => [
             false,

@@ -13,7 +13,6 @@ namespace CodeIgniter\Database;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
-use Generator;
 
 /**
  * @internal
@@ -209,7 +208,7 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame($expected, $this->getPrivateProperty($conn, 'DSN'));
     }
 
-    public function convertDSNProvider(): Generator
+    public function convertDSNProvider(): iterable
     {
         yield from [
             [

@@ -16,7 +16,6 @@ use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
 use Config\Routing;
-use Generator;
 
 /**
  * @internal
@@ -122,7 +121,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $this->assertSame('/en/contact', $routes->reverseRoute('myController::goto'));
     }
 
-    public function reverseRoutingHandlerProvider(): Generator
+    public function reverseRoutingHandlerProvider(): iterable
     {
         return yield from [
             'Omit namespace'                  => ['Galleries::showUserGallery'],

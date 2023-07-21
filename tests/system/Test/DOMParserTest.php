@@ -79,7 +79,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertSame(['href' => 'http://example.com'], $selector['attr']);
     }
 
-    public function provideText()
+    public function provideText(): iterable
     {
         return [
             'en' => ['Hello World'],

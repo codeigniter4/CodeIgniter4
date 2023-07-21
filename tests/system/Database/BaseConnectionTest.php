@@ -14,7 +14,6 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
-use Generator;
 use Throwable;
 
 /**
@@ -184,7 +183,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertSame($expected, $return);
     }
 
-    public function identifiersProvider(): Generator
+    public function identifiersProvider(): iterable
     {
         yield from [
             // $prefixSingle, $protectIdentifiers, $fieldExists, $item, $expected

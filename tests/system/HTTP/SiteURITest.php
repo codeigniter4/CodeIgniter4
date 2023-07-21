@@ -60,12 +60,12 @@ final class SiteURITest extends CIUnitTestCase
         $this->assertSame($expectedTotalSegments, $uri->getTotalSegments());
     }
 
-    public function provideConstructor()
+    public function provideConstructor(): iterable
     {
         return array_merge($this->provideURIs(), $this->provideRelativePathWithQueryOrFragment());
     }
 
-    public function provideURIs()
+    public function provideURIs(): iterable
     {
         return [
             '' => [
