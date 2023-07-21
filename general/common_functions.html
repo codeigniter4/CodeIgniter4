@@ -445,7 +445,7 @@ settings, API keys, etc.</p>
 This uses the Laminas Escaper library to handle the actual filtering of the data.</p>
 <p>If $data is a string, then it simply escapes and returns it.
 If $data is an array, then it loops over it, escaping each ‘value’ of the key/value pairs.</p>
-<p>Valid context values: html, js, css, url, attr, raw</p>
+<p>Valid context values: <code class="docutils literal notranslate"><span class="pre">html</span></code>, <code class="docutils literal notranslate"><span class="pre">js</span></code>, <code class="docutils literal notranslate"><span class="pre">css</span></code>, <code class="docutils literal notranslate"><span class="pre">url</span></code>, <code class="docutils literal notranslate"><span class="pre">attr</span></code>, <code class="docutils literal notranslate"><span class="pre">raw</span></code></p>
 </dd></dl>
 
 <dl class="php function">
@@ -509,15 +509,15 @@ See <a class="reference internal" href="../concepts/factories.html#factories-loa
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the old form data to check for.</p></li>
-<li><p><strong>$default</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – The default value to return if $key doesn’t exist.</p></li>
-<li><p><strong>$escape</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – An <a class="reference external" href="#esc">escape</a> context or false to disable it.</p></li>
+<li><p><strong>$default</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – The default value to return if $key doesn’t exist.</p></li>
+<li><p><strong>$escape</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">false|string</span></code></span>) – An <a class="reference external" href="#esc">escape</a> context or false to disable it.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The value of the defined key, or the default value.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string|null</span></code></span></p>
 </dd>
 </dl>
 <p>Provides a simple way to access “old input data” from submitting a form.</p>
@@ -526,8 +526,7 @@ See <a class="reference internal" href="../concepts/factories.html#factories-loa
 
 <span class="c1">// in controller, checking form submittal</span>
 <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$user</span><span class="p">))</span> <span class="p">{</span>
-    <span class="c1">// &#39;withInput&#39; is what specifies &quot;old data&quot;</span>
-    <span class="c1">// should be saved.</span>
+    <span class="c1">// &#39;withInput()&#39; is what specifies &quot;old data&quot; should be saved.</span>
     <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">withInput</span><span class="p">();</span>
 <span class="p">}</span>
 
@@ -544,7 +543,9 @@ See <a class="reference internal" href="../concepts/factories.html#factories-loa
 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you are using the <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form helper</span></a>, this feature is built-in. You only
+<p>If you are using the <a class="reference internal" href="../helpers/form_helper.html#set_value" title="set_value"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_value()</span></code></a>, <a class="reference internal" href="../helpers/form_helper.html#set_select" title="set_select"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_select()</span></code></a>,
+<a class="reference internal" href="../helpers/form_helper.html#set_checkbox" title="set_checkbox"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_checkbox()</span></code></a>, and <a class="reference internal" href="../helpers/form_helper.html#set_radio" title="set_radio"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_radio()</span></code></a> functions in
+<a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form helper</span></a>, this feature is built-in. You only
 need to use this function when not using the form helper.</p>
 </div>
 <dl class="php function">
@@ -1270,7 +1271,7 @@ instance every time.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 18, 2023.
+      <span class="lastupdated">Last updated on Jul 21, 2023.
       </span></p>
   </div>
 
