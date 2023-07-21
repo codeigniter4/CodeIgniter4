@@ -260,7 +260,7 @@ class Validation implements ValidationInterface
 
             // If it's a callable, call and get out of here.
             if ($this->isClosure($rule)) {
-                $passed = $rule($value, $data, $error, $field);
+                $passed = $rule($value, $data, $error, $field, $label);
             } elseif ($isCallable) {
                 $passed = $param === false ? $rule($value) : $rule($value, $param, $data);
             } else {
@@ -275,7 +275,7 @@ class Validation implements ValidationInterface
                     $found  = true;
                     $passed = $param === false
                         ? $set->{$rule}($value, $error)
-                        : $set->{$rule}($value, $param, $data, $error, $field);
+                        : $set->{$rule}($value, $param, $data, $error, $field, $label);
 
                     break;
                 }
