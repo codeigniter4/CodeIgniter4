@@ -17,6 +17,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/app/Config/Kint.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Property Config\\\\Routing\\:\\:\\$override404 has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/app/Config/Routing.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method App\\\\Controllers\\\\BaseController\\:\\:initController\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/app/Controllers/BaseController.php',
@@ -532,6 +537,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/Publisher.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Config\\\\Routing\\:\\:\\$override404 has no type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/Routing.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$filters has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/View.php',
@@ -912,6 +922,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Seeder.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Debug\\\\BaseExceptionHandler\\:\\:maskSensitiveData\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Debug/BaseExceptionHandler.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Debug\\\\Exceptions\\:\\:exceptionHandler\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Debug/Exceptions.php',
@@ -1148,6 +1163,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Exceptions\\\\FrameworkException\\:\\:forFabricatorCreateFailed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Exceptions/FrameworkException.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Exceptions\\\\FrameworkException\\:\\:forInvalidDirectory\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Exceptions/FrameworkException.php',
 ];
@@ -1407,6 +1427,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/Response.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HTTP\\\\SiteURI\\:\\:applyParts\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HTTP/SiteURI.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URI\\:\\:applyParts\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/URI.php',
@@ -1510,6 +1535,11 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Honeypot\\:\\:hasContent\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Honeypot/Honeypot.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\HotReloader\\\\HotReloader\\:\\:run\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HotReloader/HotReloader.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\I18n\\\\Time\\:\\:setTestNow\\(\\) has no return type specified\\.$#',
@@ -1730,6 +1760,11 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Router\\\\AutoRouter\\:\\:\\$cliRoutes type has no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/AutoRouter.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouterImproved\\:\\:createSegments\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Router/AutoRouterImproved.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollection\\:\\:add\\(\\) has parameter \\$to with no signature specified for Closure\\.$#',
