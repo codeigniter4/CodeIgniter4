@@ -57,6 +57,8 @@
         "ext-sqlsrv": "If you use SQL Server",
         "ext-xdebug": "If you use CIUnitTestCase::assertHeaderEmitted()"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "CodeIgniter\\": "system/"
