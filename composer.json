@@ -20,7 +20,7 @@
         "nexusphp/cs-config": "^3.6",
         "nexusphp/tachycardia": "^1.0",
         "php-coveralls/php-coveralls": "^2.5",
-        "phpstan/phpstan": "^1.7.1",
+        "phpstan/phpstan": "^1.10.2",
         "phpunit/phpcov": "^8.2",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1 || ^2.0",
