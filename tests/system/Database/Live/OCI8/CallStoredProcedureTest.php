@@ -51,7 +51,6 @@ final class CallStoredProcedureTest extends CIUnitTestCase
                 'name'  => ':output',
                 'value' => &$result,
             ],
-
         ]);
 
         $this->assertSame($result, '7');
@@ -74,7 +73,6 @@ final class CallStoredProcedureTest extends CIUnitTestCase
                 'name'  => ':output',
                 'value' => &$result,
             ],
-
         ]);
 
         $this->assertSame($result, '7');
@@ -90,7 +88,6 @@ final class CallStoredProcedureTest extends CIUnitTestCase
                 'type'  => OCI_B_CURSOR,
                 'value' => &$result,
             ],
-
         ]);
 
         oci_execute($result);

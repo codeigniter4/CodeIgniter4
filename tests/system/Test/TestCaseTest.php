@@ -14,7 +14,6 @@ namespace CodeIgniter\Test;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\Response;
-
 use Config\App;
 
 /**
