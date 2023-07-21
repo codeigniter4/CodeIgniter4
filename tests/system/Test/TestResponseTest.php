@@ -46,7 +46,7 @@ final class TestResponseTest extends CIUnitTestCase
     /**
      * Provides status codes and their expected "OK"
      */
-    public function statusCodeProvider(): array
+    public function statusCodeProvider(): iterable
     {
         return [
             [

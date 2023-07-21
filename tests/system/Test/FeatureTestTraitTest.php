@@ -284,7 +284,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->get('0');
     }
 
-    public function provideRoutesData()
+    public function provideRoutesData(): iterable
     {
         return [
             'non parameterized cli' => [

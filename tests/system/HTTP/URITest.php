@@ -136,7 +136,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expectedPath, $uri->getPath());
     }
 
-    public function provideURLs(): array
+    public function provideURLs(): iterable
     {
         return [
             '' => [
@@ -375,7 +375,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expectedPath, $uri->getPath());
     }
 
-    public function providePaths(): array
+    public function providePaths(): iterable
     {
         return [
             '' => [
@@ -431,7 +431,7 @@ final class URITest extends CIUnitTestCase
         ];
     }
 
-    public function invalidPaths()
+    public function invalidPaths(): iterable
     {
         return [
             'dot-segment' => [
@@ -555,7 +555,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('', $uri->getQuery());
     }
 
-    public function authorityInfo()
+    public function authorityInfo(): iterable
     {
         return [
             'host-only' => [
@@ -590,7 +590,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, $uri->getAuthority());
     }
 
-    public function defaultPorts()
+    public function defaultPorts(): iterable
     {
         return [
             'http' => [
@@ -629,7 +629,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($authority, $uri->getAuthority());
     }
 
-    public function defaultDots()
+    public function defaultDots(): iterable
     {
         return [
             [
@@ -738,7 +738,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, URI::removeDotSegments($path));
     }
 
-    public function defaultResolutions()
+    public function defaultResolutions(): iterable
     {
         return [
             [

@@ -29,7 +29,9 @@ $finder = Finder::create()
         __DIR__ . '/admin/starter/builds',
     ]);
 
-$overrides = [];
+$overrides = [
+    'php_unit_data_provider_return_type' => true,
+];
 
 $options = [
     'cacheFile' => 'build/.php-cs-fixer.no-header.cache',

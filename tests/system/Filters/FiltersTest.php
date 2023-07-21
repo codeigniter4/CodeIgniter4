@@ -208,7 +208,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize()->getFilters());
     }
 
-    public function provideExcept()
+    public function provideExcept(): iterable
     {
         return [
             [

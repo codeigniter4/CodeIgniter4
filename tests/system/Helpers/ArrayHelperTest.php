@@ -320,7 +320,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         array_sort_by_multiple_keys($data, $sortColumns);
     }
 
-    public static function deepSearchProvider()
+    public static function deepSearchProvider(): iterable
     {
         return [
             [
@@ -346,7 +346,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
     }
 
-    public static function sortByMultipleKeysProvider()
+    public static function sortByMultipleKeysProvider(): iterable
     {
         $seed = [
             0 => [

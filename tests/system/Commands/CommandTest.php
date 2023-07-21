@@ -138,7 +138,7 @@ final class CommandTest extends CIUnitTestCase
         $this->assertSame($expected, ParamsReveal::$args);
     }
 
-    public function commandArgsProvider(): array
+    public function commandArgsProvider(): iterable
     {
         return [
             [

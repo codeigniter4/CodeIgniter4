@@ -17,7 +17,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use DateTime;
 use DateTimeZone;
-use Generator;
 use IntlDateFormatter;
 use Locale;
 
@@ -1159,7 +1158,7 @@ final class TimeLegacyTest extends CIUnitTestCase
         $this->assertSame('2017-03-10 12:00:00', (string) $time);
     }
 
-    public function provideLocales(): Generator
+    public function provideLocales(): iterable
     {
         yield from [
             ['en'],

@@ -16,7 +16,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cookie as CookieConfig;
 use DateTimeImmutable;
 use DateTimeZone;
-use Generator;
 use LogicException;
 
 /**
@@ -99,7 +98,7 @@ final class CookieTest extends CIUnitTestCase
         $this->assertSame($expected, $cookie->getPrefixedName());
     }
 
-    public function prefixProvider(): Generator
+    public function prefixProvider(): iterable
     {
         yield from [
             ['prefix_', '', 'prefix_test'],

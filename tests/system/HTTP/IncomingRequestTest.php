@@ -16,7 +16,6 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
-use Generator;
 use InvalidArgumentException;
 use TypeError;
 
@@ -519,7 +518,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $request->getRawInput());
     }
 
-    public function provideRawInputVarChecks()
+    public function provideRawInputVarChecks(): iterable
     {
         return [
             [
@@ -627,7 +626,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertTrue($request->is(strtolower($value)));
     }
 
-    public function provideIsHTTPMethods(): Generator
+    public function provideIsHTTPMethods(): iterable
     {
         yield from [
             ['GET'],
@@ -840,7 +839,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertNull($this->request->getGetPost('gc'));
     }
 
-    public function providePathChecks()
+    public function providePathChecks(): iterable
     {
         return [
             'not /index.php' => [
