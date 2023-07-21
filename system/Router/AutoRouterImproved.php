@@ -121,7 +121,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         $this->controller = $this->defaultController;
     }
 
-    private function createSegments(string $uri)
+    private function createSegments(string $uri): array
     {
         $segments = explode('/', $uri);
         $segments = array_filter($segments, static fn ($segment) => $segment !== '');

@@ -89,7 +89,7 @@ abstract class BaseExceptionHandler
      *
      * @param array|object $trace
      */
-    protected function maskSensitiveData(&$trace, array $keysToMask, string $path = '')
+    protected function maskSensitiveData(&$trace, array $keysToMask, string $path = ''): void
     {
         foreach ($keysToMask as $keyToMask) {
             $explode = explode('/', $keyToMask);
