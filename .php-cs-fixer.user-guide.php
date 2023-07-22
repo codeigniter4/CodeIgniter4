@@ -37,7 +37,7 @@ $overrides = [
 ];
 
 $options = [
-    'cacheFile' => 'build/.php-cs-fixer.no-header.cache',
+    'cacheFile' => 'build/.php-cs-fixer.user-guide.cache',
     'finder'    => $finder,
 ];
 
