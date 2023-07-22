@@ -328,7 +328,7 @@ class SiteURI extends URI
     /**
      * Saves our parts from a parse_url() call.
      */
-    protected function applyParts(array $parts)
+    protected function applyParts(array $parts): void
     {
         if (! empty($parts['host'])) {
             $this->host = $parts['host'];

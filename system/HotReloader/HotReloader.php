@@ -16,7 +16,7 @@ namespace CodeIgniter\HotReloader;
  */
 final class HotReloader
 {
-    public function run()
+    public function run(): void
     {
         ini_set('zlib.output_compression', 'Off');
 
