@@ -478,7 +478,7 @@ class Factories
      *
      * @internal For caching only
      */
-    public static function setComponentInstances(string $component, array $data)
+    public static function setComponentInstances(string $component, array $data): void
     {
         static::$aliases[$component] = $data['aliases'];
         self::$instances[$component] = $data['instances'];

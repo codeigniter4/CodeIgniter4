@@ -40,7 +40,7 @@ final class FactoriesCache
         $this->cache->save($this->getCacheKey($component), $data, 3600 * 24);
     }
 
-    private function getCacheKey(string $component)
+    private function getCacheKey(string $component): string
     {
         return 'FactoriesCache_' . $component;
     }
