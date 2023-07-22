@@ -1004,10 +1004,8 @@ if (! function_exists('service')) {
      *  - $timer = \CodeIgniter\Config\Services::timer();
      *
      * @param array|bool|float|int|object|string|null ...$params
-     *
-     * @return object
      */
-    function service(string $name, ...$params)
+    function service(string $name, ...$params): ?object
     {
         return Services::$name(...$params);
     }
@@ -1018,10 +1016,8 @@ if (! function_exists('single_service')) {
      * Always returns a new instance of the class.
      *
      * @param array|bool|float|int|object|string|null ...$params
-     *
-     * @return object|null
      */
-    function single_service(string $name, ...$params)
+    function single_service(string $name, ...$params): ?object
     {
         $service = Services::serviceExists($name);
 
