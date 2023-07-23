@@ -1,4 +1,4 @@
-# CodeIgniter 4 Development
+# CodeIgniter 4 Development 
 
 [![PHPUnit](https://github.com/codeigniter4/CodeIgniter4/workflows/PHPUnit/badge.svg)](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/test-phpunit.yml)
 [![PHPStan](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/test-phpstan.yml/badge.svg)](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/test-phpstan.yml)
@@ -11,7 +11,7 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/codeigniter4/CodeIgniter4/pulls)
 <br>
 
-## What is CodeIgniter?
+## What is CodeIgniter? 🤔
 
 CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
 More information can be found at the [official site](https://codeigniter.com).
@@ -22,7 +22,7 @@ while still keeping as many of the things intact that has made people love the f
 
 More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
 
-### Documentation
+### Documentation 📚
 
 The [User Guide](https://codeigniter4.github.io/userguide/) is the primary documentation for CodeIgniter 4.
 
@@ -31,7 +31,7 @@ As with the rest of the framework, it is a work in progress, and will see change
 
 You might also be interested in the [API documentation](https://codeigniter4.github.io/api/) for the framework components.
 
-## Important Change with index.php
+## Important Change with index.php ❗
 
 index.php is no longer in the root of the project! It has been moved inside the *public* folder,
 for better security and separation of components.
@@ -42,7 +42,7 @@ framework are exposed.
 
 **Please** read the user guide for a better explanation of how CI4 works!
 
-## Repository Management
+## Repository Management 🗄️
 
 CodeIgniter is developed completely on a volunteer basis. As such, please give up to 7 days
 for your issues to be reviewed. If you haven't heard from one of the team in that time period,
@@ -69,7 +69,7 @@ into the framework roadmap.
 Remember that some components that were part of CodeIgniter 3 are being moved
 to optional packages, with their own repository.
 
-## Contributing
+## Contributing 🤝  
 
 We **are** accepting contributions from the community! It doesn't matter whether you can code, write documentation, or help find bugs,
 all contributions are welcome.
@@ -84,7 +84,7 @@ CodeIgniter has had thousands on contributions from people since its creation. T
 
 Made with [contrib.rocks](https://contrib.rocks).
 
-## Server Requirements
+## Server Requirements 📋
 
 PHP version 7.4 or higher is required, with the following extensions installed:
 
@@ -97,6 +97,6 @@ Additionally, make sure that the following extensions are enabled in your PHP:
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
 - [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
 
-## Running CodeIgniter Tests
+## Running CodeIgniter Tests 🏃‍♂️✅
 
 Information on running the CodeIgniter test suite can be found in the [README.md](tests/README.md) file in the tests directory.
