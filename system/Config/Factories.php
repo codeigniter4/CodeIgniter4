@@ -166,7 +166,6 @@ class Factories
                     self::$instances[$options['component']][$class] = new $class(...$arguments);
 
                     return self::$instances[$options['component']][$class];
-
                 }
             }
         }
