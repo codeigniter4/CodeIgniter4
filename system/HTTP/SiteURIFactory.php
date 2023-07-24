@@ -131,7 +131,7 @@ class SiteURIFactory
 
         // Strip the SCRIPT_NAME path from the URI
         if (
-            $path !== '' && isset($this->superglobals->server('SCRIPT_NAME')[0])
+            $path !== '' && $this->superglobals->server('SCRIPT_NAME') !== ''
             && pathinfo($this->superglobals->server('SCRIPT_NAME'), PATHINFO_EXTENSION) === 'php'
         ) {
             // Compare each segment, dropping them until there is no match
