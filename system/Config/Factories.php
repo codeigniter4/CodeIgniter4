@@ -117,6 +117,14 @@ class Factories
     }
 
     /**
+     * Is the component Config?
+     */
+    private static function isConfig(string $component): bool
+    {
+        return $component === 'config';
+    }
+
+    /**
      * Finds a component class
      *
      * @param array  $options The array of component-specific directives
@@ -135,7 +143,7 @@ class Factories
 
         // Determine the relative class names we need
         $basename = self::getBasename($name);
-        $appname  = $options['component'] === 'config'
+        $appname  = self::isConfig($options['component'])
             ? 'Config\\' . $basename
             : rtrim(APP_NAMESPACE, '\\') . '\\' . $options['path'] . '\\' . $basename;
 
@@ -194,7 +202,7 @@ class Factories
         }
 
         // Special case for Config since its App namespace is actually \Config
-        if ($options['component'] === 'config') {
+        if (self::isConfig($options['component'])) {
             return strpos($name, 'Config') === 0;
         }
 
@@ -233,7 +241,7 @@ class Factories
             return self::$options[$component];
         }
 
-        $values = $component === 'config'
+        $values = self::isConfig($component)
             // Handle Config as a special case to prevent logic loops
             ? self::$configOptions
             // Load values from the best Factory configuration (will include Registrars)
