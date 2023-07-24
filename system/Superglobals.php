@@ -46,6 +46,12 @@ final class Superglobals
         return $this->get[$key] ?? null;
     }
 
+    public function setGet(string $key, string $value): void
+    {
+        $this->get[$key] = $value;
+        $_GET[$key]      = $value;
+    }
+
     public function setGetArray(array $array): void
     {
         $this->get = $array;
