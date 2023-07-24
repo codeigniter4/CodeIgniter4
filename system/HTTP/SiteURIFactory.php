@@ -15,7 +15,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Superglobals;
 use Config\App;
 
-class SiteURIFactory
+final class SiteURIFactory
 {
     private App $appConfig;
     private Superglobals $superglobals;
