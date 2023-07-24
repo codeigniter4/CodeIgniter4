@@ -401,7 +401,11 @@ class Factories
         self::$basenames[$component][$name]  = $class;
 
         if (self::isConfig($component)) {
-            self::$basenames[$component][$basename] = $class;
+            if ($name !== $basename) {
+                self::$basenames[$component][$basename] = $class;
+            } else {
+                self::$basenames[$component]['Config\\' . $basename] = $class;
+            }
         }
     }
 
