@@ -65,6 +65,8 @@ class Factories
      * A multi-dimensional array with components as
      * keys to the array of name-indexed instances.
      *
+     * [component => [FQCN => instance]]
+     *
      * @var array<string, array<string, object>>
      * @phpstan-var  array<string, array<class-string, object>>
      */
@@ -118,6 +120,8 @@ class Factories
 
     /**
      * Is the component Config?
+     *
+     * @param string $component Lowercase, plural component name
      */
     private static function isConfig(string $component): bool
     {
@@ -231,6 +235,8 @@ class Factories
      * @param string $component Lowercase, plural component name
      *
      * @return array<string, bool|string|null>
+     *
+     * @internal For testing only
      */
     public static function getOptions(string $component): array
     {
@@ -247,6 +253,8 @@ class Factories
             // Load values from the best Factory configuration (will include Registrars)
             : config(Factory::class)->{$component} ?? [];
 
+        // The setOptions() reset the component. So getOptions() may reset
+        // the component.
         return self::setOptions($component, $values);
     }
 
@@ -254,6 +262,7 @@ class Factories
      * Normalizes, stores, and returns the configuration for a specific component
      *
      * @param string $component Lowercase, plural component name
+     * @param array  $values    option values
      *
      * @return array<string, bool|string|null> The result after applying defaults and normalization
      */
@@ -305,6 +314,8 @@ class Factories
      *
      * @param string $component Lowercase, plural component name
      * @param string $name      The name of the instance
+     *
+     * @internal For testing only
      */
     public static function injectMock(string $component, string $name, object $instance)
     {
@@ -321,6 +332,8 @@ class Factories
 
     /**
      * Gets a basename from a class name, namespaced or not.
+     *
+     * @internal For testing only
      */
     public static function getBasename(string $name): string
     {
