@@ -255,7 +255,27 @@ final class FactoriesTest extends CIUnitTestCase
         $this->assertInstanceOf(SomeWidget::class, $result);
     }
 
-    public function testPreferAppOverridesConfigClassname()
+    public function testShortnameReturnsConfigInApp()
+    {
+        // Create a config class in App
+        $file   = APPPATH . 'Config/TestRegistrar.php';
+        $source = <<<'EOL'
+            <?php
+            namespace Config;
+            class TestRegistrar
+            {}
+            EOL;
+        file_put_contents($file, $source);
+
+        $result = Factories::config('TestRegistrar');
+
+        $this->assertInstanceOf('Config\TestRegistrar', $result);
+
+        // Delete the config class in App
+        unlink($file);
+    }
+
+    public function testFullClassnameIgnoresPreferApp()
     {
         // Create a config class in App
         $file   = APPPATH . 'Config/TestRegistrar.php';
@@ -269,7 +289,7 @@ final class FactoriesTest extends CIUnitTestCase
 
         $result = Factories::config(TestRegistrar::class);
 
-        $this->assertInstanceOf('Config\TestRegistrar', $result);
+        $this->assertInstanceOf(TestRegistrar::class, $result);
 
         Factories::setOptions('config', ['preferApp' => false]);
 

@@ -221,8 +221,8 @@ class Factories
 
         // If an App version was requested then see if it verifies
         if (
-            // preferApp is used only for no namespace class or Config class.
-            (strpos($name, '\\') === false || self::isConfig($options['component']))
+            // preferApp is used only for no namespace class.
+            strpos($name, '\\') === false
             && $options['preferApp'] && class_exists($appname)
             && self::verifyInstanceOf($options, $name)
         ) {
