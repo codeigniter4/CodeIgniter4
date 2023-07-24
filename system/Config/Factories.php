@@ -14,6 +14,7 @@ namespace CodeIgniter\Config;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Model;
 use Config\Services;
+use InvalidArgumentException;
 
 /**
  * Factories for creating instances.
@@ -51,8 +52,10 @@ class Factories
     ];
 
     /**
-     * Mapping of class basenames (no namespace) to
+     * Mapping of classnames (with or without namespace) to
      * their instances.
+     *
+     * [component => [name => FQCN]]
      *
      * @var array<string, array<string, string>>
      * @phpstan-var array<string, array<string, class-string>>
@@ -73,6 +76,37 @@ class Factories
     protected static $instances = [];
 
     /**
+     * Define the class to load. You can *override* the concrete class.
+     *
+     * @param string $component Lowercase, plural component name
+     * @param string $name      Classname. The first parameter of Factories magic method
+     * @param string $classname FQCN to load
+     * @phpstan-param class-string $classname FQCN to load
+     */
+    public static function define(string $component, string $name, string $classname): void
+    {
+        if (isset(self::$basenames[$component][$name])) {
+            if (self::$basenames[$component][$name] === $classname) {
+                return;
+            }
+
+            throw new InvalidArgumentException(
+                'Already defined in Factories: ' . $component . ' ' . $name . ' -> ' . self::$basenames[$component][$name]
+            );
+        }
+
+        if (! class_exists($classname)) {
+            throw new InvalidArgumentException('No such class: ' . $classname);
+        }
+
+        // Force a configuration to exist for this component.
+        // Otherwise, getOptions() will reset the component.
+        self::getOptions($component);
+
+        self::$basenames[$component][$name] = $classname;
+    }
+
+    /**
      * Loads instances based on the method component name. Either
      * creates a new instance or returns an existing shared instance.
      *
@@ -88,6 +122,12 @@ class Factories
         $options = array_merge(self::getOptions(strtolower($component)), $options);
 
         if (! $options['getShared']) {
+            if (isset(self::$basenames[$component][$name])) {
+                $class = self::$basenames[$component][$name];
+
+                return new $class(...$arguments);
+            }
+
             if ($class = self::locateClass($options, $name)) {
                 return new $class(...$arguments);
             }
@@ -95,15 +135,39 @@ class Factories
             return null;
         }
 
-        $basename = self::getBasename($name);
-
         // Check for an existing instance
-        if (isset(self::$basenames[$options['component']][$basename])) {
-            $class = self::$basenames[$options['component']][$basename];
+        if (isset(self::$basenames[$options['component']][$name])) {
+            $class = self::$basenames[$options['component']][$name];
 
             // Need to verify if the shared instance matches the request
             if (self::verifyInstanceOf($options, $class)) {
+                if (isset(self::$instances[$options['component']][$class])) {
+                    return self::$instances[$options['component']][$class];
+                }
+                self::$instances[$options['component']][$class] = new $class(...$arguments);
+
                 return self::$instances[$options['component']][$class];
+
+            }
+        }
+
+        // Check for an existing Config instance with basename.
+        if (self::isConfig($options['component'])) {
+            $basename = self::getBasename($name);
+
+            if (isset(self::$basenames[$options['component']][$basename])) {
+                $class = self::$basenames[$options['component']][$basename];
+
+                // Need to verify if the shared instance matches the request
+                if (self::verifyInstanceOf($options, $class)) {
+                    if (isset(self::$instances[$options['component']][$class])) {
+                        return self::$instances[$options['component']][$class];
+                    }
+                    self::$instances[$options['component']][$class] = new $class(...$arguments);
+
+                    return self::$instances[$options['component']][$class];
+
+                }
             }
         }
 
@@ -112,8 +176,13 @@ class Factories
             return null;
         }
 
-        self::$instances[$options['component']][$class]    = new $class(...$arguments);
-        self::$basenames[$options['component']][$basename] = $class;
+        self::$instances[$options['component']][$class] = new $class(...$arguments);
+        self::$basenames[$options['component']][$name]  = $class;
+
+        // If a short classname is specified, also register FQCN to share the instance.
+        if (! isset(self::$basenames[$options['component']][$class])) {
+            self::$basenames[$options['component']][$class] = $class;
+        }
 
         return self::$instances[$options['component']][$class];
     }
@@ -153,7 +222,9 @@ class Factories
 
         // If an App version was requested then see if it verifies
         if (
-            $options['preferApp'] && class_exists($appname)
+            // preferApp is used only for no namespace class or Config class.
+            (strpos($name, '\\') === false || self::isConfig($options['component']))
+            && $options['preferApp'] && class_exists($appname)
             && self::verifyInstanceOf($options, $name)
         ) {
             return $appname;
@@ -326,8 +397,12 @@ class Factories
         $class    = get_class($instance);
         $basename = self::getBasename($name);
 
-        self::$instances[$component][$class]    = $instance;
-        self::$basenames[$component][$basename] = $class;
+        self::$instances[$component][$class] = $instance;
+        self::$basenames[$component][$name]  = $class;
+
+        if (self::isConfig($component)) {
+            self::$basenames[$component][$basename] = $class;
+        }
     }
 
     /**

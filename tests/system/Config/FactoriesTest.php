@@ -12,9 +12,13 @@
 namespace CodeIgniter\Config;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use InvalidArgumentException;
 use ReflectionClass;
 use stdClass;
+use Tests\Support\Config\TestRegistrar;
+use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\UserModel;
+use Tests\Support\View\SampleClass;
 use Tests\Support\Widgets\OtherWidget;
 use Tests\Support\Widgets\SomeWidget;
 
@@ -251,7 +255,33 @@ final class FactoriesTest extends CIUnitTestCase
         $this->assertInstanceOf(SomeWidget::class, $result);
     }
 
-    public function testpreferAppOverridesClassname()
+    public function testPreferAppOverridesConfigClassname()
+    {
+        // Create a config class in App
+        $file   = APPPATH . 'Config/TestRegistrar.php';
+        $source = <<<'EOL'
+            <?php
+            namespace Config;
+            class TestRegistrar
+            {}
+            EOL;
+        file_put_contents($file, $source);
+
+        $result = Factories::config(TestRegistrar::class);
+
+        $this->assertInstanceOf('Config\TestRegistrar', $result);
+
+        Factories::setOptions('config', ['preferApp' => false]);
+
+        $result = Factories::config(TestRegistrar::class);
+
+        $this->assertInstanceOf(TestRegistrar::class, $result);
+
+        // Delete the config class in App
+        unlink($file);
+    }
+
+    public function testPreferAppIsIgnored()
     {
         // Create a fake class in App
         $class = 'App\Widgets\OtherWidget';
@@ -260,11 +290,74 @@ final class FactoriesTest extends CIUnitTestCase
         }
 
         $result = Factories::widgets(OtherWidget::class);
-        $this->assertInstanceOf(SomeWidget::class, $result);
-
-        Factories::setOptions('widgets', ['preferApp' => false]);
-
-        $result = Factories::widgets(OtherWidget::class);
         $this->assertInstanceOf(OtherWidget::class, $result);
+    }
+
+    public function testCanLoadTwoCellsWithSameShortName()
+    {
+        $cell1 = Factories::cells('\\' . SampleClass::class);
+        $cell2 = Factories::cells('\\' . \Tests\Support\View\OtherCells\SampleClass::class);
+
+        $this->assertNotSame($cell1, $cell2);
+    }
+
+    public function testDefineTwice()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Already defined in Factories: models CodeIgniter\Shield\Models\UserModel -> Tests\Support\Models\UserModel'
+        );
+
+        Factories::define(
+            'models',
+            'CodeIgniter\Shield\Models\UserModel',
+            UserModel::class
+        );
+        Factories::define(
+            'models',
+            'CodeIgniter\Shield\Models\UserModel',
+            EntityModel::class
+        );
+    }
+
+    public function testDefineNonExistentClass()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('No such class: App\Models\UserModel');
+
+        Factories::define(
+            'models',
+            'CodeIgniter\Shield\Models\UserModel',
+            'App\Models\UserModel'
+        );
+    }
+
+    public function testDefineAfterLoading()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Already defined in Factories: models Tests\Support\Models\UserModel -> Tests\Support\Models\UserModel'
+        );
+
+        model(UserModel::class);
+
+        Factories::define(
+            'models',
+            UserModel::class,
+            'App\Models\UserModel'
+        );
+    }
+
+    public function testDefineAndLoad()
+    {
+        Factories::define(
+            'models',
+            UserModel::class,
+            EntityModel::class
+        );
+
+        $model = model(UserModel::class);
+
+        $this->assertInstanceOf(EntityModel::class, $model);
     }
 }
