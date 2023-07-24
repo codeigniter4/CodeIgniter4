@@ -178,7 +178,7 @@ class SiteURIFactory
      */
     private function parseQueryString(): string
     {
-        $query = $this->superglobals->server('QUERY_STRING') ?? @getenv('QUERY_STRING');
+        $query = $this->superglobals->server('QUERY_STRING') ?? (string) getenv('QUERY_STRING');
 
         if (trim($query, '/') === '') {
             return '/';
