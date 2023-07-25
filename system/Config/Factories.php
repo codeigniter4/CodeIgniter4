@@ -242,8 +242,8 @@ class Factories
         // Have to do this the hard way...
         $locator = Services::locator();
 
-        // Check if the class was namespaced
-        if (strpos($alias, '\\') !== false) {
+        // Check if the class alias was namespaced
+        if (self::isNamespaced($alias)) {
             if (! $file = $locator->locateFile($alias, $options['path'])) {
                 return null;
             }
@@ -265,6 +265,16 @@ class Factories
         }
 
         return null;
+    }
+
+    /**
+     * Is the class alias namespaced or not?
+     *
+     * @param string $alias Class alias. See the $aliases property.
+     */
+    private static function isNamespaced(string $alias): bool
+    {
+        return strpos($alias, '\\') !== false;
     }
 
     /**
@@ -414,7 +424,7 @@ class Factories
     }
 
     /**
-     * Gets a basename from a class name, namespaced or not.
+     * Gets a basename from a class alias, namespaced or not.
      *
      * @internal For testing only
      */
