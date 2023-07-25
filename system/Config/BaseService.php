@@ -126,6 +126,7 @@ use Config\View as ConfigView;
  * @method static Security                   security(App $config = null, $getShared = true)
  * @method static Session                    session(App $config = null, $getShared = true)
  * @method static SiteURIFactory             siteurifactory(App $config = null, Superglobals $superglobals = null, $getShared = true)
+ * @method static Superglobals               superglobals(array $server = null, array $get = null, bool $getShared = true)
  * @method static Throttler                  throttler($getShared = true)
  * @method static Timer                      timer($getShared = true)
  * @method static Toolbar                    toolbar(ConfigToolbar $config = null, $getShared = true)

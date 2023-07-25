@@ -710,9 +710,26 @@ class Services extends BaseService
         }
 
         $config ??= config('App');
-        $superglobals ??= new Superglobals();
+        $superglobals ??= AppServices::superglobals();
 
         return new SiteURIFactory($config, $superglobals);
+    }
+
+    /**
+     * Superglobals.
+     *
+     * @return Superglobals
+     */
+    public static function superglobals(
+        ?array $server = null,
+        ?array $get = null,
+        bool $getShared = true
+    ) {
+        if ($getShared) {
+            return static::getSharedInstance('superglobals', $server, $get);
+        }
+
+        return new Superglobals($server, $get);
     }
 
     /**
@@ -776,7 +793,7 @@ class Services extends BaseService
 
         if ($uri === null) {
             $appConfig = config(App::class);
-            $factory   = AppServices::siteurifactory($appConfig, new Superglobals());
+            $factory   = AppServices::siteurifactory($appConfig, AppServices::superglobals());
 
             return $factory->createFromGlobals();
         }
