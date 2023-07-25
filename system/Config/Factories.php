@@ -226,8 +226,8 @@ class Factories
 
         // If an App version was requested then see if it verifies
         if (
-            // preferApp is used only for no namespace class.
-            strpos($alias, '\\') === false
+            // preferApp is used only for no namespaced class.
+            ! self::isNamespaced($alias)
             && $options['preferApp'] && class_exists($appname)
             && self::verifyInstanceOf($options, $alias)
         ) {
