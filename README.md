@@ -69,7 +69,7 @@ into the framework roadmap.
 Remember that some components that were part of CodeIgniter 3 are being moved
 to optional packages, with their own repository.
 
-## Contributing 🤝  
+## Contributing 🤝
 
 We **are** accepting contributions from the community! It doesn't matter whether you can code, write documentation, or help find bugs,
 all contributions are welcome.
