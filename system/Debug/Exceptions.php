@@ -334,9 +334,9 @@ class Exceptions
     /**
      * Mask sensitive data in the trace.
      *
-     * @param array|object $trace
+     * @param array $trace
      *
-     * @return array|object
+     * @return array
      *
      * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */

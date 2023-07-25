@@ -86,10 +86,8 @@ abstract class BaseExceptionHandler
 
     /**
      * Mask sensitive data in the trace.
-     *
-     * @param array|object $trace
      */
-    protected function maskSensitiveData($trace, array $keysToMask, string $path = '')
+    protected function maskSensitiveData(array $trace, array $keysToMask, string $path = ''): array
     {
         foreach ($trace as $i => $line) {
             $trace[$i]['args'] = $this->maskData($line['args'], $keysToMask);
