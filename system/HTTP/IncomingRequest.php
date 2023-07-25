@@ -473,30 +473,6 @@ class IncomingRequest extends Request
     }
 
     /**
-     * @deprecated 4.4.0 Moved to SiteURIFactory.
-     */
-    private function determineHost(App $config, string $baseURL): string
-    {
-        $host = parse_url($baseURL, PHP_URL_HOST);
-
-        if (empty($config->allowedHostnames)) {
-            return $host;
-        }
-
-        // Update host if it is valid.
-        $httpHostPort = $this->getServer('HTTP_HOST');
-        if ($httpHostPort !== null) {
-            [$httpHost] = explode(':', $httpHostPort, 2);
-
-            if (in_array($httpHost, $config->allowedHostnames, true)) {
-                $host = $httpHost;
-            }
-        }
-
-        return $host;
-    }
-
-    /**
      * Returns the URI path relative to baseURL,
      * running detection as necessary.
      */
