@@ -25,7 +25,7 @@ use InvalidArgumentException;
  * instantiation checks.
  *
  * @method static BaseConfig|null config(...$arguments)
- * @method static Model|null      models(string $name, array $options = [], ?ConnectionInterface &$conn = null)
+ * @method static Model|null      models(string $alias, array $options = [], ?ConnectionInterface &$conn = null)
  */
 class Factories
 {
@@ -84,19 +84,19 @@ class Factories
      * Define the class to load. You can *override* the concrete class.
      *
      * @param string $component Lowercase, plural component name
-     * @param string $name      Class alias. See the $aliases property.
+     * @param string $alias     Class alias. See the $aliases property.
      * @param string $classname FQCN to load
      * @phpstan-param class-string $classname FQCN to load
      */
-    public static function define(string $component, string $name, string $classname): void
+    public static function define(string $component, string $alias, string $classname): void
     {
-        if (isset(self::$aliases[$component][$name])) {
-            if (self::$aliases[$component][$name] === $classname) {
+        if (isset(self::$aliases[$component][$alias])) {
+            if (self::$aliases[$component][$alias] === $classname) {
                 return;
             }
 
             throw new InvalidArgumentException(
-                'Already defined in Factories: ' . $component . ' ' . $name . ' -> ' . self::$aliases[$component][$name]
+                'Already defined in Factories: ' . $component . ' ' . $alias . ' -> ' . self::$aliases[$component][$alias]
             );
         }
 
@@ -108,7 +108,7 @@ class Factories
         // Otherwise, getOptions() will reset the component.
         self::getOptions($component);
 
-        self::$aliases[$component][$name] = $classname;
+        self::$aliases[$component][$alias] = $classname;
     }
 
     /**
@@ -120,20 +120,20 @@ class Factories
     public static function __callStatic(string $component, array $arguments)
     {
         // First argument is the class alias, second is options
-        $name    = trim(array_shift($arguments), '\\ ');
+        $alias   = trim(array_shift($arguments), '\\ ');
         $options = array_shift($arguments) ?? [];
 
         // Determine the component-specific options
         $options = array_merge(self::getOptions(strtolower($component)), $options);
 
         if (! $options['getShared']) {
-            if (isset(self::$aliases[$component][$name])) {
-                $class = self::$aliases[$component][$name];
+            if (isset(self::$aliases[$component][$alias])) {
+                $class = self::$aliases[$component][$alias];
 
                 return new $class(...$arguments);
             }
 
-            if ($class = self::locateClass($options, $name)) {
+            if ($class = self::locateClass($options, $alias)) {
                 return new $class(...$arguments);
             }
 
@@ -141,8 +141,8 @@ class Factories
         }
 
         // Check for an existing instance
-        if (isset(self::$aliases[$options['component']][$name])) {
-            $class = self::$aliases[$options['component']][$name];
+        if (isset(self::$aliases[$options['component']][$alias])) {
+            $class = self::$aliases[$options['component']][$alias];
 
             // Need to verify if the shared instance matches the request
             if (self::verifyInstanceOf($options, $class)) {
@@ -158,7 +158,7 @@ class Factories
 
         // Check for an existing Config instance with basename.
         if (self::isConfig($options['component'])) {
-            $basename = self::getBasename($name);
+            $basename = self::getBasename($alias);
 
             if (isset(self::$aliases[$options['component']][$basename])) {
                 $class = self::$aliases[$options['component']][$basename];
@@ -176,12 +176,12 @@ class Factories
         }
 
         // Try to locate the class
-        if (! $class = self::locateClass($options, $name)) {
+        if (! $class = self::locateClass($options, $alias)) {
             return null;
         }
 
         self::$instances[$options['component']][$class] = new $class(...$arguments);
-        self::$aliases[$options['component']][$name]    = $class;
+        self::$aliases[$options['component']][$alias]   = $class;
 
         // If a short classname is specified, also register FQCN to share the instance.
         if (! isset(self::$aliases[$options['component']][$class])) {
@@ -205,21 +205,21 @@ class Factories
      * Finds a component class
      *
      * @param array  $options The array of component-specific directives
-     * @param string $name    Class alias. See the $aliases property.
+     * @param string $alias   Class alias. See the $aliases property.
      */
-    protected static function locateClass(array $options, string $name): ?string
+    protected static function locateClass(array $options, string $alias): ?string
     {
         // Check for low-hanging fruit
         if (
-            class_exists($name, false)
-            && self::verifyPreferApp($options, $name)
-            && self::verifyInstanceOf($options, $name)
+            class_exists($alias, false)
+            && self::verifyPreferApp($options, $alias)
+            && self::verifyInstanceOf($options, $alias)
         ) {
-            return $name;
+            return $alias;
         }
 
         // Determine the relative class names we need
-        $basename = self::getBasename($name);
+        $basename = self::getBasename($alias);
         $appname  = self::isConfig($options['component'])
             ? 'Config\\' . $basename
             : rtrim(APP_NAMESPACE, '\\') . '\\' . $options['path'] . '\\' . $basename;
@@ -227,31 +227,31 @@ class Factories
         // If an App version was requested then see if it verifies
         if (
             // preferApp is used only for no namespace class.
-            strpos($name, '\\') === false
+            strpos($alias, '\\') === false
             && $options['preferApp'] && class_exists($appname)
-            && self::verifyInstanceOf($options, $name)
+            && self::verifyInstanceOf($options, $alias)
         ) {
             return $appname;
         }
 
         // If we have ruled out an App version and the class exists then try it
-        if (class_exists($name) && self::verifyInstanceOf($options, $name)) {
-            return $name;
+        if (class_exists($alias) && self::verifyInstanceOf($options, $alias)) {
+            return $alias;
         }
 
         // Have to do this the hard way...
         $locator = Services::locator();
 
         // Check if the class was namespaced
-        if (strpos($name, '\\') !== false) {
-            if (! $file = $locator->locateFile($name, $options['path'])) {
+        if (strpos($alias, '\\') !== false) {
+            if (! $file = $locator->locateFile($alias, $options['path'])) {
                 return null;
             }
             $files = [$file];
         }
         // No namespace? Search for it
         // Check all namespaces, prioritizing App and modules
-        elseif (! $files = $locator->search($options['path'] . DIRECTORY_SEPARATOR . $name)) {
+        elseif (! $files = $locator->search($options['path'] . DIRECTORY_SEPARATOR . $alias)) {
             return null;
         }
 
@@ -271,9 +271,9 @@ class Factories
      * Verifies that a class & config satisfy the "preferApp" option
      *
      * @param array  $options The array of component-specific directives
-     * @param string $name    Class alias. See the $aliases property.
+     * @param string $alias   Class alias. See the $aliases property.
      */
-    protected static function verifyPreferApp(array $options, string $name): bool
+    protected static function verifyPreferApp(array $options, string $alias): bool
     {
         // Anything without that restriction passes
         if (! $options['preferApp']) {
@@ -282,26 +282,26 @@ class Factories
 
         // Special case for Config since its App namespace is actually \Config
         if (self::isConfig($options['component'])) {
-            return strpos($name, 'Config') === 0;
+            return strpos($alias, 'Config') === 0;
         }
 
-        return strpos($name, APP_NAMESPACE) === 0;
+        return strpos($alias, APP_NAMESPACE) === 0;
     }
 
     /**
      * Verifies that a class & config satisfy the "instanceOf" option
      *
      * @param array  $options The array of component-specific directives
-     * @param string $name    Class alias. See the $aliases property.
+     * @param string $alias   Class alias. See the $aliases property.
      */
-    protected static function verifyInstanceOf(array $options, string $name): bool
+    protected static function verifyInstanceOf(array $options, string $alias): bool
     {
         // Anything without that restriction passes
         if (! $options['instanceOf']) {
             return true;
         }
 
-        return is_a($name, $options['instanceOf'], true);
+        return is_a($alias, $options['instanceOf'], true);
     }
 
     /**
@@ -388,24 +388,24 @@ class Factories
      * Helper method for injecting mock instances
      *
      * @param string $component Lowercase, plural component name
-     * @param string $name      Class alias. See the $aliases property.
+     * @param string $alias     Class alias. See the $aliases property.
      *
      * @internal For testing only
      */
-    public static function injectMock(string $component, string $name, object $instance)
+    public static function injectMock(string $component, string $alias, object $instance)
     {
         // Force a configuration to exist for this component
         $component = strtolower($component);
         self::getOptions($component);
 
         $class    = get_class($instance);
-        $basename = self::getBasename($name);
+        $basename = self::getBasename($alias);
 
         self::$instances[$component][$class] = $instance;
-        self::$aliases[$component][$name]    = $class;
+        self::$aliases[$component][$alias]   = $class;
 
         if (self::isConfig($component)) {
-            if ($name !== $basename) {
+            if ($alias !== $basename) {
                 self::$aliases[$component][$basename] = $class;
             } else {
                 self::$aliases[$component]['Config\\' . $basename] = $class;
@@ -418,13 +418,13 @@ class Factories
      *
      * @internal For testing only
      */
-    public static function getBasename(string $name): string
+    public static function getBasename(string $alias): string
     {
         // Determine the basename
-        if ($basename = strrchr($name, '\\')) {
+        if ($basename = strrchr($alias, '\\')) {
             return substr($basename, 1);
         }
 
-        return $name;
+        return $alias;
     }
 }
