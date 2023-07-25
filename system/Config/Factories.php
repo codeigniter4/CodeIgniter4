@@ -85,8 +85,8 @@ class Factories
      *
      * @param string $component Lowercase, plural component name
      * @param string $alias     Class alias. See the $aliases property.
-     * @param string $classname FQCN to load
-     * @phpstan-param class-string $classname FQCN to load
+     * @param string $classname FQCN to be loaded
+     * @phpstan-param class-string $classname FQCN to be loaded
      */
     public static function define(string $component, string $alias, string $classname): void
     {
