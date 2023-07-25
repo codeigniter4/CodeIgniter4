@@ -15,6 +15,11 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Superglobals;
 use Config\App;
 
+/**
+ * Creates SiteURI using superglobals.
+ *
+ * This class also updates superglobal $_SERVER and $_GET.
+ */
 final class SiteURIFactory
 {
     private App $appConfig;
@@ -42,6 +47,7 @@ final class SiteURIFactory
      * Create the SiteURI object from URI string.
      *
      * @internal Used for testing purposes only.
+     * @testTag
      */
     public function createFromString(string $uri): SiteURI
     {
@@ -79,6 +85,7 @@ final class SiteURIFactory
      * @return string The route path
      *
      * @internal Used for testing purposes only.
+     * @testTag
      */
     public function detectRoutePath(string $protocol = ''): string
     {
