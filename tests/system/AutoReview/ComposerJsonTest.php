@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\AutoReview;
 
+use InvalidArgumentException;
 use JsonException;
 use PHPUnit\Framework\TestCase;
 
@@ -40,7 +41,7 @@ final class ComposerJsonTest extends TestCase
 
     public function testFrameworkRequireIsTheSameWithDevRequire(): void
     {
-        $this->checkFramework('require');
+        $this->checkSection('require', 'framework');
     }
 
     public function testFrameworkRequireDevIsTheSameWithDevRequireDev(): void
@@ -68,7 +69,7 @@ final class ComposerJsonTest extends TestCase
 
     public function testFrameworkSuggestIsTheSameWithDevSuggest(): void
     {
-        $this->checkFramework('suggest');
+        $this->checkSection('suggest', 'framework');
     }
 
     public function testFrameworkConfigIsTheSameWithDevSuggest(): void
@@ -89,21 +90,25 @@ final class ComposerJsonTest extends TestCase
         );
     }
 
-    private function checkFramework(string $section): void
+    private function checkSection(string $section, string $component): void
     {
-        $this->assertSame(
-            $this->devComposer[$section],
-            $this->frameworkComposer[$section],
-            'The framework\'s "' . $section . '" section is not updated with the main composer.json.'
-        );
-    }
+        switch (strtolower($component)) {
+            case 'framework':
+                $sectionContent = $this->frameworkComposer[$section] ?? null;
+                break;
 
-    private function checkStarter(string $section): void
-    {
+            case 'starter':
+                $sectionContent = $this->starterComposer[$section] ?? null;
+                break;
+
+            default:
+                throw new InvalidArgumentException(sprintf('Unknown component: %s.', $component));
+        }
+
         $this->assertSame(
             $this->devComposer[$section],
-            $this->starterComposer[$section],
-            'The starter\'s "' . $section . '" section is not updated with the main composer.json.'
+            $sectionContent,
+            sprintf('The %s\'s "%s" section is not updated with the main composer.json', strtolower($component), $section)
         );
     }
 
