@@ -64,7 +64,7 @@ class Factories
      * @var array<string, array<string, string>>
      * @phpstan-var array<string, array<string, class-string>>
      */
-    protected static $basenames = [];
+    protected static $aliases = [];
 
     /**
      * Store for instances of any component that
@@ -84,19 +84,19 @@ class Factories
      * Define the class to load. You can *override* the concrete class.
      *
      * @param string $component Lowercase, plural component name
-     * @param string $name      Class alias. See the $basenames property.
+     * @param string $name      Class alias. See the $aliases property.
      * @param string $classname FQCN to load
      * @phpstan-param class-string $classname FQCN to load
      */
     public static function define(string $component, string $name, string $classname): void
     {
-        if (isset(self::$basenames[$component][$name])) {
-            if (self::$basenames[$component][$name] === $classname) {
+        if (isset(self::$aliases[$component][$name])) {
+            if (self::$aliases[$component][$name] === $classname) {
                 return;
             }
 
             throw new InvalidArgumentException(
-                'Already defined in Factories: ' . $component . ' ' . $name . ' -> ' . self::$basenames[$component][$name]
+                'Already defined in Factories: ' . $component . ' ' . $name . ' -> ' . self::$aliases[$component][$name]
             );
         }
 
@@ -108,7 +108,7 @@ class Factories
         // Otherwise, getOptions() will reset the component.
         self::getOptions($component);
 
-        self::$basenames[$component][$name] = $classname;
+        self::$aliases[$component][$name] = $classname;
     }
 
     /**
@@ -127,8 +127,8 @@ class Factories
         $options = array_merge(self::getOptions(strtolower($component)), $options);
 
         if (! $options['getShared']) {
-            if (isset(self::$basenames[$component][$name])) {
-                $class = self::$basenames[$component][$name];
+            if (isset(self::$aliases[$component][$name])) {
+                $class = self::$aliases[$component][$name];
 
                 return new $class(...$arguments);
             }
@@ -141,8 +141,8 @@ class Factories
         }
 
         // Check for an existing instance
-        if (isset(self::$basenames[$options['component']][$name])) {
-            $class = self::$basenames[$options['component']][$name];
+        if (isset(self::$aliases[$options['component']][$name])) {
+            $class = self::$aliases[$options['component']][$name];
 
             // Need to verify if the shared instance matches the request
             if (self::verifyInstanceOf($options, $class)) {
@@ -160,8 +160,8 @@ class Factories
         if (self::isConfig($options['component'])) {
             $basename = self::getBasename($name);
 
-            if (isset(self::$basenames[$options['component']][$basename])) {
-                $class = self::$basenames[$options['component']][$basename];
+            if (isset(self::$aliases[$options['component']][$basename])) {
+                $class = self::$aliases[$options['component']][$basename];
 
                 // Need to verify if the shared instance matches the request
                 if (self::verifyInstanceOf($options, $class)) {
@@ -181,11 +181,11 @@ class Factories
         }
 
         self::$instances[$options['component']][$class] = new $class(...$arguments);
-        self::$basenames[$options['component']][$name]  = $class;
+        self::$aliases[$options['component']][$name]    = $class;
 
         // If a short classname is specified, also register FQCN to share the instance.
-        if (! isset(self::$basenames[$options['component']][$class])) {
-            self::$basenames[$options['component']][$class] = $class;
+        if (! isset(self::$aliases[$options['component']][$class])) {
+            self::$aliases[$options['component']][$class] = $class;
         }
 
         return self::$instances[$options['component']][$class];
@@ -205,7 +205,7 @@ class Factories
      * Finds a component class
      *
      * @param array  $options The array of component-specific directives
-     * @param string $name    Class alias. See the $basenames property.
+     * @param string $name    Class alias. See the $aliases property.
      */
     protected static function locateClass(array $options, string $name): ?string
     {
@@ -271,7 +271,7 @@ class Factories
      * Verifies that a class & config satisfy the "preferApp" option
      *
      * @param array  $options The array of component-specific directives
-     * @param string $name    Class alias. See the $basenames property.
+     * @param string $name    Class alias. See the $aliases property.
      */
     protected static function verifyPreferApp(array $options, string $name): bool
     {
@@ -292,7 +292,7 @@ class Factories
      * Verifies that a class & config satisfy the "instanceOf" option
      *
      * @param array  $options The array of component-specific directives
-     * @param string $name    Class alias. See the $basenames property.
+     * @param string $name    Class alias. See the $aliases property.
      */
     protected static function verifyInstanceOf(array $options, string $name): bool
     {
@@ -372,7 +372,7 @@ class Factories
         if ($component) {
             unset(
                 static::$options[$component],
-                static::$basenames[$component],
+                static::$aliases[$component],
                 static::$instances[$component]
             );
 
@@ -380,7 +380,7 @@ class Factories
         }
 
         static::$options   = [];
-        static::$basenames = [];
+        static::$aliases   = [];
         static::$instances = [];
     }
 
@@ -388,7 +388,7 @@ class Factories
      * Helper method for injecting mock instances
      *
      * @param string $component Lowercase, plural component name
-     * @param string $name      Class alias. See the $basenames property.
+     * @param string $name      Class alias. See the $aliases property.
      *
      * @internal For testing only
      */
@@ -402,13 +402,13 @@ class Factories
         $basename = self::getBasename($name);
 
         self::$instances[$component][$class] = $instance;
-        self::$basenames[$component][$name]  = $class;
+        self::$aliases[$component][$name]    = $class;
 
         if (self::isConfig($component)) {
             if ($name !== $basename) {
-                self::$basenames[$component][$basename] = $class;
+                self::$aliases[$component][$basename] = $class;
             } else {
-                self::$basenames[$component]['Config\\' . $basename] = $class;
+                self::$aliases[$component]['Config\\' . $basename] = $class;
             }
         }
     }
