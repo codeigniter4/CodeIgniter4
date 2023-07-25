@@ -73,12 +73,20 @@ final class ComposerJsonTest extends TestCase
 
     public function testFrameworkConfigIsTheSameWithDevSuggest(): void
     {
-        $this->checkFramework('config');
+        $this->checkConfig(
+            $this->devComposer['config'],
+            $this->frameworkComposer['config'],
+            'framework'
+        );
     }
 
     public function testStarterConfigIsTheSameWithDevSuggest(): void
     {
-        $this->checkStarter('config');
+        $this->checkConfig(
+            $this->devComposer['config'],
+            $this->starterComposer['config'],
+            'starter'
+        );
     }
 
     private function checkFramework(string $section): void
@@ -97,6 +105,25 @@ final class ComposerJsonTest extends TestCase
             $this->starterComposer[$section],
             'The starter\'s "' . $section . '" section is not updated with the main composer.json.'
         );
+    }
+
+    private function checkConfig(array $fromMain, array $fromComponent, string $component): void
+    {
+        foreach ($fromMain as $key => $expectedValue) {
+            if (! isset($fromComponent[$key])) {
+                $this->addToAssertionCount(1);
+
+                continue;
+            }
+
+            $actualValue = $fromComponent[$key];
+
+            $this->assertSame($expectedValue, $actualValue, sprintf(
+                '%s\'s value for config property "%s" is not same with the main composer.json\'s config.',
+                ucfirst($component),
+                $key
+            ));
+        }
     }
 
     private function getComposerJson(string $path): array
