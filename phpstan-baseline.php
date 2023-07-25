@@ -922,11 +922,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Debug/Exceptions.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Exceptions\\:\\:maskSensitiveData\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Exceptions.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Debug\\\\Exceptions\\:\\:render\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Debug/Exceptions.php',

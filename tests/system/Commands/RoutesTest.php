@@ -39,7 +39,7 @@ final class RoutesTest extends CIUnitTestCase
 
     protected function getBuffer()
     {
-        return $this->getStreamFilterBuffer();
+        return str_replace(PHP_EOL, "\n", $this->getStreamFilterBuffer());
     }
 
     private function getCleanRoutes(): RouteCollection

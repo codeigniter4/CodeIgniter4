@@ -35,9 +35,16 @@ final class NamespacesTest extends CIUnitTestCase
         $this->resetServices();
     }
 
+    /**
+     * @see https://regex101.com/r/l3lHfR/1
+     */
     protected function getBuffer()
     {
-        return $this->getStreamFilterBuffer();
+        return preg_replace_callback('/(\|\s*[^|]+\s*\|\s*)(.*?)(\s*\|\s*[^|]+\s*\|)/', static function (array $matches) {
+            $matches[2] = str_replace(DIRECTORY_SEPARATOR, '/', $matches[2]);
+
+            return $matches[1] . $matches[2] . $matches[3];
+        }, str_replace(PHP_EOL, "\n", $this->getStreamFilterBuffer()));
     }
 
     public function testNamespacesCommandCodeIgniterOnly()
