@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Router\Exceptions\RouterException;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use InvalidArgumentException;
@@ -69,7 +70,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
     private function createRequest(string $uri): void
     {
-        $factory = new SiteURIFactory($_SERVER, $this->config);
+        $factory = new SiteURIFactory($this->config, new Superglobals());
 
         $uri = $factory->createFromString($uri);
 

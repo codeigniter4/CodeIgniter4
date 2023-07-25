@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
@@ -55,7 +56,7 @@ final class SiteUrlTest extends CIUnitTestCase
     {
         $config ??= new App();
 
-        $factory = new SiteURIFactory($_SERVER, $config);
+        $factory = new SiteURIFactory($config, new Superglobals());
         $uri     = $factory->createFromGlobals();
 
         if ($path !== null) {
