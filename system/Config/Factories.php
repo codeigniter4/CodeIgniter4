@@ -322,6 +322,7 @@ class Factories
      * @return array<string, bool|string|null>
      *
      * @internal For testing only
+     * @testTag
      */
     public static function getOptions(string $component): array
     {
@@ -401,6 +402,7 @@ class Factories
      * @param string $alias     Class alias. See the $aliases property.
      *
      * @internal For testing only
+     * @testTag
      */
     public static function injectMock(string $component, string $alias, object $instance)
     {
@@ -427,6 +429,7 @@ class Factories
      * Gets a basename from a class alias, namespaced or not.
      *
      * @internal For testing only
+     * @testTag
      */
     public static function getBasename(string $alias): string
     {
