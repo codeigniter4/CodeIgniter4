@@ -19,6 +19,7 @@
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.5",
+        "ergebnis/composer-normalize": "^2.28",
         "fakerphp/faker": "^1.9",
         "kint-php/kint": "^5.0.4",
         "mikey179/vfsstream": "^1.6",
@@ -67,6 +68,9 @@
         }
     },
     "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true
+        },
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true
