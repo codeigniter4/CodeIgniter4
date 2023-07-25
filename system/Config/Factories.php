@@ -52,10 +52,14 @@ class Factories
     ];
 
     /**
-     * Mapping of classnames (with or without namespace) to
-     * their instances.
+     * Mapping of class aliases to their true Full Qualified Class Name (FQCN).
      *
-     * [component => [name => FQCN]]
+     * Class aliases can be:
+     *     - FQCN. E.g., 'App\Lib\SomeLib'
+     *     - short classname. E.g., 'SomeLib'
+     *     - short classname with sub-directories. E.g., 'Sub/SomeLib'
+     *
+     * [component => [alias => FQCN]]
      *
      * @var array<string, array<string, string>>
      * @phpstan-var array<string, array<string, class-string>>
@@ -65,6 +69,7 @@ class Factories
     /**
      * Store for instances of any component that
      * has been requested as "shared".
+     *
      * A multi-dimensional array with components as
      * keys to the array of name-indexed instances.
      *
@@ -79,7 +84,7 @@ class Factories
      * Define the class to load. You can *override* the concrete class.
      *
      * @param string $component Lowercase, plural component name
-     * @param string $name      Classname. The first parameter of Factories magic method
+     * @param string $name      Class alias. See the $basenames property.
      * @param string $classname FQCN to load
      * @phpstan-param class-string $classname FQCN to load
      */
@@ -114,7 +119,7 @@ class Factories
      */
     public static function __callStatic(string $component, array $arguments)
     {
-        // First argument is the name, second is options
+        // First argument is the class alias, second is options
         $name    = trim(array_shift($arguments), '\\ ');
         $options = array_shift($arguments) ?? [];
 
@@ -200,7 +205,7 @@ class Factories
      * Finds a component class
      *
      * @param array  $options The array of component-specific directives
-     * @param string $name    Class name, namespace optional
+     * @param string $name    Class alias. See the $basenames property.
      */
     protected static function locateClass(array $options, string $name): ?string
     {
@@ -266,7 +271,7 @@ class Factories
      * Verifies that a class & config satisfy the "preferApp" option
      *
      * @param array  $options The array of component-specific directives
-     * @param string $name    Class name, namespace optional
+     * @param string $name    Class alias. See the $basenames property.
      */
     protected static function verifyPreferApp(array $options, string $name): bool
     {
@@ -287,7 +292,7 @@ class Factories
      * Verifies that a class & config satisfy the "instanceOf" option
      *
      * @param array  $options The array of component-specific directives
-     * @param string $name    Class name, namespace optional
+     * @param string $name    Class alias. See the $basenames property.
      */
     protected static function verifyInstanceOf(array $options, string $name): bool
     {
@@ -383,7 +388,7 @@ class Factories
      * Helper method for injecting mock instances
      *
      * @param string $component Lowercase, plural component name
-     * @param string $name      The name of the instance
+     * @param string $name      Class alias. See the $basenames property.
      *
      * @internal For testing only
      */
