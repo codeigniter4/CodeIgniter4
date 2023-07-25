@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Debug;
 
+use App\Controllers\Home;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
@@ -139,5 +140,86 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         );
 
         $this->resetStreamFilterBuffer();
+    }
+
+    public function testMaskSensitiveData(): void
+    {
+        $maskSensitiveData = $this->getPrivateMethodInvoker($this->handler, 'maskSensitiveData');
+
+        $trace = [
+            0 => [
+                'file'     => '/var/www/CodeIgniter4/app/Controllers/Home.php',
+                'line'     => 15,
+                'function' => 'f',
+                'class'    => Home::class,
+                'type'     => '->',
+                'args'     => [
+                    0 => (object) [
+                        'password' => 'secret1',
+                    ],
+                    1 => (object) [
+                        'default' => [
+                            'password' => 'secret2',
+                        ],
+                    ],
+                    2 => [
+                        'password' => 'secret3',
+                    ],
+                    3 => [
+                        'default' => ['password' => 'secret4'],
+                    ],
+                ],
+            ],
+            1 => [
+                'file'     => '/var/www/CodeIgniter4/system/CodeIgniter.php',
+                'line'     => 932,
+                'function' => 'index',
+                'class'    => Home::class,
+                'type'     => '->',
+                'args'     => [
+                ],
+            ],
+        ];
+        $keysToMask = ['password'];
+        $path       = '';
+
+        $newTrace = $maskSensitiveData($trace, $keysToMask, $path);
+
+        $this->assertSame(['password' => '******************'], (array) $newTrace[0]['args'][0]);
+        $this->assertSame(['password' => '******************'], $newTrace[0]['args'][1]->default);
+        $this->assertSame(['password' => '******************'], $newTrace[0]['args'][2]);
+        $this->assertSame(['password' => '******************'], $newTrace[0]['args'][3]['default']);
+    }
+
+    public function testMaskSensitiveDataTraceDataKey(): void
+    {
+        $maskSensitiveData = $this->getPrivateMethodInvoker($this->handler, 'maskSensitiveData');
+
+        $trace = [
+            0 => [
+                'file'     => '/var/www/CodeIgniter4/app/Controllers/Home.php',
+                'line'     => 15,
+                'function' => 'f',
+                'class'    => Home::class,
+                'type'     => '->',
+                'args'     => [
+                ],
+            ],
+            1 => [
+                'file'     => '/var/www/CodeIgniter4/system/CodeIgniter.php',
+                'line'     => 932,
+                'function' => 'index',
+                'class'    => Home::class,
+                'type'     => '->',
+                'args'     => [
+                ],
+            ],
+        ];
+        $keysToMask = ['file'];
+        $path       = '';
+
+        $newTrace = $maskSensitiveData($trace, $keysToMask, $path);
+
+        $this->assertSame('/var/www/CodeIgniter4/app/Controllers/Home.php', $newTrace[0]['file']);
     }
 }
