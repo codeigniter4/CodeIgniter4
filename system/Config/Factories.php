@@ -410,17 +410,16 @@ class Factories
         $component = strtolower($component);
         self::getOptions($component);
 
-        $class    = get_class($instance);
-        $basename = self::getBasename($alias);
+        $class = get_class($instance);
 
         self::$instances[$component][$class] = $instance;
         self::$aliases[$component][$alias]   = $class;
 
         if (self::isConfig($component)) {
-            if ($alias !== $basename) {
-                self::$aliases[$component][$basename] = $class;
+            if (self::isNamespaced($alias)) {
+                self::$aliases[$component][self::getBasename($alias)] = $class;
             } else {
-                self::$aliases[$component]['Config\\' . $basename] = $class;
+                self::$aliases[$component]['Config\\' . $alias] = $class;
             }
         }
     }
