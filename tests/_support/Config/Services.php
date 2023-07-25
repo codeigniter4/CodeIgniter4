@@ -13,7 +13,6 @@ namespace Tests\Support\Config;
 
 use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\URI;
-use CodeIgniter\Superglobals;
 use Config\App;
 use Config\Services as BaseServices;
 use RuntimeException;
@@ -46,7 +45,7 @@ class Services extends BaseServices
 
         if ($uri === null) {
             $appConfig = config(App::class);
-            $factory   = new SiteURIFactory($appConfig, new Superglobals());
+            $factory   = new SiteURIFactory($appConfig, Services::superglobals());
 
             return $factory->createFromGlobals();
         }
