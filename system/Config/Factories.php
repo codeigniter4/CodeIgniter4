@@ -146,16 +146,6 @@ class Factories
             return $instance;
         }
 
-        // Check for an existing Config definition with basename.
-        if (self::isConfig($options['component'])) {
-            $basename = self::getBasename($alias);
-
-            $instance = self::getDefinedInstance($options, $basename, $arguments);
-            if ($instance !== null) {
-                return $instance;
-            }
-        }
-
         // Try to locate the class
         if (! $class = self::locateClass($options, $alias)) {
             return null;
