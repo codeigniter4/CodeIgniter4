@@ -150,19 +150,20 @@ Others
   the ``Content-Disposition: inline`` header to display the file in the browser.
   See :ref:`open-file-in-browser` for details.
 - **View:** Added optional 2nd parameter ``$saveData`` on ``renderSection()`` to prevent from auto cleans the data after displaying. See :ref:`View Layouts <creating-a-layout>` for details.
-- **Auto Routing (Improved)**: Now you can route to Modules.
-  See :ref:`auto-routing-improved-module-routing` for details.
-- **Auto Routing (Improved):** If a controller is found that corresponds to a URI
-  segment and that controller does not have a method defined for the URI segment,
-  the default method will now be executed. This addition allows for more flexible
-  handling of URIs in auto routing.
-  See :ref:`controller-default-method-fallback` for details.
+- **Auto Routing (Improved)**:
+    - Now you can route to Modules. See :ref:`auto-routing-improved-module-routing`
+      for details.
+    - If a controller is found that corresponds to a URI segment and that controller
+      does not have a method defined for the URI segment, the default method will
+      now be executed. This addition allows for more flexible handling of URIs in
+      auto routing. See :ref:`controller-default-method-fallback` for details.
 - **Filters:** Now you can use Filter Arguments with :ref:`$filters property <filters-filters-filter-arguments>`.
 - **Request:** Added ``IncomingRequest::setValidLocales()`` method to set valid locales.
 - **Table:** Added ``Table::setSyncRowsWithHeading()`` method to synchronize row columns with headings. See :ref:`table-sync-rows-with-headings` for details.
 - **Error Handling:** Now you can use :ref:`custom-exception-handlers`.
-- **RedirectException:** can also take an object that implements ResponseInterface as its first argument.
-- **RedirectException:** implements ResponsableInterface.
+- **RedirectException:**
+    - It can also take an object that implements ``ResponseInterface`` as its first argument.
+    - It implements ``ResponsableInterface``.
 - **DebugBar:** Now :ref:`view-routes` are displayed in *DEFINED ROUTES* on the *Routes* tab.
 
 Message Changes
@@ -174,11 +175,12 @@ Changes
 *******
 
 - **Images:** The default quality for WebP in ``GDHandler`` has been changed from 80 to 90.
-- **Config:** The deprecated Cookie items in **app/Config/App.php** has been removed.
-- **Config:** The deprecated Session items in **app/Config/App.php** has been removed.
-- **Config:** The deprecated CSRF items in **app/Config/App.php** has been removed.
-- **Config:** Routing settings have been moved to **app/Config/Routing.php** config file.
-  See :ref:`Upgrading Guide <upgrade-440-config-routing>`.
+- **Config:**
+    - The deprecated Cookie items in **app/Config/App.php** has been removed.
+    - The deprecated Session items in **app/Config/App.php** has been removed.
+    - The deprecated CSRF items in **app/Config/App.php** has been removed.
+    - Routing settings have been moved to **app/Config/Routing.php** config file.
+      See :ref:`Upgrading Guide <upgrade-440-config-routing>`.
 - **DownloadResponse:** When generating response headers, does not replace the ``Content-Disposition`` header if it was previously specified.
 - **Autoloader:** Before v4.4.0, CodeIgniter autoloader did not allow special
   characters that are illegal in filenames on certain operating systems.
