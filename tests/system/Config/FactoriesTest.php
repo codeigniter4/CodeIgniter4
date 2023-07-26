@@ -321,7 +321,7 @@ final class FactoriesTest extends CIUnitTestCase
         $this->assertNotSame($cell1, $cell2);
     }
 
-    public function testDefineTwice()
+    public function testDefineSameAliasTwiceWithDifferentClasses()
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
@@ -338,6 +338,24 @@ final class FactoriesTest extends CIUnitTestCase
             'CodeIgniter\Shield\Models\UserModel',
             EntityModel::class
         );
+    }
+
+    public function testDefineSameAliasAndSameClassTwice()
+    {
+        Factories::define(
+            'models',
+            'CodeIgniter\Shield\Models\UserModel',
+            UserModel::class
+        );
+        Factories::define(
+            'models',
+            'CodeIgniter\Shield\Models\UserModel',
+            UserModel::class
+        );
+
+        $model = model('CodeIgniter\Shield\Models\UserModel');
+
+        $this->assertInstanceOf(UserModel::class, $model);
     }
 
     public function testDefineNonExistentClass()
