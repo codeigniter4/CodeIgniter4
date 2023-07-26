@@ -73,6 +73,21 @@ This bug was fixed and now URIs for underscores (**foo_bar**) is not accessible.
 If you have links to URIs for underscores (**foo_bar**), update them with URIs
 for dashes (**foo-bar**).
 
+When Passing Fully Qualified Classnames to Factories
+====================================================
+
+The behavior of passing fully qualified classnames to Factories has been changed.
+See :ref:`ChangeLog <v440-factories>` for details.
+
+If you have code like ``model('\Myth\Auth\Models\UserModel::class')`` or
+``model('Myth\Auth\Models\UserModel')`` (the code may be in the third-party packages),
+and you expect to load your ``App\Models\UserModel``, you need to define the
+classname to be loaded before the first loading of that class::
+
+    Factories::define('models', 'Myth\Auth\Models\UserModel', 'App\Models\UserModel');
+
+See :ref:`factories-defining-classname-to-be-loaded` for details.
+
 Interface Changes
 =================
 

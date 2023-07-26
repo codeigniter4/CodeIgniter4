@@ -29,6 +29,35 @@ or more was specified. See :ref:`upgrade-440-uri-setsegment`.
 
 The next segment (``+1``) of the current last segment can be set as before.
 
+.. _v440-factories:
+
+Factories
+---------
+
+Passing Fully Qualified Classname
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Now ``preferApp`` works only when you request
+:ref:`a classname without a namespace <factories-passing-classname-without-namespace>`.
+
+For example, when you call ``model(\Myth\Auth\Models\UserModel::class)`` or
+``model('Myth\Auth\Models\UserModel')``:
+
+   - before:
+
+      - returns ``App\Models\UserModel`` if exists and ``preferApp`` is true (default)
+      - returns ``Myth\Auth\Models\UserModel`` if exists and ``preferApp`` is false
+
+   - after:
+
+      - returns ``Myth\Auth\Models\UserModel`` even if ``preferApp`` is true (default)
+      - returns ``App\Models\UserModel`` if you define ``Factories::define('models', 'Myth\Auth\Models\UserModel', 'App\Models\UserModel')`` before calling the ``model()``
+
+Property Name
+^^^^^^^^^^^^^
+
+The property ``Factories::$basenames`` has been renamed to ``$aliases``.
+
 .. _v440-interface-changes:
 
 Interface Changes
@@ -164,6 +193,8 @@ Others
 - **RedirectException:** can also take an object that implements ResponseInterface as its first argument.
 - **RedirectException:** implements ResponsableInterface.
 - **DebugBar:** Now :ref:`view-routes` are displayed in *DEFINED ROUTES* on the *Routes* tab.
+- **Factories:** You can now define the classname that will actually be loaded.
+  See :ref:`factories-defining-classname-to-be-loaded`.
 
 Message Changes
 ***************
