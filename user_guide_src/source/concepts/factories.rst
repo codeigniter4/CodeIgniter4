@@ -128,6 +128,29 @@ The second function, :php:func:`model()` returns a new instance of a Model class
 
 .. literalinclude:: factories/009.php
 
+.. _factories-defining-classname-to-be-loaded:
+
+Defining Classname to be Loaded
+*******************************
+
+.. versionadded:: 4.4.0
+
+You could define a classname to be loaded before loading the class with
+the ``Factories::define()`` method:
+
+.. literalinclude:: factories/014.php
+   :lines: 2-
+
+The first parameter is a component. The second parameter is a class alias
+(the first parameter to Factories magic static method), and the third parameter
+is the true full qualified classname to be loaded.
+
+After that, if you load ``Myth\Auth\Models\UserModel`` with Factories, the
+``App\Models\UserModel`` instance will be returned:
+
+.. literalinclude:: factories/015.php
+   :lines: 2-
+
 Factory Parameters
 ******************
 
