@@ -52,7 +52,7 @@ class Factories
     ];
 
     /**
-     * Mapping of class aliases to their true Full Qualified Class Name (FQCN).
+     * Mapping of class aliases to their true Fully Qualified Class Name (FQCN).
      *
      * Class aliases can be:
      *     - FQCN. E.g., 'App\Lib\SomeLib'
