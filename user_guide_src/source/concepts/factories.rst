@@ -54,8 +54,17 @@ by using the magic static method of the Factories class, ``Factories::models()``
 
 The static method name is called *component*.
 
-By default, Factories first searches in the ``App`` namespace for the path corresponding to the magic static method name.
+.. _factories-passing-classname-without-namespace:
+
+Passing Classname without Namespace
+-----------------------------------
+
+If you pass a classname without a namespace, Factories first searches in the
+``App`` namespace for the path corresponding to the magic static method name.
 ``Factories::models()`` searches the **app/Models** directory.
+
+Passing Short Classname
+^^^^^^^^^^^^^^^^^^^^^^^
 
 In the following code, if you have ``App\Models\UserModel``, the instance will be returned:
 
@@ -68,31 +77,35 @@ you get back the instance as before:
 
 .. literalinclude:: factories/003.php
 
-preferApp option
-----------------
+Passing Short Classname with Sub-directories
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You could also request a specific class:
+If you want to load a class in sub directories, you use the ``/`` as a separator.
+The following code loads **app/Libraries/Sub/SubLib.php** if it exists:
+
+.. literalinclude:: factories/013.php
+   :lines: 2-
+
+Passing Full Qualified Classname
+--------------------------------
+
+You could also request a full qualified classname:
 
 .. literalinclude:: factories/002.php
    :lines: 2-
 
-If you have only ``Blog\Models\UserModel``, the instance will be returned.
-But if you have both ``App\Models\UserModel`` and ``Blog\Models\UserModel``,
-the instance of ``App\Models\UserModel`` will be returned.
+It returns the instance of ``Blog\Models\UserModel`` if it exists.
 
-If you want to get ``Blog\Models\UserModel``, you need to disable the option ``preferApp``:
+.. note:: Prior to v4.4.0, when you requested a full qualified classname,
+    if you had only ``Blog\Models\UserModel``, the instance would be returned.
+    But if you had both ``App\Models\UserModel`` and ``Blog\Models\UserModel``,
+    the instance of ``App\Models\UserModel`` would be returned.
 
-.. literalinclude:: factories/010.php
-   :lines: 2-
+    If you wanted to get ``Blog\Models\UserModel``, you needed to disable the
+    option ``preferApp``:
 
-Loading a Class in Sub-directories
-==================================
-
-If you want to load a class in sub directories, you use the ``/`` as a separator.
-The following code loads **app/Libraries/Sub/SubLib.php**:
-
-.. literalinclude:: factories/013.php
-   :lines: 2-
+    .. literalinclude:: factories/010.php
+       :lines: 2-
 
 Convenience Functions
 *********************
@@ -153,6 +166,9 @@ getShared  boolean        Whether to return a shared instance of the class or lo
 preferApp  boolean        Whether a class with the same basename in the App namespace  ``true``
                           overrides other explicit class requests.
 ========== ============== ============================================================ ===================================================
+
+.. note:: Since v4.4.0, ``preferApp`` works only when you request
+    :ref:`a classname without a namespace <factories-passing-classname-without-namespace>`.
 
 Factories Behavior
 ******************
