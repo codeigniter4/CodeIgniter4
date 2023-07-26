@@ -42,6 +42,15 @@ final class PublisherInputTest extends CIUnitTestCase
         helper(['filesystem']);
     }
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->file = normalize_path($this->file);
+
+        $this->directory = normalize_path($this->directory);
+    }
+
     public function testAddPathFile()
     {
         $publisher = new Publisher(SUPPORTPATH . 'Files');
@@ -83,7 +92,7 @@ final class PublisherInputTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
+            $this->file,
         ];
 
         $publisher->addPath('Files');
@@ -99,7 +108,7 @@ final class PublisherInputTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
+            $this->file,
         ];
 
         $publisher->addPaths([
@@ -118,8 +127,8 @@ final class PublisherInputTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
-            SUPPORTPATH . 'Log/Handlers/TestHandler.php',
+            normalize_path(SUPPORTPATH . 'Files/baker/banana.php'),
+            normalize_path(SUPPORTPATH . 'Log/Handlers/TestHandler.php'),
         ];
 
         $publisher->addPaths([

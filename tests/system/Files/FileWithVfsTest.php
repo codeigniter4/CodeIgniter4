@@ -49,49 +49,49 @@ final class FileWithVfsTest extends CIUnitTestCase
     public function testDestinationUnknown()
     {
         $destination = $this->start . 'charlie/cherry.php';
-        $this->assertSame($destination, $this->file->getDestination($destination));
+        $this->assertSame($destination, normalize_path($this->file->getDestination($destination), false));
     }
 
     public function testDestinationSameFileSameFolder()
     {
         $destination = $this->start . 'able/apple.php';
-        $this->assertSame($this->start . 'able/apple_1.php', $this->file->getDestination($destination));
+        $this->assertSame($this->start . 'able/apple_1.php', normalize_path($this->file->getDestination($destination), false));
     }
 
     public function testDestinationSameFileDifferentFolder()
     {
         $destination = $this->start . 'baker/apple.php';
-        $this->assertSame($destination, $this->file->getDestination($destination));
+        $this->assertSame($destination, normalize_path($this->file->getDestination($destination), false));
     }
 
     public function testDestinationDifferentFileSameFolder()
     {
         $destination = $this->start . 'able/date.php';
-        $this->assertSame($destination, $this->file->getDestination($destination));
+        $this->assertSame($destination, normalize_path($this->file->getDestination($destination), false));
     }
 
     public function testDestinationDifferentFileDifferentFolder()
     {
         $destination = $this->start . 'baker/date.php';
-        $this->assertSame($destination, $this->file->getDestination($destination));
+        $this->assertSame($destination, normalize_path($this->file->getDestination($destination), false));
     }
 
     public function testDestinationExistingFileDifferentFolder()
     {
         $destination = $this->start . 'baker/banana.php';
-        $this->assertSame($this->start . 'baker/banana_1.php', $this->file->getDestination($destination));
+        $this->assertSame($this->start . 'baker/banana_1.php', normalize_path($this->file->getDestination($destination), false));
     }
 
     public function testDestinationDelimited()
     {
         $destination = $this->start . 'able/fig_3.php';
-        $this->assertSame($this->start . 'able/fig_4.php', $this->file->getDestination($destination));
+        $this->assertSame($this->start . 'able/fig_4.php', normalize_path($this->file->getDestination($destination), false));
     }
 
     public function testDestinationDelimitedAlpha()
     {
         $destination = $this->start . 'able/prune_ripe.php';
-        $this->assertSame($this->start . 'able/prune_ripe_1.php', $this->file->getDestination($destination));
+        $this->assertSame($this->start . 'able/prune_ripe_1.php', normalize_path($this->file->getDestination($destination), false));
     }
 
     public function testMoveNormal()

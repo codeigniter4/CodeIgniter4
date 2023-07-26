@@ -85,13 +85,13 @@ final class AutoloaderTest extends CIUnitTestCase
 
         $ns = $loader->getNamespace();
         $this->assertCount(1, $ns['App']);
-        $this->assertSame('ROOTPATH/app', clean_path($ns['App'][0]));
+        $this->assertSame('ROOTPATH/app', normalize_path(clean_path($ns['App'][0]), false));
 
         $loader->initialize(new Autoload(), new Modules());
 
         $ns = $loader->getNamespace();
         $this->assertCount(1, $ns['App']);
-        $this->assertSame('ROOTPATH/app', clean_path($ns['App'][0]));
+        $this->assertSame('ROOTPATH/app', normalize_path(clean_path($ns['App'][0]), false));
     }
 
     public function testServiceAutoLoaderFromShareInstances()
@@ -284,9 +284,15 @@ final class AutoloaderTest extends CIUnitTestCase
         $loader = new Autoloader();
         $loader->initialize($config, $modules);
 
-        $namespaces = $loader->getNamespace();
+        $namespaces = array_map(
+            static fn (array $paths): array => array_map(
+                static fn (string $path): string => normalize_path($path, false),
+                $paths
+            ),
+            $loader->getNamespace()
+        );
         $this->assertSame('/Config/Autoload/Psr/Log/', $namespaces['Psr\Log'][0]);
-        $this->assertStringContainsString(VENDORPATH, $namespaces['Psr\Log'][1]);
+        $this->assertStringContainsString(normalize_path(VENDORPATH, false), $namespaces['Psr\Log'][1]);
     }
 
     public function testComposerPackagesOnly()

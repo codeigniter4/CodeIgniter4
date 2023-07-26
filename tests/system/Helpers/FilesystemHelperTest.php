@@ -316,8 +316,6 @@ final class FilesystemHelperTest extends CIUnitTestCase
     {
         $vfs = vfsStream::setup('root', null, $this->structure);
 
-        $filenames = get_filenames($vfs->url(), true, false, false);
-
         $expected = [
             'vfs://root/boo/far',
             'vfs://root/boo/faz',
@@ -325,7 +323,10 @@ final class FilesystemHelperTest extends CIUnitTestCase
             'vfs://root/foo/baz',
             'vfs://root/simpleFile',
         ];
-        $this->assertSame($expected, $filenames);
+        $this->assertSame(
+            $expected,
+            array_map(static fn (string $file): string => normalize_path($file, false), get_filenames($vfs->url(), true, false, false))
+        );
     }
 
     public function testGetFilenamesWithHidden()
@@ -348,7 +349,10 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
         $vfs = vfsStream::setup('root', null, $this->structure);
 
-        $this->assertSame($expected, get_filenames($vfs->url(), false, true));
+        $this->assertSame(
+            $expected,
+            array_map(static fn (string $file): string => normalize_path($file, false), get_filenames($vfs->url(), false, true))
+        );
     }
 
     public function testGetFilenamesWithRelativeSource()
@@ -368,7 +372,10 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
         $vfs = vfsStream::setup('root', null, $this->structure);
 
-        $this->assertSame($expected, get_filenames($vfs->url(), null));
+        $this->assertSame(
+            $expected,
+            array_map(static fn (string $file): string => normalize_path($file, false), get_filenames($vfs->url(), null))
+        );
     }
 
     public function testGetFilenamesWithFullSource()
@@ -378,17 +385,20 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $vfs = vfsStream::setup('root', null, $this->structure);
 
         $expected = [
-            $vfs->url() . DIRECTORY_SEPARATOR . 'AnEmptyFolder',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'boo',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'boo/far',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'boo/faz',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'foo',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'foo/bar',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'foo/baz',
-            $vfs->url() . DIRECTORY_SEPARATOR . 'simpleFile',
+            $vfs->url() . '/AnEmptyFolder',
+            $vfs->url() . '/boo',
+            $vfs->url() . '/boo/far',
+            $vfs->url() . '/boo/faz',
+            $vfs->url() . '/foo',
+            $vfs->url() . '/foo/bar',
+            $vfs->url() . '/foo/baz',
+            $vfs->url() . '/simpleFile',
         ];
 
-        $this->assertSame($expected, get_filenames($vfs->url(), true));
+        $this->assertSame(
+            $expected,
+            array_map(static fn (string $file): string => normalize_path($file, false), get_filenames($vfs->url(), true)),
+        );
     }
 
     public function testGetFilenamesFailure()
@@ -398,7 +408,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testGetDirFileInfo()
     {
-        $file = SUPPORTPATH . 'Files/baker/banana.php';
+        $file = normalize_path(SUPPORTPATH . 'Files/baker/banana.php');
         $info = get_file_info($file);
 
         $expected = [
@@ -460,6 +470,11 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($expected, get_file_info(SUPPORTPATH . 'Files/baker/banana.php', 'readable,writable,executable'));
     }
 
+    /**
+     * chmod does not work well on Windows
+     *
+     * @requires OS Linux|Darwin
+     */
     public function testGetFileInfoPerms()
     {
         $file     = SUPPORTPATH . 'Files/baker/banana.php';
@@ -559,7 +574,10 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testRealPathResolved()
     {
-        $this->assertSame(SUPPORTPATH . 'Models/', set_realpath(SUPPORTPATH . 'Files/../Models', true));
+        $this->assertSame(
+            normalize_path(SUPPORTPATH . 'Models/'),
+            normalize_path(set_realpath(SUPPORTPATH . 'Files/../Models', true))
+        );
     }
 
     /**

@@ -43,6 +43,15 @@ final class FileCollectionTest extends CIUnitTestCase
         helper(['filesystem']);
     }
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->file = normalize_path($this->file);
+
+        $this->directory = normalize_path($this->directory);
+    }
+
     public function testResolveDirectoryDirectory()
     {
         $method = $this->getPrivateMethodInvoker(FileCollection::class, 'resolveDirectory');
@@ -60,9 +69,11 @@ final class FileCollectionTest extends CIUnitTestCase
         $method($this->file);
     }
 
+    /**
+     * @requires OS Linux|Darwin
+     */
     public function testResolveDirectorySymlink()
     {
-        // Create a symlink to test
         $link = sys_get_temp_dir() . DIRECTORY_SEPARATOR . bin2hex(random_bytes(4));
         symlink($this->directory, $link);
 
@@ -80,9 +91,11 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($this->file, $method($this->file));
     }
 
+    /**
+     * @requires OS Linux|Darwin
+     */
     public function testResolveFileSymlink()
     {
-        // Create a symlink to test
         $link = sys_get_temp_dir() . DIRECTORY_SEPARATOR . bin2hex(random_bytes(4));
         symlink($this->file, $link);
 
@@ -111,9 +124,14 @@ final class FileCollectionTest extends CIUnitTestCase
         ];
 
         $collection = new class ([$this->file]) extends FileCollection {
-            protected $files = [
-                SUPPORTPATH . 'Files/able/apple.php',
-            ];
+            protected $files = [SUPPORTPATH . 'Files/able/apple.php'];
+
+            public function get(): array
+            {
+                $this->files = array_map('normalize_path', $this->files);
+
+                return parent::get();
+            }
         };
 
         $this->assertSame($expected, $collection->get());
@@ -124,7 +142,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $collection = new class () extends FileCollection {
             protected function define(): void
             {
-                $this->add(SUPPORTPATH . 'Files/baker/banana.php');
+                $this->add(normalize_path(SUPPORTPATH . 'Files/baker/banana.php'));
             }
         };
 
@@ -172,7 +190,7 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
+            normalize_path(SUPPORTPATH . 'Files/baker/banana.php'),
         ];
 
         $files->add(SUPPORTPATH . 'Files');
@@ -186,12 +204,12 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $expected = [
             $this->directory . 'apple.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
+            normalize_path(SUPPORTPATH . 'Files/baker/banana.php'),
         ];
 
         $files->add([
             $this->directory . 'apple.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
+            normalize_path(SUPPORTPATH . 'Files/baker/banana.php'),
         ]);
 
         $this->assertSame($expected, $files->get());
@@ -205,12 +223,12 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
+            normalize_path(SUPPORTPATH . 'Files/baker/banana.php'),
         ];
 
         $files->add([
             SUPPORTPATH . 'Files/able', // directory
-            SUPPORTPATH . 'Files/baker/banana.php',
+            normalize_path(SUPPORTPATH . 'Files/baker/banana.php'),
         ]);
 
         $this->assertSame($expected, $files->get());
@@ -224,8 +242,8 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
-            SUPPORTPATH . 'Log/Handlers/TestHandler.php',
+            normalize_path(SUPPORTPATH . 'Files/baker/banana.php'),
+            normalize_path(SUPPORTPATH . 'Log/Handlers/TestHandler.php'),
         ];
 
         $files->add([
@@ -389,7 +407,7 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
+            normalize_path(SUPPORTPATH . 'Files/baker/banana.php'),
         ];
 
         $collection->addDirectory(SUPPORTPATH . 'Files', true);
@@ -404,7 +422,7 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
+            normalize_path(SUPPORTPATH . 'Files/baker/banana.php'),
         ];
 
         $collection->addDirectories([
@@ -422,8 +440,8 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->directory . 'apple.php',
             $this->directory . 'fig_3.php',
             $this->directory . 'prune_ripe.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
-            SUPPORTPATH . 'Log/Handlers/TestHandler.php',
+            normalize_path(SUPPORTPATH . 'Files/baker/banana.php'),
+            normalize_path(SUPPORTPATH . 'Log/Handlers/TestHandler.php'),
         ];
 
         $collection->addDirectories([
@@ -453,7 +471,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $expected = [
             $this->directory . 'apple.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
+            normalize_path(SUPPORTPATH . 'Files/baker/banana.php'),
         ];
 
         $collection->removePattern('#[a-z]+_.*#');
@@ -468,7 +486,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $expected = [
             $this->directory . 'apple.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
+            normalize_path(SUPPORTPATH . 'Files/baker/banana.php'),
         ];
 
         $collection->removePattern('*_*.php');
@@ -482,7 +500,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $collection->addDirectory(SUPPORTPATH . 'Files', true);
 
         $expected = [
-            SUPPORTPATH . 'Files/baker/banana.php',
+            normalize_path(SUPPORTPATH . 'Files/baker/banana.php'),
         ];
 
         $collection->removePattern('*.php', $this->directory);
@@ -538,7 +556,7 @@ final class FileCollectionTest extends CIUnitTestCase
 
         $expected = [
             $this->directory . 'fig_3.php',
-            SUPPORTPATH . 'Files/baker/banana.php',
+            normalize_path(SUPPORTPATH . 'Files/baker/banana.php'),
         ];
 
         $collection->retainPattern('*_?.php', $this->directory);

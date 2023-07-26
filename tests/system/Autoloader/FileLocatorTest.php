@@ -55,7 +55,7 @@ final class FileLocatorTest extends CIUnitTestCase
     {
         $file = 'Controllers/Home'; // not namespaced
 
-        $expected = APPPATH . 'Controllers/Home.php';
+        $expected = normalize_path(APPPATH . 'Controllers/Home.php');
 
         $this->assertSame($expected, $this->locator->locateFile($file));
     }
@@ -71,7 +71,7 @@ final class FileLocatorTest extends CIUnitTestCase
     {
         $file = 'welcome_message'; // not namespaced
 
-        $expected = APPPATH . 'Views/welcome_message.php';
+        $expected = normalize_path(APPPATH . 'Views/welcome_message.php');
 
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
@@ -89,7 +89,7 @@ final class FileLocatorTest extends CIUnitTestCase
     {
         $file = 'Controllers/Home'; // not namespaced
 
-        $expected = APPPATH . 'Controllers/Home.php';
+        $expected = normalize_path(APPPATH . 'Controllers/Home.php');
 
         // This works because $file contains `Controllers`.
         $this->assertSame($expected, $this->locator->locateFile($file, 'Controllers'));
@@ -99,7 +99,7 @@ final class FileLocatorTest extends CIUnitTestCase
     {
         $file = '\App\Views/errors/html/error_404.php';
 
-        $expected = APPPATH . 'Views/errors/html/error_404.php';
+        $expected = normalize_path(APPPATH . 'Views/errors/html/error_404.php');
 
         // This works because $file contains `Views`.
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
@@ -109,7 +109,7 @@ final class FileLocatorTest extends CIUnitTestCase
     {
         $file = 'Views/welcome_message.php'; // not namespaced
 
-        $expected = APPPATH . 'Views/welcome_message.php';
+        $expected = normalize_path(APPPATH . 'Views/welcome_message.php');
 
         // This works because $file contains `Views`.
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
@@ -119,7 +119,7 @@ final class FileLocatorTest extends CIUnitTestCase
     {
         $file = '\Errors\error_404';
 
-        $expected = APPPATH . 'Views/errors/html/error_404.php';
+        $expected = normalize_path(APPPATH . 'Views/errors/html/error_404.php');
 
         // The namespace `Errors` (APPPATH . 'Views/errors') + the folder (`html`) + `error_404`
         $this->assertSame($expected, $this->locator->locateFile($file, 'html'));
@@ -129,7 +129,7 @@ final class FileLocatorTest extends CIUnitTestCase
     {
         $file = '\Errors\html/error_404';
 
-        $expected = APPPATH . 'Views/errors/html/error_404.php';
+        $expected = normalize_path(APPPATH . 'Views/errors/html/error_404.php');
 
         $this->assertSame($expected, $this->locator->locateFile($file, 'html'));
     }
@@ -138,7 +138,7 @@ final class FileLocatorTest extends CIUnitTestCase
     {
         $file = '\CodeIgniter\Devkit\View\Views/simple';
 
-        $expected = ROOTPATH . 'tests/_support/View/Views/simple.php';
+        $expected = normalize_path(ROOTPATH . 'tests/_support/View/Views/simple.php');
 
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
@@ -161,14 +161,14 @@ final class FileLocatorTest extends CIUnitTestCase
     {
         $file = 'Acme\SampleProject\View\Views\simple';
 
-        $expected = ROOTPATH . 'tests/_support/View/Views/simple.php';
+        $expected = normalize_path(ROOTPATH . 'tests/_support/View/Views/simple.php');
 
         $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
     public function testSearchSimple()
     {
-        $expected = APPPATH . 'Config/App.php';
+        $expected = normalize_path(APPPATH . 'Config/App.php');
 
         $foundFiles = $this->locator->search('Config/App.php');
 
@@ -177,7 +177,7 @@ final class FileLocatorTest extends CIUnitTestCase
 
     public function testSearchWithFileExtension()
     {
-        $expected = APPPATH . 'Config/App.php';
+        $expected = normalize_path(APPPATH . 'Config/App.php');
 
         $foundFiles = $this->locator->search('Config/App', 'php');
 
@@ -208,8 +208,8 @@ final class FileLocatorTest extends CIUnitTestCase
 
         $this->assertSame(
             [
-                SYSTEMPATH . 'Language/en/Validation.php',
-                APPPATH . 'Language/en/Validation.php',
+                normalize_path(SYSTEMPATH . 'Language/en/Validation.php'),
+                normalize_path(APPPATH . 'Language/en/Validation.php'),
             ],
             $foundFiles
         );
@@ -224,9 +224,8 @@ final class FileLocatorTest extends CIUnitTestCase
     {
         $files = $this->locator->listFiles('Config/');
 
-        $expectedWin = APPPATH . 'Config\App.php';
-        $expectedLin = APPPATH . 'Config/App.php';
-        $this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
+        $expected = normalize_path(APPPATH . 'Config/App.php');
+        $this->assertTrue(in_array($expected, $files, true));
     }
 
     public function testListFilesDoesNotContainDirectories()

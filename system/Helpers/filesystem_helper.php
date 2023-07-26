@@ -253,15 +253,17 @@ if (! function_exists('get_dir_file_info')) {
     function get_dir_file_info(string $sourceDir, bool $topLevelOnly = true, bool $recursion = false): array
     {
         static $fileData = [];
-        $relativePath    = $sourceDir;
+
+        $sourceDir    = realpath($sourceDir) ?: $sourceDir;
+        $relativePath = $sourceDir;
 
         try {
             $fp = opendir($sourceDir);
 
-            // reset the array and make sure $source_dir has a trailing slash on the initial call
+            // reset the array and make sure $sourceDir has a trailing slash on the initial call
             if ($recursion === false) {
                 $fileData  = [];
-                $sourceDir = rtrim(realpath($sourceDir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+                $sourceDir = rtrim($sourceDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             }
 
             // Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast

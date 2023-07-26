@@ -44,6 +44,15 @@ final class PublisherSupportTest extends CIUnitTestCase
         helper(['filesystem']);
     }
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->file = normalize_path($this->file);
+
+        $this->directory = normalize_path($this->directory);
+    }
+
     public function testDiscoverDefault()
     {
         $result = Publisher::discover();
