@@ -561,4 +561,35 @@ final class FilesystemHelperTest extends CIUnitTestCase
     {
         $this->assertSame(SUPPORTPATH . 'Models/', set_realpath(SUPPORTPATH . 'Files/../Models', true));
     }
+
+    /**
+     * @dataProvider provideNormalizePath
+     */
+    public function testNormalizePath(string $expected, string $input, bool $native): void
+    {
+        $this->assertSame($expected, normalize_path($input, $native));
+    }
+
+    public static function provideNormalizePath(): iterable
+    {
+        yield ['/etc/hosts', '/etc\hosts', false];
+
+        yield ['C:/App/Users/User/Desktop/bar.php', 'C:\App/Users\User\Desktop/bar.php', false];
+
+        yield ['var/socket/tmp', 'var\socket/tmp', false];
+
+        if (! is_windows()) {
+            yield ['/etc/hosts', '/etc\hosts', true];
+
+            yield ['C:/App/Users/User/Desktop/bar.php', 'C:\App/Users\User\Desktop/bar.php', true];
+
+            yield ['var/socket/tmp', 'var\socket/tmp', true];
+        } else {
+            yield ['\etc\hosts', '/etc\hosts', true];
+
+            yield ['C:\App\Users\User\Desktop\bar.php', 'C:\App/Users\User\Desktop/bar.php', true];
+
+            yield ['var\socket\tmp', 'var\socket/tmp', true];
+        }
+    }
 }

@@ -448,3 +448,20 @@ if (! function_exists('set_realpath')) {
         return is_dir($path) ? rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR : $path;
     }
 }
+
+if (! function_exists('normalize_path')) {
+    /**
+     * Normalizes the given path.
+     *
+     * @param bool $native If true, this will normalize all slashes to `DIRECTORY_SEPARATOR`. Otherwise,
+     *                     this will change all slashes to forward slashes ("/").
+     */
+    function normalize_path(string $path, bool $native = true): string
+    {
+        if ($native) {
+            return str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $path);
+        }
+
+        return str_replace('\\', '/', $path);
+    }
+}
