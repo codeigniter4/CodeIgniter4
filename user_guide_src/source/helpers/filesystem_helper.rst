@@ -245,3 +245,18 @@ The following functions are available:
     Examples:
 
     .. literalinclude:: filesystem_helper/015.php
+
+.. versionadded:: 4.3.7
+
+.. php:function:: normalize_path($path[, $native = true])
+
+    :param  string $path: File path
+    :param  bool $native: If true, this will normalize all slashes to `DIRECTORY_SEPARATOR`. Otherwise, this will change all slashes to forward slashes ("/").
+    :returns:   Normalized file path
+    :rtype:     string
+
+    Normalizes a given path.
+
+    Examples:
+
+    .. literalinclude:: filesystem_helper/016.php
