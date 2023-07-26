@@ -141,41 +141,18 @@ class Factories
         }
 
         // Check for an existing definition
-        if (isset(self::$aliases[$options['component']][$alias])) {
-            $class = self::$aliases[$options['component']][$alias];
-
-            // Need to verify if the shared instance matches the request
-            if (self::verifyInstanceOf($options, $class)) {
-                // Check for an existing instance
-                if (isset(self::$instances[$options['component']][$class])) {
-                    return self::$instances[$options['component']][$class];
-                }
-
-                self::$instances[$options['component']][$class] = new $class(...$arguments);
-
-                return self::$instances[$options['component']][$class];
-
-            }
+        $instance = self::getDefinedInstance($options, $alias, $arguments);
+        if ($instance !== null) {
+            return $instance;
         }
 
         // Check for an existing Config definition with basename.
         if (self::isConfig($options['component'])) {
             $basename = self::getBasename($alias);
 
-            if (isset(self::$aliases[$options['component']][$basename])) {
-                $class = self::$aliases[$options['component']][$basename];
-
-                // Need to verify if the shared instance matches the request
-                if (self::verifyInstanceOf($options, $class)) {
-                    // Check for an existing instance
-                    if (isset(self::$instances[$options['component']][$class])) {
-                        return self::$instances[$options['component']][$class];
-                    }
-
-                    self::$instances[$options['component']][$class] = new $class(...$arguments);
-
-                    return self::$instances[$options['component']][$class];
-                }
+            $instance = self::getDefinedInstance($options, $basename, $arguments);
+            if ($instance !== null) {
+                return $instance;
             }
         }
 
@@ -193,6 +170,32 @@ class Factories
         }
 
         return self::$instances[$options['component']][$class];
+    }
+
+    /**
+     * Gets the defined instance. If not exists, creates new one.
+     *
+     * @return object|null
+     */
+    private static function getDefinedInstance(array $options, string $alias, array $arguments)
+    {
+        if (isset(self::$aliases[$options['component']][$alias])) {
+            $class = self::$aliases[$options['component']][$alias];
+
+            // Need to verify if the shared instance matches the request
+            if (self::verifyInstanceOf($options, $class)) {
+                // Check for an existing instance
+                if (isset(self::$instances[$options['component']][$class])) {
+                    return self::$instances[$options['component']][$class];
+                }
+
+                self::$instances[$options['component']][$class] = new $class(...$arguments);
+
+                return self::$instances[$options['component']][$class];
+            }
+        }
+
+        return null;
     }
 
     /**
