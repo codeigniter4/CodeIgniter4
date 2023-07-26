@@ -28,7 +28,7 @@ permissions:
 
 jobs:
   build:
-    name: Compilation of SCSS (Dart Sass)
+    name: Compilation of SCSS (Node Sass)
     runs-on: ubuntu-22.04
 
     steps:
@@ -41,13 +41,13 @@ jobs:
           # node version based on dart-sass test workflow
           node-version: 16
 
-      - name: Install Dart Sass
+      - name: Install sass and node-sass
         run: |
-          npm install --global sass
+          npm install --global sass node-sass
           sass --version
 
-      - name: Run Dart Sass
-        run: sass --no-source-map admin/css/debug-toolbar/toolbar.scss system/Debug/Toolbar/Views/toolbar.css
+      - name: Run node-sass
+        run: node-sass admin/css/debug-toolbar/toolbar.scss system/Debug/Toolbar/Views/toolbar.css --indent-type space --indent-width 4 --output-style expanded --linefeed lf
 
       - name: Check for changed CSS files
         run: |
