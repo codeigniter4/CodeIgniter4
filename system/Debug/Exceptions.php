@@ -334,11 +334,11 @@ class Exceptions
     /**
      * Mask sensitive data in the trace.
      *
-     * @param array|object $trace
+     * @param array $trace
      *
-     * @return array|object
+     * @return array
      *
-     * @deprecated No longer used. Moved to BaseExceptionHandler.
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     protected function maskSensitiveData($trace, array $keysToMask, string $path = '')
     {
@@ -353,6 +353,8 @@ class Exceptions
      * @param array|object $args
      *
      * @return array|object
+     *
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     private function maskData($args, array $keysToMask, string $path = '')
     {
