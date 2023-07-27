@@ -98,11 +98,8 @@ final class UpsertTest extends CIUnitTestCase
                 break;
 
             case 'Postgre':
-
             case 'SQLite3':
-
             case 'SQLSRV':
-
             case 'OCI8':
                 // postgre, sqlite, sqlsrv, oracle - counts row with no change
                 $this->assertSame(3, $affectedRows1);

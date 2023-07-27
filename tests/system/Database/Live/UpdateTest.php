@@ -342,7 +342,6 @@ final class UpdateTest extends CIUnitTestCase
                 'country' => 'Greece',
             ],
             [
-
                 'email'   => 'ahmadinejad@world.com',
                 'name'    => 'Ahmadinejad No change',
                 'country' => 'Greece',

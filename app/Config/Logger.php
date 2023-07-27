@@ -74,14 +74,12 @@ class Logger extends BaseConfig
      * the handler on top and continuing down.
      */
     public array $handlers = [
-
         /*
          * --------------------------------------------------------------------
          * File Handler
          * --------------------------------------------------------------------
          */
         FileHandler::class => [
-
             // The log levels that this handler will handle.
             'handles' => [
                 'critical',
