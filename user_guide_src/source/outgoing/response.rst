@@ -111,7 +111,7 @@ When you want to redirect back, use ``redirect()->back()``:
 
 .. note:: ``redirect()->back()`` is not the same as browser "back" button.
     It takes a visitor to "the last page viewed during the Session" when the Session is available.
-    If the Session hasn’t been loaded, or is otherwise unavailable, then a sanitized version of HTTP_REFERER will be used.
+    If the Session hasn't been loaded, or is otherwise unavailable, then a sanitized version of HTTP_REFERER will be used.
 
 .. _response-redirect-status-code:
 
