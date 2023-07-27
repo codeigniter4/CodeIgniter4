@@ -187,7 +187,7 @@ class Forge extends BaseForge
     protected function _processColumn(array $field): string
     {
         $constraint = '';
-        // @todo: can’t cover multi pattern when set type.
+        // @todo: can't cover multi pattern when set type.
         if ($field['type'] === 'VARCHAR2' && strpos($field['length'], "('") === 0) {
             $constraint = ' CHECK(' . $this->db->escapeIdentifiers($field['name'])
                 . ' IN ' . $field['length'] . ')';

@@ -392,7 +392,7 @@ necessary with our new implementation. However, it may happen that your
 application relied on these values, so here are alternative methods of
 accessing them:
 
-  - session_id: ``$session->session_id`` or ``session_id()`` (PHP’s built-in function)
+  - session_id: ``$session->session_id`` or ``session_id()`` (PHP's built-in function)
   - ip_address: ``$_SERVER['REMOTE_ADDR']``
   - user_agent: ``$_SERVER['HTTP_USER_AGENT']`` (unused by sessions)
   - last_activity: Depends on the storage, no straightforward way. Sorry!

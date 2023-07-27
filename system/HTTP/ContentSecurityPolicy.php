@@ -327,7 +327,7 @@ class ContentSecurityPolicy
     /**
      * Adds a new base_uri value. Can be either a URI class or a simple string.
      *
-     * base_uri restricts the URLs that can appear in a page’s <base> element.
+     * base_uri restricts the URLs that can appear in a page's <base> element.
      *
      * @see http://www.w3.org/TR/CSP/#directive-base-uri
      *
