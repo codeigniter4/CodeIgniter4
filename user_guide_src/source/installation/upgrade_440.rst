@@ -47,7 +47,7 @@ If your code depends on this bug, fix the segment number.
 .. literalinclude:: upgrade_440/002.php
    :lines: 2-
 
-When you extend Exceptions
+When You Extend Exceptions
 ==========================
 
 If you are extending ``CodeIgniter\Debug\Exceptions`` and have not overridden
