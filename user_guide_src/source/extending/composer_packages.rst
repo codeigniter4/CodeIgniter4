@@ -16,6 +16,8 @@ Folder Structure
 Here's a typical directory structure for a Composer package::
 
     your-package-name/
+    ├── .gitattributes
+    ├── .gitignore
     ├── README.md
     ├── composer.json
     ├── src/
