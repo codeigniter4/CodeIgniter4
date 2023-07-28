@@ -234,7 +234,7 @@ class IncomingRequest extends Request
      *
      * @return void
      *
-     * @deprecated No longer used.
+     * @deprecated 4.4.0 No longer used.
      */
     protected function detectURI(string $protocol, string $baseURL)
     {
@@ -463,7 +463,7 @@ class IncomingRequest extends Request
      *
      * @return $this
      *
-     * @deprecated This method will be private. The parameter $config is deprecated. No longer used.
+     * @deprecated 4.4.0 This method will be private. The parameter $config is deprecated. No longer used.
      */
     public function setPath(string $path, ?App $config = null)
     {
@@ -911,7 +911,7 @@ class IncomingRequest extends Request
      *
      * Do some final cleaning of the URI and return it, currently only used in static::_parse_request_uri()
      *
-     * @deprecated Use URI::removeDotSegments() directly
+     * @deprecated 4.1.2 Use URI::removeDotSegments() directly
      */
     protected function removeRelativeDirectory(string $uri): string
     {
