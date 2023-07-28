@@ -36,14 +36,14 @@ class URI
      *
      * @var string
      *
-     * @deprecated Not used.
+     * @deprecated 4.4.0 Not used.
      */
     protected $uriString;
 
     /**
      * The Current baseURL.
      *
-     * @deprecated Use SiteURI instead.
+     * @deprecated 4.4.0 Use SiteURI instead.
      */
     private ?string $baseURL = null;
 
@@ -292,7 +292,7 @@ class URI
      *
      * @throws HTTPException
      *
-     * @deprecated This method will be private.
+     * @deprecated 4.4.0 This method will be private.
      */
     public function setURI(?string $uri = null)
     {
@@ -705,7 +705,7 @@ class URI
      *
      * @return $this
      *
-     * @deprecated Use `withScheme()` instead.
+     * @deprecated 4.4.0 Use `withScheme()` instead.
      */
     public function setScheme(string $str)
     {
