@@ -49,7 +49,6 @@ final class DefinedRouteCollector
 
             foreach ($routes as $route => $handler) {
                 if (is_string($handler) || $handler instanceof Closure) {
-
                     if ($handler instanceof Closure) {
                         $view = $this->routeCollection->getRoutesOptions($route, $method)['view'] ?? false;
 
