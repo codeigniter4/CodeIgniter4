@@ -189,14 +189,15 @@ with the ``new`` command:
 
 .. literalinclude:: modules/008.php
 
-Config files are automatically discovered whenever using the :php:func:`config()` function that is always available.
+Config files are automatically discovered whenever using the :php:func:`config()` function that is always available, and you pass a short classname to it.
 
 .. note:: We don't recommend you use the same short classname in modules.
-    Modules that need to override or add to known configurations in **app/Config/** should use :ref:`registrars`.
+    Modules that need to override or add to known configurations in **app/Config/** should use :ref:`Implicit Registrars <registrars>`.
 
-.. note:: ``config()`` finds the file in **app/Config/** when there is a class with the same shortname,
+.. note:: Prior to v4.4.0, ``config()`` finds the file in **app/Config/** when there
+    is a class with the same shortname,
     even if you specify a fully qualified class name like ``config(\Acme\Blog\Config\Blog::class)``.
-    This is because ``config()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`factories-loading-class` for more information.
+    This behavior has been fixed in v4.4.0, and returns the specified instance.
 
 Migrations
 ==========
