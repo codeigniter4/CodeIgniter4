@@ -72,6 +72,46 @@ CodeIgniter and exit()
 The ``CodeIgniter::run()`` method no longer calls ``exit(EXIT_SUCCESS)``. The
 exit call is moved to **public/index.php**.
 
+.. _v440-site-uri-changes:
+
+Site URI Changes
+================
+
+A new ``SiteURI`` class that extends the ``URI`` class and represents the site
+URI has been added, and now it is used in many places that need the current URI.
+
+``$this->request->getUri()`` in controllers returns the ``SiteURI`` instance.
+Also, :php:func:`site_url()`, :php:func:`base_url()`, and :php:func:`current_url()`
+use the SiteURI internally.
+
+getPath()
+---------
+
+The ``getPath()`` method now always returns the full URI path with leading ``/``.
+Therefore, when your baseURL has sub-directories and you want to get the relative
+path to baseURL, you must use the new ``getRoutePath()`` method instead.
+
+For example::
+
+            baseURL: http://localhost:8888/CodeIgniter4/
+    The current URI: http://localhost:8888/CodeIgniter4/foo/bar
+          getPath(): /CodeIgniter4/foo/bar
+     getRoutePath(): foo/bar
+
+Site URI Values
+---------------
+
+The SiteURI class normalizes site URIs more strictly than before, and some bugs
+have been fixed.
+
+As a result, the framework may return site URIs or the URI paths slightly differently
+than in previous versions.
+For example, ``/`` will be added after ``index.php``::
+
+    http://example.com/test/index.php?page=1
+    ↓
+    http://example.com/test/index.php/?page=1
+
 .. _v440-interface-changes:
 
 Interface Changes
@@ -192,6 +232,8 @@ Libraries
   the value of the `full_path` index of the file if it was uploaded via directory upload.
 - **CURLRequest:** Added a request option ``proxy``. See
   :ref:`CURLRequest Class <curlrequest-request-options-proxy>`.
+- **URI:** A new ``SiteURI`` class that extends ``URI`` and represents the site
+  URI has been added.
 
 Helpers and Functions
 =====================

@@ -1,3 +1,3 @@
 <?php
 
-$path = $this->request->getPath();
+$uri = $this->request->getUri();
