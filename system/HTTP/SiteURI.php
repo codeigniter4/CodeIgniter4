@@ -145,7 +145,7 @@ class SiteURI extends URI
         $uri = new URI($baseURL);
 
         // Update scheme
-        if ($scheme !== null) {
+        if ($scheme !== null && $scheme !== '') {
             $uri->setScheme($scheme);
         } elseif ($configApp->forceGlobalSecureRequests) {
             $uri->setScheme('https');
@@ -381,13 +381,12 @@ class SiteURI extends URI
 
         $uri = new self($config, $relativePath, $host, $scheme);
 
-        return URI::createURIString(
-            $uri->getScheme(),
-            $uri->getAuthority(),
-            $uri->getPath(),
-            $uri->getQuery(),
-            $uri->getFragment()
-        );
+        // Support protocol-relative links
+        if ($scheme === '') {
+            return substr((string) $uri, strlen($uri->getScheme()) + 1);
+        }
+
+        return (string) $uri;
     }
 
     /**
@@ -420,12 +419,11 @@ class SiteURI extends URI
 
         $uri = new self($config, $relativePath, $host, $scheme);
 
-        return URI::createURIString(
-            $uri->getScheme(),
-            $uri->getAuthority(),
-            $uri->getPath(),
-            $uri->getQuery(),
-            $uri->getFragment()
-        );
+        // Support protocol-relative links
+        if ($scheme === '') {
+            return substr((string) $uri, strlen($uri->getScheme()) + 1);
+        }
+
+        return (string) $uri;
     }
 }

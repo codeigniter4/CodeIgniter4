@@ -33,7 +33,6 @@ if (! function_exists('site_url')) {
 
         assert($currentURI instanceof SiteURI);
 
-        // @TODO supprot protocol-relative links
         return $currentURI->siteUrl($relativePath, $scheme, $config);
     }
 }
