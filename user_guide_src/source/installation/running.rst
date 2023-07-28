@@ -182,12 +182,85 @@ The above configuration assumes the project folder is located as follows:
        │      └── public/  (DocumentRoot for myproject.local)
        └── htdocs/
 
+Restart Apache.
+
 Testing
 -------
 
 With the above configuration, your webapp would be accessed with the URL **http://myproject.local/** in your browser.
 
 Apache needs to be restarted whenever you change its configuration.
+
+Hosting with Subfolder
+======================
+
+If you want a baseURL like **http://localhost/myproject/** with a subfolder,
+there are three ways.
+
+Making Symlink
+--------------
+
+Place your project folder as follows, where **htdocs** is the Apache document root::
+
+    ├── myproject/ (project folder)
+    │      └── public/
+    └── htdocs/
+
+Navigate to the **htdocs** folder and create a symbolic link as follows::
+
+    > cd htdocs/
+    > ln -s ../myproject/public/ myproject
+
+Using Alias
+-----------
+
+Place your project folder as follows, where **htdocs** is the Apache document root::
+
+    ├── myproject/ (project folder)
+    │      └── public/
+    └── htdocs/
+
+Add the following in the main configuration file, e.g., **apache2/conf/httpd.conf**:
+
+.. code-block:: apache
+
+    Alias /myproject /opt/lamp/apache2/myproject/public
+    <Directory "/opt/lamp/apache2/myproject/public">
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+Restart Apache.
+
+Adding .htaccess
+----------------
+
+The last resort is to add **.htaccess** to the project root.
+
+It is not recommended that you place the project folder in the document root.
+However, if you have no other choice, like on a shared server, you can use this.
+
+Place your project folder as follows, where **htdocs** is the Apache document root,
+and create the **.htaccess** file::
+
+    └── htdocs/
+        └── myproject/ (project folder)
+            ├── .htaccess
+            └── public/
+
+And edit **.htaccess** as follows:
+
+.. code-block:: apache
+
+    <IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteRule ^(.*)$ public/$1 [L]
+    </IfModule>
+
+    <FilesMatch "^\.">
+        Require all denied
+        Satisfy All
+    </FilesMatch>
 
 Hosting with mod_userdir (Shared Hosts)
 =======================================

@@ -24,8 +24,10 @@ $finder = Finder::create()
     ])
     ->notPath([
         'ci3sample/',
-        'libraries/sessions/016.php',
         'database/query_builder/075.php',
+        'libraries/sessions/016.php',
+        'outgoing/response/031.php',
+        'outgoing/response/032.php',
     ]);
 
 $overrides = [
@@ -34,6 +36,23 @@ $overrides = [
     'no_unused_imports'                  => false,
     'class_attributes_separation'        => false,
     'php_unit_data_provider_return_type' => true,
+    'no_extra_blank_lines'               => [
+        'tokens' => [
+            'attribute',
+            'break',
+            'case',
+            'continue',
+            'curly_brace_block',
+            'default',
+            'extra',
+            'parenthesis_brace_block',
+            'return',
+            'square_brace_block',
+            'switch',
+            'throw',
+            'use',
+        ],
+    ],
 ];
 
 $options = [

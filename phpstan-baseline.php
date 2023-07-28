@@ -2,31 +2,6 @@
 
 $ignoreErrors = [];
 $ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Kint\\:\\:\\$plugins has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Kint.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Kint\\:\\:\\$richObjectPlugins has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Kint.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Kint\\:\\:\\$richTabPlugins has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Kint.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method App\\\\Controllers\\\\BaseController\\:\\:initController\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Controllers/BaseController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method App\\\\Controllers\\\\Home\\:\\:index\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Controllers/Home.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\Autoloader\\:\\:discoverComposerNamespaces\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',

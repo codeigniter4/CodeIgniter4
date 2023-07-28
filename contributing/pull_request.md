@@ -28,7 +28,7 @@ Before we look into how to contribute to CodeIgniter4, here are some guidelines.
 Your Pull Requests (PRs) need to meet our guidelines.
 
 If your Pull Requests fail to pass these guidelines, they will be declined,
-and you will need to re-submit when you’ve made the changes.
+and you will need to re-submit when you've made the changes.
 This might sound a bit tough, but it is required for us to maintain the quality of the codebase.
 
 ### PHP Style
