@@ -324,8 +324,20 @@ Deprecations
   ``$redirect`` in ``Security`` are deprecated, and no longer used. Use
   ``$config`` instead.
 - **URI:**
+    - ``URI::$uriString`` is deprecated.
+    - ``URI::$baseURL`` is deprecated. Use ``SiteURI`` instead.
     - ``URI::setSilent()`` is deprecated.
     - ``URI::setScheme()`` is deprecated. Use ``withScheme()`` instead.
+    - ``URI::setURI()`` is deprecated.
+- **IncomingRequest:**
+    - ``IncomingRequest::detectURI()`` is deprecated and no longer used.
+    - ``IncomingRequest::detectPath()`` is deprecated, and no longer used. It
+      moved to ``SiteURIFactory``.
+    - ``IncomingRequest::parseRequestURI()`` is deprecated, and no longer used. It
+      moved to ``SiteURIFactory``.
+    - ``IncomingRequest::parseQueryString()`` is deprecated, and no longer used. It
+      moved to ``SiteURIFactory``.
+    - ``IncomingRequest::setPath()`` is deprecated.
 
 Bugs Fixed
 **********
