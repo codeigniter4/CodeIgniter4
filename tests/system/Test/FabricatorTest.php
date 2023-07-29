@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Test;
 
-use CodeIgniter\Database\ModelFactory;
+use CodeIgniter\Config\Factories;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\FabricatorModel;
@@ -98,12 +98,16 @@ final class FabricatorTest extends CIUnitTestCase
 
     public function testModelUsesNewInstance()
     {
-        // Inject the wrong model for UserModel to show it is ignored by Fabricator
+        // Inject the wrong model for UserModel
         $mock = new FabricatorModel();
-        ModelFactory::injectMock(UserModel::class, $mock);
+        Factories::injectMock('models', UserModel::class, $mock);
 
         $fabricator = new Fabricator(UserModel::class);
-        $this->assertInstanceOf(UserModel::class, $fabricator->getModel());
+
+        // Fabricator gets the instance from Factories, so it is FabricatorModel.
+        $this->assertInstanceOf(FabricatorModel::class, $fabricator->getModel());
+        // But Fabricator creates a new instance.
+        $this->assertNotSame($mock, $fabricator->getModel());
     }
 
     public function testGetModelReturnsModel()

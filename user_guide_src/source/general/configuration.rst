@@ -47,9 +47,10 @@ All of the configuration files that ship with CodeIgniter are namespaced with
 ``Config``. Using this namespace in your application will provide the best
 performance since it knows exactly where to find the files.
 
-.. note:: ``config()`` finds the file in **app/Config/** when there is a class with the same shortname,
+.. note:: Prior to v4.4.0, ``config()`` finds the file in **app/Config/** when there
+    is a class with the same shortname,
     even if you specify a fully qualified class name like ``config(\Acme\Blog\Config\Blog::class)``.
-    This is because ``config()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`factories-loading-class` for more information.
+    This behavior has been fixed in v4.4.0, and returns the specified instance.
 
 Getting a Config Property
 =========================
