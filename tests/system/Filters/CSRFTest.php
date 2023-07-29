@@ -41,7 +41,7 @@ final class CSRFTest extends CIUnitTestCase
         $this->config = new \Config\Filters();
     }
 
-    public function testDoNotCheckCliRequest()
+    public function testDoNotCheckCliRequest(): void
     {
         $this->config->globals = [
             'before' => ['csrf'],
@@ -59,7 +59,7 @@ final class CSRFTest extends CIUnitTestCase
         $this->assertSame($this->request, $request);
     }
 
-    public function testPassGetRequest()
+    public function testPassGetRequest(): void
     {
         $this->config->globals = [
             'before' => ['csrf'],

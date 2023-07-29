@@ -71,7 +71,7 @@ final class SiteUrlTest extends CIUnitTestCase
         $path,
         $expectedSiteUrl,
         $expectedBaseUrl
-    ) {
+    ): void {
         // Set the config
         $this->config->baseURL                   = $baseURL;
         $this->config->indexPage                 = $indexPage;
@@ -304,7 +304,7 @@ final class SiteUrlTest extends CIUnitTestCase
         ];
     }
 
-    public function testSiteURLWithEmptyStringScheme()
+    public function testSiteURLWithEmptyStringScheme(): void
     {
         $this->config->baseURL                   = 'http://example.com/';
         $this->config->indexPage                 = 'index.php';
@@ -326,7 +326,7 @@ final class SiteUrlTest extends CIUnitTestCase
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/240
      */
-    public function testBaseURLDiscovery()
+    public function testBaseURLDiscovery(): void
     {
         $this->config->baseURL = 'http://example.com/';
 
@@ -342,7 +342,7 @@ final class SiteUrlTest extends CIUnitTestCase
         $this->assertSame('http://example.com/profile', base_url('profile'));
     }
 
-    public function testBaseURLService()
+    public function testBaseURLService(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/ci/v4/x/y';
@@ -355,7 +355,7 @@ final class SiteUrlTest extends CIUnitTestCase
         $this->assertSame('http://example.com/ci/v4/controller/method', base_url('controller/method', null));
     }
 
-    public function testBaseURLWithCLIRequest()
+    public function testBaseURLWithCLIRequest(): void
     {
         unset($_SERVER['HTTP_HOST'], $_SERVER['REQUEST_URI']);
 
@@ -373,7 +373,7 @@ final class SiteUrlTest extends CIUnitTestCase
         );
     }
 
-    public function testSiteURLWithAllowedHostname()
+    public function testSiteURLWithAllowedHostname(): void
     {
         $_SERVER['HTTP_HOST']   = 'www.example.jp';
         $_SERVER['REQUEST_URI'] = '/public';
@@ -393,7 +393,7 @@ final class SiteUrlTest extends CIUnitTestCase
         );
     }
 
-    public function testSiteURLWithAltConfig()
+    public function testSiteURLWithAltConfig(): void
     {
         $_SERVER['HTTP_HOST']   = 'www.example.jp';
         $_SERVER['REQUEST_URI'] = '/public';
@@ -415,7 +415,7 @@ final class SiteUrlTest extends CIUnitTestCase
         );
     }
 
-    public function testBaseURLWithAllowedHostname()
+    public function testBaseURLWithAllowedHostname(): void
     {
         $_SERVER['HTTP_HOST']   = 'www.example.jp';
         $_SERVER['REQUEST_URI'] = '/public';

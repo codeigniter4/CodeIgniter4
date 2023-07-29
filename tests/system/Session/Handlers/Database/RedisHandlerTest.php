@@ -53,7 +53,7 @@ final class RedisHandlerTest extends CIUnitTestCase
         return new RedisHandler(new AppConfig(), $this->userIpAddress);
     }
 
-    public function testSavePathWithoutProtocol()
+    public function testSavePathWithoutProtocol(): void
     {
         $handler = $this->getInstance(
             ['savePath' => '127.0.0.1:6379']
@@ -64,7 +64,7 @@ final class RedisHandlerTest extends CIUnitTestCase
         $this->assertSame('tcp', $savePath['protocol']);
     }
 
-    public function testSavePathTLSAuth()
+    public function testSavePathTLSAuth(): void
     {
         $handler = $this->getInstance(
             ['savePath' => 'tls://127.0.0.1:6379?auth=password']
@@ -76,7 +76,7 @@ final class RedisHandlerTest extends CIUnitTestCase
         $this->assertSame('password', $savePath['password']);
     }
 
-    public function testSavePathTCPAuth()
+    public function testSavePathTCPAuth(): void
     {
         $handler = $this->getInstance(
             ['savePath' => 'tcp://127.0.0.1:6379?auth=password']
@@ -88,7 +88,7 @@ final class RedisHandlerTest extends CIUnitTestCase
         $this->assertSame('password', $savePath['password']);
     }
 
-    public function testSavePathTimeoutFloat()
+    public function testSavePathTimeoutFloat(): void
     {
         $handler = $this->getInstance(
             ['savePath' => 'tcp://127.0.0.1:6379?timeout=2.5']
@@ -99,7 +99,7 @@ final class RedisHandlerTest extends CIUnitTestCase
         $this->assertSame(2.5, $savePath['timeout']);
     }
 
-    public function testSavePathTimeoutInt()
+    public function testSavePathTimeoutInt(): void
     {
         $handler = $this->getInstance(
             ['savePath' => 'tcp://127.0.0.1:6379?timeout=10']
@@ -110,13 +110,13 @@ final class RedisHandlerTest extends CIUnitTestCase
         $this->assertSame(10.0, $savePath['timeout']);
     }
 
-    public function testOpen()
+    public function testOpen(): void
     {
         $handler = $this->getInstance();
         $this->assertTrue($handler->open($this->sessionSavePath, $this->sessionName));
     }
 
-    public function testOpenWithDefaultProtocol()
+    public function testOpenWithDefaultProtocol(): void
     {
         $default = $this->sessionSavePath;
 
@@ -129,7 +129,7 @@ final class RedisHandlerTest extends CIUnitTestCase
         $this->sessionSavePath = $default;
     }
 
-    public function testWrite()
+    public function testWrite(): void
     {
         $handler = $this->getInstance();
         $handler->open($this->sessionSavePath, $this->sessionName);
@@ -143,7 +143,7 @@ final class RedisHandlerTest extends CIUnitTestCase
         $handler->close();
     }
 
-    public function testReadSuccess()
+    public function testReadSuccess(): void
     {
         $handler = $this->getInstance();
         $handler->open($this->sessionSavePath, $this->sessionName);
@@ -156,7 +156,7 @@ final class RedisHandlerTest extends CIUnitTestCase
         $handler->close();
     }
 
-    public function testReadFailure()
+    public function testReadFailure(): void
     {
         $handler = $this->getInstance();
         $handler->open($this->sessionSavePath, $this->sessionName);
@@ -166,7 +166,7 @@ final class RedisHandlerTest extends CIUnitTestCase
         $handler->close();
     }
 
-    public function testGC()
+    public function testGC(): void
     {
         $handler = $this->getInstance();
         $this->assertSame(1, $handler->gc(3600));

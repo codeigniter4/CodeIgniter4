@@ -73,7 +73,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         }
     }
 
-    public function testNew()
+    public function testNew(): void
     {
         $this->assertInstanceOf(FileHandler::class, $this->handler);
     }
@@ -83,7 +83,7 @@ final class FileHandlerTest extends AbstractHandlerTest
      *
      * @requires OS Linux|Darwin
      */
-    public function testNewWithNonWritablePath()
+    public function testNewWithNonWritablePath(): void
     {
         $this->expectException(CacheException::class);
 
@@ -91,7 +91,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         new FileHandler($this->config);
     }
 
-    public function testSetDefaultPath()
+    public function testSetDefaultPath(): void
     {
         // Initialize path
         $config                    = new Cache();
@@ -109,7 +109,7 @@ final class FileHandlerTest extends AbstractHandlerTest
      *
      * @timeLimit 3.5
      */
-    public function testGet()
+    public function testGet(): void
     {
         $this->handler->save(self::$key1, 'value', 2);
 
@@ -126,7 +126,7 @@ final class FileHandlerTest extends AbstractHandlerTest
      *
      * @timeLimit 3.5
      */
-    public function testRemember()
+    public function testRemember(): void
     {
         $this->handler->remember(self::$key1, 2, static fn () => 'value');
 
@@ -142,7 +142,7 @@ final class FileHandlerTest extends AbstractHandlerTest
      *
      * @requires OS Linux|Darwin
      */
-    public function testSave()
+    public function testSave(): void
     {
         $this->assertTrue($this->handler->save(self::$key1, 'value'));
 
@@ -150,7 +150,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->assertFalse($this->handler->save(self::$key2, 'value'));
     }
 
-    public function testSaveExcessiveKeyLength()
+    public function testSaveExcessiveKeyLength(): void
     {
         $key  = str_repeat('a', 260);
         $file = $this->config->file['storePath'] . DIRECTORY_SEPARATOR . md5($key);
@@ -161,7 +161,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         unlink($file);
     }
 
-    public function testSavePermanent()
+    public function testSavePermanent(): void
     {
         $this->assertTrue($this->handler->save(self::$key1, 'value', 0));
         $metaData = $this->handler->getMetaData(self::$key1);
@@ -173,7 +173,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->assertTrue($this->handler->delete(self::$key1));
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->handler->save(self::$key1, 'value');
 
@@ -181,7 +181,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->assertFalse($this->handler->delete(self::$dummy));
     }
 
-    public function testDeleteMatchingPrefix()
+    public function testDeleteMatchingPrefix(): void
     {
         // Save 101 items to match on
         for ($i = 1; $i <= 101; $i++) {
@@ -202,7 +202,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->handler->clean();
     }
 
-    public function testDeleteMatchingSuffix()
+    public function testDeleteMatchingSuffix(): void
     {
         // Save 101 items to match on
         for ($i = 1; $i <= 101; $i++) {
@@ -223,7 +223,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->handler->clean();
     }
 
-    public function testIncrement()
+    public function testIncrement(): void
     {
         $this->handler->save(self::$key1, 1);
         $this->handler->save(self::$key2, 'value');
@@ -233,7 +233,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->assertSame(10, $this->handler->increment(self::$key3, 10));
     }
 
-    public function testDecrement()
+    public function testDecrement(): void
     {
         $this->handler->save(self::$key1, 10);
         $this->handler->save(self::$key2, 'value');
@@ -246,7 +246,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->assertSame(-1, $this->handler->decrement(self::$key3, 1));
     }
 
-    public function testClean()
+    public function testClean(): void
     {
         $this->handler->save(self::$key1, 1);
         $this->handler->save(self::$key2, 'value');
@@ -257,7 +257,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->handler->save(self::$key2, 'value');
     }
 
-    public function testGetCacheInfo()
+    public function testGetCacheInfo(): void
     {
         $this->handler->save(self::$key1, 'value');
 
@@ -267,7 +267,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->assertArrayHasKey('server_path', $actual[self::$key1]);
     }
 
-    public function testIsSupported()
+    public function testIsSupported(): void
     {
         $this->assertTrue($this->handler->isSupported());
     }
@@ -318,7 +318,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         ];
     }
 
-    public function testFileHandler()
+    public function testFileHandler(): void
     {
         $fileHandler = new BaseTestFileHandler();
 
@@ -333,7 +333,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->assertArrayHasKey('fileperms', $actual);
     }
 
-    public function testGetMetaDataMiss()
+    public function testGetMetaDataMiss(): void
     {
         $this->assertFalse($this->handler->getMetaData(self::$dummy));
     }

@@ -32,7 +32,7 @@ final class ModelFactoryTest extends CIUnitTestCase
         ModelFactory::reset();
     }
 
-    public function testCreateSeparateInstances()
+    public function testCreateSeparateInstances(): void
     {
         $basenameModel  = ModelFactory::get('JobModel', false);
         $namespaceModel = ModelFactory::get(JobModel::class, false);
@@ -42,7 +42,7 @@ final class ModelFactoryTest extends CIUnitTestCase
         $this->assertNotSame($basenameModel, $namespaceModel);
     }
 
-    public function testCreateSharedInstance()
+    public function testCreateSharedInstance(): void
     {
         $basenameModel  = ModelFactory::get('JobModel', true);
         $namespaceModel = ModelFactory::get(JobModel::class, true);
@@ -50,14 +50,14 @@ final class ModelFactoryTest extends CIUnitTestCase
         $this->assertSame($basenameModel, $namespaceModel);
     }
 
-    public function testInjection()
+    public function testInjection(): void
     {
         ModelFactory::injectMock('Banana', new JobModel());
 
         $this->assertInstanceOf(JobModel::class, ModelFactory::get('Banana'));
     }
 
-    public function testReset()
+    public function testReset(): void
     {
         ModelFactory::injectMock('Banana', new JobModel());
 
@@ -66,7 +66,7 @@ final class ModelFactoryTest extends CIUnitTestCase
         $this->assertNull(ModelFactory::get('Banana'));
     }
 
-    public function testBasenameReturnsExistingNamespaceInstance()
+    public function testBasenameReturnsExistingNamespaceInstance(): void
     {
         ModelFactory::injectMock(UserModel::class, new JobModel());
 

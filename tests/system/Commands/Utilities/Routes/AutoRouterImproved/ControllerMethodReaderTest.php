@@ -34,7 +34,7 @@ final class ControllerMethodReaderTest extends CIUnitTestCase
         return new ControllerMethodReader($namespace, $methods);
     }
 
-    public function testRead()
+    public function testRead(): void
     {
         $reader = $this->createControllerMethodReader();
 
@@ -64,7 +64,7 @@ final class ControllerMethodReaderTest extends CIUnitTestCase
         $this->assertSame($expected, $routes);
     }
 
-    public function testReadDefaultController()
+    public function testReadDefaultController(): void
     {
         $reader = $this->createControllerMethodReader(
             'CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers'
@@ -99,7 +99,7 @@ final class ControllerMethodReaderTest extends CIUnitTestCase
         $this->assertSame($expected, $routes);
     }
 
-    public function testReadControllerWithRemap()
+    public function testReadControllerWithRemap(): void
     {
         $reader = $this->createControllerMethodReader();
 

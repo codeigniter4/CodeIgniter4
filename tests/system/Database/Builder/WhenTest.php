@@ -33,14 +33,14 @@ final class WhenTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testWhenTrue()
+    public function testWhenTrue(): void
     {
         $builder = $this->db->table('jobs');
 
         $expectedSQL = 'SELECT * FROM "jobs"';
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
-        $builder = $builder->when(true, static function ($query) {
+        $builder = $builder->when(true, static function ($query): void {
             $query->select('id');
         });
 
@@ -48,11 +48,11 @@ final class WhenTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testWhenTruthy()
+    public function testWhenTruthy(): void
     {
         $builder = $this->db->table('jobs');
 
-        $builder = $builder->when('abc', static function ($query) {
+        $builder = $builder->when('abc', static function ($query): void {
             $query->select('id');
         });
 
@@ -60,13 +60,13 @@ final class WhenTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testWhenRunsDefaultWhenFalse()
+    public function testWhenRunsDefaultWhenFalse(): void
     {
         $builder = $this->db->table('jobs');
 
-        $builder = $builder->when(false, static function ($query) {
+        $builder = $builder->when(false, static function ($query): void {
             $query->select('id');
-        }, static function ($query) {
+        }, static function ($query): void {
             $query->select('name');
         });
 
@@ -74,11 +74,11 @@ final class WhenTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testWhenDoesntModifyWhenFalse()
+    public function testWhenDoesntModifyWhenFalse(): void
     {
         $builder = $this->db->table('jobs');
 
-        $builder = $builder->when(false, static function ($query) {
+        $builder = $builder->when(false, static function ($query): void {
             $query->select('id');
         });
 
@@ -86,12 +86,12 @@ final class WhenTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testWhenPassesParemeters()
+    public function testWhenPassesParemeters(): void
     {
         $builder = $this->db->table('jobs');
         $name    = 'developer';
 
-        $builder = $builder->when($name, static function ($query, $name) {
+        $builder = $builder->when($name, static function ($query, $name): void {
             $query->where('name', $name);
         });
 
@@ -99,14 +99,14 @@ final class WhenTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testWhenNotFalse()
+    public function testWhenNotFalse(): void
     {
         $builder = $this->db->table('jobs');
 
         $expectedSQL = 'SELECT * FROM "jobs"';
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
-        $builder = $builder->whenNot(false, static function ($query) {
+        $builder = $builder->whenNot(false, static function ($query): void {
             $query->select('id');
         });
 
@@ -114,11 +114,11 @@ final class WhenTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testWhenNotFalsey()
+    public function testWhenNotFalsey(): void
     {
         $builder = $this->db->table('jobs');
 
-        $builder = $builder->whenNot('0', static function ($query) {
+        $builder = $builder->whenNot('0', static function ($query): void {
             $query->select('id');
         });
 
@@ -126,13 +126,13 @@ final class WhenTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testWhenNotRunsDefaultWhenTrue()
+    public function testWhenNotRunsDefaultWhenTrue(): void
     {
         $builder = $this->db->table('jobs');
 
-        $builder = $builder->whenNot(true, static function ($query) {
+        $builder = $builder->whenNot(true, static function ($query): void {
             $query->select('id');
-        }, static function ($query) {
+        }, static function ($query): void {
             $query->select('name');
         });
 
@@ -140,11 +140,11 @@ final class WhenTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testWhenNotDoesntModifyWhenFalse()
+    public function testWhenNotDoesntModifyWhenFalse(): void
     {
         $builder = $this->db->table('jobs');
 
-        $builder = $builder->whenNot(true, static function ($query) {
+        $builder = $builder->whenNot(true, static function ($query): void {
             $query->select('id');
         });
 
@@ -152,12 +152,12 @@ final class WhenTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testWhenNotPassesParemeters()
+    public function testWhenNotPassesParemeters(): void
     {
         $builder = $this->db->table('jobs');
         $name    = '0';
 
-        $builder = $builder->whenNot($name, static function ($query, $name) {
+        $builder = $builder->whenNot($name, static function ($query, $name): void {
             $query->where('name', $name);
         });
 

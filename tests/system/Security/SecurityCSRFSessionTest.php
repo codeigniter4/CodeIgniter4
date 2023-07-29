@@ -95,14 +95,14 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         Services::injectMock('session', $session);
     }
 
-    public function testHashIsReadFromSession()
+    public function testHashIsReadFromSession(): void
     {
         $security = new Security(new MockAppConfig());
 
         $this->assertSame($this->hash, $security->getHash());
     }
 
-    public function testCSRFVerifyPostThrowsExceptionOnNoMatch()
+    public function testCSRFVerifyPostThrowsExceptionOnNoMatch(): void
     {
         $this->expectException(SecurityException::class);
 
@@ -116,7 +116,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $security->verify($request);
     }
 
-    public function testCSRFVerifyPostReturnsSelfOnMatch()
+    public function testCSRFVerifyPostReturnsSelfOnMatch(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['foo']              = 'bar';
@@ -131,7 +131,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $this->assertCount(1, $_POST);
     }
 
-    public function testCSRFVerifyPOSTHeaderThrowsExceptionOnNoMatch()
+    public function testCSRFVerifyPOSTHeaderThrowsExceptionOnNoMatch(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
@@ -144,7 +144,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $security->verify($request);
     }
 
-    public function testCSRFVerifyPOSTHeaderReturnsSelfOnMatch()
+    public function testCSRFVerifyPOSTHeaderReturnsSelfOnMatch(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['foo']              = 'bar';
@@ -159,7 +159,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $this->assertCount(1, $_POST);
     }
 
-    public function testCSRFVerifyPUTHeaderThrowsExceptionOnNoMatch()
+    public function testCSRFVerifyPUTHeaderThrowsExceptionOnNoMatch(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'PUT';
 
@@ -172,7 +172,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $security->verify($request);
     }
 
-    public function testCSRFVerifyPUTHeaderReturnsSelfOnMatch()
+    public function testCSRFVerifyPUTHeaderReturnsSelfOnMatch(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'PUT';
 
@@ -185,7 +185,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $this->assertLogged('info', 'CSRF token verified.');
     }
 
-    public function testCSRFVerifyJsonThrowsExceptionOnNoMatch()
+    public function testCSRFVerifyJsonThrowsExceptionOnNoMatch(): void
     {
         $this->expectException(SecurityException::class);
 
@@ -199,7 +199,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $security->verify($request);
     }
 
-    public function testCSRFVerifyJsonReturnsSelfOnMatch()
+    public function testCSRFVerifyJsonReturnsSelfOnMatch(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
@@ -213,7 +213,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $this->assertSame('{"foo":"bar"}', $request->getBody());
     }
 
-    public function testRegenerateWithFalseSecurityRegenerateProperty()
+    public function testRegenerateWithFalseSecurityRegenerateProperty(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['csrf_test_name']   = '8b9218a55906f9dcc1dc263dce7f005a';
@@ -233,7 +233,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
         $this->assertSame($oldHash, $newHash);
     }
 
-    public function testRegenerateWithTrueSecurityRegenerateProperty()
+    public function testRegenerateWithTrueSecurityRegenerateProperty(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['csrf_test_name']   = '8b9218a55906f9dcc1dc263dce7f005a';

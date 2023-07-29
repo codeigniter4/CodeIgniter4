@@ -15,7 +15,7 @@ use CodeIgniter\Database\Seeder;
 
 class AnotherSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         $row = [
             'name'    => 'Jerome Lohan',

@@ -27,27 +27,27 @@ final class CountTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testCountReturnsZeroWithNoResults()
+    public function testCountReturnsZeroWithNoResults(): void
     {
         $this->assertSame(0, $this->db->table('empty')->countAll());
     }
 
-    public function testCountAllReturnsCorrectInteger()
+    public function testCountAllReturnsCorrectInteger(): void
     {
         $this->assertSame(4, $this->db->table('job')->countAll());
     }
 
-    public function testCountAllResultsReturnsZeroWithNoResults()
+    public function testCountAllResultsReturnsZeroWithNoResults(): void
     {
         $this->assertSame(0, $this->db->table('job')->where('name', 'Superstar')->countAllResults());
     }
 
-    public function testCountAllResultsReturnsCorrectValue()
+    public function testCountAllResultsReturnsCorrectValue(): void
     {
         $this->assertSame(1, $this->db->table('job')->where('name', 'Developer')->countAllResults());
     }
 
-    public function testCountAllResultsHonorsReset()
+    public function testCountAllResultsHonorsReset(): void
     {
         $builder = $this->db->table('job');
 

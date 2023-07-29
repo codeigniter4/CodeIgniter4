@@ -96,7 +96,7 @@ final class FilterFinderTest extends CIUnitTestCase
         return new Filters($filtersConfig, $this->request, $this->response, $this->moduleConfig);
     }
 
-    public function testFindGlobalsFilters()
+    public function testFindGlobalsFilters(): void
     {
         $collection = $this->createRouteCollection();
         $router     = $this->createRouter($collection);
@@ -113,7 +113,7 @@ final class FilterFinderTest extends CIUnitTestCase
         $this->assertSame($expected, $filters);
     }
 
-    public function testFindGlobalsFiltersWithRedirectRoute()
+    public function testFindGlobalsFiltersWithRedirectRoute(): void
     {
         $collection = $this->createRouteCollection();
         $collection->addRedirect('users/about', 'profile');
@@ -132,7 +132,7 @@ final class FilterFinderTest extends CIUnitTestCase
         $this->assertSame($expected, $filters);
     }
 
-    public function testFindGlobalsAndRouteFilters()
+    public function testFindGlobalsAndRouteFilters(): void
     {
         $collection = $this->createRouteCollection();
         $collection->get('admin', ' AdminController::index', ['filter' => 'honeypot']);
@@ -150,7 +150,7 @@ final class FilterFinderTest extends CIUnitTestCase
         $this->assertSame($expected, $filters);
     }
 
-    public function testFindGlobalsAndRouteClassnameFilters()
+    public function testFindGlobalsAndRouteClassnameFilters(): void
     {
         $collection = $this->createRouteCollection();
         $collection->get('admin', ' AdminController::index', ['filter' => InvalidChars::class]);
@@ -168,7 +168,7 @@ final class FilterFinderTest extends CIUnitTestCase
         $this->assertSame($expected, $filters);
     }
 
-    public function testFindGlobalsAndRouteMultipleFilters()
+    public function testFindGlobalsAndRouteMultipleFilters(): void
     {
         config('Feature')->multipleFilters = true;
 

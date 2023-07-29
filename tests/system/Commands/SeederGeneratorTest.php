@@ -34,14 +34,14 @@ final class SeederGeneratorTest extends CIUnitTestCase
         }
     }
 
-    public function testGenerateSeeder()
+    public function testGenerateSeeder(): void
     {
         command('make:seeder cars');
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Database/Seeds/Cars.php');
     }
 
-    public function testGenerateSeederWithOptionSuffix()
+    public function testGenerateSeederWithOptionSuffix(): void
     {
         command('make:seeder cars -suffix');
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());

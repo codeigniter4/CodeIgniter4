@@ -41,7 +41,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->resetServices();
     }
 
-    public function testCallGet()
+    public function testCallGet(): void
     {
         $this->withRoutes([
             [
@@ -56,7 +56,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertDontSee('Again');
     }
 
-    public function testCallSimpleGet()
+    public function testCallSimpleGet(): void
     {
         $this->withRoutes([
             [
@@ -74,7 +74,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertSame(200, $response->response()->getStatusCode());
     }
 
-    public function testCallPost()
+    public function testCallPost(): void
     {
         $this->withRoutes([
             [
@@ -88,7 +88,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello Mars');
     }
 
-    public function testCallPostWithBody()
+    public function testCallPostWithBody(): void
     {
         $this->withRoutes([
             [
@@ -102,7 +102,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello Mars!');
     }
 
-    public function testCallValidationTwice()
+    public function testCallValidationTwice(): void
     {
         $this->withRoutes([
             [
@@ -132,7 +132,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Okay');
     }
 
-    public function testCallPut()
+    public function testCallPut(): void
     {
         $this->withRoutes([
             [
@@ -146,7 +146,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello Pluto');
     }
 
-    public function testCallPatch()
+    public function testCallPatch(): void
     {
         $this->withRoutes([
             [
@@ -160,7 +160,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello Jupiter');
     }
 
-    public function testCallOptions()
+    public function testCallOptions(): void
     {
         $this->withRoutes([
             [
@@ -174,7 +174,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello George');
     }
 
-    public function testCallDelete()
+    public function testCallDelete(): void
     {
         $this->withRoutes([
             [
@@ -188,7 +188,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello Wonka');
     }
 
-    public function testSession()
+    public function testSession(): void
     {
         $response = $this->withRoutes([
             [
@@ -205,7 +205,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSessionMissing('popcorn');
     }
 
-    public function testWithSessionNull()
+    public function testWithSessionNull(): void
     {
         $_SESSION = [
             'fruit'    => 'apple',
@@ -224,7 +224,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSessionMissing('popcorn');
     }
 
-    public function testReturns()
+    public function testReturns(): void
     {
         $this->withRoutes([
             [
@@ -237,7 +237,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hi');
     }
 
-    public function testIgnores()
+    public function testIgnores(): void
     {
         $this->withRoutes([
             [
@@ -250,7 +250,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertEmpty($response->response()->getBody());
     }
 
-    public function testEchoesWithParams()
+    public function testEchoesWithParams(): void
     {
         $this->withRoutes([
             [
@@ -264,7 +264,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello-o-o bar');
     }
 
-    public function testEchoesWithQuery()
+    public function testEchoesWithQuery(): void
     {
         $this->withRoutes([
             [
@@ -278,7 +278,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello-o-o bar');
     }
 
-    public function testCallZeroAsPathGot404()
+    public function testCallZeroAsPathGot404(): void
     {
         $this->expectException(PageNotFoundException::class);
         $this->get('0');
@@ -322,7 +322,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
      * @param mixed $to
      * @param mixed $httpGet
      */
-    public function testOpenCliRoutesFromHttpGot404($from, $to, $httpGet)
+    public function testOpenCliRoutesFromHttpGot404($from, $to, $httpGet): void
     {
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage('Cannot access CLI Route: ');
@@ -344,7 +344,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/3072
      */
-    public function testIsOkWithRedirects()
+    public function testIsOkWithRedirects(): void
     {
         $this->withRoutes([
             [
@@ -358,7 +358,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertTrue($response->isOK());
     }
 
-    public function testCallGetWithParams()
+    public function testCallGetWithParams(): void
     {
         $this->withRoutes([
             [
@@ -385,7 +385,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         );
     }
 
-    public function testCallGetWithParamsAndREQUEST()
+    public function testCallGetWithParamsAndREQUEST(): void
     {
         $this->withRoutes([
             [
@@ -412,7 +412,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         );
     }
 
-    public function testCallPostWithParams()
+    public function testCallPostWithParams(): void
     {
         $this->withRoutes([
             [
@@ -439,7 +439,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         );
     }
 
-    public function testCallPostWithParamsAndREQUEST()
+    public function testCallPostWithParamsAndREQUEST(): void
     {
         $this->withRoutes([
             [
@@ -466,7 +466,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         );
     }
 
-    public function testCallPutWithJsonRequest()
+    public function testCallPutWithJsonRequest(): void
     {
         $this->withRoutes([
             [
@@ -490,7 +490,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertJSONExact($data);
     }
 
-    public function testCallPutWithJsonRequestAndREQUEST()
+    public function testCallPutWithJsonRequestAndREQUEST(): void
     {
         $this->withRoutes([
             [
@@ -514,7 +514,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertStringContainsString('[]', $response->getBody());
     }
 
-    public function testCallWithJsonRequest()
+    public function testCallWithJsonRequest(): void
     {
         $this->withRoutes([
             [
@@ -538,7 +538,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertJSONExact($data);
     }
 
-    public function testSetupRequestBodyWithParams()
+    public function testSetupRequestBodyWithParams(): void
     {
         $request = $this->setupRequest('post', 'home');
 
@@ -548,7 +548,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertSame('application/json', $request->header('Content-Type')->getValue());
     }
 
-    public function testSetupJSONRequestBodyWithBody()
+    public function testSetupJSONRequestBodyWithBody(): void
     {
         $request = $this->setupRequest('post', 'home');
         $request = $this->withBodyFormat('json')
@@ -565,7 +565,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         );
     }
 
-    public function testSetupRequestBodyWithXml()
+    public function testSetupRequestBodyWithXml(): void
     {
         $request = $this->setupRequest('post', 'home');
 
@@ -587,7 +587,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertSame('application/xml', $request->header('Content-Type')->getValue());
     }
 
-    public function testSetupRequestBodyWithBody()
+    public function testSetupRequestBodyWithBody(): void
     {
         $request = $this->setupRequest('post', 'home');
 

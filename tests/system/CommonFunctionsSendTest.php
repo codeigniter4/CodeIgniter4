@@ -34,7 +34,7 @@ final class CommonFunctionsSendTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testRedirectResponseCookiesSent()
+    public function testRedirectResponseCookiesSent(): void
     {
         $loginTime = time();
 

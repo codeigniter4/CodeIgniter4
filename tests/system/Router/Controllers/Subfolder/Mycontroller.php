@@ -15,7 +15,7 @@ use CodeIgniter\Controller;
 
 class Mycontroller extends Controller
 {
-    public function getSomemethod()
+    public function getSomemethod(): void
     {
     }
 }

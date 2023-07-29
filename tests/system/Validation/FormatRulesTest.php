@@ -87,7 +87,7 @@ class FormatRulesTest extends CIUnitTestCase
     /**
      * @dataProvider urlProvider
      */
-    public function testValidURL(?string $url, bool $isLoose, bool $isStrict)
+    public function testValidURL(?string $url, bool $isLoose, bool $isStrict): void
     {
         $data = [
             'foo' => $url,
@@ -103,7 +103,7 @@ class FormatRulesTest extends CIUnitTestCase
     /**
      * @dataProvider urlProvider
      */
-    public function testValidURLStrict(?string $url, bool $isLoose, bool $isStrict)
+    public function testValidURLStrict(?string $url, bool $isLoose, bool $isStrict): void
     {
         $data = [
             'foo' => $url,
@@ -116,7 +116,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($isStrict, $this->validation->run($data));
     }
 
-    public function testValidURLStrictWithSchema()
+    public function testValidURLStrictWithSchema(): void
     {
         $data = [
             'foo' => 'http://www.codeigniter.com',

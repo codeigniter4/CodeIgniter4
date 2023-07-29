@@ -36,13 +36,13 @@ final class EntityGeneratorTest extends CIUnitTestCase
         }
     }
 
-    public function testGenerateEntity()
+    public function testGenerateEntity(): void
     {
         command('make:entity user');
         $this->assertFileExists(APPPATH . 'Entities/User.php');
     }
 
-    public function testGenerateEntityWithOptionSuffix()
+    public function testGenerateEntityWithOptionSuffix(): void
     {
         command('make:entity user -suffix');
         $this->assertFileExists(APPPATH . 'Entities/UserEntity.php');

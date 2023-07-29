@@ -67,7 +67,7 @@ final class InvalidCharsTest extends CIUnitTestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testBeforeDoNothingWhenCLIRequest()
+    public function testBeforeDoNothingWhenCLIRequest(): void
     {
         $cliRequest = new CLIRequest(new MockAppConfig());
 
@@ -77,7 +77,7 @@ final class InvalidCharsTest extends CIUnitTestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testBeforeValidString()
+    public function testBeforeValidString(): void
     {
         $_POST['val'] = [
             'valid string',
@@ -87,7 +87,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($this->request);
     }
 
-    public function testBeforeInvalidUTF8StringCausesException()
+    public function testBeforeInvalidUTF8StringCausesException(): void
     {
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('Invalid UTF-8 characters in post:');
@@ -101,7 +101,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($this->request);
     }
 
-    public function testBeforeInvalidControlCharCausesException()
+    public function testBeforeInvalidControlCharCausesException(): void
     {
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('Invalid Control characters in cookie:');
@@ -117,7 +117,7 @@ final class InvalidCharsTest extends CIUnitTestCase
      *
      * @dataProvider stringWithLineBreakAndTabProvider
      */
-    public function testCheckControlStringWithLineBreakAndTabReturnsTheString(string $input)
+    public function testCheckControlStringWithLineBreakAndTabReturnsTheString(string $input): void
     {
         $_GET['val'] = $input;
 
@@ -138,7 +138,7 @@ final class InvalidCharsTest extends CIUnitTestCase
     /**
      * @dataProvider stringWithControlCharsProvider
      */
-    public function testCheckControlStringWithControlCharsCausesException(string $input)
+    public function testCheckControlStringWithControlCharsCausesException(string $input): void
     {
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('Invalid Control characters in get:');

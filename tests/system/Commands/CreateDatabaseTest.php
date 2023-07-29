@@ -67,7 +67,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
         return $this->getStreamFilterBuffer();
     }
 
-    public function testCreateDatabase()
+    public function testCreateDatabase(): void
     {
         if ($this->connection instanceof OCI8Connection) {
             $this->markTestSkipped('Needs to run on non-OCI8 drivers.');
@@ -77,7 +77,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
         $this->assertStringContainsString('successfully created.', $this->getBuffer());
     }
 
-    public function testSqliteDatabaseDuplicated()
+    public function testSqliteDatabaseDuplicated(): void
     {
         if (! $this->connection instanceof SQLite3Connection) {
             $this->markTestSkipped('Needs to run on SQLite3.');
@@ -90,7 +90,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
         $this->assertStringContainsString('already exists.', $this->getBuffer());
     }
 
-    public function testOtherDriverDuplicatedDatabase()
+    public function testOtherDriverDuplicatedDatabase(): void
     {
         if ($this->connection instanceof SQLite3Connection || $this->connection instanceof OCI8Connection) {
             $this->markTestSkipped('Needs to run on non-SQLite3 and non-OCI8 drivers.');

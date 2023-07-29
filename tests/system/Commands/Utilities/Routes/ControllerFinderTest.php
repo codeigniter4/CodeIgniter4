@@ -21,7 +21,7 @@ use Tests\Support\Controllers\Hello;
  */
 final class ControllerFinderTest extends CIUnitTestCase
 {
-    public function testFind()
+    public function testFind(): void
     {
         $namespace = 'Tests\Support\Controllers';
         $finder    = new ControllerFinder($namespace);

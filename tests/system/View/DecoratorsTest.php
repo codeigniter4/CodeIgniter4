@@ -39,7 +39,7 @@ final class DecoratorsTest extends CIUnitTestCase
         $this->config   = config('View');
     }
 
-    public function testNoDecoratorsDoesntAlter()
+    public function testNoDecoratorsDoesntAlter(): void
     {
         $config             = $this->config;
         $config->decorators = [];
@@ -53,7 +53,7 @@ final class DecoratorsTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, $view->render('simple'));
     }
 
-    public function testThrowsOnInvalidClass()
+    public function testThrowsOnInvalidClass(): void
     {
         $this->expectException(ViewException::class);
         $this->expectExceptionMessage(lang('View.invalidDecoratorClass', [BadDecorator::class]));
@@ -70,7 +70,7 @@ final class DecoratorsTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, $view->render('simple'));
     }
 
-    public function testDecoratorAltersOutput()
+    public function testDecoratorAltersOutput(): void
     {
         $config             = $this->config;
         $config->decorators = [WorldDecorator::class];
@@ -84,7 +84,7 @@ final class DecoratorsTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, $view->render('simple'));
     }
 
-    public function testParserNoDecoratorsDoesntAlter()
+    public function testParserNoDecoratorsDoesntAlter(): void
     {
         $config             = $this->config;
         $config->decorators = [];
@@ -96,7 +96,7 @@ final class DecoratorsTest extends CIUnitTestCase
         $this->assertSame("<h1>Hello World</h1>\n", $parser->render('template1'));
     }
 
-    public function testParserDecoratorAltersOutput()
+    public function testParserDecoratorAltersOutput(): void
     {
         $config             = $this->config;
         $config->decorators = [WorldDecorator::class];

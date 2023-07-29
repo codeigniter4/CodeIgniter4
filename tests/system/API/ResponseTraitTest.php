@@ -95,14 +95,14 @@ final class ResponseTraitTest extends CIUnitTestCase
                 $this->formatter = $formatter;
             }
 
-            public function resetFormatter()
+            public function resetFormatter(): void
             {
                 $this->formatter = null;
             }
         };
     }
 
-    public function testNoFormatterJSON()
+    public function testNoFormatterJSON(): void
     {
         $this->formatter = null;
         $controller      = $this->makeController([], 'http://codeigniter.com', ['Accept' => 'application/json']);
@@ -120,7 +120,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($expected, $this->response->getBody());
     }
 
-    public function testNoFormatter()
+    public function testNoFormatter(): void
     {
         $this->formatter = null;
         $controller      = $this->makeController([], 'http://codeigniter.com', ['Accept' => 'application/json']);
@@ -130,7 +130,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame('A Custom Reason', $this->response->getBody());
     }
 
-    public function testAssociativeArrayPayload()
+    public function testAssociativeArrayPayload(): void
     {
         $this->formatter = null;
         $controller      = $this->makeController();
@@ -146,7 +146,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($expected, $this->response->getBody());
     }
 
-    public function testArrayPayload()
+    public function testArrayPayload(): void
     {
         $this->formatter = null;
         $controller      = $this->makeController();
@@ -168,7 +168,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($expected, $this->response->getBody());
     }
 
-    public function testPHPtoArrayPayload()
+    public function testPHPtoArrayPayload(): void
     {
         $this->formatter = null;
         $controller      = $this->makeController();
@@ -187,7 +187,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($expected, $this->response->getBody());
     }
 
-    public function testRespondSets404WithNoData()
+    public function testRespondSets404WithNoData(): void
     {
         $controller = $this->makeController();
 
@@ -197,7 +197,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertNull($this->response->getBody());
     }
 
-    public function testRespondSetsStatusWithEmptyData()
+    public function testRespondSetsStatusWithEmptyData(): void
     {
         $controller = $this->makeController();
 
@@ -207,7 +207,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertNull($this->response->getBody());
     }
 
-    public function testRespondSetsCorrectBodyAndStatus()
+    public function testRespondSetsCorrectBodyAndStatus(): void
     {
         $controller = $this->makeController();
 
@@ -219,7 +219,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame('Created', $this->response->getReason());
     }
 
-    public function testRespondWithCustomReason()
+    public function testRespondWithCustomReason(): void
     {
         $controller = $this->makeController();
 
@@ -229,7 +229,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame('A Custom Reason', $this->response->getReason());
     }
 
-    public function testFailSingleMessage()
+    public function testFailSingleMessage(): void
     {
         $controller = $this->makeController();
 
@@ -248,7 +248,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame('A Custom Reason', $this->response->getReason());
     }
 
-    public function testCreated()
+    public function testCreated(): void
     {
         $controller = $this->makeController();
 
@@ -259,7 +259,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($this->formatter->format(['id' => 3]), $this->response->getBody());
     }
 
-    public function testDeleted()
+    public function testDeleted(): void
     {
         $controller = $this->makeController();
 
@@ -270,7 +270,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($this->formatter->format(['id' => 3]), $this->response->getBody());
     }
 
-    public function testUpdated()
+    public function testUpdated(): void
     {
         $controller = $this->makeController();
 
@@ -281,7 +281,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($this->formatter->format(['id' => 3]), $this->response->getBody());
     }
 
-    public function testUnauthorized()
+    public function testUnauthorized(): void
     {
         $controller = $this->makeController();
 
@@ -299,7 +299,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testForbidden()
+    public function testForbidden(): void
     {
         $controller = $this->makeController();
 
@@ -317,7 +317,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testNoContent()
+    public function testNoContent(): void
     {
         $controller = $this->makeController();
 
@@ -328,7 +328,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame(204, $this->response->getStatusCode());
     }
 
-    public function testNotFound()
+    public function testNotFound(): void
     {
         $controller = $this->makeController();
 
@@ -346,7 +346,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testValidationError()
+    public function testValidationError(): void
     {
         $controller = $this->makeController();
 
@@ -364,7 +364,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testValidationErrors()
+    public function testValidationErrors(): void
     {
         $controller = $this->makeController();
 
@@ -383,7 +383,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testResourceExists()
+    public function testResourceExists(): void
     {
         $controller = $this->makeController();
 
@@ -401,7 +401,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testResourceGone()
+    public function testResourceGone(): void
     {
         $controller = $this->makeController();
 
@@ -419,7 +419,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testTooManyRequests()
+    public function testTooManyRequests(): void
     {
         $controller = $this->makeController();
 
@@ -437,7 +437,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testServerError()
+    public function testServerError(): void
     {
         $controller = $this->makeController();
 
@@ -454,7 +454,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         ]), $this->response->getBody());
     }
 
-    public function testValidContentTypes()
+    public function testValidContentTypes(): void
     {
         $chars     = '; charset=UTF-8';
         $goodMimes = [
@@ -469,7 +469,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         }
     }
 
-    private function tryValidContentType($mimeType, $contentType)
+    private function tryValidContentType($mimeType, $contentType): void
     {
         $original                = $_SERVER;
         $_SERVER['CONTENT_TYPE'] = $mimeType;
@@ -482,7 +482,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $_SERVER = $original;
     }
 
-    public function testValidResponses()
+    public function testValidResponses(): void
     {
         $chars     = '; charset=UTF-8';
         $goodMimes = [
@@ -497,7 +497,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         }
     }
 
-    public function testXMLFormatter()
+    public function testXMLFormatter(): void
     {
         $this->formatter = new XMLFormatter();
         $controller      = $this->makeController();
@@ -514,7 +514,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($expected, $this->response->getBody());
     }
 
-    public function testFormatByRequestNegotiateIfFormatIsNotJsonOrXML()
+    public function testFormatByRequestNegotiateIfFormatIsNotJsonOrXML(): void
     {
         $config = new App();
 
@@ -559,7 +559,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertStringStartsWith(config('Format')->supportedResponseFormats[0], $response->getHeaderLine('Content-Type'));
     }
 
-    public function testResponseFormat()
+    public function testResponseFormat(): void
     {
         $data       = ['foo' => 'something'];
         $controller = $this->makeController();
@@ -576,7 +576,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertStringStartsWith('application/xml', $this->response->getHeaderLine('Content-Type'));
     }
 
-    public function testXMLResponseFormat()
+    public function testXMLResponseFormat(): void
     {
         $data       = ['foo' => 'bar'];
         $controller = $this->makeController();

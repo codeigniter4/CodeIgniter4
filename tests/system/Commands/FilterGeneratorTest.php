@@ -32,13 +32,13 @@ final class FilterGeneratorTest extends CIUnitTestCase
         }
     }
 
-    public function testGenerateFilter()
+    public function testGenerateFilter(): void
     {
         command('make:filter admin');
         $this->assertFileExists(APPPATH . 'Filters/Admin.php');
     }
 
-    public function testGenerateFilterWithOptionSuffix()
+    public function testGenerateFilterWithOptionSuffix(): void
     {
         command('make:filter admin -suffix');
         $this->assertFileExists(APPPATH . 'Filters/AdminFilter.php');

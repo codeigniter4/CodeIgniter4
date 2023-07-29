@@ -85,7 +85,7 @@ final class CommonHelperTest extends CIUnitTestCase
             ->getMock();
     }
 
-    public function testHelperWithFatalLocatorThrowsException()
+    public function testHelperWithFatalLocatorThrowsException(): void
     {
         // Replace the locator with one that will fail if it is called
         $locator = new FatalLocator(Services::autoloader());
@@ -101,7 +101,7 @@ final class CommonHelperTest extends CIUnitTestCase
         $this->assertTrue($exception);
     }
 
-    public function testHelperLoadsOnce()
+    public function testHelperLoadsOnce(): void
     {
         // Load it the first time
         helper('baguette');

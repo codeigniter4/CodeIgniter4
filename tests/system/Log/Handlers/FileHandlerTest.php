@@ -35,7 +35,7 @@ final class FileHandlerTest extends CIUnitTestCase
         $this->start = $this->root->url() . '/';
     }
 
-    public function testHandle()
+    public function testHandle(): void
     {
         $config = new LoggerConfig();
 
@@ -46,7 +46,7 @@ final class FileHandlerTest extends CIUnitTestCase
         $this->assertTrue($logger->handle('warning', 'This is a test log'));
     }
 
-    public function testBasicHandle()
+    public function testBasicHandle(): void
     {
         $config                                          = new LoggerConfig();
         $config->handlers[TestHandler::class]['path']    = $this->start . 'charlie/';
@@ -59,7 +59,7 @@ final class FileHandlerTest extends CIUnitTestCase
         $this->assertTrue($logger->handle('warning', 'This is a test log'));
     }
 
-    public function testHandleCreateFile()
+    public function testHandleCreateFile(): void
     {
         $config                                       = new LoggerConfig();
         $config->handlers[TestHandler::class]['path'] = $this->start;
@@ -79,7 +79,7 @@ final class FileHandlerTest extends CIUnitTestCase
         $this->assertStringContainsString($expectedResult, $line);
     }
 
-    public function testHandleDateTimeCorrectly()
+    public function testHandleDateTimeCorrectly(): void
     {
         $config                                       = new LoggerConfig();
         $config->handlers[TestHandler::class]['path'] = $this->start;

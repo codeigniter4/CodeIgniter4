@@ -39,12 +39,12 @@ final class EscapeTest extends CIUnitTestCase
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/606
      */
-    public function testDoesNotEscapeNegativeNumbers()
+    public function testDoesNotEscapeNegativeNumbers(): void
     {
         $this->assertSame(-100, $this->db->escape(-100));
     }
 
-    public function testEscape()
+    public function testEscape(): void
     {
         $expected = "SELECT * FROM brands WHERE name = 'O" . $this->char . "'Doules'";
         $sql      = 'SELECT * FROM brands WHERE name = ' . $this->db->escape("O'Doules");
@@ -52,7 +52,7 @@ final class EscapeTest extends CIUnitTestCase
         $this->assertSame($expected, $sql);
     }
 
-    public function testEscapeString()
+    public function testEscapeString(): void
     {
         $expected = "SELECT * FROM brands WHERE name = 'O" . $this->char . "'Doules'";
         $sql      = "SELECT * FROM brands WHERE name = '" . $this->db->escapeString("O'Doules") . "'";
@@ -60,7 +60,7 @@ final class EscapeTest extends CIUnitTestCase
         $this->assertSame($expected, $sql);
     }
 
-    public function testEscapeLikeString()
+    public function testEscapeLikeString(): void
     {
         $expected = "SELECT * FROM brands WHERE column LIKE '%10!% more%' ESCAPE '!'";
         $sql      = "SELECT * FROM brands WHERE column LIKE '%" . $this->db->escapeLikeString('10% more') . "%' ESCAPE '!'";
@@ -68,7 +68,7 @@ final class EscapeTest extends CIUnitTestCase
         $this->assertSame($expected, $sql);
     }
 
-    public function testEscapeLikeStringDirect()
+    public function testEscapeLikeStringDirect(): void
     {
         if ($this->db->DBDriver === 'MySQLi') {
             $expected = "SHOW COLUMNS FROM brands WHERE column LIKE 'wild\\_chars%'";
@@ -80,7 +80,7 @@ final class EscapeTest extends CIUnitTestCase
         }
     }
 
-    public function testEscapeStringArray()
+    public function testEscapeStringArray(): void
     {
         $stringArray = [' A simple string ', new RawSql('CURRENT_TIMESTAMP()'), false, null];
 

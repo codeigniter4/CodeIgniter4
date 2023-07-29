@@ -13,7 +13,7 @@ namespace Tests\Support\MigrationTestMigrations\Database\Migrations;
 
 class Migration_some_migration extends \CodeIgniter\Database\Migration
 {
-    public function up()
+    public function up(): void
     {
         $this->forge->addField([
             'key' => [
@@ -28,7 +28,7 @@ class Migration_some_migration extends \CodeIgniter\Database\Migration
         ]);
     }
 
-    public function down()
+    public function down(): void
     {
         $this->forge->dropTable('foo', true);
     }

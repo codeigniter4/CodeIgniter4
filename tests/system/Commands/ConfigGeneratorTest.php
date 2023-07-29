@@ -32,13 +32,13 @@ final class ConfigGeneratorTest extends CIUnitTestCase
         }
     }
 
-    public function testGenerateConfig()
+    public function testGenerateConfig(): void
     {
         command('make:config auth');
         $this->assertFileExists(APPPATH . 'Config/Auth.php');
     }
 
-    public function testGenerateConfigWithOptionSuffix()
+    public function testGenerateConfigWithOptionSuffix(): void
     {
         command('make:config auth -suffix');
         $this->assertFileExists(APPPATH . 'Config/AuthConfig.php');

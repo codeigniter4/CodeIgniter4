@@ -39,7 +39,7 @@ final class WhereTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testSimpleWhere()
+    public function testSimpleWhere(): void
     {
         $builder = $this->db->table('users');
 
@@ -56,7 +56,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereNoEscape()
+    public function testWhereNoEscape(): void
     {
         $builder = $this->db->table('users');
 
@@ -73,7 +73,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereCustomKeyOperator()
+    public function testWhereCustomKeyOperator(): void
     {
         $builder = $this->db->table('users');
 
@@ -90,7 +90,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereAssociateArray()
+    public function testWhereAssociateArray(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -116,7 +116,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereAssociateArrayKeyHasEqualValueIsNull()
+    public function testWhereAssociateArrayKeyHasEqualValueIsNull(): void
     {
         $builder = $this->db->table('users');
 
@@ -132,7 +132,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereLikeInAssociateArray()
+    public function testWhereLikeInAssociateArray(): void
     {
         $builder = $this->db->table('user');
 
@@ -146,7 +146,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testWhereCustomString()
+    public function testWhereCustomString(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -160,7 +160,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereCustomStringWithOperatorEscapeFalse()
+    public function testWhereCustomStringWithOperatorEscapeFalse(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -174,7 +174,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereCustomStringWithoutOperatorEscapeFalse()
+    public function testWhereCustomStringWithoutOperatorEscapeFalse(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -193,7 +193,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereCustomStringWithBetweenEscapeFalse()
+    public function testWhereCustomStringWithBetweenEscapeFalse(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -207,7 +207,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereRawSql()
+    public function testWhereRawSql(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -221,7 +221,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereValueRawSql()
+    public function testWhereValueRawSql(): void
     {
         $sql = $this->db->table('auth_bearer')
             ->select('*')
@@ -236,7 +236,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expected, $sql);
     }
 
-    public function testWhereKeyOnlyRawSql()
+    public function testWhereKeyOnlyRawSql(): void
     {
         $sql = $this->db->table('auth_bearer')
             ->select('*')
@@ -251,7 +251,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expected, $sql);
     }
 
-    public function testWhereKeyAndValueRawSql()
+    public function testWhereKeyAndValueRawSql(): void
     {
         $sql = $this->db->table('auth_bearer')
             ->select('*')
@@ -266,7 +266,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expected, $sql);
     }
 
-    public function testWhereKeyAndValueRawSqlWithOperator()
+    public function testWhereKeyAndValueRawSqlWithOperator(): void
     {
         $sql = $this->db->table('auth_bearer')
             ->select('*')
@@ -281,7 +281,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expected, $sql);
     }
 
-    public function testWhereValueSubQuery()
+    public function testWhereValueSubQuery(): void
     {
         $expectedSQL = 'SELECT * FROM "neworder" WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)';
 
@@ -304,7 +304,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testOrWhere()
+    public function testOrWhere(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -326,7 +326,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testOrWhereSameColumn()
+    public function testOrWhereSameColumn(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -348,7 +348,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereIn()
+    public function testWhereIn(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -369,7 +369,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereInSubQuery()
+    public function testWhereInSubQuery(): void
     {
         $expectedSQL = 'SELECT * FROM "jobs" WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
 
@@ -405,7 +405,7 @@ final class WhereTest extends CIUnitTestCase
      *
      * @param mixed $key
      */
-    public function testWhereInvalidKeyThrowInvalidArgumentException($key)
+    public function testWhereInvalidKeyThrowInvalidArgumentException($key): void
     {
         $this->expectException('InvalidArgumentException');
         $builder = $this->db->table('jobs');
@@ -427,7 +427,7 @@ final class WhereTest extends CIUnitTestCase
      *
      * @param mixed $values
      */
-    public function testWhereInEmptyValuesThrowInvalidArgumentException($values)
+    public function testWhereInEmptyValuesThrowInvalidArgumentException($values): void
     {
         $this->expectException('InvalidArgumentException');
         $builder = $this->db->table('jobs');
@@ -435,7 +435,7 @@ final class WhereTest extends CIUnitTestCase
         $builder->whereIn('name', $values);
     }
 
-    public function testWhereNotIn()
+    public function testWhereNotIn(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -456,7 +456,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testWhereNotInSubQuery()
+    public function testWhereNotInSubQuery(): void
     {
         $expectedSQL = 'SELECT * FROM "jobs" WHERE "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
 
@@ -479,7 +479,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testOrWhereIn()
+    public function testOrWhereIn(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -504,7 +504,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testOrWhereInSubQuery()
+    public function testOrWhereInSubQuery(): void
     {
         $expectedSQL = 'SELECT * FROM "jobs" WHERE "deleted_at" IS NULL OR "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
 
@@ -527,7 +527,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testOrWhereNotIn()
+    public function testOrWhereNotIn(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -552,7 +552,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testOrWhereNotInSubQuery()
+    public function testOrWhereNotInSubQuery(): void
     {
         $expectedSQL = 'SELECT * FROM "jobs" WHERE "deleted_at" IS NULL OR "id" NOT IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)';
 
@@ -578,7 +578,7 @@ final class WhereTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4443
      */
-    public function testWhereWithLower()
+    public function testWhereWithLower(): void
     {
         $builder = $this->db->table('jobs');
         $builder->where('LOWER(jobs.name)', 'accountant');
@@ -587,7 +587,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testWhereValueIsString()
+    public function testWhereValueIsString(): void
     {
         $builder = $this->db->table('users');
 
@@ -599,7 +599,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testWhereValueIsFloat()
+    public function testWhereValueIsFloat(): void
     {
         $builder = $this->db->table('users');
 
@@ -616,7 +616,7 @@ final class WhereTest extends CIUnitTestCase
      * Other databases may not work well, so we may want to change the behavior
      * to match the specifications of the database driver.
      */
-    public function testWhereValueIsTrue()
+    public function testWhereValueIsTrue(): void
     {
         $builder = $this->db->table('users');
 
@@ -631,7 +631,7 @@ final class WhereTest extends CIUnitTestCase
      * Other databases may not work well, so we may want to change the behavior
      * to match the specifications of the database driver.
      */
-    public function testWhereValueIsFalse()
+    public function testWhereValueIsFalse(): void
     {
         $builder = $this->db->table('users');
 
@@ -644,7 +644,7 @@ final class WhereTest extends CIUnitTestCase
     /**
      * Check if SQL injection is not possible when unexpected values are passed
      */
-    public function testWhereValueIsArray()
+    public function testWhereValueIsArray(): void
     {
         $builder = $this->db->table('users');
 
@@ -660,7 +660,7 @@ final class WhereTest extends CIUnitTestCase
     /**
      * Check if SQL injection is not possible when unexpected values are passed
      */
-    public function testWhereValueIsArrayOfArray()
+    public function testWhereValueIsArrayOfArray(): void
     {
         $this->expectException(ErrorException::class);
         $this->expectExceptionMessage('Array to string conversion');
@@ -675,7 +675,7 @@ final class WhereTest extends CIUnitTestCase
     /**
      * Check if SQL injection is not possible when unexpected values are passed
      */
-    public function testWhereValueIsArrayOfObject()
+    public function testWhereValueIsArrayOfObject(): void
     {
         $this->expectException(Error::class);
         $this->expectExceptionMessage('Object of class stdClass could not be converted to string');
@@ -687,7 +687,7 @@ final class WhereTest extends CIUnitTestCase
         $builder->getCompiledSelect();
     }
 
-    public function testWhereValueIsNull()
+    public function testWhereValueIsNull(): void
     {
         $builder = $this->db->table('users');
 
@@ -700,7 +700,7 @@ final class WhereTest extends CIUnitTestCase
     /**
      * Check if SQL injection is not possible when unexpected values are passed
      */
-    public function testWhereValueIsStdClass()
+    public function testWhereValueIsStdClass(): void
     {
         $this->expectException(Error::class);
         $this->expectExceptionMessage('Object of class stdClass could not be converted to string');
@@ -715,7 +715,7 @@ final class WhereTest extends CIUnitTestCase
     /**
      * Check if SQL injection is not possible when unexpected values are passed
      */
-    public function testWhereValueIsDateTime()
+    public function testWhereValueIsDateTime(): void
     {
         $this->expectException(Error::class);
         $this->expectExceptionMessage('Object of class DateTime could not be converted to string');

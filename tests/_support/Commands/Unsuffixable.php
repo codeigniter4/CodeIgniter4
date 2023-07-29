@@ -65,7 +65,7 @@ class Unsuffixable extends BaseCommand
     /**
      * Actually execute a command.
      */
-    public function run(array $params)
+    public function run(array $params): void
     {
         $this->component = 'Command';
         $this->directory = 'Commands';

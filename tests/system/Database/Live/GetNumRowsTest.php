@@ -52,7 +52,7 @@ final class GetNumRowsTest extends CIUnitTestCase
     /**
      * tests newly added ResultInterface::getNumRows with a live db
      */
-    public function testGetRowNum()
+    public function testGetRowNum(): void
     {
         $query = $this->db->table('job')->get();
         $this->assertSame(4, $query->getNumRows());

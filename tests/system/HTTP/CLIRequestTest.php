@@ -38,7 +38,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $_GET  = [];
     }
 
-    public function testParsingSegments()
+    public function testParsingSegments(): void
     {
         $_SERVER['argv'] = [
             'index.php',
@@ -60,7 +60,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame($segments, $this->request->getSegments());
     }
 
-    public function testParsingSegmentsWithHTMLMetaChars()
+    public function testParsingSegmentsWithHTMLMetaChars(): void
     {
         $_SERVER['argv'] = [
             'index.php',
@@ -84,7 +84,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame($segments, $this->request->getSegments());
     }
 
-    public function testParsingOptions()
+    public function testParsingOptions(): void
     {
         $_SERVER['argv'] = [
             'index.php',
@@ -107,7 +107,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame($options, $this->request->getOptions());
     }
 
-    public function testParsingOptionDetails()
+    public function testParsingOptionDetails(): void
     {
         $_SERVER['argv'] = [
             'index.php',
@@ -125,7 +125,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertNull($this->request->getOption('notthere'));
     }
 
-    public function testParsingOptionString()
+    public function testParsingOptionString(): void
     {
         $_SERVER['argv'] = [
             'index.php',
@@ -145,7 +145,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame('--foo bar --baz "queue some stuff"', $this->request->getOptionString(true));
     }
 
-    public function testParsingNoOptions()
+    public function testParsingNoOptions(): void
     {
         $_SERVER['argv'] = [
             'index.php',
@@ -161,7 +161,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->getOptionString());
     }
 
-    public function testParsingArgs()
+    public function testParsingArgs(): void
     {
         $_SERVER['argv'] = [
             'spark',
@@ -189,7 +189,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame($options, $this->request->getArgs());
     }
 
-    public function testParsingPath()
+    public function testParsingPath(): void
     {
         $_SERVER['argv'] = [
             'index.php',
@@ -206,7 +206,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame('users/21/profile', $this->request->getPath());
     }
 
-    public function testParsingMalformed()
+    public function testParsingMalformed(): void
     {
         $_SERVER['argv'] = [
             'index.php',
@@ -227,7 +227,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame('users/21/pro-file', $this->request->getPath());
     }
 
-    public function testParsingMalformed2()
+    public function testParsingMalformed2(): void
     {
         $_SERVER['argv'] = [
             'index.php',
@@ -248,7 +248,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame('users/21/profile', $this->request->getPath());
     }
 
-    public function testParsingMalformed3()
+    public function testParsingMalformed3(): void
     {
         $_SERVER['argv'] = [
             'index.php',
@@ -270,7 +270,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame('users/21/profile/bar', $this->request->getPath());
     }
 
-    public function testFetchGlobalsSingleValue()
+    public function testFetchGlobalsSingleValue(): void
     {
         $_POST['foo'] = 'bar';
         $_GET['bar']  = 'baz';
@@ -279,12 +279,12 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame('baz', $this->request->fetchGlobal('get', 'bar'));
     }
 
-    public function testFetchGlobalsReturnsNullWhenNotFound()
+    public function testFetchGlobalsReturnsNullWhenNotFound(): void
     {
         $this->assertNull($this->request->fetchGlobal('post', 'foo'));
     }
 
-    public function testFetchGlobalsFiltersValues()
+    public function testFetchGlobalsFiltersValues(): void
     {
         $this->request->setGlobal('post', [
             'foo' => 'bar<script>',
@@ -295,7 +295,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame('baz', $this->request->fetchGlobal('post', 'bar'));
     }
 
-    public function testFetchGlobalsWithFilterFlag()
+    public function testFetchGlobalsWithFilterFlag(): void
     {
         $this->request->setGlobal('post', [
             'foo' => '`bar<script>',
@@ -306,7 +306,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame('baz', $this->request->fetchGlobal('post', 'bar'));
     }
 
-    public function testFetchGlobalReturnsAllWhenEmpty()
+    public function testFetchGlobalReturnsAllWhenEmpty(): void
     {
         $post = [
             'foo' => 'bar',
@@ -319,7 +319,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame($post, $this->request->fetchGlobal('post'));
     }
 
-    public function testFetchGlobalFiltersAllValues()
+    public function testFetchGlobalFiltersAllValues(): void
     {
         $post = [
             'foo' => 'bar<script>',
@@ -338,7 +338,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', null, FILTER_SANITIZE_ENCODED));
     }
 
-    public function testFetchGlobalFilterWithFlagAllValues()
+    public function testFetchGlobalFilterWithFlagAllValues(): void
     {
         $post = [
             'foo' => '`bar<script>',
@@ -357,7 +357,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', null, FILTER_SANITIZE_ENCODED, FILTER_FLAG_STRIP_BACKTICK));
     }
 
-    public function testFetchGlobalReturnsSelectedKeys()
+    public function testFetchGlobalReturnsSelectedKeys(): void
     {
         $post = [
             'foo' => 'bar',
@@ -374,7 +374,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', ['foo', 'bar']));
     }
 
-    public function testFetchGlobalFiltersSelectedValues()
+    public function testFetchGlobalFiltersSelectedValues(): void
     {
         $post = [
             'foo' => 'bar<script>',
@@ -391,7 +391,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', ['foo', 'bar'], FILTER_SANITIZE_ENCODED));
     }
 
-    public function testFetchGlobalFilterWithFlagSelectedValues()
+    public function testFetchGlobalFilterWithFlagSelectedValues(): void
     {
         $post = [
             'foo' => '`bar<script>',
@@ -411,7 +411,7 @@ final class CLIRequestTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/353
      */
-    public function testFetchGlobalReturnsArrayValues()
+    public function testFetchGlobalReturnsArrayValues(): void
     {
         $post = [
             'ANNOUNCEMENTS' => [
@@ -432,7 +432,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertCount(2, $result['ANNOUNCEMENTS']);
     }
 
-    public function testFetchGlobalWithArrayTop()
+    public function testFetchGlobalWithArrayTop(): void
     {
         $post = [
             'clients' => [
@@ -446,7 +446,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame(['address' => ['zipcode' => 90210]], $this->request->fetchGlobal('post', 'clients'));
     }
 
-    public function testFetchGlobalWithArrayChildNumeric()
+    public function testFetchGlobalWithArrayChildNumeric(): void
     {
         $post = [
             'clients' => [
@@ -467,7 +467,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame(['zipcode' => 60610], $this->request->fetchGlobal('post', 'clients[1][address]'));
     }
 
-    public function testFetchGlobalWithArrayChildElement()
+    public function testFetchGlobalWithArrayChildElement(): void
     {
         $post = [
             'clients' => [
@@ -482,7 +482,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertNull($this->request->fetchGlobal('post', 'clients[zipcode]'));
     }
 
-    public function testFetchGlobalWithKeylessArrayChildElement()
+    public function testFetchGlobalWithKeylessArrayChildElement(): void
     {
         $post = [
             'clients' => [
@@ -497,7 +497,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame([['a']], $this->request->fetchGlobal('post', 'clients[stuff]'));
     }
 
-    public function testFetchGlobalWithArrayLastElement()
+    public function testFetchGlobalWithArrayLastElement(): void
     {
         $post = ['clients' => ['address' => ['zipcode' => 90210]]];
         $this->request->setGlobal('post', $post);
@@ -505,7 +505,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame('90210', $this->request->fetchGlobal('post', 'clients[address][zipcode]'));
     }
 
-    public function testFetchGlobalWithEmptyNotation()
+    public function testFetchGlobalWithEmptyNotation(): void
     {
         $expected = [
             ['address' => ['zipcode' => '90210']],
@@ -570,63 +570,63 @@ final class CLIRequestTest extends CIUnitTestCase
      * @param mixed      $address
      * @param mixed|null $type
      */
-    public function testValidIPAddress($expected, $address, $type = null)
+    public function testValidIPAddress($expected, $address, $type = null): void
     {
         $this->assertSame($expected, $this->request->isValidIP($address, $type));
     }
 
-    public function testGetIPAddressDefault()
+    public function testGetIPAddressDefault(): void
     {
         $this->assertSame('0.0.0.0', $this->request->getIPAddress());
     }
 
-    public function testMethodReturnsRightStuff()
+    public function testMethodReturnsRightStuff(): void
     {
         // Defaults method to CLI now.
         $this->assertSame('cli', $this->request->getMethod());
         $this->assertSame('CLI', $this->request->getMethod(true));
     }
 
-    public function testMethodIsCliReturnsAlwaysTrue()
+    public function testMethodIsCliReturnsAlwaysTrue(): void
     {
         $this->assertTrue($this->request->isCLI());
     }
 
-    public function testGetGet()
+    public function testGetGet(): void
     {
         $this->assertSame([], $this->request->getGet());
         $this->assertNull($this->request->getGet('test'));
         $this->assertSame([], $this->request->getGet(['test', 'abc']));
     }
 
-    public function testGetPost()
+    public function testGetPost(): void
     {
         $this->assertSame([], $this->request->getPost());
     }
 
-    public function testGetPostGet()
+    public function testGetPostGet(): void
     {
         $this->assertSame([], $this->request->getPostGet());
     }
 
-    public function testGetGetPost()
+    public function testGetGetPost(): void
     {
         $this->assertSame([], $this->request->getGetPost());
     }
 
-    public function testGetLocale()
+    public function testGetLocale(): void
     {
         $this->assertSame('en', $this->request->getLocale());
     }
 
-    public function testGetCookie()
+    public function testGetCookie(): void
     {
         $this->assertNull($this->request->getCookie('TESTY'));
 
         $this->assertSame($this->request->getCookie(), []);
     }
 
-    public function testIs()
+    public function testIs(): void
     {
         $this->assertFalse($this->request->is('get'));
     }

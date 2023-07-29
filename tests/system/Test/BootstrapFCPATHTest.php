@@ -47,7 +47,7 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
         $this->deleteDirectories();
     }
 
-    public function testSetFCPATH()
+    public function testSetFCPATH(): void
     {
         $result1     = $this->readOutput($this->file1);
         $correctPath = $this->correctFCPATH();

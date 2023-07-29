@@ -27,7 +27,7 @@ final class WhereTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testWhereSimpleKeyValue()
+    public function testWhereSimpleKeyValue(): void
     {
         $row = $this->db->table('job')->where('id', 1)->get()->getRow();
 
@@ -35,14 +35,14 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame('Developer', $row->name);
     }
 
-    public function testWhereCustomKeyValue()
+    public function testWhereCustomKeyValue(): void
     {
         $jobs = $this->db->table('job')->where('id !=', 1)->get()->getResult();
 
         $this->assertCount(3, $jobs);
     }
 
-    public function testWhereArray()
+    public function testWhereArray(): void
     {
         $jobs = $this->db->table('job')->where([
             'id >'    => 2,
@@ -55,7 +55,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame('Musician', $job->name);
     }
 
-    public function testWhereCustomString()
+    public function testWhereCustomString(): void
     {
         $jobs = $this->db->table('job')->where("id > 2 AND name != 'Accountant'")
             ->get()
@@ -67,7 +67,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame('Musician', $job->name);
     }
 
-    public function testOrWhere()
+    public function testOrWhere(): void
     {
         $jobs = $this->db->table('job')
             ->where('name !=', 'Accountant')
@@ -81,7 +81,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame('Musician', $jobs[2]->name);
     }
 
-    public function testOrWhereSameColumn()
+    public function testOrWhereSameColumn(): void
     {
         $jobs = $this->db->table('job')
             ->where('name', 'Developer')
@@ -94,7 +94,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame('Politician', $jobs[1]->name);
     }
 
-    public function testWhereIn()
+    public function testWhereIn(): void
     {
         $jobs = $this->db->table('job')
             ->whereIn('name', ['Politician', 'Accountant'])
@@ -106,7 +106,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame('Accountant', $jobs[1]->name);
     }
 
-    public function testWhereNotIn()
+    public function testWhereNotIn(): void
     {
         $jobs = $this->db->table('job')
             ->whereNotIn('name', ['Politician', 'Accountant'])
@@ -118,7 +118,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame('Musician', $jobs[1]->name);
     }
 
-    public function testSubQuery()
+    public function testSubQuery(): void
     {
         $subQuery = $this->db->table('job')
             ->select('id')
@@ -144,7 +144,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame('Musician', $jobs[2]->name);
     }
 
-    public function testSubQueryAnotherType()
+    public function testSubQueryAnotherType(): void
     {
         $subQuery = $this->db->table('job')
             ->select('id')
@@ -167,7 +167,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame('Developer', $jobs[0]->name);
     }
 
-    public function testWhereNullParam()
+    public function testWhereNullParam(): void
     {
         $this->db->table('job')
             ->insert([
@@ -184,7 +184,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame('Brewmaster', $jobs[0]->name);
     }
 
-    public function testWhereIsNull()
+    public function testWhereIsNull(): void
     {
         $this->db->table('job')
             ->insert([
@@ -201,7 +201,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame('Brewmaster', $jobs[0]->name);
     }
 
-    public function testWhereIsNotNull()
+    public function testWhereIsNotNull(): void
     {
         $this->db->table('job')
             ->insert([
@@ -220,7 +220,7 @@ final class WhereTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4443
      */
-    public function testWhereWithLower()
+    public function testWhereWithLower(): void
     {
         $builder = $this->db->table('job');
         $builder->insert([

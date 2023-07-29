@@ -44,13 +44,13 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
 
     abstract protected function getInstance($options = []);
 
-    public function testOpen()
+    public function testOpen(): void
     {
         $handler = $this->getInstance();
         $this->assertTrue($handler->open('ci_sessions', 'ci_session'));
     }
 
-    public function testReadSuccess()
+    public function testReadSuccess(): void
     {
         $handler  = $this->getInstance();
         $expected = '__ci_last_regenerate|i:1624650854;_ci_previous_url|s:40:\"http://localhost/index.php/home/index\";';
@@ -60,7 +60,7 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
         $this->assertSame('1483201a66afd2bd671e4a67dc6ecf24', $this->getPrivateProperty($handler, 'fingerprint'));
     }
 
-    public function testReadFailure()
+    public function testReadFailure(): void
     {
         $handler = $this->getInstance();
         $this->assertSame('', $handler->read('123456b43phsnnf8if6bo33b635e4321'));
@@ -69,7 +69,7 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
         $this->assertSame('d41d8cd98f00b204e9800998ecf8427e', $this->getPrivateProperty($handler, 'fingerprint'));
     }
 
-    public function testWriteInsert()
+    public function testWriteInsert(): void
     {
         $handler = $this->getInstance();
 
@@ -88,7 +88,7 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
         $this->assertSame('1483201a66afd2bd671e4a67dc6ecf24', $this->getPrivateProperty($handler, 'fingerprint'));
     }
 
-    public function testWriteUpdate()
+    public function testWriteUpdate(): void
     {
         $handler = $this->getInstance();
 
@@ -112,7 +112,7 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
         $this->assertSame('1483201a66afd2bd671e4a67dc6ecf24', $this->getPrivateProperty($handler, 'fingerprint'));
     }
 
-    public function testGC()
+    public function testGC(): void
     {
         $handler = $this->getInstance();
         $this->assertSame(1, $handler->gc(3600));

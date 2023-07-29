@@ -39,7 +39,7 @@ final class TestPublisher extends Publisher
     /**
      * Fakes an error on the given file.
      */
-    public static function setResult(bool $result)
+    public static function setResult(bool $result): void
     {
         self::$result = $result;
     }

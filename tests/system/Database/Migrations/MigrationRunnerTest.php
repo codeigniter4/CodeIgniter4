@@ -55,7 +55,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->config->enabled = true;
     }
 
-    protected function setUpAddNamespace()
+    protected function setUpAddNamespace(): void
     {
         Services::autoloader()->addNamespace(
             'Tests\Support\MigrationTestMigrations',
@@ -72,7 +72,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->regressDatabase();
     }
 
-    public function testLoadsDefaultDatabaseWhenNoneSpecified()
+    public function testLoadsDefaultDatabaseWhenNoneSpecified(): void
     {
         $dbConfig = new Database();
         $runner   = new MigrationRunner($this->config);
@@ -92,7 +92,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame($dbConfig->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
     }
 
-    public function testGetCliMessages()
+    public function testGetCliMessages(): void
     {
         $runner = new MigrationRunner($this->config);
 
@@ -103,7 +103,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame($messages, $runner->getCliMessages());
     }
 
-    public function testGetHistory()
+    public function testGetHistory(): void
     {
         $runner = new MigrationRunner($this->config);
         $runner->ensureTable();
@@ -142,7 +142,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         }
     }
 
-    public function testGetHistoryReturnsEmptyArrayWithNoResults()
+    public function testGetHistoryReturnsEmptyArrayWithNoResults(): void
     {
         $runner = new MigrationRunner($this->config);
         $runner->ensureTable();
@@ -150,7 +150,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame([], $runner->getHistory());
     }
 
-    public function testGetMigrationNumberAllDigits()
+    public function testGetMigrationNumberAllDigits(): void
     {
         $runner = new MigrationRunner($this->config);
 
@@ -159,7 +159,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame('20190806235100', $method('20190806235100_Foo'));
     }
 
-    public function testGetMigrationNumberDashes()
+    public function testGetMigrationNumberDashes(): void
     {
         $runner = new MigrationRunner($this->config);
 
@@ -168,7 +168,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame('2019-08-06-235100', $method('2019-08-06-235100_Foo'));
     }
 
-    public function testGetMigrationNumberUnderscores()
+    public function testGetMigrationNumberUnderscores(): void
     {
         $runner = new MigrationRunner($this->config);
 
@@ -177,7 +177,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame('2019_08_06_235100', $method('2019_08_06_235100_Foo'));
     }
 
-    public function testGetMigrationNumberReturnsZeroIfNoneFound()
+    public function testGetMigrationNumberReturnsZeroIfNoneFound(): void
     {
         $runner = new MigrationRunner($this->config);
 
@@ -186,7 +186,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame('0', $method('Foo'));
     }
 
-    public function testGetMigrationNameDashes()
+    public function testGetMigrationNameDashes(): void
     {
         $runner = new MigrationRunner($this->config);
 
@@ -195,7 +195,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame('Foo_bar', $method('2019-08-06-235100_Foo_bar'));
     }
 
-    public function testGetMigrationNameUnderscores()
+    public function testGetMigrationNameUnderscores(): void
     {
         $runner = new MigrationRunner($this->config);
 
@@ -204,7 +204,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame('Foo_bar', $method('2019_08_06_235100_Foo_bar'));
     }
 
-    public function testSetSilentStoresValue()
+    public function testSetSilentStoresValue(): void
     {
         $runner = new MigrationRunner($this->config);
 
@@ -215,7 +215,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertFalse($this->getPrivateProperty($runner, 'silent'));
     }
 
-    public function testSetNameStoresValue()
+    public function testSetNameStoresValue(): void
     {
         $runner = new MigrationRunner($this->config);
 
@@ -223,7 +223,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame('foo', $this->getPrivateProperty($runner, 'name'));
     }
 
-    public function testSetGroupStoresValue()
+    public function testSetGroupStoresValue(): void
     {
         $runner = new MigrationRunner($this->config);
 
@@ -231,7 +231,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame('foo', $this->getPrivateProperty($runner, 'group'));
     }
 
-    public function testSetNamespaceStoresValue()
+    public function testSetNamespaceStoresValue(): void
     {
         $runner = new MigrationRunner($this->config);
 
@@ -239,7 +239,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame('foo', $this->getPrivateProperty($runner, 'namespace'));
     }
 
-    public function testFindMigrationsReturnsEmptyArrayWithNoneFound()
+    public function testFindMigrationsReturnsEmptyArrayWithNoneFound(): void
     {
         $config = $this->config;
         $runner = new MigrationRunner($config);
@@ -247,7 +247,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame([], $runner->findMigrations());
     }
 
-    public function testFindMigrationsSuccessTimestamp()
+    public function testFindMigrationsSuccessTimestamp(): void
     {
         $config = $this->config;
         $runner = new MigrationRunner($config);
@@ -280,7 +280,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame((array) $mig2, (array) array_shift($migrations));
     }
 
-    public function testMigrationThrowsDisabledException()
+    public function testMigrationThrowsDisabledException(): void
     {
         $this->expectException(ConfigException::class);
         $this->expectExceptionMessage('Migrations have been loaded but are disabled or setup incorrectly.');
@@ -304,7 +304,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $runner->latest();
     }
 
-    public function testVersionReturnsUpDownSuccess()
+    public function testVersionReturnsUpDownSuccess(): void
     {
         $forge = Database::forge();
         $forge->dropTable('foo', true);
@@ -329,7 +329,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertFalse($this->db->tableExists('foo'));
     }
 
-    public function testLatestSuccess()
+    public function testLatestSuccess(): void
     {
         $runner = new MigrationRunner($this->config);
         $runner->setSilent(false)
@@ -347,7 +347,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         ]);
     }
 
-    public function testRegressSuccess()
+    public function testRegressSuccess(): void
     {
         $forge = Database::forge();
         $forge->dropTable('foo', true);
@@ -369,7 +369,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertEmpty($history);
     }
 
-    public function testLatestTriggersEvent()
+    public function testLatestTriggersEvent(): void
     {
         $forge = Database::forge();
         $forge->dropTable('foo', true);
@@ -381,7 +381,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $result = null;
 
         Events::removeAllListeners();
-        Events::on('migrate', static function ($arg) use (&$result) {
+        Events::on('migrate', static function ($arg) use (&$result): void {
             $result = $arg;
         });
 
@@ -391,7 +391,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame('latest', $result['method']);
     }
 
-    public function testRegressTriggersEvent()
+    public function testRegressTriggersEvent(): void
     {
         $forge = Database::forge();
         $forge->dropTable('foo', true);
@@ -402,7 +402,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
         $result = null;
         Events::removeAllListeners();
-        Events::on('migrate', static function ($arg) use (&$result) {
+        Events::on('migrate', static function ($arg) use (&$result): void {
             $result = $arg;
         });
 
@@ -413,7 +413,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame('regress', $result['method']);
     }
 
-    public function testHistoryRecordsBatches()
+    public function testHistoryRecordsBatches(): void
     {
         $config = $this->config;
         $runner = new MigrationRunner($config);
@@ -436,7 +436,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->seeInDatabase('migrations', ['batch' => 1]);
     }
 
-    public function testGetBatchVersions()
+    public function testGetBatchVersions(): void
     {
         $config = $this->config;
         $runner = new MigrationRunner($config);
@@ -452,7 +452,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame('2018-01-24-102302', $runner->getBatchEnd(1));
     }
 
-    protected function resetTables()
+    protected function resetTables(): void
     {
         $forge = Config::forge();
 
