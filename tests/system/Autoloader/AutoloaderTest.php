@@ -12,12 +12,15 @@
 namespace CodeIgniter\Autoloader;
 
 use App\Controllers\Home;
+use Closure;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\ReflectionHelper;
 use Config\Autoload;
 use Config\Modules;
 use Config\Services;
 use InvalidArgumentException;
+use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
 use UnnamespacedClass;
 
@@ -28,7 +31,10 @@ use UnnamespacedClass;
  */
 final class AutoloaderTest extends CIUnitTestCase
 {
+    use ReflectionHelper;
+
     private Autoloader $loader;
+    private Closure $classLoader;
 
     protected function setUp(): void
     {
@@ -50,13 +56,15 @@ final class AutoloaderTest extends CIUnitTestCase
 
         $this->loader = new Autoloader();
         $this->loader->initialize($config, $modules)->register();
+
+        $this->classLoader = $this->getPrivateMethodInvoker($this->loader, 'loadInNamespace');
     }
 
     protected function tearDown(): void
     {
-        $this->loader->unregister();
-
         parent::tearDown();
+
+        $this->loader->unregister();
     }
 
     public function testLoadStoredClass(): void
@@ -96,9 +104,10 @@ final class AutoloaderTest extends CIUnitTestCase
 
     public function testServiceAutoLoaderFromShareInstances(): void
     {
-        $autoloader = Services::autoloader();
+        $classLoader = $this->getPrivateMethodInvoker(Services::autoloader(), 'loadInNamespace');
+
         // look for Home controller, as that should be in base repo
-        $actual   = $autoloader->loadClass(Home::class);
+        $actual   = $classLoader(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, realpath($actual) ?: $actual);
     }
@@ -109,8 +118,10 @@ final class AutoloaderTest extends CIUnitTestCase
         $autoloader->initialize(new Autoload(), new Modules());
         $autoloader->register();
 
+        $classLoader = $this->getPrivateMethodInvoker($autoloader, 'loadInNamespace');
+
         // look for Home controller, as that should be in base repo
-        $actual   = $autoloader->loadClass(Home::class);
+        $actual   = $classLoader(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, realpath($actual) ?: $actual);
 
@@ -119,41 +130,43 @@ final class AutoloaderTest extends CIUnitTestCase
 
     public function testExistingFile(): void
     {
-        $actual   = $this->loader->loadClass(Home::class);
+        $actual   = ($this->classLoader)(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, $actual);
 
-        $actual   = $this->loader->loadClass('CodeIgniter\Helpers\array_helper');
+        $actual   = ($this->classLoader)('CodeIgniter\Helpers\array_helper');
         $expected = SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR . 'array_helper.php';
         $this->assertSame($expected, $actual);
     }
 
     public function testMatchesWithPrecedingSlash(): void
     {
-        $actual   = $this->loader->loadClass(Home::class);
+        $actual   = ($this->classLoader)(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, $actual);
     }
 
     public function testMatchesWithFileExtension(): void
     {
-        $actual   = $this->loader->loadClass('\App\Controllers\Home.php');
-        $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
-        $this->assertSame($expected, $actual);
+        /** @var Autoloader&MockObject $classLoader */
+        $classLoader = $this->getMockBuilder(Autoloader::class)->onlyMethods(['loadInNamespace'])->getMock();
+        $classLoader->expects($this->once())->method('loadInNamespace')->with(Home::class);
+
+        $classLoader->loadClass('\App\Controllers\Home.php');
     }
 
     public function testMissingFile(): void
     {
-        $this->assertFalse($this->loader->loadClass('\App\Missing\Classname'));
+        $this->assertFalse(($this->classLoader)('\App\Missing\Classname'));
     }
 
     public function testAddNamespaceWorks(): void
     {
-        $this->assertFalse($this->loader->loadClass('My\App\Class'));
+        $this->assertFalse(($this->classLoader)('My\App\Class'));
 
         $this->loader->addNamespace('My\App', __DIR__);
 
-        $actual   = $this->loader->loadClass('My\App\AutoloaderTest');
+        $actual   = ($this->classLoader)('My\App\AutoloaderTest');
         $expected = __FILE__;
 
         $this->assertSame($expected, $actual);
@@ -168,11 +181,11 @@ final class AutoloaderTest extends CIUnitTestCase
             ],
         ]);
 
-        $actual   = $this->loader->loadClass('My\App\App');
+        $actual   = ($this->classLoader)('My\App\App');
         $expected = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'App.php';
         $this->assertSame($expected, $actual);
 
-        $actual   = $this->loader->loadClass('My\App\AutoloaderTest');
+        $actual   = ($this->classLoader)('My\App\AutoloaderTest');
         $expected = __FILE__;
         $this->assertSame($expected, $actual);
     }
@@ -183,7 +196,7 @@ final class AutoloaderTest extends CIUnitTestCase
 
         $this->assertSame(
             __FILE__,
-            $this->loader->loadClass('App\Controllers\AutoloaderTest')
+            ($this->classLoader)('App\Controllers\AutoloaderTest')
         );
     }
 
@@ -201,15 +214,15 @@ final class AutoloaderTest extends CIUnitTestCase
     public function testRemoveNamespace(): void
     {
         $this->loader->addNamespace('My\App', __DIR__);
-        $this->assertSame(__FILE__, $this->loader->loadClass('My\App\AutoloaderTest'));
+        $this->assertSame(__FILE__, ($this->classLoader)('My\App\AutoloaderTest'));
 
         $this->loader->removeNamespace('My\App');
-        $this->assertFalse((bool) $this->loader->loadClass('My\App\AutoloaderTest'));
+        $this->assertFalse(($this->classLoader)('My\App\AutoloaderTest'));
     }
 
     public function testloadClassNonNamespaced(): void
     {
-        $this->assertFalse($this->loader->loadClass('Modules'));
+        $this->assertFalse(($this->classLoader)('Modules'));
     }
 
     public function testSanitizationContailsSpecialChars(): void

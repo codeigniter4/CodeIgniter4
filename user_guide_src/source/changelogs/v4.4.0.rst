@@ -109,6 +109,12 @@ Added Parameters
 - **Routing:** The third parameter ``Routing $routing`` has been added to
   ``RouteCollection::__construct()``.
 
+Return Type Changes
+-------------------
+
+- **Autoloader:** The return signatures of the `loadClass` and `loadClassmap` methods are made `void`
+  to be compatible as callbacks in `spl_autoload_register` and `spl_autoload_unregister` functions.
+
 Enhancements
 ************
 
@@ -225,6 +231,8 @@ Changes
   ``Config\App::$forceGlobalSecureRequests = true`` sets the HTTP status code 307,
   which allows the HTTP request method to be preserved after the redirect.
   In previous versions, it was 302.
+- The methods `Autoloader::loadClass()` and `Autoloader::loadClassmap()` are now both
+  marked `@internal`.
 
 Deprecations
 ************
