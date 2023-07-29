@@ -89,6 +89,76 @@ be ``YourVendor``. So you would write like the following::
 
 This setting instructs Composer to autoload the source code for your package.
 
+***************************
+Preparing Development Tools
+***************************
+
+There are many tools that help ensure quality code. So you should use them.
+You can easily install and configure such tools with
+`CodeIgniter DevKit <https://github.com/codeigniter4/devkit>`_.
+
+Installing DevKit
+=================
+
+In the root of your package directory, run the following commands::
+
+    > composer config minimum-stability dev
+    > composer config prefer-stable true
+    > composer require --dev codeigniter4/devkit
+
+The DevKit installs various Composer packages that helps your development, and
+installs templates for them in **vendor/codeigniter4/devkit/src/Template**.
+Copy the files in it to your project root folder, and edit them for your needs.
+
+Configuring Coding Standards Fixer
+==================================
+
+DevKit provides Coding Standards Fixer with
+`CodeIgniter Coding Standard <https://github.com/CodeIgniter/coding-standard>`_
+based on `PHP-CS-Fixer <https://github.com/PHP-CS-Fixer/PHP-CS-Fixer>`_.
+
+Copy **vendor/codeigniter4/devkit/src/Template/.php-cs-fixer.dist.php** to your
+project root folder.
+
+Create the **build** folder for the cache file::
+
+    your-package-name/
+    ├── .php-cs-fixer.dist.php
+    ├── build/
+
+Open **.php-cs-fixer.dist.php** in your editor, and fix the folder path::
+
+    --- a/.php-cs-fixer.dist.php
+    +++ b/.php-cs-fixer.dist.php
+    @@ -7,7 +7,7 @@ use PhpCsFixer\Finder;
+     $finder = Finder::create()
+         ->files()
+         ->in([
+    -        __DIR__ . '/app/',
+    +        __DIR__ . '/src/',
+             __DIR__ . '/tests/',
+         ])
+         ->exclude([
+
+That't it. Now you can run Coding Standards Fixer::
+
+    > vendor/bin/php-cs-fixer fix --ansi --verbose --diff
+
+If you add ``scripts.cs-fix`` in your **composer.json**, you can run it with
+``composer cs-fix`` command::
+
+    --- a/composer.json
+    +++ b/composer.json
+    @@ -23,5 +23,8 @@
+             "allow-plugins": {
+                 "phpstan/extension-installer": true
+             }
+    +    },
+    +    "scripts": {
+    +        "cs-fix": "php-cs-fixer fix --ansi --verbose --diff"
+         }
+     }
+
 ************
 Config Files
 ************
