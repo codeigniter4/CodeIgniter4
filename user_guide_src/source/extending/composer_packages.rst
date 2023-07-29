@@ -179,3 +179,16 @@ Overriding Settings in app/Config
 
 If you need to override or add to known configurations in the **app/Config** folder,
 you can use :ref:`Implicit Registrars <registrars>`.
+
+**********
+References
+**********
+
+We have published some official packages. You can use these packages as references
+when creating your own packages:
+
+- https://github.com/codeigniter4/shield
+- https://github.com/codeigniter4/settings
+- https://github.com/codeigniter4/tasks
+- https://github.com/codeigniter4/cache
+
