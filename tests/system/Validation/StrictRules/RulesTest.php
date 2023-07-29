@@ -52,43 +52,46 @@ final class RulesTest extends TraditionalRulesTest
 
     public function providePermitEmptyCasesStrict(): iterable
     {
-        yield from [
-            [
-                ['foo' => 'permit_empty'],
-                ['foo' => ''],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty'],
-                ['foo' => '0'],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty'],
-                ['foo' => 0],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty'],
-                ['foo' => 0.0],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty'],
-                ['foo' => null],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty'],
-                ['foo' => false],
-                true,
-            ],
-            // Testing with closure
-            [
-                ['foo' => ['permit_empty', static fn ($value) => true]],
-                ['foo' => ''],
-                true,
-            ],
+        yield [
+            ['foo' => 'permit_empty'],
+            ['foo' => ''],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty'],
+            ['foo' => '0'],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty'],
+            ['foo' => 0],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty'],
+            ['foo' => 0.0],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty'],
+            ['foo' => null],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty'],
+            ['foo' => false],
+            true,
+        ];
+        // Testing with closure
+        yield [
+            ['foo' => ['permit_empty', static fn ($value) => true]],
+            ['foo' => ''],
+            true,
         ];
     }
 
@@ -107,15 +110,19 @@ final class RulesTest extends TraditionalRulesTest
 
     public function provideGreaterThanEqualStrict(): iterable
     {
-        yield from [
-            [0, '0', true],
-            [1, '0', true],
-            [-1, '0', false],
-            [1.0, '1', true],
-            [1.1, '1', true],
-            [0.9, '1', false],
-            [true, '0', false],
-        ];
+        yield [0, '0', true];
+
+        yield [1, '0', true];
+
+        yield [-1, '0', false];
+
+        yield [1.0, '1', true];
+
+        yield [1.1, '1', true];
+
+        yield [0.9, '1', false];
+
+        yield [true, '0', false];
     }
 
     /**
@@ -133,16 +140,21 @@ final class RulesTest extends TraditionalRulesTest
 
     public function provideGreaterThanStrict(): iterable
     {
-        yield from [
-            [-10, '-11', true],
-            [10, '9', true],
-            [10, '10', false],
-            [10.1, '10', true],
-            [10.0, '10', false],
-            [9.9, '10', false],
-            [10, 'a', false],
-            [true, '0', false],
-        ];
+        yield [-10, '-11', true];
+
+        yield [10, '9', true];
+
+        yield [10, '10', false];
+
+        yield [10.1, '10', true];
+
+        yield [10.0, '10', false];
+
+        yield [9.9, '10', false];
+
+        yield [10, 'a', false];
+
+        yield [true, '0', false];
     }
 
     /**
@@ -160,17 +172,23 @@ final class RulesTest extends TraditionalRulesTest
 
     public function provideLessThanStrict(): iterable
     {
-        yield from [
-            [-10, '-11', false],
-            [9, '10', true],
-            [10, '9', false],
-            [10, '10', false],
-            [9.9, '10', true],
-            [10.1, '10', false],
-            [10.0, '10', false],
-            [10, 'a', true],
-            [true, '0', false],
-        ];
+        yield [-10, '-11', false];
+
+        yield [9, '10', true];
+
+        yield [10, '9', false];
+
+        yield [10, '10', false];
+
+        yield [9.9, '10', true];
+
+        yield [10.1, '10', false];
+
+        yield [10.0, '10', false];
+
+        yield [10, 'a', true];
+
+        yield [true, '0', false];
     }
 
     /**
@@ -188,14 +206,18 @@ final class RulesTest extends TraditionalRulesTest
 
     public function provideLessThanEqualStrict(): iterable
     {
-        yield from [
-            [0, '0', true],
-            [1, '0', false],
-            [-1, '0', true],
-            [1.0, '1', true],
-            [0.9, '1', true],
-            [1.1, '1', false],
-            [true, '0', false],
-        ];
+        yield [0, '0', true];
+
+        yield [1, '0', false];
+
+        yield [-1, '0', true];
+
+        yield [1.0, '1', true];
+
+        yield [0.9, '1', true];
+
+        yield [1.1, '1', false];
+
+        yield [true, '0', false];
     }
 }

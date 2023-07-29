@@ -100,14 +100,17 @@ final class CookieTest extends CIUnitTestCase
 
     public function prefixProvider(): iterable
     {
-        yield from [
-            ['prefix_', '', 'prefix_test'],
-            ['prefix_', '0', '0test'],
-            ['prefix_', 'new_', 'new_test'],
-            ['', '', 'test'],
-            ['', '0', '0test'],
-            ['', 'new_', 'new_test'],
-        ];
+        yield ['prefix_', '', 'prefix_test'];
+
+        yield ['prefix_', '0', '0test'];
+
+        yield ['prefix_', 'new_', 'new_test'];
+
+        yield ['', '', 'test'];
+
+        yield ['', '0', '0test'];
+
+        yield ['', 'new_', 'new_test'];
     }
 
     public function testValidationOfRawCookieName(): void

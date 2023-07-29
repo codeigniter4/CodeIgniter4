@@ -62,14 +62,17 @@ class RulesTest extends CIUnitTestCase
 
     public function provideRequiredCases(): iterable
     {
-        yield from [
-            [['foo' => null], false],
-            [['foo' => 123], true],
-            [['foo' => null, 'bar' => 123], false],
-            [['foo' => [123]], true],
-            [['foo' => []], false],
-            [['foo' => new stdClass()], true],
-        ];
+        yield [['foo' => null], false];
+
+        yield [['foo' => 123], true];
+
+        yield [['foo' => null, 'bar' => 123], false];
+
+        yield [['foo' => [123]], true];
+
+        yield [['foo' => []], false];
+
+        yield [['foo' => new stdClass()], true];
     }
 
     /**
@@ -83,45 +86,49 @@ class RulesTest extends CIUnitTestCase
 
     public function ifExistProvider(): iterable
     {
-        yield from [
-            [
-                ['foo' => 'required'],
-                ['foo' => ''],
-                false,
-            ],
-            [
-                ['foo' => 'required'],
-                ['foo' => null],
-                false,
-            ],
-            [
-                ['foo' => 'if_exist|required'],
-                ['foo' => ''],
-                false,
-            ],
-            // Input data does not exist then the other rules will be ignored
-            [
-                ['foo' => 'if_exist|required'],
-                [],
-                true,
-            ],
-            // Testing for multi-dimensional data
-            [
-                ['foo.bar' => 'if_exist|required'],
-                ['foo' => ['bar' => '']],
-                false,
-            ],
-            [
-                ['foo.bar' => 'if_exist|required'],
-                ['foo' => []],
-                true,
-            ],
-            // Testing with closure
-            [
-                ['foo' => ['if_exist', static fn ($value) => true]],
-                ['foo' => []],
-                true,
-            ],
+        yield [
+            ['foo' => 'required'],
+            ['foo' => ''],
+            false,
+        ];
+
+        yield [
+            ['foo' => 'required'],
+            ['foo' => null],
+            false,
+        ];
+
+        yield [
+            ['foo' => 'if_exist|required'],
+            ['foo' => ''],
+            false,
+        ];
+
+        // Input data does not exist then the other rules will be ignored
+        yield [
+            ['foo' => 'if_exist|required'],
+            [],
+            true,
+        ];
+
+        // Testing for multi-dimensional data
+        yield [
+            ['foo.bar' => 'if_exist|required'],
+            ['foo' => ['bar' => '']],
+            false,
+        ];
+
+        yield [
+            ['foo.bar' => 'if_exist|required'],
+            ['foo' => []],
+            true,
+        ];
+
+        // Testing with closure
+        yield [
+            ['foo' => ['if_exist', static fn ($value) => true]],
+            ['foo' => []],
+            true,
         ];
     }
 
@@ -136,156 +143,182 @@ class RulesTest extends CIUnitTestCase
 
     public function providePermitEmptyCases(): iterable
     {
-        yield from [
-            // If the rule is only `permit_empty`, any value will pass.
-            [
-                ['foo' => 'permit_empty|valid_email'],
-                ['foo' => ''],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty|valid_email'],
-                ['foo' => '0'],
-                false,
-            ],
-            [
-                ['foo' => 'permit_empty|valid_email'],
-                ['foo' => '-0'],
-                false,
-            ],
-            [
-                ['foo' => 'permit_empty|valid_emails'],
-                ['foo' => 0],
-                false,
-            ],
-            [
-                ['foo' => 'permit_empty|valid_email'],
-                ['foo' => -0],
-                false,
-            ],
-            [
-                ['foo' => 'permit_empty|valid_email'],
-                ['foo' => 0.0],
-                false,
-            ],
-            [
-                ['foo' => 'permit_empty|valid_emails'],
-                ['foo' => '0.0'],
-                false,
-            ],
-            [
-                ['foo' => 'permit_empty|valid_email'],
-                ['foo' => -0.0],
-                false,
-            ],
-            [
-                ['foo' => 'permit_empty|valid_email'],
-                ['foo' => '-0.0'],
-                false,
-            ],
-            [
-                ['foo' => 'permit_empty|valid_email'],
-                ['foo' => null],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty|valid_email'],
-                ['foo' => false],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty|valid_email'],
-                ['foo' => 'user@domain.tld'],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty|valid_email'],
-                ['foo' => 'invalid'],
-                false,
-            ],
-            // Required has more priority
-            [
-                ['foo' => 'permit_empty|required|valid_email'],
-                ['foo' => ''],
-                false,
-            ],
-            [
-                ['foo' => 'permit_empty|required'],
-                ['foo' => ''],
-                false,
-            ],
-            [
-                ['foo' => 'permit_empty|required'],
-                ['foo' => null],
-                false,
-            ],
-            [
-                ['foo' => 'permit_empty|required'],
-                ['foo' => false],
-                false,
-            ],
-            // This tests will return true because the input data is trimmed
-            [
-                ['foo' => 'permit_empty|required'],
-                ['foo' => '0'],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty|required'],
-                ['foo' => 0],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty|required'],
-                ['foo' => 0.0],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty|required_with[bar]'],
-                ['foo' => ''],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty|required_with[bar]'],
-                ['foo' => 0],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty|required_with[bar]'],
-                ['foo' => 0.0, 'bar' => 1],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty|required_with[bar]'],
-                ['foo' => '', 'bar' => 1],
-                false,
-            ],
-            [
-                ['foo' => 'permit_empty|required_without[bar]'],
-                ['foo' => ''],
-                false,
-            ],
-            [
-                ['foo' => 'permit_empty|required_without[bar]'],
-                ['foo' => 0],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty|required_without[bar]'],
-                ['foo' => 0.0, 'bar' => 1],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty|required_without[bar]'],
-                ['foo' => '', 'bar' => 1],
-                true,
-            ],
-            // Testing with closure
-            [
-                ['foo' => ['permit_empty', static fn ($value) => true]],
-                ['foo' => ''],
-                true,
-            ],
+        yield // If the rule is only `permit_empty`, any value will pass.
+        [
+            ['foo' => 'permit_empty|valid_email'],
+            ['foo' => ''],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|valid_email'],
+            ['foo' => '0'],
+            false,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|valid_email'],
+            ['foo' => '-0'],
+            false,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|valid_emails'],
+            ['foo' => 0],
+            false,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|valid_email'],
+            ['foo' => -0],
+            false,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|valid_email'],
+            ['foo' => 0.0],
+            false,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|valid_emails'],
+            ['foo' => '0.0'],
+            false,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|valid_email'],
+            ['foo' => -0.0],
+            false,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|valid_email'],
+            ['foo' => '-0.0'],
+            false,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|valid_email'],
+            ['foo' => null],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|valid_email'],
+            ['foo' => false],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|valid_email'],
+            ['foo' => 'user@domain.tld'],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|valid_email'],
+            ['foo' => 'invalid'],
+            false,
+        ];
+
+        // Required has more priority
+        yield [
+            ['foo' => 'permit_empty|required|valid_email'],
+            ['foo' => ''],
+            false,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|required'],
+            ['foo' => ''],
+            false,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|required'],
+            ['foo' => null],
+            false,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|required'],
+            ['foo' => false],
+            false,
+        ];
+
+        // This tests will return true because the input data is trimmed
+        yield [
+            ['foo' => 'permit_empty|required'],
+            ['foo' => '0'],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|required'],
+            ['foo' => 0],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|required'],
+            ['foo' => 0.0],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|required_with[bar]'],
+            ['foo' => ''],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|required_with[bar]'],
+            ['foo' => 0],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|required_with[bar]'],
+            ['foo' => 0.0, 'bar' => 1],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|required_with[bar]'],
+            ['foo' => '', 'bar' => 1],
+            false,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|required_without[bar]'],
+            ['foo' => ''],
+            false,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|required_without[bar]'],
+            ['foo' => 0],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|required_without[bar]'],
+            ['foo' => 0.0, 'bar' => 1],
+            true,
+        ];
+
+        yield [
+            ['foo' => 'permit_empty|required_without[bar]'],
+            ['foo' => '', 'bar' => 1],
+            true,
+        ];
+
+        // Testing with closure
+        yield [
+            ['foo' => ['permit_empty', static fn ($value) => true]],
+            ['foo' => ''],
+            true,
         ];
     }
 
@@ -300,11 +333,11 @@ class RulesTest extends CIUnitTestCase
 
     public function provideMatchesCases(): iterable
     {
-        yield from [
-            [['foo' => null, 'bar' => null], true],
-            [['foo' => 'match', 'bar' => 'match'], true],
-            [['foo' => 'match', 'bar' => 'nope'], false],
-        ];
+        yield [['foo' => null, 'bar' => null], true];
+
+        yield [['foo' => 'match', 'bar' => 'match'], true];
+
+        yield [['foo' => 'match', 'bar' => 'nope'], false];
     }
 
     /**
@@ -318,10 +351,9 @@ class RulesTest extends CIUnitTestCase
 
     public function provideMatchesNestedCases(): iterable
     {
-        yield from [
-            [['nested' => ['foo' => 'match', 'bar' => 'match']], true],
-            [['nested' => ['foo' => 'match', 'bar' => 'nope']], false],
-        ];
+        yield [['nested' => ['foo' => 'match', 'bar' => 'match']], true];
+
+        yield [['nested' => ['foo' => 'match', 'bar' => 'nope']], false];
     }
 
     /**
@@ -353,13 +385,15 @@ class RulesTest extends CIUnitTestCase
 
     public function provideEqualsCases(): iterable
     {
-        yield from [
-            'null'   => [['foo' => null], '', false],
-            'empty'  => [['foo' => ''], '', true],
-            'fail'   => [['foo' => 'bar'], 'notbar', false],
-            'pass'   => [['foo' => 'bar'], 'bar', true],
-            'casing' => [['foo' => 'bar'], 'Bar', false],
-        ];
+        yield 'null' => [['foo' => null], '', false];
+
+        yield 'empty' => [['foo' => ''], '', true];
+
+        yield 'fail' => [['foo' => 'bar'], 'notbar', false];
+
+        yield 'pass' => [['foo' => 'bar'], 'bar', true];
+
+        yield 'casing' => [['foo' => 'bar'], 'Bar', false];
     }
 
     /**
@@ -373,12 +407,13 @@ class RulesTest extends CIUnitTestCase
 
     public function provideMinLengthCases(): iterable
     {
-        yield from [
-            'null'    => [null, '2', false],
-            'less'    => ['bar', '2', true],
-            'equal'   => ['bar', '3', true],
-            'greater' => ['bar', '4', false],
-        ];
+        yield 'null' => [null, '2', false];
+
+        yield 'less' => ['bar', '2', true];
+
+        yield 'equal' => ['bar', '3', true];
+
+        yield 'greater' => ['bar', '4', false];
     }
 
     /**
@@ -407,12 +442,13 @@ class RulesTest extends CIUnitTestCase
 
     public function provideExactLengthCases(): iterable
     {
-        yield from [
-            'null'    => [null, false],
-            'exact'   => ['bar', true],
-            'less'    => ['ba', false],
-            'greater' => ['bars', false],
-        ];
+        yield 'null' => [null, false];
+
+        yield 'exact' => ['bar', true];
+
+        yield 'less' => ['ba', false];
+
+        yield 'greater' => ['bars', false];
     }
 
     public function testExactLengthDetectsBadLength(): void
@@ -434,17 +470,23 @@ class RulesTest extends CIUnitTestCase
 
     public function greaterThanProvider(): iterable
     {
-        yield from [
-            ['-10', '-11', true],
-            ['10', '9', true],
-            ['10', '10', false],
-            ['10.1', '10', true],
-            ['10.0', '10', false],
-            ['9.9', '10', false],
-            ['10', 'a', false],
-            ['10a', '10', false],
-            [null, null, false],
-        ];
+        yield ['-10', '-11', true];
+
+        yield ['10', '9', true];
+
+        yield ['10', '10', false];
+
+        yield ['10.1', '10', true];
+
+        yield ['10.0', '10', false];
+
+        yield ['9.9', '10', false];
+
+        yield ['10', 'a', false];
+
+        yield ['10a', '10', false];
+
+        yield [null, null, false];
     }
 
     /**
@@ -459,18 +501,25 @@ class RulesTest extends CIUnitTestCase
 
     public function greaterThanEqualProvider(): iterable
     {
-        yield from [
-            ['0', '0', true],
-            ['1', '0', true],
-            ['-1', '0', false],
-            ['1.0', '1', true],
-            ['1.1', '1', true],
-            ['0.9', '1', false],
-            ['10a', '0', false],
-            [null, null, false],
-            ['1', null, true],
-            [null, '1', false],
-        ];
+        yield ['0', '0', true];
+
+        yield ['1', '0', true];
+
+        yield ['-1', '0', false];
+
+        yield ['1.0', '1', true];
+
+        yield ['1.1', '1', true];
+
+        yield ['0.9', '1', false];
+
+        yield ['10a', '0', false];
+
+        yield [null, null, false];
+
+        yield ['1', null, true];
+
+        yield [null, '1', false];
     }
 
     /**
@@ -485,18 +534,25 @@ class RulesTest extends CIUnitTestCase
 
     public function lessThanProvider(): iterable
     {
-        yield from [
-            ['-10', '-11', false],
-            ['9', '10', true],
-            ['10', '9', false],
-            ['10', '10', false],
-            ['9.9', '10', true],
-            ['10.1', '10', false],
-            ['10.0', '10', false],
-            ['10', 'a', true],
-            ['10a', '10', false],
-            [null, null, false],
-        ];
+        yield ['-10', '-11', false];
+
+        yield ['9', '10', true];
+
+        yield ['10', '9', false];
+
+        yield ['10', '10', false];
+
+        yield ['9.9', '10', true];
+
+        yield ['10.1', '10', false];
+
+        yield ['10.0', '10', false];
+
+        yield ['10', 'a', true];
+
+        yield ['10a', '10', false];
+
+        yield [null, null, false];
     }
 
     /**
@@ -511,18 +567,25 @@ class RulesTest extends CIUnitTestCase
 
     public function lessThanEqualProvider(): iterable
     {
-        yield from [
-            ['0', '0', true],
-            ['1', '0', false],
-            ['-1', '0', true],
-            ['1.0', '1', true],
-            ['0.9', '1', true],
-            ['1.1', '1', false],
-            ['10a', '0', false],
-            [null, null, false],
-            ['1', null, false],
-            [null, '1', false],
-        ];
+        yield ['0', '0', true];
+
+        yield ['1', '0', false];
+
+        yield ['-1', '0', true];
+
+        yield ['1.0', '1', true];
+
+        yield ['0.9', '1', true];
+
+        yield ['1.1', '1', false];
+
+        yield ['10a', '0', false];
+
+        yield [null, null, false];
+
+        yield ['1', null, false];
+
+        yield [null, '1', false];
     }
 
     /**
@@ -547,17 +610,23 @@ class RulesTest extends CIUnitTestCase
 
     public function inListProvider(): iterable
     {
-        yield from [
-            ['red', 'red,Blue,123', true],
-            ['Blue', 'red, Blue,123', true],
-            ['Blue', 'red,Blue,123', true],
-            ['123', 'red,Blue,123', true],
-            ['Red', 'red,Blue,123', false],
-            [' red', 'red,Blue,123', false],
-            ['1234', 'red,Blue,123', false],
-            [null, 'red,Blue,123', false],
-            ['red', null, false],
-        ];
+        yield ['red', 'red,Blue,123', true];
+
+        yield ['Blue', 'red, Blue,123', true];
+
+        yield ['Blue', 'red,Blue,123', true];
+
+        yield ['123', 'red,Blue,123', true];
+
+        yield ['Red', 'red,Blue,123', false];
+
+        yield [' red', 'red,Blue,123', false];
+
+        yield ['1234', 'red,Blue,123', false];
+
+        yield [null, 'red,Blue,123', false];
+
+        yield ['red', null, false];
     }
 
     /**
@@ -583,33 +652,40 @@ class RulesTest extends CIUnitTestCase
 
     public function requiredWithProvider(): iterable
     {
-        yield from [
-            ['nope', 'bar', false],
-            ['foo', 'bar', true],
-            ['nope', 'baz', true],
-            [null, null, true],
-            [null, 'foo', false],
-            ['foo', null, true],
-            [
-                'array.emptyField1',
-                'array.emptyField2',
-                true,
-            ],
-            [
-                'array.nonEmptyField1',
-                'array.emptyField2',
-                true,
-            ],
-            [
-                'array.emptyField1',
-                'array.nonEmptyField2',
-                false,
-            ],
-            [
-                'array.nonEmptyField1',
-                'array.nonEmptyField2',
-                true,
-            ],
+        yield ['nope', 'bar', false];
+
+        yield ['foo', 'bar', true];
+
+        yield ['nope', 'baz', true];
+
+        yield [null, null, true];
+
+        yield [null, 'foo', false];
+
+        yield ['foo', null, true];
+
+        yield [
+            'array.emptyField1',
+            'array.emptyField2',
+            true,
+        ];
+
+        yield [
+            'array.nonEmptyField1',
+            'array.emptyField2',
+            true,
+        ];
+
+        yield [
+            'array.emptyField1',
+            'array.nonEmptyField2',
+            false,
+        ];
+
+        yield [
+            'array.nonEmptyField1',
+            'array.nonEmptyField2',
+            true,
         ];
     }
 
@@ -631,24 +707,33 @@ class RulesTest extends CIUnitTestCase
 
     public function RequiredWithAndOtherRulesProvider(): iterable
     {
-        yield from [
-            // `otherField` and `mustBeADate` do not exist
-            [true, []],
-            // `mustBeADate` does not exist
-            [false, ['otherField' => 'exists']],
-            // ``otherField` does not exist
-            [true, ['mustBeADate' => '2023-06-12']],
-            [true, ['mustBeADate' => '']],
-            [true, ['mustBeADate' => null]],
-            [true, ['mustBeADate' => []]],
-            // `otherField` and `mustBeADate` exist
-            [true, ['mustBeADate' => '', 'otherField' => '']],
-            [true, ['mustBeADate' => '2023-06-12', 'otherField' => 'exists']],
-            [true, ['mustBeADate' => '2023-06-12', 'otherField' => '']],
-            [false, ['mustBeADate' => '', 'otherField' => 'exists']],
-            [false, ['mustBeADate' => [], 'otherField' => 'exists']],
-            [false, ['mustBeADate' => null, 'otherField' => 'exists']],
-        ];
+        // `otherField` and `mustBeADate` do not exist
+        yield [true, []];
+
+        // `mustBeADate` does not exist
+        yield [false, ['otherField' => 'exists']];
+
+        // ``otherField` does not exist
+        yield [true, ['mustBeADate' => '2023-06-12']];
+
+        yield [true, ['mustBeADate' => '']];
+
+        yield [true, ['mustBeADate' => null]];
+
+        yield [true, ['mustBeADate' => []]];
+
+        // `otherField` and `mustBeADate` exist
+        yield [true, ['mustBeADate' => '', 'otherField' => '']];
+
+        yield [true, ['mustBeADate' => '2023-06-12', 'otherField' => 'exists']];
+
+        yield [true, ['mustBeADate' => '2023-06-12', 'otherField' => '']];
+
+        yield [false, ['mustBeADate' => '', 'otherField' => 'exists']];
+
+        yield [false, ['mustBeADate' => [], 'otherField' => 'exists']];
+
+        yield [false, ['mustBeADate' => null, 'otherField' => 'exists']];
     }
 
     /**
@@ -668,11 +753,11 @@ class RulesTest extends CIUnitTestCase
 
     public function RequiredWithAndOtherRuleWithValueZeroProvider(): iterable
     {
-        yield from [
-            [true, ['married' => '0', 'partner_name' => '']],
-            [true, ['married' => '1', 'partner_name' => 'Foo']],
-            [false, ['married' => '1', 'partner_name' => '']],
-        ];
+        yield [true, ['married' => '0', 'partner_name' => '']];
+
+        yield [true, ['married' => '1', 'partner_name' => 'Foo']];
+
+        yield [false, ['married' => '1', 'partner_name' => '']];
     }
 
     /**
@@ -698,32 +783,38 @@ class RulesTest extends CIUnitTestCase
 
     public function requiredWithoutProvider(): iterable
     {
-        yield from [
-            ['nope', 'bars', false],
-            ['foo', 'nope', true],
-            [null, null, false],
-            [null, 'foo', true],
-            ['foo', null, true],
-            [
-                'array.emptyField1',
-                'array.emptyField2',
-                false,
-            ],
-            [
-                'array.nonEmptyField1',
-                'array.emptyField2',
-                true,
-            ],
-            [
-                'array.emptyField1',
-                'array.nonEmptyField2',
-                true,
-            ],
-            [
-                'array.nonEmptyField1',
-                'array.nonEmptyField2',
-                true,
-            ],
+        yield ['nope', 'bars', false];
+
+        yield ['foo', 'nope', true];
+
+        yield [null, null, false];
+
+        yield [null, 'foo', true];
+
+        yield ['foo', null, true];
+
+        yield [
+            'array.emptyField1',
+            'array.emptyField2',
+            false,
+        ];
+
+        yield [
+            'array.nonEmptyField1',
+            'array.emptyField2',
+            true,
+        ];
+
+        yield [
+            'array.emptyField1',
+            'array.nonEmptyField2',
+            true,
+        ];
+
+        yield [
+            'array.nonEmptyField1',
+            'array.nonEmptyField2',
+            true,
         ];
     }
 
@@ -744,37 +835,39 @@ class RulesTest extends CIUnitTestCase
 
     public function requiredWithoutMultipleProvider(): iterable
     {
-        yield from [
-            'all empty' => [
-                '',
-                '',
-                '',
-                false,
-            ],
-            'foo is not empty' => [
-                'a',
-                '',
-                '',
-                true,
-            ],
-            'bar is not empty' => [
-                '',
-                'b',
-                '',
-                false,
-            ],
-            'baz is not empty' => [
-                '',
-                '',
-                'c',
-                false,
-            ],
-            'bar,baz are not empty' => [
-                '',
-                'b',
-                'c',
-                true,
-            ],
+        yield 'all empty' => [
+            '',
+            '',
+            '',
+            false,
+        ];
+
+        yield 'foo is not empty' => [
+            'a',
+            '',
+            '',
+            true,
+        ];
+
+        yield 'bar is not empty' => [
+            '',
+            'b',
+            '',
+            false,
+        ];
+
+        yield 'baz is not empty' => [
+            '',
+            '',
+            'c',
+            false,
+        ];
+
+        yield 'bar,baz are not empty' => [
+            '',
+            'b',
+            'c',
+            true,
         ];
     }
 
@@ -790,33 +883,34 @@ class RulesTest extends CIUnitTestCase
 
     public function requiredWithoutMultipleWithoutFieldsProvider(): iterable
     {
-        yield from [
-            'baz is missing' => [
-                [
-                    'foo' => '',
-                    'bar' => '',
-                ],
-                false,
+        yield 'baz is missing' => [
+            [
+                'foo' => '',
+                'bar' => '',
             ],
-            'bar,baz are missing' => [
-                [
-                    'foo' => '',
-                ],
-                false,
+            false,
+        ];
+
+        yield 'bar,baz are missing' => [
+            [
+                'foo' => '',
             ],
-            'bar is not empty' => [
-                [
-                    'foo' => '',
-                    'bar' => 'b',
-                ],
-                false,
+            false,
+        ];
+
+        yield 'bar is not empty' => [
+            [
+                'foo' => '',
+                'bar' => 'b',
             ],
-            'foo is not empty' => [
-                [
-                    'foo' => 'a',
-                ],
-                true,
+            false,
+        ];
+
+        yield 'foo is not empty' => [
+            [
+                'foo' => 'a',
             ],
+            true,
         ];
     }
 }

@@ -628,15 +628,19 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function provideIsHTTPMethods(): iterable
     {
-        yield from [
-            ['GET'],
-            ['POST'],
-            ['PUT'],
-            ['DELETE'],
-            ['HEAD'],
-            ['PATCH'],
-            ['OPTIONS'],
-        ];
+        yield ['GET'];
+
+        yield ['POST'];
+
+        yield ['PUT'];
+
+        yield ['DELETE'];
+
+        yield ['HEAD'];
+
+        yield ['PATCH'];
+
+        yield ['OPTIONS'];
     }
 
     /**

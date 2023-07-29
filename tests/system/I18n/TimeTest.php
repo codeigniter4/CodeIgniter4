@@ -1172,12 +1172,13 @@ final class TimeTest extends CIUnitTestCase
 
     public function provideLocales(): iterable
     {
-        yield from [
-            ['en'],
-            ['de'],
-            ['ar'],
-            ['fa'],
-        ];
+        yield ['en'];
+
+        yield ['de'];
+
+        yield ['ar'];
+
+        yield ['fa'];
     }
 
     public function testModify()

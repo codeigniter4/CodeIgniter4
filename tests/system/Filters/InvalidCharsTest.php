@@ -126,13 +126,15 @@ final class InvalidCharsTest extends CIUnitTestCase
 
     public function stringWithLineBreakAndTabProvider(): iterable
     {
-        yield from [
-            ["String contains \n line break."],
-            ["String contains \r line break."],
-            ["String contains \r\n line break."],
-            ["String contains \t tab."],
-            ["String contains \t and \r line \n break."],
-        ];
+        yield ["String contains \n line break."];
+
+        yield ["String contains \r line break."];
+
+        yield ["String contains \r\n line break."];
+
+        yield ["String contains \t tab."];
+
+        yield ["String contains \t and \r line \n break."];
     }
 
     /**
@@ -150,9 +152,8 @@ final class InvalidCharsTest extends CIUnitTestCase
 
     public function stringWithControlCharsProvider(): iterable
     {
-        yield from [
-            ["String contains null char.\0"],
-            ["String contains null char and line break.\0\n"],
-        ];
+        yield ["String contains null char.\0"];
+
+        yield ["String contains null char and line break.\0\n"];
     }
 }

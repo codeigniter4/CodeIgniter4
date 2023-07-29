@@ -68,17 +68,23 @@ final class DotEnvTest extends CIUnitTestCase
 
     public function provideLoadVars(): iterable
     {
-        yield from [
-            ['bar', 'FOO'],
-            ['baz', 'BAR'],
-            ['with spaces', 'SPACED'],
-            ['', 'NULL'],
-            ['exported foo', 'char.expo.foo'],
-            ['variable', 'character.export.var'],
-            ['character', 'char.var'],
-            ['imports', 'char.exports'],
-            ['banana', 'fruit.export'],
-        ];
+        yield ['bar', 'FOO'];
+
+        yield ['baz', 'BAR'];
+
+        yield ['with spaces', 'SPACED'];
+
+        yield ['', 'NULL'];
+
+        yield ['exported foo', 'char.expo.foo'];
+
+        yield ['variable', 'character.export.var'];
+
+        yield ['character', 'char.var'];
+
+        yield ['imports', 'char.exports'];
+
+        yield ['banana', 'fruit.export'];
     }
 
     /**

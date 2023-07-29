@@ -407,24 +407,25 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function groupProvider(): iterable
     {
-        yield from [
-            ['admin', '/', [
-                'admin/users/list'   => '\Users::list',
-                'admin/delegate/foo' => '\Users::foo',
-            ]],
-            ['/', '', [
-                'users/list'   => '\Users::list',
-                'delegate/foo' => '\Users::foo',
-            ]],
-            ['', '', [
-                'users/list'   => '\Users::list',
-                'delegate/foo' => '\Users::foo',
-            ]],
-            ['', '/', [
-                'users/list'   => '\Users::list',
-                'delegate/foo' => '\Users::foo',
-            ]],
-        ];
+        yield ['admin', '/', [
+            'admin/users/list'   => '\Users::list',
+            'admin/delegate/foo' => '\Users::foo',
+        ]];
+
+        yield ['/', '', [
+            'users/list'   => '\Users::list',
+            'delegate/foo' => '\Users::foo',
+        ]];
+
+        yield ['', '', [
+            'users/list'   => '\Users::list',
+            'delegate/foo' => '\Users::foo',
+        ]];
+
+        yield ['', '/', [
+            'users/list'   => '\Users::list',
+            'delegate/foo' => '\Users::foo',
+        ]];
     }
 
     public function testHostnameOption()
@@ -1244,42 +1245,43 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function optionsProvider(): iterable
     {
-        yield from [
+        yield [
             [
-                [
-                    'foo' => 'options1',
-                ],
-                [
-                    'foo' => 'options2',
-                ],
+                'foo' => 'options1',
             ],
             [
-                [
-                    'as'  => 'admin',
-                    'foo' => 'options1',
-                ],
-                [
-                    'foo' => 'options2',
-                ],
+                'foo' => 'options2',
+            ],
+        ];
+
+        yield [
+            [
+                'as'  => 'admin',
+                'foo' => 'options1',
             ],
             [
-                [
-                    'foo' => 'options1',
-                ],
-                [
-                    'as'  => 'admin',
-                    'foo' => 'options2',
-                ],
+                'foo' => 'options2',
+            ],
+        ];
+
+        yield [
+            [
+                'foo' => 'options1',
             ],
             [
-                [
-                    'as'  => 'admin',
-                    'foo' => 'options1',
-                ],
-                [
-                    'as'  => 'admin',
-                    'foo' => 'options2',
-                ],
+                'as'  => 'admin',
+                'foo' => 'options2',
+            ],
+        ];
+
+        yield [
+            [
+                'as'  => 'admin',
+                'foo' => 'options1',
+            ],
+            [
+                'as'  => 'admin',
+                'foo' => 'options2',
             ],
         ];
     }

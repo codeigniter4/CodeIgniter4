@@ -42,31 +42,34 @@ final class FormatRulesTest extends TraditionalFormatRulesTest
 
     public function alphaSpaceProvider(): Generator
     {
-        yield from [
-            [
-                null,
-                false,  // true in Traditional Rule
-            ],
-            [
-                self::ALPHABET,
-                true,
-            ],
-            [
-                self::ALPHABET . ' ',
-                true,
-            ],
-            [
-                self::ALPHABET . "\n",
-                false,
-            ],
-            [
-                self::ALPHABET . '1',
-                false,
-            ],
-            [
-                self::ALPHABET . '*',
-                false,
-            ],
+        yield [
+            null,
+            false,  // true in Traditional Rule
+        ];
+
+        yield [
+            self::ALPHABET,
+            true,
+        ];
+
+        yield [
+            self::ALPHABET . ' ',
+            true,
+        ];
+
+        yield [
+            self::ALPHABET . "\n",
+            false,
+        ];
+
+        yield [
+            self::ALPHABET . '1',
+            false,
+        ];
+
+        yield [
+            self::ALPHABET . '*',
+            false,
         ];
     }
 

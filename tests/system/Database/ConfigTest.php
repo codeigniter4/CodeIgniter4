@@ -210,27 +210,29 @@ final class ConfigTest extends CIUnitTestCase
 
     public function convertDSNProvider(): iterable
     {
-        yield from [
-            [
-                'pgsql:host=localhost;port=5432;dbname=database_name;user=username;password=password',
-                'host=localhost port=5432 dbname=database_name user=username password=password',
-            ],
-            [
-                'pgsql:host=localhost;port=5432;dbname=database_name;user=username;password=we;port=we',
-                'host=localhost port=5432 dbname=database_name user=username password=we;port=we',
-            ],
-            [
-                'pgsql:host=localhost;port=5432;dbname=database_name',
-                'host=localhost port=5432 dbname=database_name',
-            ],
-            [
-                "pgsql:host=localhost;port=5432;dbname=database_name;options='--client_encoding=UTF8'",
-                "host=localhost port=5432 dbname=database_name options='--client_encoding=UTF8'",
-            ],
-            [
-                'pgsql:host=localhost;port=5432;dbname=database_name;something=stupid',
-                'host=localhost port=5432 dbname=database_name;something=stupid',
-            ],
+        yield [
+            'pgsql:host=localhost;port=5432;dbname=database_name;user=username;password=password',
+            'host=localhost port=5432 dbname=database_name user=username password=password',
+        ];
+
+        yield [
+            'pgsql:host=localhost;port=5432;dbname=database_name;user=username;password=we;port=we',
+            'host=localhost port=5432 dbname=database_name user=username password=we;port=we',
+        ];
+
+        yield [
+            'pgsql:host=localhost;port=5432;dbname=database_name',
+            'host=localhost port=5432 dbname=database_name',
+        ];
+
+        yield [
+            "pgsql:host=localhost;port=5432;dbname=database_name;options='--client_encoding=UTF8'",
+            "host=localhost port=5432 dbname=database_name options='--client_encoding=UTF8'",
+        ];
+
+        yield [
+            'pgsql:host=localhost;port=5432;dbname=database_name;something=stupid',
+            'host=localhost port=5432 dbname=database_name;something=stupid',
         ];
     }
 }

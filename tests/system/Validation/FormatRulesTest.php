@@ -131,100 +131,115 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function urlProvider(): iterable
     {
-        yield from [
-            [
-                'www.codeigniter.com',
-                true,
-                false,
-            ],
-            [
-                'http://codeigniter.com',
-                true,
-                true,
-            ],
-            // https://bugs.php.net/bug.php?id=51192
-            [
-                'http://accept-dashes.tld',
-                true,
-                true,
-            ],
-            [
-                'http://reject_underscores',
-                false,
-                false,
-            ],
-            // https://github.com/bcit-ci/CodeIgniter/issues/4415
-            [
-                'http://[::1]/ipv6',
-                true,
-                true,
-            ],
-            [
-                'htt://www.codeigniter.com',
-                false,
-                false,
-            ],
-            [
-                '',
-                false,
-                false,
-            ],
-            // https://github.com/codeigniter4/CodeIgniter4/issues/3156
-            [
-                'codeigniter',
-                true,   // What?
-                false,
-            ],
-            [
-                'code igniter',
-                false,
-                false,
-            ],
-            [
-                null,
-                false,
-                false,
-            ],
-            [
-                'http://',
-                true,   // Why?
-                false,
-            ],
-            [
-                'http:///oops.com',
-                false,
-                false,
-            ],
-            [
-                '123.com',
-                true,
-                false,
-            ],
-            [
-                'abc.123',
-                true,
-                false,
-            ],
-            [
-                'http:8080//abc.com',
-                true,   // Insane?
-                false,
-            ],
-            [
-                'mailto:support@codeigniter.com',
-                true,
-                false,
-            ],
-            [
-                '//example.com',
-                false,
-                false,
-            ],
-            [
-                "http://www.codeigniter.com\n",
-                false,
-                false,
-            ],
+        yield [
+            'www.codeigniter.com',
+            true,
+            false,
+        ];
+
+        yield [
+            'http://codeigniter.com',
+            true,
+            true,
+        ];
+
+        // https://bugs.php.net/bug.php?id=51192
+        yield [
+            'http://accept-dashes.tld',
+            true,
+            true,
+        ];
+
+        yield [
+            'http://reject_underscores',
+            false,
+            false,
+        ];
+
+        // https://github.com/bcit-ci/CodeIgniter/issues/4415
+        yield [
+            'http://[::1]/ipv6',
+            true,
+            true,
+        ];
+
+        yield [
+            'htt://www.codeigniter.com',
+            false,
+            false,
+        ];
+
+        yield [
+            '',
+            false,
+            false,
+        ];
+
+        // https://github.com/codeigniter4/CodeIgniter4/issues/3156
+        yield [
+            'codeigniter',
+            true,   // What?
+            false,
+        ];
+
+        yield [
+            'code igniter',
+            false,
+            false,
+        ];
+
+        yield [
+            null,
+            false,
+            false,
+        ];
+
+        yield [
+            'http://',
+            true,   // Why?
+            false,
+        ];
+
+        yield [
+            'http:///oops.com',
+            false,
+            false,
+        ];
+
+        yield [
+            '123.com',
+            true,
+            false,
+        ];
+
+        yield [
+            'abc.123',
+            true,
+            false,
+        ];
+
+        yield [
+            'http:8080//abc.com',
+            true,   // Insane?
+            false,
+        ];
+
+        yield [
+            'mailto:support@codeigniter.com',
+            true,
+            false,
+        ];
+
+        yield [
+            '//example.com',
+            false,
+            false,
+        ];
+
+        yield [
+            "http://www.codeigniter.com\n",
+            false,
+            false,
         ];
     }
 
@@ -262,49 +277,52 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function emailProviderSingle(): iterable
     {
-        yield from [
-            [
-                'email@sample.com',
-                true,
-            ],
-            [
-                'valid_email',
-                false,
-            ],
-            [
-                null,
-                false,
-            ],
+        yield [
+            'email@sample.com',
+            true,
+        ];
+
+        yield [
+            'valid_email',
+            false,
+        ];
+
+        yield [
+            null,
+            false,
         ];
     }
 
     public function emailsProvider(): iterable
     {
-        yield from [
-            [
-                '1@sample.com,2@sample.com',
-                true,
-            ],
-            [
-                '1@sample.com, 2@sample.com',
-                true,
-            ],
-            [
-                'email@sample.com',
-                true,
-            ],
-            [
-                '@sample.com,2@sample.com,validemail@email.ca',
-                false,
-            ],
-            [
-                null,
-                false,
-            ],
-            [
-                ',',
-                false,
-            ],
+        yield [
+            '1@sample.com,2@sample.com',
+            true,
+        ];
+
+        yield [
+            '1@sample.com, 2@sample.com',
+            true,
+        ];
+
+        yield [
+            'email@sample.com',
+            true,
+        ];
+
+        yield [
+            '@sample.com,2@sample.com,validemail@email.ca',
+            false,
+        ];
+
+        yield [
+            null,
+            false,
+        ];
+
+        yield [
+            ',',
+            false,
         ];
     }
 
@@ -326,52 +344,58 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function ipProvider(): iterable
     {
-        yield from [
-            [
-                '127.0.0.1',
-                null,
-                true,
-            ],
-            [
-                '127.0.0.1',
-                'ipv4',
-                true,
-            ],
-            [
-                '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
-                null,
-                true,
-            ],
-            [
-                '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
-                'ipv6',
-                true,
-            ],
-            [
-                '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
-                'ipv4',
-                false,
-            ],
-            [
-                '127.0.0.1',
-                'ipv6',
-                false,
-            ],
-            [
-                'H001:0db8:85a3:0000:0000:8a2e:0370:7334',
-                null,
-                false,
-            ],
-            [
-                '127.0.0.259',
-                null,
-                false,
-            ],
-            [
-                null,
-                null,
-                false,
-            ],
+        yield [
+            '127.0.0.1',
+            null,
+            true,
+        ];
+
+        yield [
+            '127.0.0.1',
+            'ipv4',
+            true,
+        ];
+
+        yield [
+            '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
+            null,
+            true,
+        ];
+
+        yield [
+            '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
+            'ipv6',
+            true,
+        ];
+
+        yield [
+            '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
+            'ipv4',
+            false,
+        ];
+
+        yield [
+            '127.0.0.1',
+            'ipv6',
+            false,
+        ];
+
+        yield [
+            'H001:0db8:85a3:0000:0000:8a2e:0370:7334',
+            null,
+            false,
+        ];
+
+        yield [
+            '127.0.0.259',
+            null,
+            false,
+        ];
+
+        yield [
+            null,
+            null,
+            false,
         ];
     }
 
@@ -395,19 +419,19 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function stringProvider(): iterable
     {
-        yield from [
-            [
-                '123',
-                true,
-            ],
-            [
-                123,
-                false,
-            ],
-            [
-                'hello',
-                true,
-            ],
+        yield [
+            '123',
+            true,
+        ];
+
+        yield [
+            123,
+            false,
+        ];
+
+        yield [
+            'hello',
+            true,
         ];
     }
 
@@ -429,27 +453,29 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function alphaProvider(): iterable
     {
-        yield from [
-            [
-                self::ALPHABET,
-                true,
-            ],
-            [
-                self::ALPHABET . ' ',
-                false,
-            ],
-            [
-                self::ALPHABET . '1',
-                false,
-            ],
-            [
-                self::ALPHABET . '*',
-                false,
-            ],
-            [
-                null,
-                false,
-            ],
+        yield [
+            self::ALPHABET,
+            true,
+        ];
+
+        yield [
+            self::ALPHABET . ' ',
+            false,
+        ];
+
+        yield [
+            self::ALPHABET . '1',
+            false,
+        ];
+
+        yield [
+            self::ALPHABET . '*',
+            false,
+        ];
+
+        yield [
+            null,
+            false,
         ];
     }
 
@@ -471,31 +497,34 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function alphaSpaceProvider(): iterable
     {
-        yield from [
-            [
-                null,
-                true,
-            ],
-            [
-                self::ALPHABET,
-                true,
-            ],
-            [
-                self::ALPHABET . ' ',
-                true,
-            ],
-            [
-                self::ALPHABET . "\n",
-                false,
-            ],
-            [
-                self::ALPHABET . '1',
-                false,
-            ],
-            [
-                self::ALPHABET . '*',
-                false,
-            ],
+        yield [
+            null,
+            true,
+        ];
+
+        yield [
+            self::ALPHABET,
+            true,
+        ];
+
+        yield [
+            self::ALPHABET . ' ',
+            true,
+        ];
+
+        yield [
+            self::ALPHABET . "\n",
+            false,
+        ];
+
+        yield [
+            self::ALPHABET . '1',
+            false,
+        ];
+
+        yield [
+            self::ALPHABET . '*',
+            false,
         ];
     }
 
@@ -517,23 +546,24 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function alphaNumericProvider(): iterable
     {
-        yield from [
-            [
-                self::ALPHANUMERIC,
-                true,
-            ],
-            [
-                self::ALPHANUMERIC . '\ ',
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . '_',
-                false,
-            ],
-            [
-                null,
-                false,
-            ],
+        yield [
+            self::ALPHANUMERIC,
+            true,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . '\ ',
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . '_',
+            false,
+        ];
+
+        yield [
+            null,
+            false,
         ];
     }
 
@@ -555,79 +585,94 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function alphaNumericPunctProvider(): iterable
     {
-        yield from [
-            [
-                self::ALPHANUMERIC . ' ~!#$%&*-_+=|:.',
-                true,
-            ],
-            [
-                self::ALPHANUMERIC . '`',
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . "\n",
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . '@',
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . '^',
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . '(',
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . ')',
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . '\\',
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . '{',
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . '}',
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . '[',
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . ']',
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . '"',
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . "'",
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . '<',
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . '>',
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . '/',
-                false,
-            ],
-            [
-                null,
-                false,
-            ],
+        yield [
+            self::ALPHANUMERIC . ' ~!#$%&*-_+=|:.',
+            true,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . '`',
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . "\n",
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . '@',
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . '^',
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . '(',
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . ')',
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . '\\',
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . '{',
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . '}',
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . '[',
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . ']',
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . '"',
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . "'",
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . '<',
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . '>',
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . '/',
+            false,
+        ];
+
+        yield [
+            null,
+            false,
         ];
     }
 
@@ -649,23 +694,24 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function alphaNumericSpaceProvider(): Generator
     {
-        yield from [
-            [
-                ' ' . self::ALPHANUMERIC,
-                true,
-            ],
-            [
-                ' ' . self::ALPHANUMERIC . '-',
-                false,
-            ],
-            [
-                ' ' . self::ALPHANUMERIC . "\n",
-                false,
-            ],
-            [
-                null,
-                false,
-            ],
+        yield [
+            ' ' . self::ALPHANUMERIC,
+            true,
+        ];
+
+        yield [
+            ' ' . self::ALPHANUMERIC . '-',
+            false,
+        ];
+
+        yield [
+            ' ' . self::ALPHANUMERIC . "\n",
+            false,
+        ];
+
+        yield [
+            null,
+            false,
         ];
     }
 
@@ -687,23 +733,24 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function alphaDashProvider(): iterable
     {
-        yield from [
-            [
-                self::ALPHANUMERIC . '-',
-                true,
-            ],
-            [
-                self::ALPHANUMERIC . '-\ ',
-                false,
-            ],
-            [
-                self::ALPHANUMERIC . "-\n",
-                false,
-            ],
-            [
-                null,
-                false,
-            ],
+        yield [
+            self::ALPHANUMERIC . '-',
+            true,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . '-\ ',
+            false,
+        ];
+
+        yield [
+            self::ALPHANUMERIC . "-\n",
+            false,
+        ];
+
+        yield [
+            null,
+            false,
         ];
     }
 
@@ -725,23 +772,24 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function hexProvider(): iterable
     {
-        yield from [
-            [
-                'abcdefABCDEF0123456789',
-                true,
-            ],
-            [
-                self::ALPHANUMERIC,
-                false,
-            ],
-            [
-                'asdfjkl;',
-                false,
-            ],
-            [
-                null,
-                false,
-            ],
+        yield [
+            'abcdefABCDEF0123456789',
+            true,
+        ];
+
+        yield [
+            self::ALPHANUMERIC,
+            false,
+        ];
+
+        yield [
+            'asdfjkl;',
+            false,
+        ];
+
+        yield [
+            null,
+            false,
         ];
     }
 
@@ -763,39 +811,44 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function numericProvider(): iterable
     {
-        yield from [
-            [
-                '0',
-                true,
-            ],
-            [
-                '12314',
-                true,
-            ],
-            [
-                '-42',
-                true,
-            ],
-            [
-                '+42',
-                true,
-            ],
-            [
-                "+42\n",
-                false,
-            ],
-            [
-                '123a',
-                false,
-            ],
-            [
-                '--1',
-                false,
-            ],
-            [
-                null,
-                false,
-            ],
+        yield [
+            '0',
+            true,
+        ];
+
+        yield [
+            '12314',
+            true,
+        ];
+
+        yield [
+            '-42',
+            true,
+        ];
+
+        yield [
+            '+42',
+            true,
+        ];
+
+        yield [
+            "+42\n",
+            false,
+        ];
+
+        yield [
+            '123a',
+            false,
+        ];
+
+        yield [
+            '--1',
+            false,
+        ];
+
+        yield [
+            null,
+            false,
         ];
     }
 
@@ -885,39 +938,44 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function integerProvider(): iterable
     {
-        yield from [
-            [
-                '0',
-                true,
-            ],
-            [
-                '42',
-                true,
-            ],
-            [
-                '-1',
-                true,
-            ],
-            [
-                "+42\n",
-                false,
-            ],
-            [
-                '123a',
-                false,
-            ],
-            [
-                '1.9',
-                false,
-            ],
-            [
-                '--1',
-                false,
-            ],
-            [
-                null,
-                false,
-            ],
+        yield [
+            '0',
+            true,
+        ];
+
+        yield [
+            '42',
+            true,
+        ];
+
+        yield [
+            '-1',
+            true,
+        ];
+
+        yield [
+            "+42\n",
+            false,
+        ];
+
+        yield [
+            '123a',
+            false,
+        ];
+
+        yield [
+            '1.9',
+            false,
+        ];
+
+        yield [
+            '--1',
+            false,
+        ];
+
+        yield [
+            null,
+            false,
         ];
     }
 
@@ -939,43 +997,49 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function decimalProvider(): iterable
     {
-        yield from [
-            [
-                '1.0',
-                true,
-            ],
-            [
-                '-0.98',
-                true,
-            ],
-            [
-                '0',
-                true,
-            ],
-            [
-                "0\n",
-                false,
-            ],
-            [
-                '1.0a',
-                false,
-            ],
-            [
-                '-i',
-                false,
-            ],
-            [
-                '--1',
-                false,
-            ],
-            [
-                null,
-                false,
-            ],
-            [
-                '.25',
-                true,
-            ],
+        yield [
+            '1.0',
+            true,
+        ];
+
+        yield [
+            '-0.98',
+            true,
+        ];
+
+        yield [
+            '0',
+            true,
+        ];
+
+        yield [
+            "0\n",
+            false,
+        ];
+
+        yield [
+            '1.0a',
+            false,
+        ];
+
+        yield [
+            '-i',
+            false,
+        ];
+
+        yield [
+            '--1',
+            false,
+        ];
+
+        yield [
+            null,
+            false,
+        ];
+
+        yield [
+            '.25',
+            true,
         ];
     }
 
@@ -997,27 +1061,29 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function naturalProvider(): iterable
     {
-        yield from [
-            [
-                '0',
-                true,
-            ],
-            [
-                '12',
-                true,
-            ],
-            [
-                '42a',
-                false,
-            ],
-            [
-                '-1',
-                false,
-            ],
-            [
-                null,
-                false,
-            ],
+        yield [
+            '0',
+            true,
+        ];
+
+        yield [
+            '12',
+            true,
+        ];
+
+        yield [
+            '42a',
+            false,
+        ];
+
+        yield [
+            '-1',
+            false,
+        ];
+
+        yield [
+            null,
+            false,
         ];
     }
 
@@ -1039,27 +1105,29 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function naturalZeroProvider(): iterable
     {
-        yield from [
-            [
-                '0',
-                false,
-            ],
-            [
-                '12',
-                true,
-            ],
-            [
-                '42a',
-                false,
-            ],
-            [
-                '-1',
-                false,
-            ],
-            [
-                null,
-                false,
-            ],
+        yield [
+            '0',
+            false,
+        ];
+
+        yield [
+            '12',
+            true,
+        ];
+
+        yield [
+            '42a',
+            false,
+        ];
+
+        yield [
+            '-1',
+            false,
+        ];
+
+        yield [
+            null,
+            false,
         ];
     }
 
@@ -1081,19 +1149,19 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function base64Provider(): iterable
     {
-        yield from [
-            [
-                base64_encode('string'),
-                true,
-            ],
-            [
-                'FA08GG',
-                false,
-            ],
-            [
-                null,
-                false,
-            ],
+        yield [
+            base64_encode('string'),
+            true,
+        ];
+
+        yield [
+            'FA08GG',
+            false,
+        ];
+
+        yield [
+            null,
+            false,
         ];
     }
 
@@ -1115,43 +1183,49 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function jsonProvider(): iterable
     {
-        yield from [
-            [
-                'null',
-                true,
-            ],
-            [
-                '"null"',
-                true,
-            ],
-            [
-                '600100825',
-                true,
-            ],
-            [
-                '{"A":"Yay.", "B":[0,5]}',
-                true,
-            ],
-            [
-                '[0,"2",2.2,"3.3"]',
-                true,
-            ],
-            [
-                null,
-                false,
-            ],
-            [
-                '600-Nope. Should not pass.',
-                false,
-            ],
-            [
-                '{"A":SHOULD_NOT_PASS}',
-                false,
-            ],
-            [
-                '[0,"2",2.2 "3.3"]',
-                false,
-            ],
+        yield [
+            'null',
+            true,
+        ];
+
+        yield [
+            '"null"',
+            true,
+        ];
+
+        yield [
+            '600100825',
+            true,
+        ];
+
+        yield [
+            '{"A":"Yay.", "B":[0,5]}',
+            true,
+        ];
+
+        yield [
+            '[0,"2",2.2,"3.3"]',
+            true,
+        ];
+
+        yield [
+            null,
+            false,
+        ];
+
+        yield [
+            '600-Nope. Should not pass.',
+            false,
+        ];
+
+        yield [
+            '{"A":SHOULD_NOT_PASS}',
+            false,
+        ];
+
+        yield [
+            '[0,"2",2.2 "3.3"]',
+            false,
         ];
     }
 
@@ -1173,23 +1247,24 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function timezoneProvider(): iterable
     {
-        yield from [
-            [
-                'America/Chicago',
-                true,
-            ],
-            [
-                'america/chicago',
-                false,
-            ],
-            [
-                'foo/bar',
-                false,
-            ],
-            [
-                null,
-                false,
-            ],
+        yield [
+            'America/Chicago',
+            true,
+        ];
+
+        yield [
+            'america/chicago',
+            false,
+        ];
+
+        yield [
+            'foo/bar',
+            false,
+        ];
+
+        yield [
+            null,
+            false,
         ];
     }
 
@@ -1211,172 +1286,202 @@ class FormatRulesTest extends CIUnitTestCase
 
     public function validDateProvider(): iterable
     {
-        yield from [
-            [
-                null,
-                'Y-m-d',
-                false,
-            ],
-            [
-                'Sun',
-                'D',
-                true,
-            ],
-            [
-                'Sun',
-                'd',
-                false,
-            ],
-            [
-                'Sun',
-                null,
-                true,
-            ],
-            [
-                '1500',
-                'Y',
-                true,
-            ],
-            [
-                '1500',
-                'y',
-                false,
-            ],
-            [
-                '1500',
-                null,
-                true,
-            ],
-            [
-                '09:26:05',
-                'H:i:s',
-                true,
-            ],
-            [
-                '09:26:5',
-                'H:i:s',
-                false,
-            ],
-            [
-                '1992-02-29',
-                'Y-m-d',
-                true,
-            ],
-            [
-                '1991-02-29',
-                'Y-m-d',
-                false,
-            ],
-            [
-                '1718-05-10 15:25:59',
-                'Y-m-d H:i:s',
-                true,
-            ],
-            [
-                '1718-05-10 15:5:59',
-                'Y-m-d H:i:s',
-                false,
-            ],
-            [
-                'Thu, 31 Oct 2013 13:31:00',
-                'D, d M Y H:i:s',
-                true,
-            ],
-            [
-                'Thu, 31 Jun 2013 13:31:00',
-                'D, d M Y H:i:s',
-                false,
-            ],
-            [
-                'Thu, 31 Jun 2013 13:31:00',
-                null,
-                true,
-            ],
-            [
-                '07.05.03',
-                'm.d.y',
-                true,
-            ],
-            [
-                '07.05.1803',
-                'm.d.y',
-                false,
-            ],
-            [
-                '19890109',
-                'Ymd',
-                true,
-            ],
-            [
-                '198919',
-                'Ymd',
-                false,
-            ],
-            [
-                '2, 7, 2001',
-                'j, n, Y',
-                true,
-            ],
-            [
-                '2, 17, 2001',
-                'j, n, Y',
-                false,
-            ],
-            [
-                '09-42-25, 12-11-17',
-                'h-i-s, j-m-y',
-                true,
-            ],
-            [
-                '09-42-25, 12-00-17',
-                'h-i-s, j-m-y',
-                false,
-            ],
-            [
-                '09-42-25, 12-00-17',
-                null,
-                false,
-            ],
-            [
-                'November 12, 2017, 9:42 am',
-                'F j, Y, g:i a',
-                true,
-            ],
-            [
-                'November 12, 2017, 19:42 am',
-                'F j, Y, g:i a',
-                false,
-            ],
-            [
-                'November 12, 2017, 9:42 am',
-                null,
-                true,
-            ],
-            [
-                'Monday 8th of August 2005 03:12:46 PM',
-                'l jS \of F Y h:i:s A',
-                true,
-            ],
-            [
-                'Monday 8th of August 2005 13:12:46 PM',
-                'l jS \of F Y h:i:s A',
-                false,
-            ],
-            [
-                '23:01:59 is now',
-                'H:m:s \i\s \n\o\w',
-                true,
-            ],
-            [
-                '23:01:59 is now',
-                'H:m:s is now',
-                false,
-            ],
-            [
-                '12/11/2017',
-                'd/m/Y',
-                true,
-            ],
+        yield [
+            null,
+            'Y-m-d',
+            false,
+        ];
+
+        yield [
+            'Sun',
+            'D',
+            true,
+        ];
+
+        yield [
+            'Sun',
+            'd',
+            false,
+        ];
+
+        yield [
+            'Sun',
+            null,
+            true,
+        ];
+
+        yield [
+            '1500',
+            'Y',
+            true,
+        ];
+
+        yield [
+            '1500',
+            'y',
+            false,
+        ];
+
+        yield [
+            '1500',
+            null,
+            true,
+        ];
+
+        yield [
+            '09:26:05',
+            'H:i:s',
+            true,
+        ];
+
+        yield [
+            '09:26:5',
+            'H:i:s',
+            false,
+        ];
+
+        yield [
+            '1992-02-29',
+            'Y-m-d',
+            true,
+        ];
+
+        yield [
+            '1991-02-29',
+            'Y-m-d',
+            false,
+        ];
+
+        yield [
+            '1718-05-10 15:25:59',
+            'Y-m-d H:i:s',
+            true,
+        ];
+
+        yield [
+            '1718-05-10 15:5:59',
+            'Y-m-d H:i:s',
+            false,
+        ];
+
+        yield [
+            'Thu, 31 Oct 2013 13:31:00',
+            'D, d M Y H:i:s',
+            true,
+        ];
+
+        yield [
+            'Thu, 31 Jun 2013 13:31:00',
+            'D, d M Y H:i:s',
+            false,
+        ];
+
+        yield [
+            'Thu, 31 Jun 2013 13:31:00',
+            null,
+            true,
+        ];
+
+        yield [
+            '07.05.03',
+            'm.d.y',
+            true,
+        ];
+
+        yield [
+            '07.05.1803',
+            'm.d.y',
+            false,
+        ];
+
+        yield [
+            '19890109',
+            'Ymd',
+            true,
+        ];
+
+        yield [
+            '198919',
+            'Ymd',
+            false,
+        ];
+
+        yield [
+            '2, 7, 2001',
+            'j, n, Y',
+            true,
+        ];
+
+        yield [
+            '2, 17, 2001',
+            'j, n, Y',
+            false,
+        ];
+
+        yield [
+            '09-42-25, 12-11-17',
+            'h-i-s, j-m-y',
+            true,
+        ];
+
+        yield [
+            '09-42-25, 12-00-17',
+            'h-i-s, j-m-y',
+            false,
+        ];
+
+        yield [
+            '09-42-25, 12-00-17',
+            null,
+            false,
+        ];
+
+        yield [
+            'November 12, 2017, 9:42 am',
+            'F j, Y, g:i a',
+            true,
+        ];
+
+        yield [
+            'November 12, 2017, 19:42 am',
+            'F j, Y, g:i a',
+            false,
+        ];
+
+        yield [
+            'November 12, 2017, 9:42 am',
+            null,
+            true,
+        ];
+
+        yield [
+            'Monday 8th of August 2005 03:12:46 PM',
+            'l jS \of F Y h:i:s A',
+            true,
+        ];
+
+        yield [
+            'Monday 8th of August 2005 13:12:46 PM',
+            'l jS \of F Y h:i:s A',
+            false,
+        ];
+
+        yield [
+            '23:01:59 is now',
+            'H:m:s \i\s \n\o\w',
+            true,
+        ];
+
+        yield [
+            '23:01:59 is now',
+            'H:m:s is now',
+            false,
+        ];
+
+        yield [
+            '12/11/2017',
+            'd/m/Y',
+            true,
         ];
     }
 }

@@ -293,26 +293,41 @@ final class ResponseTest extends CIUnitTestCase
 
     public function provideForRedirect(): iterable
     {
-        yield from [
-            ['Apache/2.4.17', 'HTTP/1.1', 'GET', null, 302],
-            ['Apache/2.4.17', 'HTTP/1.1', 'GET', 307, 307],
-            ['Apache/2.4.17', 'HTTP/1.1', 'GET', 302, 302],
-            ['Apache/2.4.17', 'HTTP/1.1', 'POST', null, 303],
-            ['Apache/2.4.17', 'HTTP/1.1', 'POST', 307, 307],
-            ['Apache/2.4.17', 'HTTP/1.1', 'POST', 302, 302],
-            ['Apache/2.4.17', 'HTTP/1.1', 'HEAD', null, 307],
-            ['Apache/2.4.17', 'HTTP/1.1', 'HEAD', 307, 307],
-            ['Apache/2.4.17', 'HTTP/1.1', 'HEAD', 302, 302],
-            ['Apache/2.4.17', 'HTTP/1.1', 'OPTIONS', null, 307],
-            ['Apache/2.4.17', 'HTTP/1.1', 'OPTIONS', 307, 307],
-            ['Apache/2.4.17', 'HTTP/1.1', 'OPTIONS', 302, 302],
-            ['Apache/2.4.17', 'HTTP/1.1', 'PUT', null, 303],
-            ['Apache/2.4.17', 'HTTP/1.1', 'PUT', 307, 307],
-            ['Apache/2.4.17', 'HTTP/1.1', 'PUT', 302, 302],
-            ['Apache/2.4.17', 'HTTP/1.1', 'DELETE', null, 303],
-            ['Apache/2.4.17', 'HTTP/1.1', 'DELETE', 307, 307],
-            ['Apache/2.4.17', 'HTTP/1.1', 'DELETE', 302, 302],
-        ];
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'GET', null, 302];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'GET', 307, 307];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'GET', 302, 302];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'POST', null, 303];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'POST', 307, 307];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'POST', 302, 302];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'HEAD', null, 307];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'HEAD', 307, 307];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'HEAD', 302, 302];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'OPTIONS', null, 307];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'OPTIONS', 307, 307];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'OPTIONS', 302, 302];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'PUT', null, 303];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'PUT', 307, 307];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'PUT', 302, 302];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'DELETE', null, 303];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'DELETE', 307, 307];
+
+        yield ['Apache/2.4.17', 'HTTP/1.1', 'DELETE', 302, 302];
     }
 
     /**
@@ -339,14 +354,17 @@ final class ResponseTest extends CIUnitTestCase
 
     public function provideForRedirectWithIIS(): iterable
     {
-        yield from [
-            ['HTTP/1.1', 'GET', null, 302],
-            ['HTTP/1.1', 'GET', 307, 307],
-            ['HTTP/1.1', 'GET', 302, 302],
-            ['HTTP/1.1', 'POST', null, 302],
-            ['HTTP/1.1', 'POST', 307, 307],
-            ['HTTP/1.1', 'POST', 302, 302],
-        ];
+        yield ['HTTP/1.1', 'GET', null, 302];
+
+        yield ['HTTP/1.1', 'GET', 307, 307];
+
+        yield ['HTTP/1.1', 'GET', 302, 302];
+
+        yield ['HTTP/1.1', 'POST', null, 302];
+
+        yield ['HTTP/1.1', 'POST', 307, 307];
+
+        yield ['HTTP/1.1', 'POST', 302, 302];
     }
 
     public function testSetCookieFails()

@@ -35,13 +35,15 @@ final class SampleURIGeneratorTest extends CIUnitTestCase
 
     public function routeKeyProvider(): iterable
     {
-        yield from [
-            'root'                => ['/', '/'],
-            'placeholder num'     => ['shop/product/([0-9]+)', 'shop/product/123'],
-            'placeholder segment' => ['shop/product/([^/]+)', 'shop/product/abc_123'],
-            'placeholder any'     => ['shop/product/(.*)', 'shop/product/123/abc'],
-            'auto route'          => ['home/index[/...]', 'home/index/1/2/3/4/5'],
-        ];
+        yield 'root' => ['/', '/'];
+
+        yield 'placeholder num' => ['shop/product/([0-9]+)', 'shop/product/123'];
+
+        yield 'placeholder segment' => ['shop/product/([^/]+)', 'shop/product/abc_123'];
+
+        yield 'placeholder any' => ['shop/product/(.*)', 'shop/product/123/abc'];
+
+        yield 'auto route' => ['home/index[/...]', 'home/index/1/2/3/4/5'];
     }
 
     public function testGetFromPlaceholderCustomPlaceholder()

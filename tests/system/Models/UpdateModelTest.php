@@ -399,17 +399,16 @@ final class UpdateModelTest extends LiveModelTestCase
 
     public function provideInvalidIds(): iterable
     {
-        yield from [
-            [
-                null,
-                DatabaseException::class,
-                'Updates are not allowed unless they contain a "where" or "like" clause.',
-            ],
-            [
-                false,
-                InvalidArgumentException::class,
-                'update(): argument #1 ($id) should not be boolean.',
-            ],
+        yield [
+            null,
+            DatabaseException::class,
+            'Updates are not allowed unless they contain a "where" or "like" clause.',
+        ];
+
+        yield [
+            false,
+            InvalidArgumentException::class,
+            'update(): argument #1 ($id) should not be boolean.',
         ];
     }
 }

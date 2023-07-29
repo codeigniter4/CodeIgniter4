@@ -624,63 +624,70 @@ class ValidationTest extends CIUnitTestCase
 
     public function rulesSetupProvider(): iterable
     {
-        yield from [
+        yield [
+            'min_length[10]',
+            'The foo field must be at least 10 characters in length.',
+        ];
+
+        yield [
+            'min_length[10]',
+            'The foo field is very short.',
+            ['foo' => ['min_length' => 'The {field} field is very short.']],
+        ];
+
+        yield [
+            ['min_length[10]'],
+            'The foo field must be at least 10 characters in length.',
+        ];
+
+        yield [
+            ['min_length[10]'],
+            'The foo field is very short.',
+            ['foo' => ['min_length' => 'The {field} field is very short.']],
+        ];
+
+        yield [
+            ['rules' => 'min_length[10]'],
+            'The foo field must be at least 10 characters in length.',
+        ];
+
+        yield [
+            ['rules' => ['min_length[10]']],
+            'The foo field must be at least 10 characters in length.',
+        ];
+
+        yield [
             [
-                'min_length[10]',
-                'The foo field must be at least 10 characters in length.',
+                'label' => 'Foo Bar',
+                'rules' => 'min_length[10]',
             ],
+            'The Foo Bar field must be at least 10 characters in length.',
+        ];
+
+        yield [
             [
-                'min_length[10]',
-                'The foo field is very short.',
-                ['foo' => ['min_length' => 'The {field} field is very short.']],
+                'label' => 'Foo Bar',
+                'rules' => ['min_length[10]'],
             ],
+            'The Foo Bar field must be at least 10 characters in length.',
+        ];
+
+        yield [
             [
-                ['min_length[10]'],
-                'The foo field must be at least 10 characters in length.',
+                'label' => 'Foo Bar',
+                'rules' => 'min_length[10]',
             ],
+            'The Foo Bar field is very short.',
+            ['foo' => ['min_length' => 'The {field} field is very short.']],
+        ];
+
+        yield [
             [
-                ['min_length[10]'],
-                'The foo field is very short.',
-                ['foo' => ['min_length' => 'The {field} field is very short.']],
+                'label'  => 'Foo Bar',
+                'rules'  => 'min_length[10]',
+                'errors' => ['min_length' => 'The {field} field is very short.'],
             ],
-            [
-                ['rules' => 'min_length[10]'],
-                'The foo field must be at least 10 characters in length.',
-            ],
-            [
-                ['rules' => ['min_length[10]']],
-                'The foo field must be at least 10 characters in length.',
-            ],
-            [
-                [
-                    'label' => 'Foo Bar',
-                    'rules' => 'min_length[10]',
-                ],
-                'The Foo Bar field must be at least 10 characters in length.',
-            ],
-            [
-                [
-                    'label' => 'Foo Bar',
-                    'rules' => ['min_length[10]'],
-                ],
-                'The Foo Bar field must be at least 10 characters in length.',
-            ],
-            [
-                [
-                    'label' => 'Foo Bar',
-                    'rules' => 'min_length[10]',
-                ],
-                'The Foo Bar field is very short.',
-                ['foo' => ['min_length' => 'The {field} field is very short.']],
-            ],
-            [
-                [
-                    'label'  => 'Foo Bar',
-                    'rules'  => 'min_length[10]',
-                    'errors' => ['min_length' => 'The {field} field is very short.'],
-                ],
-                'The Foo Bar field is very short.',
-            ],
+            'The Foo Bar field is very short.',
         ];
     }
 
@@ -972,56 +979,56 @@ class ValidationTest extends CIUnitTestCase
 
     public function arrayFieldDataProvider(): iterable
     {
-        yield from [
-            'all_rules_should_pass' => [
-                'body' => [
-                    'foo' => [
-                        'a',
-                        'b',
-                        'c',
-                    ],
-                ],
-                'rules' => [
-                    'foo.0' => 'required|alpha|max_length[2]',
-                    'foo.1' => 'required|alpha|max_length[2]',
-                    'foo.2' => 'required|alpha|max_length[2]',
-                ],
-                'results' => [],
-            ],
-            'first_field_will_return_required_error' => [
-                'body' => [
-                    'foo' => [
-                        '',
-                        'b',
-                        'c',
-                    ],
-                ],
-                'rules' => [
-                    'foo.0' => 'required|alpha|max_length[2]',
-                    'foo.1' => 'required|alpha|max_length[2]',
-                    'foo.2' => 'required|alpha|max_length[2]',
-                ],
-                'results' => [
-                    'foo.0' => 'The foo.0 field is required.',
+        yield 'all_rules_should_pass' => [
+            'body' => [
+                'foo' => [
+                    'a',
+                    'b',
+                    'c',
                 ],
             ],
-            'first_and second_field_will_return_required_and_min_length_error' => [
-                'body' => [
-                    'foo' => [
-                        '',
-                        'b',
-                        'c',
-                    ],
+            'rules' => [
+                'foo.0' => 'required|alpha|max_length[2]',
+                'foo.1' => 'required|alpha|max_length[2]',
+                'foo.2' => 'required|alpha|max_length[2]',
+            ],
+            'results' => [],
+        ];
+
+        yield 'first_field_will_return_required_error' => [
+            'body' => [
+                'foo' => [
+                    '',
+                    'b',
+                    'c',
                 ],
-                'rules' => [
-                    'foo.0' => 'required|alpha|max_length[2]',
-                    'foo.1' => 'required|alpha|min_length[2]|max_length[4]',
-                    'foo.2' => 'required|alpha|max_length[2]',
+            ],
+            'rules' => [
+                'foo.0' => 'required|alpha|max_length[2]',
+                'foo.1' => 'required|alpha|max_length[2]',
+                'foo.2' => 'required|alpha|max_length[2]',
+            ],
+            'results' => [
+                'foo.0' => 'The foo.0 field is required.',
+            ],
+        ];
+
+        yield 'first_and second_field_will_return_required_and_min_length_error' => [
+            'body' => [
+                'foo' => [
+                    '',
+                    'b',
+                    'c',
                 ],
-                'results' => [
-                    'foo.0' => 'The foo.0 field is required.',
-                    'foo.1' => 'The foo.1 field must be at least 2 characters in length.',
-                ],
+            ],
+            'rules' => [
+                'foo.0' => 'required|alpha|max_length[2]',
+                'foo.1' => 'required|alpha|min_length[2]|max_length[4]',
+                'foo.2' => 'required|alpha|max_length[2]',
+            ],
+            'results' => [
+                'foo.0' => 'The foo.0 field is required.',
+                'foo.1' => 'The foo.1 field must be at least 2 characters in length.',
             ],
         ];
     }

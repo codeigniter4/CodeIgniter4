@@ -62,6 +62,7 @@ $overrides = [
             'use',
         ],
     ],
+    'yield_from_array_to_yields' => true,
 ];
 
 $options = [
