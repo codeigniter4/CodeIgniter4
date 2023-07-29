@@ -2,16 +2,6 @@
 
 $ignoreErrors = [];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\Autoloader\\:\\:discoverComposerNamespaces\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Autoloader\\\\Autoloader\\:\\:register\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$callback of function spl_autoload_register expects \\(callable\\(string\\)\\: void\\)\\|null, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), \'loadClass\'\\} given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
