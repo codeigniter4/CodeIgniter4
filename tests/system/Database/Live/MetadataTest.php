@@ -86,7 +86,7 @@ final class MetadataTest extends CIUnitTestCase
         $this->db->setPrefix($oldPrefix);
     }
 
-    public function testListTablesUnconstrainedByPrefixReturnsAllTables()
+    public function testListTablesUnconstrainedByPrefixReturnsAllTables(): void
     {
         try {
             $this->createExtraneousTable();
@@ -105,7 +105,7 @@ final class MetadataTest extends CIUnitTestCase
         }
     }
 
-    public function testListTablesConstrainedByPrefixReturnsOnlyTablesWithMatchingPrefix()
+    public function testListTablesConstrainedByPrefixReturnsOnlyTablesWithMatchingPrefix(): void
     {
         try {
             $this->createExtraneousTable();
@@ -121,7 +121,7 @@ final class MetadataTest extends CIUnitTestCase
         }
     }
 
-    public function testListTablesConstrainedByExtraneousPrefixReturnsOnlyTheExtraneousTable()
+    public function testListTablesConstrainedByExtraneousPrefixReturnsOnlyTheExtraneousTable(): void
     {
         $oldPrefix = '';
 

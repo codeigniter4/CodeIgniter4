@@ -30,7 +30,7 @@ final class GetTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $builder = $this->db->table('users');
 
@@ -42,7 +42,7 @@ final class GetTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/2141
      */
-    public function testGetWithReset()
+    public function testGetWithReset(): void
     {
         $builder = $this->db->table('users');
         $builder->testMode()->where('username', 'bogus');
@@ -58,7 +58,7 @@ final class GetTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/2143
      */
-    public function testGetWhereWithLimit()
+    public function testGetWhereWithLimit(): void
     {
         $builder = $this->db->table('users');
         $builder->testMode();
@@ -71,7 +71,7 @@ final class GetTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, null, true)));
     }
 
-    public function testGetWhereWithLimitAndOffset()
+    public function testGetWhereWithLimitAndOffset(): void
     {
         $builder = $this->db->table('users');
         $builder->testMode();
@@ -84,7 +84,7 @@ final class GetTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], 5, 10, true)));
     }
 
-    public function testGetWhereWithWhereConditionOnly()
+    public function testGetWhereWithWhereConditionOnly(): void
     {
         $builder = $this->db->table('users');
         $builder->testMode();
@@ -97,7 +97,7 @@ final class GetTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getWhere(['username' => 'bogus'], null, null, true)));
     }
 
-    public function testGetWhereWithoutArgs()
+    public function testGetWhereWithoutArgs(): void
     {
         $builder = $this->db->table('users');
         $builder->testMode();

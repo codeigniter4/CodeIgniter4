@@ -29,16 +29,16 @@ final class MigrationTest extends CIUnitTestCase
         parent::setUp();
     }
 
-    public function testDBGroup()
+    public function testDBGroup(): void
     {
         $migration = new class () extends Migration {
             protected $DBGroup = 'tests';
 
-            public function up()
+            public function up(): void
             {
             }
 
-            public function down()
+            public function down(): void
             {
             }
         };

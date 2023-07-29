@@ -60,7 +60,7 @@ final class FileMovingTest extends CIUnitTestCase
         }
     }
 
-    public function testMove()
+    public function testMove(): void
     {
         $finalFilename = 'fileA';
         $_FILES        = [
@@ -100,7 +100,7 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertTrue($this->root->hasChild('destination/' . $finalFilename . '_1.txt'));
     }
 
-    public function testMoveOverwriting()
+    public function testMoveOverwriting(): void
     {
         $finalFilename = 'file_with_delimiters_underscore';
         $_FILES        = [
@@ -150,7 +150,7 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertFileExists($destination . '/' . $finalFilename . '.txt');
     }
 
-    public function testMoved()
+    public function testMoved(): void
     {
         $finalFilename = 'fileA';
         $_FILES        = [
@@ -183,7 +183,7 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertTrue($file->hasMoved());
     }
 
-    public function testStore()
+    public function testStore(): void
     {
         $finalFilename = 'fileA';
         $_FILES        = [
@@ -215,7 +215,7 @@ final class FileMovingTest extends CIUnitTestCase
         $this->assertSame($destination . '/fileA.txt', $path);
     }
 
-    public function testAlreadyMoved()
+    public function testAlreadyMoved(): void
     {
         $finalFilename = 'fileA';
         $_FILES        = [
@@ -246,7 +246,7 @@ final class FileMovingTest extends CIUnitTestCase
         }
     }
 
-    public function testInvalidFile()
+    public function testInvalidFile(): void
     {
         $_FILES = [
             'userfile' => [
@@ -267,7 +267,7 @@ final class FileMovingTest extends CIUnitTestCase
         $file->move($destination, $file->getName(), false);
     }
 
-    public function testFailedMoveBecauseOfWarning()
+    public function testFailedMoveBecauseOfWarning(): void
     {
         $_FILES = [
             'userfile' => [
@@ -293,7 +293,7 @@ final class FileMovingTest extends CIUnitTestCase
         $file->move($destination, $file->getName(), false);
     }
 
-    public function testFailedMoveBecauseOfFalseReturned()
+    public function testFailedMoveBecauseOfFalseReturned(): void
     {
         $_FILES = [
             'userfile1' => [
@@ -363,7 +363,7 @@ function move_uploaded_file($filename, $destination, ?bool $setReturnValue = nul
     return $return;
 }
 
-function rrmdir($src)
+function rrmdir($src): void
 {
     $dir = opendir($src);
 

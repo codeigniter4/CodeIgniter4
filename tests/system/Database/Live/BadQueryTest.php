@@ -28,7 +28,7 @@ final class BadQueryTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testBadQueryDebugTrue()
+    public function testBadQueryDebugTrue(): void
     {
         $this->enableDBDebug();
 
@@ -39,7 +39,7 @@ final class BadQueryTest extends CIUnitTestCase
         // this code is never executed
     }
 
-    public function testBadQueryDebugFalse()
+    public function testBadQueryDebugFalse(): void
     {
         // WARNING this value will persist! take care to roll it back.
         $this->disableDBDebug();

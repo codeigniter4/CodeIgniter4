@@ -27,7 +27,7 @@ final class OrderTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testOrderAscending()
+    public function testOrderAscending(): void
     {
         $jobs = $this->db->table('job')
             ->orderBy('name', 'asc')
@@ -41,7 +41,7 @@ final class OrderTest extends CIUnitTestCase
         $this->assertSame('Politician', $jobs[3]->name);
     }
 
-    public function testOrderDescending()
+    public function testOrderDescending(): void
     {
         $jobs = $this->db->table('job')
             ->orderBy('name', 'desc')
@@ -55,7 +55,7 @@ final class OrderTest extends CIUnitTestCase
         $this->assertSame('Politician', $jobs[0]->name);
     }
 
-    public function testMultipleOrderValues()
+    public function testMultipleOrderValues(): void
     {
         $users = $this->db->table('user')
             ->orderBy('country', 'asc')
@@ -70,7 +70,7 @@ final class OrderTest extends CIUnitTestCase
         $this->assertSame('Derek Jones', $users[3]->name);
     }
 
-    public function testOrderRandom()
+    public function testOrderRandom(): void
     {
         $sql = $this->db->table('job')
             ->orderBy('name', 'random')

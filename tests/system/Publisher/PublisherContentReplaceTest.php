@@ -40,7 +40,7 @@ final class PublisherContentReplaceTest extends CIUnitTestCase
         unlink($this->file);
     }
 
-    public function testAddLineAfter()
+    public function testAddLineAfter(): void
     {
         $result = $this->publisher->addLineAfter(
             $this->file,
@@ -56,7 +56,7 @@ final class PublisherContentReplaceTest extends CIUnitTestCase
         );
     }
 
-    public function testAddLineBefore()
+    public function testAddLineBefore(): void
     {
         $result = $this->publisher->addLineBefore(
             $this->file,
@@ -72,7 +72,7 @@ final class PublisherContentReplaceTest extends CIUnitTestCase
         );
     }
 
-    public function testReplace()
+    public function testReplace(): void
     {
         $result = $this->publisher->replace(
             $this->file,

@@ -27,7 +27,7 @@ final class LimitTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testLimit()
+    public function testLimit(): void
     {
         $jobs = $this->db->table('job')
             ->limit(2)
@@ -39,7 +39,7 @@ final class LimitTest extends CIUnitTestCase
         $this->assertSame('Politician', $jobs[1]->name);
     }
 
-    public function testLimitAndOffset()
+    public function testLimitAndOffset(): void
     {
         $jobs = $this->db->table('job')
             ->limit(2, 2)

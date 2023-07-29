@@ -25,7 +25,7 @@ class SampleClassWithInitController
 {
     private ResponseInterface $response;
 
-    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger): void
     {
         $this->response = $response;
     }

@@ -36,7 +36,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testUpdateArray()
+    public function testUpdateArray(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -59,7 +59,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateObject()
+    public function testUpdateObject(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -82,7 +82,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateInternalWhereAndLimit()
+    public function testUpdateInternalWhereAndLimit(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -104,7 +104,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateWithSet()
+    public function testUpdateWithSet(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -126,7 +126,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateWithSetAsInt()
+    public function testUpdateWithSetAsInt(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -148,7 +148,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateWithSetAsBoolean()
+    public function testUpdateWithSetAsBoolean(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -170,7 +170,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateWithSetAsArray()
+    public function testUpdateWithSetAsArray(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -200,7 +200,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateThrowsExceptionWithNoData()
+    public function testUpdateThrowsExceptionWithNoData(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -210,7 +210,7 @@ final class UpdateTest extends CIUnitTestCase
         $builder->update(null, null, null);
     }
 
-    public function testUpdateBatch()
+    public function testUpdateBatch(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -248,7 +248,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expected, $query->getQuery());
     }
 
-    public function testSetUpdateBatchWithoutEscape()
+    public function testSetUpdateBatchWithoutEscape(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
         $escape  = false;
@@ -287,7 +287,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expected, $query->getQuery());
     }
 
-    public function testUpdateBatchThrowsExceptionWithNoData()
+    public function testUpdateBatchThrowsExceptionWithNoData(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -297,7 +297,7 @@ final class UpdateTest extends CIUnitTestCase
         $builder->updateBatch(null, 'id');
     }
 
-    public function testUpdateBatchThrowsExceptionWithNoID()
+    public function testUpdateBatchThrowsExceptionWithNoID(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -320,7 +320,7 @@ final class UpdateTest extends CIUnitTestCase
         $builder->updateBatch($set, null);
     }
 
-    public function testUpdateBatchThrowsExceptionWithEmptySetArray()
+    public function testUpdateBatchThrowsExceptionWithEmptySetArray(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -330,7 +330,7 @@ final class UpdateTest extends CIUnitTestCase
         $builder->updateBatch([], 'id');
     }
 
-    public function testUpdateWithWhereSameColumn()
+    public function testUpdateWithWhereSameColumn(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -352,7 +352,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateWithWhereSameColumn2()
+    public function testUpdateWithWhereSameColumn2(): void
     {
         // calling order: set() -> where()
         $builder = new BaseBuilder('jobs', $this->db);
@@ -378,7 +378,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateWithWhereSameColumn3()
+    public function testUpdateWithWhereSameColumn3(): void
     {
         // calling order: where() -> set() in update()
         $builder = new BaseBuilder('jobs', $this->db);
@@ -406,7 +406,7 @@ final class UpdateTest extends CIUnitTestCase
     /**
      * @see https://codeigniter4.github.io/CodeIgniter4/database/query_builder.html#updating-data
      */
-    public function testSetWithoutEscape()
+    public function testSetWithoutEscape(): void
     {
         $builder = new BaseBuilder('mytable', $this->db);
 
@@ -427,7 +427,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testSetWithAndWithoutEscape()
+    public function testSetWithAndWithoutEscape(): void
     {
         $builder = new BaseBuilder('mytable', $this->db);
 

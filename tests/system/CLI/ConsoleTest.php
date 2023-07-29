@@ -45,7 +45,7 @@ final class ConsoleTest extends CIUnitTestCase
         $this->app->initialize();
     }
 
-    public function testHeader()
+    public function testHeader(): void
     {
         $console = new Console();
         $console->showHeader();
@@ -58,14 +58,14 @@ final class ConsoleTest extends CIUnitTestCase
         );
     }
 
-    public function testNoHeader()
+    public function testNoHeader(): void
     {
         $console = new Console();
         $console->showHeader(true);
         $this->assertSame('', $this->getStreamFilterBuffer());
     }
 
-    public function testRun()
+    public function testRun(): void
     {
         $this->initCLI();
 
@@ -77,7 +77,7 @@ final class ConsoleTest extends CIUnitTestCase
         $this->assertStringContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
     }
 
-    public function testBadCommand()
+    public function testBadCommand(): void
     {
         $this->initCLI('bogus');
 
@@ -88,7 +88,7 @@ final class ConsoleTest extends CIUnitTestCase
         $this->assertStringContainsString('Command "bogus" not found', $this->getStreamFilterBuffer());
     }
 
-    public function testHelpCommandDetails()
+    public function testHelpCommandDetails(): void
     {
         $this->initCLI('help', 'session:migration');
 
@@ -101,7 +101,7 @@ final class ConsoleTest extends CIUnitTestCase
         $this->assertStringContainsString('Options:', $this->getStreamFilterBuffer());
     }
 
-    public function testHelpCommandUsingHelpOption()
+    public function testHelpCommandUsingHelpOption(): void
     {
         $this->initCLI('env', '--help');
 
@@ -114,7 +114,7 @@ final class ConsoleTest extends CIUnitTestCase
         );
     }
 
-    public function testHelpOptionIsOnlyPassed()
+    public function testHelpOptionIsOnlyPassed(): void
     {
         $this->initCLI('--help');
 
@@ -125,7 +125,7 @@ final class ConsoleTest extends CIUnitTestCase
         $this->assertStringContainsString('Lists the available commands.', $this->getStreamFilterBuffer());
     }
 
-    public function testHelpArgumentAndHelpOptionCombined()
+    public function testHelpArgumentAndHelpOptionCombined(): void
     {
         $this->initCLI('help', '--help');
 

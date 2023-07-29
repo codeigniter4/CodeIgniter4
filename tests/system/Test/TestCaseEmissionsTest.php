@@ -44,7 +44,7 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testHeadersEmitted()
+    public function testHeadersEmitted(): void
     {
         $response = new Response(new App());
         $response->pretend(false);
@@ -72,7 +72,7 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testHeadersNotEmitted()
+    public function testHeadersNotEmitted(): void
     {
         $response = new Response(new App());
         $response->pretend(false);

@@ -31,7 +31,7 @@ final class PublishCommandTest extends CIUnitTestCase
         TestPublisher::setResult(true);
     }
 
-    public function testDefault()
+    public function testDefault(): void
     {
         command('publish');
 
@@ -42,7 +42,7 @@ final class PublishCommandTest extends CIUnitTestCase
         ]), $this->getStreamFilterBuffer());
     }
 
-    public function testFailure()
+    public function testFailure(): void
     {
         TestPublisher::setResult(false);
 

@@ -55,7 +55,7 @@ final class GetIndexDataTest extends CIUnitTestCase
         $this->forge = Database::forge($config);
     }
 
-    public function testGetIndexData()
+    public function testGetIndexData(): void
     {
         // INTEGER PRIMARY KEY AUTO_INCREMENT doesn't get an index by default
         $this->forge->addField([

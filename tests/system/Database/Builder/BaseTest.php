@@ -31,7 +31,7 @@ final class BaseTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testDbReturnsConnection()
+    public function testDbReturnsConnection(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -40,7 +40,7 @@ final class BaseTest extends CIUnitTestCase
         $this->assertInstanceOf(MockConnection::class, $result);
     }
 
-    public function testGetTableReturnsTable()
+    public function testGetTableReturnsTable(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -48,7 +48,7 @@ final class BaseTest extends CIUnitTestCase
         $this->assertSame('jobs', $result);
     }
 
-    public function testGetTableIgnoresFrom()
+    public function testGetTableIgnoresFrom(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -57,7 +57,7 @@ final class BaseTest extends CIUnitTestCase
         $this->assertSame('jobs', $result);
     }
 
-    public function testSubquerySameBaseBuilderObject()
+    public function testSubquerySameBaseBuilderObject(): void
     {
         $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('The subquery cannot be the same object as the main query object.');

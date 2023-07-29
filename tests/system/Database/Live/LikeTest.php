@@ -28,7 +28,7 @@ final class LikeTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testLikeDefault()
+    public function testLikeDefault(): void
     {
         $job = $this->db->table('job')->like('name', 'veloper')->get();
         $job = $job->getRow();
@@ -37,7 +37,7 @@ final class LikeTest extends CIUnitTestCase
         $this->assertSame('Developer', $job->name);
     }
 
-    public function testLikeBefore()
+    public function testLikeBefore(): void
     {
         $job = $this->db->table('job')->like('name', 'veloper', 'before')->get();
         $job = $job->getRow();
@@ -46,7 +46,7 @@ final class LikeTest extends CIUnitTestCase
         $this->assertSame('Developer', $job->name);
     }
 
-    public function testLikeAfter()
+    public function testLikeAfter(): void
     {
         $job = $this->db->table('job')->like('name', 'Develop')->get();
         $job = $job->getRow();
@@ -55,7 +55,7 @@ final class LikeTest extends CIUnitTestCase
         $this->assertSame('Developer', $job->name);
     }
 
-    public function testLikeBoth()
+    public function testLikeBoth(): void
     {
         $job = $this->db->table('job')->like('name', 'veloper', 'both')->get();
         $job = $job->getRow();
@@ -64,7 +64,7 @@ final class LikeTest extends CIUnitTestCase
         $this->assertSame('Developer', $job->name);
     }
 
-    public function testLikeCaseInsensitive()
+    public function testLikeCaseInsensitive(): void
     {
         $job = $this->db->table('job')->like('name', 'VELOPER', 'both', null, true)->get();
         $job = $job->getRow();
@@ -73,7 +73,7 @@ final class LikeTest extends CIUnitTestCase
         $this->assertSame('Developer', $job->name);
     }
 
-    public function testOrLike()
+    public function testOrLike(): void
     {
         $jobs = $this->db->table('job')->like('name', 'ian')
             ->orLike('name', 'veloper')
@@ -86,7 +86,7 @@ final class LikeTest extends CIUnitTestCase
         $this->assertSame('Musician', $jobs[2]->name);
     }
 
-    public function testNotLike()
+    public function testNotLike(): void
     {
         $jobs = $this->db->table('job')
             ->notLike('name', 'veloper')
@@ -99,7 +99,7 @@ final class LikeTest extends CIUnitTestCase
         $this->assertSame('Musician', $jobs[2]->name);
     }
 
-    public function testOrNotLike()
+    public function testOrNotLike(): void
     {
         $jobs = $this->db->table('job')
             ->like('name', 'ian')
@@ -113,7 +113,7 @@ final class LikeTest extends CIUnitTestCase
         $this->assertSame('Musician', $jobs[2]->name);
     }
 
-    public function testLikeSpacesOrTabs()
+    public function testLikeSpacesOrTabs(): void
     {
         $builder = $this->db->table('misc');
         $spaces  = $builder->like('value', '   ')->get()->getResult();
@@ -126,7 +126,7 @@ final class LikeTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/7268
      */
-    public function testLikeRawSqlAndCountAllResultsAndGet()
+    public function testLikeRawSqlAndCountAllResultsAndGet(): void
     {
         $builder = $this->db->table('job');
 
@@ -147,7 +147,7 @@ final class LikeTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/7268
      */
-    public function testLikeRawSqlAndGetAndCountAllResults()
+    public function testLikeRawSqlAndGetAndCountAllResults(): void
     {
         $builder = $this->db->table('job');
 

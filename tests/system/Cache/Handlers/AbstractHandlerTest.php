@@ -25,12 +25,12 @@ abstract class AbstractHandlerTest extends CIUnitTestCase
     protected static $key3  = 'key3';
     protected static $dummy = 'dymmy';
 
-    public function testGetMetaDataMiss()
+    public function testGetMetaDataMiss(): void
     {
         $this->assertNull($this->handler->getMetaData(self::$dummy));
     }
 
-    public function testGetMetaData()
+    public function testGetMetaData(): void
     {
         $time = Time::now()->getTimestamp();
         $this->handler->save(self::$key1, 'value');

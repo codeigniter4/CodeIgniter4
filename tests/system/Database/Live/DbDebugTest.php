@@ -26,7 +26,7 @@ final class DbDebugTest extends CIUnitTestCase
 
     protected $refresh = true;
 
-    public function testDBDebugTrue()
+    public function testDBDebugTrue(): void
     {
         $this->enableDBDebug();
 
@@ -35,7 +35,7 @@ final class DbDebugTest extends CIUnitTestCase
         $this->db->simpleQuery('SELECT * FROM db_error');
     }
 
-    public function testDBDebugFalse()
+    public function testDBDebugFalse(): void
     {
         // WARNING this value will persist! take care to roll it back.
         $this->disableDBDebug();

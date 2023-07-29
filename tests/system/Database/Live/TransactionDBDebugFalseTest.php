@@ -32,7 +32,7 @@ final class TransactionDBDebugFalseTest extends TransactionDBDebugTrueTest
         $this->enableDBDebug();
     }
 
-    public function testTransStartTransException()
+    public function testTransStartTransException(): void
     {
         $builder = $this->db->table('job');
 

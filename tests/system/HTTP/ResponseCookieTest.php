@@ -39,7 +39,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         Cookie::setDefaults($this->defaults);
     }
 
-    public function testCookiePrefixed()
+    public function testCookiePrefixed(): void
     {
         $config         = config('Cookie');
         $config->prefix = 'mine';
@@ -54,7 +54,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertFalse($response->hasCookie('foo', null, 'yours'));
     }
 
-    public function testCookiesAll()
+    public function testCookiesAll(): void
     {
         $response = new Response(new App());
         $response->setCookie('foo', 'bar');
@@ -65,7 +65,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertTrue($response->hasCookie('bee'));
     }
 
-    public function testSetCookieObject()
+    public function testSetCookieObject(): void
     {
         $cookie   = new Cookie('foo', 'bar');
         $response = new Response(new App());
@@ -76,7 +76,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertTrue($response->hasCookie('foo'));
     }
 
-    public function testCookieGet()
+    public function testCookieGet(): void
     {
         $response = new Response(new App());
         $response->setCookie('foo', 'bar');
@@ -86,7 +86,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertNull($response->getCookie('bogus'));
     }
 
-    public function testCookieDomain()
+    public function testCookieDomain(): void
     {
         $response = new Response(new App());
 
@@ -106,7 +106,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertSame('mine.com', $cookie->getDomain());
     }
 
-    public function testCookiePath()
+    public function testCookiePath(): void
     {
         $response = new Response(new App());
 
@@ -119,7 +119,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertSame('/tmp/here', $cookie->getPath());
     }
 
-    public function testCookieSecure()
+    public function testCookieSecure(): void
     {
         $response = new Response(new App());
 
@@ -132,7 +132,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertTrue($cookie->isSecure());
     }
 
-    public function testCookieHTTPOnly()
+    public function testCookieHTTPOnly(): void
     {
         $response = new Response(new App());
 
@@ -145,7 +145,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertFalse($cookie->isHTTPOnly());
     }
 
-    public function testCookieExpiry()
+    public function testCookieExpiry(): void
     {
         $response = new Response(new App());
 
@@ -164,7 +164,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertSame(0, $cookie->getExpiresTimestamp());
     }
 
-    public function testCookieDelete()
+    public function testCookieDelete(): void
     {
         $response = new Response(new App());
 
@@ -226,7 +226,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertSame($cookie->getExpiresTimestamp(), 0);
     }
 
-    public function testCookieDefaultSetSameSite()
+    public function testCookieDefaultSetSameSite(): void
     {
         $response = new Response(new App());
         $response->setCookie([
@@ -240,7 +240,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertSame('Lax', $allCookies['bar;/;']->getSameSite());
     }
 
-    public function testCookieStrictSetSameSite()
+    public function testCookieStrictSetSameSite(): void
     {
         $config           = config('Cookie');
         $config->samesite = 'Strict';
@@ -256,7 +256,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertSame('Strict', $allCookies['bar;/;']->getSameSite());
     }
 
-    public function testCookieBlankSetSameSite()
+    public function testCookieBlankSetSameSite(): void
     {
         /** @var CookieConfig $config */
         $config           = config('Cookie');
@@ -273,7 +273,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertSame('', $allCookies['bar;/;']->getSameSite());
     }
 
-    public function testCookieWithoutSameSite()
+    public function testCookieWithoutSameSite(): void
     {
         $config = new CookieConfig();
         unset($config->samesite);
@@ -289,7 +289,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertSame('Lax', $allCookies['bar;/;']->getSameSite());
     }
 
-    public function testCookieStrictSameSite()
+    public function testCookieStrictSameSite(): void
     {
         $response = new Response(new App());
         $response->setCookie([
@@ -304,7 +304,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertSame('Strict', $allCookies['bar;/;']->getSameSite());
     }
 
-    public function testCookieInvalidSameSite()
+    public function testCookieInvalidSameSite(): void
     {
         $response = new Response(new App());
 
@@ -318,7 +318,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         ]);
     }
 
-    public function testSetCookieConfigCookieIsUsed()
+    public function testSetCookieConfigCookieIsUsed(): void
     {
         /** @var CookieConfig $config */
         $config           = config('Cookie');
@@ -342,7 +342,7 @@ final class ResponseCookieTest extends CIUnitTestCase
         $this->assertSame('None', $options['samesite']);
     }
 
-    public function testGetCookieStore()
+    public function testGetCookieStore(): void
     {
         $response = new Response(new App());
         $this->assertInstanceOf(CookieStore::class, $response->getCookieStore());

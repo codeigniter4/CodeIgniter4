@@ -31,7 +31,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->lang = new MockLanguage('en');
     }
 
-    public function testReturnsStringWithNoFileInMessage()
+    public function testReturnsStringWithNoFileInMessage(): void
     {
         $this->assertSame('something', $this->lang->getLine('something'));
     }
@@ -39,7 +39,7 @@ final class LanguageTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/3822
      */
-    public function testReturnParsedStringWithNoFileInMessage()
+    public function testReturnParsedStringWithNoFileInMessage(): void
     {
         $this->lang->setLocale('en-GB');
 
@@ -49,7 +49,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('£7.41', lang($line, ['price' => '7.41'], 'en-GB'));
     }
 
-    public function testGetLineReturnsLine()
+    public function testGetLineReturnsLine(): void
     {
         $this->lang->setData('books', [
             'bookSaved'  => 'We kept the book free from the boogeyman',
@@ -59,7 +59,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('We saved some more', $this->lang->getLine('books.booksSaved'));
     }
 
-    public function testGetLineReturnsFallbackLine()
+    public function testGetLineReturnsFallbackLine(): void
     {
         $this->lang
             ->setLocale('en-US')
@@ -81,7 +81,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('equivalent.unknown', $this->lang->getLine('equivalent.unknown'));
     }
 
-    public function testGetLineArrayReturnsLineArray()
+    public function testGetLineArrayReturnsLineArray(): void
     {
         $this->lang->setData('books', [
             'booksList' => [
@@ -96,7 +96,7 @@ final class LanguageTest extends CIUnitTestCase
         ], $this->lang->getLine('books.booksList'));
     }
 
-    public function testGetLineFormatsMessage()
+    public function testGetLineFormatsMessage(): void
     {
         // No intl extension? then we can't test this - go away....
         if (! class_exists(MessageFormatter::class)) {
@@ -110,7 +110,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('45 books have been saved.', $this->lang->getLine('books.bookCount', [91 / 2]));
     }
 
-    public function testGetLineArrayFormatsMessages()
+    public function testGetLineArrayFormatsMessages(): void
     {
         // No intl extension? Then we can't test this - go away...
         if (! class_exists(MessageFormatter::class)) {
@@ -129,7 +129,7 @@ final class LanguageTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/891
      */
-    public function testLangAllowsOtherLocales()
+    public function testLangAllowsOtherLocales(): void
     {
         $str1 = lang('Language.languageGetLineInvalidArgumentException', [], 'en');
         $str2 = lang('Language.languageGetLineInvalidArgumentException', [], 'ru');
@@ -138,7 +138,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('Whatever this would be, translated', $str2);
     }
 
-    public function testLangDoesntFormat()
+    public function testLangDoesntFormat(): void
     {
         $this->lang->disableIntlSupport();
 
@@ -151,7 +151,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame(['{0, number, integer} related books.'], $this->lang->getLine('books.bookList', [15]));
     }
 
-    public function testLanguageDuplicateKey()
+    public function testLanguageDuplicateKey(): void
     {
         $this->lang = new Language('en');
         $this->assertSame('These are not the droids you are looking for', $this->lang->getLine('More.strongForce', []));
@@ -160,7 +160,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('I have a very bad feeling about this', $this->lang->getLine('More.cannotMove', []));
     }
 
-    public function testLanguageFileLoading()
+    public function testLanguageFileLoading(): void
     {
         $this->lang = new SecondMockLanguage('en');
 
@@ -171,7 +171,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertCount(1, $this->lang->loaded()); // should only be there once
     }
 
-    public function testLanguageFileLoadingReturns()
+    public function testLanguageFileLoadingReturns(): void
     {
         $this->lang = new SecondMockLanguage('en');
 
@@ -184,7 +184,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertCount(1, $this->lang->loaded());
     }
 
-    public function testLanguageSameKeyAndFileName()
+    public function testLanguageSameKeyAndFileName(): void
     {
         // first file data | example.message
         $this->lang->setData('example', ['message' => 'This is an example message']);
@@ -198,13 +198,13 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('Another example', $this->lang->getLine('another.example'));
     }
 
-    public function testGetLocale()
+    public function testGetLocale(): void
     {
         $this->lang = Services::language('en', false);
         $this->assertSame('en', $this->lang->getLocale());
     }
 
-    public function testPrioritizedLocator()
+    public function testPrioritizedLocator(): void
     {
         // this should load the replacement bundle of messages
         $message = lang('Core.missingExtension', [], 'en');
@@ -248,7 +248,7 @@ final class LanguageTest extends CIUnitTestCase
      *
      * @param mixed $bundle
      */
-    public function testBundleUniqueKeys($bundle)
+    public function testBundleUniqueKeys($bundle): void
     {
         $messages = require SYSTEMPATH . 'Language/en/' . $bundle . '.php';
         $this->assertGreaterThan(0, count($messages));
@@ -256,7 +256,7 @@ final class LanguageTest extends CIUnitTestCase
 
     // Testing base locale vs variants
 
-    public function testBaseFallbacks()
+    public function testBaseFallbacks(): void
     {
         $this->lang = Services::language('en-ZZ', false);
         // key is in both base and variant; should pick variant
@@ -275,7 +275,7 @@ final class LanguageTest extends CIUnitTestCase
     /**
      * Test if after using lang() with a locale the Language class keep the locale after return the $line
      */
-    public function testLangKeepLocale()
+    public function testLangKeepLocale(): void
     {
         $this->lang = Services::language('en', true);
 
@@ -302,7 +302,7 @@ final class LanguageTest extends CIUnitTestCase
      * six	Y	Y	N
      * sev	Y	Y	Y
      */
-    public function testAllTheWayFallbacks()
+    public function testAllTheWayFallbacks(): void
     {
         $this->lang = Services::language('ab-CD', false);
         $this->assertSame('Allin.none', $this->lang->getLine('Allin.none'));
@@ -315,7 +315,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('Hanging Gardens of Babylon', $this->lang->getLine('Allin.sev'));
     }
 
-    public function testLanguageNestedArrayDefinition()
+    public function testLanguageNestedArrayDefinition(): void
     {
         $this->lang = new SecondMockLanguage('en');
         $this->lang->loadem('Nested', 'en');
@@ -323,7 +323,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('e', $this->lang->getLine('Nested.a.b.c.d'));
     }
 
-    public function testLanguageKeySeparatedByDot()
+    public function testLanguageKeySeparatedByDot(): void
     {
         $this->lang = new SecondMockLanguage('en');
         $this->lang->loadem('Foo', 'en');

@@ -57,7 +57,7 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
         $this->setPrivateProperty($this->db, 'DBDebug', true);
     }
 
-    public function testTransStart()
+    public function testTransStart(): void
     {
         $builder = $this->db->table('job');
 
@@ -83,7 +83,7 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
         $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
     }
 
-    public function testTransStartTransException()
+    public function testTransStartTransException(): void
     {
         $builder = $this->db->table('job');
         $e       = null;
@@ -114,7 +114,7 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
         $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
     }
 
-    public function testTransStrictTrue()
+    public function testTransStrictTrue(): void
     {
         $builder = $this->db->table('job');
 
@@ -159,7 +159,7 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
         $this->dontSeeInDatabase('job', ['name' => 'Comedian']);
     }
 
-    public function testTransStrictFalse()
+    public function testTransStrictFalse(): void
     {
         $builder = $this->db->table('job');
 
@@ -206,7 +206,7 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'Comedian']);
     }
 
-    public function testTransBegin()
+    public function testTransBegin(): void
     {
         $builder = $this->db->table('job');
 

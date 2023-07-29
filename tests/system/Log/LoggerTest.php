@@ -25,7 +25,7 @@ use Tests\Support\Log\Handlers\TestHandler;
  */
 final class LoggerTest extends CIUnitTestCase
 {
-    public function testThrowsExceptionWithBadHandlerSettings()
+    public function testThrowsExceptionWithBadHandlerSettings(): void
     {
         $config           = new LoggerConfig();
         $config->handlers = null;
@@ -36,7 +36,7 @@ final class LoggerTest extends CIUnitTestCase
         new Logger($config);
     }
 
-    public function testLogThrowsExceptionOnInvalidLevel()
+    public function testLogThrowsExceptionOnInvalidLevel(): void
     {
         $config = new LoggerConfig();
 
@@ -48,7 +48,7 @@ final class LoggerTest extends CIUnitTestCase
         $logger->log('foo', '');
     }
 
-    public function testLogReturnsFalseWhenLogNotHandled()
+    public function testLogReturnsFalseWhenLogNotHandled(): void
     {
         $config            = new LoggerConfig();
         $config->threshold = 3;
@@ -58,7 +58,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertFalse($logger->log('debug', ''));
     }
 
-    public function testLogActuallyLogs()
+    public function testLogActuallyLogs(): void
     {
         $config = new LoggerConfig();
         $logger = new Logger($config);
@@ -72,7 +72,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testLogDoesnotLogUnhandledLevels()
+    public function testLogDoesnotLogUnhandledLevels(): void
     {
         $config = new LoggerConfig();
 
@@ -87,7 +87,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertCount(0, $logs);
     }
 
-    public function testLogInterpolatesMessage()
+    public function testLogInterpolatesMessage(): void
     {
         $config = new LoggerConfig();
 
@@ -103,7 +103,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testLogInterpolatesPost()
+    public function testLogInterpolatesPost(): void
     {
         $config = new LoggerConfig();
 
@@ -120,7 +120,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testLogInterpolatesGet()
+    public function testLogInterpolatesGet(): void
     {
         $config = new LoggerConfig();
 
@@ -137,7 +137,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testLogInterpolatesSession()
+    public function testLogInterpolatesSession(): void
     {
         $config = new LoggerConfig();
 
@@ -154,7 +154,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testLogInterpolatesCurrentEnvironment()
+    public function testLogInterpolatesCurrentEnvironment(): void
     {
         $config = new LoggerConfig();
 
@@ -170,7 +170,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testLogInterpolatesEnvironmentVars()
+    public function testLogInterpolatesEnvironmentVars(): void
     {
         $config = new LoggerConfig();
 
@@ -188,7 +188,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testLogInterpolatesFileAndLine()
+    public function testLogInterpolatesFileAndLine(): void
     {
         $config = new LoggerConfig();
 
@@ -205,7 +205,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertGreaterThan(1, strpos($logs[0], $expected));
     }
 
-    public function testLogInterpolatesExceptions()
+    public function testLogInterpolatesExceptions(): void
     {
         $config = new LoggerConfig();
         $logger = new Logger($config);
@@ -224,7 +224,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame(0, strpos($logs[0], $expected));
     }
 
-    public function testEmergencyLogsCorrectly()
+    public function testEmergencyLogsCorrectly(): void
     {
         $config = new LoggerConfig();
         $logger = new Logger($config);
@@ -239,7 +239,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testAlertLogsCorrectly()
+    public function testAlertLogsCorrectly(): void
     {
         $config = new LoggerConfig();
         $logger = new Logger($config);
@@ -254,7 +254,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testCriticalLogsCorrectly()
+    public function testCriticalLogsCorrectly(): void
     {
         $config = new LoggerConfig();
         $logger = new Logger($config);
@@ -269,7 +269,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testErrorLogsCorrectly()
+    public function testErrorLogsCorrectly(): void
     {
         $config = new LoggerConfig();
         $logger = new Logger($config);
@@ -284,7 +284,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testWarningLogsCorrectly()
+    public function testWarningLogsCorrectly(): void
     {
         $config = new LoggerConfig();
         $logger = new Logger($config);
@@ -299,7 +299,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testNoticeLogsCorrectly()
+    public function testNoticeLogsCorrectly(): void
     {
         $config = new LoggerConfig();
         $logger = new Logger($config);
@@ -314,7 +314,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testInfoLogsCorrectly()
+    public function testInfoLogsCorrectly(): void
     {
         $config = new LoggerConfig();
         $logger = new Logger($config);
@@ -329,7 +329,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testDebugLogsCorrectly()
+    public function testDebugLogsCorrectly(): void
     {
         $config = new LoggerConfig();
         $logger = new Logger($config);
@@ -344,7 +344,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testLogLevels()
+    public function testLogLevels(): void
     {
         $config = new LoggerConfig();
         $logger = new Logger($config);
@@ -359,7 +359,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertSame($expected, $logs[0]);
     }
 
-    public function testNonStringMessage()
+    public function testNonStringMessage(): void
     {
         $config = new LoggerConfig();
         $logger = new Logger($config);
@@ -373,7 +373,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, $logs[0]);
     }
 
-    public function testDetermineFileNoStackTrace()
+    public function testDetermineFileNoStackTrace(): void
     {
         $config = new LoggerConfig();
         $logger = new Logger($config);

@@ -31,7 +31,7 @@ final class DistinctTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 

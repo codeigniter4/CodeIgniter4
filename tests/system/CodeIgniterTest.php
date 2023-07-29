@@ -59,7 +59,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->resetServices();
     }
 
-    public function testRunEmptyDefaultRoute()
+    public function testRunEmptyDefaultRoute(): void
     {
         $_SERVER['argv'] = ['index.php'];
         $_SERVER['argc'] = 1;
@@ -71,7 +71,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
     }
 
-    public function testRunEmptyDefaultRouteReturnResponse()
+    public function testRunEmptyDefaultRouteReturnResponse(): void
     {
         $_SERVER['argv'] = ['index.php'];
         $_SERVER['argc'] = 1;
@@ -81,7 +81,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('Welcome to CodeIgniter', $response->getBody());
     }
 
-    public function testRunClosureRoute()
+    public function testRunClosureRoute(): void
     {
         $_SERVER['argv'] = ['index.php', 'pages/about'];
         $_SERVER['argc'] = 2;
@@ -90,7 +90,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
-        $routes->add('pages/(:segment)', static function ($segment) {
+        $routes->add('pages/(:segment)', static function ($segment): void {
             echo 'You want to see "' . esc($segment) . '" page.';
         });
         $router = Services::router($routes, Services::incomingrequest());
@@ -103,7 +103,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('You want to see "about" page.', $output);
     }
 
-    public function testRun404Override()
+    public function testRun404Override(): void
     {
         $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
@@ -122,7 +122,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('Hello', $output);
     }
 
-    public function testRun404OverrideControllerReturnsResponse()
+    public function testRun404OverrideControllerReturnsResponse(): void
     {
         $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
@@ -141,7 +141,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('Oops', $output);
     }
 
-    public function testRun404OverrideReturnResponse()
+    public function testRun404OverrideReturnResponse(): void
     {
         $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
@@ -158,7 +158,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('Oops', $response->getBody());
     }
 
-    public function testRun404OverrideByClosure()
+    public function testRun404OverrideByClosure(): void
     {
         $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
@@ -166,7 +166,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         // Inject mock router.
         $routes = new RouteCollection(Services::locator(), new Modules());
         $routes->setAutoRoute(false);
-        $routes->set404Override(static function () {
+        $routes->set404Override(static function (): void {
             echo '404 Override by Closure.';
         });
         $router = Services::router($routes, Services::incomingrequest());
@@ -179,7 +179,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('404 Override by Closure.', $output);
     }
 
-    public function testControllersCanReturnString()
+    public function testControllersCanReturnString(): void
     {
         $_SERVER['argv'] = ['index.php', 'pages/about'];
         $_SERVER['argc'] = 2;
@@ -199,7 +199,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('You want to see "about" page.', $output);
     }
 
-    public function testControllersCanReturnResponseObject()
+    public function testControllersCanReturnResponseObject(): void
     {
         $_SERVER['argv'] = ['index.php', 'pages/about'];
         $_SERVER['argc'] = 2;
@@ -227,7 +227,7 @@ final class CodeIgniterTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/6358
      */
-    public function testControllersCanReturnDownloadResponseObject()
+    public function testControllersCanReturnDownloadResponseObject(): void
     {
         $_SERVER['argv'] = ['index.php', 'pages/about'];
         $_SERVER['argc'] = 2;
@@ -251,7 +251,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame('some text', $output);
     }
 
-    public function testControllersRunFilterByClassName()
+    public function testControllersRunFilterByClassName(): void
     {
         $_SERVER['argv'] = ['index.php', 'pages/about'];
         $_SERVER['argc'] = 2;
@@ -274,7 +274,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->resetServices();
     }
 
-    public function testDisableControllerFilters()
+    public function testDisableControllerFilters(): void
     {
         $_SERVER['argv'] = ['index.php', 'pages/about'];
         $_SERVER['argc'] = 2;
@@ -301,7 +301,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->resetServices();
     }
 
-    public function testResponseConfigEmpty()
+    public function testResponseConfigEmpty(): void
     {
         $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
@@ -311,7 +311,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertInstanceOf(Response::class, $response);
     }
 
-    public function testRoutesIsEmpty()
+    public function testRoutesIsEmpty(): void
     {
         $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
@@ -327,7 +327,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
     }
 
-    public function testTransfersCorrectHTTPVersion()
+    public function testTransfersCorrectHTTPVersion(): void
     {
         $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
@@ -343,7 +343,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame('2.0', $response->getProtocolVersion());
     }
 
-    public function testSupportsHttp3()
+    public function testSupportsHttp3(): void
     {
         $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
@@ -359,7 +359,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame('3.0', $response->getProtocolVersion());
     }
 
-    public function testIgnoringErrorSuppressedByAt()
+    public function testIgnoringErrorSuppressedByAt(): void
     {
         $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
@@ -372,7 +372,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
     }
 
-    public function testRunForceSecure()
+    public function testRunForceSecure(): void
     {
         $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
@@ -397,7 +397,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame('https://example.com/', $response->header('Location')->getValue());
     }
 
-    public function testRunRedirectionWithNamed()
+    public function testRunRedirectionWithNamed(): void
     {
         $_SERVER['argv'] = ['index.php', 'example'];
         $_SERVER['argc'] = 2;
@@ -406,7 +406,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
-        $routes->add('pages/named', static function () {
+        $routes->add('pages/named', static function (): void {
         }, ['as' => 'name']);
         $routes->addRedirect('example', 'name');
 
@@ -420,7 +420,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame('http://example.com/pages/named', $response->header('Location')->getValue());
     }
 
-    public function testRunRedirectionWithURI()
+    public function testRunRedirectionWithURI(): void
     {
         $_SERVER['argv'] = ['index.php', 'example'];
         $_SERVER['argc'] = 2;
@@ -429,7 +429,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
-        $routes->add('pages/uri', static function () {
+        $routes->add('pages/uri', static function (): void {
         });
         $routes->addRedirect('example', 'pages/uri');
 
@@ -446,7 +446,7 @@ final class CodeIgniterTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/3041
      */
-    public function testRunRedirectionWithGET()
+    public function testRunRedirectionWithGET(): void
     {
         $_SERVER['argv'] = ['index.php', 'example'];
         $_SERVER['argc'] = 2;
@@ -472,7 +472,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame(302, $response->getStatusCode());
     }
 
-    public function testRunRedirectionWithGETAndHTTPCode301()
+    public function testRunRedirectionWithGETAndHTTPCode301(): void
     {
         $_SERVER['argv'] = ['index.php', 'example'];
         $_SERVER['argc'] = 2;
@@ -496,7 +496,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame(301, $response->getStatusCode());
     }
 
-    public function testRunRedirectionWithPOSTAndHTTPCode301()
+    public function testRunRedirectionWithPOSTAndHTTPCode301(): void
     {
         $_SERVER['argv'] = ['index.php', 'example'];
         $_SERVER['argc'] = 2;
@@ -520,7 +520,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame(301, $response->getStatusCode());
     }
 
-    public function testStoresPreviousURL()
+    public function testStoresPreviousURL(): void
     {
         $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
@@ -537,7 +537,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame('http://example.com/index.php', $_SESSION['_ci_previous_url']);
     }
 
-    public function testNotStoresPreviousURL()
+    public function testNotStoresPreviousURL(): void
     {
         $_SERVER['argv'] = ['index.php', 'example'];
         $_SERVER['argc'] = 2;
@@ -560,7 +560,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertArrayNotHasKey('_ci_previous_url', $_SESSION);
     }
 
-    public function testNotStoresPreviousURLByCheckingContentType()
+    public function testNotStoresPreviousURLByCheckingContentType(): void
     {
         $_SERVER['argv'] = ['index.php', 'image'];
         $_SERVER['argc'] = 2;
@@ -589,7 +589,7 @@ final class CodeIgniterTest extends CIUnitTestCase
      * Can't use static::tearDownAfterClass. This will cause a buffer exception
      * need improve
      */
-    public function testRunDefaultRoute()
+    public function testRunDefaultRoute(): void
     {
         $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
@@ -601,7 +601,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
     }
 
-    public function testRunCLIRoute()
+    public function testRunCLIRoute(): void
     {
         $_SERVER['argv'] = ['index.php', 'cli'];
         $_SERVER['argc'] = 2;
@@ -620,7 +620,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('Method Not Allowed', $output);
     }
 
-    public function testSpoofRequestMethodCanUsePUT()
+    public function testSpoofRequestMethodCanUsePUT(): void
     {
         $_SERVER['argv'] = ['index.php'];
         $_SERVER['argc'] = 1;
@@ -644,7 +644,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame('put', Services::incomingrequest()->getMethod());
     }
 
-    public function testSpoofRequestMethodCannotUseGET()
+    public function testSpoofRequestMethodCannotUseGET(): void
     {
         $_SERVER['argv'] = ['index.php'];
         $_SERVER['argc'] = 1;
@@ -671,7 +671,7 @@ final class CodeIgniterTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/6281
      */
-    public function testPageCacheSendSecureHeaders()
+    public function testPageCacheSendSecureHeaders(): void
     {
         // Suppress command() output
         CITestStreamFilter::registration();
@@ -735,7 +735,7 @@ final class CodeIgniterTest extends CIUnitTestCase
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/pull/6410
      */
-    public function testPageCacheWithCacheQueryString($cacheQueryStringValue, int $expectedPagesInCache, array $testingUrls)
+    public function testPageCacheWithCacheQueryString($cacheQueryStringValue, int $expectedPagesInCache, array $testingUrls): void
     {
         // Suppress command() output
         CITestStreamFilter::registration();

@@ -30,7 +30,7 @@ final class PretendTest extends CIUnitTestCase
         $this->db->pretend(false);
     }
 
-    public function testPretendReturnsQueryObject()
+    public function testPretendReturnsQueryObject(): void
     {
         $result = $this->db->pretend(false)
             ->table('user')

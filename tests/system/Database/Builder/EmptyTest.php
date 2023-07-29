@@ -31,7 +31,7 @@ final class EmptyTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testEmptyWithNoTable()
+    public function testEmptyWithNoTable(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 

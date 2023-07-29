@@ -72,7 +72,7 @@ final class EnvironmentCommandTest extends CIUnitTestCase
         $this->assertStringContainsString('Invalid environment type "foobar".', $this->getStreamFilterBuffer());
     }
 
-    public function testDefaultShippedEnvIsMissing()
+    public function testDefaultShippedEnvIsMissing(): void
     {
         rename(ROOTPATH . 'env', ROOTPATH . 'lostenv');
         command('env development');

@@ -93,7 +93,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->getRules());
     }
 
-    public function testSetRuleStoresRule()
+    public function testSetRuleStoresRule(): void
     {
         $this->validation->setRules([]);
         $this->validation->setRule('foo', null, 'bar|baz');
@@ -106,7 +106,7 @@ class ValidationTest extends CIUnitTestCase
         ], $this->validation->getRules());
     }
 
-    public function testSetRuleMultipleWithIndividual()
+    public function testSetRuleMultipleWithIndividual(): void
     {
         $this->validation->setRule('username', 'Username', 'required|min_length[3]');
         $this->validation->setRule('password', 'Password', ['required', 'min_length[8]', 'alpha_numeric_punct']);
@@ -127,7 +127,7 @@ class ValidationTest extends CIUnitTestCase
         ], $this->validation->getRules());
     }
 
-    public function testSetRuleAddsRule()
+    public function testSetRuleAddsRule(): void
     {
         $this->validation->setRules([
             'bar' => [
@@ -149,7 +149,7 @@ class ValidationTest extends CIUnitTestCase
         ], $this->validation->getRules());
     }
 
-    public function testSetRuleOverwritesRule()
+    public function testSetRuleOverwritesRule(): void
     {
         $this->validation->setRules([
             'foo' => [
@@ -167,7 +167,7 @@ class ValidationTest extends CIUnitTestCase
         ], $this->validation->getRules());
     }
 
-    public function testSetRuleOverwritesRuleReverse()
+    public function testSetRuleOverwritesRuleReverse(): void
     {
         $this->validation->setRule('foo', null, 'foo|foz');
         $this->validation->setRules([
@@ -234,7 +234,7 @@ class ValidationTest extends CIUnitTestCase
         ];
     }
 
-    public function testRunReturnsFalseWithNothingToDo()
+    public function testRunReturnsFalseWithNothingToDo(): void
     {
         $this->validation->setRules([]);
         $this->assertFalse($this->validation->run([]));
@@ -613,7 +613,7 @@ class ValidationTest extends CIUnitTestCase
      * @param string|string[] $rules
      * @param string          $expected
      */
-    public function testRulesSetup($rules, $expected, array $errors = [])
+    public function testRulesSetup($rules, $expected, array $errors = []): void
     {
         $data = ['foo' => ''];
         $this->validation->setRules(['foo' => $rules], $errors);
@@ -958,7 +958,7 @@ class ValidationTest extends CIUnitTestCase
     /**
      * @dataProvider arrayFieldDataProvider
      */
-    public function testRulesForArrayField(array $body, array $rules, array $results)
+    public function testRulesForArrayField(array $body, array $rules, array $results): void
     {
         $config          = new App();
         $config->baseURL = 'http://example.com/';
@@ -1387,7 +1387,7 @@ class ValidationTest extends CIUnitTestCase
      *
      * @source https://github.com/codeigniter4/CodeIgniter4/pull/3910#issuecomment-784922913
      */
-    protected function placeholderReplacementResultDetermination(string $placeholder = 'id', ?array $data = null)
+    protected function placeholderReplacementResultDetermination(string $placeholder = 'id', ?array $data = null): void
     {
         if ($data === null) {
             $data = [$placeholder => '12'];
@@ -1411,7 +1411,7 @@ class ValidationTest extends CIUnitTestCase
     /**
      * @see ValidationTest::placeholderReplacementResultDetermination()
      */
-    public function testPlaceholderReplacementTestFails()
+    public function testPlaceholderReplacementTestFails(): void
     {
         // to test if placeholderReplacementResultDetermination() works we provoke and expect an exception
         $this->expectException(ExpectationFailedException::class);
@@ -1423,7 +1423,7 @@ class ValidationTest extends CIUnitTestCase
         $this->placeholderReplacementResultDetermination('id', []);
     }
 
-    public function testPlaceholderReplacementSetSingleRuleString()
+    public function testPlaceholderReplacementSetSingleRuleString(): void
     {
         $this->validation->setRule('id', null, 'required|is_natural_no_zero');
         $this->validation->setRule('foo', null, 'required|filter[{id}]');
@@ -1431,7 +1431,7 @@ class ValidationTest extends CIUnitTestCase
         $this->placeholderReplacementResultDetermination();
     }
 
-    public function testPlaceholderReplacementSetSingleRuleArray()
+    public function testPlaceholderReplacementSetSingleRuleArray(): void
     {
         $this->validation->setRule('id', null, ['required', 'is_natural_no_zero']);
         $this->validation->setRule('foo', null, ['required', 'filter[{id}]']);
@@ -1439,7 +1439,7 @@ class ValidationTest extends CIUnitTestCase
         $this->placeholderReplacementResultDetermination();
     }
 
-    public function testPlaceholderReplacementSetMultipleRulesSimpleString()
+    public function testPlaceholderReplacementSetMultipleRulesSimpleString(): void
     {
         $this->validation->setRules([
             'id'  => 'required|is_natural_no_zero',
@@ -1449,7 +1449,7 @@ class ValidationTest extends CIUnitTestCase
         $this->placeholderReplacementResultDetermination();
     }
 
-    public function testPlaceholderReplacementSetMultipleRulesSimpleArray()
+    public function testPlaceholderReplacementSetMultipleRulesSimpleArray(): void
     {
         $this->validation->setRules([
             'id'  => ['required', 'is_natural_no_zero'],
@@ -1459,7 +1459,7 @@ class ValidationTest extends CIUnitTestCase
         $this->placeholderReplacementResultDetermination();
     }
 
-    public function testPlaceholderReplacementSetMultipleRulesComplexString()
+    public function testPlaceholderReplacementSetMultipleRulesComplexString(): void
     {
         $this->validation->setRules([
             'id' => [
@@ -1473,7 +1473,7 @@ class ValidationTest extends CIUnitTestCase
         $this->placeholderReplacementResultDetermination();
     }
 
-    public function testPlaceholderReplacementSetMultipleRulesComplexArray()
+    public function testPlaceholderReplacementSetMultipleRulesComplexArray(): void
     {
         $this->validation->setRules([
             'id' => [
@@ -1578,7 +1578,7 @@ class ValidationTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5942
      */
-    public function testRequireWithoutWithWildCard()
+    public function testRequireWithoutWithWildCard(): void
     {
         $data = [
             'a' => [

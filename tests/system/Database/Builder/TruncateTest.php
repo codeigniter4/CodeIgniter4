@@ -31,7 +31,7 @@ final class TruncateTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testTruncate()
+    public function testTruncate(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 

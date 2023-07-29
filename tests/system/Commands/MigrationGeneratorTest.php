@@ -32,25 +32,25 @@ final class MigrationGeneratorTest extends CIUnitTestCase
         }
     }
 
-    public function testGenerateMigration()
+    public function testGenerateMigration(): void
     {
         command('make:migration database');
         $this->assertStringContainsString('_Database.php', $this->getStreamFilterBuffer());
     }
 
-    public function testGenerateMigrationWithOptionSession()
+    public function testGenerateMigrationWithOptionSession(): void
     {
         command('make:migration -session');
         $this->assertStringContainsString('_CreateCiSessionsTable.php', $this->getStreamFilterBuffer());
     }
 
-    public function testGenerateMigrationWithOptionTable()
+    public function testGenerateMigrationWithOptionTable(): void
     {
         command('make:migration -session -table logger');
         $this->assertStringContainsString('_CreateLoggerTable.php', $this->getStreamFilterBuffer());
     }
 
-    public function testGenerateMigrationWithOptionSuffix()
+    public function testGenerateMigrationWithOptionSuffix(): void
     {
         command('make:migration database -suffix');
         $this->assertStringContainsString('_DatabaseMigration.php', $this->getStreamFilterBuffer());

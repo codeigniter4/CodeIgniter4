@@ -44,7 +44,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
         return file_get_contents($filepath) ?: '';
     }
 
-    public function testGenerateModel()
+    public function testGenerateModel(): void
     {
         command('make:model user --table users');
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
@@ -56,7 +56,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('protected $returnType       = \'array\';', $this->getFileContent($file));
     }
 
-    public function testGenerateModelWithOptionTable()
+    public function testGenerateModelWithOptionTable(): void
     {
         command('make:model cars -table utilisateur');
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
@@ -65,7 +65,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('protected $table            = \'utilisateur\';', $this->getFileContent($file));
     }
 
-    public function testGenerateModelWithOptionDBGroup()
+    public function testGenerateModelWithOptionDBGroup(): void
     {
         command('make:model user -dbgroup testing');
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
@@ -74,7 +74,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('protected $DBGroup          = \'testing\';', $this->getFileContent($file));
     }
 
-    public function testGenerateModelWithOptionReturnArray()
+    public function testGenerateModelWithOptionReturnArray(): void
     {
         command('make:model user --return array');
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
@@ -83,7 +83,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('protected $returnType       = \'array\';', $this->getFileContent($file));
     }
 
-    public function testGenerateModelWithOptionReturnObject()
+    public function testGenerateModelWithOptionReturnObject(): void
     {
         command('make:model user --return object');
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
@@ -92,7 +92,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('protected $returnType       = \'object\';', $this->getFileContent($file));
     }
 
-    public function testGenerateModelWithOptionReturnEntity()
+    public function testGenerateModelWithOptionReturnEntity(): void
     {
         command('make:model user --return entity');
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
@@ -118,7 +118,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
         }
     }
 
-    public function testGenerateModelWithOptionSuffix()
+    public function testGenerateModelWithOptionSuffix(): void
     {
         command('make:model user --suffix --return entity');
 
@@ -136,7 +136,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5050
      */
-    public function testGenerateModelWithSuffixAndMixedPascalCasedName()
+    public function testGenerateModelWithSuffixAndMixedPascalCasedName(): void
     {
         command('make:model MyTable --suffix --return entity');
 

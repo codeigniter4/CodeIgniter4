@@ -28,14 +28,14 @@ final class WriteTypeQueryTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testSet()
+    public function testSet(): void
     {
         $sql = 'SET FOREIGN_KEY_CHECKS=0';
 
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    public function testInsert()
+    public function testInsert(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -55,7 +55,7 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         }
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
         $builder->testMode()->where('id', 1)->update(['name' => 'Programmer'], null, null);
@@ -70,7 +70,7 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         }
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $builder = $this->db->table('jobs');
         $sql     = $builder->testMode()->delete(['id' => 1], null, true);
@@ -78,7 +78,7 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    public function testReplace()
+    public function testReplace(): void
     {
         if (in_array($this->db->DBDriver, ['Postgre', 'SQLSRV'], true)) {
             // these two were complaining about the builder stuff so i just cooked up this
@@ -96,14 +96,14 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $sql = 'CREATE DATABASE foo';
 
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    public function testDrop()
+    public function testDrop(): void
     {
         $sql = 'DROP DATABASE foo';
 
@@ -114,7 +114,7 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    public function testTruncate()
+    public function testTruncate(): void
     {
         $builder = new BaseBuilder('user', $this->db);
         $sql     = $builder->testMode()->truncate();
@@ -122,28 +122,28 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    public function testLoad()
+    public function testLoad(): void
     {
         $sql = "LOAD DATA INFILE '/tmp/test.txt' INTO TABLE test FIELDS TERMINATED BY ','  LINES STARTING BY 'xxx';";
 
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    public function testCopy()
+    public function testCopy(): void
     {
         $sql = "COPY demo(firstname, lastname) TO 'demo.txt' DELIMITER ' ';";
 
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    public function testAlter()
+    public function testAlter(): void
     {
         $sql = 'ALTER TABLE supplier ADD supplier_name char(50);';
 
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    public function testRename()
+    public function testRename(): void
     {
         if ($this->db->DBDriver === 'SQLSRV') {
             $sql = 'EXEC sp_rename table1 , table2 ;';
@@ -156,28 +156,28 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    public function testGrant()
+    public function testGrant(): void
     {
         $sql = 'GRANT SELECT ON TABLE my_table TO user1,user2';
 
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    public function testRevoke()
+    public function testRevoke(): void
     {
         $sql = 'REVOKE SELECT ON TABLE my_table FROM user1,user2';
 
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    public function testLock()
+    public function testLock(): void
     {
         $sql = 'LOCK TABLE my_table IN SHARE MODE;';
 
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    public function testUnlock()
+    public function testUnlock(): void
     {
         // i think this is only a valid command for MySQL?
         $sql = 'UNLOCK TABLES;';
@@ -185,7 +185,7 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    public function testReindex()
+    public function testReindex(): void
     {
         // i think this is only a valid command for Postgre?
         $sql = 'REINDEX TABLE foo';
@@ -193,7 +193,7 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         $this->assertTrue($this->db->isWriteType($sql));
     }
 
-    public function testSelect()
+    public function testSelect(): void
     {
         $builder = new BaseBuilder('users', $this->db);
         $builder->select('*');
@@ -202,7 +202,7 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         $this->assertFalse($this->db->isWriteType($sql));
     }
 
-    public function testTrick()
+    public function testTrick(): void
     {
         $builder = new BaseBuilder('users', $this->db);
         $builder->select('UPDATE');

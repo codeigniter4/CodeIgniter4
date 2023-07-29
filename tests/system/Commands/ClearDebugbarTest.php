@@ -32,7 +32,7 @@ final class ClearDebugbarTest extends CIUnitTestCase
         $this->time = time();
     }
 
-    protected function createDummyDebugbarJson()
+    protected function createDummyDebugbarJson(): void
     {
         $time = $this->time;
         $path = WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$time}.json";
@@ -46,7 +46,7 @@ final class ClearDebugbarTest extends CIUnitTestCase
         }
     }
 
-    public function testClearDebugbarWorks()
+    public function testClearDebugbarWorks(): void
     {
         // test clean debugbar dir
         $this->assertFileDoesNotExist(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");

@@ -33,14 +33,14 @@ final class ClearCacheTest extends CIUnitTestCase
         Services::injectMock('cache', CacheFactory::getHandler(config('Cache')));
     }
 
-    public function testClearCacheInvalidHandler()
+    public function testClearCacheInvalidHandler(): void
     {
         command('cache:clear junk');
 
         $this->assertStringContainsString('junk is not a valid cache handler.', $this->getStreamFilterBuffer());
     }
 
-    public function testClearCacheWorks()
+    public function testClearCacheWorks(): void
     {
         cache()->save('foo', 'bar');
         $this->assertSame('bar', cache('foo'));

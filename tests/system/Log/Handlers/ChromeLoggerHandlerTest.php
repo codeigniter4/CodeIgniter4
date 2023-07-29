@@ -25,7 +25,7 @@ use stdClass;
  */
 final class ChromeLoggerHandlerTest extends CIUnitTestCase
 {
-    public function testCanHandleLogLevel()
+    public function testCanHandleLogLevel(): void
     {
         $config = new LoggerConfig();
 
@@ -35,7 +35,7 @@ final class ChromeLoggerHandlerTest extends CIUnitTestCase
         $this->assertFalse($logger->canHandle('foo'));
     }
 
-    public function testHandle()
+    public function testHandle(): void
     {
         $config = new LoggerConfig();
 
@@ -45,7 +45,7 @@ final class ChromeLoggerHandlerTest extends CIUnitTestCase
         $this->assertTrue($logger->handle('warning', 'This a log test'));
     }
 
-    public function testSendLogs()
+    public function testSendLogs(): void
     {
         $config = new LoggerConfig();
 
@@ -59,7 +59,7 @@ final class ChromeLoggerHandlerTest extends CIUnitTestCase
         $this->assertTrue($response->hasHeader('X-ChromeLogger-Data'));
     }
 
-    public function testSetDateFormat()
+    public function testSetDateFormat(): void
     {
         $config = new LoggerConfig();
 
@@ -73,7 +73,7 @@ final class ChromeLoggerHandlerTest extends CIUnitTestCase
         $this->assertSame('F j, Y', $this->getPrivateProperty($logger, 'dateFormat'));
     }
 
-    public function testChromeLoggerHeaderSent()
+    public function testChromeLoggerHeaderSent(): void
     {
         Services::injectMock('response', new MockResponse(new App()));
         $response = service('response');
