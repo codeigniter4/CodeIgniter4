@@ -12,9 +12,6 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-Mandatory File Changes
-**********************
-
 Breaking Changes
 ****************
 
@@ -52,9 +49,6 @@ If you use the method, update the code like the following::
         ↓
     [$rules, $customErrors] = $this->validation->loadRuleGroup($rules);
 
-Breaking Enhancements
-*********************
-
 Project Files
 *************
 
@@ -73,7 +67,7 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- @TODO
+- app/Config/Kint.php
 
 All Changes
 ===========
@@ -81,4 +75,16 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- app/Config/App.php
+- app/Config/Autoload.php
+- app/Config/Cache.php
+- app/Config/ContentSecurityPolicy.php
+- app/Config/Filters.php
+- app/Config/Kint.php
+- app/Config/Logger.php
+- app/Config/Migrations.php
+- app/Config/Modules.php
+- app/Config/Paths.php
+- app/Controllers/BaseController.php
+- app/Controllers/Home.php
+- composer.json
