@@ -1,5 +1,40 @@
 # Changelog
 
+## [v4.3.7](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.7) (2023-07-30)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.6...v4.3.7)
+
+### Breaking Changes
+
+* fix: FeatureTestTrait may change $params values passed to call(), and a few bug fixes by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7602
+* fix: auto routing legacy and $route->add() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7690
+* fix: [Model] setValidationRule() cannot use with ruleGroup by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7691
+
+### Fixed Bugs
+
+* docs: fix incorrect description on RedirectException (1) by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7629
+* docs: fix incorrect description on RedirectException (2) by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7633
+* fix: skip http proxy added header by @jozefrebjak in https://github.com/codeigniter4/CodeIgniter4/pull/7622
+* fix: number_to_roman() param type by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7640
+* fix: [Auto Routing Improved] feature testing may use incorrect param count by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7597
+* fix: `url_to()` error message by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7652
+* fix: [ViewCells] caching by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7663
+* fix: [ViewCells] when there are cells with the same short name, only the first cell is loaded by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7686
+* Fix number comparison in number_to_amount() in number_helper.php by @sba in https://github.com/codeigniter4/CodeIgniter4/pull/7701
+* fix: wrong Config classname to config() in Toolbar by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7735
+* fix: $sensitiveDataInTrace does not work by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7725
+
+### Enhancements
+
+* Remove PHPStan from pre-commit hook by @lonnieezell in https://github.com/codeigniter4/CodeIgniter4/pull/7618
+
+### Refactoring
+
+* refactor: remove unused property in Encryption\Handlers\BaseHandler by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7579
+* refactor: use ::class to config() param by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7611
+* refactor: remove unused non-empty array in RequestTrait by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7620
+* refactor: [Cache] simplify code of `FileHandler::getItem()` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/7667
+* refactor:  replace `config(Paths::class)` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7702
+
 ## [v4.3.6](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.6) (2023-06-18)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.5...v4.3.6)
 
