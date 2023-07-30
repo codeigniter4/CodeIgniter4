@@ -48,7 +48,7 @@ final class SecurityTest extends CIUnitTestCase
         return new MockSecurity($config);
     }
 
-    public function testBasicConfigIsSaved()
+    public function testBasicConfigIsSaved(): void
     {
         $security = $this->createMockSecurity();
 
@@ -58,7 +58,7 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('csrf_test_name', $security->getTokenName());
     }
 
-    public function testHashIsReadFromCookie()
+    public function testHashIsReadFromCookie(): void
     {
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
 
@@ -70,7 +70,7 @@ final class SecurityTest extends CIUnitTestCase
         );
     }
 
-    public function testGetHashSetsCookieWhenGETWithoutCSRFCookie()
+    public function testGetHashSetsCookieWhenGETWithoutCSRFCookie(): void
     {
         $security = $this->createMockSecurity();
 
@@ -82,7 +82,7 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame($security->getHash(), $cookie->getValue());
     }
 
-    public function testGetHashReturnsCSRFCookieWhenGETWithCSRFCookie()
+    public function testGetHashReturnsCSRFCookieWhenGETWithCSRFCookie(): void
     {
         $_SERVER['REQUEST_METHOD']   = 'GET';
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
@@ -94,7 +94,7 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame($_COOKIE['csrf_cookie_name'], $security->getHash());
     }
 
-    public function testCSRFVerifyPostThrowsExceptionOnNoMatch()
+    public function testCSRFVerifyPostThrowsExceptionOnNoMatch(): void
     {
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
@@ -112,7 +112,7 @@ final class SecurityTest extends CIUnitTestCase
         $security->verify($request);
     }
 
-    public function testCSRFVerifyPostReturnsSelfOnMatch()
+    public function testCSRFVerifyPostReturnsSelfOnMatch(): void
     {
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_POST['foo']                = 'bar';
@@ -133,7 +133,7 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertCount(1, $_POST);
     }
 
-    public function testCSRFVerifyHeaderThrowsExceptionOnNoMatch()
+    public function testCSRFVerifyHeaderThrowsExceptionOnNoMatch(): void
     {
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
@@ -152,7 +152,7 @@ final class SecurityTest extends CIUnitTestCase
         $security->verify($request);
     }
 
-    public function testCSRFVerifyHeaderReturnsSelfOnMatch()
+    public function testCSRFVerifyHeaderReturnsSelfOnMatch(): void
     {
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_POST['foo']                = 'bar';
@@ -174,7 +174,7 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertCount(1, $_POST);
     }
 
-    public function testCSRFVerifyJsonThrowsExceptionOnNoMatch()
+    public function testCSRFVerifyJsonThrowsExceptionOnNoMatch(): void
     {
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
@@ -195,7 +195,7 @@ final class SecurityTest extends CIUnitTestCase
         $security->verify($request);
     }
 
-    public function testCSRFVerifyJsonReturnsSelfOnMatch()
+    public function testCSRFVerifyJsonReturnsSelfOnMatch(): void
     {
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
@@ -218,7 +218,7 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('{"foo":"bar"}', $request->getBody());
     }
 
-    public function testSanitizeFilename()
+    public function testSanitizeFilename(): void
     {
         $security = $this->createMockSecurity();
 
@@ -227,7 +227,7 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('foo', $security->sanitizeFilename($filename));
     }
 
-    public function testRegenerateWithFalseSecurityRegenerateProperty()
+    public function testRegenerateWithFalseSecurityRegenerateProperty(): void
     {
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
@@ -252,7 +252,7 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame($oldHash, $newHash);
     }
 
-    public function testRegenerateWithFalseSecurityRegeneratePropertyManually()
+    public function testRegenerateWithFalseSecurityRegeneratePropertyManually(): void
     {
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
@@ -278,7 +278,7 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertNotSame($oldHash, $newHash);
     }
 
-    public function testRegenerateWithTrueSecurityRegenerateProperty()
+    public function testRegenerateWithTrueSecurityRegenerateProperty(): void
     {
         $_SERVER['REQUEST_METHOD']   = 'POST';
         $_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';

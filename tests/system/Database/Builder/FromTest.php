@@ -32,7 +32,7 @@ final class FromTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testSimpleFrom()
+    public function testSimpleFrom(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 
@@ -43,7 +43,7 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testFromThatOverwrites()
+    public function testFromThatOverwrites(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 
@@ -54,7 +54,7 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testFromWithMultipleTables()
+    public function testFromWithMultipleTables(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 
@@ -65,7 +65,7 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testFromWithMultipleTablesAsString()
+    public function testFromWithMultipleTablesAsString(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 
@@ -76,7 +76,7 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testFromReset()
+    public function testFromReset(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 
@@ -103,7 +103,7 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testFromSubquery()
+    public function testFromSubquery(): void
     {
         $expectedSQL = 'SELECT * FROM (SELECT * FROM "users") "alias"';
         $subquery    = new BaseBuilder('users', $this->db);
@@ -124,7 +124,7 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testFromWithMultipleTablesAsStringWithSQLSRV()
+    public function testFromWithMultipleTablesAsStringWithSQLSRV(): void
     {
         $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
 
@@ -137,7 +137,7 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testFromSubqueryWithSQLSRV()
+    public function testFromSubqueryWithSQLSRV(): void
     {
         $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
 

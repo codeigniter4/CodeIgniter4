@@ -15,7 +15,7 @@ use CodeIgniter\Database\Seeder;
 
 class CITestSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         // Job Data
         $data = [

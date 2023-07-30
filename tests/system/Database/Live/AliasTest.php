@@ -27,7 +27,7 @@ final class AliasTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testAlias()
+    public function testAlias(): void
     {
         $builder = $this->db->table('job j');
 

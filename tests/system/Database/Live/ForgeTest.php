@@ -47,7 +47,7 @@ final class ForgeTest extends CIUnitTestCase
         parent::setUp();
     }
 
-    public function testCreateDatabase()
+    public function testCreateDatabase(): void
     {
         if ($this->db->DBDriver === 'OCI8') {
             $this->markTestSkipped('OCI8 does not support create database.');
@@ -57,7 +57,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertTrue($databaseCreated);
     }
 
-    public function testCreateDatabaseIfNotExists()
+    public function testCreateDatabaseIfNotExists(): void
     {
         if ($this->db->DBDriver === 'OCI8') {
             $this->markTestSkipped('OCI8 does not support create database.');
@@ -72,7 +72,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertTrue($databaseCreateIfNotExists);
     }
 
-    public function testCreateDatabaseIfNotExistsWithDb()
+    public function testCreateDatabaseIfNotExistsWithDb(): void
     {
         if ($this->db->DBDriver === 'OCI8') {
             $this->markTestSkipped('OCI8 does not support create database.');
@@ -88,7 +88,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertTrue($databaseExists);
     }
 
-    public function testDropDatabase()
+    public function testDropDatabase(): void
     {
         if ($this->db->DBDriver === 'OCI8') {
             $this->markTestSkipped('OCI8 does not support drop database.');
@@ -102,7 +102,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertTrue($databaseDropped);
     }
 
-    public function testCreateDatabaseExceptionNoCreateStatement()
+    public function testCreateDatabaseExceptionNoCreateStatement(): void
     {
         $this->setPrivateProperty($this->forge, 'createDatabaseStr', false);
 
@@ -117,7 +117,7 @@ final class ForgeTest extends CIUnitTestCase
         }
     }
 
-    public function testDropDatabaseExceptionNoDropStatement()
+    public function testDropDatabaseExceptionNoDropStatement(): void
     {
         $this->setPrivateProperty($this->forge, 'dropDatabaseStr', false);
 
@@ -131,7 +131,7 @@ final class ForgeTest extends CIUnitTestCase
         }
     }
 
-    public function testCreateTable()
+    public function testCreateTable(): void
     {
         $this->forge->dropTable('forge_test_table', true);
 
@@ -164,7 +164,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_table', true);
     }
 
-    public function testCreateTableWithExists()
+    public function testCreateTableWithExists(): void
     {
         // create table so that it exists in database
         $this->forge->addField([
@@ -213,7 +213,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('test_exists');
     }
 
-    public function testCreateTableApplyBigInt()
+    public function testCreateTableApplyBigInt(): void
     {
         $this->forge->dropTable('forge_test_table', true);
 
@@ -244,7 +244,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_table', true);
     }
 
-    public function testCreateTableWithAttributes()
+    public function testCreateTableWithAttributes(): void
     {
         if ($this->db->DBDriver === 'OCI8') {
             $this->markTestSkipped('OCI8 does not support comments on tables or columns.');
@@ -269,7 +269,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertTrue($exist);
     }
 
-    public function testCreateTableWithArrayFieldConstraints()
+    public function testCreateTableWithArrayFieldConstraints(): void
     {
         if (in_array($this->db->DBDriver, ['MySQLi', 'SQLite3'], true)) {
             $this->forge->dropTable('forge_array_constraint', true);
@@ -333,7 +333,7 @@ final class ForgeTest extends CIUnitTestCase
         }
     }
 
-    public function testCreateTableWithStringField()
+    public function testCreateTableWithStringField(): void
     {
         $this->forge->dropTable('forge_test_table', true);
 
@@ -348,7 +348,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertTrue($exist);
     }
 
-    public function testCreateTableWithEmptyName()
+    public function testCreateTableWithEmptyName(): void
     {
         $this->forge->dropTable('forge_test_table', true);
 
@@ -361,7 +361,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->createTable('');
     }
 
-    public function testCreateTableWithNoFields()
+    public function testCreateTableWithNoFields(): void
     {
         $this->forge->dropTable('forge_test_table', true);
 
@@ -371,7 +371,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->createTable('forge_test_table');
     }
 
-    public function testCreateTableWithStringFieldException()
+    public function testCreateTableWithStringFieldException(): void
     {
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Field information is required for that operation.');
@@ -384,7 +384,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->createTable('forge_test_table');
     }
 
-    public function testRenameTable()
+    public function testRenameTable(): void
     {
         $this->forge->dropTable('forge_test_table_dummy', true);
 
@@ -400,7 +400,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertTrue($exist);
     }
 
-    public function testRenameTableEmptyNameException()
+    public function testRenameTableEmptyNameException(): void
     {
         $this->forge->dropTable('forge_test_table_dummy', true);
 
@@ -415,7 +415,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->renameTable('forge_test_table', '');
     }
 
-    public function testRenameTableNoRenameStatementException()
+    public function testRenameTableNoRenameStatementException(): void
     {
         $this->setPrivateProperty($this->forge, 'renameTableStr', false);
 
@@ -432,7 +432,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->renameTable('forge_test_table', 'forge_test_table_dummy');
     }
 
-    public function testDropTableWithEmptyName()
+    public function testDropTableWithEmptyName(): void
     {
         $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('A table name is required for that operation.');
@@ -440,7 +440,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('', true);
     }
 
-    public function testForeignKey()
+    public function testForeignKey(): void
     {
         $this->forge->dropTable('forge_test_invoices', true);
         $this->forge->dropTable('forge_test_users', true);
@@ -505,7 +505,7 @@ final class ForgeTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4986
      */
-    public function testForeignKeyAddingWithStringFields()
+    public function testForeignKeyAddingWithStringFields(): void
     {
         if ($this->db->DBDriver !== 'MySQLi') {
             $this->markTestSkipped('Testing only on MySQLi but fix expands to all DBs.');
@@ -544,7 +544,7 @@ final class ForgeTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4310
      */
-    public function testCompositeForeignKey()
+    public function testCompositeForeignKey(): void
     {
         $this->forge->dropTable('forge_test_invoices', true);
         $this->forge->dropTable('forge_test_users', true);
@@ -620,7 +620,7 @@ final class ForgeTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4310
      */
-    public function testCompositeForeignKeyFieldNotExistException()
+    public function testCompositeForeignKeyFieldNotExistException(): void
     {
         $this->expectException(DatabaseException::class);
         if ($this->db->DBDriver === 'SQLite3') {
@@ -679,7 +679,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->createTable('forge_test_invoices', true, $attributes);
     }
 
-    public function testForeignKeyFieldNotExistException()
+    public function testForeignKeyFieldNotExistException(): void
     {
         $this->expectException(DatabaseException::class);
         if ($this->db->DBDriver === 'SQLite3') {
@@ -730,7 +730,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->createTable('forge_test_invoices', true, $attributes);
     }
 
-    public function testDropForeignKey()
+    public function testDropForeignKey(): void
     {
         $this->forge->dropTable('forge_test_invoices', true);
         $this->forge->dropTable('forge_test_users', true);
@@ -792,7 +792,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_users', true);
     }
 
-    public function testAddColumn()
+    public function testAddColumn(): void
     {
         $this->forge->dropTable('forge_test_table', true);
 
@@ -862,7 +862,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_table', true);
     }
 
-    public function testAddFields()
+    public function testAddFields(): void
     {
         $tableName = 'forge_test_fields';
         if ($this->db->DBDriver === 'OCI8') {
@@ -1087,7 +1087,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertSame($expected, json_decode(json_encode($fieldsData), true));
     }
 
-    public function testCompositeKey()
+    public function testCompositeKey(): void
     {
         $this->forge->dropTable('forge_test_1', true);
 
@@ -1182,7 +1182,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_1', true);
     }
 
-    public function testSetKeyNames()
+    public function testSetKeyNames(): void
     {
         $this->forge->dropTable('forge_test_1', true);
 
@@ -1246,7 +1246,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_1', true);
     }
 
-    public function testDropColumn()
+    public function testDropColumn(): void
     {
         $this->forge->dropTable('forge_test_two', true);
 
@@ -1278,7 +1278,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_two', true);
     }
 
-    public function testModifyColumnRename()
+    public function testModifyColumnRename(): void
     {
         $this->forge->dropTable('forge_test_three', true);
 
@@ -1318,7 +1318,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_three', true);
     }
 
-    public function testModifyColumnNullTrue()
+    public function testModifyColumnNullTrue(): void
     {
         $this->forge->dropTable('forge_test_modify', true);
 
@@ -1347,7 +1347,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_modify', true);
     }
 
-    public function testModifyColumnNullFalse()
+    public function testModifyColumnNullFalse(): void
     {
         $this->forge->dropTable('forge_test_modify', true);
 
@@ -1393,7 +1393,7 @@ final class ForgeTest extends CIUnitTestCase
         return $fields[$name];
     }
 
-    public function testConnectWithArrayGroup()
+    public function testConnectWithArrayGroup(): void
     {
         $group = config('Database');
         $group = $group->tests;
@@ -1406,7 +1406,7 @@ final class ForgeTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1983
      */
-    public function testDropTableSuccess()
+    public function testDropTableSuccess(): void
     {
         // Add an index to user table so we have
         // something to work with
@@ -1430,7 +1430,7 @@ final class ForgeTest extends CIUnitTestCase
         }
     }
 
-    public function testDropMultipleColumnWithArray()
+    public function testDropMultipleColumnWithArray(): void
     {
         $this->forge->dropTable('forge_test_two', true);
 
@@ -1468,7 +1468,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_two', true);
     }
 
-    public function testDropMultipleColumnWithString()
+    public function testDropMultipleColumnWithString(): void
     {
         $this->forge->dropTable('forge_test_four', true);
 
@@ -1506,7 +1506,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_four', true);
     }
 
-    public function testDropKey()
+    public function testDropKey(): void
     {
         $this->forge->dropTable('key_test_users', true);
         $keyName = 'key_test_users_id';
@@ -1540,7 +1540,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('key_test_users', true);
     }
 
-    public function testAddTextColumnWithConstraint()
+    public function testAddTextColumnWithConstraint(): void
     {
         // some DBMS do not allow a constraint for type TEXT
         $this->forge->addColumn('user', [
@@ -1557,7 +1557,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertFalse($this->db->fieldExists('text_with_constraint', 'user'));
     }
 
-    public function testDropPrimaryKey()
+    public function testDropPrimaryKey(): void
     {
         $this->forge->dropTable('forge_test_users', true);
 
@@ -1593,7 +1593,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_users', true);
     }
 
-    public function testProcessIndexes()
+    public function testProcessIndexes(): void
     {
         // make sure tables don't exist
         $this->forge->dropTable('actions', true);
@@ -1657,7 +1657,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('user2', true);
     }
 
-    private function createUser2TableWithKeys()
+    private function createUser2TableWithKeys(): void
     {
         $fields = [
             'id'         => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
@@ -1675,7 +1675,7 @@ final class ForgeTest extends CIUnitTestCase
             ->createTable('user2', true);
     }
 
-    private function populateUser2Table()
+    private function populateUser2Table(): void
     {
         $data = [
             [
@@ -1702,7 +1702,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->db->table('user2')->insertBatch($data);
     }
 
-    private function createActionsTable()
+    private function createActionsTable(): void
     {
         $fields = [
             'id'       => ['type' => 'int', 'constraint' => 9],
@@ -1715,7 +1715,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->createTable('actions');
     }
 
-    private function insertDataTest()
+    private function insertDataTest(): void
     {
         $data = [
             [

@@ -40,7 +40,7 @@ final class RawSqlTest extends CIUnitTestCase
         }
     }
 
-    protected function addSqlFunction()
+    protected function addSqlFunction(): void
     {
         $this->db->query('DROP FUNCTION IF EXISTS setDateTime');
 
@@ -55,7 +55,7 @@ final class RawSqlTest extends CIUnitTestCase
         $this->db->query($sql);
     }
 
-    public function testRawSqlUpdateObject()
+    public function testRawSqlUpdateObject(): void
     {
         $data = [];
 
@@ -79,7 +79,7 @@ final class RawSqlTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['email' => 'ahmadinejad@world.com', 'created_at' => '2022-01-11 01:01:11']);
     }
 
-    public function testRawSqlSetUpdateObject()
+    public function testRawSqlSetUpdateObject(): void
     {
         $data = [];
 
@@ -103,7 +103,7 @@ final class RawSqlTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['email' => 'ahmadinejad@world.com', 'created_at' => '2022-02-11 01:01:11']);
     }
 
-    public function testRawSqlUpdateArray()
+    public function testRawSqlUpdateArray(): void
     {
         $data = [
             ['email' => 'derek@world.com', 'created_at' => new RawSql("setDateTime('2022-03-01')")],
@@ -122,7 +122,7 @@ final class RawSqlTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['email' => 'ahmadinejad@world.com', 'created_at' => '2022-03-11 01:01:11']);
     }
 
-    public function testRawSqlInsertArray()
+    public function testRawSqlInsertArray(): void
     {
         $data = [
             ['email' => 'pedro@world.com', 'created_at' => new RawSql("setDateTime('2022-04-01')")],
@@ -141,7 +141,7 @@ final class RawSqlTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['email' => 'jason@world.com', 'created_at' => '2022-04-11 01:01:11']);
     }
 
-    public function testRawSqlInsertObject()
+    public function testRawSqlInsertObject(): void
     {
         $data = [];
 
@@ -167,7 +167,7 @@ final class RawSqlTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['email' => 'jessica@world.com', 'created_at' => '2022-05-11 01:01:11']);
     }
 
-    public function testRawSqlSetInsertObject()
+    public function testRawSqlSetInsertObject(): void
     {
         $data = [];
 

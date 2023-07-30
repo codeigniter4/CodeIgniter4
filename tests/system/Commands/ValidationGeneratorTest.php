@@ -38,13 +38,13 @@ final class ValidationGeneratorTest extends CIUnitTestCase
         }
     }
 
-    public function testGenerateValidation()
+    public function testGenerateValidation(): void
     {
         command('make:validation user');
         $this->assertFileExists(APPPATH . 'Validation/User.php');
     }
 
-    public function testGenerateValidationWithOptionSuffix()
+    public function testGenerateValidationWithOptionSuffix(): void
     {
         command('make:validation admin -suffix');
         $this->assertFileExists(APPPATH . 'Validation/AdminValidation.php');

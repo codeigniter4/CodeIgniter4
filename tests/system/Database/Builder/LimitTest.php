@@ -31,7 +31,7 @@ final class LimitTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testLimitAlone()
+    public function testLimitAlone(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 
@@ -42,7 +42,7 @@ final class LimitTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testLimitAndOffset()
+    public function testLimitAndOffset(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 
@@ -53,7 +53,7 @@ final class LimitTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testLimitAndOffsetMethod()
+    public function testLimitAndOffsetMethod(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 

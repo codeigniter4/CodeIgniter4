@@ -21,7 +21,7 @@ use Config\Services;
  */
 final class FilterCollectorTest extends CIUnitTestCase
 {
-    public function testGet()
+    public function testGet(): void
     {
         $routes = Services::routes();
         $routes->resetRoutes();

@@ -60,7 +60,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         Services::injectMock('request', $this->request);
     }
 
-    public function testRedirectToFullURI()
+    public function testRedirectToFullURI(): void
     {
         $response = new RedirectResponse(new App());
 
@@ -70,7 +70,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertSame('http://example.com/foo', $response->getHeaderLine('Location'));
     }
 
-    public function testRedirectRoute()
+    public function testRedirectRoute(): void
     {
         $response = new RedirectResponse(new App());
 
@@ -89,7 +89,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertSame('http://example.com/index.php/exampleRoute2', $response->getHeaderLine('Location'));
     }
 
-    public function testRedirectRouteBadNamedRoute()
+    public function testRedirectRouteBadNamedRoute(): void
     {
         $this->expectException(HTTPException::class);
         $this->expectExceptionMessage('The route for "differentRoute" cannot be found.');
@@ -101,7 +101,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $response->route('differentRoute');
     }
 
-    public function testRedirectRouteBadControllerMethod()
+    public function testRedirectRouteBadControllerMethod(): void
     {
         $this->expectException(HTTPException::class);
         $this->expectExceptionMessage('The route for "Bad::badMethod" cannot be found.');
@@ -113,7 +113,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $response->route('Bad::badMethod');
     }
 
-    public function testRedirectRelativeConvertsToFullURI()
+    public function testRedirectRelativeConvertsToFullURI(): void
     {
         $response = new RedirectResponse($this->config);
 
@@ -127,7 +127,7 @@ final class RedirectResponseTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testWithInput()
+    public function testWithInput(): void
     {
         $_SESSION = [];
         $_GET     = ['foo' => 'bar'];
@@ -147,7 +147,7 @@ final class RedirectResponseTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testWithValidationErrors()
+    public function testWithValidationErrors(): void
     {
         $_SESSION = [];
 
@@ -167,7 +167,7 @@ final class RedirectResponseTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testWith()
+    public function testWith(): void
     {
         $_SESSION = [];
 
@@ -183,7 +183,7 @@ final class RedirectResponseTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testRedirectBack()
+    public function testRedirectBack(): void
     {
         $_SERVER['HTTP_REFERER'] = 'http://somewhere.com';
         $this->request           = new MockIncomingRequest($this->config, new URI('http://somewhere.com'), null, new UserAgent());
@@ -199,7 +199,7 @@ final class RedirectResponseTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testRedirectBackMissing()
+    public function testRedirectBackMissing(): void
     {
         $_SESSION = [];
 
@@ -216,7 +216,7 @@ final class RedirectResponseTest extends CIUnitTestCase
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/2119
      */
-    public function testRedirectRouteBaseUrl()
+    public function testRedirectRouteBaseUrl(): void
     {
         $config          = new App();
         $config->baseURL = 'http://example.com/test/';
@@ -237,7 +237,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         Factories::reset('config');
     }
 
-    public function testWithCookies()
+    public function testWithCookies(): void
     {
         $_SESSION = [];
 
@@ -255,7 +255,7 @@ final class RedirectResponseTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testWithCookiesWithEmptyCookies()
+    public function testWithCookiesWithEmptyCookies(): void
     {
         $_SESSION = [];
 
@@ -265,7 +265,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertEmpty($response->getCookies());
     }
 
-    public function testWithHeaders()
+    public function testWithHeaders(): void
     {
         $_SESSION = [];
 
@@ -283,7 +283,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         }
     }
 
-    public function testWithHeadersWithEmptyHeaders()
+    public function testWithHeadersWithEmptyHeaders(): void
     {
         $_SESSION = [];
 

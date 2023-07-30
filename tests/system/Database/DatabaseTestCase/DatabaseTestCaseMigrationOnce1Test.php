@@ -64,7 +64,7 @@ final class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
         parent::setUp();
     }
 
-    protected function setUpAddNamespace()
+    protected function setUpAddNamespace(): void
     {
         Services::autoloader()->addNamespace(
             'Tests\Support\MigrationTestMigrations',
@@ -79,7 +79,7 @@ final class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
         $this->regressDatabase();
     }
 
-    public function testMigrationDone()
+    public function testMigrationDone(): void
     {
         $this->seeInDatabase('foo', ['key' => 'foobar']);
 
@@ -88,7 +88,7 @@ final class DatabaseTestCaseMigrationOnce1Test extends CIUnitTestCase
         $this->dropTableFoo();
     }
 
-    private function dropTableFoo()
+    private function dropTableFoo(): void
     {
         $forge = Database::forge();
         $forge->dropTable('foo', true);

@@ -34,7 +34,7 @@ final class TableTest extends CIUnitTestCase
 
     // Setter Methods
 
-    public function testSetTemplate()
+    public function testSetTemplate(): void
     {
         $this->assertFalse($this->table->setTemplate('not an array'));
 
@@ -44,13 +44,13 @@ final class TableTest extends CIUnitTestCase
         $this->assertSame($template, $this->table->template);
     }
 
-    public function testSetEmpty()
+    public function testSetEmpty(): void
     {
         $this->table->setEmpty('nada');
         $this->assertSame('nada', $this->table->emptyCells);
     }
 
-    public function testSetCaption()
+    public function testSetCaption(): void
     {
         $this->table->setCaption('awesome cap');
         $this->assertSame('awesome cap', $this->table->caption);
@@ -59,7 +59,7 @@ final class TableTest extends CIUnitTestCase
     /**
      * @depends testPrepArgs
      */
-    public function testSetHeading()
+    public function testSetHeading(): void
     {
         // uses _prep_args internally, so we'll just do a quick
         // check to verify that func_get_args and prep_args are
@@ -77,7 +77,7 @@ final class TableTest extends CIUnitTestCase
         );
     }
 
-    public function testSetFooting()
+    public function testSetFooting(): void
     {
         // uses _prep_args internally, so we'll just do a quick
         // check to verify that func_get_args and prep_args are
@@ -96,7 +96,7 @@ final class TableTest extends CIUnitTestCase
         );
     }
 
-    public function testSetHeadingWithStyle()
+    public function testSetHeadingWithStyle(): void
     {
         $template = [
             'heading_cell_start' => '<td>',
@@ -122,7 +122,7 @@ final class TableTest extends CIUnitTestCase
         );
     }
 
-    public function testSetFootingWithStyle()
+    public function testSetFootingWithStyle(): void
     {
         $template = [
             'footing_cell_start' => '<td>',
@@ -151,7 +151,7 @@ final class TableTest extends CIUnitTestCase
     /**
      * @depends testPrepArgs
      */
-    public function testAddRow()
+    public function testAddRow(): void
     {
         // uses _prep_args internally, so we'll just do a quick
         // check to verify that func_get_args and prep_args are
@@ -175,7 +175,7 @@ final class TableTest extends CIUnitTestCase
 
     // Uility Methods
 
-    public function testPrepArgs()
+    public function testPrepArgs(): void
     {
         $expected = [
             ['data' => 'name'],
@@ -201,7 +201,7 @@ final class TableTest extends CIUnitTestCase
         );
     }
 
-    public function testDefaultTemplateKeys()
+    public function testDefaultTemplateKeys(): void
     {
         $keys = [
             'table_open',
@@ -229,7 +229,7 @@ final class TableTest extends CIUnitTestCase
         }
     }
 
-    public function testCompileTemplate()
+    public function testCompileTemplate(): void
     {
         $this->assertFalse($this->table->setTemplate('invalid_junk'));
 
@@ -248,7 +248,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertSame('</table junk>', $this->table->template['table_close']);
     }
 
-    public function testMakeColumns()
+    public function testMakeColumns(): void
     {
         // Test bogus parameters
         $this->assertFalse($this->table->makeColumns('invalid_junk'));
@@ -281,7 +281,7 @@ final class TableTest extends CIUnitTestCase
         );
     }
 
-    public function testClear()
+    public function testClear(): void
     {
         $this->table->setHeading('Name', 'Color', 'Size');
 
@@ -309,7 +309,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertEmpty($this->table->rows);
     }
 
-    public function testSetFromArray()
+    public function testSetFromArray(): void
     {
         $data = [
             [
@@ -353,7 +353,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertSame($expected, $this->table->rows[1]);
     }
 
-    public function testSetFromObject()
+    public function testSetFromObject(): void
     {
         // This needs to be passed by reference to CI_DB_result::__construct()
         $dummy           = new stdClass();
@@ -379,7 +379,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertSame($expected, $this->table->rows[1]);
     }
 
-    public function testGenerate()
+    public function testGenerate(): void
     {
         // Prepare the data
         $data = [
@@ -445,7 +445,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<td>12345</td>', $table);
     }
 
-    public function testGenerateTdWithClassStyle()
+    public function testGenerateTdWithClassStyle(): void
     {
         $template = [
             'table_open'         => '<table border="1" cellpadding="4" cellspacing="0">',
@@ -494,7 +494,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<td style="' . $this->styleTableTwo . '" class="thr"><small class="text-light">IDR <span class="badge badge-info">10</span></small></td>', $table);
     }
 
-    public function testGenerateThWithClassStyle()
+    public function testGenerateThWithClassStyle(): void
     {
         $template = [
             'table_open'         => '<table border="1" cellpadding="4" cellspacing="0">',
@@ -543,7 +543,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<th style="' . $this->styleTableTwo . '" class="thr"><small class="text-light">IDR <span class="badge badge-info">10</span></small></th>', $table);
     }
 
-    public function testGenerateInvalidHeadingFooting()
+    public function testGenerateInvalidHeadingFooting(): void
     {
         $template = [
             'table_open'         => '<table border="1" cellpadding="4" cellspacing="0">',
@@ -592,7 +592,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<footer><small class="text-light">IDR <span class="badge badge-info">10</span></small></footer>', $table);
     }
 
-    public function testGenerateInvalidHeadingFootingHTML()
+    public function testGenerateInvalidHeadingFootingHTML(): void
     {
         $template = [
             'table_open'         => '<table border="1" cellpadding="4" cellspacing="0">',
@@ -641,7 +641,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('td><small class="text-light">IDR <span class="badge badge-info">10</span></small></td>', $table);
     }
 
-    public function testGenerateEmptyCell()
+    public function testGenerateEmptyCell(): void
     {
         // Prepare the data
         $data = [
@@ -674,7 +674,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<td>Huh?</td>', $table);
     }
 
-    public function testWithConfig()
+    public function testWithConfig(): void
     {
         $customSettings = [
             'table_open' => '<table border="1" cellpadding="2" cellspacing="1" class="mytable">',
@@ -711,7 +711,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<table border="1" cellpadding="2" cellspacing="1" class="mytable">', $generated);
     }
 
-    public function testGenerateFromDBResult()
+    public function testGenerateFromDBResult(): void
     {
         // This needs to be passed by reference to CI_DB_result::__construct()
         $dummy           = new stdClass();
@@ -730,7 +730,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<td>foo@bar.com</td>', $table);
     }
 
-    public function testUndefined()
+    public function testUndefined(): void
     {
         // Prepare the data
         $data = [];
@@ -740,7 +740,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertSame('Undefined table data', $table);
     }
 
-    public function testCallback()
+    public function testCallback(): void
     {
         $this->table->setHeading('Name', 'Color', 'Size');
         $this->table->addRow('Fred', '<strong>Blue</strong>', 'Small');
@@ -752,7 +752,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<td>Fred</td><td>&lt;strong&gt;Blue&lt;/strong&gt;</td><td>Small</td>', $generated);
     }
 
-    public function testInvalidCallback()
+    public function testInvalidCallback(): void
     {
         $this->table->setHeading('Name', 'Color', 'Size');
         $this->table->addRow('Fred', '<strong>Blue</strong>', 'Small');

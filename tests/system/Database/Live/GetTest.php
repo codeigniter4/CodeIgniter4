@@ -28,7 +28,7 @@ final class GetTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testGet()
+    public function testGet(): void
     {
         $jobs = $this->db->table('job')->get()->getResult();
 
@@ -39,7 +39,7 @@ final class GetTest extends CIUnitTestCase
         $this->assertSame('Musician', $jobs[3]->name);
     }
 
-    public function testGetWitLimit()
+    public function testGetWitLimit(): void
     {
         $jobs = $this->db->table('job')->get(2, 2)->getResult();
 
@@ -48,7 +48,7 @@ final class GetTest extends CIUnitTestCase
         $this->assertSame('Musician', $jobs[1]->name);
     }
 
-    public function testGetWhereArray()
+    public function testGetWhereArray(): void
     {
         $jobs = $this->db->table('job')
             ->getWhere(['id' => 1])
@@ -58,7 +58,7 @@ final class GetTest extends CIUnitTestCase
         $this->assertSame('Developer', $jobs[0]->name);
     }
 
-    public function testGetWhereWithLimits()
+    public function testGetWhereWithLimits(): void
     {
         $jobs = $this->db->table('job')
             ->getWhere('id > 1', 1, 1)
@@ -68,14 +68,14 @@ final class GetTest extends CIUnitTestCase
         $this->assertSame('Accountant', $jobs[0]->name);
     }
 
-    public function testGetFieldCount()
+    public function testGetFieldCount(): void
     {
         $jobs = $this->db->table('job')->get()->getFieldCount();
 
         $this->assertSame(6, $jobs);
     }
 
-    public function testGetFieldNames()
+    public function testGetFieldNames(): void
     {
         $jobs = $this->db->table('job')->get()->getFieldNames();
 
@@ -83,7 +83,7 @@ final class GetTest extends CIUnitTestCase
         $this->assertContains('description', $jobs);
     }
 
-    public function testGetFieldData()
+    public function testGetFieldData(): void
     {
         $jobs = $this->db->table('job')->get()->getFieldData();
 
@@ -169,7 +169,7 @@ final class GetTest extends CIUnitTestCase
         }
     }
 
-    public function testGetDataSeek()
+    public function testGetDataSeek(): void
     {
         $data = $this->db->table('job')->get();
 
@@ -186,7 +186,7 @@ final class GetTest extends CIUnitTestCase
         $this->assertSame('Musician', $details[0]->name);
     }
 
-    public function testGetAnotherDataSeek()
+    public function testGetAnotherDataSeek(): void
     {
         $data = $this->db->table('job')->get();
 
@@ -200,7 +200,7 @@ final class GetTest extends CIUnitTestCase
         $this->assertSame('Musician', $details[3]->name);
     }
 
-    public function testFreeResult()
+    public function testFreeResult(): void
     {
         $data = $this->db->table('job')->where('id', 4)->get();
 
@@ -213,21 +213,21 @@ final class GetTest extends CIUnitTestCase
         $this->assertFalse($data->resultID);
     }
 
-    public function testGetRowWithColumnName()
+    public function testGetRowWithColumnName(): void
     {
         $name = $this->db->table('user')->get()->getRow('name', 'array');
 
         $this->assertSame('Derek Jones', $name);
     }
 
-    public function testGetRowWithReturnType()
+    public function testGetRowWithReturnType(): void
     {
         $user = $this->db->table('user')->get()->getRow(0, 'array');
 
         $this->assertSame('Derek Jones', $user['name']);
     }
 
-    public function testGetRowWithCustomReturnType()
+    public function testGetRowWithCustomReturnType(): void
     {
         $testClass = new class () {
             public $id;
@@ -244,28 +244,28 @@ final class GetTest extends CIUnitTestCase
         $this->assertSame('Derek Jones', $user->name);
     }
 
-    public function testGetFirstRow()
+    public function testGetFirstRow(): void
     {
         $user = $this->db->table('user')->get()->getFirstRow();
 
         $this->assertSame('Derek Jones', $user->name);
     }
 
-    public function testGetLastRow()
+    public function testGetLastRow(): void
     {
         $user = $this->db->table('user')->get()->getLastRow();
 
         $this->assertSame('Chris Martin', $user->name);
     }
 
-    public function testGetNextRow()
+    public function testGetNextRow(): void
     {
         $user = $this->db->table('user')->get()->getNextRow();
 
         $this->assertSame('Ahmadinejad', $user->name);
     }
 
-    public function testGetPreviousRow()
+    public function testGetPreviousRow(): void
     {
         $user = $this->db->table('user')->get();
 

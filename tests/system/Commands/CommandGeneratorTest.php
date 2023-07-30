@@ -46,7 +46,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
         return file_get_contents($filepath) ?: '';
     }
 
-    public function testGenerateCommand()
+    public function testGenerateCommand(): void
     {
         command('make:command deliver');
         $file = APPPATH . 'Commands/Deliver.php';
@@ -56,7 +56,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('protected $name = \'command:name\';', $contents);
     }
 
-    public function testGenerateCommandWithOptionCommand()
+    public function testGenerateCommandWithOptionCommand(): void
     {
         command('make:command deliver -command clear:sessions');
         $file = APPPATH . 'Commands/Deliver.php';
@@ -66,7 +66,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('protected $usage = \'clear:sessions [arguments] [options]\';', $contents);
     }
 
-    public function testGenerateCommandWithOptionTypeBasic()
+    public function testGenerateCommandWithOptionTypeBasic(): void
     {
         command('make:command deliver -type basic');
         $file = APPPATH . 'Commands/Deliver.php';
@@ -76,7 +76,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('protected $name = \'command:name\';', $contents);
     }
 
-    public function testGenerateCommandWithOptionTypeGenerator()
+    public function testGenerateCommandWithOptionTypeGenerator(): void
     {
         command('make:command deliver -type generator');
         $file = APPPATH . 'Commands/Deliver.php';
@@ -86,7 +86,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('protected $name = \'command:name\';', $contents);
     }
 
-    public function testGenerateCommandWithOptionGroup()
+    public function testGenerateCommandWithOptionGroup(): void
     {
         command('make:command deliver -group Deliverables');
         $file = APPPATH . 'Commands/Deliver.php';
@@ -97,7 +97,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('protected $group = \'Deliverables\';', $contents);
     }
 
-    public function testGenerateCommandWithOptionSuffix()
+    public function testGenerateCommandWithOptionSuffix(): void
     {
         command('make:command publish -suffix');
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());

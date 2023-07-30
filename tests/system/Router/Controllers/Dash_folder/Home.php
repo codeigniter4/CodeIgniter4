@@ -15,7 +15,7 @@ use CodeIgniter\Controller;
 
 class Home extends Controller
 {
-    public function getIndex()
+    public function getIndex(): void
     {
     }
 }

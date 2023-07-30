@@ -77,7 +77,7 @@ final class FiltersTest extends CIUnitTestCase
         return new Filters($config, $request, $this->response);
     }
 
-    public function testProcessMethodDetectsCLI()
+    public function testProcessMethodDetectsCLI(): void
     {
         $_SERVER['argv'] = [
             'spark',
@@ -105,7 +105,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize()->getFilters());
     }
 
-    public function testProcessMethodDetectsGetRequests()
+    public function testProcessMethodDetectsGetRequests(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -126,7 +126,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize()->getFilters());
     }
 
-    public function testProcessMethodRespectsMethod()
+    public function testProcessMethodRespectsMethod(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -151,7 +151,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize()->getFilters());
     }
 
-    public function testProcessMethodIgnoresMethod()
+    public function testProcessMethodIgnoresMethod(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'DELETE';
 
@@ -176,7 +176,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize()->getFilters());
     }
 
-    public function testProcessMethodProcessGlobals()
+    public function testProcessMethodProcessGlobals(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -224,7 +224,7 @@ final class FiltersTest extends CIUnitTestCase
     /**
      * @dataProvider provideExcept
      */
-    public function testProcessMethodProcessGlobalsWithExcept(array $except)
+    public function testProcessMethodProcessGlobalsWithExcept(array $except): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -257,7 +257,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
-    public function testProcessMethodProcessesFiltersBefore()
+    public function testProcessMethodProcessesFiltersBefore(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -286,7 +286,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
-    public function testProcessMethodProcessesFiltersAfter()
+    public function testProcessMethodProcessesFiltersAfter(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -317,7 +317,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
-    public function testProcessMethodProcessesCombined()
+    public function testProcessMethodProcessesCombined(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -365,7 +365,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
-    public function testProcessMethodProcessesCombinedAfterForToolbar()
+    public function testProcessMethodProcessesCombinedAfterForToolbar(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -406,7 +406,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
-    public function testRunThrowsWithInvalidAlias()
+    public function testRunThrowsWithInvalidAlias(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -426,7 +426,7 @@ final class FiltersTest extends CIUnitTestCase
         $filters->run($uri);
     }
 
-    public function testCustomFiltersLoad()
+    public function testCustomFiltersLoad(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -451,7 +451,7 @@ final class FiltersTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4720
      */
-    public function testAllCustomFiltersAreDiscoveredInConstructor()
+    public function testAllCustomFiltersAreDiscoveredInConstructor(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -466,7 +466,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertContains('test-customfilter', array_keys($configFilters->aliases));
     }
 
-    public function testRunThrowsWithInvalidClassType()
+    public function testRunThrowsWithInvalidClassType(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -486,7 +486,7 @@ final class FiltersTest extends CIUnitTestCase
         $filters->run($uri);
     }
 
-    public function testRunDoesBefore()
+    public function testRunDoesBefore(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -506,7 +506,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame('http://google.com', $request->getBody());
     }
 
-    public function testRunDoesAfter()
+    public function testRunDoesAfter(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -526,7 +526,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame('http://google.com', $response->getBody());
     }
 
-    public function testShortCircuit()
+    public function testShortCircuit(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -547,7 +547,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame('http://google.com', $response->getBody());
     }
 
-    public function testOtherResult()
+    public function testOtherResult(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -573,7 +573,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame('This is curious', $response);
     }
 
-    public function testBeforeExceptString()
+    public function testBeforeExceptString(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -606,7 +606,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
-    public function testBeforeExceptInapplicable()
+    public function testBeforeExceptInapplicable(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -640,7 +640,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
-    public function testAfterExceptString()
+    public function testAfterExceptString(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -673,7 +673,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
-    public function testAfterExceptInapplicable()
+    public function testAfterExceptInapplicable(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -709,7 +709,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
-    public function testAddFilter()
+    public function testAddFilter(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -730,7 +730,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertContains('some_alias', $filters['before']);
     }
 
-    public function testAddFilterSection()
+    public function testAddFilterSection(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -746,7 +746,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertContains('another', $list['before']);
     }
 
-    public function testInitializeTwice()
+    public function testInitializeTwice(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -763,7 +763,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertContains('another', $list['before']);
     }
 
-    public function testEnableFilter()
+    public function testEnableFilter(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -870,7 +870,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame(['role' => ['super']], $filters->getArguments());
     }
 
-    public function testEnableFilterWithArguments()
+    public function testEnableFilterWithArguments(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -902,7 +902,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame('admin;super', $response->getBody());
     }
 
-    public function testEnableFilterWithNoArguments()
+    public function testEnableFilterWithNoArguments(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -932,7 +932,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame('Is null', $response->getBody());
     }
 
-    public function testEnableNonFilter()
+    public function testEnableNonFilter(): void
     {
         $this->expectException(FilterException::class);
 
@@ -955,7 +955,7 @@ final class FiltersTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1664
      */
-    public function testMatchesURICaseInsensitively()
+    public function testMatchesURICaseInsensitively(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -1003,7 +1003,7 @@ final class FiltersTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1907
      */
-    public function testFilterMatching()
+    public function testFilterMatching(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -1039,7 +1039,7 @@ final class FiltersTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1907
      */
-    public function testGlobalFilterMatching()
+    public function testGlobalFilterMatching(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -1081,7 +1081,7 @@ final class FiltersTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1907
      */
-    public function testCombinedFilterMatching()
+    public function testCombinedFilterMatching(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -1129,7 +1129,7 @@ final class FiltersTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1907
      */
-    public function testSegmentedFilterMatching()
+    public function testSegmentedFilterMatching(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -1172,7 +1172,7 @@ final class FiltersTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/2831
      */
-    public function testFilterAliasMultiple()
+    public function testFilterAliasMultiple(): void
     {
         $config = [
             'aliases' => [
@@ -1197,7 +1197,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame('http://exampleMultipleCSP.com', $request->header('x-csp')->getValue());
     }
 
-    public function testFilterClass()
+    public function testFilterClass(): void
     {
         $config = [
             'aliases' => [
@@ -1227,7 +1227,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->getFiltersClass());
     }
 
-    public function testReset()
+    public function testReset(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 

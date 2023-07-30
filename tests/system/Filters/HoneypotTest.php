@@ -49,7 +49,7 @@ final class HoneypotTest extends CIUnitTestCase
         $_POST[$this->honey->name] = 'hey';
     }
 
-    public function testBeforeTriggered()
+    public function testBeforeTriggered(): void
     {
         $this->config->globals = [
             'before' => ['honeypot'],
@@ -66,7 +66,7 @@ final class HoneypotTest extends CIUnitTestCase
         $filters->run($uri, 'before');
     }
 
-    public function testBeforeClean()
+    public function testBeforeClean(): void
     {
         $this->config->globals = [
             'before' => ['honeypot'],
@@ -90,7 +90,7 @@ final class HoneypotTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testAfter()
+    public function testAfter(): void
     {
         $this->config->globals = [
             'before' => [],
@@ -112,7 +112,7 @@ final class HoneypotTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testAfterNotApplicable()
+    public function testAfterNotApplicable(): void
     {
         $this->config->globals = [
             'before' => [],

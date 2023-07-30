@@ -29,7 +29,7 @@ final class FabricatorLiveTest extends CIUnitTestCase
 
     protected $refresh = true;
 
-    public function testCreateAddsToDatabase()
+    public function testCreateAddsToDatabase(): void
     {
         $fabricator = new Fabricator(UserModel::class);
 
@@ -41,7 +41,7 @@ final class FabricatorLiveTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['name' => $result->name]);
     }
 
-    public function testCreateAddsCountToDatabase()
+    public function testCreateAddsCountToDatabase(): void
     {
         $count = 10;
 
@@ -55,7 +55,7 @@ final class FabricatorLiveTest extends CIUnitTestCase
         $this->seeNumRecords($count, 'user', []);
     }
 
-    public function testHelperCreates()
+    public function testHelperCreates(): void
     {
         helper('test');
 
@@ -64,7 +64,7 @@ final class FabricatorLiveTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['name' => $result->name]);
     }
 
-    public function testCreateIncrementsCount()
+    public function testCreateIncrementsCount(): void
     {
         $fabricator = new Fabricator(UserModel::class);
         $fabricator->setOverrides(['country' => 'China']);
@@ -76,7 +76,7 @@ final class FabricatorLiveTest extends CIUnitTestCase
         $this->assertSame($count + 1, Fabricator::getCount('user'));
     }
 
-    public function testHelperIncrementsCount()
+    public function testHelperIncrementsCount(): void
     {
         $count = Fabricator::getCount('user');
 
@@ -85,7 +85,7 @@ final class FabricatorLiveTest extends CIUnitTestCase
         $this->assertSame($count + 1, Fabricator::getCount('user'));
     }
 
-    public function testCreateThrowsOnFailure()
+    public function testCreateThrowsOnFailure(): void
     {
         $this->expectException(FrameworkException::class);
         $this->expectExceptionMessage(lang('Fabricator.createFailed', ['job', 'Too short, man!']));
@@ -93,7 +93,7 @@ final class FabricatorLiveTest extends CIUnitTestCase
         fake(ValidModel::class, ['name' => 'eh']);
     }
 
-    public function testHelperDoesNotPersist()
+    public function testHelperDoesNotPersist(): void
     {
         helper('test');
         $result = fake(UserModel::class, ['name' => 'Derek'], false);

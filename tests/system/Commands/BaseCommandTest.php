@@ -31,28 +31,28 @@ final class BaseCommandTest extends CIUnitTestCase
         $this->logger = Services::logger();
     }
 
-    public function testMagicIssetTrue()
+    public function testMagicIssetTrue(): void
     {
         $command = new AppInfo($this->logger, service('commands'));
 
         $this->assertTrue(isset($command->group));
     }
 
-    public function testMagicIssetFalse()
+    public function testMagicIssetFalse(): void
     {
         $command = new AppInfo($this->logger, service('commands'));
 
         $this->assertFalse(isset($command->foobar));
     }
 
-    public function testMagicGet()
+    public function testMagicGet(): void
     {
         $command = new AppInfo($this->logger, service('commands'));
 
         $this->assertSame('demo', $command->group);
     }
 
-    public function testMagicGetMissing()
+    public function testMagicGetMissing(): void
     {
         $command = new AppInfo($this->logger, service('commands'));
 

@@ -43,14 +43,14 @@ final class FileCollectionTest extends CIUnitTestCase
         helper(['filesystem']);
     }
 
-    public function testResolveDirectoryDirectory()
+    public function testResolveDirectoryDirectory(): void
     {
         $method = $this->getPrivateMethodInvoker(FileCollection::class, 'resolveDirectory');
 
         $this->assertSame($this->directory, $method($this->directory));
     }
 
-    public function testResolveDirectoryFile()
+    public function testResolveDirectoryFile(): void
     {
         $method = $this->getPrivateMethodInvoker(FileCollection::class, 'resolveDirectory');
 
@@ -60,7 +60,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $method($this->file);
     }
 
-    public function testResolveDirectorySymlink()
+    public function testResolveDirectorySymlink(): void
     {
         // Create a symlink to test
         $link = sys_get_temp_dir() . DIRECTORY_SEPARATOR . bin2hex(random_bytes(4));
@@ -73,14 +73,14 @@ final class FileCollectionTest extends CIUnitTestCase
         unlink($link);
     }
 
-    public function testResolveFileFile()
+    public function testResolveFileFile(): void
     {
         $method = $this->getPrivateMethodInvoker(FileCollection::class, 'resolveFile');
 
         $this->assertSame($this->file, $method($this->file));
     }
 
-    public function testResolveFileSymlink()
+    public function testResolveFileSymlink(): void
     {
         // Create a symlink to test
         $link = sys_get_temp_dir() . DIRECTORY_SEPARATOR . bin2hex(random_bytes(4));
@@ -93,7 +93,7 @@ final class FileCollectionTest extends CIUnitTestCase
         unlink($link);
     }
 
-    public function testResolveFileDirectory()
+    public function testResolveFileDirectory(): void
     {
         $method = $this->getPrivateMethodInvoker(FileCollection::class, 'resolveFile');
 
@@ -103,7 +103,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $method($this->directory);
     }
 
-    public function testConstructorAddsFiles()
+    public function testConstructorAddsFiles(): void
     {
         $expected = [
             $this->directory . 'apple.php',
@@ -119,7 +119,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $collection->get());
     }
 
-    public function testConstructorCallsDefine()
+    public function testConstructorCallsDefine(): void
     {
         $collection = new class () extends FileCollection {
             protected function define(): void
@@ -131,7 +131,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame([$this->file], $collection->get());
     }
 
-    public function testAddStringFile()
+    public function testAddStringFile(): void
     {
         $files = new FileCollection();
 
@@ -140,7 +140,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame([$this->file], $files->get());
     }
 
-    public function testAddStringFileRecursiveDoesNothing()
+    public function testAddStringFileRecursiveDoesNothing(): void
     {
         $files = new FileCollection();
 
@@ -149,7 +149,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame([$this->file], $files->get());
     }
 
-    public function testAddStringDirectory()
+    public function testAddStringDirectory(): void
     {
         $files = new FileCollection();
 
@@ -164,7 +164,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $files->get());
     }
 
-    public function testAddStringDirectoryRecursive()
+    public function testAddStringDirectoryRecursive(): void
     {
         $files = new FileCollection();
 
@@ -180,7 +180,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $files->get());
     }
 
-    public function testAddArrayFiles()
+    public function testAddArrayFiles(): void
     {
         $files = new FileCollection();
 
@@ -197,7 +197,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $files->get());
     }
 
-    public function testAddArrayDirectoryAndFile()
+    public function testAddArrayDirectoryAndFile(): void
     {
         $files = new FileCollection();
 
@@ -216,7 +216,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $files->get());
     }
 
-    public function testAddArrayRecursive()
+    public function testAddArrayRecursive(): void
     {
         $files = new FileCollection();
 
@@ -236,7 +236,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $files->get());
     }
 
-    public function testAddFile()
+    public function testAddFile(): void
     {
         $collection = new FileCollection();
         $this->assertSame([], $this->getPrivateProperty($collection, 'files'));
@@ -245,7 +245,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame([$this->file], $this->getPrivateProperty($collection, 'files'));
     }
 
-    public function testAddFileMissing()
+    public function testAddFileMissing(): void
     {
         $collection = new FileCollection();
 
@@ -255,7 +255,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $collection->addFile('TheHillsAreAlive.bmp');
     }
 
-    public function testAddFileDirectory()
+    public function testAddFileDirectory(): void
     {
         $collection = new FileCollection();
 
@@ -265,7 +265,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $collection->addFile($this->directory);
     }
 
-    public function testAddFiles()
+    public function testAddFiles(): void
     {
         $collection = new FileCollection();
         $files      = [
@@ -277,7 +277,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($files, $this->getPrivateProperty($collection, 'files'));
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $collection = new FileCollection();
         $collection->addFile($this->file);
@@ -285,7 +285,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame([$this->file], $collection->get());
     }
 
-    public function testGetSorts()
+    public function testGetSorts(): void
     {
         $collection = new FileCollection();
         $files      = [
@@ -298,7 +298,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame(array_reverse($files), $collection->get());
     }
 
-    public function testGetUniques()
+    public function testGetUniques(): void
     {
         $collection = new FileCollection();
         $files      = [
@@ -310,7 +310,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame([$this->file], $collection->get());
     }
 
-    public function testSet()
+    public function testSet(): void
     {
         $collection = new FileCollection();
 
@@ -318,7 +318,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame([$this->file], $collection->get());
     }
 
-    public function testSetInvalid()
+    public function testSetInvalid(): void
     {
         $collection = new FileCollection();
 
@@ -328,7 +328,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $collection->set(['flerb']);
     }
 
-    public function testRemoveFile()
+    public function testRemoveFile(): void
     {
         $collection = new FileCollection();
         $files      = [
@@ -343,7 +343,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame([$this->directory . 'apple.php'], $collection->get());
     }
 
-    public function testRemoveFiles()
+    public function testRemoveFiles(): void
     {
         $collection = new FileCollection();
         $files      = [
@@ -358,7 +358,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame([], $collection->get());
     }
 
-    public function testAddDirectoryInvalid()
+    public function testAddDirectoryInvalid(): void
     {
         $collection = new FileCollection();
 
@@ -368,7 +368,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $collection->addDirectory($this->file);
     }
 
-    public function testAddDirectory()
+    public function testAddDirectory(): void
     {
         $collection = new FileCollection();
         $expected   = [
@@ -382,7 +382,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $collection->get());
     }
 
-    public function testAddDirectoryRecursive()
+    public function testAddDirectoryRecursive(): void
     {
         $collection = new FileCollection();
         $expected   = [
@@ -397,7 +397,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $collection->get());
     }
 
-    public function testAddDirectories()
+    public function testAddDirectories(): void
     {
         $collection = new FileCollection();
         $expected   = [
@@ -415,7 +415,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $collection->get());
     }
 
-    public function testAddDirectoriesRecursive()
+    public function testAddDirectoriesRecursive(): void
     {
         $collection = new FileCollection();
         $expected   = [
@@ -434,7 +434,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $collection->get());
     }
 
-    public function testRemovePatternEmpty()
+    public function testRemovePatternEmpty(): void
     {
         $collection = new FileCollection();
         $collection->addDirectory(SUPPORTPATH . 'Files', true);
@@ -446,7 +446,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($files, $collection->get());
     }
 
-    public function testRemovePatternRegex()
+    public function testRemovePatternRegex(): void
     {
         $collection = new FileCollection();
         $collection->addDirectory(SUPPORTPATH . 'Files', true);
@@ -461,7 +461,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $collection->get());
     }
 
-    public function testRemovePatternPseudo()
+    public function testRemovePatternPseudo(): void
     {
         $collection = new FileCollection();
         $collection->addDirectory(SUPPORTPATH . 'Files', true);
@@ -476,7 +476,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $collection->get());
     }
 
-    public function testRemovePatternScope()
+    public function testRemovePatternScope(): void
     {
         $collection = new FileCollection();
         $collection->addDirectory(SUPPORTPATH . 'Files', true);
@@ -490,7 +490,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $collection->get());
     }
 
-    public function testRetainPatternEmpty()
+    public function testRetainPatternEmpty(): void
     {
         $collection = new FileCollection();
         $collection->addDirectory(SUPPORTPATH . 'Files', true);
@@ -502,7 +502,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($files, $collection->get());
     }
 
-    public function testRetainPatternRegex()
+    public function testRetainPatternRegex(): void
     {
         $collection = new FileCollection();
         $collection->addDirectory(SUPPORTPATH . 'Files', true);
@@ -517,7 +517,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $collection->get());
     }
 
-    public function testRetainPatternPseudo()
+    public function testRetainPatternPseudo(): void
     {
         $collection = new FileCollection();
         $collection->addDirectory(SUPPORTPATH . 'Files', true);
@@ -531,7 +531,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $collection->get());
     }
 
-    public function testRetainPatternScope()
+    public function testRetainPatternScope(): void
     {
         $collection = new FileCollection();
         $collection->addDirectory(SUPPORTPATH . 'Files', true);
@@ -546,7 +546,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $collection->get());
     }
 
-    public function testCount()
+    public function testCount(): void
     {
         $collection = new FileCollection();
         $collection->addDirectory(SUPPORTPATH . 'Files', true);
@@ -554,7 +554,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertCount(4, $collection);
     }
 
-    public function testIterable()
+    public function testIterable(): void
     {
         $collection = new FileCollection();
         $collection->addDirectory(SUPPORTPATH . 'Files', true);

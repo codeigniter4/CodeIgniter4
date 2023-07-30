@@ -35,14 +35,14 @@ final class DeleteTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testDeleteThrowExceptionWithNoCriteria()
+    public function testDeleteThrowExceptionWithNoCriteria(): void
     {
         $this->expectException(DatabaseException::class);
 
         $this->db->table('job')->delete();
     }
 
-    public function testDeleteWithExternalWhere()
+    public function testDeleteWithExternalWhere(): void
     {
         $this->seeInDatabase('job', ['name' => 'Developer']);
 
@@ -51,7 +51,7 @@ final class DeleteTest extends CIUnitTestCase
         $this->dontSeeInDatabase('job', ['name' => 'Developer']);
     }
 
-    public function testDeleteWithInternalWhere()
+    public function testDeleteWithInternalWhere(): void
     {
         $this->seeInDatabase('job', ['name' => 'Developer']);
 
@@ -60,7 +60,7 @@ final class DeleteTest extends CIUnitTestCase
         $this->dontSeeInDatabase('job', ['name' => 'Developer']);
     }
 
-    public function testDeleteWithLimit()
+    public function testDeleteWithLimit(): void
     {
         $this->seeNumRecords(2, 'user', ['country' => 'US']);
 
@@ -75,7 +75,7 @@ final class DeleteTest extends CIUnitTestCase
         $this->seeNumRecords(1, 'user', ['country' => 'US']);
     }
 
-    public function testDeleteBatch()
+    public function testDeleteBatch(): void
     {
         $data = [
             ['userid' => 1, 'username' => 'Derek J', 'unused' => 'You can have fields you dont use'],
@@ -98,7 +98,7 @@ final class DeleteTest extends CIUnitTestCase
         $this->dontSeeInDatabase('user', ['email' => 'ahmadinejad@world.com', 'name' => 'Ahmadinejad']);
     }
 
-    public function testDeleteBatchWithQuery()
+    public function testDeleteBatchWithQuery(): void
     {
         $this->forge = Database::forge($this->DBGroup);
 

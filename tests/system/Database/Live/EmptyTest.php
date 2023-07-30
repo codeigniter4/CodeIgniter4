@@ -27,14 +27,14 @@ final class EmptyTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testEmpty()
+    public function testEmpty(): void
     {
         $this->db->table('misc')->emptyTable();
 
         $this->assertSame(0, $this->db->table('misc')->countAll());
     }
 
-    public function testTruncate()
+    public function testTruncate(): void
     {
         $this->db->table('misc')->truncate();
 

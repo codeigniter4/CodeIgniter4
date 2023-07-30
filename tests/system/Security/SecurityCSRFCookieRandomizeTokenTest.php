@@ -58,7 +58,7 @@ final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
         $this->resetServices();
     }
 
-    public function testTokenIsReadFromCookie()
+    public function testTokenIsReadFromCookie(): void
     {
         $security = new MockSecurity($this->config);
 
@@ -68,7 +68,7 @@ final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
         );
     }
 
-    public function testCSRFVerifySetNewCookie()
+    public function testCSRFVerifySetNewCookie(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['foo']              = 'bar';

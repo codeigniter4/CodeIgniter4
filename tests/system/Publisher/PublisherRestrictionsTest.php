@@ -29,12 +29,12 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
     /**
      * @see \Tests\Support\Config\Registrar::Publisher()
      */
-    public function testRegistrarsNotAllowed()
+    public function testRegistrarsNotAllowed(): void
     {
         $this->assertArrayNotHasKey(SUPPORTPATH, config('Publisher')->restrictions);
     }
 
-    public function testImmutableRestrictions()
+    public function testImmutableRestrictions(): void
     {
         $publisher = new Publisher();
 
@@ -49,7 +49,7 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
     /**
      * @dataProvider fileProvider
      */
-    public function testDefaultPublicRestrictions(string $path)
+    public function testDefaultPublicRestrictions(string $path): void
     {
         $publisher = new Publisher(ROOTPATH, FCPATH);
         $pattern   = config('Publisher')->restrictions[FCPATH];
@@ -81,7 +81,7 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
     /**
      * @dataProvider destinationProvider
      */
-    public function testDestinations(string $destination, bool $allowed)
+    public function testDestinations(string $destination, bool $allowed): void
     {
         config('Publisher')->restrictions = [
             APPPATH                   => '',

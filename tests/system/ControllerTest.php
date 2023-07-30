@@ -63,7 +63,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->logger   = Services::logger();
     }
 
-    public function testConstructor()
+    public function testConstructor(): void
     {
         // make sure we can instantiate one
         $this->controller = new Controller();
@@ -71,7 +71,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->assertInstanceOf(Controller::class, $this->controller);
     }
 
-    public function testConstructorHTTPS()
+    public function testConstructorHTTPS(): void
     {
         $original = $_SERVER;
         $_SERVER  = ['HTTPS' => 'on'];
@@ -88,7 +88,7 @@ final class ControllerTest extends CIUnitTestCase
         $_SERVER = $original; // restore so code coverage doesn't break
     }
 
-    public function testCachePage()
+    public function testCachePage(): void
     {
         $this->controller = new Controller();
         $this->controller->initController($this->request, $this->response, $this->logger);
@@ -97,7 +97,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->assertNull($method(10));
     }
 
-    public function testValidate()
+    public function testValidate(): void
     {
         // make sure we can instantiate one
         $this->controller = new Controller();
@@ -108,7 +108,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->assertFalse($method([]));
     }
 
-    public function testValidateWithStringRulesNotFound()
+    public function testValidateWithStringRulesNotFound(): void
     {
         $this->expectException(ValidationException::class);
 
@@ -120,7 +120,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->assertFalse($method('signup'));
     }
 
-    public function testValidateWithStringRulesFoundReadMessagesFromValidationConfig()
+    public function testValidateWithStringRulesFoundReadMessagesFromValidationConfig(): void
     {
         $validation = new class () extends ValidationConfig {
             public $signup = [
@@ -143,7 +143,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->assertSame('You must choose a username.', Services::validation()->getError('username'));
     }
 
-    public function testValidateWithStringRulesFoundUseMessagesParameter()
+    public function testValidateWithStringRulesFoundUseMessagesParameter(): void
     {
         $validation = new class () extends ValidationConfig {
             public $signup = [
@@ -165,7 +165,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->assertSame('You must choose a username.', Services::validation()->getError('username'));
     }
 
-    public function testValidateData()
+    public function testValidateData(): void
     {
         // make sure we can instantiate one
         $this->controller = new Controller();
@@ -188,7 +188,7 @@ final class ControllerTest extends CIUnitTestCase
         );
     }
 
-    public function testHelpers()
+    public function testHelpers(): void
     {
         $this->controller = new class () extends Controller {
             protected $helpers = [

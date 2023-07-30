@@ -42,7 +42,7 @@ final class HistoryTest extends CIUnitTestCase
         parent::tearDown();
     }
 
-    private function createDummyDebugbarJson()
+    private function createDummyDebugbarJson(): void
     {
         $time = $this->time;
         $path = WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$time}.json";
@@ -67,7 +67,7 @@ final class HistoryTest extends CIUnitTestCase
         }
     }
 
-    public function testSetFiles()
+    public function testSetFiles(): void
     {
         $time = $this->time;
 

@@ -52,7 +52,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         );
     }
 
-    public function testAutoRouteFindsDefaultControllerAndMethodGet()
+    public function testAutoRouteFindsDefaultControllerAndMethodGet(): void
     {
         $this->collection->setDefaultController('Index');
 
@@ -93,7 +93,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame([], $params);
     }
 
-    public function testAutoRouteFindsDefaultControllerAndMethodPost()
+    public function testAutoRouteFindsDefaultControllerAndMethodPost(): void
     {
         $this->collection->setDefaultController('Index');
 
@@ -108,7 +108,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame([], $params);
     }
 
-    public function testAutoRouteFindsControllerWithFileAndMethod()
+    public function testAutoRouteFindsControllerWithFileAndMethod(): void
     {
         $router = $this->createNewAutoRouter();
 
@@ -126,7 +126,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         ], $router->getPos());
     }
 
-    public function testFindsControllerAndMethodAndParam()
+    public function testFindsControllerAndMethodAndParam(): void
     {
         $router = $this->createNewAutoRouter();
 
@@ -144,7 +144,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         ], $router->getPos());
     }
 
-    public function testUriParamCountIsGreaterThanMethodParams()
+    public function testUriParamCountIsGreaterThanMethodParams(): void
     {
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage(
@@ -156,7 +156,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router->getRoute('mycontroller/somemethod/a/b', 'get');
     }
 
-    public function testAutoRouteFindsControllerWithFile()
+    public function testAutoRouteFindsControllerWithFile(): void
     {
         $router = $this->createNewAutoRouter();
 
@@ -169,7 +169,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame([], $params);
     }
 
-    public function testAutoRouteFindsControllerWithSubfolder()
+    public function testAutoRouteFindsControllerWithSubfolder(): void
     {
         $router = $this->createNewAutoRouter();
 
@@ -200,7 +200,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame([], $params);
     }
 
-    public function testAutoRouteFindsDashedSubfolder()
+    public function testAutoRouteFindsDashedSubfolder(): void
     {
         $router = $this->createNewAutoRouter();
 
@@ -216,7 +216,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame([], $params);
     }
 
-    public function testAutoRouteFindsDashedController()
+    public function testAutoRouteFindsDashedController(): void
     {
         $router = $this->createNewAutoRouter();
 
@@ -229,7 +229,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame([], $params);
     }
 
-    public function testAutoRouteFindsDashedMethod()
+    public function testAutoRouteFindsDashedMethod(): void
     {
         $router = $this->createNewAutoRouter();
 
@@ -242,7 +242,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame([], $params);
     }
 
-    public function testAutoRouteFindsDefaultDashFolder()
+    public function testAutoRouteFindsDefaultDashFolder(): void
     {
         $router = $this->createNewAutoRouter();
 
@@ -327,7 +327,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         ], $router->getPos());
     }
 
-    public function testAutoRouteRejectsSingleDot()
+    public function testAutoRouteRejectsSingleDot(): void
     {
         $this->expectException(PageNotFoundException::class);
 
@@ -336,7 +336,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router->getRoute('.', 'get');
     }
 
-    public function testAutoRouteRejectsDoubleDot()
+    public function testAutoRouteRejectsDoubleDot(): void
     {
         $this->expectException(PageNotFoundException::class);
 
@@ -345,7 +345,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router->getRoute('..', 'get');
     }
 
-    public function testAutoRouteRejectsMidDot()
+    public function testAutoRouteRejectsMidDot(): void
     {
         $this->expectException(PageNotFoundException::class);
 
@@ -354,7 +354,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router->getRoute('foo.bar', 'get');
     }
 
-    public function testRejectsDefaultControllerPath()
+    public function testRejectsDefaultControllerPath(): void
     {
         $this->expectException(PageNotFoundException::class);
 
@@ -363,7 +363,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router->getRoute('home', 'get');
     }
 
-    public function testRejectsDefaultControllerAndDefaultMethodPath()
+    public function testRejectsDefaultControllerAndDefaultMethodPath(): void
     {
         $this->expectException(PageNotFoundException::class);
 
@@ -372,7 +372,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router->getRoute('home/index', 'get');
     }
 
-    public function testRejectsDefaultMethodPath()
+    public function testRejectsDefaultMethodPath(): void
     {
         $this->expectException(PageNotFoundException::class);
 
@@ -381,7 +381,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router->getRoute('mycontroller/index', 'get');
     }
 
-    public function testRejectsControllerWithRemapMethod()
+    public function testRejectsControllerWithRemapMethod(): void
     {
         $this->expectException(PageNotFoundException::class);
         $this->expectExceptionMessage(

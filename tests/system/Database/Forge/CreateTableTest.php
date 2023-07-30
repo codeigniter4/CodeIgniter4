@@ -23,7 +23,7 @@ use CodeIgniter\Test\Mock\MockConnection;
  */
 final class CreateTableTest extends CIUnitTestCase
 {
-    public function testCreateTableWithDefaultRawSql()
+    public function testCreateTableWithDefaultRawSql(): void
     {
         $sql = <<<'SQL'
             CREATE TABLE "foo" (

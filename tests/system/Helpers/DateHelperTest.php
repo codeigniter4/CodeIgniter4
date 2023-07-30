@@ -28,7 +28,7 @@ final class DateHelperTest extends CIUnitTestCase
         helper('date');
     }
 
-    public function testNowDefault()
+    public function testNowDefault(): void
     {
         Time::setTestNow('June 20, 2022', 'America/Chicago');
 
@@ -37,7 +37,7 @@ final class DateHelperTest extends CIUnitTestCase
         Time::setTestNow();
     }
 
-    public function testNowSpecific()
+    public function testNowSpecific(): void
     {
         Time::setTestNow('June 20, 2022', 'America/Chicago');
 
@@ -50,7 +50,7 @@ final class DateHelperTest extends CIUnitTestCase
         Time::setTestNow();
     }
 
-    public function testTimezoneSelectDefault()
+    public function testTimezoneSelectDefault(): void
     {
         $timezones = DateTimeZone::listIdentifiers(DateTimeZone::ALL, null);
 
@@ -66,7 +66,7 @@ final class DateHelperTest extends CIUnitTestCase
         $this->assertSame($expected, timezone_select('custom-select', 'Asia/Jakarta'));
     }
 
-    public function testTimezoneSelectSpecific()
+    public function testTimezoneSelectSpecific(): void
     {
         $spesificRegion = DateTimeZone::ASIA;
         $timezones      = DateTimeZone::listIdentifiers($spesificRegion, null);
@@ -86,7 +86,7 @@ final class DateHelperTest extends CIUnitTestCase
         );
     }
 
-    public function testTimezoneSelectSingle()
+    public function testTimezoneSelectSingle(): void
     {
         $spesificRegion = DateTimeZone::PER_COUNTRY;
         $country        = 'ID';

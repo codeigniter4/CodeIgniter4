@@ -22,7 +22,7 @@ use Tests\Support\Controllers\Remap;
  */
 final class ControllerMethodReaderTest extends CIUnitTestCase
 {
-    public function testRead()
+    public function testRead(): void
     {
         $namespace = 'Tests\Support\Controllers';
         $reader    = new ControllerMethodReader($namespace);
@@ -90,7 +90,7 @@ final class ControllerMethodReaderTest extends CIUnitTestCase
         $this->assertSame($expected, $routes);
     }
 
-    public function testReadControllerWithRemap()
+    public function testReadControllerWithRemap(): void
     {
         $namespace = 'Tests\Support\Controllers';
         $reader    = new ControllerMethodReader($namespace);

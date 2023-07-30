@@ -118,7 +118,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         return new Security($this->config);
     }
 
-    public function testHashIsReadFromSession()
+    public function testHashIsReadFromSession(): void
     {
         $security = new MockSecurity($this->config);
 
@@ -128,7 +128,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         );
     }
 
-    public function testCSRFVerifyPostNoToken()
+    public function testCSRFVerifyPostNoToken(): void
     {
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('The action you requested is not allowed.');
@@ -143,7 +143,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $security->verify($request);
     }
 
-    public function testCSRFVerifyPostThrowsExceptionOnNoMatch()
+    public function testCSRFVerifyPostThrowsExceptionOnNoMatch(): void
     {
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('The action you requested is not allowed.');
@@ -158,7 +158,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $security->verify($request);
     }
 
-    public function testCSRFVerifyPostInvalidToken()
+    public function testCSRFVerifyPostInvalidToken(): void
     {
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('The action you requested is not allowed.');
@@ -173,7 +173,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $security->verify($request);
     }
 
-    public function testCSRFVerifyPostReturnsSelfOnMatch()
+    public function testCSRFVerifyPostReturnsSelfOnMatch(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['foo']              = 'bar';
@@ -188,7 +188,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $this->assertCount(1, $_POST);
     }
 
-    public function testCSRFVerifyPOSTHeaderThrowsExceptionOnNoMatch()
+    public function testCSRFVerifyPOSTHeaderThrowsExceptionOnNoMatch(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
@@ -203,7 +203,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $security->verify($request);
     }
 
-    public function testCSRFVerifyPOSTHeaderReturnsSelfOnMatch()
+    public function testCSRFVerifyPOSTHeaderReturnsSelfOnMatch(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['foo']              = 'bar';
@@ -218,7 +218,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $this->assertCount(1, $_POST);
     }
 
-    public function testCSRFVerifyPUTHeaderThrowsExceptionOnNoMatch()
+    public function testCSRFVerifyPUTHeaderThrowsExceptionOnNoMatch(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'PUT';
 
@@ -233,7 +233,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $security->verify($request);
     }
 
-    public function testCSRFVerifyPUTHeaderReturnsSelfOnMatch()
+    public function testCSRFVerifyPUTHeaderReturnsSelfOnMatch(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'PUT';
 
@@ -246,7 +246,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $this->assertLogged('info', 'CSRF token verified.');
     }
 
-    public function testCSRFVerifyJsonThrowsExceptionOnNoMatch()
+    public function testCSRFVerifyJsonThrowsExceptionOnNoMatch(): void
     {
         $this->expectException(SecurityException::class);
         $this->expectExceptionMessage('The action you requested is not allowed.');
@@ -261,7 +261,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $security->verify($request);
     }
 
-    public function testCSRFVerifyJsonReturnsSelfOnMatch()
+    public function testCSRFVerifyJsonReturnsSelfOnMatch(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
@@ -275,7 +275,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $this->assertSame('{"foo":"bar"}', $request->getBody());
     }
 
-    public function testRegenerateWithFalseSecurityRegenerateProperty()
+    public function testRegenerateWithFalseSecurityRegenerateProperty(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['csrf_test_name']   = $this->randomizedToken;
@@ -296,7 +296,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $this->assertSame($oldHash, $newHash);
     }
 
-    public function testRegenerateWithTrueSecurityRegenerateProperty()
+    public function testRegenerateWithTrueSecurityRegenerateProperty(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['csrf_test_name']   = $this->randomizedToken;

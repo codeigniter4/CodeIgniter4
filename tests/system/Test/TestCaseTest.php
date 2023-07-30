@@ -33,28 +33,28 @@ final class TestCaseTest extends CIUnitTestCase
         CLI::print();
     }
 
-    public function testGetPrivatePropertyWithObject()
+    public function testGetPrivatePropertyWithObject(): void
     {
         $obj    = new __TestForReflectionHelper();
         $actual = $this->getPrivateProperty($obj, 'private');
         $this->assertSame('secret', $actual);
     }
 
-    public function testLogging()
+    public function testLogging(): void
     {
         log_message('error', 'Some variable did not contain a value.');
         $this->assertLogged('error', 'Some variable did not contain a value.');
     }
 
-    public function testAssertLogContains()
+    public function testAssertLogContains(): void
     {
         log_message('error', 'Some variable did not contain a value.');
         $this->assertLogContains('error', 'variable did not');
     }
 
-    public function testEventTriggering()
+    public function testEventTriggering(): void
     {
-        Events::on('foo', static function ($arg) use (&$result) {
+        Events::on('foo', static function ($arg) use (&$result): void {
             $result = $arg;
         });
 
@@ -63,7 +63,7 @@ final class TestCaseTest extends CIUnitTestCase
         $this->assertEventTriggered('foo');
     }
 
-    public function testStreamFilter()
+    public function testStreamFilter(): void
     {
         CLI::write('first.');
         $expected = PHP_EOL . 'first.' . PHP_EOL;
@@ -79,7 +79,7 @@ final class TestCaseTest extends CIUnitTestCase
      * TestCaseEmissionsTest is intended to circumvent PHPunit,
      * and allow us to test our own header emissions.
      */
-    public function testPHPUnitHeadersEmitted()
+    public function testPHPUnitHeadersEmitted(): void
     {
         $response = new Response(new App());
         $response->pretend(true);
@@ -95,21 +95,21 @@ final class TestCaseTest extends CIUnitTestCase
         $this->assertHeaderNotEmitted('Set-Cookie: foo=bar;');
     }
 
-    public function testCloseEnough()
+    public function testCloseEnough(): void
     {
         $this->assertCloseEnough(1, 1);
         $this->assertCloseEnough(1, 0);
         $this->assertCloseEnough(1, 2);
     }
 
-    public function testCloseEnoughString()
+    public function testCloseEnoughString(): void
     {
         $this->assertCloseEnoughString(strtotime('10:00:00'), strtotime('09:59:59'));
         $this->assertCloseEnoughString(strtotime('10:00:00'), strtotime('10:00:00'));
         $this->assertCloseEnoughString(strtotime('10:00:00'), strtotime('10:00:01'));
     }
 
-    public function testCloseEnoughStringBadLength()
+    public function testCloseEnoughStringBadLength(): void
     {
         $result = $this->assertCloseEnoughString('apples & oranges', 'apples');
         $this->assertFalse($result, 'Different string lengths should have returned false');

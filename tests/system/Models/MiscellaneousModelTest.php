@@ -30,7 +30,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
     {
         $rowCount = 0;
 
-        $this->createModel(UserModel::class)->chunk(2, static function ($row) use (&$rowCount) {
+        $this->createModel(UserModel::class)->chunk(2, static function ($row) use (&$rowCount): void {
             $rowCount++;
         });
 

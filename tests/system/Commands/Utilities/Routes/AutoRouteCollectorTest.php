@@ -20,7 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class AutoRouteCollectorTest extends CIUnitTestCase
 {
-    public function testGet()
+    public function testGet(): void
     {
         $namespace = 'Tests\Support\Controllers';
         $collector = new AutoRouteCollector(

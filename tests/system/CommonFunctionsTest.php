@@ -63,7 +63,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         parent::setUp();
     }
 
-    public function testStringifyAttributes()
+    public function testStringifyAttributes(): void
     {
         $this->assertSame(' class="foo" id="bar"', stringify_attributes(['class' => 'foo', 'id' => 'bar']));
 
@@ -80,7 +80,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame('', stringify_attributes([]));
     }
 
-    public function testStringifyJsAttributes()
+    public function testStringifyJsAttributes(): void
     {
         $this->assertSame('width=800,height=600', stringify_attributes(['width' => '800', 'height' => '600'], true));
 
@@ -90,26 +90,26 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame('width=800,height=600', stringify_attributes($atts, true));
     }
 
-    public function testEnvReturnsDefault()
+    public function testEnvReturnsDefault(): void
     {
         $this->assertSame('baz', env('foo', 'baz'));
     }
 
-    public function testEnvGetsFromSERVER()
+    public function testEnvGetsFromSERVER(): void
     {
         $_SERVER['foo'] = 'bar';
 
         $this->assertSame('bar', env('foo', 'baz'));
     }
 
-    public function testEnvGetsFromENV()
+    public function testEnvGetsFromENV(): void
     {
         $_ENV['foo'] = 'bar';
 
         $this->assertSame('bar', env('foo', 'baz'));
     }
 
-    public function testEnvBooleans()
+    public function testEnvBooleans(): void
     {
         $_ENV['p1'] = 'true';
         $_ENV['p2'] = 'false';
@@ -127,7 +127,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         return new RouteCollection(Services::locator(), new Modules(), new Routing());
     }
 
-    public function testRedirectReturnsRedirectResponse()
+    public function testRedirectReturnsRedirectResponse(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -143,12 +143,12 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertInstanceOf(RedirectResponse::class, redirect('base'));
     }
 
-    public function testRedirectDefault()
+    public function testRedirectDefault(): void
     {
         $this->assertInstanceOf(RedirectResponse::class, redirect());
     }
 
-    public function testRequestIncomingRequest()
+    public function testRequestIncomingRequest(): void
     {
         Services::createRequest(new App());
 
@@ -157,7 +157,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertInstanceOf(IncomingRequest::class, $request);
     }
 
-    public function testRequestCLIRequest()
+    public function testRequestCLIRequest(): void
     {
         Services::createRequest(new App(), true);
 
@@ -166,19 +166,19 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertInstanceOf(CLIRequest::class, $request);
     }
 
-    public function testResponse()
+    public function testResponse(): void
     {
         $response = response();
 
         $this->assertInstanceOf(Response::class, $response);
     }
 
-    public function testSolidusElement()
+    public function testSolidusElement(): void
     {
         $this->assertSame('', _solidus());
     }
 
-    public function testSolidusElementXHTML()
+    public function testSolidusElementXHTML(): void
     {
         $doctypes        = config('DocTypes');
         $default         = $doctypes->html5;
@@ -190,7 +190,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $doctypes->html5 = $default;
     }
 
-    public function testView()
+    public function testView(): void
     {
         $data = [
             'testString' => 'bar',
@@ -200,7 +200,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, view('\Tests\Support\View\Views\simple', $data));
     }
 
-    public function testViewSavedData()
+    public function testViewSavedData(): void
     {
         $data = [
             'testString' => 'bar',
@@ -211,26 +211,26 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, view('\Tests\Support\View\Views\simple'));
     }
 
-    public function testViewCell()
+    public function testViewCell(): void
     {
         $expected = 'Hello';
         $this->assertSame($expected, view_cell('\Tests\Support\View\SampleClass::hello'));
     }
 
-    public function testEscapeWithDifferentEncodings()
+    public function testEscapeWithDifferentEncodings(): void
     {
         $this->assertSame('&lt;x', esc('<x', 'html', 'utf-8'));
         $this->assertSame('&lt;x', esc('<x', 'html', 'iso-8859-1'));
         $this->assertSame('&lt;x', esc('<x', 'html', 'windows-1251'));
     }
 
-    public function testEscapeBadContext()
+    public function testEscapeBadContext(): void
     {
         $this->expectException('InvalidArgumentException');
         esc(['width' => '800', 'height' => '600'], 'bogus');
     }
 
-    public function testEscapeBadContextZero()
+    public function testEscapeBadContextZero(): void
     {
         $this->expectException('InvalidArgumentException');
         esc('<script>', '0');
@@ -240,7 +240,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testSessionInstance()
+    public function testSessionInstance(): void
     {
         $this->injectSessionMock();
 
@@ -251,7 +251,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testSessionVariable()
+    public function testSessionVariable(): void
     {
         $this->injectSessionMock();
 
@@ -264,7 +264,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testSessionVariableNotThere()
+    public function testSessionVariableNotThere(): void
     {
         $this->injectSessionMock();
 
@@ -272,7 +272,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertNull(session('notbogus'));
     }
 
-    public function testRouteTo()
+    public function testRouteTo(): void
     {
         // prime the pump
         $routes = service('routes');
@@ -283,7 +283,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame('/path/string/to/13', route_to('myController::goto', 'string', 13));
     }
 
-    public function testRouteToInCliWithoutLocaleInRoute()
+    public function testRouteToInCliWithoutLocaleInRoute(): void
     {
         Services::createRequest(new App(), true);
         $routes = service('routes');
@@ -294,7 +294,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame('/path/string/to/13', route_to('myController::goto', 'string', 13));
     }
 
-    public function testRouteToInCliWithLocaleInRoute()
+    public function testRouteToInCliWithLocaleInRoute(): void
     {
         Services::createRequest(new App(), true);
         $routes = service('routes');
@@ -308,7 +308,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         );
     }
 
-    public function testRouteToWithUnsupportedLocale()
+    public function testRouteToWithUnsupportedLocale(): void
     {
         Services::createRequest(new App(), false);
         $routes = service('routes');
@@ -322,64 +322,64 @@ final class CommonFunctionsTest extends CIUnitTestCase
         );
     }
 
-    public function testInvisible()
+    public function testInvisible(): void
     {
         $this->assertSame('Javascript', remove_invisible_characters("Java\0script"));
     }
 
-    public function testInvisibleEncoded()
+    public function testInvisibleEncoded(): void
     {
         $this->assertSame('Javascript', remove_invisible_characters('Java%0cscript'));
     }
 
-    public function testAppTimezone()
+    public function testAppTimezone(): void
     {
         $this->assertSame('UTC', app_timezone());
     }
 
-    public function testCSRFToken()
+    public function testCSRFToken(): void
     {
         Services::injectMock('security', new MockSecurity(new SecurityConfig()));
 
         $this->assertSame('csrf_test_name', csrf_token());
     }
 
-    public function testCSRFHeader()
+    public function testCSRFHeader(): void
     {
         $this->assertSame('X-CSRF-TOKEN', csrf_header());
     }
 
-    public function testHash()
+    public function testHash(): void
     {
         $this->assertSame(32, strlen(csrf_hash()));
     }
 
-    public function testCSRFField()
+    public function testCSRFField(): void
     {
         $this->assertStringContainsString('<input type="hidden" ', csrf_field());
     }
 
-    public function testCSRFMeta()
+    public function testCSRFMeta(): void
     {
         $this->assertStringContainsString('<meta name="X-CSRF-TOKEN" ', csrf_meta());
     }
 
-    public function testModelNotExists()
+    public function testModelNotExists(): void
     {
         $this->assertNull(model(UnexsistenceClass::class));
     }
 
-    public function testModelExistsBasename()
+    public function testModelExistsBasename(): void
     {
         $this->assertInstanceOf(JobModel::class, model('JobModel'));
     }
 
-    public function testModelExistsClassname()
+    public function testModelExistsClassname(): void
     {
         $this->assertInstanceOf(JobModel::class, model(JobModel::class));
     }
 
-    public function testModelExistsAbsoluteClassname()
+    public function testModelExistsAbsoluteClassname(): void
     {
         $this->assertInstanceOf(JobModel::class, model(JobModel::class));
     }
@@ -388,7 +388,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testOldInput()
+    public function testOldInput(): void
     {
         $this->injectSessionMock();
         // setup from RedirectResponseTest...
@@ -423,7 +423,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testOldInputSerializeData()
+    public function testOldInputSerializeData(): void
     {
         $this->injectSessionMock();
         // setup from RedirectResponseTest...
@@ -458,7 +458,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testOldInputArray()
+    public function testOldInputArray(): void
     {
         $this->injectSessionMock();
         // setup from RedirectResponseTest...
@@ -490,19 +490,19 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame($locations, old('location'));
     }
 
-    public function testReallyWritable()
+    public function testReallyWritable(): void
     {
         // cannot test fully on *nix
         $this->assertTrue(is_really_writable(WRITEPATH));
     }
 
-    public function testSlashItem()
+    public function testSlashItem(): void
     {
         $this->assertSame('en/', slash_item('defaultLocale')); // en
         $this->assertSame('', slash_item('negotiateLocale')); // false
     }
 
-    public function testSlashItemOnInexistentItem()
+    public function testSlashItemOnInexistentItem(): void
     {
         $this->assertNull(slash_item('foo'));
         $this->assertNull(slash_item('bar'));
@@ -510,7 +510,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertNull(slash_item('indices'));
     }
 
-    public function testSlashItemThrowsErrorOnNonStringableItem()
+    public function testSlashItemThrowsErrorOnNonStringableItem(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Cannot convert "Config\\App::$supportedLocales" of type "array" to type "string".');
@@ -518,7 +518,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         slash_item('supportedLocales');
     }
 
-    protected function injectSessionMock()
+    protected function injectSessionMock(): void
     {
         $sessionConfig = new SessionConfig();
 
@@ -556,7 +556,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     // Make sure cookies are set by RedirectResponse this way
     // See https://github.com/codeigniter4/CodeIgniter4/issues/1393
-    public function testRedirectResponseCookies1()
+    public function testRedirectResponseCookies1(): void
     {
         $loginTime = time();
 
@@ -575,7 +575,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testTrace()
+    public function testTrace(): void
     {
         ob_start();
         trace();
@@ -584,7 +584,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertStringContainsString('Debug Backtrace', $content);
     }
 
-    public function testViewNotSaveData()
+    public function testViewNotSaveData(): void
     {
         $data = [
             'testString' => 'bar',
@@ -598,7 +598,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testForceHttpsNullRequestAndResponse()
+    public function testForceHttpsNullRequestAndResponse(): void
     {
         $this->assertNull(Services::response()->header('Location'));
         Services::response()->setCookie('force', 'cookie');
@@ -626,7 +626,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
      * @param mixed $input
      * @param mixed $expected
      */
-    public function testCleanPathActuallyCleaningThePaths($input, $expected)
+    public function testCleanPathActuallyCleaningThePaths($input, $expected): void
     {
         $this->assertSame($expected, clean_path($input));
     }
@@ -659,13 +659,13 @@ final class CommonFunctionsTest extends CIUnitTestCase
         ];
     }
 
-    public function testIsCli()
+    public function testIsCli(): void
     {
         $this->assertIsBool(is_cli());
         $this->assertTrue(is_cli());
     }
 
-    public function testDWithCSP()
+    public function testDWithCSP(): void
     {
         $this->resetServices();
 
@@ -691,7 +691,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testTraceWithCSP()
+    public function testTraceWithCSP(): void
     {
         $this->resetServices();
 
@@ -709,7 +709,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         trace();
     }
 
-    public function testCspStyleNonce()
+    public function testCspStyleNonce(): void
     {
         $config             = config('App');
         $config->CSPEnabled = true;
@@ -717,7 +717,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertStringStartsWith('nonce="', csp_style_nonce());
     }
 
-    public function testCspScriptNonce()
+    public function testCspScriptNonce(): void
     {
         $config             = config('App');
         $config->CSPEnabled = true;
@@ -725,7 +725,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertStringStartsWith('nonce="', csp_script_nonce());
     }
 
-    public function testLangOnCLI()
+    public function testLangOnCLI(): void
     {
         Services::createRequest(new App(), true);
 
@@ -736,13 +736,13 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->resetServices();
     }
 
-    public function testIsWindows()
+    public function testIsWindows(): void
     {
         $this->assertSame(strpos(php_uname(), 'Windows') !== false, is_windows());
         $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), is_windows());
     }
 
-    public function testIsWindowsUsingMock()
+    public function testIsWindowsUsingMock(): void
     {
         is_windows(true);
         $this->assertTrue(is_windows());

@@ -15,11 +15,11 @@ use CodeIgniter\Controller;
 
 class Index extends Controller
 {
-    public function getIndex($p1 = '')
+    public function getIndex($p1 = ''): void
     {
     }
 
-    public function postIndex()
+    public function postIndex(): void
     {
     }
 }

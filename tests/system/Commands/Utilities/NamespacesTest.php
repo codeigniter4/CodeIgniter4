@@ -47,7 +47,7 @@ final class NamespacesTest extends CIUnitTestCase
         }, str_replace(PHP_EOL, "\n", $this->getStreamFilterBuffer()));
     }
 
-    public function testNamespacesCommandCodeIgniterOnly()
+    public function testNamespacesCommandCodeIgniterOnly(): void
     {
         command('namespaces -c');
 
@@ -65,7 +65,7 @@ final class NamespacesTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, $this->getBuffer());
     }
 
-    public function testNamespacesCommandAllNamespaces()
+    public function testNamespacesCommandAllNamespaces(): void
     {
         command('namespaces');
 

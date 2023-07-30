@@ -22,7 +22,7 @@ class GoogleEmpty implements FilterInterface
         return '';
     }
 
-    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null): void
     {
     }
 }

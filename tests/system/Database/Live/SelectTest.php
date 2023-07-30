@@ -27,7 +27,7 @@ final class SelectTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testSelectAllByDefault()
+    public function testSelectAllByDefault(): void
     {
         $row = $this->db->table('job')->get()->getRowArray();
 
@@ -36,7 +36,7 @@ final class SelectTest extends CIUnitTestCase
         $this->assertArrayHasKey('description', $row);
     }
 
-    public function testSelectSingleColumn()
+    public function testSelectSingleColumn(): void
     {
         $row = $this->db->table('job')->select('name')->get()->getRowArray();
 
@@ -45,7 +45,7 @@ final class SelectTest extends CIUnitTestCase
         $this->assertArrayNotHasKey('description', $row);
     }
 
-    public function testSelectMultipleColumns()
+    public function testSelectMultipleColumns(): void
     {
         $row = $this->db->table('job')->select('name, description')->get()->getRowArray();
 
@@ -54,84 +54,84 @@ final class SelectTest extends CIUnitTestCase
         $this->assertArrayHasKey('description', $row);
     }
 
-    public function testSelectMax()
+    public function testSelectMax(): void
     {
         $result = $this->db->table('job')->selectMax('id')->get()->getRow();
 
         $this->assertSame(4, (int) $result->id);
     }
 
-    public function testSelectMaxWithAlias()
+    public function testSelectMaxWithAlias(): void
     {
         $result = $this->db->table('job')->selectMax('id', 'xam')->get()->getRow();
 
         $this->assertSame(4, (int) $result->xam);
     }
 
-    public function testSelectMin()
+    public function testSelectMin(): void
     {
         $result = $this->db->table('job')->selectMin('id')->get()->getRow();
 
         $this->assertSame(1, (int) $result->id);
     }
 
-    public function testSelectMinWithAlias()
+    public function testSelectMinWithAlias(): void
     {
         $result = $this->db->table('job')->selectMin('id', 'xam')->get()->getRow();
 
         $this->assertSame(1, (int) $result->xam);
     }
 
-    public function testSelectAvg()
+    public function testSelectAvg(): void
     {
         $result = $this->db->table('job')->selectAvg('id')->get()->getRow();
 
         $this->assertSame(2.5, (float) $result->id);
     }
 
-    public function testSelectAvgWithAlias()
+    public function testSelectAvgWithAlias(): void
     {
         $result = $this->db->table('job')->selectAvg('id', 'xam')->get()->getRow();
 
         $this->assertSame(2.5, (float) $result->xam);
     }
 
-    public function testSelectSum()
+    public function testSelectSum(): void
     {
         $result = $this->db->table('job')->selectSum('id')->get()->getRow();
 
         $this->assertSame(10, (int) $result->id);
     }
 
-    public function testSelectSumWithAlias()
+    public function testSelectSumWithAlias(): void
     {
         $result = $this->db->table('job')->selectSum('id', 'xam')->get()->getRow();
 
         $this->assertSame(10, (int) $result->xam);
     }
 
-    public function testSelectCount()
+    public function testSelectCount(): void
     {
         $result = $this->db->table('job')->selectCount('id')->get()->getRow();
 
         $this->assertSame(4, (int) $result->id);
     }
 
-    public function testSelectCountWithAlias()
+    public function testSelectCountWithAlias(): void
     {
         $result = $this->db->table('job')->selectCount('id', 'xam')->get()->getRow();
 
         $this->assertSame(4, (int) $result->xam);
     }
 
-    public function testSelectDistinctWorkTogether()
+    public function testSelectDistinctWorkTogether(): void
     {
         $users = $this->db->table('user')->select('country')->distinct()->get()->getResult();
 
         $this->assertCount(3, $users);
     }
 
-    public function testSelectDistinctCanBeTurnedOff()
+    public function testSelectDistinctCanBeTurnedOff(): void
     {
         $users = $this->db->table('user')->select('country')->distinct(false)->get()->getResult();
 
@@ -141,7 +141,7 @@ final class SelectTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1226
      */
-    public function testSelectWithMultipleWheresOnSameColumn()
+    public function testSelectWithMultipleWheresOnSameColumn(): void
     {
         $users = $this->db->table('user')
             ->where('id', 1)
@@ -159,7 +159,7 @@ final class SelectTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1226
      */
-    public function testSelectWithMultipleWheresOnSameColumnAgain()
+    public function testSelectWithMultipleWheresOnSameColumnAgain(): void
     {
         $users = $this->db->table('user')
             ->whereIn('id', [1, 2])

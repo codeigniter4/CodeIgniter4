@@ -36,7 +36,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
 {
     use ControllerTestTrait;
 
-    public function testBadController()
+    public function testBadController(): void
     {
         $this->expectException('InvalidArgumentException');
         $logger = new Logger(new LoggerConfig());
@@ -46,7 +46,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('index');
     }
 
-    public function testBadControllerMethod()
+    public function testBadControllerMethod(): void
     {
         $this->expectException('InvalidArgumentException');
         $logger = new Logger(new LoggerConfig());
@@ -56,7 +56,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('nothere');
     }
 
-    public function testController()
+    public function testController(): void
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
@@ -67,7 +67,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->assertTrue($result->isOK());
     }
 
-    public function testControllerWithoutLogger()
+    public function testControllerWithoutLogger(): void
     {
         $result = $this->withURI('http://example.com')
             ->controller(Home::class)
@@ -76,7 +76,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->assertTrue($result->isOK());
     }
 
-    public function testPopcornIndex()
+    public function testPopcornIndex(): void
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
@@ -87,7 +87,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->assertTrue($result->isOK());
     }
 
-    public function testPopcornIndex2()
+    public function testPopcornIndex2(): void
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
@@ -99,7 +99,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->assertSame('Hi there', $body);
     }
 
-    public function testPopcornFailure()
+    public function testPopcornFailure(): void
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
@@ -110,7 +110,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->assertSame(567, $result->response()->getStatusCode());
     }
 
-    public function testPopcornException()
+    public function testPopcornException(): void
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
@@ -121,7 +121,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->assertSame(500, $result->response()->getStatusCode());
     }
 
-    public function testPopcornIndexWithSupport()
+    public function testPopcornIndexWithSupport(): void
     {
         $logger = new Logger(new LoggerConfig());
         $config = new App();
@@ -140,7 +140,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->assertSame('Hi there', $body);
     }
 
-    public function testRequestPassthrough()
+    public function testRequestPassthrough(): void
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
@@ -152,7 +152,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->assertSame('get', $req->getMethod());
     }
 
-    public function testFailureResponse()
+    public function testFailureResponse(): void
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
@@ -164,7 +164,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->assertSame(401, $result->response()->getStatusCode());
     }
 
-    public function testEmptyResponse()
+    public function testEmptyResponse(): void
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
@@ -177,7 +177,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->assertFalse($result->isOK());
     }
 
-    public function testRedirect()
+    public function testRedirect(): void
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
@@ -188,7 +188,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->assertTrue($result->isRedirect());
     }
 
-    public function testDOMParserForward()
+    public function testDOMParserForward(): void
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
@@ -199,7 +199,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->assertTrue($result->see('Hi'));
     }
 
-    public function testFailsForward()
+    public function testFailsForward(): void
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withURI('http://example.com')
@@ -214,7 +214,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1834
      */
-    public function testResponseOverriding()
+    public function testResponseOverriding(): void
     {
         $result = $this->withURI('http://example.com/rest/')
             ->controller(Popcorn::class)
@@ -227,7 +227,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/2470
      */
-    public function testControllerNoURI()
+    public function testControllerNoURI(): void
     {
         $logger = new Logger(new LoggerConfig());
         $result = $this->withLogger($logger)
@@ -237,14 +237,14 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->assertTrue($result->isOK());
     }
 
-    public function testRedirectRoute()
+    public function testRedirectRoute(): void
     {
         $result = $this->controller(Popcorn::class)
             ->execute('toindex');
         $this->assertTrue($result->isRedirect());
     }
 
-    public function testUsesRequestBody()
+    public function testUsesRequestBody(): void
     {
         $this->controller = new class () extends Controller {
             public function throwsBody(): void

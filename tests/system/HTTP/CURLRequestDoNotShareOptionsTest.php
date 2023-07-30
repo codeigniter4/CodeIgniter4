@@ -52,7 +52,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4707
      */
-    public function testPrepareURLIgnoresAppConfig()
+    public function testPrepareURLIgnoresAppConfig(): void
     {
         config('App')->baseURL = 'http://example.com/fruit/';
 
@@ -66,7 +66,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1029
      */
-    public function testGetRemembersBaseURI()
+    public function testGetRemembersBaseURI(): void
     {
         $request = $this->getRequest(['base_uri' => 'http://www.foo.com/api/v1/']);
 
@@ -80,7 +80,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1029
      */
-    public function testGetRemembersBaseURIWithHelperMethod()
+    public function testGetRemembersBaseURIWithHelperMethod(): void
     {
         $request = Services::curlrequest(['base_uri' => 'http://www.foo.com/api/v1/']);
 
@@ -89,7 +89,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('/api/v1/', $uri->getPath());
     }
 
-    public function testSendReturnsResponse()
+    public function testSendReturnsResponse(): void
     {
         $output = 'Howdy Stranger.';
 
@@ -99,7 +99,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame($output, $response->getBody());
     }
 
-    public function testGetSetsCorrectMethod()
+    public function testGetSetsCorrectMethod(): void
     {
         $this->request->get('http://example.com');
 
@@ -111,7 +111,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('GET', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testDeleteSetsCorrectMethod()
+    public function testDeleteSetsCorrectMethod(): void
     {
         $this->request->delete('http://example.com');
 
@@ -123,7 +123,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('DELETE', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testHeadSetsCorrectMethod()
+    public function testHeadSetsCorrectMethod(): void
     {
         $this->request->head('http://example.com');
 
@@ -135,7 +135,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('HEAD', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testOptionsSetsCorrectMethod()
+    public function testOptionsSetsCorrectMethod(): void
     {
         $this->request->options('http://example.com');
 
@@ -147,7 +147,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('OPTIONS', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testOptionsBaseURIOption()
+    public function testOptionsBaseURIOption(): void
     {
         $options = ['base_uri' => 'http://www.foo.com/api/v1/'];
         $request = $this->getRequest($options);
@@ -155,7 +155,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('http://www.foo.com/api/v1/', $request->getBaseURI()->__toString());
     }
 
-    public function testOptionsBaseURIOverride()
+    public function testOptionsBaseURIOverride(): void
     {
         $options = [
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -166,7 +166,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('http://bogus/com', $request->getBaseURI()->__toString());
     }
 
-    public function testOptionsHeaders()
+    public function testOptionsHeaders(): void
     {
         $options = [
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -182,7 +182,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
     /**
      * @backupGlobals enabled
      */
-    public function testOptionsHeadersNotUsingPopulate()
+    public function testOptionsHeadersNotUsingPopulate(): void
     {
         $_SERVER['HTTP_HOST']            = 'site1.com';
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
@@ -203,7 +203,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('', $request->header('Accept-Encoding')->getValue());
     }
 
-    public function testDefaultOptionsAreSharedBetweenRequests()
+    public function testDefaultOptionsAreSharedBetweenRequests(): void
     {
         $options = [
             'form_params' => ['studio' => 1],
@@ -224,7 +224,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('CodeIgniter Framework v4', $request->curl_options[CURLOPT_USERAGENT]);
     }
 
-    public function testHeaderContentLengthNotSharedBetweenRequests()
+    public function testHeaderContentLengthNotSharedBetweenRequests(): void
     {
         $options = [
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -244,7 +244,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
     /**
      * @backupGlobals enabled
      */
-    public function testHeaderContentLengthNotSharedBetweenClients()
+    public function testHeaderContentLengthNotSharedBetweenClients(): void
     {
         $_SERVER['HTTP_CONTENT_LENGTH'] = '10';
 
@@ -264,7 +264,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertNull($request->header('Content-Length'));
     }
 
-    public function testOptionsDelay()
+    public function testOptionsDelay(): void
     {
         $request = $this->getRequest();
         $this->assertSame(0.0, $request->getDelay());
@@ -277,7 +277,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame(2.0, $request->getDelay());
     }
 
-    public function testPatchSetsCorrectMethod()
+    public function testPatchSetsCorrectMethod(): void
     {
         $this->request->patch('http://example.com');
 
@@ -289,7 +289,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('PATCH', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testPostSetsCorrectMethod()
+    public function testPostSetsCorrectMethod(): void
     {
         $this->request->post('http://example.com');
 
@@ -301,7 +301,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('POST', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testPutSetsCorrectMethod()
+    public function testPutSetsCorrectMethod(): void
     {
         $this->request->put('http://example.com');
 
@@ -313,7 +313,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('PUT', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testCustomMethodSetsCorrectMethod()
+    public function testCustomMethodSetsCorrectMethod(): void
     {
         $this->request->request('custom', 'http://example.com');
 
@@ -325,7 +325,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('CUSTOM', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testRequestMethodGetsSanitized()
+    public function testRequestMethodGetsSanitized(): void
     {
         $this->request->request('<script>Custom</script>', 'http://example.com');
 
@@ -337,7 +337,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('CUSTOM', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testRequestSetsBasicCurlOptions()
+    public function testRequestSetsBasicCurlOptions(): void
     {
         $this->request->request('get', 'http://example.com');
 
@@ -362,7 +362,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame(150000.0, $options[CURLOPT_CONNECTTIMEOUT_MS]);
     }
 
-    public function testAuthBasicOption()
+    public function testAuthBasicOption(): void
     {
         $this->request->request('get', 'http://example.com', [
             'auth' => [
@@ -380,7 +380,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
     }
 
-    public function testAuthBasicOptionExplicit()
+    public function testAuthBasicOptionExplicit(): void
     {
         $this->request->request('get', 'http://example.com', [
             'auth' => [
@@ -399,7 +399,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
     }
 
-    public function testAuthDigestOption()
+    public function testAuthDigestOption(): void
     {
         $output = "HTTP/1.1 401 Unauthorized
 		Server: ddos-guard
@@ -439,7 +439,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame(CURLAUTH_DIGEST, $options[CURLOPT_HTTPAUTH]);
     }
 
-    public function testSetAuthBasic()
+    public function testSetAuthBasic(): void
     {
         $this->request->setAuth('username', 'password')->get('http://example.com');
 
@@ -452,7 +452,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
     }
 
-    public function testSetAuthDigest()
+    public function testSetAuthDigest(): void
     {
         $output = "HTTP/1.1 401 Unauthorized
 		Server: ddos-guard
@@ -486,7 +486,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame(CURLAUTH_DIGEST, $options[CURLOPT_HTTPAUTH]);
     }
 
-    public function testCertOption()
+    public function testCertOption(): void
     {
         $file = __FILE__;
 
@@ -500,7 +500,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame($file, $options[CURLOPT_SSLCERT]);
     }
 
-    public function testCertOptionWithPassword()
+    public function testCertOptionWithPassword(): void
     {
         $file = __FILE__;
 
@@ -520,7 +520,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('password', $options[CURLOPT_SSLCERTPASSWD]);
     }
 
-    public function testMissingCertOption()
+    public function testMissingCertOption(): void
     {
         $file = 'something_obviously_bogus';
         $this->expectException(HTTPException::class);
@@ -530,7 +530,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         ]);
     }
 
-    public function testSSLVerification()
+    public function testSSLVerification(): void
     {
         $file = __FILE__;
 
@@ -548,7 +548,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame(1, $options[CURLOPT_SSL_VERIFYPEER]);
     }
 
-    public function testSSLWithBadKey()
+    public function testSSLWithBadKey(): void
     {
         $file = 'something_obviously_bogus';
         $this->expectException(HTTPException::class);
@@ -573,7 +573,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertTrue($options[CURLOPT_HTTPPROXYTUNNEL]);
     }
 
-    public function testDebugOptionTrue()
+    public function testDebugOptionTrue(): void
     {
         $this->request->request('get', 'http://example.com', [
             'debug' => true,
@@ -588,7 +588,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertIsResource($options[CURLOPT_STDERR]);
     }
 
-    public function testDebugOptionFalse()
+    public function testDebugOptionFalse(): void
     {
         $this->request->request('get', 'http://example.com', [
             'debug' => false,
@@ -600,7 +600,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertArrayNotHasKey(CURLOPT_STDERR, $options);
     }
 
-    public function testDebugOptionFile()
+    public function testDebugOptionFile(): void
     {
         $file = SUPPORTPATH . 'Files/baker/banana.php';
 
@@ -617,7 +617,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertIsResource($options[CURLOPT_STDERR]);
     }
 
-    public function testDecodeContent()
+    public function testDecodeContent(): void
     {
         $this->request->setHeader('Accept-Encoding', 'cobol');
         $this->request->request('get', 'http://example.com', [
@@ -630,7 +630,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('cobol', $options[CURLOPT_ENCODING]);
     }
 
-    public function testDecodeContentWithoutAccept()
+    public function testDecodeContentWithoutAccept(): void
     {
         //      $this->request->setHeader('Accept-Encoding', 'cobol');
         $this->request->request('get', 'http://example.com', [
@@ -645,7 +645,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('Accept-Encoding', $options[CURLOPT_HTTPHEADER]);
     }
 
-    public function testAllowRedirectsOptionFalse()
+    public function testAllowRedirectsOptionFalse(): void
     {
         $this->request->request('get', 'http://example.com', [
             'allow_redirects' => false,
@@ -660,7 +660,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertArrayNotHasKey(CURLOPT_REDIR_PROTOCOLS, $options);
     }
 
-    public function testAllowRedirectsOptionTrue()
+    public function testAllowRedirectsOptionTrue(): void
     {
         $this->request->request('get', 'http://example.com', [
             'allow_redirects' => true,
@@ -677,7 +677,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame(CURLPROTO_HTTP | CURLPROTO_HTTPS, $options[CURLOPT_REDIR_PROTOCOLS]);
     }
 
-    public function testAllowRedirectsOptionDefaults()
+    public function testAllowRedirectsOptionDefaults(): void
     {
         $this->request->request('get', 'http://example.com', [
             'allow_redirects' => true,
@@ -692,7 +692,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertArrayHasKey(CURLOPT_REDIR_PROTOCOLS, $options);
     }
 
-    public function testAllowRedirectsArray()
+    public function testAllowRedirectsArray(): void
     {
         $this->request->request('get', 'http://example.com', [
             'allow_redirects' => ['max' => 2],
@@ -707,7 +707,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame(2, $options[CURLOPT_MAXREDIRS]);
     }
 
-    public function testSendWithQuery()
+    public function testSendWithQuery(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -724,7 +724,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame('http://www.foo.com/api/v1/products?name=Henry&d.t=value', $options[CURLOPT_URL]);
     }
 
-    public function testSendWithDelay()
+    public function testSendWithDelay(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -737,7 +737,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame(0.1, $request->getDelay());
     }
 
-    public function testSendContinued()
+    public function testSendContinued(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -752,7 +752,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
     /**
      * See: https://github.com/codeigniter4/CodeIgniter4/issues/3261
      */
-    public function testSendContinuedWithManyHeaders()
+    public function testSendContinuedWithManyHeaders(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -799,7 +799,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
     /**
      * See: https://github.com/codeigniter4/CodeIgniter4/issues/7394
      */
-    public function testResponseHeadersWithMultipleRequests()
+    public function testResponseHeadersWithMultipleRequests(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -852,7 +852,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         $this->assertSame(200, $response->getStatusCode());
     }
 
-    public function testSplitResponse()
+    public function testSplitResponse(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -864,7 +864,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         $this->assertSame('Hi there', $response->getBody());
     }
 
-    public function testApplyBody()
+    public function testApplyBody(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -879,7 +879,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         $this->assertSame('name=George', $request->curl_options[CURLOPT_POSTFIELDS]);
     }
 
-    public function testApplyBodyByOptions()
+    public function testApplyBodyByOptions(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -895,7 +895,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         $this->assertSame('name=George', $request->curl_options[CURLOPT_POSTFIELDS]);
     }
 
-    public function testBodyIsResetOnSecondRequest()
+    public function testBodyIsResetOnSecondRequest(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -910,7 +910,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         $this->assertArrayNotHasKey(CURLOPT_POSTFIELDS, $request->curl_options);
     }
 
-    public function testResponseHeaders()
+    public function testResponseHeaders(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -924,7 +924,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         $this->assertSame(234, $response->getStatusCode());
     }
 
-    public function testResponseHeadersShortProtocol()
+    public function testResponseHeadersShortProtocol(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -938,7 +938,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         $this->assertSame(235, $response->getStatusCode());
     }
 
-    public function testPostFormEncoded()
+    public function testPostFormEncoded(): void
     {
         $params = [
             'foo' => 'bar',
@@ -960,7 +960,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         $this->assertSame($expected, $options[CURLOPT_POSTFIELDS]);
     }
 
-    public function testPostFormMultipart()
+    public function testPostFormMultipart(): void
     {
         $params = [
             'foo' => 'bar',
@@ -982,7 +982,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         $this->assertSame($params, $options[CURLOPT_POSTFIELDS]);
     }
 
-    public function testSetForm()
+    public function testSetForm(): void
     {
         $params = [
             'foo' => 'bar',
@@ -1009,7 +1009,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         );
     }
 
-    public function testJSONData()
+    public function testJSONData(): void
     {
         $params = [
             'foo' => 'bar',
@@ -1031,7 +1031,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         );
     }
 
-    public function testSetJSON()
+    public function testSetJSON(): void
     {
         $params = [
             'foo' => 'bar',
@@ -1054,7 +1054,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         );
     }
 
-    public function testHTTPv1()
+    public function testHTTPv1(): void
     {
         $this->request->request('POST', '/post', [
             'version' => 1.0,
@@ -1066,7 +1066,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         $this->assertSame(CURL_HTTP_VERSION_1_0, $options[CURLOPT_HTTP_VERSION]);
     }
 
-    public function testHTTPv11()
+    public function testHTTPv11(): void
     {
         $this->request->request('POST', '/post', [
             'version' => 1.1,
@@ -1078,7 +1078,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         $this->assertSame(CURL_HTTP_VERSION_1_1, $options[CURLOPT_HTTP_VERSION]);
     }
 
-    public function testCookieOption()
+    public function testCookieOption(): void
     {
         $holder = SUPPORTPATH . 'HTTP/Files/CookiesHolder.txt';
         $this->request->request('POST', '/post', [
@@ -1093,7 +1093,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         $this->assertSame($holder, $options[CURLOPT_COOKIEFILE]);
     }
 
-    public function testUserAgentOption()
+    public function testUserAgentOption(): void
     {
         $agent = 'CodeIgniter Framework';
 

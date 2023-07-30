@@ -105,7 +105,7 @@ final class ConfigTest extends CIUnitTestCase
         $this->setPrivateProperty(Config::class, 'instances', []);
     }
 
-    public function testConnectionGroup()
+    public function testConnectionGroup(): void
     {
         $conn = Config::connect($this->group, false);
         $this->assertInstanceOf(BaseConnection::class, $conn);
@@ -123,7 +123,7 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame($this->group['DBCollat'], $this->getPrivateProperty($conn, 'DBCollat'));
     }
 
-    public function testConnectionGroupWithDSN()
+    public function testConnectionGroupWithDSN(): void
     {
         $conn = Config::connect($this->dsnGroup, false);
         $this->assertInstanceOf(BaseConnection::class, $conn);
@@ -143,7 +143,7 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame([], $this->getPrivateProperty($conn, 'failover'));
     }
 
-    public function testConnectionGroupWithDSNPostgre()
+    public function testConnectionGroupWithDSNPostgre(): void
     {
         $conn = Config::connect($this->dsnGroupPostgre, false);
         $this->assertInstanceOf(BaseConnection::class, $conn);
@@ -171,7 +171,7 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame($expected, $this->getPrivateProperty($conn, 'DSN'));
     }
 
-    public function testConnectionGroupWithDSNPostgreNative()
+    public function testConnectionGroupWithDSNPostgreNative(): void
     {
         $conn = Config::connect($this->dsnGroupPostgreNative, false);
         $this->assertInstanceOf(BaseConnection::class, $conn);
@@ -196,7 +196,7 @@ final class ConfigTest extends CIUnitTestCase
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/7550
      */
-    public function testConvertDSN(string $input, string $expected)
+    public function testConvertDSN(string $input, string $expected): void
     {
         $this->dsnGroupPostgreNative['DSN'] = $input;
         $conn                               = Config::connect($this->dsnGroupPostgreNative, false);

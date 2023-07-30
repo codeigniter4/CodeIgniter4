@@ -15,7 +15,7 @@ use CodeIgniter\Database\Migration;
 
 class Migration_Create_test_tables extends Migration
 {
-    public function up()
+    public function up(): void
     {
         // User Table
         $this->forge->addField([
@@ -160,7 +160,7 @@ class Migration_Create_test_tables extends Migration
         }
     }
 
-    public function down()
+    public function down(): void
     {
         $this->forge->dropTable('user', true);
         $this->forge->dropTable('job', true);
