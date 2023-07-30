@@ -1,7 +1,7 @@
 Version 4.3.7
 #############
 
-Release Date: Unreleased
+Release Date: July 30, 2023
 
 **4.3.7 release of CodeIgniter4**
 
@@ -23,18 +23,12 @@ BREAKING
   changed from "**rules array**" to "**array** of **rules array** and **customErrors array**"
   (``[rules, customErrors]``).
 
-Message Changes
-***************
-
 Changes
 *******
 
 - The number helper function :php:func:`number_to_amount()`, which previously
   returned "1000", has been corrected to return "1 thousand" when the number
   is exactly 1000, for example.
-
-Deprecations
-************
 
 Bugs Fixed
 **********
