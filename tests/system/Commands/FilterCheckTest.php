@@ -40,7 +40,7 @@ final class FilterCheckTest extends CIUnitTestCase
         return $this->getStreamFilterBuffer();
     }
 
-    public function testFilterCheckDefinedRoute()
+    public function testFilterCheckDefinedRoute(): void
     {
         command('filter:check get /');
 
@@ -50,7 +50,7 @@ final class FilterCheckTest extends CIUnitTestCase
         );
     }
 
-    public function testFilterCheckInvalidRoute()
+    public function testFilterCheckInvalidRoute(): void
     {
         command('filter:check put product/123');
 

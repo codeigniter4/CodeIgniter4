@@ -14,7 +14,6 @@ namespace CodeIgniter\Models;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity\Entity;
-use Generator;
 use InvalidArgumentException;
 use stdClass;
 use Tests\Support\Models\EventModel;
@@ -398,7 +397,7 @@ final class UpdateModelTest extends LiveModelTestCase
         $this->model->update($id, ['name' => 'Foo Bar']);
     }
 
-    public function provideInvalidIds(): Generator
+    public function provideInvalidIds(): iterable
     {
         yield from [
             [

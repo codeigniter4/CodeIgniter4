@@ -112,12 +112,12 @@ class CURLRequest extends OutgoingRequest
 
         parent::__construct('GET', $uri);
 
-        $this->responseOrig   = $response ?? new Response(config('App'));
+        $this->responseOrig   = $response ?? new Response(config(App::class));
         $this->baseURI        = $uri->useRawQueryString();
         $this->defaultOptions = $options;
 
         /** @var ConfigCURLRequest|null $configCURLRequest */
-        $configCURLRequest  = config('CURLRequest');
+        $configCURLRequest  = config(ConfigCURLRequest::class);
         $this->shareOptions = $configCURLRequest->shareOptions ?? true;
 
         $this->config = $this->defaultConfig;
@@ -263,7 +263,7 @@ class CURLRequest extends OutgoingRequest
     /**
      * Set JSON data to be sent.
      *
-     * @param mixed $data
+     * @param array|bool|float|int|object|string|null $data
      *
      * @return $this
      */
@@ -384,6 +384,10 @@ class CURLRequest extends OutgoingRequest
         $breakString = "\r\n\r\n";
 
         if (strpos($output, 'HTTP/1.1 100 Continue') === 0) {
+            $output = substr($output, strpos($output, $breakString) + 4);
+        }
+
+        if (strpos($output, 'HTTP/1.1 200 Connection established') === 0) {
             $output = substr($output, strpos($output, $breakString) + 4);
         }
 

@@ -55,7 +55,7 @@ final class TransactionTest extends CIUnitTestCase
         $this->setPrivateProperty($this->db, 'DBDebug', true);
     }
 
-    public function testTransStartDBDebugTrue()
+    public function testTransStartDBDebugTrue(): void
     {
         $this->enableDBDebug();
 
@@ -105,7 +105,7 @@ final class TransactionTest extends CIUnitTestCase
         $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
     }
 
-    public function testTransStartDBDebugFalse()
+    public function testTransStartDBDebugFalse(): void
     {
         $this->disableDBDebug();
 
@@ -138,7 +138,7 @@ final class TransactionTest extends CIUnitTestCase
         $this->enableDBDebug();
     }
 
-    public function testTransStrictTrueAndDBDebugFalse()
+    public function testTransStrictTrueAndDBDebugFalse(): void
     {
         $this->disableDBDebug();
 
@@ -187,7 +187,7 @@ final class TransactionTest extends CIUnitTestCase
         $this->enableDBDebug();
     }
 
-    public function testTransStrictFalseAndDBDebugFalse()
+    public function testTransStrictFalseAndDBDebugFalse(): void
     {
         $this->disableDBDebug();
 

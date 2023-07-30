@@ -81,7 +81,7 @@ Each handler's section will have one property in common: ``handles``, which is a
 
 .. literalinclude:: logging/004.php
 
-Modifying the Message With Context
+Modifying the Message with Context
 ==================================
 
 You will often want to modify the details of your message based on the context of the event being logged.

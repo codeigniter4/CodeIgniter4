@@ -24,24 +24,51 @@ $finder = Finder::create()
     ])
     ->notPath([
         'ci3sample/',
-        'libraries/sessions/016.php',
         'database/query_builder/075.php',
+        'libraries/sessions/016.php',
+        'outgoing/response/031.php',
+        'outgoing/response/032.php',
     ]);
 
 $overrides = [
-    'echo_tag_syntax'             => false,
-    'php_unit_internal_class'     => false,
-    'no_unused_imports'           => false,
-    'class_attributes_separation' => false,
-];
-
-$options = [
-    'cacheFile'    => 'build/.php-cs-fixer.user-guide.cache',
-    'finder'       => $finder,
-    'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
-    'customRules'  => [
-        NoCodeSeparatorCommentFixer::name() => true,
+    'echo_tag_syntax'                    => false,
+    'php_unit_internal_class'            => false,
+    'no_unused_imports'                  => false,
+    'class_attributes_separation'        => false,
+    'php_unit_data_provider_return_type' => true,
+    'no_extra_blank_lines'               => [
+        'tokens' => [
+            'attribute',
+            'break',
+            'case',
+            'continue',
+            'curly_brace_block',
+            'default',
+            'extra',
+            'parenthesis_brace_block',
+            'return',
+            'square_brace_block',
+            'switch',
+            'throw',
+            'use',
+        ],
     ],
 ];
 
-return Factory::create(new CodeIgniter4(), $overrides, $options)->forProjects();
+$options = [
+    'cacheFile' => 'build/.php-cs-fixer.user-guide.cache',
+    'finder'    => $finder,
+];
+
+$config = Factory::create(new CodeIgniter4(), $overrides, $options)->forProjects();
+
+// @TODO: remove this check when support for PHP 7.4 is dropped
+if (PHP_VERSION_ID >= 80000) {
+    $config
+        ->registerCustomFixers(FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'))
+        ->setRules(array_merge($config->getRules(), [
+            NoCodeSeparatorCommentFixer::name() => true,
+        ]));
+}
+
+return $config;

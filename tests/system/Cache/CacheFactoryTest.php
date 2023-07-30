@@ -46,12 +46,12 @@ final class CacheFactoryTest extends CIUnitTestCase
         }
     }
 
-    public function testNew()
+    public function testNew(): void
     {
         $this->assertInstanceOf(CacheFactory::class, $this->cacheFactory);
     }
 
-    public function testGetHandlerExceptionCacheInvalidHandlers()
+    public function testGetHandlerExceptionCacheInvalidHandlers(): void
     {
         $this->expectException(CacheException::class);
         $this->expectExceptionMessage('Cache config must have an array of $validHandlers.');
@@ -61,7 +61,7 @@ final class CacheFactoryTest extends CIUnitTestCase
         $this->cacheFactory->getHandler($this->config);
     }
 
-    public function testGetHandlerExceptionCacheHandlerNotFound()
+    public function testGetHandlerExceptionCacheHandlerNotFound(): void
     {
         $this->expectException(CacheException::class);
         $this->expectExceptionMessage('Cache config has an invalid handler or backup handler specified.');
@@ -71,7 +71,7 @@ final class CacheFactoryTest extends CIUnitTestCase
         $this->cacheFactory->getHandler($this->config);
     }
 
-    public function testGetDummyHandler()
+    public function testGetDummyHandler(): void
     {
         if (! is_dir($this->config->storePath)) {
             mkdir($this->config->storePath, 0555, true);
@@ -86,7 +86,7 @@ final class CacheFactoryTest extends CIUnitTestCase
         $this->config->storePath .= self::$directory;
     }
 
-    public function testHandlesBadHandler()
+    public function testHandlesBadHandler(): void
     {
         if (! is_dir($this->config->storePath)) {
             mkdir($this->config->storePath, 0555, true);

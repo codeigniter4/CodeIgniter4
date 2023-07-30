@@ -24,7 +24,7 @@ final class HomeTest extends CIUnitTestCase
 {
     use FeatureTestTrait;
 
-    public function testPageLoadsSuccessfully()
+    public function testPageLoadsSuccessfully(): void
     {
         $this->withRoutes([
             [

@@ -55,12 +55,12 @@ final class RedisHandlerTest extends AbstractHandlerTest
         }
     }
 
-    public function testNew()
+    public function testNew(): void
     {
         $this->assertInstanceOf(RedisHandler::class, $this->handler);
     }
 
-    public function testDestruct()
+    public function testDestruct(): void
     {
         $this->handler = new RedisHandler($this->config);
         $this->handler->initialize();
@@ -74,7 +74,7 @@ final class RedisHandlerTest extends AbstractHandlerTest
      *
      * @timeLimit 3.5
      */
-    public function testGet()
+    public function testGet(): void
     {
         $this->handler->save(self::$key1, 'value', 2);
 
@@ -91,7 +91,7 @@ final class RedisHandlerTest extends AbstractHandlerTest
      *
      * @timeLimit 3.5
      */
-    public function testRemember()
+    public function testRemember(): void
     {
         $this->handler->remember(self::$key1, 2, static fn () => 'value');
 
@@ -102,12 +102,12 @@ final class RedisHandlerTest extends AbstractHandlerTest
         $this->assertNull($this->handler->get(self::$key1));
     }
 
-    public function testSave()
+    public function testSave(): void
     {
         $this->assertTrue($this->handler->save(self::$key1, 'value'));
     }
 
-    public function testSavePermanent()
+    public function testSavePermanent(): void
     {
         $this->assertTrue($this->handler->save(self::$key1, 'value', 0));
         $metaData = $this->handler->getMetaData(self::$key1);
@@ -119,7 +119,7 @@ final class RedisHandlerTest extends AbstractHandlerTest
         $this->assertTrue($this->handler->delete(self::$key1));
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->handler->save(self::$key1, 'value');
 
@@ -127,7 +127,7 @@ final class RedisHandlerTest extends AbstractHandlerTest
         $this->assertFalse($this->handler->delete(self::$dummy));
     }
 
-    public function testDeleteMatchingPrefix()
+    public function testDeleteMatchingPrefix(): void
     {
         // Save 101 items to match on
         for ($i = 1; $i <= 101; $i++) {
@@ -147,7 +147,7 @@ final class RedisHandlerTest extends AbstractHandlerTest
         $this->assertSame('keys=88', $dbInfo[0]);
     }
 
-    public function testDeleteMatchingSuffix()
+    public function testDeleteMatchingSuffix(): void
     {
         // Save 101 items to match on
         for ($i = 1; $i <= 101; $i++) {
@@ -167,7 +167,7 @@ final class RedisHandlerTest extends AbstractHandlerTest
         $this->assertSame('keys=90', $dbInfo[0]);
     }
 
-    public function testIncrementAndDecrement()
+    public function testIncrementAndDecrement(): void
     {
         $this->handler->save('counter', 100);
 
@@ -184,14 +184,14 @@ final class RedisHandlerTest extends AbstractHandlerTest
         $this->assertSame(140, $this->handler->get('counter'));
     }
 
-    public function testClean()
+    public function testClean(): void
     {
         $this->handler->save(self::$key1, 1);
 
         $this->assertTrue($this->handler->clean());
     }
 
-    public function testGetCacheInfo()
+    public function testGetCacheInfo(): void
     {
         $this->handler->save(self::$key1, 'value');
 
@@ -208,7 +208,7 @@ final class RedisHandlerTest extends AbstractHandlerTest
         $this->assertIsArray($metadata);
     }
 
-    public function testIsSupported()
+    public function testIsSupported(): void
     {
         $this->assertTrue($this->handler->isSupported());
     }

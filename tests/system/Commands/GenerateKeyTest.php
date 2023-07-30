@@ -62,13 +62,13 @@ final class GenerateKeyTest extends CIUnitTestCase
         return $this->getStreamFilterBuffer();
     }
 
-    protected function resetEnvironment()
+    protected function resetEnvironment(): void
     {
         putenv('encryption.key');
         unset($_ENV['encryption.key'], $_SERVER['encryption.key']);
     }
 
-    public function testGenerateKeyShowsEncodedKey()
+    public function testGenerateKeyShowsEncodedKey(): void
     {
         command('key:generate --show');
         $this->assertStringContainsString('hex2bin:', $this->getBuffer());
@@ -84,7 +84,7 @@ final class GenerateKeyTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testGenerateKeyCreatesNewKey()
+    public function testGenerateKeyCreatesNewKey(): void
     {
         command('key:generate');
         $this->assertStringContainsString('successfully set.', $this->getBuffer());
@@ -102,7 +102,7 @@ final class GenerateKeyTest extends CIUnitTestCase
         $this->assertStringContainsString('hex2bin:', file_get_contents($this->envPath));
     }
 
-    public function testDefaultShippedEnvIsMissing()
+    public function testDefaultShippedEnvIsMissing(): void
     {
         rename(ROOTPATH . 'env', ROOTPATH . 'lostenv');
         command('key:generate');
@@ -115,7 +115,7 @@ final class GenerateKeyTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/6838
      */
-    public function testKeyGenerateWhenKeyIsMissingInDotEnvFile()
+    public function testKeyGenerateWhenKeyIsMissingInDotEnvFile(): void
     {
         file_put_contents($this->envPath, '');
 
@@ -125,7 +125,7 @@ final class GenerateKeyTest extends CIUnitTestCase
         $this->assertSame("\nencryption.key = " . env('encryption.key'), file_get_contents($this->envPath));
     }
 
-    public function testKeyGenerateWhenNewHexKeyIsSubsequentlyCommentedOut()
+    public function testKeyGenerateWhenNewHexKeyIsSubsequentlyCommentedOut(): void
     {
         command('key:generate');
         $key = env('encryption.key', '');
@@ -143,7 +143,7 @@ final class GenerateKeyTest extends CIUnitTestCase
         $this->assertNotSame($key, env('encryption.key', $key), 'Failed replacing the commented out key.');
     }
 
-    public function testKeyGenerateWhenNewBase64KeyIsSubsequentlyCommentedOut()
+    public function testKeyGenerateWhenNewBase64KeyIsSubsequentlyCommentedOut(): void
     {
         command('key:generate --prefix base64');
         $key = env('encryption.key', '');

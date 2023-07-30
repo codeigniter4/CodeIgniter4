@@ -41,7 +41,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->resetServices();
     }
 
-    public function testCallGet()
+    public function testCallGet(): void
     {
         $this->withRoutes([
             [
@@ -56,7 +56,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertDontSee('Again');
     }
 
-    public function testCallSimpleGet()
+    public function testCallSimpleGet(): void
     {
         $this->withRoutes([
             [
@@ -74,7 +74,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertSame(200, $response->response()->getStatusCode());
     }
 
-    public function testCallPost()
+    public function testCallPost(): void
     {
         $this->withRoutes([
             [
@@ -88,7 +88,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello Mars');
     }
 
-    public function testCallPostWithBody()
+    public function testCallPostWithBody(): void
     {
         $this->withRoutes([
             [
@@ -102,7 +102,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello Mars!');
     }
 
-    public function testCallValidationTwice()
+    public function testCallValidationTwice(): void
     {
         $this->withRoutes([
             [
@@ -132,7 +132,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Okay');
     }
 
-    public function testCallPut()
+    public function testCallPut(): void
     {
         $this->withRoutes([
             [
@@ -146,7 +146,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello Pluto');
     }
 
-    public function testCallPatch()
+    public function testCallPatch(): void
     {
         $this->withRoutes([
             [
@@ -160,7 +160,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello Jupiter');
     }
 
-    public function testCallOptions()
+    public function testCallOptions(): void
     {
         $this->withRoutes([
             [
@@ -174,7 +174,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello George');
     }
 
-    public function testCallDelete()
+    public function testCallDelete(): void
     {
         $this->withRoutes([
             [
@@ -188,7 +188,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello Wonka');
     }
 
-    public function testSession()
+    public function testSession(): void
     {
         $response = $this->withRoutes([
             [
@@ -205,7 +205,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSessionMissing('popcorn');
     }
 
-    public function testWithSessionNull()
+    public function testWithSessionNull(): void
     {
         $_SESSION = [
             'fruit'    => 'apple',
@@ -224,7 +224,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSessionMissing('popcorn');
     }
 
-    public function testReturns()
+    public function testReturns(): void
     {
         $this->withRoutes([
             [
@@ -237,7 +237,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hi');
     }
 
-    public function testIgnores()
+    public function testIgnores(): void
     {
         $this->withRoutes([
             [
@@ -250,7 +250,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertEmpty($response->response()->getBody());
     }
 
-    public function testEchoesWithParams()
+    public function testEchoesWithParams(): void
     {
         $this->withRoutes([
             [
@@ -264,7 +264,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello-o-o bar');
     }
 
-    public function testEchoesWithQuery()
+    public function testEchoesWithQuery(): void
     {
         $this->withRoutes([
             [
@@ -278,13 +278,13 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertSee('Hello-o-o bar');
     }
 
-    public function testCallZeroAsPathGot404()
+    public function testCallZeroAsPathGot404(): void
     {
         $this->expectException(PageNotFoundException::class);
         $this->get('0');
     }
 
-    public function provideRoutesData()
+    public function provideRoutesData(): iterable
     {
         return [
             'non parameterized cli' => [
@@ -322,10 +322,10 @@ final class FeatureTestTraitTest extends CIUnitTestCase
      * @param mixed $to
      * @param mixed $httpGet
      */
-    public function testOpenCliRoutesFromHttpGot404($from, $to, $httpGet)
+    public function testOpenCliRoutesFromHttpGot404($from, $to, $httpGet): void
     {
         $this->expectException(PageNotFoundException::class);
-        $this->expectExceptionMessage('Cannot access the controller in a CLI Route.');
+        $this->expectExceptionMessage('Cannot access CLI Route: ');
 
         $collection = Services::routes();
         $collection->setAutoRoute(true);
@@ -344,7 +344,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/3072
      */
-    public function testIsOkWithRedirects()
+    public function testIsOkWithRedirects(): void
     {
         $this->withRoutes([
             [
@@ -358,7 +358,163 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertTrue($response->isOK());
     }
 
-    public function testCallWithJsonRequest()
+    public function testCallGetWithParams(): void
+    {
+        $this->withRoutes([
+            [
+                'get',
+                'home',
+                static fn () => json_encode(Services::request()->getGet()),
+            ],
+        ]);
+        $data = [
+            'true'   => true,
+            'false'  => false,
+            'int'    => 2,
+            'null'   => null,
+            'float'  => 1.23,
+            'string' => 'foo',
+        ];
+        $response = $this->get('home', $data);
+
+        $response->assertOK();
+        $this->assertStringContainsString(
+            // All GET values will be strings.
+            '{"true":"1","false":"","int":"2","null":"","float":"1.23","string":"foo"}',
+            $response->getBody()
+        );
+    }
+
+    public function testCallGetWithParamsAndREQUEST(): void
+    {
+        $this->withRoutes([
+            [
+                'get',
+                'home',
+                static fn () => json_encode(Services::request()->fetchGlobal('request')),
+            ],
+        ]);
+        $data = [
+            'true'   => true,
+            'false'  => false,
+            'int'    => 2,
+            'null'   => null,
+            'float'  => 1.23,
+            'string' => 'foo',
+        ];
+        $response = $this->get('home', $data);
+
+        $response->assertOK();
+        $this->assertStringContainsString(
+            // All GET values will be strings.
+            '{"true":"1","false":"","int":"2","null":"","float":"1.23","string":"foo"}',
+            $response->getBody()
+        );
+    }
+
+    public function testCallPostWithParams(): void
+    {
+        $this->withRoutes([
+            [
+                'post',
+                'home',
+                static fn () => json_encode(Services::request()->getPost()),
+            ],
+        ]);
+        $data = [
+            'true'   => true,
+            'false'  => false,
+            'int'    => 2,
+            'null'   => null,
+            'float'  => 1.23,
+            'string' => 'foo',
+        ];
+        $response = $this->post('home', $data);
+
+        $response->assertOK();
+        $this->assertStringContainsString(
+            // All POST values will be strings.
+            '{"true":"1","false":"","int":"2","null":"","float":"1.23","string":"foo"}',
+            $response->getBody()
+        );
+    }
+
+    public function testCallPostWithParamsAndREQUEST(): void
+    {
+        $this->withRoutes([
+            [
+                'post',
+                'home',
+                static fn () => json_encode(Services::request()->fetchGlobal('request')),
+            ],
+        ]);
+        $data = [
+            'true'   => true,
+            'false'  => false,
+            'int'    => 2,
+            'null'   => null,
+            'float'  => 1.23,
+            'string' => 'foo',
+        ];
+        $response = $this->post('home', $data);
+
+        $response->assertOK();
+        $this->assertStringContainsString(
+            // All POST values will be strings.
+            '{"true":"1","false":"","int":"2","null":"","float":"1.23","string":"foo"}',
+            $response->getBody()
+        );
+    }
+
+    public function testCallPutWithJsonRequest(): void
+    {
+        $this->withRoutes([
+            [
+                'put',
+                'home',
+                '\Tests\Support\Controllers\Popcorn::echoJson',
+            ],
+        ]);
+        $data = [
+            'true'   => true,
+            'false'  => false,
+            'int'    => 2,
+            'null'   => null,
+            'float'  => 1.23,
+            'string' => 'foo',
+        ];
+        $response = $this->withBodyFormat('json')
+            ->call('put', 'home', $data);
+
+        $response->assertOK();
+        $response->assertJSONExact($data);
+    }
+
+    public function testCallPutWithJsonRequestAndREQUEST(): void
+    {
+        $this->withRoutes([
+            [
+                'put',
+                'home',
+                static fn () => json_encode(Services::request()->fetchGlobal('request')),
+            ],
+        ]);
+        $data = [
+            'true'   => true,
+            'false'  => false,
+            'int'    => 2,
+            'null'   => null,
+            'float'  => 1.23,
+            'string' => 'foo',
+        ];
+        $response = $this->withBodyFormat('json')
+            ->call('put', 'home', $data);
+
+        $response->assertOK();
+        $this->assertStringContainsString('[]', $response->getBody());
+    }
+
+    public function testCallWithJsonRequest(): void
     {
         $this->withRoutes([
             [
@@ -367,26 +523,22 @@ final class FeatureTestTraitTest extends CIUnitTestCase
                 '\Tests\Support\Controllers\Popcorn::echoJson',
             ],
         ]);
-        $response = $this->withBodyFormat('json')->call('post', 'home', ['foo' => 'bar']);
+        $data = [
+            'true'   => true,
+            'false'  => false,
+            'int'    => 2,
+            'null'   => null,
+            'float'  => 1.23,
+            'string' => 'foo',
+        ];
+        $response = $this->withBodyFormat('json')
+            ->call('post', 'home', $data);
+
         $response->assertOK();
-        $response->assertJSONExact(['foo' => 'bar']);
+        $response->assertJSONExact($data);
     }
 
-    public function testCallWithJsonRequestObject()
-    {
-        $this->withRoutes([
-            [
-                'post',
-                'home',
-                '\Tests\Support\Controllers\Popcorn::echoJson',
-            ],
-        ]);
-        $response = $this->withBodyFormat('json')->call('post', 'home', ['foo' => 'bar']);
-        $response->assertOK();
-        $response->assertJSONExact((object) ['foo' => 'bar']);
-    }
-
-    public function testSetupRequestBodyWithParams()
+    public function testSetupRequestBodyWithParams(): void
     {
         $request = $this->setupRequest('post', 'home');
 
@@ -396,21 +548,46 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertSame('application/json', $request->header('Content-Type')->getValue());
     }
 
-    public function testSetupRequestBodyWithXml()
+    public function testSetupJSONRequestBodyWithBody(): void
+    {
+        $request = $this->setupRequest('post', 'home');
+        $request = $this->withBodyFormat('json')
+            ->withBody(json_encode(['foo1' => 'bar1']))
+            ->setRequestBody($request);
+
+        $this->assertJsonStringEqualsJsonString(
+            json_encode(['foo1' => 'bar1']),
+            $request->getBody()
+        );
+        $this->assertSame(
+            'application/json',
+            $request->header('Content-Type')->getValue()
+        );
+    }
+
+    public function testSetupRequestBodyWithXml(): void
     {
         $request = $this->setupRequest('post', 'home');
 
-        $request = $this->withBodyFormat('xml')->setRequestBody($request, ['foo' => 'bar']);
+        $data = [
+            'true'   => true,
+            'false'  => false,
+            'int'    => 2,
+            'null'   => null,
+            'float'  => 1.23,
+            'string' => 'foo',
+        ];
+        $request = $this->withBodyFormat('xml')->setRequestBody($request, $data);
 
         $expectedXml = '<?xml version="1.0"?>
-<response><foo>bar</foo></response>
+<response><true>1</true><false/><int>2</int><null/><float>1.23</float><string>foo</string></response>
 ';
 
         $this->assertSame($expectedXml, $request->getBody());
         $this->assertSame('application/xml', $request->header('Content-Type')->getValue());
     }
 
-    public function testSetupRequestBodyWithBody()
+    public function testSetupRequestBodyWithBody(): void
     {
         $request = $this->setupRequest('post', 'home');
 

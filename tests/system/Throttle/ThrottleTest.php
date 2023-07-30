@@ -31,7 +31,7 @@ final class ThrottleTest extends CIUnitTestCase
         $this->cache = new MockCache();
     }
 
-    public function testTokenTime()
+    public function testTokenTime(): void
     {
         $throttler = new Throttler($this->cache);
 
@@ -53,7 +53,7 @@ final class ThrottleTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5458
      */
-    public function testTokenTimeCalculation()
+    public function testTokenTimeCalculation(): void
     {
         $time = 1_639_441_295;
 
@@ -86,7 +86,7 @@ final class ThrottleTest extends CIUnitTestCase
         $this->assertSame(97, $throttler->getTokenTime(), 'Wrong token time');
     }
 
-    public function testIPSavesBucket()
+    public function testIPSavesBucket(): void
     {
         $throttler = new Throttler($this->cache);
 
@@ -94,7 +94,7 @@ final class ThrottleTest extends CIUnitTestCase
         $this->assertSame(59, $this->cache->get('throttler_127.0.0.1'));
     }
 
-    public function testRemove()
+    public function testRemove(): void
     {
         $throttler = new Throttler($this->cache);
 
@@ -107,7 +107,7 @@ final class ThrottleTest extends CIUnitTestCase
         $this->assertTrue($throttler->check('127.0.0.1', 1, MINUTE));
     }
 
-    public function testDecrementsValues()
+    public function testDecrementsValues(): void
     {
         $throttler = new Throttler($this->cache);
 
@@ -118,7 +118,7 @@ final class ThrottleTest extends CIUnitTestCase
         $this->assertCloseEnough(57, $this->cache->get('throttler_127.0.0.1'));
     }
 
-    public function testReturnsFalseIfBucketEmpty()
+    public function testReturnsFalseIfBucketEmpty(): void
     {
         $throttler = new Throttler($this->cache);
 
@@ -127,7 +127,7 @@ final class ThrottleTest extends CIUnitTestCase
         $this->assertFalse($throttler->check('127.0.0.1', 1, MINUTE));
     }
 
-    public function testCosting()
+    public function testCosting(): void
     {
         $throttler = new Throttler($this->cache);
 
@@ -137,7 +137,7 @@ final class ThrottleTest extends CIUnitTestCase
         $this->assertSame($rate - $cost, $this->cache->get('throttler_127.0.0.1'));
     }
 
-    public function testUnderload()
+    public function testUnderload(): void
     {
         $throttler = new Throttler($this->cache);
 
@@ -151,7 +151,7 @@ final class ThrottleTest extends CIUnitTestCase
         $this->assertSame($rate - 1, $this->cache->get('throttler_127.0.0.1'));
     }
 
-    public function testOverload()
+    public function testOverload(): void
     {
         $throttler = new Throttler($this->cache);
 
@@ -163,7 +163,7 @@ final class ThrottleTest extends CIUnitTestCase
         $this->assertFalse($throttler->check('127.0.0.1', $rate, MINUTE, $cost));
     }
 
-    public function testFlooding()
+    public function testFlooding(): void
     {
         $time = 1_639_441_295;
 
@@ -208,7 +208,7 @@ final class ThrottleTest extends CIUnitTestCase
         }
     }
 
-    public function tokenTimeUsecases(): array
+    public function tokenTimeUsecases(): iterable
     {
         return [
             '2 capacity / 200 seconds (100s refresh, 0.01 tokens/s) -> 5 checks, 1 cost each' => [

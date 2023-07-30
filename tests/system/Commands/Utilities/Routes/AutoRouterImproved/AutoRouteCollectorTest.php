@@ -52,7 +52,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
         );
     }
 
-    public function testGetFilterMatches()
+    public function testGetFilterMatches(): void
     {
         $filterConfigFilters = ['honeypot' => ['before' => ['newautorouting/save*']]];
         $collector           = $this->createAutoRouteCollector($filterConfigFilters);
@@ -80,7 +80,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
         $this->assertSame($expected, $routes);
     }
 
-    public function testGetFilterDoesNotMatch()
+    public function testGetFilterDoesNotMatch(): void
     {
         $filterConfigFilters = ['honeypot' => ['before' => ['newautorouting/save/*/*']]];
         $collector           = $this->createAutoRouteCollector($filterConfigFilters);

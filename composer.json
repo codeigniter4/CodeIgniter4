@@ -20,11 +20,11 @@
         "nexusphp/cs-config": "^3.6",
         "nexusphp/tachycardia": "^1.0",
         "php-coveralls/php-coveralls": "^2.5",
-        "phpstan/phpstan": "^1.7.1",
+        "phpstan/phpstan": "^1.10.2",
         "phpunit/phpcov": "^8.2",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1 || ^2.0",
-        "rector/rector": "0.17.1",
+        "rector/rector": "0.17.7",
         "vimeo/psalm": "^5.0"
     },
     "suggest": {
@@ -77,17 +77,20 @@
             "bash -c \"if [ -f admin/setup.sh ]; then bash admin/setup.sh; fi\""
         ],
         "analyze": [
+            "Composer\\Config::disableProcessTimeout",
             "bash -c \"XDEBUG_MODE=off phpstan analyse\"",
             "rector process --dry-run"
         ],
         "sa": "@analyze",
         "test": "phpunit",
         "cs": [
+            "Composer\\Config::disableProcessTimeout",
             "php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.user-guide.php",
             "php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.no-header.php",
             "php-cs-fixer fix --ansi --verbose --dry-run --diff"
         ],
         "cs-fix": [
+            "Composer\\Config::disableProcessTimeout",
             "php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.user-guide.php",
             "php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.no-header.php",
             "php-cs-fixer fix --ansi --verbose --diff"

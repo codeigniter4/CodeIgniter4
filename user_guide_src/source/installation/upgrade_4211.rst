@@ -55,7 +55,7 @@ If the following values exceed those maximum length, the session will not work p
 Project Files
 *************
 
-Version ``4.2.11`` did not alter any executable code in project files.
+Version 4.2.11 did not alter any executable code in project files.
 
 All Changes
 ===========

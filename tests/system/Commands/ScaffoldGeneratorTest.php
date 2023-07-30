@@ -43,7 +43,7 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
         return file_get_contents($filepath) ?: '';
     }
 
-    public function testCreateComponentProducesManyFiles()
+    public function testCreateComponentProducesManyFiles(): void
     {
         command('make:scaffold people');
 
@@ -66,7 +66,7 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
         unlink(APPPATH . 'Database/Seeds/People.php');
     }
 
-    public function testCreateComponentWithManyOptions()
+    public function testCreateComponentWithManyOptions(): void
     {
         command('make:scaffold user -restful -return entity');
 
@@ -95,7 +95,7 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
         unlink(APPPATH . 'Models/User.php');
     }
 
-    public function testCreateComponentWithOptionSuffix()
+    public function testCreateComponentWithOptionSuffix(): void
     {
         command('make:scaffold order -suffix');
 
@@ -118,7 +118,7 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
         unlink(APPPATH . 'Models/OrderModel.php');
     }
 
-    public function testCreateComponentWithOptionForce()
+    public function testCreateComponentWithOptionForce(): void
     {
         command('make:controller fixer');
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
@@ -151,7 +151,7 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
         unlink(APPPATH . 'Models/Fixer.php');
     }
 
-    public function testCreateComponentWithOptionNamespace()
+    public function testCreateComponentWithOptionNamespace(): void
     {
         command('make:scaffold product -namespace App');
 

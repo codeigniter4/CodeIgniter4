@@ -13,7 +13,6 @@ namespace CodeIgniter\Validation;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
-use Generator;
 use Tests\Support\Validation\TestRules;
 
 /**
@@ -64,7 +63,7 @@ final class CreditCardRulesTest extends CIUnitTestCase
      *
      * @see https://www.paypalobjects.com/en_US/vhelp/paypalmanager_help/credit_card_numbers.htm
      */
-    public function creditCardProvider(): Generator
+    public function creditCardProvider(): iterable
     {
         yield from [
             'null_test' => [

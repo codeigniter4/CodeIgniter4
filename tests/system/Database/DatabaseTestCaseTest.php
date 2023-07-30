@@ -69,7 +69,7 @@ final class DatabaseTestCaseTest extends CIUnitTestCase
         parent::setUp();
     }
 
-    protected function setUpAddNamespace()
+    protected function setUpAddNamespace(): void
     {
         Services::autoloader()->addNamespace(
             'Tests\Support\MigrationTestMigrations',
@@ -84,12 +84,12 @@ final class DatabaseTestCaseTest extends CIUnitTestCase
         $this->regressDatabase();
     }
 
-    public function testMultipleSeeders()
+    public function testMultipleSeeders(): void
     {
         $this->seeInDatabase('user', ['name' => 'Jerome Lohan']);
     }
 
-    public function testMultipleMigrationNamespaces()
+    public function testMultipleMigrationNamespaces(): void
     {
         $this->seeInDatabase('foo', ['key' => 'foobar']);
     }

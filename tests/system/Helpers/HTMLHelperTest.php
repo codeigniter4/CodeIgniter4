@@ -47,7 +47,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         ];
     }
 
-    public function testBasicUL()
+    public function testBasicUL(): void
     {
         $expected = <<<'EOH'
             <ul>
@@ -66,7 +66,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame(ltrim($expected), ul($list));
     }
 
-    public function testULWithClass()
+    public function testULWithClass(): void
     {
         $expected = <<<'EOH'
             <ul class="test">
@@ -85,7 +85,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, ul($list, 'class="test"'));
     }
 
-    public function testMultiLevelUL()
+    public function testMultiLevelUL(): void
     {
         $expected = <<<'EOH'
             <ul>
@@ -114,7 +114,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame(ltrim($expected), ul($list));
     }
 
-    public function testBasicOL()
+    public function testBasicOL(): void
     {
         $expected = <<<'EOH'
             <ol>
@@ -133,7 +133,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame(ltrim($expected), ol($list));
     }
 
-    public function testOLWithClass()
+    public function testOLWithClass(): void
     {
         $expected = <<<'EOH'
             <ol class="test">
@@ -152,7 +152,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, ol($list, 'class="test"'));
     }
 
-    public function testMultiLevelOL()
+    public function testMultiLevelOL(): void
     {
         $expected = <<<'EOH'
             <ol>
@@ -181,28 +181,28 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame(ltrim($expected), ol($list));
     }
 
-    public function testIMG()
+    public function testIMG(): void
     {
         $target   = 'http://site.com/images/picture.jpg';
         $expected = '<img src="http://site.com/images/picture.jpg" alt="">';
         $this->assertSame($expected, img($target));
     }
 
-    public function testIMGWithoutProtocol()
+    public function testIMGWithoutProtocol(): void
     {
         $target   = 'assets/mugshot.jpg';
         $expected = '<img src="http://example.com/assets/mugshot.jpg" alt="">';
         $this->assertSame($expected, img($target));
     }
 
-    public function testIMGWithIndexpage()
+    public function testIMGWithIndexpage(): void
     {
         $target   = 'assets/mugshot.jpg';
         $expected = '<img src="http://example.com/index.php/assets/mugshot.jpg" alt="">';
         $this->assertSame($expected, img($target, true));
     }
 
-    public function testIMGXHTML()
+    public function testIMGXHTML(): void
     {
         $doctypes        = config('DocTypes');
         $default         = $doctypes->html5;
@@ -215,7 +215,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $doctypes->html5 = $default;
     }
 
-    public function testIMGXHTMLWithoutProtocol()
+    public function testIMGXHTMLWithoutProtocol(): void
     {
         $doctypes        = config('DocTypes');
         $default         = $doctypes->html5;
@@ -228,7 +228,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $doctypes->html5 = $default;
     }
 
-    public function testIMGXHTMLWithIndexpage()
+    public function testIMGXHTMLWithIndexpage(): void
     {
         $doctypes        = config('DocTypes');
         $default         = $doctypes->html5;
@@ -241,21 +241,21 @@ final class HTMLHelperTest extends CIUnitTestCase
         $doctypes->html5 = $default;
     }
 
-    public function testImgData()
+    public function testImgData(): void
     {
         $expected = 'data:image/gif;base64,' . $this->imgData;
 
         $this->assertSame($expected, img_data($this->imgPath));
     }
 
-    public function testImgDataWithMime()
+    public function testImgDataWithMime(): void
     {
         $expected = 'data:image/png;base64,' . $this->imgData;
 
         $this->assertSame($expected, img_data($this->imgPath, 'image/png'));
     }
 
-    public function testImgDataUnknownMime()
+    public function testImgDataUnknownMime(): void
     {
         $path   = SUPPORTPATH . 'Validation' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'phpUxc0ty';
         $result = img_data($path);
@@ -263,56 +263,56 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame(0, strpos($result, 'data:image/jpg'));
     }
 
-    public function testImgDataNoFile()
+    public function testImgDataNoFile(): void
     {
         $this->expectException(FileNotFoundException::class);
 
         img_data($this->imgPath . 'gobbledygook');
     }
 
-    public function testScriptTag()
+    public function testScriptTag(): void
     {
         $target   = 'http://site.com/js/mystyles.js';
         $expected = '<script src="http://site.com/js/mystyles.js"></script>';
         $this->assertSame($expected, script_tag($target));
     }
 
-    public function testScriptTagWithoutProtocol()
+    public function testScriptTagWithoutProtocol(): void
     {
         $target   = 'js/mystyles.js';
         $expected = '<script src="http://example.com/js/mystyles.js"></script>';
         $this->assertSame($expected, script_tag($target));
     }
 
-    public function testScriptTagWithIndexpage()
+    public function testScriptTagWithIndexpage(): void
     {
         $target   = 'js/mystyles.js';
         $expected = '<script src="http://example.com/index.php/js/mystyles.js"></script>';
         $this->assertSame($expected, script_tag($target, true));
     }
 
-    public function testScriptTagWithSrc()
+    public function testScriptTagWithSrc(): void
     {
         $target   = ['src' => 'http://site.com/js/mystyles.js'];
         $expected = '<script src="http://site.com/js/mystyles.js"></script>';
         $this->assertSame($expected, script_tag($target));
     }
 
-    public function testScriptTagWithSrcWithoutProtocol()
+    public function testScriptTagWithSrcWithoutProtocol(): void
     {
         $target   = ['src' => 'js/mystyles.js'];
         $expected = '<script src="http://example.com/js/mystyles.js"></script>';
         $this->assertSame($expected, script_tag($target));
     }
 
-    public function testScriptTagWithSrcAndAttributes()
+    public function testScriptTagWithSrcAndAttributes(): void
     {
         $target   = ['src' => 'js/mystyles.js', 'charset' => 'UTF-8', 'defer' => '', 'async' => null];
         $expected = '<script src="http://example.com/js/mystyles.js" charset="UTF-8" defer="" async></script>';
         $this->assertSame($expected, script_tag($target));
     }
 
-    public function testScriptTagWithCsp()
+    public function testScriptTagWithCsp(): void
     {
         // Reset CSP object
         $this->resetServices();
@@ -338,20 +338,20 @@ final class HTMLHelperTest extends CIUnitTestCase
      * This test has probably no real-world value but may help detecting
      * a change in the default behaviour.
      */
-    public function testScriptTagWithoutAnyArg()
+    public function testScriptTagWithoutAnyArg(): void
     {
         $expected = '<script src="http://example.com/"></script>';
         $this->assertSame($expected, script_tag());
     }
 
-    public function testLinkTag()
+    public function testLinkTag(): void
     {
         $target   = 'css/mystyles.css';
         $expected = '<link href="http://example.com/css/mystyles.css" rel="stylesheet" type="text/css">';
         $this->assertSame($expected, link_tag($target));
     }
 
-    public function testLinkTagXHTML()
+    public function testLinkTagXHTML(): void
     {
         $doctypes        = config('DocTypes');
         $default         = $doctypes->html5;
@@ -365,7 +365,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $doctypes->html5 = $default;
     }
 
-    public function testLinkTagMedia()
+    public function testLinkTagMedia(): void
     {
         $target = 'https://styles.com/css/mystyles.css';
         $tag    = link_tag($target, 'stylesheet', 'text/css', '', 'print');
@@ -374,7 +374,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $tag);
     }
 
-    public function testLinkTagTitle()
+    public function testLinkTagTitle(): void
     {
         $tag = link_tag('default.css', 'stylesheet', 'text/css', 'Default Style');
 
@@ -382,7 +382,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $tag);
     }
 
-    public function testLinkTagFavicon()
+    public function testLinkTagFavicon(): void
     {
         $tag = link_tag('favicon.ico', 'shortcut icon', 'image/ico');
 
@@ -390,7 +390,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $tag);
     }
 
-    public function testLinkTagRss()
+    public function testLinkTagRss(): void
     {
         $tag = link_tag('feed', 'alternate', 'application/rss+xml', 'My RSS Feed');
 
@@ -398,7 +398,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $tag);
     }
 
-    public function testLinkTagAlternate()
+    public function testLinkTagAlternate(): void
     {
         $tag = link_tag(
             'http://sp.example.com/',
@@ -412,7 +412,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $tag);
     }
 
-    public function testLinkTagArrayAlternate()
+    public function testLinkTagArrayAlternate(): void
     {
         $tag = link_tag([
             'href'  => 'http://sp.example.com/',
@@ -424,7 +424,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $tag);
     }
 
-    public function testLinkTagCanonical()
+    public function testLinkTagCanonical(): void
     {
         $tag = link_tag('http://www.example.com/', 'canonical');
 
@@ -432,7 +432,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $tag);
     }
 
-    public function testLinkTagArray()
+    public function testLinkTagArray(): void
     {
         $parms = [
             'href'      => 'css/mystyles.css',
@@ -442,7 +442,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, link_tag($parms));
     }
 
-    public function testLinkTagArrayHreflang()
+    public function testLinkTagArrayHreflang(): void
     {
         $tag = link_tag([
             'href'     => 'https://example.com/en',
@@ -454,26 +454,26 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $tag);
     }
 
-    public function testDocType()
+    public function testDocType(): void
     {
         $target   = 'html4-strict';
         $expected = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">';
         $this->assertSame($expected, doctype($target));
     }
 
-    public function testDocTypeDefault()
+    public function testDocTypeDefault(): void
     {
         $expected = '<!DOCTYPE html>';
         $this->assertSame($expected, doctype());
     }
 
-    public function testDocTypeInvalid()
+    public function testDocTypeInvalid(): void
     {
         $target = 'good-guess';
         $this->assertEmpty(doctype($target));
     }
 
-    public function testVideo()
+    public function testVideo(): void
     {
         $expected = <<<'EOH'
             <video src="http://www.codeigniter.com/test.mp4" controls>
@@ -488,7 +488,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $video);
     }
 
-    public function testVideoWithTracks()
+    public function testVideoWithTracks(): void
     {
         $expected = <<<'EOH'
             <video src="http://example.com/test.mp4" controls>
@@ -505,7 +505,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $video);
     }
 
-    public function testVideoWithTracksXHTML()
+    public function testVideoWithTracksXHTML(): void
     {
         $doctypes        = config('DocTypes');
         $default         = $doctypes->html5;
@@ -533,7 +533,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $doctypes->html5 = $default;
     }
 
-    public function testVideoWithTracksAndIndex()
+    public function testVideoWithTracksAndIndex(): void
     {
         $expected = <<<'EOH'
             <video src="http://example.com/index.php/test.mp4" controls>
@@ -550,7 +550,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $video);
     }
 
-    public function testVideoMultipleSources()
+    public function testVideoMultipleSources(): void
     {
         $expected = <<<'EOH'
             <video class="test" controls>
@@ -577,7 +577,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $video);
     }
 
-    public function testVideoMultipleSourcesXHTML()
+    public function testVideoMultipleSourcesXHTML(): void
     {
         $doctypes        = config('DocTypes');
         $default         = $doctypes->html5;
@@ -615,7 +615,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $doctypes->html5 = $default;
     }
 
-    public function testAudio()
+    public function testAudio(): void
     {
         $expected = <<<'EOH'
             <audio id="test" controls>
@@ -638,7 +638,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $audio);
     }
 
-    public function testAudioXHTML()
+    public function testAudioXHTML(): void
     {
         $doctypes        = config('DocTypes');
         $default         = $doctypes->html5;
@@ -672,7 +672,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $doctypes->html5 = $default;
     }
 
-    public function testAudioSimple()
+    public function testAudioSimple(): void
     {
         $expected = <<<'EOH'
             <audio src="http://example.com/sound.mpeg" type="audio/mpeg" id="test" controls>
@@ -688,7 +688,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $audio);
     }
 
-    public function testAudioWithSource()
+    public function testAudioWithSource(): void
     {
         $expected = <<<'EOH'
             <audio src="http://codeigniter.com/sound.mpeg" type="audio/mpeg" id="test" controls>
@@ -704,7 +704,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $audio);
     }
 
-    public function testAudioWithIndex()
+    public function testAudioWithIndex(): void
     {
         $expected = <<<'EOH'
             <audio src="http://example.com/index.php/sound.mpeg" type="audio/mpeg" id="test" controls>
@@ -720,7 +720,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $audio);
     }
 
-    public function testAudioWithTracks()
+    public function testAudioWithTracks(): void
     {
         $expected = <<<'EOH'
             <audio src="http://example.com/sound.mpeg" type="audio/mpeg" id="test" controls>
@@ -738,7 +738,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $audio);
     }
 
-    public function testMediaNameOnly()
+    public function testMediaNameOnly(): void
     {
         $expected = <<<'EOH'
             <av>
@@ -748,7 +748,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, _media('av'));
     }
 
-    public function testMediaWithSources()
+    public function testMediaWithSources(): void
     {
         $expected = <<<'EOH'
             <av>
@@ -764,13 +764,13 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, _media('av', $sources));
     }
 
-    public function testSource()
+    public function testSource(): void
     {
         $expected = '<source src="http://example.com/index.php/sound.mpeg" type="audio/mpeg">';
         $this->assertSame($expected, source('sound.mpeg', 'audio/mpeg', '', true));
     }
 
-    public function testSourceXHTML()
+    public function testSourceXHTML(): void
     {
         $doctypes        = config('DocTypes');
         $default         = $doctypes->html5;
@@ -783,7 +783,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $doctypes->html5 = $default;
     }
 
-    public function testEmbed()
+    public function testEmbed(): void
     {
         $expected = <<<'EOH'
             <embed src="http://example.com/movie.mov" type="video/quicktime" class="test">
@@ -795,7 +795,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $embed);
     }
 
-    public function testEmbedXHTML()
+    public function testEmbedXHTML(): void
     {
         $doctypes        = config('DocTypes');
         $default         = $doctypes->html5;
@@ -814,7 +814,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $doctypes->html5 = $default;
     }
 
-    public function testEmbedIndexed()
+    public function testEmbedIndexed(): void
     {
         $expected = <<<'EOH'
             <embed src="http://example.com/index.php/movie.mov" type="video/quicktime" class="test">
@@ -826,7 +826,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $embed, '');
     }
 
-    public function testObject()
+    public function testObject(): void
     {
         $expected = <<<'EOH'
             <object data="http://example.com/movie.swf" class="test"></object>
@@ -839,7 +839,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $object);
     }
 
-    public function testObjectWithParams()
+    public function testObjectWithParams(): void
     {
         $expected = <<<'EOH'
             <object data="http://example.com/movie.swf" class="test">
@@ -858,7 +858,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $object);
     }
 
-    public function testObjectWithParamsXHTML()
+    public function testObjectWithParamsXHTML(): void
     {
         $doctypes        = config('DocTypes');
         $default         = $doctypes->html5;
@@ -884,7 +884,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $doctypes->html5 = $default;
     }
 
-    public function testObjectIndexed()
+    public function testObjectIndexed(): void
     {
         $expected = <<<'EOH'
             <object data="http://example.com/index.php/movie.swf" class="test"></object>

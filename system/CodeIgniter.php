@@ -28,6 +28,7 @@ use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Router\Router;
 use Config\App;
 use Config\Cache;
+use Config\Feature;
 use Config\Kint as KintConfig;
 use Config\Services;
 use Exception;
@@ -47,7 +48,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.3.6';
+    public const CI_VERSION = '4.3.7';
 
     /**
      * App startup time.
@@ -268,7 +269,6 @@ class CodeIgniter
 
     private function configureKint(): void
     {
-        /** @var \Config\Kint $config */
         $config = config(KintConfig::class);
 
         Kint::$depth_limit         = $config->maxDepth;
@@ -455,7 +455,7 @@ class CodeIgniter
             // If any filters were specified within the routes file,
             // we need to ensure it's active for the current request
             if ($routeFilter !== null) {
-                $multipleFiltersEnabled = config('Feature')->multipleFilters ?? false;
+                $multipleFiltersEnabled = config(Feature::class)->multipleFilters ?? false;
                 if ($multipleFiltersEnabled) {
                     $filters->enableFilters($routeFilter, 'before');
                     $filters->enableFilters($routeFilter, 'after');
@@ -732,7 +732,7 @@ class CodeIgniter
      * Caches the full response from the current request. Used for
      * full-page caching for very high performance.
      *
-     * @return mixed
+     * @return bool
      */
     public function cachePage(Cache $config)
     {
@@ -822,7 +822,7 @@ class CodeIgniter
         $this->benchmark->stop('routing');
 
         // for backward compatibility
-        $multipleFiltersEnabled = config('Feature')->multipleFilters ?? false;
+        $multipleFiltersEnabled = config(Feature::class)->multipleFilters ?? false;
         if (! $multipleFiltersEnabled) {
             return $this->router->getFilter();
         }
@@ -918,7 +918,7 @@ class CodeIgniter
      *  2. PHP CLI: accessed by CLI via php public/index.php, arguments become URI segments,
      *      sent to Controllers via Routes, output varies
      *
-     * @param mixed $class
+     * @param Controller $class
      *
      * @return false|ResponseInterface|string|void
      */

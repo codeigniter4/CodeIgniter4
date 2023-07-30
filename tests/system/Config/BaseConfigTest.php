@@ -47,7 +47,7 @@ final class BaseConfigTest extends CIUnitTestCase
         }
     }
 
-    public function testBasicValues()
+    public function testBasicValues(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
@@ -59,7 +59,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame(18, $config->golf);
     }
 
-    public function testUseDefaultValueTypeIntAndFloatValues()
+    public function testUseDefaultValueTypeIntAndFloatValues(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
@@ -69,7 +69,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame(999, $config->int);
     }
 
-    public function testUseDefaultValueTypeStringValue()
+    public function testUseDefaultValueTypeStringValue(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
@@ -82,7 +82,7 @@ final class BaseConfigTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testServerValues()
+    public function testServerValues(): void
     {
         $_SERVER = [
             'simpleconfig.shortie' => 123,
@@ -96,7 +96,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('456', $config->longie);
     }
 
-    public function testEnvironmentOverrides()
+    public function testEnvironmentOverrides(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
@@ -126,7 +126,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame(20, $config->size);
     }
 
-    public function testPrefixedValues()
+    public function testPrefixedValues(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
@@ -136,7 +136,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('baz', $config->onedeep);
     }
 
-    public function testPrefixedArrayValues()
+    public function testPrefixedArrayValues(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
@@ -151,7 +151,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertFalse($config->crew['doctor']);
     }
 
-    public function testArrayValues()
+    public function testArrayValues(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
@@ -163,7 +163,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->second);
     }
 
-    public function testSetsDefaultValues()
+    public function testSetsDefaultValues(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
         $dotenv->load();
@@ -178,7 +178,7 @@ final class BaseConfigTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testSetsDefaultValuesEncryptionUsingHex2Bin()
+    public function testSetsDefaultValuesEncryptionUsingHex2Bin(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
         $dotenv->load();
@@ -193,7 +193,7 @@ final class BaseConfigTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testSetDefaultValuesEncryptionUsingBase64()
+    public function testSetDefaultValuesEncryptionUsingBase64(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');
         $dotenv->load();
@@ -203,7 +203,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('OpenSSL', $config->driver);
     }
 
-    public function testSetsDefaultValuesHex2Bin()
+    public function testSetsDefaultValuesHex2Bin(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
         $dotenv->load();
@@ -214,7 +214,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('MCrypt', $config->driver);
     }
 
-    public function testSetDefaultValuesBase64()
+    public function testSetDefaultValuesBase64(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
         $dotenv->load();
@@ -224,7 +224,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('MCrypt', $config->driver);
     }
 
-    public function testRecognizesLooseValues()
+    public function testRecognizesLooseValues(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'loose.env');
         $dotenv->load();
@@ -237,7 +237,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertFalse($config->QFALSE);
     }
 
-    public function testRegistrars()
+    public function testRegistrars(): void
     {
         $config              = new RegistrarConfig();
         $config::$registrars = [TestRegistrar::class];
@@ -251,7 +251,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame(['baz', 'first', 'second'], $config->bar);
     }
 
-    public function testBadRegistrar()
+    public function testBadRegistrar(): void
     {
         // Shouldn't change any values.
         $config              = new RegistrarConfig();
@@ -265,7 +265,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->foo);
     }
 
-    public function testNotEnabled()
+    public function testNotEnabled(): void
     {
         $modulesConfig          = config('Modules');
         $modulesConfig->enabled = false;
@@ -280,7 +280,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame($expected, $config::$registrars);
     }
 
-    public function testDidDiscovery()
+    public function testDidDiscovery(): void
     {
         $modulesConfig          = config('Modules');
         $modulesConfig->enabled = true;

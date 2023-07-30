@@ -106,6 +106,9 @@ final class AutoRouterImproved implements AutoRouterInterface
     {
         $httpVerb = strtolower($httpVerb);
 
+        // Reset Controller method params.
+        $this->params = [];
+
         $defaultMethod = $httpVerb . ucfirst($this->defaultMethod);
         $this->method  = $defaultMethod;
 

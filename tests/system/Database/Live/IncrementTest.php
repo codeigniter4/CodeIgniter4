@@ -27,7 +27,7 @@ final class IncrementTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testIncrement()
+    public function testIncrement(): void
     {
         $this->hasInDatabase('job', ['name' => 'incremental', 'description' => '6']);
 
@@ -38,7 +38,7 @@ final class IncrementTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '7']);
     }
 
-    public function testIncrementWithValue()
+    public function testIncrementWithValue(): void
     {
         $this->hasInDatabase('job', ['name' => 'incremental', 'description' => '6']);
 
@@ -49,7 +49,7 @@ final class IncrementTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '8']);
     }
 
-    public function testResetStateAfterIncrement()
+    public function testResetStateAfterIncrement(): void
     {
         $this->hasInDatabase('job', ['name' => 'account1', 'description' => '10']);
         $this->hasInDatabase('job', ['name' => 'account2', 'description' => '10']);
@@ -63,7 +63,7 @@ final class IncrementTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'account2', 'description' => '11']);
     }
 
-    public function testDecrement()
+    public function testDecrement(): void
     {
         $this->hasInDatabase('job', ['name' => 'incremental', 'description' => '6']);
 
@@ -74,7 +74,7 @@ final class IncrementTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '5']);
     }
 
-    public function testDecrementWithValue()
+    public function testDecrementWithValue(): void
     {
         $this->hasInDatabase('job', ['name' => 'incremental', 'description' => '6']);
 
@@ -85,7 +85,7 @@ final class IncrementTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '4']);
     }
 
-    public function testResetStateAfterDecrement()
+    public function testResetStateAfterDecrement(): void
     {
         $this->hasInDatabase('job', ['name' => 'account1', 'description' => '10']);
         $this->hasInDatabase('job', ['name' => 'account2', 'description' => '10']);

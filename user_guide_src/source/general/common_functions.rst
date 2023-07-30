@@ -30,6 +30,21 @@ Service Accessors
 
     .. literalinclude:: common_functions/001.php
 
+.. php:function:: config(string $name[, bool $getShared = true])
+
+    :param string $name: The config classname.
+    :param bool $getShared: Whether to return a shared instance.
+    :returns: The config instances.
+    :rtype: object|null
+
+    More simple way of getting config instances from Factories.
+
+    See :ref:`Configuration <configuration-config>` and
+    :ref:`Factories <factories-config>` for details.
+
+    The ``config()`` uses ``Factories::config()`` internally.
+    See :ref:`factories-loading-class` for details on the first parameter ``$name``.
+
 .. php:function:: cookie(string $name[, string $value = ''[, array $options = []]])
 
     :param string $name: Cookie name
@@ -79,7 +94,7 @@ Service Accessors
     If $data is a string, then it simply escapes and returns it.
     If $data is an array, then it loops over it, escaping each 'value' of the key/value pairs.
 
-    Valid context values: html, js, css, url, attr, raw
+    Valid context values: ``html``, ``js``, ``css``, ``url``, ``attr``, ``raw``
 
 .. php:function:: helper($filename)
 
@@ -110,17 +125,17 @@ Service Accessors
     More simple way of getting model instances.
 
     The ``model()`` uses ``Factories::models()`` internally.
-    See :ref:`factories-example` for details on the first parameter ``$name``.
+    See :ref:`factories-loading-class` for details on the first parameter ``$name``.
 
     See also the :ref:`Using CodeIgniter's Model <accessing-models>`.
 
 .. php:function:: old($key[, $default = null,[, $escape = 'html']])
 
     :param string $key: The name of the old form data to check for.
-    :param mixed  $default: The default value to return if $key doesn't exist.
-    :param mixed  $escape: An `escape <#esc>`_ context or false to disable it.
+    :param string|null  $default: The default value to return if $key doesn't exist.
+    :param false|string  $escape: An `escape <#esc>`_ context or false to disable it.
     :returns: The value of the defined key, or the default value.
-    :rtype: mixed
+    :rtype: array|string|null
 
     Provides a simple way to access "old input data" from submitting a form.
 
@@ -128,8 +143,10 @@ Service Accessors
 
     .. literalinclude:: common_functions/002.php
 
-.. note:: If you are using the :doc:`form helper </helpers/form_helper>`, this feature is built-in. You only
-        need to use this function when not using the form helper.
+.. note:: If you are using the :php:func:`set_value()`, :php:func:`set_select()`,
+    :php:func:`set_checkbox()`, and :php:func:`set_radio()` functions in
+    :doc:`form helper </helpers/form_helper>`, this feature is built-in. You only
+    need to use this function when not using the form helper.
 
 .. php:function:: session([$key])
 
@@ -266,8 +283,11 @@ Miscellaneous Functions
 
     Checks to see if the page is currently being accessed via HTTPS. If it is, then
     nothing happens. If it is not, then the user is redirected back to the current URI
-    but through HTTPS. Will set the HTTP Strict Transport Security header, which instructs
-    modern browsers to automatically modify any HTTP requests to HTTPS requests for the $duration.
+    but through HTTPS. Will set the HTTP Strict Transport Security (HTST) header, which instructs
+    modern browsers to automatically modify any HTTP requests to HTTPS requests for the ``$duration``.
+
+    .. note:: This function is also used when you set
+        ``Config\App:$forceGlobalSecureRequests`` to true.
 
 .. php:function:: function_usable($function_name)
 

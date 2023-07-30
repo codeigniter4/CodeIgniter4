@@ -31,14 +31,14 @@ final class PrefixTest extends CIUnitTestCase
         $this->db = new MockConnection(['DBPrefix' => 'ci_']);
     }
 
-    public function testPrefixesSetOnTableNames()
+    public function testPrefixesSetOnTableNames(): void
     {
         $expected = 'ci_users';
 
         $this->assertSame($expected, $this->db->prefixTable('users'));
     }
 
-    public function testPrefixesSetOnTableNamesWithWhereClause()
+    public function testPrefixesSetOnTableNamesWithWhereClause(): void
     {
         $builder = $this->db->table('users');
 

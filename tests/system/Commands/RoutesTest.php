@@ -39,7 +39,7 @@ final class RoutesTest extends CIUnitTestCase
 
     protected function getBuffer()
     {
-        return $this->getStreamFilterBuffer();
+        return str_replace(PHP_EOL, "\n", $this->getStreamFilterBuffer());
     }
 
     private function getCleanRoutes(): RouteCollection
@@ -51,7 +51,7 @@ final class RoutesTest extends CIUnitTestCase
         return $routes;
     }
 
-    public function testRoutesCommand()
+    public function testRoutesCommand(): void
     {
         $this->getCleanRoutes();
 
@@ -77,7 +77,7 @@ final class RoutesTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, $this->getBuffer());
     }
 
-    public function testRoutesCommandSortByHandler()
+    public function testRoutesCommandSortByHandler(): void
     {
         $this->getCleanRoutes();
 
@@ -103,7 +103,7 @@ final class RoutesTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, $this->getBuffer());
     }
 
-    public function testRoutesCommandAutoRouteImproved()
+    public function testRoutesCommandAutoRouteImproved(): void
     {
         $routes = $this->getCleanRoutes();
 
@@ -136,7 +136,7 @@ final class RoutesTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, $this->getBuffer());
     }
 
-    public function testRoutesCommandRouteLegacy()
+    public function testRoutesCommandRouteLegacy(): void
     {
         $routes = $this->getCleanRoutes();
 

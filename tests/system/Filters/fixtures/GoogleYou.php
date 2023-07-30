@@ -26,7 +26,7 @@ class GoogleYou implements FilterInterface
         return $response;
     }
 
-    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null): void
     {
     }
 }

@@ -36,7 +36,7 @@ final class UpdateTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testUpdateSetsAllWithoutWhere()
+    public function testUpdateSetsAllWithoutWhere(): void
     {
         $this->db->table('user')->update(['name' => 'Bobby']);
 
@@ -48,7 +48,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame('Bobby', $result[3]->name);
     }
 
-    public function testUpdateSetsAllWithoutWhereAndLimit()
+    public function testUpdateSetsAllWithoutWhereAndLimit(): void
     {
         try {
             $this->db->table('user')->update(['name' => 'Bobby'], null, 1);
@@ -76,7 +76,7 @@ final class UpdateTest extends CIUnitTestCase
         }
     }
 
-    public function testUpdateWithWhere()
+    public function testUpdateWithWhere(): void
     {
         $this->db->table('user')->update(['name' => 'Bobby'], ['country' => 'US']);
 
@@ -93,7 +93,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertCount(2, $rows);
     }
 
-    public function testUpdateWithWhereAndLimit()
+    public function testUpdateWithWhereAndLimit(): void
     {
         try {
             $this->db->table('user')->update(['name' => 'Bobby'], ['country' => 'US'], 1);
@@ -111,7 +111,7 @@ final class UpdateTest extends CIUnitTestCase
         }
     }
 
-    public function testUpdateBatch()
+    public function testUpdateBatch(): void
     {
         $data = [
             [
@@ -136,7 +136,7 @@ final class UpdateTest extends CIUnitTestCase
         ]);
     }
 
-    public function testUpdateWithWhereSameColumn()
+    public function testUpdateWithWhereSameColumn(): void
     {
         $this->db->table('user')->update(['country' => 'CA'], ['country' => 'US']);
 
@@ -153,7 +153,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertCount(2, $rows);
     }
 
-    public function testUpdateWithWhereSameColumn2()
+    public function testUpdateWithWhereSameColumn2(): void
     {
         // calling order: set() -> where()
         $this->db->table('user')
@@ -174,7 +174,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertCount(2, $rows);
     }
 
-    public function testUpdateWithWhereSameColumn3()
+    public function testUpdateWithWhereSameColumn3(): void
     {
         // calling order: where() -> set() in update()
         $this->db->table('user')
@@ -197,7 +197,7 @@ final class UpdateTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/324
      */
-    public function testUpdatePeriods()
+    public function testUpdatePeriods(): void
     {
         $this->db->table('misc')
             ->where('key', 'spaces and tabs')
@@ -213,7 +213,7 @@ final class UpdateTest extends CIUnitTestCase
     /**
      * @see https://codeigniter4.github.io/CodeIgniter4/database/query_builder.html#updating-data
      */
-    public function testSetWithoutEscape()
+    public function testSetWithoutEscape(): void
     {
         $this->db->table('job')
             ->set('description', $this->db->escapeIdentifiers('name'), false)
@@ -225,7 +225,7 @@ final class UpdateTest extends CIUnitTestCase
         ]);
     }
 
-    public function testSetWithBoolean()
+    public function testSetWithBoolean(): void
     {
         $this->db->table('type_test')
             ->set('type_boolean', false)
@@ -244,7 +244,7 @@ final class UpdateTest extends CIUnitTestCase
         ]);
     }
 
-    public function testUpdateBatchTwoConstraints()
+    public function testUpdateBatchTwoConstraints(): void
     {
         if (version_compare($this->db->getVersion(), '3.33.0') < 0) {
             $this->markTestSkipped('This SQLite version does not support this test.');
@@ -275,7 +275,7 @@ final class UpdateTest extends CIUnitTestCase
         ]);
     }
 
-    public function testUpdateBatchConstraintsRawSqlAndAlias()
+    public function testUpdateBatchConstraintsRawSqlAndAlias(): void
     {
         if (version_compare($this->db->getVersion(), '3.33.0') < 0) {
             $this->markTestSkipped('This SQLite version does not support this test.');
@@ -329,7 +329,7 @@ final class UpdateTest extends CIUnitTestCase
         ]);
     }
 
-    public function testUpdateBatchUpdateFieldsAndAlias()
+    public function testUpdateBatchUpdateFieldsAndAlias(): void
     {
         if ($this->db->DBDriver === 'SQLite3' && ! (version_compare($this->db->getVersion(), '3.33.0') >= 0)) {
             $this->markTestSkipped('Only SQLite 3.33 and newer can complete this test.');
@@ -342,7 +342,6 @@ final class UpdateTest extends CIUnitTestCase
                 'country' => 'Greece',
             ],
             [
-
                 'email'   => 'ahmadinejad@world.com',
                 'name'    => 'Ahmadinejad No change',
                 'country' => 'Greece',
@@ -421,7 +420,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['name' => 'Should Change', 'country' => 'UK']);
     }
 
-    public function testUpdateBatchWithoutOnConstraint()
+    public function testUpdateBatchWithoutOnConstraint(): void
     {
         if ($this->db->DBDriver === 'SQLite3' && ! (version_compare($this->db->getVersion(), '3.33.0') >= 0)) {
             $this->markTestSkipped('Only SQLite 3.33 and newer can complete this test.');
@@ -463,7 +462,7 @@ final class UpdateTest extends CIUnitTestCase
         }
     }
 
-    public function testRawSqlConstraint()
+    public function testRawSqlConstraint(): void
     {
         if ($this->db->DBDriver === 'SQLite3' && ! (version_compare($this->db->getVersion(), '3.33.0') >= 0)) {
             $this->markTestSkipped('Only SQLite 3.33 and newer can complete this test.');
@@ -487,7 +486,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['email' => 'derek@world.com', 'country' => 'Germany']);
     }
 
-    public function testRawSqlConstraintWithKey()
+    public function testRawSqlConstraintWithKey(): void
     {
         if ($this->db->DBDriver === 'SQLite3' && ! (version_compare($this->db->getVersion(), '3.33.0') >= 0)) {
             $this->markTestSkipped('Only SQLite 3.33 and newer can complete this test.');
@@ -511,7 +510,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['email' => 'derek@world.com', 'country' => 'Germany']);
     }
 
-    public function testNoConstraintFound()
+    public function testNoConstraintFound(): void
     {
         $jobData = [
             'name'        => 'Programmer',
@@ -525,7 +524,7 @@ final class UpdateTest extends CIUnitTestCase
             ->updateBatch($jobData);
     }
 
-    public function testUpdateBatchWithQuery()
+    public function testUpdateBatchWithQuery(): void
     {
         $this->forge = Database::forge($this->DBGroup);
 

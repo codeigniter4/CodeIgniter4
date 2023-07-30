@@ -50,7 +50,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         }
     }
 
-    public function testPrepareReturnsPreparedQuery()
+    public function testPrepareReturnsPreparedQuery(): void
     {
         $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->insert([
             'name'    => 'a',
@@ -79,7 +79,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         $this->assertSame($expected, $this->query->getQueryString());
     }
 
-    public function testPrepareReturnsManualPreparedQuery()
+    public function testPrepareReturnsManualPreparedQuery(): void
     {
         $this->query = $this->db->prepare(static function ($db) {
             $sql = "INSERT INTO {$db->protectIdentifiers($db->DBPrefix . 'user')} ("
@@ -107,7 +107,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         $this->assertSame($expected, $this->query->getQueryString());
     }
 
-    public function testExecuteRunsQueryAndReturnsTrue()
+    public function testExecuteRunsQueryAndReturnsTrue(): void
     {
         $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->insert([
             'name'    => 'a',
@@ -123,7 +123,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'bar', 'email' => 'bar@example.com']);
     }
 
-    public function testExecuteRunsQueryManualAndReturnsTrue()
+    public function testExecuteRunsQueryManualAndReturnsTrue(): void
     {
         $this->query = $this->db->prepare(static function ($db) {
             $sql = "INSERT INTO {$db->protectIdentifiers($db->DBPrefix . 'user')} ("
@@ -142,7 +142,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'bar', 'email' => 'bar@example.com']);
     }
 
-    public function testExecuteRunsQueryAndReturnsFalse()
+    public function testExecuteRunsQueryAndReturnsFalse(): void
     {
         $this->query = $this->db->prepare(static fn ($db) => $db->table('without_auto_increment')->insert([
             'key'   => 'a',
@@ -160,7 +160,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         $this->dontSeeInDatabase($this->db->DBPrefix . 'without_auto_increment', ['key' => 'foo1', 'value' => 'baz']);
     }
 
-    public function testExecuteRunsQueryManualAndReturnsFalse()
+    public function testExecuteRunsQueryManualAndReturnsFalse(): void
     {
         $this->query = $this->db->prepare(static function ($db) {
             $sql = "INSERT INTO {$db->protectIdentifiers($db->DBPrefix . 'without_auto_increment')} ("
@@ -182,7 +182,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         $this->dontSeeInDatabase($this->db->DBPrefix . 'without_auto_increment', ['key' => 'foo1', 'value' => 'baz']);
     }
 
-    public function testExecuteSelectQueryAndCheckTypeAndResult()
+    public function testExecuteSelectQueryAndCheckTypeAndResult(): void
     {
         $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->select('name, email, country')->where([
             'name' => 'foo',
@@ -196,7 +196,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         $this->assertSame($expectedRow, $result->getRowArray());
     }
 
-    public function testExecuteSelectQueryManualAndCheckTypeAndResult()
+    public function testExecuteSelectQueryManualAndCheckTypeAndResult(): void
     {
         $this->query = $this->db->prepare(static function ($db) {
             $sql = 'SELECT '
@@ -217,7 +217,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         $this->assertSame($expectedRow, $result->getRowArray());
     }
 
-    public function testExecuteRunsInvalidQuery()
+    public function testExecuteRunsInvalidQuery(): void
     {
         $this->expectException(DatabaseException::class);
 
@@ -230,7 +230,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         $this->query->execute('foo', 'foo@example.com', 'US');
     }
 
-    public function testDeallocatePreparedQueryThenTryToExecute()
+    public function testDeallocatePreparedQueryThenTryToExecute(): void
     {
         $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->insert([
             'name'    => 'a',
@@ -247,7 +247,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         $this->query->execute('bar', 'bar@example.com', 'GB');
     }
 
-    public function testDeallocatePreparedQueryThenTryToClose()
+    public function testDeallocatePreparedQueryThenTryToClose(): void
     {
         $this->query = $this->db->prepare(
             static fn ($db) => $db->table('user')->insert([

@@ -27,7 +27,7 @@ final class BaseHandlerTest extends CIUnitTestCase
      *
      * @param mixed $input
      */
-    public function testValidateKeyInvalidType($input)
+    public function testValidateKeyInvalidType($input): void
     {
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Cache key must be a string');
@@ -35,7 +35,7 @@ final class BaseHandlerTest extends CIUnitTestCase
         BaseHandler::validateKey($input);
     }
 
-    public function invalidTypeProvider(): array
+    public function invalidTypeProvider(): iterable
     {
         return [
             [true],
@@ -46,7 +46,7 @@ final class BaseHandlerTest extends CIUnitTestCase
         ];
     }
 
-    public function testValidateKeyUsesConfig()
+    public function testValidateKeyUsesConfig(): void
     {
         config('Cache')->reservedCharacters = 'b';
 
@@ -56,7 +56,7 @@ final class BaseHandlerTest extends CIUnitTestCase
         BaseHandler::validateKey('banana');
     }
 
-    public function testValidateKeySuccess()
+    public function testValidateKeySuccess(): void
     {
         $string = 'banana';
         $result = BaseHandler::validateKey($string);
@@ -64,7 +64,7 @@ final class BaseHandlerTest extends CIUnitTestCase
         $this->assertSame($string, $result);
     }
 
-    public function testValidateKeySuccessWithPrefix()
+    public function testValidateKeySuccessWithPrefix(): void
     {
         $string = 'banana';
         $result = BaseHandler::validateKey($string, 'prefix');
@@ -72,7 +72,7 @@ final class BaseHandlerTest extends CIUnitTestCase
         $this->assertSame('prefix' . $string, $result);
     }
 
-    public function testValidateExcessiveLength()
+    public function testValidateExcessiveLength(): void
     {
         $string   = 'MoreThanTenCharacters';
         $expected = md5($string);
@@ -82,7 +82,7 @@ final class BaseHandlerTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testValidateExcessiveLengthWithPrefix()
+    public function testValidateExcessiveLengthWithPrefix(): void
     {
         $string   = 'MoreThanTenCharacters';
         $expected = 'prefix' . md5($string);

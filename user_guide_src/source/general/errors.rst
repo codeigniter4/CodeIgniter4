@@ -3,9 +3,11 @@ Error Handling
 ##############
 
 CodeIgniter builds error reporting into your system through Exceptions, both the `SPL collection <https://www.php.net/manual/en/spl.exceptions.php>`_, as
-well as a few custom exceptions that are provided by the framework. Depending on your environment's setup,
+well as a few exceptions that are provided by the framework.
+
+Depending on your environment's setup,
 the default action when an error or exception is thrown is to display a detailed error report unless the application
-is running under the ``production`` environment. In this case, a more generic message is displayed to
+is running under the ``production`` environment. In the ``production`` environment, a more generic message is displayed to
 keep the best user experience for your users.
 
 .. contents::
@@ -43,11 +45,18 @@ the error handler to function as normal, you can throw a new exception within th
 Configuration
 =============
 
-By default, CodeIgniter will display all errors in the ``development`` and ``testing`` environments, and will not
+Error Reporting
+---------------
+
+By default, CodeIgniter will display a detailed error report with all errors in the ``development`` and ``testing`` environments, and will not
 display any errors in the ``production`` environment. You can change this by setting the ``CI_ENVIRONMENT`` variable
-in the **.env** file.
+in the :ref:`.env <dotenv-file>` file.
 
 .. important:: Disabling error reporting DOES NOT stop logs from being written if there are errors.
+
+.. warning:: Note that your settings from the **.env** file are added to ``$_SERVER``
+    and ``$_ENV``. As a side effect, this means that if the detailed error report
+    is displayed, **your secure credentials are publicly exposed**.
 
 Logging Exceptions
 ------------------
@@ -105,11 +114,11 @@ RedirectException
 -----------------
 
 This exception is a special case allowing for overriding of all other response routing and
-forcing a redirect to a specific route or URL:
+forcing a redirect to a specific URI:
 
 .. literalinclude:: errors/010.php
 
-``$route`` may be a named route, relative URI, or a complete URL. You can also supply a
+``$uri`` is a URI path relative to baseURL. You can also supply a
 redirect code to use instead of the default (``302``, "temporary redirect"):
 
 .. literalinclude:: errors/011.php

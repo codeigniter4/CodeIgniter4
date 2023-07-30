@@ -28,7 +28,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         helper('array');
     }
 
-    public function testArrayDotSimple()
+    public function testArrayDotSimple(): void
     {
         $data = [
             'foo' => [
@@ -39,7 +39,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame(23, dot_array_search('foo.bar', $data));
     }
 
-    public function testArrayDotTooManyLevels()
+    public function testArrayDotTooManyLevels(): void
     {
         $data = [
             'foo' => [
@@ -50,7 +50,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertNull(dot_array_search('foo.bar.baz', $data));
     }
 
-    public function testArrayDotTooManyLevelsWithWildCard()
+    public function testArrayDotTooManyLevelsWithWildCard(): void
     {
         $data = [
             'a' => [],
@@ -62,7 +62,7 @@ final class ArrayHelperTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5369
      */
-    public function testArrayDotValueIsListArray()
+    public function testArrayDotValueIsListArray(): void
     {
         $data = [
             'arr' => [1, 2, 3],
@@ -71,7 +71,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertNull(dot_array_search('arr.*.index', $data));
     }
 
-    public function testArrayDotEscape()
+    public function testArrayDotEscape(): void
     {
         $data = [
             'foo' => [
@@ -86,7 +86,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame(42, dot_array_search('foo\.bar.baz', $data));
     }
 
-    public function testArraySearchDotMultiLevels()
+    public function testArraySearchDotMultiLevels(): void
     {
         $data1 = [
             'bar' => [
@@ -109,14 +109,14 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertNull(dot_array_search('bar.*.foo', $data3));
     }
 
-    public function testArrayDotReturnNullEmptyArray()
+    public function testArrayDotReturnNullEmptyArray(): void
     {
         $data = [];
 
         $this->assertNull(dot_array_search('foo.bar', $data));
     }
 
-    public function testArrayDotReturnNullMissingValue()
+    public function testArrayDotReturnNullMissingValue(): void
     {
         $data = [
             'foo' => [
@@ -127,7 +127,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertNull(dot_array_search('foo.baz', $data));
     }
 
-    public function testArrayDotReturnNullEmptyIndex()
+    public function testArrayDotReturnNullEmptyIndex(): void
     {
         $data = [
             'foo' => [
@@ -138,7 +138,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertNull(dot_array_search('', $data));
     }
 
-    public function testArrayDotEarlyIndex()
+    public function testArrayDotEarlyIndex(): void
     {
         $data = [
             'foo' => [
@@ -149,7 +149,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame(['bar' => 23], dot_array_search('foo', $data));
     }
 
-    public function testArrayDotWildcard()
+    public function testArrayDotWildcard(): void
     {
         $data = [
             'foo' => [
@@ -162,7 +162,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame(23, dot_array_search('foo.*.baz', $data));
     }
 
-    public function testArrayDotWildcardWithMultipleChoices()
+    public function testArrayDotWildcardWithMultipleChoices(): void
     {
         $data = [
             'foo' => [
@@ -179,7 +179,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame(23, dot_array_search('foo.*.baz', $data));
     }
 
-    public function testArrayDotNestedNotFound()
+    public function testArrayDotNestedNotFound(): void
     {
         $data = [
             'foo' => [
@@ -195,7 +195,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertNull(dot_array_search('foo.*.notthere', $data));
     }
 
-    public function testArrayDotIgnoresLastWildcard()
+    public function testArrayDotIgnoresLastWildcard(): void
     {
         $data = [
             'foo' => [
@@ -214,7 +214,7 @@ final class ArrayHelperTest extends CIUnitTestCase
      * @param int|string        $key
      * @param array|string|null $expected
      */
-    public function testArrayDeepSearch($key, $expected)
+    public function testArrayDeepSearch($key, $expected): void
     {
         $data = [
             'key1' => 'Value 1',
@@ -240,7 +240,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testArrayDeepSearchReturnNullEmptyArray()
+    public function testArrayDeepSearchReturnNullEmptyArray(): void
     {
         $data = [];
 
@@ -250,7 +250,7 @@ final class ArrayHelperTest extends CIUnitTestCase
     /**
      * @dataProvider sortByMultipleKeysProvider
      */
-    public function testArraySortByMultipleKeysWithArray(array $data, array $sortColumns, array $expected)
+    public function testArraySortByMultipleKeysWithArray(array $data, array $sortColumns, array $expected): void
     {
         $success = array_sort_by_multiple_keys($data, $sortColumns);
 
@@ -261,7 +261,7 @@ final class ArrayHelperTest extends CIUnitTestCase
     /**
      * @dataProvider sortByMultipleKeysProvider
      */
-    public function testArraySortByMultipleKeysWithObjects(array $data, array $sortColumns, array $expected)
+    public function testArraySortByMultipleKeysWithObjects(array $data, array $sortColumns, array $expected): void
     {
         // Morph to objects
         foreach ($data as $index => $dataSet) {
@@ -277,7 +277,7 @@ final class ArrayHelperTest extends CIUnitTestCase
     /**
      * @dataProvider sortByMultipleKeysProvider
      */
-    public function testArraySortByMultipleKeysFailsEmptyParameter(array $data, array $sortColumns, array $expected)
+    public function testArraySortByMultipleKeysFailsEmptyParameter(array $data, array $sortColumns, array $expected): void
     {
         // Both filled
         $success = array_sort_by_multiple_keys($data, $sortColumns);
@@ -301,7 +301,7 @@ final class ArrayHelperTest extends CIUnitTestCase
      *
      * @param mixed $data
      */
-    public function testArraySortByMultipleKeysFailsInconsistentArraySizes($data)
+    public function testArraySortByMultipleKeysFailsInconsistentArraySizes($data): void
     {
         // PHP 8 changes this error type
         if (version_compare(PHP_VERSION, '8.0', '<')) {
@@ -320,7 +320,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         array_sort_by_multiple_keys($data, $sortColumns);
     }
 
-    public static function deepSearchProvider()
+    public static function deepSearchProvider(): iterable
     {
         return [
             [
@@ -346,7 +346,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
     }
 
-    public static function sortByMultipleKeysProvider()
+    public static function sortByMultipleKeysProvider(): iterable
     {
         $seed = [
             0 => [

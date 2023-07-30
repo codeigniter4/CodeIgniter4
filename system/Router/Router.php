@@ -16,6 +16,8 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\Exceptions\RouterException;
+use Config\App;
+use Config\Feature;
 
 /**
  * Request router.
@@ -131,7 +133,7 @@ class Router implements RouterInterface
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
 
         if ($this->collection->shouldAutoRoute()) {
-            $autoRoutesImproved = config('Feature')->autoRoutesImproved ?? false;
+            $autoRoutesImproved = config(Feature::class)->autoRoutesImproved ?? false;
             if ($autoRoutesImproved) {
                 $this->autoRouter = new AutoRouterImproved(
                     $this->collection->getRegisteredControllers('*'),
@@ -143,7 +145,7 @@ class Router implements RouterInterface
                 );
             } else {
                 $this->autoRouter = new AutoRouter(
-                    $this->collection->getRegisteredControllers('cli'),
+                    $this->collection->getRoutes('cli', false), // @phpstan-ignore-line
                     $this->collection->getDefaultNamespace(),
                     $this->collection->getDefaultController(),
                     $this->collection->getDefaultMethod(),
@@ -181,7 +183,7 @@ class Router implements RouterInterface
         // Checks defined routes
         if ($this->checkRoutes($uri)) {
             if ($this->collection->isFiltered($this->matchedRoute[0])) {
-                $multipleFiltersEnabled = config('Feature')->multipleFilters ?? false;
+                $multipleFiltersEnabled = config(Feature::class)->multipleFilters ?? false;
                 if ($multipleFiltersEnabled) {
                     $this->filtersInfo = $this->collection->getFiltersForRoute($this->matchedRoute[0]);
                 } else {
@@ -391,6 +393,7 @@ class Router implements RouterInterface
      */
     protected function checkRoutes(string $uri): bool
     {
+        // @phpstan-ignore-next-line
         $routes = $this->collection->getRoutes($this->collection->getHTTPVerb());
 
         // Don't waste any time
@@ -441,7 +444,7 @@ class Router implements RouterInterface
                     );
 
                     if ($this->collection->shouldUseSupportedLocalesOnly()
-                        && ! in_array($matched['locale'], config('App')->supportedLocales, true)) {
+                        && ! in_array($matched['locale'], config(App::class)->supportedLocales, true)) {
                         // Throw exception to prevent the autorouter, if enabled,
                         // from trying to find a route
                         throw PageNotFoundException::forLocaleNotSupported($matched['locale']);

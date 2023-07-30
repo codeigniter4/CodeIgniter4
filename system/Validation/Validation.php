@@ -462,14 +462,14 @@ class Validation implements ValidationInterface
     }
 
     /**
-     * Sets an individual rule and custom error messages for a single field.
+     * Sets (or adds) an individual rule and custom error messages for a single
+     * field.
      *
      * The custom error message should be just the messages that apply to
      * this field, like so:
-     *
      *    [
-     *        'rule' => 'message',
-     *        'rule' => 'message',
+     *        'rule1' => 'message1',
+     *        'rule2' => 'message2',
      *    ]
      *
      * @param array|string $rules
@@ -502,8 +502,8 @@ class Validation implements ValidationInterface
 
     /**
      * Stores the rules that should be used to validate the items.
-     * Rules should be an array formatted like:
      *
+     * Rules should be an array formatted like:
      *    [
      *        'field' => 'rule1|rule2'
      *    ]
@@ -511,12 +511,12 @@ class Validation implements ValidationInterface
      * The $errors array should be formatted like:
      *    [
      *        'field' => [
-     *            'rule' => 'message',
-     *            'rule' => 'message
+     *            'rule1' => 'message1',
+     *            'rule2' => 'message2',
      *        ],
      *    ]
      *
-     * @param array $errors // An array of custom error messages
+     * @param array $errors An array of custom error messages
      */
     public function setRules(array $rules, array $errors = []): ValidationInterface
     {
@@ -665,7 +665,7 @@ class Validation implements ValidationInterface
      * same format used with setRules(). Additionally, check
      * for {group}_errors for an array of custom error messages.
      *
-     * @return array
+     * @return array<int, array> [rules, customErrors]
      *
      * @throws ValidationException
      */
@@ -693,7 +693,7 @@ class Validation implements ValidationInterface
             $this->customErrors = $this->config->{$errorName};
         }
 
-        return $this->rules;
+        return [$this->rules, $this->customErrors];
     }
 
     /**

@@ -1,0 +1,42 @@
+Version 4.3.7
+#############
+
+Release Date: July 30, 2023
+
+**4.3.7 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+BREAKING
+********
+
+- **RouteCollection:** The second parameter ``bool $includeWildcard = true`` has
+  been added to the ``RouteCollection::getRoutes()`` method.
+- **AutoRouting Legacy:** The first parameter of the ``AutoRouter::__construct()``
+  has been changed from ``$protectedControllers`` to ``$cliRoutes``.
+- **FeatureTestTrait:** When using :ref:`withBodyFormat() <feature-formatting-the-request>`,
+  the priority of the request body has been changed.
+  See :ref:`Upgrading Guide <upgrade-437-feature-testing>` for details.
+- **Validation:** The return value of ``Validation::loadRuleGroup()`` has been
+  changed from "**rules array**" to "**array** of **rules array** and **customErrors array**"
+  (``[rules, customErrors]``).
+
+Changes
+*******
+
+- The number helper function :php:func:`number_to_amount()`, which previously
+  returned "1000", has been corrected to return "1 thousand" when the number
+  is exactly 1000, for example.
+
+Bugs Fixed
+**********
+
+- **AutoRouting Legacy:** Fixed a bug that when you added a route with
+  ``$routes->add()``, the controller's other methods were inaccessible from the
+  web browser.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

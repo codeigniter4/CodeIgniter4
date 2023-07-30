@@ -40,7 +40,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $this->encryption     = new Encryption($this->config);
     }
 
-    public function testPropertiesGetter()
+    public function testPropertiesGetter(): void
     {
         $this->config->key       = sodium_crypto_secretbox_keygen();
         $this->config->blockSize = 256;
@@ -51,7 +51,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $this->assertNull($encrypter->driver);
     }
 
-    public function testEmptyKeyThrowsErrorOnInitialize()
+    public function testEmptyKeyThrowsErrorOnInitialize(): void
     {
         $this->expectException(EncryptionException::class);
 
@@ -59,7 +59,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $this->encryption->initialize($this->config);
     }
 
-    public function testEmptyKeyThrowsErrorOnEncrypt()
+    public function testEmptyKeyThrowsErrorOnEncrypt(): void
     {
         $this->expectException(EncryptionException::class);
 
@@ -67,7 +67,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $encrypter->encrypt('Some message to encrypt', '');
     }
 
-    public function testInvalidBlockSizeThrowsErrorOnEncrypt()
+    public function testInvalidBlockSizeThrowsErrorOnEncrypt(): void
     {
         $this->expectException(EncryptionException::class);
         $this->config->blockSize = -1;
@@ -76,7 +76,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $encrypter->encrypt('Some message.');
     }
 
-    public function testEmptyKeyThrowsErrorOnDecrypt()
+    public function testEmptyKeyThrowsErrorOnDecrypt(): void
     {
         $this->expectException(EncryptionException::class);
 
@@ -86,7 +86,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $encrypter->decrypt($ciphertext);
     }
 
-    public function testInvalidBlockSizeThrowsErrorOnDecrypt()
+    public function testInvalidBlockSizeThrowsErrorOnDecrypt(): void
     {
         $this->expectException(EncryptionException::class);
         $key = $this->config->key;
@@ -97,7 +97,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $encrypter->decrypt($ciphertext, ['key' => $key, 'blockSize' => 0]);
     }
 
-    public function testTruncatedMessageThrowsErrorOnDecrypt()
+    public function testTruncatedMessageThrowsErrorOnDecrypt(): void
     {
         $this->expectException(EncryptionException::class);
 
@@ -107,7 +107,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $encrypter->decrypt($truncated, ['blockSize' => 256, 'key' => sodium_crypto_secretbox_keygen()]);
     }
 
-    public function testDecryptingMessages()
+    public function testDecryptingMessages(): void
     {
         $key = sodium_crypto_secretbox_keygen();
         $msg = 'A plaintext message for you.';

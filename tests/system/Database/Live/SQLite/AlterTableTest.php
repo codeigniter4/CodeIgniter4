@@ -12,7 +12,6 @@
 namespace CodeIgniter\Database\Live\SQLite;
 
 use CodeIgniter\Database\Exceptions\DataException;
-use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Database\SQLite3\Forge;
 use CodeIgniter\Database\SQLite3\Table;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -57,7 +56,7 @@ final class AlterTableTest extends CIUnitTestCase
         $this->dropTables();
     }
 
-    private function dropTables()
+    private function dropTables(): void
     {
         $this->forge->dropTable('aliens', true);
         $this->forge->dropTable('aliens_fk', true);
@@ -67,7 +66,7 @@ final class AlterTableTest extends CIUnitTestCase
         $this->forge->dropTable('foo_fk', true);
     }
 
-    public function testFromTableThrowsOnNoTable()
+    public function testFromTableThrowsOnNoTable(): void
     {
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('Table "foo" was not found in the current database.');
@@ -75,7 +74,7 @@ final class AlterTableTest extends CIUnitTestCase
         $this->table->fromTable('foo');
     }
 
-    public function testFromTableFillsDetails()
+    public function testFromTableFillsDetails(): void
     {
         $this->createTable();
 
@@ -112,7 +111,7 @@ final class AlterTableTest extends CIUnitTestCase
         $this->assertSame(['fields' => ['id'], 'type' => 'primary'], $keys['primary']);
     }
 
-    public function testDropColumnSuccess()
+    public function testDropColumnSuccess(): void
     {
         $this->createTable();
 
@@ -130,7 +129,7 @@ final class AlterTableTest extends CIUnitTestCase
         $this->assertContains('email', $columns);
     }
 
-    public function testDropColumnMaintainsKeys()
+    public function testDropColumnMaintainsKeys(): void
     {
         $this->createTable();
 
@@ -152,7 +151,7 @@ final class AlterTableTest extends CIUnitTestCase
         $this->assertTrue($result);
     }
 
-    public function testDropColumnDropCompositeKey()
+    public function testDropColumnDropCompositeKey(): void
     {
         $this->forge->dropTable('actions', true);
 
@@ -192,7 +191,7 @@ final class AlterTableTest extends CIUnitTestCase
         $this->forge->dropTable('actions');
     }
 
-    public function testModifyColumnSuccess()
+    public function testModifyColumnSuccess(): void
     {
         $this->createTable('janky');
 
@@ -215,7 +214,7 @@ final class AlterTableTest extends CIUnitTestCase
         $this->assertTrue($this->db->fieldExists('serial', 'janky'));
     }
 
-    public function testDropForeignKeySuccess()
+    public function testDropForeignKeySuccess(): void
     {
         $this->createTable('aliens');
 
@@ -233,7 +232,7 @@ final class AlterTableTest extends CIUnitTestCase
         $this->assertEmpty($keys);
     }
 
-    public function testProcessCopiesOldData()
+    public function testProcessCopiesOldData(): void
     {
         $this->createTable();
 
@@ -260,7 +259,7 @@ final class AlterTableTest extends CIUnitTestCase
         $this->seeInDatabase('foo', ['email' => 'funkalicious@example.com']);
     }
 
-    protected function createTable(string $tableName = 'foo')
+    protected function createTable(string $tableName = 'foo'): void
     {
         // Create support table for foreign keys
         $this->forge->addField([

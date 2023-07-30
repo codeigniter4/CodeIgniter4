@@ -20,7 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class OutgoingRequestTest extends CIUnitTestCase
 {
-    public function testCreateWithHeader()
+    public function testCreateWithHeader(): void
     {
         $uri     = new URI('https://example.com/');
         $headers = ['User-Agent' => 'Mozilla/5.0'];
@@ -29,7 +29,7 @@ final class OutgoingRequestTest extends CIUnitTestCase
         $this->assertSame('Mozilla/5.0', $request->header('User-Agent')->getValue());
     }
 
-    public function testGetUri()
+    public function testGetUri(): void
     {
         $uri     = new URI('https://example.com/');
         $request = new OutgoingRequest('GET', $uri);
@@ -37,7 +37,7 @@ final class OutgoingRequestTest extends CIUnitTestCase
         $this->assertSame($uri, $request->getUri());
     }
 
-    public function testWithMethod()
+    public function testWithMethod(): void
     {
         $uri     = new URI('https://example.com/');
         $request = new OutgoingRequest('GET', $uri);
@@ -48,7 +48,7 @@ final class OutgoingRequestTest extends CIUnitTestCase
         $this->assertSame('POST', strtoupper($newRequest->getMethod()));
     }
 
-    public function testWithUri()
+    public function testWithUri(): void
     {
         $uri     = new URI('https://example.com/');
         $request = new OutgoingRequest('GET', $uri);
@@ -65,7 +65,7 @@ final class OutgoingRequestTest extends CIUnitTestCase
      *   request.
      * https://www.php-fig.org/psr/psr-7/#32-psrhttpmessagerequestinterface
      */
-    public function testWithUriPreserveHostHostHeaderIsMissingAndNewUriContainsHost()
+    public function testWithUriPreserveHostHostHeaderIsMissingAndNewUriContainsHost(): void
     {
         $uri     = new URI();
         $request = new OutgoingRequest('GET', $uri);
@@ -82,7 +82,7 @@ final class OutgoingRequestTest extends CIUnitTestCase
      *   request.
      * https://www.php-fig.org/psr/psr-7/#32-psrhttpmessagerequestinterface
      */
-    public function testWithUriPreserveHostHostHeaderIsMissingAndNewUriDoesNotContainsHost()
+    public function testWithUriPreserveHostHostHeaderIsMissingAndNewUriDoesNotContainsHost(): void
     {
         $uri     = new URI();
         $request = new OutgoingRequest('GET', $uri);
@@ -98,7 +98,7 @@ final class OutgoingRequestTest extends CIUnitTestCase
      *   the Host header in the returned request.
      * https://www.php-fig.org/psr/psr-7/#32-psrhttpmessagerequestinterface
      */
-    public function testWithUriPreserveHostHostHostIsNonEmpty()
+    public function testWithUriPreserveHostHostHostIsNonEmpty(): void
     {
         $uri     = new URI('https://example.com/');
         $request = new OutgoingRequest('GET', $uri);

@@ -92,7 +92,7 @@ The following functions are available:
 
 .. php:function:: number_to_roman($num)
 
-    :param string $num: The number want to convert
+    :param int|string $num: The number want to convert
     :returns: The roman number converted from given parameter
     :rtype: string|null
 
@@ -101,4 +101,4 @@ The following functions are available:
     .. literalinclude:: number_helper/009.php
 
     This function only handles numbers in the range 1 through 3999.
-    It will return null for any value outside that range.
+    It will return ``null`` for any value outside that range.

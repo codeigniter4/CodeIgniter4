@@ -46,7 +46,7 @@ final class ResponseSendTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testHeadersMissingDate()
+    public function testHeadersMissingDate(): void
     {
         $response = new Response(new App());
         $response->pretend(false);
@@ -79,7 +79,7 @@ final class ResponseSendTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testHeadersWithCSP()
+    public function testHeadersWithCSP(): void
     {
         $this->resetFactories();
         $this->resetServices();
@@ -115,7 +115,7 @@ final class ResponseSendTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testRedirectResponseCookies()
+    public function testRedirectResponseCookies(): void
     {
         $loginTime = time();
 

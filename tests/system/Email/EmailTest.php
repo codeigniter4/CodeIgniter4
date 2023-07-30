@@ -23,7 +23,7 @@ use ErrorException;
  */
 final class EmailTest extends CIUnitTestCase
 {
-    public function testEmailValidation()
+    public function testEmailValidation(): void
     {
         $config           = config('Email');
         $config->validate = true;
@@ -32,7 +32,7 @@ final class EmailTest extends CIUnitTestCase
         $this->assertStringContainsString('Invalid email address: "invalid"', $email->printDebugger());
     }
 
-    public function autoClearProvider()
+    public function autoClearProvider(): iterable
     {
         return [
             'autoclear'     => [true],
@@ -45,7 +45,7 @@ final class EmailTest extends CIUnitTestCase
      *
      * @param mixed $autoClear
      */
-    public function testEmailSendWithClearance($autoClear)
+    public function testEmailSendWithClearance($autoClear): void
     {
         $email = $this->createMockEmail();
 
@@ -58,7 +58,7 @@ final class EmailTest extends CIUnitTestCase
         }
     }
 
-    public function testEmailSendStoresArchive()
+    public function testEmailSendStoresArchive(): void
     {
         $email = $this->createMockEmail();
 
@@ -74,7 +74,7 @@ final class EmailTest extends CIUnitTestCase
         $this->assertSame('Archive Test', $email->archive['subject']);
     }
 
-    public function testAutoClearLeavesArchive()
+    public function testAutoClearLeavesArchive(): void
     {
         $email = $this->createMockEmail();
 
@@ -85,7 +85,7 @@ final class EmailTest extends CIUnitTestCase
         $this->assertNotEmpty($email->archive);
     }
 
-    public function testEmailSendRepeatUpdatesArchive()
+    public function testEmailSendRepeatUpdatesArchive(): void
     {
         $config = config('Email');
         $email  = new MockEmail($config);
@@ -103,7 +103,7 @@ final class EmailTest extends CIUnitTestCase
         $this->assertSame('Archive Test', $email->archive['subject']);
     }
 
-    public function testSuccessDoesTriggerEvent()
+    public function testSuccessDoesTriggerEvent(): void
     {
         $email = $this->createMockEmail();
 
@@ -111,7 +111,7 @@ final class EmailTest extends CIUnitTestCase
 
         $result = null;
 
-        Events::on('email', static function ($arg) use (&$result) {
+        Events::on('email', static function ($arg) use (&$result): void {
             $result = $arg;
         });
 
@@ -121,7 +121,7 @@ final class EmailTest extends CIUnitTestCase
         $this->assertSame(['foo@foo.com'], $result['recipients']);
     }
 
-    public function testFailureDoesNotTriggerEvent()
+    public function testFailureDoesNotTriggerEvent(): void
     {
         $email = $this->createMockEmail();
 
@@ -130,7 +130,7 @@ final class EmailTest extends CIUnitTestCase
 
         $result = null;
 
-        Events::on('email', static function ($arg) use (&$result) {
+        Events::on('email', static function ($arg) use (&$result): void {
             $result = $arg;
         });
 
@@ -139,7 +139,7 @@ final class EmailTest extends CIUnitTestCase
         $this->assertNull($result);
     }
 
-    public function testDestructDoesNotThrowException()
+    public function testDestructDoesNotThrowException(): void
     {
         $email = $this->getMockBuilder(Email::class)
             ->disableOriginalConstructor()

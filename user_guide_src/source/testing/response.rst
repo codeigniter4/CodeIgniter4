@@ -249,7 +249,7 @@ Asserts that an input tag exists with the name and value:
 
 .. literalinclude:: response/029.php
 
-Working With JSON
+Working with JSON
 =================
 
 Responses will frequently contain JSON responses, especially when working with API methods. The following methods
@@ -280,7 +280,7 @@ assertJSONExact($test)
 
 Similar to ``assertJSONFragment()``, but checks the entire JSON response to ensure exact matches.
 
-Working With XML
+Working with XML
 ================
 
 getXML()

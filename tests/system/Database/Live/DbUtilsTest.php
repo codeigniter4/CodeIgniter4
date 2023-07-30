@@ -29,7 +29,7 @@ final class DbUtilsTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testUtilsBackup()
+    public function testUtilsBackup(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
@@ -39,7 +39,7 @@ final class DbUtilsTest extends CIUnitTestCase
         $util->backup();
     }
 
-    public function testUtilsBackupWithParamsArray()
+    public function testUtilsBackupWithParamsArray(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
@@ -52,7 +52,7 @@ final class DbUtilsTest extends CIUnitTestCase
         $util->backup($params);
     }
 
-    public function testUtilsBackupWithParamsString()
+    public function testUtilsBackupWithParamsString(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
@@ -62,7 +62,7 @@ final class DbUtilsTest extends CIUnitTestCase
         $util->backup('db_jobs');
     }
 
-    public function testUtilsListDatabases()
+    public function testUtilsListDatabases(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
@@ -78,7 +78,7 @@ final class DbUtilsTest extends CIUnitTestCase
         }
     }
 
-    public function testUtilsDatabaseExist()
+    public function testUtilsDatabaseExist(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
@@ -94,7 +94,7 @@ final class DbUtilsTest extends CIUnitTestCase
         }
     }
 
-    public function testUtilsOptimizeDatabase()
+    public function testUtilsOptimizeDatabase(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
@@ -109,7 +109,7 @@ final class DbUtilsTest extends CIUnitTestCase
         $this->assertTrue((bool) $d);
     }
 
-    public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugTrue()
+    public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugTrue(): void
     {
         $util = (new Database())->loadUtils($this->db);
         $this->setPrivateProperty($util, 'optimizeTable', false);
@@ -124,7 +124,7 @@ final class DbUtilsTest extends CIUnitTestCase
         // this point in code execution will never be reached
     }
 
-    public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugFalse()
+    public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugFalse(): void
     {
         $util = (new Database())->loadUtils($this->db);
         $this->setPrivateProperty($util, 'optimizeTable', false);
@@ -138,7 +138,7 @@ final class DbUtilsTest extends CIUnitTestCase
         $this->enableDBDebug();
     }
 
-    public function testUtilsOptimizeTable()
+    public function testUtilsOptimizeTable(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
@@ -153,7 +153,7 @@ final class DbUtilsTest extends CIUnitTestCase
         $this->assertTrue($d);
     }
 
-    public function testUtilsOptimizeTableFalseOptimizeTable()
+    public function testUtilsOptimizeTableFalseOptimizeTable(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
@@ -165,7 +165,7 @@ final class DbUtilsTest extends CIUnitTestCase
         $util->optimizeTable('db_job');
     }
 
-    public function testUtilsRepairTable()
+    public function testUtilsRepairTable(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
@@ -175,7 +175,7 @@ final class DbUtilsTest extends CIUnitTestCase
         $util->repairTable('db_job');
     }
 
-    public function testUtilsCSVFromResult()
+    public function testUtilsCSVFromResult(): void
     {
         $data = $this->db->table('job')->get();
 
@@ -188,7 +188,7 @@ final class DbUtilsTest extends CIUnitTestCase
         $this->assertSame('"1","Developer","Awesome job, but sometimes makes you bored","","",""', $data[1]);
     }
 
-    public function testUtilsXMLFromResult()
+    public function testUtilsXMLFromResult(): void
     {
         $data = $this->db->table('job')->where('id', 4)->get();
 

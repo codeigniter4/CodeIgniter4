@@ -65,8 +65,8 @@ if (! function_exists('cache')) {
      *    cache()->save('foo', 'bar');
      *    $foo = cache('bar');
      *
-     * @return CacheInterface|mixed
-     * @phpstan-return ($key is null ? CacheInterface : mixed)
+     * @return array|bool|CacheInterface|float|int|object|string|null
+     * @phpstan-return ($key is null ? CacheInterface : array|bool|float|int|object|string|null)
      */
     function cache(?string $key = null)
     {
@@ -1003,11 +1003,9 @@ if (! function_exists('service')) {
      *  - $timer = service('timer')
      *  - $timer = \CodeIgniter\Config\Services::timer();
      *
-     * @param mixed ...$params
-     *
-     * @return object
+     * @param array|bool|float|int|object|string|null ...$params
      */
-    function service(string $name, ...$params)
+    function service(string $name, ...$params): ?object
     {
         return Services::$name(...$params);
     }
@@ -1017,11 +1015,9 @@ if (! function_exists('single_service')) {
     /**
      * Always returns a new instance of the class.
      *
-     * @param mixed ...$params
-     *
-     * @return object|null
+     * @param array|bool|float|int|object|string|null ...$params
      */
-    function single_service(string $name, ...$params)
+    function single_service(string $name, ...$params): ?object
     {
         $service = Services::serviceExists($name);
 

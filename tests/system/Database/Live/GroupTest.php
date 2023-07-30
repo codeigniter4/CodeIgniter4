@@ -27,7 +27,7 @@ final class GroupTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testGroupBy()
+    public function testGroupBy(): void
     {
         $result = $this->db->table('user')
             ->select('name')
@@ -38,7 +38,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertCount(4, $result);
     }
 
-    public function testHavingBy()
+    public function testHavingBy(): void
     {
         $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
 
@@ -61,7 +61,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertCount(2, $result);
     }
 
-    public function testOrHavingBy()
+    public function testOrHavingBy(): void
     {
         $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
 
@@ -86,7 +86,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertCount(2, $result);
     }
 
-    public function testHavingIn()
+    public function testHavingIn(): void
     {
         $result = $this->db->table('job')
             ->select('name')
@@ -101,7 +101,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Politician', $result[1]->name);
     }
 
-    public function testorHavingIn()
+    public function testorHavingIn(): void
     {
         $result = $this->db->table('job')
             ->select('name')
@@ -117,7 +117,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Politician', $result[1]->name);
     }
 
-    public function testHavingNotIn()
+    public function testHavingNotIn(): void
     {
         $result = $this->db->table('job')
             ->select('name')
@@ -132,7 +132,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Musician', $result[1]->name);
     }
 
-    public function testOrHavingNotIn()
+    public function testOrHavingNotIn(): void
     {
         $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
 
@@ -161,7 +161,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Musician', $result[1]->name);
     }
 
-    public function testHavingLike()
+    public function testHavingLike(): void
     {
         $result = $this->db->table('job')
             ->select('name')
@@ -174,7 +174,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Developer', $result[0]->name);
     }
 
-    public function testNotHavingLike()
+    public function testNotHavingLike(): void
     {
         $result = $this->db->table('job')
             ->select('name')
@@ -189,7 +189,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Developer', $result[1]->name);
     }
 
-    public function testOrHavingLike()
+    public function testOrHavingLike(): void
     {
         $result = $this->db->table('job')
             ->select('name')
@@ -205,7 +205,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Developer', $result[1]->name);
     }
 
-    public function testOrNotHavingLike()
+    public function testOrNotHavingLike(): void
     {
         $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
 
@@ -235,7 +235,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Musician', $result[2]->name);
     }
 
-    public function testAndHavingGroupStart()
+    public function testAndHavingGroupStart(): void
     {
         $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
 
@@ -269,7 +269,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Accountant', $result[0]->name);
     }
 
-    public function testOrHavingGroupStart()
+    public function testOrHavingGroupStart(): void
     {
         $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
 
@@ -304,7 +304,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Musician', $result[1]->name);
     }
 
-    public function testNotHavingGroupStart()
+    public function testNotHavingGroupStart(): void
     {
         $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
 
@@ -338,7 +338,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Musician', $result[0]->name);
     }
 
-    public function testOrNotHavingGroupStart()
+    public function testOrNotHavingGroupStart(): void
     {
         $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
 
@@ -374,7 +374,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Politician', $result[2]->name);
     }
 
-    public function testAndGroups()
+    public function testAndGroups(): void
     {
         $result = $this->db->table('user')
             ->groupStart()
@@ -389,7 +389,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Richard A Causey', $result[0]->name);
     }
 
-    public function testOrGroups()
+    public function testOrGroups(): void
     {
         $result = $this->db->table('user')
             ->where('country', 'Iran')
@@ -405,7 +405,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Chris Martin', $result[1]->name);
     }
 
-    public function testNotGroups()
+    public function testNotGroups(): void
     {
         $result = $this->db->table('user')
             ->where('country', 'US')
@@ -420,7 +420,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Derek Jones', $result[0]->name);
     }
 
-    public function testOrNotGroups()
+    public function testOrNotGroups(): void
     {
         $result = $this->db->table('user')
             ->where('country', 'US')
@@ -437,7 +437,7 @@ final class GroupTest extends CIUnitTestCase
         $this->assertSame('Chris Martin', $result[2]->name);
     }
 
-    public function testGroupByCount()
+    public function testGroupByCount(): void
     {
         $result = $this->db->table('user')
             ->selectCount('id', 'count')

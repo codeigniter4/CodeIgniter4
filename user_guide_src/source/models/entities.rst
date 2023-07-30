@@ -57,7 +57,7 @@ are handled automatically by the class or the database, so we don't want to chan
 class as the ``$returnType``. This ensures that all methods on the model that return rows from the database will return
 instances of our User Entity class instead of an object or array like normal.
 
-Working With the Entity Class
+Working with the Entity Class
 -----------------------------
 
 Now that all of the pieces are in place, you would work with the Entity class as you would any other class:

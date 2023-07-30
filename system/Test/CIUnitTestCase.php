@@ -25,6 +25,7 @@ use CodeIgniter\Test\Mock\MockEmail;
 use CodeIgniter\Test\Mock\MockSession;
 use Config\App;
 use Config\Autoload;
+use Config\Email;
 use Config\Modules;
 use Config\Services;
 use Exception;
@@ -323,7 +324,7 @@ abstract class CIUnitTestCase extends TestCase
      */
     protected function mockEmail()
     {
-        Services::injectMock('email', new MockEmail(config('Email')));
+        Services::injectMock('email', new MockEmail(config(Email::class)));
     }
 
     /**
@@ -333,7 +334,7 @@ abstract class CIUnitTestCase extends TestCase
     {
         $_SESSION = [];
 
-        $config  = config('App');
+        $config  = config(App::class);
         $session = new MockSession(new ArrayHandler($config, '0.0.0.0'), $config);
 
         Services::injectMock('session', $session);

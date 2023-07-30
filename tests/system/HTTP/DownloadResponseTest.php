@@ -31,14 +31,14 @@ final class DownloadResponseTest extends CIUnitTestCase
         }
     }
 
-    public function testCanGetStatusCode()
+    public function testCanGetStatusCode(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
         $this->assertSame(200, $response->getStatusCode());
     }
 
-    public function testCantSetStatusCode()
+    public function testCantSetStatusCode(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
@@ -46,7 +46,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $response->setStatusCode(200);
     }
 
-    public function testSetDateRemembersDateInUTC()
+    public function testSetDateRemembersDateInUTC(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
@@ -61,7 +61,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame($date->format('D, d M Y H:i:s') . ' GMT', $header);
     }
 
-    public function testSetLastModifiedWithDateTimeObject()
+    public function testSetLastModifiedWithDateTimeObject(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
@@ -75,7 +75,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame($date->format('D, d M Y H:i:s') . ' GMT', $header);
     }
 
-    public function testSetLastModifiedWithString()
+    public function testSetLastModifiedWithString(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
@@ -86,14 +86,14 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame('2000-03-10 10:23:45', $header);
     }
 
-    public function testsentMethodSouldReturnRedirectResponse()
+    public function testsentMethodSouldReturnRedirectResponse(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
         $this->assertInstanceOf(DownloadResponse::class, $response);
     }
 
-    public function testSetContentType()
+    public function testSetContentType(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
@@ -102,7 +102,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame('text/json; charset=UTF-8', $response->getHeaderLine('Content-Type'));
     }
 
-    public function testSetContentTypeNoCharSet()
+    public function testSetContentTypeNoCharSet(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
@@ -111,7 +111,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame('application/octet-stream', $response->getHeaderLine('Content-Type'));
     }
 
-    public function testSetFileName()
+    public function testSetFileName(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
         $response->setFileName('myFile.txt');
@@ -120,7 +120,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame('attachment; filename="myFile.txt"; filename*=UTF-8\'\'myFile.txt', $response->getHeaderLine('Content-Disposition'));
     }
 
-    public function testNoCache()
+    public function testNoCache(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
@@ -129,7 +129,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame('private, no-transform, no-store, must-revalidate', $response->getHeaderLine('Cache-control'));
     }
 
-    public function testCantSetCache()
+    public function testCantSetCache(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
@@ -137,7 +137,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $response->setCache();
     }
 
-    public function testWhenFilepathIsSetBinaryCanNotBeSet()
+    public function testWhenFilepathIsSetBinaryCanNotBeSet(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
@@ -146,7 +146,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $response->setBinary('test');
     }
 
-    public function testWhenBinaryIsSetFilepathCanNotBeSet()
+    public function testWhenBinaryIsSetFilepathCanNotBeSet(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
@@ -155,7 +155,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $response->setFilePath(__FILE__);
     }
 
-    public function testCanNotSetNoFilepath()
+    public function testCanNotSetNoFilepath(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
@@ -163,7 +163,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $response->setFilePath('unit test');
     }
 
-    public function testCanGetContentLength()
+    public function testCanGetContentLength(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
@@ -181,7 +181,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame($size, $response->getContentLength());
     }
 
-    public function testIsSetDownloadableHeadlersFromBinary()
+    public function testIsSetDownloadableHeadlersFromBinary(): void
     {
         $response = new DownloadResponse('unit test.txt', false);
 
@@ -195,7 +195,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame('4', $response->getHeaderLine('Content-Length'));
     }
 
-    public function testIsSetDownloadableHeadlersFromFile()
+    public function testIsSetDownloadableHeadlersFromFile(): void
     {
         $response = new DownloadResponse('unit-test.php', false);
 
@@ -209,7 +209,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame(filesize(__FILE__), (int) $response->getHeaderLine('Content-Length'));
     }
 
-    public function testIfTheCharacterCodeIsOtherThanUtf8ReplaceItWithUtf8AndRawurlencode()
+    public function testIfTheCharacterCodeIsOtherThanUtf8ReplaceItWithUtf8AndRawurlencode(): void
     {
         $response = new DownloadResponse(mb_convert_encoding('テスト.php', 'Shift-JIS', 'UTF-8'), false);
 
@@ -220,7 +220,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame('attachment; filename="' . mb_convert_encoding('テスト.php', 'Shift-JIS', 'UTF-8') . '"; filename*=UTF-8\'\'%E3%83%86%E3%82%B9%E3%83%88.php', $response->getHeaderLine('Content-Disposition'));
     }
 
-    public function testFileExtensionIsUpperCaseWhenAndroidOSIs2()
+    public function testFileExtensionIsUpperCaseWhenAndroidOSIs2(): void
     {
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Linux; U; Android 2.0.3; ja-jp; SC-02C Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30';
         $response                   = new DownloadResponse('unit-test.php', false);
@@ -231,7 +231,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame('attachment; filename="unit-test.PHP"; filename*=UTF-8\'\'unit-test.PHP', $response->getHeaderLine('Content-Disposition'));
     }
 
-    public function testIsSetContentTypeFromFilename()
+    public function testIsSetContentTypeFromFilename(): void
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
@@ -241,7 +241,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame('text/plain; charset=UTF-8', $response->getHeaderLine('Content-Type'));
     }
 
-    public function testCanOutputFileBodyFromBinary()
+    public function testCanOutputFileBodyFromBinary(): void
     {
         $response = new DownloadResponse('unit-test.txt', false);
 
@@ -255,7 +255,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame('test', $actual);
     }
 
-    public function testCanOutputFileBodyFromFile()
+    public function testCanOutputFileBodyFromFile(): void
     {
         $response = new DownloadResponse('unit-test.php', false);
 
@@ -269,7 +269,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame(file_get_contents(__FILE__), $actual);
     }
 
-    public function testThrowExceptionWhenNoSetDownloadSource()
+    public function testThrowExceptionWhenNoSetDownloadSource(): void
     {
         $response = new DownloadResponse('unit-test.php', false);
 
@@ -277,13 +277,13 @@ final class DownloadResponseTest extends CIUnitTestCase
         $response->sendBody();
     }
 
-    public function testGetReason()
+    public function testGetReason(): void
     {
         $response = new DownloadResponse('unit-test.php', false);
         $this->assertSame('OK', $response->getReasonPhrase());
     }
 
-    public function testPretendOutput()
+    public function testPretendOutput(): void
     {
         $response = new DownloadResponse('unit-test.php', false);
         $response->pretend(true);
@@ -302,7 +302,7 @@ final class DownloadResponseTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testRealOutput()
+    public function testRealOutput(): void
     {
         $response = new DownloadResponse('unit-test.php', false);
         $response->pretend(false);

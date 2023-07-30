@@ -1,9 +1,10 @@
+################
 Running Your App
 ################
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 A CodeIgniter 4 app can be run in a number of different ways: hosted on a web server,
 using virtualization, or using CodeIgniter's command line tool for testing.
@@ -20,8 +21,9 @@ section of the User Guide to begin learning how to build dynamic PHP application
 
 .. _initial-configuration:
 
+*********************
 Initial Configuration
-=====================
+*********************
 
 #. Open the **app/Config/App.php** file with a text editor and
    set your base URL to ``$baseURL``. If you need more flexibility, the baseURL may
@@ -45,16 +47,17 @@ Initial Configuration
         run using the "production" environment. See also :ref:`environment-constant`.
 
 .. note:: If you will be running your site using a web server (e.g., Apache or Nginx),
-    you will need to modify the permissions for the ``writable`` folder inside
+    you will need to modify the permissions for the **writable** folder inside
     your project, so that it is writable by the user or account used by your
     web server.
 
+************************
 Local Development Server
-========================
+************************
 
 CodeIgniter 4 comes with a local development server, leveraging PHP's built-in web server
-with CodeIgniter routing. You can use the ``serve`` script to launch it,
-with the following command line in the main directory::
+with CodeIgniter routing. You can launch it, with the following command line
+in the main directory::
 
     > php spark serve
 
@@ -64,8 +67,8 @@ This will launch the server and you can now view your application in your browse
     be used on a production server.
 
 If you need to run the site on a host other than simply localhost, you'll first need to add the host
-to your ``hosts`` file. The exact location of the file varies in each of the main operating systems, though
-all unix-type systems (include OS X) will typically keep the file at **/etc/hosts**.
+to your **hosts** file. The exact location of the file varies in each of the main operating systems, though
+all unix-type systems (including macOS) will typically keep the file at **/etc/hosts**.
 
 The local development server can be customized with three command line options:
 
@@ -83,28 +86,39 @@ The local development server can be customized with three command line options:
 
     > php spark serve --php /usr/bin/php7.6.5.4
 
+*******************
 Hosting with Apache
-===================
+*******************
 
 A CodeIgniter4 webapp is normally hosted on a web server.
-Apache's ``httpd`` is the "standard" platform, and assumed in much of our documentation.
+Apache HTTP Server is the "standard" platform, and assumed in much of our documentation.
 
 Apache is bundled with many platforms, but can also be downloaded in a bundle
 with a database engine and PHP from `Bitnami <https://bitnami.com/stacks/infrastructure>`_.
 
-.htaccess
----------
+Configure Main Config File
+==========================
+
+Enabling mod_rewrite
+--------------------
 
 The "mod_rewrite" module enables URLs without "index.php" in them, and is assumed
 in our user guide.
 
 Make sure that the rewrite module is enabled (uncommented) in the main
-configuration file, e.g., ``apache2/conf/httpd.conf``::
+configuration file, e.g., **apache2/conf/httpd.conf**:
+
+.. code-block:: apache
 
     LoadModule rewrite_module modules/mod_rewrite.so
 
-Also make sure that the default document root's <Directory> element enables this too,
-in the "AllowOverride" setting::
+Setting Document Root
+---------------------
+
+Also make sure that the default document root's ``<Directory>`` element enables this too,
+in the ``AllowOverride`` setting:
+
+.. code-block:: apache
 
     <Directory "/opt/lamp/apache2/htdocs">
         Options Indexes FollowSymLinks
@@ -112,127 +126,233 @@ in the "AllowOverride" setting::
         Require all granted
     </Directory>
 
-Removing the index.php
-----------------------
-
-See :ref:`CodeIgniter URLs <urls-remove-index-php-apache>`.
-
-Virtual Hosting
----------------
+Hosting with VirtualHost
+========================
 
 We recommend using "virtual hosting" to run your apps.
 You can set up different aliases for each of the apps you work on,
 
+Enabling vhost_alias_module
+---------------------------
+
 Make sure that the virtual hosting module is enabled (uncommented) in the main
-configuration file, e.g., ``apache2/conf/httpd.conf``::
+configuration file, e.g., **apache2/conf/httpd.conf**:
+
+.. code-block:: apache
 
     LoadModule vhost_alias_module modules/mod_vhost_alias.so
 
-Add a host alias in your "hosts" file, typically ``/etc/hosts`` on unix-type platforms,
-or ``c:/Windows/System32/drivers/etc/hosts`` on Windows.
-Add a line to the file. This could be "myproject.local" or "myproject.test", for instance::
+Adding Host Alias
+-----------------
+
+Add a host alias in your "hosts" file, typically **/etc/hosts** on unix-type platforms,
+or **c:\Windows\System32\drivers\etc\hosts** on Windows.
+
+Add a line to the file.
+This could be ``myproject.local`` or ``myproject.test``, for instance::
 
     127.0.0.1 myproject.local
 
-Add a <VirtualHost> element for your webapp inside the virtual hosting configuration,
-e.g., ``apache2/conf/extra/httpd-vhost.conf``::
+Setting VirtualHost
+-------------------
+
+Add a ``<VirtualHost>`` element for your webapp inside the virtual hosting configuration,
+e.g., **apache2/conf/extra/httpd-vhost.conf**:
+
+.. code-block:: apache
 
     <VirtualHost *:80>
-        DocumentRoot "/opt/lamp/apache2/htdocs/myproject/public"
-        ServerName myproject.local
-        ErrorLog "logs/myproject-error_log"
-        CustomLog "logs/myproject-access_log" common
+        DocumentRoot "/opt/lamp/apache2/myproject/public"
+        ServerName   myproject.local
+        ErrorLog     "logs/myproject-error_log"
+        CustomLog    "logs/myproject-access_log" common
+
+        <Directory "/opt/lamp/apache2/myproject/public">
+            AllowOverride All
+            Require all granted
+        </Directory>
     </VirtualHost>
 
-If your project folder is not a subfolder of the Apache document root, then your
-<VirtualHost> element may need a nested <Directory> element to grant the web server access to the files.
+The above configuration assumes the project folder is located as follows:
 
-With mod_userdir (shared hosts)
---------------------------------
+.. code-block:: text
+
+    apache2/
+       ├── myproject/      (Project Folder)
+       │      └── public/  (DocumentRoot for myproject.local)
+       └── htdocs/
+
+Restart Apache.
+
+Testing
+-------
+
+With the above configuration, your webapp would be accessed with the URL **http://myproject.local/** in your browser.
+
+Apache needs to be restarted whenever you change its configuration.
+
+Hosting with Subfolder
+======================
+
+If you want a baseURL like **http://localhost/myproject/** with a subfolder,
+there are three ways.
+
+Making Symlink
+--------------
+
+Place your project folder as follows, where **htdocs** is the Apache document root::
+
+    ├── myproject/ (project folder)
+    │      └── public/
+    └── htdocs/
+
+Navigate to the **htdocs** folder and create a symbolic link as follows::
+
+    > cd htdocs/
+    > ln -s ../myproject/public/ myproject
+
+Using Alias
+-----------
+
+Place your project folder as follows, where **htdocs** is the Apache document root::
+
+    ├── myproject/ (project folder)
+    │      └── public/
+    └── htdocs/
+
+Add the following in the main configuration file, e.g., **apache2/conf/httpd.conf**:
+
+.. code-block:: apache
+
+    Alias /myproject /opt/lamp/apache2/myproject/public
+    <Directory "/opt/lamp/apache2/myproject/public">
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+Restart Apache.
+
+Adding .htaccess
+----------------
+
+The last resort is to add **.htaccess** to the project root.
+
+It is not recommended that you place the project folder in the document root.
+However, if you have no other choice, like on a shared server, you can use this.
+
+Place your project folder as follows, where **htdocs** is the Apache document root,
+and create the **.htaccess** file::
+
+    └── htdocs/
+        └── myproject/ (project folder)
+            ├── .htaccess
+            └── public/
+
+And edit **.htaccess** as follows:
+
+.. code-block:: apache
+
+    <IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteRule ^(.*)$ public/$1 [L]
+    </IfModule>
+
+    <FilesMatch "^\.">
+        Require all denied
+        Satisfy All
+    </FilesMatch>
+
+Hosting with mod_userdir (Shared Hosts)
+=======================================
 
 A common practice in shared hosting environments is to use the Apache module "mod_userdir" to enable per-user Virtual Hosts automatically. Additional configuration is required to allow CodeIgniter4 to be run from these per-user directories.
 
 The following assumes that the server is already configured for mod_userdir. A guide to enabling this module is available `in the Apache documentation <https://httpd.apache.org/docs/2.4/howto/public_html.html>`_.
 
-Because CodeIgniter4 expects the server to find the framework front controller at ``/public/index.php`` by default, you must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the per-user web directory).
+Because CodeIgniter4 expects the server to find the framework front controller at **public/index.php** by default, you must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the per-user web directory).
 
-The default user web directory ``~/public_html`` is specified by the ``UserDir`` directive, typically in ``/apache2/mods-available/userdir.conf`` or ``/apache2/conf/extra/httpd-userdir.conf``::
+The default user web directory **~/public_html** is specified by the ``UserDir`` directive, typically in **apache2/mods-available/userdir.conf** or **apache2/conf/extra/httpd-userdir.conf**:
+
+.. code-block:: apache
 
     UserDir public_html
 
-So you will need to configure Apache to look for CodeIgniter's public directory first before trying to serve the default::
+So you will need to configure Apache to look for CodeIgniter's public directory first before trying to serve the default:
+
+.. code-block:: apache
 
     UserDir "public_html/public" "public_html"
 
-Be sure to specify options and permissions for the CodeIgniter public directory as well. A ``userdir.conf`` might look like::
+Be sure to specify options and permissions for the CodeIgniter public directory as well. A **userdir.conf** might look like:
+
+.. code-block:: apache
 
     <IfModule mod_userdir.c>
         UserDir "public_html/public" "public_html"
         UserDir disabled root
 
         <Directory /home/*/public_html>
-                AllowOverride All
-                Options MultiViews Indexes FollowSymLinks
-                <Limit GET POST OPTIONS>
-                        # Apache <= 2.2:
-                        # Order allow,deny
-                        # Allow from all
+            AllowOverride All
+            Options MultiViews Indexes FollowSymLinks
+            <Limit GET POST OPTIONS>
+                # Apache <= 2.2:
+                # Order allow,deny
+                # Allow from all
 
-                        # Apache >= 2.4:
-                        Require all granted
-                </Limit>
-                <LimitExcept GET POST OPTIONS>
-                        # Apache <= 2.2:
-                        # Order deny,allow
-                        # Deny from all
+                # Apache >= 2.4:
+                Require all granted
+            </Limit>
+            <LimitExcept GET POST OPTIONS>
+                # Apache <= 2.2:
+                # Order deny,allow
+                # Deny from all
 
-                        # Apache >= 2.4:
-                        Require all denied
-                </LimitExcept>
+                # Apache >= 2.4:
+                Require all denied
+            </LimitExcept>
         </Directory>
 
         <Directory /home/*/public_html/public>
-                AllowOverride All
-                Options MultiViews Indexes FollowSymLinks
-                <Limit GET POST OPTIONS>
-                        # Apache <= 2.2:
-                        # Order allow,deny
-                        # Allow from all
+            AllowOverride All
+            Options MultiViews Indexes FollowSymLinks
+            <Limit GET POST OPTIONS>
+                # Apache <= 2.2:
+                # Order allow,deny
+                # Allow from all
 
-                        # Apache >= 2.4:
-                        Require all granted
-                </Limit>
-                <LimitExcept GET POST OPTIONS>
-                        # Apache <= 2.2:
-                        # Order deny,allow
-                        # Deny from all
+                # Apache >= 2.4:
+                Require all granted
+            </Limit>
+            <LimitExcept GET POST OPTIONS>
+                # Apache <= 2.2:
+                # Order deny,allow
+                # Deny from all
 
-                        # Apache >= 2.4:
-                        Require all denied
-                </LimitExcept>
+                # Apache >= 2.4:
+                Require all denied
+            </LimitExcept>
         </Directory>
     </IfModule>
 
+Removing the index.php
+======================
+
+See :ref:`CodeIgniter URLs <urls-remove-index-php-apache>`.
+
 Setting Environment
--------------------
+===================
 
 See :ref:`Handling Multiple Environments <environment-apache>`.
 
-Testing
--------
-
-With the above configuration, your webapp would be accessed with the URL ``http://myproject.local`` in your browser.
-
-Apache needs to be restarted whenever you change its configuration.
-
+******************
 Hosting with Nginx
-==================
+******************
 
 Nginx is the second most widely used HTTP server for web hosting.
-Here you can find an example configuration using PHP 7.3 FPM (unix sockets) under Ubuntu Server.
+Here you can find an example configuration using PHP 8.1 FPM (unix sockets) under Ubuntu Server.
 
 default.conf
-------------
+============
 
 This configuration enables URLs without "index.php" in them and using CodeIgniter's "404 - File Not Found" for URLs ending with ".php".
 
@@ -255,7 +375,7 @@ This configuration enables URLs without "index.php" in them and using CodeIgnite
             include snippets/fastcgi-php.conf;
 
             # With php-fpm:
-            fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+            fastcgi_pass unix:/run/php/php8.1-fpm.sock;
             # With php-cgi:
             # fastcgi_pass 127.0.0.1:9000;
         }
@@ -269,17 +389,18 @@ This configuration enables URLs without "index.php" in them and using CodeIgnite
     }
 
 Setting Environment
--------------------
+===================
 
 See :ref:`Handling Multiple Environments <environment-nginx>`.
 
+*********************
 Bootstrapping the App
-=====================
+*********************
 
 In some scenarios you will want to load the framework without actually running the whole
 application. This is particularly useful for unit testing your project, but may also be
 handy for using third-party tools to analyze and modify your code. The framework comes
-with a separate bootstrap script specifically for this scenario: ``system/Test/bootstrap.php``.
+with a separate bootstrap script specifically for this scenario: **system/Test/bootstrap.php**.
 
 Most of the paths to your project are defined during the bootstrap process. You may use
 pre-defined constants to override these, but when using the defaults be sure that your

@@ -35,14 +35,14 @@ final class ParserPluginTest extends CIUnitTestCase
         $this->validator = Services::validation();
     }
 
-    public function testCurrentURL()
+    public function testCurrentURL(): void
     {
         $template = '{+ current_url +}';
 
         $this->assertSame(current_url(), $this->parser->renderString($template));
     }
 
-    public function testPreviousURL()
+    public function testPreviousURL(): void
     {
         $template = '{+ previous_url +}';
 
@@ -52,7 +52,7 @@ final class ParserPluginTest extends CIUnitTestCase
         $this->assertSame(previous_url(), $this->parser->renderString($template));
     }
 
-    public function testMailto()
+    public function testMailto(): void
     {
         $template = '{+ mailto email=foo@example.com title=Silly +}';
 
@@ -62,28 +62,28 @@ final class ParserPluginTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/3523
      */
-    public function testMailtoWithDashAndParenthesis()
+    public function testMailtoWithDashAndParenthesis(): void
     {
         $template = '{+ mailto email=foo-bar@example.com title="Online español test level" +}';
 
         $this->assertSame(mailto('foo-bar@example.com', 'Online español test level'), $this->parser->renderString($template));
     }
 
-    public function testSafeMailto()
+    public function testSafeMailto(): void
     {
         $template = '{+ safe_mailto email=foo@example.com title=Silly +}';
 
         $this->assertSame(safe_mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
     }
 
-    public function testLang()
+    public function testLang(): void
     {
         $template = '{+ lang Number.terabyteAbbr +}';
 
         $this->assertSame('TB', $this->parser->renderString($template));
     }
 
-    public function testValidationErrors()
+    public function testValidationErrors(): void
     {
         $this->validator->setError('email', 'Invalid email address');
 
@@ -92,7 +92,7 @@ final class ParserPluginTest extends CIUnitTestCase
         $this->assertSame($this->setHints($this->validator->showError('email')), $this->setHints($this->parser->renderString($template)));
     }
 
-    public function testRoute()
+    public function testRoute(): void
     {
         // prime the pump
         $routes = service('routes');
@@ -105,14 +105,14 @@ final class ParserPluginTest extends CIUnitTestCase
         $this->assertSame('/path/string/to/13', $this->parser->renderString($template));
     }
 
-    public function testSiteURL()
+    public function testSiteURL(): void
     {
         $template = '{+ siteURL +}';
 
         $this->assertSame('http://example.com/index.php', $this->parser->renderString($template));
     }
 
-    public function testValidationErrorsList()
+    public function testValidationErrorsList(): void
     {
         $this->validator->setError('email', 'Invalid email address');
         $this->validator->setError('username', 'User name must be unique');
@@ -126,7 +126,7 @@ final class ParserPluginTest extends CIUnitTestCase
         return preg_replace('/(<!-- DEBUG-VIEW+) (\w+) (\d+)/', '${1}', $output);
     }
 
-    public function testCspScriptNonceWithCspEnabled()
+    public function testCspScriptNonceWithCspEnabled(): void
     {
         $config             = config('App');
         $config->CSPEnabled = true;

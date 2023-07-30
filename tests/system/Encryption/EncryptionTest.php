@@ -35,7 +35,7 @@ final class EncryptionTest extends CIUnitTestCase
      *
      * Covers behavior with config encryption key set or not
      */
-    public function testConstructor()
+    public function testConstructor(): void
     {
         // Assume no configuration from set_up()
         $this->assertEmpty($this->encryption->key);
@@ -55,7 +55,7 @@ final class EncryptionTest extends CIUnitTestCase
     /**
      * Covers behavior with invalid parameters
      */
-    public function testBadDriver()
+    public function testBadDriver(): void
     {
         $this->expectException(EncryptionException::class);
 
@@ -70,7 +70,7 @@ final class EncryptionTest extends CIUnitTestCase
     /**
      * Covers behavior with invalid parameters
      */
-    public function testMissingDriver()
+    public function testMissingDriver(): void
     {
         $this->expectException(EncryptionException::class);
 
@@ -82,14 +82,14 @@ final class EncryptionTest extends CIUnitTestCase
         $this->encryption->initialize($config);
     }
 
-    public function testKeyCreation()
+    public function testKeyCreation(): void
     {
         $this->assertNotEmpty($this->encryption->createKey());
         $this->assertSame(32, strlen($this->encryption->createKey()));
         $this->assertSame(16, strlen($this->encryption->createKey(16)));
     }
 
-    public function testServiceSuccess()
+    public function testServiceSuccess(): void
     {
         $config         = new EncryptionConfig();
         $config->driver = 'OpenSSL';
@@ -99,7 +99,7 @@ final class EncryptionTest extends CIUnitTestCase
         $this->assertInstanceOf(EncrypterInterface::class, $encrypter);
     }
 
-    public function testServiceFailure()
+    public function testServiceFailure(): void
     {
         $this->expectException(EncryptionException::class);
 
@@ -111,14 +111,14 @@ final class EncryptionTest extends CIUnitTestCase
         Services::encrypter($config);
     }
 
-    public function testServiceWithoutKey()
+    public function testServiceWithoutKey(): void
     {
         $this->expectException(EncryptionException::class);
 
         Services::encrypter();
     }
 
-    public function testServiceShared()
+    public function testServiceShared(): void
     {
         $config         = new EncryptionConfig();
         $config->driver = 'OpenSSL';
@@ -131,27 +131,27 @@ final class EncryptionTest extends CIUnitTestCase
         $this->assertSame('anything', $encrypter->key);
     }
 
-    public function testMagicIssetTrue()
+    public function testMagicIssetTrue(): void
     {
         $this->assertTrue(isset($this->encryption->digest));
     }
 
-    public function testMagicIssetFalse()
+    public function testMagicIssetFalse(): void
     {
         $this->assertFalse(isset($this->encryption->bogus));
     }
 
-    public function testMagicGet()
+    public function testMagicGet(): void
     {
         $this->assertSame('SHA512', $this->encryption->digest);
     }
 
-    public function testMagicGetMissing()
+    public function testMagicGetMissing(): void
     {
         $this->assertNull($this->encryption->bogus);
     }
 
-    public function testDecryptEncryptedDataByCI3AES128CBC()
+    public function testDecryptEncryptedDataByCI3AES128CBC(): void
     {
         $config                 = new EncryptionConfig();
         $config->driver         = 'OpenSSL';
@@ -169,7 +169,7 @@ final class EncryptionTest extends CIUnitTestCase
         $this->assertSame($expected, $decrypted);
     }
 
-    public function testDecryptEncryptedDataByCI3AES256CTR()
+    public function testDecryptEncryptedDataByCI3AES256CTR(): void
     {
         $config                 = new EncryptionConfig();
         $config->driver         = 'OpenSSL';
@@ -186,7 +186,7 @@ final class EncryptionTest extends CIUnitTestCase
         $this->assertSame($expected, $decrypted);
     }
 
-    public function testDecryptEncryptedDataByCI42()
+    public function testDecryptEncryptedDataByCI42(): void
     {
         $config      = new EncryptionConfig();
         $config->key = hex2bin('64c70b0b8d45b80b9eba60b8b3c8a34d0193223d20fea46f8644b848bf7ce67f');

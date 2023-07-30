@@ -32,7 +32,7 @@ final class MessageTest extends CIUnitTestCase
 
     // We can only test the headers retrieved from $_SERVER
     // This test might fail under apache.
-    public function testHeadersRetrievesHeaders()
+    public function testHeadersRetrievesHeaders(): void
     {
         $this->message->setHeader('Host', 'daisyduke.com');
         $this->message->setHeader('Referer', 'RoscoePekoTrain.com');
@@ -46,7 +46,7 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame('RoscoePekoTrain.com', $headers['Referer']->getValue());
     }
 
-    public function testCanGrabSingleHeader()
+    public function testCanGrabSingleHeader(): void
     {
         $this->message->setHeader('Host', 'daisyduke.com');
 
@@ -56,7 +56,7 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame('daisyduke.com', $header->getValue());
     }
 
-    public function testCaseInsensitiveheader()
+    public function testCaseInsensitiveheader(): void
     {
         $this->message->setHeader('Host', 'daisyduke.com');
 
@@ -64,7 +64,7 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame('daisyduke.com', $this->message->header('HOST')->getValue());
     }
 
-    public function testCanSetHeaders()
+    public function testCanSetHeaders(): void
     {
         $this->message->setHeader('first', 'kiss');
         $this->message->setHeader('second', ['black', 'book']);
@@ -73,7 +73,7 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame(['black', 'book'], $this->message->header('Second')->getValue());
     }
 
-    public function testSetHeaderOverwritesPrevious()
+    public function testSetHeaderOverwritesPrevious(): void
     {
         $this->message->setHeader('Pragma', 'cache');
         $this->message->setHeader('Pragma', 'no-cache');
@@ -81,7 +81,7 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame('no-cache', $this->message->header('Pragma')->getValue());
     }
 
-    public function testHeaderLineIsReadable()
+    public function testHeaderLineIsReadable(): void
     {
         $this->message->setHeader('Accept', ['json', 'html']);
         $this->message->setHeader('Host', 'daisyduke.com');
@@ -90,7 +90,7 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame('daisyduke.com', $this->message->header('Host')->getValueLine());
     }
 
-    public function testCanRemoveHeader()
+    public function testCanRemoveHeader(): void
     {
         $this->message->setHeader('Host', 'daisyduke.com');
 
@@ -99,7 +99,7 @@ final class MessageTest extends CIUnitTestCase
         $this->assertNull($this->message->header('host'));
     }
 
-    public function testCanAppendHeader()
+    public function testCanAppendHeader(): void
     {
         $this->message->setHeader('accept', ['json', 'html']);
 
@@ -108,7 +108,7 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame(['json', 'html', 'xml'], $this->message->header('accept')->getValue());
     }
 
-    public function testCanPrependHeader()
+    public function testCanPrependHeader(): void
     {
         $this->message->setHeader('accept', ['json', 'html']);
 
@@ -117,27 +117,27 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame(['xml', 'json', 'html'], $this->message->header('accept')->getValue());
     }
 
-    public function testSetProtocolWorks()
+    public function testSetProtocolWorks(): void
     {
         $this->message->setProtocolVersion('1.1');
 
         $this->assertSame('1.1', $this->message->getProtocolVersion());
     }
 
-    public function testSetProtocolWorksWithNonNumericVersion()
+    public function testSetProtocolWorksWithNonNumericVersion(): void
     {
         $this->message->setProtocolVersion('HTTP/1.1');
 
         $this->assertSame('1.1', $this->message->getProtocolVersion());
     }
 
-    public function testSetProtocolThrowsExceptionWithInvalidProtocol()
+    public function testSetProtocolThrowsExceptionWithInvalidProtocol(): void
     {
         $this->expectException(HTTPException::class);
         $this->message->setProtocolVersion('1.2');
     }
 
-    public function testBodyBasics()
+    public function testBodyBasics(): void
     {
         $body = 'a strange little fellow.';
 
@@ -146,7 +146,7 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame($body, $this->message->getBody());
     }
 
-    public function testAppendBody()
+    public function testAppendBody(): void
     {
         $this->message->setBody('moo');
 
@@ -155,14 +155,14 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame("moo\n", $this->message->getBody());
     }
 
-    public function testSetHeaderReplacingHeader()
+    public function testSetHeaderReplacingHeader(): void
     {
         $this->message->setHeader('Accept', 'json');
 
         $this->assertSame('json', $this->message->getHeaderLine('Accept'));
     }
 
-    public function testSetHeaderDuplicateSettings()
+    public function testSetHeaderDuplicateSettings(): void
     {
         $this->message->setHeader('Accept', 'json');
         $this->message->setHeader('Accept', 'xml');
@@ -170,7 +170,7 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame('xml', $this->message->getHeaderLine('Accept'));
     }
 
-    public function testSetHeaderDuplicateSettingsInsensitive()
+    public function testSetHeaderDuplicateSettingsInsensitive(): void
     {
         $this->message->setHeader('Accept', 'json');
         $this->message->setHeader('accept', 'xml');
@@ -178,14 +178,14 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame('xml', $this->message->getHeaderLine('Accept'));
     }
 
-    public function testSetHeaderArrayValues()
+    public function testSetHeaderArrayValues(): void
     {
         $this->message->setHeader('Accept', ['json', 'html', 'xml']);
 
         $this->assertSame('json, html, xml', $this->message->getHeaderLine('Accept'));
     }
 
-    public function provideArrayHeaderValue()
+    public function provideArrayHeaderValue(): iterable
     {
         return [
             'existing for next not append' => [
@@ -209,7 +209,7 @@ final class MessageTest extends CIUnitTestCase
      *
      * @param mixed $arrayHeaderValue
      */
-    public function testSetHeaderWithExistingArrayValuesAppendStringValue($arrayHeaderValue)
+    public function testSetHeaderWithExistingArrayValuesAppendStringValue($arrayHeaderValue): void
     {
         $this->message->setHeader('Accept', $arrayHeaderValue);
         $this->message->setHeader('Accept', 'xml');
@@ -222,7 +222,7 @@ final class MessageTest extends CIUnitTestCase
      *
      * @param mixed $arrayHeaderValue
      */
-    public function testSetHeaderWithExistingArrayValuesAppendArrayValue($arrayHeaderValue)
+    public function testSetHeaderWithExistingArrayValuesAppendArrayValue($arrayHeaderValue): void
     {
         $this->message->setHeader('Accept', $arrayHeaderValue);
         $this->message->setHeader('Accept', ['xml']);
@@ -230,7 +230,7 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame('json, html, xml', $this->message->getHeaderLine('Accept'));
     }
 
-    public function testSetHeaderWithExistingArrayValuesAppendNullValue()
+    public function testSetHeaderWithExistingArrayValuesAppendNullValue(): void
     {
         $this->message->setHeader('Accept', ['json', 'html', 'xml']);
         $this->message->setHeader('Accept', null);
@@ -238,7 +238,7 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame('json, html, xml', $this->message->getHeaderLine('Accept'));
     }
 
-    public function testPopulateHeadersWithoutContentType()
+    public function testPopulateHeadersWithoutContentType(): void
     {
         $original    = $_SERVER;
         $originalEnv = getenv('CONTENT_TYPE');
@@ -255,7 +255,7 @@ final class MessageTest extends CIUnitTestCase
         $_SERVER = $original; // restore so code coverage doesn't break
     }
 
-    public function testPopulateHeadersWithoutHTTP()
+    public function testPopulateHeadersWithoutHTTP(): void
     {
         // fail path, if argument doesn't have the HTTP_*
         $original = $_SERVER;
@@ -272,7 +272,7 @@ final class MessageTest extends CIUnitTestCase
         $_SERVER = $original; // restore so code coverage doesn't break
     }
 
-    public function testPopulateHeadersKeyNotExists()
+    public function testPopulateHeadersKeyNotExists(): void
     {
         // Success path, if array key is not exists, assign empty string to it's value
         $original = $_SERVER;
@@ -288,7 +288,7 @@ final class MessageTest extends CIUnitTestCase
         $_SERVER = $original; // restore so code coverage doesn't break
     }
 
-    public function testPopulateHeaders()
+    public function testPopulateHeaders(): void
     {
         // success path
         $original = $_SERVER;

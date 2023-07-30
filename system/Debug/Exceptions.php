@@ -293,7 +293,7 @@ class Exceptions
         $trace = $exception->getTrace();
 
         if ($this->config->sensitiveDataInTrace !== []) {
-            $this->maskSensitiveData($trace, $this->config->sensitiveDataInTrace);
+            $trace = $this->maskSensitiveData($trace, $this->config->sensitiveDataInTrace);
         }
 
         return [
@@ -311,31 +311,52 @@ class Exceptions
      * Mask sensitive data in the trace.
      *
      * @param array|object $trace
+     *
+     * @return array|object
      */
-    protected function maskSensitiveData(&$trace, array $keysToMask, string $path = '')
+    protected function maskSensitiveData($trace, array $keysToMask, string $path = '')
+    {
+        foreach ($trace as $i => $line) {
+            $trace[$i]['args'] = $this->maskData($line['args'], $keysToMask);
+        }
+
+        return $trace;
+    }
+
+    /**
+     * @param array|object $args
+     *
+     * @return array|object
+     */
+    private function maskData($args, array $keysToMask, string $path = '')
     {
         foreach ($keysToMask as $keyToMask) {
             $explode = explode('/', $keyToMask);
             $index   = end($explode);
 
             if (strpos(strrev($path . '/' . $index), strrev($keyToMask)) === 0) {
-                if (is_array($trace) && array_key_exists($index, $trace)) {
-                    $trace[$index] = '******************';
-                } elseif (is_object($trace) && property_exists($trace, $index) && isset($trace->{$index})) {
-                    $trace->{$index} = '******************';
+                if (is_array($args) && array_key_exists($index, $args)) {
+                    $args[$index] = '******************';
+                } elseif (
+                    is_object($args) && property_exists($args, $index)
+                    && isset($args->{$index}) && is_scalar($args->{$index})
+                ) {
+                    $args->{$index} = '******************';
                 }
             }
         }
 
-        if (is_object($trace)) {
-            $trace = get_object_vars($trace);
-        }
-
-        if (is_array($trace)) {
-            foreach ($trace as $pathKey => $subarray) {
-                $this->maskSensitiveData($subarray, $keysToMask, $path . '/' . $pathKey);
+        if (is_array($args)) {
+            foreach ($args as $pathKey => $subarray) {
+                $args[$pathKey] = $this->maskData($subarray, $keysToMask, $path . '/' . $pathKey);
+            }
+        } elseif (is_object($args)) {
+            foreach ($args as $pathKey => $subarray) {
+                $args->{$pathKey} = $this->maskData($subarray, $keysToMask, $path . '/' . $pathKey);
             }
         }
+
+        return $args;
     }
 
     /**

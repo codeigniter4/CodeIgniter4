@@ -56,7 +56,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER = [];
     }
 
-    public function testCurrentURLReturnsBasicURL()
+    public function testCurrentURLReturnsBasicURL(): void
     {
         $_SERVER['REQUEST_URI'] = '/public';
         $_SERVER['SCRIPT_NAME'] = '/public/index.php';
@@ -70,7 +70,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('http://example.com/public/index.php/', current_url());
     }
 
-    public function testCurrentURLReturnsAllowedHostname()
+    public function testCurrentURLReturnsAllowedHostname(): void
     {
         $_SERVER['HTTP_HOST']   = 'www.example.jp';
         $_SERVER['REQUEST_URI'] = '/public';
@@ -82,7 +82,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('http://www.example.jp/public/index.php/', current_url());
     }
 
-    public function testCurrentURLReturnsBaseURLIfNotAllowedHostname()
+    public function testCurrentURLReturnsBaseURLIfNotAllowedHostname(): void
     {
         $_SERVER['HTTP_HOST']   = 'invalid.example.org';
         $_SERVER['REQUEST_URI'] = '/public';
@@ -94,7 +94,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('http://example.com/public/index.php/', current_url());
     }
 
-    public function testCurrentURLReturnsObject()
+    public function testCurrentURLReturnsObject(): void
     {
         // Since we're on a CLI, we must provide our own URI
         $this->config->baseURL = 'http://example.com/public';
@@ -105,7 +105,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('http://example.com/public/index.php/', (string) $url);
     }
 
-    public function testCurrentURLEquivalence()
+    public function testCurrentURLEquivalence(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/public';
@@ -120,7 +120,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame(site_url(uri_string()), current_url());
     }
 
-    public function testCurrentURLInSubfolder()
+    public function testCurrentURLInSubfolder(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/foo/public/bar?baz=quip';
@@ -142,7 +142,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('http', $uri->getScheme());
     }
 
-    public function testCurrentURLWithPortInSubfolder()
+    public function testCurrentURLWithPortInSubfolder(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['SERVER_PORT'] = '8080';
@@ -167,7 +167,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame(8080, $uri->getPort());
     }
 
-    public function testUriString()
+    public function testUriString(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
@@ -187,7 +187,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         Services::injectMock('request', $request);
     }
 
-    public function testUriStringNoTrailingSlash()
+    public function testUriStringNoTrailingSlash(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
@@ -200,7 +200,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('assets/image.jpg', uri_string());
     }
 
-    public function testUriStringEmpty()
+    public function testUriStringEmpty(): void
     {
         $uri = 'http://example.com/';
         $this->setService($uri);
@@ -208,7 +208,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('', uri_string());
     }
 
-    public function testUriStringSubfolderAbsolute()
+    public function testUriStringSubfolderAbsolute(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/subfolder/assets/image.jpg';
@@ -221,7 +221,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('subfolder/assets/image.jpg', uri_string());
     }
 
-    public function testUriStringSubfolderRelative()
+    public function testUriStringSubfolderRelative(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/subfolder/assets/image.jpg';
@@ -235,7 +235,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('assets/image.jpg', uri_string());
     }
 
-    public function urlIsProvider()
+    public function urlIsProvider(): iterable
     {
         return [
             [
@@ -279,7 +279,7 @@ final class CurrentUrlTest extends CIUnitTestCase
     /**
      * @dataProvider urlIsProvider
      */
-    public function testUrlIs(string $currentPath, string $testPath, bool $expected)
+    public function testUrlIs(string $currentPath, string $testPath, bool $expected): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/' . $currentPath;
@@ -293,7 +293,7 @@ final class CurrentUrlTest extends CIUnitTestCase
     /**
      * @dataProvider urlIsProvider
      */
-    public function testUrlIsNoIndex(string $currentPath, string $testPath, bool $expected)
+    public function testUrlIsNoIndex(string $currentPath, string $testPath, bool $expected): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/' . $currentPath;
@@ -309,7 +309,7 @@ final class CurrentUrlTest extends CIUnitTestCase
     /**
      * @dataProvider urlIsProvider
      */
-    public function testUrlIsWithSubfolder(string $currentPath, string $testPath, bool $expected)
+    public function testUrlIsWithSubfolder(string $currentPath, string $testPath, bool $expected): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/' . $currentPath;

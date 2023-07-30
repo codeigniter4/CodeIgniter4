@@ -39,7 +39,7 @@ but does not take any configuration options.
 
 .. literalinclude:: sessions/002.php
 
-How do Sessions work?
+How Do Sessions Work?
 =====================
 
 When a page is loaded, the session class will check to see if a valid
@@ -59,7 +59,7 @@ automatic.
 .. note:: Under CLI, the Session library will automatically halt itself,
     as this is a concept based entirely on the HTTP protocol.
 
-A note about concurrency
+A Note about Concurrency
 ------------------------
 
 Unless you're developing a website with heavy AJAX usage, you can skip this
@@ -214,6 +214,8 @@ This method also accepts an array of item keys to unset:
 
 .. literalinclude:: sessions/018.php
 
+.. _sessions-flashdata:
+
 Flashdata
 =========
 
@@ -351,16 +353,18 @@ destroy()
 ---------
 
 To clear the current session (for example, during a logout), you may
-simply use either PHP's `session_destroy() <https://www.php.net/session_destroy>`_
-function, or the library's ``destroy()`` method. Both will work in exactly the
-same way:
+simply use the library's ``destroy()`` method:
 
 .. literalinclude:: sessions/037.php
 
-.. note:: This must be the last session-related operation that you do
-    during the same request. All session data (including flashdata and
-    tempdata) will be destroyed permanently and functions will be
-    unusable during the same request after you destroy the session.
+This method will work in exactly the same way as PHP's
+`session_destroy() <https://www.php.net/session_destroy>`_ function.
+
+This must be the last session-related operation that you do during the same request.
+All session data (including flashdata and tempdata) will be destroyed permanently.
+
+.. note:: You do not have to call this method from usual code. Cleanup session
+    data rather than destroying the session.
 
 .. _session-stop:
 
@@ -388,7 +392,7 @@ necessary with our new implementation. However, it may happen that your
 application relied on these values, so here are alternative methods of
 accessing them:
 
-  - session_id: ``$session->session_id`` or ``session_id()`` (PHP’s built-in function)
+  - session_id: ``$session->session_id`` or ``session_id()`` (PHP's built-in function)
   - ip_address: ``$_SERVER['REMOTE_ADDR']``
   - user_agent: ``$_SERVER['HTTP_USER_AGENT']`` (unused by sessions)
   - last_activity: Depends on the storage, no straightforward way. Sorry!
@@ -435,7 +439,7 @@ Preference                     Default                                      Opti
     unexpected results or be changed in the future. Please configure
     everything properly.
 
-.. note:: If ``sessionExpiration`` is set to ``0``, the ``session.gc_maxlifetime``
+.. note:: If ``expiration`` is set to ``0``, the ``session.gc_maxlifetime``
     setting set by PHP in session management will be used as-is
     (often the default value of ``1440``). This needs to be changed in
     ``php.ini`` or via ``ini_set()`` as needed.
@@ -559,6 +563,9 @@ However, there are some conditions that must be met:
 Configure DatabaseHandler
 -------------------------
 
+Setting Table Name
+^^^^^^^^^^^^^^^^^^
+
 In order to use the 'DatabaseHandler' session driver, you must also create this
 table that we already mentioned and then set it as your
 ``$savePath`` value.
@@ -566,6 +573,9 @@ For example, if you would like to use 'ci_sessions' as your table name,
 you would do this:
 
 .. literalinclude:: sessions/039.php
+
+Creating Database Table
+^^^^^^^^^^^^^^^^^^^^^^^
 
 And then of course, create the database table ...
 
@@ -594,22 +604,37 @@ For PostgreSQL::
     and the session ID and a delimiter. It should be increased as needed, for example,
     when using long session IDs.
 
+Adding Primary Key
+^^^^^^^^^^^^^^^^^^
+
 You will also need to add a PRIMARY KEY **depending on your $matchIP
 setting**. The examples below work both on MySQL and PostgreSQL::
 
-    // When sessionMatchIP = true
+    // When $matchIP = true
     ALTER TABLE ci_sessions ADD PRIMARY KEY (id, ip_address);
 
-    // When sessionMatchIP = false
+    // When $matchIP = false
     ALTER TABLE ci_sessions ADD PRIMARY KEY (id);
 
     // To drop a previously created primary key (use when changing the setting)
     ALTER TABLE ci_sessions DROP PRIMARY KEY;
 
-You can choose the Database group to use by adding a new line to the
-**app/Config/Session.php** file with the name of the group to use:
+.. important:: If you don't add the correct primary key, the following error
+    may occur::
+
+        Uncaught mysqli_sql_exception: Duplicate entry 'ci_session:***' for key 'ci_sessions.PRIMARY'
+
+Changing Database Group
+^^^^^^^^^^^^^^^^^^^^^^^
+
+The default database group is used by default.
+You can change the database group to use by changing the ``$DBGroup`` property
+in the **app/Config/Session.php** file to the name of the group to use:
 
 .. literalinclude:: sessions/040.php
+
+Setting Up Database Table with Command
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you'd rather not do all of this by hand, you can use the ``make:migration --session`` command
 from the cli to generate a migration file for you::
@@ -627,7 +652,7 @@ RedisHandler Driver
 
 .. note:: Since Redis doesn't have a locking mechanism exposed, locks for
     this driver are emulated by a separate value that is kept for up
-    to 300 seconds. With ``v4.3.2`` or above, You can connect ``Redis`` with **TLS** protocol.
+    to 300 seconds. With ``v4.3.2`` or above, you can connect ``Redis`` with **TLS** protocol.
 
 Redis is a storage engine typically used for caching and popular because
 of its high performance, which is also probably your reason to use the

@@ -23,7 +23,7 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
-    public function testPublishLanguageWithoutOptions()
+    public function testPublishLanguageWithoutOptions(): void
     {
         command('publish:language');
 
@@ -36,7 +36,7 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         }
     }
 
-    public function testEnabledSortImportsWillDisruptLanguageFilePublish()
+    public function testEnabledSortImportsWillDisruptLanguageFilePublish(): void
     {
         command('publish:language --lang es');
 
@@ -53,7 +53,7 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         }
     }
 
-    public function testDisabledSortImportsWillNotAffectLanguageFilesPublish()
+    public function testDisabledSortImportsWillNotAffectLanguageFilesPublish(): void
     {
         command('publish:language --lang ar --sort off');
 

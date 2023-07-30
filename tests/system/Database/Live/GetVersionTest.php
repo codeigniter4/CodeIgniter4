@@ -25,7 +25,7 @@ final class GetVersionTest extends CIUnitTestCase
 
     protected $migrate = false;
 
-    public function testGetVersion()
+    public function testGetVersion(): void
     {
         $version = $this->db->getVersion();
 

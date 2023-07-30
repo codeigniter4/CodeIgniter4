@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\CLI;
 
+use Config\Exceptions;
 use Psr\Log\LoggerInterface;
 use ReflectionException;
 use Throwable;
@@ -121,7 +122,7 @@ abstract class BaseCommand
     {
         $exception = $e;
         $message   = $e->getMessage();
-        $config    = config('Exceptions');
+        $config    = config(Exceptions::class);
 
         require $config->errorViewPath . '/cli/error_exception.php';
     }

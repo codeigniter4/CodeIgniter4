@@ -15,4 +15,4 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Project Files
 *************
 
-Version ``4.2.3`` is an internal change for security measures and requires no intervention in projects.
+Version 4.2.3 is an internal change for security measures and requires no intervention in projects.

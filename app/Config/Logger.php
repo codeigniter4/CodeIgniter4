@@ -74,14 +74,12 @@ class Logger extends BaseConfig
      * the handler on top and continuing down.
      */
     public array $handlers = [
-
         /*
          * --------------------------------------------------------------------
          * File Handler
          * --------------------------------------------------------------------
          */
         FileHandler::class => [
-
             // The log levels that this handler will handle.
             'handles' => [
                 'critical',
@@ -99,7 +97,7 @@ class Logger extends BaseConfig
              * An extension of 'php' allows for protecting the log files via basic
              * scripting, when they are to be stored under a publicly accessible directory.
              *
-             * Note: Leaving it blank will default to 'log'.
+             * NOTE: Leaving it blank will default to 'log'.
              */
             'fileExtension' => '',
 

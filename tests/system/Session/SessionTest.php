@@ -68,7 +68,7 @@ final class SessionTest extends CIUnitTestCase
         return $session;
     }
 
-    public function testSessionSetsRegenerateTime()
+    public function testSessionSetsRegenerateTime(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -76,7 +76,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertTrue(isset($_SESSION['__ci_last_regenerate']) && ! empty($_SESSION['__ci_last_regenerate']));
     }
 
-    public function testWillRegenerateSessionAutomatically()
+    public function testWillRegenerateSessionAutomatically(): void
     {
         $session = $this->getInstance();
 
@@ -88,7 +88,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertGreaterThan($time + 90, $_SESSION['__ci_last_regenerate']);
     }
 
-    public function testCanSetSingleValue()
+    public function testCanSetSingleValue(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -98,7 +98,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame('bar', $_SESSION['foo']);
     }
 
-    public function testCanSetArray()
+    public function testCanSetArray(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -116,7 +116,7 @@ final class SessionTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
      */
-    public function testCanSerializeArray()
+    public function testCanSerializeArray(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -131,7 +131,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame($locations, $session->get('_ci_old_input')['location']);
     }
 
-    public function testGetSimpleKey()
+    public function testGetSimpleKey(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -141,7 +141,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame('bar', $session->get('foo'));
     }
 
-    public function testGetReturnsNullWhenNotFound()
+    public function testGetReturnsNullWhenNotFound(): void
     {
         $_SESSION = [];
 
@@ -151,7 +151,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertNull($session->get('foo'));
     }
 
-    public function testGetReturnsNullWhenNotFoundWithXmlHttpRequest()
+    public function testGetReturnsNullWhenNotFoundWithXmlHttpRequest(): void
     {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
         $_SESSION                         = [];
@@ -162,7 +162,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertNull($session->get('foo'));
     }
 
-    public function testGetReturnsEmptyArrayWhenWithXmlHttpRequest()
+    public function testGetReturnsEmptyArrayWhenWithXmlHttpRequest(): void
     {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
         $_SESSION                         = [];
@@ -173,7 +173,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame([], $session->get());
     }
 
-    public function testGetReturnsItemValueisZero()
+    public function testGetReturnsItemValueisZero(): void
     {
         $_SESSION = [];
 
@@ -185,7 +185,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame(0, $session->get('foo'));
     }
 
-    public function testGetReturnsAllWithNoKeys()
+    public function testGetReturnsAllWithNoKeys(): void
     {
         $_SESSION = [
             'foo' => 'bar',
@@ -201,7 +201,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertArrayHasKey('bar', $result);
     }
 
-    public function testGetAsProperty()
+    public function testGetAsProperty(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -211,7 +211,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame('bar', $session->foo);
     }
 
-    public function testGetAsNormal()
+    public function testGetAsNormal(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -221,7 +221,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame('bar', $_SESSION['foo']);
     }
 
-    public function testHasReturnsTrueOnSuccess()
+    public function testHasReturnsTrueOnSuccess(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -231,7 +231,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertTrue($session->has('foo'));
     }
 
-    public function testHasReturnsFalseOnNotFound()
+    public function testHasReturnsFalseOnNotFound(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -241,7 +241,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertFalse($session->has('bar'));
     }
 
-    public function testIssetReturnsTrueOnSuccess()
+    public function testIssetReturnsTrueOnSuccess(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -252,7 +252,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertTrue($issetReturn);
     }
 
-    public function testIssetReturnsFalseOnNotFound()
+    public function testIssetReturnsFalseOnNotFound(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -263,7 +263,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertFalse($issetReturn);
     }
 
-    public function testPushNewValueIntoArraySessionValue()
+    public function testPushNewValueIntoArraySessionValue(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -280,7 +280,7 @@ final class SessionTest extends CIUnitTestCase
         );
     }
 
-    public function testRemoveActuallyRemoves()
+    public function testRemoveActuallyRemoves(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -292,7 +292,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertFalse($session->has('foo'));
     }
 
-    public function testHasReturnsCanRemoveArray()
+    public function testHasReturnsCanRemoveArray(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -310,7 +310,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertArrayNotHasKey('bar', $_SESSION);
     }
 
-    public function testSetMagicMethod()
+    public function testSetMagicMethod(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -321,7 +321,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame('bar', $_SESSION['foo']);
     }
 
-    public function testCanFlashData()
+    public function testCanFlashData(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -343,7 +343,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertFalse($session->has('foo'));
     }
 
-    public function testCanFlashArray()
+    public function testCanFlashArray(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -359,7 +359,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame('new', $_SESSION['__ci_vars']['bar']);
     }
 
-    public function testKeepFlashData()
+    public function testKeepFlashData(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -386,7 +386,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame('old', $_SESSION['__ci_vars']['foo']);
     }
 
-    public function testUnmarkFlashDataRemovesData()
+    public function testUnmarkFlashDataRemovesData(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -406,7 +406,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertFalse($issetReturn);
     }
 
-    public function testGetFlashKeysOnlyReturnsFlashKeys()
+    public function testGetFlashKeysOnlyReturnsFlashKeys(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -420,7 +420,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertNotContains('bar', $keys);
     }
 
-    public function testSetTempDataWorks()
+    public function testSetTempDataWorks(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -429,7 +429,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertGreaterThanOrEqual($_SESSION['__ci_vars']['foo'], time() + 300);
     }
 
-    public function testSetTempDataArrayMultiTTL()
+    public function testSetTempDataArrayMultiTTL(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -447,7 +447,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertLessThanOrEqual($_SESSION['__ci_vars']['baz'], $time + 100);
     }
 
-    public function testSetTempDataArraySingleTTL()
+    public function testSetTempDataArraySingleTTL(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -461,7 +461,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertLessThanOrEqual($_SESSION['__ci_vars']['baz'], $time + 200);
     }
 
-    public function testGetTestDataReturnsAll()
+    public function testGetTestDataReturnsAll(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -477,7 +477,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame($data, $session->getTempdata());
     }
 
-    public function testGetTestDataReturnsSingle()
+    public function testGetTestDataReturnsSingle(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -492,7 +492,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame('bar', $session->getTempdata('foo'));
     }
 
-    public function testRemoveTempDataActuallyDeletes()
+    public function testRemoveTempDataActuallyDeletes(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -508,7 +508,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame(['bar' => 'baz'], $session->getTempdata());
     }
 
-    public function testUnMarkTempDataSingle()
+    public function testUnMarkTempDataSingle(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -524,7 +524,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame(['bar' => 'baz'], $session->getTempdata());
     }
 
-    public function testUnMarkTempDataArray()
+    public function testUnMarkTempDataArray(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -540,7 +540,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame([], $session->getTempdata());
     }
 
-    public function testGetTempdataKeys()
+    public function testGetTempdataKeys(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -556,7 +556,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame(['foo', 'bar'], $session->getTempKeys());
     }
 
-    public function testGetDotKey()
+    public function testGetDotKey(): void
     {
         $session = $this->getInstance();
         $session->start();
@@ -564,7 +564,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame('value', $session->get('test.1'));
     }
 
-    public function testLaxSameSite()
+    public function testLaxSameSite(): void
     {
         $config           = new CookieConfig();
         $config->samesite = 'Lax';
@@ -577,7 +577,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame('Lax', $cookies[0]->getSameSite());
     }
 
-    public function testNoneSameSite()
+    public function testNoneSameSite(): void
     {
         $config           = new CookieConfig();
         $config->secure   = true;
@@ -593,7 +593,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame('None', $cookies[0]->getSameSite());
     }
 
-    public function testNoSameSiteReturnsDefault()
+    public function testNoSameSiteReturnsDefault(): void
     {
         $config           = new CookieConfig();
         $config->samesite = '';
@@ -608,7 +608,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertSame('Lax', $cookies[0]->getSameSite());
     }
 
-    public function testInvalidSameSite()
+    public function testInvalidSameSite(): void
     {
         $this->expectException(CookieException::class);
         $this->expectExceptionMessage(lang('Cookie.invalidSameSite', ['Invalid']));
@@ -622,7 +622,7 @@ final class SessionTest extends CIUnitTestCase
         $session->start();
     }
 
-    public function testExpires()
+    public function testExpires(): void
     {
         $session = $this->getInstance(['expiration' => 8000]);
         $session->start();
@@ -632,7 +632,7 @@ final class SessionTest extends CIUnitTestCase
         $this->assertGreaterThan(8000, $cookies[0]->getExpiresTimestamp());
     }
 
-    public function testExpiresOnClose()
+    public function testExpiresOnClose(): void
     {
         $session = $this->getInstance(['expiration' => 0]);
         $session->start();

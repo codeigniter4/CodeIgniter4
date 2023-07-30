@@ -37,7 +37,7 @@ final class InsertTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testInsertArray()
+    public function testInsertArray(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -63,7 +63,7 @@ final class InsertTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testInsertObject()
+    public function testInsertObject(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -89,7 +89,7 @@ final class InsertTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testInsertObjectWithRawSql()
+    public function testInsertObjectWithRawSql(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -107,7 +107,7 @@ final class InsertTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5365
      */
-    public function testInsertWithTableAlias()
+    public function testInsertWithTableAlias(): void
     {
         $builder = $this->db->table('jobs as j');
 
@@ -133,7 +133,7 @@ final class InsertTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testThrowsExceptionOnNoValuesSet()
+    public function testThrowsExceptionOnNoValuesSet(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -143,7 +143,7 @@ final class InsertTest extends CIUnitTestCase
         $builder->testMode()->insert(null, true);
     }
 
-    public function testInsertBatch()
+    public function testInsertBatch(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -178,7 +178,7 @@ final class InsertTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5671
      */
-    public function testInsertBatchIgnore()
+    public function testInsertBatchIgnore(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -212,7 +212,7 @@ final class InsertTest extends CIUnitTestCase
         $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
     }
 
-    public function testInsertBatchWithoutEscape()
+    public function testInsertBatchWithoutEscape(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -242,7 +242,7 @@ final class InsertTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4345
      */
-    public function testInsertBatchWithFieldsEndingInNumbers()
+    public function testInsertBatchWithFieldsEndingInNumbers(): void
     {
         $builder = $this->db->table('ip_table');
 
@@ -263,7 +263,7 @@ final class InsertTest extends CIUnitTestCase
         $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
     }
 
-    public function testInsertBatchThrowsExceptionOnNoData()
+    public function testInsertBatchThrowsExceptionOnNoData(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -272,7 +272,7 @@ final class InsertTest extends CIUnitTestCase
         $builder->insertBatch();
     }
 
-    public function testInsertBatchThrowsExceptionOnEmptyData()
+    public function testInsertBatchThrowsExceptionOnEmptyData(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -281,7 +281,7 @@ final class InsertTest extends CIUnitTestCase
         $builder->insertBatch([]);
     }
 
-    public function testSetIncorrectRawSqlUsage()
+    public function testSetIncorrectRawSqlUsage(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(

@@ -35,7 +35,7 @@ final class RequestTest extends CIUnitTestCase
         $_GET  = [];
     }
 
-    public function testFetchGlobalsSingleValue()
+    public function testFetchGlobalsSingleValue(): void
     {
         $_POST['foo'] = 'bar';
         $_GET['bar']  = 'baz';
@@ -44,12 +44,12 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame('baz', $this->request->fetchGlobal('get', 'bar'));
     }
 
-    public function testFetchGlobalsReturnsNullWhenNotFound()
+    public function testFetchGlobalsReturnsNullWhenNotFound(): void
     {
         $this->assertNull($this->request->fetchGlobal('post', 'foo'));
     }
 
-    public function testFetchGlobalsFiltersValues()
+    public function testFetchGlobalsFiltersValues(): void
     {
         $this->request->setGlobal('post', [
             'foo' => 'bar<script>',
@@ -60,7 +60,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame('baz', $this->request->fetchGlobal('post', 'bar'));
     }
 
-    public function testFetchGlobalsWithFilterFlag()
+    public function testFetchGlobalsWithFilterFlag(): void
     {
         $this->request->setGlobal('post', [
             'foo' => '`bar<script>',
@@ -71,7 +71,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame('baz', $this->request->fetchGlobal('post', 'bar'));
     }
 
-    public function testFetchGlobalReturnsAllWhenEmpty()
+    public function testFetchGlobalReturnsAllWhenEmpty(): void
     {
         $post = [
             'foo' => 'bar',
@@ -84,7 +84,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($post, $this->request->fetchGlobal('post'));
     }
 
-    public function testFetchGlobalFiltersAllValues()
+    public function testFetchGlobalFiltersAllValues(): void
     {
         $post = [
             'foo' => 'bar<script>',
@@ -103,7 +103,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', null, FILTER_SANITIZE_ENCODED));
     }
 
-    public function testFetchGlobalFilterWithFlagAllValues()
+    public function testFetchGlobalFilterWithFlagAllValues(): void
     {
         $post = [
             'foo' => '`bar<script>',
@@ -122,7 +122,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', null, FILTER_SANITIZE_ENCODED, FILTER_FLAG_STRIP_BACKTICK));
     }
 
-    public function testFetchGlobalReturnsSelectedKeys()
+    public function testFetchGlobalReturnsSelectedKeys(): void
     {
         $post = [
             'foo' => 'bar',
@@ -139,7 +139,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', ['foo', 'bar']));
     }
 
-    public function testFetchGlobalFiltersSelectedValues()
+    public function testFetchGlobalFiltersSelectedValues(): void
     {
         $post = [
             'foo' => 'bar<script>',
@@ -156,7 +156,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', ['foo', 'bar'], FILTER_SANITIZE_ENCODED));
     }
 
-    public function testFetchGlobalFilterWithFlagSelectedValues()
+    public function testFetchGlobalFilterWithFlagSelectedValues(): void
     {
         $post = [
             'foo' => '`bar<script>',
@@ -176,7 +176,7 @@ final class RequestTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/353
      */
-    public function testFetchGlobalReturnsArrayValues()
+    public function testFetchGlobalReturnsArrayValues(): void
     {
         $post = [
             'ANNOUNCEMENTS' => [
@@ -193,7 +193,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertCount(2, $result['ANNOUNCEMENTS']);
     }
 
-    public function testFetchGlobalWithArrayTop()
+    public function testFetchGlobalWithArrayTop(): void
     {
         $post = [
             'clients' => [
@@ -207,7 +207,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame(['address' => ['zipcode' => 90210]], $this->request->fetchGlobal('post', 'clients'));
     }
 
-    public function testFetchGlobalWithArrayChildNumeric()
+    public function testFetchGlobalWithArrayChildNumeric(): void
     {
         $post = [
             'clients' => [
@@ -228,7 +228,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame(['zipcode' => 60610], $this->request->fetchGlobal('post', 'clients[1][address]'));
     }
 
-    public function testFetchGlobalWithArrayChildElement()
+    public function testFetchGlobalWithArrayChildElement(): void
     {
         $post = [
             'clients' => [
@@ -243,7 +243,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertNull($this->request->fetchGlobal('post', 'clients[zipcode]'));
     }
 
-    public function testFetchGlobalWithKeylessArrayChildElement()
+    public function testFetchGlobalWithKeylessArrayChildElement(): void
     {
         $post = [
             'clients' => [
@@ -258,7 +258,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame([['a']], $this->request->fetchGlobal('post', 'clients[stuff]'));
     }
 
-    public function testFetchGlobalWithArrayLastElement()
+    public function testFetchGlobalWithArrayLastElement(): void
     {
         $post = [
             'clients' => [
@@ -272,7 +272,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame('90210', $this->request->fetchGlobal('post', 'clients[address][zipcode]'));
     }
 
-    public function testFetchGlobalWithEmptyNotation()
+    public function testFetchGlobalWithEmptyNotation(): void
     {
         $expected = [
             [
@@ -294,7 +294,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', 'clients[]'));
     }
 
-    public function testFetchGlobalFiltersWithNull()
+    public function testFetchGlobalFiltersWithNull(): void
     {
         $expected = [
             'foo'     => false,
@@ -361,7 +361,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', null, FILTER_VALIDATE_INT));
     }
 
-    public function testFetchGlobalFiltersWithValue()
+    public function testFetchGlobalFiltersWithValue(): void
     {
         $expected = [
             [
@@ -420,7 +420,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', 'people', FILTER_VALIDATE_INT));
     }
 
-    public function testFetchGlobalFiltersWithValues()
+    public function testFetchGlobalFiltersWithValues(): void
     {
         $expected = [
             'address' => [
@@ -485,7 +485,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', ['address', 'people'], FILTER_VALIDATE_INT));
     }
 
-    public function testFetchGlobalFiltersWithArrayChildElement()
+    public function testFetchGlobalFiltersWithArrayChildElement(): void
     {
         $expected = [
             'name' => false,
@@ -532,7 +532,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', 'people[0]', FILTER_VALIDATE_INT));
     }
 
-    public function ipAddressChecks()
+    public function ipAddressChecks(): iterable
     {
         return [
             'empty' => [
@@ -585,17 +585,17 @@ final class RequestTest extends CIUnitTestCase
      * @param mixed      $address
      * @param mixed|null $type
      */
-    public function testValidIPAddress($expected, $address, $type = null)
+    public function testValidIPAddress($expected, $address, $type = null): void
     {
         $this->assertSame($expected, $this->request->isValidIP($address, $type));
     }
 
-    public function testGetIPAddressDefault()
+    public function testGetIPAddressDefault(): void
     {
         $this->assertSame('0.0.0.0', $this->request->getIPAddress());
     }
 
-    public function testGetIPAddressNormal()
+    public function testGetIPAddressNormal(): void
     {
         $expected               = '123.123.123.123';
         $_SERVER['REMOTE_ADDR'] = $expected;
@@ -605,7 +605,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->getIPAddress());
     }
 
-    public function testGetIPAddressThruProxy()
+    public function testGetIPAddressThruProxy(): void
     {
         $expected                        = '123.123.123.123';
         $_SERVER['REMOTE_ADDR']          = '10.0.1.200';
@@ -623,7 +623,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->getIPAddress());
     }
 
-    public function testGetIPAddressThruProxyInvalid()
+    public function testGetIPAddressThruProxyInvalid(): void
     {
         $expected                        = '123.456.23.123';
         $_SERVER['REMOTE_ADDR']          = '10.0.1.200';
@@ -641,7 +641,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame('10.0.1.200', $this->request->getIPAddress());
     }
 
-    public function testGetIPAddressThruProxyNotWhitelisted()
+    public function testGetIPAddressThruProxyNotWhitelisted(): void
     {
         $expected                        = '123.456.23.123';
         $_SERVER['REMOTE_ADDR']          = '10.10.1.200';
@@ -659,7 +659,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame('10.10.1.200', $this->request->getIPAddress());
     }
 
-    public function testGetIPAddressThruProxySubnet()
+    public function testGetIPAddressThruProxySubnet(): void
     {
         $expected                        = '123.123.123.123';
         $_SERVER['REMOTE_ADDR']          = '192.168.5.21';
@@ -674,7 +674,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->getIPAddress());
     }
 
-    public function testGetIPAddressThruProxyOutofSubnet()
+    public function testGetIPAddressThruProxyOutofSubnet(): void
     {
         $expected                        = '123.123.123.123';
         $_SERVER['REMOTE_ADDR']          = '192.168.5.21';
@@ -691,7 +691,7 @@ final class RequestTest extends CIUnitTestCase
 
     // FIXME getIPAddress should have more testing, to 100% code coverage
 
-    public function testMethodReturnsRightStuff()
+    public function testMethodReturnsRightStuff(): void
     {
         // Defaults method to GET now.
         $this->assertSame('get', $this->request->getMethod());

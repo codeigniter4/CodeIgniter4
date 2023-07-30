@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use InvalidArgumentException;
 
 /**
  * @backupGlobals enabled
@@ -49,7 +50,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $_SERVER = [];
     }
 
-    public function testPreviousURLUsesSessionFirst()
+    public function testPreviousURLUsesSessionFirst(): void
     {
         $uri1 = 'http://example.com/one?two';
         $uri2 = 'http://example.com/two?foo';
@@ -75,7 +76,7 @@ final class MiscUrlTest extends CIUnitTestCase
         Services::injectMock('request', $request);
     }
 
-    public function testPreviousURLUsesRefererIfNeeded()
+    public function testPreviousURLUsesRefererIfNeeded(): void
     {
         $uri1 = 'http://example.com/one?two';
 
@@ -91,7 +92,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test index_page
 
-    public function testIndexPage()
+    public function testIndexPage(): void
     {
         $uri = 'http://example.com/';
         $this->setRequest($uri);
@@ -99,7 +100,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame('index.php', index_page());
     }
 
-    public function testIndexPageAlt()
+    public function testIndexPageAlt(): void
     {
         $this->config->indexPage = 'banana.php';
 
@@ -111,7 +112,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test anchor
 
-    public function anchorNormalPatterns()
+    public function anchorNormalPatterns(): iterable
     {
         return [
             'normal01' => [
@@ -162,7 +163,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $title
      * @param mixed $attributes
      */
-    public function testAnchor($expected = '', $uri = '', $title = '', $attributes = '')
+    public function testAnchor($expected = '', $uri = '', $title = '', $attributes = ''): void
     {
         $uriString = 'http://example.com/';
         $this->setRequest($uriString);
@@ -170,7 +171,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
 
-    public function anchorNoindexPatterns()
+    public function anchorNoindexPatterns(): iterable
     {
         return [
             'noindex01' => [
@@ -227,7 +228,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $title
      * @param mixed $attributes
      */
-    public function testAnchorNoindex($expected = '', $uri = '', $title = '', $attributes = '')
+    public function testAnchorNoindex($expected = '', $uri = '', $title = '', $attributes = ''): void
     {
         $this->config->indexPage = '';
 
@@ -237,7 +238,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
 
-    public function anchorSubpagePatterns()
+    public function anchorSubpagePatterns(): iterable
     {
         return [
             'subpage01' => [
@@ -284,7 +285,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $title
      * @param mixed $attributes
      */
-    public function testAnchorTargetted($expected = '', $uri = '', $title = '', $attributes = '')
+    public function testAnchorTargetted($expected = '', $uri = '', $title = '', $attributes = ''): void
     {
         $this->config->indexPage = '';
 
@@ -294,7 +295,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
 
-    public function anchorExamplePatterns()
+    public function anchorExamplePatterns(): iterable
     {
         return [
             'egpage01' => [
@@ -330,7 +331,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $title
      * @param mixed $attributes
      */
-    public function testAnchorExamples($expected = '', $uri = '', $title = '', $attributes = '')
+    public function testAnchorExamples($expected = '', $uri = '', $title = '', $attributes = ''): void
     {
         $uriString = 'http://example.com/';
         $this->setRequest($uriString);
@@ -340,7 +341,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test anchor_popup
 
-    public function anchorPopupPatterns()
+    public function anchorPopupPatterns(): iterable
     {
         return [
             'normal01' => [
@@ -388,7 +389,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $title
      * @param mixed $attributes
      */
-    public function testAnchorPopup($expected = '', $uri = '', $title = '', $attributes = false)
+    public function testAnchorPopup($expected = '', $uri = '', $title = '', $attributes = false): void
     {
         $uriString = 'http://example.com/';
         $this->setRequest($uriString);
@@ -398,7 +399,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test mailto
 
-    public function mailtoPatterns()
+    public function mailtoPatterns(): iterable
     {
         return [
             'page01' => [
@@ -427,7 +428,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $title
      * @param mixed $attributes
      */
-    public function testMailto($expected = '', $email = '', $title = '', $attributes = '')
+    public function testMailto($expected = '', $email = '', $title = '', $attributes = ''): void
     {
         $uriString = 'http://example.com/';
         $this->setRequest($uriString);
@@ -437,7 +438,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test safe_mailto
 
-    public function safeMailtoPatterns()
+    public function safeMailtoPatterns(): iterable
     {
         return [
             'page01' => [
@@ -466,7 +467,7 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $title
      * @param mixed $attributes
      */
-    public function testSafeMailto($expected = '', $email = '', $title = '', $attributes = '')
+    public function testSafeMailto($expected = '', $email = '', $title = '', $attributes = ''): void
     {
         $uriString = 'http://example.com/';
         $this->setRequest($uriString);
@@ -474,7 +475,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, safe_mailto($email, $title, $attributes));
     }
 
-    public function testSafeMailtoWithCsp()
+    public function testSafeMailtoWithCsp(): void
     {
         $this->config->CSPEnabled = true;
         Factories::injectMock('config', 'App', $this->config);
@@ -486,7 +487,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test auto_link
 
-    public function autolinkUrls()
+    public function autolinkUrls(): iterable
     {
         return [
             'test01' => [
@@ -530,12 +531,12 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $in
      * @param mixed $out
      */
-    public function testAutoLinkUrl($in, $out)
+    public function testAutoLinkUrl($in, $out): void
     {
         $this->assertSame($out, auto_link($in, 'url'));
     }
 
-    public function autolinkEmails()
+    public function autolinkEmails(): iterable
     {
         return [
             'test01' => [
@@ -579,12 +580,12 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $in
      * @param mixed $out
      */
-    public function testAutoLinkEmail($in, $out)
+    public function testAutoLinkEmail($in, $out): void
     {
         $this->assertSame($out, auto_link($in, 'email'));
     }
 
-    public function autolinkBoth()
+    public function autolinkBoth(): iterable
     {
         return [
             'test01' => [
@@ -628,12 +629,12 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $in
      * @param mixed $out
      */
-    public function testAutolinkBoth($in, $out)
+    public function testAutolinkBoth($in, $out): void
     {
         $this->assertSame($out, auto_link($in));
     }
 
-    public function autolinkPopup()
+    public function autolinkPopup(): iterable
     {
         return [
             'test01' => [
@@ -677,14 +678,14 @@ final class MiscUrlTest extends CIUnitTestCase
      * @param mixed $in
      * @param mixed $out
      */
-    public function testAutoLinkPopup($in, $out)
+    public function testAutoLinkPopup($in, $out): void
     {
         $this->assertSame($out, auto_link($in, 'url', true));
     }
 
     // Test prep_url
 
-    public function prepUrlProvider()
+    public function prepUrlProvider(): iterable
     {
         // input, expected, secure
         return [
@@ -764,14 +765,14 @@ final class MiscUrlTest extends CIUnitTestCase
     /**
      * @dataProvider prepUrlProvider
      */
-    public function testPrepUrl(string $input, string $expected, bool $secure)
+    public function testPrepUrl(string $input, string $expected, bool $secure): void
     {
         $this->assertSame($expected, prep_url($input, $secure));
     }
 
     // Test url_title
 
-    public function testUrlTitle()
+    public function testUrlTitle(): void
     {
         $words = [
             'foo bar /'       => 'foo-bar',
@@ -784,7 +785,7 @@ final class MiscUrlTest extends CIUnitTestCase
         }
     }
 
-    public function testUrlTitleExtraDashes()
+    public function testUrlTitleExtraDashes(): void
     {
         $words = [
             '_foo bar_'                 => 'foo_bar',
@@ -799,7 +800,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test mb_url_title
 
-    public function testMbUrlTitle()
+    public function testMbUrlTitle(): void
     {
         $words = [
             'foo bar /'       => 'foo-bar',
@@ -813,7 +814,7 @@ final class MiscUrlTest extends CIUnitTestCase
         }
     }
 
-    public function testMbUrlTitleExtraDashes()
+    public function testMbUrlTitleExtraDashes(): void
     {
         $words = [
             '_foo bar_'                 => 'foo_bar',
@@ -830,7 +831,7 @@ final class MiscUrlTest extends CIUnitTestCase
     /**
      * @dataProvider urlToProvider
      */
-    public function testUrlTo(string $expected, string $input, ...$args)
+    public function testUrlTo(string $expected, string $input, ...$args): void
     {
         $_SERVER['HTTP_HOST'] = 'example.com';
 
@@ -846,14 +847,14 @@ final class MiscUrlTest extends CIUnitTestCase
     /**
      * @dataProvider urlToMissingRoutesProvider
      */
-    public function testUrlToThrowsOnEmptyOrMissingRoute(string $route)
+    public function testUrlToThrowsOnEmptyOrMissingRoute(string $route): void
     {
         $this->expectException(RouterException::class);
 
         url_to($route);
     }
 
-    public function urlToProvider()
+    public function urlToProvider(): iterable
     {
         $page = config('App')->indexPage !== '' ? config('App')->indexPage . '/' : '';
 
@@ -873,7 +874,7 @@ final class MiscUrlTest extends CIUnitTestCase
         ];
     }
 
-    public function urlToMissingRoutesProvider()
+    public function urlToMissingRoutesProvider(): iterable
     {
         return [
             [
@@ -885,7 +886,7 @@ final class MiscUrlTest extends CIUnitTestCase
         ];
     }
 
-    public function testUrlToWithSupportedLocaleInRoute()
+    public function testUrlToWithSupportedLocaleInRoute(): void
     {
         Services::createRequest(new App());
         $routes = service('routes');
@@ -899,5 +900,21 @@ final class MiscUrlTest extends CIUnitTestCase
             'http://example.com/index.php/en/path/string/to/13',
             url_to('path-to', 'string', 13, 'en')
         );
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/7651
+     */
+    public function testUrlToMissingArgument(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Missing argument for "([a-zA-Z]+)" in route "([a-zA-Z]+)/login".');
+
+        $routes = Services::routes();
+        $routes->group('(:alpha)', static function ($routes): void {
+            $routes->match(['get'], 'login', 'Common\LoginController::loginView', ['as' => 'loginURL']);
+        });
+
+        url_to('loginURL');
     }
 }

@@ -151,8 +151,8 @@ Class Reference
         :returns: The current HTTP protocol version
         :rtype: string
 
-        Returns the message's current HTTP protocol. If none has been set, will return ``null``.
-        Acceptable values are ``1.0``, ``1.1`` and ``2.0``.
+        Returns the message's current HTTP protocol. If none has been set, will
+        return ``1.1``.
 
     .. php:method:: setProtocolVersion($version)
 
@@ -160,6 +160,7 @@ Class Reference
         :returns: The current message instance
         :rtype: CodeIgniter\\HTTP\\Message
 
-        Sets the HTTP protocol version this Message uses. Valid values are ``1.0``, ``1.1`` and ``2.0``:
+        Sets the HTTP protocol version this Message uses. Valid values are
+        ``1.0``, ``1.1``, ``2.0`` and ``3.0``:
 
         .. literalinclude:: message/010.php

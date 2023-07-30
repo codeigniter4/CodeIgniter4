@@ -30,27 +30,27 @@ final class SecurityHelperTest extends CIUnitTestCase
         helper('security');
     }
 
-    public function testSanitizeFilenameSimpleSuccess()
+    public function testSanitizeFilenameSimpleSuccess(): void
     {
         Services::injectMock('security', new MockSecurity(new App()));
 
         $this->assertSame('hello.doc', sanitize_filename('hello.doc'));
     }
 
-    public function testSanitizeFilenameStripsExtras()
+    public function testSanitizeFilenameStripsExtras(): void
     {
         $filename = './<!--foo -->';
         $this->assertSame('foo ', sanitize_filename($filename));
     }
 
-    public function testStripImageTags()
+    public function testStripImageTags(): void
     {
         $this->assertSame('http://example.com/spacer.gif', strip_image_tags('http://example.com/spacer.gif'));
 
         $this->assertSame('http://example.com/spacer.gif', strip_image_tags('<img src="http://example.com/spacer.gif" alt="Who needs CSS when you have a spacer.gif?" />'));
     }
 
-    public function testEncodePhpTags()
+    public function testEncodePhpTags(): void
     {
         $this->assertSame('&lt;? echo $foo; ?&gt;', encode_php_tags('<? echo $foo; ?>'));
     }

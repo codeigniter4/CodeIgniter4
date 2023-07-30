@@ -59,17 +59,26 @@ final class FeatureTestAutoRoutingImprovedTest extends CIUnitTestCase
         Services::injectMock('router', $router);
     }
 
-    public function testCallGet()
+    public function testCallGet(): void
     {
         $response = $this->get('newautorouting');
 
         $response->assertSee('Hello');
     }
 
-    public function testCallPost()
+    public function testCallPost(): void
     {
         $response = $this->post('newautorouting/save/1/a/b');
 
         $response->assertSee('Saved');
+    }
+
+    public function testCallParamsCount(): void
+    {
+        $response = $this->post('newautorouting/save/1/a/b');
+        $response->assertSee('Saved');
+
+        $response = $this->get('newautorouting');
+        $response->assertSee('Hello');
     }
 }

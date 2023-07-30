@@ -172,7 +172,7 @@ class Security implements SecurityInterface
     public function __construct(App $config)
     {
         /** @var SecurityConfig|null $security */
-        $security = config('Security');
+        $security = config(SecurityConfig::class);
 
         // Store CSRF-related configurations
         if ($security instanceof SecurityConfig) {
@@ -223,7 +223,7 @@ class Security implements SecurityInterface
     private function configureCookie(App $config): void
     {
         /** @var CookieConfig|null $cookie */
-        $cookie = config('Cookie');
+        $cookie = config(CookieConfig::class);
 
         if ($cookie instanceof CookieConfig) {
             $cookiePrefix     = $cookie->prefix;

@@ -45,7 +45,7 @@ final class CommandTest extends CIUnitTestCase
         return $this->getStreamFilterBuffer();
     }
 
-    public function testListCommands()
+    public function testListCommands(): void
     {
         command('list');
 
@@ -54,7 +54,7 @@ final class CommandTest extends CIUnitTestCase
         $this->assertStringContainsString('Displays basic usage information.', $this->getBuffer());
     }
 
-    public function testListCommandsSimple()
+    public function testListCommandsSimple(): void
     {
         command('list --simple');
 
@@ -62,13 +62,13 @@ final class CommandTest extends CIUnitTestCase
         $this->assertStringNotContainsString('Lists the available commands.', $this->getBuffer());
     }
 
-    public function testCustomCommand()
+    public function testCustomCommand(): void
     {
         command('app:info');
         $this->assertStringContainsString('CI Version:', $this->getBuffer());
     }
 
-    public function testShowError()
+    public function testShowError(): void
     {
         command('app:info');
         $commands = $this->commands->getCommands();
@@ -78,7 +78,7 @@ final class CommandTest extends CIUnitTestCase
         $this->assertStringContainsString('Displays basic usage information.', $this->getBuffer());
     }
 
-    public function testCommandCall()
+    public function testCommandCall(): void
     {
         command('app:info');
         $commands = $this->commands->getCommands();
@@ -88,13 +88,13 @@ final class CommandTest extends CIUnitTestCase
         $this->assertStringContainsString('Invalid "background" color:', $this->getBuffer());
     }
 
-    public function testAbstractCommand()
+    public function testAbstractCommand(): void
     {
         command('app:pablo');
         $this->assertStringContainsString('not found', $this->getBuffer());
     }
 
-    public function testNamespacesCommand()
+    public function testNamespacesCommand(): void
     {
         command('namespaces');
 
@@ -103,13 +103,13 @@ final class CommandTest extends CIUnitTestCase
         $this->assertStringContainsString('| Yes', $this->getBuffer());
     }
 
-    public function testInexistentCommandWithNoAlternatives()
+    public function testInexistentCommandWithNoAlternatives(): void
     {
         command('app:oops');
         $this->assertStringContainsString('Command "app:oops" not found', $this->getBuffer());
     }
 
-    public function testInexistentCommandsButWithOneAlternative()
+    public function testInexistentCommandsButWithOneAlternative(): void
     {
         command('namespace');
 
@@ -118,7 +118,7 @@ final class CommandTest extends CIUnitTestCase
         $this->assertStringContainsString('namespaces', $this->getBuffer());
     }
 
-    public function testInexistentCommandsButWithManyAlternatives()
+    public function testInexistentCommandsButWithManyAlternatives(): void
     {
         command('clear');
 
@@ -130,7 +130,7 @@ final class CommandTest extends CIUnitTestCase
     /**
      * @dataProvider commandArgsProvider
      */
-    public function testCommandParsesArgsCorrectly(string $input, array $expected)
+    public function testCommandParsesArgsCorrectly(string $input, array $expected): void
     {
         ParamsReveal::$args = null;
         command($input);
@@ -138,7 +138,7 @@ final class CommandTest extends CIUnitTestCase
         $this->assertSame($expected, ParamsReveal::$args);
     }
 
-    public function commandArgsProvider(): array
+    public function commandArgsProvider(): iterable
     {
         return [
             [

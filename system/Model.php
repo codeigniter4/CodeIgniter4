@@ -792,7 +792,7 @@ class Model extends BaseModel
      *
      * @param string $name Name
      *
-     * @return mixed
+     * @return array|BaseBuilder|bool|float|int|object|string|null
      */
     public function __get(string $name)
     {
@@ -821,7 +821,7 @@ class Model extends BaseModel
      * Provides direct access to method in the builder (if available)
      * and the database connection.
      *
-     * @return mixed
+     * @return $this|array|BaseBuilder|bool|float|int|object|string|null
      */
     public function __call(string $name, array $params)
     {
@@ -866,7 +866,7 @@ class Model extends BaseModel
      *
      * @codeCoverageIgnore
      *
-     * @deprecated since 4.1
+     * @deprecated 4.1.0
      */
     public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = true): array
     {

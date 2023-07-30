@@ -15,7 +15,6 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
-use Generator;
 
 /**
  * @internal
@@ -52,7 +51,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         return (new RouteCollection($loader, $moduleConfig))->setHTTPVerb('get');
     }
 
-    public function testReverseRoutingFindsSimpleMatch()
+    public function testReverseRoutingFindsSimpleMatch(): void
     {
         $routes = $this->getCollector();
 
@@ -65,7 +64,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $this->assertSame('/path/string/to/13', $match);
     }
 
-    public function testReverseRoutingWithLocaleAndFindsSimpleMatch()
+    public function testReverseRoutingWithLocaleAndFindsSimpleMatch(): void
     {
         $routes = $this->getCollector();
 
@@ -78,7 +77,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $this->assertSame('/en/path/string/to/13', $match);
     }
 
-    public function testReverseRoutingReturnsFalseWithBadParamCount()
+    public function testReverseRoutingReturnsFalseWithBadParamCount(): void
     {
         $routes = $this->getCollector();
 
@@ -89,7 +88,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $this->assertFalse($routes->reverseRoute('myController::goto', 'string', 13));
     }
 
-    public function testReverseRoutingReturnsFalseWithNoMatch()
+    public function testReverseRoutingReturnsFalseWithNoMatch(): void
     {
         $routes = $this->getCollector();
 
@@ -100,7 +99,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $this->assertFalse($routes->reverseRoute('myBadController::goto', 'string', 13));
     }
 
-    public function testReverseRoutingThrowsExceptionWithBadParamTypes()
+    public function testReverseRoutingThrowsExceptionWithBadParamTypes(): void
     {
         $routes = $this->getCollector();
 
@@ -112,7 +111,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $routes->reverseRoute('myController::goto', 13, 'string');
     }
 
-    public function testReverseRoutingWithLocale()
+    public function testReverseRoutingWithLocale(): void
     {
         $routes = $this->getCollector();
 
@@ -121,7 +120,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $this->assertSame('/en/contact', $routes->reverseRoute('myController::goto'));
     }
 
-    public function reverseRoutingHandlerProvider(): Generator
+    public function reverseRoutingHandlerProvider(): iterable
     {
         return yield from [
             'Omit namespace'                  => ['Galleries::showUserGallery'],
@@ -133,7 +132,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
     /**
      * @dataProvider reverseRoutingHandlerProvider
      */
-    public function testReverseRoutingDefaultNamespaceAppController(string $controller)
+    public function testReverseRoutingDefaultNamespaceAppController(string $controller): void
     {
         $routes = $this->getCollector();
         $routes->setDefaultNamespace('App\Controllers');
@@ -145,7 +144,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $this->assertSame('/users/15/gallery12', $match);
     }
 
-    public function testReverseRoutingDefaultNamespaceAppControllerSubNamespace()
+    public function testReverseRoutingDefaultNamespaceAppControllerSubNamespace(): void
     {
         $routes = $this->getCollector();
         $routes->setDefaultNamespace('App\Controllers');
@@ -157,7 +156,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $this->assertSame('/admin/15/gallery12', $match);
     }
 
-    public function testReverseRouteMatching()
+    public function testReverseRouteMatching(): void
     {
         $routes = $this->getCollector();
 
@@ -168,7 +167,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $this->assertSame('/test/1/2', $match);
     }
 
-    public function testReverseRouteMatchingWithLocale()
+    public function testReverseRouteMatchingWithLocale(): void
     {
         $routes = $this->getCollector();
 
@@ -182,11 +181,11 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/568
      */
-    public function testReverseRoutingWithClosure()
+    public function testReverseRoutingWithClosure(): void
     {
         $routes = $this->getCollector();
 
-        $routes->add('login', static function () {
+        $routes->add('login', static function (): void {
         });
 
         $match = $routes->reverseRoute('login');
@@ -194,11 +193,11 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $this->assertSame('/login', $match);
     }
 
-    public function testReverseRoutingWithClosureNoMatch()
+    public function testReverseRoutingWithClosureNoMatch(): void
     {
         $routes = $this->getCollector();
 
-        $routes->add('login', static function () {
+        $routes->add('login', static function (): void {
         });
 
         $this->assertFalse($routes->reverseRoute('foobar'));

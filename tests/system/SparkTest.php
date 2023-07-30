@@ -20,7 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class SparkTest extends CIUnitTestCase
 {
-    public function testCanUseOption()
+    public function testCanUseOption(): void
     {
         ob_start();
         passthru('php spark list --simple');

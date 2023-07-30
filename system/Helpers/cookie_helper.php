@@ -69,10 +69,10 @@ if (! function_exists('get_cookie')) {
     {
         if ($prefix === '') {
             /** @var Cookie|null $cookie */
-            $cookie = config('Cookie');
+            $cookie = config(Cookie::class);
 
             // @TODO Remove Config\App fallback when deprecated `App` members are removed.
-            $prefix = $cookie instanceof Cookie ? $cookie->prefix : config('App')->cookiePrefix;
+            $prefix = $cookie instanceof Cookie ? $cookie->prefix : config(App::class)->cookiePrefix;
         }
 
         $request = Services::request();
@@ -86,7 +86,7 @@ if (! function_exists('delete_cookie')) {
     /**
      * Delete a cookie
      *
-     * @param mixed  $name
+     * @param string $name
      * @param string $domain the cookie domain. Usually: .yourdomain.com
      * @param string $path   the cookie path
      * @param string $prefix the cookie prefix

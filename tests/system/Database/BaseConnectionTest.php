@@ -14,7 +14,6 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
-use Generator;
 use Throwable;
 
 /**
@@ -61,7 +60,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         'failover' => [],
     ];
 
-    public function testSavesConfigOptions()
+    public function testSavesConfigOptions(): void
     {
         $db = new MockConnection($this->options);
 
@@ -81,7 +80,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertSame([], $db->failover);
     }
 
-    public function testConnectionThrowExceptionWhenCannotConnect()
+    public function testConnectionThrowExceptionWhenCannotConnect(): void
     {
         try {
             $db = new MockConnection($this->options);
@@ -92,7 +91,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         }
     }
 
-    public function testCanConnectAndStoreConnection()
+    public function testCanConnectAndStoreConnection(): void
     {
         $db = new MockConnection($this->options);
         $db->shouldReturn('connect', 123)->initialize();
@@ -100,7 +99,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertSame(123, $db->getConnection());
     }
 
-    public function testCanConnectToFailoverWhenNoConnectionAvailable()
+    public function testCanConnectToFailoverWhenNoConnectionAvailable(): void
     {
         $options             = $this->options;
         $options['failover'] = [$this->failoverOptions];
@@ -115,7 +114,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertSame('failover', $db->username);
     }
 
-    public function testStoresConnectionTimings()
+    public function testStoresConnectionTimings(): void
     {
         $start = microtime(true);
 
@@ -129,35 +128,35 @@ final class BaseConnectionTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5535
      */
-    public function testStoresConnectionTimingsNotConnected()
+    public function testStoresConnectionTimingsNotConnected(): void
     {
         $db = new MockConnection($this->options);
 
         $this->assertSame('0.000000', $db->getConnectDuration());
     }
 
-    public function testMagicIssetTrue()
+    public function testMagicIssetTrue(): void
     {
         $db = new MockConnection($this->options);
 
         $this->assertTrue(isset($db->charset));
     }
 
-    public function testMagicIssetFalse()
+    public function testMagicIssetFalse(): void
     {
         $db = new MockConnection($this->options);
 
         $this->assertFalse(isset($db->foobar));
     }
 
-    public function testMagicGet()
+    public function testMagicGet(): void
     {
         $db = new MockConnection($this->options);
 
         $this->assertSame('utf8', $db->charset);
     }
 
-    public function testMagicGetMissing()
+    public function testMagicGetMissing(): void
     {
         $db = new MockConnection($this->options);
 
@@ -176,7 +175,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         bool $fieldExists,
         string $item,
         string $expected
-    ) {
+    ): void {
         $db = new MockConnection($this->options);
 
         $return = $db->protectIdentifiers($item, $prefixSingle, $protectIdentifiers, $fieldExists);
@@ -184,7 +183,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertSame($expected, $return);
     }
 
-    public function identifiersProvider(): Generator
+    public function identifiersProvider(): iterable
     {
         yield from [
             // $prefixSingle, $protectIdentifiers, $fieldExists, $item, $expected

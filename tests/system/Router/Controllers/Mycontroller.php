@@ -15,11 +15,11 @@ use CodeIgniter\Controller;
 
 class Mycontroller extends Controller
 {
-    public function getIndex()
+    public function getIndex(): void
     {
     }
 
-    public function getSomemethod($first = '')
+    public function getSomemethod($first = ''): void
     {
     }
 }

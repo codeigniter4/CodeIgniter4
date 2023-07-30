@@ -106,7 +106,7 @@ class Filters
         $this->request = &$request;
         $this->setResponse($response);
 
-        $this->modules = $modules ?? config('Modules');
+        $this->modules = $modules ?? config(Modules::class);
 
         if ($this->modules->shouldDiscover('filters')) {
             $this->discoverFilters();

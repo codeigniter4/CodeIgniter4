@@ -57,8 +57,7 @@ class Config extends BaseConfig
             $config = $group;
             $group  = 'custom-' . md5(json_encode($config));
         } else {
-            /** @var DbConfig $dbConfig */
-            $dbConfig = config('Database');
+            $dbConfig = config(DbConfig::class);
 
             if ($group === null) {
                 $group = (ENVIRONMENT === 'testing') ? 'tests' : $dbConfig->defaultGroup;
@@ -132,7 +131,7 @@ class Config extends BaseConfig
      */
     public static function seeder(?string $group = null)
     {
-        $config = config('Database');
+        $config = config(DbConfig::class);
 
         return new Seeder($config, static::connect($group));
     }

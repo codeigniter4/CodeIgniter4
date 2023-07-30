@@ -15,4 +15,4 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Project Files
 *************
 
-Version ``4.2.5`` did not alter any project files.
+Version 4.2.5 did not alter any project files.
