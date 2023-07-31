@@ -68,10 +68,10 @@ The ``name`` field is important here. Package names are generally written in the
 format "vendor-name/package-name" with all lowercase. Here is a common example:
 
 - ``your-vendor-name``: The name that identifies the vendor (creator of the package),
-  such as the name of you or your organization.
+  such as your name or your organization.
 - ``your-package-name``: The name of the package you are creating.
 
-Thus, it is important to make the name unique and distinguish it from other packages.
+Thus, it is important to make the name unique to distinguish it from other packages.
 Uniqueness is especially important when publishing.
 
 Namespace
