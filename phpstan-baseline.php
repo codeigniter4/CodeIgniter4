@@ -2786,10 +2786,5 @@ $ignoreErrors[] = [
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/View.php',
 ];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\View\\\\View\\:\\:\\$tempData has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
-];
 
 return ['parameters' => ['ignoreErrors' => $ignoreErrors]];
