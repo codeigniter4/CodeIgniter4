@@ -474,6 +474,8 @@ class Model extends BaseModel
      * Works with the find* methods to return only the rows that
      * have been deleted.
      * This method works only with dbCalls.
+     *
+     * @return void
      */
     protected function doOnlyDeleted()
     {
@@ -553,6 +555,8 @@ class Model extends BaseModel
      * Works with $this->builder to get the Compiled select to
      * determine the rows to operate on.
      * This method works only with dbCalls.
+     *
+     * @return void
      *
      * @throws DataException
      */
