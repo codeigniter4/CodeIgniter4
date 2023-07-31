@@ -194,15 +194,6 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('assets/image.jpg', uri_string());
     }
 
-    private function setService(string $uri): void
-    {
-        $uri = new URI($uri);
-        Services::injectMock('uri', $uri);
-
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
-    }
-
     public function testUriStringNoTrailingSlash(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
