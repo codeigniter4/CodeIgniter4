@@ -101,11 +101,13 @@ You can easily install and configure such tools with
 Installing DevKit
 =================
 
-In the root of your package directory, run the following commands::
+In the root of your package directory, run the following commands:
 
-    > composer config minimum-stability dev
-    > composer config prefer-stable true
-    > composer require --dev codeigniter4/devkit
+.. code-block:: console
+
+    composer config minimum-stability dev
+    composer config prefer-stable true
+    composer require --dev codeigniter4/devkit
 
 The DevKit installs various Composer packages that helps your development, and
 installs templates for them in **vendor/codeigniter4/devkit/src/Template**.
