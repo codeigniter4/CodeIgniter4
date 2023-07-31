@@ -150,17 +150,13 @@ That't it. Now you can run Coding Standards Fixer::
 If you add ``scripts.cs-fix`` in your **composer.json**, you can run it with
 ``composer cs-fix`` command::
 
-    --- a/composer.json
-    +++ b/composer.json
-    @@ -23,5 +23,8 @@
-             "allow-plugins": {
-                 "phpstan/extension-installer": true
-             }
-    +    },
-    +    "scripts": {
-    +        "cs-fix": "php-cs-fixer fix --ansi --verbose --diff"
-         }
-     }
+    {
+        // ...
+        },
+        "scripts": {
+            "cs-fix": "php-cs-fixer fix --ansi --verbose --diff"
+        }
+    }
 
 ************
 Config Files
