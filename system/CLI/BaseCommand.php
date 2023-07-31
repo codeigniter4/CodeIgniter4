@@ -117,6 +117,8 @@ abstract class BaseCommand
 
     /**
      * A simple method to display an error with line/file, in child commands.
+     *
+     * @return void
      */
     protected function showError(Throwable $e)
     {
@@ -129,6 +131,8 @@ abstract class BaseCommand
 
     /**
      * Show Help includes (Usage, Arguments, Description, Options).
+     *
+     * @return void
      */
     public function showHelp()
     {
