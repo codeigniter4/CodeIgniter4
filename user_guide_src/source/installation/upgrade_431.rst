@@ -21,11 +21,13 @@ Composer Version
 If you are using older version of Composer, upgrade your ``composer`` tool,
 and delete the **vendor/** directory, and run ``composer update`` again.
 
-The procedure, for example, is as follows::
+The procedure, for example, is as follows:
 
-    > composer self-update
-    > rm -rf vendor/
-    > composer update
+.. code-block:: console
+
+    composer self-update
+    rm -rf vendor/
+    composer update
 
 Mandatory File Changes
 **********************

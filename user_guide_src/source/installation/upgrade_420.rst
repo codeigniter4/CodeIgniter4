@@ -27,11 +27,13 @@ The following files received significant changes and
 .. important:: If you don't update the above two files, CodeIgniter will not work at all
     after running ``composer update``.
 
-    The upgrade procedure, for example, is as follows::
+    The upgrade procedure, for example, is as follows:
 
-        > composer update
-        > cp vendor/codeigniter4/framework/public/index.php public/index.php
-        > cp vendor/codeigniter4/framework/spark .
+    .. code-block:: console
+
+        composer update
+        cp vendor/codeigniter4/framework/public/index.php public/index.php
+        cp vendor/codeigniter4/framework/spark .
 
 Config/Constants.php
 ====================

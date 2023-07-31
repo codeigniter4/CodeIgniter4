@@ -837,9 +837,11 @@ CodeIgniter has the following :doc:`command </cli/spark_commands>` to display al
 spark routes
 ============
 
-Displays all routes and filters::
+Displays all routes and filters:
 
-    > php spark routes
+.. code-block:: console
+
+    php spark routes
 
 The output is like the following:
 
@@ -924,6 +926,8 @@ Sort by Handler
 
 .. versionadded:: 4.3.0
 
-You can sort the routes by *Handler*::
+You can sort the routes by *Handler*:
 
-    > php spark routes -h
+.. code-block:: console
+
+    php spark routes -h

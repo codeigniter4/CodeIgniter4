@@ -28,18 +28,24 @@ to install it globally we do not recommend it, since it can cause compatibility 
 system as time goes on.
 
 Ensure that you have Composer installed on your system. From the project root (the directory that contains the
-application and system directories) type the following from the command line::
+application and system directories) type the following from the command line:
 
-    > composer require --dev phpunit/phpunit
+.. code-block:: console
+
+    composer require --dev phpunit/phpunit
 
 This will install the correct version for your current PHP version. Once that is done, you can run all of the
-tests for this project by typing::
+tests for this project by typing:
 
-    > vendor/bin/phpunit
+.. code-block:: console
 
-If you are using Windows, use the following command::
+    vendor/bin/phpunit
 
-    > vendor\bin\phpunit
+If you are using Windows, use the following command:
+
+.. code-block:: console
+
+    vendor\bin\phpunit
 
 Phar
 ----

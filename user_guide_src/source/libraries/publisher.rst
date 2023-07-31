@@ -66,9 +66,11 @@ different directory and it will return any child classes found:
 
 .. literalinclude:: publisher/006.php
 
-Most of the time you will not need to handle your own discovery, just use the provided "publish" command::
+Most of the time you will not need to handle your own discovery, just use the provided "publish" command:
 
-    > php spark publish
+.. code-block:: console
+
+    php spark publish
 
 By default on your class extension ``publish()`` will add all files from your ``$source`` and merge them
 out to your destination, overwriting on collision.
@@ -118,10 +120,12 @@ to keep up with. You can create a publication definition in your project to sync
 
 .. literalinclude:: publisher/009.php
 
-Now add the dependency via Composer and call ``spark publish`` to run the publication::
+Now add the dependency via Composer and call ``spark publish`` to run the publication:
 
-    > composer require twbs/bootstrap
-    > php spark publish
+.. code-block:: console
+
+    composer require twbs/bootstrap
+    php spark publish
 
 ... and you'll end up with something like this::
 

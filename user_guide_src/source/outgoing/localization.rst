@@ -243,9 +243,11 @@ into your **app** folder. The incorporated translations will be automatically
 picked up because the ``App`` namespace is mapped to your **app** folder.
 
 Alternately, a better practice would be to run the following command inside your
-project::
+project:
 
-    > composer require codeigniter4/translations
+.. code-block:: console
+
+    composer require codeigniter4/translations
 
 The translated messages will be automatically picked
 up because the translations folders get mapped appropriately.

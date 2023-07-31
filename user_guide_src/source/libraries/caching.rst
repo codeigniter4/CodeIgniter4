@@ -85,16 +85,20 @@ These tools are not required to use Cache driver but might help you.
 cache:clear
 ===========
 
-Clears the current system caches::
+Clears the current system caches:
 
-    > php spark cache:clear
+.. code-block:: console
+
+    php spark cache:clear
 
 cache:info
 ==========
 
-Shows file cache information in the current system::
+Shows file cache information in the current system:
 
-    > php spark cache:info
+.. code-block:: console
+
+    php spark cache:info
 
 .. note:: This command only supports the File cache handler.
 
@@ -317,9 +321,11 @@ Predis Caching
 ==============
 
 Predis is a flexible and feature-complete PHP client library for the Redis key-value store.
-To use it, from the command line inside your project root::
+To use it, from the command line inside your project root:
 
-    > composer require predis/predis
+.. code-block:: console
+
+    composer require predis/predis
 
 For more information on Redis, please see
 `https://github.com/nrk/predis <https://github.com/nrk/predis>`_.

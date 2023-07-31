@@ -515,12 +515,13 @@ it. But be careful because the system user *running* the script is usually
 not your own, but something like 'www-data' instead, so only setting those
 permissions will probably break your application.
 
-Instead, you should do something like this, depending on your environment
-::
+Instead, you should do something like this, depending on your environment:
 
-    > mkdir /<path to your application directory>/writable/sessions/
-    > chmod 0700 /<path to your application directory>/writable/sessions/
-    > chown www-data /<path to your application directory>/writable/sessions/
+.. code-block:: console
+
+    mkdir /<path to your application directory>/writable/sessions/
+    chmod 0700 /<path to your application directory>/writable/sessions/
+    chown www-data /<path to your application directory>/writable/sessions/
 
 Bonus Tip
 ---------
@@ -637,10 +638,12 @@ Setting Up Database Table with Command
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you'd rather not do all of this by hand, you can use the ``make:migration --session`` command
-from the cli to generate a migration file for you::
+from the cli to generate a migration file for you:
 
-  > php spark make:migration --session
-  > php spark migrate
+.. code-block:: console
+
+  php spark make:migration --session
+  php spark migrate
 
 This command will take the ``$savePath`` and ``$matchIP`` settings into account
 when it generates the code.
