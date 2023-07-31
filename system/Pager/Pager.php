@@ -123,7 +123,7 @@ class Pager implements PagerInterface
         $pager = new PagerRenderer($this->getDetails($group));
 
         return $this->view->setVar('pager', $pager)
-            ->render($this->config->templates[$template], null, false);
+            ->render($this->config->templates[$template]);
     }
 
     /**
