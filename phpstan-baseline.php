@@ -17,11 +17,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\CacheInterface\\:\\:initialize\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Cache/CacheInterface.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\BaseHandler\\:\\:deleteMatching\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Cache/Handlers/BaseHandler.php',
@@ -37,11 +32,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Cache/Handlers/DummyHandler.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\DummyHandler\\:\\:initialize\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Cache/Handlers/DummyHandler.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\DummyHandler\\:\\:remember\\(\\) has parameter \\$callback with no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Cache/Handlers/DummyHandler.php',
@@ -52,17 +42,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Cache/Handlers/FileHandler.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\FileHandler\\:\\:initialize\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Cache/Handlers/FileHandler.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\MemcachedHandler\\:\\:deleteMatching\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Cache/Handlers/MemcachedHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\MemcachedHandler\\:\\:initialize\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Cache/Handlers/MemcachedHandler.php',
 ];
@@ -72,27 +52,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Cache/Handlers/PredisHandler.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\PredisHandler\\:\\:initialize\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Cache/Handlers/PredisHandler.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\RedisHandler\\:\\:deleteMatching\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Cache/Handlers/RedisHandler.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\RedisHandler\\:\\:initialize\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Cache/Handlers/RedisHandler.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\WincacheHandler\\:\\:deleteMatching\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Cache/Handlers/WincacheHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\WincacheHandler\\:\\:initialize\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Cache/Handlers/WincacheHandler.php',
 ];
@@ -2283,11 +2248,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockCache\\:\\:assertMissing\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockCache\\:\\:initialize\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
 ];

@@ -18,6 +18,8 @@ interface CacheInterface
 {
     /**
      * Takes care of any handler-specific setup that must be done.
+     *
+     * @return void
      */
     public function initialize();
 
