@@ -343,4 +343,8 @@
     .highlight .ni {
         color: #b780b7;
     }
+
+    .highlight-console .highlight pre {
+        background: #434343;
+    }
 }
