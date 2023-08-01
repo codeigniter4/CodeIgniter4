@@ -65,6 +65,26 @@ final class InsertModelTest extends LiveModelTestCase
         $this->seeInDatabase('job', ['name' => 'Cab Driver']);
     }
 
+    public function testInsertBatchUseAutoIncrementSetToFalse(): void
+    {
+        $insertData = [
+            [
+                'key'   => 'key1',
+                'value' => 'value1',
+            ],
+            [
+                'key'   => 'key2',
+                'value' => 'value2',
+            ],
+        ];
+
+        $this->createModel(WithoutAutoIncrementModel::class);
+        $this->model->insertBatch($insertData);
+
+        $this->seeInDatabase('without_auto_increment', ['key' => 'key1']);
+        $this->seeInDatabase('without_auto_increment', ['key' => 'key2']);
+    }
+
     public function testInsertBatchValidationFail(): void
     {
         $jobData = [
