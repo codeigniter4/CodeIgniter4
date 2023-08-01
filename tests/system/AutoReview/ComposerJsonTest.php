@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\AutoReview;
 
+use InvalidArgumentException;
 use JsonException;
 use PHPUnit\Framework\TestCase;
 
@@ -40,7 +41,7 @@ final class ComposerJsonTest extends TestCase
 
     public function testFrameworkRequireIsTheSameWithDevRequire(): void
     {
-        $this->checkFramework('require');
+        $this->checkSection('require', 'framework');
     }
 
     public function testFrameworkRequireDevIsTheSameWithDevRequireDev(): void
@@ -68,35 +69,66 @@ final class ComposerJsonTest extends TestCase
 
     public function testFrameworkSuggestIsTheSameWithDevSuggest(): void
     {
-        $this->checkFramework('suggest');
+        $this->checkSection('suggest', 'framework');
     }
 
     public function testFrameworkConfigIsTheSameWithDevSuggest(): void
     {
-        $this->checkFramework('config');
+        $this->checkConfig(
+            $this->devComposer['config'],
+            $this->frameworkComposer['config'],
+            'framework'
+        );
     }
 
     public function testStarterConfigIsTheSameWithDevSuggest(): void
     {
-        $this->checkStarter('config');
-    }
-
-    private function checkFramework(string $section): void
-    {
-        $this->assertSame(
-            $this->devComposer[$section],
-            $this->frameworkComposer[$section],
-            'The framework\'s "' . $section . '" section is not updated with the main composer.json.'
+        $this->checkConfig(
+            $this->devComposer['config'],
+            $this->starterComposer['config'],
+            'starter'
         );
     }
 
-    private function checkStarter(string $section): void
+    private function checkSection(string $section, string $component): void
     {
+        switch (strtolower($component)) {
+            case 'framework':
+                $sectionContent = $this->frameworkComposer[$section] ?? null;
+                break;
+
+            case 'starter':
+                $sectionContent = $this->starterComposer[$section] ?? null;
+                break;
+
+            default:
+                throw new InvalidArgumentException(sprintf('Unknown component: %s.', $component));
+        }
+
         $this->assertSame(
             $this->devComposer[$section],
-            $this->starterComposer[$section],
-            'The starter\'s "' . $section . '" section is not updated with the main composer.json.'
+            $sectionContent,
+            sprintf('The %s\'s "%s" section is not updated with the main composer.json', strtolower($component), $section)
         );
+    }
+
+    private function checkConfig(array $fromMain, array $fromComponent, string $component): void
+    {
+        foreach ($fromMain as $key => $expectedValue) {
+            if (! isset($fromComponent[$key])) {
+                $this->addToAssertionCount(1);
+
+                continue;
+            }
+
+            $actualValue = $fromComponent[$key];
+
+            $this->assertSame($expectedValue, $actualValue, sprintf(
+                '%s\'s value for config property "%s" is not same with the main composer.json\'s config.',
+                ucfirst($component),
+                $key
+            ));
+        }
     }
 
     private function getComposerJson(string $path): array
