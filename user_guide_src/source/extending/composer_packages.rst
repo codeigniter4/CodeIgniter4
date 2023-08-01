@@ -143,9 +143,11 @@ Open **.php-cs-fixer.dist.php** in your editor, and fix the folder path::
          ])
          ->exclude([
 
-That't it. Now you can run Coding Standards Fixer::
+That't it. Now you can run Coding Standards Fixer:
 
-    > vendor/bin/php-cs-fixer fix --ansi --verbose --diff
+.. code-block:: console
+
+    vendor/bin/php-cs-fixer fix --ansi --verbose --diff
 
 If you add ``scripts.cs-fix`` in your **composer.json**, you can run it with
 ``composer cs-fix`` command::
