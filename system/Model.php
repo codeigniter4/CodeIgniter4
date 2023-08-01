@@ -130,13 +130,6 @@ class Model extends BaseModel
     protected $escape = [];
 
     /**
-     * Primary Key value when inserting and useAutoIncrement is false.
-     *
-     * @var int|string|null
-     */
-    private $tempPrimaryKeyValue;
-
-    /**
      * Builder method names that should not be used in the Model.
      *
      * @var string[] method name
@@ -280,13 +273,6 @@ class Model extends BaseModel
     {
         $escape       = $this->escape;
         $this->escape = [];
-
-        // If $useAutoIncrement is false, add the primary key data.
-        if ($this->useAutoIncrement === false && $this->tempPrimaryKeyValue !== null) {
-            $data[$this->primaryKey] = $this->tempPrimaryKeyValue;
-
-            $this->tempPrimaryKeyValue = null;
-        }
 
         // Require non-empty primaryKey when
         // not using auto-increment feature
@@ -717,14 +703,6 @@ class Model extends BaseModel
             } else {
                 $data = $this->transformDataToArray($data, 'insert');
                 $data = array_merge($this->tempData['data'], $data);
-            }
-        }
-
-        if ($this->useAutoIncrement === false) {
-            if (is_array($data) && isset($data[$this->primaryKey])) {
-                $this->tempPrimaryKeyValue = $data[$this->primaryKey];
-            } elseif (is_object($data) && isset($data->{$this->primaryKey})) {
-                $this->tempPrimaryKeyValue = $data->{$this->primaryKey};
             }
         }
 
