@@ -1225,8 +1225,8 @@ abstract class BaseModel
      * Ensures that only the fields that are allowed to be updated
      * are in the data array.
      *
-     * Used by insert() and update() to protect against mass assignment
-     * vulnerabilities.
+     * Used by insert(), insertBatch(), update(), and updateBatch() to protect
+     * against mass assignment vulnerabilities.
      *
      * @param array $data Data
      *
