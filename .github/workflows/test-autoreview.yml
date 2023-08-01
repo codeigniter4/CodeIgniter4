@@ -97,7 +97,7 @@ jobs:
 
           if [[ '${{ steps.normalize-starter-composer.conclusion }}' == 'failure' ]]; then
             echo 'Normalization of starter composer.json encountered a problem.';
-            echo 'Please run it locally: `composer normalize -d admin/framework`';
+            echo 'Please run it locally: `composer normalize -d admin/starter`';
             exit 1;
           fi
 
