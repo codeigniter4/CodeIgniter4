@@ -338,6 +338,8 @@ abstract class BaseModel
     /**
      * Initializes the instance with any additional steps.
      * Optionally implemented by child classes.
+     *
+     * @return void
      */
     protected function initialize()
     {
@@ -458,6 +460,8 @@ abstract class BaseModel
      * Works with the find* methods to return only the rows that
      * have been deleted.
      * This method works only with dbCalls.
+     *
+     * @return void
      */
     abstract protected function doOnlyDeleted();
 
@@ -523,6 +527,8 @@ abstract class BaseModel
      *
      * @param int     $size     Size
      * @param Closure $userFunc Callback Function
+     *
+     * @return void
      *
      * @throws DataException
      */
