@@ -107,9 +107,11 @@ that wish to use them. The tools primarily provide access to the same methods th
 migrate
 =======
 
-Migrates a database group with all available migrations::
+Migrates a database group with all available migrations:
 
-    > php spark migrate
+.. code-block:: console
+
+    php spark migrate
 
 You can use (migrate) with the following options:
 
@@ -117,13 +119,19 @@ You can use (migrate) with the following options:
 - ``-n`` - to choose namespace, otherwise (App) namespace will be used.
 - ``--all`` - to migrate all namespaces to the latest migration.
 
-This example will migrate ``Acme\Blog`` namespace with any new migrations on the test database group::
+This example will migrate ``Acme\Blog`` namespace with any new migrations on the test database group:
 
-    For Unix:
-    > php spark migrate -g test -n Acme\\Blog
+For Unix:
 
-    For Windows:
-    > php spark migrate -g test -n Acme\Blog
+.. code-block:: console
+
+    php spark migrate -g test -n Acme\\Blog
+
+For Windows:
+
+.. code-block:: console
+
+    php spark migrate -g test -n Acme\Blog
 
 When using the ``--all`` option, it will scan through all namespaces attempting to find any migrations that have
 not been run. These will all be collected and then sorted as a group by date created. This should help
@@ -132,9 +140,11 @@ to minimize any potential conflicts between the main application and any modules
 rollback
 ========
 
-Rolls back all migrations, taking the database group to a blank slate, effectively migration 0::
+Rolls back all migrations, taking the database group to a blank slate, effectively migration 0:
 
-  > php spark migrate:rollback
+.. code-block:: console
+
+  php spark migrate:rollback
 
 You can use (rollback) with the following options:
 
@@ -145,9 +155,11 @@ You can use (rollback) with the following options:
 refresh
 =======
 
-Refreshes the database state by first rolling back all migrations, and then migrating all::
+Refreshes the database state by first rolling back all migrations, and then migrating all:
 
-  > php spark migrate:refresh
+.. code-block:: console
+
+  php spark migrate:refresh
 
 You can use (refresh) with the following options:
 
@@ -159,9 +171,11 @@ You can use (refresh) with the following options:
 status
 ======
 
-Displays a list of all migrations and the date and time they ran, or '--' if they have not been run::
+Displays a list of all migrations and the date and time they ran, or '--' if they have not been run:
 
-  > php spark migrate:status
+.. code-block:: console
+
+  php spark migrate:status
 
   ...
 
@@ -184,9 +198,9 @@ Creates a skeleton migration file in **app/Database/Migrations**.
 It automatically prepends the current timestamp. The class name it
 creates is the Pascal case version of the filename.
 
-::
+.. code-block:: console
 
-  > php spark make:migration <class> [options]
+  php spark make:migration <class> [options]
 
 You can use (``make:migration``) with the following options:
 

@@ -65,9 +65,11 @@ run()
 -----
 
 The ``run()`` method is the method that is called when the command is being run. The ``$params`` array is a list of
-any CLI arguments after the command name for your use. If the CLI string was::
+any CLI arguments after the command name for your use. If the CLI string was:
 
-    > php spark foo bar baz
+.. code-block:: console
+
+    php spark foo bar baz
 
 Then **foo** is the command name, and the ``$params`` array would be:
 

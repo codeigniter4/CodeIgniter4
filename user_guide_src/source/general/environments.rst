@@ -54,9 +54,11 @@ The simplest method to set the variable is in your :ref:`.env file <dotenv-file>
 
     CI_ENVIRONMENT = development
 
-.. note:: You can change the ``CI_ENVIRONMENT`` value in **.env** file by ``spark env`` command::
+.. note:: You can change the ``CI_ENVIRONMENT`` value in **.env** file by ``spark env`` command:
 
-    > php spark env production
+    .. code-block:: console
+
+        php spark env production
 
 .. _environment-apache:
 
@@ -135,9 +137,11 @@ Confirming the Current Environment
 
 To confirm the current environment, simply echo the constant ``ENVIRONMENT``.
 
-You can also check the current environment by ``spark env`` command::
+You can also check the current environment by ``spark env`` command:
 
-    > php spark env
+.. code-block:: console
+
+    php spark env
 
 *************************************
 Effects on Default Framework Behavior

@@ -36,9 +36,11 @@ The Spark Commands
 
 CodeIgniter ships with the official command **spark** and built-in commands.
 
-You can run the spark and see the help::
+You can run the spark and see the help:
 
-    > php spark
+.. code-block:: console
+
+    php spark
 
 See the :doc:`spark_commands` page for detailed information.
 

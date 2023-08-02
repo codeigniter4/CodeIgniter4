@@ -14,9 +14,11 @@ Introduction
 ************
 
 All built-in generators reside under the ``Generators`` group when listed using ``php spark list``.
-To view the full description and usage information on a particular generator, use the command::
+To view the full description and usage information on a particular generator, use the command:
 
-    > php spark help <generator_command>
+.. code-block:: console
+
+    php spark help <generator_command>
 
 where ``<generator_command>`` will be replaced with the command to check.
 
@@ -287,9 +289,11 @@ wrapper to the controller, model, entity, migration, and seeder generator comman
 name that will be used to name all the generated classes. Also, **individual options** supported by each
 generator command are recognized by the scaffold command.
 
-Running this in your terminal::
+Running this in your terminal:
 
-    > php spark make:scaffold user
+.. code-block:: console
+
+    php spark make:scaffold user
 
 will create the following files:
 

@@ -19,9 +19,11 @@ db:table --show
 ---------------
 
 To list all the tables in your database straight from your favorite terminal,
-you can use the ``db:table --show`` command::
+you can use the ``db:table --show`` command:
 
-    > php spark db:table --show
+.. code-block:: console
+
+    php spark db:table --show
 
 When using this command it is assumed that a table exists.
 Otherwise, CodeIgniter will complain that the database has no tables.
@@ -32,21 +34,27 @@ Retrieve Some Records
 db:table
 --------
 
-When you have a table named ``my_table``, you can see the field names and the records of a table::
+When you have a table named ``my_table``, you can see the field names and the records of a table:
 
-    > php spark db:table my_table
+.. code-block:: console
+
+    .. code-block:: consolephp spark db:table my_table
 
 If the table ``my_table`` is not in the database, CodeIgniter displays a list of available tables to select.
 
-You can also use the following command without the table name::
+You can also use the following command without the table name:
 
-    > php spark db:table
+.. code-block:: console
+
+    php spark db:table
 
 In this case, the table name will be asked.
 
-You can also pass a few options::
+You can also pass a few options:
 
-    > php spark db:table my_table --limit-rows 50 --limit-field-value 20 --desc
+.. code-block:: console
+
+    php spark db:table my_table --limit-rows 50 --limit-field-value 20 --desc
 
 The option ``--limit-rows 50`` limits the number of rows to 50 rows.
 
@@ -60,9 +68,11 @@ Retrieve Field Metadata
 db:table --metadata
 -------------------
 
-When you have a table named ``my_table``, you can see metadata like the column type, max length of the table with the ``--metadata`` option::
+When you have a table named ``my_table``, you can see metadata like the column type, max length of the table with the ``--metadata`` option:
 
-    > php spark db:table my_table --metadata
+.. code-block:: console
+
+    php spark db:table my_table --metadata
 
 When using this command it is assumed that the table exists.
 Otherwise, CodeIgniter will show a table list to select.

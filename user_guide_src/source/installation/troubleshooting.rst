@@ -11,9 +11,11 @@ Here are some common installation problems, and suggested workarounds.
 How do I know if my install is working?
 ---------------------------------------
 
-From the command line, at your project root::
+From the command line, at your project root:
 
-    > php spark serve
+.. code-block:: console
+
+    php spark serve
 
 ``http://localhost:8080`` in your browser should then show the default
 welcome page:

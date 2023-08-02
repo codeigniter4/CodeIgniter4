@@ -241,6 +241,10 @@ html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(
 	margin-top: 2rem;
 }
 
+.highlight-console .highlight {
+    background-color: #fffff0;
+}
+
 /* Messages ----------------------------------------------------------------- */
 
 .rst-content .success {

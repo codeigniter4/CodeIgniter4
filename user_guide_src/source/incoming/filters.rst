@@ -179,9 +179,11 @@ filter:check
 
 .. versionadded:: 4.3.0
 
-Check the filters for the route ``/`` with **GET** method::
+Check the filters for the route ``/`` with **GET** method:
 
-    > php spark filter:check get /
+.. code-block:: console
+
+    php spark filter:check get /
 
 The output is like the following:
 

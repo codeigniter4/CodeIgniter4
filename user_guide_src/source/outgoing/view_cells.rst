@@ -94,9 +94,9 @@ Generating Cell via Command
 
 You can also create a controlled cell via a built in command from the CLI. The command is ``php spark make:cell``. It takes one argument, the name of the cell to create. The name should be in PascalCase, and the class will be created in the **app/Cells** directory. The view file will also be created in the **app/Cells** directory.
 
-::
+.. code-block:: console
 
-    > php spark make:cell AlertMessageCell
+    php spark make:cell AlertMessageCell
 
 Using a Different View
 ======================
