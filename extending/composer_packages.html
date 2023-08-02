@@ -290,21 +290,22 @@ or can create a Composer package for CodeIgniter 4.</p>
 <ul>
 <li><p><a class="reference internal" href="#package-name" id="id3">Package Name</a></p></li>
 <li><p><a class="reference internal" href="#namespace" id="id4">Namespace</a></p></li>
+<li><p><a class="reference internal" href="#choosing-license" id="id5">Choosing License</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#preparing-development-tools" id="id5">Preparing Development Tools</a></p>
+<li><p><a class="reference internal" href="#preparing-development-tools" id="id6">Preparing Development Tools</a></p>
 <ul>
-<li><p><a class="reference internal" href="#installing-devkit" id="id6">Installing DevKit</a></p></li>
-<li><p><a class="reference internal" href="#configuring-coding-standards-fixer" id="id7">Configuring Coding Standards Fixer</a></p></li>
+<li><p><a class="reference internal" href="#installing-devkit" id="id7">Installing DevKit</a></p></li>
+<li><p><a class="reference internal" href="#configuring-coding-standards-fixer" id="id8">Configuring Coding Standards Fixer</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#config-files" id="id8">Config Files</a></p>
+<li><p><a class="reference internal" href="#config-files" id="id9">Config Files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#allowing-users-to-override-settings" id="id9">Allowing Users to Override Settings</a></p></li>
-<li><p><a class="reference internal" href="#overriding-settings-in-app-config" id="id10">Overriding Settings in app/Config</a></p></li>
+<li><p><a class="reference internal" href="#allowing-users-to-override-settings" id="id10">Allowing Users to Override Settings</a></p></li>
+<li><p><a class="reference internal" href="#overriding-settings-in-app-config" id="id11">Overriding Settings in app/Config</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#references" id="id11">References</a></p></li>
+<li><p><a class="reference internal" href="#references" id="id12">References</a></p></li>
 </ul>
 </div>
 <section id="folder-structure">
@@ -380,14 +381,19 @@ be <code class="docutils literal notranslate"><span class="pre">YourVendor</span
 </div>
 <p>This setting instructs Composer to autoload the source code for your package.</p>
 </section>
+<section id="choosing-license">
+<h3><a class="toc-backref" href="#id5">Choosing License</a><a class="headerlink" href="#choosing-license" title="Permalink to this headline"></a></h3>
+<p>If you are not familiar with open source licenses, see <a class="reference external" href="https://choosealicense.com/">https://choosealicense.com/</a>.
+Many PHP packages, including CodeIgniter, use the MIT license.</p>
+</section>
 </section>
 <section id="preparing-development-tools">
-<h2><a class="toc-backref" href="#id5">Preparing Development Tools</a><a class="headerlink" href="#preparing-development-tools" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Preparing Development Tools</a><a class="headerlink" href="#preparing-development-tools" title="Permalink to this headline"></a></h2>
 <p>There are many tools that help ensure quality code. So you should use them.
 You can easily install and configure such tools with
 <a class="reference external" href="https://github.com/codeigniter4/devkit">CodeIgniter DevKit</a>.</p>
 <section id="installing-devkit">
-<h3><a class="toc-backref" href="#id6">Installing DevKit</a><a class="headerlink" href="#installing-devkit" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Installing DevKit</a><a class="headerlink" href="#installing-devkit" title="Permalink to this headline"></a></h3>
 <p>In the root of your package directory, run the following commands:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">composer config minimum-stability dev</span>
 <span class="go">composer config prefer-stable true</span>
@@ -399,7 +405,7 @@ installs templates for them in <strong>vendor/codeigniter4/devkit/src/Template</
 Copy the files in it to your project root folder, and edit them for your needs.</p>
 </section>
 <section id="configuring-coding-standards-fixer">
-<h3><a class="toc-backref" href="#id7">Configuring Coding Standards Fixer</a><a class="headerlink" href="#configuring-coding-standards-fixer" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Configuring Coding Standards Fixer</a><a class="headerlink" href="#configuring-coding-standards-fixer" title="Permalink to this headline"></a></h3>
 <p>DevKit provides Coding Standards Fixer with
 <a class="reference external" href="https://github.com/CodeIgniter/coding-standard">CodeIgniter Coding Standard</a>
 based on <a class="reference external" href="https://github.com/PHP-CS-Fixer/PHP-CS-Fixer">PHP-CS-Fixer</a>.</p>
@@ -443,9 +449,9 @@ project root folder.</p>
 </section>
 </section>
 <section id="config-files">
-<h2><a class="toc-backref" href="#id8">Config Files</a><a class="headerlink" href="#config-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9">Config Files</a><a class="headerlink" href="#config-files" title="Permalink to this headline"></a></h2>
 <section id="allowing-users-to-override-settings">
-<h3><a class="toc-backref" href="#id9">Allowing Users to Override Settings</a><a class="headerlink" href="#allowing-users-to-override-settings" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">Allowing Users to Override Settings</a><a class="headerlink" href="#allowing-users-to-override-settings" title="Permalink to this headline"></a></h3>
 <p>If your package has a configuration file and you want users to be able to override
 the settings, use <a class="reference internal" href="../general/common_functions.html#config" title="config"><code class="xref php php-func docutils literal notranslate"><span class="pre">config()</span></code></a> with the short classname like <code class="docutils literal notranslate"><span class="pre">config('YourConfig')</span></code>
 to call the configuration file.</p>
@@ -454,13 +460,13 @@ with the same short classname in <strong>app/Config</strong> that extends the pa
 class like <code class="docutils literal notranslate"><span class="pre">YourVendor\YourPackage\Config\YourConfig</span></code>.</p>
 </section>
 <section id="overriding-settings-in-app-config">
-<h3><a class="toc-backref" href="#id10">Overriding Settings in app/Config</a><a class="headerlink" href="#overriding-settings-in-app-config" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11">Overriding Settings in app/Config</a><a class="headerlink" href="#overriding-settings-in-app-config" title="Permalink to this headline"></a></h3>
 <p>If you need to override or add to known configurations in the <strong>app/Config</strong> folder,
 you can use <a class="reference internal" href="../general/configuration.html#registrars"><span class="std std-ref">Implicit Registrars</span></a>.</p>
 </section>
 </section>
 <section id="references">
-<h2><a class="toc-backref" href="#id11">References</a><a class="headerlink" href="#references" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id12">References</a><a class="headerlink" href="#references" title="Permalink to this headline"></a></h2>
 <p>We have published some official packages. You can use these packages as references
 when creating your own packages:</p>
 <ul class="simple">
