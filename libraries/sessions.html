@@ -983,10 +983,10 @@ allows only the directory’s owner to perform read and write operations on
 it. But be careful because the system user <em>running</em> the script is usually
 not your own, but something like ‘www-data’ instead, so only setting those
 permissions will probably break your application.</p>
-<p>Instead, you should do something like this, depending on your environment</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nb">mkdir</span> <span class="o">/&lt;</span><span class="nx">path</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">application</span> <span class="nx">directory</span><span class="o">&gt;/</span><span class="nx">writable</span><span class="o">/</span><span class="nx">sessions</span><span class="o">/</span>
-<span class="o">&gt;</span> <span class="nb">chmod</span> <span class="mo">0700</span> <span class="o">/&lt;</span><span class="nx">path</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">application</span> <span class="nx">directory</span><span class="o">&gt;/</span><span class="nx">writable</span><span class="o">/</span><span class="nx">sessions</span><span class="o">/</span>
-<span class="o">&gt;</span> <span class="nb">chown</span> <span class="nx">www</span><span class="o">-</span><span class="nx">data</span> <span class="o">/&lt;</span><span class="nx">path</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">application</span> <span class="nx">directory</span><span class="o">&gt;/</span><span class="nx">writable</span><span class="o">/</span><span class="nx">sessions</span><span class="o">/</span>
+<p>Instead, you should do something like this, depending on your environment:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir /&lt;path to your application directory&gt;/writable/sessions/</span>
+<span class="go">chmod 0700 /&lt;path to your application directory&gt;/writable/sessions/</span>
+<span class="go">chown www-data /&lt;path to your application directory&gt;/writable/sessions/</span>
 </pre></div>
 </div>
 <section id="bonus-tip">
@@ -1132,8 +1132,8 @@ in the <strong>app/Config/Session.php</strong> file to the name of the group to 
 <h5>Setting Up Database Table with Command<a class="headerlink" href="#setting-up-database-table-with-command" title="Permalink to this headline"></a></h5>
 <p>If you’d rather not do all of this by hand, you can use the <code class="docutils literal notranslate"><span class="pre">make:migration</span> <span class="pre">--session</span></code> command
 from the cli to generate a migration file for you:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">migration</span> <span class="o">--</span><span class="nx">session</span>
-<span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:migration --session</span>
+<span class="go">php spark migrate</span>
 </pre></div>
 </div>
 <p>This command will take the <code class="docutils literal notranslate"><span class="pre">$savePath</span></code> and <code class="docutils literal notranslate"><span class="pre">$matchIP</span></code> settings into account
@@ -1278,7 +1278,7 @@ separate the multiple server paths with commas:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 31, 2023.
+      <span class="lastupdated">Last updated on Aug 02, 2023.
       </span></p>
   </div>
 

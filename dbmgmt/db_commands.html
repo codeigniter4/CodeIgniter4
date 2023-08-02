@@ -301,7 +301,7 @@
 <h4>db:table –show<a class="headerlink" href="#db-table-show" title="Permalink to this headline"></a></h4>
 <p>To list all the tables in your database straight from your favorite terminal,
 you can use the <code class="docutils literal notranslate"><span class="pre">db:table</span> <span class="pre">--show</span></code> command:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">table</span> <span class="o">--</span><span class="nx">show</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:table --show</span>
 </pre></div>
 </div>
 <p>When using this command it is assumed that a table exists.
@@ -313,17 +313,17 @@ Otherwise, CodeIgniter will complain that the database has no tables.</p>
 <section id="db-table">
 <h4>db:table<a class="headerlink" href="#db-table" title="Permalink to this headline"></a></h4>
 <p>When you have a table named <code class="docutils literal notranslate"><span class="pre">my_table</span></code>, you can see the field names and the records of a table:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">table</span> <span class="nx">my_table</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">.. code-block:: consolephp spark db:table my_table</span>
 </pre></div>
 </div>
 <p>If the table <code class="docutils literal notranslate"><span class="pre">my_table</span></code> is not in the database, CodeIgniter displays a list of available tables to select.</p>
 <p>You can also use the following command without the table name:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">table</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:table</span>
 </pre></div>
 </div>
 <p>In this case, the table name will be asked.</p>
 <p>You can also pass a few options:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">table</span> <span class="nx">my_table</span> <span class="o">--</span><span class="nx">limit</span><span class="o">-</span><span class="nx">rows</span> <span class="mi">50</span> <span class="o">--</span><span class="nx">limit</span><span class="o">-</span><span class="nx">field</span><span class="o">-</span><span class="nx">value</span> <span class="mi">20</span> <span class="o">--</span><span class="nx">desc</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:table my_table --limit-rows 50 --limit-field-value 20 --desc</span>
 </pre></div>
 </div>
 <p>The option <code class="docutils literal notranslate"><span class="pre">--limit-rows</span> <span class="pre">50</span></code> limits the number of rows to 50 rows.</p>
@@ -336,7 +336,7 @@ Otherwise, CodeIgniter will complain that the database has no tables.</p>
 <section id="db-table-metadata">
 <h4>db:table –metadata<a class="headerlink" href="#db-table-metadata" title="Permalink to this headline"></a></h4>
 <p>When you have a table named <code class="docutils literal notranslate"><span class="pre">my_table</span></code>, you can see metadata like the column type, max length of the table with the <code class="docutils literal notranslate"><span class="pre">--metadata</span></code> option:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">table</span> <span class="nx">my_table</span> <span class="o">--</span><span class="nx">metadata</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:table my_table --metadata</span>
 </pre></div>
 </div>
 <p>When using this command it is assumed that the table exists.
@@ -359,7 +359,7 @@ Also, you can use this command as <code class="docutils literal notranslate"><sp
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 31, 2023.
+      <span class="lastupdated">Last updated on Aug 02, 2023.
       </span></p>
   </div>
 

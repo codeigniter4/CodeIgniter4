@@ -381,7 +381,7 @@ web server.</p>
 <p>CodeIgniter 4 comes with a local development server, leveraging PHP’s built-in web server
 with CodeIgniter routing. You can launch it, with the following command line
 in the main directory:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark serve</span>
 </pre></div>
 </div>
 <p>This will launch the server and you can now view your application in your browser at <a class="reference external" href="http://localhost:8080">http://localhost:8080</a>.</p>
@@ -396,21 +396,27 @@ all unix-type systems (including macOS) will typically keep the file at <strong>
 <p>The local development server can be customized with three command line options:</p>
 <ul>
 <li><p>You can use the <code class="docutils literal notranslate"><span class="pre">--host</span></code> CLI option to specify a different host to run the application at:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span> <span class="o">--</span><span class="nx">host</span> <span class="nx">example</span><span class="o">.</span><span class="nx">dev</span>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark serve --host example.dev</span>
 </pre></div>
 </div>
+</div></blockquote>
 </li>
 <li><p>By default, the server runs on port 8080 but you might have more than one site running, or already have
 another application using that port. You can use the <code class="docutils literal notranslate"><span class="pre">--port</span></code> CLI option to specify a different one:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span> <span class="o">--</span><span class="nx">port</span> <span class="mi">8081</span>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark serve --port 8081</span>
 </pre></div>
 </div>
+</div></blockquote>
 </li>
 <li><p>You can also specify a specific version of PHP to use, with the <code class="docutils literal notranslate"><span class="pre">--php</span></code> CLI option, with its value
 set to the path of the PHP executable you want to use:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span> <span class="o">--</span><span class="nx">php</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">php7</span><span class="o">.</span><span class="mf">6.5</span><span class="o">.</span><span class="mi">4</span>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark serve --php /usr/bin/php7.6.5.4</span>
 </pre></div>
 </div>
+</div></blockquote>
 </li>
 </ul>
 </section>
@@ -512,8 +518,8 @@ there are three ways.</p>
 </pre></div>
 </div>
 <p>Navigate to the <strong>htdocs</strong> folder and create a symbolic link as follows:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">cd</span> <span class="nx">htdocs</span><span class="o">/</span>
-<span class="o">&gt;</span> <span class="nx">ln</span> <span class="o">-</span><span class="nx">s</span> <span class="o">../</span><span class="nx">myproject</span><span class="o">/</span><span class="k">public</span><span class="o">/</span> <span class="nx">myproject</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd htdocs/</span>
+<span class="go">ln -s ../myproject/public/ myproject</span>
 </pre></div>
 </div>
 </section>
@@ -702,7 +708,7 @@ paths align with the expected directory structure for your installation method.<
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 31, 2023.
+      <span class="lastupdated">Last updated on Aug 02, 2023.
       </span></p>
   </div>
 

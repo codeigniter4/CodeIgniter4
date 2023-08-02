@@ -405,7 +405,7 @@ different directory and it will return any child classes found:</p>
 </pre></div>
 </div>
 <p>Most of the time you will not need to handle your own discovery, just use the provided “publish” command:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">publish</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark publish</span>
 </pre></div>
 </div>
 <p>By default on your class extension <code class="docutils literal notranslate"><span class="pre">publish()</span></code> will add all files from your <code class="docutils literal notranslate"><span class="pre">$source</span></code> and merge them
@@ -521,8 +521,8 @@ to keep up with. You can create a publication definition in your project to sync
 </pre></div>
 </div>
 <p>Now add the dependency via Composer and call <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">publish</span></code> to run the publication:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="k">require</span> <span class="nx">twbs</span><span class="o">/</span><span class="nx">bootstrap</span>
-<span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">publish</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">composer require twbs/bootstrap</span>
+<span class="go">php spark publish</span>
 </pre></div>
 </div>
 <p>… and you’ll end up with something like this:</p>
@@ -810,7 +810,7 @@ affect other files in the destination. Returns success or failure, use <code cla
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 31, 2023.
+      <span class="lastupdated">Last updated on Aug 02, 2023.
       </span></p>
   </div>
 

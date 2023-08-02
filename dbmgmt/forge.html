@@ -387,17 +387,18 @@ Returns true/false based on success or failure:</p>
 command. By using this command it is assumed that the database is not yet existing. Otherwise, CodeIgniter
 will complain that the database creation has failed.</p>
 <p>To start, just type the command and the name of the database (e.g., <code class="docutils literal notranslate"><span class="pre">foo</span></code>):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">create</span> <span class="nx">foo</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:create foo</span>
 </pre></div>
 </div>
 <p>If everything went fine, you should expect the <code class="docutils literal notranslate"><span class="pre">Database</span> <span class="pre">&quot;foo&quot;</span> <span class="pre">successfully</span> <span class="pre">created.</span></code> message displayed.</p>
 <p>If you are on a testing environment or you are using the SQLite3 driver, you may pass in the file extension
 for the file where the database will be created using the <code class="docutils literal notranslate"><span class="pre">--ext</span></code> option. Valid values are <code class="docutils literal notranslate"><span class="pre">db</span></code> and
-<code class="docutils literal notranslate"><span class="pre">sqlite</span></code> and defaults to <code class="docutils literal notranslate"><span class="pre">db</span></code>. Remember that these should not be preceded by a period.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">create</span> <span class="nx">foo</span> <span class="o">--</span><span class="nx">ext</span> <span class="nx">sqlite</span>
-<span class="c1">// will create the db file in WRITEPATH/foo.sqlite</span>
+<code class="docutils literal notranslate"><span class="pre">sqlite</span></code> and defaults to <code class="docutils literal notranslate"><span class="pre">db</span></code>. Remember that these should not be preceded by a period.
+:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:create foo --ext sqlite</span>
 </pre></div>
 </div>
+<p>The above command will create the db file in <strong>WRITEPATH/foo.sqlite</strong>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When using the special SQLite3 database name <code class="docutils literal notranslate"><span class="pre">:memory:</span></code>, expect that the command will still
@@ -1228,7 +1229,7 @@ See <a class="reference internal" href="#adding-keys-to-a-table">Adding Keys to 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 31, 2023.
+      <span class="lastupdated">Last updated on Aug 02, 2023.
       </span></p>
   </div>
 

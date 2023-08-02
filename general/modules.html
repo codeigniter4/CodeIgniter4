@@ -586,11 +586,12 @@ namespaces will be run every time.</p>
 <h3><a class="toc-backref" href="#id14">Seeds</a><a class="headerlink" href="#seeds" title="Permalink to this headline"></a></h3>
 <p>Seed files can be used from both the CLI and called from within other seed files as long as the full namespace
 is provided. If calling on the CLI, you will need to provide double backslashes:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">For</span> <span class="nx">Unix</span><span class="o">:</span>
-<span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">seed</span> <span class="nx">Acme\\Blog\\Database\\Seeds\\TestPostSeeder</span>
-
-<span class="k">For</span> <span class="nx">Windows</span><span class="o">:</span>
-<span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">seed</span> <span class="nx">Acme\Blog\Database\Seeds\TestPostSeeder</span>
+<p>For Unix:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:seed Acme\\Blog\\Database\\Seeds\\TestPostSeeder</span>
+</pre></div>
+</div>
+<p>For Windows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:seed Acme\Blog\Database\Seeds\TestPostSeeder</span>
 </pre></div>
 </div>
 </section>
@@ -663,7 +664,7 @@ This is because <code class="docutils literal notranslate"><span class="pre">mod
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 31, 2023.
+      <span class="lastupdated">Last updated on Aug 02, 2023.
       </span></p>
   </div>
 

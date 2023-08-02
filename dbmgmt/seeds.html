@@ -381,24 +381,25 @@ anywhere the autoloader can find them. This is great for more modular code bases
 <h3><a class="toc-backref" href="#id4">Command Line Seeding</a><a class="headerlink" href="#command-line-seeding" title="Permalink to this headline"></a></h3>
 <p>You can also seed data from the command line, as part of the Migrations CLI tools, if you don’t want to create
 a dedicated controller:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">seed</span> <span class="nx">TestSeeder</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:seed TestSeeder</span>
 </pre></div>
 </div>
 </section>
 </section>
 <section id="creating-seeder-files">
 <h2><a class="toc-backref" href="#id5">Creating Seeder Files</a><a class="headerlink" href="#creating-seeder-files" title="Permalink to this headline"></a></h2>
-<p>Using the command line, you can easily generate seed files.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">seeder</span> <span class="nx">user</span> <span class="o">--</span><span class="nx">suffix</span>
-<span class="c1">// Output: UserSeeder.php file located at app/Database/Seeds directory.</span>
+<p>Using the command line, you can easily generate seed files:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:seeder user --suffix</span>
 </pre></div>
 </div>
+<p>The above command outputs <strong>UserSeeder.php</strong> file located at <strong>app/Database/Seeds</strong> directory.</p>
 <p>You can supply the <code class="docutils literal notranslate"><span class="pre">root</span></code> namespace where the seed file will be stored by supplying the <code class="docutils literal notranslate"><span class="pre">--namespace</span></code> option:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">For</span> <span class="nx">Unix</span><span class="o">:</span>
-<span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">seeder</span> <span class="nx">MySeeder</span> <span class="o">--</span><span class="k">namespace</span> <span class="nx">Acme\\Blog</span>
-
-<span class="k">For</span> <span class="nx">Windows</span><span class="o">:</span>
-<span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">seeder</span> <span class="nx">MySeeder</span> <span class="o">--</span><span class="k">namespace</span> <span class="nx">Acme\Blog</span>
+<p>For Unix:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:seeder MySeeder --namespace Acme\\Blog</span>
+</pre></div>
+</div>
+<p>For Windows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:seeder MySeeder --namespace Acme\Blog</span>
 </pre></div>
 </div>
 <p>If <code class="docutils literal notranslate"><span class="pre">Acme\Blog</span></code> is mapped to <strong>app/Blog</strong> directory, then this command will generate <strong>MySeeder.php</strong> at <strong>app/Blog/Database/Seeds</strong> directory.</p>
@@ -418,7 +419,7 @@ a dedicated controller:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 31, 2023.
+      <span class="lastupdated">Last updated on Aug 02, 2023.
       </span></p>
   </div>
 

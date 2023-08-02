@@ -339,7 +339,7 @@ a new CodeIgniter4 based project.</p>
 <section id="installation">
 <h3><a class="toc-backref" href="#id9">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline"></a></h3>
 <p>In the folder above your project root:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">appstarter</span> <span class="nx">project</span><span class="o">-</span><span class="nx">root</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">composer create-project codeigniter4/appstarter project-root</span>
 </pre></div>
 </div>
 <p>The command above will create a <strong>project-root</strong> folder.</p>
@@ -355,7 +355,7 @@ So if you install CodeIgniter under the folder that contains the special charact
 <p class="admonition-title">Important</p>
 <p>When you deploy to your production server, don’t forget to run the
 following command:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">install</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nx">dev</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">composer install --no-dev</span>
 </pre></div>
 </div>
 <p>The above command will remove the Composer packages only for development
@@ -371,7 +371,7 @@ See <a class="reference internal" href="running.html#initial-configuration"><spa
 <section id="upgrading">
 <span id="app-starter-upgrading"></span><h3><a class="toc-backref" href="#id11">Upgrading</a><a class="headerlink" href="#upgrading" title="Permalink to this headline"></a></h3>
 <p>Whenever there is a new release, then from the command line in your project root:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">update</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">composer update</span>
 </pre></div>
 </div>
 <p>Read the <a class="reference internal" href="upgrading.html"><span class="doc">upgrade instructions</span></a>, and check Breaking Changes and Enhancements.</p>
@@ -408,13 +408,13 @@ for a developer who is willing to live with the latest unreleased changes, which
 Note that this differs from the released user guide, and will pertain to the
 develop branch explicitly.</p>
 <p>In your project root:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">builds</span> <span class="nx">development</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php builds development</span>
 </pre></div>
 </div>
 <p>The command above will update <strong>composer.json</strong> to point to the <code class="docutils literal notranslate"><span class="pre">develop</span></code> branch of the
 working repository, and update the corresponding paths in config and XML files. To revert
 these changes run:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">builds</span> <span class="nx">release</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php builds release</span>
 </pre></div>
 </div>
 <p>After using the <code class="docutils literal notranslate"><span class="pre">builds</span></code> command be sure to run <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span></code> to sync your vendor
@@ -431,19 +431,20 @@ existing project using Composer.</p>
 <p>Develop your app inside the <code class="docutils literal notranslate"><span class="pre">app</span></code> folder, and the <code class="docutils literal notranslate"><span class="pre">public</span></code> folder
 will be your document root.</p>
 <p>In your project root:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="k">require</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">framework</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">composer require codeigniter4/framework</span>
 </pre></div>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>When you deploy to your production server, don’t forget to run the
 following command:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">install</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nx">dev</span>
-</pre></div>
 </div>
-<p>The above command will remove the Composer packages only for development
-that are not needed in the production environment. This will greatly reduce
-the vendor folder size.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">composer install --no-dev</span>
+
+<span class="go">The above command will remove the Composer packages only for development</span>
+<span class="go">that are not needed in the production environment. This will greatly reduce</span>
+<span class="go">the vendor folder size.</span>
+</pre></div>
 </div>
 </section>
 <section id="setting-up">
@@ -464,9 +465,12 @@ See <a class="reference internal" href="running.html#initial-configuration"><spa
 <section id="adding-codeigniter4-upgrading">
 <span id="id3"></span><h3><a class="toc-backref" href="#id20">Upgrading</a><a class="headerlink" href="#adding-codeigniter4-upgrading" title="Permalink to this headline"></a></h3>
 <p>Whenever there is a new release, then from the command line in your project root:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">update</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="nx">code</span><span class="o">-</span><span class="nx">block</span><span class="o">::</span> <span class="na">console</span>
 </pre></div>
 </div>
+<blockquote>
+<div><p>composer update</p>
+</div></blockquote>
 <p>Read the <a class="reference internal" href="upgrading.html"><span class="doc">upgrade instructions</span></a>, and check Breaking Changes and Enhancements.</p>
 </section>
 <section id="id4">
@@ -498,7 +502,7 @@ with merging changes to the project space:
 <p>If you want to take advantage of the system message translations,
 they can be added to your project in a similar fashion.</p>
 <p>From the command line inside your project root:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="k">require</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">translations</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">composer require codeigniter4/translations</span>
 </pre></div>
 </div>
 <p>These will be updated along with the framework whenever you do a <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span></code>.</p>
@@ -517,7 +521,7 @@ they can be added to your project in a similar fashion.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 31, 2023.
+      <span class="lastupdated">Last updated on Aug 02, 2023.
       </span></p>
   </div>
 

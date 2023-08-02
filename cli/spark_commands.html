@@ -310,18 +310,18 @@ The command file <strong>spark</strong> has been provided that is used to run an
 <p>When called <strong>spark</strong> without specifying a command, a simple help page is displayed
 that also provides a list of available commands and their descriptions, sorted by
 categories:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark</span>
 </pre></div>
 </div>
 <section id="spark-list">
 <h5>spark list<a class="headerlink" href="#spark-list" title="Permalink to this headline"></a></h5>
 <p><code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span></code> is the exactly same as the <code class="docutils literal notranslate"><span class="pre">list</span></code> command:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="k">list</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark list</span>
 </pre></div>
 </div>
 <p>You may also use the <code class="docutils literal notranslate"><span class="pre">--simple</span></code> option to get a raw list of all available commands,
 sorted alphabetically:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="k">list</span> <span class="o">--</span><span class="nx">simple</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark list --simple</span>
 </pre></div>
 </div>
 </section>
@@ -329,29 +329,29 @@ sorted alphabetically:</p>
 <section id="showing-help">
 <h4><a class="toc-backref" href="#id4">Showing Help</a><a class="headerlink" href="#showing-help" title="Permalink to this headline"></a></h4>
 <p>You can get help about any CLI command using the <code class="docutils literal notranslate"><span class="pre">help</span></code> command as follows:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">help</span> <span class="nx">db</span><span class="o">:</span><span class="nx">seed</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark help db:seed</span>
 </pre></div>
 </div>
 <p>Since v4.3.0, you can also use the <code class="docutils literal notranslate"><span class="pre">--help</span></code> option instead of the <code class="docutils literal notranslate"><span class="pre">help</span></code> command:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">seed</span> <span class="o">--</span><span class="nx">help</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:seed --help</span>
 </pre></div>
 </div>
 </section>
 <section id="running-a-command">
 <h4><a class="toc-backref" href="#id5">Running a Command</a><a class="headerlink" href="#running-a-command" title="Permalink to this headline"></a></h4>
 <p>You should pass the name of the command as the first argument to run that command:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark migrate</span>
 </pre></div>
 </div>
 <p>Some commands take additional arguments, which should be provided directly after the command, separated by spaces:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">db</span><span class="o">:</span><span class="nx">seed</span> <span class="nx">DevUserSeeder</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark db:seed DevUserSeeder</span>
 </pre></div>
 </div>
 <p>For all of the commands CodeIgniter provides, if you do not provide the required arguments, you will be prompted
 for the information it needs to run correctly:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">controller</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark make:controller</span>
 
-<span class="nx">Controller</span> <span class="k">class</span> <span class="nc">name</span> <span class="o">:</span>
+<span class="go">Controller class name :</span>
 </pre></div>
 </div>
 </section>
@@ -359,17 +359,17 @@ for the information it needs to run correctly:</p>
 <h4><a class="toc-backref" href="#id6">Suppressing Header Output</a><a class="headerlink" href="#suppressing-header-output" title="Permalink to this headline"></a></h4>
 <p>When you run a command, the header with CodeIgniter version and the current time
 is output:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">env</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark env</span>
 
-<span class="nx">CodeIgniter</span> <span class="nx">v4</span><span class="o">.</span><span class="mf">3.5</span> <span class="nx">Command</span> <span class="nx">Line</span> <span class="nx">Tool</span> <span class="o">-</span> <span class="nx">Server</span> <span class="nx">Time</span><span class="o">:</span> <span class="mi">2023</span><span class="o">-</span><span class="mo">06</span><span class="o">-</span><span class="mi">16</span> <span class="mi">12</span><span class="o">:</span><span class="mi">45</span><span class="o">:</span><span class="mi">31</span> <span class="nx">UTC</span><span class="o">+</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span>
+<span class="go">CodeIgniter v4.3.5 Command Line Tool - Server Time: 2023-06-16 12:45:31 UTC+00:00</span>
 
-<span class="nx">Your</span> <span class="nx">environment</span> <span class="nx">is</span> <span class="nx">currently</span> <span class="nx">set</span> <span class="k">as</span> <span class="nx">development</span><span class="o">.</span>
+<span class="go">Your environment is currently set as development.</span>
 </pre></div>
 </div>
 <p>You may always pass <code class="docutils literal notranslate"><span class="pre">--no-header</span></code> to suppress the header output, helpful for parsing results:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">env</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nb">header</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark env --no-header</span>
 
-<span class="nx">Your</span> <span class="nx">environment</span> <span class="nx">is</span> <span class="nx">currently</span> <span class="nx">set</span> <span class="k">as</span> <span class="nx">development</span><span class="o">.</span>
+<span class="go">Your environment is currently set as development.</span>
 </pre></div>
 </div>
 </section>
@@ -403,7 +403,7 @@ so that you can choose to display it or not.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 31, 2023.
+      <span class="lastupdated">Last updated on Aug 02, 2023.
       </span></p>
   </div>
 
