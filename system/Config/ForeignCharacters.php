@@ -18,6 +18,8 @@ class ForeignCharacters
 {
     /**
      * Without further ado, the list of foreign characters.
+     *
+     * @var array
      */
     public $characterList = [
         '/ä|æ|ǽ/'                                                     => 'ae',

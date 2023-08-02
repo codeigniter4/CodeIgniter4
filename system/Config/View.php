@@ -33,6 +33,8 @@ class View extends BaseConfig
      *
      * To prevent potential abuse, all filters MUST be defined here
      * in order for them to be available for use within the Parser.
+     *
+     * @var array
      */
     public $filters = [];
 
@@ -40,6 +42,8 @@ class View extends BaseConfig
      * Parser Plugins provide a way to extend the functionality provided
      * by the core Parser by creating aliases that will be replaced with
      * any callable. Can be single or tag pair.
+     *
+     * @var array
      */
     public $plugins = [];
 
