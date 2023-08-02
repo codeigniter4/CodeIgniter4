@@ -19,7 +19,7 @@ class ForeignCharacters
     /**
      * Without further ado, the list of foreign characters.
      *
-     * @var array
+     * @var array<string, string>
      */
     public $characterList = [
         '/ä|æ|ǽ/'                                                     => 'ae',

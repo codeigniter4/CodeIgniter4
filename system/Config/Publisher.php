@@ -35,10 +35,8 @@ class Publisher extends BaseConfig
 
     /**
      * Disables Registrars to prevent modules from altering the restrictions.
-     *
-     * @return void
      */
-    final protected function registerProperties()
+    final protected function registerProperties(): void
     {
     }
 }
