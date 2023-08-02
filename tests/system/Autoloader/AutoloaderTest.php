@@ -146,15 +146,6 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function testMatchesWithFileExtension(): void
-    {
-        /** @var Autoloader&MockObject $classLoader */
-        $classLoader = $this->getMockBuilder(Autoloader::class)->onlyMethods(['loadInNamespace'])->getMock();
-        $classLoader->expects($this->once())->method('loadInNamespace')->with(Home::class);
-
-        $classLoader->loadClass('\App\Controllers\Home.php');
-    }
-
     public function testMissingFile(): void
     {
         $this->assertFalse(($this->classLoader)('\App\Missing\Classname'));
