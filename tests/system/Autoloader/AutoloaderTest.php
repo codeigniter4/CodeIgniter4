@@ -20,7 +20,6 @@ use Config\Autoload;
 use Config\Modules;
 use Config\Services;
 use InvalidArgumentException;
-use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
 use UnnamespacedClass;
 
@@ -34,6 +33,10 @@ final class AutoloaderTest extends CIUnitTestCase
     use ReflectionHelper;
 
     private Autoloader $loader;
+
+    /**
+     * @phpstan-var Closure(string): (false|string)
+     */
     private Closure $classLoader;
 
     protected function setUp(): void
