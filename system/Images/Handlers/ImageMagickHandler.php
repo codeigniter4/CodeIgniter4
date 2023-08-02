@@ -292,7 +292,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @throws Exception
      */
-    protected function ensureResource()
+    protected function ensureResource(): void
     {
         $this->getResourcePath();
 
@@ -304,7 +304,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @throws ImageException
      */
-    protected function supportedFormatCheck()
+    protected function supportedFormatCheck(): void
     {
         switch ($this->image()->imageType) {
             case IMAGETYPE_WEBP:
@@ -320,7 +320,7 @@ class ImageMagickHandler extends BaseHandler
      *
      * @throws Exception
      */
-    protected function _text(string $text, array $options = [])
+    protected function _text(string $text, array $options = []): void
     {
         $xAxis   = 0;
         $yAxis   = 0;

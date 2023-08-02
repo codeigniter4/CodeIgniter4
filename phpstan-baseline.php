@@ -1417,21 +1417,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:_text\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Handlers/BaseHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:ensureResource\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Handlers/BaseHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:reproportion\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Handlers/BaseHandler.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:\\$image \\(CodeIgniter\\\\Images\\\\Image\\) in empty\\(\\) is not falsy\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Images/Handlers/BaseHandler.php',
@@ -1439,21 +1424,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Comparison operation "\\>\\=" between \\(array\\|float\\|int\\) and 0 results in an error\\.$#',
 	'count' => 2,
-	'path' => __DIR__ . '/system/Images/Handlers/ImageMagickHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Handlers\\\\ImageMagickHandler\\:\\:_text\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Handlers/ImageMagickHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Handlers\\\\ImageMagickHandler\\:\\:ensureResource\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Handlers/ImageMagickHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Handlers\\\\ImageMagickHandler\\:\\:supportedFormatCheck\\(\\) has no return type specified\\.$#',
-	'count' => 1,
 	'path' => __DIR__ . '/system/Images/Handlers/ImageMagickHandler.php',
 ];
 $ignoreErrors[] = [
