@@ -62,9 +62,11 @@ Installing CodeIgniter
 
 You can download a release manually from the site, but for this tutorial we will
 use the recommended way and install the AppStarter package through Composer.
-From your command line type the following::
+From your command line type the following:
 
-    > composer create-project codeigniter4/appstarter ci-news
+.. code-block:: console
+
+    composer create-project codeigniter4/appstarter ci-news
 
 This creates a new folder, **ci-news**, which contains your application code, with
 CodeIgniter installed in the vendor folder.
@@ -93,9 +95,11 @@ With that out of the way it's time to view your application in a browser. You ca
 serve it through any server of your choice, Apache, Nginx, etc, but CodeIgniter
 comes with a simple command that takes advantage of PHP's built-in server to get
 you up and running fast on your development machines. Type the following on the
-command line from the root of your project::
+command line from the root of your project:
 
-    > php spark serve
+.. code-block:: console
+
+    php spark serve
 
 The Welcome Page
 ****************

@@ -35,9 +35,11 @@ a new CodeIgniter4 based project.
 Installation
 ------------
 
-In the folder above your project root::
+In the folder above your project root:
 
-    > composer create-project codeigniter4/appstarter project-root
+.. code-block:: console
+
+    composer create-project codeigniter4/appstarter project-root
 
 The command above will create a **project-root** folder.
 
@@ -52,9 +54,11 @@ If you omit the "project-root" argument, the command will create an
     this restriction has been removed.
 
 .. important:: When you deploy to your production server, don't forget to run the
-    following command::
+    following command:
 
-    > composer install --no-dev
+    .. code-block:: console
+
+        composer install --no-dev
 
     The above command will remove the Composer packages only for development
     that are not needed in the production environment. This will greatly reduce
@@ -71,9 +75,11 @@ See :ref:`initial-configuration` for the details.
 Upgrading
 ---------
 
-Whenever there is a new release, then from the command line in your project root::
+Whenever there is a new release, then from the command line in your project root:
 
-    > composer update
+.. code-block:: console
+
+    composer update
 
 Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
 
@@ -111,15 +117,19 @@ The `development user guide <https://codeigniter4.github.io/CodeIgniter4/>`_ is 
 Note that this differs from the released user guide, and will pertain to the
 develop branch explicitly.
 
-In your project root::
+In your project root:
 
-    > php builds development
+.. code-block:: console
+
+    php builds development
 
 The command above will update **composer.json** to point to the ``develop`` branch of the
 working repository, and update the corresponding paths in config and XML files. To revert
-these changes run::
+these changes run:
 
-    > php builds release
+.. code-block:: console
+
+    php builds release
 
 After using the ``builds`` command be sure to run ``composer update`` to sync your vendor
 folder with the latest target build.
@@ -137,14 +147,18 @@ Installation
 Develop your app inside the ``app`` folder, and the ``public`` folder
 will be your document root.
 
-In your project root::
+In your project root:
 
-    > composer require codeigniter4/framework
+.. code-block:: console
+
+    composer require codeigniter4/framework
 
 .. important:: When you deploy to your production server, don't forget to run the
-    following command::
+    following command:
 
-    > composer install --no-dev
+.. code-block:: console
+
+    composer install --no-dev
 
     The above command will remove the Composer packages only for development
     that are not needed in the production environment. This will greatly reduce
@@ -170,7 +184,9 @@ Upgrading
 
 Whenever there is a new release, then from the command line in your project root::
 
-    > composer update
+.. code-block:: console
+
+    composer update
 
 Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
 
@@ -203,8 +219,10 @@ Translations Installation
 If you want to take advantage of the system message translations,
 they can be added to your project in a similar fashion.
 
-From the command line inside your project root::
+From the command line inside your project root:
 
-    > composer require codeigniter4/translations
+.. code-block:: console
+
+    composer require codeigniter4/translations
 
 These will be updated along with the framework whenever you do a ``composer update``.

@@ -17,9 +17,11 @@ What has been changed
 - First of all, the sequential naming (``001_create_users``, ``002_create_posts``) of migrations is not longer supported. Version 4 of CodeIgniter only supports the timestamp scheme (``20121031100537_create_users``, ``20121031500638_create_posts``) . If you have used sequential naming you have to rename each migration file.
 - The migration table definition was changed. If you upgrade from CI3 to CI4 and use the same database,
   You need to upgrade the migration table definition and its data.
-- The migration procedure has been also changed. You can now migrate the database with a simple CLI command::
+- The migration procedure has been also changed. You can now migrate the database with a simple CLI command:
 
-    > php spark migrate
+.. code-block:: console
+
+    php spark migrate
 
 Upgrade Guide
 =============
