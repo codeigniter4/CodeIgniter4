@@ -1467,61 +1467,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Model.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Pager\\\\Exceptions\\\\PagerException\\:\\:forInvalidPaginationGroup\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Pager/Exceptions/PagerException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Pager\\\\Exceptions\\\\PagerException\\:\\:forInvalidTemplate\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Pager/Exceptions/PagerException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Pager\\\\Pager\\:\\:calculateCurrentPage\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Pager/Pager.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Pager\\\\Pager\\:\\:ensureGroup\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Pager/Pager.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Pager\\\\PagerRenderer\\:\\:updatePages\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Pager/PagerRenderer.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Publisher\\\\Exceptions\\\\PublisherException\\:\\:forCollision\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Publisher/Exceptions/PublisherException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Publisher\\\\Exceptions\\\\PublisherException\\:\\:forDestinationNotAllowed\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Publisher/Exceptions/PublisherException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Publisher\\\\Exceptions\\\\PublisherException\\:\\:forFileNotAllowed\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Publisher/Exceptions/PublisherException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Publisher\\\\Publisher\\:\\:verifyAllowed\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Publisher/Publisher.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\RESTful\\\\BaseResource\\:\\:initController\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/RESTful/BaseResource.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\RESTful\\\\BaseResource\\:\\:setModel\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/RESTful/BaseResource.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouter\\:\\:setDirectory\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/AutoRouter.php',
