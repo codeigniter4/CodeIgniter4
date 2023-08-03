@@ -2,6 +2,16 @@
 
 $ignoreErrors = [];
 $ignoreErrors[] = [
+	'message' => '#^PHPDoc type array of property Config\\\\View\\:\\:\\$filters is not covariant with PHPDoc type array\\<string, callable\\-string\\> of overridden property CodeIgniter\\\\Config\\\\View\\:\\:\\$filters\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/app/Config/View.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc type array of property Config\\\\View\\:\\:\\$plugins is not covariant with PHPDoc type array\\<string, callable\\-string\\> of overridden property CodeIgniter\\\\Config\\\\View\\:\\:\\$plugins\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/app/Config/View.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$callback of function spl_autoload_register expects \\(callable\\(string\\)\\: void\\)\\|null, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), \'loadClass\'\\} given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
@@ -315,6 +325,26 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\ComposerScripts\\:\\:postUpdate\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/ComposerScripts.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$coreFilters type has no signature specified for callable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/View.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$corePlugins type has no signature specified for callable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/View.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$filters type has no signature specified for callable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/View.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$plugins type has no signature specified for callable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/View.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Controller\\:\\:cachePage\\(\\) has no return type specified\\.$#',

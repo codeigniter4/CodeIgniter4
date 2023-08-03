@@ -34,7 +34,8 @@ class View extends BaseConfig
      * To prevent potential abuse, all filters MUST be defined here
      * in order for them to be available for use within the Parser.
      *
-     * @var array<string>
+     * @var array<string, string>
+     * @phpstan-var array<string, callable-string>
      */
     public $filters = [];
 
@@ -43,14 +44,16 @@ class View extends BaseConfig
      * by the core Parser by creating aliases that will be replaced with
      * any callable. Can be single or tag pair.
      *
-     * @var array<string>
+     * @var array<string, string>
+     * @phpstan-var array<string, callable-string>
      */
     public $plugins = [];
 
     /**
      * Built-in View filters.
      *
-     * @var array
+     * @var array<string, string>
+     * @phpstan-var array<string, callable-string>
      */
     protected $coreFilters = [
         'abs'            => '\abs',
@@ -79,7 +82,8 @@ class View extends BaseConfig
     /**
      * Built-in View plugins.
      *
-     * @var array
+     * @var array<string, string>
+     * @phpstan-var array<string, callable-string>
      */
     protected $corePlugins = [
         'csp_script_nonce'  => '\CodeIgniter\View\Plugins::cspScriptNonce',
