@@ -55,6 +55,7 @@ the existing content.
     ```
 * Vet the **admin/** folders for any removed hidden files (Action deploy scripts
   *do not remove these*)
+  * git diff --name-status origin/master admin/
 * Merge any Security Advisory PRs in private forks
 
 ## Process
