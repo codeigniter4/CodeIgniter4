@@ -273,7 +273,7 @@ final class FileHandlerTest extends AbstractHandlerTest
     }
 
     /**
-     * @dataProvider modeProvider
+     * @dataProvider provideSaveMode
      *
      * permissions given on Windows are fixed to `0666`
      *
@@ -296,7 +296,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->assertSame($string, $mode);
     }
 
-    public function modeProvider(): iterable
+    public function provideSaveMode(): iterable
     {
         return [
             [

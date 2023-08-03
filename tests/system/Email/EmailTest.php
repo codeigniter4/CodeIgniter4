@@ -32,7 +32,7 @@ final class EmailTest extends CIUnitTestCase
         $this->assertStringContainsString('Invalid email address: "invalid"', $email->printDebugger());
     }
 
-    public function autoClearProvider(): iterable
+    public function provideEmailSendWithClearance(): iterable
     {
         return [
             'autoclear'     => [true],
@@ -41,7 +41,7 @@ final class EmailTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider autoClearProvider
+     * @dataProvider provideEmailSendWithClearance
      *
      * @param mixed $autoClear
      */

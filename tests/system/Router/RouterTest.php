@@ -847,7 +847,7 @@ final class RouterTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideRedirectCase
+     * @dataProvider provideRedirectRoute
      */
     public function testRedirectRoute(
         string $route,
@@ -870,7 +870,7 @@ final class RouterTest extends CIUnitTestCase
         $router->handle($url);
     }
 
-    public function provideRedirectCase(): iterable
+    public function provideRedirectRoute(): iterable
     {
         // [$route, $redirectFrom, $redirectTo, $url, $expectedPath, $alias]
         return [

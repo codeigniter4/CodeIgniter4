@@ -284,7 +284,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->get('0');
     }
 
-    public function provideRoutesData(): iterable
+    public function provideOpenCliRoutesFromHttpGot404(): iterable
     {
         return [
             'non parameterized cli' => [
@@ -316,7 +316,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideRoutesData
+     * @dataProvider provideOpenCliRoutesFromHttpGot404
      *
      * @param mixed $from
      * @param mixed $to

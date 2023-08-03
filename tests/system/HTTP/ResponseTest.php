@@ -270,7 +270,7 @@ final class ResponseTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideForRedirect
+     * @dataProvider provideRedirect
      */
     public function testRedirect(
         string $server,
@@ -291,7 +291,7 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame($expectedCode, $response->getStatusCode());
     }
 
-    public function provideForRedirect(): iterable
+    public function provideRedirect(): iterable
     {
         yield from [
             ['Apache/2.4.17', 'HTTP/1.1', 'GET', null, 302],
@@ -316,7 +316,7 @@ final class ResponseTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideForRedirectWithIIS
+     * @dataProvider provideRedirectWithIIS
      */
     public function testRedirectWithIIS(
         string $protocol,
@@ -337,7 +337,7 @@ final class ResponseTest extends CIUnitTestCase
         unset($_SERVER['SERVER_SOFTWARE']);
     }
 
-    public function provideForRedirectWithIIS(): iterable
+    public function provideRedirectWithIIS(): iterable
     {
         yield from [
             ['HTTP/1.1', 'GET', null, 302],

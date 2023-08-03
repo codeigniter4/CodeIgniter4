@@ -42,7 +42,7 @@ final class RulesTest extends TraditionalRulesTest
     ];
 
     /**
-     * @dataProvider providePermitEmptyCasesStrict
+     * @dataProvider providePermitEmptyStrict
      */
     public function testPermitEmptyStrict(array $rules, array $data, bool $expected): void
     {
@@ -50,7 +50,7 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function providePermitEmptyCasesStrict(): iterable
+    public function providePermitEmptyStrict(): iterable
     {
         yield from [
             [
@@ -174,7 +174,7 @@ final class RulesTest extends TraditionalRulesTest
     }
 
     /**
-     * @dataProvider provideLessThanEqualStrict
+     * @dataProvider provideLessEqualThanStrict
      *
      * @param int $value
      */
@@ -186,7 +186,7 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideLessThanEqualStrict(): iterable
+    public function provideLessEqualThanStrict(): iterable
     {
         yield from [
             [0, '0', true],

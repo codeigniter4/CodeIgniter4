@@ -382,7 +382,7 @@ final class UpdateModelTest extends LiveModelTestCase
     }
 
     /**
-     * @dataProvider provideInvalidIds
+     * @dataProvider provideUpdateThrowDatabaseExceptionWithoutWhereClause
      *
      * @param false|null $id
      */
@@ -397,7 +397,7 @@ final class UpdateModelTest extends LiveModelTestCase
         $this->model->update($id, ['name' => 'Foo Bar']);
     }
 
-    public function provideInvalidIds(): iterable
+    public function provideUpdateThrowDatabaseExceptionWithoutWhereClause(): iterable
     {
         yield from [
             [

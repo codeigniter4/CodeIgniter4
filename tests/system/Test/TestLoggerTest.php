@@ -21,7 +21,7 @@ use Config\Logger;
 final class TestLoggerTest extends CIUnitTestCase
 {
     /**
-     * @dataProvider provideDidLogCases
+     * @dataProvider provideDidLogMethod
      */
     public function testDidLogMethod(bool $expected, string $level, string $message, bool $exact): void
     {
@@ -33,7 +33,7 @@ final class TestLoggerTest extends CIUnitTestCase
         );
     }
 
-    public function provideDidLogCases(): iterable
+    public function provideDidLogMethod(): iterable
     {
         yield 'exact' => [
             true,

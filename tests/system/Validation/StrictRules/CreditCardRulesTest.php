@@ -50,7 +50,7 @@ final class CreditCardRulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider creditCardProvider
+     * @dataProvider provideValidCCNumber
      */
     public function testValidCCNumber(string $type, ?string $number, bool $expected): void
     {
@@ -64,7 +64,7 @@ final class CreditCardRulesTest extends CIUnitTestCase
      *
      * @see https://www.paypalobjects.com/en_US/vhelp/paypalmanager_help/credit_card_numbers.htm
      */
-    public function creditCardProvider(): iterable
+    public function provideValidCCNumber(): iterable
     {
         yield from [
             'null_test' => [

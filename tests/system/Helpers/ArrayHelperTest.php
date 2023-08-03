@@ -209,7 +209,7 @@ final class ArrayHelperTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider deepSearchProvider
+     * @dataProvider provideArrayDeepSearch
      *
      * @param int|string        $key
      * @param array|string|null $expected
@@ -320,7 +320,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         array_sort_by_multiple_keys($data, $sortColumns);
     }
 
-    public static function deepSearchProvider(): iterable
+    public static function provideArrayDeepSearch(): iterable
     {
         return [
             [
@@ -400,14 +400,14 @@ final class ArrayHelperTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider arrayFlattenProvider
+     * @dataProvider provideArrayFlattening
      */
     public function testArrayFlattening(array $input, array $expected): void
     {
         $this->assertSame($expected, array_flatten_with_dots($input));
     }
 
-    public function arrayFlattenProvider(): iterable
+    public function provideArrayFlattening(): iterable
     {
         yield 'normal' => [
             [
