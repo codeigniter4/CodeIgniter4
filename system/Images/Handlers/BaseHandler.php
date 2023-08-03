@@ -726,8 +726,10 @@ abstract class BaseHandler implements ImageHandlerInterface
      *
      * This function lets us re-proportion the width/height
      * if users choose to maintain the aspect ratio when resizing.
+     *
+     * @return void
      */
-    protected function reproportion(): void
+    protected function reproportion()
     {
         if (($this->width === 0 && $this->height === 0) || $this->image()->origWidth === 0 || $this->image()->origHeight === 0 || (! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) || ! ctype_digit((string) $this->image()->origWidth) || ! ctype_digit((string) $this->image()->origHeight)) {
             return;

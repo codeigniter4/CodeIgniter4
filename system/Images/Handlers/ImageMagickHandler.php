@@ -290,9 +290,11 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Make the image resource object if needed
      *
+     * @return void
+     *
      * @throws Exception
      */
-    protected function ensureResource(): void
+    protected function ensureResource()
     {
         $this->getResourcePath();
 
@@ -302,9 +304,11 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Check if given image format is supported
      *
+     * @return void
+     *
      * @throws ImageException
      */
-    protected function supportedFormatCheck(): void
+    protected function supportedFormatCheck()
     {
         switch ($this->image()->imageType) {
             case IMAGETYPE_WEBP:
@@ -318,9 +322,11 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Handler-specific method for overlaying text on an image.
      *
+     * @return void
+     *
      * @throws Exception
      */
-    protected function _text(string $text, array $options = []): void
+    protected function _text(string $text, array $options = [])
     {
         $xAxis   = 0;
         $yAxis   = 0;
