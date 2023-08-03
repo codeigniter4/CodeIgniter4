@@ -1747,26 +1747,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Router/RouterInterface.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Security\\\\Exceptions\\\\SecurityException\\:\\:forDisallowedAction\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Security/Exceptions/SecurityException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Security\\\\Exceptions\\\\SecurityException\\:\\:forInvalidControlChars\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Security/Exceptions/SecurityException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Security\\\\Exceptions\\\\SecurityException\\:\\:forInvalidSameSite\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Security/Exceptions/SecurityException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Security\\\\Exceptions\\\\SecurityException\\:\\:forInvalidUTF8Chars\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Security/Exceptions/SecurityException.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Session\\\\Exceptions\\\\SessionException\\:\\:forEmptySavepath\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Session/Exceptions/SessionException.php',
@@ -2532,49 +2512,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Throttle/Throttler.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\Exceptions\\\\ValidationException\\:\\:forGroupNotArray\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Exceptions/ValidationException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\Exceptions\\\\ValidationException\\:\\:forGroupNotFound\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Exceptions/ValidationException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\Exceptions\\\\ValidationException\\:\\:forInvalidTemplate\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Exceptions/ValidationException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\Exceptions\\\\ValidationException\\:\\:forNoRuleSets\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Exceptions/ValidationException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\Exceptions\\\\ValidationException\\:\\:forRuleNotFound\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Exceptions/ValidationException.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Validation\\\\Validation\\:\\:isClosure\\(\\) has parameter \\$rule with no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Validation/Validation.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\Validation\\:\\:loadRuleSets\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Validation.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\Validation\\:\\:setRuleGroup\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Validation.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationInterface\\:\\:setRuleGroup\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/ValidationInterface.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Call to an undefined static method CodeIgniter\\\\Config\\\\Factories\\:\\:cells\\(\\)\\.$#',

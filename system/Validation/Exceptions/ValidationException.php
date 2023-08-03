@@ -15,27 +15,27 @@ use CodeIgniter\Exceptions\FrameworkException;
 
 class ValidationException extends FrameworkException
 {
-    public static function forRuleNotFound(?string $rule = null)
+    public static function forRuleNotFound(?string $rule = null): ValidationException
     {
         return new static(lang('Validation.ruleNotFound', [$rule]));
     }
 
-    public static function forGroupNotFound(?string $group = null)
+    public static function forGroupNotFound(?string $group = null): ValidationException
     {
         return new static(lang('Validation.groupNotFound', [$group]));
     }
 
-    public static function forGroupNotArray(?string $group = null)
+    public static function forGroupNotArray(?string $group = null): ValidationException
     {
         return new static(lang('Validation.groupNotArray', [$group]));
     }
 
-    public static function forInvalidTemplate(?string $template = null)
+    public static function forInvalidTemplate(?string $template = null): ValidationException
     {
         return new static(lang('Validation.invalidTemplate', [$template]));
     }
 
-    public static function forNoRuleSets()
+    public static function forNoRuleSets(): ValidationException
     {
         return new static(lang('Validation.noRuleSets'));
     }
