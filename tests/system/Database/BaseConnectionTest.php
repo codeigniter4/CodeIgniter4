@@ -167,7 +167,7 @@ final class BaseConnectionTest extends CIUnitTestCase
      * These tests are intended to confirm the current behavior.
      * We do not know if all of these are the correct behavior.
      *
-     * @dataProvider identifiersProvider
+     * @dataProvider provideProtectIdentifiers
      */
     public function testProtectIdentifiers(
         bool $prefixSingle,
@@ -183,7 +183,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertSame($expected, $return);
     }
 
-    public function identifiersProvider(): iterable
+    public function provideProtectIdentifiers(): iterable
     {
         yield from [
             // $prefixSingle, $protectIdentifiers, $fieldExists, $item, $expected

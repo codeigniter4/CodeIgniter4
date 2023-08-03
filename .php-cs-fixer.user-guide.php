@@ -53,6 +53,10 @@ $overrides = [
             'use',
         ],
     ],
+    'php_unit_data_provider_name' => [
+        'prefix' => 'provide',
+        'suffix' => '',
+    ],
 ];
 
 $options = [

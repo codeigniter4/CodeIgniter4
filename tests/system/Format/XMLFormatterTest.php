@@ -102,7 +102,7 @@ final class XMLFormatterTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider invalidTagsProvider
+     * @dataProvider provideValidatingInvalidTags
      */
     public function testValidatingInvalidTags(string $expected, array $input): void
     {
@@ -115,7 +115,7 @@ final class XMLFormatterTest extends CIUnitTestCase
         $this->assertSame($expectedXML, $this->xmlFormatter->format($input));
     }
 
-    public function invalidTagsProvider(): iterable
+    public function provideValidatingInvalidTags(): iterable
     {
         return [
             [

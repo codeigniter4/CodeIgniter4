@@ -192,7 +192,7 @@ final class ConfigTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider convertDSNProvider
+     * @dataProvider provideConvertDSN
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/7550
      */
@@ -208,7 +208,7 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame($expected, $this->getPrivateProperty($conn, 'DSN'));
     }
 
-    public function convertDSNProvider(): iterable
+    public function provideConvertDSN(): iterable
     {
         yield from [
             [

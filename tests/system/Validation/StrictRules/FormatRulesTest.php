@@ -12,7 +12,6 @@
 namespace CodeIgniter\Validation\StrictRules;
 
 use CodeIgniter\Validation\FormatRulesTest as TraditionalFormatRulesTest;
-use Generator;
 use Tests\Support\Validation\TestRules;
 
 /**
@@ -40,7 +39,7 @@ final class FormatRulesTest extends TraditionalFormatRulesTest
         ],
     ];
 
-    public function alphaSpaceProvider(): Generator
+    public function provideAlphaSpace(): iterable
     {
         yield from [
             [
@@ -70,7 +69,7 @@ final class FormatRulesTest extends TraditionalFormatRulesTest
         ];
     }
 
-    public function integerInvalidTypeDataProvider(): Generator
+    public function provideInvalidIntegerType(): iterable
     {
         yield 'array with int' => [
             [555],
