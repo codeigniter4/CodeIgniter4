@@ -101,7 +101,7 @@ use Config\View as ConfigView;
  * @method static CURLRequest                curlrequest($options = [], ResponseInterface $response = null, App $config = null, $getShared = true)
  * @method static Email                      email($config = null, $getShared = true)
  * @method static EncrypterInterface         encrypter(Encryption $config = null, $getShared = false)
- * @method static Exceptions                 exceptions(ConfigExceptions $config = null, IncomingRequest $request = null, ResponseInterface $response = null, $getShared = true)
+ * @method static Exceptions                 exceptions(ConfigExceptions $config = null, $getShared = true)
  * @method static Filters                    filters(ConfigFilters $config = null, $getShared = true)
  * @method static Format                     format(ConfigFormat $config = null, $getShared = true)
  * @method static Honeypot                   honeypot(ConfigHoneyPot $config = null, $getShared = true)

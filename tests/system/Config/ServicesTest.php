@@ -127,13 +127,13 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testNewExceptions(): void
     {
-        $actual = Services::exceptions(new Exceptions(), Services::request(), Services::response());
+        $actual = Services::exceptions(new Exceptions());
         $this->assertInstanceOf(\CodeIgniter\Debug\Exceptions::class, $actual);
     }
 
     public function testNewExceptionsWithNullConfig(): void
     {
-        $actual = Services::exceptions(null, null, null, false);
+        $actual = Services::exceptions(null, false);
         $this->assertInstanceOf(\CodeIgniter\Debug\Exceptions::class, $actual);
     }
 

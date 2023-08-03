@@ -109,6 +109,14 @@ Added Parameters
 - **Routing:** The third parameter ``Routing $routing`` has been added to
   ``RouteCollection::__construct()``.
 
+Removed Parameters
+------------------
+
+- **Services:** The second parameter ``$request`` and the third parameter
+  ``$response`` in ``Services::exceptions()`` have been removed.
+- **Error Handling:** The second parameter ``$request`` and the third parameter
+  ``$response`` in ``CodeIgniter\Debug\Exceptions::__construct()`` have been removed.
+
 Return Type Changes
 -------------------
 
