@@ -1147,54 +1147,99 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Exceptions\\\\HoneypotException\\:\\:forNoHiddenValue\\(\\) has no return type specified\\.$#',
+	'message' => '#^Function d\\(\\) has no return type specified\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Exceptions/HoneypotException.php',
+	'path' => __DIR__ . '/system/Helpers/kint_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Exceptions\\\\HoneypotException\\:\\:forNoNameField\\(\\) has no return type specified\\.$#',
+	'message' => '#^Function d\\(\\) has parameter \\$vars with no type specified\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Exceptions/HoneypotException.php',
+	'path' => __DIR__ . '/system/Helpers/kint_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Exceptions\\\\HoneypotException\\:\\:forNoTemplate\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Exceptions/HoneypotException.php',
+	'message' => '#^Function dd\\(\\) has no return type specified\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Helpers/kint_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Exceptions\\\\HoneypotException\\:\\:isBot\\(\\) has no return type specified\\.$#',
+	'message' => '#^Function dd\\(\\) has parameter \\$vars with no type specified\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Exceptions/HoneypotException.php',
+	'path' => __DIR__ . '/system/Helpers/kint_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Honeypot\\:\\:attachHoneypot\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Honeypot.php',
+	'message' => '#^Function trace\\(\\) has no return type specified\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Helpers/kint_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Honeypot\\:\\:hasContent\\(\\) has no return type specified\\.$#',
+	'message' => '#^Function mock\\(\\) has no return type specified\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Honeypot.php',
+	'path' => __DIR__ . '/system/Helpers/test_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\I18n\\\\Time\\:\\:setTestNow\\(\\) has no return type specified\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forEXIFUnsupported\\(\\) has no return type specified\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/I18n/Time.php',
+	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\I18n\\\\Time\\:\\:toDateTimeString\\(\\) has no return type specified\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forFileNotSupported\\(\\) has no return type specified\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/I18n/Time.php',
+	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\I18n\\\\TimeLegacy\\:\\:setTestNow\\(\\) has no return type specified\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forImageProcessFailed\\(\\) has no return type specified\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/I18n/TimeLegacy.php',
+	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\I18n\\\\TimeLegacy\\:\\:toDateTimeString\\(\\) has no return type specified\\.$#',
+	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forInvalidDirection\\(\\) has no return type specified\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/I18n/TimeLegacy.php',
+	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forInvalidImageCreate\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forInvalidImageLibraryPath\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forInvalidPath\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forMissingAngle\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forMissingImage\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forSaveFailed\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:_text\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Images/Handlers/BaseHandler.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:ensureResource\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Images/Handlers/BaseHandler.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Method CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:reproportion\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Images/Handlers/BaseHandler.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:\\$image \\(CodeIgniter\\\\Images\\\\Image\\) in empty\\(\\) is not falsy\\.$#',

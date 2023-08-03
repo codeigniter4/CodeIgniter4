@@ -59,6 +59,8 @@ class Honeypot
 
     /**
      * Checks the request if honeypot field has data.
+     *
+     * @return bool
      */
     public function hasContent(RequestInterface $request)
     {
@@ -69,6 +71,8 @@ class Honeypot
 
     /**
      * Attaches Honeypot template to response.
+     *
+     * @return void
      */
     public function attachHoneypot(ResponseInterface $response)
     {
