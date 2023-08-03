@@ -33,7 +33,7 @@ final class TestResponseTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider statusCodeProvider
+     * @dataProvider provideHttpStatusCodes
      */
     public function testIsOK(int $code, bool $isOk): void
     {
@@ -46,7 +46,7 @@ final class TestResponseTest extends CIUnitTestCase
     /**
      * Provides status codes and their expected "OK"
      */
-    public function statusCodeProvider(): iterable
+    public function provideHttpStatusCodes(): iterable
     {
         return [
             [
@@ -223,7 +223,7 @@ final class TestResponseTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider statusCodeProvider
+     * @dataProvider provideHttpStatusCodes
      */
     public function testAssertIsOK(int $code, bool $isOk): void
     {

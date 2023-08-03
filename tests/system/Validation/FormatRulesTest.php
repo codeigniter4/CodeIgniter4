@@ -85,7 +85,7 @@ class FormatRulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider urlProvider
+     * @dataProvider provideValidUrl
      */
     public function testValidURL(?string $url, bool $isLoose, bool $isStrict): void
     {
@@ -101,7 +101,7 @@ class FormatRulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider urlProvider
+     * @dataProvider provideValidUrl
      */
     public function testValidURLStrict(?string $url, bool $isLoose, bool $isStrict): void
     {
@@ -129,7 +129,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    public function urlProvider(): iterable
+    public function provideValidUrl(): iterable
     {
         yield from [
             [
@@ -802,7 +802,7 @@ class FormatRulesTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5374
      *
-     * @dataProvider integerInvalidTypeDataProvider
+     * @dataProvider provideInvalidIntegerType
      *
      * @param mixed $value
      */
@@ -821,7 +821,7 @@ class FormatRulesTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5374
      *
-     * @dataProvider integerInvalidTypeDataProvider
+     * @dataProvider provideInvalidIntegerType
      *
      * @param mixed $value
      */
@@ -837,7 +837,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertsame($expected, $this->validation->run($data));
     }
 
-    public function integerInvalidTypeDataProvider(): iterable
+    public function provideInvalidIntegerType(): iterable
     {
         // TypeError : CodeIgniter\Validation\FormatRules::integer(): Argument #1 ($str) must be of type ?string, array given
         // yield 'array with int' => [

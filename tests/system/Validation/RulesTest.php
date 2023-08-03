@@ -526,7 +526,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider inListProvider
+     * @dataProvider provideInList
      */
     public function testInList(?string $first, ?string $second, bool $expected): void
     {
@@ -536,7 +536,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider inListProvider
+     * @dataProvider provideInList
      */
     public function testNotInList(?string $first, ?string $second, bool $expected): void
     {
@@ -545,7 +545,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame(! $expected, $this->validation->run($data));
     }
 
-    public function inListProvider(): iterable
+    public function provideInList(): iterable
     {
         yield from [
             ['red', 'red,Blue,123', true],

@@ -248,7 +248,7 @@ final class ArrayHelperTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider sortByMultipleKeysProvider
+     * @dataProvider provideSortByMultipleKeys
      */
     public function testArraySortByMultipleKeysWithArray(array $data, array $sortColumns, array $expected): void
     {
@@ -259,7 +259,7 @@ final class ArrayHelperTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider sortByMultipleKeysProvider
+     * @dataProvider provideSortByMultipleKeys
      */
     public function testArraySortByMultipleKeysWithObjects(array $data, array $sortColumns, array $expected): void
     {
@@ -275,7 +275,7 @@ final class ArrayHelperTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider sortByMultipleKeysProvider
+     * @dataProvider provideSortByMultipleKeys
      */
     public function testArraySortByMultipleKeysFailsEmptyParameter(array $data, array $sortColumns, array $expected): void
     {
@@ -297,7 +297,7 @@ final class ArrayHelperTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider sortByMultipleKeysProvider
+     * @dataProvider provideSortByMultipleKeys
      *
      * @param mixed $data
      */
@@ -346,7 +346,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
     }
 
-    public static function sortByMultipleKeysProvider(): iterable
+    public static function provideSortByMultipleKeys(): iterable
     {
         $seed = [
             0 => [
