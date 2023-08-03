@@ -35,7 +35,7 @@ final class BaseHandlerTest extends CIUnitTestCase
         BaseHandler::validateKey($input);
     }
 
-    public function provideValidateKeyInvalidType(): iterable
+    public static function provideValidateKeyInvalidType(): iterable
     {
         return [
             [true],

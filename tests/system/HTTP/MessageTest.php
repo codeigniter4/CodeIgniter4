@@ -185,7 +185,7 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame('json, html, xml', $this->message->getHeaderLine('Accept'));
     }
 
-    public function provideArrayHeaderValue(): iterable
+    public static function provideArrayHeaderValue(): iterable
     {
         return [
             'existing for next not append' => [

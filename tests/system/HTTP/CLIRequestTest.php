@@ -517,7 +517,7 @@ final class CLIRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', 'clients[]'));
     }
 
-    public function provideValidIPAddress(): iterable
+    public static function provideValidIPAddress(): iterable
     {
         return [
             'empty' => [

@@ -32,7 +32,7 @@ final class EmailTest extends CIUnitTestCase
         $this->assertStringContainsString('Invalid email address: "invalid"', $email->printDebugger());
     }
 
-    public function provideEmailSendWithClearance(): iterable
+    public static function provideEmailSendWithClearance(): iterable
     {
         return [
             'autoclear'     => [true],

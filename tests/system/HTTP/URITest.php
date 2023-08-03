@@ -136,7 +136,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expectedPath, $uri->getPath());
     }
 
-    public function provideSimpleUri(): iterable
+    public static function provideSimpleUri(): iterable
     {
         return [
             '' => [
@@ -375,7 +375,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expectedPath, $uri->getPath());
     }
 
-    public function provideSetPath(): iterable
+    public static function provideSetPath(): iterable
     {
         return [
             '' => [
@@ -431,7 +431,7 @@ final class URITest extends CIUnitTestCase
         ];
     }
 
-    public function providePathGetsFiltered(): iterable
+    public static function providePathGetsFiltered(): iterable
     {
         return [
             'dot-segment' => [
@@ -555,7 +555,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('', $uri->getQuery());
     }
 
-    public function provideAuthorityReturnsExceptedValues(): iterable
+    public static function provideAuthorityReturnsExceptedValues(): iterable
     {
         return [
             'host-only' => [
@@ -590,7 +590,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, $uri->getAuthority());
     }
 
-    public function provideAuthorityRemovesDefaultPorts(): iterable
+    public static function provideAuthorityRemovesDefaultPorts(): iterable
     {
         return [
             'http' => [
@@ -629,7 +629,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($authority, $uri->getAuthority());
     }
 
-    public function provideRemoveDotSegments(): iterable
+    public static function provideRemoveDotSegments(): iterable
     {
         return [
             [
@@ -738,7 +738,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, URI::removeDotSegments($path));
     }
 
-    public function defaultResolutions(): iterable
+    public static function defaultResolutions(): iterable
     {
         return [
             [

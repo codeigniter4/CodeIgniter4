@@ -235,7 +235,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('assets/image.jpg', uri_string());
     }
 
-    public function provideUrlIs(): iterable
+    public static function provideUrlIs(): iterable
     {
         return [
             [

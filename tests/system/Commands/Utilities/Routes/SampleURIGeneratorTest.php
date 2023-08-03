@@ -33,7 +33,7 @@ final class SampleURIGeneratorTest extends CIUnitTestCase
         $this->assertSame($expected, $uri);
     }
 
-    public function provideGet(): iterable
+    public static function provideGet(): iterable
     {
         yield from [
             'root'                => ['/', '/'],

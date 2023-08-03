@@ -124,7 +124,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($this->request);
     }
 
-    public function provideCheckControlStringWithLineBreakAndTabReturnsTheString(): iterable
+    public static function provideCheckControlStringWithLineBreakAndTabReturnsTheString(): iterable
     {
         yield from [
             ["String contains \n line break."],
@@ -148,7 +148,7 @@ final class InvalidCharsTest extends CIUnitTestCase
         $this->invalidChars->before($this->request);
     }
 
-    public function provideCheckControlStringWithControlCharsCausesException(): iterable
+    public static function provideCheckControlStringWithControlCharsCausesException(): iterable
     {
         yield from [
             ["String contains null char.\0"],

@@ -296,7 +296,7 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->assertSame($string, $mode);
     }
 
-    public function provideSaveMode(): iterable
+    public static function provideSaveMode(): iterable
     {
         return [
             [
