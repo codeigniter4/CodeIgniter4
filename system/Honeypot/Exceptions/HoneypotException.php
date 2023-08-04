@@ -16,22 +16,22 @@ use CodeIgniter\Exceptions\ExceptionInterface;
 
 class HoneypotException extends ConfigException implements ExceptionInterface
 {
-    public static function forNoTemplate(): HoneypotException
+    public static function forNoTemplate(): self
     {
         return new static(lang('Honeypot.noTemplate'));
     }
 
-    public static function forNoNameField(): HoneypotException
+    public static function forNoNameField(): self
     {
         return new static(lang('Honeypot.noNameField'));
     }
 
-    public static function forNoHiddenValue(): HoneypotException
+    public static function forNoHiddenValue(): self
     {
         return new static(lang('Honeypot.noHiddenValue'));
     }
 
-    public static function isBot(): HoneypotException
+    public static function isBot(): self
     {
         return new static(lang('Honeypot.theClientIsABot'));
     }
