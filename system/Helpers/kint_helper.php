@@ -18,7 +18,7 @@ if (! function_exists('dd')) {
          *
          * @param array $vars
          *
-         * @return void
+         * @phpstan-return never
          *
          * @codeCoverageIgnore Can't be tested ... exits
          */
