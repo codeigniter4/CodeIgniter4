@@ -15,27 +15,52 @@ use CodeIgniter\Exceptions\FrameworkException;
 
 class ValidationException extends FrameworkException
 {
-    public static function forRuleNotFound(?string $rule = null): ValidationException
+    /**
+     * Throws when the validation rule is not found.
+     *
+     * @return static
+     */
+    public static function forRuleNotFound(?string $rule = null)
     {
         return new static(lang('Validation.ruleNotFound', [$rule]));
     }
 
-    public static function forGroupNotFound(?string $group = null): ValidationException
+    /**
+     * Throws when the group value of config is not isset.
+     *
+     * @return static
+     */
+    public static function forGroupNotFound(?string $group = null)
     {
         return new static(lang('Validation.groupNotFound', [$group]));
     }
 
-    public static function forGroupNotArray(?string $group = null): ValidationException
+    /**
+     * Throws when the group value of config is not array type.
+     *
+     * @return static
+     */
+    public static function forGroupNotArray(?string $group = null)
     {
         return new static(lang('Validation.groupNotArray', [$group]));
     }
 
-    public static function forInvalidTemplate(?string $template = null): ValidationException
+    /**
+     * Throws when the template of config is invalid.
+     *
+     * @return static
+     */
+    public static function forInvalidTemplate(?string $template = null)
     {
         return new static(lang('Validation.invalidTemplate', [$template]));
     }
 
-    public static function forNoRuleSets(): ValidationException
+    /**
+     * Throws when there is no any rule set.
+     *
+     * @return static
+     */
+    public static function forNoRuleSets()
     {
         return new static(lang('Validation.noRuleSets'));
     }
