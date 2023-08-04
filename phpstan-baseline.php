@@ -902,37 +902,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Entity/Entity.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Events\\\\Events\\:\\:initialize\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Events/Events.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Events\\\\Events\\:\\:on\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Events/Events.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Events\\\\Events\\:\\:on\\(\\) has parameter \\$callback with no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Events/Events.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Events\\\\Events\\:\\:removeAllListeners\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Events/Events.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Events\\\\Events\\:\\:removeListener\\(\\) has parameter \\$listener with no signature specified for callable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Events/Events.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Events\\\\Events\\:\\:setFiles\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Events/Events.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Events\\\\Events\\:\\:simulate\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Events/Events.php',
 ];
@@ -2678,11 +2653,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\View\\\\View\\:\\:section\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\View\\\\View\\:\\:\\$tempData has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/View.php',
 ];

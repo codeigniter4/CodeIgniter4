@@ -243,7 +243,7 @@ final class InflectorHelperTest extends CIUnitTestCase
         }
     }
 
-    public function provideOrdinal(): iterable
+    public static function provideOrdinal(): iterable
     {
         return [
             ['st', 1],

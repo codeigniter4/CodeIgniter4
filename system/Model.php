@@ -735,6 +735,41 @@ class Model extends BaseModel
     }
 
     /**
+     * Ensures that only the fields that are allowed to be inserted are in
+     * the data array.
+     *
+     * Used by insert() and insertBatch() to protect against mass assignment
+     * vulnerabilities.
+     *
+     * @param array $data Data
+     *
+     * @throws DataException
+     */
+    protected function doProtectFieldsForInsert(array $data): array
+    {
+        if (! $this->protectFields) {
+            return $data;
+        }
+
+        if (empty($this->allowedFields)) {
+            throw DataException::forInvalidAllowedFields(static::class);
+        }
+
+        foreach (array_keys($data) as $key) {
+            // Do not remove the non-auto-incrementing primary key data.
+            if ($this->useAutoIncrement === false && $key === $this->primaryKey) {
+                continue;
+            }
+
+            if (! in_array($key, $this->allowedFields, true)) {
+                unset($data[$key]);
+            }
+        }
+
+        return $data;
+    }
+
+    /**
      * Updates a single record in the database. If an object is provided,
      * it will attempt to convert it into an array.
      *

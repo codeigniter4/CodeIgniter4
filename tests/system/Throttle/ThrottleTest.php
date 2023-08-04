@@ -189,7 +189,7 @@ final class ThrottleTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider tokenTimeUsecases
+     * @dataProvider provideTokenTimeCalculationUCs
      */
     public function testTokenTimeCalculationUCs(int $capacity, int $seconds, array $checkInputs): void
     {
@@ -208,7 +208,7 @@ final class ThrottleTest extends CIUnitTestCase
         }
     }
 
-    public function tokenTimeUsecases(): iterable
+    public static function provideTokenTimeCalculationUCs(): iterable
     {
         return [
             '2 capacity / 200 seconds (100s refresh, 0.01 tokens/s) -> 5 checks, 1 cost each' => [

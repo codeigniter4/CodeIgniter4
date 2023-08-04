@@ -128,7 +128,7 @@ final class CommandTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider commandArgsProvider
+     * @dataProvider provideCommandParsesArgsCorrectly
      */
     public function testCommandParsesArgsCorrectly(string $input, array $expected): void
     {
@@ -138,7 +138,7 @@ final class CommandTest extends CIUnitTestCase
         $this->assertSame($expected, ParamsReveal::$args);
     }
 
-    public function commandArgsProvider(): iterable
+    public static function provideCommandParsesArgsCorrectly(): iterable
     {
         return [
             [
