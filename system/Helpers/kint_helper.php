@@ -67,11 +67,6 @@ if (! function_exists('trace')) {
         /**
          * Provides a backtrace to the current execution point, from Kint.
          */
-        /**
-         * trace function
-         *
-         * @return int|string
-         */
         function trace()
         {
             Kint::$aliases[] = 'trace';
