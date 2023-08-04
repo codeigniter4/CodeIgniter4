@@ -16,12 +16,12 @@ use CodeIgniter\Exceptions\HTTPExceptionInterface;
 
 class SecurityException extends FrameworkException implements HTTPExceptionInterface
 {
-    public static function forDisallowedAction(): SecurityException
+    public static function forDisallowedAction(): self
     {
         return new static(lang('Security.disallowedAction'), 403);
     }
 
-    public static function forInvalidUTF8Chars(string $source, string $string): SecurityException
+    public static function forInvalidUTF8Chars(string $source, string $string): self
     {
         return new static(
             'Invalid UTF-8 characters in ' . $source . ': ' . $string,
@@ -29,7 +29,7 @@ class SecurityException extends FrameworkException implements HTTPExceptionInter
         );
     }
 
-    public static function forInvalidControlChars(string $source, string $string): SecurityException
+    public static function forInvalidControlChars(string $source, string $string): self
     {
         return new static(
             'Invalid Control characters in ' . $source . ': ' . $string,
@@ -42,7 +42,7 @@ class SecurityException extends FrameworkException implements HTTPExceptionInter
      *
      * @codeCoverageIgnore
      */
-    public static function forInvalidSameSite(string $samesite): SecurityException
+    public static function forInvalidSameSite(string $samesite): self
     {
         return new static(lang('Security.invalidSameSite', [$samesite]));
     }
