@@ -14,7 +14,7 @@ Cookies are mainly used for three purposes:
 - **Personalization**: User preferences, themes, and other settings
 - **Tracking**: Recording and analyzing user behavior
 
-To help you efficiently use cookies across browsers with your request and response,
+To help you efficiently send cookies to browsers,
 CodeIgniter provides the ``CodeIgniter\Cookie\Cookie`` class to abstract the
 cookie interaction.
 
