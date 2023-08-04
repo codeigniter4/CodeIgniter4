@@ -19,7 +19,7 @@ class HoneypotException extends ConfigException implements ExceptionInterface
     /**
      * Thrown when the template value of config is empty.
      *
-     * @return self
+     * @return static
      */
     public static function forNoTemplate()
     {
@@ -29,7 +29,7 @@ class HoneypotException extends ConfigException implements ExceptionInterface
     /**
      * Thrown when the name value of config is empty.
      *
-     * @return self
+     * @return static
      */
     public static function forNoNameField()
     {
@@ -39,7 +39,7 @@ class HoneypotException extends ConfigException implements ExceptionInterface
     /**
      * Thrown when the hidden value of config is false.
      *
-     * @return self
+     * @return static
      */
     public static function forNoHiddenValue()
     {
@@ -49,7 +49,7 @@ class HoneypotException extends ConfigException implements ExceptionInterface
     /**
      * Thrown when there are no data in the request of honeypot field.
      *
-     * @return self
+     * @return static
      */
     public static function isBot()
     {
