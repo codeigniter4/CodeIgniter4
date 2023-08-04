@@ -519,7 +519,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $actual, 'array excluding empty not the same');
     }
 
-    public function provideArrayGroupByIncludeEmpty(): iterable
+    public static function provideArrayGroupByIncludeEmpty(): iterable
     {
         yield 'simple group-by test' => [
             ['color'],
@@ -930,7 +930,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         ];
     }
 
-    public function provideArrayGroupByExcludeEmpty(): iterable
+    public static function provideArrayGroupByExcludeEmpty(): iterable
     {
         yield 'simple group-by test' => [
             ['color'],
