@@ -85,6 +85,8 @@ class DotEnv
      * Sets the variable into the environment. Will parse the string
      * first to look for {name}={value} pattern, ensure that nested
      * variables are handled, and strip it of single and double quotes.
+     *
+     * @return void
      */
     protected function setVariable(string $name, string $value = '')
     {

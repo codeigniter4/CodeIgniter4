@@ -2,6 +2,16 @@
 
 $ignoreErrors = [];
 $ignoreErrors[] = [
+	'message' => '#^PHPDoc type array of property Config\\\\View\\:\\:\\$filters is not covariant with PHPDoc type array\\<string, callable\\-string\\> of overridden property CodeIgniter\\\\Config\\\\View\\:\\:\\$filters\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/app/Config/View.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc type array of property Config\\\\View\\:\\:\\$plugins is not covariant with PHPDoc type array\\<string, callable\\-string\\> of overridden property CodeIgniter\\\\Config\\\\View\\:\\:\\$plugins\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/app/Config/View.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$callback of function spl_autoload_register expects \\(callable\\(string\\)\\: void\\)\\|null, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), \'loadClass\'\\} given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
@@ -317,67 +327,22 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/ComposerScripts.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\BaseConfig\\:\\:registerProperties\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/BaseConfig.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\BaseService\\:\\:injectMock\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/BaseService.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\BaseService\\:\\:reset\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/BaseService.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\BaseService\\:\\:resetSingle\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/BaseService.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\Config\\:\\:injectMock\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Config.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\Config\\:\\:reset\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Config.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\DotEnv\\:\\:setVariable\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/DotEnv.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\Factories\\:\\:injectMock\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Factories.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\Factories\\:\\:reset\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Factories.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Config\\\\ForeignCharacters\\:\\:\\$characterList has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/ForeignCharacters.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\Publisher\\:\\:registerProperties\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Publisher.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$filters has no type specified\\.$#',
+	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$coreFilters type has no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/View.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$plugins has no type specified\\.$#',
+	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$corePlugins type has no signature specified for callable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/View.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$filters type has no signature specified for callable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/View.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$plugins type has no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/View.php',
 ];
