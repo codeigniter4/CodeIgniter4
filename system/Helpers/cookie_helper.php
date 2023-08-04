@@ -9,8 +9,9 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+use CodeIgniter\Cookie\Cookie;
 use Config\App;
-use Config\Cookie;
+use Config\Cookie as CookieConfig;
 use Config\Services;
 
 // =============================================================================
@@ -68,11 +69,11 @@ if (! function_exists('get_cookie')) {
     function get_cookie($index, bool $xssClean = false, ?string $prefix = '')
     {
         if ($prefix === '') {
-            /** @var Cookie|null $cookie */
-            $cookie = config(Cookie::class);
+            /** @var CookieConfig|null $cookie */
+            $cookie = config(CookieConfig::class);
 
             // @TODO Remove Config\App fallback when deprecated `App` members are removed.
-            $prefix = $cookie instanceof Cookie ? $cookie->prefix : config(App::class)->cookiePrefix;
+            $prefix = $cookie instanceof CookieConfig ? $cookie->prefix : config(App::class)->cookiePrefix;
         }
 
         $request = Services::request();
