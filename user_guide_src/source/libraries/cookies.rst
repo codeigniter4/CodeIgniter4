@@ -199,6 +199,10 @@ the instance with the modified instance.
 Dispatching Cookies in Store
 ============================
 
+.. deprecated:: 4.1.6
+
+.. important:: This method is deprecated. It will be removed in future releases.
+
 More often than not, you do not need to concern yourself in manually sending cookies. CodeIgniter will do this
 for you. However, if you really need to manually send cookies, you can use the ``dispatch`` method. Just like
 in sending other headers, you need to make sure the headers are not yet sent by checking the value
