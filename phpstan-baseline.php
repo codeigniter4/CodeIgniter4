@@ -837,46 +837,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Views.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:SMTPEnd\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:appendAttachments\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:batchBCCSend\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:buildHeaders\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:buildMessage\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:setErrorMessage\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:unwrapSpecials\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:writeHeaders\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Static property CodeIgniter\\\\Email\\\\Email\\:\\:\\$func_overload \\(bool\\) in isset\\(\\) is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Email/Email.php',
