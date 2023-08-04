@@ -23,7 +23,7 @@ The following functions are available:
 
 .. php:function:: set_cookie($name[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = false[, $httpOnly = false[, $sameSite = '']]]]]]]])
 
-    :param    mixed    $name: Cookie name *or* associative array of all of the parameters available to this function
+    :param    array|Cookie|string    $name: Cookie name *or* associative array of all of the parameters available to this function *or* an instance of ``CodeIgniter\Cookie\Cookie``
     :param    string    $value: Cookie value
     :param    int    $expire: Number of seconds until expiration. If set to ``0`` the cookie will only last as long as the browser is open
     :param    string    $domain: Cookie domain (usually: .yourdomain.com)
