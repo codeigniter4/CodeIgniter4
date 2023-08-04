@@ -62,7 +62,7 @@ final class SiteURITest extends CIUnitTestCase
 
     public function provideConstructor(): iterable
     {
-        return array_merge($this->provideURIs(), $this->provideRelativePathWithQueryOrFragment());
+        return array_merge($this->provideSetPath(), $this->provideRelativePathWithQueryOrFragment());
     }
 
     public function provideSetPath(): iterable
