@@ -131,6 +131,7 @@ also take advantage of the class's constants to make it not a hassle.
 
 .. literalinclude:: cookies/006.php
 
+
 ***************
 Sending Cookies
 ***************
@@ -146,16 +147,25 @@ You can also use the :php:func:`set_cookie()` helper function:
 
 .. literalinclude:: cookies/018.php
 
+
 **********************
 Using the Cookie Store
 **********************
 
 .. note:: Normally, there is no need to use CookieStore directly.
 
-The ``CookieStore`` class represents an immutable collection of ``Cookie`` objects. The ``CookieStore``
+The ``CookieStore`` class represents an immutable collection of ``Cookie`` objects.
+
+Getting the Store from Response
+===============================
+
+The ``CookieStore``
 instance can be accessed from the current ``Response`` object.
 
 .. literalinclude:: cookies/007.php
+
+Creating CookieStore
+====================
 
 CodeIgniter provides three (3) other ways to create a new instance of the ``CookieStore``.
 
