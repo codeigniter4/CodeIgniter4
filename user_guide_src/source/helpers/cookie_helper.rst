@@ -55,11 +55,12 @@ The following functions are available:
     This helper function gives you friendlier syntax to get browser
     cookies. Refer to the :doc:`IncomingRequest Library </incoming/incomingrequest>` for
     detailed description of its use, as this function acts very
-    similarly to ``IncomingRequest::getCookie()``, except it will also prepend
+    similarly to :php:meth:`CodeIgniter\\HTTP\\IncomingRequest::getCookie()`,
+    except it will also prepend
     the ``Config\Cookie::$prefix`` that you might've set in your
     **app/Config/Cookie.php** file.
 
-    .. warning:: Using XSS filtering is a bad practice. It does not prevent XSS attacks perfectly. Using ``esc()`` with the correct ``$context`` in the views is recommended.
+    .. warning:: Using XSS filtering is a bad practice. It does not prevent XSS attacks perfectly. Using :php:func:`esc()` with the correct ``$context`` in the views is recommended.
 
 .. php:function:: delete_cookie($name[, $domain = ''[, $path = '/'[, $prefix = '']]])
 
@@ -74,10 +75,10 @@ The following functions are available:
 
     .. literalinclude:: cookie_helper/002.php
 
-    This function is otherwise identical to ``set_cookie()``, except that it
+    This function is otherwise identical to :php:func:`set_cookie()`, except that it
     does not have the ``value`` and ``expire`` parameters.
 
-    .. note:: When you use ``set_cookie()``,
+    .. note:: When you use :php:func:`set_cookie()`,
         if the ``value`` is set to empty string and the ``expire`` is set to ``0``, the cookie will be deleted.
         If the ``value`` is set to non-empty string and the ``expire`` is set to ``0``, the cookie will only last as long as the browser is open.
 
