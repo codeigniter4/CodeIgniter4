@@ -58,6 +58,12 @@ Property Name
 
 The property ``Factories::$basenames`` has been renamed to ``$aliases``.
 
+Autoloader
+----------
+
+Previously, CodeIgniter's autoloader allowed loading class names ending with the `.php` extension. This means instantiating objects like `new Foo.php()` was possible
+and would instantiate as `new Foo()`. Since `Foo.php` is an invalid class name, this behavior of the autoloader is changed. Now, instantiating such classes would fail.
+
 .. _v440-interface-changes:
 
 Interface Changes

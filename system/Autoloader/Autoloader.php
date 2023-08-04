@@ -260,9 +260,6 @@ class Autoloader
      */
     public function loadClass(string $class): void
     {
-        $class = trim($class, '\\');
-        $class = str_ireplace('.php', '', $class);
-
         $this->loadInNamespace($class);
     }
 
