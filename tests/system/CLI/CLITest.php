@@ -463,7 +463,7 @@ final class CLITest extends CIUnitTestCase
         $this->assertSame($this->getStreamFilterBuffer(), $expected);
     }
 
-    public function provideTable(): iterable
+    public static function provideTable(): iterable
     {
         $head = [
             'ID',

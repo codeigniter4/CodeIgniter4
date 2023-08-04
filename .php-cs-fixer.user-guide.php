@@ -53,7 +53,8 @@ $overrides = [
             'use',
         ],
     ],
-    'php_unit_data_provider_name' => [
+    'php_unit_data_provider_static' => true,
+    'php_unit_data_provider_name'   => [
         'prefix' => 'provide',
         'suffix' => '',
     ],

@@ -208,7 +208,7 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame($expected, $this->getPrivateProperty($conn, 'DSN'));
     }
 
-    public function provideConvertDSN(): iterable
+    public static function provideConvertDSN(): iterable
     {
         yield from [
             [

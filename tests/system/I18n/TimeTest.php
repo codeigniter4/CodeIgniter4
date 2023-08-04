@@ -1170,7 +1170,7 @@ final class TimeTest extends CIUnitTestCase
         $this->assertSame('2017-03-10 12:00:00', (string) $time);
     }
 
-    public function provideToStringDoesNotDependOnLocale(): iterable
+    public static function provideToStringDoesNotDependOnLocale(): iterable
     {
         yield from [
             ['en'],

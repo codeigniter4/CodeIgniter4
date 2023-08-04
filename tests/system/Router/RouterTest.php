@@ -870,7 +870,7 @@ final class RouterTest extends CIUnitTestCase
         $router->handle($url);
     }
 
-    public function provideRedirectRoute(): iterable
+    public static function provideRedirectRoute(): iterable
     {
         // [$route, $redirectFrom, $redirectTo, $url, $expectedPath, $alias]
         return [

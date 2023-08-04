@@ -397,7 +397,7 @@ final class UpdateModelTest extends LiveModelTestCase
         $this->model->update($id, ['name' => 'Foo Bar']);
     }
 
-    public function provideUpdateThrowDatabaseExceptionWithoutWhereClause(): iterable
+    public static function provideUpdateThrowDatabaseExceptionWithoutWhereClause(): iterable
     {
         yield from [
             [

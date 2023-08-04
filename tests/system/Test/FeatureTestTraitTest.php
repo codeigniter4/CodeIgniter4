@@ -284,7 +284,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->get('0');
     }
 
-    public function provideOpenCliRoutesFromHttpGot404(): iterable
+    public static function provideOpenCliRoutesFromHttpGot404(): iterable
     {
         return [
             'non parameterized cli' => [

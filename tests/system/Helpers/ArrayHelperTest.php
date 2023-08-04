@@ -407,7 +407,7 @@ final class ArrayHelperTest extends CIUnitTestCase
         $this->assertSame($expected, array_flatten_with_dots($input));
     }
 
-    public function provideArrayFlattening(): iterable
+    public static function provideArrayFlattening(): iterable
     {
         yield 'normal' => [
             [

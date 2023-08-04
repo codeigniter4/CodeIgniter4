@@ -98,7 +98,7 @@ final class CookieTest extends CIUnitTestCase
         $this->assertSame($expected, $cookie->getPrefixedName());
     }
 
-    public function provideConfigPrefix(): iterable
+    public static function provideConfigPrefix(): iterable
     {
         yield from [
             ['prefix_', '', 'prefix_test'],

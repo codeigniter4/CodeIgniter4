@@ -81,7 +81,7 @@ final class SiteUrlTest extends CIUnitTestCase
         $this->assertSame($expectedBaseUrl, base_url($path, $scheme));
     }
 
-    public function provideUrls(): iterable
+    public static function provideUrls(): iterable
     {
         // baseURL, indexPage, scheme, secure, path, expectedSiteUrl, expectedBaseUrl
         return [

@@ -208,7 +208,7 @@ final class ThrottleTest extends CIUnitTestCase
         }
     }
 
-    public function provideTokenTimeCalculationUCs(): iterable
+    public static function provideTokenTimeCalculationUCs(): iterable
     {
         return [
             '2 capacity / 200 seconds (100s refresh, 0.01 tokens/s) -> 5 checks, 1 cost each' => [

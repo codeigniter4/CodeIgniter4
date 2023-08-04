@@ -208,7 +208,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize()->getFilters());
     }
 
-    public function provideProcessMethodProcessGlobalsWithExcept(): iterable
+    public static function provideProcessMethodProcessGlobalsWithExcept(): iterable
     {
         return [
             [

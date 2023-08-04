@@ -33,7 +33,7 @@ final class TestLoggerTest extends CIUnitTestCase
         );
     }
 
-    public function provideDidLogMethod(): iterable
+    public static function provideDidLogMethod(): iterable
     {
         yield 'exact' => [
             true,
