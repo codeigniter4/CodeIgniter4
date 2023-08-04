@@ -32,13 +32,23 @@ There are currently four (4) ways to create a new ``Cookie`` value object.
 
 When constructing the ``Cookie`` object, only the ``name`` attribute is required. All other else are optional.
 If the optional attributes are not modified, their values will be filled up by the default values saved in
-the ``Cookie`` class. To override the defaults currently stored in the class, you can pass a ``Config\Cookie``
+the ``Cookie`` class.
+
+Overriding Defaults
+===================
+
+To override the defaults currently stored in the class, you can pass a ``Config\Cookie``
 instance or an array of defaults to the static ``Cookie::setDefaults()`` method.
 
 .. literalinclude:: cookies/002.php
 
 Passing the ``Config\Cookie`` instance or an array to ``Cookie::setDefaults()`` will effectively
-overwrite your defaults and will persist until new defaults are passed. If you do not want this
+overwrite your defaults and will persist until new defaults are passed.
+
+Changing Defaults for a Limited Time
+------------------------------------
+
+If you do not want this
 behavior but only want to change defaults for a limited time, you can take advantage of
 ``Cookie::setDefaults()`` return which returns the old defaults array.
 
