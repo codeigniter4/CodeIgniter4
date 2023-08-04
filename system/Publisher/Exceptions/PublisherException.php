@@ -25,24 +25,30 @@ class PublisherException extends FrameworkException
      *
      * @param string $from The source file
      * @param string $to   The destination file
+     *
+     * @return static
      */
-    public static function forCollision(string $from, string $to): self
+    public static function forCollision(string $from, string $to)
     {
         return new static(lang('Publisher.collision', [filetype($to), $from, $to]));
     }
 
     /**
      * Throws when given a destination that is not in the list of allowed directories.
+     *
+     * @return static
      */
-    public static function forDestinationNotAllowed(string $destination): self
+    public static function forDestinationNotAllowed(string $destination)
     {
         return new static(lang('Publisher.destinationNotAllowed', [$destination]));
     }
 
     /**
      * Throws when a file fails to match the allowed pattern for its destination.
+     *
+     * @return static
      */
-    public static function forFileNotAllowed(string $file, string $directory, string $pattern): self
+    public static function forFileNotAllowed(string $file, string $directory, string $pattern)
     {
         return new static(lang('Publisher.fileNotAllowed', [$file, $directory, $pattern]));
     }
