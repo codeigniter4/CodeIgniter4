@@ -19,19 +19,19 @@ $cookie = new Cookie(
     ]
 );
 
-$cookie->getName(); // 'remember_token'
-$cookie->getPrefix(); // '__Secure-'
-$cookie->getPrefixedName(); // '__Secure-remember_token'
+$cookie->getName();             // 'remember_token'
+$cookie->getPrefix();           // '__Secure-'
+$cookie->getPrefixedName();     // '__Secure-remember_token'
 $cookie->getExpiresTimestamp(); // Unix timestamp
-$cookie->getExpiresString(); // 'Fri, 14-Feb-2025 00:00:00 GMT'
-$cookie->isExpired(); // false
-$cookie->getMaxAge(); // the difference from time() to expires
-$cookie->isRaw(); // false
-$cookie->isSecure(); // true
-$cookie->getPath(); // '/'
-$cookie->getDomain(); // ''
-$cookie->isHTTPOnly(); // true
-$cookie->getSameSite(); // 'Lax'
+$cookie->getExpiresString();    // 'Fri, 14-Feb-2025 00:00:00 GMT'
+$cookie->isExpired();           // false
+$cookie->getMaxAge();           // the difference from time() to expires
+$cookie->isRaw();               // false
+$cookie->isSecure();            // true
+$cookie->getPath();             // '/'
+$cookie->getDomain();           // ''
+$cookie->isHTTPOnly();          // true
+$cookie->getSameSite();         // 'Lax'
 
 // additional getter
 $cookie->getId(); // '__Secure-remember_token;;/'
