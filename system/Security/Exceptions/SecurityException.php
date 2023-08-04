@@ -29,6 +29,9 @@ class SecurityException extends FrameworkException implements HTTPExceptionInter
     /**
      * Throws when the source string contains invalid UTF-8 characters.
      *
+     * @param string $source The source string
+     * @param string $string The invalid string
+     *
      * @return static
      */
     public static function forInvalidUTF8Chars(string $source, string $string)
@@ -41,6 +44,9 @@ class SecurityException extends FrameworkException implements HTTPExceptionInter
 
     /**
      * Throws when the source string contains invalid control characters.
+     *
+     * @param string $source The source string
+     * @param string $string The invalid string
      *
      * @return static
      */
