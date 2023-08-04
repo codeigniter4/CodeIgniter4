@@ -16,52 +16,102 @@ use CodeIgniter\Exceptions\FrameworkException;
 
 class ImageException extends FrameworkException implements ExceptionInterface
 {
-    public static function forMissingImage(): self
+    /**
+     * Thrown when the image is not found.
+     *
+     * @return static
+     */
+    public static function forMissingImage()
     {
         return new static(lang('Images.sourceImageRequired'));
     }
 
-    public static function forFileNotSupported(): self
+    /**
+     * Thrown when the file specific is not following the role.
+     *
+     * @return static
+     */
+    public static function forFileNotSupported()
     {
         return new static(lang('Images.fileNotSupported'));
     }
 
-    public static function forMissingAngle(): self
+    /**
+     * Thrown when the angle is undefined.
+     *
+     * @return static
+     */
+    public static function forMissingAngle()
     {
         return new static(lang('Images.rotationAngleRequired'));
     }
 
-    public static function forInvalidDirection(?string $dir = null): self
+    /**
+     * Thrown when the direction property is invalid.
+     *
+     * @return static
+     */
+    public static function forInvalidDirection(?string $dir = null)
     {
         return new static(lang('Images.invalidDirection', [$dir]));
     }
 
-    public static function forInvalidPath(): self
+    /**
+     * Thrown when the path property is invalid.
+     *
+     * @return static
+     */
+    public static function forInvalidPath()
     {
         return new static(lang('Images.invalidPath'));
     }
 
-    public static function forEXIFUnsupported(): self
+    /**
+     * Thrown when the EXIF function is not supported.
+     *
+     * @return static
+     */
+    public static function forEXIFUnsupported()
     {
         return new static(lang('Images.exifNotSupported'));
     }
 
-    public static function forInvalidImageCreate(?string $extra = null): self
+    /**
+     * Thrown when the image specific is invalid.
+     *
+     * @return static
+     */
+    public static function forInvalidImageCreate(?string $extra = null)
     {
         return new static(lang('Images.unsupportedImageCreate') . ' ' . $extra);
     }
 
-    public static function forSaveFailed(): self
+    /**
+     * Thrown when the image save failed.
+     *
+     * @return static
+     */
+    public static function forSaveFailed()
     {
         return new static(lang('Images.saveFailed'));
     }
 
-    public static function forInvalidImageLibraryPath(?string $path = null): self
+    /**
+     * Thrown when the image library path is invalid.
+     *
+     * @return static
+     */
+    public static function forInvalidImageLibraryPath(?string $path = null)
     {
         return new static(lang('Images.libPathInvalid', [$path]));
     }
 
-    public static function forImageProcessFailed(): self
+    /**
+     * Thrown when the image process failed.
+     *
+     * @return static
+     */
+    public static function forImageProcessFailed()
     {
         return new static(lang('Images.imageProcessFailed'));
     }
