@@ -15,12 +15,12 @@ use CodeIgniter\Exceptions\FrameworkException;
 
 class PagerException extends FrameworkException
 {
-    public static function forInvalidTemplate(?string $template = null): PagerException
+    public static function forInvalidTemplate(?string $template = null): self
     {
         return new static(lang('Pager.invalidTemplate', [$template]));
     }
 
-    public static function forInvalidPaginationGroup(?string $group = null): PagerException
+    public static function forInvalidPaginationGroup(?string $group = null): self
     {
         return new static(lang('Pager.invalidPaginationGroup', [$group]));
     }
