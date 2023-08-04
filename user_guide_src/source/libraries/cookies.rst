@@ -243,11 +243,11 @@ Class Reference
 
     .. php:staticmethod:: setDefaults([$config = []])
 
-        :param \Config\Cookie|array $config: The configuration array or instance
+        :param \\Config\\Cookie|array $config: The configuration array or instance
         :rtype: array<string, mixed>
         :returns: The old defaults
 
-        Set the default attributes to a Cookie instance by injecting the values from the ``\Config\Cookie`` config or an array.
+        Set the default attributes to a Cookie instance by injecting the values from the ``Config\Cookie`` config or an array.
 
     .. php:staticmethod:: fromHeaderString(string $header[, bool $raw = false])
 
