@@ -278,7 +278,7 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider providePathChecks
+     * @dataProvider provideExtensionPHP
      *
      * @param string $path
      * @param string $detectPath
@@ -296,7 +296,7 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
         $this->assertSame($detectPath, $factory->detectRoutePath());
     }
 
-    public function providePathChecks(): iterable
+    public function provideExtensionPHP(): iterable
     {
         return [
             'not /index.php' => [
