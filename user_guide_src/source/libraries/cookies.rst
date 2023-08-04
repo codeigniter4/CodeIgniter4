@@ -131,6 +131,21 @@ also take advantage of the class's constants to make it not a hassle.
 
 .. literalinclude:: cookies/006.php
 
+***************
+Sending Cookies
+***************
+
+Set the ``Cookie`` objects in the ``CookieStore`` of the Response object, and
+the framework will automatically send the cookies.
+
+Use :php:meth:`CodeIgniter\\HTTP\\Response::setCookie()` to set:
+
+.. literalinclude:: cookies/017.php
+
+You can also use the :php:func:`set_cookie()` helper function:
+
+.. literalinclude:: cookies/018.php
+
 **********************
 Using the Cookie Store
 **********************
