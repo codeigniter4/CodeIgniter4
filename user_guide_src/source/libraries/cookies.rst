@@ -92,7 +92,9 @@ A cookie name can be any US-ASCII character, except for the following:
 - separator characters, such as ``( ) < > @ , ; : \ " / [ ] ? = { }``
 
 If setting the ``$raw`` parameter to ``true`` this validation will be strictly made. This is because
-PHP's ``setcookie`` and ``setrawcookie`` will reject cookies with invalid names. Additionally, cookie
+PHP's `setcookie() <https://www.php.net/manual/en/function.setcookie.php>`_
+and `setrawcookie() <https://www.php.net/manual/en/function.setrawcookie.php>`_
+will reject cookies with invalid names. Additionally, cookie
 names cannot be an empty string.
 
 Validating the Prefix Attribute
