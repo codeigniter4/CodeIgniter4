@@ -1247,49 +1247,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/UserAgent.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Function delete_cookie\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/cookie_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function set_cookie\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/cookie_helper.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Right side of && is always true\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function d\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/kint_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function d\\(\\) has parameter \\$vars with no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/kint_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function dd\\(\\) has no return type specified\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Helpers/kint_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function dd\\(\\) has parameter \\$vars with no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/kint_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function trace\\(\\) has no return type specified\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Helpers/kint_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function mock\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/test_helper.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Exceptions\\\\HoneypotException\\:\\:forNoHiddenValue\\(\\) has no return type specified\\.$#',
