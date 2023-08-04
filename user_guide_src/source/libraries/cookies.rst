@@ -135,6 +135,8 @@ also take advantage of the class's constants to make it not a hassle.
 Using the Cookie Store
 **********************
 
+.. note:: Normally, there is no need to use CookieStore directly.
+
 The ``CookieStore`` class represents an immutable collection of ``Cookie`` objects. The ``CookieStore``
 instance can be accessed from the current ``Response`` object.
 
