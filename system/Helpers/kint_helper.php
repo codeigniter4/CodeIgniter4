@@ -70,7 +70,7 @@ if (! function_exists('trace')) {
         /**
          * trace function
          *
-         * @return int
+         * @return int|string
          */
         function trace()
         {
