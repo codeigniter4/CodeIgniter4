@@ -62,10 +62,10 @@ final class SiteURITest extends CIUnitTestCase
 
     public function provideConstructor(): iterable
     {
-        return array_merge($this->provideURIs(), $this->provideRelativePathWithQueryOrFragment());
+        return array_merge($this->provideSetPath(), $this->provideRelativePathWithQueryOrFragment());
     }
 
-    public function provideURIs(): iterable
+    public function provideSetPath(): iterable
     {
         return [
             '' => [
@@ -315,7 +315,7 @@ final class SiteURITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideURIs
+     * @dataProvider provideSetPath
      */
     public function testSetPath(
         string $baseURL,
