@@ -47,7 +47,7 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider fileProvider
+     * @dataProvider provideDefaultPublicRestrictions
      */
     public function testDefaultPublicRestrictions(string $path): void
     {
@@ -69,7 +69,7 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
         $this->assertSame($expected, $errors[$file]->getMessage());
     }
 
-    public function fileProvider(): iterable
+    public function provideDefaultPublicRestrictions(): iterable
     {
         yield from [
             'php'  => ['index.php'],
@@ -79,7 +79,7 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider destinationProvider
+     * @dataProvider provideDestinations
      */
     public function testDestinations(string $destination, bool $allowed): void
     {
@@ -99,7 +99,7 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
         $this->assertInstanceOf(Publisher::class, $publisher);
     }
 
-    public function destinationProvider(): iterable
+    public function provideDestinations(): iterable
     {
         return [
             'explicit' => [

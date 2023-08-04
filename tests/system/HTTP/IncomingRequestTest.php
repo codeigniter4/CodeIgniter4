@@ -534,7 +534,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $request->getRawInput());
     }
 
-    public function provideRawInputVarChecks(): iterable
+    public function provideCanGrabGetRawInputVar(): iterable
     {
         return [
             [
@@ -614,7 +614,7 @@ final class IncomingRequestTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideRawInputVarChecks
+     * @dataProvider provideCanGrabGetRawInputVar
      *
      * @param string $rawstring
      * @param mixed  $var
@@ -855,7 +855,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertNull($this->request->getGetPost('gc'));
     }
 
-    public function providePathChecks(): iterable
+    public function provideExtensionPHP(): iterable
     {
         return [
             'not /index.php' => [
@@ -870,7 +870,7 @@ final class IncomingRequestTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider providePathChecks
+     * @dataProvider provideExtensionPHP
      *
      * @param mixed $path
      * @param mixed $detectPath

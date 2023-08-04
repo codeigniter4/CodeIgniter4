@@ -853,7 +853,7 @@ abstract class BaseModel
 
                 // Must be called first so we don't
                 // strip out created_at values.
-                $row = $this->doProtectFields($row);
+                $row = $this->doProtectFieldsForInsert($row);
 
                 // Set created_at and updated_at with same time
                 $date = $this->setDate();
@@ -1228,10 +1228,10 @@ abstract class BaseModel
     }
 
     /**
-     * Ensures that only the fields that are allowed to be updated
-     * are in the data array.
+     * Ensures that only the fields that are allowed to be updated are
+     * in the data array.
      *
-     * Used by insert() and update() to protect against mass assignment
+     * Used by update() and updateBatch() to protect against mass assignment
      * vulnerabilities.
      *
      * @param array $data Data
@@ -1255,6 +1255,22 @@ abstract class BaseModel
         }
 
         return $data;
+    }
+
+    /**
+     * Ensures that only the fields that are allowed to be inserted are in
+     * the data array.
+     *
+     * Used by insert() and insertBatch() to protect against mass assignment
+     * vulnerabilities.
+     *
+     * @param array $data Data
+     *
+     * @throws DataException
+     */
+    protected function doProtectFieldsForInsert(array $data): array
+    {
+        return $this->doProtectFields($data);
     }
 
     /**

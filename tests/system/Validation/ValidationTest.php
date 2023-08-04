@@ -186,7 +186,7 @@ class ValidationTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider setRuleRulesFormatCaseProvider
+     * @dataProvider provideSetRuleRulesFormat
      *
      * @param mixed $rules
      */
@@ -201,7 +201,7 @@ class ValidationTest extends CIUnitTestCase
         $this->addToAssertionCount(1);
     }
 
-    public function setRuleRulesFormatCaseProvider(): iterable
+    public function provideSetRuleRulesFormat(): iterable
     {
         yield 'fail-simple-object' => [
             false,
@@ -330,7 +330,7 @@ class ValidationTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5368
      *
-     * @dataProvider arrayDataProvider
+     * @dataProvider provideCanValidatetArrayData
      *
      * @param mixed $value
      */
@@ -343,7 +343,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function arrayDataProvider(): iterable
+    public function provideCanValidatetArrayData(): iterable
     {
         yield 'list array' => [
             [1, 2, 3, 4, 5],
@@ -383,7 +383,7 @@ class ValidationTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5374
      *
-     * @dataProvider isIntInvalidTypeDataProvider
+     * @dataProvider provideIsIntWithInvalidTypeData
      *
      * @param mixed $value
      */
@@ -395,7 +395,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function isIntInvalidTypeDataProvider(): iterable
+    public function provideIsIntWithInvalidTypeData(): iterable
     {
         yield 'array with int' => [
             [555],
@@ -620,7 +620,7 @@ class ValidationTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider rulesSetupProvider
+     * @dataProvider provideRulesSetup
      *
      * @param string|string[] $rules
      * @param string          $expected
@@ -634,7 +634,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->getError('foo'));
     }
 
-    public function rulesSetupProvider(): iterable
+    public function provideRulesSetup(): iterable
     {
         yield from [
             [
@@ -972,7 +972,7 @@ class ValidationTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider arrayFieldDataProvider
+     * @dataProvider provideRulesForArrayField
      */
     public function testRulesForArrayField(array $body, array $rules, array $results): void
     {
@@ -986,7 +986,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($results, $this->validation->getErrors());
     }
 
-    public function arrayFieldDataProvider(): iterable
+    public function provideRulesForArrayField(): iterable
     {
         yield from [
             'all_rules_should_pass' => [
@@ -1212,7 +1212,7 @@ class ValidationTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider dotNotationForIfExistProvider
+     * @dataProvider provideDotNotationOnIfExistRule
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4521
      */
@@ -1222,7 +1222,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function dotNotationForIfExistProvider(): iterable
+    public function provideDotNotationOnIfExistRule(): iterable
     {
         yield 'dot-on-end-fail' => [
             false,
@@ -1282,7 +1282,7 @@ class ValidationTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider validationArrayDataCaseProvider
+     * @dataProvider provideValidationOfArrayData
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4510
      */
@@ -1292,7 +1292,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function validationArrayDataCaseProvider(): iterable
+    public function provideValidationOfArrayData(): iterable
     {
         yield 'fail-empty-string' => [
             false,
@@ -1338,7 +1338,7 @@ class ValidationTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideStringRulesCases
+     * @dataProvider provideSplittingOfComplexStringRules
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4929
      */
@@ -1348,7 +1348,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $splitter($input));
     }
 
-    public function provideStringRulesCases(): iterable
+    public function provideSplittingOfComplexStringRules(): iterable
     {
         yield [
             'required',

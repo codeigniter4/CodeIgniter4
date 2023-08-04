@@ -461,7 +461,7 @@ class Services extends BaseService
         }
 
         $config ??= config(PagerConfig::class);
-        $view ??= AppServices::renderer();
+        $view ??= AppServices::renderer(null, null, false);
 
         return new Pager($config, $view);
     }

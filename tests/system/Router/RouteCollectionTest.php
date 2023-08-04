@@ -384,7 +384,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider groupProvider
+     * @dataProvider provideNestedGroupingWorksWithRootPrefix
      */
     public function testNestedGroupingWorksWithRootPrefix(
         string $group,
@@ -409,7 +409,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
     }
 
-    public function groupProvider(): iterable
+    public function provideNestedGroupingWorksWithRootPrefix(): iterable
     {
         yield from [
             ['admin', '/', [
@@ -1222,7 +1222,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider optionsProvider
+     * @dataProvider provideRoutesOptionsWithSameFromTwoRoutes
      */
     public function testRoutesOptionsWithSameFromTwoRoutes(array $options1, array $options2): void
     {
@@ -1246,7 +1246,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($options, $options1);
     }
 
-    public function optionsProvider(): iterable
+    public function provideRoutesOptionsWithSameFromTwoRoutes(): iterable
     {
         yield from [
             [

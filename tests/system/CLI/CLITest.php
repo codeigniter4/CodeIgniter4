@@ -450,7 +450,7 @@ final class CLITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider tableProvider
+     * @dataProvider provideTable
      *
      * @param array $tbody
      * @param array $thead
@@ -463,7 +463,7 @@ final class CLITest extends CIUnitTestCase
         $this->assertSame($this->getStreamFilterBuffer(), $expected);
     }
 
-    public function tableProvider(): iterable
+    public function provideTable(): iterable
     {
         $head = [
             'ID',

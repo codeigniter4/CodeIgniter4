@@ -209,7 +209,7 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize()->getFilters());
     }
 
-    public function provideExcept(): iterable
+    public function provideProcessMethodProcessGlobalsWithExcept(): iterable
     {
         return [
             [
@@ -222,7 +222,7 @@ final class FiltersTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideExcept
+     * @dataProvider provideProcessMethodProcessGlobalsWithExcept
      */
     public function testProcessMethodProcessGlobalsWithExcept(array $except): void
     {

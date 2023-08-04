@@ -821,7 +821,7 @@ final class CodeIgniterTest extends CIUnitTestCase
     /**
      * @param array|bool $cacheQueryStringValue
      *
-     * @dataProvider cacheQueryStringProvider
+     * @dataProvider providePageCacheWithCacheQueryString
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/pull/6410
      */
@@ -891,7 +891,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         CITestStreamFilter::removeErrorFilter();
     }
 
-    public function cacheQueryStringProvider(): iterable
+    public function providePageCacheWithCacheQueryString(): iterable
     {
         $testingUrls = [
             // URL #1

@@ -90,6 +90,12 @@ be ``YourVendor``. So you would write like the following::
 
 This setting instructs Composer to autoload the source code for your package.
 
+Choosing License
+================
+
+If you are not familiar with open source licenses, see https://choosealicense.com/.
+Many PHP packages, including CodeIgniter, use the MIT license.
+
 ***************************
 Preparing Development Tools
 ***************************

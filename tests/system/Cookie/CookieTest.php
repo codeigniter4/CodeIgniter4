@@ -79,7 +79,7 @@ final class CookieTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider prefixProvider
+     * @dataProvider provideConfigPrefix
      */
     public function testConfigPrefix(string $configPrefix, string $optionPrefix, string $expected): void
     {
@@ -98,7 +98,7 @@ final class CookieTest extends CIUnitTestCase
         $this->assertSame($expected, $cookie->getPrefixedName());
     }
 
-    public function prefixProvider(): iterable
+    public function provideConfigPrefix(): iterable
     {
         yield from [
             ['prefix_', '', 'prefix_test'],
@@ -165,7 +165,7 @@ final class CookieTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider invalidExpiresProvider
+     * @dataProvider provideInvalidExpires
      *
      * @param bool|float|string $expires
      */
@@ -175,7 +175,7 @@ final class CookieTest extends CIUnitTestCase
         new Cookie('test', 'value', ['expires' => $expires]);
     }
 
-    public static function invalidExpiresProvider(): iterable
+    public static function provideInvalidExpires(): iterable
     {
         $cases = [
             'non-numeric-string' => ['yes'],
@@ -189,7 +189,7 @@ final class CookieTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider setCookieHeaderProvider
+     * @dataProvider provideSetCookieHeaderCreation
      */
     public function testSetCookieHeaderCreation(string $header, array $changed): void
     {
@@ -198,7 +198,7 @@ final class CookieTest extends CIUnitTestCase
         $this->assertSame(array_merge($cookie, $changed), $cookie);
     }
 
-    public static function setCookieHeaderProvider(): iterable
+    public static function provideSetCookieHeaderCreation(): iterable
     {
         yield 'basic' => [
             'test=value',

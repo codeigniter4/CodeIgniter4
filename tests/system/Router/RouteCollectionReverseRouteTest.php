@@ -121,7 +121,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         $this->assertSame('/en/contact', $routes->reverseRoute('myController::goto'));
     }
 
-    public function reverseRoutingHandlerProvider(): iterable
+    public function provideReverseRoutingDefaultNamespaceAppController(): iterable
     {
         return yield from [
             'Omit namespace'                  => ['Galleries::showUserGallery'],
@@ -131,7 +131,7 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider reverseRoutingHandlerProvider
+     * @dataProvider provideReverseRoutingDefaultNamespaceAppController
      */
     public function testReverseRoutingDefaultNamespaceAppController(string $controller): void
     {

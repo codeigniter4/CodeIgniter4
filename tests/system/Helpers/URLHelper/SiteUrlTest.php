@@ -61,7 +61,7 @@ final class SiteUrlTest extends CIUnitTestCase
      * @param string      $expectedSiteUrl
      * @param string      $expectedBaseUrl
      *
-     * @dataProvider configProvider
+     * @dataProvider provideUrls
      */
     public function testUrls(
         $baseURL,
@@ -81,7 +81,7 @@ final class SiteUrlTest extends CIUnitTestCase
         $this->assertSame($expectedBaseUrl, base_url($path, $scheme));
     }
 
-    public function configProvider(): iterable
+    public function provideUrls(): iterable
     {
         // baseURL, indexPage, scheme, secure, path, expectedSiteUrl, expectedBaseUrl
         return [

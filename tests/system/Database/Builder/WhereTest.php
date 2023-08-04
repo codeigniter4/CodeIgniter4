@@ -392,7 +392,7 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function provideInvalidKeys(): iterable
+    public function provideWhereInvalidKeyThrowInvalidArgumentException(): iterable
     {
         return [
             'null'         => [null],
@@ -401,7 +401,7 @@ final class WhereTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideInvalidKeys
+     * @dataProvider provideWhereInvalidKeyThrowInvalidArgumentException
      *
      * @param mixed $key
      */
@@ -413,7 +413,7 @@ final class WhereTest extends CIUnitTestCase
         $builder->whereIn($key, ['Politician', 'Accountant']);
     }
 
-    public function provideInvalidValues(): iterable
+    public function provideWhereInEmptyValuesThrowInvalidArgumentException(): iterable
     {
         return [
             'null'                    => [null],
@@ -423,7 +423,7 @@ final class WhereTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideInvalidValues
+     * @dataProvider provideWhereInEmptyValuesThrowInvalidArgumentException
      *
      * @param mixed $values
      */

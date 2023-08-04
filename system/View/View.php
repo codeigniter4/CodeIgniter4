@@ -29,14 +29,16 @@ class View implements RendererInterface
     use ViewDecoratorTrait;
 
     /**
-     * Data that is made available to the Views.
+     * Saved Data.
      *
      * @var array
      */
     protected $data = [];
 
     /**
-     * Merge savedData and userData
+     * Data for the variables that are available in the Views.
+     *
+     * @var array|null
      */
     protected $tempData;
 
@@ -48,7 +50,7 @@ class View implements RendererInterface
     protected $viewPath;
 
     /**
-     * The render variables
+     * Data for rendering including Caching and Debug Toolbar data.
      *
      * @var array
      */

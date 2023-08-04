@@ -126,7 +126,7 @@ final class URITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideURLs
+     * @dataProvider provideSimpleUri
      */
     public function testSimpleUri(string $url, string $expectedURL, string $expectedPath): void
     {
@@ -136,7 +136,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expectedPath, $uri->getPath());
     }
 
-    public function provideURLs(): iterable
+    public function provideSimpleUri(): iterable
     {
         return [
             '' => [
@@ -400,7 +400,7 @@ final class URITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider providePaths
+     * @dataProvider provideSetPath
      */
     public function testSetPath(string $path, string $expectedURL, string $expectedPath): void
     {
@@ -413,7 +413,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expectedPath, $uri->getPath());
     }
 
-    public function providePaths(): iterable
+    public function provideSetPath(): iterable
     {
         return [
             '' => [
@@ -469,7 +469,7 @@ final class URITest extends CIUnitTestCase
         ];
     }
 
-    public function invalidPaths(): iterable
+    public function providePathGetsFiltered(): iterable
     {
         return [
             'dot-segment' => [
@@ -500,7 +500,7 @@ final class URITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider invalidPaths
+     * @dataProvider providePathGetsFiltered
      *
      * @param string $path
      * @param string $expected
@@ -593,7 +593,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('', $uri->getQuery());
     }
 
-    public function authorityInfo(): iterable
+    public function provideAuthorityReturnsExceptedValues(): iterable
     {
         return [
             'host-only' => [
@@ -616,7 +616,7 @@ final class URITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider authorityInfo
+     * @dataProvider provideAuthorityReturnsExceptedValues
      *
      * @param string $url
      * @param string $expected
@@ -628,7 +628,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, $uri->getAuthority());
     }
 
-    public function defaultPorts(): iterable
+    public function provideAuthorityRemovesDefaultPorts(): iterable
     {
         return [
             'http' => [
@@ -643,7 +643,7 @@ final class URITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider defaultPorts
+     * @dataProvider provideAuthorityRemovesDefaultPorts
      *
      * @param string $scheme
      * @param int    $port
@@ -667,7 +667,7 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($authority, $uri->getAuthority());
     }
 
-    public function defaultDots(): iterable
+    public function provideRemoveDotSegments(): iterable
     {
         return [
             [
@@ -766,7 +766,7 @@ final class URITest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider defaultDots
+     * @dataProvider provideRemoveDotSegments
      *
      * @param string $path
      * @param string $expected

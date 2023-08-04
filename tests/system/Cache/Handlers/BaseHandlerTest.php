@@ -23,7 +23,7 @@ use Tests\Support\Cache\RestrictiveHandler;
 final class BaseHandlerTest extends CIUnitTestCase
 {
     /**
-     * @dataProvider invalidTypeProvider
+     * @dataProvider provideValidateKeyInvalidType
      *
      * @param mixed $input
      */
@@ -35,7 +35,7 @@ final class BaseHandlerTest extends CIUnitTestCase
         BaseHandler::validateKey($input);
     }
 
-    public function invalidTypeProvider(): iterable
+    public function provideValidateKeyInvalidType(): iterable
     {
         return [
             [true],

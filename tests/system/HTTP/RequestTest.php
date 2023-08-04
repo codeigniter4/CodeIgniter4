@@ -533,7 +533,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', 'people[0]', FILTER_VALIDATE_INT));
     }
 
-    public function ipAddressChecks(): iterable
+    public function provideValidIPAddress(): iterable
     {
         return [
             'empty' => [
@@ -580,7 +580,7 @@ final class RequestTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider ipAddressChecks
+     * @dataProvider provideValidIPAddress
      *
      * @param mixed      $expected
      * @param mixed      $address

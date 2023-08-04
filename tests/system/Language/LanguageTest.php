@@ -213,7 +213,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('billions and billions', lang('Core.bazillion', [], 'en'));
     }
 
-    public function MessageBundles(): iterable
+    public function provideBundleUniqueKeys(): iterable
     {
         return [
             ['CLI'],
@@ -244,7 +244,7 @@ final class LanguageTest extends CIUnitTestCase
      * There's not a whole lot that can be done with message bundles,
      * but we can at least try loading them ... more accurate code coverage?
      *
-     * @dataProvider MessageBundles
+     * @dataProvider provideBundleUniqueKeys
      *
      * @param mixed $bundle
      */

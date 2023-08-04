@@ -52,7 +52,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideRequiredCases
+     * @dataProvider provideRequired
      */
     public function testRequired(array $data, bool $expected): void
     {
@@ -60,7 +60,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideRequiredCases(): iterable
+    public function provideRequired(): iterable
     {
         yield from [
             [['foo' => null], false],
@@ -73,7 +73,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider ifExistProvider
+     * @dataProvider provideIfExist
      */
     public function testIfExist(array $rules, array $data, bool $expected): void
     {
@@ -81,7 +81,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function ifExistProvider(): iterable
+    public function provideIfExist(): iterable
     {
         yield from [
             [
@@ -126,7 +126,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider providePermitEmptyCases
+     * @dataProvider providePermitEmpty
      */
     public function testPermitEmpty(array $rules, array $data, bool $expected): void
     {
@@ -134,7 +134,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function providePermitEmptyCases(): iterable
+    public function providePermitEmpty(): iterable
     {
         yield from [
             // If the rule is only `permit_empty`, any value will pass.
@@ -343,7 +343,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideEqualsCases
+     * @dataProvider provideEquals
      */
     public function testEquals(array $data, string $param, bool $expected): void
     {
@@ -351,7 +351,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideEqualsCases(): iterable
+    public function provideEquals(): iterable
     {
         yield from [
             'null'   => [['foo' => null], '', false],
@@ -397,7 +397,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideExactLengthCases
+     * @dataProvider provideExactLength
      */
     public function testExactLength(?string $data, bool $expected): void
     {
@@ -405,7 +405,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run(['foo' => $data]));
     }
 
-    public function provideExactLengthCases(): iterable
+    public function provideExactLength(): iterable
     {
         yield from [
             'null'    => [null, false],
@@ -423,7 +423,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider greaterThanProvider
+     * @dataProvider provideGreaterThan
      */
     public function testGreaterThan(?string $first, ?string $second, bool $expected): void
     {
@@ -432,7 +432,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function greaterThanProvider(): iterable
+    public function provideGreaterThan(): iterable
     {
         yield from [
             ['-10', '-11', true],
@@ -448,7 +448,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider greaterThanEqualProvider
+     * @dataProvider provideGreaterThanEqual
      */
     public function testGreaterThanEqual(?string $first, ?string $second, bool $expected): void
     {
@@ -457,7 +457,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function greaterThanEqualProvider(): iterable
+    public function provideGreaterThanEqual(): iterable
     {
         yield from [
             ['0', '0', true],
@@ -474,7 +474,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider lessThanProvider
+     * @dataProvider provideLessThan
      */
     public function testLessThan(?string $first, ?string $second, bool $expected): void
     {
@@ -483,7 +483,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function lessThanProvider(): iterable
+    public function provideLessThan(): iterable
     {
         yield from [
             ['-10', '-11', false],
@@ -500,7 +500,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider lessThanEqualProvider
+     * @dataProvider provideLessThanEqual
      */
     public function testLessThanEqual(?string $first, ?string $second, bool $expected): void
     {
@@ -509,7 +509,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function lessThanEqualProvider(): iterable
+    public function provideLessThanEqual(): iterable
     {
         yield from [
             ['0', '0', true],
@@ -526,7 +526,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider inListProvider
+     * @dataProvider provideInList
      */
     public function testInList(?string $first, ?string $second, bool $expected): void
     {
@@ -536,7 +536,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider inListProvider
+     * @dataProvider provideInList
      */
     public function testNotInList(?string $first, ?string $second, bool $expected): void
     {
@@ -545,7 +545,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame(! $expected, $this->validation->run($data));
     }
 
-    public function inListProvider(): iterable
+    public function provideInList(): iterable
     {
         yield from [
             ['red', 'red,Blue,123', true],
@@ -561,7 +561,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider requiredWithProvider
+     * @dataProvider provideRequiredWith
      */
     public function testRequiredWith(?string $field, ?string $check, bool $expected): void
     {
@@ -581,7 +581,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function requiredWithProvider(): iterable
+    public function provideRequiredWith(): iterable
     {
         yield from [
             ['nope', 'bar', false],
@@ -616,7 +616,7 @@ class RulesTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/7557
      *
-     * @dataProvider RequiredWithAndOtherRulesProvider
+     * @dataProvider provideRequiredWithAndOtherRules
      */
     public function testRequiredWithAndOtherRules(bool $expected, array $data): void
     {
@@ -629,7 +629,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    public function RequiredWithAndOtherRulesProvider(): iterable
+    public function provideRequiredWithAndOtherRules(): iterable
     {
         yield from [
             // `otherField` and `mustBeADate` do not exist
@@ -652,7 +652,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider RequiredWithAndOtherRuleWithValueZeroProvider
+     * @dataProvider provideRequiredWithAndOtherRuleWithValueZero
      */
     public function testRequiredWithAndOtherRuleWithValueZero(bool $expected, array $data): void
     {
@@ -666,7 +666,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    public function RequiredWithAndOtherRuleWithValueZeroProvider(): iterable
+    public function provideRequiredWithAndOtherRuleWithValueZero(): iterable
     {
         yield from [
             [true, ['married' => '0', 'partner_name' => '']],
@@ -676,7 +676,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider requiredWithoutProvider
+     * @dataProvider provideRequiredWithout
      */
     public function testRequiredWithout(?string $field, ?string $check, bool $expected): void
     {
@@ -696,7 +696,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function requiredWithoutProvider(): iterable
+    public function provideRequiredWithout(): iterable
     {
         yield from [
             ['nope', 'bars', false],
@@ -728,7 +728,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider requiredWithoutMultipleProvider
+     * @dataProvider provideRequiredWithoutMultiple
      */
     public function testRequiredWithoutMultiple(string $foo, string $bar, string $baz, bool $result): void
     {
@@ -742,7 +742,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($result, $this->validation->run($data));
     }
 
-    public function requiredWithoutMultipleProvider(): iterable
+    public function provideRequiredWithoutMultiple(): iterable
     {
         yield from [
             'all empty' => [
@@ -779,7 +779,7 @@ class RulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider requiredWithoutMultipleWithoutFieldsProvider
+     * @dataProvider provideRequiredWithoutMultipleWithoutFields
      */
     public function testRequiredWithoutMultipleWithoutFields(array $data, bool $result): void
     {
@@ -788,7 +788,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($result, $this->validation->run($data));
     }
 
-    public function requiredWithoutMultipleWithoutFieldsProvider(): iterable
+    public function provideRequiredWithoutMultipleWithoutFields(): iterable
     {
         yield from [
             'baz is missing' => [
