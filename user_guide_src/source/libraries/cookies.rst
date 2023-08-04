@@ -142,7 +142,7 @@ CodeIgniter provides three (3) other ways to create a new instance of the ``Cook
 
 .. literalinclude:: cookies/008.php
 
-.. note:: When using the global ``cookies()`` function, the passed ``Cookie`` array will only be considered
+.. note:: When using the global :php:func:`cookies()` function, the passed ``Cookie`` array will only be considered
     if the second argument, ``$getGlobal``, is set to ``false``.
 
 Checking Cookies in Store
@@ -174,8 +174,8 @@ in store will be displayed.
 
 .. literalinclude:: cookies/013.php
 
-.. note:: The helper function ``get_cookie()`` gets the cookie from the current ``Request`` object, not
-    from ``Response``. This function checks the `$_COOKIE` array if that cookie is set and fetches it
+.. note:: The helper function :php:func:`get_cookie()` gets the cookie from the current ``Request`` object, not
+    from ``Response``. This function checks the ``$_COOKIE`` array if that cookie is set and fetches it
     right away.
 
 Adding/Removing Cookies in Store
