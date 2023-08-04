@@ -25,15 +25,15 @@ if (! function_exists('set_cookie')) {
      * Accepts seven parameters, or you can submit an associative
      * array in the first parameter containing all the values.
      *
-     * @param array|string $name     Cookie name or array containing binds
-     * @param string       $value    The value of the cookie
-     * @param string       $expire   The number of seconds until expiration
-     * @param string       $domain   For site-wide cookie. Usually: .yourdomain.com
-     * @param string       $path     The cookie path
-     * @param string       $prefix   The cookie prefix ('': the default prefix)
-     * @param bool|null    $secure   True makes the cookie secure
-     * @param bool|null    $httpOnly True makes the cookie accessible via http(s) only (no javascript)
-     * @param string|null  $sameSite The cookie SameSite value
+     * @param array|Cookie|string $name     Cookie name / array containing binds / Cookie object
+     * @param string              $value    The value of the cookie
+     * @param string              $expire   The number of seconds until expiration
+     * @param string              $domain   For site-wide cookie. Usually: .yourdomain.com
+     * @param string              $path     The cookie path
+     * @param string              $prefix   The cookie prefix ('': the default prefix)
+     * @param bool|null           $secure   True makes the cookie secure
+     * @param bool|null           $httpOnly True makes the cookie accessible via http(s) only (no javascript)
+     * @param string|null         $sameSite The cookie SameSite value
      *
      * @see \CodeIgniter\HTTP\Response::setCookie()
      */
