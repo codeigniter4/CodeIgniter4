@@ -16,7 +16,9 @@ if (! function_exists('dd')) {
         /**
          * Prints a Kint debug report and exits.
          *
-         * @param array ...$vars
+         * @param mixed $vars
+         *
+         * @return void
          *
          * @codeCoverageIgnore Can't be tested ... exits
          */
@@ -40,6 +42,13 @@ if (! function_exists('dd')) {
 
 if (! function_exists('d') && ! class_exists(Kint::class)) {
     // In case that Kint is not loaded.
+    /**
+     * d function
+     *
+     * @param mixed $vars
+     *
+     * @return void
+     */
     function d(...$vars)
     {
         return 0;
@@ -58,6 +67,11 @@ if (! function_exists('trace')) {
         }
     } else {
         // In case that Kint is not loaded.
+        /**
+         * trace function
+         *
+         * @return void
+         */
         function trace()
         {
             return 0;
