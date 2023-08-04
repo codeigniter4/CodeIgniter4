@@ -75,7 +75,7 @@ exit call is moved to **public/index.php**.
 .. _v440-site-uri-changes:
 
 Site URI Changes
-================
+----------------
 
 A new ``SiteURI`` class that extends the ``URI`` class and represents the site
 URI has been added, and now it is used in many places that need the current URI.
@@ -85,7 +85,7 @@ Also, :php:func:`site_url()`, :php:func:`base_url()`, and :php:func:`current_url
 use the SiteURI internally.
 
 getPath()
----------
+^^^^^^^^^
 
 The ``getPath()`` method now always returns the full URI path with leading ``/``.
 Therefore, when your baseURL has sub-directories and you want to get the relative
@@ -99,7 +99,7 @@ For example::
      getRoutePath(): foo/bar
 
 Site URI Values
----------------
+^^^^^^^^^^^^^^^
 
 The SiteURI class normalizes site URIs more strictly than before, and some bugs
 have been fixed.
