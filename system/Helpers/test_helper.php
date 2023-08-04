@@ -47,6 +47,8 @@ if (! function_exists('mock')) {
      * Used within our test suite to mock certain system tools.
      *
      * @param string $className Fully qualified class name
+     *
+     * @return object
      */
     function mock(string $className)
     {

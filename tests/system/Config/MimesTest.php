@@ -21,7 +21,7 @@ use Config\Mimes;
  */
 final class MimesTest extends CIUnitTestCase
 {
-    public function provideGuessExtensionFromType(): iterable
+    public static function provideGuessExtensionFromType(): iterable
     {
         return [
             'null' => [
@@ -55,7 +55,7 @@ final class MimesTest extends CIUnitTestCase
         $this->assertSame($expected, Mimes::guessExtensionFromType($mime));
     }
 
-    public function provideGuessTypeFromExtension(): iterable
+    public static function provideGuessTypeFromExtension(): iterable
     {
         return [
             'null' => [

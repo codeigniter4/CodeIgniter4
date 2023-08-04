@@ -60,7 +60,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideRequired(): iterable
+    public static function provideRequired(): iterable
     {
         yield from [
             [['foo' => null], false],
@@ -81,7 +81,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideIfExist(): iterable
+    public static function provideIfExist(): iterable
     {
         yield from [
             [
@@ -134,7 +134,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function providePermitEmpty(): iterable
+    public static function providePermitEmpty(): iterable
     {
         yield from [
             // If the rule is only `permit_empty`, any value will pass.
@@ -298,7 +298,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideMatchesCases(): iterable
+    public static function provideMatchesCases(): iterable
     {
         yield from [
             [['foo' => null, 'bar' => null], true],
@@ -316,7 +316,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideMatchesNestedCases(): iterable
+    public static function provideMatchesNestedCases(): iterable
     {
         yield from [
             [['nested' => ['foo' => 'match', 'bar' => 'match']], true],
@@ -351,7 +351,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideEquals(): iterable
+    public static function provideEquals(): iterable
     {
         yield from [
             'null'   => [['foo' => null], '', false],
@@ -371,7 +371,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run(['foo' => $data]));
     }
 
-    public function provideMinLengthCases(): iterable
+    public static function provideMinLengthCases(): iterable
     {
         yield from [
             'null'    => [null, '2', false],
@@ -405,7 +405,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run(['foo' => $data]));
     }
 
-    public function provideExactLength(): iterable
+    public static function provideExactLength(): iterable
     {
         yield from [
             'null'    => [null, false],
@@ -432,7 +432,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideGreaterThan(): iterable
+    public static function provideGreaterThan(): iterable
     {
         yield from [
             ['-10', '-11', true],
@@ -457,7 +457,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideGreaterThanEqual(): iterable
+    public static function provideGreaterThanEqual(): iterable
     {
         yield from [
             ['0', '0', true],
@@ -483,7 +483,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideLessThan(): iterable
+    public static function provideLessThan(): iterable
     {
         yield from [
             ['-10', '-11', false],
@@ -509,7 +509,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideLessThanEqual(): iterable
+    public static function provideLessThanEqual(): iterable
     {
         yield from [
             ['0', '0', true],
@@ -545,7 +545,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame(! $expected, $this->validation->run($data));
     }
 
-    public function provideInList(): iterable
+    public static function provideInList(): iterable
     {
         yield from [
             ['red', 'red,Blue,123', true],
@@ -581,7 +581,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideRequiredWith(): iterable
+    public static function provideRequiredWith(): iterable
     {
         yield from [
             ['nope', 'bar', false],
@@ -629,7 +629,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    public function provideRequiredWithAndOtherRules(): iterable
+    public static function provideRequiredWithAndOtherRules(): iterable
     {
         yield from [
             // `otherField` and `mustBeADate` do not exist
@@ -666,7 +666,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $result);
     }
 
-    public function provideRequiredWithAndOtherRuleWithValueZero(): iterable
+    public static function provideRequiredWithAndOtherRuleWithValueZero(): iterable
     {
         yield from [
             [true, ['married' => '0', 'partner_name' => '']],
@@ -696,7 +696,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideRequiredWithout(): iterable
+    public static function provideRequiredWithout(): iterable
     {
         yield from [
             ['nope', 'bars', false],
@@ -742,7 +742,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($result, $this->validation->run($data));
     }
 
-    public function provideRequiredWithoutMultiple(): iterable
+    public static function provideRequiredWithoutMultiple(): iterable
     {
         yield from [
             'all empty' => [
@@ -788,7 +788,7 @@ class RulesTest extends CIUnitTestCase
         $this->assertSame($result, $this->validation->run($data));
     }
 
-    public function provideRequiredWithoutMultipleWithoutFields(): iterable
+    public static function provideRequiredWithoutMultipleWithoutFields(): iterable
     {
         yield from [
             'baz is missing' => [

@@ -39,7 +39,7 @@ final class FormatRulesTest extends TraditionalFormatRulesTest
         ],
     ];
 
-    public function provideAlphaSpace(): iterable
+    public static function provideAlphaSpace(): iterable
     {
         yield from [
             [
@@ -69,7 +69,7 @@ final class FormatRulesTest extends TraditionalFormatRulesTest
         ];
     }
 
-    public function provideInvalidIntegerType(): iterable
+    public static function provideInvalidIntegerType(): iterable
     {
         yield 'array with int' => [
             [555],

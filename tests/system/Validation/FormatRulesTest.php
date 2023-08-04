@@ -129,7 +129,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    public function provideValidUrl(): iterable
+    public static function provideValidUrl(): iterable
     {
         yield from [
             [
@@ -260,7 +260,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideValidEmail(): iterable
+    public static function provideValidEmail(): iterable
     {
         yield from [
             [
@@ -278,7 +278,7 @@ class FormatRulesTest extends CIUnitTestCase
         ];
     }
 
-    public function provideValidEmails(): iterable
+    public static function provideValidEmails(): iterable
     {
         yield from [
             [
@@ -324,7 +324,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideValidIP(): iterable
+    public static function provideValidIP(): iterable
     {
         yield from [
             [
@@ -393,7 +393,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideString(): iterable
+    public static function provideString(): iterable
     {
         yield from [
             [
@@ -427,7 +427,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideAlpha(): iterable
+    public static function provideAlpha(): iterable
     {
         yield from [
             [
@@ -469,7 +469,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideAlphaSpace(): iterable
+    public static function provideAlphaSpace(): iterable
     {
         yield from [
             [
@@ -515,7 +515,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function alphaNumericProvider(): iterable
+    public static function alphaNumericProvider(): iterable
     {
         yield from [
             [
@@ -553,7 +553,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideAlphaNumericPunct(): iterable
+    public static function provideAlphaNumericPunct(): iterable
     {
         yield from [
             [
@@ -685,7 +685,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideAlphaDash(): iterable
+    public static function provideAlphaDash(): iterable
     {
         yield from [
             [
@@ -723,7 +723,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideHex(): iterable
+    public static function provideHex(): iterable
     {
         yield from [
             [
@@ -761,7 +761,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideNumeric(): iterable
+    public static function provideNumeric(): iterable
     {
         yield from [
             [
@@ -837,7 +837,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertsame($expected, $this->validation->run($data));
     }
 
-    public function provideInvalidIntegerType(): iterable
+    public static function provideInvalidIntegerType(): iterable
     {
         // TypeError : CodeIgniter\Validation\FormatRules::integer(): Argument #1 ($str) must be of type ?string, array given
         // yield 'array with int' => [
@@ -883,7 +883,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideInteger(): iterable
+    public static function provideInteger(): iterable
     {
         yield from [
             [
@@ -937,7 +937,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideDecimal(): iterable
+    public static function provideDecimal(): iterable
     {
         yield from [
             [
@@ -995,7 +995,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideNatural(): iterable
+    public static function provideNatural(): iterable
     {
         yield from [
             [
@@ -1037,7 +1037,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideNaturalNoZero(): iterable
+    public static function provideNaturalNoZero(): iterable
     {
         yield from [
             [
@@ -1079,7 +1079,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideBase64(): iterable
+    public static function provideBase64(): iterable
     {
         yield from [
             [
@@ -1113,7 +1113,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideJson(): iterable
+    public static function provideJson(): iterable
     {
         yield from [
             [
@@ -1171,7 +1171,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideTimeZone(): iterable
+    public static function provideTimeZone(): iterable
     {
         yield from [
             [
@@ -1209,7 +1209,7 @@ class FormatRulesTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideValidDate(): iterable
+    public static function provideValidDate(): iterable
     {
         yield from [
             [

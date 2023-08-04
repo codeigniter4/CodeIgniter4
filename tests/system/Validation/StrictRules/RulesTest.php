@@ -50,7 +50,7 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function providePermitEmptyStrict(): iterable
+    public static function providePermitEmptyStrict(): iterable
     {
         yield from [
             [
@@ -105,7 +105,7 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideGreaterThanEqualStrict(): iterable
+    public static function provideGreaterThanEqualStrict(): iterable
     {
         yield from [
             [0, '0', true],
@@ -131,7 +131,7 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideGreaterThanStrict(): iterable
+    public static function provideGreaterThanStrict(): iterable
     {
         yield from [
             [-10, '-11', true],
@@ -158,7 +158,7 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideLessThanStrict(): iterable
+    public static function provideLessThanStrict(): iterable
     {
         yield from [
             [-10, '-11', false],
@@ -186,7 +186,7 @@ final class RulesTest extends TraditionalRulesTest
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideLessEqualThanStrict(): iterable
+    public static function provideLessEqualThanStrict(): iterable
     {
         yield from [
             [0, '0', true],

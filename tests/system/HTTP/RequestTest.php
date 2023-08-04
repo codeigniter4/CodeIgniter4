@@ -533,7 +533,7 @@ final class RequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->fetchGlobal('post', 'people[0]', FILTER_VALIDATE_INT));
     }
 
-    public function provideValidIPAddress(): iterable
+    public static function provideValidIPAddress(): iterable
     {
         return [
             'empty' => [

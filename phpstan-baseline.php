@@ -2,6 +2,26 @@
 
 $ignoreErrors = [];
 $ignoreErrors[] = [
+	'message' => '#^PHPDoc type array of property Config\\\\View\\:\\:\\$filters is not covariant with PHPDoc type array\\<string, callable\\-string\\> of overridden property CodeIgniter\\\\Config\\\\View\\:\\:\\$filters\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/app/Config/View.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^PHPDoc type array of property Config\\\\View\\:\\:\\$plugins is not covariant with PHPDoc type array\\<string, callable\\-string\\> of overridden property CodeIgniter\\\\Config\\\\View\\:\\:\\$plugins\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/app/Config/View.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$callback of function spl_autoload_register expects \\(callable\\(string\\)\\: void\\)\\|null, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), \'loadClass\'\\} given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$callback of function spl_autoload_register expects \\(callable\\(string\\)\\: void\\)\\|null, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), \'loadClassmap\'\\} given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:chunk\\(\\) has parameter \\$userFunc with no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
@@ -297,67 +317,22 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/ComposerScripts.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\BaseConfig\\:\\:registerProperties\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/BaseConfig.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\BaseService\\:\\:injectMock\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/BaseService.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\BaseService\\:\\:reset\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/BaseService.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\BaseService\\:\\:resetSingle\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/BaseService.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\Config\\:\\:injectMock\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Config.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\Config\\:\\:reset\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Config.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\DotEnv\\:\\:setVariable\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/DotEnv.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\Factories\\:\\:injectMock\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Factories.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\Factories\\:\\:reset\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Factories.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Config\\\\ForeignCharacters\\:\\:\\$characterList has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/ForeignCharacters.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Config\\\\Publisher\\:\\:registerProperties\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Publisher.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$filters has no type specified\\.$#',
+	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$coreFilters type has no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/View.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$plugins has no type specified\\.$#',
+	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$corePlugins type has no signature specified for callable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/View.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$filters type has no signature specified for callable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/View.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$plugins type has no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/View.php',
 ];
@@ -817,46 +792,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Views.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:SMTPEnd\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:appendAttachments\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:batchBCCSend\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:buildHeaders\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:buildMessage\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:setErrorMessage\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:unwrapSpecials\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Email\\\\Email\\:\\:writeHeaders\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Email/Email.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Static property CodeIgniter\\\\Email\\\\Email\\:\\:\\$func_overload \\(bool\\) in isset\\(\\) is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Email/Email.php',
@@ -1032,36 +967,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:discoverFilters\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:processAliasesToClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:processFilters\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:processGlobals\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:processMethods\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\Filters\\:\\:setResponse\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Format\\\\XMLFormatter\\:\\:arrayToXML\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Format/XMLFormatter.php',
@@ -1227,49 +1132,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/UserAgent.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Function delete_cookie\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/cookie_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function set_cookie\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/cookie_helper.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Right side of && is always true\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function d\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/kint_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function d\\(\\) has parameter \\$vars with no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/kint_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function dd\\(\\) has no return type specified\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Helpers/kint_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function dd\\(\\) has parameter \\$vars with no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/kint_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function trace\\(\\) has no return type specified\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Helpers/kint_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function mock\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/test_helper.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Exceptions\\\\HoneypotException\\:\\:forNoHiddenValue\\(\\) has no return type specified\\.$#',

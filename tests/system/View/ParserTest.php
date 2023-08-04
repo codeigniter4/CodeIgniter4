@@ -418,7 +418,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame($result, $this->parser->renderString($template));
     }
 
-    public function provideEscHandling(): iterable
+    public static function provideEscHandling(): iterable
     {
         return [
             'scalar'     => [42],

@@ -183,7 +183,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertSame($expected, $return);
     }
 
-    public function provideProtectIdentifiers(): iterable
+    public static function provideProtectIdentifiers(): iterable
     {
         yield from [
             // $prefixSingle, $protectIdentifiers, $fieldExists, $item, $expected

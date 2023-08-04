@@ -631,7 +631,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame($expected, clean_path($input));
     }
 
-    public function provideCleanPathActuallyCleaningThePaths(): iterable
+    public static function provideCleanPathActuallyCleaningThePaths(): iterable
     {
         $ds = DIRECTORY_SEPARATOR;
 

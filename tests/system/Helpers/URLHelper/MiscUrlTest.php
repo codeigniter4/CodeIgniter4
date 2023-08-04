@@ -112,7 +112,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test anchor
 
-    public function provideAnchor(): iterable
+    public static function provideAnchor(): iterable
     {
         return [
             'normal01' => [
@@ -171,7 +171,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
 
-    public function provideAnchorNoindex(): iterable
+    public static function provideAnchorNoindex(): iterable
     {
         return [
             'noindex01' => [
@@ -238,7 +238,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
 
-    public function provideAnchorTargetted(): iterable
+    public static function provideAnchorTargetted(): iterable
     {
         return [
             'subpage01' => [
@@ -295,7 +295,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
 
-    public function provideAnchorExamples(): iterable
+    public static function provideAnchorExamples(): iterable
     {
         return [
             'egpage01' => [
@@ -341,7 +341,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test anchor_popup
 
-    public function provideAnchorPopup(): iterable
+    public static function provideAnchorPopup(): iterable
     {
         return [
             'normal01' => [
@@ -399,7 +399,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test mailto
 
-    public function provideMailto(): iterable
+    public static function provideMailto(): iterable
     {
         return [
             'page01' => [
@@ -438,7 +438,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test safe_mailto
 
-    public function provideSafeMailto(): iterable
+    public static function provideSafeMailto(): iterable
     {
         return [
             'page01' => [
@@ -487,7 +487,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test auto_link
 
-    public function provideAutoLinkUrl(): iterable
+    public static function provideAutoLinkUrl(): iterable
     {
         return [
             'test01' => [
@@ -536,7 +536,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($out, auto_link($in, 'url'));
     }
 
-    public function provideAutoLinkEmail(): iterable
+    public static function provideAutoLinkEmail(): iterable
     {
         return [
             'test01' => [
@@ -585,7 +585,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($out, auto_link($in, 'email'));
     }
 
-    public function provideAutolinkBoth(): iterable
+    public static function provideAutolinkBoth(): iterable
     {
         return [
             'test01' => [
@@ -634,7 +634,7 @@ final class MiscUrlTest extends CIUnitTestCase
         $this->assertSame($out, auto_link($in));
     }
 
-    public function provideAutoLinkPopup(): iterable
+    public static function provideAutoLinkPopup(): iterable
     {
         return [
             'test01' => [
@@ -685,7 +685,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
     // Test prep_url
 
-    public function providePrepUrl(): iterable
+    public static function providePrepUrl(): iterable
     {
         // input, expected, secure
         return [
@@ -854,7 +854,7 @@ final class MiscUrlTest extends CIUnitTestCase
         url_to($route);
     }
 
-    public function provideUrlTo(): iterable
+    public static function provideUrlTo(): iterable
     {
         $page = config('App')->indexPage !== '' ? config('App')->indexPage . '/' : '';
 
@@ -874,7 +874,7 @@ final class MiscUrlTest extends CIUnitTestCase
         ];
     }
 
-    public function provideUrlToThrowsOnEmptyOrMissingRoute(): iterable
+    public static function provideUrlToThrowsOnEmptyOrMissingRoute(): iterable
     {
         return [
             [

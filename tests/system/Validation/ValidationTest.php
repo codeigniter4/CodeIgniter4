@@ -343,7 +343,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideCanValidatetArrayData(): iterable
+    public static function provideCanValidatetArrayData(): iterable
     {
         yield 'list array' => [
             [1, 2, 3, 4, 5],
@@ -395,7 +395,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function provideIsIntWithInvalidTypeData(): iterable
+    public static function provideIsIntWithInvalidTypeData(): iterable
     {
         yield 'array with int' => [
             [555],
@@ -634,7 +634,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $this->validation->getError('foo'));
     }
 
-    public function provideRulesSetup(): iterable
+    public static function provideRulesSetup(): iterable
     {
         yield from [
             [
@@ -986,7 +986,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($results, $this->validation->getErrors());
     }
 
-    public function provideRulesForArrayField(): iterable
+    public static function provideRulesForArrayField(): iterable
     {
         yield from [
             'all_rules_should_pass' => [
@@ -1222,7 +1222,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function provideDotNotationOnIfExistRule(): iterable
+    public static function provideDotNotationOnIfExistRule(): iterable
     {
         yield 'dot-on-end-fail' => [
             false,
@@ -1292,7 +1292,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function provideValidationOfArrayData(): iterable
+    public static function provideValidationOfArrayData(): iterable
     {
         yield 'fail-empty-string' => [
             false,
@@ -1348,7 +1348,7 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame($expected, $splitter($input));
     }
 
-    public function provideSplittingOfComplexStringRules(): iterable
+    public static function provideSplittingOfComplexStringRules(): iterable
     {
         yield [
             'required',

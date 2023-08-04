@@ -124,7 +124,7 @@ class Filters
      * Sample :
      * $filters->aliases['custom-auth'] = \Acme\Blob\Filters\BlobAuth::class;
      */
-    private function discoverFilters()
+    private function discoverFilters(): void
     {
         $locator = Services::locator();
 
@@ -147,6 +147,8 @@ class Filters
 
     /**
      * Set the response explicitly.
+     *
+     * @return void
      */
     public function setResponse(ResponseInterface $response)
     {
@@ -420,6 +422,8 @@ class Filters
      * Add any applicable (not excluded) global filter settings to the mix.
      *
      * @param string $uri
+     *
+     * @return void
      */
     protected function processGlobals(?string $uri = null)
     {
@@ -460,6 +464,8 @@ class Filters
 
     /**
      * Add any method-specific filters to the mix.
+     *
+     * @return void
      */
     protected function processMethods()
     {
@@ -479,6 +485,8 @@ class Filters
      * Add any applicable configured filters to the mix.
      *
      * @param string $uri
+     *
+     * @return void
      */
     protected function processFilters(?string $uri = null)
     {
@@ -548,6 +556,8 @@ class Filters
 
     /**
      * Maps filter aliases to the equivalent filter classes
+     *
+     * @return void
      *
      * @throws FilterException
      */

@@ -409,7 +409,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
     }
 
-    public function provideNestedGroupingWorksWithRootPrefix(): iterable
+    public static function provideNestedGroupingWorksWithRootPrefix(): iterable
     {
         yield from [
             ['admin', '/', [
@@ -1246,7 +1246,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($options, $options1);
     }
 
-    public function provideRoutesOptionsWithSameFromTwoRoutes(): iterable
+    public static function provideRoutesOptionsWithSameFromTwoRoutes(): iterable
     {
         yield from [
             [
@@ -1661,7 +1661,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expects, $router->handle('/0'));
     }
 
-    public function provideRouteDefaultNamespace(): iterable
+    public static function provideRouteDefaultNamespace(): iterable
     {
         return [
             'with \\ prefix'    => ['\App\Controllers'],

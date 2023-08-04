@@ -275,6 +275,8 @@ class BaseService
 
     /**
      * Reset shared instances and mocks for testing.
+     *
+     * @return void
      */
     public static function reset(bool $initAutoloader = true)
     {
@@ -288,6 +290,8 @@ class BaseService
 
     /**
      * Resets any mock and shared instances for a single service.
+     *
+     * @return void
      */
     public static function resetSingle(string $name)
     {
@@ -299,6 +303,8 @@ class BaseService
      * Inject mock object for testing.
      *
      * @param object $mock
+     *
+     * @return void
      */
     public static function injectMock(string $name, $mock)
     {

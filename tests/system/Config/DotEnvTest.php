@@ -66,7 +66,7 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame($expected, getenv($varname));
     }
 
-    public function provideLoadsVars(): iterable
+    public static function provideLoadsVars(): iterable
     {
         yield from [
             ['bar', 'FOO'],

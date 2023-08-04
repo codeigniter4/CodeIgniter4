@@ -290,7 +290,7 @@ final class ResponseTest extends CIUnitTestCase
         $this->assertSame($expectedCode, $response->getStatusCode());
     }
 
-    public function provideRedirect(): iterable
+    public static function provideRedirect(): iterable
     {
         yield from [
             ['Apache/2.4.17', 'HTTP/1.1', 'GET', null, 302],
@@ -336,7 +336,7 @@ final class ResponseTest extends CIUnitTestCase
         unset($_SERVER['SERVER_SOFTWARE']);
     }
 
-    public function provideRedirectWithIIS(): iterable
+    public static function provideRedirectWithIIS(): iterable
     {
         yield from [
             ['HTTP/1.1', 'GET', null, 302],

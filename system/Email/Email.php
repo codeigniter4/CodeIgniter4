@@ -1064,6 +1064,8 @@ class Email
 
     /**
      * Build final headers
+     *
+     * @return void
      */
     protected function buildHeaders()
     {
@@ -1077,6 +1079,8 @@ class Email
 
     /**
      * Write Headers as a string
+     *
+     * @return void
      */
     protected function writeHeaders()
     {
@@ -1103,6 +1107,8 @@ class Email
 
     /**
      * Build Final Body and attachments
+     *
+     * @return void
      */
     protected function buildMessage()
     {
@@ -1263,6 +1269,8 @@ class Email
      * @param string      $body      Message body to append to
      * @param string      $boundary  Multipart boundary
      * @param string|null $multipart When provided, only attachments of this type will be processed
+     *
+     * @return void
      */
     protected function appendAttachments(&$body, $boundary, $multipart = null)
     {
@@ -1579,6 +1587,8 @@ class Email
 
     /**
      * Batch Bcc Send. Sends groups of BCCs in batches
+     *
+     * @return void
      */
     public function batchBCCSend()
     {
@@ -1623,6 +1633,8 @@ class Email
 
     /**
      * Unwrap special elements
+     *
+     * @return void
      */
     protected function unwrapSpecials()
     {
@@ -1837,6 +1849,8 @@ class Email
 
     /**
      * Shortcut to send RSET or QUIT depending on keep-alive
+     *
+     * @return void
      */
     protected function SMTPEnd()
     {
@@ -2156,6 +2170,8 @@ class Email
 
     /**
      * @param string $msg
+     *
+     * @return void
      */
     protected function setErrorMessage($msg)
     {

@@ -374,6 +374,8 @@ class Factories
      * Resets the static arrays, optionally just for one component
      *
      * @param string|null $component Lowercase, plural component name
+     *
+     * @return void
      */
     public static function reset(?string $component = null)
     {
@@ -397,6 +399,8 @@ class Factories
      *
      * @param string $component Lowercase, plural component name
      * @param string $alias     Class alias. See the $aliases property.
+     *
+     * @return void
      *
      * @internal For testing only
      * @testTag

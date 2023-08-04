@@ -534,7 +534,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $request->getRawInput());
     }
 
-    public function provideCanGrabGetRawInputVar(): iterable
+    public static function provideCanGrabGetRawInputVar(): iterable
     {
         return [
             [
@@ -642,7 +642,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertTrue($request->is(strtolower($value)));
     }
 
-    public function provideIsHTTPMethods(): iterable
+    public static function provideIsHTTPMethods(): iterable
     {
         yield from [
             ['GET'],
@@ -855,7 +855,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertNull($this->request->getGetPost('gc'));
     }
 
-    public function provideExtensionPHP(): iterable
+    public static function provideExtensionPHP(): iterable
     {
         return [
             'not /index.php' => [
