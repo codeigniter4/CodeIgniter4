@@ -45,9 +45,16 @@ class Entity implements JsonSerializable
      *  $datamap = [
      *      'class_property_name' => 'db_column_name'
      *  ];
+     *
+     * @var array<string, string>
      */
     protected $datamap = [];
 
+    /**
+     * The date fields.
+     *
+     * @var array<string>
+     */
     protected $dates = [
         'created_at',
         'updated_at',
@@ -57,6 +64,8 @@ class Entity implements JsonSerializable
     /**
      * Array of field names and the type of value to cast them as when
      * they are accessed.
+     *
+     * @var array<string, string>
      */
     protected $casts = [];
 
