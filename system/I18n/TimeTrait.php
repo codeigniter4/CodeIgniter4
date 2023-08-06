@@ -32,7 +32,16 @@ trait TimeTrait
     /**
      * @var DateTimeZone
      */
-    protected $timezone;
+    protected $timezoneInstance;
+
+    /**
+     * Default timezone_type
+     *
+     * @see https://www.php.net/manual/en/datetimezone.getname.php#refsect1-datetimezone.getname-returnvalues
+     *
+     * @var int
+     */
+    protected $timezoneType = 1;
 
     /**
      * @var string
@@ -71,8 +80,6 @@ trait TimeTrait
      */
     public function __construct(?string $time = null, $timezone = null, ?string $locale = null)
     {
-        $this->locale = $locale ?: Locale::getDefault();
-
         $time ??= '';
 
         // If a test instance has been provided, use it instead.
@@ -86,19 +93,28 @@ trait TimeTrait
             }
         }
 
-        $timezone       = $timezone ?: date_default_timezone_get();
-        $this->timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
+        $timezone = $timezone ?: date_default_timezone_get();
+        $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
 
         // If the time string was a relative string (i.e. 'next Tuesday')
         // then we need to adjust the time going in so that we have a current
         // timezone to work with.
         if ($time !== '' && static::hasRelativeKeywords($time)) {
-            $instance = new DateTime('now', $this->timezone);
+            $instance = new DateTime('now', $timezone);
             $instance->modify($time);
             $time = $instance->format('Y-m-d H:i:s');
         }
 
-        parent::__construct($time, $this->timezone);
+        parent::__construct($time, $timezone);
+        $this->timezoneInstance = $this->getTimezone();
+
+        if (in_array($this->getTimezoneName(), DateTimeZone::listIdentifiers(), true)) {
+            $this->timezoneType = 3;
+        } elseif (in_array(mb_strtolower($this->getTimezoneName()), array_keys(DateTimeZone::listAbbreviations()), true)) {
+            $this->timezoneType = 2;
+        }
+
+        $this->locale = $locale ?: Locale::getDefault();
     }
 
     /**
@@ -492,7 +508,7 @@ trait TimeTrait
     {
         $local = date_default_timezone_get();
 
-        return $local === $this->timezone->getName();
+        return $local === $this->timezoneInstance->getName();
     }
 
     /**
@@ -508,7 +524,7 @@ trait TimeTrait
      */
     public function getTimezoneName(): string
     {
-        return $this->timezone->getName();
+        return $this->timezoneInstance->getName();
     }
 
     // --------------------------------------------------------------------
@@ -687,7 +703,7 @@ trait TimeTrait
     {
         $time = date('Y-m-d H:i:s', $timestamp);
 
-        return self::parse($time, $this->timezone, $this->locale);
+        return self::parse($time, $this->timezoneInstance, $this->locale);
     }
 
     // --------------------------------------------------------------------
@@ -943,7 +959,7 @@ trait TimeTrait
         if ($testTime instanceof DateTimeInterface) {
             $testTime = $testTime->format('Y-m-d H:i:s');
         } elseif (is_string($testTime)) {
-            $timezone = $timezone ?: $this->timezone;
+            $timezone = $timezone ?: $this->timezoneInstance;
             $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
             $testTime = new DateTime($testTime, $timezone);
             $testTime = $testTime->format('Y-m-d H:i:s');
@@ -1004,7 +1020,7 @@ trait TimeTrait
      */
     public function humanize()
     {
-        $now  = IntlCalendar::fromDateTime(self::now($this->timezone));
+        $now  = IntlCalendar::fromDateTime(self::now($this->timezoneInstance));
         $time = $this->getCalendar()->getTime();
 
         $years   = $now->fieldDifference($time, IntlCalendar::FIELD_YEAR);
@@ -1080,7 +1096,7 @@ trait TimeTrait
         if ($time instanceof self) {
             $time = $time->toDateTime();
         } elseif (is_string($time)) {
-            $timezone = $timezone ?: $this->timezone;
+            $timezone = $timezone ?: $this->timezoneInstance;
             $timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
             $time     = new DateTime($time, $timezone);
         }
@@ -1165,19 +1181,22 @@ trait TimeTrait
         return method_exists($this, $method);
     }
 
-    /**
-     * This is called when we unserialize the Time object.
-     */
-    public function __wakeup(): void
+    public function __serialize(): array
     {
-        /**
-         * Prior to unserialization, this is a string.
-         *
-         * @var string $timezone
-         */
-        $timezone = $this->timezone;
+        return [
+            'date'          => $this->format('Y-m-d H:i:s.u'),
+            'timezone_type' => $this->timezoneType,
+            'timezone'      => $this->getTimezoneName(),
+            'locale'        => $this->locale,
+        ];
+    }
 
-        $this->timezone = new DateTimeZone($timezone);
-        parent::__construct($this->date, $this->timezone);
+    public function __unserialize(array $data): void
+    {
+        $timezone = new DateTimeZone($data['timezone']);
+        parent::__construct($data['date'], $timezone);
+        $this->locale           = $data['locale'];
+        $this->timezoneType     = $data['timezone_type'];
+        $this->timezoneInstance = $timezone;
     }
 }
