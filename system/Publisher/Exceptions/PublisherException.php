@@ -25,6 +25,8 @@ class PublisherException extends FrameworkException
      *
      * @param string $from The source file
      * @param string $to   The destination file
+     *
+     * @return static
      */
     public static function forCollision(string $from, string $to)
     {
@@ -33,6 +35,8 @@ class PublisherException extends FrameworkException
 
     /**
      * Throws when given a destination that is not in the list of allowed directories.
+     *
+     * @return static
      */
     public static function forDestinationNotAllowed(string $destination)
     {
@@ -41,6 +45,8 @@ class PublisherException extends FrameworkException
 
     /**
      * Throws when a file fails to match the allowed pattern for its destination.
+     *
+     * @return static
      */
     public static function forFileNotAllowed(string $file, string $directory, string $pattern)
     {
