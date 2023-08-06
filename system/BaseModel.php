@@ -760,7 +760,7 @@ abstract class BaseModel
 
         // Must be called first, so we don't
         // strip out created_at values.
-        $data = $this->doProtectFields($data);
+        $data = $this->doProtectFieldsForInsert($data);
 
         // doProtectFields() can further remove elements from
         // $data so we need to check for empty dataset again
