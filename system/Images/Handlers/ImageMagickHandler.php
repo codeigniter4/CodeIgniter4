@@ -290,6 +290,8 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Make the image resource object if needed
      *
+     * @return void
+     *
      * @throws Exception
      */
     protected function ensureResource()
@@ -301,6 +303,8 @@ class ImageMagickHandler extends BaseHandler
 
     /**
      * Check if given image format is supported
+     *
+     * @return void
      *
      * @throws ImageException
      */
@@ -317,6 +321,8 @@ class ImageMagickHandler extends BaseHandler
 
     /**
      * Handler-specific method for overlaying text on an image.
+     *
+     * @return void
      *
      * @throws Exception
      */
