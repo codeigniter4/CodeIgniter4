@@ -791,7 +791,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString($expectContainsString, $generated);
     }
 
-    public function orderedColumnUsecases(): iterable
+    public static function orderedColumnUsecases(): iterable
     {
         yield from [
             'reorder example #1' => [

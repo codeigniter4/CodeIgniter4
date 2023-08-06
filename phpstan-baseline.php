@@ -12,16 +12,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/app/Config/View.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$callback of function spl_autoload_register expects \\(callable\\(string\\)\\: void\\)\\|null, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), \'loadClass\'\\} given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$callback of function spl_autoload_register expects \\(callable\\(string\\)\\: void\\)\\|null, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), \'loadClassmap\'\\} given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:chunk\\(\\) has parameter \\$userFunc with no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
