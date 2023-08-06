@@ -53,7 +53,8 @@ class Entity implements JsonSerializable
     /**
      * The date fields.
      *
-     * @var array<string>
+     * @var array<int, string>
+     * @phpstan-var list<string>
      */
     protected $dates = [
         'created_at',
