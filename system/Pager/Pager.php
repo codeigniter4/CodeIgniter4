@@ -388,6 +388,8 @@ class Pager implements PagerInterface
      * Ensures that an array exists for the group specified.
      *
      * @param int $perPage
+     *
+     * @return void
      */
     protected function ensureGroup(string $group, ?int $perPage = null)
     {
@@ -414,6 +416,8 @@ class Pager implements PagerInterface
 
     /**
      * Calculating the current page
+     *
+     * @return void
      */
     protected function calculateCurrentPage(string $group)
     {

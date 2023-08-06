@@ -1177,71 +1177,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/I18n/TimeLegacy.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forEXIFUnsupported\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forFileNotSupported\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forImageProcessFailed\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forInvalidDirection\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forInvalidImageCreate\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forInvalidImageLibraryPath\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forInvalidPath\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forMissingAngle\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forMissingImage\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Exceptions\\\\ImageException\\:\\:forSaveFailed\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Exceptions/ImageException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:_text\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Handlers/BaseHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:ensureResource\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Handlers/BaseHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:reproportion\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Handlers/BaseHandler.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:\\$image \\(CodeIgniter\\\\Images\\\\Image\\) in empty\\(\\) is not falsy\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Images/Handlers/BaseHandler.php',
@@ -1249,21 +1184,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Comparison operation "\\>\\=" between \\(array\\|float\\|int\\) and 0 results in an error\\.$#',
 	'count' => 2,
-	'path' => __DIR__ . '/system/Images/Handlers/ImageMagickHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Handlers\\\\ImageMagickHandler\\:\\:_text\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Handlers/ImageMagickHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Handlers\\\\ImageMagickHandler\\:\\:ensureResource\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Images/Handlers/ImageMagickHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Images\\\\Handlers\\\\ImageMagickHandler\\:\\:supportedFormatCheck\\(\\) has no return type specified\\.$#',
-	'count' => 1,
 	'path' => __DIR__ . '/system/Images/Handlers/ImageMagickHandler.php',
 ];
 $ignoreErrors[] = [
@@ -1300,61 +1220,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Model\\:\\:chunk\\(\\) has parameter \\$userFunc with no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Model.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Pager\\\\Exceptions\\\\PagerException\\:\\:forInvalidPaginationGroup\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Pager/Exceptions/PagerException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Pager\\\\Exceptions\\\\PagerException\\:\\:forInvalidTemplate\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Pager/Exceptions/PagerException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Pager\\\\Pager\\:\\:calculateCurrentPage\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Pager/Pager.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Pager\\\\Pager\\:\\:ensureGroup\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Pager/Pager.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Pager\\\\PagerRenderer\\:\\:updatePages\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Pager/PagerRenderer.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Publisher\\\\Exceptions\\\\PublisherException\\:\\:forCollision\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Publisher/Exceptions/PublisherException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Publisher\\\\Exceptions\\\\PublisherException\\:\\:forDestinationNotAllowed\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Publisher/Exceptions/PublisherException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Publisher\\\\Exceptions\\\\PublisherException\\:\\:forFileNotAllowed\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Publisher/Exceptions/PublisherException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Publisher\\\\Publisher\\:\\:verifyAllowed\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Publisher/Publisher.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\RESTful\\\\BaseResource\\:\\:initController\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/RESTful/BaseResource.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\RESTful\\\\BaseResource\\:\\:setModel\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/RESTful/BaseResource.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouter\\:\\:setDirectory\\(\\) has no return type specified\\.$#',
