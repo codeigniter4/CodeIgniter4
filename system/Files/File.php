@@ -28,7 +28,7 @@ class File extends SplFileInfo
      *
      * @var int
      */
-    protected $size;
+    protected int $size;
 
     /**
      * @var string|null

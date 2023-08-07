@@ -19,6 +19,11 @@ class FileNotFoundException extends RuntimeException implements ExceptionInterfa
 {
     use DebugTraceableTrait;
 
+    /**
+     *
+     * @param string $path
+     * @return FileNotFoundException
+     */
     public static function forFileNotFound(string $path)
     {
         return new static(lang('Files.fileNotFound', [$path]));
