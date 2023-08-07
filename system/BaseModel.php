@@ -997,6 +997,13 @@ abstract class BaseModel
                 // Save updateIndex for later
                 $updateIndex = $row[$index] ?? null;
 
+                if ($updateIndex === null) {
+                    throw new InvalidArgumentException(
+                        'The index ("' . $index . '") for updateBatch() is missing in the data: '
+                        . json_encode($row)
+                    );
+                }
+
                 // Must be called first so we don't
                 // strip out updated_at values.
                 $row = $this->doProtectFields($row);
