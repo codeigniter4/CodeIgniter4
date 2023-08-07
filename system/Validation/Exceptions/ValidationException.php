@@ -26,7 +26,7 @@ class ValidationException extends FrameworkException
     }
 
     /**
-     * Throws when the group value of config is not isset.
+     * Throws when the group value of config is not set.
      *
      * @return static
      */

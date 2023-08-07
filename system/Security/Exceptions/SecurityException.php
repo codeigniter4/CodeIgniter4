@@ -17,7 +17,7 @@ use CodeIgniter\Exceptions\HTTPExceptionInterface;
 class SecurityException extends FrameworkException implements HTTPExceptionInterface
 {
     /**
-     * Throws when some specific is not allowed.
+     * Throws when some specific action is not allowed.
      *
      * @return static
      */
