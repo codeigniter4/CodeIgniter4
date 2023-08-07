@@ -979,7 +979,9 @@ abstract class BaseModel
                 // properties representing the collection elements, we need to grab
                 // them as an array.
                 if (is_object($row) && ! $row instanceof stdClass) {
-                    $row = $this->objectToArray($row, true, true);
+                    // For updates the index field is needed even if it is not changed.
+                    // So set $onlyChanged to false.
+                    $row = $this->objectToArray($row, false, true);
                 }
 
                 // If it's still a stdClass, go ahead and convert to
