@@ -16,7 +16,7 @@ use CodeIgniter\Exceptions\FrameworkException;
 class ViewException extends FrameworkException
 {
     /**
-     * @return ViewException
+     * @return static
      */
     public static function forInvalidCellMethod(string $class, string $method)
     {
@@ -24,7 +24,7 @@ class ViewException extends FrameworkException
     }
 
     /**
-     * @return ViewException
+     * @return static
      */
     public static function forMissingCellParameters(string $class, string $method)
     {
@@ -32,7 +32,7 @@ class ViewException extends FrameworkException
     }
 
     /**
-     * @return ViewException
+     * @return static
      */
     public static function forInvalidCellParameter(string $key)
     {
@@ -40,7 +40,7 @@ class ViewException extends FrameworkException
     }
 
     /**
-     * @return ViewException
+     * @return static
      */
     public static function forNoCellClass()
     {
@@ -48,7 +48,7 @@ class ViewException extends FrameworkException
     }
 
     /**
-     * @return ViewException
+     * @return static
      */
     public static function forInvalidCellClass(?string $class = null)
     {
@@ -56,7 +56,7 @@ class ViewException extends FrameworkException
     }
 
     /**
-     * @return ViewException
+     * @return static
      */
     public static function forTagSyntaxError(string $output)
     {
@@ -64,7 +64,7 @@ class ViewException extends FrameworkException
     }
 
     /**
-     * @return ViewException
+     * @return static
      */
     public static function forInvalidDecorator(string $className)
     {

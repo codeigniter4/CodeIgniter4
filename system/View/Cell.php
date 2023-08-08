@@ -233,10 +233,8 @@ class Cell
      * Returns the values from $params that match the parameters
      * for a method, in the order they are defined. This allows
      * them to be passed directly into the method.
-     *
-     * @return array
      */
-    private function getMethodParams(BaseCell $instance, string $method, array $params)
+    private function getMethodParams(BaseCell $instance, string $method, array $params): array
     {
         $mountParams = [];
 
