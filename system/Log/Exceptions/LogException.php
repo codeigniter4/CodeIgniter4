@@ -16,7 +16,7 @@ use CodeIgniter\Exceptions\FrameworkException;
 class LogException extends FrameworkException
 {
     /**
-     * @return LogException
+     * @return static
      */
     public static function forInvalidLogLevel(string $level)
     {
@@ -24,7 +24,7 @@ class LogException extends FrameworkException
     }
 
     /**
-     * @return LogException
+     * @return static
      */
     public static function forInvalidMessageType(string $messageType)
     {
