@@ -20,7 +20,7 @@ class FileException extends RuntimeException implements ExceptionInterface
     use DebugTraceableTrait;
 
     /**
-     * @return FileException
+     * @return static
      */
     public static function forUnableToMove(?string $from = null, ?string $to = null, ?string $error = null)
     {
@@ -32,7 +32,7 @@ class FileException extends RuntimeException implements ExceptionInterface
      *
      * @param string $caller The method causing the exception
      *
-     * @return FileException
+     * @return static
      */
     public static function forExpectedDirectory(string $caller)
     {
@@ -44,7 +44,7 @@ class FileException extends RuntimeException implements ExceptionInterface
      *
      * @param string $caller The method causing the exception
      *
-     * @return FileException
+     * @return static
      */
     public static function forExpectedFile(string $caller)
     {

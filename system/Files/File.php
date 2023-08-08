@@ -25,8 +25,10 @@ class File extends SplFileInfo
 {
     /**
      * The files size in bytes
+     *
+     * @var int
      */
-    protected int $size;
+    protected $size;
 
     /**
      * @var string|null

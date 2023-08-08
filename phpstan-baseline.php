@@ -947,6 +947,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Exceptions/TestException.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Files\\\\File\\:\\:\\$size \\(int\\) on left side of \\?\\? is not nullable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Files/File.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Expression on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/Filters.php',
