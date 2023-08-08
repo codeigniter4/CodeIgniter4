@@ -807,26 +807,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Email/Email.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Encryption\\\\Handlers\\\\SodiumHandler\\:\\:parseParams\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Encryption/Handlers/SodiumHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Entity\\\\Entity\\:\\:\\$casts has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Entity/Entity.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Entity\\\\Entity\\:\\:\\$datamap has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Entity/Entity.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Entity\\\\Entity\\:\\:\\$dates has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Entity/Entity.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Events\\\\Events\\:\\:on\\(\\) has parameter \\$callback with no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Events/Events.php',
