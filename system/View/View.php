@@ -384,6 +384,8 @@ class View implements RendererInterface
 
     /**
      * Specifies that the current view should extend an existing layout.
+     *
+     * @return void
      */
     public function extend(string $layout)
     {
@@ -394,6 +396,8 @@ class View implements RendererInterface
      * Starts holds content for a section within the layout.
      *
      * @param string $name Section name
+     *
+     * @return void
      */
     public function section(string $name)
     {
@@ -406,6 +410,8 @@ class View implements RendererInterface
 
     /**
      * Captures the last section
+     *
+     * @return void
      *
      * @throws RuntimeException
      */
@@ -429,6 +435,8 @@ class View implements RendererInterface
 
     /**
      * Renders a section's contents.
+     *
+     * @return void
      */
     public function renderSection(string $sectionName)
     {
@@ -465,6 +473,8 @@ class View implements RendererInterface
 
     /**
      * Logs performance data for rendering a view.
+     *
+     * @return void
      */
     protected function logPerformance(float $start, float $end, string $view)
     {
