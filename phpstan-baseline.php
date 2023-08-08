@@ -1147,56 +1147,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Exceptions\\\\HoneypotException\\:\\:forNoHiddenValue\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Exceptions/HoneypotException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Exceptions\\\\HoneypotException\\:\\:forNoNameField\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Exceptions/HoneypotException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Exceptions\\\\HoneypotException\\:\\:forNoTemplate\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Exceptions/HoneypotException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Exceptions\\\\HoneypotException\\:\\:isBot\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Exceptions/HoneypotException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Honeypot\\:\\:attachHoneypot\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Honeypot.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Honeypot\\:\\:hasContent\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Honeypot.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\I18n\\\\Time\\:\\:setTestNow\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/I18n/Time.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\I18n\\\\Time\\:\\:toDateTimeString\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/I18n/Time.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\I18n\\\\TimeLegacy\\:\\:setTestNow\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/I18n/TimeLegacy.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\I18n\\\\TimeLegacy\\:\\:toDateTimeString\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/I18n/TimeLegacy.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:\\$image \\(CodeIgniter\\\\Images\\\\Image\\) in empty\\(\\) is not falsy\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Images/Handlers/BaseHandler.php',
