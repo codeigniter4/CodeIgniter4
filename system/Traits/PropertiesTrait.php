@@ -45,6 +45,11 @@ trait PropertiesTrait
     final public function getPublicProperties(): array
     {
         $worker = new class () {
+            /**
+             * @param object $obj
+             * 
+             * @return array
+             */
             public function getProperties($obj)
             {
                 return get_object_vars($obj);
