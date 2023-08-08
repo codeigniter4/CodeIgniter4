@@ -1147,21 +1147,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Images/Handlers/ImageMagickHandler.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Log\\\\Exceptions\\\\LogException\\:\\:forInvalidLogLevel\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Log/Exceptions/LogException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Log\\\\Exceptions\\\\LogException\\:\\:forInvalidMessageType\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Log/Exceptions/LogException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Log\\\\Handlers\\\\ChromeLoggerHandler\\:\\:sendLogs\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Log/Handlers/ChromeLoggerHandler.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Model\\:\\:chunk\\(\\) has parameter \\$userFunc with no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Model.php',
