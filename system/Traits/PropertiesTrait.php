@@ -47,7 +47,7 @@ trait PropertiesTrait
         $worker = new class () {
             /**
              * @param object $obj
-             * 
+             *
              * @return array
              */
             public function getProperties($obj)
