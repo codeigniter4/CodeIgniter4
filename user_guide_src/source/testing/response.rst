@@ -302,7 +302,7 @@ You can use this method to determine if ``$response`` actually holds JSON conten
 assertJSONFragment(array $fragment)
 -----------------------------------
 
-Asserts that $fragment is found within the JSON response. It does not need to match the entire JSON value.
+Asserts that ``$fragment`` is found within the JSON response. It does not need to match the entire JSON value.
 
 .. literalinclude:: response/032.php
    :lines: 2-
