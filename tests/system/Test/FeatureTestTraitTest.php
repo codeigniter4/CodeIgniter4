@@ -61,6 +61,22 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response->assertDontSee('Again');
     }
 
+    public function testCallGetAndUriString(): void
+    {
+        $this->withRoutes([
+            [
+                'get',
+                'foo/bar/1/2/3',
+                static fn () => 'Hello World',
+            ],
+        ]);
+        $response = $this->get('foo/bar/1/2/3');
+
+        $this->assertSame('Hello World', $response->response()->getBody());
+        $this->assertSame('foo/bar/1/2/3', uri_string());
+        $this->assertSame('http://example.com/index.php/foo/bar/1/2/3', current_url());
+    }
+
     public function testClosureWithEcho()
     {
         $this->withRoutes([
