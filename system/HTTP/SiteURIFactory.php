@@ -70,7 +70,7 @@ final class SiteURIFactory
             $fragment = '#' . $parts['fragment'];
         }
 
-        $relativePath = $parts['path'] . $query . $fragment;
+        $relativePath = ($parts['path'] ?? '') . $query . $fragment;
         $host         = $this->getValidHost($parts['host']);
 
         return new SiteURI($this->appConfig, $relativePath, $host, $parts['scheme']);
