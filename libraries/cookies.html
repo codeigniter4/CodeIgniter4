@@ -292,31 +292,38 @@ It remembers stateful information for the stateless HTTP protocol.</p>
 <li><p><strong>Personalization</strong>: User preferences, themes, and other settings</p></li>
 <li><p><strong>Tracking</strong>: Recording and analyzing user behavior</p></li>
 </ul>
-<p>To help you efficiently use cookies across browsers with your request and response,
+<p>To help you efficiently send cookies to browsers,
 CodeIgniter provides the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Cookie\Cookie</span></code> class to abstract the
 cookie interaction.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#creating-cookies" id="id1">Creating Cookies</a></p></li>
-<li><p><a class="reference internal" href="#accessing-cookie-s-attributes" id="id2">Accessing Cookie’s Attributes</a></p></li>
-<li><p><a class="reference internal" href="#immutable-cookies" id="id3">Immutable Cookies</a></p></li>
-<li><p><a class="reference internal" href="#validating-a-cookie-s-attributes" id="id4">Validating a Cookie’s Attributes</a></p>
+<li><p><a class="reference internal" href="#creating-cookies" id="id1">Creating Cookies</a></p>
 <ul>
-<li><p><a class="reference internal" href="#validating-the-name-attribute" id="id5">Validating the Name Attribute</a></p></li>
-<li><p><a class="reference internal" href="#validating-the-prefix-attribute" id="id6">Validating the Prefix Attribute</a></p></li>
-<li><p><a class="reference internal" href="#validating-the-samesite-attribute" id="id7">Validating the SameSite Attribute</a></p></li>
+<li><p><a class="reference internal" href="#overriding-defaults" id="id2">Overriding Defaults</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#using-the-cookie-store" id="id8">Using the Cookie Store</a></p>
+<li><p><a class="reference internal" href="#accessing-cookie-s-attributes" id="id3">Accessing Cookie’s Attributes</a></p></li>
+<li><p><a class="reference internal" href="#immutable-cookies" id="id4">Immutable Cookies</a></p></li>
+<li><p><a class="reference internal" href="#validating-a-cookie-s-attributes" id="id5">Validating a Cookie’s Attributes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#checking-cookies-in-store" id="id9">Checking Cookies in Store</a></p></li>
-<li><p><a class="reference internal" href="#getting-cookies-in-store" id="id10">Getting Cookies in Store</a></p></li>
-<li><p><a class="reference internal" href="#adding-removing-cookies-in-store" id="id11">Adding/Removing Cookies in Store</a></p></li>
-<li><p><a class="reference internal" href="#dispatching-cookies-in-store" id="id12">Dispatching Cookies in Store</a></p></li>
+<li><p><a class="reference internal" href="#validating-the-name-attribute" id="id6">Validating the Name Attribute</a></p></li>
+<li><p><a class="reference internal" href="#validating-the-prefix-attribute" id="id7">Validating the Prefix Attribute</a></p></li>
+<li><p><a class="reference internal" href="#validating-the-samesite-attribute" id="id8">Validating the SameSite Attribute</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#cookie-personalization" id="id13">Cookie Personalization</a></p></li>
-<li><p><a class="reference internal" href="#namespace-CodeIgniter\Cookie" id="id14">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#sending-cookies" id="id9">Sending Cookies</a></p></li>
+<li><p><a class="reference internal" href="#using-the-cookie-store" id="id10">Using the Cookie Store</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getting-the-store-from-response" id="id11">Getting the Store from Response</a></p></li>
+<li><p><a class="reference internal" href="#creating-cookiestore" id="id12">Creating CookieStore</a></p></li>
+<li><p><a class="reference internal" href="#checking-cookies-in-store" id="id13">Checking Cookies in Store</a></p></li>
+<li><p><a class="reference internal" href="#getting-cookies-in-store" id="id14">Getting Cookies in Store</a></p></li>
+<li><p><a class="reference internal" href="#adding-removing-cookies-in-store" id="id15">Adding/Removing Cookies in Store</a></p></li>
+<li><p><a class="reference internal" href="#dispatching-cookies-in-store" id="id16">Dispatching Cookies in Store</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#cookie-personalization" id="id17">Cookie Personalization</a></p></li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\Cookie" id="id18">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="creating-cookies">
@@ -366,7 +373,10 @@ cookie interaction.</p>
 </div>
 <p>When constructing the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> object, only the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute is required. All other else are optional.
 If the optional attributes are not modified, their values will be filled up by the default values saved in
-the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class. To override the defaults currently stored in the class, you can pass a <code class="docutils literal notranslate"><span class="pre">Config\Cookie</span></code>
+the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class.</p>
+<section id="overriding-defaults">
+<h3><a class="toc-backref" href="#id2">Overriding Defaults</a><a class="headerlink" href="#overriding-defaults" title="Permalink to this headline"></a></h3>
+<p>To override the defaults currently stored in the class, you can pass a <code class="docutils literal notranslate"><span class="pre">Config\Cookie</span></code>
 instance or an array of defaults to the static <code class="docutils literal notranslate"><span class="pre">Cookie::setDefaults()</span></code> method.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -387,7 +397,10 @@ instance or an array of defaults to the static <code class="docutils literal not
 </pre></div>
 </div>
 <p>Passing the <code class="docutils literal notranslate"><span class="pre">Config\Cookie</span></code> instance or an array to <code class="docutils literal notranslate"><span class="pre">Cookie::setDefaults()</span></code> will effectively
-overwrite your defaults and will persist until new defaults are passed. If you do not want this
+overwrite your defaults and will persist until new defaults are passed.</p>
+<section id="changing-defaults-for-a-limited-time">
+<h4>Changing Defaults for a Limited Time<a class="headerlink" href="#changing-defaults-for-a-limited-time" title="Permalink to this headline"></a></h4>
+<p>If you do not want this
 behavior but only want to change defaults for a limited time, you can take advantage of
 <code class="docutils literal notranslate"><span class="pre">Cookie::setDefaults()</span></code> return which returns the old defaults array.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -403,8 +416,10 @@ behavior but only want to change defaults for a limited time, you can take advan
 </pre></div>
 </div>
 </section>
+</section>
+</section>
 <section id="accessing-cookie-s-attributes">
-<h2><a class="toc-backref" href="#id2">Accessing Cookie’s Attributes</a><a class="headerlink" href="#accessing-cookie-s-attributes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Accessing Cookie’s Attributes</a><a class="headerlink" href="#accessing-cookie-s-attributes" title="Permalink to this headline"></a></h2>
 <p>Once instantiated, you can easily access a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code>’s attribute by using one of its getter methods.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -427,19 +442,19 @@ behavior but only want to change defaults for a limited time, you can take advan
     <span class="p">]</span>
 <span class="p">);</span>
 
-<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span> <span class="c1">// &#39;remember_token&#39;</span>
-<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getPrefix</span><span class="p">();</span> <span class="c1">// &#39;__Secure-&#39;</span>
-<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getPrefixedName</span><span class="p">();</span> <span class="c1">// &#39;__Secure-remember_token&#39;</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>             <span class="c1">// &#39;remember_token&#39;</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getPrefix</span><span class="p">();</span>           <span class="c1">// &#39;__Secure-&#39;</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getPrefixedName</span><span class="p">();</span>     <span class="c1">// &#39;__Secure-remember_token&#39;</span>
 <span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getExpiresTimestamp</span><span class="p">();</span> <span class="c1">// Unix timestamp</span>
-<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getExpiresString</span><span class="p">();</span> <span class="c1">// &#39;Fri, 14-Feb-2025 00:00:00 GMT&#39;</span>
-<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">isExpired</span><span class="p">();</span> <span class="c1">// false</span>
-<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getMaxAge</span><span class="p">();</span> <span class="c1">// the difference from time() to expires</span>
-<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">isRaw</span><span class="p">();</span> <span class="c1">// false</span>
-<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">isSecure</span><span class="p">();</span> <span class="c1">// true</span>
-<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span> <span class="c1">// &#39;/&#39;</span>
-<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getDomain</span><span class="p">();</span> <span class="c1">// &#39;&#39;</span>
-<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">isHTTPOnly</span><span class="p">();</span> <span class="c1">// true</span>
-<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getSameSite</span><span class="p">();</span> <span class="c1">// &#39;Lax&#39;</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getExpiresString</span><span class="p">();</span>    <span class="c1">// &#39;Fri, 14-Feb-2025 00:00:00 GMT&#39;</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">isExpired</span><span class="p">();</span>           <span class="c1">// false</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getMaxAge</span><span class="p">();</span>           <span class="c1">// the difference from time() to expires</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">isRaw</span><span class="p">();</span>               <span class="c1">// false</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">isSecure</span><span class="p">();</span>            <span class="c1">// true</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>             <span class="c1">// &#39;/&#39;</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getDomain</span><span class="p">();</span>           <span class="c1">// &#39;&#39;</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">isHTTPOnly</span><span class="p">();</span>          <span class="c1">// true</span>
+<span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getSameSite</span><span class="p">();</span>         <span class="c1">// &#39;Lax&#39;</span>
 
 <span class="c1">// additional getter</span>
 <span class="nv">$cookie</span><span class="o">-&gt;</span><span class="na">getId</span><span class="p">();</span> <span class="c1">// &#39;__Secure-remember_token;;/&#39;</span>
@@ -452,7 +467,7 @@ behavior but only want to change defaults for a limited time, you can take advan
 </div>
 </section>
 <section id="immutable-cookies">
-<h2><a class="toc-backref" href="#id3">Immutable Cookies</a><a class="headerlink" href="#immutable-cookies" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Immutable Cookies</a><a class="headerlink" href="#immutable-cookies" title="Permalink to this headline"></a></h2>
 <p>A new <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance is an immutable value object representation of an HTTP cookie. Being immutable,
 modifying any of the instance’s attributes will not affect the original instance. The modification <strong>always</strong>
 returns a new instance. You need to retain this new instance in order to use it.</p>
@@ -472,13 +487,13 @@ returns a new instance. You need to retain this new instance in order to use it.
 </div>
 </section>
 <section id="validating-a-cookie-s-attributes">
-<h2><a class="toc-backref" href="#id4">Validating a Cookie’s Attributes</a><a class="headerlink" href="#validating-a-cookie-s-attributes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Validating a Cookie’s Attributes</a><a class="headerlink" href="#validating-a-cookie-s-attributes" title="Permalink to this headline"></a></h2>
 <p>An HTTP cookie is regulated by several specifications that need to be followed in order to be
 accepted by browsers. Thus, when creating or modifying certain attributes of the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code>,
 these are validated in order to check if these follow the specifications.</p>
 <p>A <code class="docutils literal notranslate"><span class="pre">CookieException</span></code> is thrown if violations were reported.</p>
 <section id="validating-the-name-attribute">
-<h3><a class="toc-backref" href="#id5">Validating the Name Attribute</a><a class="headerlink" href="#validating-the-name-attribute" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Validating the Name Attribute</a><a class="headerlink" href="#validating-the-name-attribute" title="Permalink to this headline"></a></h3>
 <p>A cookie name can be any US-ASCII character, except for the following:</p>
 <ul class="simple">
 <li><p>control characters;</p></li>
@@ -486,11 +501,13 @@ these are validated in order to check if these follow the specifications.</p>
 <li><p>separator characters, such as <code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">)</span> <span class="pre">&lt;</span> <span class="pre">&gt;</span> <span class="pre">&#64;</span> <span class="pre">,</span> <span class="pre">;</span> <span class="pre">:</span> <span class="pre">\</span> <span class="pre">&quot;</span> <span class="pre">/</span> <span class="pre">[</span> <span class="pre">]</span> <span class="pre">?</span> <span class="pre">=</span> <span class="pre">{</span> <span class="pre">}</span></code></p></li>
 </ul>
 <p>If setting the <code class="docutils literal notranslate"><span class="pre">$raw</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">true</span></code> this validation will be strictly made. This is because
-PHP’s <code class="docutils literal notranslate"><span class="pre">setcookie</span></code> and <code class="docutils literal notranslate"><span class="pre">setrawcookie</span></code> will reject cookies with invalid names. Additionally, cookie
+PHP’s <a class="reference external" href="https://www.php.net/manual/en/function.setcookie.php">setcookie()</a>
+and <a class="reference external" href="https://www.php.net/manual/en/function.setrawcookie.php">setrawcookie()</a>
+will reject cookies with invalid names. Additionally, cookie
 names cannot be an empty string.</p>
 </section>
 <section id="validating-the-prefix-attribute">
-<h3><a class="toc-backref" href="#id6">Validating the Prefix Attribute</a><a class="headerlink" href="#validating-the-prefix-attribute" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Validating the Prefix Attribute</a><a class="headerlink" href="#validating-the-prefix-attribute" title="Permalink to this headline"></a></h3>
 <p>When using the <code class="docutils literal notranslate"><span class="pre">__Secure-</span></code> prefix, cookies must be set with the <code class="docutils literal notranslate"><span class="pre">$secure</span></code> flag set to <code class="docutils literal notranslate"><span class="pre">true</span></code>. If
 using the <code class="docutils literal notranslate"><span class="pre">__Host-</span></code> prefix, cookies must exhibit the following:</p>
 <ul class="simple">
@@ -500,7 +517,7 @@ using the <code class="docutils literal notranslate"><span class="pre">__Host-</
 </ul>
 </section>
 <section id="validating-the-samesite-attribute">
-<h3><a class="toc-backref" href="#id7">Validating the SameSite Attribute</a><a class="headerlink" href="#validating-the-samesite-attribute" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Validating the SameSite Attribute</a><a class="headerlink" href="#validating-the-samesite-attribute" title="Permalink to this headline"></a></h3>
 <p>The SameSite attribute only accepts three (3) values:</p>
 <ul class="simple">
 <li><p><strong>Lax</strong>: Cookies are not sent on normal cross-site subrequests (for example to load images or frames into a third party site), but are sent when a user is navigating to the origin site (<em>i.e.</em> when following a link).</p></li>
@@ -520,16 +537,65 @@ also take advantage of the class’s constants to make it not a hassle.</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
 
-<span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_LAX</span><span class="p">;</span> <span class="c1">// &#39;lax&#39;</span>
-<span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_STRICT</span><span class="p">;</span> <span class="c1">// &#39;strict&#39;</span>
-<span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_NONE</span><span class="p">;</span> <span class="c1">// &#39;none&#39;</span>
+<span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_LAX</span><span class="p">;</span>       <span class="c1">// &#39;lax&#39;</span>
+<span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_STRICT</span><span class="p">;</span>    <span class="c1">// &#39;strict&#39;</span>
+<span class="nx">Cookie</span><span class="o">::</span><span class="na">SAMESITE_NONE</span><span class="p">;</span>      <span class="c1">// &#39;none&#39;</span>
 </pre></div>
 </div>
 </section>
 </section>
+<section id="sending-cookies">
+<h2><a class="toc-backref" href="#id9">Sending Cookies</a><a class="headerlink" href="#sending-cookies" title="Permalink to this headline"></a></h2>
+<p>Set the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> objects in the <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> of the Response object, and
+the framework will automatically send the cookies.</p>
+<p>Use <a class="reference internal" href="../outgoing/response.html#CodeIgniter\HTTP\Response::setCookie" title="CodeIgniter\HTTP\Response::setCookie"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response::setCookie()</span></code></a> to set:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
+
+<span class="nv">$response</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">();</span>
+
+<span class="nv">$cookie</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cookie</span><span class="p">(</span>
+    <span class="s1">&#39;remember_token&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6&#39;</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;max-age&#39;</span> <span class="o">=&gt;</span> <span class="mi">3600</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="c1">// Expires in 2 hours</span>
+    <span class="p">]</span>
+<span class="p">);</span>
+
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="nv">$cookie</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You can also use the <a class="reference internal" href="../helpers/cookie_helper.html#set_cookie" title="set_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_cookie()</span></code></a> helper function:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Cookie\Cookie</span><span class="p">;</span>
+
+<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;cookie&#39;</span><span class="p">);</span>
+
+<span class="nv">$cookie</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cookie</span><span class="p">(</span>
+    <span class="s1">&#39;remember_token&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6&#39;</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;max-age&#39;</span> <span class="o">=&gt;</span> <span class="mi">3600</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="c1">// Expires in 2 hours</span>
+    <span class="p">]</span>
+<span class="p">);</span>
+
+<span class="nx">set_cookie</span><span class="p">(</span><span class="nv">$cookie</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
 <section id="using-the-cookie-store">
-<h2><a class="toc-backref" href="#id8">Using the Cookie Store</a><a class="headerlink" href="#using-the-cookie-store" title="Permalink to this headline"></a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> class represents an immutable collection of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> objects. The <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>
+<h2><a class="toc-backref" href="#id10">Using the Cookie Store</a><a class="headerlink" href="#using-the-cookie-store" title="Permalink to this headline"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Normally, there is no need to use CookieStore directly.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> class represents an immutable collection of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> objects.</p>
+<section id="getting-the-store-from-response">
+<h3><a class="toc-backref" href="#id11">Getting the Store from Response</a><a class="headerlink" href="#getting-the-store-from-response" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>
 instance can be accessed from the current <code class="docutils literal notranslate"><span class="pre">Response</span></code> object.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -538,6 +604,9 @@ instance can be accessed from the current <code class="docutils literal notransl
 <span class="nv">$cookieStore</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getCookieStore</span><span class="p">();</span>
 </pre></div>
 </div>
+</section>
+<section id="creating-cookiestore">
+<h3><a class="toc-backref" href="#id12">Creating CookieStore</a><a class="headerlink" href="#creating-cookiestore" title="Permalink to this headline"></a></h3>
 <p>CodeIgniter provides three (3) other ways to create a new instance of the <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -565,11 +634,12 @@ instance can be accessed from the current <code class="docutils literal notransl
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When using the global <code class="docutils literal notranslate"><span class="pre">cookies()</span></code> function, the passed <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> array will only be considered
+<p>When using the global <a class="reference internal" href="../general/common_functions.html#cookies" title="cookies"><code class="xref php php-func docutils literal notranslate"><span class="pre">cookies()</span></code></a> function, the passed <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> array will only be considered
 if the second argument, <code class="docutils literal notranslate"><span class="pre">$getGlobal</span></code>, is set to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 </div>
+</section>
 <section id="checking-cookies-in-store">
-<h3><a class="toc-backref" href="#id9">Checking Cookies in Store</a><a class="headerlink" href="#checking-cookies-in-store" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13">Checking Cookies in Store</a><a class="headerlink" href="#checking-cookies-in-store" title="Permalink to this headline"></a></h3>
 <p>To check whether a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> object exists in the <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> instance, you can use several ways:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -596,7 +666,7 @@ if the second argument, <code class="docutils literal notranslate"><span class="
 </div>
 </section>
 <section id="getting-cookies-in-store">
-<h3><a class="toc-backref" href="#id10">Getting Cookies in Store</a><a class="headerlink" href="#getting-cookies-in-store" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14">Getting Cookies in Store</a><a class="headerlink" href="#getting-cookies-in-store" title="Permalink to this headline"></a></h3>
 <p>Retrieving a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance in a cookie collection is very easy:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -650,13 +720,13 @@ in store will be displayed.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The helper function <code class="docutils literal notranslate"><span class="pre">get_cookie()</span></code> gets the cookie from the current <code class="docutils literal notranslate"><span class="pre">Request</span></code> object, not
-from <code class="docutils literal notranslate"><span class="pre">Response</span></code>. This function checks the <cite>$_COOKIE</cite> array if that cookie is set and fetches it
+<p>The helper function <a class="reference internal" href="../helpers/cookie_helper.html#get_cookie" title="get_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">get_cookie()</span></code></a> gets the cookie from the current <code class="docutils literal notranslate"><span class="pre">Request</span></code> object, not
+from <code class="docutils literal notranslate"><span class="pre">Response</span></code>. This function checks the <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code> array if that cookie is set and fetches it
 right away.</p>
 </div>
 </section>
 <section id="adding-removing-cookies-in-store">
-<h3><a class="toc-backref" href="#id11">Adding/Removing Cookies in Store</a><a class="headerlink" href="#adding-removing-cookies-in-store" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id15">Adding/Removing Cookies in Store</a><a class="headerlink" href="#adding-removing-cookies-in-store" title="Permalink to this headline"></a></h3>
 <p>As previously mentioned, <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> objects are immutable. You need to save the modified instance
 in order to work on it. The original instance is left unchanged.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -701,7 +771,14 @@ the instance with the modified instance.</p>
 </div>
 </section>
 <section id="dispatching-cookies-in-store">
-<h3><a class="toc-backref" href="#id12">Dispatching Cookies in Store</a><a class="headerlink" href="#dispatching-cookies-in-store" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16">Dispatching Cookies in Store</a><a class="headerlink" href="#dispatching-cookies-in-store" title="Permalink to this headline"></a></h3>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.1.6.</span></p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This method is deprecated. It will be removed in future releases.</p>
+</div>
 <p>More often than not, you do not need to concern yourself in manually sending cookies. CodeIgniter will do this
 for you. However, if you really need to manually send cookies, you can use the <code class="docutils literal notranslate"><span class="pre">dispatch</span></code> method. Just like
 in sending other headers, you need to make sure the headers are not yet sent by checking the value
@@ -722,7 +799,7 @@ of <code class="docutils literal notranslate"><span class="pre">headers_sent()</
 </section>
 </section>
 <section id="cookie-personalization">
-<h2><a class="toc-backref" href="#id13">Cookie Personalization</a><a class="headerlink" href="#cookie-personalization" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id17">Cookie Personalization</a><a class="headerlink" href="#cookie-personalization" title="Permalink to this headline"></a></h2>
 <p>Sane defaults are already in place inside the <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> class to ensure the smooth creation of cookie
 objects. However, you may wish to define your own settings by changing the following settings in the
 <code class="docutils literal notranslate"><span class="pre">Config\Cookie</span></code> class in <strong>app/Config/Cookie.php</strong> file.</p>
@@ -786,7 +863,7 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>In runtime, you can manually supply a new default using the <code class="docutils literal notranslate"><span class="pre">Cookie::setDefaults()</span></code> method.</p>
 </section>
 <section id="namespace-CodeIgniter\Cookie">
-<span id="class-reference"></span><h2><a class="toc-backref" href="#id14">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Cookie" title="Permalink to this headline"></a></h2>
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id18">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Cookie" title="Permalink to this headline"></a></h2>
 <dl class="php class">
 <dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\Cookie\</span></span><span class="sig-name descname"><span class="pre">Cookie</span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie" title="Permalink to this definition"></a></dt>
@@ -796,7 +873,7 @@ objects. However, you may wish to define your own settings by changing the follo
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$config</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">ConfigCookie|array</span></code></span>) – The configuration array or instance</p></li>
+<li><p><strong>$config</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">\Config\Cookie|array</span></code></span>) – The configuration array or instance</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -806,7 +883,7 @@ objects. However, you may wish to define your own settings by changing the follo
 <dd class="field-odd"><p>The old defaults</p>
 </dd>
 </dl>
-<p>Set the default attributes to a Cookie instance by injecting the values from the <code class="docutils literal notranslate"><span class="pre">\Config\Cookie</span></code> config or an array.</p>
+<p>Set the default attributes to a Cookie instance by injecting the values from the <code class="docutils literal notranslate"><span class="pre">Config\Cookie</span></code> config or an array.</p>
 </dd></dl>
 
 <dl class="php staticmethod">
@@ -1383,7 +1460,7 @@ The original collection is left unchanged.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 02, 2023.
+      <span class="lastupdated">Last updated on Aug 09, 2023.
       </span></p>
   </div>
 
