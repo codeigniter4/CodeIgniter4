@@ -60,7 +60,7 @@ class History extends BaseCollector
      *
      * @param string $current Current history time
      * @param int    $limit   Max history files
-     * 
+     *
      * @return void
      */
     public function setFiles(string $current, int $limit = 20)
