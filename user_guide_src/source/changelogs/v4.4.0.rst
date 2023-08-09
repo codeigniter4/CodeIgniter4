@@ -240,8 +240,8 @@ Changes
       So if you installed CodeIgniter under the folder that contains the special
       characters like ``(``, ``)``, etc., CodeIgniter didn't work. Since v4.4.0,
       this restriction has been removed.
-    - The methods `Autoloader::loadClass()` and `Autoloader::loadClassmap()` are now both
-      marked `@internal`.
+    - The methods ``Autoloader::loadClass()`` and ``Autoloader::loadClassmap()`` are now both
+      marked ``@internal``.
 - **RouteCollection:** The array structure of the protected property ``$routes``
   has been modified for performance.
 - **HSTS:** Now :php:func:`force_https()` or
