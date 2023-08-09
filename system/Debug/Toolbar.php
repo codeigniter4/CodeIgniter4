@@ -348,6 +348,9 @@ class Toolbar
      *
      * @param RequestInterface  $request
      * @param ResponseInterface $response
+     *
+     * @return void
+     * @phpstan-return never|void
      */
     public function prepare(?RequestInterface $request = null, ?ResponseInterface $response = null)
     {
@@ -434,6 +437,9 @@ class Toolbar
      * Inject debug toolbar into the response.
      *
      * @codeCoverageIgnore
+     *
+     * @return void
+     * @phpstan-return never|void
      */
     public function respond()
     {
