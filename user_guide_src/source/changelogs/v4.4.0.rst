@@ -263,6 +263,7 @@ Deprecations
     - ``CodeIgniter::cache()`` method is deprecated. No longer used. Use ``ResponseCache`` instead.
     - ``CodeIgniter::cachePage()`` method is deprecated. No longer used. Use ``ResponseCache`` instead.
     - ``CodeIgniter::generateCacheName()`` method is deprecated. No longer used. Use ``ResponseCache`` instead.
+    - ``CodeIgniter::callExit()`` method is deprecated. No longer used.
 - **RedirectException:** ``\CodeIgniter\Router\Exceptions\RedirectException`` is deprecated. Use ``\CodeIgniter\HTTP\Exceptions\RedirectException`` instead.
 - **Session:** The property ``$sessionDriverName``, ``$sessionCookieName``,
   ``$sessionExpiration``, ``$sessionSavePath``, ``$sessionMatchIP``,
