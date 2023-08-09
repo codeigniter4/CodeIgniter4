@@ -233,20 +233,21 @@ Changes
     - Routing settings have been moved to **app/Config/Routing.php** config file.
       See :ref:`Upgrading Guide <upgrade-440-config-routing>`.
 - **DownloadResponse:** When generating response headers, does not replace the ``Content-Disposition`` header if it was previously specified.
-- **Autoloader:** Before v4.4.0, CodeIgniter autoloader did not allow special
-  characters that are illegal in filenames on certain operating systems.
-  The symbols that can be used are ``/``, ``_``, ``.``, ``:``, ``\`` and space.
-  So if you installed CodeIgniter under the folder that contains the special
-  characters like ``(``, ``)``, etc., CodeIgniter didn't work. Since v4.4.0,
-  this restriction has been removed.
+- **Autoloader:**
+    - Before v4.4.0, CodeIgniter autoloader did not allow special
+      characters that are illegal in filenames on certain operating systems.
+      The symbols that can be used are ``/``, ``_``, ``.``, ``:``, ``\`` and space.
+      So if you installed CodeIgniter under the folder that contains the special
+      characters like ``(``, ``)``, etc., CodeIgniter didn't work. Since v4.4.0,
+      this restriction has been removed.
+    - The methods `Autoloader::loadClass()` and `Autoloader::loadClassmap()` are now both
+      marked `@internal`.
 - **RouteCollection:** The array structure of the protected property ``$routes``
   has been modified for performance.
 - **HSTS:** Now :php:func:`force_https()` or
   ``Config\App::$forceGlobalSecureRequests = true`` sets the HTTP status code 307,
   which allows the HTTP request method to be preserved after the redirect.
   In previous versions, it was 302.
-- The methods `Autoloader::loadClass()` and `Autoloader::loadClassmap()` are now both
-  marked `@internal`.
 
 Deprecations
 ************
