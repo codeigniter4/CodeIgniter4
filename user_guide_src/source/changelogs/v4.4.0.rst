@@ -347,6 +347,10 @@ Bugs Fixed
   (e.g., **foo-bar**) and one URI for underscores (e.g., **foo_bar**). This bug
   has been fixed. Now the URI for underscores (**foo_bar**) is not accessible.
 - **Output Buffering:** Bug fix with output buffering.
+- **ControllerTestTrait:** ``ControllerTestTrait::withUri()`` creates a new Request
+  instance with the URI. Because the Request instance should have the URI instance.
+  Also if the hostname in the URI string is invalid with ``Config\App``, the valid
+  hostname will be set.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_

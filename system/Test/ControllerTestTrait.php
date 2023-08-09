@@ -278,7 +278,13 @@ trait ControllerTestTrait
      */
     public function withUri(string $uri)
     {
-        $this->uri = new URI($uri);
+        $factory   = Services::siteurifactory();
+        $this->uri = $factory->createFromString($uri);
+        Services::injectMock('uri', $this->uri);
+
+        // Update the Request instance, because Request has the SiteURI instance.
+        $this->request = Services::incomingrequest(null, false);
+        Services::injectMock('request', $this->request);
 
         return $this;
     }
