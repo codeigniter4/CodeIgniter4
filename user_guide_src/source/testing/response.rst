@@ -178,7 +178,8 @@ are useful for using within assertions in your tests.
 see()
 -----
 
-The ``see()`` method checks the text on the page to see if it exists either by itself, or more specifically within
+Returns a boolean true/false based on whether the text on the page exists either
+by itself, or more specifically within
 a tag, as specified by type, class, or id:
 
 .. literalinclude:: response/018.php
