@@ -14,7 +14,7 @@ Cookies are mainly used for three purposes:
 - **Personalization**: User preferences, themes, and other settings
 - **Tracking**: Recording and analyzing user behavior
 
-To help you efficiently use cookies across browsers with your request and response,
+To help you efficiently send cookies to browsers,
 CodeIgniter provides the ``CodeIgniter\Cookie\Cookie`` class to abstract the
 cookie interaction.
 
@@ -32,13 +32,23 @@ There are currently four (4) ways to create a new ``Cookie`` value object.
 
 When constructing the ``Cookie`` object, only the ``name`` attribute is required. All other else are optional.
 If the optional attributes are not modified, their values will be filled up by the default values saved in
-the ``Cookie`` class. To override the defaults currently stored in the class, you can pass a ``Config\Cookie``
+the ``Cookie`` class.
+
+Overriding Defaults
+===================
+
+To override the defaults currently stored in the class, you can pass a ``Config\Cookie``
 instance or an array of defaults to the static ``Cookie::setDefaults()`` method.
 
 .. literalinclude:: cookies/002.php
 
 Passing the ``Config\Cookie`` instance or an array to ``Cookie::setDefaults()`` will effectively
-overwrite your defaults and will persist until new defaults are passed. If you do not want this
+overwrite your defaults and will persist until new defaults are passed.
+
+Changing Defaults for a Limited Time
+------------------------------------
+
+If you do not want this
 behavior but only want to change defaults for a limited time, you can take advantage of
 ``Cookie::setDefaults()`` return which returns the old defaults array.
 
@@ -82,7 +92,9 @@ A cookie name can be any US-ASCII character, except for the following:
 - separator characters, such as ``( ) < > @ , ; : \ " / [ ] ? = { }``
 
 If setting the ``$raw`` parameter to ``true`` this validation will be strictly made. This is because
-PHP's ``setcookie`` and ``setrawcookie`` will reject cookies with invalid names. Additionally, cookie
+PHP's `setcookie() <https://www.php.net/manual/en/function.setcookie.php>`_
+and `setrawcookie() <https://www.php.net/manual/en/function.setrawcookie.php>`_
+will reject cookies with invalid names. Additionally, cookie
 names cannot be an empty string.
 
 Validating the Prefix Attribute
@@ -119,20 +131,47 @@ also take advantage of the class's constants to make it not a hassle.
 
 .. literalinclude:: cookies/006.php
 
+
+***************
+Sending Cookies
+***************
+
+Set the ``Cookie`` objects in the ``CookieStore`` of the Response object, and
+the framework will automatically send the cookies.
+
+Use :php:meth:`CodeIgniter\\HTTP\\Response::setCookie()` to set:
+
+.. literalinclude:: cookies/017.php
+
+You can also use the :php:func:`set_cookie()` helper function:
+
+.. literalinclude:: cookies/018.php
+
+
 **********************
 Using the Cookie Store
 **********************
 
-The ``CookieStore`` class represents an immutable collection of ``Cookie`` objects. The ``CookieStore``
+.. note:: Normally, there is no need to use CookieStore directly.
+
+The ``CookieStore`` class represents an immutable collection of ``Cookie`` objects.
+
+Getting the Store from Response
+===============================
+
+The ``CookieStore``
 instance can be accessed from the current ``Response`` object.
 
 .. literalinclude:: cookies/007.php
+
+Creating CookieStore
+====================
 
 CodeIgniter provides three (3) other ways to create a new instance of the ``CookieStore``.
 
 .. literalinclude:: cookies/008.php
 
-.. note:: When using the global ``cookies()`` function, the passed ``Cookie`` array will only be considered
+.. note:: When using the global :php:func:`cookies()` function, the passed ``Cookie`` array will only be considered
     if the second argument, ``$getGlobal``, is set to ``false``.
 
 Checking Cookies in Store
@@ -164,8 +203,8 @@ in store will be displayed.
 
 .. literalinclude:: cookies/013.php
 
-.. note:: The helper function ``get_cookie()`` gets the cookie from the current ``Request`` object, not
-    from ``Response``. This function checks the `$_COOKIE` array if that cookie is set and fetches it
+.. note:: The helper function :php:func:`get_cookie()` gets the cookie from the current ``Request`` object, not
+    from ``Response``. This function checks the ``$_COOKIE`` array if that cookie is set and fetches it
     right away.
 
 Adding/Removing Cookies in Store
@@ -188,6 +227,10 @@ the instance with the modified instance.
 
 Dispatching Cookies in Store
 ============================
+
+.. deprecated:: 4.1.6
+
+.. important:: This method is deprecated. It will be removed in future releases.
 
 More often than not, you do not need to concern yourself in manually sending cookies. CodeIgniter will do this
 for you. However, if you really need to manually send cookies, you can use the ``dispatch`` method. Just like
@@ -229,11 +272,11 @@ Class Reference
 
     .. php:staticmethod:: setDefaults([$config = []])
 
-        :param \Config\Cookie|array $config: The configuration array or instance
+        :param \\Config\\Cookie|array $config: The configuration array or instance
         :rtype: array<string, mixed>
         :returns: The old defaults
 
-        Set the default attributes to a Cookie instance by injecting the values from the ``\Config\Cookie`` config or an array.
+        Set the default attributes to a Cookie instance by injecting the values from the ``Config\Cookie`` config or an array.
 
     .. php:staticmethod:: fromHeaderString(string $header[, bool $raw = false])
 
