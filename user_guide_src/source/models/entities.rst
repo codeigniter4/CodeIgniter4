@@ -264,7 +264,8 @@ If you don't need to change values when getting or setting a value. Then just do
 
 .. literalinclude:: entities/019.php
 
-**Parameters**
+Parameters
+----------
 
 In some cases, one type is not enough. In this situation, you can use additional parameters.
 Additional parameters are indicated in square brackets and listed with a comma.
