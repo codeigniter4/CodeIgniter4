@@ -268,9 +268,8 @@ Parameters
 ----------
 
 In some cases, one type is not enough. In this situation, you can use additional parameters.
-Additional parameters are indicated in square brackets and listed with a comma.
-
-**type[param1, param2]**
+Additional parameters are indicated in square brackets and listed with a comma
+like ``type[param1, param2]``.
 
 .. literalinclude:: entities/020.php
 
