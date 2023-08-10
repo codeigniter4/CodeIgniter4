@@ -246,7 +246,7 @@ Stored in the database as "red,yellow,green":
 
 .. note:: Casting as CSV uses PHP's internal ``implode`` and ``explode`` methods and assumes all values are string-safe and free of commas. For more complex data casts try ``array`` or ``json``.
 
-Custom casting
+Custom Casting
 ==============
 
 You can define your own conversion types for getting and setting data.
