@@ -203,6 +203,9 @@ should be cast to.
 Property casting affects both read (get) and write (set), but some types affect
 only read (get).
 
+Scalar Type Casting
+-------------------
+
 Properties can be cast to any of the following data types:
 **integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, **timestamp**, **uri** and **int-bool**.
 Add a question mark at the beginning of type to mark property as nullable, i.e., **?string**, **?integer**.
@@ -214,7 +217,7 @@ For example, if you had a User entity with an ``is_banned`` property, you can ca
 .. literalinclude:: entities/012.php
 
 Array/Json Casting
-==================
+------------------
 
 Array/Json casting is especially useful with fields that store serialized arrays or json in them. When cast as:
 
@@ -235,7 +238,7 @@ the value whenever the property is set:
 .. literalinclude:: entities/014.php
 
 CSV Casting
-===========
+-----------
 
 If you know you have a flat array of simple values, encoding them as a serialized or JSON string
 may be more complex than the original structure. Casting as Comma-Separated Values (CSV) is
@@ -251,7 +254,7 @@ Stored in the database as "red,yellow,green":
 .. note:: Casting as CSV uses PHP's internal ``implode`` and ``explode`` methods and assumes all values are string-safe and free of commas. For more complex data casts try ``array`` or ``json``.
 
 Custom Casting
-==============
+--------------
 
 You can define your own conversion types for getting and setting data.
 
