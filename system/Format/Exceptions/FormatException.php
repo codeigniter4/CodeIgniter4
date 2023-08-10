@@ -25,7 +25,7 @@ class FormatException extends RuntimeException implements ExceptionInterface
     /**
      * Thrown when the instantiated class does not exist.
      *
-     * @return FormatException
+     * @return static
      */
     public static function forInvalidFormatter(string $class)
     {
@@ -38,7 +38,7 @@ class FormatException extends RuntimeException implements ExceptionInterface
      *
      * @param string $error
      *
-     * @return FormatException
+     * @return static
      */
     public static function forInvalidJSON(?string $error = null)
     {
@@ -49,7 +49,7 @@ class FormatException extends RuntimeException implements ExceptionInterface
      * Thrown when the supplied MIME type has no
      * defined Formatter class.
      *
-     * @return FormatException
+     * @return static
      */
     public static function forInvalidMime(string $mime)
     {
@@ -60,7 +60,7 @@ class FormatException extends RuntimeException implements ExceptionInterface
      * Thrown on XMLFormatter when the `simplexml` extension
      * is not installed.
      *
-     * @return FormatException
+     * @return static
      *
      * @codeCoverageIgnore
      */
