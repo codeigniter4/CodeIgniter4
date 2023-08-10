@@ -347,26 +347,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/View.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Controller\\:\\:cachePage\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Controller.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Controller\\:\\:forceHTTPS\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Controller.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Controller\\:\\:initController\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Controller.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Controller\\:\\:loadHelpers\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Controller.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:_whereIn\\(\\) has parameter \\$values with no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
@@ -957,11 +937,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Format\\\\XMLFormatter\\:\\:arrayToXML\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Format/XMLFormatter.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CLIRequest\\:\\:parseCommand\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/CLIRequest.php',
@@ -1150,21 +1125,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:\\$width \\(int\\) on left side of \\?\\? is not nullable\\.$#',
 	'count' => 4,
 	'path' => __DIR__ . '/system/Images/Handlers/ImageMagickHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Log\\\\Exceptions\\\\LogException\\:\\:forInvalidLogLevel\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Log/Exceptions/LogException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Log\\\\Exceptions\\\\LogException\\:\\:forInvalidMessageType\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Log/Exceptions/LogException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Log\\\\Handlers\\\\ChromeLoggerHandler\\:\\:sendLogs\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Log/Handlers/ChromeLoggerHandler.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Model\\:\\:chunk\\(\\) has parameter \\$userFunc with no signature specified for Closure\\.$#',
