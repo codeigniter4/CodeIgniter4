@@ -100,7 +100,6 @@ class Exceptions
      * @codeCoverageIgnore
      *
      * @return void
-     * @phpstan-return void
      */
     public function initialize()
     {

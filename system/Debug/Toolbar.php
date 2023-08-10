@@ -350,7 +350,6 @@ class Toolbar
      * @param ResponseInterface $response
      *
      * @return void
-     * @phpstan-return void
      */
     public function prepare(?RequestInterface $request = null, ?ResponseInterface $response = null)
     {
