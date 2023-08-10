@@ -10,6 +10,6 @@ class RecentPostsCell extends Cell
 
     public function mount()
     {
-        $this->posts = model('PostModel')->orderBy('created_at', 'DESC')->findAll();
+        $this->posts = model('PostModel')->orderBy('created_at', 'DESC')->findAll(10);
     }
 }

@@ -18,6 +18,6 @@ class RecentPostsCell extends Cell
                 static fn ($query, $categoryId) => $query->where('category_id', $categoryId)
             )
             ->orderBy('created_at', 'DESC')
-            ->findAll();
+            ->findAll(10);
     }
 }
