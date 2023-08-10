@@ -788,6 +788,21 @@ class Model extends BaseModel
     {
         $properties = parent::objectToRawArray($data, $onlyChanged);
 
+        $primaryKey = null;
+
+        // For Entity
+        if (method_exists($data, 'cast')) {
+            $cast = $data->cast();
+
+            // Disable Entity casting, because raw primary key data is needed for database.
+            $data->cast(false);
+
+            $primaryKey = $data->{$this->primaryKey};
+
+            // Restore Entity cast setting.
+            $data->cast($cast);
+        }
+
         // Always grab the primary key otherwise updates will fail.
         if (
             method_exists($data, 'toRawArray')
@@ -795,10 +810,10 @@ class Model extends BaseModel
                 ! empty($properties)
                 && ! empty($this->primaryKey)
                 && ! in_array($this->primaryKey, $properties, true)
-                && ! empty($data->{$this->primaryKey})
+                && ! empty($primaryKey)
             )
         ) {
-            $properties[$this->primaryKey] = $data->{$this->primaryKey};
+            $properties[$this->primaryKey] = $primaryKey;
         }
 
         return $properties;
