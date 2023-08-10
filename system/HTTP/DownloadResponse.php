@@ -129,7 +129,7 @@ class DownloadResponse extends Response
     /**
      * Set content type by guessing mime type from file extension
      */
-    private function setContentTypeByMimeType()
+    private function setContentTypeByMimeType(): void
     {
         $mime    = null;
         $charset = '';
