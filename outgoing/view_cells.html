@@ -580,7 +580,7 @@ initialization.</p>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">mount</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;PostModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getRecent</span><span class="p">();</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;PostModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="s1">&#39;DESC&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -605,7 +605,8 @@ initialization.</p>
                 <span class="nv">$categoryId</span><span class="p">,</span>
                 <span class="k">static</span> <span class="nx">fn</span> <span class="p">(</span><span class="nv">$query</span><span class="p">,</span> <span class="nv">$categoryId</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;category_id&#39;</span><span class="p">,</span> <span class="nv">$categoryId</span><span class="p">)</span>
             <span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">getRecent</span><span class="p">();</span>
+            <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="s1">&#39;DESC&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">findAll</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -645,7 +646,7 @@ as the fourth parameter:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 09, 2023.
+      <span class="lastupdated">Last updated on Aug 10, 2023.
       </span></p>
   </div>
 
