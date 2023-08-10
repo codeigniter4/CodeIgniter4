@@ -52,26 +52,13 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         ]);
         $response = $this->get('home');
 
-        $response->assertSee('Hello World');
-        $response->assertDontSee('Again');
-    }
-
-    public function testCallSimpleGet(): void
-    {
-        $this->withRoutes([
-            [
-                'add',
-                'home',
-                static fn () => 'Hello Earth',
-            ],
-        ]);
-        $response = $this->call('get', 'home');
-
         $this->assertInstanceOf(TestResponse::class, $response);
         $this->assertInstanceOf(Response::class, $response->response());
         $this->assertTrue($response->isOK());
-        $this->assertSame('Hello Earth', $response->response()->getBody());
+        $this->assertSame('Hello World', $response->response()->getBody());
         $this->assertSame(200, $response->response()->getStatusCode());
+        $response->assertSee('Hello World');
+        $response->assertDontSee('Again');
     }
 
     public function testClosureWithEcho()
