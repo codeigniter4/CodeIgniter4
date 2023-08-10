@@ -907,26 +907,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Exceptions/TestException.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Files\\\\Exceptions\\\\FileException\\:\\:forExpectedDirectory\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Files/Exceptions/FileException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Files\\\\Exceptions\\\\FileException\\:\\:forExpectedFile\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Files/Exceptions/FileException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Files\\\\Exceptions\\\\FileException\\:\\:forUnableToMove\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Files/Exceptions/FileException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Files\\\\Exceptions\\\\FileNotFoundException\\:\\:forFileNotFound\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Files/Exceptions/FileNotFoundException.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Files\\\\File\\:\\:\\$size \\(int\\) on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Files/File.php',
