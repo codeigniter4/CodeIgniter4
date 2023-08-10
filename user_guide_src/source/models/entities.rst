@@ -198,8 +198,12 @@ Property Casting
 
 You can specify that properties in your Entity should be converted to common data types with the ``$casts`` property.
 This option should be an array where the key is the name of the class property, and the value is the data type it
-should be cast to. Casting only affects when values are read. No conversions happen that affect the permanent value in
-either the entity or the database. Properties can be cast to any of the following data types:
+should be cast to.
+
+Property casting affects both read (get) and write (set), but some types affect
+only read (get).
+
+Properties can be cast to any of the following data types:
 **integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, **timestamp**, **uri** and **int-bool**.
 Add a question mark at the beginning of type to mark property as nullable, i.e., **?string**, **?integer**.
 
