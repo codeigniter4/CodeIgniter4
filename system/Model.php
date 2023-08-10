@@ -774,11 +774,11 @@ class Model extends BaseModel
     }
 
     /**
-     * Takes a class an returns an array of it's public and protected
+     * Takes a class and returns an array of its public and protected
      * properties as an array with raw values.
      *
      * @param object|string $data
-     * @param bool          $recursive If true, inner entities will be casted as array as well
+     * @param bool          $recursive If true, inner entities will be cast as array as well
      *
      * @return array|null Array
      *
