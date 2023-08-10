@@ -979,7 +979,9 @@ abstract class BaseModel
                 // properties representing the collection elements, we need to grab
                 // them as an array.
                 if (is_object($row) && ! $row instanceof stdClass) {
-                    $row = $this->objectToArray($row, true, true);
+                    // For updates the index field is needed even if it is not changed.
+                    // So set $onlyChanged to false.
+                    $row = $this->objectToArray($row, false, true);
                 }
 
                 // If it's still a stdClass, go ahead and convert to
@@ -996,6 +998,13 @@ abstract class BaseModel
 
                 // Save updateIndex for later
                 $updateIndex = $row[$index] ?? null;
+
+                if ($updateIndex === null) {
+                    throw new InvalidArgumentException(
+                        'The index ("' . $index . '") for updateBatch() is missing in the data: '
+                        . json_encode($row)
+                    );
+                }
 
                 // Must be called first so we don't
                 // strip out updated_at values.
