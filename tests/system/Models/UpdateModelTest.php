@@ -147,6 +147,27 @@ final class UpdateModelTest extends LiveModelTestCase
         ]);
     }
 
+    public function testUpdateBatchInvalidIndex(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The index ("not_exist") for updateBatch() is missing in the data: {"name":"Derek Jones","country":"Greece"}'
+        );
+
+        $data = [
+            [
+                'name'    => 'Derek Jones',
+                'country' => 'Greece',
+            ],
+            [
+                'name'    => 'Ahmadinejad',
+                'country' => 'Greece',
+            ],
+        ];
+
+        $this->createModel(UserModel::class)->updateBatch($data, 'not_exist');
+    }
+
     public function testUpdateBatchValidationFail(): void
     {
         $data = [
@@ -208,11 +229,16 @@ final class UpdateModelTest extends LiveModelTestCase
         $entity1->name    = 'Jones Martin';
         $entity1->country = 'India';
         $entity1->deleted = 0;
+        $entity1->syncOriginal();
+        // Update the entity.
+        $entity1->country = 'China';
 
+        // This entity is not updated.
         $entity2->id      = 4;
         $entity2->name    = 'Jones Martin';
         $entity2->country = 'India';
         $entity2->deleted = 0;
+        $entity2->syncOriginal();
 
         $this->assertSame(2, $this->createModel(UserModel::class)->updateBatch([$entity1, $entity2], 'id'));
     }

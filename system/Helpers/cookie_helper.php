@@ -9,7 +9,8 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-use Config\Cookie;
+use CodeIgniter\Cookie\Cookie;
+use Config\Cookie as CookieConfig;
 use Config\Services;
 
 // =============================================================================
@@ -23,15 +24,15 @@ if (! function_exists('set_cookie')) {
      * Accepts seven parameters, or you can submit an associative
      * array in the first parameter containing all the values.
      *
-     * @param array|string $name     Cookie name or array containing binds
-     * @param string       $value    The value of the cookie
-     * @param string       $expire   The number of seconds until expiration
-     * @param string       $domain   For site-wide cookie. Usually: .yourdomain.com
-     * @param string       $path     The cookie path
-     * @param string       $prefix   The cookie prefix ('': the default prefix)
-     * @param bool|null    $secure   True makes the cookie secure
-     * @param bool|null    $httpOnly True makes the cookie accessible via http(s) only (no javascript)
-     * @param string|null  $sameSite The cookie SameSite value
+     * @param array|Cookie|string $name     Cookie name / array containing binds / Cookie object
+     * @param string              $value    The value of the cookie
+     * @param string              $expire   The number of seconds until expiration
+     * @param string              $domain   For site-wide cookie. Usually: .yourdomain.com
+     * @param string              $path     The cookie path
+     * @param string              $prefix   The cookie prefix ('': the default prefix)
+     * @param bool|null           $secure   True makes the cookie secure
+     * @param bool|null           $httpOnly True makes the cookie accessible via http(s) only (no javascript)
+     * @param string|null         $sameSite The cookie SameSite value
      *
      * @return void
      *
@@ -69,7 +70,7 @@ if (! function_exists('get_cookie')) {
     function get_cookie($index, bool $xssClean = false, ?string $prefix = '')
     {
         if ($prefix === '') {
-            $cookie = config(Cookie::class);
+            $cookie = config(CookieConfig::class);
 
             $prefix = $cookie->prefix;
         }

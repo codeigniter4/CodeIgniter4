@@ -58,7 +58,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     protected $value;
 
     /**
-     * @var int
+     * @var int Unix timestamp
      */
     protected $expires;
 

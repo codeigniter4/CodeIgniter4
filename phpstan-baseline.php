@@ -787,26 +787,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Email/Email.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Encryption\\\\Handlers\\\\SodiumHandler\\:\\:parseParams\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Encryption/Handlers/SodiumHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Entity\\\\Entity\\:\\:\\$casts has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Entity/Entity.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Entity\\\\Entity\\:\\:\\$datamap has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Entity/Entity.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Entity\\\\Entity\\:\\:\\$dates has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Entity/Entity.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Events\\\\Events\\:\\:on\\(\\) has parameter \\$callback with no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Events/Events.php',
@@ -1127,56 +1107,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Exceptions\\\\HoneypotException\\:\\:forNoHiddenValue\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Exceptions/HoneypotException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Exceptions\\\\HoneypotException\\:\\:forNoNameField\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Exceptions/HoneypotException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Exceptions\\\\HoneypotException\\:\\:forNoTemplate\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Exceptions/HoneypotException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Exceptions\\\\HoneypotException\\:\\:isBot\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Exceptions/HoneypotException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Honeypot\\:\\:attachHoneypot\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Honeypot.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Honeypot\\\\Honeypot\\:\\:hasContent\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Honeypot/Honeypot.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\I18n\\\\Time\\:\\:setTestNow\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/I18n/Time.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\I18n\\\\Time\\:\\:toDateTimeString\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/I18n/Time.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\I18n\\\\TimeLegacy\\:\\:setTestNow\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/I18n/TimeLegacy.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\I18n\\\\TimeLegacy\\:\\:toDateTimeString\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/I18n/TimeLegacy.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:\\$image \\(CodeIgniter\\\\Images\\\\Image\\) in empty\\(\\) is not falsy\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Images/Handlers/BaseHandler.php',
@@ -1445,26 +1375,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\RouterInterface\\:\\:handle\\(\\) return type has no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/RouterInterface.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Security\\\\Exceptions\\\\SecurityException\\:\\:forDisallowedAction\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Security/Exceptions/SecurityException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Security\\\\Exceptions\\\\SecurityException\\:\\:forInvalidControlChars\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Security/Exceptions/SecurityException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Security\\\\Exceptions\\\\SecurityException\\:\\:forInvalidSameSite\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Security/Exceptions/SecurityException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Security\\\\Exceptions\\\\SecurityException\\:\\:forInvalidUTF8Chars\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Security/Exceptions/SecurityException.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Session\\\\Exceptions\\\\SessionException\\:\\:forEmptySavepath\\(\\) has no return type specified\\.$#',
@@ -2227,49 +2137,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Throttle/Throttler.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\Exceptions\\\\ValidationException\\:\\:forGroupNotArray\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Exceptions/ValidationException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\Exceptions\\\\ValidationException\\:\\:forGroupNotFound\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Exceptions/ValidationException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\Exceptions\\\\ValidationException\\:\\:forInvalidTemplate\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Exceptions/ValidationException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\Exceptions\\\\ValidationException\\:\\:forNoRuleSets\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Exceptions/ValidationException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\Exceptions\\\\ValidationException\\:\\:forRuleNotFound\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Exceptions/ValidationException.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Validation\\\\Validation\\:\\:isClosure\\(\\) has parameter \\$rule with no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Validation/Validation.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\Validation\\:\\:loadRuleSets\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Validation.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\Validation\\:\\:setRuleGroup\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Validation.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Validation\\\\ValidationInterface\\:\\:setRuleGroup\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/ValidationInterface.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Call to an undefined static method CodeIgniter\\\\Config\\\\Factories\\:\\:cells\\(\\)\\.$#',

@@ -92,6 +92,8 @@ interface ValidationInterface
      * Set rule group.
      *
      * @param string $group Group.
+     *
+     * @return void
      */
     public function setRuleGroup(string $group);
 

@@ -624,6 +624,8 @@ class Validation implements ValidationInterface
      *
      * @param string $group Group.
      *
+     * @return void
+     *
      * @throws ValidationException If group not found.
      */
     public function setRuleGroup(string $group)
@@ -676,6 +678,8 @@ class Validation implements ValidationInterface
     /**
      * Loads all of the rulesets classes that have been defined in the
      * Config\Validation and stores them locally so we can use them.
+     *
+     * @return void
      */
     protected function loadRuleSets()
     {

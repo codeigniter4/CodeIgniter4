@@ -73,7 +73,7 @@ class RedisHandler extends BaseHandler
         // Store Session configurations
         $this->sessionExpiration = empty($config->expiration)
             ? (int) ini_get('session.gc_maxlifetime')
-            : (int) $config->expiration;
+            : $config->expiration;
         // Add sessionCookieName for multiple session cookies.
         $this->keyPrefix .= $config->cookieName . ':';
 
