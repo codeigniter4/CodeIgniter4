@@ -76,6 +76,9 @@ class Database extends BaseCollector
      * data.
      *
      * @internal
+     *
+     * @return void
+     * @phpstan-return never|void
      */
     public static function collect(Query $query)
     {
@@ -247,7 +250,7 @@ class Database extends BaseCollector
     /**
      * Gets the connections from the database config
      */
-    private function getConnections()
+    private function getConnections(): void
     {
         $this->connections = \Config\Database::getConnections();
     }
