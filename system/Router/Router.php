@@ -503,6 +503,8 @@ class Router implements RouterInterface
      *
      * Attempts to match a URI path against Controllers and directories
      * found in APPPATH/Controllers, to find a matching route.
+     *
+     * @return void
      */
     public function autoRoute(string $uri)
     {
@@ -579,6 +581,8 @@ class Router implements RouterInterface
      *
      * @param bool $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
      *
+     * @return void
+     *
      * @deprecated This method should be removed.
      */
     public function setDirectory(?string $dir = null, bool $append = false, bool $validate = true)
@@ -611,6 +615,8 @@ class Router implements RouterInterface
      * to be called.
      *
      * @param array $segments URI segments
+     *
+     * @return void
      */
     protected function setRequest(array $segments = [])
     {
@@ -638,6 +644,8 @@ class Router implements RouterInterface
      * Sets the default controller based on the info set in the RouteCollection.
      *
      * @deprecated This was an unnecessary method, so it is no longer used.
+     *
+     * @return void
      */
     protected function setDefaultController()
     {

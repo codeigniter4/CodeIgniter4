@@ -677,76 +677,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Seeder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Exceptions\\:\\:exceptionHandler\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Exceptions.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Exceptions\\:\\:initialize\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Exceptions.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Exceptions\\:\\:render\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Exceptions.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Exceptions\\:\\:shutdownHandler\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Exceptions.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Iterator\\:\\:add\\(\\) has parameter \\$closure with no signature specified for Closure\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Iterator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Timer\\:\\:record\\(\\) has parameter \\$callable with no signature specified for callable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Timer.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Toolbar\\:\\:prepare\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Toolbar.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Toolbar\\:\\:respond\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Toolbar.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Toolbar\\\\Collectors\\\\BaseCollector\\:\\:getBadgeValue\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/BaseCollector.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Toolbar\\\\Collectors\\\\BaseCollector\\:\\:getVarData\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/BaseCollector.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Toolbar\\\\Collectors\\\\Database\\:\\:collect\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Database.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Toolbar\\\\Collectors\\\\Database\\:\\:getConnections\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Database.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Toolbar\\\\Collectors\\\\History\\:\\:setFiles\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/History.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Debug\\\\Toolbar\\\\Collectors\\\\Logs\\:\\:collectLogs\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Logs.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Log\\\\Logger\\:\\:\\$logCache \\(array\\) on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Logs.php',
@@ -1092,11 +1022,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Model.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\AutoRouter\\:\\:setDirectory\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/AutoRouter.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Router\\\\AutoRouter\\:\\:\\$cliRoutes type has no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/AutoRouter.php',
@@ -1112,22 +1037,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Router/RouteCollection.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollection\\:\\:create\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/RouteCollection.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollection\\:\\:create\\(\\) has parameter \\$to with no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/RouteCollection.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollection\\:\\:delete\\(\\) has parameter \\$to with no signature specified for Closure\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/RouteCollection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollection\\:\\:discoverRoutes\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/RouteCollection.php',
 ];
@@ -1148,11 +1063,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollection\\:\\:getControllerName\\(\\) has parameter \\$handler with no signature specified for Closure\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/RouteCollection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollection\\:\\:group\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/RouteCollection.php',
 ];
@@ -1188,11 +1098,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollection\\:\\:put\\(\\) has parameter \\$to with no signature specified for Closure\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/RouteCollection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollection\\:\\:resetRoutes\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/RouteCollection.php',
 ];
@@ -1262,11 +1167,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Router/Router.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\Router\\:\\:autoRoute\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/Router.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\Router\\:\\:controllerName\\(\\) return type has no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/Router.php',
@@ -1282,22 +1182,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Router/Router.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\Router\\:\\:setDefaultController\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/Router.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\Router\\:\\:setDirectory\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/Router.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\Router\\:\\:setMatchedRoute\\(\\) has parameter \\$handler with no signature specified for callable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/Router.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Router\\\\Router\\:\\:setRequest\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/Router.php',
 ];

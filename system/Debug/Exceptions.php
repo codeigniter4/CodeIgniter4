@@ -99,6 +99,8 @@ class Exceptions
      * handling of our application.
      *
      * @codeCoverageIgnore
+     *
+     * @return void
      */
     public function initialize()
     {
@@ -111,6 +113,9 @@ class Exceptions
      * Catches any uncaught errors and exceptions, including most Fatal errors
      * (Yay PHP7!). Will log the error, display it if display_errors is on,
      * and fire an event that allows custom actions to be taken at this point.
+     *
+     * @return void
+     * @phpstan-return never|void
      */
     public function exceptionHandler(Throwable $exception)
     {
@@ -206,6 +211,9 @@ class Exceptions
      * need to be caught and handle them.
      *
      * @codeCoverageIgnore
+     *
+     * @return void
+     * @phpstan-return never|void
      */
     public function shutdownHandler()
     {
@@ -262,6 +270,9 @@ class Exceptions
 
     /**
      * Given an exception and status code will display the error to the client.
+     *
+     * @return void
+     * @phpstan-return never|void
      *
      * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */

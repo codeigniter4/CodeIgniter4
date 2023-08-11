@@ -345,6 +345,8 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Will attempt to discover any additional routes, either through
      * the local PSR4 namespaces, or through selected Composer packages.
+     *
+     * @return void
      */
     protected function discoverRoutes()
     {
@@ -745,6 +747,8 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param string         $name      The name to group/prefix the routes with.
      * @param array|callable ...$params
+     *
+     * @return void
      */
     public function group(string $name, ...$params)
     {
@@ -1381,6 +1385,8 @@ class RouteCollection implements RouteCollectionInterface
      * by a pipe character "|" if there is more than one.
      *
      * @param array|Closure|string $to
+     *
+     * @return void
      */
     protected function create(string $verb, string $from, $to, ?array $options = null)
     {
@@ -1629,6 +1635,8 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Reset the routes, so that a test case can provide the
      * explicit ones needed for it.
+     *
+     * @return void
      */
     public function resetRoutes()
     {

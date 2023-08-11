@@ -254,6 +254,8 @@ final class AutoRouter implements AutoRouterInterface
      * @param bool $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
      *
      * @deprecated This method should be removed.
+     *
+     * @return void
      */
     public function setDirectory(?string $dir = null, bool $append = false, bool $validate = true)
     {

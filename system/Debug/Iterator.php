@@ -38,6 +38,8 @@ class Iterator
      * Tests are simply closures that the user can define any sequence of
      * things to happen during the test.
      *
+     * @phpstan-param Closure(): mixed $closure
+     *
      * @return $this
      */
     public function add(string $name, Closure $closure)
