@@ -76,6 +76,8 @@ class DownloadResponse extends Response
 
     /**
      * set download for binary string.
+     *
+     * @return void
      */
     public function setBinary(string $binary)
     {
@@ -88,6 +90,8 @@ class DownloadResponse extends Response
 
     /**
      * set download for file.
+     *
+     * @return void
      */
     public function setFilePath(string $filepath)
     {
@@ -262,6 +266,8 @@ class DownloadResponse extends Response
 
     /**
      * set header for file download.
+     *
+     * @return void
      */
     public function buildHeaders()
     {

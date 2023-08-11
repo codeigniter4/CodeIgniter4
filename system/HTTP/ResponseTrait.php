@@ -718,6 +718,8 @@ trait ResponseTrait
 
     /**
      * Actually sets the cookies.
+     *
+     * @return void
      */
     protected function sendCookies()
     {
