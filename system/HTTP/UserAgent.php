@@ -247,6 +247,8 @@ class UserAgent
 
     /**
      * Parse a custom user-agent string
+     *
+     * @return void
      */
     public function parse(string $string)
     {
@@ -269,6 +271,8 @@ class UserAgent
 
     /**
      * Compile the User Agent Data
+     *
+     * @return void
      */
     protected function compileData()
     {
