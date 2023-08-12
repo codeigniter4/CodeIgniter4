@@ -1,6 +1,11 @@
 <?php
 
 // Check if checkbox is checked with class of 'foo'
-$results->seeCheckboxIsChecked('.foo');
+if ($results->seeCheckboxIsChecked('.foo')) {
+    // ...
+}
+
 // Check if checkbox with id of 'bar' is checked
-$results->seeCheckboxIsChecked('#bar');
+if ($results->seeCheckboxIsChecked('#bar')) {
+    // ...
+}
