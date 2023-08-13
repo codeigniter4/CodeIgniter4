@@ -64,6 +64,14 @@ Autoloader
 Previously, CodeIgniter's autoloader allowed loading class names ending with the `.php` extension. This means instantiating objects like `new Foo.php()` was possible
 and would instantiate as `new Foo()`. Since `Foo.php` is an invalid class name, this behavior of the autoloader is changed. Now, instantiating such classes would fail.
 
+.. _v440-codeigniter-and-exit:
+
+CodeIgniter and exit()
+----------------------
+
+The ``CodeIgniter::run()`` method no longer calls ``exit(EXIT_SUCCESS)``. The
+exit call is moved to **public/index.php**.
+
 .. _v440-interface-changes:
 
 Interface Changes
