@@ -10,8 +10,9 @@ be used directly with the :doc:`Model </models/model>` if that fits your needs b
     :local:
     :depth: 2
 
+************
 Entity Usage
-============
+************
 
 At its core, an Entity class is simply a class that represents a single database row. It has class properties
 to represent the database columns, and provides any additional methods to implement the business logic for
@@ -34,7 +35,7 @@ Assume you have a database table named ``users`` that has the following schema::
 .. important:: ``attributes`` is a reserved word for internal use. If you use it as a column name, the Entity does not work correctly.
 
 Create the Entity Class
------------------------
+=======================
 
 Now create a new Entity class. Since there's no default location to store these classes, and it doesn't fit
 in with the existing directory structure, create a new directory at **app/Entities**. Create the
@@ -45,7 +46,7 @@ Entity itself at **app/Entities/User.php**.
 At its simplest, this is all you need to do, though we'll make it more useful in a minute.
 
 Create the Model
-----------------
+================
 
 Create the model first at **app/Models/UserModel.php** so that we can interact with it:
 
@@ -58,7 +59,7 @@ class as the ``$returnType``. This ensures that all methods on the model that re
 instances of our User Entity class instead of an object or array like normal.
 
 Working with the Entity Class
------------------------------
+=============================
 
 Now that all of the pieces are in place, you would work with the Entity class as you would any other class:
 
@@ -79,7 +80,7 @@ a new row, or update an existing one.
     call the ``update()``, then only values that have changed are passed.
 
 Filling Properties Quickly
---------------------------
+==========================
 
 The Entity class also provides a method, ``fill()`` that allows you to shove an array of key/value pairs into the class
 and populate the class properties. Any property in the array will be set on the Entity. However, when saving through
@@ -93,15 +94,16 @@ You can also pass the data in the constructor and the data will be passed throug
 .. literalinclude:: entities/005.php
 
 Bulk Accessing Properties
--------------------------
+=========================
 
 The Entity class has two methods to extract all available properties into an array: ``toArray()`` and ``toRawArray()``.
 Using the raw version will bypass magic "getter" methods and casts. Both methods can take a boolean first parameter
 to specify whether returned values should be filtered by those that have changed, and a boolean final parameter to
 make the method recursive, in case of nested Entities.
 
+***********************
 Handling Business Logic
-=======================
+***********************
 
 While the examples above are convenient, they don't help enforce any business logic. The base Entity class implements
 some smart ``__get()`` and ``__set()`` methods that will check for special methods and use those instead of using
@@ -131,8 +133,9 @@ business logic and create objects that are pleasant to use.
 
 .. literalinclude:: entities/007.php
 
+************
 Data Mapping
-============
+************
 
 At many points in your career, you will run into situations where the use of an application has changed and the
 original column names in the database no longer make sense. Or you find that your coding style prefers camelCase
@@ -168,11 +171,12 @@ to the database. However, ``unset()`` and ``isset()`` only work on the mapped pr
     for the database column name. In this example, you must define ``setFullName()`` and
     ``getFullName()``.
 
+********
 Mutators
-========
+********
 
 Date Mutators
--------------
+=============
 
 By default, the Entity class will convert fields named `created_at`, `updated_at`, or `deleted_at` into
 :doc:`Time </libraries/time>` instances whenever they are set or retrieved. The Time class provides a large number
@@ -190,12 +194,19 @@ current timezone, as set in **app/Config/App.php**:
 .. _entities-property-casting:
 
 Property Casting
-----------------
+================
 
 You can specify that properties in your Entity should be converted to common data types with the ``$casts`` property.
 This option should be an array where the key is the name of the class property, and the value is the data type it
-should be cast to. Casting only affects when values are read. No conversions happen that affect the permanent value in
-either the entity or the database. Properties can be cast to any of the following data types:
+should be cast to.
+
+Property casting affects both read (get) and write (set), but some types affect
+only read (get).
+
+Scalar Type Casting
+-------------------
+
+Properties can be cast to any of the following data types:
 **integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, **timestamp**, **uri** and **int-bool**.
 Add a question mark at the beginning of type to mark property as nullable, i.e., **?string**, **?integer**.
 
@@ -242,7 +253,7 @@ Stored in the database as "red,yellow,green":
 
 .. note:: Casting as CSV uses PHP's internal ``implode`` and ``explode`` methods and assumes all values are string-safe and free of commas. For more complex data casts try ``array`` or ``json``.
 
-Custom casting
+Custom Casting
 --------------
 
 You can define your own conversion types for getting and setting data.
@@ -260,12 +271,12 @@ If you don't need to change values when getting or setting a value. Then just do
 
 .. literalinclude:: entities/019.php
 
-**Parameters**
+Parameters
+----------
 
 In some cases, one type is not enough. In this situation, you can use additional parameters.
-Additional parameters are indicated in square brackets and listed with a comma.
-
-**type[param1, param2]**
+Additional parameters are indicated in square brackets and listed with a comma
+like ``type[param1, param2]``.
 
 .. literalinclude:: entities/020.php
 
@@ -275,8 +286,9 @@ Additional parameters are indicated in square brackets and listed with a comma.
     the value ``nullable`` will be passed to the casting type handler.
     If casting type has predefined parameters, then ``nullable`` will be added to the end of the list.
 
+*******************************
 Checking for Changed Attributes
-===============================
+*******************************
 
 You can check if an Entity attribute has changed since it was created. The only parameter is the name of the
 attribute to check:
