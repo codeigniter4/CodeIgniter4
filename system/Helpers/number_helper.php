@@ -15,8 +15,7 @@ if (! function_exists('number_to_size')) {
     /**
      * Formats a numbers as bytes, based on size, and adds the appropriate suffix
      *
-     * @param int|string $num    Will be cast as int
-     * @param string     $locale
+     * @param int|string $num Will be cast as int
      *
      * @return bool|string
      */
