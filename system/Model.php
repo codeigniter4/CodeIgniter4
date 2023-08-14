@@ -20,6 +20,7 @@ use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Validation\ValidationInterface;
@@ -790,8 +791,7 @@ class Model extends BaseModel
 
         $primaryKey = null;
 
-        // For Entity
-        if (method_exists($data, 'cast')) {
+        if ($data instanceof Entity) {
             $cast = $data->cast();
 
             // Disable Entity casting, because raw primary key data is needed for database.
