@@ -175,6 +175,8 @@ class CLIRequest extends Request
      *
      * NOTE: I tried to use getopt but had it fail occasionally to find
      * any options, where argv has always had our back.
+     *
+     * @return void
      */
     protected function parseCommand()
     {

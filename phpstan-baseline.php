@@ -827,79 +827,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CLIRequest\\:\\:parseCommand\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/CLIRequest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Constructor of class CodeIgniter\\\\HTTP\\\\CURLRequest has an unused parameter \\$config\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:parseOptions\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:resetOptions\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\CURLRequest\\:\\:setResponseHeaders\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\ContentSecurityPolicy\\:\\:addOption\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\ContentSecurityPolicy\\:\\:addToHeader\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\ContentSecurityPolicy\\:\\:buildHeaders\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\ContentSecurityPolicy\\:\\:finalize\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\ContentSecurityPolicy\\:\\:generateNonces\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\DownloadResponse\\:\\:buildHeaders\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\DownloadResponse\\:\\:setBinary\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\DownloadResponse\\:\\:setContentTypeByMimeType\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\DownloadResponse\\:\\:setFilePath\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Files\\\\FileCollection\\:\\:populateFiles\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Expression on left side of \\?\\? is not nullable\\.$#',
@@ -917,21 +847,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/Files/UploadedFile.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Files\\\\UploadedFileInterface\\:\\:move\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Files/UploadedFileInterface.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\IncomingRequest\\:\\:detectLocale\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\IncomingRequest\\:\\:detectURI\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\HTTP\\\\Message\\:\\:\\$protocolVersion \\(string\\) on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/Message.php',
@@ -947,21 +862,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/RedirectResponse.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Request\\:\\:populateGlobals\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Request.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Response\\:\\:sendCookies\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Response.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\URI\\:\\:applyParts\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/URI.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\HTTP\\\\URI\\:\\:\\$fragment \\(string\\) on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/URI.php',
@@ -975,16 +875,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\HTTP\\\\URI\\:\\:\\$path \\(string\\) on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/URI.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\UserAgent\\:\\:compileData\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/UserAgent.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\UserAgent\\:\\:parse\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/UserAgent.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Right side of && is always true\\.$#',

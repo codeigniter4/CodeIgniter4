@@ -1,6 +1,11 @@
 <?php
 
 // Checks that "Hello World" does NOT exist on the page
-$results->dontSee('Hello World');
+if ($results->dontSee('Hello World')) {
+    // ...
+}
+
 // Checks that "Hellow World" does NOT exist within any h1 tag
-$results->dontSee('Hello World', 'h1');
+if ($results->dontSee('Hello World', 'h1')) {
+    // ...
+}

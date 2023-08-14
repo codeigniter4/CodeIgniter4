@@ -1032,6 +1032,8 @@ class URI
 
     /**
      * Saves our parts from a parse_url call.
+     *
+     * @return void
      */
     protected function applyParts(array $parts)
     {

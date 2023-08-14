@@ -208,6 +208,8 @@ class IncomingRequest extends Request
      * content negotiation.
      *
      * @param App $config
+     *
+     * @return void
      */
     public function detectLocale($config)
     {
@@ -226,6 +228,8 @@ class IncomingRequest extends Request
      * determined from the environment as needed.
      *
      * @deprecated $protocol and $baseURL are deprecated. No longer used.
+     *
+     * @return void
      */
     protected function detectURI(string $protocol, string $baseURL)
     {

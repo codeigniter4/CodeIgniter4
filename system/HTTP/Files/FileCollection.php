@@ -135,6 +135,8 @@ class FileCollection
      * of UploadedFile for each one, saving the results to this->files.
      *
      * Called by files(), file(), and hasFile()
+     *
+     * @return void
      */
     protected function populateFiles()
     {
