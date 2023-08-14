@@ -799,12 +799,13 @@ class Model extends BaseModel
 
             $primaryKey = $data->{$this->primaryKey};
 
-            // Restore Entity cast setting.
+            // Restore Entity casting setting.
             $data->cast($cast);
         }
 
         // Always grab the primary key otherwise updates will fail.
         if (
+            // @TODO Should use `$data instanceof Entity`.
             method_exists($data, 'toRawArray')
             && (
                 ! empty($properties)
