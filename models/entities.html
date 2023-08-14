@@ -301,12 +301,9 @@ be used directly with the <a class="reference internal" href="model.html"><span 
 <ul>
 <li><p><a class="reference internal" href="#date-mutators" id="id10">Date Mutators</a></p></li>
 <li><p><a class="reference internal" href="#property-casting" id="id11">Property Casting</a></p></li>
-<li><p><a class="reference internal" href="#array-json-casting" id="id12">Array/Json Casting</a></p></li>
-<li><p><a class="reference internal" href="#csv-casting" id="id13">CSV Casting</a></p></li>
-<li><p><a class="reference internal" href="#custom-casting" id="id14">Custom casting</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#checking-for-changed-attributes" id="id15">Checking for Changed Attributes</a></p></li>
+<li><p><a class="reference internal" href="#checking-for-changed-attributes" id="id12">Checking for Changed Attributes</a></p></li>
 </ul>
 </div>
 <section id="entity-usage">
@@ -631,8 +628,12 @@ current timezone, as set in <strong>app/Config/App.php</strong>:</p>
 <span id="entities-property-casting"></span><h3><a class="toc-backref" href="#id11">Property Casting</a><a class="headerlink" href="#property-casting" title="Permalink to this headline"></a></h3>
 <p>You can specify that properties in your Entity should be converted to common data types with the <code class="docutils literal notranslate"><span class="pre">$casts</span></code> property.
 This option should be an array where the key is the name of the class property, and the value is the data type it
-should be cast to. Casting only affects when values are read. No conversions happen that affect the permanent value in
-either the entity or the database. Properties can be cast to any of the following data types:
+should be cast to.</p>
+<p>Property casting affects both read (get) and write (set), but some types affect
+only read (get).</p>
+<section id="scalar-type-casting">
+<h4>Scalar Type Casting<a class="headerlink" href="#scalar-type-casting" title="Permalink to this headline"></a></h4>
+<p>Properties can be cast to any of the following data types:
 <strong>integer</strong>, <strong>float</strong>, <strong>double</strong>, <strong>string</strong>, <strong>boolean</strong>, <strong>object</strong>, <strong>array</strong>, <strong>datetime</strong>, <strong>timestamp</strong>, <strong>uri</strong> and <strong>int-bool</strong>.
 Add a question mark at the beginning of type to mark property as nullable, i.e., <strong>?string</strong>, <strong>?integer</strong>.</p>
 <div class="admonition note">
@@ -657,7 +658,7 @@ Add a question mark at the beginning of type to mark property as nullable, i.e.,
 </div>
 </section>
 <section id="array-json-casting">
-<h3><a class="toc-backref" href="#id12">Array/Json Casting</a><a class="headerlink" href="#array-json-casting" title="Permalink to this headline"></a></h3>
+<h4>Array/Json Casting<a class="headerlink" href="#array-json-casting" title="Permalink to this headline"></a></h4>
 <p>Array/Json casting is especially useful with fields that store serialized arrays or json in them. When cast as:</p>
 <ul class="simple">
 <li><p>an <strong>array</strong>, they will automatically be unserialized,</p></li>
@@ -700,7 +701,7 @@ Unlike the rest of the data types that you can cast properties into, the:</p>
 </div>
 </section>
 <section id="csv-casting">
-<h3><a class="toc-backref" href="#id13">CSV Casting</a><a class="headerlink" href="#csv-casting" title="Permalink to this headline"></a></h3>
+<h4>CSV Casting<a class="headerlink" href="#csv-casting" title="Permalink to this headline"></a></h4>
 <p>If you know you have a flat array of simple values, encoding them as a serialized or JSON string
 may be more complex than the original structure. Casting as Comma-Separated Values (CSV) is
 a simpler alternative will result in a string that uses less space and is more easily read
@@ -731,7 +732,7 @@ by humans:</p>
 </div>
 </section>
 <section id="custom-casting">
-<h3><a class="toc-backref" href="#id14">Custom casting</a><a class="headerlink" href="#custom-casting" title="Permalink to this headline"></a></h3>
+<h4>Custom Casting<a class="headerlink" href="#custom-casting" title="Permalink to this headline"></a></h4>
 <p>You can define your own conversion types for getting and setting data.</p>
 <p>At first you need to create a handler class for your type.
 Let’s say the class will be located in the <strong>app/Entities/Cast</strong> directory:</p>
@@ -798,10 +799,12 @@ Let’s say the class will be located in the <strong>app/Entities/Cast</strong> 
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><strong>Parameters</strong></p>
+</section>
+<section id="parameters">
+<h4>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline"></a></h4>
 <p>In some cases, one type is not enough. In this situation, you can use additional parameters.
-Additional parameters are indicated in square brackets and listed with a comma.</p>
-<p><strong>type[param1, param2]</strong></p>
+Additional parameters are indicated in square brackets and listed with a comma
+like <code class="docutils literal notranslate"><span class="pre">type[param1,</span> <span class="pre">param2]</span></code>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
@@ -856,8 +859,9 @@ If casting type has predefined parameters, then <code class="docutils literal no
 </div>
 </section>
 </section>
+</section>
 <section id="checking-for-changed-attributes">
-<h2><a class="toc-backref" href="#id15">Checking for Changed Attributes</a><a class="headerlink" href="#checking-for-changed-attributes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id12">Checking for Changed Attributes</a><a class="headerlink" href="#checking-for-changed-attributes" title="Permalink to this headline"></a></h2>
 <p>You can check if an Entity attribute has changed since it was created. The only parameter is the name of the
 attribute to check:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -890,7 +894,7 @@ attribute to check:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 12, 2023.
+      <span class="lastupdated">Last updated on Aug 14, 2023.
       </span></p>
   </div>
 
