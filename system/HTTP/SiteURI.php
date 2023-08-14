@@ -365,7 +365,7 @@ class SiteURI extends URI
     }
 
     /**
-     * For baser_url() helper.
+     * For base_url() helper.
      *
      * @param array|string $relativePath URI string or array of URI segments
      * @param string|null  $scheme       URI scheme. E.g., http, ftp
