@@ -67,3 +67,7 @@ $app->setContext($context);
  */
 
 $app->run();
+
+// Exits the application, setting the exit code for CLI-based applications
+// that might be watching.
+exit(EXIT_SUCCESS);

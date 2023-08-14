@@ -17,6 +17,11 @@ class MockCodeIgniter extends CodeIgniter
 {
     protected ?string $context = 'web';
 
+    /**
+     * @param int $code
+     *
+     * @deprecated 4.4.0 No longer Used. Moved to index.php.
+     */
     protected function callExit($code)
     {
         // Do not call exit() in testing.

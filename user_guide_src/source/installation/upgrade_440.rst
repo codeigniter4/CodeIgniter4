@@ -117,6 +117,24 @@ match the new array structure.
 Mandatory File Changes
 **********************
 
+index.php
+=========
+
+The following file received significant changes and
+**you must merge the updated versions** with your application:
+
+- ``public/index.php`` (see also :ref:`v440-codeigniter-and-exit`)
+
+.. important:: If you don't update the above file, CodeIgniter will not work
+    properly after running ``composer update``.
+
+    The upgrade procedure, for example, is as follows:
+
+    .. code-block:: console
+
+        composer update
+        cp vendor/codeigniter4/framework/public/index.php public/index.php
+
 Config Files
 ============
 

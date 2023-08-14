@@ -64,6 +64,14 @@ Autoloader
 Previously, CodeIgniter's autoloader allowed loading class names ending with the `.php` extension. This means instantiating objects like `new Foo.php()` was possible
 and would instantiate as `new Foo()`. Since `Foo.php` is an invalid class name, this behavior of the autoloader is changed. Now, instantiating such classes would fail.
 
+.. _v440-codeigniter-and-exit:
+
+CodeIgniter and exit()
+----------------------
+
+The ``CodeIgniter::run()`` method no longer calls ``exit(EXIT_SUCCESS)``. The
+exit call is moved to **public/index.php**.
+
 .. _v440-interface-changes:
 
 Interface Changes
@@ -263,6 +271,7 @@ Deprecations
     - ``CodeIgniter::cache()`` method is deprecated. No longer used. Use ``ResponseCache`` instead.
     - ``CodeIgniter::cachePage()`` method is deprecated. No longer used. Use ``ResponseCache`` instead.
     - ``CodeIgniter::generateCacheName()`` method is deprecated. No longer used. Use ``ResponseCache`` instead.
+    - ``CodeIgniter::callExit()`` method is deprecated. No longer used.
 - **RedirectException:** ``\CodeIgniter\Router\Exceptions\RedirectException`` is deprecated. Use ``\CodeIgniter\HTTP\Exceptions\RedirectException`` instead.
 - **Session:** The property ``$sessionDriverName``, ``$sessionCookieName``,
   ``$sessionExpiration``, ``$sessionSavePath``, ``$sessionMatchIP``,

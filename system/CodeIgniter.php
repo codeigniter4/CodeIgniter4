@@ -372,7 +372,6 @@ class CodeIgniter
         }
 
         $this->sendResponse();
-        $this->callExit(EXIT_SUCCESS);
     }
 
     /**
@@ -1088,6 +1087,8 @@ class CodeIgniter
      * without actually stopping script execution.
      *
      * @param int $code
+     *
+     * @deprecated 4.4.0 No longer Used. Moved to index.php.
      */
     protected function callExit($code)
     {
