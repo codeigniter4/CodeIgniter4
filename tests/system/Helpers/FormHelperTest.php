@@ -868,6 +868,29 @@ final class FormHelperTest extends CIUnitTestCase
     }
 
     /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/7814
+     */
+    public function testSetCheckboxWithUnchecked(): void
+    {
+        $_SESSION = [
+            '_ci_old_input' => [
+                'post' => [
+                ],
+            ],
+        ];
+
+        $this->assertSame(
+            '',
+            set_checkbox('fruit', 'apple', true)
+        );
+
+        $this->assertSame(
+            '',
+            set_checkbox('fruit', 'apple')
+        );
+    }
+
+    /**
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
