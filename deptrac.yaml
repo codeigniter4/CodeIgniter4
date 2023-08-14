@@ -189,6 +189,7 @@ parameters:
       - I18n
     Model:
       - Database
+      - Entity
       - I18n
       - Pager
       - Validation
