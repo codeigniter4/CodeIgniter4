@@ -20,6 +20,7 @@ use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Validation\ValidationInterface;
@@ -774,11 +775,11 @@ class Model extends BaseModel
     }
 
     /**
-     * Takes a class an returns an array of it's public and protected
+     * Takes a class and returns an array of its public and protected
      * properties as an array with raw values.
      *
      * @param object|string $data
-     * @param bool          $recursive If true, inner entities will be casted as array as well
+     * @param bool          $recursive If true, inner entities will be cast as array as well
      *
      * @return array|null Array
      *
@@ -788,17 +789,32 @@ class Model extends BaseModel
     {
         $properties = parent::objectToRawArray($data, $onlyChanged);
 
+        $primaryKey = null;
+
+        if ($data instanceof Entity) {
+            $cast = $data->cast();
+
+            // Disable Entity casting, because raw primary key data is needed for database.
+            $data->cast(false);
+
+            $primaryKey = $data->{$this->primaryKey};
+
+            // Restore Entity casting setting.
+            $data->cast($cast);
+        }
+
         // Always grab the primary key otherwise updates will fail.
         if (
+            // @TODO Should use `$data instanceof Entity`.
             method_exists($data, 'toRawArray')
             && (
                 ! empty($properties)
                 && ! empty($this->primaryKey)
                 && ! in_array($this->primaryKey, $properties, true)
-                && ! empty($data->{$this->primaryKey})
+                && ! empty($primaryKey)
             )
         ) {
-            $properties[$this->primaryKey] = $data->{$this->primaryKey};
+            $properties[$this->primaryKey] = $primaryKey;
         }
 
         return $properties;
