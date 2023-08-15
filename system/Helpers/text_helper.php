@@ -584,6 +584,7 @@ if (! function_exists('random_string')) {
 
                 return bin2hex(random_bytes($len / 2));
         }
+
         // 'basic' type treated as default
         return (string) mt_rand();
     }

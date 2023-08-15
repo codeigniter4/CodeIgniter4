@@ -471,10 +471,8 @@ if (! function_exists('force_https')) {
      *
      * @see https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security
      *
-     * @param int               $duration How long should the SSL header be set for? (in seconds)
-     *                                    Defaults to 1 year.
-     * @param RequestInterface  $request
-     * @param ResponseInterface $response
+     * @param int $duration How long should the SSL header be set for? (in seconds)
+     *                      Defaults to 1 year.
      *
      * @throws HTTPException
      * @throws RedirectException
