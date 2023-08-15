@@ -416,7 +416,7 @@ class Filters
                         if (isset($rules['except'])) {
                             // grab the exclusion rules
                             $check = $rules['except'];
-                            if ($this->pathApplies($uri, $check)) {
+                            if ($this->checkExcept($uri, $check)) {
                                 $keep = false;
                             }
                         }
@@ -529,6 +529,41 @@ class Filters
         // empty path matches all
         if (empty($paths)) {
             return true;
+        }
+
+        // make sure the paths are iterable
+        if (is_string($paths)) {
+            $paths = [$paths];
+        }
+
+        // treat each paths as pseudo-regex
+        foreach ($paths as $path) {
+            // need to escape path separators
+            $path = str_replace('/', '\/', trim($path, '/ '));
+            // need to make pseudo wildcard real
+            $path = strtolower(str_replace('*', '.*', $path));
+            // Does this rule apply here?
+            if (preg_match('#^' . $path . '$#', $uri, $match) === 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check except paths
+     *
+     * @param string       $uri   URI to check
+     * @param array|string $paths The except path patterns
+     *
+     * @return bool True if the URI matches except paths.
+     */
+    private function checkExcept(string $uri, $paths): bool
+    {
+        // empty path does not match anything
+        if (empty($paths)) {
+            return false;
         }
 
         // make sure the paths are iterable
