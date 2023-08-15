@@ -639,6 +639,40 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
+    public function testBeforeExceptEmptyArray(): void
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $config = [
+            'aliases' => [
+                'foo' => '',
+                'bar' => '',
+                'baz' => '',
+            ],
+            'globals' => [
+                'before' => [
+                    'foo' => ['except' => []],
+                    'bar',
+                ],
+                'after' => [
+                    'baz',
+                ],
+            ],
+        ];
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
+
+        $uri      = 'admin/foo/bar';
+        $expected = [
+            'before' => [
+                'foo',
+                'bar',
+            ],
+            'after' => ['baz'],
+        ];
+        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
+    }
+
     public function testAfterExceptString(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
