@@ -222,8 +222,10 @@ Others
     - It can also take an object that implements ``ResponseInterface`` as its first argument.
     - It implements ``ResponsableInterface``.
 - **DebugBar:** Now :ref:`view-routes` are displayed in *DEFINED ROUTES* on the *Routes* tab.
-- **Factories:** You can now define the classname that will actually be loaded.
-  See :ref:`factories-defining-classname-to-be-loaded`.
+- **Factories:**
+    - You can now define the classname that will actually be loaded.
+      See :ref:`factories-defining-classname-to-be-loaded`.
+    - The Config Caching implemented. See :ref:`factories-config-caching` for details.
 
 Message Changes
 ***************
