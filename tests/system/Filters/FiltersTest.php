@@ -215,15 +215,23 @@ final class FiltersTest extends CIUnitTestCase
                 ['admin/*'],
             ],
             [
-                [],
+                ['admin/*', 'foo/*'],
+            ],
+            [
+                ['*'],
+            ],
+            [
+                'admin/*',
             ],
         ];
     }
 
     /**
      * @dataProvider provideProcessMethodProcessGlobalsWithExcept
+     *
+     * @param array|string $except
      */
-    public function testProcessMethodProcessGlobalsWithExcept(array $except): void
+    public function testProcessMethodProcessGlobalsWithExcept($except): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
