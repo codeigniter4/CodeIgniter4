@@ -277,7 +277,8 @@ trait FeatureTestTrait
         $path  = $parts[0];
         $query = $parts[1] ?? '';
 
-        $_SERVER['QUERY_STRING'] = $query;
+        $superglobals = Services::superglobals();
+        $superglobals->setServer('QUERY_STRING', $query);
 
         $uri->setPath($path);
         $uri->setQuery($query);
