@@ -536,19 +536,7 @@ class Filters
             $paths = [$paths];
         }
 
-        // treat each paths as pseudo-regex
-        foreach ($paths as $path) {
-            // need to escape path separators
-            $path = str_replace('/', '\/', trim($path, '/ '));
-            // need to make pseudo wildcard real
-            $path = strtolower(str_replace('*', '.*', $path));
-            // Does this rule apply here?
-            if (preg_match('#^' . $path . '$#', $uri, $match) === 1) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->checkPseudoRegex($uri, $paths);
     }
 
     /**
@@ -571,12 +559,21 @@ class Filters
             $paths = [$paths];
         }
 
-        // treat each paths as pseudo-regex
+        return $this->checkPseudoRegex($uri, $paths);
+    }
+
+    /**
+     * Check the URI path as pseudo-regex
+     */
+    private function checkPseudoRegex(string $uri, array $paths): bool
+    {
+        // treat each path as pseudo-regex
         foreach ($paths as $path) {
             // need to escape path separators
             $path = str_replace('/', '\/', trim($path, '/ '));
             // need to make pseudo wildcard real
             $path = strtolower(str_replace('*', '.*', $path));
+
             // Does this rule apply here?
             if (preg_match('#^' . $path . '$#', $uri, $match) === 1) {
                 return true;
