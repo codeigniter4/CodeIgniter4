@@ -546,7 +546,7 @@ class Filters
     /**
      * Check except paths
      *
-     * @param string       $uri   URI to check
+     * @param string       $uri   URI path relative to baseURL (all lowercase)
      * @param array|string $paths The except path patterns
      *
      * @return bool True if the URI matches except paths.
@@ -568,6 +568,9 @@ class Filters
 
     /**
      * Check the URI path as pseudo-regex
+     *
+     * @param string $uri   URI path relative to baseURL (all lowercase)
+     * @param array  $paths The except path patterns
      */
     private function checkPseudoRegex(string $uri, array $paths): bool
     {
