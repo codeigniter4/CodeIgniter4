@@ -580,7 +580,12 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame('This is curious', $response);
     }
 
-    public function testBeforeExceptString(): void
+    /**
+     * @dataProvider provideBeforeExcept
+     *
+     * @param array|string $except
+     */
+    public function testBeforeExcept(string $uri, $except, array $expected): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -592,7 +597,7 @@ final class FiltersTest extends CIUnitTestCase
             ],
             'globals' => [
                 'before' => [
-                    'foo' => ['except' => 'admin/*'],
+                    'foo' => ['except' => $except],
                     'bar',
                 ],
                 'after' => [
@@ -603,82 +608,45 @@ final class FiltersTest extends CIUnitTestCase
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
         $filters       = $this->createFilters($filtersConfig);
 
-        $uri      = 'admin/foo/bar';
-        $expected = [
-            'before' => [
-                'bar',
-            ],
-            'after' => ['baz'],
-        ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
-    public function testBeforeExceptInapplicable(): void
+    public static function provideBeforeExcept(): iterable
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-
-        $config = [
-            'aliases' => [
-                'foo' => '',
-                'bar' => '',
-                'baz' => '',
-            ],
-            'globals' => [
-                'before' => [
-                    'foo' => ['except' => 'george/*'],
-                    'bar',
-                ],
-                'after' => [
-                    'baz',
+        return [
+            'string exclude' => [
+                'admin/foo/bar',
+                'admin/*',
+                [
+                    'before' => [
+                        'bar',
+                    ],
+                    'after' => ['baz'],
                 ],
             ],
-        ];
-        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
-        $filters       = $this->createFilters($filtersConfig);
-
-        $uri      = 'admin/foo/bar';
-        $expected = [
-            'before' => [
-                'foo',
-                'bar',
-            ],
-            'after' => ['baz'],
-        ];
-        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
-    }
-
-    public function testBeforeExceptEmptyArray(): void
-    {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-
-        $config = [
-            'aliases' => [
-                'foo' => '',
-                'bar' => '',
-                'baz' => '',
-            ],
-            'globals' => [
-                'before' => [
-                    'foo' => ['except' => []],
-                    'bar',
+            'string not exclude' => [
+                'admin/foo/bar',
+                'george/*',
+                [
+                    'before' => [
+                        'foo',
+                        'bar',
+                    ],
+                    'after' => ['baz'],
                 ],
-                'after' => [
-                    'baz',
+            ],
+            'empty array not exclude' => [
+                'admin/foo/bar',
+                [],
+                [
+                    'before' => [
+                        'foo',
+                        'bar',
+                    ],
+                    'after' => ['baz'],
                 ],
             ],
         ];
-        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
-        $filters       = $this->createFilters($filtersConfig);
-
-        $uri      = 'admin/foo/bar';
-        $expected = [
-            'before' => [
-                'foo',
-                'bar',
-            ],
-            'after' => ['baz'],
-        ];
-        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
     public function testAfterExceptString(): void
