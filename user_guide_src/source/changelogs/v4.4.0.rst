@@ -225,7 +225,7 @@ Others
 - **Factories:**
     - You can now define the classname that will actually be loaded.
       See :ref:`factories-defining-classname-to-be-loaded`.
-    - The Config Caching implemented. See :ref:`factories-config-caching` for details.
+    - Config Caching implemented. See :ref:`factories-config-caching` for details.
 
 Message Changes
 ***************

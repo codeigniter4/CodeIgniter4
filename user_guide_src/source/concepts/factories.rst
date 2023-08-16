@@ -270,7 +270,7 @@ Config Caching
 
 .. versionadded:: 4.4.0
 
-To improve performance, the Config Caching has been implemented.
+To improve performance, Config Caching has been implemented.
 
 Prerequisite
 ============
@@ -298,7 +298,7 @@ to shutdown, and the cached instances are used permanently.
 How to Update Config Values
 ===========================
 
-Once cached, the cache is never expired. Changing a existing Config file
+Once stored, the cached versions never expire. Changing a existing Config file
 (or changing Environment Variables for it) will not update the cache nor the Config
 values.
 
