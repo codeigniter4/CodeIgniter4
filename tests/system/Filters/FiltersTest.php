@@ -646,6 +646,52 @@ final class FiltersTest extends CIUnitTestCase
                     'after' => ['baz'],
                 ],
             ],
+            'empty string not exclude' => [
+                'admin/foo/bar',
+                // The URI path '' means the baseURL.
+                '',
+                [
+                    'before' => [
+                        'foo',
+                        'bar',
+                    ],
+                    'after' => ['baz'],
+                ],
+            ],
+            'empty string exclude' => [
+                // The URI path '' means the baseURL.
+                '',
+                // So this setting excludes `foo` filter only to the baseURL.
+                '',
+                [
+                    'before' => [
+                        'bar',
+                    ],
+                    'after' => ['baz'],
+                ],
+            ],
+            'slash not exclude' => [
+                'admin/foo/bar',
+                '/',
+                [
+                    'before' => [
+                        'foo',
+                        'bar',
+                    ],
+                    'after' => ['baz'],
+                ],
+            ],
+            'slash exclude' => [
+                // The URI path '' means the baseURL.
+                '',
+                '/',
+                [
+                    'before' => [
+                        'bar',
+                    ],
+                    'after' => ['baz'],
+                ],
+            ],
         ];
     }
 
