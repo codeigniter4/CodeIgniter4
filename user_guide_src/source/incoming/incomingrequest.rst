@@ -228,11 +228,10 @@ The object gives you full abilities to grab any part of the request on it's own:
 
 .. literalinclude:: incomingrequest/021.php
 
-You can work with the current URI string (the path relative to your baseURL) using the ``getPath()`` and ``setPath()`` methods.
-Note that this relative path on the shared instance of ``IncomingRequest`` is what the :doc:`URL Helper </helpers/url_helper>`
-functions use, so this is a helpful way to "spoof" an incoming request for testing:
+You can work with the current URI string (the path relative to your baseURL) using the ``getRoutePath()``.
 
-.. literalinclude:: incomingrequest/022.php
+.. note:: The ``getRoutePath()`` method can be used since v4.4.0. Prior to v4.4.0,
+    the ``getPath()`` method returned the path relative to your baseURL.
 
 Uploaded Files
 **************
@@ -476,15 +475,22 @@ The methods provided by the parent classes that are available are:
         :returns:        The current URI path relative to baseURL
         :rtype:    string
 
-        This is the safest method to determine the "current URI", since ``IncomingRequest::$uri``
-        may not be aware of the complete App configuration for base URLs.
+        This method returns the current URI path relative to baseURL.
+
+        .. note:: Prior to v4.4.0, this was the safest method to determine the
+            "current URI", since ``IncomingRequest::$uri`` might not be aware of
+            the complete App configuration for base URLs.
 
     .. php:method:: setPath($path)
+
+        .. deprecated:: 4.4.0
 
         :param    string    $path: The relative path to use as the current URI
         :returns:        This Incoming Request
         :rtype:    IncomingRequest
 
-        Used mostly just for testing purposes, this allows you to set the relative path
-        value for the current request instead of relying on URI detection. This will also
-        update the underlying ``URI`` instance with the new path.
+        .. note:: Prior to v4.4.0, used mostly just for testing purposes, this
+            allowed you to set the relative path value for the current request
+            instead of relying on URI detection. This also updated the
+            underlying ``URI`` instance with the new path.
+

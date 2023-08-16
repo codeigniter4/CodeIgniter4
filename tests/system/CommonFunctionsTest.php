@@ -609,7 +609,10 @@ final class CommonFunctionsTest extends CIUnitTestCase
             force_https();
         } catch (Exception $e) {
             $this->assertInstanceOf(RedirectException::class, $e);
-            $this->assertSame('https://example.com/', $e->getResponse()->header('Location')->getValue());
+            $this->assertSame(
+                'https://example.com/index.php/',
+                $e->getResponse()->header('Location')->getValue()
+            );
             $this->assertFalse($e->getResponse()->hasCookie('force'));
             $this->assertSame('header', $e->getResponse()->getHeaderLine('Force'));
             $this->assertSame('', $e->getResponse()->getBody());

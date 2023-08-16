@@ -175,7 +175,12 @@ class IncomingRequest extends Request
 
         parent::__construct($config);
 
-        $this->detectURI($config->uriProtocol, $config->baseURL);
+        if ($uri instanceof SiteURI) {
+            $this->setPath($uri->getRoutePath());
+        } else {
+            $this->setPath($uri->getPath());
+        }
+
         $this->detectLocale($config);
     }
 
@@ -227,9 +232,9 @@ class IncomingRequest extends Request
      * either provided by the user in the baseURL Config setting, or
      * determined from the environment as needed.
      *
-     * @deprecated $protocol and $baseURL are deprecated. No longer used.
-     *
      * @return void
+     *
+     * @deprecated 4.4.0 No longer used.
      */
     protected function detectURI(string $protocol, string $baseURL)
     {
@@ -447,7 +452,7 @@ class IncomingRequest extends Request
     }
 
     /**
-     * Sets the relative path and updates the URI object.
+     * Sets the URI path relative to baseURL.
      *
      * Note: Since current_url() accesses the shared request
      * instance, this can be used to change the "current URL"
@@ -457,76 +462,14 @@ class IncomingRequest extends Request
      * @param App|null $config Optional alternate config to use
      *
      * @return $this
+     *
+     * @deprecated 4.4.0 This method will be private. The parameter $config is deprecated. No longer used.
      */
     public function setPath(string $path, ?App $config = null)
     {
         $this->path = $path;
 
-        // @TODO remove this. The path of the URI object should be a full URI path,
-        //      not a URI path relative to baseURL.
-        $this->uri->setPath($path);
-
-        $config ??= $this->config;
-
-        // It's possible the user forgot a trailing slash on their
-        // baseURL, so let's help them out.
-        $baseURL = ($config->baseURL === '') ? $config->baseURL : rtrim($config->baseURL, '/ ') . '/';
-
-        // Based on our baseURL and allowedHostnames provided by the developer
-        // and HTTP_HOST, set our current domain name, scheme.
-        if ($baseURL !== '') {
-            $host = $this->determineHost($config, $baseURL);
-
-            // Set URI::$baseURL
-            $uri            = new URI($baseURL);
-            $currentBaseURL = (string) $uri->setHost($host);
-            $this->uri->setBaseURL($currentBaseURL);
-
-            $this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
-            $this->uri->setHost($host);
-            $this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
-
-            // Ensure we have any query vars
-            $this->uri->setQuery($_SERVER['QUERY_STRING'] ?? '');
-
-            // Check if the scheme needs to be coerced into its secure version
-            if ($config->forceGlobalSecureRequests && $this->uri->getScheme() === 'http') {
-                $this->uri->setScheme('https');
-            }
-        } elseif (! is_cli()) {
-            // Do not change exit() to exception; Request is initialized before
-            // setting the exception handler, so if an exception is raised, an
-            // error will be displayed even if in the production environment.
-            // @codeCoverageIgnoreStart
-            exit('You have an empty or invalid baseURL. The baseURL value must be set in app/Config/App.php, or through the .env file.');
-            // @codeCoverageIgnoreEnd
-        }
-
         return $this;
-    }
-
-    /**
-     * @deprecated 4.4.0 Moved to SiteURIFactory.
-     */
-    private function determineHost(App $config, string $baseURL): string
-    {
-        $host = parse_url($baseURL, PHP_URL_HOST);
-
-        if (empty($config->allowedHostnames)) {
-            return $host;
-        }
-
-        // Update host if it is valid.
-        $httpHostPort = $this->getServer('HTTP_HOST');
-        if ($httpHostPort !== null) {
-            [$httpHost] = explode(':', $httpHostPort, 2);
-
-            if (in_array($httpHost, $config->allowedHostnames, true)) {
-                $host = $httpHost;
-            }
-        }
-
-        return $host;
     }
 
     /**
@@ -535,10 +478,6 @@ class IncomingRequest extends Request
      */
     public function getPath(): string
     {
-        if ($this->path === null) {
-            $this->detectPath($this->config->uriProtocol);
-        }
-
         return $this->path;
     }
 
@@ -972,7 +911,7 @@ class IncomingRequest extends Request
      *
      * Do some final cleaning of the URI and return it, currently only used in static::_parse_request_uri()
      *
-     * @deprecated Use URI::removeDotSegments() directly
+     * @deprecated 4.1.2 Use URI::removeDotSegments() directly
      */
     protected function removeRelativeDirectory(string $uri): string
     {

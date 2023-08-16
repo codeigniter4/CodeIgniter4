@@ -47,6 +47,18 @@ If your code depends on this bug, fix the segment number.
 .. literalinclude:: upgrade_440/002.php
    :lines: 2-
 
+Site URI Changes
+================
+
+- Because of the rework for the current URI determination, the framework may return
+  site URIs or the URI paths slightly differently than in previous versions. It may
+  break your test code. Update assertions if the existing tests fail.
+- When your baseURL has sub-directories and you get the relative path to baseURL of
+  the current URI by the ``URI::getPath()`` method, you must use the new
+  ``SiteURI::getRoutePath()`` method instead.
+
+See :ref:`v440-site-uri-changes` for details.
+
 When You Extend Exceptions
 ==========================
 

@@ -293,6 +293,17 @@ final class SiteURITest extends CIUnitTestCase
         $this->assertSame('https://example.com/', $uri->getBaseURL());
     }
 
+    public function testConstructorEmptyScheme()
+    {
+        $config = new App();
+
+        $uri = new SiteURI($config, '', null, '');
+
+        $this->assertInstanceOf(SiteURI::class, $uri);
+        $this->assertSame('http://example.com/index.php', (string) $uri);
+        $this->assertSame('http://example.com/', $uri->getBaseURL());
+    }
+
     public function testConstructorForceGlobalSecureRequests()
     {
         $config                            = new App();

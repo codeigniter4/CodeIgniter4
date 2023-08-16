@@ -145,7 +145,7 @@ class SiteURI extends URI
         $uri = new URI($baseURL);
 
         // Update scheme
-        if ($scheme !== null) {
+        if ($scheme !== null && $scheme !== '') {
             $uri->setScheme($scheme);
         } elseif ($configApp->forceGlobalSecureRequests) {
             $uri->setScheme('https');
@@ -362,5 +362,68 @@ class SiteURI extends URI
         if (isset($parts['pass'])) {
             $this->password = $parts['pass'];
         }
+    }
+
+    /**
+     * For base_url() helper.
+     *
+     * @param array|string $relativePath URI string or array of URI segments
+     * @param string|null  $scheme       URI scheme. E.g., http, ftp
+     */
+    public function baseUrl($relativePath = '', ?string $scheme = null): string
+    {
+        $relativePath = $this->stringifyRelativePath($relativePath);
+
+        $config            = clone config(App::class);
+        $config->indexPage = '';
+
+        $host = $this->getHost();
+
+        $uri = new self($config, $relativePath, $host, $scheme);
+
+        // Support protocol-relative links
+        if ($scheme === '') {
+            return substr((string) $uri, strlen($uri->getScheme()) + 1);
+        }
+
+        return (string) $uri;
+    }
+
+    /**
+     * @param array|string $relativePath URI string or array of URI segments
+     */
+    private function stringifyRelativePath($relativePath): string
+    {
+        if (is_array($relativePath)) {
+            $relativePath = implode('/', $relativePath);
+        }
+
+        return $relativePath;
+    }
+
+    /**
+     * For site_url() helper.
+     *
+     * @param array|string $relativePath URI string or array of URI segments
+     * @param string|null  $scheme       URI scheme. E.g., http, ftp
+     * @param App|null     $config       Alternate configuration to use
+     */
+    public function siteUrl($relativePath = '', ?string $scheme = null, ?App $config = null): string
+    {
+        $relativePath = $this->stringifyRelativePath($relativePath);
+
+        // Check current host.
+        $host = $config === null ? $this->getHost() : null;
+
+        $config ??= config(App::class);
+
+        $uri = new self($config, $relativePath, $host, $scheme);
+
+        // Support protocol-relative links
+        if ($scheme === '') {
+            return substr((string) $uri, strlen($uri->getScheme()) + 1);
+        }
+
+        return (string) $uri;
     }
 }

@@ -157,6 +157,54 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
         $this->assertSame($expected, $factory->detectRoutePath('REQUEST_URI'));
     }
 
+    public function testRequestURIGetPath()
+    {
+        // /index.php/fruits/banana
+        $_SERVER['REQUEST_URI'] = '/index.php/fruits/banana';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+
+        $factory = $this->createSiteURIFactory($_SERVER);
+
+        $this->assertSame('fruits/banana', $factory->detectRoutePath('REQUEST_URI'));
+    }
+
+    public function testRequestURIPathIsRelative()
+    {
+        // /sub/folder/index.php/fruits/banana
+        $_SERVER['REQUEST_URI'] = '/sub/folder/index.php/fruits/banana';
+        $_SERVER['SCRIPT_NAME'] = '/sub/folder/index.php';
+
+        $factory = $this->createSiteURIFactory($_SERVER);
+
+        $this->assertSame('fruits/banana', $factory->detectRoutePath('REQUEST_URI'));
+    }
+
+    public function testRequestURIStoresDetectedPath()
+    {
+        // /fruits/banana
+        $_SERVER['REQUEST_URI'] = '/fruits/banana';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+
+        $factory = $this->createSiteURIFactory($_SERVER);
+
+        $_SERVER['REQUEST_URI'] = '/candy/snickers';
+
+        $this->assertSame('fruits/banana', $factory->detectRoutePath('REQUEST_URI'));
+    }
+
+    public function testRequestURIPathIsNeverRediscovered()
+    {
+        $_SERVER['REQUEST_URI'] = '/fruits/banana';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+
+        $factory = $this->createSiteURIFactory($_SERVER);
+
+        $_SERVER['REQUEST_URI'] = '/candy/snickers';
+        $factory->detectRoutePath('REQUEST_URI');
+
+        $this->assertSame('fruits/banana', $factory->detectRoutePath('REQUEST_URI'));
+    }
+
     public function testQueryString()
     {
         // /index.php?/ci/woot
@@ -227,5 +275,38 @@ final class SiteURIFactoryDetectRoutePathTest extends CIUnitTestCase
 
         $expected = 'woot';
         $this->assertSame($expected, $factory->detectRoutePath('PATH_INFO'));
+    }
+
+    /**
+     * @dataProvider provideExtensionPHP
+     *
+     * @param string $path
+     * @param string $detectPath
+     */
+    public function testExtensionPHP($path, $detectPath)
+    {
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+
+        $_SERVER['REQUEST_URI'] = $path;
+        $_SERVER['SCRIPT_NAME'] = $path;
+
+        $factory = $this->createSiteURIFactory($_SERVER, $config);
+
+        $this->assertSame($detectPath, $factory->detectRoutePath());
+    }
+
+    public static function provideExtensionPHP(): iterable
+    {
+        return [
+            'not /index.php' => [
+                '/test.php',
+                '/',
+            ],
+            '/index.php' => [
+                '/index.php',
+                '/',
+            ],
+        ];
     }
 }

@@ -14,34 +14,47 @@ relative URI to an existing one and have it resolved safely and correctly.
 Creating URI instances
 ======================
 
-Creating a URI instance is as simple as creating a new class instance:
-
-.. literalinclude:: uri/001.php
-
-Alternatively, you can use the ``service()`` function to return an instance for you:
-
-.. literalinclude:: uri/002.php
+Creating a URI instance is as simple as creating a new class instance.
 
 When you create the new instance, you can pass a full or partial URL in the constructor and it will be parsed
 into its appropriate sections:
 
+.. literalinclude:: uri/001.php
+    :lines: 2-
+
+Alternatively, you can use the :php:func:`service()` function to return an instance for you:
+
 .. literalinclude:: uri/003.php
+    :lines: 2-
+
+Since v4.4.0, if you don't pass a URL, it returns the current URI:
+
+.. literalinclude:: uri/002.php
+    :lines: 2-
+
+.. note:: The above code returns the ``SiteURI`` instance, that extends the ``URI``
+    class. The ``URI`` class is for general URIs, but the ``SiteURI`` class is
+    for your site URIs.
 
 The Current URI
 ---------------
 
 Many times, all you really want is an object representing the current URL of this request.
-You can use one of the functions available in the :doc:`../helpers/url_helper`:
+You can use the :php:func:`current_url()` function available in the :doc:`../helpers/url_helper`:
 
 .. literalinclude:: uri/004.php
+    :lines: 2-
 
 You must pass ``true`` as the first parameter, otherwise, it will return the string representation of the current URL.
 
 This URI is based on the path (relative to your ``baseURL``) as determined by the current request object and
 your settings in ``Config\App`` (``baseURL``, ``indexPage``, and ``forceGlobalSecureRequests``).
-Assuming that you're in a controller that extends ``CodeIgniter\Controller`` you can get this relative path:
+
+Assuming that you're in a controller that extends ``CodeIgniter\Controller``, you
+can also get the current SiteURI instance:
 
 .. literalinclude:: uri/005.php
+    :lines: 2-
 
 ===========
 URI Strings
@@ -135,6 +148,10 @@ can be used to manipulate it:
 
 .. note:: When setting the path this way, or any other way the class allows, it is sanitized to encode any dangerous
     characters, and remove dot segments for safety.
+
+.. note:: Since v4.4.0, the ``SiteURI::getRoutePath()`` method,
+    returns the URI path relative to baseURL, and the ``SiteURI::getPath()``
+    method always returns the full URI path with leading ``/``.
 
 Query
 -----

@@ -450,7 +450,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $response = $codeigniter->run(null, true);
 
-        $this->assertSame('https://example.com/', $response->header('Location')->getValue());
+        $this->assertSame('https://example.com/index.php/', $response->header('Location')->getValue());
     }
 
     public function testRunRedirectionWithNamed(): void
@@ -618,7 +618,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         ob_get_clean();
 
         $this->assertArrayHasKey('_ci_previous_url', $_SESSION);
-        $this->assertSame('http://example.com/index.php', $_SESSION['_ci_previous_url']);
+        $this->assertSame('http://example.com/index.php/', $_SESSION['_ci_previous_url']);
     }
 
     public function testNotStoresPreviousURL(): void

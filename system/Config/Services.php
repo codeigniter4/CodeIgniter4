@@ -38,6 +38,7 @@ use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Images\Handlers\BaseHandler;
@@ -52,6 +53,7 @@ use CodeIgniter\Session\Handlers\Database\MySQLiHandler;
 use CodeIgniter\Session\Handlers\Database\PostgreHandler;
 use CodeIgniter\Session\Handlers\DatabaseHandler;
 use CodeIgniter\Session\Session;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Throttle\Throttler;
 use CodeIgniter\Typography\Typography;
 use CodeIgniter\Validation\Validation;
@@ -694,6 +696,43 @@ class Services extends BaseService
     }
 
     /**
+     * The Factory for SiteURI.
+     *
+     * @return SiteURIFactory
+     */
+    public static function siteurifactory(
+        ?App $config = null,
+        ?Superglobals $superglobals = null,
+        bool $getShared = true
+    ) {
+        if ($getShared) {
+            return static::getSharedInstance('siteurifactory', $config, $superglobals);
+        }
+
+        $config ??= config('App');
+        $superglobals ??= AppServices::superglobals();
+
+        return new SiteURIFactory($config, $superglobals);
+    }
+
+    /**
+     * Superglobals.
+     *
+     * @return Superglobals
+     */
+    public static function superglobals(
+        ?array $server = null,
+        ?array $get = null,
+        bool $getShared = true
+    ) {
+        if ($getShared) {
+            return static::getSharedInstance('superglobals', $server, $get);
+        }
+
+        return new Superglobals($server, $get);
+    }
+
+    /**
      * The Throttler class provides a simple method for implementing
      * rate limiting in your applications.
      *
@@ -744,12 +783,19 @@ class Services extends BaseService
      *
      * @param string $uri
      *
-     * @return URI
+     * @return URI The current URI if $uri is null.
      */
     public static function uri(?string $uri = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('uri', $uri);
+        }
+
+        if ($uri === null) {
+            $appConfig = config(App::class);
+            $factory   = AppServices::siteurifactory($appConfig, AppServices::superglobals());
+
+            return $factory->createFromGlobals();
         }
 
         return new URI($uri);

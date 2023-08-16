@@ -53,7 +53,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
         $this->request = new MockIncomingRequest(
             $this->config,
-            new URI('http://example.com'),
+            new SiteURI($this->config),
             null,
             new UserAgent()
         );
@@ -186,7 +186,8 @@ final class RedirectResponseTest extends CIUnitTestCase
     public function testRedirectBack(): void
     {
         $_SERVER['HTTP_REFERER'] = 'http://somewhere.com';
-        $this->request           = new MockIncomingRequest($this->config, new URI('http://somewhere.com'), null, new UserAgent());
+
+        $this->request = new MockIncomingRequest($this->config, new SiteURI($this->config), null, new UserAgent());
         Services::injectMock('request', $this->request);
 
         $response = new RedirectResponse(new App());
@@ -222,7 +223,7 @@ final class RedirectResponseTest extends CIUnitTestCase
         $config->baseURL = 'http://example.com/test/';
         Factories::injectMock('config', 'App', $config);
 
-        $request = new MockIncomingRequest($config, new URI('http://example.com/test/'), null, new UserAgent());
+        $request = new MockIncomingRequest($config, new SiteURI($config), null, new UserAgent());
         Services::injectMock('request', $request);
 
         $response = new RedirectResponse(new App());

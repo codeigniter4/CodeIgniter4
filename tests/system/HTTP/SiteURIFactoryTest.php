@@ -85,16 +85,91 @@ final class SiteURIFactoryTest extends CIUnitTestCase
         $this->assertSame('woot', $uri->getRoutePath());
     }
 
-    public function testCreateFromString()
-    {
+    /**
+     * @dataProvider provideCreateFromStringWithIndexPage
+     */
+    public function testCreateFromStringWithIndexPage(
+        string $uriString,
+        string $expectUriString,
+        string $expectedPath,
+        string $expectedRoutePath
+    ) {
         $factory = $this->createSiteURIFactory();
 
-        $uriString = 'http://invalid.example.jp/foo/bar?page=3';
-        $uri       = $factory->createFromString($uriString);
+        $uri = $factory->createFromString($uriString);
 
         $this->assertInstanceOf(SiteURI::class, $uri);
-        $this->assertSame('http://localhost:8080/index.php/foo/bar?page=3', (string) $uri);
-        $this->assertSame('/index.php/foo/bar', $uri->getPath());
-        $this->assertSame('foo/bar', $uri->getRoutePath());
+        $this->assertSame($expectUriString, (string) $uri);
+        $this->assertSame($expectedPath, $uri->getPath());
+        $this->assertSame($expectedRoutePath, $uri->getRoutePath());
+    }
+
+    public static function provideCreateFromStringWithIndexPage(): iterable
+    {
+        return [
+            'indexPage path query' => [
+                'http://invalid.example.jp/foo/bar?page=3',         // $uriString
+                'http://localhost:8080/index.php/foo/bar?page=3',   // $expectUriString
+                '/index.php/foo/bar',                               // $expectedPath
+                'foo/bar',                                          // $expectedRoutePath
+            ],
+            'indexPage noPath' => [
+                'http://localhost:8080',            // $uriString
+                'http://localhost:8080/index.php',  // $expectUriString
+                '/index.php',                       // $expectedPath
+                '',                                 // $expectedRoutePath
+            ],
+            'indexPage slash' => [
+                'http://localhost:8080/',            // $uriString
+                'http://localhost:8080/index.php/',  // $expectUriString
+                '/index.php/',                       // $expectedPath
+                '',                                  // $expectedRoutePath
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider provideCreateFromStringWithoutIndexPage
+     */
+    public function testCreateFromStringWithoutIndexPage(
+        string $uriString,
+        string $expectUriString,
+        string $expectedPath,
+        string $expectedRoutePath
+    ) {
+        $config            = new App();
+        $config->indexPage = '';
+        $factory           = $this->createSiteURIFactory($config);
+
+        $uri = $factory->createFromString($uriString);
+
+        $this->assertInstanceOf(SiteURI::class, $uri);
+        $this->assertSame($expectUriString, (string) $uri);
+        $this->assertSame($expectedPath, $uri->getPath());
+        $this->assertSame($expectedRoutePath, $uri->getRoutePath());
+    }
+
+    public static function provideCreateFromStringWithoutIndexPage(): iterable
+    {
+        return [
+            'path query' => [
+                'http://invalid.example.jp/foo/bar?page=3', // $uriString
+                'http://localhost:8080/foo/bar?page=3',     // $expectUriString
+                '/foo/bar',                                 // $expectedPath
+                'foo/bar',                                  // $expectedRoutePath
+            ],
+            'noPath' => [
+                'http://localhost:8080',   // $uriString
+                'http://localhost:8080/',  // $expectUriString
+                '/',                       // $expectedPath
+                '',                        // $expectedRoutePath
+            ],
+            'slash' => [
+                'http://localhost:8080/',  // $uriString
+                'http://localhost:8080/',  // $expectUriString
+                '/',                       // $expectedPath
+                '',                        // $expectedRoutePath
+            ],
+        ];
     }
 }
