@@ -1455,6 +1455,7 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         $routeKey = $from;
+
         // Replace our regex pattern placeholders with the actual thing
         // so that the Router doesn't need to know about any of this.
         foreach ($this->placeholders as $tag => $pattern) {

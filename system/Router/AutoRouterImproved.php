@@ -125,6 +125,7 @@ final class AutoRouterImproved implements AutoRouterInterface
     {
         $segments = explode('/', $uri);
         $segments = array_filter($segments, static fn ($segment) => $segment !== '');
+
         // numerically reindex the array, removing gaps
         return array_values($segments);
     }
