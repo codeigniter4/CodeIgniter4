@@ -75,6 +75,7 @@ final class ControllerTest extends CIUnitTestCase
     {
         $original = $_SERVER;
         $_SERVER  = ['HTTPS' => 'on'];
+
         // make sure we can instantiate one
         try {
             $this->controller = new class () extends Controller {
