@@ -156,7 +156,9 @@ class Filters
      * Runs through all of the filters for the specified
      * uri and position.
      *
-     * @return mixed|RequestInterface|ResponseInterface
+     * @param string $uri URI path relative to baseURL
+     *
+     * @return RequestInterface|ResponseInterface|string|null
      *
      * @throws FilterException
      */
@@ -220,6 +222,8 @@ class Filters
      * We go ahead and process the entire tree because we'll need to
      * run through both a before and after and don't want to double
      * process the rows.
+     *
+     * @param string|null $uri URI path relative to baseURL (all lowercase)
      *
      * @return Filters
      */
@@ -391,7 +395,7 @@ class Filters
     /**
      * Add any applicable (not excluded) global filter settings to the mix.
      *
-     * @param string $uri
+     * @param string|null $uri URI path relative to baseURL (all lowercase)
      *
      * @return void
      */
@@ -454,7 +458,7 @@ class Filters
     /**
      * Add any applicable configured filters to the mix.
      *
-     * @param string $uri
+     * @param string|null $uri URI path relative to baseURL (all lowercase)
      *
      * @return void
      */
