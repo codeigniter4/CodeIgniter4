@@ -27,6 +27,9 @@ class CastException extends CriticalError implements HasExitCodeInterface
         return EXIT_CONFIG;
     }
 
+    /**
+     * @return static
+     */
     public static function forInvalidJsonFormatException(int $error)
     {
         switch ($error) {
