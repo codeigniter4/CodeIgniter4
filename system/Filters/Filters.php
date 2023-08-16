@@ -553,8 +553,8 @@ class Filters
      */
     private function checkExcept(string $uri, $paths): bool
     {
-        // empty path does not match anything
-        if (empty($paths)) {
+        // empty array does not match anything
+        if ($paths === []) {
             return false;
         }
 
