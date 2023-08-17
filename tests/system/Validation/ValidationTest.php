@@ -240,6 +240,22 @@ class ValidationTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run([]));
     }
 
+    public function testRuleClassesInstantiatedOnce(): void
+    {
+        $this->validation->setRules([]);
+        $this->validation->run([]);
+        $count1 = count(
+            $this->getPrivateProperty($this->validation, 'ruleSetInstances')
+        );
+
+        $this->validation->run([]);
+        $count2 = count(
+            $this->getPrivateProperty($this->validation, 'ruleSetInstances')
+        );
+
+        $this->assertSame($count1, $count2);
+    }
+
     public function testRunDoesTheBasics(): void
     {
         $data = ['foo' => 'notanumber'];
