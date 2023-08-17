@@ -1157,6 +1157,7 @@ class CodeIgniter
      * @param int $code
      *
      * @return void
+     * @phpstan-return never
      */
     protected function callExit($code)
     {
