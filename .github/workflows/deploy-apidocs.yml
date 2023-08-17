@@ -49,7 +49,7 @@ jobs:
 
       - name: Download latest phpDocumentor
         working-directory: source
-        run: sudo phive --no-progress install --global --trust-gpg-keys 8AC0BAA79732DD42 phpDocumentor
+        run: phive install --force-accept-unsigned phpDocumentor
 
       - name: Prepare API repo
         working-directory: api
@@ -61,7 +61,7 @@ jobs:
       - name: Build API in source repo
         working-directory: source
         run: |
-          phpDocumentor run --ansi --verbose
+          php tools/phpDocumentor run --ansi --verbose
           cp -R ${GITHUB_WORKSPACE}/source/api/build/* ${GITHUB_WORKSPACE}/api/docs
 
       - name: Deploy to API repo
