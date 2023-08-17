@@ -83,25 +83,27 @@ class BaseConfig
     {
         static::$moduleConfig = config(Modules::class);
 
-        if (static::$override) {
-            $this->registerProperties();
+        if (! static::$override) {
+            return;
+        }
 
-            $properties  = array_keys(get_object_vars($this));
-            $prefix      = static::class;
-            $slashAt     = strrpos($prefix, '\\');
-            $shortPrefix = strtolower(substr($prefix, $slashAt === false ? 0 : $slashAt + 1));
+        $this->registerProperties();
 
-            foreach ($properties as $property) {
-                $this->initEnvValue($this->{$property}, $property, $prefix, $shortPrefix);
+        $properties  = array_keys(get_object_vars($this));
+        $prefix      = static::class;
+        $slashAt     = strrpos($prefix, '\\');
+        $shortPrefix = strtolower(substr($prefix, $slashAt === false ? 0 : $slashAt + 1));
 
-                if ($this instanceof Encryption && $property === 'key') {
-                    if (strpos($this->{$property}, 'hex2bin:') === 0) {
-                        // Handle hex2bin prefix
-                        $this->{$property} = hex2bin(substr($this->{$property}, 8));
-                    } elseif (strpos($this->{$property}, 'base64:') === 0) {
-                        // Handle base64 prefix
-                        $this->{$property} = base64_decode(substr($this->{$property}, 7), true);
-                    }
+        foreach ($properties as $property) {
+            $this->initEnvValue($this->{$property}, $property, $prefix, $shortPrefix);
+
+            if ($this instanceof Encryption && $property === 'key') {
+                if (strpos($this->{$property}, 'hex2bin:') === 0) {
+                    // Handle hex2bin prefix
+                    $this->{$property} = hex2bin(substr($this->{$property}, 8));
+                } elseif (strpos($this->{$property}, 'base64:') === 0) {
+                    // Handle base64 prefix
+                    $this->{$property} = base64_decode(substr($this->{$property}, 7), true);
                 }
             }
         }
