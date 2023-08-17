@@ -82,76 +82,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/CodeIgniter.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:bootstrapEnvironment\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:cache\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:callExit\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:detectEnvironment\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:forceSecureAccess\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:gatherOutput\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:getRequestObject\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:getResponseObject\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:initialize\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:initializeKint\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:resolvePlatformExtensions\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:spoofRequestMethod\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:startBenchmark\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:storePreviousURL\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\CodeIgniter\\:\\:\\$controller type has no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/CodeIgniter.php',
@@ -1575,11 +1505,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockCache\\:\\:remember\\(\\) has parameter \\$callback with no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockCodeIgniter\\:\\:callExit\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockCodeIgniter.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Cannot access property \\$insert_id on object\\|resource\\|false\\.$#',
