@@ -23,6 +23,9 @@ class ConfigException extends CriticalError implements HasExitCodeInterface
         return EXIT_CONFIG;
     }
 
+    /**
+     * @return static
+     */
     public static function forDisabledMigrations()
     {
         return new static(lang('Migrations.disabled'));
