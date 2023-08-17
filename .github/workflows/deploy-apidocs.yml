@@ -43,13 +43,13 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           tools: phive
           coverage: none
 
       - name: Download latest phpDocumentor
         working-directory: source
-        run: sudo phive --no-progress install --global --trust-gpg-keys 67F861C3D889C656 phpDocumentor
+        run: phive --no-progress install --trust-gpg-keys 8AC0BAA79732DD42 phpDocumentor
 
       - name: Prepare API repo
         working-directory: api
@@ -61,7 +61,7 @@ jobs:
       - name: Build API in source repo
         working-directory: source
         run: |
-          phpDocumentor run --ansi --verbose
+          php tools/phpDocumentor run --ansi --verbose
           cp -R ${GITHUB_WORKSPACE}/source/api/build/* ${GITHUB_WORKSPACE}/api/docs
 
       - name: Deploy to API repo
