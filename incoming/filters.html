@@ -497,7 +497,7 @@ run on every request. Filters can be specified by adding their alias to either t
 <p>There are times where you want to apply a filter to almost every request, but have a few that should be left alone.
 One common example is if you need to exclude a few URI’s from the CSRF protection filter to allow requests from
 third-party websites to hit one or two specific URI’s, while keeping the rest of them protected. To do this, add
-an array with the <code class="docutils literal notranslate"><span class="pre">except</span></code> key and a URI to match as the value alongside the alias:</p>
+an array with the <code class="docutils literal notranslate"><span class="pre">except</span></code> key and a URI path (relative to BaseURL) to match as the value alongside the alias:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -519,10 +519,10 @@ an array with the <code class="docutils literal notranslate"><span class="pre">e
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Any place you can use a URI in the filter settings, you can use a regular expression or, like in this example, use
-an asterisk (<code class="docutils literal notranslate"><span class="pre">*</span></code>) for a wildcard that will match all characters after that. In this example, any URL’s starting with <code class="docutils literal notranslate"><span class="pre">api/</span></code>
+<p>Any place you can use a URI path (relative to BaseURL) in the filter settings, you can use a regular expression or, like in this example, use
+an asterisk (<code class="docutils literal notranslate"><span class="pre">*</span></code>) for a wildcard that will match all characters after that. In this example, any URI path starting with <code class="docutils literal notranslate"><span class="pre">api/</span></code>
 would be exempted from CSRF protection, but the site’s forms would all be protected. If you need to specify multiple
-URI’s you can use an array of URI patterns:</p>
+URI paths, you can use an array of URI path patterns:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -567,8 +567,8 @@ specify the method name in <strong>lowercase</strong>. It’s value would be an 
     <span class="c1">// ...</span>
 
     <span class="k">public</span> <span class="k">array</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;get&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;baz&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;InvalidChars&#39;</span><span class="p">,</span> <span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;get&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -586,7 +586,7 @@ all requests that were run from the command line.</p>
 <section id="filters">
 <h3><a class="toc-backref" href="#id11">$filters</a><a class="headerlink" href="#filters" title="Permalink to this headline"></a></h3>
 <p>This property is an array of filter aliases. For each alias, you can specify <code class="docutils literal notranslate"><span class="pre">before</span></code> and <code class="docutils literal notranslate"><span class="pre">after</span></code> arrays that contain
-a list of URI patterns that filter should apply to:</p>
+a list of URI path (relative to BaseURL) patterns that filter should apply to:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -695,7 +695,7 @@ See <a class="reference internal" href="routing.html#routing-spark-routes"><span
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 15, 2023.
+      <span class="lastupdated">Last updated on Aug 17, 2023.
       </span></p>
   </div>
 
