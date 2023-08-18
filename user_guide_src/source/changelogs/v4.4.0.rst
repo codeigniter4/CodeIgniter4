@@ -34,8 +34,8 @@ The next segment (``+1``) of the current last segment can be set as before.
 Factories
 ---------
 
-Passing Fully Qualified Classname
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Passing Classname with Namespace
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Now ``preferApp`` works only when you request
 :ref:`a classname without a namespace <factories-passing-classname-without-namespace>`.
@@ -52,6 +52,15 @@ For example, when you call ``model(\Myth\Auth\Models\UserModel::class)`` or
 
       - returns ``Myth\Auth\Models\UserModel`` even if ``preferApp`` is true (default)
       - returns ``App\Models\UserModel`` if you define ``Factories::define('models', 'Myth\Auth\Models\UserModel', 'App\Models\UserModel')`` before calling the ``model()``
+
+If you had passed a non-existent classname by mistake, the previous version
+would have returned a class instance in the ``App`` or ``Config`` namespace
+because of the ``preferApp`` feature.
+
+For example, in a controller (``namespace App\Controllers``), if you call
+``config(Config\App::class)`` by mistake (note that you forgot the leading ``\``
+in ``Config\App::class``), that means you pass ``App\Controllers\Config\App``.
+But the class does not exist, so now Factories return ``null``.
 
 Property Name
 ^^^^^^^^^^^^^
