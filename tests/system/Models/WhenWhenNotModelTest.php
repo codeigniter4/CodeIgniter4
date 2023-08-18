@@ -20,7 +20,7 @@ use Tests\Support\Models\SecondaryModel;
  */
 final class WhenWhenNotModelTest extends LiveModelTestCase
 {
-    public function testWhenWithSingleCallback(): void
+    public function testWhenWithTrueCondition(): void
     {
         $secondaryData = [
             [
@@ -49,7 +49,7 @@ final class WhenWhenNotModelTest extends LiveModelTestCase
         $this->assertSame('bar', $result[1]->key);
     }
 
-    public function testWhenWithBothCallbacks(): void
+    public function testWhenWithFalseConditionAndDefaultCallback(): void
     {
         $secondaryData = [
             [
@@ -80,7 +80,7 @@ final class WhenWhenNotModelTest extends LiveModelTestCase
         $this->assertSame('bar', $result[1]->key);
     }
 
-    public function testWhenNotWithSingleCallback(): void
+    public function testWhenNotWithFalseCondition(): void
     {
         $secondaryData = [
             [
@@ -109,7 +109,7 @@ final class WhenWhenNotModelTest extends LiveModelTestCase
         $this->assertSame('foobaz', $result[0]->value);
     }
 
-    public function testWhenNotWithBothCallbacks(): void
+    public function testWhenNotWithTrueConditionAndDefaultCallback(): void
     {
         $secondaryData = [
             [
