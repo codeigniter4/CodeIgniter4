@@ -504,8 +504,8 @@ The following functions are available:
 
     Example::
 
-        <input type="checkbox" name="mycheck" value="1" <?= set_checkbox('mycheck', '1') ?>>
-        <input type="checkbox" name="mycheck" value="2" <?= set_checkbox('mycheck', '2') ?>>
+        <input type="checkbox" name="mycheck[]" value="1" <?= set_checkbox('mycheck', '1') ?>>
+        <input type="checkbox" name="mycheck[]" value="2" <?= set_checkbox('mycheck', '2') ?>>
 
 .. php:function:: set_radio($field[, $value = ''[, $default = false]])
 
