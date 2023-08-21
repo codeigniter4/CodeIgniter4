@@ -407,18 +407,41 @@ for a developer who is willing to live with the latest unreleased changes, which
 <p>The <a class="reference external" href="https://codeigniter4.github.io/CodeIgniter4/">development user guide</a> is accessible online.
 Note that this differs from the released user guide, and will pertain to the
 develop branch explicitly.</p>
+<section id="update-for-latest-dev">
+<h4>Update for Latest Dev<a class="headerlink" href="#update-for-latest-dev" title="Permalink to this headline"></a></h4>
 <p>In your project root:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php builds development</span>
 </pre></div>
 </div>
 <p>The command above will update <strong>composer.json</strong> to point to the <code class="docutils literal notranslate"><span class="pre">develop</span></code> branch of the
-working repository, and update the corresponding paths in config and XML files. To revert
-these changes run:</p>
+working repository, and update the corresponding paths in config and XML files.</p>
+<p>After using the <code class="docutils literal notranslate"><span class="pre">builds</span></code> command be sure to run <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span></code> to sync your vendor
+folder with the latest target build. Then, check the <a class="reference internal" href="upgrading.html"><span class="doc">Upgrading From a Previous Version</span></a> and update project
+files if necessary.</p>
+</section>
+<section id="next-minor-version">
+<h4>Next Minor Version<a class="headerlink" href="#next-minor-version" title="Permalink to this headline"></a></h4>
+<p>If you want to use the next minor version branch, after using the <code class="docutils literal notranslate"><span class="pre">builds</span></code> command
+edit <strong>composer.json</strong> manually.</p>
+<p>If you try the <code class="docutils literal notranslate"><span class="pre">4.4</span></code> branch, change the version to <code class="docutils literal notranslate"><span class="pre">4.4.x-dev</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;require&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;php&quot;</span><span class="o">:</span> <span class="s2">&quot;^7.4 || ^8.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;codeigniter4/codeigniter4&quot;</span><span class="o">:</span> <span class="s2">&quot;4.4.x-dev&quot;</span>
+<span class="p">},</span>
+</pre></div>
+</div>
+<p>And run <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span></code> to sync your vendor
+folder with the latest target build. Then, check the Upgrading Guide
+(<strong>user_guide_src/source/installation/upgrade_{version}.rst</strong>) and
+update project files if necessary.</p>
+</section>
+<section id="revert-to-stable-release">
+<h4>Revert to Stable Release<a class="headerlink" href="#revert-to-stable-release" title="Permalink to this headline"></a></h4>
+<p>To revert the changes run:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php builds release</span>
 </pre></div>
 </div>
-<p>After using the <code class="docutils literal notranslate"><span class="pre">builds</span></code> command be sure to run <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span></code> to sync your vendor
-folder with the latest target build.</p>
+</section>
 </section>
 </section>
 <section id="adding-codeigniter4-to-an-existing-project">
