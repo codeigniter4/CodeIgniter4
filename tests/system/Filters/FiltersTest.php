@@ -215,15 +215,23 @@ final class FiltersTest extends CIUnitTestCase
                 ['admin/*'],
             ],
             [
-                [],
+                ['admin/*', 'foo/*'],
+            ],
+            [
+                ['*'],
+            ],
+            [
+                'admin/*',
             ],
         ];
     }
 
     /**
      * @dataProvider provideProcessMethodProcessGlobalsWithExcept
+     *
+     * @param array|string $except
      */
-    public function testProcessMethodProcessGlobalsWithExcept(array $except): void
+    public function testProcessMethodProcessGlobalsWithExcept($except): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -572,7 +580,12 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertSame('This is curious', $response);
     }
 
-    public function testBeforeExceptString(): void
+    /**
+     * @dataProvider provideBeforeExcept
+     *
+     * @param array|string $except
+     */
+    public function testBeforeExcept(string $uri, $except, array $expected): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -584,7 +597,7 @@ final class FiltersTest extends CIUnitTestCase
             ],
             'globals' => [
                 'before' => [
-                    'foo' => ['except' => 'admin/*'],
+                    'foo' => ['except' => $except],
                     'bar',
                 ],
                 'after' => [
@@ -595,48 +608,91 @@ final class FiltersTest extends CIUnitTestCase
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
         $filters       = $this->createFilters($filtersConfig);
 
-        $uri      = 'admin/foo/bar';
-        $expected = [
-            'before' => [
-                'bar',
-            ],
-            'after' => ['baz'],
-        ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
-    public function testBeforeExceptInapplicable(): void
+    public static function provideBeforeExcept(): iterable
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-
-        $config = [
-            'aliases' => [
-                'foo' => '',
-                'bar' => '',
-                'baz' => '',
-            ],
-            'globals' => [
-                'before' => [
-                    'foo' => ['except' => 'george/*'],
-                    'bar',
+        return [
+            'string exclude' => [
+                'admin/foo/bar',
+                'admin/*',
+                [
+                    'before' => [
+                        'bar',
+                    ],
+                    'after' => ['baz'],
                 ],
-                'after' => [
-                    'baz',
+            ],
+            'string not exclude' => [
+                'admin/foo/bar',
+                'george/*',
+                [
+                    'before' => [
+                        'foo',
+                        'bar',
+                    ],
+                    'after' => ['baz'],
+                ],
+            ],
+            'empty array not exclude' => [
+                'admin/foo/bar',
+                [],
+                [
+                    'before' => [
+                        'foo',
+                        'bar',
+                    ],
+                    'after' => ['baz'],
+                ],
+            ],
+            'empty string not exclude' => [
+                'admin/foo/bar',
+                // The URI path '' means the baseURL.
+                '',
+                [
+                    'before' => [
+                        'foo',
+                        'bar',
+                    ],
+                    'after' => ['baz'],
+                ],
+            ],
+            'empty string exclude' => [
+                // The URI path '' means the baseURL.
+                '',
+                // So this setting excludes `foo` filter only to the baseURL.
+                '',
+                [
+                    'before' => [
+                        'bar',
+                    ],
+                    'after' => ['baz'],
+                ],
+            ],
+            'slash not exclude' => [
+                'admin/foo/bar',
+                '/',
+                [
+                    'before' => [
+                        'foo',
+                        'bar',
+                    ],
+                    'after' => ['baz'],
+                ],
+            ],
+            'slash exclude' => [
+                // The URI path '' means the baseURL.
+                '',
+                '/',
+                [
+                    'before' => [
+                        'bar',
+                    ],
+                    'after' => ['baz'],
                 ],
             ],
         ];
-        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
-        $filters       = $this->createFilters($filtersConfig);
-
-        $uri      = 'admin/foo/bar';
-        $expected = [
-            'before' => [
-                'foo',
-                'bar',
-            ],
-            'after' => ['baz'],
-        ];
-        $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
 
     public function testAfterExceptString(): void
