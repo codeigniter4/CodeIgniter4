@@ -262,3 +262,81 @@ that single call will return a new or shared instance:
 
 .. literalinclude:: factories/007.php
    :lines: 2-
+
+.. _factories-config-caching:
+
+Config Caching
+**************
+
+.. versionadded:: 4.4.0
+
+To improve performance, Config Caching has been implemented.
+
+Prerequisite
+============
+
+.. important:: Using this feature when the prerequisites are not met will prevent
+    CodeIgniter from operating properly. Do not use this feature in such cases.
+
+- To use this feature, the properties of all Config objects instantiated in
+  Factories must not be modified after instantiation. Put another way, the Config
+  classes must be an immutable or readonly classes.
+- By default, every Config class that is cached must implement ``__set_state()``
+  method.
+
+How It Works
+============
+
+- Save the all Config instances in Factories into a cache file before shutdown,
+  if the state of the Config instances in Factories changes.
+- Restore cached Config instances before CodeIgniter initialization if a cache
+  is available.
+
+Simply put, all Config instances held by Factories are cached immediately prior
+to shutdown, and the cached instances are used permanently.
+
+How to Update Config Values
+===========================
+
+Once stored, the cached versions never expire. Changing a existing Config file
+(or changing Environment Variables for it) will not update the cache nor the Config
+values.
+
+So if you want to update Config values, update Config files or Environment Variables
+for them, and you must manually delete the cache file.
+
+You can use the ``spark cache:clear`` command:
+
+.. code-block:: console
+
+    php spark cache:clear
+
+Or simply delete the **writable/cache/FactoriesCache_config** file.
+
+How to Enable Config Caching
+============================
+
+Uncomment the following code in **public/index.php**::
+
+    --- a/public/index.php
+    +++ b/public/index.php
+    @@ -49,8 +49,8 @@ if (! defined('ENVIRONMENT')) {
+     }
+
+     // Load Config Cache
+    -// $factoriesCache = new \CodeIgniter\Cache\FactoriesCache();
+    -// $factoriesCache->load('config');
+    +$factoriesCache = new \CodeIgniter\Cache\FactoriesCache();
+    +$factoriesCache->load('config');
+     // ^^^ Uncomment these lines if you want to use Config Caching.
+
+     /*
+    @@ -79,7 +79,7 @@ $app->setContext($context);
+     $app->run();
+
+     // Save Config Cache
+    -// $factoriesCache->save('config');
+    +$factoriesCache->save('config');
+     // ^^^ Uncomment this line if you want to use Config Caching.
+
+     // Exits the application, setting the exit code for CLI-based applications

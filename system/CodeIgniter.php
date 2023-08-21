@@ -200,7 +200,6 @@ class CodeIgniter
     public function initialize()
     {
         // Define environment variables
-        $this->detectEnvironment();
         $this->bootstrapEnvironment();
 
         // Setup Exception Handling
@@ -560,6 +559,8 @@ class CodeIgniter
      *     production
      *
      * @codeCoverageIgnore
+     *
+     * @deprecated 4.4.0 No longer used. Moved to index.php and spark.
      */
     protected function detectEnvironment()
     {

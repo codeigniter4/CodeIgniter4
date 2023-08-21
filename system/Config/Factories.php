@@ -81,6 +81,15 @@ class Factories
     protected static $instances = [];
 
     /**
+     * Whether the component instances are updated?
+     *
+     * @var array<string, true> [component => true]
+     *
+     * @internal For caching only
+     */
+    protected static $updated = [];
+
+    /**
      * Define the class to load. You can *override* the concrete class.
      *
      * @param string $component Lowercase, plural component name
@@ -153,6 +162,7 @@ class Factories
 
         self::$instances[$options['component']][$class] = new $class(...$arguments);
         self::$aliases[$options['component']][$alias]   = $class;
+        self::$updated[$options['component']]           = true;
 
         // If a short classname is specified, also register FQCN to share the instance.
         if (! isset(self::$aliases[$options['component']][$class])) {
@@ -383,7 +393,8 @@ class Factories
             unset(
                 static::$options[$component],
                 static::$aliases[$component],
-                static::$instances[$component]
+                static::$instances[$component],
+                static::$updated[$component]
             );
 
             return;
@@ -392,6 +403,7 @@ class Factories
         static::$options   = [];
         static::$aliases   = [];
         static::$instances = [];
+        static::$updated   = [];
     }
 
     /**
@@ -439,5 +451,47 @@ class Factories
         }
 
         return $alias;
+    }
+
+    /**
+     * Gets component data for caching.
+     *
+     * @internal For caching only
+     */
+    public static function getComponentInstances(string $component): array
+    {
+        if (! isset(static::$aliases[$component])) {
+            return [
+                'aliases'   => [],
+                'instances' => [],
+            ];
+        }
+
+        return [
+            'aliases'   => static::$aliases[$component],
+            'instances' => self::$instances[$component],
+        ];
+    }
+
+    /**
+     * Sets component data
+     *
+     * @internal For caching only
+     */
+    public static function setComponentInstances(string $component, array $data): void
+    {
+        static::$aliases[$component] = $data['aliases'];
+        self::$instances[$component] = $data['instances'];
+        unset(self::$updated[$component]);
+    }
+
+    /**
+     * Whether the component instances are updated?
+     *
+     * @internal For caching only
+     */
+    public static function isUpdated(string $component): bool
+    {
+        return isset(self::$updated[$component]);
     }
 }
