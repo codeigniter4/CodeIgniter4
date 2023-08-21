@@ -117,6 +117,9 @@ The `development user guide <https://codeigniter4.github.io/CodeIgniter4/>`_ is 
 Note that this differs from the released user guide, and will pertain to the
 develop branch explicitly.
 
+Update for Latest Dev
+^^^^^^^^^^^^^^^^^^^^^
+
 In your project root:
 
 .. code-block:: console
@@ -124,15 +127,38 @@ In your project root:
     php builds development
 
 The command above will update **composer.json** to point to the ``develop`` branch of the
-working repository, and update the corresponding paths in config and XML files. To revert
-these changes run:
+working repository, and update the corresponding paths in config and XML files.
+
+After using the ``builds`` command be sure to run ``composer update`` to sync your vendor
+folder with the latest target build. Then, check the :doc:`upgrading` and update project
+files if necessary.
+
+Next Minor Version
+^^^^^^^^^^^^^^^^^^
+
+If you want to use the next minor version branch, after using the ``builds`` command
+edit **composer.json** manually.
+
+If you try the ``4.4`` branch, change the version to ``4.4.x-dev``::
+
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "codeigniter4/codeigniter4": "4.4.x-dev"
+    },
+
+And run ``composer update`` to sync your vendor
+folder with the latest target build. Then, check the Upgrading Guide
+(**user_guide_src/source/installation/upgrade_{version}.rst**) and
+update project files if necessary.
+
+Revert to Stable Release
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+To revert the changes run:
 
 .. code-block:: console
 
     php builds release
-
-After using the ``builds`` command be sure to run ``composer update`` to sync your vendor
-folder with the latest target build.
 
 Adding CodeIgniter4 to an Existing Project
 ==========================================

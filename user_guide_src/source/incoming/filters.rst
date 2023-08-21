@@ -124,14 +124,14 @@ Except for a Few URIs
 There are times where you want to apply a filter to almost every request, but have a few that should be left alone.
 One common example is if you need to exclude a few URI's from the CSRF protection filter to allow requests from
 third-party websites to hit one or two specific URI's, while keeping the rest of them protected. To do this, add
-an array with the ``except`` key and a URI to match as the value alongside the alias:
+an array with the ``except`` key and a URI path (relative to BaseURL) to match as the value alongside the alias:
 
 .. literalinclude:: filters/006.php
 
-Any place you can use a URI in the filter settings, you can use a regular expression or, like in this example, use
-an asterisk (``*``) for a wildcard that will match all characters after that. In this example, any URL's starting with ``api/``
+Any place you can use a URI path (relative to BaseURL) in the filter settings, you can use a regular expression or, like in this example, use
+an asterisk (``*``) for a wildcard that will match all characters after that. In this example, any URI path starting with ``api/``
 would be exempted from CSRF protection, but the site's forms would all be protected. If you need to specify multiple
-URI's you can use an array of URI patterns:
+URI paths, you can use an array of URI path patterns:
 
 .. literalinclude:: filters/007.php
 
@@ -157,7 +157,7 @@ $filters
 ========
 
 This property is an array of filter aliases. For each alias, you can specify ``before`` and ``after`` arrays that contain
-a list of URI patterns that filter should apply to:
+a list of URI path (relative to BaseURL) patterns that filter should apply to:
 
 .. literalinclude:: filters/009.php
 

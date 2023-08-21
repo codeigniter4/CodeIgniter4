@@ -6,6 +6,5 @@ $data = [
 ];
 
 return $this->response->setJSON($data);
-
 // or
 return $this->response->setXML($data);

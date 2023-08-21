@@ -79,6 +79,8 @@ use ReflectionProperty;
  * @method $this selectMax(string $select = '', string $alias = '')
  * @method $this selectMin(string $select = '', string $alias = '')
  * @method $this selectSum(string $select = '', string $alias = '')
+ * @method $this when($condition, callable $callback, ?callable $defaultCallback = null)
+ * @method $this whenNot($condition, callable $callback, ?callable $defaultCallback = null)
  * @method $this where($key, $value = null, ?bool $escape = null)
  * @method $this whereIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this whereNotIn(?string $key = null, $values = null, ?bool $escape = null)

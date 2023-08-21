@@ -9,8 +9,8 @@ class Filters extends BaseConfig
     // ...
 
     public array $methods = [
-        'post' => ['foo', 'bar'],
-        'get'  => ['baz'],
+        'post' => ['InvalidChars', 'csrf'],
+        'get'  => ['csrf'],
     ];
 
     // ...

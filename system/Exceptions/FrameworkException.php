@@ -23,11 +23,17 @@ class FrameworkException extends RuntimeException implements ExceptionInterface
 {
     use DebugTraceableTrait;
 
+    /**
+     * @return static
+     */
     public static function forEnabledZlibOutputCompression()
     {
         return new static(lang('Core.enabledZlibOutputCompression'));
     }
 
+    /**
+     * @return static
+     */
     public static function forInvalidFile(string $path)
     {
         return new static(lang('Core.invalidFile', [$path]));
@@ -46,6 +52,9 @@ class FrameworkException extends RuntimeException implements ExceptionInterface
         return new static(lang('Core.copyError', [$path]));
     }
 
+    /**
+     * @return static
+     */
     public static function forMissingExtension(string $extension)
     {
         if (strpos($extension, 'intl') !== false) {
@@ -62,11 +71,17 @@ class FrameworkException extends RuntimeException implements ExceptionInterface
         return new static($message);
     }
 
+    /**
+     * @return static
+     */
     public static function forNoHandlers(string $class)
     {
         return new static(lang('Core.noHandlers', [$class]));
     }
 
+    /**
+     * @return static
+     */
     public static function forFabricatorCreateFailed(string $table, string $reason)
     {
         return new static(lang('Fabricator.createFailed', [$table, $reason]));

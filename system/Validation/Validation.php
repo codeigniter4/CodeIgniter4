@@ -114,6 +114,8 @@ class Validation implements ValidationInterface
         $this->config = $config;
 
         $this->view = $view;
+
+        $this->loadRuleSets();
     }
 
     /**
@@ -139,7 +141,6 @@ class Validation implements ValidationInterface
         // `DBGroup` is a reserved name. For is_unique and is_not_unique
         $data['DBGroup'] = $dbGroup;
 
-        $this->loadRuleSets();
         $this->loadRuleGroup($group);
 
         // If no rules exist, we return false to ensure
