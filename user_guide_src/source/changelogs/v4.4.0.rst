@@ -57,10 +57,10 @@ If you had passed a non-existent classname by mistake, the previous version
 would have returned a class instance in the ``App`` or ``Config`` namespace
 because of the ``preferApp`` feature.
 
-For example, in a controller (``namespace App\Controllers``), if you call
-``config(Config\App::class)`` by mistake (note that you forgot the leading ``\``
-in ``Config\App::class``), that means you pass ``App\Controllers\Config\App``.
-But the class does not exist, so now Factories return ``null``.
+For example, in a controller (``namespace App\Controllers``), if you called
+``config(Config\App::class)`` by mistake (note the class is missing the leading ``\``),
+meaning you actually passed ``App\Controllers\Config\App``.
+But that class does not exist, so now Factories will return ``null``.
 
 Property Name
 ^^^^^^^^^^^^^
