@@ -165,12 +165,13 @@ class MigrationRunner
             throw ConfigException::forDisabledMigrations();
         }
 
-        $this->ensureTable();
 
         if ($group !== null) {
             $this->groupFilter = $group;
             $this->setGroup($group);
         }
+
+        $this->ensureTable();
 
         $migrations = $this->findMigrations();
 
