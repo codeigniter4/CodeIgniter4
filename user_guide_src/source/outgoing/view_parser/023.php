@@ -1,3 +1,3 @@
 <?php
 
-return $parser->render('myview');
+return $parser->renderString($template);
