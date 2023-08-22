@@ -426,7 +426,7 @@ Custom Filters
 --------------
 
 You can easily create your own filters by editing **app/Config/View.php** and adding new entries to the
-``$filters`` array. Each key is the name of the filter is called by in the view, and its value is any valid PHP
+``$filters`` array. Each key is the name which the filter is called by in the view, and its value is any valid PHP
 callable:
 
 .. literalinclude:: view_parser/012.php
@@ -435,8 +435,8 @@ PHP Native functions as Filters
 -------------------------------
 
 You can use native php function as filters by editing **app/Config/View.php** and adding new entries to the
-``$filters`` array.Each key is the name of the native PHP function is called by in the view, and its value is any valid native PHP
-function prefixed with:
+``$filters`` array. Each key is the name which the native PHP function is called by in the view, and its value is any valid native PHP
+function prefixed with ``\``:
 
 .. literalinclude:: view_parser/013.php
 
