@@ -629,8 +629,11 @@ if (! function_exists('set_checkbox')) {
             return '';
         }
 
+        $session     = Services::session();
+        $hasOldInput = $session->has('_ci_old_input');
+
         // Unchecked checkbox and radio inputs are not even submitted by browsers ...
-        if ((string) $input === '0' || ! empty($request->getPost()) || ! empty(old($field))) {
+        if ((string) $input === '0' || ! empty($request->getPost()) || $hasOldInput) {
             return ($input === $value) ? ' checked="checked"' : '';
         }
 
