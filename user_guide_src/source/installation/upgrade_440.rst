@@ -85,10 +85,10 @@ This bug was fixed and now URIs for underscores (**foo_bar**) is not accessible.
 If you have links to URIs for underscores (**foo_bar**), update them with URIs
 for dashes (**foo-bar**).
 
-When Passing Fully Qualified Classnames to Factories
-====================================================
+When Passing Classname with Namespace to Factories
+==================================================
 
-The behavior of passing fully qualified classnames to Factories has been changed.
+The behavior of passing a classname with a namespace to Factories has been changed.
 See :ref:`ChangeLog <v440-factories>` for details.
 
 If you have code like ``model('\Myth\Auth\Models\UserModel::class')`` or
