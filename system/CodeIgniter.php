@@ -701,6 +701,8 @@ class CodeIgniter
      * Tells the app that the final output should be cached.
      *
      * @deprecated 4.4.0 Moved to ResponseCache::setTtl(). to No longer used.
+     *
+     * @return void
      */
     public static function cache(int $time)
     {
