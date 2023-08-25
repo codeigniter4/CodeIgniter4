@@ -114,7 +114,7 @@ class Result extends BaseResult
     protected function fetchObject(string $className = 'stdClass')
     {
         if (is_subclass_of($className, Entity::class)) {
-            return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
+            return empty($data = $this->fetchAssoc()) ? false : (new $className())->injectRawData($data);
         }
 
         return pg_fetch_object($this->resultID, null, $className);

@@ -1,3 +1,3 @@
 <?php
 
-$uri = service('uri');
+$uri = service('uri'); // returns the current SiteURI instance.

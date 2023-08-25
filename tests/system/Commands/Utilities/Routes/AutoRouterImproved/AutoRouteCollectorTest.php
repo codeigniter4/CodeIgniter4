@@ -62,7 +62,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
         $expected = [
             0 => [
                 'GET(auto)',
-                'newautorouting',
+                'newautorouting[/..]',
                 '',
                 '\\Tests\\Support\\Controllers\\Newautorouting::getIndex',
                 '',
@@ -90,7 +90,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
         $expected = [
             0 => [
                 'GET(auto)',
-                'newautorouting',
+                'newautorouting[/..]',
                 '',
                 '\\Tests\\Support\\Controllers\\Newautorouting::getIndex',
                 '',

@@ -34,6 +34,36 @@ final class EntityTest extends CIUnitTestCase
 {
     use ReflectionHelper;
 
+    public function testSetStringToPropertyNamedAttributes()
+    {
+        $entity = $this->getEntity();
+
+        $entity->attributes = 'attributes';
+
+        $this->assertSame('attributes', $entity->attributes);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues
+     */
+    public function testSetArrayToPropertyNamedAttributes()
+    {
+        $entity = new Entity();
+
+        $entity->a          = 1;
+        $entity->attributes = [1, 2, 3];
+
+        $expected = [
+            'a'          => 1,
+            'attributes' => [
+                0 => 1,
+                1 => 2,
+                2 => 3,
+            ],
+        ];
+        $this->assertSame($expected, $entity->toRawArray());
+    }
+
     public function testSimpleSetAndGet(): void
     {
         $entity = $this->getEntity();
@@ -50,6 +80,19 @@ final class EntityTest extends CIUnitTestCase
         $entity->bar = 'thanks';
 
         $this->assertSame('bar:thanks:bar', $entity->bar);
+    }
+
+    public function testNewGetterSetters()
+    {
+        $entity = $this->getNewSetterGetterEntity();
+
+        $entity->bar = 'thanks';
+
+        $this->assertSame('bar:thanks:bar', $entity->bar);
+
+        $entity->setBar('BAR');
+
+        $this->assertSame('BAR', $entity->getBar());
     }
 
     public function testUnsetUnsetsAttribute(): void
@@ -1060,6 +1103,52 @@ final class EntityTest extends CIUnitTestCase
             }
 
             public function getFakeBar()
+            {
+                return "{$this->attributes['bar']}:bar";
+            }
+        };
+    }
+
+    protected function getNewSetterGetterEntity()
+    {
+        return new class () extends Entity {
+            protected $attributes = [
+                'foo'        => null,
+                'bar'        => null,
+                'default'    => 'sumfin',
+                'created_at' => null,
+            ];
+            protected $original = [
+                'foo'        => null,
+                'bar'        => null,
+                'default'    => 'sumfin',
+                'created_at' => null,
+            ];
+            protected $datamap = [
+                'createdAt' => 'created_at',
+            ];
+            private string $bar;
+
+            public function setBar($value)
+            {
+                $this->bar = $value;
+
+                return $this;
+            }
+
+            public function getBar()
+            {
+                return $this->bar;
+            }
+
+            public function _setBar($value)
+            {
+                $this->attributes['bar'] = "bar:{$value}";
+
+                return $this;
+            }
+
+            public function _getBar()
             {
                 return "{$this->attributes['bar']}:bar";
             }

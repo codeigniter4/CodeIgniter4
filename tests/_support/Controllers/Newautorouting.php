@@ -15,7 +15,7 @@ use CodeIgniter\Controller;
 
 class Newautorouting extends Controller
 {
-    public function getIndex()
+    public function getIndex(string $m = '')
     {
         return 'Hello';
     }

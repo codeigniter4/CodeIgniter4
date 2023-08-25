@@ -16,5 +16,5 @@ class CURLRequest extends BaseConfig
      * If true, all the options won't be reset between requests.
      * It may cause an error request with unnecessary headers.
      */
-    public bool $shareOptions = true;
+    public bool $shareOptions = false;
 }

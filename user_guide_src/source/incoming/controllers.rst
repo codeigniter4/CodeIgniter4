@@ -98,18 +98,23 @@ and in the optional second parameter, an array of custom error messages to displ
 if the items are not valid. Internally, this uses the controller's
 ``$this->request`` instance to get the data to be validated.
 
-.. warning::
-    The ``validate()`` method uses :ref:`Validation::withRequest() <validation-withrequest>` method.
-    It validates data from :ref:`$request->getJSON() <incomingrequest-getting-json-data>`
-    or :ref:`$request->getRawInput() <incomingrequest-retrieving-raw-data>`
-    or :ref:`$request->getVar() <incomingrequest-getting-data>`.
-    Which data is used depends on the request. Remember that an attacker is free to send any request to
-    the server.
-
 The :doc:`Validation Library docs </libraries/validation>` have details on
 rule and message array formats, as well as available rules:
 
 .. literalinclude:: controllers/004.php
+
+.. warning:: When you use the ``validate()`` method, you should use the
+    :ref:`getValidated() <validation-getting-validated-data>` method to get the
+    validated data. Because the ``validate()`` method uses the
+    :ref:`Validation::withRequest() <validation-withrequest>` method internally,
+    and it validates data from
+    :ref:`$request->getJSON() <incomingrequest-getting-json-data>`
+    or :ref:`$request->getRawInput() <incomingrequest-retrieving-raw-data>`
+    or :ref:`$request->getVar() <incomingrequest-getting-data>`, and an attacker
+    could change what data is validated.
+
+.. note:: The :ref:`$this->validator->getValidated() <validation-getting-validated-data>`
+    method can be used since v4.4.0.
 
 If you find it simpler to keep the rules in the configuration file, you can replace
 the ``$rules`` array with the name of the group as defined in **app/Config/Validation.php**:
@@ -274,10 +279,6 @@ Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
 
 .. literalinclude:: controllers/022.php
 
-.. important:: If there are more parameters in the URI than the method parameters,
-    Auto Routing (Improved) does not execute the method, and it results in 404
-    Not Found.
-
 Default Controller
 ==================
 
@@ -311,6 +312,57 @@ see the "Hello World" message.
 
 For more information, please refer to the :ref:`routes-configuration-options` section of the
 :ref:`URI Routing <routing-auto-routing-improved-configuration-options>` documentation.
+
+.. _controller-default-method-fallback:
+
+Default Method Fallback
+=======================
+
+.. versionadded:: 4.4.0
+
+If the controller method corresponding to the URI segment of the method name
+does not exist, and if the default method is defined, the remaining URI segments
+are passed to the default method for execution.
+
+.. literalinclude:: controllers/024.php
+
+Load the following URL::
+
+    example.com/index.php/product/15/edit
+
+The method will be passed URI segments 2 and 3 (``'15'`` and ``'edit'``):
+
+.. important:: If there are more parameters in the URI than the method parameters,
+    Auto Routing (Improved) does not execute the method, and it results in 404
+    Not Found.
+
+Fallback to Default Controller
+------------------------------
+
+If the controller corresponding to the URI segment of the controller name
+does not exist, and if the default controller (``Home`` by default) exists in
+the directory, the remaining URI segments are passed to the default controller's
+default method.
+
+For example, when you have the following default controller ``Home`` in the
+**app/Controllers/News** directory:
+
+.. literalinclude:: controllers/025.php
+
+Load the following URL::
+
+    example.com/index.php/news/101
+
+The ``News\Home`` controller and the default ``getIndex()`` method will be found.
+So the default method will be passed URI segments 2 (``'101'``):
+
+.. note:: If there is ``App\Controllers\News`` controller, it takes precedence.
+    The URI segments are searched sequentially and the first controller found
+    is used.
+
+.. note:: If there are more parameters in the URI than the method parameters,
+    Auto Routing (Improved) does not execute the method, and it results in 404
+    Not Found.
 
 Organizing Your Controllers into Sub-directories
 ================================================

@@ -12,11 +12,11 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Events\Events;
+use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\URI;
-use CodeIgniter\Router\Exceptions\RedirectException;
-use CodeIgniter\Router\RouteCollection;
 use Config\App;
 use Config\Services;
 use Exception;
@@ -143,14 +143,6 @@ trait FeatureTestTrait
      */
     public function call(string $method, string $path, ?array $params = null)
     {
-        $buffer = \ob_get_level();
-
-        // Clean up any open output buffers
-        // not relevant to unit testing
-        if (\ob_get_level() > 0 && (! isset($this->clean) || $this->clean === true)) {
-            \ob_end_clean(); // @codeCoverageIgnore
-        }
-
         // Simulate having a blank session
         $_SESSION                  = [];
         $_SERVER['REQUEST_METHOD'] = $method;
@@ -182,28 +174,16 @@ trait FeatureTestTrait
             ->setRequest($request)
             ->run($routes, true);
 
-        $output = \ob_get_contents();
-        if (empty($response->getBody()) && ! empty($output)) {
-            $response->setBody($output);
-        }
-
         // Reset directory if it has been set
         Services::router()->setDirectory(null);
-
-        // Ensure the output buffer is identical so no tests are risky
-        while (\ob_get_level() > $buffer) {
-            \ob_end_clean(); // @codeCoverageIgnore
-        }
-
-        while (\ob_get_level() < $buffer) {
-            \ob_start(); // @codeCoverageIgnore
-        }
 
         return new TestResponse($response);
     }
 
     /**
      * Performs a GET request.
+     *
+     * @param string $path URI path relative to baseURL. May include query.
      *
      * @return TestResponse
      *
@@ -288,15 +268,25 @@ trait FeatureTestTrait
      */
     protected function setupRequest(string $method, ?string $path = null): IncomingRequest
     {
-        $path    = URI::removeDotSegments($path);
-        $config  = config(App::class);
-        $request = Services::request($config, false);
+        $config = config(App::class);
+        $uri    = new SiteURI($config);
 
         // $path may have a query in it
-        $parts                   = explode('?', $path);
-        $_SERVER['QUERY_STRING'] = $parts[1] ?? '';
+        $path  = URI::removeDotSegments($path);
+        $parts = explode('?', $path);
+        $path  = $parts[0];
+        $query = $parts[1] ?? '';
 
-        $request->setPath($parts[0]);
+        $superglobals = Services::superglobals();
+        $superglobals->setServer('QUERY_STRING', $query);
+
+        $uri->setPath($path);
+        $uri->setQuery($query);
+
+        Services::injectMock('uri', $uri);
+
+        $request = Services::request($config, false);
+
         $request->setMethod($method);
         $request->setProtocolVersion('1.1');
 

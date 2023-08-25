@@ -19,7 +19,6 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Exceptions as ExceptionsConfig;
-use Config\Services;
 use ErrorException;
 use RuntimeException;
 
@@ -52,7 +51,7 @@ final class ExceptionsTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->exception = new Exceptions(new ExceptionsConfig(), Services::request(), Services::response());
+        $this->exception = new Exceptions(new ExceptionsConfig());
     }
 
     /**
@@ -65,7 +64,7 @@ final class ExceptionsTest extends CIUnitTestCase
         $config->logDeprecations     = true;
         $config->deprecationLogLevel = 'error';
 
-        $this->exception = new Exceptions($config, Services::request(), Services::response());
+        $this->exception = new Exceptions($config);
         $this->exception->initialize();
 
         // this is only needed for IDEs not to complain that strlen does not accept explicit null
@@ -89,7 +88,7 @@ final class ExceptionsTest extends CIUnitTestCase
         $config->logDeprecations     = true;
         $config->deprecationLogLevel = 'error';
 
-        $this->exception = new Exceptions($config, Services::request(), Services::response());
+        $this->exception = new Exceptions($config);
         $this->exception->initialize();
 
         @trigger_error('Hello! I am a deprecation!', E_USER_DEPRECATED);

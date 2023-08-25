@@ -542,6 +542,20 @@ final class CURLRequestTest extends CIUnitTestCase
         ]);
     }
 
+    public function testProxyuOption()
+    {
+        $this->request->request('get', 'http://example.com', [
+            'proxy' => 'http://localhost:3128',
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_PROXY, $options);
+        $this->assertSame('http://localhost:3128', $options[CURLOPT_PROXY]);
+        $this->assertArrayHasKey(CURLOPT_HTTPPROXYTUNNEL, $options);
+        $this->assertTrue($options[CURLOPT_HTTPPROXYTUNNEL]);
+    }
+
     public function testDebugOptionTrue(): void
     {
         $this->request->request('get', 'http://example.com', [

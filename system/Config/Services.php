@@ -13,6 +13,7 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Cache\ResponseCache;
 use CodeIgniter\CLI\Commands;
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Database\ConnectionInterface;
@@ -37,6 +38,7 @@ use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Images\Handlers\BaseHandler;
@@ -51,6 +53,7 @@ use CodeIgniter\Session\Handlers\Database\MySQLiHandler;
 use CodeIgniter\Session\Handlers\Database\PostgreHandler;
 use CodeIgniter\Session\Handlers\DatabaseHandler;
 use CodeIgniter\Session\Session;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Throttle\Throttler;
 use CodeIgniter\Typography\Typography;
 use CodeIgniter\Validation\Validation;
@@ -76,6 +79,8 @@ use Config\Migrations;
 use Config\Modules;
 use Config\Pager as PagerConfig;
 use Config\Paths;
+use Config\Routing;
+use Config\Security as SecurityConfig;
 use Config\Services as AppServices;
 use Config\Session as SessionConfig;
 use Config\Toolbar as ToolbarConfig;
@@ -114,7 +119,7 @@ class Services extends BaseService
             return static::getSharedInstance('cache', $config);
         }
 
-        $config ??= new Cache();
+        $config ??= config(Cache::class);
 
         return CacheFactory::getHandler($config);
     }
@@ -257,19 +262,15 @@ class Services extends BaseService
      */
     public static function exceptions(
         ?ExceptionsConfig $config = null,
-        ?IncomingRequest $request = null,
-        ?ResponseInterface $response = null,
         bool $getShared = true
     ) {
         if ($getShared) {
-            return static::getSharedInstance('exceptions', $config, $request, $response);
+            return static::getSharedInstance('exceptions', $config);
         }
 
         $config ??= config(ExceptionsConfig::class);
-        $request ??= AppServices::request();
-        $response ??= AppServices::response();
 
-        return new Exceptions($config, $request, $response);
+        return new Exceptions($config);
     }
 
     /**
@@ -431,6 +432,23 @@ class Services extends BaseService
         $request ??= AppServices::request();
 
         return new Negotiate($request);
+    }
+
+    /**
+     * Return the ResponseCache.
+     *
+     * @return ResponseCache
+     */
+    public static function responsecache(?Cache $config = null, ?CacheInterface $cache = null, bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('responsecache', $config, $cache);
+        }
+
+        $config ??= config(Cache::class);
+        $cache ??= AppServices::cache();
+
+        return new ResponseCache($config, $cache);
     }
 
     /**
@@ -596,7 +614,7 @@ class Services extends BaseService
             return static::getSharedInstance('routes');
         }
 
-        return new RouteCollection(AppServices::locator(), config(Modules::class));
+        return new RouteCollection(AppServices::locator(), config(Modules::class), config(Routing::class));
     }
 
     /**
@@ -623,13 +641,13 @@ class Services extends BaseService
      *
      * @return Security
      */
-    public static function security(?App $config = null, bool $getShared = true)
+    public static function security(?SecurityConfig $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('security', $config);
         }
 
-        $config ??= config(App::class);
+        $config ??= config(SecurityConfig::class);
 
         return new Security($config);
     }
@@ -639,24 +657,20 @@ class Services extends BaseService
      *
      * @return Session
      */
-    public static function session(?App $config = null, bool $getShared = true)
+    public static function session(?SessionConfig $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('session', $config);
         }
 
-        $config ??= config(App::class);
-        assert($config instanceof App);
+        $config ??= config(SessionConfig::class);
 
         $logger = AppServices::logger();
 
-        /** @var SessionConfig|null $sessionConfig */
-        $sessionConfig = config(SessionConfig::class);
-
-        $driverName = $sessionConfig->driver ?? $config->sessionDriver;
+        $driverName = $config->driver;
 
         if ($driverName === DatabaseHandler::class) {
-            $DBGroup = $sessionConfig->DBGroup ?? $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
+            $DBGroup = $config->DBGroup ?? config(Database::class)->defaultGroup;
             $db      = Database::connect($DBGroup);
 
             $driver = $db->getPlatform();
@@ -679,6 +693,43 @@ class Services extends BaseService
         }
 
         return $session;
+    }
+
+    /**
+     * The Factory for SiteURI.
+     *
+     * @return SiteURIFactory
+     */
+    public static function siteurifactory(
+        ?App $config = null,
+        ?Superglobals $superglobals = null,
+        bool $getShared = true
+    ) {
+        if ($getShared) {
+            return static::getSharedInstance('siteurifactory', $config, $superglobals);
+        }
+
+        $config ??= config('App');
+        $superglobals ??= AppServices::superglobals();
+
+        return new SiteURIFactory($config, $superglobals);
+    }
+
+    /**
+     * Superglobals.
+     *
+     * @return Superglobals
+     */
+    public static function superglobals(
+        ?array $server = null,
+        ?array $get = null,
+        bool $getShared = true
+    ) {
+        if ($getShared) {
+            return static::getSharedInstance('superglobals', $server, $get);
+        }
+
+        return new Superglobals($server, $get);
     }
 
     /**
@@ -732,12 +783,19 @@ class Services extends BaseService
      *
      * @param string $uri
      *
-     * @return URI
+     * @return URI The current URI if $uri is null.
      */
     public static function uri(?string $uri = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('uri', $uri);
+        }
+
+        if ($uri === null) {
+            $appConfig = config(App::class);
+            $factory   = AppServices::siteurifactory($appConfig, AppServices::superglobals());
+
+            return $factory->createFromGlobals();
         }
 
         return new URI($uri);

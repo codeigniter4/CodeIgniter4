@@ -12,9 +12,14 @@
 namespace CodeIgniter\Config;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\Database;
+use InvalidArgumentException;
 use ReflectionClass;
 use stdClass;
+use Tests\Support\Config\TestRegistrar;
+use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\UserModel;
+use Tests\Support\View\SampleClass;
 use Tests\Support\Widgets\OtherWidget;
 use Tests\Support\Widgets\SomeWidget;
 
@@ -251,7 +256,53 @@ final class FactoriesTest extends CIUnitTestCase
         $this->assertInstanceOf(SomeWidget::class, $result);
     }
 
-    public function testpreferAppOverridesClassname(): void
+    public function testShortnameReturnsConfigInApp()
+    {
+        // Create a config class in App
+        $file   = APPPATH . 'Config/TestRegistrar.php';
+        $source = <<<'EOL'
+            <?php
+            namespace Config;
+            class TestRegistrar
+            {}
+            EOL;
+        file_put_contents($file, $source);
+
+        $result = Factories::config('TestRegistrar');
+
+        $this->assertInstanceOf('Config\TestRegistrar', $result);
+
+        // Delete the config class in App
+        unlink($file);
+    }
+
+    public function testFullClassnameIgnoresPreferApp()
+    {
+        // Create a config class in App
+        $file   = APPPATH . 'Config/TestRegistrar.php';
+        $source = <<<'EOL'
+            <?php
+            namespace Config;
+            class TestRegistrar
+            {}
+            EOL;
+        file_put_contents($file, $source);
+
+        $result = Factories::config(TestRegistrar::class);
+
+        $this->assertInstanceOf(TestRegistrar::class, $result);
+
+        Factories::setOptions('config', ['preferApp' => false]);
+
+        $result = Factories::config(TestRegistrar::class);
+
+        $this->assertInstanceOf(TestRegistrar::class, $result);
+
+        // Delete the config class in App
+        unlink($file);
+    }
+
+    public function testPreferAppIsIgnored(): void
     {
         // Create a fake class in App
         $class = 'App\Widgets\OtherWidget';
@@ -260,11 +311,147 @@ final class FactoriesTest extends CIUnitTestCase
         }
 
         $result = Factories::widgets(OtherWidget::class);
-        $this->assertInstanceOf(SomeWidget::class, $result);
-
-        Factories::setOptions('widgets', ['preferApp' => false]);
-
-        $result = Factories::widgets(OtherWidget::class);
         $this->assertInstanceOf(OtherWidget::class, $result);
+    }
+
+    public function testCanLoadTwoCellsWithSameShortName()
+    {
+        $cell1 = Factories::cells('\\' . SampleClass::class);
+        $cell2 = Factories::cells('\\' . \Tests\Support\View\OtherCells\SampleClass::class);
+
+        $this->assertNotSame($cell1, $cell2);
+    }
+
+    public function testDefineSameAliasTwiceWithDifferentClasses()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Already defined in Factories: models CodeIgniter\Shield\Models\UserModel -> Tests\Support\Models\UserModel'
+        );
+
+        Factories::define(
+            'models',
+            'CodeIgniter\Shield\Models\UserModel',
+            UserModel::class
+        );
+        Factories::define(
+            'models',
+            'CodeIgniter\Shield\Models\UserModel',
+            EntityModel::class
+        );
+    }
+
+    public function testDefineSameAliasAndSameClassTwice()
+    {
+        Factories::define(
+            'models',
+            'CodeIgniter\Shield\Models\UserModel',
+            UserModel::class
+        );
+        Factories::define(
+            'models',
+            'CodeIgniter\Shield\Models\UserModel',
+            UserModel::class
+        );
+
+        $model = model('CodeIgniter\Shield\Models\UserModel');
+
+        $this->assertInstanceOf(UserModel::class, $model);
+    }
+
+    public function testDefineNonExistentClass()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('No such class: App\Models\UserModel');
+
+        Factories::define(
+            'models',
+            'CodeIgniter\Shield\Models\UserModel',
+            'App\Models\UserModel'
+        );
+    }
+
+    public function testDefineAfterLoading()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Already defined in Factories: models Tests\Support\Models\UserModel -> Tests\Support\Models\UserModel'
+        );
+
+        model(UserModel::class);
+
+        Factories::define(
+            'models',
+            UserModel::class,
+            'App\Models\UserModel'
+        );
+    }
+
+    public function testDefineAndLoad()
+    {
+        Factories::define(
+            'models',
+            UserModel::class,
+            EntityModel::class
+        );
+
+        $model = model(UserModel::class);
+
+        $this->assertInstanceOf(EntityModel::class, $model);
+    }
+
+    public function testGetComponentInstances()
+    {
+        Factories::config('App');
+        Factories::config(Database::class);
+
+        $data = Factories::getComponentInstances('config');
+
+        $this->assertIsArray($data);
+        $this->assertArrayHasKey('aliases', $data);
+        $this->assertArrayHasKey('instances', $data);
+
+        return $data;
+    }
+
+    /**
+     * @depends testGetComponentInstances
+     */
+    public function testSetComponentInstances(array $data)
+    {
+        $before = Factories::getComponentInstances('config');
+        $this->assertSame(['aliases' => [], 'instances' => []], $before);
+
+        Factories::setComponentInstances('config', $data);
+
+        $data = Factories::getComponentInstances('config');
+
+        $this->assertIsArray($data);
+        $this->assertArrayHasKey('aliases', $data);
+        $this->assertArrayHasKey('instances', $data);
+
+        return $data;
+    }
+
+    /**
+     * @depends testSetComponentInstances
+     */
+    public function testIsUpdated(array $data)
+    {
+        Factories::reset();
+
+        $updated = $this->getFactoriesStaticProperty('updated');
+
+        $this->assertSame([], $updated);
+        $this->assertFalse(Factories::isUpdated('config'));
+
+        Factories::config('App');
+
+        $this->assertTrue(Factories::isUpdated('config'));
+        $this->assertFalse(Factories::isUpdated('models'));
+
+        Factories::setComponentInstances('config', $data);
+
+        $this->assertFalse(Factories::isUpdated('config'));
     }
 }

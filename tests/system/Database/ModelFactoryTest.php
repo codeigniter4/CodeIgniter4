@@ -66,12 +66,12 @@ final class ModelFactoryTest extends CIUnitTestCase
         $this->assertNull(ModelFactory::get('Banana'));
     }
 
-    public function testBasenameReturnsExistingNamespaceInstance(): void
+    public function testBasenameDoesNotReturnExistingNamespaceInstance(): void
     {
         ModelFactory::injectMock(UserModel::class, new JobModel());
 
         $basenameModel = ModelFactory::get('UserModel');
 
-        $this->assertInstanceOf(JobModel::class, $basenameModel);
+        $this->assertInstanceOf(UserModel::class, $basenameModel);
     }
 }

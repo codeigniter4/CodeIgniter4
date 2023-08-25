@@ -15,12 +15,12 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Exceptions\HasExitCodeInterface;
 use CodeIgniter\Exceptions\HTTPExceptionInterface;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
-use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Paths;
+use Config\Services;
 use ErrorException;
 use Psr\Log\LogLevel;
 use Throwable;
@@ -36,6 +36,8 @@ class Exceptions
      * Nesting level of the output buffering mechanism
      *
      * @var int
+     *
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     public $ob_level;
 
@@ -44,6 +46,8 @@ class Exceptions
      * cli and html error view directories.
      *
      * @var string
+     *
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     protected $viewPath;
 
@@ -57,7 +61,7 @@ class Exceptions
     /**
      * The request.
      *
-     * @var CLIRequest|IncomingRequest
+     * @var RequestInterface|null
      */
     protected $request;
 
@@ -70,16 +74,13 @@ class Exceptions
 
     private ?Throwable $exceptionCaughtByExceptionHandler = null;
 
-    /**
-     * @param CLIRequest|IncomingRequest $request
-     */
-    public function __construct(ExceptionsConfig $config, $request, ResponseInterface $response)
+    public function __construct(ExceptionsConfig $config)
     {
+        // For backward compatibility
         $this->ob_level = ob_get_level();
         $this->viewPath = rtrim($config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
-        $this->config   = $config;
-        $this->request  = $request;
-        $this->response = $response;
+
+        $this->config = $config;
 
         // workaround for upgraded users
         // This causes "Deprecated: Creation of dynamic property" in PHP 8.2.
@@ -113,8 +114,6 @@ class Exceptions
      * (Yay PHP7!). Will log the error, display it if display_errors is on,
      * and fire an event that allows custom actions to be taken at this point.
      *
-     * @codeCoverageIgnore
-     *
      * @return void
      * @phpstan-return never|void
      */
@@ -123,11 +122,6 @@ class Exceptions
         $this->exceptionCaughtByExceptionHandler = $exception;
 
         [$statusCode, $exitCode] = $this->determineCodes($exception);
-
-        // Get the first exception.
-        while ($prevException = $exception->getPrevious()) {
-            $exception = $prevException;
-        }
 
         if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true)) {
             log_message('critical', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
@@ -138,6 +132,29 @@ class Exceptions
             ]);
         }
 
+        $this->request  = Services::request();
+        $this->response = Services::response();
+
+        // Get the first exception.
+        while ($prevException = $exception->getPrevious()) {
+            $exception = $prevException;
+        }
+
+        if (method_exists($this->config, 'handler')) {
+            // Use new ExceptionHandler
+            $handler = $this->config->handler($statusCode, $exception);
+            $handler->handle(
+                $exception,
+                $this->request,
+                $this->response,
+                $statusCode,
+                $exitCode
+            );
+
+            return;
+        }
+
+        // For backward compatibility
         if (! is_cli()) {
             try {
                 $this->response->setStatusCode($statusCode);
@@ -225,6 +242,8 @@ class Exceptions
      * whether an HTTP or CLI request, etc.
      *
      * @return string The path and filename of the view file to use
+     *
+     * @deprecated 4.4.0 No longer used. Moved to ExceptionHandler.
      */
     protected function determineView(Throwable $exception, string $templatePath): string
     {
@@ -254,6 +273,8 @@ class Exceptions
      *
      * @return void
      * @phpstan-return never|void
+     *
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     protected function render(Throwable $exception, int $statusCode)
     {
@@ -281,10 +302,6 @@ class Exceptions
             exit(1);
         }
 
-        if (ob_get_level() > $this->ob_level + 1) {
-            ob_end_clean();
-        }
-
         echo(function () use ($exception, $statusCode, $viewFile): string {
             $vars = $this->collectVars($exception, $statusCode);
             extract($vars, EXTR_SKIP);
@@ -298,6 +315,8 @@ class Exceptions
 
     /**
      * Gathers the variables that will be made available to the view.
+     *
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     protected function collectVars(Throwable $exception, int $statusCode): array
     {
@@ -321,9 +340,11 @@ class Exceptions
     /**
      * Mask sensitive data in the trace.
      *
-     * @param array|object $trace
+     * @param array $trace
      *
-     * @return array|object
+     * @return array
+     *
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     protected function maskSensitiveData($trace, array $keysToMask, string $path = '')
     {
@@ -338,6 +359,8 @@ class Exceptions
      * @param array|object $args
      *
      * @return array|object
+     *
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     private function maskData($args, array $keysToMask, string $path = '')
     {
@@ -453,6 +476,8 @@ class Exceptions
     /**
      * Describes memory usage in real-world units. Intended for use
      * with memory_get_usage, etc.
+     *
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     public static function describeMemory(int $bytes): string
     {
@@ -471,6 +496,8 @@ class Exceptions
      * Creates a syntax-highlighted version of a PHP file.
      *
      * @return bool|string
+     *
+     * @deprecated 4.4.0 No longer used. Moved to BaseExceptionHandler.
      */
     public static function highlightFile(string $file, int $lineNumber, int $lines = 15)
     {

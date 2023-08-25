@@ -240,6 +240,44 @@ final class URITest extends CIUnitTestCase
         $this->assertSame($expected, (string) $uri);
     }
 
+    public function testWithScheme()
+    {
+        $url = 'example.com';
+        $uri = new URI('http://' . $url);
+
+        $new = $uri->withScheme('x');
+
+        $this->assertSame('x://' . $url, (string) $new);
+        $this->assertSame('http://' . $url, (string) $uri);
+    }
+
+    public function testWithSchemeSetsHttps()
+    {
+        $url = 'http://example.com/path';
+        $uri = new URI($url);
+
+        $new = $uri->withScheme('https');
+
+        $this->assertSame('https', $new->getScheme());
+        $this->assertSame('http', $uri->getScheme());
+
+        $expected = 'https://example.com/path';
+        $this->assertSame($expected, (string) $new);
+        $expected = 'http://example.com/path';
+        $this->assertSame($expected, (string) $uri);
+    }
+
+    public function testWithSchemeSetsEmpty()
+    {
+        $url = 'example.com';
+        $uri = new URI('http://' . $url);
+
+        $new = $uri->withScheme('');
+
+        $this->assertSame($url, (string) $new);
+        $this->assertSame('http://' . $url, (string) $uri);
+    }
+
     public function testSetUserInfoSetsValue(): void
     {
         $url = 'http://example.com/path';
@@ -932,32 +970,37 @@ final class URITest extends CIUnitTestCase
         $this->assertSame('foo/banana/baz', $uri->getPath());
     }
 
-    public function testSetSegmentFallback(): void
+    public function testSetSegmentNewOne(): void
     {
         $base = 'http://example.com';
+        $uri  = new URI($base);
 
-        $uri = new URI($base);
+        // Can set the next segment.
         $uri->setSegment(1, 'first');
-        $uri->setSegment(3, 'third');
+        // Can set the next segment.
+        $uri->setSegment(2, 'third');
 
         $this->assertSame('first/third', $uri->getPath());
 
+        // Can replace the existing segment.
         $uri->setSegment(2, 'second');
 
         $this->assertSame('first/second', $uri->getPath());
 
+        // Can set the next segment.
         $uri->setSegment(3, 'third');
 
         $this->assertSame('first/second/third', $uri->getPath());
 
-        $uri->setSegment(5, 'fifth');
+        // Can set the next segment.
+        $uri->setSegment(4, 'fourth');
 
-        $this->assertSame('first/second/third/fifth', $uri->getPath());
+        $this->assertSame('first/second/third/fourth', $uri->getPath());
 
-        // sixth or seventh was not set
+        // Cannot set the next next segment.
         $this->expectException(HTTPException::class);
 
-        $uri->setSegment(8, 'eighth');
+        $uri->setSegment(6, 'six');
     }
 
     public function testSetBadSegment(): void
@@ -985,8 +1028,11 @@ final class URITest extends CIUnitTestCase
 
     public function testBasedNoIndex(): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/ci/v4/controller/method';
+        $_SERVER['REQUEST_URI']  = '/ci/v4/controller/method';
+        $_SERVER['SCRIPT_NAME']  = '/ci/v4/index.php';
+        $_SERVER['QUERY_STRING'] = '';
+        $_SERVER['HTTP_HOST']    = 'example.com';
+        $_SERVER['PATH_INFO']    = '/controller/method';
 
         $this->resetServices();
 
@@ -1003,20 +1049,24 @@ final class URITest extends CIUnitTestCase
             'http://example.com/ci/v4/controller/method',
             (string) $request->getUri()
         );
-        $this->assertSame('ci/v4/controller/method', $request->getUri()->getPath());
+        $this->assertSame('/ci/v4/controller/method', $request->getUri()->getPath());
+        $this->assertSame('controller/method', $request->getUri()->getRoutePath());
 
         // standalone
         $uri = new URI('http://example.com/ci/v4/controller/method');
         $this->assertSame('http://example.com/ci/v4/controller/method', (string) $uri);
         $this->assertSame('/ci/v4/controller/method', $uri->getPath());
 
-        $this->assertSame($uri->getPath(), '/' . $request->getUri()->getPath());
+        $this->assertSame($uri->getPath(), $request->getUri()->getPath());
     }
 
     public function testBasedWithIndex(): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/ci/v4/index.php/controller/method';
+        $_SERVER['REQUEST_URI']  = '/ci/v4/index.php/controller/method';
+        $_SERVER['SCRIPT_NAME']  = '/ci/v4/index.php';
+        $_SERVER['QUERY_STRING'] = '';
+        $_SERVER['HTTP_HOST']    = 'example.com';
+        $_SERVER['PATH_INFO']    = '/controller/method';
 
         $this->resetServices();
 
@@ -1034,7 +1084,7 @@ final class URITest extends CIUnitTestCase
             (string) $request->getUri()
         );
         $this->assertSame(
-            'ci/v4/index.php/controller/method',
+            '/ci/v4/index.php/controller/method',
             $request->getUri()->getPath()
         );
 
@@ -1046,26 +1096,26 @@ final class URITest extends CIUnitTestCase
         );
         $this->assertSame('/ci/v4/index.php/controller/method', $uri->getPath());
 
-        $this->assertSame($uri->getPath(), '/' . $request->getUri()->getPath());
+        $this->assertSame($uri->getPath(), $request->getUri()->getPath());
     }
 
     public function testForceGlobalSecureRequests(): void
     {
         $this->resetServices();
 
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/ci/v4/controller/method';
+        $_SERVER['REQUEST_URI']  = '/ci/v4/controller/method';
+        $_SERVER['SCRIPT_NAME']  = '/ci/v4/index.php';
+        $_SERVER['QUERY_STRING'] = '';
+        $_SERVER['HTTP_HOST']    = 'example.com';
+        $_SERVER['PATH_INFO']    = '/controller/method';
 
         $config                            = new App();
         $config->baseURL                   = 'http://example.com/ci/v4';
-        $config->indexPage                 = 'index.php';
+        $config->indexPage                 = '';
         $config->forceGlobalSecureRequests = true;
-
         Factories::injectMock('config', 'App', $config);
 
-        $uri     = new URI('http://example.com/ci/v4/controller/method');
-        $request = new IncomingRequest($config, $uri, 'php://input', new UserAgent());
-
+        $request = Services::request($config);
         Services::injectMock('request', $request);
 
         // Detected by request

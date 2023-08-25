@@ -53,7 +53,7 @@ final class RoutesTest extends CIUnitTestCase
 
     public function testRoutesCommand(): void
     {
-        $this->getCleanRoutes();
+        Services::injectMock('routes', null);
 
         command('routes');
 
@@ -79,7 +79,7 @@ final class RoutesTest extends CIUnitTestCase
 
     public function testRoutesCommandSortByHandler(): void
     {
-        $this->getCleanRoutes();
+        Services::injectMock('routes', null);
 
         command('routes -h');
 
@@ -89,6 +89,62 @@ final class RoutesTest extends CIUnitTestCase
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
             | GET     | closure | »             | (Closure)                              |                | toolbar       |
             | GET     | /       | »             | \App\Controllers\Home::index           |                | toolbar       |
+            | GET     | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | POST    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | PUT     | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | DELETE  | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | OPTIONS | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | TRACE   | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | CONNECT | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | CLI     | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            +---------+---------+---------------+----------------------------------------+----------------+---------------+
+            EOL;
+        $this->assertStringContainsString($expected, $this->getBuffer());
+    }
+
+    public function testRoutesCommandHostHostname()
+    {
+        Services::injectMock('routes', null);
+
+        command('routes --host blog.example.com');
+
+        $expected = <<<'EOL'
+            Host: blog.example.com
+            +---------+---------+---------------+----------------------------------------+----------------+---------------+
+            | Method  | Route   | Name          | Handler                                | Before Filters | After Filters |
+            +---------+---------+---------------+----------------------------------------+----------------+---------------+
+            | GET     | /       | »             | \App\Controllers\Blog::index           |                | toolbar       |
+            | GET     | closure | »             | (Closure)                              |                | toolbar       |
+            | GET     | all     | »             | \App\Controllers\AllDomain::index      |                | toolbar       |
+            | GET     | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | POST    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | PUT     | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | DELETE  | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | OPTIONS | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | TRACE   | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | CONNECT | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | CLI     | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            +---------+---------+---------------+----------------------------------------+----------------+---------------+
+            EOL;
+        $this->assertStringContainsString($expected, $this->getBuffer());
+    }
+
+    public function testRoutesCommandHostSubdomain()
+    {
+        Services::injectMock('routes', null);
+
+        command('routes --host sub.example.com');
+
+        $expected = <<<'EOL'
+            Host: sub.example.com
+            +---------+---------+---------------+----------------------------------------+----------------+---------------+
+            | Method  | Route   | Name          | Handler                                | Before Filters | After Filters |
+            +---------+---------+---------------+----------------------------------------+----------------+---------------+
+            | GET     | /       | »             | \App\Controllers\Sub::index            |                | toolbar       |
+            | GET     | closure | »             | (Closure)                              |                | toolbar       |
+            | GET     | all     | »             | \App\Controllers\AllDomain::index      |                | toolbar       |
             | GET     | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
             | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
             | POST    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
@@ -129,7 +185,7 @@ final class RoutesTest extends CIUnitTestCase
             | TRACE      | testing                        | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
             | CONNECT    | testing                        | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
             | CLI        | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
-            | GET(auto)  | newautorouting                 |               | \Tests\Support\Controllers\Newautorouting::getIndex |                | toolbar       |
+            | GET(auto)  | newautorouting[/..]            |               | \Tests\Support\Controllers\Newautorouting::getIndex |                | toolbar       |
             | POST(auto) | newautorouting/save/../..[/..] |               | \Tests\Support\Controllers\Newautorouting::postSave |                | toolbar       |
             +------------+--------------------------------+---------------+-----------------------------------------------------+----------------+---------------+
             EOL;
@@ -139,6 +195,7 @@ final class RoutesTest extends CIUnitTestCase
     public function testRoutesCommandRouteLegacy(): void
     {
         $routes = $this->getCleanRoutes();
+        $routes->loadRoutes();
 
         $routes->setAutoRoute(true);
         $namespace = 'Tests\Support\Controllers';

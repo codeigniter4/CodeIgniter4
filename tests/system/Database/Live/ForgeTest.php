@@ -827,6 +827,41 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertSame('username', $fieldNames[1]);
     }
 
+    public function testAddColumnNull()
+    {
+        $this->forge->dropTable('forge_test_table', true);
+
+        $this->forge->addField([
+            'col1' => ['type' => 'VARCHAR', 'constraint' => 255],
+            'col2' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => true],
+            'col3' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => false],
+        ]);
+        $this->forge->createTable('forge_test_table');
+
+        $this->forge->addColumn('forge_test_table', [
+            'col4' => ['type' => 'VARCHAR', 'constraint' => 255],
+            'col5' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => true],
+            'col6' => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => false],
+        ]);
+
+        $this->db->resetDataCache();
+
+        $col1 = $this->getMetaData('col1', 'forge_test_table');
+        $this->assertFalse($col1->nullable);
+        $col2 = $this->getMetaData('col2', 'forge_test_table');
+        $this->assertTrue($col2->nullable);
+        $col3 = $this->getMetaData('col3', 'forge_test_table');
+        $this->assertFalse($col3->nullable);
+        $col4 = $this->getMetaData('col4', 'forge_test_table');
+        $this->assertTrue($col4->nullable);
+        $col5 = $this->getMetaData('col5', 'forge_test_table');
+        $this->assertTrue($col5->nullable);
+        $col6 = $this->getMetaData('col6', 'forge_test_table');
+        $this->assertFalse($col6->nullable);
+
+        $this->forge->dropTable('forge_test_table', true);
+    }
+
     public function testAddFields(): void
     {
         $tableName = 'forge_test_fields';
@@ -850,6 +885,7 @@ final class ForgeTest extends CIUnitTestCase
             'name' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
+                'null'       => true,
             ],
             'active' => [
                 'type'       => 'INTEGER',
@@ -891,7 +927,7 @@ final class ForgeTest extends CIUnitTestCase
                     'name'        => 'name',
                     'type'        => 'varchar',
                     'max_length'  => 255,
-                    'nullable'    => false,
+                    'nullable'    => true,
                     'default'     => null,
                     'primary_key' => 0,
                 ],
@@ -931,7 +967,7 @@ final class ForgeTest extends CIUnitTestCase
                 2 => [
                     'name'       => 'name',
                     'type'       => 'character varying',
-                    'nullable'   => false,
+                    'nullable'   => true,
                     'default'    => null,
                     'max_length' => '255',
                 ],
@@ -967,7 +1003,7 @@ final class ForgeTest extends CIUnitTestCase
                     'max_length'  => null,
                     'default'     => null,
                     'primary_key' => false,
-                    'nullable'    => false,
+                    'nullable'    => true,
                 ],
                 3 => [
                     'name'        => 'active',
@@ -985,24 +1021,28 @@ final class ForgeTest extends CIUnitTestCase
                     'type'       => 'int',
                     'default'    => null,
                     'max_length' => 10,
+                    'nullable'   => false,
                 ],
                 1 => [
                     'name'       => 'username',
                     'type'       => 'varchar',
                     'default'    => null,
                     'max_length' => 255,
+                    'nullable'   => false,
                 ],
                 2 => [
                     'name'       => 'name',
                     'type'       => 'varchar',
                     'default'    => null,
                     'max_length' => 255,
+                    'nullable'   => true,
                 ],
                 3 => [
                     'name'       => 'active',
                     'type'       => 'int',
                     'default'    => '((0))', // Why?
                     'max_length' => 10,
+                    'nullable'   => false,
                 ],
             ];
         } elseif ($this->db->DBDriver === 'OCI8') {
@@ -1025,8 +1065,8 @@ final class ForgeTest extends CIUnitTestCase
                     'name'       => 'name',
                     'type'       => 'VARCHAR2',
                     'max_length' => '255',
-                    'default'    => '',
-                    'nullable'   => false,
+                    'default'    => null,
+                    'nullable'   => true,
                 ],
                 3 => [
                     'name'       => 'active',
@@ -1280,11 +1320,6 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testModifyColumnNullTrue(): void
     {
-        // @TODO remove this in `4.4` branch
-        if ($this->db->DBDriver === 'SQLSRV') {
-            $this->markTestSkipped('SQLSRV does not support getFieldData() nullable.');
-        }
-
         $this->forge->dropTable('forge_test_modify', true);
 
         $this->forge->addField([
@@ -1314,11 +1349,6 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testModifyColumnNullFalse(): void
     {
-        // @TODO remove this in `4.4` branch
-        if ($this->db->DBDriver === 'SQLSRV') {
-            $this->markTestSkipped('SQLSRV does not support getFieldData() nullable.');
-        }
-
         $this->forge->dropTable('forge_test_modify', true);
 
         $this->forge->addField([

@@ -108,14 +108,15 @@ class Controller
     }
 
     /**
-     * Provides a simple way to tie into the main CodeIgniter class and
-     * tell it how long to cache the current page for.
+     * How long to cache the current page for.
+     *
+     * @params int $time time to live in seconds.
      *
      * @return void
      */
     protected function cachePage(int $time)
     {
-        CodeIgniter::cache($time);
+        Services::responsecache()->setTtl($time);
     }
 
     /**
