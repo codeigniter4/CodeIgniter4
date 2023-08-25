@@ -1,5 +1,24 @@
 # Changelog
 
+## [v4.3.8](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.8) (2023-08-25)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.7...v4.3.8)
+
+### Fixed Bugs
+
+* fix: [Pager] knocks down variables for View by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7758
+* fix: Model::insertBatch() causes error to non auto increment table by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7759
+* fix: [Model] updateBatch() may generate invalid SQL statement by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7787
+* fix: Model inserts cast $primaryKey value when using Entity by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7806
+* fix: instances of Validation rules are incremented each time `run()` is executed by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7815
+* fix: filter except empty by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7823
+* fix: `set_checkbox()` checks unchecked checkbox by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7818
+
+### Refactoring
+
+* Normalize data provider names by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/7656
+* refactor: remove Model::$tempPrimaryKeyValue by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7760
+* Remove unused cast on RedisHandler by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/7786
+
 ## [v4.3.7](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.7) (2023-07-30)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.6...v4.3.7)
 
