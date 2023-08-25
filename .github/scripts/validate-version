@@ -10,7 +10,7 @@ FILES=("system/CodeIgniter.php" "user_guide_src/source/conf.py")
 LENGTH="${#FILES[@]}"
 
 for FILE in "${FILES[@]}"; do
-    COUNT="$((COUNT + $(grep -c "$FILE" -e "$1")))"
+    COUNT="$((COUNT + $(grep -c "$FILE" -e "'$1'")))"
 done
 
 if [[ $COUNT -ne $LENGTH ]]; then
