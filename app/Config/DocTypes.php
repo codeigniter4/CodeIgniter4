@@ -2,7 +2,9 @@
 
 namespace Config;
 
-class DocTypes
+use CodeIgniter\Config\BaseConfig;
+
+class DocTypes extends BaseConfig
 {
     /**
      * List of valid document types.
