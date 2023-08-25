@@ -308,21 +308,22 @@
 <li><p><a class="reference internal" href="#methods" id="id15">Methods</a></p></li>
 <li><p><a class="reference internal" href="#passing-uri-segments-to-your-methods" id="id16">Passing URI Segments to Your Methods</a></p></li>
 <li><p><a class="reference internal" href="#default-controller" id="id17">Default Controller</a></p></li>
-<li><p><a class="reference internal" href="#organizing-your-controllers-into-sub-directories" id="id18">Organizing Your Controllers into Sub-directories</a></p></li>
+<li><p><a class="reference internal" href="#default-method-fallback" id="id18">Default Method Fallback</a></p></li>
+<li><p><a class="reference internal" href="#organizing-your-controllers-into-sub-directories" id="id19">Organizing Your Controllers into Sub-directories</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#auto-routing-legacy" id="id19">Auto Routing (Legacy)</a></p>
+<li><p><a class="reference internal" href="#auto-routing-legacy" id="id20">Auto Routing (Legacy)</a></p>
 <ul>
-<li><p><a class="reference internal" href="#let-s-try-it-hello-world-legacy" id="id20">Let’s try it: Hello World! (Legacy)</a></p></li>
-<li><p><a class="reference internal" href="#methods-legacy" id="id21">Methods (Legacy)</a></p></li>
-<li><p><a class="reference internal" href="#passing-uri-segments-to-your-methods-legacy" id="id22">Passing URI Segments to Your Methods (Legacy)</a></p></li>
-<li><p><a class="reference internal" href="#default-controller-legacy" id="id23">Default Controller (Legacy)</a></p></li>
-<li><p><a class="reference internal" href="#organizing-your-controllers-into-sub-directories-legacy" id="id24">Organizing Your Controllers into Sub-directories (Legacy)</a></p></li>
+<li><p><a class="reference internal" href="#let-s-try-it-hello-world-legacy" id="id21">Let’s try it: Hello World! (Legacy)</a></p></li>
+<li><p><a class="reference internal" href="#methods-legacy" id="id22">Methods (Legacy)</a></p></li>
+<li><p><a class="reference internal" href="#passing-uri-segments-to-your-methods-legacy" id="id23">Passing URI Segments to Your Methods (Legacy)</a></p></li>
+<li><p><a class="reference internal" href="#default-controller-legacy" id="id24">Default Controller (Legacy)</a></p></li>
+<li><p><a class="reference internal" href="#organizing-your-controllers-into-sub-directories-legacy" id="id25">Organizing Your Controllers into Sub-directories (Legacy)</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#remapping-method-calls" id="id25">Remapping Method Calls</a></p></li>
-<li><p><a class="reference internal" href="#extending-the-controller" id="id26">Extending the Controller</a></p></li>
-<li><p><a class="reference internal" href="#that-s-it" id="id27">That’s it!</a></p></li>
+<li><p><a class="reference internal" href="#remapping-method-calls" id="id26">Remapping Method Calls</a></p></li>
+<li><p><a class="reference internal" href="#extending-the-controller" id="id27">Extending the Controller</a></p></li>
+<li><p><a class="reference internal" href="#that-s-it" id="id28">That’s it!</a></p></li>
 </ul>
 </div>
 <section id="what-is-a-controller">
@@ -436,15 +437,6 @@ The method accepts an array of rules in the first parameter,
 and in the optional second parameter, an array of custom error messages to display
 if the items are not valid. Internally, this uses the controller’s
 <code class="docutils literal notranslate"><span class="pre">$this-&gt;request</span></code> instance to get the data to be validated.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">validate()</span></code> method uses <a class="reference internal" href="../libraries/validation.html#validation-withrequest"><span class="std std-ref">Validation::withRequest()</span></a> method.
-It validates data from <a class="reference internal" href="incomingrequest.html#incomingrequest-getting-json-data"><span class="std std-ref">$request-&gt;getJSON()</span></a>
-or <a class="reference internal" href="incomingrequest.html#incomingrequest-retrieving-raw-data"><span class="std std-ref">$request-&gt;getRawInput()</span></a>
-or <a class="reference internal" href="incomingrequest.html#incomingrequest-getting-data"><span class="std std-ref">$request-&gt;getVar()</span></a>.
-Which data is used depends on the request. Remember that an attacker is free to send any request to
-the server.</p>
-</div>
 <p>The <a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation Library docs</span></a> have details on
 rule and message array formats, as well as available rules:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -459,15 +451,38 @@ rule and message array formats, as well as available rules:</p>
             <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;required|is_unique[users.email,id,</span><span class="si">{</span><span class="nv">$userID</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span>
             <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|alpha_numeric_spaces&#39;</span><span class="p">,</span>
         <span class="p">]))</span> <span class="p">{</span>
+            <span class="c1">// The validation failed.</span>
             <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/update&#39;</span><span class="p">,</span> <span class="p">[</span>
                 <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">(),</span>
             <span class="p">]);</span>
         <span class="p">}</span>
 
-        <span class="c1">// do something here if successful...</span>
+        <span class="c1">// The validation was successful.</span>
+
+        <span class="c1">// Get the validated data.</span>
+        <span class="nv">$validData</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getValidated</span><span class="p">();</span>
+
+        <span class="c1">// ...</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When you use the <code class="docutils literal notranslate"><span class="pre">validate()</span></code> method, you should use the
+<a class="reference internal" href="../libraries/validation.html#validation-getting-validated-data"><span class="std std-ref">getValidated()</span></a> method to get the
+validated data. Because the <code class="docutils literal notranslate"><span class="pre">validate()</span></code> method uses the
+<a class="reference internal" href="../libraries/validation.html#validation-withrequest"><span class="std std-ref">Validation::withRequest()</span></a> method internally,
+and it validates data from
+<a class="reference internal" href="incomingrequest.html#incomingrequest-getting-json-data"><span class="std std-ref">$request-&gt;getJSON()</span></a>
+or <a class="reference internal" href="incomingrequest.html#incomingrequest-retrieving-raw-data"><span class="std std-ref">$request-&gt;getRawInput()</span></a>
+or <a class="reference internal" href="incomingrequest.html#incomingrequest-getting-data"><span class="std std-ref">$request-&gt;getVar()</span></a>, and an attacker
+could change what data is validated.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference internal" href="../libraries/validation.html#validation-getting-validated-data"><span class="std std-ref">$this-&gt;validator-&gt;getValidated()</span></a>
+method can be used since v4.4.0.</p>
 </div>
 <p>If you find it simpler to keep the rules in the configuration file, you can replace
 the <code class="docutils literal notranslate"><span class="pre">$rules</span></code> array with the name of the group as defined in <strong>app/Config/Validation.php</strong>:</p>
@@ -480,12 +495,18 @@ the <code class="docutils literal notranslate"><span class="pre">$rules</span></
     <span class="k">public</span> <span class="k">function</span> <span class="nf">updateUser</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$userID</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="s1">&#39;userRules&#39;</span><span class="p">))</span> <span class="p">{</span>
+            <span class="c1">// The validation failed.</span>
             <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/update&#39;</span><span class="p">,</span> <span class="p">[</span>
                 <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">(),</span>
             <span class="p">]);</span>
         <span class="p">}</span>
 
-        <span class="c1">// do something here if successful...</span>
+        <span class="c1">// The validation was successful.</span>
+
+        <span class="c1">// Get the validated data.</span>
+        <span class="nv">$validData</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getValidated</span><span class="p">();</span>
+
+        <span class="c1">// ...</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -744,12 +765,6 @@ method as parameters.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>If there are more parameters in the URI than the method parameters,
-Auto Routing (Improved) does not execute the method, and it results in 404
-Not Found.</p>
-</div>
 </section>
 <section id="default-controller">
 <h3><a class="toc-backref" href="#id17">Default Controller</a><a class="headerlink" href="#default-controller" title="Permalink to this headline"></a></h3>
@@ -786,8 +801,83 @@ are denied access by Auto Routing (Improved) for security reasons.</p>
 <a class="reference internal" href="routing.html#routing-auto-routing-improved-configuration-options"><span class="std std-ref">URI Routing</span></a> documentation.</p>
 </section>
 </section>
+<section id="default-method-fallback">
+<span id="controller-default-method-fallback"></span><h3><a class="toc-backref" href="#id18">Default Method Fallback</a><a class="headerlink" href="#default-method-fallback" title="Permalink to this headline"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.4.0.</span></p>
+</div>
+<p>If the controller method corresponding to the URI segment of the method name
+does not exist, and if the default method is defined, the remaining URI segments
+are passed to the default method for execution.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Product</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getIndex</span><span class="p">(</span><span class="nv">$id</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nv">$action</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Load the following URL:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">product</span><span class="o">/</span><span class="mi">15</span><span class="o">/</span><span class="nx">edit</span>
+</pre></div>
+</div>
+<p>The method will be passed URI segments 2 and 3 (<code class="docutils literal notranslate"><span class="pre">'15'</span></code> and <code class="docutils literal notranslate"><span class="pre">'edit'</span></code>):</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If there are more parameters in the URI than the method parameters,
+Auto Routing (Improved) does not execute the method, and it results in 404
+Not Found.</p>
+</div>
+<section id="fallback-to-default-controller">
+<h4>Fallback to Default Controller<a class="headerlink" href="#fallback-to-default-controller" title="Permalink to this headline"></a></h4>
+<p>If the controller corresponding to the URI segment of the controller name
+does not exist, and if the default controller (<code class="docutils literal notranslate"><span class="pre">Home</span></code> by default) exists in
+the directory, the remaining URI segments are passed to the default controller’s
+default method.</p>
+<p>For example, when you have the following default controller <code class="docutils literal notranslate"><span class="pre">Home</span></code> in the
+<strong>app/Controllers/News</strong> directory:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers\News</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">App\Controllers\BaseController</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Home</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getIndex</span><span class="p">(</span><span class="nv">$id</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Load the following URL:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">news</span><span class="o">/</span><span class="mi">101</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">News\Home</span></code> controller and the default <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code> method will be found.
+So the default method will be passed URI segments 2 (<code class="docutils literal notranslate"><span class="pre">'101'</span></code>):</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If there is <code class="docutils literal notranslate"><span class="pre">App\Controllers\News</span></code> controller, it takes precedence.
+The URI segments are searched sequentially and the first controller found
+is used.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If there are more parameters in the URI than the method parameters,
+Auto Routing (Improved) does not execute the method, and it results in 404
+Not Found.</p>
+</div>
+</section>
+</section>
 <section id="organizing-your-controllers-into-sub-directories">
-<h3><a class="toc-backref" href="#id18">Organizing Your Controllers into Sub-directories</a><a class="headerlink" href="#organizing-your-controllers-into-sub-directories" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id19">Organizing Your Controllers into Sub-directories</a><a class="headerlink" href="#organizing-your-controllers-into-sub-directories" title="Permalink to this headline"></a></h3>
 <p>If you are building a large application you might want to hierarchically
 organize or structure your controllers into sub-directories. CodeIgniter
 permits you to do this.</p>
@@ -821,7 +911,7 @@ your <strong>app/Config/Routes.php</strong> file.</p>
 </section>
 </section>
 <section id="auto-routing-legacy">
-<span id="controller-auto-routing-legacy"></span><h2><a class="toc-backref" href="#id19">Auto Routing (Legacy)</a><a class="headerlink" href="#auto-routing-legacy" title="Permalink to this headline"></a></h2>
+<span id="controller-auto-routing-legacy"></span><h2><a class="toc-backref" href="#id20">Auto Routing (Legacy)</a><a class="headerlink" href="#auto-routing-legacy" title="Permalink to this headline"></a></h2>
 <p>This section describes the functionality of Auto Routing (Legacy) that is a routing system from CodeIgniter 3.
 It automatically routes an HTTP request, and executes the corresponding controller method
 without route definitions. The auto-routing is disabled by default.</p>
@@ -845,7 +935,7 @@ or CSRF protection are bypassed.</p>
 <p>When a controller’s short name matches the first segment of a URI, it will be loaded.</p>
 </div>
 <section id="let-s-try-it-hello-world-legacy">
-<h3><a class="toc-backref" href="#id20">Let’s try it: Hello World! (Legacy)</a><a class="headerlink" href="#let-s-try-it-hello-world-legacy" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id21">Let’s try it: Hello World! (Legacy)</a><a class="headerlink" href="#let-s-try-it-hello-world-legacy" title="Permalink to this headline"></a></h3>
 <p>Let’s create a simple controller so you can see it in action. Using your text editor, create a file called <strong>Helloworld.php</strong>,
 and put the following code in it. You will notice that the <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> Controller is extending the <code class="docutils literal notranslate"><span class="pre">BaseController</span></code>. you can
 also extend the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> if you do not need the functionality of the BaseController.</p>
@@ -934,7 +1024,7 @@ Here is an example based on PSR-4 Autoloader:</p>
 </div>
 </section>
 <section id="methods-legacy">
-<h3><a class="toc-backref" href="#id21">Methods (Legacy)</a><a class="headerlink" href="#methods-legacy" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id22">Methods (Legacy)</a><a class="headerlink" href="#methods-legacy" title="Permalink to this headline"></a></h3>
 <p>In the above example, the method name is <code class="docutils literal notranslate"><span class="pre">index()</span></code>. The <code class="docutils literal notranslate"><span class="pre">index()</span></code> method
 is always loaded by default if the <strong>second segment</strong> of the URI is
 empty. Another way to show your “Hello World” message would be this:</p>
@@ -969,7 +1059,7 @@ controller gets called.</strong></p>
 <p>You should see your new message.</p>
 </section>
 <section id="passing-uri-segments-to-your-methods-legacy">
-<h3><a class="toc-backref" href="#id22">Passing URI Segments to Your Methods (Legacy)</a><a class="headerlink" href="#passing-uri-segments-to-your-methods-legacy" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id23">Passing URI Segments to Your Methods (Legacy)</a><a class="headerlink" href="#passing-uri-segments-to-your-methods-legacy" title="Permalink to this headline"></a></h3>
 <p>If your URI contains more than two segments they will be passed to your
 method as parameters.</p>
 <p>For example, let’s say you have a URI like this:</p>
@@ -992,7 +1082,7 @@ method as parameters.</p>
 </div>
 </section>
 <section id="default-controller-legacy">
-<h3><a class="toc-backref" href="#id23">Default Controller (Legacy)</a><a class="headerlink" href="#default-controller-legacy" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id24">Default Controller (Legacy)</a><a class="headerlink" href="#default-controller-legacy" title="Permalink to this headline"></a></h3>
 <p>The Default Controller is a special controller that is used when a URI end with
 a directory name or when a URI is not present, as will be the case when only your
 site root URL is requested.</p>
@@ -1024,7 +1114,7 @@ see the “Hello World” message.</p>
 </section>
 </section>
 <section id="organizing-your-controllers-into-sub-directories-legacy">
-<h3><a class="toc-backref" href="#id24">Organizing Your Controllers into Sub-directories (Legacy)</a><a class="headerlink" href="#organizing-your-controllers-into-sub-directories-legacy" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id25">Organizing Your Controllers into Sub-directories (Legacy)</a><a class="headerlink" href="#organizing-your-controllers-into-sub-directories-legacy" title="Permalink to this headline"></a></h3>
 <p>If you are building a large application you might want to hierarchically
 organize or structure your controllers into sub-directories. CodeIgniter
 permits you to do this.</p>
@@ -1057,7 +1147,7 @@ your <strong>app/Config/Routes.php</strong> file.</p>
 </section>
 </section>
 <section id="remapping-method-calls">
-<h2><a class="toc-backref" href="#id25">Remapping Method Calls</a><a class="headerlink" href="#remapping-method-calls" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id26">Remapping Method Calls</a><a class="headerlink" href="#remapping-method-calls" title="Permalink to this headline"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><strong>Auto Routing (Improved)</strong> does not support this feature intentionally.</p>
@@ -1128,11 +1218,11 @@ to emulate CodeIgniter’s default behavior.</p>
 </div>
 </section>
 <section id="extending-the-controller">
-<h2><a class="toc-backref" href="#id26">Extending the Controller</a><a class="headerlink" href="#extending-the-controller" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id27">Extending the Controller</a><a class="headerlink" href="#extending-the-controller" title="Permalink to this headline"></a></h2>
 <p>If you want to extend the controller, see <a class="reference internal" href="../extending/basecontroller.html"><span class="doc">Extending the Controller</span></a>.</p>
 </section>
 <section id="that-s-it">
-<h2><a class="toc-backref" href="#id27">That’s it!</a><a class="headerlink" href="#that-s-it" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id28">That’s it!</a><a class="headerlink" href="#that-s-it" title="Permalink to this headline"></a></h2>
 <p>That, in a nutshell, is all there is to know about controllers.</p>
 </section>
 </section>

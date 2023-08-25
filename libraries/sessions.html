@@ -298,17 +298,18 @@ in the last section of the table of contents:</p>
 <li><p><a class="reference internal" href="#removing-session-data" id="id10">Removing Session Data</a></p></li>
 <li><p><a class="reference internal" href="#flashdata" id="id11">Flashdata</a></p></li>
 <li><p><a class="reference internal" href="#tempdata" id="id12">Tempdata</a></p></li>
-<li><p><a class="reference internal" href="#destroying-a-session" id="id13">Destroying a Session</a></p></li>
-<li><p><a class="reference internal" href="#accessing-session-metadata" id="id14">Accessing Session Metadata</a></p></li>
+<li><p><a class="reference internal" href="#closing-a-session" id="id13">Closing a Session</a></p></li>
+<li><p><a class="reference internal" href="#destroying-a-session" id="id14">Destroying a Session</a></p></li>
+<li><p><a class="reference internal" href="#accessing-session-metadata" id="id15">Accessing Session Metadata</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#session-preferences" id="id15">Session Preferences</a></p></li>
-<li><p><a class="reference internal" href="#session-drivers" id="id16">Session Drivers</a></p>
+<li><p><a class="reference internal" href="#session-preferences" id="id16">Session Preferences</a></p></li>
+<li><p><a class="reference internal" href="#session-drivers" id="id17">Session Drivers</a></p>
 <ul>
-<li><p><a class="reference internal" href="#filehandler-driver-the-default" id="id17">FileHandler Driver (the default)</a></p></li>
-<li><p><a class="reference internal" href="#databasehandler-driver" id="id18">DatabaseHandler Driver</a></p></li>
-<li><p><a class="reference internal" href="#redishandler-driver" id="id19">RedisHandler Driver</a></p></li>
-<li><p><a class="reference internal" href="#memcachedhandler-driver" id="id20">MemcachedHandler Driver</a></p></li>
+<li><p><a class="reference internal" href="#filehandler-driver-the-default" id="id18">FileHandler Driver (the default)</a></p></li>
+<li><p><a class="reference internal" href="#databasehandler-driver" id="id19">DatabaseHandler Driver</a></p></li>
+<li><p><a class="reference internal" href="#redishandler-driver" id="id20">RedisHandler Driver</a></p></li>
+<li><p><a class="reference internal" href="#memcachedhandler-driver" id="id21">MemcachedHandler Driver</a></p></li>
 </ul>
 </li>
 </ul>
@@ -384,7 +385,7 @@ longer need it. So, what you need is to close the session for the
 current request after you no longer need it.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nb">session_write_close</span><span class="p">();</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">close</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -750,8 +751,31 @@ intend to reuse that same key in the same request, you’d want to use
 </pre></div>
 </div>
 </section>
+<section id="closing-a-session">
+<h3><a class="toc-backref" href="#id13">Closing a Session</a><a class="headerlink" href="#closing-a-session" title="Permalink to this headline"></a></h3>
+<section id="close">
+<span id="session-close"></span><h4>close()<a class="headerlink" href="#close" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.4.0.</span></p>
+</div>
+<p>To close the current session manually after you no longer need it, use the
+<code class="docutils literal notranslate"><span class="pre">close()</span></code> method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">close</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>You do not have to close the session manually, PHP will close it automatically
+after your script terminated. But as session data is locked to prevent concurrent
+writes only one request may operate on a session at any time. You may improve
+your site performance by closing the session as soon as all changes to session
+data are done.</p>
+<p>This method will work in exactly the same way as PHP’s
+<a class="reference external" href="https://www.php.net/session_write_close">session_write_close()</a> function.</p>
+</section>
+</section>
 <section id="destroying-a-session">
-<h3><a class="toc-backref" href="#id13">Destroying a Session</a><a class="headerlink" href="#destroying-a-session" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14">Destroying a Session</a><a class="headerlink" href="#destroying-a-session" title="Permalink to this headline"></a></h3>
 <section id="destroy">
 <span id="session-destroy"></span><h4>destroy()<a class="headerlink" href="#destroy" title="Permalink to this headline"></a></h4>
 <p>To clear the current session (for example, during a logout), you may
@@ -787,7 +811,7 @@ method. Use the <code class="docutils literal notranslate"><span class="pre">des
 </section>
 </section>
 <section id="accessing-session-metadata">
-<h3><a class="toc-backref" href="#id14">Accessing Session Metadata</a><a class="headerlink" href="#accessing-session-metadata" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id15">Accessing Session Metadata</a><a class="headerlink" href="#accessing-session-metadata" title="Permalink to this headline"></a></h3>
 <p>In CodeIgniter 2, the session data array included 4 items
 by default: ‘session_id’, ‘ip_address’, ‘user_agent’, ‘last_activity’.</p>
 <p>This was due to the specifics of how sessions worked, but is now no longer
@@ -805,7 +829,7 @@ accessing them:</p>
 </section>
 </section>
 <section id="session-preferences">
-<h2><a class="toc-backref" href="#id15">Session Preferences</a><a class="headerlink" href="#session-preferences" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id16">Session Preferences</a><a class="headerlink" href="#session-preferences" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter will usually make everything work out of the box. However,
 Sessions are a very sensitive component of any application, so some
 careful configuration must be done. Please take your time to consider
@@ -936,7 +960,7 @@ ignored.</p>
 </div>
 </section>
 <section id="session-drivers">
-<h2><a class="toc-backref" href="#id16">Session Drivers</a><a class="headerlink" href="#session-drivers" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id17">Session Drivers</a><a class="headerlink" href="#session-drivers" title="Permalink to this headline"></a></h2>
 <p>As already mentioned, the Session library comes with 4 handlers, or storage
 engines, that you can use:</p>
 <blockquote>
@@ -961,7 +985,7 @@ get yourself familiar with them (below) before you make that choice.</p>
 a PHP array, while preventing the data from being persisted.</p>
 </div>
 <section id="filehandler-driver-the-default">
-<h3><a class="toc-backref" href="#id17">FileHandler Driver (the default)</a><a class="headerlink" href="#filehandler-driver-the-default" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id18">FileHandler Driver (the default)</a><a class="headerlink" href="#filehandler-driver-the-default" title="Permalink to this headline"></a></h3>
 <p>The ‘FileHandler’ driver uses your file system for storing session data.</p>
 <p>It can safely be said that it works exactly like PHP’s own default session
 implementation, but in case this is an important detail for you, have it
@@ -1004,14 +1028,14 @@ into using <a class="reference external" href="https://eddmann.com/posts/storing
 </section>
 </section>
 <section id="databasehandler-driver">
-<span id="sessions-databasehandler-driver"></span><h3><a class="toc-backref" href="#id18">DatabaseHandler Driver</a><a class="headerlink" href="#databasehandler-driver" title="Permalink to this headline"></a></h3>
+<span id="sessions-databasehandler-driver"></span><h3><a class="toc-backref" href="#id19">DatabaseHandler Driver</a><a class="headerlink" href="#databasehandler-driver" title="Permalink to this headline"></a></h3>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Only MySQL and PostgreSQL databases are officially
 supported, due to lack of advisory locking mechanisms on other
 platforms. Using sessions without locks can cause all sorts of
 problems, especially with heavy usage of AJAX, and we will not
-support such cases. Use <code class="docutils literal notranslate"><span class="pre">session_write_close()</span></code> after you’ve
+support such cases. Use the <a class="reference internal" href="#session-close"><span class="std std-ref">close()</span></a> method after you’ve
 done processing session data if you’re having performance
 issues.</p>
 </div>
@@ -1142,7 +1166,7 @@ when it generates the code.</p>
 </section>
 </section>
 <section id="redishandler-driver">
-<span id="sessions-redishandler-driver"></span><h3><a class="toc-backref" href="#id19">RedisHandler Driver</a><a class="headerlink" href="#redishandler-driver" title="Permalink to this headline"></a></h3>
+<span id="sessions-redishandler-driver"></span><h3><a class="toc-backref" href="#id20">RedisHandler Driver</a><a class="headerlink" href="#redishandler-driver" title="Permalink to this headline"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since Redis doesn’t have a locking mechanism exposed, locks for
@@ -1193,7 +1217,7 @@ sufficient:</p>
 </section>
 </section>
 <section id="memcachedhandler-driver">
-<span id="sessions-memcachedhandler-driver"></span><h3><a class="toc-backref" href="#id20">MemcachedHandler Driver</a><a class="headerlink" href="#memcachedhandler-driver" title="Permalink to this headline"></a></h3>
+<span id="sessions-memcachedhandler-driver"></span><h3><a class="toc-backref" href="#id21">MemcachedHandler Driver</a><a class="headerlink" href="#memcachedhandler-driver" title="Permalink to this headline"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since Memcached doesn’t have a locking mechanism exposed, locks

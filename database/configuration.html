@@ -607,8 +607,8 @@ values as a JSON string in your <strong>.env</strong> file:</p>
 <span id="database-config-explanation-of-values"></span><h2><a class="toc-backref" href="#id8">Explanation of Values:</a><a class="headerlink" href="#explanation-of-values" title="Permalink to this headline"></a></h2>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 12%" />
-<col style="width: 88%" />
+<col style="width: 13%" />
+<col style="width: 87%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Name Config</p></th>
@@ -699,6 +699,9 @@ To enforce Foreign Key constraint, set this config item to true.</p>
 </tr>
 <tr class="row-even"><td><p><strong>busyTimeout</strong></p></td>
 <td><p>milliseconds (int) - Sleeps for a specified amount of time when a table is locked (<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only).</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>numberNative</strong></p></td>
+<td><p>true/false (boolean) - Whether or not to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE (<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only).</p></td>
 </tr>
 </tbody>
 </table>

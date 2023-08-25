@@ -294,6 +294,7 @@
 <li><p><a class="reference internal" href="#enabling-the-toolbar" id="id6">Enabling the Toolbar</a></p></li>
 <li><p><a class="reference internal" href="#setting-benchmark-points" id="id7">Setting Benchmark Points</a></p></li>
 <li><p><a class="reference internal" href="#creating-custom-collectors" id="id8">Creating Custom Collectors</a></p></li>
+<li><p><a class="reference internal" href="#hot-reloading" id="id9">Hot Reloading</a></p></li>
 </ul>
 </li>
 </ul>
@@ -505,6 +506,16 @@ outer array’s key is the name of the section on the Vars tab:</p>
 </pre></div>
 </div>
 </section>
+</section>
+<section id="hot-reloading">
+<span id="debug-toolbar-hot-reload"></span><h3><a class="toc-backref" href="#id9">Hot Reloading</a><a class="headerlink" href="#hot-reloading" title="Permalink to this headline"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.4.0.</span></p>
+</div>
+<p>The Debug Toolbar includes a feature called Hot Reloading that allows you to make changes to your application’s code and have them automatically reloaded in the browser without having to refresh the page. This is a great time-saver during development.</p>
+<p>To enable Hot Reloading while you are developing, you can click the button on the left side of the toolbar that looks like a refresh icon. This will enable Hot Reloading for all pages until you disable it.</p>
+<p>Hot Reloading works by scanning the files within the <strong>app</strong> directory every second and looking for changes. If it finds any, it will send a message to the browser to reload the page. It does not scan any other directories, so if you are making changes to files outside of the <strong>app</strong> directory, you will need to manually refresh the page.</p>
+<p>If you need to watch files outside of the <strong>app</strong> directory, or are finding it slow due to the size of your project, you can specify the directories to scan and the file extensions to scan for in the <code class="docutils literal notranslate"><span class="pre">$watchedDirectories</span></code> and <code class="docutils literal notranslate"><span class="pre">$watchedExtensions</span></code> properties of the <strong>app/Config/Toolbar.php</strong> configuration file.</p>
 </section>
 </section>
 </section>

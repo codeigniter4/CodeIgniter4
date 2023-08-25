@@ -283,10 +283,10 @@
 <h1>View Layouts<a class="headerlink" href="#view-layouts" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#creating-a-layout" id="id1">Creating A Layout</a></p></li>
-<li><p><a class="reference internal" href="#using-layouts-in-views" id="id2">Using Layouts in Views</a></p></li>
-<li><p><a class="reference internal" href="#rendering-the-view" id="id3">Rendering the View</a></p></li>
-<li><p><a class="reference internal" href="#including-view-partials" id="id4">Including View Partials</a></p></li>
+<li><p><a class="reference internal" href="#creating-a-layout" id="id2">Creating A Layout</a></p></li>
+<li><p><a class="reference internal" href="#using-layouts-in-views" id="id3">Using Layouts in Views</a></p></li>
+<li><p><a class="reference internal" href="#rendering-the-view" id="id4">Rendering the View</a></p></li>
+<li><p><a class="reference internal" href="#including-view-partials" id="id5">Including View Partials</a></p></li>
 </ul>
 </div>
 <p>CodeIgniter supports a simple, yet very flexible, layout system that makes it simple to use one or more
@@ -295,7 +295,7 @@ any view being rendered. You could create different layouts to support one-colum
 blog archive pages, and more. Layouts are never directly rendered. Instead, you render a view, which
 specifies the layout that it wants to extend.</p>
 <section id="creating-a-layout">
-<h2><a class="toc-backref" href="#id1">Creating A Layout</a><a class="headerlink" href="#creating-a-layout" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id2">Creating A Layout</a><a class="headerlink" href="#creating-a-layout" title="Permalink to this headline"></a></h2>
 <p>Layouts are views like any other. The only difference is their intended usage. Layouts are the only view
 files that would make use of the <code class="docutils literal notranslate"><span class="pre">renderSection()</span></code> method. This method acts as a placeholder for content.</p>
 <p>E.g. <strong>app/Views/default.php</strong>:</p>
@@ -310,11 +310,29 @@ files that would make use of the <code class="docutils literal notranslate"><spa
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">renderSection()</span></code> method only has one argument - the name of the section. That way any child views know
-what to name the content section.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">renderSection()</span></code> method has two arguments: <code class="docutils literal notranslate"><span class="pre">$sectionName</span></code> and <code class="docutils literal notranslate"><span class="pre">$saveData</span></code>. <code class="docutils literal notranslate"><span class="pre">$sectionName</span></code> is the name of
+the section used by any child view to name the content section. If the boolean argument <code class="docutils literal notranslate"><span class="pre">$saveData</span></code> is set to true,
+the method saves data for subsequent calls. Otherwise, the method cleans the data after displaying the contents.</p>
+<p>E.g. <strong>app/Views/welcome_message.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;!</span><span class="nx">doctype</span> <span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;&lt;?=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">renderSection</span><span class="p">(</span><span class="s1">&#39;page_title&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">renderSection</span><span class="p">(</span><span class="s1">&#39;page_title&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">renderSection</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">$saveData</span></code> can be used since v4.4.0.</p>
+</div>
 </section>
 <section id="using-layouts-in-views">
-<h2><a class="toc-backref" href="#id2">Using Layouts in Views</a><a class="headerlink" href="#using-layouts-in-views" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Using Layouts in Views</a><a class="headerlink" href="#using-layouts-in-views" title="Permalink to this headline"></a></h2>
 <p>Whenever a view wants to be inserted into a layout, it must use the <code class="docutils literal notranslate"><span class="pre">extend()</span></code> method at the top of the file:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
@@ -350,7 +368,7 @@ matches the section name exists.</p>
 </div>
 </section>
 <section id="rendering-the-view">
-<h2><a class="toc-backref" href="#id3">Rendering the View</a><a class="headerlink" href="#rendering-the-view" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Rendering the View</a><a class="headerlink" href="#rendering-the-view" title="Permalink to this headline"></a></h2>
 <p>Rendering the view and it’s layout is done exactly as any other view would be displayed within a controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -370,7 +388,7 @@ the Layout <strong>app/Views/default.php</strong> is also used automatically.
 The renderer is smart enough to detect whether the view should be rendered on its own, or if it needs a layout.</p>
 </section>
 <section id="including-view-partials">
-<h2><a class="toc-backref" href="#id4">Including View Partials</a><a class="headerlink" href="#including-view-partials" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Including View Partials</a><a class="headerlink" href="#including-view-partials" title="Permalink to this headline"></a></h2>
 <p>View partials are view files that do not extend any layout. They typically include content that can be reused from
 view to view. When using view layouts you must use <code class="docutils literal notranslate"><span class="pre">$this-&gt;include()</span></code> to include any view partials.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>

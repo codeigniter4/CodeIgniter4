@@ -374,6 +374,8 @@ method that will automatically perform <a class="reference internal" href="../in
 determine the correct locale to use. The second method allows you to specify a segment in your routes that
 will be used to set the locale.</p>
 <p>Should you ever need to set the locale directly, see <a class="reference internal" href="#setting-the-current-locale">Setting the Current Locale</a>.</p>
+<p>Since v4.4.0, <code class="docutils literal notranslate"><span class="pre">IncomingRequest::setValidLocales()</span></code> has been added to set
+(and reset) valid locales that are set from <code class="docutils literal notranslate"><span class="pre">Config\App::$supportedLocales</span></code> setting.</p>
 <section id="content-negotiation">
 <h4><a class="toc-backref" href="#id6">Content Negotiation</a><a class="headerlink" href="#content-negotiation" title="Permalink to this headline"></a></h4>
 <p>You can set up content negotiation to happen automatically by setting two additional settings in <strong>app/Config/App.php</strong>.

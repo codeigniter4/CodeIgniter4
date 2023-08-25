@@ -313,11 +313,12 @@ or communicate with an API, among many other things.</p>
 <li><p><a class="reference internal" href="#http-errors" id="id18">http_errors</a></p></li>
 <li><p><a class="reference internal" href="#json" id="id19">json</a></p></li>
 <li><p><a class="reference internal" href="#multipart" id="id20">multipart</a></p></li>
-<li><p><a class="reference internal" href="#query" id="id21">query</a></p></li>
-<li><p><a class="reference internal" href="#timeout" id="id22">timeout</a></p></li>
-<li><p><a class="reference internal" href="#user-agent" id="id23">user_agent</a></p></li>
-<li><p><a class="reference internal" href="#verify" id="id24">verify</a></p></li>
-<li><p><a class="reference internal" href="#version" id="id25">version</a></p></li>
+<li><p><a class="reference internal" href="#proxy" id="id21">proxy</a></p></li>
+<li><p><a class="reference internal" href="#query" id="id22">query</a></p></li>
+<li><p><a class="reference internal" href="#timeout" id="id23">timeout</a></p></li>
+<li><p><a class="reference internal" href="#user-agent" id="id24">user_agent</a></p></li>
+<li><p><a class="reference internal" href="#verify" id="id25">verify</a></p></li>
+<li><p><a class="reference internal" href="#version" id="id26">version</a></p></li>
 </ul>
 </li>
 </ul>
@@ -335,11 +336,15 @@ will provide it, so please check with your host to verify if you run into proble
 <section id="config-for-curlrequest">
 <h2><a class="toc-backref" href="#id1">Config for CURLRequest</a><a class="headerlink" href="#config-for-curlrequest" title="Permalink to this headline"></a></h2>
 <section id="sharing-options">
-<h3><a class="toc-backref" href="#id2">Sharing Options</a><a class="headerlink" href="#sharing-options" title="Permalink to this headline"></a></h3>
-<p>Due to historical reasons, by default, the CURLRequest shares all the options between requests.
-If you send more than one request with an instance of the class,
-this behavior may cause an error request with unnecessary headers and body.</p>
-<p>You can change the behavior by editing the following config parameter value in <strong>app/Config/CURLRequest.php</strong> to <code class="docutils literal notranslate"><span class="pre">false</span></code>:</p>
+<span id="curlrequest-sharing-options"></span><h3><a class="toc-backref" href="#id2">Sharing Options</a><a class="headerlink" href="#sharing-options" title="Permalink to this headline"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.4.0, the default value has been changed to <code class="docutils literal notranslate"><span class="pre">false</span></code>. This
+setting exists only for backward compatibility. New users do not need to
+change the setting.</p>
+</div>
+<p>If you want to share all the options between requests, set <code class="docutils literal notranslate"><span class="pre">$shareOptions</span></code> to
+<code class="docutils literal notranslate"><span class="pre">true</span></code> in <strong>app/Config/CURLRequest.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -348,12 +353,13 @@ this behavior may cause an error request with unnecessary headers and body.</p>
 
 <span class="k">class</span> <span class="nc">CURLRequest</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="nv">$shareOptions</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
-
     <span class="c1">// ...</span>
+    <span class="k">public</span> <span class="nx">bool</span> <span class="nv">$shareOptions</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>If you send more than one request with an instance of the class, this behavior
+may cause an error request with unnecessary headers and body.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Before v4.2.0, the request body is not reset even if <code class="docutils literal notranslate"><span class="pre">$shareOptions</span></code> is false due to a bug.</p>
@@ -773,8 +779,24 @@ has been disabled. Any files that you want to send must be passed as instances o
 requests.</p>
 </div>
 </section>
+<section id="proxy">
+<span id="curlrequest-request-options-proxy"></span><h3><a class="toc-backref" href="#id21">proxy</a><a class="headerlink" href="#proxy" title="Permalink to this headline"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.4.0.</span></p>
+</div>
+<p>You can set a proxy by passing an associative array as the <code class="docutils literal notranslate"><span class="pre">proxy</span></code> option:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span>
+    <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span>
+    <span class="p">[</span><span class="s1">&#39;proxy&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://localhost:3128&#39;</span><span class="p">]</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
 <section id="query">
-<h3><a class="toc-backref" href="#id21">query</a><a class="headerlink" href="#query" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id22">query</a><a class="headerlink" href="#query" title="Permalink to this headline"></a></h3>
 <p>You can pass along data to send as query string variables by passing an associative array as the <code class="docutils literal notranslate"><span class="pre">query</span></code> option:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -784,7 +806,7 @@ requests.</p>
 </div>
 </section>
 <section id="timeout">
-<h3><a class="toc-backref" href="#id22">timeout</a><a class="headerlink" href="#timeout" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id23">timeout</a><a class="headerlink" href="#timeout" title="Permalink to this headline"></a></h3>
 <p>By default, cURL functions are allowed to run as long as they take, with no time limit. You can modify this with the <code class="docutils literal notranslate"><span class="pre">timeout</span></code>
 option. The value should be the number of seconds you want the functions to execute for. Use 0 to wait indefinitely:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -794,7 +816,7 @@ option. The value should be the number of seconds you want the functions to exec
 </div>
 </section>
 <section id="user-agent">
-<h3><a class="toc-backref" href="#id23">user_agent</a><a class="headerlink" href="#user-agent" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id24">user_agent</a><a class="headerlink" href="#user-agent" title="Permalink to this headline"></a></h3>
 <p>Allows specifying the User Agent for requests:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -803,7 +825,7 @@ option. The value should be the number of seconds you want the functions to exec
 </div>
 </section>
 <section id="verify">
-<h3><a class="toc-backref" href="#id24">verify</a><a class="headerlink" href="#verify" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id25">verify</a><a class="headerlink" href="#verify" title="Permalink to this headline"></a></h3>
 <p>This option describes the SSL certificate verification behavior. If the <code class="docutils literal notranslate"><span class="pre">verify</span></code> option is <code class="docutils literal notranslate"><span class="pre">true</span></code>, it enables the
 SSL certificate verification and uses the default CA bundle provided by the operating system. If set to <code class="docutils literal notranslate"><span class="pre">false</span></code> it
 will disable the certificate verification (this is insecure, and allows man-in-the-middle attacks!). You can set it
@@ -823,7 +845,7 @@ is true:</p>
 </div>
 </section>
 <section id="version">
-<span id="curlrequest-version"></span><h3><a class="toc-backref" href="#id25">version</a><a class="headerlink" href="#version" title="Permalink to this headline"></a></h3>
+<span id="curlrequest-version"></span><h3><a class="toc-backref" href="#id26">version</a><a class="headerlink" href="#version" title="Permalink to this headline"></a></h3>
 <p>To set the HTTP protocol to use, you can pass a string or float with the version number (typically either <code class="docutils literal notranslate"><span class="pre">1.0</span></code>
 or <code class="docutils literal notranslate"><span class="pre">1.1</span></code>, <code class="docutils literal notranslate"><span class="pre">2.0</span></code> is supported since v4.3.0.):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>

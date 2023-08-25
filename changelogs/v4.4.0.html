@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Version 4.4.0 &mdash; CodeIgniter 4.3.8 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Version 4.3.8" href="v4.3.8.html" />
+    <link rel="prev" title="Change Logs" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/ci-logo-text.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/requirements.html">Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/credits.html">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/psr.html">PSR Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License Agreement</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../installation/index.html">Installation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Change Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Build Your First Application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/static_pages.html">Static Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/news_section.html">News Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/create_news_items.html">Create News Items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/conclusion.html">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/factories.html">Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/http.html">Working with HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/security.html">Security Guidelines</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../general/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/ajax.html">AJAX Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/methodspoofing.html">HTTP Method Spoofing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/restful.html">RESTful Resource Handling</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/views.html">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_cells.html">View Cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_renderer.html">View Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_parser.html">View Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working with Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../database/examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/helpers.html">Query Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/metadata.html">Getting MetaData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/events.html">Database Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/utilities.html">Database Utilities</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../models/model.html">Using CodeIgniter's Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/entities.html">Using Entity Classes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/forge.html">Database Manipulation with Database Forge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/migration.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/seeds.html">Database Seeding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/db_commands.html">Database Commands</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/file_collections.html">File Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/publisher.html">Publisher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/security.html">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/time.html">Times and Dates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/typography.html">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uploaded_files.html">Working with Uploaded Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uri.html">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/array_helper.html">Array Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/date_helper.html">Date Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/filesystem_helper.html">Filesystem Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/form_helper.html">Form Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/html_helper.html">HTML Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/inflector_helper.html">Inflector Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/number_helper.html">Number Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/security_helper.html">Security Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/test_helper.html">Test Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/text_helper.html">Text Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/url_helper.html">URL Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/xml_helper.html">XML Helper</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../testing/overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/fabricator.html">Generating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_overview.html">CLI Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_controllers.html">Running Controllers via CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/spark_commands.html">Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/common.html">Replacing Common Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/basecontroller.html">Extending the Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/authentication.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/composer_packages.html">Creating Composer Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/contributing.html">Contributing to CodeIgniter</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/official_packages.html">Official Packages</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/changelogs/v4.4.0.rst">Edit this page</a>
+
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../installation/index.html">Installation</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Change Logs</a></li>
+      <li class="breadcrumb-item active">Version 4.4.0</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="version-4-4-0">
+<h1>Version 4.4.0<a class="headerlink" href="#version-4-4-0" title="Permalink to this headline"></a></h1>
+<p>Release Date: Unreleased</p>
+<p><strong>4.4.0 release of CodeIgniter4</strong></p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#highlights" id="id2">Highlights</a></p></li>
+<li><p><a class="reference internal" href="#breaking" id="id3">BREAKING</a></p>
+<ul>
+<li><p><a class="reference internal" href="#behavior-changes" id="id4">Behavior Changes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#uri-setsegment-and-non-existent-segment" id="id5">URI::setSegment() and Non-Existent Segment</a></p></li>
+<li><p><a class="reference internal" href="#factories" id="id6">Factories</a></p></li>
+<li><p><a class="reference internal" href="#autoloader" id="id7">Autoloader</a></p></li>
+<li><p><a class="reference internal" href="#codeigniter-and-exit" id="id8">CodeIgniter and exit()</a></p></li>
+<li><p><a class="reference internal" href="#site-uri-changes" id="id9">Site URI Changes</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#interface-changes" id="id10">Interface Changes</a></p></li>
+<li><p><a class="reference internal" href="#method-signature-changes" id="id11">Method Signature Changes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#parameter-type-changes" id="id12">Parameter Type Changes</a></p></li>
+<li><p><a class="reference internal" href="#added-parameters" id="id13">Added Parameters</a></p></li>
+<li><p><a class="reference internal" href="#removed-parameters" id="id14">Removed Parameters</a></p></li>
+<li><p><a class="reference internal" href="#return-type-changes" id="id15">Return Type Changes</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#enhancements" id="id16">Enhancements</a></p>
+<ul>
+<li><p><a class="reference internal" href="#commands" id="id17">Commands</a></p></li>
+<li><p><a class="reference internal" href="#testing" id="id18">Testing</a></p></li>
+<li><p><a class="reference internal" href="#database" id="id19">Database</a></p>
+<ul>
+<li><p><a class="reference internal" href="#query-builder" id="id20">Query Builder</a></p></li>
+<li><p><a class="reference internal" href="#forge" id="id21">Forge</a></p></li>
+<li><p><a class="reference internal" href="#others" id="id22">Others</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#model" id="id23">Model</a></p></li>
+<li><p><a class="reference internal" href="#libraries" id="id24">Libraries</a></p></li>
+<li><p><a class="reference internal" href="#helpers-and-functions" id="id25">Helpers and Functions</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id26">Others</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#message-changes" id="id27">Message Changes</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id28">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id29">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id30">Bugs Fixed</a></p></li>
+</ul>
+</div>
+<section id="highlights">
+<h2><a class="toc-backref" href="#id2">Highlights</a><a class="headerlink" href="#highlights" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>TBD</p></li>
+</ul>
+</section>
+<section id="breaking">
+<h2><a class="toc-backref" href="#id3">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this headline"></a></h2>
+<section id="behavior-changes">
+<h3><a class="toc-backref" href="#id4">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Permalink to this headline"></a></h3>
+<section id="uri-setsegment-and-non-existent-segment">
+<h4><a class="toc-backref" href="#id5">URI::setSegment() and Non-Existent Segment</a><a class="headerlink" href="#uri-setsegment-and-non-existent-segment" title="Permalink to this headline"></a></h4>
+<p>An exception is now thrown when you set the last <code class="docutils literal notranslate"><span class="pre">+2</span></code> segment.
+In previous versions, an exception was thrown only if the last segment <code class="docutils literal notranslate"><span class="pre">+3</span></code>
+or more was specified. See <a class="reference internal" href="../installation/upgrade_440.html#upgrade-440-uri-setsegment"><span class="std std-ref">URI::setSegment() Change</span></a>.</p>
+<p>The next segment (<code class="docutils literal notranslate"><span class="pre">+1</span></code>) of the current last segment can be set as before.</p>
+</section>
+<section id="factories">
+<span id="v440-factories"></span><h4><a class="toc-backref" href="#id6">Factories</a><a class="headerlink" href="#factories" title="Permalink to this headline"></a></h4>
+<section id="passing-classname-with-namespace">
+<h5>Passing Classname with Namespace<a class="headerlink" href="#passing-classname-with-namespace" title="Permalink to this headline"></a></h5>
+<p>Now <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> works only when you request
+<a class="reference internal" href="../concepts/factories.html#factories-passing-classname-without-namespace"><span class="std std-ref">a classname without a namespace</span></a>.</p>
+<p>For example, when you call <code class="docutils literal notranslate"><span class="pre">model(\Myth\Auth\Models\UserModel::class)</span></code> or
+<code class="docutils literal notranslate"><span class="pre">model('Myth\Auth\Models\UserModel')</span></code>:</p>
+<blockquote>
+<div><ul>
+<li><p>before:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>returns <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> if exists and <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> is true (default)</p></li>
+<li><p>returns <code class="docutils literal notranslate"><span class="pre">Myth\Auth\Models\UserModel</span></code> if exists and <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> is false</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>after:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>returns <code class="docutils literal notranslate"><span class="pre">Myth\Auth\Models\UserModel</span></code> even if <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> is true (default)</p></li>
+<li><p>returns <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> if you define <code class="docutils literal notranslate"><span class="pre">Factories::define('models',</span> <span class="pre">'Myth\Auth\Models\UserModel',</span> <span class="pre">'App\Models\UserModel')</span></code> before calling the <code class="docutils literal notranslate"><span class="pre">model()</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>If you had passed a non-existent classname by mistake, the previous version
+would have returned a class instance in the <code class="docutils literal notranslate"><span class="pre">App</span></code> or <code class="docutils literal notranslate"><span class="pre">Config</span></code> namespace
+because of the <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> feature.</p>
+<p>For example, in a controller (<code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Controllers</span></code>), if you called
+<code class="docutils literal notranslate"><span class="pre">config(Config\App::class)</span></code> by mistake (note the class is missing the leading <code class="docutils literal notranslate"><span class="pre">\</span></code>),
+meaning you actually passed <code class="docutils literal notranslate"><span class="pre">App\Controllers\Config\App</span></code>.
+But that class does not exist, so now Factories will return <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+</section>
+<section id="property-name">
+<h5>Property Name<a class="headerlink" href="#property-name" title="Permalink to this headline"></a></h5>
+<p>The property <code class="docutils literal notranslate"><span class="pre">Factories::$basenames</span></code> has been renamed to <code class="docutils literal notranslate"><span class="pre">$aliases</span></code>.</p>
+</section>
+</section>
+<section id="autoloader">
+<h4><a class="toc-backref" href="#id7">Autoloader</a><a class="headerlink" href="#autoloader" title="Permalink to this headline"></a></h4>
+<p>Previously, CodeIgniter’s autoloader allowed loading class names ending with the <cite>.php</cite> extension. This means instantiating objects like <cite>new Foo.php()</cite> was possible
+and would instantiate as <cite>new Foo()</cite>. Since <cite>Foo.php</cite> is an invalid class name, this behavior of the autoloader is changed. Now, instantiating such classes would fail.</p>
+</section>
+<section id="codeigniter-and-exit">
+<span id="v440-codeigniter-and-exit"></span><h4><a class="toc-backref" href="#id8">CodeIgniter and exit()</a><a class="headerlink" href="#codeigniter-and-exit" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">CodeIgniter::run()</span></code> method no longer calls <code class="docutils literal notranslate"><span class="pre">exit(EXIT_SUCCESS)</span></code>. The
+exit call is moved to <strong>public/index.php</strong>.</p>
+</section>
+<section id="site-uri-changes">
+<span id="v440-site-uri-changes"></span><h4><a class="toc-backref" href="#id9">Site URI Changes</a><a class="headerlink" href="#site-uri-changes" title="Permalink to this headline"></a></h4>
+<p>A new <code class="docutils literal notranslate"><span class="pre">SiteURI</span></code> class that extends the <code class="docutils literal notranslate"><span class="pre">URI</span></code> class and represents the site
+URI has been added, and now it is used in many places that need the current URI.</p>
+<p><code class="docutils literal notranslate"><span class="pre">$this-&gt;request-&gt;getUri()</span></code> in controllers returns the <code class="docutils literal notranslate"><span class="pre">SiteURI</span></code> instance.
+Also, <a class="reference internal" href="../helpers/url_helper.html#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, <a class="reference internal" href="../helpers/url_helper.html#base_url" title="base_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">base_url()</span></code></a>, and <a class="reference internal" href="../helpers/url_helper.html#current_url" title="current_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">current_url()</span></code></a>
+use the SiteURI internally.</p>
+<section id="getpath">
+<h5>getPath()<a class="headerlink" href="#getpath" title="Permalink to this headline"></a></h5>
+<p>The <code class="docutils literal notranslate"><span class="pre">getPath()</span></code> method now always returns the full URI path with leading <code class="docutils literal notranslate"><span class="pre">/</span></code>.
+Therefore, when your baseURL has sub-directories and you want to get the relative
+path to baseURL, you must use the new <code class="docutils literal notranslate"><span class="pre">getRoutePath()</span></code> method instead.</p>
+<p>For example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>        <span class="nx">baseURL</span><span class="o">:</span> <span class="nx">http</span><span class="o">://</span><span class="nx">localhost</span><span class="o">:</span><span class="mi">8888</span><span class="o">/</span><span class="nx">CodeIgniter4</span><span class="o">/</span>
+<span class="nx">The</span> <span class="nb">current</span> <span class="nx">URI</span><span class="o">:</span> <span class="nx">http</span><span class="o">://</span><span class="nx">localhost</span><span class="o">:</span><span class="mi">8888</span><span class="o">/</span><span class="nx">CodeIgniter4</span><span class="o">/</span><span class="nx">foo</span><span class="o">/</span><span class="nx">bar</span>
+      <span class="nx">getPath</span><span class="p">()</span><span class="o">:</span> <span class="o">/</span><span class="nx">CodeIgniter4</span><span class="o">/</span><span class="nx">foo</span><span class="o">/</span><span class="nx">bar</span>
+ <span class="nx">getRoutePath</span><span class="p">()</span><span class="o">:</span> <span class="nx">foo</span><span class="o">/</span><span class="nx">bar</span>
+</pre></div>
+</div>
+</section>
+<section id="site-uri-values">
+<h5>Site URI Values<a class="headerlink" href="#site-uri-values" title="Permalink to this headline"></a></h5>
+<p>The SiteURI class normalizes site URIs more strictly than before, and some bugs
+have been fixed.</p>
+<p>As a result, the framework may return site URIs or the URI paths slightly differently
+than in previous versions.
+For example, <code class="docutils literal notranslate"><span class="pre">/</span></code> will be added after <code class="docutils literal notranslate"><span class="pre">index.php</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">test</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">?</span><span class="nx">page</span><span class="o">=</span><span class="mi">1</span>
+<span class="nx">↓</span>
+<span class="nx">http</span><span class="o">://</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">test</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/?</span><span class="nx">page</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="interface-changes">
+<span id="v440-interface-changes"></span><h3><a class="toc-backref" href="#id10">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this headline"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As long as you have not extended the relevant CodeIgniter core classes
+or implemented these interfaces, all these changes are backward compatible
+and require no intervention.</p>
+</div>
+<ul class="simple">
+<li><p><strong>Validation:</strong> Added the <code class="docutils literal notranslate"><span class="pre">getValidated()</span></code> method in <code class="docutils literal notranslate"><span class="pre">ValidationInterface</span></code>.</p></li>
+</ul>
+</section>
+<section id="method-signature-changes">
+<span id="v440-method-signature-changes"></span><h3><a class="toc-backref" href="#id11">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this headline"></a></h3>
+<section id="parameter-type-changes">
+<span id="v440-parameter-type-changes"></span><h4><a class="toc-backref" href="#id12">Parameter Type Changes</a><a class="headerlink" href="#parameter-type-changes" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Services:</strong></dt><dd><ul>
+<li><p>The first parameter of <code class="docutils literal notranslate"><span class="pre">Services::security()</span></code> has been changed from
+<code class="docutils literal notranslate"><span class="pre">Config\App</span></code> to <code class="docutils literal notranslate"><span class="pre">Config\Security</span></code>.</p></li>
+<li><p>The first parameter of <code class="docutils literal notranslate"><span class="pre">Services::session()</span></code> has been changed from
+<code class="docutils literal notranslate"><span class="pre">Config\App</span></code> to <code class="docutils literal notranslate"><span class="pre">Config\Session</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Session:</strong></dt><dd><ul>
+<li><p>The second parameter of <code class="docutils literal notranslate"><span class="pre">Session::__construct()</span></code> has been changed from
+<code class="docutils literal notranslate"><span class="pre">Config\App</span></code> to <code class="docutils literal notranslate"><span class="pre">Config\Session</span></code>.</p></li>
+<li><p>The first parameter of <code class="docutils literal notranslate"><span class="pre">__construct()</span></code> in the database’s <code class="docutils literal notranslate"><span class="pre">BaseHandler</span></code>,
+<code class="docutils literal notranslate"><span class="pre">DatabaseHandler</span></code>, <code class="docutils literal notranslate"><span class="pre">FileHandler</span></code>, <code class="docutils literal notranslate"><span class="pre">MemcachedHandler</span></code>, and <code class="docutils literal notranslate"><span class="pre">RedisHandler</span></code>
+has been changed from <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> to <code class="docutils literal notranslate"><span class="pre">Config\Session</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Security:</strong> The first parameter of <code class="docutils literal notranslate"><span class="pre">Security::__construct()</span></code> has been
+changed from <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> to <code class="docutils literal notranslate"><span class="pre">Config\Security</span></code>.</p></li>
+<li><p><strong>Validation:</strong> The method signature of <code class="docutils literal notranslate"><span class="pre">Validation::check()</span></code> has been changed.
+The <code class="docutils literal notranslate"><span class="pre">string</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$rule</span></code> parameter was removed.</p></li>
+<li><p><strong>CodeIgniter:</strong> The method signature of <code class="docutils literal notranslate"><span class="pre">CodeIgniter::setRequest()</span></code> has been
+changed. The <code class="docutils literal notranslate"><span class="pre">Request</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$request</span></code> parameter was removed.</p></li>
+<li><dl class="simple">
+<dt><strong>FeatureTestCase:</strong></dt><dd><ul>
+<li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">FeatureTestCase::populateGlobals()</span></code> has been
+changed. The <code class="docutils literal notranslate"><span class="pre">Request</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$request</span></code> parameter was removed.</p></li>
+<li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">FeatureTestCase::setRequestBody()</span></code> has been
+changed. The <code class="docutils literal notranslate"><span class="pre">Request</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$request</span></code> parameter and the
+return type <code class="docutils literal notranslate"><span class="pre">Request</span></code> were removed.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="added-parameters">
+<h4><a class="toc-backref" href="#id13">Added Parameters</a><a class="headerlink" href="#added-parameters" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p><strong>Routing:</strong> The third parameter <code class="docutils literal notranslate"><span class="pre">Routing</span> <span class="pre">$routing</span></code> has been added to
+<code class="docutils literal notranslate"><span class="pre">RouteCollection::__construct()</span></code>.</p></li>
+</ul>
+</section>
+<section id="removed-parameters">
+<h4><a class="toc-backref" href="#id14">Removed Parameters</a><a class="headerlink" href="#removed-parameters" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p><strong>Services:</strong> The second parameter <code class="docutils literal notranslate"><span class="pre">$request</span></code> and the third parameter
+<code class="docutils literal notranslate"><span class="pre">$response</span></code> in <code class="docutils literal notranslate"><span class="pre">Services::exceptions()</span></code> have been removed.</p></li>
+<li><p><strong>Error Handling:</strong> The second parameter <code class="docutils literal notranslate"><span class="pre">$request</span></code> and the third parameter
+<code class="docutils literal notranslate"><span class="pre">$response</span></code> in <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Debug\Exceptions::__construct()</span></code> have been removed.</p></li>
+</ul>
+</section>
+<section id="return-type-changes">
+<h4><a class="toc-backref" href="#id15">Return Type Changes</a><a class="headerlink" href="#return-type-changes" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p><strong>Autoloader:</strong> The return signatures of the <cite>loadClass</cite> and <cite>loadClassmap</cite> methods are made <cite>void</cite>
+to be compatible as callbacks in <cite>spl_autoload_register</cite> and <cite>spl_autoload_unregister</cite> functions.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="enhancements">
+<h2><a class="toc-backref" href="#id16">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this headline"></a></h2>
+<section id="commands">
+<h3><a class="toc-backref" href="#id17">Commands</a><a class="headerlink" href="#commands" title="Permalink to this headline"></a></h3>
+<ul>
+<li><dl>
+<dt><strong>spark routes:</strong></dt><dd><ul>
+<li><p>Now you can specify the host in the request URL.
+See <a class="reference internal" href="../incoming/routing.html#routing-spark-routes-specify-host"><span class="std std-ref">Specify Host</span></a>.</p></li>
+<li><p>It shows view files of <a class="reference internal" href="../incoming/routing.html#view-routes"><span class="std std-ref">View Routes</span></a> in <em>Handler</em> like the following:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 15%" />
+<col style="width: 7%" />
+<col style="width: 34%" />
+<col style="width: 18%" />
+<col style="width: 17%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Method</p></td>
+<td><p>Route</p></td>
+<td><p>Name</p></td>
+<td><p>Handler</p></td>
+<td><p>Before Filters</p></td>
+<td><p>After Filters</p></td>
+</tr>
+<tr class="row-even"><td><p>GET</p></td>
+<td><p>about</p></td>
+<td><p>»</p></td>
+<td><p>(View) pages/about</p></td>
+<td></td>
+<td><p>toolbar</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="testing">
+<h3><a class="toc-backref" href="#id18">Testing</a><a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>The Debug Toolbar now has a new “Hot Reload” feature that can be used to automatically reload the page when a file is changed. See <a class="reference internal" href="../testing/debugging.html#debug-toolbar-hot-reload"><span class="std std-ref">Hot Reloading</span></a>.</p></li>
+</ul>
+</section>
+<section id="database">
+<h3><a class="toc-backref" href="#id19">Database</a><a class="headerlink" href="#database" title="Permalink to this headline"></a></h3>
+<section id="query-builder">
+<h4><a class="toc-backref" href="#id20">Query Builder</a><a class="headerlink" href="#query-builder" title="Permalink to this headline"></a></h4>
+</section>
+<section id="forge">
+<h4><a class="toc-backref" href="#id21">Forge</a><a class="headerlink" href="#forge" title="Permalink to this headline"></a></h4>
+</section>
+<section id="others">
+<h4><a class="toc-backref" href="#id22">Others</a><a class="headerlink" href="#others" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p><strong>MySQLi:</strong> Added the <code class="docutils literal notranslate"><span class="pre">numberNative</span></code> attribute to the Database Config to keep the variable type obtained after SQL Query consistent with the type set in the database.
+See <a class="reference internal" href="../database/configuration.html#database-config-explanation-of-values"><span class="std std-ref">Database Configuration</span></a>.</p></li>
+<li><p><strong>SQLSRV:</strong> Field Metadata now includes <code class="docutils literal notranslate"><span class="pre">nullable</span></code>. See <a class="reference internal" href="../database/metadata.html#db-metadata-getfielddata"><span class="std std-ref">$db-&gt;getFieldData()</span></a>.</p></li>
+</ul>
+</section>
+</section>
+<section id="model">
+<h3><a class="toc-backref" href="#id23">Model</a><a class="headerlink" href="#model" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Added special getter/setter to Entity to avoid method name conflicts.
+See <a class="reference internal" href="../models/entities.html#entities-special-getter-setter"><span class="std std-ref">Special Getter/Setter</span></a>.</p></li>
+</ul>
+</section>
+<section id="libraries">
+<h3><a class="toc-backref" href="#id24">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p><strong>Validation:</strong> Added <code class="docutils literal notranslate"><span class="pre">Validation::getValidated()</span></code> method that gets
+the actual validated data. See <a class="reference internal" href="../libraries/validation.html#validation-getting-validated-data"><span class="std std-ref">Getting Validated Data</span></a> for details.</p></li>
+<li><p><strong>Images:</strong> The option <code class="docutils literal notranslate"><span class="pre">$quality</span></code> can now be used to compress WebP images.</p></li>
+<li><p><strong>Uploaded Files:</strong> Added <code class="docutils literal notranslate"><span class="pre">UploadedFiles::getClientPath()</span></code> method that returns
+the value of the <cite>full_path</cite> index of the file if it was uploaded via directory upload.</p></li>
+<li><p><strong>CURLRequest:</strong> Added a request option <code class="docutils literal notranslate"><span class="pre">proxy</span></code>. See
+<a class="reference internal" href="../libraries/curlrequest.html#curlrequest-request-options-proxy"><span class="std std-ref">CURLRequest Class</span></a>.</p></li>
+<li><p><strong>URI:</strong> A new <code class="docutils literal notranslate"><span class="pre">SiteURI</span></code> class that extends <code class="docutils literal notranslate"><span class="pre">URI</span></code> and represents the site
+URI has been added.</p></li>
+</ul>
+</section>
+<section id="helpers-and-functions">
+<h3><a class="toc-backref" href="#id25">Helpers and Functions</a><a class="headerlink" href="#helpers-and-functions" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p><strong>Array:</strong> Added <a class="reference internal" href="../helpers/array_helper.html#array_group_by" title="array_group_by"><code class="xref php php-func docutils literal notranslate"><span class="pre">array_group_by()</span></code></a> helper function to group data
+values together. Supports dot-notation syntax.</p></li>
+<li><p><strong>Common:</strong> <a class="reference internal" href="../general/common_functions.html#force_https" title="force_https"><code class="xref php php-func docutils literal notranslate"><span class="pre">force_https()</span></code></a> no longer terminates the application, but throws a <code class="docutils literal notranslate"><span class="pre">RedirectException</span></code>.</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3><a class="toc-backref" href="#id26">Others</a><a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p><strong>DownloadResponse:</strong> Added <code class="docutils literal notranslate"><span class="pre">DownloadResponse::inline()</span></code> method that sets
+the <code class="docutils literal notranslate"><span class="pre">Content-Disposition:</span> <span class="pre">inline</span></code> header to display the file in the browser.
+See <a class="reference internal" href="../outgoing/response.html#open-file-in-browser"><span class="std std-ref">Open File in Browser</span></a> for details.</p></li>
+<li><p><strong>View:</strong> Added optional 2nd parameter <code class="docutils literal notranslate"><span class="pre">$saveData</span></code> on <code class="docutils literal notranslate"><span class="pre">renderSection()</span></code> to prevent from auto cleans the data after displaying. See <a class="reference internal" href="../outgoing/view_layouts.html#creating-a-layout"><span class="std std-ref">View Layouts</span></a> for details.</p></li>
+<li><dl class="simple">
+<dt><strong>Auto Routing (Improved)</strong>:</dt><dd><ul>
+<li><p>Now you can route to Modules. See <a class="reference internal" href="../incoming/routing.html#auto-routing-improved-module-routing"><span class="std std-ref">Module Routing</span></a>
+for details.</p></li>
+<li><p>If a controller is found that corresponds to a URI segment and that controller
+does not have a method defined for the URI segment, the default method will
+now be executed. This addition allows for more flexible handling of URIs in
+auto routing. See <a class="reference internal" href="../incoming/controllers.html#controller-default-method-fallback"><span class="std std-ref">Default Method Fallback</span></a> for details.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Filters:</strong> Now you can use Filter Arguments with <a class="reference internal" href="../incoming/filters.html#filters-filters-filter-arguments"><span class="std std-ref">$filters property</span></a>.</p></li>
+<li><p><strong>Request:</strong> Added <code class="docutils literal notranslate"><span class="pre">IncomingRequest::setValidLocales()</span></code> method to set valid locales.</p></li>
+<li><p><strong>Table:</strong> Added <code class="docutils literal notranslate"><span class="pre">Table::setSyncRowsWithHeading()</span></code> method to synchronize row columns with headings. See <a class="reference internal" href="../outgoing/table.html#table-sync-rows-with-headings"><span class="std std-ref">Synchronizing Rows with Headings</span></a> for details.</p></li>
+<li><p><strong>Error Handling:</strong> Now you can use <a class="reference internal" href="../general/errors.html#custom-exception-handlers"><span class="std std-ref">Custom Exception Handlers</span></a>.</p></li>
+<li><dl class="simple">
+<dt><strong>RedirectException:</strong></dt><dd><ul>
+<li><p>It can also take an object that implements <code class="docutils literal notranslate"><span class="pre">ResponseInterface</span></code> as its first argument.</p></li>
+<li><p>It implements <code class="docutils literal notranslate"><span class="pre">ResponsableInterface</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>DebugBar:</strong> Now <a class="reference internal" href="../incoming/routing.html#view-routes"><span class="std std-ref">View Routes</span></a> are displayed in <em>DEFINED ROUTES</em> on the <em>Routes</em> tab.</p></li>
+<li><dl class="simple">
+<dt><strong>Factories:</strong></dt><dd><ul>
+<li><p>You can now define the classname that will actually be loaded.
+See <a class="reference internal" href="../concepts/factories.html#factories-defining-classname-to-be-loaded"><span class="std std-ref">Defining Classname to be Loaded</span></a>.</p></li>
+<li><p>Config Caching implemented. See <a class="reference internal" href="../concepts/factories.html#factories-config-caching"><span class="std std-ref">Config Caching</span></a> for details.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+</section>
+<section id="message-changes">
+<h2><a class="toc-backref" href="#id27">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Improved <code class="docutils literal notranslate"><span class="pre">HTTP.invalidHTTPProtocol</span></code> error message.</p></li>
+</ul>
+</section>
+<section id="changes">
+<h2><a class="toc-backref" href="#id28">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><strong>Images:</strong> The default quality for WebP in <code class="docutils literal notranslate"><span class="pre">GDHandler</span></code> has been changed from 80 to 90.</p></li>
+<li><dl class="simple">
+<dt><strong>Config:</strong></dt><dd><ul>
+<li><p>The deprecated Cookie items in <strong>app/Config/App.php</strong> has been removed.</p></li>
+<li><p>The deprecated Session items in <strong>app/Config/App.php</strong> has been removed.</p></li>
+<li><p>The deprecated CSRF items in <strong>app/Config/App.php</strong> has been removed.</p></li>
+<li><p>Routing settings have been moved to <strong>app/Config/Routing.php</strong> config file.
+See <a class="reference internal" href="../installation/upgrade_440.html#upgrade-440-config-routing"><span class="std std-ref">Upgrading Guide</span></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>DownloadResponse:</strong> When generating response headers, does not replace the <code class="docutils literal notranslate"><span class="pre">Content-Disposition</span></code> header if it was previously specified.</p></li>
+<li><dl class="simple">
+<dt><strong>Autoloader:</strong></dt><dd><ul>
+<li><p>Before v4.4.0, CodeIgniter autoloader did not allow special
+characters that are illegal in filenames on certain operating systems.
+The symbols that can be used are <code class="docutils literal notranslate"><span class="pre">/</span></code>, <code class="docutils literal notranslate"><span class="pre">_</span></code>, <code class="docutils literal notranslate"><span class="pre">.</span></code>, <code class="docutils literal notranslate"><span class="pre">:</span></code>, <code class="docutils literal notranslate"><span class="pre">\</span></code> and space.
+So if you installed CodeIgniter under the folder that contains the special
+characters like <code class="docutils literal notranslate"><span class="pre">(</span></code>, <code class="docutils literal notranslate"><span class="pre">)</span></code>, etc., CodeIgniter didn’t work. Since v4.4.0,
+this restriction has been removed.</p></li>
+<li><p>The methods <code class="docutils literal notranslate"><span class="pre">Autoloader::loadClass()</span></code> and <code class="docutils literal notranslate"><span class="pre">Autoloader::loadClassmap()</span></code> are now both
+marked <code class="docutils literal notranslate"><span class="pre">&#64;internal</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>RouteCollection:</strong> The array structure of the protected property <code class="docutils literal notranslate"><span class="pre">$routes</span></code>
+has been modified for performance.</p></li>
+<li><p><strong>HSTS:</strong> Now <a class="reference internal" href="../general/common_functions.html#force_https" title="force_https"><code class="xref php php-func docutils literal notranslate"><span class="pre">force_https()</span></code></a> or
+<code class="docutils literal notranslate"><span class="pre">Config\App::$forceGlobalSecureRequests</span> <span class="pre">=</span> <span class="pre">true</span></code> sets the HTTP status code 307,
+which allows the HTTP request method to be preserved after the redirect.
+In previous versions, it was 302.</p></li>
+</ul>
+</section>
+<section id="deprecations">
+<h2><a class="toc-backref" href="#id29">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><strong>Entity:</strong> <code class="docutils literal notranslate"><span class="pre">Entity::setAttributes()</span></code> is deprecated. Use <code class="docutils literal notranslate"><span class="pre">Entity::injectRawData()</span></code> instead.</p></li>
+<li><p><strong>Error Handling:</strong> Many methods and properties in <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Debug\Exceptions</span></code>
+are deprecated. Because these methods have been moved to <code class="docutils literal notranslate"><span class="pre">BaseExceptionHandler</span></code> or
+<code class="docutils literal notranslate"><span class="pre">ExceptionHandler</span></code>.</p></li>
+<li><p><strong>Autoloader:</strong> <code class="docutils literal notranslate"><span class="pre">Autoloader::sanitizeFilename()</span></code> is deprecated.</p></li>
+<li><dl class="simple">
+<dt><strong>CodeIgniter:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter::$returnResponse</span></code> property is deprecated. No longer used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter::$cacheTTL</span></code> property is deprecated. No longer used. Use <code class="docutils literal notranslate"><span class="pre">ResponseCache</span></code> instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter::cache()</span></code> method is deprecated. No longer used. Use <code class="docutils literal notranslate"><span class="pre">ResponseCache</span></code> instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter::cachePage()</span></code> method is deprecated. No longer used. Use <code class="docutils literal notranslate"><span class="pre">ResponseCache</span></code> instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter::generateCacheName()</span></code> method is deprecated. No longer used. Use <code class="docutils literal notranslate"><span class="pre">ResponseCache</span></code> instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter::callExit()</span></code> method is deprecated. No longer used.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>RedirectException:</strong> <code class="docutils literal notranslate"><span class="pre">\CodeIgniter\Router\Exceptions\RedirectException</span></code> is deprecated. Use <code class="docutils literal notranslate"><span class="pre">\CodeIgniter\HTTP\Exceptions\RedirectException</span></code> instead.</p></li>
+<li><p><strong>Session:</strong> The property <code class="docutils literal notranslate"><span class="pre">$sessionDriverName</span></code>, <code class="docutils literal notranslate"><span class="pre">$sessionCookieName</span></code>,
+<code class="docutils literal notranslate"><span class="pre">$sessionExpiration</span></code>, <code class="docutils literal notranslate"><span class="pre">$sessionSavePath</span></code>, <code class="docutils literal notranslate"><span class="pre">$sessionMatchIP</span></code>,
+<code class="docutils literal notranslate"><span class="pre">$sessionTimeToUpdate</span></code>, and <code class="docutils literal notranslate"><span class="pre">$sessionRegenerateDestroy</span></code> in <code class="docutils literal notranslate"><span class="pre">Session</span></code> are
+deprecated, and no longer used. Use <code class="docutils literal notranslate"><span class="pre">$config</span></code> instead.</p></li>
+<li><p><strong>Security:</strong> The property <code class="docutils literal notranslate"><span class="pre">$csrfProtection</span></code>, <code class="docutils literal notranslate"><span class="pre">$tokenRandomize</span></code>,
+<code class="docutils literal notranslate"><span class="pre">$tokenName</span></code>, <code class="docutils literal notranslate"><span class="pre">$headerName</span></code>, <code class="docutils literal notranslate"><span class="pre">$expires</span></code>, <code class="docutils literal notranslate"><span class="pre">$regenerate</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">$redirect</span></code> in <code class="docutils literal notranslate"><span class="pre">Security</span></code> are deprecated, and no longer used. Use
+<code class="docutils literal notranslate"><span class="pre">$config</span></code> instead.</p></li>
+<li><dl class="simple">
+<dt><strong>URI:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">URI::$uriString</span></code> is deprecated.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">URI::$baseURL</span></code> is deprecated. Use <code class="docutils literal notranslate"><span class="pre">SiteURI</span></code> instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">URI::setSilent()</span></code> is deprecated.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">URI::setScheme()</span></code> is deprecated. Use <code class="docutils literal notranslate"><span class="pre">withScheme()</span></code> instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">URI::setURI()</span></code> is deprecated.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>IncomingRequest:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">IncomingRequest::detectURI()</span></code> is deprecated and no longer used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IncomingRequest::detectPath()</span></code> is deprecated, and no longer used. It
+moved to <code class="docutils literal notranslate"><span class="pre">SiteURIFactory</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IncomingRequest::parseRequestURI()</span></code> is deprecated, and no longer used. It
+moved to <code class="docutils literal notranslate"><span class="pre">SiteURIFactory</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IncomingRequest::parseQueryString()</span></code> is deprecated, and no longer used. It
+moved to <code class="docutils literal notranslate"><span class="pre">SiteURIFactory</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IncomingRequest::setPath()</span></code> is deprecated.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="bugs-fixed">
+<h2><a class="toc-backref" href="#id30">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><strong>Auto Routing (Improved)</strong>: In previous versions, when <code class="docutils literal notranslate"><span class="pre">$translateURIDashes</span></code>
+is true, two URIs correspond to a single controller method, one URI for dashes
+(e.g., <strong>foo-bar</strong>) and one URI for underscores (e.g., <strong>foo_bar</strong>). This bug
+has been fixed. Now the URI for underscores (<strong>foo_bar</strong>) is not accessible.</p></li>
+<li><p><strong>Output Buffering:</strong> Bug fix with output buffering.</p></li>
+<li><p><strong>ControllerTestTrait:</strong> <code class="docutils literal notranslate"><span class="pre">ControllerTestTrait::withUri()</span></code> creates a new Request
+instance with the URI. Because the Request instance should have the URI instance.
+Also if the hostname in the URI string is invalid with <code class="docutils literal notranslate"><span class="pre">Config\App</span></code>, the valid
+hostname will be set.</p></li>
+</ul>
+<p>See the repo’s
+<a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
+for a complete list of bugs fixed.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Change Logs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="v4.3.8.html" class="btn btn-neutral float-right" title="Version 4.3.8" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Aug 25, 2023.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

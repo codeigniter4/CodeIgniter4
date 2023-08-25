@@ -470,6 +470,13 @@ representing a valid URI:</p>
 </pre></div>
 </div>
 <p>It is a good practice to always provide the URI during testing to avoid surprises.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.4.0, this method creates a new Request instance with the URI.
+Because the Request instance should have the URI instance. Also if the hostname
+in the URI string is invalid with <code class="docutils literal notranslate"><span class="pre">Config\App</span></code>, the valid hostname will be
+set.</p>
+</div>
 </section>
 <section id="withbody-body">
 <h3><a class="toc-backref" href="#id11">withBody($body)</a><a class="headerlink" href="#withbody-body" title="Permalink to this headline"></a></h3>

@@ -310,42 +310,39 @@ relative URI to an existing one and have it resolved safely and correctly.</p>
 </div>
 <section id="creating-uri-instances">
 <h2><a class="toc-backref" href="#id1">Creating URI instances</a><a class="headerlink" href="#creating-uri-instances" title="Permalink to this headline"></a></h2>
-<p>Creating a URI instance is as simple as creating a new class instance:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>Alternatively, you can use the <code class="docutils literal notranslate"><span class="pre">service()</span></code> function to return an instance for you:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$uri</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
+<p>Creating a URI instance is as simple as creating a new class instance.</p>
 <p>When you create the new instance, you can pass a full or partial URL in the constructor and it will be parsed
 into its appropriate sections:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
-<span class="nv">$uri</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
 </pre></div>
+</div>
+<p>Alternatively, you can use the <a class="reference internal" href="../general/common_functions.html#service" title="service"><code class="xref php php-func docutils literal notranslate"><span class="pre">service()</span></code></a> function to return an instance for you:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Since v4.4.0, if you don’t pass a URL, it returns the current URI:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">);</span> <span class="c1">// returns the current SiteURI instance.</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The above code returns the <code class="docutils literal notranslate"><span class="pre">SiteURI</span></code> instance, that extends the <code class="docutils literal notranslate"><span class="pre">URI</span></code>
+class. The <code class="docutils literal notranslate"><span class="pre">URI</span></code> class is for general URIs, but the <code class="docutils literal notranslate"><span class="pre">SiteURI</span></code> class is
+for your site URIs.</p>
 </div>
 <section id="the-current-uri">
 <h3><a class="toc-backref" href="#id2">The Current URI</a><a class="headerlink" href="#the-current-uri" title="Permalink to this headline"></a></h3>
 <p>Many times, all you really want is an object representing the current URL of this request.
-You can use one of the functions available in the <a class="reference internal" href="../helpers/url_helper.html"><span class="doc">URL Helper</span></a>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+You can use the <a class="reference internal" href="../helpers/url_helper.html#current_url" title="current_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">current_url()</span></code></a> function available in the <a class="reference internal" href="../helpers/url_helper.html"><span class="doc">URL Helper</span></a>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You must pass <code class="docutils literal notranslate"><span class="pre">true</span></code> as the first parameter, otherwise, it will return the string representation of the current URL.</p>
 <p>This URI is based on the path (relative to your <code class="docutils literal notranslate"><span class="pre">baseURL</span></code>) as determined by the current request object and
-your settings in <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> (<code class="docutils literal notranslate"><span class="pre">baseURL</span></code>, <code class="docutils literal notranslate"><span class="pre">indexPage</span></code>, and <code class="docutils literal notranslate"><span class="pre">forceGlobalSecureRequests</span></code>).
-Assuming that you’re in a controller that extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> you can get this relative path:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$path</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>
+your settings in <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> (<code class="docutils literal notranslate"><span class="pre">baseURL</span></code>, <code class="docutils literal notranslate"><span class="pre">indexPage</span></code>, and <code class="docutils literal notranslate"><span class="pre">forceGlobalSecureRequests</span></code>).</p>
+<p>Assuming that you’re in a controller that extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code>, you
+can also get the current SiteURI instance:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getUri</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -487,6 +484,12 @@ can be used to manipulate it:</p>
 <p class="admonition-title">Note</p>
 <p>When setting the path this way, or any other way the class allows, it is sanitized to encode any dangerous
 characters, and remove dot segments for safety.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.4.0, the <code class="docutils literal notranslate"><span class="pre">SiteURI::getRoutePath()</span></code> method,
+returns the URI path relative to baseURL, and the <code class="docutils literal notranslate"><span class="pre">SiteURI::getPath()</span></code>
+method always returns the full URI path with leading <code class="docutils literal notranslate"><span class="pre">/</span></code>.</p>
 </div>
 </section>
 <section id="query">

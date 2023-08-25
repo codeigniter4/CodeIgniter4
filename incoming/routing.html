@@ -359,27 +359,29 @@
 <li><p><a class="reference internal" href="#default-method" id="id60">Default Method</a></p></li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#module-routing" id="id61">Module Routing</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#auto-routing-legacy" id="id61">Auto Routing (Legacy)</a></p>
+<li><p><a class="reference internal" href="#auto-routing-legacy" id="id62">Auto Routing (Legacy)</a></p>
 <ul>
-<li><p><a class="reference internal" href="#enable-auto-routing-legacy" id="id62">Enable Auto Routing (Legacy)</a></p></li>
-<li><p><a class="reference internal" href="#uri-segments-legacy" id="id63">URI Segments (Legacy)</a></p></li>
-<li><p><a class="reference internal" href="#configuration-options-legacy" id="id64">Configuration Options (Legacy)</a></p>
+<li><p><a class="reference internal" href="#enable-auto-routing-legacy" id="id63">Enable Auto Routing (Legacy)</a></p></li>
+<li><p><a class="reference internal" href="#uri-segments-legacy" id="id64">URI Segments (Legacy)</a></p></li>
+<li><p><a class="reference internal" href="#configuration-options-legacy" id="id65">Configuration Options (Legacy)</a></p>
 <ul>
-<li><p><a class="reference internal" href="#default-controller-legacy" id="id65">Default Controller (Legacy)</a></p></li>
-<li><p><a class="reference internal" href="#default-method-legacy" id="id66">Default Method (Legacy)</a></p></li>
+<li><p><a class="reference internal" href="#default-controller-legacy" id="id66">Default Controller (Legacy)</a></p></li>
+<li><p><a class="reference internal" href="#default-method-legacy" id="id67">Default Method (Legacy)</a></p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#confirming-routes" id="id67">Confirming Routes</a></p>
+<li><p><a class="reference internal" href="#confirming-routes" id="id68">Confirming Routes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#spark-routes" id="id68">spark routes</a></p>
+<li><p><a class="reference internal" href="#spark-routes" id="id69">spark routes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id11" id="id69">Auto Routing (Improved)</a></p></li>
-<li><p><a class="reference internal" href="#id12" id="id70">Auto Routing (Legacy)</a></p></li>
-<li><p><a class="reference internal" href="#sort-by-handler" id="id71">Sort by Handler</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id70">Auto Routing (Improved)</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id71">Auto Routing (Legacy)</a></p></li>
+<li><p><a class="reference internal" href="#sort-by-handler" id="id72">Sort by Handler</a></p></li>
+<li><p><a class="reference internal" href="#specify-host" id="id73">Specify Host</a></p></li>
 </ul>
 </li>
 </ul>
@@ -870,7 +872,7 @@ The value for the filter can be a string or an array of strings:</p>
 <li><p>matching the aliases defined in <strong>app/Config/Filters.php</strong>.</p></li>
 <li><p>filter classnames</p></li>
 </ul>
-<p>See <a class="reference internal" href="filters.html"><span class="doc">Controller filters</span></a> for more information on setting up filters.</p>
+<p>See <a class="reference internal" href="filters.html"><span class="doc">Controller Filters</span></a> for more information on setting up filters.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>If you set filters to routes in <strong>app/Config/Routes.php</strong>
@@ -922,6 +924,17 @@ See <a class="reference internal" href="#use-defined-routes-only"><span class="s
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39; AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;admin-auth&#39;</span><span class="p">,</span> <span class="nx">\App\Filters\SomeFilter</span><span class="o">::</span><span class="na">class</span><span class="p">]]);</span>
 </pre></div>
 </div>
+<section id="filter-arguments">
+<h5>Filter Arguments<a class="headerlink" href="#filter-arguments" title="Permalink to this headline"></a></h5>
+<p>Additional arguments may be passed to a filter:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;users/delete/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;admin-auth:dual,noreturn&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>In this example, the array <code class="docutils literal notranslate"><span class="pre">['dual',</span> <span class="pre">'noreturn']</span></code> will be passed in <code class="docutils literal notranslate"><span class="pre">$arguments</span></code>
+to the filter’s <code class="docutils literal notranslate"><span class="pre">before()</span></code> and <code class="docutils literal notranslate"><span class="pre">after()</span></code> implementation methods.</p>
+</section>
 </section>
 </section>
 <section id="assigning-namespace">
@@ -1153,7 +1166,13 @@ Negative integers will be cast to the absolute value.</p>
 <section id="routes-configuration-options">
 <span id="id7"></span><h2><a class="toc-backref" href="#id49">Routes Configuration Options</a><a class="headerlink" href="#routes-configuration-options" title="Permalink to this headline"></a></h2>
 <p>The RoutesCollection class provides several options that affect all routes, and can be modified to meet your
-application’s needs. These options are available at the top of <strong>app/Config/Routes.php</strong>.</p>
+application’s needs. These options are available in <strong>app/Config/Routing.php</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The config file <strong>app/Config/Routing.php</strong> has been added since v4.4.0.
+In previous versions, the setter methods were used in <strong>app/Config/Routes.php</strong>
+to change settings.</p>
+</div>
 <section id="default-namespace">
 <span id="routing-default-namespace"></span><h3><a class="toc-backref" href="#id50">Default Namespace</a><a class="headerlink" href="#default-namespace" title="Permalink to this headline"></a></h3>
 <p>When matching a controller to a route, the router will add the default namespace value to the front of the controller
@@ -1162,7 +1181,13 @@ specified by the route. By default, this value is <code class="docutils literal 
 controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultNamespace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="c1">// In app/Config/Routing.php</span>
+<span class="k">class</span> <span class="nc">Routing</span> <span class="k">extends</span> <span class="nx">BaseRouting</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultNamespace</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
 
 <span class="c1">// Controller is \Users</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;Users::index&#39;</span><span class="p">);</span>
@@ -1175,6 +1200,7 @@ controller:</p>
 then you can change this value to save typing:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="c1">// This can be overridden in the Routes file</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultNamespace</span><span class="p">(</span><span class="s1">&#39;App&#39;</span><span class="p">);</span>
 
 <span class="c1">// Controller is \App\Users</span>
@@ -1188,12 +1214,28 @@ then you can change this value to save typing:</p>
 <section id="translate-uri-dashes">
 <h3><a class="toc-backref" href="#id51">Translate URI Dashes</a><a class="headerlink" href="#translate-uri-dashes" title="Permalink to this headline"></a></h3>
 <p>This option enables you to automatically replace dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>) with underscores in the controller and method
-URI segments, thus saving you additional route entries if you need to do that. This is required because the
-dash isn’t a valid class or method name character and would cause a fatal error if you try to use it:</p>
+URI segments when used in Auto Routing, thus saving you additional route entries if you need to do that. This is required because the dash isn’t a valid class or method name character and would cause a fatal error if you try to use it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="c1">// In app/Config/Routing.php</span>
+<span class="k">class</span> <span class="nc">Routing</span> <span class="k">extends</span> <span class="nx">BaseRouting</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="k">public</span> <span class="nx">bool</span> <span class="nv">$translateURIDashes</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="c1">// This can be overridden in the Routes file</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setTranslateURIDashes</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using Auto Routing (Improved), prior to v4.4.0, if
+<code class="docutils literal notranslate"><span class="pre">$translateURIDashes</span></code> is true, two URIs correspond to a single controller
+method, one URI for dashes (e.g., <strong>foo-bar</strong>) and one URI for underscores
+(e.g., <strong>foo_bar</strong>). This was incorrect behavior. Since v4.4.0, the URI for
+underscores (<strong>foo_bar</strong>) is not accessible.</p>
 </div>
 </section>
 <section id="use-defined-routes-only">
@@ -1202,9 +1244,18 @@ dash isn’t a valid class or method name character and would cause a fatal erro
 <p>When no defined route is found that matches the URI, the system will attempt to match that URI against the
 controllers and methods when Auto Routing is enabled.</p>
 <p>You can disable this automatic matching, and restrict routes
-to only those defined by you, by setting the <code class="docutils literal notranslate"><span class="pre">setAutoRoute()</span></code> option to false:</p>
+to only those defined by you, by setting the <code class="docutils literal notranslate"><span class="pre">$autoRoute</span></code> property to false:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="c1">// In app/Config/Routing.php</span>
+<span class="k">class</span> <span class="nc">Routing</span> <span class="k">extends</span> <span class="nx">BaseRouting</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="k">public</span> <span class="nx">bool</span> <span class="nv">$autoRoute</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="c1">// This can be overridden in the Routes file</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setAutoRoute</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -1221,6 +1272,14 @@ what happens by specifying an action to happen with the <code class="docutils li
 a valid class/method pair, just like you would show in any route, or a Closure:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="c1">// In app/Config/Routing.php</span>
+<span class="k">class</span> <span class="nc">Routing</span> <span class="k">extends</span> <span class="nx">BaseRouting</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="k">public</span> <span class="nv">$override404</span> <span class="o">=</span> <span class="s1">&#39;App\Errors::show404&#39;</span><span class="p">;</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
 <span class="c1">// Would execute the show404 method of the App\Errors class</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">set404Override</span><span class="p">(</span><span class="s1">&#39;App\Errors::show404&#39;</span><span class="p">);</span>
 
@@ -1230,6 +1289,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
 <span class="p">});</span>
 </pre></div>
 </div>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">$override404</span></code> property within the routing config file, you can use closures. Defining the override in the Routing file is restricted to class/method pairs.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">set404Override()</span></code> method does not change the Response status code to <code class="docutils literal notranslate"><span class="pre">404</span></code>.
@@ -1279,8 +1339,8 @@ and execute the corresponding controller methods.</p>
 </div>
 <section id="enable-auto-routing">
 <span id="enabled-auto-routing-improved"></span><h3><a class="toc-backref" href="#id56">Enable Auto Routing</a><a class="headerlink" href="#enable-auto-routing" title="Permalink to this headline"></a></h3>
-<p>To use it, you need to change the setting <code class="docutils literal notranslate"><span class="pre">setAutoRoute()</span></code> option to true in <strong>app/Config/Routes.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setAutoRoute</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+<p>To use it, you need to change the setting <code class="docutils literal notranslate"><span class="pre">$autoRoute</span></code> option to true in <strong>app/Config/Routing.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">bool</span> <span class="nv">$autoRoute</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>And you need to change the property <code class="docutils literal notranslate"><span class="pre">$autoRoutesImproved</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code> in <strong>app/Config/Feature.php</strong>:</p>
@@ -1362,9 +1422,34 @@ In the example above, you can access <strong>example.com/products</strong>, but 
 </div>
 </section>
 </section>
+<section id="module-routing">
+<span id="auto-routing-improved-module-routing"></span><h3><a class="toc-backref" href="#id61">Module Routing</a><a class="headerlink" href="#module-routing" title="Permalink to this headline"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.4.0.</span></p>
+</div>
+<p>You can use auto routing even if you use <a class="reference internal" href="../general/modules.html"><span class="doc">Code Modules</span></a> and place
+the controllers in a different namespace.</p>
+<p>To route to a module, the <code class="docutils literal notranslate"><span class="pre">$moduleRoutes</span></code> property in <strong>app/Config/Routing.php</strong>
+must be set:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">array</span> <span class="nv">$moduleRoutes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;blog&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Acme\Blog\Controllers&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>The key is the first URI segment for the module, and the value is the controller
+namespace. In the above configuration, <strong>http://localhost:8080/blog/foo/bar</strong>
+will be routed to <code class="docutils literal notranslate"><span class="pre">Acme\Blog\Controllers\Foo::getBar()</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you define <code class="docutils literal notranslate"><span class="pre">$moduleRoutes</span></code>, the routing for the module takes
+precedence. In the above example, even if you have the <code class="docutils literal notranslate"><span class="pre">App\Controllers\Blog</span></code>
+controller, <strong>http://localhost:8080/blog</strong> will be routed to the default
+controller <code class="docutils literal notranslate"><span class="pre">Acme\Blog\Controllers\Home</span></code>.</p>
+</div>
+</section>
 </section>
 <section id="auto-routing-legacy">
-<span id="id10"></span><h2><a class="toc-backref" href="#id61">Auto Routing (Legacy)</a><a class="headerlink" href="#auto-routing-legacy" title="Permalink to this headline"></a></h2>
+<span id="id10"></span><h2><a class="toc-backref" href="#id62">Auto Routing (Legacy)</a><a class="headerlink" href="#auto-routing-legacy" title="Permalink to this headline"></a></h2>
 <p>Auto Routing (Legacy) is a routing system from CodeIgniter 3.
 It can automatically route HTTP requests based on conventions and execute the corresponding controller methods.</p>
 <p>It is recommended that all routes are defined in the <strong>app/Config/Routes.php</strong> file,
@@ -1380,15 +1465,15 @@ or CSRF protection are bypassed.</p>
 <p>Auto Routing (Legacy) routes a HTTP request with <strong>any</strong> HTTP method to a controller method.</p>
 </div>
 <section id="enable-auto-routing-legacy">
-<h3><a class="toc-backref" href="#id62">Enable Auto Routing (Legacy)</a><a class="headerlink" href="#enable-auto-routing-legacy" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id63">Enable Auto Routing (Legacy)</a><a class="headerlink" href="#enable-auto-routing-legacy" title="Permalink to this headline"></a></h3>
 <p>Since v4.2.0, the auto-routing is disabled by default.</p>
-<p>To use it, you need to change the setting <code class="docutils literal notranslate"><span class="pre">setAutoRoute()</span></code> option to true in <strong>app/Config/Routes.php</strong>:</p>
+<p>To use it, you need to change the setting <code class="docutils literal notranslate"><span class="pre">$autoRoute</span></code> option to true in <strong>app/Config/Routing.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setAutoRoute</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="uri-segments-legacy">
-<h3><a class="toc-backref" href="#id63">URI Segments (Legacy)</a><a class="headerlink" href="#uri-segments-legacy" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id64">URI Segments (Legacy)</a><a class="headerlink" href="#uri-segments-legacy" title="Permalink to this headline"></a></h3>
 <p>The segments in the URL, in following with the Model-View-Controller approach, usually represent:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">class</span><span class="o">/</span><span class="nx">method</span><span class="o">/</span><span class="nx">ID</span>
 </pre></div>
@@ -1407,10 +1492,10 @@ and executes <code class="docutils literal notranslate"><span class="pre">index(
 <p>See <a class="reference internal" href="controllers.html#controller-auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy) in Controllers</span></a> for more info.</p>
 </section>
 <section id="configuration-options-legacy">
-<span id="routing-auto-routing-legacy-configuration-options"></span><h3><a class="toc-backref" href="#id64">Configuration Options (Legacy)</a><a class="headerlink" href="#configuration-options-legacy" title="Permalink to this headline"></a></h3>
+<span id="routing-auto-routing-legacy-configuration-options"></span><h3><a class="toc-backref" href="#id65">Configuration Options (Legacy)</a><a class="headerlink" href="#configuration-options-legacy" title="Permalink to this headline"></a></h3>
 <p>These options are available at the top of <strong>app/Config/Routes.php</strong>.</p>
 <section id="default-controller-legacy">
-<h4><a class="toc-backref" href="#id65">Default Controller (Legacy)</a><a class="headerlink" href="#default-controller-legacy" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id66">Default Controller (Legacy)</a><a class="headerlink" href="#default-controller-legacy" title="Permalink to this headline"></a></h4>
 <section id="for-site-root-uri-legacy">
 <h5>For Site Root URI (Legacy)<a class="headerlink" href="#for-site-root-uri-legacy" title="Permalink to this headline"></a></h5>
 <p>When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
@@ -1432,7 +1517,7 @@ in the controllers directory. For example, if the user visits <strong>example.co
 </section>
 </section>
 <section id="default-method-legacy">
-<h4><a class="toc-backref" href="#id66">Default Method (Legacy)</a><a class="headerlink" href="#default-method-legacy" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id67">Default Method (Legacy)</a><a class="headerlink" href="#default-method-legacy" title="Permalink to this headline"></a></h4>
 <p>This works similar to the default controller setting, but is used to determine the default method that is used
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
 <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
@@ -1447,10 +1532,10 @@ when a controller is found that matches the URI, but no segment exists for the m
 </section>
 </section>
 <section id="confirming-routes">
-<h2><a class="toc-backref" href="#id67">Confirming Routes</a><a class="headerlink" href="#confirming-routes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id68">Confirming Routes</a><a class="headerlink" href="#confirming-routes" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter has the following <a class="reference internal" href="../cli/spark_commands.html"><span class="doc">command</span></a> to display all routes.</p>
 <section id="spark-routes">
-<span id="routing-spark-routes"></span><h3><a class="toc-backref" href="#id68">spark routes</a><a class="headerlink" href="#spark-routes" title="Permalink to this headline"></a></h3>
+<span id="routing-spark-routes"></span><h3><a class="toc-backref" href="#id69">spark routes</a><a class="headerlink" href="#spark-routes" title="Permalink to this headline"></a></h3>
 <p>Displays all routes and filters:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark routes</span>
 </pre></div>
@@ -1472,7 +1557,7 @@ when a controller is found that matches the URI, but no segment exists for the m
 <p>The system is not perfect. If you use Custom Placeholders, <em>Filters</em> might not be correct. If you want to check filters for a route, you can use <a class="reference internal" href="filters.html#spark-filter-check"><span class="std std-ref">spark filter:check</span></a> command.</p>
 </div>
 <section id="id11">
-<h4><a class="toc-backref" href="#id69">Auto Routing (Improved)</a><a class="headerlink" href="#id11" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id70">Auto Routing (Improved)</a><a class="headerlink" href="#id11" title="Permalink to this headline"></a></h4>
 <p>When you use Auto Routing (Improved), the output is like the following:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+-----------+-------------------------+---------------+-----------------------------------+----------------+---------------+
 | Method    | Route                   | Name          | Handler                           | Before Filters | After Filters |
@@ -1507,7 +1592,7 @@ due to a bug.</p>
 </div>
 </section>
 <section id="id12">
-<h4><a class="toc-backref" href="#id70">Auto Routing (Legacy)</a><a class="headerlink" href="#id12" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id71">Auto Routing (Legacy)</a><a class="headerlink" href="#id12" title="Permalink to this headline"></a></h4>
 <p>When you use Auto Routing (Legacy), the output is like the following:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+--------+--------------------+---------------+-----------------------------------+----------------+---------------+
 | Method | Route              | Name          | Handler                           | Before Filters | After Filters |
@@ -1524,12 +1609,22 @@ due to a bug.</p>
 </div>
 </section>
 <section id="sort-by-handler">
-<span id="routing-spark-routes-sort-by-handler"></span><h4><a class="toc-backref" href="#id71">Sort by Handler</a><a class="headerlink" href="#sort-by-handler" title="Permalink to this headline"></a></h4>
+<span id="routing-spark-routes-sort-by-handler"></span><h4><a class="toc-backref" href="#id72">Sort by Handler</a><a class="headerlink" href="#sort-by-handler" title="Permalink to this headline"></a></h4>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.3.0.</span></p>
 </div>
 <p>You can sort the routes by <em>Handler</em>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark routes -h</span>
+</pre></div>
+</div>
+</section>
+<section id="specify-host">
+<span id="routing-spark-routes-specify-host"></span><h4><a class="toc-backref" href="#id73">Specify Host</a><a class="headerlink" href="#specify-host" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.4.0.</span></p>
+</div>
+<p>You can specify the host in the request URL with the <code class="docutils literal notranslate"><span class="pre">--host</span></code> option:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark routes --host accounts.example.com</span>
 </pre></div>
 </div>
 </section>

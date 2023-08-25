@@ -347,9 +347,12 @@ a new CodeIgniter4 based project.</p>
 “appstarter” folder, which can be renamed as appropriate.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>CodeIgniter autoloader does not allow special characters that are illegal in filenames on certain operating systems.
+<p>Before v4.4.0, CodeIgniter autoloader did not allow special
+characters that are illegal in filenames on certain operating systems.
 The symbols that can be used are <code class="docutils literal notranslate"><span class="pre">/</span></code>, <code class="docutils literal notranslate"><span class="pre">_</span></code>, <code class="docutils literal notranslate"><span class="pre">.</span></code>, <code class="docutils literal notranslate"><span class="pre">:</span></code>, <code class="docutils literal notranslate"><span class="pre">\</span></code> and space.
-So if you install CodeIgniter under the folder that contains the special characters like <code class="docutils literal notranslate"><span class="pre">(</span></code>, <code class="docutils literal notranslate"><span class="pre">)</span></code>, etc., CodeIgniter won’t work.</p>
+So if you installed CodeIgniter under the folder that contains the special
+characters like <code class="docutils literal notranslate"><span class="pre">(</span></code>, <code class="docutils literal notranslate"><span class="pre">)</span></code>, etc., CodeIgniter didn’t work. Since v4.4.0,
+this restriction has been removed.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>

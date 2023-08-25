@@ -721,6 +721,20 @@ version, use <code class="docutils literal notranslate"><span class="pre">getMim
 </pre></div>
 </div>
 </section>
+<section id="getclientpath">
+<h4>getClientPath()<a class="headerlink" href="#getclientpath" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.4.0.</span></p>
+</div>
+<p>Returns the <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/API/File/webkitRelativePath">webkit relative path</a> of the uploaded file when the client has uploaded files via directory upload.
+In PHP versions below 8.1, this returns <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$clientPath</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getClientPath</span><span class="p">();</span>
+<span class="k">echo</span> <span class="nv">$clientPath</span><span class="p">;</span> <span class="c1">// dir/file.txt, or dir/sub_dir/file.txt</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="moving-files">
 <h3><a class="toc-backref" href="#id17">Moving Files</a><a class="headerlink" href="#moving-files" title="Permalink to this headline"></a></h3>

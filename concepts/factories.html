@@ -293,10 +293,10 @@
 <ul>
 <li><p><a class="reference internal" href="#loading-a-class" id="id6">Loading a Class</a></p>
 <ul>
-<li><p><a class="reference internal" href="#preferapp-option" id="id7">preferApp option</a></p></li>
+<li><p><a class="reference internal" href="#passing-classname-without-namespace" id="id7">Passing Classname without Namespace</a></p></li>
+<li><p><a class="reference internal" href="#passing-full-qualified-classname" id="id8">Passing Full Qualified Classname</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#loading-a-class-in-sub-directories" id="id8">Loading a Class in Sub-directories</a></p></li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#convenience-functions" id="id9">Convenience Functions</a></p>
@@ -305,18 +305,27 @@
 <li><p><a class="reference internal" href="#model" id="id11">model()</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#factory-parameters" id="id12">Factory Parameters</a></p></li>
-<li><p><a class="reference internal" href="#factories-options" id="id13">Factories Options</a></p></li>
-<li><p><a class="reference internal" href="#factories-behavior" id="id14">Factories Behavior</a></p>
+<li><p><a class="reference internal" href="#defining-classname-to-be-loaded" id="id12">Defining Classname to be Loaded</a></p></li>
+<li><p><a class="reference internal" href="#factory-parameters" id="id13">Factory Parameters</a></p></li>
+<li><p><a class="reference internal" href="#factories-options" id="id14">Factories Options</a></p></li>
+<li><p><a class="reference internal" href="#factories-behavior" id="id15">Factories Behavior</a></p>
 <ul>
-<li><p><a class="reference internal" href="#configurations" id="id15">Configurations</a></p>
+<li><p><a class="reference internal" href="#configurations" id="id16">Configurations</a></p>
 <ul>
-<li><p><a class="reference internal" href="#example-filters-factories" id="id16">Example: Filters Factories</a></p></li>
-<li><p><a class="reference internal" href="#example-library-factories" id="id17">Example: Library Factories</a></p></li>
+<li><p><a class="reference internal" href="#example-filters-factories" id="id17">Example: Filters Factories</a></p></li>
+<li><p><a class="reference internal" href="#example-library-factories" id="id18">Example: Library Factories</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#setoptions-method" id="id18">setOptions Method</a></p></li>
-<li><p><a class="reference internal" href="#parameter-options" id="id19">Parameter Options</a></p></li>
+<li><p><a class="reference internal" href="#setoptions-method" id="id19">setOptions Method</a></p></li>
+<li><p><a class="reference internal" href="#parameter-options" id="id20">Parameter Options</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#config-caching" id="id21">Config Caching</a></p>
+<ul>
+<li><p><a class="reference internal" href="#prerequisite" id="id22">Prerequisite</a></p></li>
+<li><p><a class="reference internal" href="#how-it-works" id="id23">How It Works</a></p></li>
+<li><p><a class="reference internal" href="#how-to-update-config-values" id="id24">How to Update Config Values</a></p></li>
+<li><p><a class="reference internal" href="#how-to-enable-config-caching" id="id25">How to Enable Config Caching</a></p></li>
 </ul>
 </li>
 </ul>
@@ -357,8 +366,13 @@ not a class name, so the returned instance can be changed without changing the c
 <p>Take a look at <strong>Models</strong> as an example. You can access the Factory specific to Models
 by using the magic static method of the Factories class, <code class="docutils literal notranslate"><span class="pre">Factories::models()</span></code>.</p>
 <p>The static method name is called <em>component</em>.</p>
-<p>By default, Factories first searches in the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace for the path corresponding to the magic static method name.
+<section id="passing-classname-without-namespace">
+<span id="factories-passing-classname-without-namespace"></span><h4><a class="toc-backref" href="#id7">Passing Classname without Namespace</a><a class="headerlink" href="#passing-classname-without-namespace" title="Permalink to this headline"></a></h4>
+<p>If you pass a classname without a namespace, Factories first searches in the
+<code class="docutils literal notranslate"><span class="pre">App</span></code> namespace for the path corresponding to the magic static method name.
 <code class="docutils literal notranslate"><span class="pre">Factories::models()</span></code> searches the <strong>app/Models</strong> directory.</p>
+<section id="passing-short-classname">
+<h5>Passing Short Classname<a class="headerlink" href="#passing-short-classname" title="Permalink to this headline"></a></h5>
 <p>In the following code, if you have <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code>, the instance will be returned:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -385,30 +399,38 @@ you get back the instance as before:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<section id="preferapp-option">
-<h4><a class="toc-backref" href="#id7">preferApp option</a><a class="headerlink" href="#preferapp-option" title="Permalink to this headline"></a></h4>
-<p>You could also request a specific class:</p>
+</section>
+<section id="passing-short-classname-with-sub-directories">
+<h5>Passing Short Classname with Sub-directories<a class="headerlink" href="#passing-short-classname-with-sub-directories" title="Permalink to this headline"></a></h5>
+<p>If you want to load a class in sub directories, you use the <code class="docutils literal notranslate"><span class="pre">/</span></code> as a separator.
+The following code loads <strong>app/Libraries/Sub/SubLib.php</strong> if it exists:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$lib</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">libraries</span><span class="p">(</span><span class="s1">&#39;Sub/SubLib&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="passing-full-qualified-classname">
+<h4><a class="toc-backref" href="#id8">Passing Full Qualified Classname</a><a class="headerlink" href="#passing-full-qualified-classname" title="Permalink to this headline"></a></h4>
+<p>You could also request a full qualified classname:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;Blog\Models\UserModel&#39;</span><span class="p">);</span>
 <span class="c1">// Or</span>
 <span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="nx">\Blog\Models\UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If you have only <code class="docutils literal notranslate"><span class="pre">Blog\Models\UserModel</span></code>, the instance will be returned.
-But if you have both <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> and <code class="docutils literal notranslate"><span class="pre">Blog\Models\UserModel</span></code>,
-the instance of <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> will be returned.</p>
-<p>If you want to get <code class="docutils literal notranslate"><span class="pre">Blog\Models\UserModel</span></code>, you need to disable the option <code class="docutils literal notranslate"><span class="pre">preferApp</span></code>:</p>
+<p>It returns the instance of <code class="docutils literal notranslate"><span class="pre">Blog\Models\UserModel</span></code> if it exists.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to v4.4.0, when you requested a full qualified classname,
+if you had only <code class="docutils literal notranslate"><span class="pre">Blog\Models\UserModel</span></code>, the instance would be returned.
+But if you had both <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> and <code class="docutils literal notranslate"><span class="pre">Blog\Models\UserModel</span></code>,
+the instance of <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> would be returned.</p>
+<p>If you wanted to get <code class="docutils literal notranslate"><span class="pre">Blog\Models\UserModel</span></code>, you needed to disable the
+option <code class="docutils literal notranslate"><span class="pre">preferApp</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;Blog\Models\UserModel&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;preferApp&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="loading-a-class-in-sub-directories">
-<h3><a class="toc-backref" href="#id8">Loading a Class in Sub-directories</a><a class="headerlink" href="#loading-a-class-in-sub-directories" title="Permalink to this headline"></a></h3>
-<p>If you want to load a class in sub directories, you use the <code class="docutils literal notranslate"><span class="pre">/</span></code> as a separator.
-The following code loads <strong>app/Libraries/Sub/SubLib.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$lib</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">libraries</span><span class="p">(</span><span class="s1">&#39;Sub/SubLib&#39;</span><span class="p">);</span>
-</pre></div>
 </div>
+</section>
 </section>
 </section>
 <section id="convenience-functions">
@@ -439,8 +461,27 @@ The following code loads <strong>app/Libraries/Sub/SubLib.php</strong>:</p>
 </div>
 </section>
 </section>
+<section id="defining-classname-to-be-loaded">
+<span id="factories-defining-classname-to-be-loaded"></span><h2><a class="toc-backref" href="#id12">Defining Classname to be Loaded</a><a class="headerlink" href="#defining-classname-to-be-loaded" title="Permalink to this headline"></a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.4.0.</span></p>
+</div>
+<p>You could define a classname to be loaded before loading the class with
+the <code class="docutils literal notranslate"><span class="pre">Factories::define()</span></code> method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">Factories</span><span class="o">::</span><span class="na">define</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="s1">&#39;Myth\Auth\Models\UserModel&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Models\UserModel&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The first parameter is a component. The second parameter is a class alias
+(the first parameter to Factories magic static method), and the third parameter
+is the true full qualified classname to be loaded.</p>
+<p>After that, if you load <code class="docutils literal notranslate"><span class="pre">Myth\Auth\Models\UserModel</span></code> with Factories, the
+<code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> instance will be returned:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Myth\Auth\Models\UserModel&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
 <section id="factory-parameters">
-<h2><a class="toc-backref" href="#id12">Factory Parameters</a><a class="headerlink" href="#factory-parameters" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id13">Factory Parameters</a><a class="headerlink" href="#factory-parameters" title="Permalink to this headline"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Factories</span></code> takes as a second parameter an array of option values (described below).
 These directives will override the default options configured for each component.</p>
 <p>Any more parameters passed at the same time will be forwarded on to the class
@@ -457,7 +498,7 @@ to access user records always go through that connection:</p>
 class instance that uses the alternate database connection.</p>
 </section>
 <section id="factories-options">
-<span id="id1"></span><h2><a class="toc-backref" href="#id13">Factories Options</a><a class="headerlink" href="#factories-options" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id14">Factories Options</a><a class="headerlink" href="#factories-options" title="Permalink to this headline"></a></h2>
 <p>The default behavior might not work for every component. For example, say your component
 name and its path do not align, or you need to limit instances to a certain type of class.
 Each component takes a set of options to direct discovery and instantiation.</p>
@@ -508,9 +549,14 @@ overrides other explicit class requests.</p></td>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.4.0, <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> works only when you request
+<a class="reference internal" href="#factories-passing-classname-without-namespace"><span class="std std-ref">a classname without a namespace</span></a>.</p>
+</div>
 </section>
 <section id="factories-behavior">
-<h2><a class="toc-backref" href="#id14">Factories Behavior</a><a class="headerlink" href="#factories-behavior" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id15">Factories Behavior</a><a class="headerlink" href="#factories-behavior" title="Permalink to this headline"></a></h2>
 <p>Options can be applied in one of three ways (listed in ascending priority):</p>
 <ul class="simple">
 <li><p>A configuration class <code class="docutils literal notranslate"><span class="pre">Config\Factory</span></code> with a property that matches the name of a component.</p></li>
@@ -518,11 +564,11 @@ overrides other explicit class requests.</p></td>
 <li><p>Passing options directly at call time with a parameter.</p></li>
 </ul>
 <section id="configurations">
-<h3><a class="toc-backref" href="#id15">Configurations</a><a class="headerlink" href="#configurations" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16">Configurations</a><a class="headerlink" href="#configurations" title="Permalink to this headline"></a></h3>
 <p>To set default component options, create a new Config files at <strong>app/Config/Factory.php</strong>
 that supplies options as an array property that matches the name of the component.</p>
 <section id="example-filters-factories">
-<h4><a class="toc-backref" href="#id16">Example: Filters Factories</a><a class="headerlink" href="#example-filters-factories" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id17">Example: Filters Factories</a><a class="headerlink" href="#example-filters-factories" title="Permalink to this headline"></a></h4>
 <p>For example, if you want to create <strong>Filters</strong> by Factories, the component name wll be <code class="docutils literal notranslate"><span class="pre">filters</span></code>.
 And if you want to ensure that each filter is an instance of a class which implements CodeIgniter’s <code class="docutils literal notranslate"><span class="pre">FilterInterface</span></code>,
 your <strong>app/Config/Factory.php</strong> file might look like this:</p>
@@ -547,7 +593,7 @@ and the returned instance will surely be a CodeIgniter’s filter.</p>
 unrelated <code class="docutils literal notranslate"><span class="pre">Filters</span></code> path in its namespace.</p>
 </section>
 <section id="example-library-factories">
-<h4><a class="toc-backref" href="#id17">Example: Library Factories</a><a class="headerlink" href="#example-library-factories" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id18">Example: Library Factories</a><a class="headerlink" href="#example-library-factories" title="Permalink to this headline"></a></h4>
 <p>If you want to load your library classes in the <strong>app/Libraries</strong> directory with
 <code class="docutils literal notranslate"><span class="pre">Factories::library('SomeLib')</span></code>, the path <cite>Libraries</cite> is different from the
 default path <cite>Library</cite>.</p>
@@ -575,7 +621,7 @@ default path <cite>Library</cite>.</p>
 </section>
 </section>
 <section id="setoptions-method">
-<h3><a class="toc-backref" href="#id18">setOptions Method</a><a class="headerlink" href="#setoptions-method" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id19">setOptions Method</a><a class="headerlink" href="#setoptions-method" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Factories</span></code> class has a static method to allow runtime option configuration: simply
 supply the desired array of options using the <code class="docutils literal notranslate"><span class="pre">setOptions()</span></code> method and they will be
 merged with the default values and stored for the next call:</p>
@@ -589,7 +635,7 @@ merged with the default values and stored for the next call:</p>
 </div>
 </section>
 <section id="parameter-options">
-<h3><a class="toc-backref" href="#id19">Parameter Options</a><a class="headerlink" href="#parameter-options" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id20">Parameter Options</a><a class="headerlink" href="#parameter-options" title="Permalink to this headline"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Factories</span></code>’s magic static call takes as a second parameter an array of option values.
 These directives will override the stored options configured for each component and can be
 used at call time to get exactly what you need. The input should be an array with option
@@ -599,6 +645,80 @@ a component. By adding a second parameter to the magic static call, you can cont
 that single call will return a new or shared instance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;getShared&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>  <span class="c1">// Default; will always be the same instance</span>
 <span class="nv">$other</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;getShared&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span> <span class="c1">// Will always create a new instance</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="config-caching">
+<span id="factories-config-caching"></span><h2><a class="toc-backref" href="#id21">Config Caching</a><a class="headerlink" href="#config-caching" title="Permalink to this headline"></a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.4.0.</span></p>
+</div>
+<p>To improve performance, Config Caching has been implemented.</p>
+<section id="prerequisite">
+<h3><a class="toc-backref" href="#id22">Prerequisite</a><a class="headerlink" href="#prerequisite" title="Permalink to this headline"></a></h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Using this feature when the prerequisites are not met will prevent
+CodeIgniter from operating properly. Do not use this feature in such cases.</p>
+</div>
+<ul class="simple">
+<li><p>To use this feature, the properties of all Config objects instantiated in
+Factories must not be modified after instantiation. Put another way, the Config
+classes must be an immutable or readonly classes.</p></li>
+<li><p>By default, every Config class that is cached must implement <code class="docutils literal notranslate"><span class="pre">__set_state()</span></code>
+method.</p></li>
+</ul>
+</section>
+<section id="how-it-works">
+<h3><a class="toc-backref" href="#id23">How It Works</a><a class="headerlink" href="#how-it-works" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Save the all Config instances in Factories into a cache file before shutdown,
+if the state of the Config instances in Factories changes.</p></li>
+<li><p>Restore cached Config instances before CodeIgniter initialization if a cache
+is available.</p></li>
+</ul>
+<p>Simply put, all Config instances held by Factories are cached immediately prior
+to shutdown, and the cached instances are used permanently.</p>
+</section>
+<section id="how-to-update-config-values">
+<h3><a class="toc-backref" href="#id24">How to Update Config Values</a><a class="headerlink" href="#how-to-update-config-values" title="Permalink to this headline"></a></h3>
+<p>Once stored, the cached versions never expire. Changing a existing Config file
+(or changing Environment Variables for it) will not update the cache nor the Config
+values.</p>
+<p>So if you want to update Config values, update Config files or Environment Variables
+for them, and you must manually delete the cache file.</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">cache:clear</span></code> command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark cache:clear</span>
+</pre></div>
+</div>
+<p>Or simply delete the <strong>writable/cache/FactoriesCache_config</strong> file.</p>
+</section>
+<section id="how-to-enable-config-caching">
+<h3><a class="toc-backref" href="#id25">How to Enable Config Caching</a><a class="headerlink" href="#how-to-enable-config-caching" title="Permalink to this headline"></a></h3>
+<p>Uncomment the following code in <strong>public/index.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="nx">a</span><span class="o">/</span><span class="k">public</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span>
+<span class="o">+++</span> <span class="nx">b</span><span class="o">/</span><span class="k">public</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">49</span><span class="p">,</span><span class="mi">8</span> <span class="o">+</span><span class="mi">49</span><span class="p">,</span><span class="mi">8</span> <span class="o">@@</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;ENVIRONMENT&#39;</span><span class="p">))</span> <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="c1">// Load Config Cache</span>
+<span class="o">-//</span> <span class="nv">$factoriesCache</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Cache\FactoriesCache</span><span class="p">();</span>
+<span class="o">-//</span> <span class="nv">$factoriesCache</span><span class="o">-&gt;</span><span class="na">load</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">);</span>
+<span class="o">+</span><span class="nv">$factoriesCache</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Cache\FactoriesCache</span><span class="p">();</span>
+<span class="o">+</span><span class="nv">$factoriesCache</span><span class="o">-&gt;</span><span class="na">load</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">);</span>
+ <span class="c1">// ^^^ Uncomment these lines if you want to use Config Caching.</span>
+
+ <span class="o">/*</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">79</span><span class="p">,</span><span class="mi">7</span> <span class="o">+</span><span class="mi">79</span><span class="p">,</span><span class="mi">7</span> <span class="o">@@</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">setContext</span><span class="p">(</span><span class="nv">$context</span><span class="p">);</span>
+ <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
+
+ <span class="c1">// Save Config Cache</span>
+<span class="o">-//</span> <span class="nv">$factoriesCache</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">);</span>
+<span class="o">+</span><span class="nv">$factoriesCache</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">);</span>
+ <span class="c1">// ^^^ Uncomment this line if you want to use Config Caching.</span>
+
+ <span class="c1">// Exits the application, setting the exit code for CLI-based applications</span>
 </pre></div>
 </div>
 </section>

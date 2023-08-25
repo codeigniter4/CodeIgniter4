@@ -411,7 +411,7 @@ looking for.</p>
 <section id="retrieve-field-metadata">
 <h3><a class="toc-backref" href="#id7">Retrieve Field Metadata</a><a class="headerlink" href="#retrieve-field-metadata" title="Permalink to this headline"></a></h3>
 <section id="db-getfielddata">
-<h4>$db-&gt;getFieldData()<a class="headerlink" href="#db-getfielddata" title="Permalink to this headline"></a></h4>
+<span id="db-metadata-getfielddata"></span><h4>$db-&gt;getFieldData()<a class="headerlink" href="#db-getfielddata" title="Permalink to this headline"></a></h4>
 <p>Returns an array of objects containing field information.</p>
 <p>Sometimes it’s helpful to gather the field names or other metadata, like
 the column type, max length, etc.</p>
@@ -451,9 +451,13 @@ database:</p>
 <li><p>type - the type of the column</p></li>
 <li><p>max_length - maximum length of the column</p></li>
 <li><p>primary_key - integer <code class="docutils literal notranslate"><span class="pre">1</span></code> if the column is a primary key (all integer <code class="docutils literal notranslate"><span class="pre">1</span></code>, even if there are multiple primary keys), otherwise integer <code class="docutils literal notranslate"><span class="pre">0</span></code> (This field is currently only available for MySQL and SQLite3)</p></li>
-<li><p>nullable - boolean <code class="docutils literal notranslate"><span class="pre">true</span></code> if the column is nullable, otherwise boolean <code class="docutils literal notranslate"><span class="pre">false</span></code> (This field is currently not available in SQL Server)</p></li>
+<li><p>nullable - boolean <code class="docutils literal notranslate"><span class="pre">true</span></code> if the column is nullable, otherwise boolean <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
 <li><p>default - the default value</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.4.0, SQLSRV supported <code class="docutils literal notranslate"><span class="pre">nullable</span></code>.</p>
+</div>
 </section>
 </section>
 <section id="list-the-indexes-in-a-table">

@@ -394,7 +394,11 @@ adjust PHP memory limits.</p>
 <h3><a class="toc-backref" href="#id3">Image Quality</a><a class="headerlink" href="#image-quality" title="Permalink to this headline"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">save()</span></code> can take an additional parameter <code class="docutils literal notranslate"><span class="pre">$quality</span></code> to alter the resulting image
 quality. Values range from 0 to 100 with 90 being the framework default. This parameter
-only applies to JPEG images and will be ignored otherwise:</p>
+only applies to JPEG and WEBP images, will be ignored otherwise:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">$quality</span></code> for WebP can be used since v4.4.0.</p>
+</div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$image</span><span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>

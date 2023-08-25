@@ -285,41 +285,45 @@
 a server responding to the client that called it.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#working-with-the-response" id="id3">Working with the Response</a></p>
+<li><p><a class="reference internal" href="#working-with-the-response" id="id4">Working with the Response</a></p>
 <ul>
-<li><p><a class="reference internal" href="#setting-the-output" id="id4">Setting the Output</a></p></li>
-<li><p><a class="reference internal" href="#setting-headers" id="id5">Setting Headers</a></p></li>
+<li><p><a class="reference internal" href="#setting-the-output" id="id5">Setting the Output</a></p></li>
+<li><p><a class="reference internal" href="#setting-headers" id="id6">Setting Headers</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#redirect" id="id6">Redirect</a></p>
+<li><p><a class="reference internal" href="#redirect" id="id7">Redirect</a></p>
 <ul>
-<li><p><a class="reference internal" href="#redirect-to-a-uri-path" id="id7">Redirect to a URI path</a></p></li>
-<li><p><a class="reference internal" href="#redirect-to-a-defined-route" id="id8">Redirect to a Defined Route</a></p></li>
-<li><p><a class="reference internal" href="#redirect-back" id="id9">Redirect Back</a></p></li>
-<li><p><a class="reference internal" href="#redirect-status-code" id="id10">Redirect Status Code</a></p></li>
+<li><p><a class="reference internal" href="#redirect-to-a-uri-path" id="id8">Redirect to a URI path</a></p></li>
+<li><p><a class="reference internal" href="#redirect-to-a-defined-route" id="id9">Redirect to a Defined Route</a></p></li>
+<li><p><a class="reference internal" href="#redirect-back" id="id10">Redirect Back</a></p></li>
+<li><p><a class="reference internal" href="#redirect-status-code" id="id11">Redirect Status Code</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#force-file-download" id="id11">Force File Download</a></p></li>
-<li><p><a class="reference internal" href="#http-caching" id="id12">HTTP Caching</a></p></li>
-<li><p><a class="reference internal" href="#content-security-policy" id="id13">Content Security Policy</a></p>
+<li><p><a class="reference internal" href="#force-file-download" id="id12">Force File Download</a></p>
 <ul>
-<li><p><a class="reference internal" href="#turning-csp-on" id="id14">Turning CSP On</a></p></li>
-<li><p><a class="reference internal" href="#runtime-configuration" id="id15">Runtime Configuration</a></p></li>
-<li><p><a class="reference internal" href="#inline-content" id="id16">Inline Content</a></p></li>
+<li><p><a class="reference internal" href="#open-file-in-browser" id="id13">Open File in Browser</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#class-reference" id="id17">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#http-caching" id="id14">HTTP Caching</a></p></li>
+<li><p><a class="reference internal" href="#content-security-policy" id="id15">Content Security Policy</a></p>
+<ul>
+<li><p><a class="reference internal" href="#turning-csp-on" id="id16">Turning CSP On</a></p></li>
+<li><p><a class="reference internal" href="#runtime-configuration" id="id17">Runtime Configuration</a></p></li>
+<li><p><a class="reference internal" href="#inline-content" id="id18">Inline Content</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#class-reference" id="id19">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="working-with-the-response">
-<h2><a class="toc-backref" href="#id3">Working with the Response</a><a class="headerlink" href="#working-with-the-response" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Working with the Response</a><a class="headerlink" href="#working-with-the-response" title="Permalink to this headline"></a></h2>
 <p>A Response class is instantiated for you and passed into your controllers. It can be accessed through
 <code class="docutils literal notranslate"><span class="pre">$this-&gt;response</span></code>. Many times you will not need to touch the class directly, since CodeIgniter takes care of
 sending the headers and the body for you. This is great if the page successfully created the content it was asked to.
 When things go wrong, or you need to send very specific status codes back, or even take advantage of the
 powerful HTTP caching, it’s there for you.</p>
 <section id="setting-the-output">
-<h3><a class="toc-backref" href="#id4">Setting the Output</a><a class="headerlink" href="#setting-the-output" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">Setting the Output</a><a class="headerlink" href="#setting-the-output" title="Permalink to this headline"></a></h3>
 <p>When you need to set the output of the script directly, and not rely on CodeIgniter to automatically get it, you
 do it manually with the <code class="docutils literal notranslate"><span class="pre">setBody</span></code> method. This is usually used in conjunction with setting the status code of
 the response:</p>
@@ -352,7 +356,7 @@ as the second parameter of the <code class="docutils literal notranslate"><span 
 </div>
 </section>
 <section id="setting-headers">
-<h3><a class="toc-backref" href="#id5">Setting Headers</a><a class="headerlink" href="#setting-headers" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Setting Headers</a><a class="headerlink" href="#setting-headers" title="Permalink to this headline"></a></h3>
 <p>Often, you will need to set headers to be set for the response. The Response class makes this very simple to do,
 with the <code class="docutils literal notranslate"><span class="pre">setHeader()</span></code> method. The first parameter is the name of the header. The second parameter is the value,
 which can be either a string or an array of values that will be combined correctly when sent to the client.
@@ -383,7 +387,7 @@ parameter. This is not case-sensitive.</p>
 </section>
 </section>
 <section id="redirect">
-<span id="response-redirect"></span><h2><a class="toc-backref" href="#id6">Redirect</a><a class="headerlink" href="#redirect" title="Permalink to this headline"></a></h2>
+<span id="response-redirect"></span><h2><a class="toc-backref" href="#id7">Redirect</a><a class="headerlink" href="#redirect" title="Permalink to this headline"></a></h2>
 <p>If you want to create a redirect, use the <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a> function. It
 returns a <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance.</p>
 <div class="admonition important">
@@ -395,7 +399,7 @@ or the <code class="docutils literal notranslate"><span class="pre">initControll
 If you forget to return <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code>, no redirection will occur.</p>
 </div>
 <section id="redirect-to-a-uri-path">
-<h3><a class="toc-backref" href="#id7">Redirect to a URI path</a><a class="headerlink" href="#redirect-to-a-uri-path" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Redirect to a URI path</a><a class="headerlink" href="#redirect-to-a-uri-path" title="Permalink to this headline"></a></h3>
 <p>When you want to pass a URI path (relative to baseURL), use <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;to()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go to specific URI path. &quot;admin/home&quot; is the URI path relative to baseURL.</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">to</span><span class="p">(</span><span class="s1">&#39;admin/home&#39;</span><span class="p">);</span>
@@ -409,7 +413,7 @@ Like <code class="docutils literal notranslate"><span class="pre">return</span> 
 </div>
 </section>
 <section id="redirect-to-a-defined-route">
-<h3><a class="toc-backref" href="#id8">Redirect to a Defined Route</a><a class="headerlink" href="#redirect-to-a-defined-route" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">Redirect to a Defined Route</a><a class="headerlink" href="#redirect-to-a-defined-route" title="Permalink to this headline"></a></h3>
 <p>When you want to pass a <a class="reference internal" href="../incoming/routing.html#using-named-routes"><span class="std std-ref">route name</span></a> or Controller::method
 for <a class="reference internal" href="../incoming/routing.html#reverse-routing"><span class="std std-ref">reverse routing</span></a>, use <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;route()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go to a named route. &quot;user_gallery&quot; is the route name, not a URI path.</span>
@@ -425,7 +429,7 @@ treating it the same as using <code class="docutils literal notranslate"><span c
 </div>
 </section>
 <section id="redirect-back">
-<h3><a class="toc-backref" href="#id9">Redirect Back</a><a class="headerlink" href="#redirect-back" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">Redirect Back</a><a class="headerlink" href="#redirect-back" title="Permalink to this headline"></a></h3>
 <p>When you want to redirect back, use <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;back()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go back to the previous page.</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">();</span>
@@ -451,7 +455,7 @@ If the Session hasn’t been loaded, or is otherwise unavailable, then a sanitiz
 </div>
 </section>
 <section id="redirect-status-code">
-<span id="response-redirect-status-code"></span><h3><a class="toc-backref" href="#id10">Redirect Status Code</a><a class="headerlink" href="#redirect-status-code" title="Permalink to this headline"></a></h3>
+<span id="response-redirect-status-code"></span><h3><a class="toc-backref" href="#id11">Redirect Status Code</a><a class="headerlink" href="#redirect-status-code" title="Permalink to this headline"></a></h3>
 <p>The default HTTP status code for GET requests is 302. However, when using HTTP/1.1
 or later, 303 is used for POST/PUT/DELETE requests and 307 for all other requests.</p>
 <p>You can specify the status code:</p>
@@ -476,7 +480,7 @@ See <a class="reference internal" href="../changelogs/v4.3.4.html#v434-redirect-
 </section>
 </section>
 <section id="force-file-download">
-<span id="id1"></span><h2><a class="toc-backref" href="#id11">Force File Download</a><a class="headerlink" href="#force-file-download" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id12">Force File Download</a><a class="headerlink" href="#force-file-download" title="Permalink to this headline"></a></h2>
 <p>The Response class provides a simple way to send a file to the client, prompting the browser to download the data
 to your computer. This sets the appropriate headers to make it happen.</p>
 <p>The first parameter is the <strong>name you want the downloaded file to be named</strong>, the second parameter is the
@@ -514,9 +518,22 @@ pass <code class="docutils literal notranslate"><span class="pre">null</span></c
 <p>The response object MUST be returned for the download to be sent to the client. This allows the response
 to be passed through all <strong>after</strong> filters before being sent to the client.</p>
 </div>
+<section id="open-file-in-browser">
+<span id="id2"></span><h3><a class="toc-backref" href="#id13">Open File in Browser</a><a class="headerlink" href="#open-file-in-browser" title="Permalink to this headline"></a></h3>
+<p>Some browsers can display files such as PDF. To tell the browser to display the file instead of saving it, call the
+<code class="docutils literal notranslate"><span class="pre">DownloadResponse::inline()</span></code> method.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="s1">&#39;Here is some text!&#39;</span><span class="p">;</span>
+<span class="nv">$name</span> <span class="o">=</span> <span class="s1">&#39;mytext.txt&#39;</span><span class="p">;</span>
+
+<span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">download</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">inline</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="http-caching">
-<h2><a class="toc-backref" href="#id12">HTTP Caching</a><a class="headerlink" href="#http-caching" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id14">HTTP Caching</a><a class="headerlink" href="#http-caching" title="Permalink to this headline"></a></h2>
 <p>Built into the HTTP specification are tools help the client (often the web browser) cache the results. Used correctly,
 this can lead to a huge performance boost to your application because it will tell the client that they don’t need
 to contact the server at all since nothing has changed. And you can’t get faster than that.</p>
@@ -542,7 +559,7 @@ situation. While most of the options are applied to the <code class="docutils li
 the <code class="docutils literal notranslate"><span class="pre">etag</span></code> and <code class="docutils literal notranslate"><span class="pre">last-modified</span></code> options to their appropriate header.</p>
 </section>
 <section id="content-security-policy">
-<span id="id2"></span><h2><a class="toc-backref" href="#id13">Content Security Policy</a><a class="headerlink" href="#content-security-policy" title="Permalink to this headline"></a></h2>
+<span id="id3"></span><h2><a class="toc-backref" href="#id15">Content Security Policy</a><a class="headerlink" href="#content-security-policy" title="Permalink to this headline"></a></h2>
 <p>One of the best protections you have against XSS attacks is to implement a Content Security Policy on the site.
 This forces you to whitelist every single source of content that is pulled in from your site’s HTML,
 including images, stylesheets, javascript files, etc. The browser will refuse content from sources that don’t meet
@@ -559,7 +576,7 @@ visit the following sites:</p>
 <li><p><a class="reference external" href="https://www.sitepoint.com/improving-web-security-with-the-content-security-policy/">Article at SitePoint</a></p></li>
 </ul>
 <section id="turning-csp-on">
-<h3><a class="toc-backref" href="#id14">Turning CSP On</a><a class="headerlink" href="#turning-csp-on" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16">Turning CSP On</a><a class="headerlink" href="#turning-csp-on" title="Permalink to this headline"></a></h3>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>The <a class="reference internal" href="../testing/debugging.html#the-debug-toolbar"><span class="std std-ref">Debug Toolbar</span></a> may use Kint, which
@@ -599,7 +616,7 @@ to the CSP header appropriate for blocking or preventing. That can be overridden
 call basis, by providing an optional second parameter to the adding method call.</p>
 </section>
 <section id="runtime-configuration">
-<h3><a class="toc-backref" href="#id15">Runtime Configuration</a><a class="headerlink" href="#runtime-configuration" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id17">Runtime Configuration</a><a class="headerlink" href="#runtime-configuration" title="Permalink to this headline"></a></h3>
 <p>If your application needs to make changes at run-time, you can access the instance at <code class="docutils literal notranslate"><span class="pre">$this-&gt;response-&gt;getCSP()</span></code> in your controllers. The
 class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
 Examples are shown below, with different combinations of parameters, though all accept either a directive
@@ -657,7 +674,7 @@ that youtube.com was allowed, and then provide several allowed but reported sour
 </div>
 </section>
 <section id="inline-content">
-<h3><a class="toc-backref" href="#id16">Inline Content</a><a class="headerlink" href="#inline-content" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id18">Inline Content</a><a class="headerlink" href="#inline-content" title="Permalink to this headline"></a></h3>
 <p>It is possible to set a website to not protect even inline scripts and styles on its own pages, since this might have
 been the result of user-generated content. To protect against this, CSP allows you to specify a nonce within the
 <code class="docutils literal notranslate"><span class="pre">&lt;style&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code> tags, and to add those values to the response’s header. This is a pain to handle in real
@@ -704,7 +721,7 @@ life, and is most secure when generated on the fly. To make this simple, you can
 </section>
 </section>
 <section id="class-reference">
-<h2><a class="toc-backref" href="#id17">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id19">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In addition to the methods listed here, this class inherits the methods from the

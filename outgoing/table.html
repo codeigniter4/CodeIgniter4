@@ -290,9 +290,10 @@ tables from arrays or database result sets.</p>
 <li><p><a class="reference internal" href="#initializing-the-class" id="id2">Initializing the Class</a></p></li>
 <li><p><a class="reference internal" href="#examples" id="id3">Examples</a></p></li>
 <li><p><a class="reference internal" href="#changing-the-look-of-your-table" id="id4">Changing the Look of Your Table</a></p></li>
+<li><p><a class="reference internal" href="#synchronizing-rows-with-headings" id="id5">Synchronizing Rows with Headings</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#namespace-CodeIgniter\View" id="id5">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\View" id="id6">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="using-the-table-class">
@@ -445,9 +446,98 @@ to the Table constructor:</p>
 </pre></div>
 </div>
 </section>
+<section id="synchronizing-rows-with-headings">
+<span id="table-sync-rows-with-headings"></span><h3><a class="toc-backref" href="#id5">Synchronizing Rows with Headings</a><a class="headerlink" href="#synchronizing-rows-with-headings" title="Permalink to this headline"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.4.0.</span></p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">setSyncRowsWithHeading(true)</span></code> method enables that each data value
+is placed in the same column as defined in <code class="docutils literal notranslate"><span class="pre">setHeading()</span></code> if an
+associative array was used as parameter. This is especially useful
+when dealing with data loaded via REST API where the order is not to
+your liking, or if the API returned too much data.</p>
+<p>If a data row contains a key that is not present in the heading, its value is
+filtered. Conversely, if a data row does not have a key listed in the heading,
+an empty cell will be placed in its place.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Size&#39;</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">setSyncRowsWithHeading</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Small&#39;</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;size&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Large&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;24&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mary&#39;</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Green&#39;</span><span class="p">]);</span>
+
+<span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
+<span class="cp">?&gt;</span>
+
+<span class="cm">&lt;!-- Generates a table with this prototype: --&gt;</span>
+<span class="p">&lt;</span><span class="nt">table</span> <span class="na">border</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="na">cellpadding</span><span class="o">=</span><span class="s">&quot;4&quot;</span> <span class="na">cellspacing</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Name<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Color<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Size<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Fred<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Blue<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Small<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Mary<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Large<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Green<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You must call <code class="docutils literal notranslate"><span class="pre">setSyncRowsWithHeading(true)</span></code> and
+<code class="docutils literal notranslate"><span class="pre">setHeading([...])</span></code> before adding any rows via <code class="docutils literal notranslate"><span class="pre">addRow([...])</span></code> where
+the rearrangement of columns takes place.</p>
+</div>
+<p>Using an array as input to <code class="docutils literal notranslate"><span class="pre">generate()</span></code> produces the same result:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Fred&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;size&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Small&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;size&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Large&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;age&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;24&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mary&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Green&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+
+<span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
+
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">([</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Size&#39;</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">setSyncRowsWithHeading</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="namespace-CodeIgniter\View">
-<span id="class-reference"></span><h2><a class="toc-backref" href="#id5">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\View" title="Permalink to this headline"></a></h2>
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id6">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\View" title="Permalink to this headline"></a></h2>
 <dl class="php class">
 <dt class="sig sig-object php" id="CodeIgniter\View\Table">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\View\</span></span><span class="sig-name descname"><span class="pre">Table</span></span><a class="headerlink" href="#CodeIgniter\View\Table" title="Permalink to this definition"></a></dt>
@@ -754,6 +844,22 @@ generated to clear the previous table information.</p>
 <span class="k">echo</span> <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\View\Table::setSyncRowsWithHeading">
+<span class="sig-name descname"><span class="pre">setSyncRowsWithHeading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">bool</span> <span class="pre">$orderByKey</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\View\Table::setSyncRowsWithHeading" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Table instance (method chaining)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><span><a class="reference internal" href="#CodeIgniter\View\Table" title="CodeIgniter\View\Table"><code class="xref php php-obj docutils literal notranslate"><span class="pre">Table</span></code></a></span></p>
+</dd>
+</dl>
+<p>Enables each row data key to be ordered by heading keys. This gives
+more control of data being displaced in the correct column. Make
+sure to set this value before calling the first <code class="docutils literal notranslate"><span class="pre">addRow()</span></code> method.</p>
 </dd></dl>
 
 </dd></dl>

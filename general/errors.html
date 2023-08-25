@@ -289,28 +289,34 @@ is running under the <code class="docutils literal notranslate"><span class="pre
 keep the best user experience for your users.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#using-exceptions" id="id2">Using Exceptions</a></p></li>
-<li><p><a class="reference internal" href="#configuration" id="id3">Configuration</a></p>
+<li><p><a class="reference internal" href="#using-exceptions" id="id3">Using Exceptions</a></p></li>
+<li><p><a class="reference internal" href="#configuration" id="id4">Configuration</a></p>
 <ul>
-<li><p><a class="reference internal" href="#error-reporting" id="id4">Error Reporting</a></p></li>
-<li><p><a class="reference internal" href="#logging-exceptions" id="id5">Logging Exceptions</a></p></li>
+<li><p><a class="reference internal" href="#error-reporting" id="id5">Error Reporting</a></p></li>
+<li><p><a class="reference internal" href="#logging-exceptions" id="id6">Logging Exceptions</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#framework-exceptions" id="id6">Framework Exceptions</a></p>
+<li><p><a class="reference internal" href="#framework-exceptions" id="id7">Framework Exceptions</a></p>
 <ul>
-<li><p><a class="reference internal" href="#pagenotfoundexception" id="id7">PageNotFoundException</a></p></li>
-<li><p><a class="reference internal" href="#configexception" id="id8">ConfigException</a></p></li>
-<li><p><a class="reference internal" href="#databaseexception" id="id9">DatabaseException</a></p></li>
-<li><p><a class="reference internal" href="#redirectexception" id="id10">RedirectException</a></p></li>
+<li><p><a class="reference internal" href="#pagenotfoundexception" id="id8">PageNotFoundException</a></p></li>
+<li><p><a class="reference internal" href="#configexception" id="id9">ConfigException</a></p></li>
+<li><p><a class="reference internal" href="#databaseexception" id="id10">DatabaseException</a></p></li>
+<li><p><a class="reference internal" href="#redirectexception" id="id11">RedirectException</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#specify-http-status-code-in-your-exception" id="id11">Specify HTTP Status Code in Your Exception</a></p></li>
-<li><p><a class="reference internal" href="#specify-exit-code-in-your-exception" id="id12">Specify Exit Code in Your Exception</a></p></li>
-<li><p><a class="reference internal" href="#logging-deprecation-warnings" id="id13">Logging Deprecation Warnings</a></p></li>
+<li><p><a class="reference internal" href="#specify-http-status-code-in-your-exception" id="id12">Specify HTTP Status Code in Your Exception</a></p></li>
+<li><p><a class="reference internal" href="#specify-exit-code-in-your-exception" id="id13">Specify Exit Code in Your Exception</a></p></li>
+<li><p><a class="reference internal" href="#logging-deprecation-warnings" id="id14">Logging Deprecation Warnings</a></p></li>
+<li><p><a class="reference internal" href="#custom-exception-handlers" id="id15">Custom Exception Handlers</a></p>
+<ul>
+<li><p><a class="reference internal" href="#defining-the-new-handler" id="id16">Defining the New Handler</a></p></li>
+<li><p><a class="reference internal" href="#configuring-the-new-handler" id="id17">Configuring the New Handler</a></p></li>
+</ul>
+</li>
 </ul>
 </div>
 <section id="using-exceptions">
-<h2><a class="toc-backref" href="#id2">Using Exceptions</a><a class="headerlink" href="#using-exceptions" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Using Exceptions</a><a class="headerlink" href="#using-exceptions" title="Permalink to this headline"></a></h2>
 <p>This section is a quick overview for newer programmers, or for developers who are not experienced with using exceptions.</p>
 <p>Exceptions are simply events that happen when the exception is “thrown”. This halts the current flow of the script, and
 execution is then sent to the error handler which displays the appropriate error page:</p>
@@ -358,9 +364,9 @@ the error handler to function as normal, you can throw a new exception within th
 </div>
 </section>
 <section id="configuration">
-<h2><a class="toc-backref" href="#id3">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
 <section id="error-reporting">
-<h3><a class="toc-backref" href="#id4">Error Reporting</a><a class="headerlink" href="#error-reporting" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">Error Reporting</a><a class="headerlink" href="#error-reporting" title="Permalink to this headline"></a></h3>
 <p>By default, CodeIgniter will display a detailed error report with all errors in the <code class="docutils literal notranslate"><span class="pre">development</span></code> and <code class="docutils literal notranslate"><span class="pre">testing</span></code> environments, and will not
 display any errors in the <code class="docutils literal notranslate"><span class="pre">production</span></code> environment. You can change this by setting the <code class="docutils literal notranslate"><span class="pre">CI_ENVIRONMENT</span></code> variable
 in the <a class="reference internal" href="configuration.html#dotenv-file"><span class="std std-ref">.env</span></a> file.</p>
@@ -376,7 +382,7 @@ is displayed, <strong>your secure credentials are publicly exposed</strong>.</p>
 </div>
 </section>
 <section id="logging-exceptions">
-<h3><a class="toc-backref" href="#id5">Logging Exceptions</a><a class="headerlink" href="#logging-exceptions" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Logging Exceptions</a><a class="headerlink" href="#logging-exceptions" title="Permalink to this headline"></a></h3>
 <p>By default, all Exceptions other than 404 - Page Not Found exceptions are logged. This can be turned on and off
 by setting the <code class="docutils literal notranslate"><span class="pre">$log</span></code> value of <strong>app/Config/Exceptions.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -412,10 +418,10 @@ are not set up to log <strong>critical</strong> errors, which all exceptions are
 </section>
 </section>
 <section id="framework-exceptions">
-<h2><a class="toc-backref" href="#id6">Framework Exceptions</a><a class="headerlink" href="#framework-exceptions" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">Framework Exceptions</a><a class="headerlink" href="#framework-exceptions" title="Permalink to this headline"></a></h2>
 <p>The following framework exceptions are available:</p>
 <section id="pagenotfoundexception">
-<h3><a class="toc-backref" href="#id7">PageNotFoundException</a><a class="headerlink" href="#pagenotfoundexception" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">PageNotFoundException</a><a class="headerlink" href="#pagenotfoundexception" title="Permalink to this headline"></a></h3>
 <p>This is used to signal a 404, Page Not Found error. When thrown, the system will show the view found at
 <strong>app/Views/errors/html/error_404.php</strong>. You should customize all of the error views for your site.
 If, in <strong>app/Config/Routes.php</strong>, you have specified a 404 Override, that will be called instead of the standard
@@ -430,7 +436,7 @@ If, in <strong>app/Config/Routes.php</strong>, you have specified a 404 Override
 <p>You can pass a message into the exception that will be displayed in place of the default message on the 404 page.</p>
 </section>
 <section id="configexception">
-<h3><a class="toc-backref" href="#id8">ConfigException</a><a class="headerlink" href="#configexception" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">ConfigException</a><a class="headerlink" href="#configexception" title="Permalink to this headline"></a></h3>
 <p>This exception should be used when the values from the configuration class are invalid, or when the config class
 is not the right type, etc:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -441,7 +447,7 @@ is not the right type, etc:</p>
 <p>This provides an exit code of 3.</p>
 </section>
 <section id="databaseexception">
-<h3><a class="toc-backref" href="#id9">DatabaseException</a><a class="headerlink" href="#databaseexception" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">DatabaseException</a><a class="headerlink" href="#databaseexception" title="Permalink to this headline"></a></h3>
 <p>This exception is thrown for database errors, such as when the database connection cannot be created,
 or when it is temporarily lost:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -452,25 +458,43 @@ or when it is temporarily lost:</p>
 <p>This provides an exit code of 8.</p>
 </section>
 <section id="redirectexception">
-<h3><a class="toc-backref" href="#id10">RedirectException</a><a class="headerlink" href="#redirectexception" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11">RedirectException</a><a class="headerlink" href="#redirectexception" title="Permalink to this headline"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.4.0, the namespace of <code class="docutils literal notranslate"><span class="pre">RedirectException</span></code> has been changed.
+Previously it was <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\Exceptions\RedirectException</span></code>. The
+previous class is deprecated.</p>
+</div>
 <p>This exception is a special case allowing for overriding of all other response routing and
 forcing a redirect to a specific URI:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Router\Exceptions\RedirectException</span><span class="p">(</span><span class="nv">$uri</span><span class="p">);</span>
+<span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\Exceptions\RedirectException</span><span class="p">(</span><span class="nv">$uri</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">$uri</span></code> is a URI path relative to baseURL. You can also supply a
 redirect code to use instead of the default (<code class="docutils literal notranslate"><span class="pre">302</span></code>, “temporary redirect”):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Router\Exceptions\RedirectException</span><span class="p">(</span><span class="nv">$uri</span><span class="p">,</span> <span class="mi">301</span><span class="p">);</span>
+<span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\Exceptions\RedirectException</span><span class="p">(</span><span class="nv">$uri</span><span class="p">,</span> <span class="mi">301</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Also, since v4.4.0 an object of a class that implements ResponseInterface can be used as the first argument.
+This solution is suitable for cases where you need to add additional headers or cookies in the response.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$response</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">response</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">redirect</span><span class="p">(</span><span class="s1">&#39;https://example.com/path&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Some&#39;</span><span class="p">,</span> <span class="s1">&#39;header&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;cookie&#39;</span><span class="p">);</span>
+
+<span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\Exceptions\RedirectException</span><span class="p">(</span><span class="nv">$response</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 </section>
 <section id="specify-http-status-code-in-your-exception">
-<span id="error-specify-http-status-code"></span><h2><a class="toc-backref" href="#id11">Specify HTTP Status Code in Your Exception</a><a class="headerlink" href="#specify-http-status-code-in-your-exception" title="Permalink to this headline"></a></h2>
+<span id="error-specify-http-status-code"></span><h2><a class="toc-backref" href="#id12">Specify HTTP Status Code in Your Exception</a><a class="headerlink" href="#specify-http-status-code-in-your-exception" title="Permalink to this headline"></a></h2>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.3.0.</span></p>
 </div>
@@ -479,7 +503,7 @@ redirect code to use instead of the default (<code class="docutils literal notra
 <p>When an exception implementing <code class="docutils literal notranslate"><span class="pre">HTTPExceptionInterface</span></code> is caught by CodeIgniter’s exception handler, the Exception code will become the HTTP status code.</p>
 </section>
 <section id="specify-exit-code-in-your-exception">
-<span id="error-specify-exit-code"></span><h2><a class="toc-backref" href="#id12">Specify Exit Code in Your Exception</a><a class="headerlink" href="#specify-exit-code-in-your-exception" title="Permalink to this headline"></a></h2>
+<span id="error-specify-exit-code"></span><h2><a class="toc-backref" href="#id13">Specify Exit Code in Your Exception</a><a class="headerlink" href="#specify-exit-code-in-your-exception" title="Permalink to this headline"></a></h2>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.3.0.</span></p>
 </div>
@@ -488,7 +512,7 @@ redirect code to use instead of the default (<code class="docutils literal notra
 <p>When an exception implementing <code class="docutils literal notranslate"><span class="pre">HasExitCodeInterface</span></code> is caught by CodeIgniter’s exception handler, the code returned from the <code class="docutils literal notranslate"><span class="pre">getExitCode()</span></code> method will become the exit code.</p>
 </section>
 <section id="logging-deprecation-warnings">
-<span id="id1"></span><h2><a class="toc-backref" href="#id13">Logging Deprecation Warnings</a><a class="headerlink" href="#logging-deprecation-warnings" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id14">Logging Deprecation Warnings</a><a class="headerlink" href="#logging-deprecation-warnings" title="Permalink to this headline"></a></h2>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.3.0.</span></p>
 </div>
@@ -540,6 +564,108 @@ it accordingly.</p>
 </div>
 <p>For testing your application you may want to always throw on deprecations. You may configure this by
 setting the environment variable <code class="docutils literal notranslate"><span class="pre">CODEIGNITER_SCREAM_DEPRECATIONS</span></code> to a truthy value.</p>
+</section>
+<section id="custom-exception-handlers">
+<span id="id2"></span><h2><a class="toc-backref" href="#id15">Custom Exception Handlers</a><a class="headerlink" href="#custom-exception-handlers" title="Permalink to this headline"></a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.4.0.</span></p>
+</div>
+<p>If you need more control over how exceptions are displayed you can now define your own handlers and
+specify when they apply.</p>
+<section id="defining-the-new-handler">
+<h3><a class="toc-backref" href="#id16">Defining the New Handler</a><a class="headerlink" href="#defining-the-new-handler" title="Permalink to this headline"></a></h3>
+<p>The first step is to create a new class which implements <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Debug\ExceptionHandlerInterface</span></code>.
+You can also extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Debug\BaseExceptionHandler</span></code>.
+This class includes a number of utility methods that are used by the default exception handler.
+The new handler must implement a single method: <code class="docutils literal notranslate"><span class="pre">handle()</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Libraries</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Debug\BaseExceptionHandler</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Debug\ExceptionHandlerInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\RequestInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\ResponseInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Throwable</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyExceptionHandler</span> <span class="k">extends</span> <span class="nx">BaseExceptionHandler</span> <span class="k">implements</span> <span class="nx">ExceptionHandlerInterface</span>
+<span class="p">{</span>
+    <span class="c1">// You can override the view path.</span>
+    <span class="k">protected</span> <span class="o">?</span><span class="nx">string</span> <span class="nv">$viewPath</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Views/exception/&#39;</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">handle</span><span class="p">(</span>
+        <span class="nx">Throwable</span> <span class="nv">$exception</span><span class="p">,</span>
+        <span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span>
+        <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">,</span>
+        <span class="nx">int</span> <span class="nv">$statusCode</span><span class="p">,</span>
+        <span class="nx">int</span> <span class="nv">$exitCode</span>
+    <span class="p">)</span><span class="o">:</span> <span class="nx">void</span> <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="nv">$exception</span><span class="p">,</span> <span class="nv">$statusCode</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">viewPath</span> <span class="o">.</span> <span class="s2">&quot;error_</span><span class="si">{</span><span class="nv">$statusCode</span><span class="si">}</span><span class="s2">.php&quot;</span><span class="p">);</span>
+
+        <span class="k">exit</span><span class="p">(</span><span class="nv">$exitCode</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This example defines the minimum amount of code typically needed - display a view and exit with the proper
+exit code. However, the <code class="docutils literal notranslate"><span class="pre">BaseExceptionHandler</span></code> provides a number of other helper functions and objects.</p>
+</section>
+<section id="configuring-the-new-handler">
+<h3><a class="toc-backref" href="#id17">Configuring the New Handler</a><a class="headerlink" href="#configuring-the-new-handler" title="Permalink to this headline"></a></h3>
+<p>Telling CodeIgniter to use your new exception handler class is done in the <strong>app/Config/Exceptions.php</strong>
+configuration file’s <code class="docutils literal notranslate"><span class="pre">handler()</span></code> method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Debug\ExceptionHandler</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Debug\ExceptionHandlerInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Throwable</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Exceptions</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">handler</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$statusCode</span><span class="p">,</span> <span class="nx">Throwable</span> <span class="nv">$exception</span><span class="p">)</span><span class="o">:</span> <span class="nx">ExceptionHandlerInterface</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">ExceptionHandler</span><span class="p">(</span><span class="nv">$this</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can use any logic your application needs to determine whether it should handle the exception, but the
+two most common are checking on the HTTP status code or the type of exception. If your class should handle
+it then return a new instance of that class:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Debug\ExceptionHandlerInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Exceptions\PageNotFoundException</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Throwable</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Exceptions</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">handler</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$statusCode</span><span class="p">,</span> <span class="nx">Throwable</span> <span class="nv">$exception</span><span class="p">)</span><span class="o">:</span> <span class="nx">ExceptionHandlerInterface</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">in_array</span><span class="p">(</span><span class="nv">$statusCode</span><span class="p">,</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">404</span><span class="p">,</span> <span class="mi">500</span><span class="p">],</span> <span class="k">true</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nx">\App\Libraries\MyExceptionHandler</span><span class="p">(</span><span class="nv">$this</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$exception</span> <span class="nx">instanceof</span> <span class="nx">PageNotFoundException</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nx">\App\Libraries\MyExceptionHandler</span><span class="p">(</span><span class="nv">$this</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Debug\ExceptionHandler</span><span class="p">(</span><span class="nv">$this</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 

@@ -687,32 +687,19 @@ specified header object in a case-insensitive manner if it exists. If not, then 
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getUserInfo</span><span class="p">();</span>       <span class="c1">// snoopy:password</span>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getHost</span><span class="p">();</span>           <span class="c1">// example.com</span>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getPort</span><span class="p">();</span>           <span class="c1">// 88</span>
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>           <span class="c1">// path/to/page</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>           <span class="c1">// /path/to/page</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getRoutePath</span><span class="p">();</span>      <span class="c1">// path/to/page</span>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">();</span>          <span class="c1">// foo=bar&amp;bar=baz</span>
 <span class="nb">print_r</span><span class="p">(</span><span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegments</span><span class="p">());</span>   <span class="c1">// Array ( [0] =&gt; path [1] =&gt; to [2] =&gt; page )</span>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>       <span class="c1">// path</span>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getTotalSegments</span><span class="p">();</span>  <span class="c1">// 3</span>
 </pre></div>
 </div>
-<p>You can work with the current URI string (the path relative to your baseURL) using the <code class="docutils literal notranslate"><span class="pre">getPath()</span></code> and <code class="docutils literal notranslate"><span class="pre">setPath()</span></code> methods.
-Note that this relative path on the shared instance of <code class="docutils literal notranslate"><span class="pre">IncomingRequest</span></code> is what the <a class="reference internal" href="../helpers/url_helper.html"><span class="doc">URL Helper</span></a>
-functions use, so this is a helpful way to “spoof” an incoming request for testing:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
-
-<span class="k">final</span> <span class="k">class</span> <span class="nc">MyMenuTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">testActiveLinkUsesCurrentUrl</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setPath</span><span class="p">(</span><span class="s1">&#39;users/list&#39;</span><span class="p">);</span>
-
-        <span class="nv">$menu</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyMenu</span><span class="p">();</span>
-
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertTrue</span><span class="p">(</span><span class="s1">&#39;users/list&#39;</span><span class="p">,</span> <span class="nv">$menu</span><span class="o">-&gt;</span><span class="na">getActiveLink</span><span class="p">());</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
+<p>You can work with the current URI string (the path relative to your baseURL) using the <code class="docutils literal notranslate"><span class="pre">getRoutePath()</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">getRoutePath()</span></code> method can be used since v4.4.0. Prior to v4.4.0,
+the <code class="docutils literal notranslate"><span class="pre">getPath()</span></code> method returned the path relative to your baseURL.</p>
 </div>
 </section>
 <section id="uploaded-files">
@@ -1118,14 +1105,22 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>This is the safest method to determine the “current URI”, since <code class="docutils literal notranslate"><span class="pre">IncomingRequest::$uri</span></code>
-may not be aware of the complete App configuration for base URLs.</p>
+<p>This method returns the current URI path relative to baseURL.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to v4.4.0, this was the safest method to determine the
+“current URI”, since <code class="docutils literal notranslate"><span class="pre">IncomingRequest::$uri</span></code> might not be aware of
+the complete App configuration for base URLs.</p>
+</div>
 </dd></dl>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\IncomingRequest::setPath">
 <span class="sig-name descname"><span class="pre">setPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\IncomingRequest::setPath" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.4.0.</span></p>
+</div>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$path</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The relative path to use as the current URI</p></li>
@@ -1138,9 +1133,13 @@ may not be aware of the complete App configuration for base URLs.</p>
 <dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\HTTP\IncomingRequest" title="CodeIgniter\HTTP\IncomingRequest"><code class="xref php php-obj docutils literal notranslate"><span class="pre">IncomingRequest</span></code></a></span></p>
 </dd>
 </dl>
-<p>Used mostly just for testing purposes, this allows you to set the relative path
-value for the current request instead of relying on URI detection. This will also
-update the underlying <code class="docutils literal notranslate"><span class="pre">URI</span></code> instance with the new path.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to v4.4.0, used mostly just for testing purposes, this
+allowed you to set the relative path value for the current request
+instead of relying on URI detection. This also updated the
+underlying <code class="docutils literal notranslate"><span class="pre">URI</span></code> instance with the new path.</p>
+</div>
 </dd></dl>
 
 </dd></dl>

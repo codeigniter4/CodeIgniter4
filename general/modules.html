@@ -564,17 +564,18 @@ with the <code class="docutils literal notranslate"><span class="pre">new</span>
 <span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Acme\Blog\Config\Blog</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>Config files are automatically discovered whenever using the <a class="reference internal" href="common_functions.html#config" title="config"><code class="xref php php-func docutils literal notranslate"><span class="pre">config()</span></code></a> function that is always available.</p>
+<p>Config files are automatically discovered whenever using the <a class="reference internal" href="common_functions.html#config" title="config"><code class="xref php php-func docutils literal notranslate"><span class="pre">config()</span></code></a> function that is always available, and you pass a short classname to it.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>We don’t recommend you use the same short classname in modules.
-Modules that need to override or add to known configurations in <strong>app/Config/</strong> should use <a class="reference internal" href="configuration.html#registrars"><span class="std std-ref">Registrars</span></a>.</p>
+Modules that need to override or add to known configurations in <strong>app/Config/</strong> should use <a class="reference internal" href="configuration.html#registrars"><span class="std std-ref">Implicit Registrars</span></a>.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">config()</span></code> finds the file in <strong>app/Config/</strong> when there is a class with the same shortname,
+<p>Prior to v4.4.0, <code class="docutils literal notranslate"><span class="pre">config()</span></code> finds the file in <strong>app/Config/</strong> when there
+is a class with the same shortname,
 even if you specify a fully qualified class name like <code class="docutils literal notranslate"><span class="pre">config(\Acme\Blog\Config\Blog::class)</span></code>.
-This is because <code class="docutils literal notranslate"><span class="pre">config()</span></code> is a wrapper for the <code class="docutils literal notranslate"><span class="pre">Factories</span></code> class which uses <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> by default. See <a class="reference internal" href="../concepts/factories.html#factories-loading-class"><span class="std std-ref">Loading Classes</span></a> for more information.</p>
+This behavior has been fixed in v4.4.0, and returns the specified instance.</p>
 </div>
 </section>
 <section id="migrations">

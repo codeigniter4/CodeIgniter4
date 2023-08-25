@@ -356,9 +356,10 @@ namespaces.</p>
 performance since it knows exactly where to find the files.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">config()</span></code> finds the file in <strong>app/Config/</strong> when there is a class with the same shortname,
+<p>Prior to v4.4.0, <code class="docutils literal notranslate"><span class="pre">config()</span></code> finds the file in <strong>app/Config/</strong> when there
+is a class with the same shortname,
 even if you specify a fully qualified class name like <code class="docutils literal notranslate"><span class="pre">config(\Acme\Blog\Config\Blog::class)</span></code>.
-This is because <code class="docutils literal notranslate"><span class="pre">config()</span></code> is a wrapper for the <code class="docutils literal notranslate"><span class="pre">Factories</span></code> class which uses <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> by default. See <a class="reference internal" href="../concepts/factories.html#factories-loading-class"><span class="std std-ref">Loading Classes</span></a> for more information.</p>
+This behavior has been fixed in v4.4.0, and returns the specified instance.</p>
 </div>
 </section>
 </section>
