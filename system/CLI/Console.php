@@ -39,6 +39,8 @@ class Console
 
     /**
      * Displays basic information about the Console.
+     *
+     * @return void
      */
     public function showHeader(bool $suppress = false)
     {

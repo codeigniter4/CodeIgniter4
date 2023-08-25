@@ -29,14 +29,16 @@ class View implements RendererInterface
     use ViewDecoratorTrait;
 
     /**
-     * Data that is made available to the Views.
+     * Saved Data.
      *
      * @var array
      */
     protected $data = [];
 
     /**
-     * Merge savedData and userData
+     * Data for the variables that are available in the Views.
+     *
+     * @var array|null
      */
     protected $tempData;
 
@@ -48,7 +50,7 @@ class View implements RendererInterface
     protected $viewPath;
 
     /**
-     * The render variables
+     * Data for rendering including Caching and Debug Toolbar data.
      *
      * @var array
      */
@@ -382,6 +384,8 @@ class View implements RendererInterface
 
     /**
      * Specifies that the current view should extend an existing layout.
+     *
+     * @return void
      */
     public function extend(string $layout)
     {
@@ -392,6 +396,8 @@ class View implements RendererInterface
      * Starts holds content for a section within the layout.
      *
      * @param string $name Section name
+     *
+     * @return void
      */
     public function section(string $name)
     {
@@ -404,6 +410,8 @@ class View implements RendererInterface
 
     /**
      * Captures the last section
+     *
+     * @return void
      *
      * @throws RuntimeException
      */
@@ -427,6 +435,8 @@ class View implements RendererInterface
 
     /**
      * Renders a section's contents.
+     *
+     * @return void
      */
     public function renderSection(string $sectionName)
     {
@@ -463,6 +473,8 @@ class View implements RendererInterface
 
     /**
      * Logs performance data for rendering a view.
+     *
+     * @return void
      */
     protected function logPerformance(float $start, float $end, string $view)
     {

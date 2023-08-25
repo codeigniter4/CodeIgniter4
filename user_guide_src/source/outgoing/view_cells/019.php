@@ -17,6 +17,7 @@ class RecentPostsCell extends Cell
                 $categoryId,
                 static fn ($query, $categoryId) => $query->where('category_id', $categoryId)
             )
-            ->getRecent();
+            ->orderBy('created_at', 'DESC')
+            ->findAll(10);
     }
 }

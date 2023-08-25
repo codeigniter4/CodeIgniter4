@@ -55,9 +55,11 @@ those classes can be found in:
 The key of each row is the namespace itself. This does not need a trailing back slash.
 The value is the location to the directory the classes can be found in.
 
-.. note:: You can check the namespace configuration by ``spark namespaces`` command::
+.. note:: You can check the namespace configuration by ``spark namespaces`` command:
 
-    > php spark namespaces
+    .. code-block:: console
+
+        php spark namespaces
 
 By default, the application directory is namespace to the ``App`` namespace. You must namespace the controllers,
 libraries, or models in the application directory, and they will be found under the ``App`` namespace.

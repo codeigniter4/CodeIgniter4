@@ -19,6 +19,9 @@ class FileException extends RuntimeException implements ExceptionInterface
 {
     use DebugTraceableTrait;
 
+    /**
+     * @return static
+     */
     public static function forUnableToMove(?string $from = null, ?string $to = null, ?string $error = null)
     {
         return new static(lang('Files.cannotMove', [$from, $to, $error]));
@@ -28,6 +31,8 @@ class FileException extends RuntimeException implements ExceptionInterface
      * Throws when an item is expected to be a directory but is not or is missing.
      *
      * @param string $caller The method causing the exception
+     *
+     * @return static
      */
     public static function forExpectedDirectory(string $caller)
     {
@@ -38,6 +43,8 @@ class FileException extends RuntimeException implements ExceptionInterface
      * Throws when an item is expected to be a file but is not or is missing.
      *
      * @param string $caller The method causing the exception
+     *
+     * @return static
      */
     public static function forExpectedFile(string $caller)
     {

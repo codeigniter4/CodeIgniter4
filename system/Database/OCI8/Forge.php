@@ -218,19 +218,24 @@ class Forge extends BaseForge
         switch (strtoupper($attributes['TYPE'])) {
             case 'TINYINT':
                 $attributes['CONSTRAINT'] ??= 3;
+
                 // no break
             case 'SMALLINT':
                 $attributes['CONSTRAINT'] ??= 5;
+
                 // no break
             case 'MEDIUMINT':
                 $attributes['CONSTRAINT'] ??= 7;
+
                 // no break
             case 'INT':
             case 'INTEGER':
                 $attributes['CONSTRAINT'] ??= 11;
+
                 // no break
             case 'BIGINT':
                 $attributes['CONSTRAINT'] ??= 19;
+
                 // no break
             case 'NUMERIC':
                 $attributes['TYPE'] = 'NUMBER';
@@ -261,6 +266,7 @@ class Forge extends BaseForge
             case 'ENUM':
             case 'VARCHAR':
                 $attributes['CONSTRAINT'] ??= 255;
+
                 // no break
             case 'TEXT':
             case 'MEDIUMTEXT':

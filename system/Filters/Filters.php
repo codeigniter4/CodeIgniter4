@@ -121,7 +121,7 @@ class Filters
      * Sample :
      * $filters->aliases['custom-auth'] = \Acme\Blob\Filters\BlobAuth::class;
      */
-    private function discoverFilters()
+    private function discoverFilters(): void
     {
         $locator = Services::locator();
 
@@ -144,6 +144,8 @@ class Filters
 
     /**
      * Set the response explicitly.
+     *
+     * @return void
      */
     public function setResponse(ResponseInterface $response)
     {
@@ -154,7 +156,9 @@ class Filters
      * Runs through all of the filters for the specified
      * uri and position.
      *
-     * @return mixed|RequestInterface|ResponseInterface
+     * @param string $uri URI path relative to baseURL
+     *
+     * @return RequestInterface|ResponseInterface|string|null
      *
      * @throws FilterException
      */
@@ -218,6 +222,8 @@ class Filters
      * We go ahead and process the entire tree because we'll need to
      * run through both a before and after and don't want to double
      * process the rows.
+     *
+     * @param string|null $uri URI path relative to baseURL (all lowercase)
      *
      * @return Filters
      */
@@ -389,7 +395,9 @@ class Filters
     /**
      * Add any applicable (not excluded) global filter settings to the mix.
      *
-     * @param string $uri
+     * @param string|null $uri URI path relative to baseURL (all lowercase)
+     *
+     * @return void
      */
     protected function processGlobals(?string $uri = null)
     {
@@ -412,7 +420,7 @@ class Filters
                         if (isset($rules['except'])) {
                             // grab the exclusion rules
                             $check = $rules['except'];
-                            if ($this->pathApplies($uri, $check)) {
+                            if ($this->checkExcept($uri, $check)) {
                                 $keep = false;
                             }
                         }
@@ -430,6 +438,8 @@ class Filters
 
     /**
      * Add any method-specific filters to the mix.
+     *
+     * @return void
      */
     protected function processMethods()
     {
@@ -448,7 +458,9 @@ class Filters
     /**
      * Add any applicable configured filters to the mix.
      *
-     * @param string $uri
+     * @param string|null $uri URI path relative to baseURL (all lowercase)
+     *
+     * @return void
      */
     protected function processFilters(?string $uri = null)
     {
@@ -479,6 +491,8 @@ class Filters
 
     /**
      * Maps filter aliases to the equivalent filter classes
+     *
+     * @return void
      *
      * @throws FilterException
      */
@@ -526,12 +540,47 @@ class Filters
             $paths = [$paths];
         }
 
-        // treat each paths as pseudo-regex
+        return $this->checkPseudoRegex($uri, $paths);
+    }
+
+    /**
+     * Check except paths
+     *
+     * @param string       $uri   URI path relative to baseURL (all lowercase)
+     * @param array|string $paths The except path patterns
+     *
+     * @return bool True if the URI matches except paths.
+     */
+    private function checkExcept(string $uri, $paths): bool
+    {
+        // empty array does not match anything
+        if ($paths === []) {
+            return false;
+        }
+
+        // make sure the paths are iterable
+        if (is_string($paths)) {
+            $paths = [$paths];
+        }
+
+        return $this->checkPseudoRegex($uri, $paths);
+    }
+
+    /**
+     * Check the URI path as pseudo-regex
+     *
+     * @param string $uri   URI path relative to baseURL (all lowercase)
+     * @param array  $paths The except path patterns
+     */
+    private function checkPseudoRegex(string $uri, array $paths): bool
+    {
+        // treat each path as pseudo-regex
         foreach ($paths as $path) {
             // need to escape path separators
             $path = str_replace('/', '\/', trim($path, '/ '));
             // need to make pseudo wildcard real
             $path = strtolower(str_replace('*', '.*', $path));
+
             // Does this rule apply here?
             if (preg_match('#^' . $path . '$#', $uri, $match) === 1) {
                 return true;

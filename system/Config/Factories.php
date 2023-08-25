@@ -267,6 +267,8 @@ class Factories
      * Resets the static arrays, optionally just for one component
      *
      * @param string|null $component Lowercase, plural component name
+     *
+     * @return void
      */
     public static function reset(?string $component = null)
     {
@@ -290,6 +292,8 @@ class Factories
      *
      * @param string $component Lowercase, plural component name
      * @param string $name      The name of the instance
+     *
+     * @return void
      */
     public static function injectMock(string $component, string $name, object $instance)
     {

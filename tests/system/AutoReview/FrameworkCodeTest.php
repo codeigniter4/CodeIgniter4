@@ -39,7 +39,7 @@ final class FrameworkCodeTest extends TestCase
     ];
 
     /**
-     * @dataProvider provideTestClassCases
+     * @dataProvider provideEachTestClassHasCorrectGroupAnnotation
      *
      * @phpstan-param class-string $class
      */
@@ -73,7 +73,7 @@ final class FrameworkCodeTest extends TestCase
         ));
     }
 
-    public function provideTestClassCases(): iterable
+    public function provideEachTestClassHasCorrectGroupAnnotation(): iterable
     {
         foreach ($this->getTestClasses() as $class) {
             yield $class => [$class];

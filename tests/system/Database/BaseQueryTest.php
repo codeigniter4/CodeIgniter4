@@ -104,7 +104,7 @@ final class BaseQueryTest extends CIUnitTestCase
         $this->assertSame($newSQL, $query->getQuery());
     }
 
-    public function queryTypes(): iterable
+    public static function provideIsWriteType(): iterable
     {
         return [
             'select' => [
@@ -183,7 +183,7 @@ final class BaseQueryTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider queryTypes
+     * @dataProvider provideIsWriteType
      *
      * @param mixed $expected
      * @param mixed $sql
@@ -577,7 +577,7 @@ final class BaseQueryTest extends CIUnitTestCase
         $this->assertSame($expected, $query->getQuery());
     }
 
-    public function queryKeywords(): iterable
+    public static function provideHighlightQueryKeywords(): iterable
     {
         return [
             'highlightKeyWords' => [
@@ -596,7 +596,7 @@ final class BaseQueryTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider queryKeywords
+     * @dataProvider provideHighlightQueryKeywords
      *
      * @param mixed $expected
      * @param mixed $sql

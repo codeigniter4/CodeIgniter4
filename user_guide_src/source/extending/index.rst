@@ -12,4 +12,5 @@ CodeIgniter 4 has been designed to be easy to extend or build upon.
     events
     basecontroller
     authentication
+    composer_packages
     contributing

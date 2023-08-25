@@ -235,7 +235,7 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('assets/image.jpg', uri_string());
     }
 
-    public function urlIsProvider(): iterable
+    public static function provideUrlIs(): iterable
     {
         return [
             [
@@ -277,7 +277,7 @@ final class CurrentUrlTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider urlIsProvider
+     * @dataProvider provideUrlIs
      */
     public function testUrlIs(string $currentPath, string $testPath, bool $expected): void
     {
@@ -291,7 +291,7 @@ final class CurrentUrlTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider urlIsProvider
+     * @dataProvider provideUrlIs
      */
     public function testUrlIsNoIndex(string $currentPath, string $testPath, bool $expected): void
     {
@@ -307,7 +307,7 @@ final class CurrentUrlTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider urlIsProvider
+     * @dataProvider provideUrlIs
      */
     public function testUrlIsWithSubfolder(string $currentPath, string $testPath, bool $expected): void
     {

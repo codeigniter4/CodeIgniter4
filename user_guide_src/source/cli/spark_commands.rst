@@ -23,48 +23,64 @@ Showing List of Commands
 
 When called **spark** without specifying a command, a simple help page is displayed
 that also provides a list of available commands and their descriptions, sorted by
-categories::
+categories:
 
-    > php spark
+.. code-block:: console
+
+    php spark
 
 spark list
 ^^^^^^^^^^
 
-``php spark`` is the exactly same as the ``list`` command::
+``php spark`` is the exactly same as the ``list`` command:
 
-    > php spark list
+.. code-block:: console
+
+    php spark list
 
 You may also use the ``--simple`` option to get a raw list of all available commands,
-sorted alphabetically::
+sorted alphabetically:
 
-    > php spark list --simple
+.. code-block:: console
+
+    php spark list --simple
 
 Showing Help
 ------------
 
-You can get help about any CLI command using the ``help`` command as follows::
+You can get help about any CLI command using the ``help`` command as follows:
 
-    > php spark help db:seed
+.. code-block:: console
 
-Since v4.3.0, you can also use the ``--help`` option instead of the ``help`` command::
+    php spark help db:seed
 
-    > php spark db:seed --help
+Since v4.3.0, you can also use the ``--help`` option instead of the ``help`` command:
+
+.. code-block:: console
+
+    php spark db:seed --help
 
 Running a Command
 -----------------
 
-You should pass the name of the command as the first argument to run that command::
+You should pass the name of the command as the first argument to run that command:
 
-    > php spark migrate
+.. code-block:: console
 
-Some commands take additional arguments, which should be provided directly after the command, separated by spaces::
+    php spark migrate
 
-    > php spark db:seed DevUserSeeder
+Some commands take additional arguments, which should be provided directly after the command, separated by spaces:
+
+.. code-block:: console
+
+    php spark db:seed DevUserSeeder
 
 For all of the commands CodeIgniter provides, if you do not provide the required arguments, you will be prompted
-for the information it needs to run correctly::
+for the information it needs to run correctly:
 
-    > php spark make:controller
+.. code-block:: console
+
+    php spark make:controller
 
     Controller class name :
 
@@ -72,17 +88,21 @@ Suppressing Header Output
 -------------------------
 
 When you run a command, the header with CodeIgniter version and the current time
-is output::
+is output:
 
-    > php spark env
+.. code-block:: console
+
+    php spark env
 
     CodeIgniter v4.3.5 Command Line Tool - Server Time: 2023-06-16 12:45:31 UTC+00:00
 
     Your environment is currently set as development.
 
-You may always pass ``--no-header`` to suppress the header output, helpful for parsing results::
+You may always pass ``--no-header`` to suppress the header output, helpful for parsing results:
 
-    > php spark env --no-header
+.. code-block:: console
+
+    php spark env --no-header
 
     Your environment is currently set as development.
 

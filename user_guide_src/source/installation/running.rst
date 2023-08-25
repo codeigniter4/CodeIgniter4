@@ -57,9 +57,11 @@ Local Development Server
 
 CodeIgniter 4 comes with a local development server, leveraging PHP's built-in web server
 with CodeIgniter routing. You can launch it, with the following command line
-in the main directory::
+in the main directory:
 
-    > php spark serve
+.. code-block:: console
+
+    php spark serve
 
 This will launch the server and you can now view your application in your browser at http://localhost:8080.
 
@@ -72,19 +74,25 @@ all unix-type systems (including macOS) will typically keep the file at **/etc/h
 
 The local development server can be customized with three command line options:
 
-- You can use the ``--host`` CLI option to specify a different host to run the application at::
+- You can use the ``--host`` CLI option to specify a different host to run the application at:
 
-    > php spark serve --host example.dev
+    .. code-block:: console
+
+        php spark serve --host example.dev
 
 - By default, the server runs on port 8080 but you might have more than one site running, or already have
-  another application using that port. You can use the ``--port`` CLI option to specify a different one::
+  another application using that port. You can use the ``--port`` CLI option to specify a different one:
 
-    > php spark serve --port 8081
+    .. code-block:: console
+
+        php spark serve --port 8081
 
 - You can also specify a specific version of PHP to use, with the ``--php`` CLI option, with its value
-  set to the path of the PHP executable you want to use::
+  set to the path of the PHP executable you want to use:
 
-    > php spark serve --php /usr/bin/php7.6.5.4
+    .. code-block:: console
+
+        php spark serve --php /usr/bin/php7.6.5.4
 
 *******************
 Hosting with Apache
@@ -206,10 +214,12 @@ Place your project folder as follows, where **htdocs** is the Apache document ro
     │      └── public/
     └── htdocs/
 
-Navigate to the **htdocs** folder and create a symbolic link as follows::
+Navigate to the **htdocs** folder and create a symbolic link as follows:
 
-    > cd htdocs/
-    > ln -s ../myproject/public/ myproject
+.. code-block:: console
+
+    cd htdocs/
+    ln -s ../myproject/public/ myproject
 
 Using Alias
 -----------

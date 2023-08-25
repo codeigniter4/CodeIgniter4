@@ -289,6 +289,8 @@ class PagerRenderer
      * to show.
      *
      * @param int|null $count The new "surroundCount"
+     *
+     * @return void
      */
     protected function updatePages(?int $count = null)
     {

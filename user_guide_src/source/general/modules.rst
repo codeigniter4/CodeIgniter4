@@ -3,9 +3,13 @@ Code Modules
 ############
 
 CodeIgniter supports a form of code modularization to help you create reusable code. Modules are typically
-centered around a specific subject, and can be thought of as mini-applications within your larger application. Any
+centered around a specific subject, and can be thought of as mini-applications within your larger application.
+
+Any
 of the standard file types within the framework are supported, like controllers, models, views, config files, helpers,
 language files, etc. Modules may contain as few, or as many, of these as you like.
+
+If you want to create a module as a Composer package, see also :doc:`../extending/composer_packages`.
 
 .. contents::
     :local:
@@ -208,13 +212,20 @@ Seeds
 =====
 
 Seed files can be used from both the CLI and called from within other seed files as long as the full namespace
-is provided. If calling on the CLI, you will need to provide double backslashes::
+is provided. If calling on the CLI, you will need to provide double backslashes:
 
-    For Unix:
-    > php spark db:seed Acme\\Blog\\Database\\Seeds\\TestPostSeeder
 
-    For Windows:
-    > php spark db:seed Acme\Blog\Database\Seeds\TestPostSeeder
+For Unix:
+
+.. code-block:: console
+
+    php spark db:seed Acme\\Blog\\Database\\Seeds\\TestPostSeeder
+
+For Windows:
+
+.. code-block:: console
+
+    php spark db:seed Acme\Blog\Database\Seeds\TestPostSeeder
 
 Helpers
 =======

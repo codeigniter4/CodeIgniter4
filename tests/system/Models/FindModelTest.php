@@ -157,7 +157,7 @@ final class FindModelTest extends LiveModelTestCase
     }
 
     /**
-     * @dataProvider provideGroupBy
+     * @dataProvider provideFirstAggregate
      *
      * @param mixed $groupBy
      * @param mixed $total
@@ -184,7 +184,7 @@ final class FindModelTest extends LiveModelTestCase
         $this->assertSame($total, (int) $user->total);
     }
 
-    public static function provideGroupBy(): iterable
+    public static function provideFirstAggregate(): iterable
     {
         return [
             [true, 3],

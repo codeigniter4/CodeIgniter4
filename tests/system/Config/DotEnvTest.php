@@ -56,7 +56,7 @@ final class DotEnvTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideLoadVars
+     * @dataProvider provideLoadsVars
      */
     public function testLoadsVars(string $expected, string $varname): void
     {
@@ -66,7 +66,7 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertSame($expected, getenv($varname));
     }
 
-    public function provideLoadVars(): iterable
+    public static function provideLoadsVars(): iterable
     {
         yield from [
             ['bar', 'FOO'],

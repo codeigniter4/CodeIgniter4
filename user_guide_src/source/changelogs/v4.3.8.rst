@@ -1,0 +1,23 @@
+Version 4.3.8
+#############
+
+Release Date: August 25, 2023
+
+**4.3.8 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+Bugs Fixed
+**********
+
+- **Controller Filters:** In previous versions, ``['except' => []]`` or ``['except' => '']``
+  meant "except all". The bug has been fixed, and now
+
+    - ``['except' => []]`` means to exclude nothing.
+    - ``['except' => '']`` means to exclude the baseURL only.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

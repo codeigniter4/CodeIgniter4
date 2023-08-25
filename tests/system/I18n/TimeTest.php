@@ -1126,17 +1126,16 @@ final class TimeTest extends CIUnitTestCase
         $this->assertNull($time->weekOfWeek);
     }
 
-    // @TODO Uncomment when PHP 8.2.4 Segmentation fault fixed.
-    //    public function testUnserializeTimeObject()
-    //    {
-    //        $time1     = new Time('August 28, 2020 10:04:00pm', 'Asia/Manila', 'en');
-    //        $timeCache = serialize($time1);
-    //        $time2     = unserialize($timeCache);
-    //
-    //        $this->assertInstanceOf(Time::class, $time2);
-    //        $this->assertTrue($time2->equals($time1));
-    //        $this->assertNotSame($time1, $time2);
-    //    }
+    public function testUnserializeTimeObject()
+    {
+        $time1     = new Time('August 28, 2020 10:04:00pm', 'Asia/Manila', 'en');
+        $timeCache = serialize($time1);
+        $time2     = unserialize($timeCache);
+
+        $this->assertInstanceOf(Time::class, $time2);
+        $this->assertTrue($time2->equals($time1));
+        $this->assertNotSame($time1, $time2);
+    }
 
     public function testSetTestNowWithTimeZone(): void
     {
@@ -1159,7 +1158,7 @@ final class TimeTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideLocales
+     * @dataProvider provideToStringDoesNotDependOnLocale
      */
     public function testToStringDoesNotDependOnLocale(string $locale): void
     {
@@ -1170,7 +1169,7 @@ final class TimeTest extends CIUnitTestCase
         $this->assertSame('2017-03-10 12:00:00', (string) $time);
     }
 
-    public function provideLocales(): iterable
+    public static function provideToStringDoesNotDependOnLocale(): iterable
     {
         yield from [
             ['en'],

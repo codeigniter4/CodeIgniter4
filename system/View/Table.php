@@ -411,6 +411,8 @@ class Table
      * Set table data from a database result object
      *
      * @param BaseResult $object Database result object
+     *
+     * @return void
      */
     protected function _setFromDBResult($object)
     {
@@ -428,6 +430,8 @@ class Table
      * Set table data from an array
      *
      * @param array $data
+     *
+     * @return void
      */
     protected function _setFromArray($data)
     {
@@ -442,6 +446,8 @@ class Table
 
     /**
      * Compile Template
+     *
+     * @return void
      */
     protected function _compileTemplate()
     {

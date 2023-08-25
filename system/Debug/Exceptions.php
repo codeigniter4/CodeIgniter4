@@ -98,6 +98,8 @@ class Exceptions
      * handling of our application.
      *
      * @codeCoverageIgnore
+     *
+     * @return void
      */
     public function initialize()
     {
@@ -112,6 +114,9 @@ class Exceptions
      * and fire an event that allows custom actions to be taken at this point.
      *
      * @codeCoverageIgnore
+     *
+     * @return void
+     * @phpstan-return never|void
      */
     public function exceptionHandler(Throwable $exception)
     {
@@ -189,6 +194,9 @@ class Exceptions
      * need to be caught and handle them.
      *
      * @codeCoverageIgnore
+     *
+     * @return void
+     * @phpstan-return never|void
      */
     public function shutdownHandler()
     {
@@ -243,6 +251,9 @@ class Exceptions
 
     /**
      * Given an exception and status code will display the error to the client.
+     *
+     * @return void
+     * @phpstan-return never|void
      */
     protected function render(Throwable $exception, int $statusCode)
     {

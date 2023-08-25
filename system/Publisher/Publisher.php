@@ -466,7 +466,7 @@ class Publisher extends FileCollection
     /**
      * Verify this is an allowed file for its destination.
      */
-    private function verifyAllowed(string $from, string $to)
+    private function verifyAllowed(string $from, string $to): void
     {
         // Verify this is an allowed file for its destination
         foreach ($this->restrictions as $directory => $pattern) {

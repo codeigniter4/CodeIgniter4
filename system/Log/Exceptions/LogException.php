@@ -15,11 +15,17 @@ use CodeIgniter\Exceptions\FrameworkException;
 
 class LogException extends FrameworkException
 {
+    /**
+     * @return static
+     */
     public static function forInvalidLogLevel(string $level)
     {
         return new static(lang('Log.invalidLogLevel', [$level]));
     }
 
+    /**
+     * @return static
+     */
     public static function forInvalidMessageType(string $messageType)
     {
         return new static(lang('Log.invalidMessageType', [$messageType]));

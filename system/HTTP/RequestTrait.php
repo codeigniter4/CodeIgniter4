@@ -337,6 +337,8 @@ trait RequestTrait
     /**
      * Saves a copy of the current state of one of several PHP globals
      * so we can retrieve them later.
+     *
+     * @return void
      */
     protected function populateGlobals(string $method)
     {

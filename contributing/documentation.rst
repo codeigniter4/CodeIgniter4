@@ -171,3 +171,16 @@ As a general rule, we use ``**`` for in-line file paths, and `````` for source c
 E.g.::
 
     Open the **app/Config/Filters.php** file and update the ``$methods`` property like the following:
+
+**********
+Code Block
+**********
+
+CLI Command
+===========
+
+::
+
+    .. code-block:: console
+
+        php spark migrate

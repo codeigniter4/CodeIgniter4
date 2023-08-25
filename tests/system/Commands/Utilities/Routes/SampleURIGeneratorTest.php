@@ -22,7 +22,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 final class SampleURIGeneratorTest extends CIUnitTestCase
 {
     /**
-     * @dataProvider routeKeyProvider
+     * @dataProvider provideGet
      */
     public function testGet(string $routeKey, string $expected): void
     {
@@ -33,7 +33,7 @@ final class SampleURIGeneratorTest extends CIUnitTestCase
         $this->assertSame($expected, $uri);
     }
 
-    public function routeKeyProvider(): iterable
+    public static function provideGet(): iterable
     {
         yield from [
             'root'                => ['/', '/'],

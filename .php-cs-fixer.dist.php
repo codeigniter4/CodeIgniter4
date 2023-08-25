@@ -44,6 +44,11 @@ $finder = Finder::create()
     ]);
 
 $overrides = [
+    'php_unit_data_provider_name' => [
+        'prefix' => 'provide',
+        'suffix' => '',
+    ],
+    'php_unit_data_provider_static'      => true,
     'php_unit_data_provider_return_type' => true,
     'no_extra_blank_lines'               => [
         'tokens' => [

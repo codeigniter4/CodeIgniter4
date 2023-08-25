@@ -20,6 +20,7 @@ use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Validation\ValidationInterface;
@@ -78,6 +79,8 @@ use ReflectionProperty;
  * @method $this selectMax(string $select = '', string $alias = '')
  * @method $this selectMin(string $select = '', string $alias = '')
  * @method $this selectSum(string $select = '', string $alias = '')
+ * @method $this when($condition, callable $callback, ?callable $defaultCallback = null)
+ * @method $this whenNot($condition, callable $callback, ?callable $defaultCallback = null)
  * @method $this where($key, $value = null, ?bool $escape = null)
  * @method $this whereIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this whereNotIn(?string $key = null, $values = null, ?bool $escape = null)
@@ -128,13 +131,6 @@ class Model extends BaseModel
      * @var array
      */
     protected $escape = [];
-
-    /**
-     * Primary Key value when inserting and useAutoIncrement is false.
-     *
-     * @var int|string|null
-     */
-    private $tempPrimaryKeyValue;
 
     /**
      * Builder method names that should not be used in the Model.
@@ -280,13 +276,6 @@ class Model extends BaseModel
     {
         $escape       = $this->escape;
         $this->escape = [];
-
-        // If $useAutoIncrement is false, add the primary key data.
-        if ($this->useAutoIncrement === false && $this->tempPrimaryKeyValue !== null) {
-            $data[$this->primaryKey] = $this->tempPrimaryKeyValue;
-
-            $this->tempPrimaryKeyValue = null;
-        }
 
         // Require non-empty primaryKey when
         // not using auto-increment feature
@@ -474,6 +463,8 @@ class Model extends BaseModel
      * Works with the find* methods to return only the rows that
      * have been deleted.
      * This method works only with dbCalls.
+     *
+     * @return void
      */
     protected function doOnlyDeleted()
     {
@@ -553,6 +544,8 @@ class Model extends BaseModel
      * Works with $this->builder to get the Compiled select to
      * determine the rows to operate on.
      * This method works only with dbCalls.
+     *
+     * @return void
      *
      * @throws DataException
      */
@@ -716,18 +709,45 @@ class Model extends BaseModel
             }
         }
 
-        if ($this->useAutoIncrement === false) {
-            if (is_array($data) && isset($data[$this->primaryKey])) {
-                $this->tempPrimaryKeyValue = $data[$this->primaryKey];
-            } elseif (is_object($data) && isset($data->{$this->primaryKey})) {
-                $this->tempPrimaryKeyValue = $data->{$this->primaryKey};
-            }
-        }
-
         $this->escape   = $this->tempData['escape'] ?? [];
         $this->tempData = [];
 
         return parent::insert($data, $returnID);
+    }
+
+    /**
+     * Ensures that only the fields that are allowed to be inserted are in
+     * the data array.
+     *
+     * Used by insert() and insertBatch() to protect against mass assignment
+     * vulnerabilities.
+     *
+     * @param array $data Data
+     *
+     * @throws DataException
+     */
+    protected function doProtectFieldsForInsert(array $data): array
+    {
+        if (! $this->protectFields) {
+            return $data;
+        }
+
+        if (empty($this->allowedFields)) {
+            throw DataException::forInvalidAllowedFields(static::class);
+        }
+
+        foreach (array_keys($data) as $key) {
+            // Do not remove the non-auto-incrementing primary key data.
+            if ($this->useAutoIncrement === false && $key === $this->primaryKey) {
+                continue;
+            }
+
+            if (! in_array($key, $this->allowedFields, true)) {
+                unset($data[$key]);
+            }
+        }
+
+        return $data;
     }
 
     /**
@@ -757,11 +777,11 @@ class Model extends BaseModel
     }
 
     /**
-     * Takes a class an returns an array of it's public and protected
+     * Takes a class and returns an array of its public and protected
      * properties as an array with raw values.
      *
      * @param object|string $data
-     * @param bool          $recursive If true, inner entities will be casted as array as well
+     * @param bool          $recursive If true, inner entities will be cast as array as well
      *
      * @return array|null Array
      *
@@ -771,17 +791,32 @@ class Model extends BaseModel
     {
         $properties = parent::objectToRawArray($data, $onlyChanged);
 
+        $primaryKey = null;
+
+        if ($data instanceof Entity) {
+            $cast = $data->cast();
+
+            // Disable Entity casting, because raw primary key data is needed for database.
+            $data->cast(false);
+
+            $primaryKey = $data->{$this->primaryKey};
+
+            // Restore Entity casting setting.
+            $data->cast($cast);
+        }
+
         // Always grab the primary key otherwise updates will fail.
         if (
+            // @TODO Should use `$data instanceof Entity`.
             method_exists($data, 'toRawArray')
             && (
                 ! empty($properties)
                 && ! empty($this->primaryKey)
                 && ! in_array($this->primaryKey, $properties, true)
-                && ! empty($data->{$this->primaryKey})
+                && ! empty($primaryKey)
             )
         ) {
-            $properties[$this->primaryKey] = $data->{$this->primaryKey};
+            $properties[$this->primaryKey] = $primaryKey;
         }
 
         return $properties;

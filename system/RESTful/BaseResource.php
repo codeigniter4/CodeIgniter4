@@ -39,6 +39,8 @@ abstract class BaseResource extends Controller
 
     /**
      * Constructor.
+     *
+     * @return void
      */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
@@ -52,6 +54,8 @@ abstract class BaseResource extends Controller
      * Given either the name or the object, determine the other.
      *
      * @param object|string|null $which
+     *
+     * @return void
      */
     public function setModel($which = null)
     {

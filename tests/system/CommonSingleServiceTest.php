@@ -27,7 +27,7 @@ use ReflectionMethod;
 final class CommonSingleServiceTest extends CIUnitTestCase
 {
     /**
-     * @dataProvider serviceNamesProvider
+     * @dataProvider provideServiceNames
      */
     public function testSingleServiceWithNoParamsSupplied(string $service): void
     {
@@ -43,7 +43,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider serviceNamesProvider
+     * @dataProvider provideServiceNames
      */
     public function testSingleServiceWithAtLeastOneParamSupplied(string $service): void
     {
@@ -99,7 +99,7 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         $this->assertNull(single_service('timers'));
     }
 
-    public static function serviceNamesProvider(): iterable
+    public static function provideServiceNames(): iterable
     {
         static $services = [];
         static $excl     = [
