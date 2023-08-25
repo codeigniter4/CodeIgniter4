@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Version 4.4.0 &mdash; CodeIgniter 4.3.8 documentation</title>
+  <title>Version 4.4.0 &mdash; CodeIgniter 4.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
@@ -282,75 +282,71 @@
              
   <section id="version-4-4-0">
 <h1>Version 4.4.0<a class="headerlink" href="#version-4-4-0" title="Permalink to this headline"></a></h1>
-<p>Release Date: Unreleased</p>
+<p>Release Date: August 25, 2023</p>
 <p><strong>4.4.0 release of CodeIgniter4</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#highlights" id="id2">Highlights</a></p></li>
-<li><p><a class="reference internal" href="#breaking" id="id3">BREAKING</a></p>
+<li><p><a class="reference internal" href="#highlights" id="id1">Highlights</a></p></li>
+<li><p><a class="reference internal" href="#breaking" id="id2">BREAKING</a></p>
 <ul>
-<li><p><a class="reference internal" href="#behavior-changes" id="id4">Behavior Changes</a></p>
+<li><p><a class="reference internal" href="#behavior-changes" id="id3">Behavior Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#uri-setsegment-and-non-existent-segment" id="id5">URI::setSegment() and Non-Existent Segment</a></p></li>
-<li><p><a class="reference internal" href="#factories" id="id6">Factories</a></p></li>
-<li><p><a class="reference internal" href="#autoloader" id="id7">Autoloader</a></p></li>
-<li><p><a class="reference internal" href="#codeigniter-and-exit" id="id8">CodeIgniter and exit()</a></p></li>
-<li><p><a class="reference internal" href="#site-uri-changes" id="id9">Site URI Changes</a></p></li>
+<li><p><a class="reference internal" href="#uri-setsegment-and-non-existent-segment" id="id4">URI::setSegment() and Non-Existent Segment</a></p></li>
+<li><p><a class="reference internal" href="#factories" id="id5">Factories</a></p></li>
+<li><p><a class="reference internal" href="#autoloader" id="id6">Autoloader</a></p></li>
+<li><p><a class="reference internal" href="#codeigniter-and-exit" id="id7">CodeIgniter and exit()</a></p></li>
+<li><p><a class="reference internal" href="#site-uri-changes" id="id8">Site URI Changes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#interface-changes" id="id10">Interface Changes</a></p></li>
-<li><p><a class="reference internal" href="#method-signature-changes" id="id11">Method Signature Changes</a></p>
+<li><p><a class="reference internal" href="#interface-changes" id="id9">Interface Changes</a></p></li>
+<li><p><a class="reference internal" href="#method-signature-changes" id="id10">Method Signature Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#parameter-type-changes" id="id12">Parameter Type Changes</a></p></li>
-<li><p><a class="reference internal" href="#added-parameters" id="id13">Added Parameters</a></p></li>
-<li><p><a class="reference internal" href="#removed-parameters" id="id14">Removed Parameters</a></p></li>
-<li><p><a class="reference internal" href="#return-type-changes" id="id15">Return Type Changes</a></p></li>
+<li><p><a class="reference internal" href="#parameter-type-changes" id="id11">Parameter Type Changes</a></p></li>
+<li><p><a class="reference internal" href="#added-parameters" id="id12">Added Parameters</a></p></li>
+<li><p><a class="reference internal" href="#removed-parameters" id="id13">Removed Parameters</a></p></li>
+<li><p><a class="reference internal" href="#return-type-changes" id="id14">Return Type Changes</a></p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#enhancements" id="id16">Enhancements</a></p>
+<li><p><a class="reference internal" href="#enhancements" id="id15">Enhancements</a></p>
 <ul>
-<li><p><a class="reference internal" href="#commands" id="id17">Commands</a></p></li>
-<li><p><a class="reference internal" href="#testing" id="id18">Testing</a></p></li>
-<li><p><a class="reference internal" href="#database" id="id19">Database</a></p>
-<ul>
-<li><p><a class="reference internal" href="#query-builder" id="id20">Query Builder</a></p></li>
-<li><p><a class="reference internal" href="#forge" id="id21">Forge</a></p></li>
+<li><p><a class="reference internal" href="#commands" id="id16">Commands</a></p></li>
+<li><p><a class="reference internal" href="#testing" id="id17">Testing</a></p></li>
+<li><p><a class="reference internal" href="#database" id="id18">Database</a></p></li>
+<li><p><a class="reference internal" href="#model" id="id19">Model</a></p></li>
+<li><p><a class="reference internal" href="#libraries" id="id20">Libraries</a></p></li>
+<li><p><a class="reference internal" href="#helpers-and-functions" id="id21">Helpers and Functions</a></p></li>
 <li><p><a class="reference internal" href="#others" id="id22">Others</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#model" id="id23">Model</a></p></li>
-<li><p><a class="reference internal" href="#libraries" id="id24">Libraries</a></p></li>
-<li><p><a class="reference internal" href="#helpers-and-functions" id="id25">Helpers and Functions</a></p></li>
-<li><p><a class="reference internal" href="#id1" id="id26">Others</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#message-changes" id="id27">Message Changes</a></p></li>
-<li><p><a class="reference internal" href="#changes" id="id28">Changes</a></p></li>
-<li><p><a class="reference internal" href="#deprecations" id="id29">Deprecations</a></p></li>
-<li><p><a class="reference internal" href="#bugs-fixed" id="id30">Bugs Fixed</a></p></li>
+<li><p><a class="reference internal" href="#message-changes" id="id23">Message Changes</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id24">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id25">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id26">Bugs Fixed</a></p></li>
 </ul>
 </div>
 <section id="highlights">
-<h2><a class="toc-backref" href="#id2">Highlights</a><a class="headerlink" href="#highlights" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1">Highlights</a><a class="headerlink" href="#highlights" title="Permalink to this headline"></a></h2>
 <ul class="simple">
-<li><p>TBD</p></li>
+<li><p>The Debug Toolbar now has a new “Hot Reload” feature
+(<em>contributed by</em> <a class="reference external" href="https://github.com/lonnieezell">lonnieezell</a>).
+See <a class="reference internal" href="#testing">Testing</a>.</p></li>
 </ul>
 </section>
 <section id="breaking">
-<h2><a class="toc-backref" href="#id3">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this headline"></a></h2>
 <section id="behavior-changes">
-<h3><a class="toc-backref" href="#id4">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Permalink to this headline"></a></h3>
 <section id="uri-setsegment-and-non-existent-segment">
-<h4><a class="toc-backref" href="#id5">URI::setSegment() and Non-Existent Segment</a><a class="headerlink" href="#uri-setsegment-and-non-existent-segment" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id4">URI::setSegment() and Non-Existent Segment</a><a class="headerlink" href="#uri-setsegment-and-non-existent-segment" title="Permalink to this headline"></a></h4>
 <p>An exception is now thrown when you set the last <code class="docutils literal notranslate"><span class="pre">+2</span></code> segment.
 In previous versions, an exception was thrown only if the last segment <code class="docutils literal notranslate"><span class="pre">+3</span></code>
 or more was specified. See <a class="reference internal" href="../installation/upgrade_440.html#upgrade-440-uri-setsegment"><span class="std std-ref">URI::setSegment() Change</span></a>.</p>
 <p>The next segment (<code class="docutils literal notranslate"><span class="pre">+1</span></code>) of the current last segment can be set as before.</p>
 </section>
 <section id="factories">
-<span id="v440-factories"></span><h4><a class="toc-backref" href="#id6">Factories</a><a class="headerlink" href="#factories" title="Permalink to this headline"></a></h4>
+<span id="v440-factories"></span><h4><a class="toc-backref" href="#id5">Factories</a><a class="headerlink" href="#factories" title="Permalink to this headline"></a></h4>
 <section id="passing-classname-with-namespace">
 <h5>Passing Classname with Namespace<a class="headerlink" href="#passing-classname-with-namespace" title="Permalink to this headline"></a></h5>
 <p>Now <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> works only when you request
@@ -391,17 +387,17 @@ But that class does not exist, so now Factories will return <code class="docutil
 </section>
 </section>
 <section id="autoloader">
-<h4><a class="toc-backref" href="#id7">Autoloader</a><a class="headerlink" href="#autoloader" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id6">Autoloader</a><a class="headerlink" href="#autoloader" title="Permalink to this headline"></a></h4>
 <p>Previously, CodeIgniter’s autoloader allowed loading class names ending with the <cite>.php</cite> extension. This means instantiating objects like <cite>new Foo.php()</cite> was possible
 and would instantiate as <cite>new Foo()</cite>. Since <cite>Foo.php</cite> is an invalid class name, this behavior of the autoloader is changed. Now, instantiating such classes would fail.</p>
 </section>
 <section id="codeigniter-and-exit">
-<span id="v440-codeigniter-and-exit"></span><h4><a class="toc-backref" href="#id8">CodeIgniter and exit()</a><a class="headerlink" href="#codeigniter-and-exit" title="Permalink to this headline"></a></h4>
+<span id="v440-codeigniter-and-exit"></span><h4><a class="toc-backref" href="#id7">CodeIgniter and exit()</a><a class="headerlink" href="#codeigniter-and-exit" title="Permalink to this headline"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">CodeIgniter::run()</span></code> method no longer calls <code class="docutils literal notranslate"><span class="pre">exit(EXIT_SUCCESS)</span></code>. The
 exit call is moved to <strong>public/index.php</strong>.</p>
 </section>
 <section id="site-uri-changes">
-<span id="v440-site-uri-changes"></span><h4><a class="toc-backref" href="#id9">Site URI Changes</a><a class="headerlink" href="#site-uri-changes" title="Permalink to this headline"></a></h4>
+<span id="v440-site-uri-changes"></span><h4><a class="toc-backref" href="#id8">Site URI Changes</a><a class="headerlink" href="#site-uri-changes" title="Permalink to this headline"></a></h4>
 <p>A new <code class="docutils literal notranslate"><span class="pre">SiteURI</span></code> class that extends the <code class="docutils literal notranslate"><span class="pre">URI</span></code> class and represents the site
 URI has been added, and now it is used in many places that need the current URI.</p>
 <p><code class="docutils literal notranslate"><span class="pre">$this-&gt;request-&gt;getUri()</span></code> in controllers returns the <code class="docutils literal notranslate"><span class="pre">SiteURI</span></code> instance.
@@ -436,7 +432,7 @@ For example, <code class="docutils literal notranslate"><span class="pre">/</spa
 </section>
 </section>
 <section id="interface-changes">
-<span id="v440-interface-changes"></span><h3><a class="toc-backref" href="#id10">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this headline"></a></h3>
+<span id="v440-interface-changes"></span><h3><a class="toc-backref" href="#id9">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this headline"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>As long as you have not extended the relevant CodeIgniter core classes
@@ -448,9 +444,9 @@ and require no intervention.</p>
 </ul>
 </section>
 <section id="method-signature-changes">
-<span id="v440-method-signature-changes"></span><h3><a class="toc-backref" href="#id11">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this headline"></a></h3>
+<span id="v440-method-signature-changes"></span><h3><a class="toc-backref" href="#id10">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this headline"></a></h3>
 <section id="parameter-type-changes">
-<span id="v440-parameter-type-changes"></span><h4><a class="toc-backref" href="#id12">Parameter Type Changes</a><a class="headerlink" href="#parameter-type-changes" title="Permalink to this headline"></a></h4>
+<span id="v440-parameter-type-changes"></span><h4><a class="toc-backref" href="#id11">Parameter Type Changes</a><a class="headerlink" href="#parameter-type-changes" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><dl class="simple">
 <dt><strong>Services:</strong></dt><dd><ul>
@@ -493,14 +489,14 @@ return type <code class="docutils literal notranslate"><span class="pre">Request
 </ul>
 </section>
 <section id="added-parameters">
-<h4><a class="toc-backref" href="#id13">Added Parameters</a><a class="headerlink" href="#added-parameters" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id12">Added Parameters</a><a class="headerlink" href="#added-parameters" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p><strong>Routing:</strong> The third parameter <code class="docutils literal notranslate"><span class="pre">Routing</span> <span class="pre">$routing</span></code> has been added to
 <code class="docutils literal notranslate"><span class="pre">RouteCollection::__construct()</span></code>.</p></li>
 </ul>
 </section>
 <section id="removed-parameters">
-<h4><a class="toc-backref" href="#id14">Removed Parameters</a><a class="headerlink" href="#removed-parameters" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id13">Removed Parameters</a><a class="headerlink" href="#removed-parameters" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p><strong>Services:</strong> The second parameter <code class="docutils literal notranslate"><span class="pre">$request</span></code> and the third parameter
 <code class="docutils literal notranslate"><span class="pre">$response</span></code> in <code class="docutils literal notranslate"><span class="pre">Services::exceptions()</span></code> have been removed.</p></li>
@@ -509,7 +505,7 @@ return type <code class="docutils literal notranslate"><span class="pre">Request
 </ul>
 </section>
 <section id="return-type-changes">
-<h4><a class="toc-backref" href="#id15">Return Type Changes</a><a class="headerlink" href="#return-type-changes" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id14">Return Type Changes</a><a class="headerlink" href="#return-type-changes" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p><strong>Autoloader:</strong> The return signatures of the <cite>loadClass</cite> and <cite>loadClassmap</cite> methods are made <cite>void</cite>
 to be compatible as callbacks in <cite>spl_autoload_register</cite> and <cite>spl_autoload_unregister</cite> functions.</p></li>
@@ -518,9 +514,9 @@ to be compatible as callbacks in <cite>spl_autoload_register</cite> and <cite>sp
 </section>
 </section>
 <section id="enhancements">
-<h2><a class="toc-backref" href="#id16">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id15">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this headline"></a></h2>
 <section id="commands">
-<h3><a class="toc-backref" href="#id17">Commands</a><a class="headerlink" href="#commands" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16">Commands</a><a class="headerlink" href="#commands" title="Permalink to this headline"></a></h3>
 <ul>
 <li><dl>
 <dt><strong>spark routes:</strong></dt><dd><ul>
@@ -563,37 +559,37 @@ See <a class="reference internal" href="../incoming/routing.html#routing-spark-r
 </ul>
 </section>
 <section id="testing">
-<h3><a class="toc-backref" href="#id18">Testing</a><a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id17">Testing</a><a class="headerlink" href="#testing" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p>The Debug Toolbar now has a new “Hot Reload” feature that can be used to automatically reload the page when a file is changed. See <a class="reference internal" href="../testing/debugging.html#debug-toolbar-hot-reload"><span class="std std-ref">Hot Reloading</span></a>.</p></li>
+<li><dl class="simple">
+<dt><strong>DebugBar:</strong></dt><dd><ul>
+<li><p>The Debug Toolbar now has a new “Hot Reload” feature that can be used to
+automatically reload the page when a file is changed.
+See <a class="reference internal" href="../testing/debugging.html#debug-toolbar-hot-reload"><span class="std std-ref">Hot Reloading</span></a>.</p></li>
+<li><p>Now <a class="reference internal" href="../incoming/routing.html#view-routes"><span class="std std-ref">View Routes</span></a> are displayed in <em>DEFINED ROUTES</em> on the <em>Routes</em> tab.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </section>
 <section id="database">
-<h3><a class="toc-backref" href="#id19">Database</a><a class="headerlink" href="#database" title="Permalink to this headline"></a></h3>
-<section id="query-builder">
-<h4><a class="toc-backref" href="#id20">Query Builder</a><a class="headerlink" href="#query-builder" title="Permalink to this headline"></a></h4>
-</section>
-<section id="forge">
-<h4><a class="toc-backref" href="#id21">Forge</a><a class="headerlink" href="#forge" title="Permalink to this headline"></a></h4>
-</section>
-<section id="others">
-<h4><a class="toc-backref" href="#id22">Others</a><a class="headerlink" href="#others" title="Permalink to this headline"></a></h4>
+<h3><a class="toc-backref" href="#id18">Database</a><a class="headerlink" href="#database" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p><strong>MySQLi:</strong> Added the <code class="docutils literal notranslate"><span class="pre">numberNative</span></code> attribute to the Database Config to keep the variable type obtained after SQL Query consistent with the type set in the database.
 See <a class="reference internal" href="../database/configuration.html#database-config-explanation-of-values"><span class="std std-ref">Database Configuration</span></a>.</p></li>
 <li><p><strong>SQLSRV:</strong> Field Metadata now includes <code class="docutils literal notranslate"><span class="pre">nullable</span></code>. See <a class="reference internal" href="../database/metadata.html#db-metadata-getfielddata"><span class="std std-ref">$db-&gt;getFieldData()</span></a>.</p></li>
 </ul>
 </section>
-</section>
 <section id="model">
-<h3><a class="toc-backref" href="#id23">Model</a><a class="headerlink" href="#model" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id19">Model</a><a class="headerlink" href="#model" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Added special getter/setter to Entity to avoid method name conflicts.
 See <a class="reference internal" href="../models/entities.html#entities-special-getter-setter"><span class="std std-ref">Special Getter/Setter</span></a>.</p></li>
 </ul>
 </section>
 <section id="libraries">
-<h3><a class="toc-backref" href="#id24">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id20">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p><strong>Validation:</strong> Added <code class="docutils literal notranslate"><span class="pre">Validation::getValidated()</span></code> method that gets
 the actual validated data. See <a class="reference internal" href="../libraries/validation.html#validation-getting-validated-data"><span class="std std-ref">Getting Validated Data</span></a> for details.</p></li>
@@ -607,15 +603,15 @@ URI has been added.</p></li>
 </ul>
 </section>
 <section id="helpers-and-functions">
-<h3><a class="toc-backref" href="#id25">Helpers and Functions</a><a class="headerlink" href="#helpers-and-functions" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id21">Helpers and Functions</a><a class="headerlink" href="#helpers-and-functions" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p><strong>Array:</strong> Added <a class="reference internal" href="../helpers/array_helper.html#array_group_by" title="array_group_by"><code class="xref php php-func docutils literal notranslate"><span class="pre">array_group_by()</span></code></a> helper function to group data
 values together. Supports dot-notation syntax.</p></li>
 <li><p><strong>Common:</strong> <a class="reference internal" href="../general/common_functions.html#force_https" title="force_https"><code class="xref php php-func docutils literal notranslate"><span class="pre">force_https()</span></code></a> no longer terminates the application, but throws a <code class="docutils literal notranslate"><span class="pre">RedirectException</span></code>.</p></li>
 </ul>
 </section>
-<section id="id1">
-<h3><a class="toc-backref" href="#id26">Others</a><a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<section id="others">
+<h3><a class="toc-backref" href="#id22">Others</a><a class="headerlink" href="#others" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p><strong>DownloadResponse:</strong> Added <code class="docutils literal notranslate"><span class="pre">DownloadResponse::inline()</span></code> method that sets
 the <code class="docutils literal notranslate"><span class="pre">Content-Disposition:</span> <span class="pre">inline</span></code> header to display the file in the browser.
@@ -645,7 +641,6 @@ auto routing. See <a class="reference internal" href="../incoming/controllers.ht
 </dd>
 </dl>
 </li>
-<li><p><strong>DebugBar:</strong> Now <a class="reference internal" href="../incoming/routing.html#view-routes"><span class="std std-ref">View Routes</span></a> are displayed in <em>DEFINED ROUTES</em> on the <em>Routes</em> tab.</p></li>
 <li><dl class="simple">
 <dt><strong>Factories:</strong></dt><dd><ul>
 <li><p>You can now define the classname that will actually be loaded.
@@ -659,13 +654,13 @@ See <a class="reference internal" href="../concepts/factories.html#factories-def
 </section>
 </section>
 <section id="message-changes">
-<h2><a class="toc-backref" href="#id27">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id23">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Improved <code class="docutils literal notranslate"><span class="pre">HTTP.invalidHTTPProtocol</span></code> error message.</p></li>
 </ul>
 </section>
 <section id="changes">
-<h2><a class="toc-backref" href="#id28">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id24">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p><strong>Images:</strong> The default quality for WebP in <code class="docutils literal notranslate"><span class="pre">GDHandler</span></code> has been changed from 80 to 90.</p></li>
 <li><dl class="simple">
@@ -703,7 +698,7 @@ In previous versions, it was 302.</p></li>
 </ul>
 </section>
 <section id="deprecations">
-<h2><a class="toc-backref" href="#id29">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id25">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p><strong>Entity:</strong> <code class="docutils literal notranslate"><span class="pre">Entity::setAttributes()</span></code> is deprecated. Use <code class="docutils literal notranslate"><span class="pre">Entity::injectRawData()</span></code> instead.</p></li>
 <li><p><strong>Error Handling:</strong> Many methods and properties in <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Debug\Exceptions</span></code>
@@ -759,7 +754,7 @@ moved to <code class="docutils literal notranslate"><span class="pre">SiteURIFac
 </ul>
 </section>
 <section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id30">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id26">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p><strong>Auto Routing (Improved)</strong>: In previous versions, when <code class="docutils literal notranslate"><span class="pre">$translateURIDashes</span></code>
 is true, two URIs correspond to a single controller method, one URI for dashes
