@@ -1,25 +1,13 @@
 Version 4.3.8
 #############
 
-Release Date: Unreleased
+Release Date: August 25, 2023
 
 **4.3.8 release of CodeIgniter4**
 
 .. contents::
     :local:
     :depth: 3
-
-BREAKING
-********
-
-Message Changes
-***************
-
-Changes
-*******
-
-Deprecations
-************
 
 Bugs Fixed
 **********
