@@ -1,7 +1,7 @@
 Version 4.4.0
 #############
 
-Release Date: Unreleased
+Release Date: August 25, 2023
 
 **4.4.0 release of CodeIgniter4**
 
@@ -12,7 +12,9 @@ Release Date: Unreleased
 Highlights
 **********
 
-- TBD
+- The Debug Toolbar now has a new “Hot Reload” feature
+  (*contributed by* `lonnieezell <https://github.com/lonnieezell>`_).
+  See `Testing`_.
 
 BREAKING
 ********
@@ -207,19 +209,14 @@ Commands
 Testing
 =======
 
-- The Debug Toolbar now has a new "Hot Reload" feature that can be used to automatically reload the page when a file is changed. See :ref:`debug-toolbar-hot-reload`.
+- **DebugBar:**
+    - The Debug Toolbar now has a new "Hot Reload" feature that can be used to
+      automatically reload the page when a file is changed.
+      See :ref:`debug-toolbar-hot-reload`.
+    - Now :ref:`view-routes` are displayed in *DEFINED ROUTES* on the *Routes* tab.
 
 Database
 ========
-
-Query Builder
--------------
-
-Forge
------
-
-Others
-------
 
 - **MySQLi:** Added the ``numberNative`` attribute to the Database Config to keep the variable type obtained after SQL Query consistent with the type set in the database.
   See :ref:`Database Configuration <database-config-explanation-of-values>`.
@@ -272,7 +269,6 @@ Others
 - **RedirectException:**
     - It can also take an object that implements ``ResponseInterface`` as its first argument.
     - It implements ``ResponsableInterface``.
-- **DebugBar:** Now :ref:`view-routes` are displayed in *DEFINED ROUTES* on the *Routes* tab.
 - **Factories:**
     - You can now define the classname that will actually be loaded.
       See :ref:`factories-defining-classname-to-be-loaded`.

@@ -1,5 +1,5 @@
 ##############################
-Upgrading from 4.3.x to 4.4.0
+Upgrading from 4.3.8 to 4.4.0
 ##############################
 
 Please refer to the upgrade instructions corresponding to your installation method.
@@ -246,4 +246,15 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- app/Config/App.php
+- app/Config/CURLRequest.php
+- app/Config/Cookie.php
+- app/Config/Database.php
+- app/Config/Events.php
+- app/Config/Exceptions.php
+- app/Config/Filters.php
+- app/Config/Routes.php
+- app/Config/Routing.php
+- app/Config/Toolbar.php
+- public/index.php
+- spark
