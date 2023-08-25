@@ -240,33 +240,27 @@ class Autoloader
     /**
      * Load a class using available class mapping.
      *
-     * @return false|string
+     * @internal For `spl_autoload_register` use.
      */
-    public function loadClassmap(string $class)
+    public function loadClassmap(string $class): void
     {
         $file = $this->classmap[$class] ?? '';
 
         if (is_string($file) && $file !== '') {
-            return $this->includeFile($file);
+            $this->includeFile($file);
         }
-
-        return false;
     }
 
     /**
      * Loads the class file for a given class name.
      *
-     * @param string $class The fully qualified class name.
+     * @internal For `spl_autoload_register` use.
      *
-     * @return false|string The mapped file on success, or boolean false
-     *                      on failure.
+     * @param string $class The fully qualified class name.
      */
-    public function loadClass(string $class)
+    public function loadClass(string $class): void
     {
-        $class = trim($class, '\\');
-        $class = str_ireplace('.php', '', $class);
-
-        return $this->loadInNamespace($class);
+        $this->loadInNamespace($class);
     }
 
     /**
@@ -308,8 +302,6 @@ class Autoloader
      */
     protected function includeFile(string $file)
     {
-        $file = $this->sanitizeFilename($file);
-
         if (is_file($file)) {
             include_once $file;
 
@@ -329,6 +321,8 @@ class Autoloader
      * and end of filename.
      *
      * @return string The sanitized filename
+     *
+     * @deprecated No longer used. See https://github.com/codeigniter4/CodeIgniter4/issues/7055
      */
     public function sanitizeFilename(string $filename): string
     {

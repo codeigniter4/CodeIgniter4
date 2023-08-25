@@ -355,7 +355,7 @@ The value for the filter can be a string or an array of strings:
 * matching the aliases defined in **app/Config/Filters.php**.
 * filter classnames
 
-See :doc:`Controller filters <filters>` for more information on setting up filters.
+See :doc:`Controller Filters <filters>` for more information on setting up filters.
 
 .. Warning:: If you set filters to routes in **app/Config/Routes.php**
     (not in **app/Config/Filters.php**), it is recommended to disable Auto Routing (Legacy).
@@ -394,6 +394,16 @@ Multiple Filters
 You specify an array for the filter value:
 
 .. literalinclude:: routing/037.php
+
+Filter Arguments
+^^^^^^^^^^^^^^^^
+
+Additional arguments may be passed to a filter:
+
+.. literalinclude:: routing/067.php
+
+In this example, the array ``['dual', 'noreturn']`` will be passed in ``$arguments``
+to the filter's ``before()`` and ``after()`` implementation methods.
 
 .. _assigning-namespace:
 
@@ -565,7 +575,11 @@ Routes Configuration Options
 ****************************
 
 The RoutesCollection class provides several options that affect all routes, and can be modified to meet your
-application's needs. These options are available at the top of **app/Config/Routes.php**.
+application's needs. These options are available in **app/Config/Routing.php**.
+
+.. note:: The config file **app/Config/Routing.php** has been added since v4.4.0.
+    In previous versions, the setter methods were used in **app/Config/Routes.php**
+    to change settings.
 
 .. _routing-default-namespace:
 
@@ -589,10 +603,15 @@ Translate URI Dashes
 ====================
 
 This option enables you to automatically replace dashes (``-``) with underscores in the controller and method
-URI segments, thus saving you additional route entries if you need to do that. This is required because the
-dash isn't a valid class or method name character and would cause a fatal error if you try to use it:
+URI segments when used in Auto Routing, thus saving you additional route entries if you need to do that. This is required because the dash isn't a valid class or method name character and would cause a fatal error if you try to use it:
 
 .. literalinclude:: routing/049.php
+
+.. note:: When using Auto Routing (Improved), prior to v4.4.0, if
+    ``$translateURIDashes`` is true, two URIs correspond to a single controller
+    method, one URI for dashes (e.g., **foo-bar**) and one URI for underscores
+    (e.g., **foo_bar**). This was incorrect behavior. Since v4.4.0, the URI for
+    underscores (**foo_bar**) is not accessible.
 
 .. _use-defined-routes-only:
 
@@ -605,7 +624,7 @@ When no defined route is found that matches the URI, the system will attempt to 
 controllers and methods when Auto Routing is enabled.
 
 You can disable this automatic matching, and restrict routes
-to only those defined by you, by setting the ``setAutoRoute()`` option to false:
+to only those defined by you, by setting the ``$autoRoute`` property to false:
 
 .. literalinclude:: routing/050.php
 
@@ -620,6 +639,8 @@ what happens by specifying an action to happen with the ``set404Override()`` met
 a valid class/method pair, just like you would show in any route, or a Closure:
 
 .. literalinclude:: routing/051.php
+
+Using the ``$override404`` property within the routing config file, you can use closures. Defining the override in the Routing file is restricted to class/method pairs.
 
 .. note:: The ``set404Override()`` method does not change the Response status code to ``404``.
     If you don't set the status code in the controller you set, the default status code ``200``
@@ -662,9 +683,9 @@ and execute the corresponding controller methods.
 Enable Auto Routing
 ===================
 
-To use it, you need to change the setting ``setAutoRoute()`` option to true in **app/Config/Routes.php**::
+To use it, you need to change the setting ``$autoRoute`` option to true in **app/Config/Routing.php**::
 
-    $routes->setAutoRoute(true);
+    public bool $autoRoute = true;
 
 And you need to change the property ``$autoRoutesImproved`` to ``true`` in **app/Config/Feature.php**::
 
@@ -741,6 +762,32 @@ In this example, if the user were to visit **example.com/products**, and a ``Pro
 .. important:: You cannot access the controller with the URI of the default method name.
     In the example above, you can access **example.com/products**, but if you access **example.com/products/listall**, it will be not found.
 
+.. _auto-routing-improved-module-routing:
+
+Module Routing
+==============
+
+.. versionadded:: 4.4.0
+
+You can use auto routing even if you use :doc:`../general/modules` and place
+the controllers in a different namespace.
+
+To route to a module, the ``$moduleRoutes`` property in **app/Config/Routing.php**
+must be set::
+
+    public array $moduleRoutes = [
+        'blog' => 'Acme\Blog\Controllers',
+    ];
+
+The key is the first URI segment for the module, and the value is the controller
+namespace. In the above configuration, **http://localhost:8080/blog/foo/bar**
+will be routed to ``Acme\Blog\Controllers\Foo::getBar()``.
+
+.. note:: If you define ``$moduleRoutes``, the routing for the module takes
+    precedence. In the above example, even if you have the ``App\Controllers\Blog``
+    controller, **http://localhost:8080/blog** will be routed to the default
+    controller ``Acme\Blog\Controllers\Home``.
+
 .. _auto-routing-legacy:
 
 Auto Routing (Legacy)
@@ -763,7 +810,7 @@ Enable Auto Routing (Legacy)
 
 Since v4.2.0, the auto-routing is disabled by default.
 
-To use it, you need to change the setting ``setAutoRoute()`` option to true in **app/Config/Routes.php**::
+To use it, you need to change the setting ``$autoRoute`` option to true in **app/Config/Routing.php**::
 
     $routes->setAutoRoute(true);
 
@@ -931,3 +978,16 @@ You can sort the routes by *Handler*:
 .. code-block:: console
 
     php spark routes -h
+
+.. _routing-spark-routes-specify-host:
+
+Specify Host
+------------
+
+.. versionadded:: 4.4.0
+
+You can specify the host in the request URL with the ``--host`` option:
+
+.. code-block:: console
+
+    php spark routes --host accounts.example.com

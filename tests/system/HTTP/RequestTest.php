@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
@@ -616,7 +617,8 @@ final class RequestTest extends CIUnitTestCase
             '10.0.1.200'     => 'X-Forwarded-For',
             '192.168.5.0/24' => 'X-Forwarded-For',
         ];
-        $this->request = new Request($config);
+        Factories::injectMock('config', App::class, $config);
+        $this->request = new Request();
         $this->request->populateHeaders();
 
         // we should see the original forwarded address
@@ -667,7 +669,8 @@ final class RequestTest extends CIUnitTestCase
 
         $config           = new App();
         $config->proxyIPs = ['192.168.5.0/24' => 'X-Forwarded-For'];
-        $this->request    = new Request($config);
+        Factories::injectMock('config', App::class, $config);
+        $this->request = new Request();
         $this->request->populateHeaders();
 
         // we should see the original forwarded address

@@ -12,16 +12,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/app/Config/View.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$callback of function spl_autoload_register expects \\(callable\\(string\\)\\: void\\)\\|null, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), \'loadClass\'\\} given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$callback of function spl_autoload_register expects \\(callable\\(string\\)\\: void\\)\\|null, array\\{\\$this\\(CodeIgniter\\\\Autoloader\\\\Autoloader\\), \'loadClassmap\'\\} given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:chunk\\(\\) has parameter \\$userFunc with no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
@@ -70,16 +60,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Cache\\\\Handlers\\\\WincacheHandler\\:\\:deleteMatching\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Cache/Handlers/WincacheHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getPost\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:setLocale\\(\\)\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:bootstrapEnvironment\\(\\) has no return type specified\\.$#',
@@ -1138,11 +1118,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Session\\\\Session\\:\\:unmarkTempdata\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Session/Session.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Session\\\\Session\\:\\:\\$sessionExpiration \\(int\\) in isset\\(\\) is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Session/Session.php',
 ];

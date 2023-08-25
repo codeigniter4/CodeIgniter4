@@ -12,7 +12,9 @@
 namespace CodeIgniter;
 
 use CodeIgniter\Config\BaseService;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
@@ -28,9 +30,14 @@ use CodeIgniter\Test\Mock\MockSecurity;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
 use Config\App;
+use Config\Cookie;
 use Config\Logger;
 use Config\Modules;
+use Config\Routing;
+use Config\Security as SecurityConfig;
 use Config\Services;
+use Config\Session as SessionConfig;
+use Exception;
 use Kint;
 use RuntimeException;
 use stdClass;
@@ -115,16 +122,19 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertNull(env('p4'));
     }
 
+    private function createRouteCollection(): RouteCollection
+    {
+        return new RouteCollection(Services::locator(), new Modules(), new Routing());
+    }
+
     public function testRedirectReturnsRedirectResponse(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $response = $this->createMock(Response::class);
-        $routes   = new RouteCollection(
-            Services::locator(),
-            new Modules()
-        );
         Services::injectMock('response', $response);
+
+        $routes = $this->createRouteCollection();
         Services::injectMock('routes', $routes);
 
         $routes->add('home/base', 'Controller::index', ['as' => 'base']);
@@ -329,7 +339,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testCSRFToken(): void
     {
-        Services::injectMock('security', new MockSecurity(new App()));
+        Services::injectMock('security', new MockSecurity(new SecurityConfig()));
 
         $this->assertSame('csrf_test_name', csrf_token());
     }
@@ -387,7 +397,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
 
-        $this->routes = new RouteCollection(Services::locator(), new Modules());
+        $this->routes = $this->createRouteCollection();
         Services::injectMock('routes', $this->routes);
 
         $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
@@ -422,7 +432,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
 
-        $this->routes = new RouteCollection(Services::locator(), new Modules());
+        $this->routes = $this->createRouteCollection();
         Services::injectMock('routes', $this->routes);
 
         $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
@@ -457,7 +467,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
 
-        $this->routes = new RouteCollection(Services::locator(), new Modules());
+        $this->routes = $this->createRouteCollection();
         Services::injectMock('routes', $this->routes);
 
         $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
@@ -488,12 +498,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testSlashItem(): void
     {
-        $this->assertSame('/', slash_item('cookiePath')); // /
-        $this->assertSame('', slash_item('cookieDomain')); // ''
         $this->assertSame('en/', slash_item('defaultLocale')); // en
-        $this->assertSame('7200/', slash_item('sessionExpiration')); // int 7200
         $this->assertSame('', slash_item('negotiateLocale')); // false
-        $this->assertSame('1/', slash_item('cookieHTTPOnly')); // true
     }
 
     public function testSlashItemOnInexistentItem(): void
@@ -514,28 +520,36 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     protected function injectSessionMock(): void
     {
+        $sessionConfig = new SessionConfig();
+
         $defaults = [
-            'sessionDriver'            => FileHandler::class,
-            'sessionCookieName'        => 'ci_session',
-            'sessionExpiration'        => 7200,
-            'sessionSavePath'          => '',
-            'sessionMatchIP'           => false,
-            'sessionTimeToUpdate'      => 300,
-            'sessionRegenerateDestroy' => false,
-            'cookieDomain'             => '',
-            'cookiePrefix'             => '',
-            'cookiePath'               => '/',
-            'cookieSecure'             => false,
-            'cookieSameSite'           => 'Lax',
+            'driver'            => FileHandler::class,
+            'cookieName'        => 'ci_session',
+            'expiration'        => 7200,
+            'savePath'          => '',
+            'matchIP'           => false,
+            'timeToUpdate'      => 300,
+            'regenerateDestroy' => false,
         ];
 
-        $appConfig = new App();
-
         foreach ($defaults as $key => $config) {
-            $appConfig->{$key} = $config;
+            $sessionConfig->{$key} = $config;
         }
 
-        $session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);
+        $cookie = new Cookie();
+
+        foreach ([
+            'prefix'   => '',
+            'domain'   => '',
+            'path'     => '/',
+            'secure'   => false,
+            'samesite' => 'Lax',
+        ] as $key => $value) {
+            $cookie->{$key} = $value;
+        }
+        Factories::injectMock('config', 'Cookie', $cookie);
+
+        $session = new MockSession(new FileHandler($sessionConfig, '127.0.0.1'), $sessionConfig);
         $session->setLogger(new TestLogger(new Logger()));
         BaseService::injectMock('session', $session);
     }
@@ -587,10 +601,26 @@ final class CommonFunctionsTest extends CIUnitTestCase
     public function testForceHttpsNullRequestAndResponse(): void
     {
         $this->assertNull(Services::response()->header('Location'));
+        Services::response()->setCookie('force', 'cookie');
+        Services::response()->setHeader('Force', 'header');
+        Services::response()->setBody('default body');
 
+        try {
+            force_https();
+        } catch (Exception $e) {
+            $this->assertInstanceOf(RedirectException::class, $e);
+            $this->assertSame(
+                'https://example.com/index.php/',
+                $e->getResponse()->header('Location')->getValue()
+            );
+            $this->assertFalse($e->getResponse()->hasCookie('force'));
+            $this->assertSame('header', $e->getResponse()->getHeaderLine('Force'));
+            $this->assertSame('', $e->getResponse()->getBody());
+            $this->assertSame(307, $e->getResponse()->getStatusCode());
+        }
+
+        $this->expectException(RedirectException::class);
         force_https();
-
-        $this->assertSame('https://example.com/', Services::response()->header('Location')->getValue());
     }
 
     /**

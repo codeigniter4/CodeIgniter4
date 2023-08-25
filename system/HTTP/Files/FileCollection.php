@@ -184,7 +184,8 @@ class FileCollection
             $array['name'] ?? null,
             $array['type'] ?? null,
             $array['size'] ?? null,
-            $array['error'] ?? null
+            $array['error'] ?? null,
+            $array['full_path'] ?? null
         );
     }
 

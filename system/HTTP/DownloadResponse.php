@@ -257,6 +257,13 @@ class DownloadResponse extends Response
      */
     public function send()
     {
+        // Turn off output buffering completely, even if php.ini output_buffering is not off
+        if (ENVIRONMENT !== 'testing') {
+            while (ob_get_level() > 0) {
+                ob_end_clean();
+            }
+        }
+
         $this->buildHeaders();
         $this->sendHeaders();
         $this->sendBody();
@@ -275,7 +282,10 @@ class DownloadResponse extends Response
             $this->setContentTypeByMimeType();
         }
 
-        $this->setHeader('Content-Disposition', $this->getContentDisposition());
+        if (! $this->hasHeader('Content-Disposition')) {
+            $this->setHeader('Content-Disposition', $this->getContentDisposition());
+        }
+
         $this->setHeader('Expires-Disposition', '0');
         $this->setHeader('Content-Transfer-Encoding', 'binary');
         $this->setHeader('Content-Length', (string) $this->getContentLength());
@@ -328,6 +338,18 @@ class DownloadResponse extends Response
     private function sendBodyByBinary()
     {
         echo $this->binary;
+
+        return $this;
+    }
+
+    /**
+     * Sets the response header to display the file in the browser.
+     *
+     * @return DownloadResponse
+     */
+    public function inline()
+    {
+        $this->setHeader('Content-Disposition', 'inline');
 
         return $this;
     }

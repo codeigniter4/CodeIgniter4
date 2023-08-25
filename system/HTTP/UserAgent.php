@@ -102,7 +102,7 @@ class UserAgent
      */
     public function __construct(?UserAgents $config = null)
     {
-        $this->config = $config ?? new UserAgents();
+        $this->config = $config ?? config(UserAgents::class);
 
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
             $this->agent = trim($_SERVER['HTTP_USER_AGENT']);

@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
@@ -34,9 +35,20 @@ final class IncomingRequestTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
+        $config        = new App();
+        $this->request = $this->createRequest($config);
 
         $_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
+    }
+
+    private function createRequest(?App $config = null, $body = null, ?string $path = null): IncomingRequest
+    {
+        $config ??= new App();
+        $path ??= '';
+
+        $uri = new SiteURI($config, $path);
+
+        return new IncomingRequest($config, $uri, $body, new UserAgent());
     }
 
     public function testCanGrabRequestVars(): void
@@ -185,7 +197,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config->defaultLocale    = 'es';
         $config->baseURL          = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), null, new UserAgent());
+        $request = $this->createRequest($config);
 
         $request->setLocale('en');
         $this->assertSame('en', $request->getLocale());
@@ -198,10 +210,25 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config->defaultLocale    = 'es';
         $config->baseURL          = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), null, new UserAgent());
+        $request = $this->createRequest($config);
 
         $request->setLocale('xx');
         $this->assertSame('es', $request->getLocale());
+    }
+
+    public function testSetValidLocales()
+    {
+        $config                   = new App();
+        $config->supportedLocales = ['en', 'es'];
+        $config->defaultLocale    = 'es';
+        $config->baseURL          = 'http://example.com/';
+
+        $request = new IncomingRequest($config, new URI(), null, new UserAgent());
+
+        $request->setValidLocales(['ja']);
+        $request->setLocale('ja');
+
+        $this->assertSame('ja', $request->getLocale());
     }
 
     /**
@@ -216,7 +243,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config->supportedLocales = ['fr', 'en'];
         $config->baseURL          = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), null, new UserAgent());
+        $request = $this->createRequest($config);
 
         $this->assertSame($config->defaultLocale, $request->getDefaultLocale());
         $this->assertSame('fr', $request->getLocale());
@@ -231,7 +258,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config->supportedLocales = ['fr', 'en'];
         $config->baseURL          = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), null, new UserAgent());
+        $request = $this->createRequest($config);
 
         $this->assertSame($config->defaultLocale, $request->getDefaultLocale());
         $this->assertSame('fr', $request->getLocale());
@@ -290,7 +317,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request = $this->createRequest($config, $json);
 
         $this->assertSame($expected, $request->getJSON(true));
     }
@@ -311,7 +338,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request = $this->createRequest($config, $json);
 
         $this->assertSame('bar', $request->getJsonVar('foo'));
         $this->assertNull($request->getJsonVar('notExists'));
@@ -345,7 +372,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request = $this->createRequest($config, $json);
 
         $jsonVar = $request->getJsonVar('baz', true);
         $this->assertIsArray($jsonVar);
@@ -365,7 +392,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request = $this->createRequest($config, $json);
 
         $this->assertFalse($request->getJsonVar('foo', false, FILTER_VALIDATE_INT));
     }
@@ -386,7 +413,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request = $this->createRequest($config, $json);
         $request->setHeader('Content-Type', 'application/json');
 
         $expected = [
@@ -430,7 +457,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request = $this->createRequest($config, $json);
         $request->setHeader('Content-Type', 'application/json');
 
         $this->assertSame('bar', $request->getVar('foo'));
@@ -457,12 +484,13 @@ final class IncomingRequestTest extends CIUnitTestCase
         $_REQUEST['foo']  = 'bar';
         $_REQUEST['fizz'] = 'buzz';
 
-        $request = new IncomingRequest($config, new URI('http://example.com/path?foo=bar&fizz=buzz'), 'php://input', new UserAgent());
+        $request = $this->createRequest($config, null);
         $request = $request->withMethod('GET');
 
         // JSON type
         $request->setHeader('Content-Type', 'application/json');
 
+        // The body is null, so this works.
         $this->assertSame('bar', $request->getVar('foo'));
         $this->assertSame('buzz', $request->getVar('fizz'));
 
@@ -485,7 +513,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
         $json            = null;
-        $request         = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request         = $this->createRequest($config, $json);
 
         $this->assertNull($request->getJsonVar('myKey'));
     }
@@ -495,7 +523,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
         $json            = null;
-        $request         = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request         = $this->createRequest($config, $json);
 
         $this->assertNull($request->getJSON());
     }
@@ -513,7 +541,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
+        $request = $this->createRequest($config, $rawstring);
 
         $this->assertSame($expected, $request->getRawInput());
     }
@@ -611,7 +639,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
+        $request = $this->createRequest($config, $rawstring);
 
         $this->assertSame($expected, $request->getRawInputVar($var, $filter, $flag));
     }
@@ -707,7 +735,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla';
 
         $config  = new App();
-        $request = new IncomingRequest($config, new URI(), null, new UserAgent());
+        $request = $this->createRequest($config);
 
         $this->assertSame('Mozilla', $request->getUserAgent()->__toString());
     }
@@ -822,7 +850,7 @@ final class IncomingRequestTest extends CIUnitTestCase
     public function testWithFalseBody(): void
     {
         // Use `false` here to simulate file_get_contents returning a false value
-        $request = new IncomingRequest(new App(), new URI(), false, new UserAgent());
+        $request = $this->createRequest(null, false);
 
         $this->assertNotFalse($request->getBody());
         $this->assertNull($request->getBody());
@@ -872,47 +900,9 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetPath(): void
     {
-        $_SERVER['REQUEST_URI'] = '/index.php/fruits/banana';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
-
-        $request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
+        $request = $this->createRequest(null, null, 'fruits/banana');
 
         $this->assertSame('fruits/banana', $request->getPath());
-    }
-
-    public function testGetPathIsRelative(): void
-    {
-        $_SERVER['REQUEST_URI'] = '/sub/folder/index.php/fruits/banana';
-        $_SERVER['SCRIPT_NAME'] = '/sub/folder/index.php';
-
-        $request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
-
-        $this->assertSame('fruits/banana', $request->getPath());
-    }
-
-    public function testGetPathStoresDetectedValue(): void
-    {
-        $_SERVER['REQUEST_URI'] = '/fruits/banana';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
-
-        $request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
-
-        $_SERVER['REQUEST_URI'] = '/candy/snickers';
-
-        $this->assertSame('fruits/banana', $request->getPath());
-    }
-
-    public function testGetPathIsRediscovered(): void
-    {
-        $_SERVER['REQUEST_URI'] = '/fruits/banana';
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
-
-        $request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
-
-        $_SERVER['REQUEST_URI'] = '/candy/snickers';
-        $request->detectPath();
-
-        $this->assertSame('candy/snickers', $request->getPath());
     }
 
     public function testSetPath(): void
@@ -922,15 +912,6 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $request->setPath('foobar');
         $this->assertSame('foobar', $request->getPath());
-    }
-
-    public function testSetPathUpdatesURI(): void
-    {
-        $request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
-
-        $request->setPath('apples');
-
-        $this->assertSame('apples', $request->getUri()->getPath());
     }
 
     public function testGetIPAddressNormal(): void
@@ -957,7 +938,8 @@ final class IncomingRequestTest extends CIUnitTestCase
             '10.0.1.200'     => 'X-Forwarded-For',
             '192.168.5.0/24' => 'X-Forwarded-For',
         ];
-        $this->request = new Request($config);
+        Factories::injectMock('config', App::class, $config);
+        $this->request = new Request();
         $this->request->populateHeaders();
 
         // we should see the original forwarded address
@@ -974,7 +956,8 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config->proxyIPs = [
             '2001:db8::2:1' => 'X-Forwarded-For',
         ];
-        $this->request = new Request($config);
+        Factories::injectMock('config', App::class, $config);
+        $this->request = new Request();
         $this->request->populateHeaders();
 
         // we should see the original forwarded address
@@ -1059,7 +1042,8 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $config           = new App();
         $config->proxyIPs = ['192.168.5.0/24' => 'X-Forwarded-For'];
-        $this->request    = new Request($config);
+        Factories::injectMock('config', App::class, $config);
+        $this->request = new Request();
         $this->request->populateHeaders();
 
         // we should see the original forwarded address
@@ -1074,7 +1058,8 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $config           = new App();
         $config->proxyIPs = ['2001:db8:1234::/48' => 'X-Forwarded-For'];
-        $this->request    = new Request($config);
+        Factories::injectMock('config', App::class, $config);
+        $this->request = new Request();
         $this->request->populateHeaders();
 
         // we should see the original forwarded address
@@ -1150,7 +1135,8 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $config           = new App();
         $config->proxyIPs = ['192.168.5.0/28'];
-        $this->request    = new Request($config);
+        Factories::injectMock('config', App::class, $config);
+        $this->request = new Request();
         $this->request->populateHeaders();
 
         $this->request->getIPAddress();

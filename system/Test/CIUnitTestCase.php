@@ -28,6 +28,7 @@ use Config\Autoload;
 use Config\Email;
 use Config\Modules;
 use Config\Services;
+use Config\Session;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
@@ -334,7 +335,7 @@ abstract class CIUnitTestCase extends TestCase
     {
         $_SESSION = [];
 
-        $config  = config(App::class);
+        $config  = config(Session::class);
         $session = new MockSession(new ArrayHandler($config, '0.0.0.0'), $config);
 
         Services::injectMock('session', $session);

@@ -19,6 +19,7 @@ use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\App;
 use Config\Services;
 use Exception;
+use Tests\Support\Controllers\Newautorouting;
 use Tests\Support\Controllers\Popcorn;
 
 /**
@@ -258,5 +259,16 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $this->expectExceptionMessage('banana');
 
         $this->withBody('banana')->execute('throwsBody');
+    }
+
+    public function testWithUriUpdatesUriStringAndCurrentUrlValues()
+    {
+        $result = $this->withURI('http://example.com/foo/bar/1/2/3')
+            ->controller(Newautorouting::class)
+            ->execute('postSave', '1', '2', '3');
+
+        $this->assertSame('Saved', $result->response()->getBody());
+        $this->assertSame('foo/bar/1/2/3', uri_string());
+        $this->assertSame('http://example.com/index.php/foo/bar/1/2/3', current_url());
     }
 }

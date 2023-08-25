@@ -10,11 +10,17 @@ class UserController extends BaseController
             'email' => "required|is_unique[users.email,id,{$userID}]",
             'name'  => 'required|alpha_numeric_spaces',
         ])) {
+            // The validation failed.
             return view('users/update', [
                 'errors' => $this->validator->getErrors(),
             ]);
         }
 
-        // do something here if successful...
+        // The validation was successful.
+
+        // Get the validated data.
+        $validData = $this->validator->getValidated();
+
+        // ...
     }
 }

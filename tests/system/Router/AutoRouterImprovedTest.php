@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Router;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Router\Controllers\Dash_folder\Dash_controller;
@@ -19,6 +20,7 @@ use CodeIgniter\Router\Controllers\Index;
 use CodeIgniter\Router\Controllers\Mycontroller;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
+use Config\Routing;
 
 /**
  * @internal
@@ -35,14 +37,14 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $moduleConfig          = new Modules();
         $moduleConfig->enabled = false;
-        $this->collection      = new RouteCollection(Services::locator(), $moduleConfig);
+        $this->collection      = new RouteCollection(Services::locator(), $moduleConfig, new Routing());
     }
 
-    private function createNewAutoRouter(string $httpVerb = 'get'): AutoRouterImproved
+    private function createNewAutoRouter(string $httpVerb = 'get', $namespace = 'CodeIgniter\Router\Controllers'): AutoRouterImproved
     {
         return new AutoRouterImproved(
             [],
-            'CodeIgniter\Router\Controllers',
+            $namespace,
             $this->collection->getDefaultController(),
             $this->collection->getDefaultMethod(),
             true,
@@ -58,6 +60,32 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         [$directory, $controller, $method, $params]
             = $router->getRoute('/', 'get');
+
+        $this->assertNull($directory);
+        $this->assertSame('\\' . Index::class, $controller);
+        $this->assertSame('getIndex', $method);
+        $this->assertSame([], $params);
+        $this->assertSame([
+            'controller' => null,
+            'method'     => null,
+            'params'     => null,
+        ], $router->getPos());
+    }
+
+    public function testAutoRouteFindsModuleDefaultControllerAndMethodGet()
+    {
+        $config               = config(Routing::class);
+        $config->moduleRoutes = [
+            'test' => 'CodeIgniter\Router\Controllers',
+        ];
+        Factories::injectMock('config', Routing::class, $config);
+
+        $this->collection->setDefaultController('Index');
+
+        $router = $this->createNewAutoRouter('get', 'App/Controllers');
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('test', 'get');
 
         $this->assertNull($directory);
         $this->assertSame('\\' . Index::class, $controller);
@@ -91,6 +119,11 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame('\\' . Mycontroller::class, $controller);
         $this->assertSame('getSomemethod', $method);
         $this->assertSame([], $params);
+        $this->assertSame([
+            'controller' => 0,
+            'method'     => 1,
+            'params'     => null,
+        ], $router->getPos());
     }
 
     public function testFindsControllerAndMethodAndParam(): void
@@ -104,6 +137,11 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame('\\' . Mycontroller::class, $controller);
         $this->assertSame('getSomemethod', $method);
         $this->assertSame(['a'], $params);
+        $this->assertSame([
+            'controller' => 0,
+            'method'     => 1,
+            'params'     => 2,
+        ], $router->getPos());
     }
 
     public function testUriParamCountIsGreaterThanMethodParams(): void
@@ -140,6 +178,24 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $this->assertSame('Subfolder/', $directory);
         $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Mycontroller::class, $controller);
+        $this->assertSame('getSomemethod', $method);
+        $this->assertSame([], $params);
+        $this->assertSame([
+            'controller' => 1,
+            'method'     => 2,
+            'params'     => null,
+        ], $router->getPos());
+    }
+
+    public function testAutoRouteFindsControllerWithSubSubfolder()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('subfolder/sub/mycontroller/somemethod', 'get');
+
+        $this->assertSame('Subfolder/Sub/', $directory);
+        $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Sub\Mycontroller::class, $controller);
         $this->assertSame('getSomemethod', $method);
         $this->assertSame([], $params);
     }
@@ -197,6 +253,78 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame('\\' . Home::class, $controller);
         $this->assertSame('getIndex', $method);
         $this->assertSame([], $params);
+    }
+
+    public function testAutoRouteFallbackToDefaultMethod()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('index/15', 'get');
+
+        $this->assertNull($directory);
+        $this->assertSame('\\' . Index::class, $controller);
+        $this->assertSame('getIndex', $method);
+        $this->assertSame(['15'], $params);
+        $this->assertSame([
+            'controller' => 0,
+            'method'     => null,
+            'params'     => 1,
+        ], $router->getPos());
+    }
+
+    public function testAutoRouteFallbackToDefaultControllerOneParam()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('subfolder/15', 'get');
+
+        $this->assertSame('Subfolder/', $directory);
+        $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Home::class, $controller);
+        $this->assertSame('getIndex', $method);
+        $this->assertSame(['15'], $params);
+        $this->assertSame([
+            'controller' => null,
+            'method'     => null,
+            'params'     => 1,
+        ], $router->getPos());
+    }
+
+    public function testAutoRouteFallbackToDefaultControllerTwoParams()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('subfolder/15/20', 'get');
+
+        $this->assertSame('Subfolder/', $directory);
+        $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Home::class, $controller);
+        $this->assertSame('getIndex', $method);
+        $this->assertSame(['15', '20'], $params);
+        $this->assertSame([
+            'controller' => null,
+            'method'     => null,
+            'params'     => 1,
+        ], $router->getPos());
+    }
+
+    public function testAutoRouteFallbackToDefaultControllerNoParams()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('subfolder', 'get');
+
+        $this->assertSame('Subfolder/', $directory);
+        $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Home::class, $controller);
+        $this->assertSame('getIndex', $method);
+        $this->assertSame([], $params);
+        $this->assertSame([
+            'controller' => null,
+            'method'     => null,
+            'params'     => null,
+        ], $router->getPos());
     }
 
     public function testAutoRouteRejectsSingleDot(): void
@@ -263,5 +391,67 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         $router->getRoute('remap/test', 'get');
+    }
+
+    public function testRejectsURIWithUnderscoreFolder()
+    {
+        $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage(
+            'AutoRouterImproved prohibits access to the URI containing underscores ("dash_folder")'
+        );
+
+        $router = $this->createNewAutoRouter();
+
+        $router->getRoute('dash_folder', 'get');
+    }
+
+    public function testRejectsURIWithUnderscoreController()
+    {
+        $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage(
+            'AutoRouterImproved prohibits access to the URI containing underscores ("dash_controller")'
+        );
+
+        $router = $this->createNewAutoRouter();
+
+        $router->getRoute('dash-folder/dash_controller/dash-method', 'get');
+    }
+
+    public function testRejectsURIWithUnderscoreMethod()
+    {
+        $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage(
+            'AutoRouterImproved prohibits access to the URI containing underscores ("dash_method")'
+        );
+
+        $router = $this->createNewAutoRouter();
+
+        $router->getRoute('dash-folder/dash-controller/dash_method', 'get');
+    }
+
+    public function testPermitsURIWithUnderscoreParam()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('mycontroller/somemethod/a_b', 'get');
+
+        $this->assertNull($directory);
+        $this->assertSame('\\' . Mycontroller::class, $controller);
+        $this->assertSame('getSomemethod', $method);
+        $this->assertSame(['a_b'], $params);
+    }
+
+    public function testDoesNotTranslateDashInParam()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('mycontroller/somemethod/a-b', 'get');
+
+        $this->assertNull($directory);
+        $this->assertSame('\\' . Mycontroller::class, $controller);
+        $this->assertSame('getSomemethod', $method);
+        $this->assertSame(['a-b'], $params);
     }
 }

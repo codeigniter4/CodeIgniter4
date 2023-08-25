@@ -138,50 +138,51 @@ and decode it in the constructor in the Config class:
 Explanation of Values:
 **********************
 
-=============== ===========================================================================================================
- Name Config    Description
-=============== ===========================================================================================================
-**DSN**         The DSN connect string (an all-in-one configuration sequence).
-**hostname**    The hostname of your database server. Often this is 'localhost'.
-**username**    The username used to connect to the database. (``SQLite3`` does not use this.)
-**password**    The password used to connect to the database. (``SQLite3`` does not use this.)
-**database**    The name of the database you want to connect to.
+================ ===========================================================================================================
+ Name Config     Description
+================ ===========================================================================================================
+**DSN**          The DSN connect string (an all-in-one configuration sequence).
+**hostname**     The hostname of your database server. Often this is 'localhost'.
+**username**     The username used to connect to the database. (``SQLite3`` does not use this.)
+**password**     The password used to connect to the database. (``SQLite3`` does not use this.)
+**database**     The name of the database you want to connect to.
 
-                .. note:: CodeIgniter doesn't support dots (``.``) in the database, table, and column names.
-**DBDriver**    The database driver name. The case must match the driver name.
-                You can set a fully qualified classname to use your custom driver.
-                Supported drivers: ``MySQLi``, ``Postgre``, ``SQLite3``, ``SQLSRV``, and ``OCI8``.
-**DBPrefix**    An optional table prefix which will added to the table name when running
-                :doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
-                installations to share one database.
-**pConnect**    true/false (boolean) - Whether to use a persistent connection.
-**DBDebug**     true/false (boolean) - Whether to throw exceptions or not when database errors occur.
-**charset**     The character set used in communicating with the database.
-**DBCollat**    The character collation used in communicating with the database (``MySQLi`` only).
-**swapPre**     A default table prefix that should be swapped with ``DBPrefix``. This is useful for distributed
-                applications where you might run manually written queries, and need the prefix to still be
-                customizable by the end user.
-**schema**      The database schema, default value varies by driver. (Used by ``Postgre`` and ``SQLSRV``.)
-**encrypt**     Whether or not to use an encrypted connection.
-                ``SQLSRV`` driver accepts true/false
-                ``MySQLi`` driver accepts an array with the following options:
-                * ``ssl_key``    - Path to the private key file
-                * ``ssl_cert``   - Path to the public key certificate file
-                * ``ssl_ca``     - Path to the certificate authority file
-                * ``ssl_capath`` - Path to a directory containing trusted CA certificates in PEM format
-                * ``ssl_cipher`` - List of *allowed* ciphers to be used for the encryption, separated by colons (``:``)
-                * ``ssl_verify`` - true/false; Whether to verify the server certificate or not (``MySQLi`` only)
-**compress**    Whether or not to use client compression (``MySQLi`` only).
-**strictOn**    true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring strict SQL
-                while developing an application (``MySQLi`` only).
-**port**        The database port number - Empty string ``''`` for default port (or dynamic port with ``SQLSRV``).
-**foreignKeys** true/false (boolean) - Whether or not to enable Foreign Key constraint (``SQLite3`` only).
+                 .. note:: CodeIgniter doesn't support dots (``.``) in the database, table, and column names.
+**DBDriver**     The database driver name. The case must match the driver name.
+                 You can set a fully qualified classname to use your custom driver.
+                 Supported drivers: ``MySQLi``, ``Postgre``, ``SQLite3``, ``SQLSRV``, and ``OCI8``.
+**DBPrefix**     An optional table prefix which will added to the table name when running
+                 :doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
+                 installations to share one database.
+**pConnect**     true/false (boolean) - Whether to use a persistent connection.
+**DBDebug**      true/false (boolean) - Whether to throw exceptions or not when database errors occur.
+**charset**      The character set used in communicating with the database.
+**DBCollat**     The character collation used in communicating with the database (``MySQLi`` only).
+**swapPre**      A default table prefix that should be swapped with ``DBPrefix``. This is useful for distributed
+                 applications where you might run manually written queries, and need the prefix to still be
+                 customizable by the end user.
+**schema**       The database schema, default value varies by driver. (Used by ``Postgre`` and ``SQLSRV``.)
+**encrypt**      Whether or not to use an encrypted connection.
+                 ``SQLSRV`` driver accepts true/false
+                 ``MySQLi`` driver accepts an array with the following options:
+                 * ``ssl_key``    - Path to the private key file
+                 * ``ssl_cert``   - Path to the public key certificate file
+                 * ``ssl_ca``     - Path to the certificate authority file
+                 * ``ssl_capath`` - Path to a directory containing trusted CA certificates in PEM format
+                 * ``ssl_cipher`` - List of *allowed* ciphers to be used for the encryption, separated by colons (``:``)
+                 * ``ssl_verify`` - true/false; Whether to verify the server certificate or not (``MySQLi`` only)
+**compress**     Whether or not to use client compression (``MySQLi`` only).
+**strictOn**     true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring strict SQL
+                 while developing an application (``MySQLi`` only).
+**port**         The database port number - Empty string ``''`` for default port (or dynamic port with ``SQLSRV``).
+**foreignKeys**  true/false (boolean) - Whether or not to enable Foreign Key constraint (``SQLite3`` only).
 
-                .. important:: SQLite3 Foreign Key constraint is disabled by default.
-                    See `SQLite documentation <https://www.sqlite.org/pragma.html#pragma_foreign_keys>`_.
-                    To enforce Foreign Key constraint, set this config item to true.
-**busyTimeout** milliseconds (int) - Sleeps for a specified amount of time when a table is locked (``SQLite3`` only).
-=============== ===========================================================================================================
+                 .. important:: SQLite3 Foreign Key constraint is disabled by default.
+                     See `SQLite documentation <https://www.sqlite.org/pragma.html#pragma_foreign_keys>`_.
+                     To enforce Foreign Key constraint, set this config item to true.
+**busyTimeout**  milliseconds (int) - Sleeps for a specified amount of time when a table is locked (``SQLite3`` only).
+**numberNative** true/false (boolean) - Whether or not to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE (``MySQLi`` only).
+================ ===========================================================================================================
 
 .. note:: Depending on what database driver you are using (``MySQLi``, ``Postgre``,
     etc.) not all values will be needed. For example, when using ``SQLite3`` you

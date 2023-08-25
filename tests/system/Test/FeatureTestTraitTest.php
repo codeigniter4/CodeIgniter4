@@ -52,25 +52,46 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         ]);
         $response = $this->get('home');
 
+        $this->assertInstanceOf(TestResponse::class, $response);
+        $this->assertInstanceOf(Response::class, $response->response());
+        $this->assertTrue($response->isOK());
+        $this->assertSame('Hello World', $response->response()->getBody());
+        $this->assertSame(200, $response->response()->getStatusCode());
         $response->assertSee('Hello World');
         $response->assertDontSee('Again');
     }
 
-    public function testCallSimpleGet(): void
+    public function testCallGetAndUriString(): void
     {
         $this->withRoutes([
             [
-                'add',
-                'home',
-                static fn () => 'Hello Earth',
+                'get',
+                'foo/bar/1/2/3',
+                static fn () => 'Hello World',
             ],
         ]);
-        $response = $this->call('get', 'home');
+        $response = $this->get('foo/bar/1/2/3');
 
+        $this->assertSame('Hello World', $response->response()->getBody());
+        $this->assertSame('foo/bar/1/2/3', uri_string());
+        $this->assertSame('http://example.com/index.php/foo/bar/1/2/3', current_url());
+    }
+
+    public function testClosureWithEcho()
+    {
+        $this->withRoutes([
+            [
+                'get',
+                'home',
+                static function () { echo 'test echo'; },
+            ],
+        ]);
+
+        $response = $this->get('home');
         $this->assertInstanceOf(TestResponse::class, $response);
         $this->assertInstanceOf(Response::class, $response->response());
         $this->assertTrue($response->isOK());
-        $this->assertSame('Hello Earth', $response->response()->getBody());
+        $this->assertSame('test echo', $response->response()->getBody());
         $this->assertSame(200, $response->response()->getStatusCode());
     }
 

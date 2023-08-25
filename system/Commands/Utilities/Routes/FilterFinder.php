@@ -13,7 +13,7 @@ namespace CodeIgniter\Commands\Utilities\Routes;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Filters\Filters;
-use CodeIgniter\Router\Exceptions\RedirectException;
+use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\Router\Router;
 use Config\Feature;
 use Config\Services;

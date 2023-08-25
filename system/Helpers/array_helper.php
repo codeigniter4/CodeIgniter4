@@ -218,3 +218,68 @@ if (! function_exists('array_flatten_with_dots')) {
         return $flattened;
     }
 }
+
+if (! function_exists('array_group_by')) {
+    /**
+     * Groups all rows by their index values. Result's depth equals number of indexes
+     *
+     * @param array $array        Data array (i.e. from query result)
+     * @param array $indexes      Indexes to group by. Dot syntax used. Returns $array if empty
+     * @param bool  $includeEmpty If true, null and '' are also added as valid keys to group
+     *
+     * @return array Result array where rows are grouped together by indexes values.
+     */
+    function array_group_by(array $array, array $indexes, bool $includeEmpty = false): array
+    {
+        if ($indexes === []) {
+            return $array;
+        }
+
+        $result = [];
+
+        foreach ($array as $row) {
+            $result = _array_attach_indexed_value($result, $row, $indexes, $includeEmpty);
+        }
+
+        return $result;
+    }
+}
+
+if (! function_exists('_array_attach_indexed_value')) {
+    /**
+     * Used by `array_group_by` to recursively attach $row to the $indexes path of values found by
+     * `dot_array_search`
+     *
+     * @internal This should not be used on its own
+     */
+    function _array_attach_indexed_value(array $result, array $row, array $indexes, bool $includeEmpty): array
+    {
+        if (($index = array_shift($indexes)) === null) {
+            $result[] = $row;
+
+            return $result;
+        }
+
+        $value = dot_array_search($index, $row);
+
+        if (! is_scalar($value)) {
+            $value = '';
+        }
+
+        if (is_bool($value)) {
+            $value = (int) $value;
+        }
+
+        if (! $includeEmpty && $value === '') {
+            return $result;
+        }
+
+        if (! array_key_exists($value, $result)) {
+            $result[$value] = [];
+        }
+
+        $result[$value] = _array_attach_indexed_value($result[$value], $row, $indexes, $includeEmpty);
+
+        return $result;
+    }
+}

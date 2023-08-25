@@ -12,6 +12,7 @@
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\Filters\fixtures\GoogleCurious;
 use CodeIgniter\Filters\fixtures\GoogleEmpty;
@@ -837,6 +838,92 @@ final class FiltersTest extends CIUnitTestCase
         $filters = $filters->getFilters();
 
         $this->assertContains('google', $filters['before']);
+    }
+
+    public function testFiltersWithArguments()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $config = [
+            'aliases' => ['role' => Role::class],
+            'globals' => [
+            ],
+            'filters' => [
+                'role:admin,super' => [
+                    'before' => ['admin/*'],
+                    'after'  => ['admin/*'],
+                ],
+            ],
+        ];
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
+
+        $filters = $filters->initialize('admin/foo/bar');
+        $found   = $filters->getFilters();
+
+        $this->assertContains('role', $found['before']);
+        $this->assertSame(['admin', 'super'], $filters->getArguments('role'));
+        $this->assertSame(['role' => ['admin', 'super']], $filters->getArguments());
+
+        $response = $filters->run('admin/foo/bar', 'before');
+
+        $this->assertSame('admin;super', $response);
+
+        $response = $filters->run('admin/foo/bar', 'after');
+
+        $this->assertSame('admin;super', $response->getBody());
+    }
+
+    public function testFilterWithArgumentsIsDefined()
+    {
+        $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage('"role" already has arguments: admin,super');
+
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $config = [
+            'aliases' => ['role' => Role::class],
+            'globals' => [],
+            'filters' => [
+                'role:admin,super' => [
+                    'before' => ['admin/*'],
+                ],
+                'role:super' => [
+                    'before' => ['admin/user/*'],
+                ],
+            ],
+        ];
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
+
+        $filters->initialize('admin/user/bar');
+    }
+
+    public function testFilterWithoutArgumentsIsDefined()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $config = [
+            'aliases' => ['role' => Role::class],
+            'globals' => [],
+            'filters' => [
+                'role' => [
+                    'before' => ['admin/*'],
+                ],
+                'role:super' => [
+                    'before' => ['admin/user/*'],
+                ],
+            ],
+        ];
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
+
+        $filters = $filters->initialize('admin/user/bar');
+        $found   = $filters->getFilters();
+
+        $this->assertContains('role', $found['before']);
+        $this->assertSame(['super'], $filters->getArguments('role'));
+        $this->assertSame(['role' => ['super']], $filters->getArguments());
     }
 
     public function testEnableFilterWithArguments(): void

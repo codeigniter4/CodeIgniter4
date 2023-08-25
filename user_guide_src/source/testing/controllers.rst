@@ -101,6 +101,11 @@ representing a valid URI:
 
 It is a good practice to always provide the URI during testing to avoid surprises.
 
+.. note:: Since v4.4.0, this method creates a new Request instance with the URI.
+    Because the Request instance should have the URI instance. Also if the hostname
+    in the URI string is invalid with ``Config\App``, the valid hostname will be
+    set.
+
 withBody($body)
 ---------------
 

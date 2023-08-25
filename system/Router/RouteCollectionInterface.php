@@ -179,12 +179,12 @@ interface RouteCollectionInterface
     /**
      * Determines if the route is a redirecting route.
      */
-    public function isRedirect(string $from): bool;
+    public function isRedirect(string $routeKey): bool;
 
     /**
      * Grabs the HTTP status code from a redirecting Route.
      */
-    public function getRedirectCode(string $from): int;
+    public function getRedirectCode(string $routeKey): int;
 
     /**
      * Get the flag that limit or not the routes with {locale} placeholder to App::$supportedLocales

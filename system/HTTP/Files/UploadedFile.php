@@ -35,6 +35,13 @@ class UploadedFile extends File implements UploadedFileInterface
     protected $path;
 
     /**
+     * The webkit relative path of the file.
+     *
+     * @var string
+     */
+    protected $clientPath;
+
+    /**
      * The original filename as provided by the client.
      *
      * @var string
@@ -78,8 +85,9 @@ class UploadedFile extends File implements UploadedFileInterface
      * @param string $mimeType     The type of file as provided by PHP
      * @param int    $size         The size of the file, in bytes
      * @param int    $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
+     * @param string $clientPath   The webkit relative path of the uploaded file.
      */
-    public function __construct(string $path, string $originalName, ?string $mimeType = null, ?int $size = null, ?int $error = null)
+    public function __construct(string $path, string $originalName, ?string $mimeType = null, ?int $size = null, ?int $error = null, ?string $clientPath = null)
     {
         $this->path             = $path;
         $this->name             = $originalName;
@@ -87,6 +95,7 @@ class UploadedFile extends File implements UploadedFileInterface
         $this->originalMimeType = $mimeType;
         $this->size             = $size;
         $this->error            = $error;
+        $this->clientPath       = $clientPath;
 
         parent::__construct($path, false);
     }
@@ -265,6 +274,15 @@ class UploadedFile extends File implements UploadedFileInterface
     public function getClientName(): string
     {
         return $this->originalName;
+    }
+
+    /**
+     * (PHP 8.1+)
+     * Returns the webkit relative path of the uploaded file on directory uploads.
+     */
+    public function getClientPath(): ?string
+    {
+        return $this->clientPath;
     }
 
     /**

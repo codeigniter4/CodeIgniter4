@@ -14,7 +14,6 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorTrait;
-use Config\App as AppConfig;
 use Config\Database;
 use Config\Migrations;
 use Config\Session as SessionConfig;
@@ -111,12 +110,10 @@ class MigrationGenerator extends BaseCommand
             $data['DBGroup']  = is_string($DBGroup) ? $DBGroup : 'default';
             $data['DBDriver'] = config(Database::class)->{$data['DBGroup']}['DBDriver'];
 
-            $config = config(AppConfig::class);
             /** @var SessionConfig|null $session */
             $session = config(SessionConfig::class);
 
-            $data['matchIP'] = ($session instanceof SessionConfig)
-                ? $session->matchIP : $config->sessionMatchIP;
+            $data['matchIP'] = $session->matchIP;
         }
 
         return $this->parseTemplate($class, [], [], $data);

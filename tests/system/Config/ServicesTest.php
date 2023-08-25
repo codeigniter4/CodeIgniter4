@@ -43,6 +43,7 @@ use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
 use Config\App;
 use Config\Exceptions;
+use Config\Security as SecurityConfig;
 use RuntimeException;
 use Tests\Support\Config\Services;
 
@@ -53,7 +54,6 @@ use Tests\Support\Config\Services;
  */
 final class ServicesTest extends CIUnitTestCase
 {
-    private App $config;
     private array $original;
 
     protected function setUp(): void
@@ -61,7 +61,6 @@ final class ServicesTest extends CIUnitTestCase
         parent::setUp();
 
         $this->original = $_SERVER;
-        $this->config   = new App();
     }
 
     protected function tearDown(): void
@@ -128,13 +127,13 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testNewExceptions(): void
     {
-        $actual = Services::exceptions(new Exceptions(), Services::request(), Services::response());
+        $actual = Services::exceptions(new Exceptions());
         $this->assertInstanceOf(\CodeIgniter\Debug\Exceptions::class, $actual);
     }
 
     public function testNewExceptionsWithNullConfig(): void
     {
-        $actual = Services::exceptions(null, null, null, false);
+        $actual = Services::exceptions(null, false);
         $this->assertInstanceOf(\CodeIgniter\Debug\Exceptions::class, $actual);
     }
 
@@ -242,7 +241,7 @@ final class ServicesTest extends CIUnitTestCase
      */
     public function testNewSession(): void
     {
-        $actual = Services::session($this->config);
+        $actual = Services::session();
         $this->assertInstanceOf(Session::class, $actual);
     }
 
@@ -329,7 +328,7 @@ final class ServicesTest extends CIUnitTestCase
     public function testResetSingle(): void
     {
         Services::injectMock('response', new MockResponse(new App()));
-        Services::injectMock('security', new MockSecurity(new App()));
+        Services::injectMock('security', new MockSecurity(new SecurityConfig()));
         $response = service('response');
         $security = service('security');
         $this->assertInstanceOf(MockResponse::class, $response);
@@ -411,7 +410,7 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testSecurity(): void
     {
-        Services::injectMock('security', new MockSecurity(new App()));
+        Services::injectMock('security', new MockSecurity(new SecurityConfig()));
 
         $result = Services::security();
         $this->assertInstanceOf(Security::class, $result);

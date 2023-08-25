@@ -436,9 +436,12 @@ class View implements RendererInterface
     /**
      * Renders a section's contents.
      *
+     * @param bool $saveData If true, saves data for subsequent calls,
+     *                       if false, cleans the data after displaying.
+     *
      * @return void
      */
-    public function renderSection(string $sectionName)
+    public function renderSection(string $sectionName, bool $saveData = false)
     {
         if (! isset($this->sections[$sectionName])) {
             echo '';
@@ -448,7 +451,9 @@ class View implements RendererInterface
 
         foreach ($this->sections[$sectionName] as $key => $contents) {
             echo $contents;
-            unset($this->sections[$sectionName][$key]);
+            if ($saveData === false) {
+                unset($this->sections[$sectionName][$key]);
+            }
         }
     }
 

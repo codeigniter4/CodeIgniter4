@@ -12,7 +12,6 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Factories;
-use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
@@ -173,7 +172,7 @@ final class ResponseTest extends CIUnitTestCase
         $response->setLink($pager);
 
         $this->assertSame(
-            '<http://example.com/test/index.php?page=1>; rel="first",<http://example.com/test/index.php?page=2>; rel="prev",<http://example.com/test/index.php?page=4>; rel="next",<http://example.com/test/index.php?page=20>; rel="last"',
+            '<http://example.com/test/index.php/?page=1>; rel="first",<http://example.com/test/index.php/?page=2>; rel="prev",<http://example.com/test/index.php/?page=4>; rel="next",<http://example.com/test/index.php/?page=20>; rel="last"',
             $response->header('Link')->getValue()
         );
 
@@ -181,7 +180,7 @@ final class ResponseTest extends CIUnitTestCase
         $response->setLink($pager);
 
         $this->assertSame(
-            '<http://example.com/test/index.php?page=2>; rel="next",<http://example.com/test/index.php?page=20>; rel="last"',
+            '<http://example.com/test/index.php/?page=2>; rel="next",<http://example.com/test/index.php/?page=20>; rel="last"',
             $response->header('Link')->getValue()
         );
 
@@ -189,7 +188,7 @@ final class ResponseTest extends CIUnitTestCase
         $response->setLink($pager);
 
         $this->assertSame(
-            '<http://example.com/test/index.php?page=1>; rel="first",<http://example.com/test/index.php?page=19>; rel="prev"',
+            '<http://example.com/test/index.php/?page=1>; rel="first",<http://example.com/test/index.php/?page=19>; rel="prev"',
             $response->header('Link')->getValue()
         );
     }
@@ -572,15 +571,5 @@ final class ResponseTest extends CIUnitTestCase
         ob_end_clean();
 
         $this->assertSame('Happy days', $actual);
-    }
-
-    public function testInvalidSameSiteCookie(): void
-    {
-        $config                 = new App();
-        $config->cookieSameSite = 'Invalid';
-
-        $this->expectException(CookieException::class);
-        $this->expectExceptionMessage(lang('Cookie.invalidSameSite', ['Invalid']));
-        new Response($config);
     }
 }

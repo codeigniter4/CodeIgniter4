@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.12.0@f90118cdeacd0088e7215e64c0c99ceca819e176">
+<files psalm-version="5.13.1@086b94371304750d1c673315321a55d15fc59015">
+  <file src="system/Cache/FactoriesCache/FileVarExportHandler.php">
+    <UndefinedVariable>
+      <code>$val</code>
+    </UndefinedVariable>
+  </file>
   <file src="system/Cache/Handlers/MemcachedHandler.php">
     <UndefinedClass>
       <code>Memcache</code>
@@ -82,6 +87,9 @@
     <UndefinedGlobalVariable>
       <code>$routes</code>
       <code>$routes</code>
+      <code>$routes</code>
+      <code>$routes</code>
+      <code>$routes</code>
     </UndefinedGlobalVariable>
   </file>
   <file src="tests/_support/View/Cells/colors.php">
@@ -101,7 +109,9 @@
   </file>
   <file src="tests/system/Config/FactoriesTest.php">
     <UndefinedClass>
-      <code><![CDATA['SomeWidget']]></code>
+      <code><![CDATA['App\Models\UserModel']]></code>
+      <code><![CDATA['App\Models\UserModel']]></code>
+      <code><![CDATA['Config\TestRegistrar']]></code>
     </UndefinedClass>
   </file>
   <file src="tests/system/Database/BaseConnectionTest.php">

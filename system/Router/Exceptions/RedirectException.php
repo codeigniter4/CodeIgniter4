@@ -16,6 +16,8 @@ use Exception;
 
 /**
  * RedirectException
+ *
+ * @deprecated Use \CodeIgniter\HTTP\Exceptions\RedirectException instead
  */
 class RedirectException extends Exception implements HTTPExceptionInterface
 {

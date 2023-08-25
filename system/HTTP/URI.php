@@ -14,6 +14,7 @@ namespace CodeIgniter\HTTP;
 use BadMethodCallException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
+use InvalidArgumentException;
 
 /**
  * Abstraction for a uniform resource identifier (URI).
@@ -34,11 +35,15 @@ class URI
      * Current URI string
      *
      * @var string
+     *
+     * @deprecated 4.4.0 Not used.
      */
     protected $uriString;
 
     /**
      * The Current baseURL.
+     *
+     * @deprecated 4.4.0 Use SiteURI instead.
      */
     private ?string $baseURL = null;
 
@@ -88,11 +93,6 @@ class URI
 
     /**
      * URI path.
-     *
-     * Note: The constructor of the IncomingRequest class changes the path of
-     *      the URI object held by the IncomingRequest class to a path relative
-     *      to the baseURL. If the baseURL contains subfolders, this value
-     *      will be different from the current URI path.
      *
      * @var string
      */
@@ -259,6 +259,8 @@ class URI
      * If $silent == true, then will not throw exceptions and will
      * attempt to continue gracefully.
      *
+     * @deprecated 4.4.0 Method not in PSR-7
+     *
      * @return URI
      */
     public function setSilent(bool $silent = true)
@@ -271,6 +273,8 @@ class URI
     /**
      * If $raw == true, then will use parseStr() method
      * instead of native parse_str() function.
+     *
+     * Note: Method not in PSR-7
      *
      * @return URI
      */
@@ -287,6 +291,8 @@ class URI
      * @return URI
      *
      * @throws HTTPException
+     *
+     * @deprecated 4.4.0 This method will be private.
      */
     public function setURI(?string $uri = null)
     {
@@ -403,6 +409,8 @@ class URI
     /**
      * Temporarily sets the URI to show a password in userInfo. Will
      * reset itself after the first call to authority().
+     *
+     * Note: Method not in PSR-7
      *
      * @return URI
      */
@@ -533,22 +541,28 @@ class URI
 
     /**
      * Returns the value of a specific segment of the URI path.
+     * Allows to get only existing segments or the next one.
      *
-     * @param int    $number  Segment number
+     * @param int    $number  Segment number starting at 1
      * @param string $default Default value
      *
-     * @return string The value of the segment. If no segment is found,
-     *                throws InvalidArgumentError
+     * @return string The value of the segment. If you specify the last +1
+     *                segment, the $default value. If you specify the last +2
+     *                or more throws HTTPException.
      */
     public function getSegment(int $number, string $default = ''): string
     {
+        if ($number < 1) {
+            throw HTTPException::forURISegmentOutOfRange($number);
+        }
+
+        if ($number > count($this->segments) + 1 && ! $this->silent) {
+            throw HTTPException::forURISegmentOutOfRange($number);
+        }
+
         // The segment should treat the array as 1-based for the user
         // but we still have to deal with a zero-based array.
         $number--;
-
-        if ($number > count($this->segments) && ! $this->silent) {
-            throw HTTPException::forURISegmentOutOfRange($number);
-        }
 
         return $this->segments[$number] ?? $default;
     }
@@ -557,15 +571,18 @@ class URI
      * Set the value of a specific segment of the URI path.
      * Allows to set only existing segments or add new one.
      *
-     * @param int|string $value (string or int)
+     * Note: Method not in PSR-7
+     *
+     * @param int        $number Segment number starting at 1
+     * @param int|string $value
      *
      * @return $this
      */
     public function setSegment(int $number, $value)
     {
-        // The segment should treat the array as 1-based for the user
-        // but we still have to deal with a zero-based array.
-        $number--;
+        if ($number < 1) {
+            throw HTTPException::forURISegmentOutOfRange($number);
+        }
 
         if ($number > count($this->segments) + 1) {
             if ($this->silent) {
@@ -575,6 +592,10 @@ class URI
             throw HTTPException::forURISegmentOutOfRange($number);
         }
 
+        // The segment should treat the array as 1-based for the user
+        // but we still have to deal with a zero-based array.
+        $number--;
+
         $this->segments[$number] = $value;
         $this->refreshPath();
 
@@ -583,6 +604,8 @@ class URI
 
     /**
      * Returns the total number of segments.
+     *
+     * Note: Method not in PSR-7
      */
     public function getTotalSegments(): int
     {
@@ -650,6 +673,8 @@ class URI
     /**
      * Parses the given string and saves the appropriate authority pieces.
      *
+     * Note: Method not in PSR-7
+     *
      * @return $this
      */
     public function setAuthority(string $str)
@@ -679,6 +704,8 @@ class URI
      * @see https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
      *
      * @return $this
+     *
+     * @deprecated 4.4.0 Use `withScheme()` instead.
      */
     public function setScheme(string $str)
     {
@@ -689,12 +716,42 @@ class URI
     }
 
     /**
+     * Return an instance with the specified scheme.
+     *
+     * This method MUST retain the state of the current instance, and return
+     * an instance that contains the specified scheme.
+     *
+     * Implementations MUST support the schemes "http" and "https" case
+     * insensitively, and MAY accommodate other schemes if required.
+     *
+     * An empty scheme is equivalent to removing the scheme.
+     *
+     * @param string $scheme The scheme to use with the new instance.
+     *
+     * @return static A new instance with the specified scheme.
+     *
+     * @throws InvalidArgumentException for invalid or unsupported schemes.
+     */
+    public function withScheme(string $scheme)
+    {
+        $uri = clone $this;
+
+        $scheme = strtolower($scheme);
+
+        $uri->scheme = preg_replace('#:(//)?$#', '', $scheme);
+
+        return $uri;
+    }
+
+    /**
      * Sets the userInfo/Authority portion of the URI.
      *
      * @param string $user The user's username
      * @param string $pass The user's password
      *
      * @return $this
+     *
+     * @TODO PSR-7: Should be `withUserInfo($user, $password = null)`.
      */
     public function setUserInfo(string $user, string $pass)
     {
@@ -708,6 +765,8 @@ class URI
      * Sets the host name to use.
      *
      * @return $this
+     *
+     * @TODO PSR-7: Should be `withHost($host)`.
      */
     public function setHost(string $str)
     {
@@ -722,6 +781,8 @@ class URI
      * @param int $port
      *
      * @return $this
+     *
+     * @TODO PSR-7: Should be `withPort($port)`.
      */
     public function setPort(?int $port = null)
     {
@@ -746,6 +807,8 @@ class URI
      * Sets the path portion of the URI.
      *
      * @return $this
+     *
+     * @TODO PSR-7: Should be `withPath($port)`.
      */
     public function setPath(string $path)
     {
@@ -762,6 +825,8 @@ class URI
      * Sets the current baseURL.
      *
      * @interal
+     *
+     * @deprecated Use SiteURI instead.
      */
     public function setBaseURL(string $baseURL): void
     {
@@ -772,6 +837,8 @@ class URI
      * Returns the current baseURL.
      *
      * @interal
+     *
+     * @deprecated Use SiteURI instead.
      */
     public function getBaseURL(): string
     {
@@ -786,6 +853,8 @@ class URI
      * Sets the path portion of the URI based on segments.
      *
      * @return $this
+     *
+     * @deprecated This method will be private.
      */
     public function refreshPath()
     {
@@ -803,6 +872,8 @@ class URI
      * to clean the various parts of the query keys and values.
      *
      * @return $this
+     *
+     * @TODO PSR-7: Should be `withQuery($query)`.
      */
     public function setQuery(string $query)
     {
@@ -833,6 +904,8 @@ class URI
      * portion of the URI.
      *
      * @return URI
+     *
+     * @TODO: PSR-7: Should be `withQueryParams(array $query)`
      */
     public function setQueryArray(array $query)
     {
@@ -844,7 +917,9 @@ class URI
     /**
      * Adds a single new element to the query vars.
      *
-     * @param int|string $value
+     * Note: Method not in PSR-7
+     *
+     * @param int|string|null $value
      *
      * @return $this
      */
@@ -857,6 +932,8 @@ class URI
 
     /**
      * Removes one or more query vars from the URI.
+     *
+     * Note: Method not in PSR-7
      *
      * @param string ...$params
      *
@@ -874,6 +951,8 @@ class URI
     /**
      * Filters the query variables so that only the keys passed in
      * are kept. The rest are removed from the object.
+     *
+     * Note: Method not in PSR-7
      *
      * @param string ...$params
      *
@@ -902,6 +981,8 @@ class URI
      * @see https://tools.ietf.org/html/rfc3986#section-3.5
      *
      * @return $this
+     *
+     * @TODO PSR-7: Should be `withFragment($fragment)`.
      */
     public function setFragment(string $string)
     {

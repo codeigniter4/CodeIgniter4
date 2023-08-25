@@ -38,19 +38,21 @@ final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
      */
     private string $randomizedToken = '8bc70b67c91494e815c7d2219c1ae0ab005513c290126d34d41bf41c5265e0f1';
 
+    private SecurityConfig $config;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         $_COOKIE = [];
 
-        $config                 = new SecurityConfig();
-        $config->csrfProtection = Security::CSRF_PROTECTION_COOKIE;
-        $config->tokenRandomize = true;
-        Factories::injectMock('config', 'Security', $config);
+        $this->config                 = new SecurityConfig();
+        $this->config->csrfProtection = Security::CSRF_PROTECTION_COOKIE;
+        $this->config->tokenRandomize = true;
+        Factories::injectMock('config', 'Security', $this->config);
 
         // Set Cookie value
-        $security                            = new MockSecurity(new MockAppConfig());
+        $security                            = new MockSecurity($this->config);
         $_COOKIE[$security->getCookieName()] = $this->hash;
 
         $this->resetServices();
@@ -58,7 +60,7 @@ final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
 
     public function testTokenIsReadFromCookie(): void
     {
-        $security = new MockSecurity(new MockAppConfig());
+        $security = new MockSecurity($this->config);
 
         $this->assertSame(
             $this->randomizedToken,
@@ -74,7 +76,7 @@ final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
 
         $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
-        $security = new Security(new MockAppConfig());
+        $security = new Security($this->config);
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
         $this->assertLogged('info', 'CSRF token verified.');
