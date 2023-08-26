@@ -466,10 +466,8 @@ properly after running <code class="docutils literal notranslate"><span class="p
 <h3><a class="toc-backref" href="#id14">Config Files</a><a class="headerlink" href="#config-files" title="Permalink to this headline"></a></h3>
 <section id="app-config-app-php">
 <h4>app/Config/App.php<a class="headerlink" href="#app-config-app-php" title="Permalink to this headline"></a></h4>
-<ul class="simple">
-<li><p>The property <code class="docutils literal notranslate"><span class="pre">$proxyIPs</span></code> must be an array. If you don’t use proxy servers,
-it must be <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">array</span> <span class="pre">$proxyIPs</span> <span class="pre">=</span> <span class="pre">[];</span></code>.</p></li>
-</ul>
+<p>The property <code class="docutils literal notranslate"><span class="pre">$proxyIPs</span></code> must be an array. If you don’t use proxy servers,
+it must be <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">array</span> <span class="pre">$proxyIPs</span> <span class="pre">=</span> <span class="pre">[];</span></code>.</p>
 </section>
 <section id="app-config-routing-php">
 <span id="upgrade-440-config-routing"></span><h4>app/Config/Routing.php<a class="headerlink" href="#app-config-routing-php" title="Permalink to this headline"></a></h4>
@@ -486,6 +484,75 @@ directory, and configure it.</p></li>
 <li><p>Remove all settings in <strong>app/Config/Routes.php</strong> that are no longer needed.</p></li>
 <li><p>If you use the environment-specific routes files, add them to the <code class="docutils literal notranslate"><span class="pre">$routeFiles</span></code> property in <strong>app/Config/Routing.php</strong>.</p></li>
 </ol>
+</section>
+<section id="app-config-toolbar-php">
+<h4>app/Config/Toolbar.php<a class="headerlink" href="#app-config-toolbar-php" title="Permalink to this headline"></a></h4>
+<p>You need to add the new properties <code class="docutils literal notranslate"><span class="pre">$watchedDirectories</span></code> and <code class="docutils literal notranslate"><span class="pre">$watchedExtensions</span></code>
+for <a class="reference internal" href="../testing/debugging.html#debug-toolbar-hot-reload"><span class="std std-ref">Hot Reloading</span></a>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="nx">a</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">Config</span><span class="o">/</span><span class="nx">Toolbar</span><span class="o">.</span><span class="nx">php</span>
+<span class="o">+++</span> <span class="nx">b</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">Config</span><span class="o">/</span><span class="nx">Toolbar</span><span class="o">.</span><span class="nx">php</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">88</span><span class="p">,</span><span class="mi">4</span> <span class="o">+</span><span class="mi">88</span><span class="p">,</span><span class="mi">31</span> <span class="o">@@</span> <span class="k">class</span> <span class="nc">Toolbar</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+      <span class="o">*</span> <span class="sb">`$maxQueries`</span> <span class="nx">defines</span> <span class="nx">the</span> <span class="nx">maximum</span> <span class="nx">amount</span> <span class="nx">of</span> <span class="nx">queries</span> <span class="nx">that</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nx">stored</span><span class="o">.</span>
+      <span class="o">*/</span>
+     <span class="k">public</span> <span class="nx">int</span> <span class="nv">$maxQueries</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="o">+</span>
+<span class="o">+</span>    <span class="sd">/**</span>
+<span class="sd">+     * --------------------------------------------------------------------------</span>
+<span class="sd">+     * Watched Directories</span>
+<span class="sd">+     * --------------------------------------------------------------------------</span>
+<span class="sd">+     *</span>
+<span class="sd">+     * Contains an array of directories that will be watched for changes and</span>
+<span class="sd">+     * used to determine if the hot-reload feature should reload the page or not.</span>
+<span class="sd">+     * We restrict the values to keep performance as high as possible.</span>
+<span class="sd">+     *</span>
+<span class="sd">+     * NOTE: The ROOTPATH will be prepended to all values.</span>
+<span class="sd">+     */</span>
+<span class="o">+</span>    <span class="k">public</span> <span class="k">array</span> <span class="nv">$watchedDirectories</span> <span class="o">=</span> <span class="p">[</span>
+<span class="o">+</span>        <span class="s1">&#39;app&#39;</span><span class="p">,</span>
+<span class="o">+</span>    <span class="p">];</span>
+<span class="o">+</span>
+<span class="o">+</span>    <span class="sd">/**</span>
+<span class="sd">+     * --------------------------------------------------------------------------</span>
+<span class="sd">+     * Watched File Extensions</span>
+<span class="sd">+     * --------------------------------------------------------------------------</span>
+<span class="sd">+     *</span>
+<span class="sd">+     * Contains an array of file extensions that will be watched for changes and</span>
+<span class="sd">+     * used to determine if the hot-reload feature should reload the page or not.</span>
+<span class="sd">+     */</span>
+<span class="o">+</span>    <span class="k">public</span> <span class="k">array</span> <span class="nv">$watchedExtensions</span> <span class="o">=</span> <span class="p">[</span>
+<span class="o">+</span>        <span class="s1">&#39;php&#39;</span><span class="p">,</span> <span class="s1">&#39;css&#39;</span><span class="p">,</span> <span class="s1">&#39;js&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="s1">&#39;svg&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="s1">&#39;env&#39;</span><span class="p">,</span>
+<span class="o">+</span>    <span class="p">];</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="app-config-events-php">
+<h4>app/Config/Events.php<a class="headerlink" href="#app-config-events-php" title="Permalink to this headline"></a></h4>
+<p>You need to add the code to add a route for <a class="reference internal" href="../testing/debugging.html#debug-toolbar-hot-reload"><span class="std std-ref">Hot Reloading</span></a>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="nx">a</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">Config</span><span class="o">/</span><span class="nx">Events</span><span class="o">.</span><span class="nx">php</span>
+<span class="o">+++</span> <span class="nx">b</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">Config</span><span class="o">/</span><span class="nx">Events</span><span class="o">.</span><span class="nx">php</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span> <span class="o">+</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span> <span class="o">@@</span> <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+ <span class="k">use</span> <span class="nx">CodeIgniter\Events\Events</span><span class="p">;</span>
+ <span class="k">use</span> <span class="nx">CodeIgniter\Exceptions\FrameworkException</span><span class="p">;</span>
+<span class="o">+</span><span class="k">use</span> <span class="nx">CodeIgniter\HotReloader\HotReloader</span><span class="p">;</span>
+
+ <span class="o">/*</span>
+  <span class="o">*</span> <span class="o">--------------------------------------------------------------------</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">44</span><span class="p">,</span><span class="mi">5</span> <span class="o">+</span><span class="mi">45</span><span class="p">,</span><span class="mi">11</span> <span class="o">@@</span> <span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;pre_system&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+     <span class="k">if</span> <span class="p">(</span><span class="nx">CI_DEBUG</span> <span class="o">&amp;&amp;</span> <span class="o">!</span> <span class="nx">is_cli</span><span class="p">())</span> <span class="p">{</span>
+         <span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;DBQuery&#39;</span><span class="p">,</span> <span class="s1">&#39;CodeIgniter\Debug\Toolbar\Collectors\Database::collect&#39;</span><span class="p">);</span>
+         <span class="nx">Services</span><span class="o">::</span><span class="na">toolbar</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">();</span>
+<span class="o">+</span>        <span class="c1">// Hot Reload route - for framework use on the hot reloader.</span>
+<span class="o">+</span>        <span class="k">if</span> <span class="p">(</span><span class="nx">ENVIRONMENT</span> <span class="o">===</span> <span class="s1">&#39;development&#39;</span><span class="p">)</span> <span class="p">{</span>
+<span class="o">+</span>            <span class="nx">Services</span><span class="o">::</span><span class="na">routes</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;__hot-reload&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="o">+</span>                <span class="p">(</span><span class="k">new</span> <span class="nx">HotReloader</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">();</span>
+<span class="o">+</span>            <span class="p">});</span>
+<span class="o">+</span>        <span class="p">}</span>
+     <span class="p">}</span>
+ <span class="p">});</span>
+</pre></div>
+</div>
 </section>
 <section id="app-config-cookie-php">
 <h4>app/Config/Cookie.php<a class="headerlink" href="#app-config-cookie-php" title="Permalink to this headline"></a></h4>
