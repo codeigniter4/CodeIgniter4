@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Version 4.0.0-alpha.1 &mdash; CodeIgniter 4.4.0 documentation</title>
+  <title>Version 4.4.1 &mdash; CodeIgniter 4.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
@@ -22,8 +22,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Upgrading From a Previous Version" href="../installation/upgrading.html" />
-    <link rel="prev" title="Version 4.0.0-alpha.2" href="v4.0.0-alpha.2.html" /> 
+    <link rel="next" title="Version 4.4.0" href="v4.4.0.html" />
+    <link rel="prev" title="Change Logs" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -264,14 +264,14 @@
 
       <div class="wy-nav-content">
         <div class="rst-content">
-<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/changelogs/v4.0.0-alpha.1.rst">Edit this page</a>
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/changelogs/v4.4.1.rst">Edit this page</a>
 
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../installation/index.html">Installation</a></li>
           <li class="breadcrumb-item"><a href="index.html">Change Logs</a></li>
-      <li class="breadcrumb-item active">Version 4.0.0-alpha.1</li>
+      <li class="breadcrumb-item active">Version 4.4.1</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -280,254 +280,36 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="version-4-0-0-alpha-1">
-<h1>Version 4.0.0-alpha.1<a class="headerlink" href="#version-4-0-0-alpha-1" title="Permalink to this headline"></a></h1>
-<p>Release Date: September 28, 2018</p>
-<p><strong>Rewrite of the CodeIgniter framework</strong></p>
+  <section id="version-4-4-1">
+<h1>Version 4.4.1<a class="headerlink" href="#version-4-4-1" title="Permalink to this headline"></a></h1>
+<p>Release Date: Unreleased</p>
+<p><strong>4.4.1 release of CodeIgniter4</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#new-packages-list" id="id1">New Packages List</a></p></li>
+<li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p></li>
+<li><p><a class="reference internal" href="#message-changes" id="id2">Message Changes</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id3">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id4">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id5">Bugs Fixed</a></p></li>
 </ul>
 </div>
-<section id="new-packages-list">
-<h2><a class="toc-backref" href="#id1">New Packages List</a><a class="headerlink" href="#new-packages-list" title="Permalink to this headline"></a></h2>
-<blockquote>
-<div><ul class="simple">
-<li><dl class="simple">
-<dt>API</dt><dd><ul>
-<li><p>\ ResponseTrait</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Autoloader</dt><dd><ul>
-<li><p>\ AutoLoader, FileLocator</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>CLI</dt><dd><ul>
-<li><p>\ BaseCommand, CLI, CommandRunner, Console</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Cache</dt><dd><ul>
-<li><p>\ CacheFactory, CacheInterface</p></li>
-<li><p>\ Handlers … Dummy, File, Memcached, Predis, Redis, Wincache</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Commands</dt><dd><ul>
-<li><p>\ Help, ListCommands</p></li>
-<li><p>\ Database \ CreateMigration, MigrateCurrent, MigrateLatest, MigrateRefresh,
-MigrateRollback, MigrateStatus, MigrateVersion, Seed</p></li>
-<li><p>\ Server \ Serve</p></li>
-<li><p>\ Sessions \ CreateMigration</p></li>
-<li><p>\ Utilities \ Namespaces, Routes</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Config</dt><dd><ul>
-<li><p>\ AutoloadConfig, BaseConfig, BaseService, Config, DotEnv, ForeignCharacters,
-Routes, Services, View</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Database</dt><dd><ul>
-<li><p>\ BaseBuilder, BaseConnection, BasePreparedQuery, BaseResult, BaseUtils, Config,
-ConnectionInterface, Database, Forge, Migration, MigrationRunner, PreparedQueryInterface, Query,
-QueryInterface, ResultInterface, Seeder</p></li>
-<li><p>\ MySQLi \ Builder, Connection, Forge, PreparedQuery, Result</p></li>
-<li><p>\ Postgre \ Builder, Connection, Forge, PreparedQuery, Result, Utils</p></li>
-<li><p>\ SQLite3 \ Builder, Connection, Forge, PreparedQuery, Result, Utils</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Debug</dt><dd><ul>
-<li><p>\ Exceptions, Iterator, Timer, Toolbar</p></li>
-<li><p>\ Toolbar \ Collectors…</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Email</dt><dd><ul>
-<li><p>\ Email</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Events</dt><dd><ul>
-<li><p>\ Events</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Files</dt><dd><ul>
-<li><p>\ File</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Filters</dt><dd><ul>
-<li><p>\ FilterInterface, Filters</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Format</dt><dd><ul>
-<li><p>\ FormatterInterface, JSONFormatter, XMLFormatter</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>HTTP</dt><dd><ul>
-<li><p>\ CLIRequest, CURLRequest, ContentSecurityPolicy, Header,
-IncomingRequest, Message, Negotiate, Request, RequestInterface,
-Response, ResponseInterface, URI, UserAgent</p></li>
-<li><p>\ Files \ FileCollection, UploadedFile, UploadedFileInterface</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Helpers</dt><dd><ul>
-<li><p>… array, cookie, date, filesystem, form, html, inflector, number,
-security, text, url</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Honeypot</dt><dd><ul>
-<li><p>\ Honeypot</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>I18n</dt><dd><ul>
-<li><p>\ Time, TimeDifference</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Images</dt><dd><ul>
-<li><p>\ Image, ImageHandlerInterface</p></li>
-<li><p>\ Handlers … Base, GD, ImageMagick</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Language</dt><dd><ul>
-<li><p>\ Language</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Log</dt><dd><ul>
-<li><p>Logger, LoggerAwareTrait</p></li>
-<li><p>\ Handlers …  Base, ChromeLogger, File, HandlerInterface</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Pager</dt><dd><ul>
-<li><p>\ Pager, PagerInterface, PagerRenderer</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Router</dt><dd><ul>
-<li><p>\ RouteCollection, RouteCollectionInterface, Router, RouterInterface</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Security</dt><dd><ul>
-<li><p>\ Security</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Session</dt><dd><ul>
-<li><p>\ Session, SessionInterface</p></li>
-<li><p>\ Handlers … Base, File, Memcached, Redis</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Test</dt><dd><ul>
-<li><p>\ CIDatabaseTestCase, CIUnitTestCase, FeatureResponse, FeatureTestCase, ReflectionHelper</p></li>
-<li><p>\ Filters \ CITestStreamFilter</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>ThirdParty (bundled)</dt><dd><ul>
-<li><p>\ Kint (for \Debug)</p></li>
-<li><p>\ PSR \ Log (for \Log)</p></li>
-<li><p>\ ZendEscaper \ Escaper (for \View)</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Throttle</dt><dd><ul>
-<li><p>\ Throttler, ThrottlerInterface</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Typography</dt><dd><ul>
-<li><p>\ Typography</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Validation</dt><dd><ul>
-<li><p>\ CreditCardRules, FileRules, FormatRules, Rules, Validation, ValidationInterface</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>View</dt><dd><ul>
-<li><p>\ Cell, Filters, Parser, Plugins, RendererInterface, View</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</div></blockquote>
+<section id="breaking">
+<h2><a class="toc-backref" href="#id1">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this headline"></a></h2>
+</section>
+<section id="message-changes">
+<h2><a class="toc-backref" href="#id2">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this headline"></a></h2>
+</section>
+<section id="changes">
+<h2><a class="toc-backref" href="#id3">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
+</section>
+<section id="deprecations">
+<h2><a class="toc-backref" href="#id4">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
+</section>
+<section id="bugs-fixed">
+<h2><a class="toc-backref" href="#id5">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
+<p>See the repo’s
+<a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
+for a complete list of bugs fixed.</p>
 </section>
 </section>
 
@@ -535,8 +317,8 @@ security, text, url</p></li>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="v4.0.0-alpha.2.html" class="btn btn-neutral float-left" title="Version 4.0.0-alpha.2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../installation/upgrading.html" class="btn btn-neutral float-right" title="Upgrading From a Previous Version" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Change Logs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="v4.4.0.html" class="btn btn-neutral float-right" title="Version 4.4.0" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
