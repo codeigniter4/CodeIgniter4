@@ -11,9 +11,11 @@
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Response;
+use Config\Routing;
 use Config\Services;
 
 /**
@@ -615,5 +617,16 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $request = $this->withBody('test')->setRequestBody($request);
 
         $this->assertSame('test', $request->getBody());
+    }
+
+    public function testAutoRoutingLegacy()
+    {
+        $config            = config(Routing::class);
+        $config->autoRoute = true;
+        Factories::injectMock('config', Routing::class, $config);
+
+        $response = $this->get('home/index');
+
+        $response->assertOK();
     }
 }
