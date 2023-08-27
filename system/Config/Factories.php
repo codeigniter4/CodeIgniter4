@@ -142,6 +142,7 @@ class Factories
                 return new $class(...$arguments);
             }
 
+            // Try to locate the class
             if ($class = self::locateClass($options, $alias)) {
                 return new $class(...$arguments);
             }
@@ -179,6 +180,7 @@ class Factories
      */
     private static function getDefinedInstance(array $options, string $alias, array $arguments)
     {
+        // The alias is already defined.
         if (isset(self::$aliases[$options['component']][$alias])) {
             $class = self::$aliases[$options['component']][$alias];
 
@@ -190,6 +192,21 @@ class Factories
                 }
 
                 self::$instances[$options['component']][$class] = new $class(...$arguments);
+
+                return self::$instances[$options['component']][$class];
+            }
+        }
+
+        // Try to locate the class
+        if (! $class = self::locateClass($options, $alias)) {
+            return null;
+        }
+
+        // Need to verify if the shared instance matches the request
+        if (self::verifyInstanceOf($options, $class)) {
+            // Check for an existing instance for the class
+            if (isset(self::$instances[$options['component']][$class])) {
+                self::$aliases[$options['component']][$alias] = $class;
 
                 return self::$instances[$options['component']][$class];
             }
