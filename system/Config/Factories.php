@@ -162,9 +162,8 @@ class Factories
             return null;
         }
 
-        self::$instances[$options['component']][$class] = new $class(...$arguments);
-        self::$aliases[$options['component']][$alias]   = $class;
-        self::$updated[$options['component']]           = true;
+        self::createInstance($options['component'], $class, $arguments);
+        self::$aliases[$options['component']][$alias] = $class;
 
         // If a short classname is specified, also register FQCN to share the instance.
         if (! isset(self::$aliases[$options['component']][$class])) {
@@ -192,8 +191,7 @@ class Factories
                     return self::$instances[$options['component']][$class];
                 }
 
-                self::$instances[$options['component']][$class] = new $class(...$arguments);
-                self::$updated[$options['component']]           = true;
+                self::createInstance($options['component'], $class, $arguments);
 
                 return self::$instances[$options['component']][$class];
             }
@@ -216,6 +214,15 @@ class Factories
         }
 
         return null;
+    }
+
+    /**
+     * Creates the shared instance.
+     */
+    private static function createInstance(string $component, string $class, array $arguments): void
+    {
+        self::$instances[$component][$class] = new $class(...$arguments);
+        self::$updated[$component]           = true;
     }
 
     /**
