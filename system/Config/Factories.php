@@ -163,11 +163,11 @@ class Factories
         }
 
         self::createInstance($options['component'], $class, $arguments);
-        self::$aliases[$options['component']][$alias] = $class;
+        self::setAlias($options['component'], $alias, $class);
 
         // If a short classname is specified, also register FQCN to share the instance.
         if (! isset(self::$aliases[$options['component']][$class])) {
-            self::$aliases[$options['component']][$class] = $class;
+            self::setAlias($options['component'], $class, $class);
         }
 
         return self::$instances[$options['component']][$class];
@@ -206,8 +206,7 @@ class Factories
         if (self::verifyInstanceOf($options, $class)) {
             // Check for an existing instance for the class
             if (isset(self::$instances[$options['component']][$class])) {
-                self::$aliases[$options['component']][$alias] = $class;
-                self::$updated[$options['component']]         = true;
+                self::setAlias($options['component'], $alias, $class);
 
                 return self::$instances[$options['component']][$class];
             }
@@ -223,6 +222,15 @@ class Factories
     {
         self::$instances[$component][$class] = new $class(...$arguments);
         self::$updated[$component]           = true;
+    }
+
+    /**
+     * Sets alias
+     */
+    private static function setAlias(string $component, string $alias, string $class): void
+    {
+        self::$aliases[$component][$alias] = $class;
+        self::$updated[$component]         = true;
     }
 
     /**
