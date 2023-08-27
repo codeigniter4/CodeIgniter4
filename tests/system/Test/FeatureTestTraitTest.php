@@ -77,6 +77,21 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertSame('http://example.com/index.php/foo/bar/1/2/3', current_url());
     }
 
+    public function testCallGetAndFilterReturnsResponse(): void
+    {
+        $this->withRoutes([
+            [
+                'get',
+                'admin',
+                static fn () => 'Admin Area',
+                ['filter' => 'test-redirectfilter'],
+            ],
+        ]);
+        $response = $this->get('admin');
+
+        $response->assertRedirectTo('login');
+    }
+
     public function testClosureWithEcho()
     {
         $this->withRoutes([
