@@ -118,6 +118,7 @@ class Factories
         self::getOptions($component);
 
         self::$aliases[$component][$alias] = $classname;
+        self::$updated[$component]         = true;
     }
 
     /**
@@ -192,6 +193,7 @@ class Factories
                 }
 
                 self::$instances[$options['component']][$class] = new $class(...$arguments);
+                self::$updated[$options['component']]           = true;
 
                 return self::$instances[$options['component']][$class];
             }
@@ -207,6 +209,7 @@ class Factories
             // Check for an existing instance for the class
             if (isset(self::$instances[$options['component']][$class])) {
                 self::$aliases[$options['component']][$alias] = $class;
+                self::$updated[$options['component']]         = true;
 
                 return self::$instances[$options['component']][$class];
             }
