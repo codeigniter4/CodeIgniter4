@@ -12,6 +12,7 @@
 namespace CodeIgniter\Config;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\App;
 use Config\Database;
 use InvalidArgumentException;
 use ReflectionClass;
@@ -320,6 +321,14 @@ final class FactoriesTest extends CIUnitTestCase
         $cell2 = Factories::cells('\\' . \Tests\Support\View\OtherCells\SampleClass::class);
 
         $this->assertNotSame($cell1, $cell2);
+    }
+
+    public function testCanLoadSharedConfigWithDifferentAlias()
+    {
+        $config1 = Factories::config(App::class);
+        $config2 = Factories::config('App');
+
+        $this->assertSame($config1, $config2);
     }
 
     public function testDefineSameAliasTwiceWithDifferentClasses()
