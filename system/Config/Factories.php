@@ -197,14 +197,11 @@ class Factories
             return null;
         }
 
-        // Need to verify if the shared instance matches the request
-        if (self::verifyInstanceOf($options, $class)) {
-            // Check for an existing instance for the class
-            if (isset(self::$instances[$options['component']][$class])) {
-                self::setAlias($options['component'], $alias, $class);
+        // Check for an existing instance for the class
+        if (isset(self::$instances[$options['component']][$class])) {
+            self::setAlias($options['component'], $alias, $class);
 
-                return self::$instances[$options['component']][$class];
-            }
+            return self::$instances[$options['component']][$class];
         }
 
         return null;
