@@ -165,11 +165,6 @@ class Factories
         self::createInstance($options['component'], $class, $arguments);
         self::setAlias($options['component'], $alias, $class);
 
-        // If a short classname is specified, also register FQCN to share the instance.
-        if (! isset(self::$aliases[$options['component']][$class])) {
-            self::setAlias($options['component'], $class, $class);
-        }
-
         return self::$instances[$options['component']][$class];
     }
 
@@ -231,6 +226,11 @@ class Factories
     {
         self::$aliases[$component][$alias] = $class;
         self::$updated[$component]         = true;
+
+        // If a short classname is specified, also register FQCN to share the instance.
+        if (! isset(self::$aliases[$component][$class])) {
+            self::$aliases[$component][$class] = $class;
+        }
     }
 
     /**
