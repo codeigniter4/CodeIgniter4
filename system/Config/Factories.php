@@ -228,7 +228,7 @@ class Factories
         self::$updated[$component]         = true;
 
         // If a short classname is specified, also register FQCN to share the instance.
-        if (! isset(self::$aliases[$component][$class])) {
+        if (! isset(self::$aliases[$component][$class]) && ! self::isNamespaced($alias)) {
             self::$aliases[$component][$class] = $class;
         }
     }
