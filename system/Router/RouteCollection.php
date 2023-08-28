@@ -28,7 +28,9 @@ class RouteCollection implements RouteCollectionInterface
 {
     /**
      * The namespace to be added to any Controllers.
-     * Defaults to the global namespaces (\)
+     * Defaults to the global namespaces (\).
+     *
+     * This must have a trailing backslash (\).
      *
      * @var string
      */
@@ -288,7 +290,7 @@ class RouteCollection implements RouteCollectionInterface
         $this->httpHost = Services::request()->getServer('HTTP_HOST');
 
         // Setup based on config file. Let routes file override.
-        $this->defaultNamespace   = $routing->defaultNamespace;
+        $this->defaultNamespace   = rtrim($routing->defaultNamespace, '\\') . '\\';
         $this->defaultController  = $routing->defaultController;
         $this->defaultMethod      = $routing->defaultMethod;
         $this->translateURIDashes = $routing->translateURIDashes;
