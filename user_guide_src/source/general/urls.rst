@@ -63,7 +63,7 @@ Query      page=2
 Removing the index.php file
 ===========================
 
-By default, the **index.php** file will be included in your URLs::
+When you use Apache Web Server, by default, the **index.php** file will be needed in your URLs::
 
     example.com/index.php/news/article/my_article
 
