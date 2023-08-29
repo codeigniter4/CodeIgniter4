@@ -25,8 +25,8 @@ section of the User Guide to begin learning how to build dynamic PHP application
 Initial Configuration
 *********************
 
-Setting the Base URL of Your Site
-=================================
+Configure for Your Site URIs
+============================
 
 Open the **app/Config/App.php** file with a text editor.
 
@@ -53,8 +53,8 @@ If you intend to use a database, open the
 **app/Config/Database.php** file with a text editor and set your
 database settings. Alternately, these could be set in your **.env** file.
 
-Setting to Development Mode
-===========================
+Set to Development Mode
+=======================
 
 If it is not on the production server, set ``CI_ENVIRONMENT`` to ``development``
 in **.env** file to take advantage of the debugging tools provided. See
@@ -65,8 +65,8 @@ in **.env** file to take advantage of the debugging tools provided. See
     by setting the environment to "production". By default, the application will
     run using the "production" environment. See also :ref:`environment-constant`.
 
-Setting Writable Folder Permission
-==================================
+Set Writable Folder Permission
+==============================
 
 If you will be running your site using a web server (e.g., Apache or nginx),
 you will need to modify the permissions for the **writable** folder inside
