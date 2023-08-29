@@ -14,6 +14,7 @@ namespace CodeIgniter\Helpers;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Config\DocTypes;
 use Config\Filters;
 use Config\Services;
 
@@ -262,9 +263,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormInputXHTML(): void
     {
-        $doctypes        = config('DocTypes');
-        $default         = $doctypes->html5;
-        $doctypes->html5 = false;
+        $this->disableHtml5();
 
         $expected = <<<EOH
             <input type="text" name="username" value="johndoe" id="username" maxlength="100" size="50" style="width:50%" />\n
@@ -279,8 +278,20 @@ final class FormHelperTest extends CIUnitTestCase
         ];
         $this->assertSame($expected, form_input($data));
 
-        // Reset
-        $doctypes->html5 = $default;
+        $this->enableHtml5();
+    }
+
+    private function disableHtml5()
+    {
+        $doctypes        = new DocTypes();
+        $doctypes->html5 = false;
+        _solidus($doctypes);
+    }
+
+    private function enableHtml5()
+    {
+        $doctypes = new DocTypes();
+        _solidus($doctypes);
     }
 
     public function testFormInputWithExtra(): void
@@ -317,17 +328,14 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormUploadXHTML(): void
     {
-        $doctypes        = config('DocTypes');
-        $default         = $doctypes->html5;
-        $doctypes->html5 = false;
+        $this->disableHtml5();
 
         $expected = <<<EOH
             <input type="file" name="attachment" />\n
             EOH;
         $this->assertSame($expected, form_upload('attachment'));
 
-        // Reset
-        $doctypes->html5 = $default;
+        $this->enableHtml5();
     }
 
     public function testFormTextarea(): void
@@ -656,17 +664,14 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormCheckboxXHTML(): void
     {
-        $doctypes        = config('DocTypes');
-        $default         = $doctypes->html5;
-        $doctypes->html5 = false;
+        $this->disableHtml5();
 
         $expected = <<<EOH
             <input type="checkbox" name="newsletter" value="accept" checked="checked" />\n
             EOH;
         $this->assertSame($expected, form_checkbox('newsletter', 'accept', true));
 
-        // Reset
-        $doctypes->html5 = $default;
+        $this->enableHtml5();
     }
 
     public function testFormCheckboxArrayData(): void

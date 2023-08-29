@@ -31,6 +31,7 @@ use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
 use Config\App;
 use Config\Cookie;
+use Config\DocTypes;
 use Config\Logger;
 use Config\Modules;
 use Config\Routing;
@@ -180,14 +181,24 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testSolidusElementXHTML(): void
     {
-        $doctypes        = config('DocTypes');
-        $default         = $doctypes->html5;
-        $doctypes->html5 = false;
+        $this->disableHtml5();
 
         $this->assertSame(' /', _solidus());
 
-        // Reset
-        $doctypes->html5 = $default;
+        $this->enableHtml5();
+    }
+
+    private function disableHtml5()
+    {
+        $doctypes        = new DocTypes();
+        $doctypes->html5 = false;
+        _solidus($doctypes);
+    }
+
+    private function enableHtml5()
+    {
+        $doctypes = new DocTypes();
+        _solidus($doctypes);
     }
 
     public function testView(): void
