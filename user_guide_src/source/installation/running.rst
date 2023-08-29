@@ -28,14 +28,23 @@ Initial Configuration
 Setting the Base URL of Your Site
 =================================
 
-Open the **app/Config/App.php** file with a text editor and
-set your base URL to ``$baseURL``. If you need more flexibility, the baseURL may
-be set within the :ref:`.env <dotenv-file>` file as ``app.baseURL = 'http://example.com/'``.
-(Always use a trailing slash on your base URL!)
+Open the **app/Config/App.php** file with a text editor.
 
-.. note:: If you don't set the ``baseURL`` correctly, in development mode,
-    the debug toolbar may not load properly and web pages may take considerably
-    longer to display.
+#. $baseURL
+    Set your base URL to ``$baseURL``. If you need more flexibility, the baseURL may
+    be set within the :ref:`.env <dotenv-file>` file as ``app.baseURL = 'http://example.com/'``.
+    (Always use a trailing slash on your base URL!)
+
+    .. note:: If you don't set the ``baseURL`` correctly, in development mode,
+        the debug toolbar may not load properly and web pages may take considerably
+        longer to display.
+
+#. $indexPage
+    If you don't want to include **index.php** in your site URIs, set ``$indexPage`` to ``''``.
+    The setting will be used when the framework generates your site URIs.
+
+    .. note:: You may need to configure your web server to access your site with a URL
+        that does not contain **index.php**. See :ref:`CodeIgniter URLs <urls-remove-index-php>`.
 
 Configure Database Connection Settings
 ======================================
