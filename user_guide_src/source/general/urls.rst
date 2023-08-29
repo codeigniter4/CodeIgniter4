@@ -95,10 +95,10 @@ request for your index.php file.
 
 .. _urls-remove-index-php-nginx:
 
-NGINX
+nginx
 -----
 
-Under NGINX, you can define a location block and use the ``try_files`` directive to get the same effect as we did with
+Under nginx, you can define a location block and use the ``try_files`` directive to get the same effect as we did with
 the above Apache configuration:
 
 .. code-block:: nginx

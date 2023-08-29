@@ -59,7 +59,7 @@ in **.env** file to take advantage of the debugging tools provided. See
 Setting Writable Folder Permission
 ==================================
 
-If you will be running your site using a web server (e.g., Apache or Nginx),
+If you will be running your site using a web server (e.g., Apache or nginx),
 you will need to modify the permissions for the **writable** folder inside
 your project, so that it is writable by the user or account used by your
 web server.
@@ -368,10 +368,10 @@ Setting Environment
 See :ref:`Handling Multiple Environments <environment-apache>`.
 
 ******************
-Hosting with Nginx
+Hosting with nginx
 ******************
 
-Nginx is the second most widely used HTTP server for web hosting.
+nginx is the second most widely used HTTP server for web hosting.
 Here you can find an example configuration using PHP 8.1 FPM (unix sockets) under Ubuntu Server.
 
 default.conf
