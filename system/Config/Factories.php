@@ -118,6 +118,7 @@ class Factories
         self::getOptions($component);
 
         self::$aliases[$component][$alias] = $classname;
+        self::$updated[$component]         = true;
     }
 
     /**
@@ -142,6 +143,7 @@ class Factories
                 return new $class(...$arguments);
             }
 
+            // Try to locate the class
             if ($class = self::locateClass($options, $alias)) {
                 return new $class(...$arguments);
             }
@@ -160,14 +162,8 @@ class Factories
             return null;
         }
 
-        self::$instances[$options['component']][$class] = new $class(...$arguments);
-        self::$aliases[$options['component']][$alias]   = $class;
-        self::$updated[$options['component']]           = true;
-
-        // If a short classname is specified, also register FQCN to share the instance.
-        if (! isset(self::$aliases[$options['component']][$class])) {
-            self::$aliases[$options['component']][$class] = $class;
-        }
+        self::createInstance($options['component'], $class, $arguments);
+        self::setAlias($options['component'], $alias, $class);
 
         return self::$instances[$options['component']][$class];
     }
@@ -179,6 +175,7 @@ class Factories
      */
     private static function getDefinedInstance(array $options, string $alias, array $arguments)
     {
+        // The alias is already defined.
         if (isset(self::$aliases[$options['component']][$alias])) {
             $class = self::$aliases[$options['component']][$alias];
 
@@ -189,13 +186,48 @@ class Factories
                     return self::$instances[$options['component']][$class];
                 }
 
-                self::$instances[$options['component']][$class] = new $class(...$arguments);
+                self::createInstance($options['component'], $class, $arguments);
 
                 return self::$instances[$options['component']][$class];
             }
         }
 
+        // Try to locate the class
+        if (! $class = self::locateClass($options, $alias)) {
+            return null;
+        }
+
+        // Check for an existing instance for the class
+        if (isset(self::$instances[$options['component']][$class])) {
+            self::setAlias($options['component'], $alias, $class);
+
+            return self::$instances[$options['component']][$class];
+        }
+
         return null;
+    }
+
+    /**
+     * Creates the shared instance.
+     */
+    private static function createInstance(string $component, string $class, array $arguments): void
+    {
+        self::$instances[$component][$class] = new $class(...$arguments);
+        self::$updated[$component]           = true;
+    }
+
+    /**
+     * Sets alias
+     */
+    private static function setAlias(string $component, string $alias, string $class): void
+    {
+        self::$aliases[$component][$alias] = $class;
+        self::$updated[$component]         = true;
+
+        // If a short classname is specified, also register FQCN to share the instance.
+        if (! isset(self::$aliases[$component][$class]) && ! self::isNamespaced($alias)) {
+            self::$aliases[$component][$class] = $class;
+        }
     }
 
     /**
