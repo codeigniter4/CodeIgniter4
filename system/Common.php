@@ -890,7 +890,8 @@ if (! function_exists('_solidus')) {
      */
     function _solidus(): string
     {
-        if (config(DocTypes::class)->html5 ?? false) {
+        $docTypes = new DocTypes();
+        if ($docTypes->html5 ?? false) {
             return '';
         }
 
