@@ -39,7 +39,7 @@ trait FeatureTestTrait
      *    ['get', 'home', 'Home::index']
      * ]
      *
-     * @param array $routes
+     * @param array|null $routes Array to set routes
      *
      * @return $this
      */

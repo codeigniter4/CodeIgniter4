@@ -177,7 +177,7 @@ class CLI
      * Named options must be in the following formats:
      * php index.php user -v --v -name=John --name=John
      *
-     * @param string $prefix
+     * @param string $prefix You may specify a string with which to prompt the user.
      */
     public static function input(?string $prefix = null): string
     {

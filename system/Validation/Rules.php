@@ -204,8 +204,6 @@ class Rules
 
     /**
      * Does not equal the static value provided.
-     *
-     * @param string $str
      */
     public function not_equals(?string $str, string $val): bool
     {
@@ -214,8 +212,6 @@ class Rules
 
     /**
      * Value should not be within an array of values.
-     *
-     * @param string $value
      */
     public function not_in_list(?string $value, string $list): bool
     {

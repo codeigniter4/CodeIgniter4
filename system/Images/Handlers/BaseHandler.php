@@ -549,8 +549,6 @@ abstract class BaseHandler implements ImageHandlerInterface
      *  - bottom
      *  - bottom-right
      *
-     * @param int $height
-     *
      * @return BaseHandler
      */
     public function fit(int $width, ?int $height = null, string $position = 'center')
