@@ -66,6 +66,8 @@ Email properties. Then save the file and it will be used automatically.
 You will NOT need to use the ``$email->initialize()`` method if
 you set your preferences in the config file.
 
+.. _email-ssl-tls-for-smtp:
+
 SSL versus TLS for SMTP Protocol
 --------------------------------
 
@@ -85,7 +87,7 @@ will upgrade the channel to use encryption using the ``STARTTLS`` SMTP command.
 
 Upgrading a connection on port 465 may or may not be supported by the server, so the
 ``STARTTLS`` SMTP command may fail if the server does not allow it. If you set the port to 465,
-you should try to leave the ``SMTPCrypto`` setting blank since the communication is
+you should try to set the ``SMTPCrypto`` to an empty string (``''``) since the communication is
 secured using TLS from the start and the ``STARTTLS`` is not needed.
 
 If your configuration requires you to connect to port 587, you should most likely set
@@ -115,14 +117,15 @@ Preference          Default Value          Options                      Descript
 **SMTPHost**        No Default             None                         SMTP Server Address.
 **SMTPUser**        No Default             None                         SMTP Username.
 **SMTPPass**        No Default             None                         SMTP Password.
-**SMTPPort**        25                     None                         SMTP Port. (If set to 465, TLS will be used for the connection
-                                                                        regardless of SMTPCrypto setting.)
+**SMTPPort**        25                     None                         SMTP Port. (If set to ``465``, TLS will be used for the connection
+                                                                        regardless of ``SMTPCrypto`` setting.)
 **SMTPTimeout**     5                      None                         SMTP Timeout (in seconds).
 **SMTPKeepAlive**   false                  true or false (boolean)      Enable persistent SMTP connections.
-**SMTPCrypto**      No Default             tls or ssl                   SMTP Encryption. Setting this to "ssl" will create a secure
-                                                                        channel to the server using SSL and "tls" will issue a
+**SMTPCrypto**      tls                    tls, ssl, or empty string    SMTP Encryption. Setting this to ``ssl`` will create a secure
+                                                                        channel to the server using SSL, and ``tls`` will issue a
                                                                         ``STARTTLS`` command to the server. Connection on port 465 should
-                                                                        set this to blank.
+                                                                        set this to an empty string (``''``). See also
+                                                                        :ref:`email-ssl-tls-for-smtp`.
 **wordWrap**        true                   true or false (boolean)      Enable word-wrap.
 **wrapChars**       76                                                  Character count to wrap at.
 **mailType**        text                   text or html                 Type of mail. If you send HTML email you must send it as a complete web
