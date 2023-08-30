@@ -949,7 +949,7 @@ final class MiscUrlTest extends CIUnitTestCase
     public function testUrlToMissingArgument(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Missing argument for "([a-zA-Z]+)" in route "([a-zA-Z]+)/login".');
+        $this->expectExceptionMessage('Missing argument for "(:alpha)" in route "(:alpha)/login".');
 
         $routes = Services::routes();
         $routes->group('(:alpha)', static function ($routes): void {
