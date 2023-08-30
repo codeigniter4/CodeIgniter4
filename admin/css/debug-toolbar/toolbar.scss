@@ -202,6 +202,15 @@
         // Give room for OS X scrollbar
         white-space: nowrap;
         z-index: 10000;
+        // Endless Rotate
+        .rotate {
+            animation: rotate 9s linear infinite;
+        }
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
     }
 
     // Fixed top
@@ -500,14 +509,4 @@
 
 .debug-bar-noverflow {
     overflow: hidden;
-}
-
-/* ENDLESS ROTATE */
-.rotate {
-    animation: rotate 9s linear infinite;
-}
-@keyframes rotate {
-    to {
-        transform: rotate(360deg);
-    }
 }

@@ -140,6 +140,14 @@
   white-space: nowrap;
   z-index: 10000;
 }
+#debug-bar .toolbar .rotate {
+  animation: rotate 9s linear infinite;
+}
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
 #debug-bar.fixed-top {
   bottom: auto;
   top: 0;
@@ -795,15 +803,4 @@
 
 .debug-bar-noverflow {
   overflow: hidden;
-}
-
-/* ENDLESS ROTATE */
-.rotate {
-  animation: rotate 9s linear infinite;
-}
-
-@keyframes rotate {
-  to {
-    transform: rotate(360deg);
-  }
 }
