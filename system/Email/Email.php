@@ -1870,9 +1870,13 @@ class Email
 
         $ssl = '';
 
+        // Connection to port 465 should use implicit TLS (without STARTTLS)
+        // as per RFC 8314.
         if ($this->SMTPPort === 465) {
             $ssl = 'tls://';
-        } elseif ($this->SMTPCrypto === 'ssl') {
+        }
+        // But if $SMTPCrypto is set to `ssl`, SSL can be used.
+        if ($this->SMTPCrypto === 'ssl') {
             $ssl = 'ssl://';
         }
 
