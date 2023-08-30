@@ -141,9 +141,9 @@
   z-index: 10000;
 }
 #debug-bar .toolbar .rotate {
-  animation: rotate 9s linear infinite;
+  animation: toolbar-rotate 9s linear infinite;
 }
-@keyframes rotate {
+@keyframes toolbar-rotate {
   to {
     transform: rotate(360deg);
   }

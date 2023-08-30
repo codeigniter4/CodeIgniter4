@@ -204,9 +204,9 @@
         z-index: 10000;
         // Endless Rotate
         .rotate {
-            animation: rotate 9s linear infinite;
+            animation: toolbar-rotate 9s linear infinite;
         }
-        @keyframes rotate {
+        @keyframes toolbar-rotate {
             to {
                 transform: rotate(360deg);
             }
