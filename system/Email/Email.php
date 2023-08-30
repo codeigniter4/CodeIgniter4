@@ -113,7 +113,9 @@ class Email
     /**
      * SMTP Encryption
      *
-     * @var string Empty, 'tls' or 'ssl'
+     * @var string '', 'tls' or 'ssl'. 'tls' will issue a STARTTLS command
+     *             to the server. 'ssl' means implicit SSL. Connection on port
+     *             465 should set this to ''.
      */
     public $SMTPCrypto = '';
 
