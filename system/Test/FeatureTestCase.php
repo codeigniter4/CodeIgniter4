@@ -51,8 +51,6 @@ class FeatureTestCase extends CIUnitTestCase
      *    ['get', 'home', 'Home::index']
      * ]
      *
-     * @param array $routes
-     *
      * @return $this
      */
     protected function withRoutes(?array $routes = null)

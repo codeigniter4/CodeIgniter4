@@ -28,8 +28,9 @@ interface RouteCollectionInterface
     /**
      * Adds a single route to the collection.
      *
-     * @param array|Closure|string $to
-     * @param array                $options
+     * @param string               $from    The route path (with placeholders or regex)
+     * @param array|Closure|string $to      The route handler
+     * @param array|null           $options The route options
      *
      * @return RouteCollectionInterface
      */
@@ -44,7 +45,7 @@ interface RouteCollectionInterface
      * multiple placeholders added at once.
      *
      * @param array|string $placeholder
-     * @param string       $pattern
+     * @param string|null  $pattern     The regex pattern
      *
      * @return RouteCollectionInterface
      */

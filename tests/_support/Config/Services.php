@@ -28,7 +28,7 @@ class Services extends BaseServices
     /**
      * The URI class provides a way to model and manipulate URIs.
      *
-     * @param string $uri
+     * @param string|null $uri The URI string
      *
      * @return URI
      */

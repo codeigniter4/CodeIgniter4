@@ -41,8 +41,6 @@ abstract class Migration
 
     /**
      * Constructor.
-     *
-     * @param Forge $forge
      */
     public function __construct(?Forge $forge = null)
     {
@@ -53,8 +51,6 @@ abstract class Migration
 
     /**
      * Returns the database group name this migration uses.
-     *
-     * @return string
      */
     public function getDBGroup(): ?string
     {

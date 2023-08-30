@@ -387,8 +387,6 @@ class Pager implements PagerInterface
     /**
      * Ensures that an array exists for the group specified.
      *
-     * @param int $perPage
-     *
      * @return void
      */
     protected function ensureGroup(string $group, ?int $perPage = null)
