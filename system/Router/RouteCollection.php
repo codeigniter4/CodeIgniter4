@@ -1173,7 +1173,7 @@ class RouteCollection implements RouteCollectionInterface
         // If it's not a named route, then loop over
         // all routes to find a match.
         foreach ($this->routes as $collection) {
-            foreach ($collection as $routeKey => $route) {
+            foreach ($collection as $route) {
                 $to   = $route['handler'];
                 $from = $route['from'];
 
@@ -1346,13 +1346,10 @@ class RouteCollection implements RouteCollectionInterface
                 );
             }
 
+            // Remove `(:` and `)` when $placeholder is a placeholder.
             $placeholderName = substr($placeholder, 2, -1);
-            if (isset($this->placeholders[$placeholderName])) {
-                $pattern = $this->placeholders[$placeholderName];
-            } else {
-                // The $placeholder is not a placeholder. It is a regex.
-                $pattern = $placeholder;
-            }
+            // or maybe $placeholder is not a placeholder, but a regex.
+            $pattern = $this->placeholders[$placeholderName] ?? $placeholder;
 
             if (! preg_match('#^' . $pattern . '$#u', $params[$index])) {
                 throw RouterException::forInvalidParameterType();
