@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.13.1@086b94371304750d1c673315321a55d15fc59015">
+<files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
+  <file src="app/Config/View.php">
+    <UndefinedDocblockClass>
+      <code><![CDATA[array<string, ParserCallableString>]]></code>
+      <code><![CDATA[array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>]]></code>
+      <code><![CDATA[array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>]]></code>
+      <code>public $filters = [];</code>
+      <code>public $plugins = [];</code>
+      <code>public $plugins = [];</code>
+    </UndefinedDocblockClass>
+  </file>
   <file src="system/Cache/FactoriesCache/FileVarExportHandler.php">
     <UndefinedVariable>
       <code>$val</code>
@@ -26,6 +36,60 @@
       <code>$routeWithoutController</code>
       <code>$routeWithoutController</code>
     </DuplicateArrayKey>
+  </file>
+  <file src="system/Config/View.php">
+    <UndefinedDocblockClass>
+      <code><![CDATA[array<string, ParserCallableString>]]></code>
+      <code><![CDATA[array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>]]></code>
+      <code><![CDATA[array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>]]></code>
+      <code><![CDATA[protected $coreFilters = [
+        'abs'            => '\abs',
+        'capitalize'     => '\CodeIgniter\View\Filters::capitalize',
+        'date'           => '\CodeIgniter\View\Filters::date',
+        'date_modify'    => '\CodeIgniter\View\Filters::date_modify',
+        'default'        => '\CodeIgniter\View\Filters::default',
+        'esc'            => '\CodeIgniter\View\Filters::esc',
+        'excerpt'        => '\CodeIgniter\View\Filters::excerpt',
+        'highlight'      => '\CodeIgniter\View\Filters::highlight',
+        'highlight_code' => '\CodeIgniter\View\Filters::highlight_code',
+        'limit_words'    => '\CodeIgniter\View\Filters::limit_words',
+        'limit_chars'    => '\CodeIgniter\View\Filters::limit_chars',
+        'local_currency' => '\CodeIgniter\View\Filters::local_currency',
+        'local_number'   => '\CodeIgniter\View\Filters::local_number',
+        'lower'          => '\strtolower',
+        'nl2br'          => '\CodeIgniter\View\Filters::nl2br',
+        'number_format'  => '\number_format',
+        'prose'          => '\CodeIgniter\View\Filters::prose',
+        'round'          => '\CodeIgniter\View\Filters::round',
+        'strip_tags'     => '\strip_tags',
+        'title'          => '\CodeIgniter\View\Filters::title',
+        'upper'          => '\strtoupper',
+    ];]]></code>
+      <code><![CDATA[protected $corePlugins = [
+        'csp_script_nonce'  => '\CodeIgniter\View\Plugins::cspScriptNonce',
+        'csp_style_nonce'   => '\CodeIgniter\View\Plugins::cspStyleNonce',
+        'current_url'       => '\CodeIgniter\View\Plugins::currentURL',
+        'previous_url'      => '\CodeIgniter\View\Plugins::previousURL',
+        'mailto'            => '\CodeIgniter\View\Plugins::mailto',
+        'safe_mailto'       => '\CodeIgniter\View\Plugins::safeMailto',
+        'lang'              => '\CodeIgniter\View\Plugins::lang',
+        'validation_errors' => '\CodeIgniter\View\Plugins::validationErrors',
+        'route'             => '\CodeIgniter\View\Plugins::route',
+        'siteURL'           => '\CodeIgniter\View\Plugins::siteURL',
+    ];]]></code>
+      <code><![CDATA[protected $corePlugins = [
+        'csp_script_nonce'  => '\CodeIgniter\View\Plugins::cspScriptNonce',
+        'csp_style_nonce'   => '\CodeIgniter\View\Plugins::cspStyleNonce',
+        'current_url'       => '\CodeIgniter\View\Plugins::currentURL',
+        'previous_url'      => '\CodeIgniter\View\Plugins::previousURL',
+        'mailto'            => '\CodeIgniter\View\Plugins::mailto',
+        'safe_mailto'       => '\CodeIgniter\View\Plugins::safeMailto',
+        'lang'              => '\CodeIgniter\View\Plugins::lang',
+        'validation_errors' => '\CodeIgniter\View\Plugins::validationErrors',
+        'route'             => '\CodeIgniter\View\Plugins::route',
+        'siteURL'           => '\CodeIgniter\View\Plugins::siteURL',
+    ];]]></code>
+    </UndefinedDocblockClass>
   </file>
   <file src="system/Database/BasePreparedQuery.php">
     <InaccessibleProperty>
@@ -77,6 +141,14 @@
     <UnsupportedPropertyReferenceUsage>
       <code><![CDATA[$this->dom = &$this->domParser]]></code>
     </UnsupportedPropertyReferenceUsage>
+  </file>
+  <file src="system/View/Parser.php">
+    <UndefinedDocblockClass>
+      <code><![CDATA[array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>]]></code>
+      <code><![CDATA[array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>]]></code>
+      <code>protected $plugins = [];</code>
+      <code>protected $plugins = [];</code>
+    </UndefinedDocblockClass>
   </file>
   <file src="tests/_support/Config/Filters.php">
     <UndefinedGlobalVariable>
