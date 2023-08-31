@@ -15,6 +15,7 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Config\DocTypes;
 
 /**
  * @internal
@@ -206,41 +207,48 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testIMGXHTML(): void
     {
-        $doctypes        = config('DocTypes');
-        $default         = $doctypes->html5;
-        $doctypes->html5 = false;
+        $this->disableHtml5();
 
         $target   = 'http://site.com/images/picture.jpg';
         $expected = '<img src="http://site.com/images/picture.jpg" alt="" />';
         $this->assertSame($expected, img($target));
 
-        $doctypes->html5 = $default;
+        $this->enableHtml5();
+    }
+
+    private function disableHtml5()
+    {
+        $doctypes        = new DocTypes();
+        $doctypes->html5 = false;
+        _solidus($doctypes);
+    }
+
+    private function enableHtml5()
+    {
+        $doctypes = new DocTypes();
+        _solidus($doctypes);
     }
 
     public function testIMGXHTMLWithoutProtocol(): void
     {
-        $doctypes        = config('DocTypes');
-        $default         = $doctypes->html5;
-        $doctypes->html5 = false;
+        $this->disableHtml5();
 
         $target   = 'assets/mugshot.jpg';
         $expected = '<img src="http://example.com/assets/mugshot.jpg" alt="" />';
         $this->assertSame($expected, img($target));
 
-        $doctypes->html5 = $default;
+        $this->enableHtml5();
     }
 
     public function testIMGXHTMLWithIndexpage(): void
     {
-        $doctypes        = config('DocTypes');
-        $default         = $doctypes->html5;
-        $doctypes->html5 = false;
+        $this->disableHtml5();
 
         $target   = 'assets/mugshot.jpg';
         $expected = '<img src="http://example.com/index.php/assets/mugshot.jpg" alt="" />';
         $this->assertSame($expected, img($target, true));
 
-        $doctypes->html5 = $default;
+        $this->enableHtml5();
     }
 
     public function testImgData(): void
@@ -355,16 +363,13 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testLinkTagXHTML(): void
     {
-        $doctypes        = config('DocTypes');
-        $default         = $doctypes->html5;
-        $doctypes->html5 = false;
+        $this->disableHtml5();
 
         $target   = 'css/mystyles.css';
         $expected = '<link href="http://example.com/css/mystyles.css" rel="stylesheet" type="text/css" />';
         $this->assertSame($expected, link_tag($target));
 
-        // Reset
-        $doctypes->html5 = $default;
+        $this->enableHtml5();
     }
 
     public function testLinkTagMedia(): void
@@ -509,9 +514,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testVideoWithTracksXHTML(): void
     {
-        $doctypes        = config('DocTypes');
-        $default         = $doctypes->html5;
-        $doctypes->html5 = false;
+        $this->disableHtml5();
 
         $expected = <<<'EOH'
             <video src="http://example.com/test.mp4" controls>
@@ -531,8 +534,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $video = video($target, $message, 'controls', $tracks);
         $this->assertSame($expected, $video);
 
-        // Reset
-        $doctypes->html5 = $default;
+        $this->enableHtml5();
     }
 
     public function testVideoWithTracksAndIndex(): void
@@ -581,9 +583,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testVideoMultipleSourcesXHTML(): void
     {
-        $doctypes        = config('DocTypes');
-        $default         = $doctypes->html5;
-        $doctypes->html5 = false;
+        $this->disableHtml5();
 
         $expected = <<<'EOH'
             <video class="test" controls>
@@ -613,8 +613,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
         $this->assertSame($expected, $video);
 
-        // Reset
-        $doctypes->html5 = $default;
+        $this->enableHtml5();
     }
 
     public function testAudio(): void
@@ -642,9 +641,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testAudioXHTML(): void
     {
-        $doctypes        = config('DocTypes');
-        $default         = $doctypes->html5;
-        $doctypes->html5 = false;
+        $this->disableHtml5();
 
         $expected = <<<'EOH'
             <audio id="test" controls>
@@ -670,8 +667,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
         $this->assertSame($expected, $audio);
 
-        // Reset
-        $doctypes->html5 = $default;
+        $this->enableHtml5();
     }
 
     public function testAudioSimple(): void
@@ -774,15 +770,12 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testSourceXHTML(): void
     {
-        $doctypes        = config('DocTypes');
-        $default         = $doctypes->html5;
-        $doctypes->html5 = false;
+        $this->disableHtml5();
 
         $expected = '<source src="http://example.com/index.php/sound.mpeg" type="audio/mpeg" />';
         $this->assertSame($expected, source('sound.mpeg', 'audio/mpeg', '', true));
 
-        // Reset
-        $doctypes->html5 = $default;
+        $this->enableHtml5();
     }
 
     public function testEmbed(): void
@@ -799,9 +792,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testEmbedXHTML(): void
     {
-        $doctypes        = config('DocTypes');
-        $default         = $doctypes->html5;
-        $doctypes->html5 = false;
+        $this->disableHtml5();
 
         $expected = <<<'EOH'
             <embed src="http://example.com/movie.mov" type="video/quicktime" class="test" />
@@ -812,8 +803,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $embed = embed('movie.mov', $type, 'class="test"');
         $this->assertSame($expected, $embed);
 
-        // Reset
-        $doctypes->html5 = $default;
+        $this->enableHtml5();
     }
 
     public function testEmbedIndexed(): void
@@ -862,9 +852,7 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testObjectWithParamsXHTML(): void
     {
-        $doctypes        = config('DocTypes');
-        $default         = $doctypes->html5;
-        $doctypes->html5 = false;
+        $this->disableHtml5();
 
         $expected = <<<'EOH'
             <object data="http://example.com/movie.swf" class="test">
@@ -882,8 +870,7 @@ final class HTMLHelperTest extends CIUnitTestCase
         $object = object('movie.swf', $type, 'class="test"', $parms);
         $this->assertSame($expected, $object);
 
-        // Reset
-        $doctypes->html5 = $default;
+        $this->enableHtml5();
     }
 
     public function testObjectIndexed(): void
