@@ -41,7 +41,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
     {
         @mkdir(self::$languageTestPath . self::$locale, 0777, true);
         Services::commands()->run('lang:find', [
-            'dir' => 'Controllers/Translation',
+            'dir' => 'Services/Translation',
         ]);
         $this->realizeAssertion();
         $this->clearGeneratedFiles();
@@ -52,7 +52,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
         self::$locale = config(App::class)->supportedLocales[0];
         @mkdir(self::$languageTestPath . self::$locale, 0777, true);
         Services::commands()->run('lang:find', [
-            'dir'    => 'Controllers/Translation',
+            'dir'    => 'Services/Translation',
             'locale' => self::$locale,
         ]);
         $this->realizeAssertion();
@@ -64,7 +64,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
         self::$locale = 'test_locale_incorrect';
         @mkdir(self::$languageTestPath . self::$locale, 0777, true);
         $status = Services::commands()->run('lang:find', [
-            'dir'    => 'Controllers/Translation',
+            'dir'    => 'Services/Translation',
             'locale' => self::$locale,
         ]);
         $this->assertSame($status, -1);
@@ -83,7 +83,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
     {
         @mkdir(self::$languageTestPath . self::$locale, 0777, true);
         $status = Services::commands()->run('lang:find', [
-            'dir' => 'Controllers/Translation/NotExistFolder',
+            'dir' => 'Services/Translation/NotExistFolder',
         ]);
         $this->assertSame($status, -1);
         $this->clearGeneratedFiles();
@@ -93,7 +93,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
     {
         @mkdir(self::$languageTestPath . self::$locale, 0777, true);
         Services::commands()->run('lang:find', [
-            'dir'      => 'Controllers/Translation',
+            'dir'      => 'Services/Translation',
             'show-new' => null,
         ]);
         $this->assertStringContainsString($this->getActualTableWithNewKeys(), $this->getStreamFilterBuffer());
@@ -148,7 +148,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
 
     private function getActualTableWithNewKeys(): string
     {
-        return <<<'TEXT'
+        return <<<'TEXT_WRAP'
             +------------------+----------------------------------------------------+
             | File             | Key                                                |
             +------------------+----------------------------------------------------+
@@ -175,7 +175,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
             | TranslationThree | TranslationThree.formFields.new.name               |
             | TranslationThree | TranslationThree.formFields.new.short_tag          |
             +------------------+----------------------------------------------------+
-            TEXT;
+            TEXT_WRAP;
     }
 
     private function realizeAssertion(): void
