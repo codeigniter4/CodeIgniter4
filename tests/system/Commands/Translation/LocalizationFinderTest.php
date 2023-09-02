@@ -18,6 +18,8 @@ use Config\Services;
 use Locale;
 
 /**
+ * @group Others
+ *
  * @internal
  */
 final class LocalizationFinderTest extends CIUnitTestCase
