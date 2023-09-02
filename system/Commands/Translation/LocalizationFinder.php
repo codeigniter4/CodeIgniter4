@@ -13,6 +13,7 @@ namespace CodeIgniter\Commands\Translation;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Config\App;
 use Locale;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -59,8 +60,8 @@ class LocalizationFinder extends BaseCommand
         }
 
         if (is_string($cliOptionLocale)) {
-            if (! in_array($cliOptionLocale, config(\Config\App::class)->supportedLocales, true)) {
-                CLI::error('Error: Supported locales ' . implode(', ', config(\Config\App::class)->supportedLocales));
+            if (! in_array($cliOptionLocale, config(App::class)->supportedLocales, true)) {
+                CLI::error('Error: Supported locales ' . implode(', ', config(App::class)->supportedLocales));
 
                 return -1;
             }
@@ -129,7 +130,7 @@ class LocalizationFinder extends BaseCommand
                 /**
                  * New translates exists
                  */
-                if (count($languageDiff) > 0) {
+                if ($languageDiff !== []) {
                     if (false === file_put_contents($languageFilePath, $this->templateFile($newLanguageKeys))) {
                         $this->writeIsVerbose('Lang file ' . $langFileName . ' (error write).', 'red');
                     } else {
@@ -213,7 +214,7 @@ class LocalizationFinder extends BaseCommand
             return true;
         }
 
-        return (bool) ('php' !== $file->getExtension());
+        return 'php' !== $file->getExtension();
     }
 
     private function templateFile(array $language = []): string
