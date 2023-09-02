@@ -15,6 +15,8 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
+use Config\App;
 use Config\Routing;
 use Config\Services;
 
@@ -628,5 +630,20 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $response = $this->get('home/index');
 
         $response->assertOK();
+    }
+
+    public function testForceGlobalSecureRequests()
+    {
+        $config                            = config(App::class);
+        $config->forceGlobalSecureRequests = true;
+        Factories::injectMock('config', App::class, $config);
+
+        $this->app = new MockCodeIgniter($config);
+        $this->app->initialize();
+
+        $response = $this->get('/');
+
+        // Do not redirect.
+        $response->assertStatus(200);
     }
 }
