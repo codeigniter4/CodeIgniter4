@@ -292,6 +292,9 @@ trait FeatureTestTrait
 
         if ($config->forceGlobalSecureRequests) {
             $_SERVER['HTTPS'] = 'test';
+            $server           = $request->getServer();
+            $server['HTTPS']  = 'test';
+            $request->setGlobal('server', $server);
         }
 
         return $request;
