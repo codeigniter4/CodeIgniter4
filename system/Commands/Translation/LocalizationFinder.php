@@ -153,7 +153,10 @@ class LocalizationFinder extends BaseCommand
         CLI::write('All operations done!');
     }
 
-    private function findTranslationsInFile(string|SplFileInfo $file): array
+    /**
+     * @param SplFileInfo|string $file
+     */
+    private function findTranslationsInFile($file): array
     {
         $languageFoundKeys = [];
 
