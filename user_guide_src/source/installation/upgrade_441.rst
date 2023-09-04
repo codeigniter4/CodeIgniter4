@@ -12,15 +12,6 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-Mandatory File Changes
-**********************
-
-Breaking Changes
-****************
-
-Breaking Enhancements
-*********************
-
 Project Files
 *************
 
@@ -33,13 +24,7 @@ the project space: `Explore on Packagist <https://packagist.org/explore/?query=c
 Content Changes
 ===============
 
-The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:
-
-Config
-------
-
-- @TODO
+Version 4.4.1 did not alter any executable code in project files.
 
 All Changes
 ===========
@@ -47,4 +32,10 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- app/Config/Autoload.php
+- app/Config/DocTypes.php
+- app/Config/Email.php
+- app/Config/ForeignCharacters.php
+- app/Config/Mimes.php
+- app/Config/Modules.php
+- composer.json

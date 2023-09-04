@@ -1,7 +1,7 @@
 Version 4.4.1
 #############
 
-Release Date: Unreleased
+Release Date: September 5, 2023
 
 **4.4.1 release of CodeIgniter4**
 
@@ -9,20 +9,13 @@ Release Date: Unreleased
     :local:
     :depth: 3
 
-BREAKING
-********
-
-Message Changes
-***************
-
-Changes
-*******
-
-Deprecations
-************
-
 Bugs Fixed
 **********
+
+- **AutoRouting Legacy:** Fixed a bug that Auto Routing Legacy does not work.
+- **FeatureTest:**
+    - Fixed a bug that FeatureTest may cause risky tests.
+    - Fixed a bug that FeatureTest fails when forceGlobalSecureRequests is true.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
