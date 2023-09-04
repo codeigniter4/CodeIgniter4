@@ -146,12 +146,24 @@ final class LocalizationFinderTest extends CIUnitTestCase
         ];
     }
 
+    private function getActualTranslationFourKeys(): array
+    {
+        return [
+            'dashed' => [
+                'key-with-dash'     => 'Translation-Four.dashed.key-with-dash',
+                'key-with-dash-two' => 'Translation-Four.dashed.key-with-dash-two',
+            ],
+        ];
+    }
+
     private function getActualTableWithNewKeys(): string
     {
         return <<<'TEXT_WRAP'
             +------------------+----------------------------------------------------+
             | File             | Key                                                |
             +------------------+----------------------------------------------------+
+            | Translation-Four | Translation-Four.dashed.key-with-dash              |
+            | Translation-Four | Translation-Four.dashed.key-with-dash-two          |
             | TranslationOne   | TranslationOne.Copyright                           |
             | TranslationOne   | TranslationOne.DESCRIPTION                         |
             | TranslationOne   | TranslationOne.last_operation_success              |
@@ -185,9 +197,11 @@ final class LocalizationFinderTest extends CIUnitTestCase
 
         $translationOneKeys   = require self::$languageTestPath . self::$locale . '/TranslationOne.php';
         $translationThreeKeys = require self::$languageTestPath . self::$locale . '/TranslationThree.php';
+        $translationFourKeys  = require self::$languageTestPath . self::$locale . '/Translation-Four.php';
 
         $this->assertSame($translationOneKeys, $this->getActualTranslationOneKeys());
         $this->assertSame($translationThreeKeys, $this->getActualTranslationThreeKeys());
+        $this->assertSame($translationFourKeys, $this->getActualTranslationFourKeys());
     }
 
     private function clearGeneratedFiles(): void
@@ -198,6 +212,10 @@ final class LocalizationFinderTest extends CIUnitTestCase
 
         if (is_file(self::$languageTestPath . self::$locale . '/TranslationThree.php')) {
             unlink(self::$languageTestPath . self::$locale . '/TranslationThree.php');
+        }
+
+        if (is_file(self::$languageTestPath . self::$locale . '/Translation-Four.php')) {
+            unlink(self::$languageTestPath . self::$locale . '/Translation-Four.php');
         }
     }
 }
