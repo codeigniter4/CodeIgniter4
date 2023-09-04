@@ -254,3 +254,42 @@ project:
 
 The translated messages will be automatically picked
 up because the translations folders get mapped appropriately.
+
+
+Automatic Translation Search via Command
+========================================
+
+.. versionadded:: 4.5.0
+
+You can automatically find and update translation files in your **app/** folder. The command will search for the use of the ``lang()`` function, combine the current translation keys in **app/Language** by defining the locale ``defaultLocale`` from **Config/App**.
+After the operation, you need to translate the language keys yourself.
+The command is able to recognize nested keys normally ``File.array.nested.text``.
+Previously saved keys do not change.
+
+.. code-block:: console
+
+    php spark lang:find
+
+.. literalinclude:: localization/019.php
+
+
+.. note:: Command ignoring **app/Language/** path.
+
+
+Before updating, it is possible to preview the translations found by the command:
+
+.. code-block:: console
+
+    php spark lang:find --verbose --show-new
+
+For a more accurate search, specify the desired locale or directory to scan.
+
+.. code-block:: console
+
+    php spark lang:find --dir Controllers/Translation --locale en --show-new
+
+Detailed information can be found by running the command:
+
+.. code-block:: console
+
+    php spark help lang:find
