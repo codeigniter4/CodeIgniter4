@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Detect usage of tabs in RST files
         run: php utils/check_tabs_in_rst.php
