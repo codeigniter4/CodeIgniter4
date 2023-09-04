@@ -120,7 +120,7 @@ Migrates a database group with all available migrations:
 You can use (migrate) with the following options:
 
 - ``-g`` - to chose database group, otherwise default database group will be used.
-- ``-n`` - to choose namespace, otherwise (App) namespace will be used.
+- ``-n`` - to choose namespace, otherwise ``App`` namespace will be used.
 - ``--all`` - to migrate all namespaces to the latest migration.
 
 This example will migrate ``Acme\Blog`` namespace with any new migrations on the test database group:
@@ -168,7 +168,7 @@ Refreshes the database state by first rolling back all migrations, and then migr
 You can use (refresh) with the following options:
 
 - ``-g`` - to choose database group, otherwise default database group will be used.
-- ``-n`` - to choose namespace, otherwise (App) namespace will be used.
+- ``-n`` - to choose namespace, otherwise ``App`` namespace will be used.
 - ``--all`` - to refresh all namespaces.
 - ``-f`` - to force a bypass confirmation question, it is only asked in a production environment.
 
