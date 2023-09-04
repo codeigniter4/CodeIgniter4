@@ -144,7 +144,7 @@ to minimize any potential conflicts between the main application and any modules
 rollback
 ========
 
-Rolls back all migrations, taking the database group to a blank slate, effectively migration 0:
+Rolls back all migrations to a blank slate, effectively migration 0:
 
 .. code-block:: console
 
@@ -152,7 +152,6 @@ Rolls back all migrations, taking the database group to a blank slate, effective
 
 You can use (rollback) with the following options:
 
-- ``-g`` - to choose database group, otherwise default database group will be used.
 - ``-b`` - to choose a batch: natural numbers specify the batch.
 - ``-f`` - to force a bypass confirmation question, it is only asked in a production environment.
 
