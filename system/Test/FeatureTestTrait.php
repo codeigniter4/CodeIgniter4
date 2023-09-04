@@ -51,7 +51,11 @@ trait FeatureTestTrait
             $collection->resetRoutes();
 
             foreach ($routes as $route) {
-                $collection->{$route[0]}($route[1], $route[2]);
+                if (isset($route[3])) {
+                    $collection->{$route[0]}($route[1], $route[2], $route[3]);
+                } else {
+                    $collection->{$route[0]}($route[1], $route[2]);
+                }
             }
         }
 

@@ -468,6 +468,8 @@ class CodeIgniter
 
             // If a ResponseInterface instance is returned then send it back to the client and stop
             if ($possibleResponse instanceof ResponseInterface) {
+                $this->outputBufferingEnd();
+
                 return $possibleResponse;
             }
 
