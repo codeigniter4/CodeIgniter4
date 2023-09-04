@@ -166,7 +166,7 @@ class LocalizationFinder extends BaseCommand
         }
 
         $fileContent = file_get_contents($file->getRealPath());
-        preg_match_all('/lang\(\'([._a-z0-9]+)\'\)/ui', $fileContent, $matches);
+        preg_match_all('/lang\(\'([._a-z0-9\-]+)\'\)/ui', $fileContent, $matches);
 
         if (empty($matches[1])) {
             return [];
