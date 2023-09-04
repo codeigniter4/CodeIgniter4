@@ -119,7 +119,7 @@ Migrates a database group with all available migrations:
 
 You can use (migrate) with the following options:
 
-- ``-g`` - to chose database group, otherwise default database group will be used.
+- ``-g`` - to specify database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
 - ``-n`` - to choose namespace, otherwise ``App`` namespace will be used.
 - ``--all`` - to migrate all namespaces to the latest migration.
 
