@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace Tests\Support\Controllers\Translation;
+namespace Tests\Support\Services\Translation;
 
 class TranslationTwo
 {
