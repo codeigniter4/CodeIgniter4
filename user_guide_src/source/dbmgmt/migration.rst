@@ -223,13 +223,15 @@ Migration Preferences
 
 The following is a table of all the config options for migrations, available in **app/Config/Migrations.php**.
 
-========================== ====================== ========================== =============================================================
-Preference                 Default                Options                    Description
-========================== ====================== ========================== =============================================================
-**enabled**                true                   true / false               Enable or disable migrations.
-**table**                  migrations             None                       The table name for storing the schema version number.
-**timestampFormat**        Y-m-d-His\_                                       The format to use for timestamps when creating a migration.
-========================== ====================== ========================== =============================================================
+==================== ============ ============= =============================================================
+Preference           Default      Options       Description
+==================== ============ ============= =============================================================
+**enabled**          true         true / false  Enable or disable migrations.
+**table**            migrations   None          The table name for storing the schema version number. This
+                                                table is always created in the default database group
+                                                (``$defaultGroup``).
+**timestampFormat**  Y-m-d-His\_                The format to use for timestamps when creating a migration.
+==================== ============ ============= =============================================================
 
 ***************
 Class Reference
