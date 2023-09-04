@@ -67,9 +67,13 @@ Database Groups
 
 A migration will only be run against a single database group. If you have multiple groups defined in
 **app/Config/Database.php**, then it will run against the ``$defaultGroup`` as specified
-in that same configuration file. There may be times when you need different schemas for different
+in that same configuration file.
+
+There may be times when you need different schemas for different
 database groups. Perhaps you have one database that is used for all general site information, while
-another database is used for mission critical data. You can ensure that migrations are run only
+another database is used for mission critical data.
+
+You can ensure that migrations are run only
 against the proper group by setting the ``$DBGroup`` property on your migration. This name must
 match the name of the database group exactly:
 
