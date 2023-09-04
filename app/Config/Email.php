@@ -56,7 +56,11 @@ class Email extends BaseConfig
     public bool $SMTPKeepAlive = false;
 
     /**
-     * SMTP Encryption. Either tls or ssl
+     * SMTP Encryption.
+     *
+     * @var string '', 'tls' or 'ssl'. 'tls' will issue a STARTTLS command
+     *             to the server. 'ssl' means implicit SSL. Connection on port
+     *             465 should set this to ''.
      */
     public string $SMTPCrypto = 'tls';
 
