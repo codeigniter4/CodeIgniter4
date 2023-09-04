@@ -166,7 +166,7 @@ Refreshes the database state by first rolling back all migrations, and then migr
 
 You can use (refresh) with the following options:
 
-- ``-g`` - to choose database group, otherwise default database group will be used.
+- ``-g`` - to specify database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
 - ``-n`` - to choose namespace, otherwise ``App`` namespace will be used.
 - ``--all`` - to refresh all namespaces.
 - ``-f`` - to force a bypass confirmation question, it is only asked in a production environment.
@@ -192,7 +192,7 @@ Displays a list of all migrations and the date and time they ran, or '--' if the
 
 You can use (status) with the following options:
 
-- ``-g`` - to choose database group, otherwise default database group will be used.
+- ``-g`` - to specify database group. If specified, only migrations for the specified database group will be checked. If not specified, all migrations will be checked.
 
 make:migration
 ==============
