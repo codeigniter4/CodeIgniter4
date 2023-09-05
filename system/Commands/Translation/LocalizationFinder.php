@@ -55,8 +55,8 @@ class LocalizationFinder extends BaseCommand
         $countNewKeys       = 0;
 
         if (ENVIRONMENT === 'testing') {
-            $currentDir         = SUPPORTPATH;
-            $this->languagePath = $currentDir . 'Language/';
+            $currentDir         = SUPPORTPATH . 'Services/';
+            $this->languagePath = SUPPORTPATH . 'Language/';
         }
 
         if (is_string($cliOptionLocale)) {

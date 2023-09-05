@@ -41,7 +41,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
     {
         @mkdir(self::$languageTestPath . self::$locale, 0777, true);
         Services::commands()->run('lang:find', [
-            'dir' => 'Services/Translation',
+            'dir' => 'Translation',
         ]);
         $this->realizeAssertion();
         $this->clearGeneratedFiles();
@@ -52,7 +52,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
         self::$locale = config(App::class)->supportedLocales[0];
         @mkdir(self::$languageTestPath . self::$locale, 0777, true);
         Services::commands()->run('lang:find', [
-            'dir'    => 'Services/Translation',
+            'dir'    => 'Translation',
             'locale' => self::$locale,
         ]);
         $this->realizeAssertion();
@@ -64,7 +64,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
         self::$locale = 'test_locale_incorrect';
         @mkdir(self::$languageTestPath . self::$locale, 0777, true);
         $status = Services::commands()->run('lang:find', [
-            'dir'    => 'Services/Translation',
+            'dir'    => 'Translation',
             'locale' => self::$locale,
         ]);
         $this->assertSame($status, -1);
@@ -83,7 +83,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
     {
         @mkdir(self::$languageTestPath . self::$locale, 0777, true);
         $status = Services::commands()->run('lang:find', [
-            'dir' => 'Services/Translation/NotExistFolder',
+            'dir' => 'Translation/NotExistFolder',
         ]);
         $this->assertSame($status, -1);
         $this->clearGeneratedFiles();
@@ -93,7 +93,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
     {
         @mkdir(self::$languageTestPath . self::$locale, 0777, true);
         Services::commands()->run('lang:find', [
-            'dir'      => 'Services/Translation',
+            'dir'      => 'Translation',
             'show-new' => null,
         ]);
         $this->assertStringContainsString($this->getActualTableWithNewKeys(), $this->getStreamFilterBuffer());
