@@ -3,10 +3,6 @@ services:
 		class: Utils\PHPStan\CheckUseStatementsAfterLicenseRule
 		tags:
 			- phpstan.rules.rule
-	-
-		class: Utils\PHPStan\CheckFrameworkExceptionInstantiationViaNamedConstructorRule
-		tags:
-			- phpstan.rules.rule
 
 includes:
 	- phpstan-baseline.php

@@ -17,6 +17,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Accessing offset \'ANSICON\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'NO_COLOR\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'argv\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\CodeIgniter\\:\\:bootstrapEnvironment\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/CodeIgniter.php',
@@ -95,6 +110,11 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfo\\:\\:showDataOfTable\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Database/ShowTableInfo.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'encryption\\.key\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Encryption/GenerateKey.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\CellGenerator\\:\\:generateClass\\(\\) has no return type specified\\.$#',
@@ -227,6 +247,36 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/ListCommands.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Accessing offset \'DOCUMENT_ROOT\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Commands/Server/rewrite.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'REQUEST_URI\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Server/rewrite.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Server/rewrite.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'CI_ENVIRONMENT\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/system/Commands/Utilities/Environment.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTP_HOST\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Utilities/Routes.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning non\\-falsy\\-string directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Utilities/Routes.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\AutoRouteCollector\\:\\:addFilters\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php',
@@ -235,6 +285,21 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\\\AutoRouterImproved\\\\AutoRouteCollector\\:\\:addFilters\\(\\) has parameter \\$routes with no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'REMOTE_ADDR\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Common.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'REQUEST_METHOD\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Common.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset string directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Common.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Function force_https\\(\\) has no return type specified\\.$#',
@@ -255,6 +320,46 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\ComposerScripts\\:\\:postUpdate\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/ComposerScripts.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'CI_ENVIRONMENT\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Config/AutoloadConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset non\\-falsy\\-string directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/system/Config/BaseConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/BaseConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Config/BaseService.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset string directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Config/DotEnv.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset string of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/DotEnv.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'SERVER_PROTOCOL\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/Services.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/Services.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Config\\\\View\\:\\:\\$coreFilters type has no signature specified for callable\\.$#',
@@ -642,9 +747,24 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Views.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Accessing offset \'SERVER_ADDR\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Email/Email.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'SERVER_NAME\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Email/Email.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Static property CodeIgniter\\\\Email\\\\Email\\:\\:\\$func_overload \\(bool\\) in isset\\(\\) is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Email/Email.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Events/Events.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Events\\\\Events\\:\\:on\\(\\) has parameter \\$callback with no signature specified for callable\\.$#',
@@ -662,6 +782,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Files/File.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Filters/Filters.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Expression on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/Filters.php',
@@ -670,6 +795,11 @@ $ignoreErrors[] = [
 	'message' => '#^Constructor of class CodeIgniter\\\\HTTP\\\\CURLRequest has an unused parameter \\$config\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTP_USER_AGENT\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Expression on left side of \\?\\? is not nullable\\.$#',
@@ -687,6 +817,46 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/Files/UploadedFile.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTPS\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'QUERY_STRING\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'REQUEST_URI\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'SCRIPT_NAME\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset array\\|string directly on \\$_GET is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'QUERY_STRING\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'CONTENT_TYPE\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HTTP/Message.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \\(int\\|string\\) directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HTTP/Message.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\HTTP\\\\Message\\:\\:\\$protocolVersion \\(string\\) on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/Message.php',
@@ -702,6 +872,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/RedirectResponse.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Accessing offset \'REQUEST_METHOD\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/system/HTTP/Response.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'SERVER_PROTOCOL\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HTTP/Response.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'SERVER_SOFTWARE\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/HTTP/Response.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\HTTP\\\\URI\\:\\:\\$fragment \\(string\\) on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/URI.php',
@@ -715,6 +900,16 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\HTTP\\\\URI\\:\\:\\$path \\(string\\) on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/URI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTP_REFERER\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/system/HTTP/UserAgent.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTP_USER_AGENT\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/HTTP/UserAgent.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Right side of && is always true\\.$#',
@@ -750,6 +945,16 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Model\\:\\:chunk\\(\\) has parameter \\$userFunc with no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Model.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset mixed directly on \\$_GET is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Pager/Pager.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Argument \\#1 \\$name \\(class\\-string\\) passed to function model does not extend CodeIgniter\\\\\\\\Model\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/RESTful/BaseResource.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Router\\\\AutoRouter\\:\\:\\$cliRoutes type has no signature specified for Closure\\.$#',
@@ -855,6 +1060,11 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:set404Override\\(\\) has parameter \\$callable with no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/RouteCollectionInterface.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'REQUEST_METHOD\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Router/Router.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getDefaultNamespace\\(\\)\\.$#',
@@ -980,6 +1190,11 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Session\\\\Handlers\\\\FileHandler\\:\\:configureSessionIDRegex\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Session/Handlers/FileHandler.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTP_X_REQUESTED_WITH\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Session/Session.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Session\\\\Session\\:\\:configure\\(\\) has no return type specified\\.$#',
@@ -1250,6 +1465,21 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Fabricator\\:\\:resetCounts\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Fabricator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$name of function model expects a valid class string, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/Fabricator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'test\' directly on offset \'HTTPS\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
@@ -1680,6 +1910,21 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertStatus\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/TestResponse.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'app\\.baseURL\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/bootstrap.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'http\\://example\\.com/\' directly on offset \'app\\.baseURL\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/bootstrap.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'testing\' directly on offset \'CI_ENVIRONMENT\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/bootstrap.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Throttle\\\\Throttler\\:\\:\\$testTime \\(int\\) on left side of \\?\\? is not nullable\\.$#',

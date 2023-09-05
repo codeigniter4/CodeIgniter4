@@ -80,7 +80,9 @@ jobs:
           restore-keys: ${{ runner.os }}-phpstan-
 
       - name: Install dependencies
-        run: composer update --ansi --no-interaction
+        run: |
+          composer require --dev --ansi --no-interaction phpstan/extension-installer codeigniter/phpstan-codeigniter
+          composer update --ansi --no-interaction
 
       - name: Run static analysis
         run: vendor/bin/phpstan analyse
