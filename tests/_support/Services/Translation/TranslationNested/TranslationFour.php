@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace Tests\Support\Services\Translation;
+namespace Tests\Support\Services\Translation\Nested;
 
 class TranslationFour
 {
