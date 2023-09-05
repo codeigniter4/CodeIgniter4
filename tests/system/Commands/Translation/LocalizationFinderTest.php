@@ -194,6 +194,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
     {
         $this->assertFileExists(self::$languageTestPath . self::$locale . '/TranslationOne.php');
         $this->assertFileExists(self::$languageTestPath . self::$locale . '/TranslationThree.php');
+        $this->assertFileExists(self::$languageTestPath . self::$locale . '/Translation-Four.php');
 
         $translationOneKeys   = require self::$languageTestPath . self::$locale . '/TranslationOne.php';
         $translationThreeKeys = require self::$languageTestPath . self::$locale . '/TranslationThree.php';
@@ -216,6 +217,10 @@ final class LocalizationFinderTest extends CIUnitTestCase
 
         if (is_file(self::$languageTestPath . self::$locale . '/Translation-Four.php')) {
             unlink(self::$languageTestPath . self::$locale . '/Translation-Four.php');
+        }
+
+        if (is_dir(self::$languageTestPath . '/test_locale_incorrect')) {
+            rmdir(self::$languageTestPath . '/test_locale_incorrect');
         }
     }
 }
