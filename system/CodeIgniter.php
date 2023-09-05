@@ -52,7 +52,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.4.0';
+    public const CI_VERSION = '4.4.1';
 
     /**
      * App startup time.
@@ -468,6 +468,8 @@ class CodeIgniter
 
             // If a ResponseInterface instance is returned then send it back to the client and stop
             if ($possibleResponse instanceof ResponseInterface) {
+                $this->outputBufferingEnd();
+
                 return $possibleResponse;
             }
 
@@ -701,6 +703,8 @@ class CodeIgniter
      * Tells the app that the final output should be cached.
      *
      * @deprecated 4.4.0 Moved to ResponseCache::setTtl(). to No longer used.
+     *
+     * @return void
      */
     public static function cache(int $time)
     {

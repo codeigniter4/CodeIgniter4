@@ -886,11 +886,21 @@ if (! function_exists('_solidus')) {
     /**
      * Generates the solidus character (`/`) depending on the HTML5 compatibility flag in `Config\DocTypes`
      *
+     * @param DocTypes|null $docTypesConfig New config. For testing purpose only.
+     *
      * @internal
      */
-    function _solidus(): string
+    function _solidus(?DocTypes $docTypesConfig = null): string
     {
-        if (config(DocTypes::class)->html5 ?? false) {
+        static $docTypes = null;
+
+        if ($docTypesConfig !== null) {
+            $docTypes = $docTypesConfig;
+        }
+
+        $docTypes ??= new DocTypes();
+
+        if ($docTypes->html5 ?? false) {
             return '';
         }
 

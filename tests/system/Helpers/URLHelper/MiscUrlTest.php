@@ -906,13 +906,50 @@ final class MiscUrlTest extends CIUnitTestCase
         );
     }
 
+    public function testUrlToWithNamedRouteWithNestedParentheses(): void
+    {
+        Services::createRequest(new App());
+        $routes = service('routes');
+
+        // The route will be:
+        //   docs/(master|\d+\.(?:\d+|x))/([a-z0-9-]+)
+        $routes->addPlaceholder([
+            'version' => 'master|\d+\.(?:\d+|x)',
+            'page'    => '[a-z0-9-]+',
+        ]);
+        $routes->get('docs/(:version)/(:page)', static function () {
+            echo 'Test the documentation segment';
+        }, ['as' => 'docs.version']);
+
+        $this->assertSame(
+            'http://example.com/index.php/docs/10.9/install',
+            url_to('docs.version', '10.9', 'install')
+        );
+    }
+
+    public function testUrlToWithRouteWithNestedParentheses(): void
+    {
+        Services::createRequest(new App());
+        $routes = service('routes');
+
+        // The route will be:
+        //   images/(^.*\.(?:jpg|png)$)
+        $routes->addPlaceholder('imgFileExt', '^.*\.(?:jpg|png)$');
+        $routes->get('images/(:imgFileExt)', 'Images::getFile/$1');
+
+        $this->assertSame(
+            'http://example.com/index.php/images/test.jpg',
+            url_to('Images::getFile', 'test.jpg')
+        );
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/7651
      */
     public function testUrlToMissingArgument(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Missing argument for "([a-zA-Z]+)" in route "([a-zA-Z]+)/login".');
+        $this->expectExceptionMessage('Missing argument for "(:alpha)" in route "(:alpha)/login".');
 
         $routes = Services::routes();
         $routes->group('(:alpha)', static function ($routes): void {

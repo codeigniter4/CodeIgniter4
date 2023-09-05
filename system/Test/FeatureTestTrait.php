@@ -39,7 +39,7 @@ trait FeatureTestTrait
      *    ['get', 'home', 'Home::index']
      * ]
      *
-     * @param array $routes
+     * @param array|null $routes Array to set routes
      *
      * @return $this
      */
@@ -51,7 +51,11 @@ trait FeatureTestTrait
             $collection->resetRoutes();
 
             foreach ($routes as $route) {
-                $collection->{$route[0]}($route[1], $route[2]);
+                if (isset($route[3])) {
+                    $collection->{$route[0]}($route[1], $route[2], $route[3]);
+                } else {
+                    $collection->{$route[0]}($route[1], $route[2]);
+                }
             }
         }
 
@@ -292,6 +296,9 @@ trait FeatureTestTrait
 
         if ($config->forceGlobalSecureRequests) {
             $_SERVER['HTTPS'] = 'test';
+            $server           = $request->getServer();
+            $server['HTTPS']  = 'test';
+            $request->setGlobal('server', $server);
         }
 
         return $request;

@@ -188,6 +188,8 @@ class MemcachedHandler extends BaseHandler
 
     /**
      * {@inheritDoc}
+     *
+     * @return never
      */
     public function deleteMatching(string $pattern)
     {

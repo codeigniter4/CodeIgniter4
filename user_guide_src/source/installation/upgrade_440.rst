@@ -155,8 +155,8 @@ Config Files
 app/Config/App.php
 ------------------
 
-- The property ``$proxyIPs`` must be an array. If you don't use proxy servers,
-  it must be ``public array $proxyIPs = [];``.
+The property ``$proxyIPs`` must be an array. If you don't use proxy servers,
+it must be ``public array $proxyIPs = [];``.
 
 .. _upgrade-440-config-routing:
 
@@ -175,6 +175,76 @@ So you need to do:
    directory, and configure it.
 2. Remove all settings in **app/Config/Routes.php** that are no longer needed.
 3. If you use the environment-specific routes files, add them to the ``$routeFiles`` property in **app/Config/Routing.php**.
+
+app/Config/Toolbar.php
+----------------------
+
+You need to add the new properties ``$watchedDirectories`` and ``$watchedExtensions``
+for :ref:`debug-toolbar-hot-reload`::
+
+    --- a/app/Config/Toolbar.php
+    +++ b/app/Config/Toolbar.php
+    @@ -88,4 +88,31 @@ class Toolbar extends BaseConfig
+          * `$maxQueries` defines the maximum amount of queries that will be stored.
+          */
+         public int $maxQueries = 100;
+    +
+    +    /**
+    +     * --------------------------------------------------------------------------
+    +     * Watched Directories
+    +     * --------------------------------------------------------------------------
+    +     *
+    +     * Contains an array of directories that will be watched for changes and
+    +     * used to determine if the hot-reload feature should reload the page or not.
+    +     * We restrict the values to keep performance as high as possible.
+    +     *
+    +     * NOTE: The ROOTPATH will be prepended to all values.
+    +     */
+    +    public array $watchedDirectories = [
+    +        'app',
+    +    ];
+    +
+    +    /**
+    +     * --------------------------------------------------------------------------
+    +     * Watched File Extensions
+    +     * --------------------------------------------------------------------------
+    +     *
+    +     * Contains an array of file extensions that will be watched for changes and
+    +     * used to determine if the hot-reload feature should reload the page or not.
+    +     */
+    +    public array $watchedExtensions = [
+    +        'php', 'css', 'js', 'html', 'svg', 'json', 'env',
+    +    ];
+     }
+
+
+app/Config/Events.php
+---------------------
+
+You need to add the code to add a route for :ref:`debug-toolbar-hot-reload`::
+
+    --- a/app/Config/Events.php
+    +++ b/app/Config/Events.php
+    @@ -4,6 +4,7 @@ namespace Config;
+
+     use CodeIgniter\Events\Events;
+     use CodeIgniter\Exceptions\FrameworkException;
+    +use CodeIgniter\HotReloader\HotReloader;
+
+     /*
+      * --------------------------------------------------------------------
+    @@ -44,5 +45,11 @@ Events::on('pre_system', static function () {
+         if (CI_DEBUG && ! is_cli()) {
+             Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
+             Services::toolbar()->respond();
+    +        // Hot Reload route - for framework use on the hot reloader.
+    +        if (ENVIRONMENT === 'development') {
+    +            Services::routes()->get('__hot-reload', static function () {
+    +                (new HotReloader())->run();
+    +            });
+    +        }
+         }
+     });
 
 app/Config/Cookie.php
 ---------------------

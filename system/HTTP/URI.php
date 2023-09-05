@@ -778,8 +778,6 @@ class URI
     /**
      * Sets the port portion of the URI.
      *
-     * @param int $port
-     *
      * @return $this
      *
      * @TODO PSR-7: Should be `withPort($port)`.

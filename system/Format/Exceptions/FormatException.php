@@ -36,7 +36,7 @@ class FormatException extends RuntimeException implements ExceptionInterface
      * Thrown in JSONFormatter when the json_encode produces
      * an error code other than JSON_ERROR_NONE and JSON_ERROR_RECURSION.
      *
-     * @param string $error
+     * @param string $error The error message
      *
      * @return static
      */

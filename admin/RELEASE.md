@@ -11,6 +11,8 @@
 If you release a new minor version.
 
 * Create PR to merge `4.x` into `develop` and merge it
+* Rename the current minor version (e.g., `4.4`) in Setting > Branches >
+  "Branch protection rules" to the next minor version. E.g. `4.4` → `4.5`
 * Delete the merged `4.x` branch (This closes all PRs to the branch)
 * Do the regular release process. Go to the next "Changelog" section
 
@@ -77,6 +79,7 @@ the existing content.
   * fill in the "All Changes" section, and add it to **upgrading.rst**
     * git diff --name-status origin/master -- . ':!system'
   * Remove the section titles that have no items
+  * Update the "from" version in the title. E.g., `from 4.3.x` → `from 4.3.8`
 * Commit the changes with `Prep for 4.x.x release` and push to origin
 * Create a new PR from `release-4.x.x` to `develop`:
   * Title: `Prep for 4.x.x release`
@@ -113,6 +116,8 @@ the existing content.
   * "[Deploy Distributable Repos](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/deploy-distributables.yml)", the main repo
   * "[Deploy Production](https://github.com/codeigniter4/userguide/actions/workflows/deploy.yml)", UG repo
   * "[pages-build-deployment](https://github.com/codeigniter4/userguide/actions/workflows/pages/pages-build-deployment)", UG repo
+  * Check if "CodeIgniter4.x.x.epub" is added to UG repo. "CodeIgniter.epub" was
+    created when v4.3.8 was released.
 * Fast-forward `develop` branch to catch the merge commit from `master`
     ```console
     git fetch origin

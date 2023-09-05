@@ -11,9 +11,13 @@
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
+use Config\App;
+use Config\Routing;
 use Config\Services;
 
 /**
@@ -75,6 +79,21 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->assertSame('Hello World', $response->response()->getBody());
         $this->assertSame('foo/bar/1/2/3', uri_string());
         $this->assertSame('http://example.com/index.php/foo/bar/1/2/3', current_url());
+    }
+
+    public function testCallGetAndFilterReturnsResponse(): void
+    {
+        $this->withRoutes([
+            [
+                'get',
+                'admin',
+                static fn () => 'Admin Area',
+                ['filter' => 'test-redirectfilter'],
+            ],
+        ]);
+        $response = $this->get('admin');
+
+        $response->assertRedirectTo('login');
     }
 
     public function testClosureWithEcho()
@@ -615,5 +634,31 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $request = $this->withBody('test')->setRequestBody($request);
 
         $this->assertSame('test', $request->getBody());
+    }
+
+    public function testAutoRoutingLegacy()
+    {
+        $config            = config(Routing::class);
+        $config->autoRoute = true;
+        Factories::injectMock('config', Routing::class, $config);
+
+        $response = $this->get('home/index');
+
+        $response->assertOK();
+    }
+
+    public function testForceGlobalSecureRequests()
+    {
+        $config                            = config(App::class);
+        $config->forceGlobalSecureRequests = true;
+        Factories::injectMock('config', App::class, $config);
+
+        $this->app = new MockCodeIgniter($config);
+        $this->app->initialize();
+
+        $response = $this->get('/');
+
+        // Do not redirect.
+        $response->assertStatus(200);
     }
 }

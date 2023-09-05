@@ -28,7 +28,9 @@ class RouteCollection implements RouteCollectionInterface
 {
     /**
      * The namespace to be added to any Controllers.
-     * Defaults to the global namespaces (\)
+     * Defaults to the global namespaces (\).
+     *
+     * This must have a trailing backslash (\).
      *
      * @var string
      */
@@ -288,7 +290,7 @@ class RouteCollection implements RouteCollectionInterface
         $this->httpHost = Services::request()->getServer('HTTP_HOST');
 
         // Setup based on config file. Let routes file override.
-        $this->defaultNamespace   = $routing->defaultNamespace;
+        $this->defaultNamespace   = rtrim($routing->defaultNamespace, '\\') . '\\';
         $this->defaultController  = $routing->defaultController;
         $this->defaultMethod      = $routing->defaultMethod;
         $this->translateURIDashes = $routing->translateURIDashes;
@@ -1149,11 +1151,13 @@ class RouteCollection implements RouteCollectionInterface
     public function reverseRoute(string $search, ...$params)
     {
         // Named routes get higher priority.
-        foreach ($this->routesNames as $collection) {
+        foreach ($this->routesNames as $verb => $collection) {
             if (array_key_exists($search, $collection)) {
                 $routeKey = $collection[$search];
 
-                return $this->buildReverseRoute($routeKey, $params);
+                $from = $this->routes[$verb][$routeKey]['from'];
+
+                return $this->buildReverseRoute($from, $params);
             }
         }
 
@@ -1169,8 +1173,9 @@ class RouteCollection implements RouteCollectionInterface
         // If it's not a named route, then loop over
         // all routes to find a match.
         foreach ($this->routes as $collection) {
-            foreach ($collection as $routeKey => $route) {
-                $to = $route['handler'];
+            foreach ($collection as $route) {
+                $to   = $route['handler'];
+                $from = $route['from'];
 
                 // ignore closures
                 if (! is_string($to)) {
@@ -1194,7 +1199,7 @@ class RouteCollection implements RouteCollectionInterface
                     continue;
                 }
 
-                return $this->buildReverseRoute($routeKey, $params);
+                return $this->buildReverseRoute($from, $params);
             }
         }
 
@@ -1309,21 +1314,21 @@ class RouteCollection implements RouteCollectionInterface
      * @param array $params One or more parameters to be passed to the route.
      *                      The last parameter allows you to set the locale.
      */
-    protected function buildReverseRoute(string $routeKey, array $params): string
+    protected function buildReverseRoute(string $from, array $params): string
     {
         $locale = null;
 
         // Find all of our back-references in the original route
-        preg_match_all('/\(([^)]+)\)/', $routeKey, $matches);
+        preg_match_all('/\(([^)]+)\)/', $from, $matches);
 
         if (empty($matches[0])) {
-            if (strpos($routeKey, '{locale}') !== false) {
+            if (strpos($from, '{locale}') !== false) {
                 $locale = $params[0] ?? null;
             }
 
-            $routeKey = $this->replaceLocale($routeKey, $locale);
+            $from = $this->replaceLocale($from, $locale);
 
-            return '/' . ltrim($routeKey, '/');
+            return '/' . ltrim($from, '/');
         }
 
         // Locale is passed?
@@ -1334,25 +1339,31 @@ class RouteCollection implements RouteCollectionInterface
 
         // Build our resulting string, inserting the $params in
         // the appropriate places.
-        foreach ($matches[0] as $index => $pattern) {
+        foreach ($matches[0] as $index => $placeholder) {
             if (! isset($params[$index])) {
                 throw new InvalidArgumentException(
-                    'Missing argument for "' . $pattern . '" in route "' . $routeKey . '".'
+                    'Missing argument for "' . $placeholder . '" in route "' . $from . '".'
                 );
             }
+
+            // Remove `(:` and `)` when $placeholder is a placeholder.
+            $placeholderName = substr($placeholder, 2, -1);
+            // or maybe $placeholder is not a placeholder, but a regex.
+            $pattern = $this->placeholders[$placeholderName] ?? $placeholder;
+
             if (! preg_match('#^' . $pattern . '$#u', $params[$index])) {
                 throw RouterException::forInvalidParameterType();
             }
 
             // Ensure that the param we're inserting matches
             // the expected param type.
-            $pos      = strpos($routeKey, $pattern);
-            $routeKey = substr_replace($routeKey, $params[$index], $pos, strlen($pattern));
+            $pos  = strpos($from, $placeholder);
+            $from = substr_replace($from, $params[$index], $pos, strlen($placeholder));
         }
 
-        $routeKey = $this->replaceLocale($routeKey, $locale);
+        $from = $this->replaceLocale($from, $locale);
 
-        return '/' . ltrim($routeKey, '/');
+        return '/' . ltrim($from, '/');
     }
 
     /**

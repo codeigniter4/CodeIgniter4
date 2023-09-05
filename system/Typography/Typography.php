@@ -323,10 +323,11 @@ class Typography
      */
     public function nl2brExceptPre(string $str): string
     {
-        $newstr = '';
+        $newstr   = '';
+        $docTypes = new DocTypes();
 
         for ($ex = explode('pre>', $str), $ct = count($ex), $i = 0; $i < $ct; $i++) {
-            $xhtml = ! (config(DocTypes::class)->html5 ?? false);
+            $xhtml = ! ($docTypes->html5 ?? false);
             $newstr .= (($i % 2) === 0) ? nl2br($ex[$i], $xhtml) : $ex[$i];
 
             if ($ct - 1 !== $i) {

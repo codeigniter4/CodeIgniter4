@@ -346,9 +346,6 @@ class Toolbar
     /**
      * Prepare for debugging..
      *
-     * @param RequestInterface  $request
-     * @param ResponseInterface $response
-     *
      * @return void
      */
     public function prepare(?RequestInterface $request = null, ?ResponseInterface $response = null)

@@ -236,8 +236,6 @@ class CreditCardRules
 
     /**
      * Checks the given number to see if the number passing a Luhn check.
-     *
-     * @param string $number
      */
     protected function isValidLuhn(?string $number = null): bool
     {
