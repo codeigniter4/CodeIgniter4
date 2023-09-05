@@ -88,6 +88,8 @@ class LocalizationFinder extends BaseCommand
         }
 
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($currentDir));
+        $files    = iterator_to_array($iterator, true);
+        ksort($files);
         $this->writeIsVerbose('Current locale: ' . $currentLocale);
         $this->writeIsVerbose('Find phrases in ' . $currentDir . ' folder...');
 
