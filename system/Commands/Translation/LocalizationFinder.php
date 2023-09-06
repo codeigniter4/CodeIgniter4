@@ -63,7 +63,7 @@ class LocalizationFinder extends BaseCommand
             if (! in_array($optionLocale, config(App::class)->supportedLocales, true)) {
                 CLI::error('Error: Supported locales ' . implode(', ', config(App::class)->supportedLocales));
 
-                return -1;
+                return EXIT_USER_INPUT;
             }
 
             $currentLocale = $optionLocale;
@@ -75,13 +75,13 @@ class LocalizationFinder extends BaseCommand
             if (false === $tempCurrentDir) {
                 CLI::error('Error: Dir must be located in ' . $currentDir);
 
-                return -1;
+                return EXIT_USER_INPUT;
             }
 
             if (str_starts_with($tempCurrentDir, $this->languagePath)) {
                 CLI::error('Error: Dir ' . $this->languagePath . ' restricted to scan.');
 
-                return -1;
+                return EXIT_USER_INPUT;
             }
 
             $currentDir = $tempCurrentDir;
@@ -154,6 +154,8 @@ class LocalizationFinder extends BaseCommand
         $this->writeIsVerbose('Files found: ' . $countFiles);
         $this->writeIsVerbose('New translates found: ' . $countNewKeys);
         CLI::write('All operations done!');
+
+        return EXIT_SUCCESS;
     }
 
     /**
