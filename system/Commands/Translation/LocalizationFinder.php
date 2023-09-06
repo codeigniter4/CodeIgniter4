@@ -343,7 +343,7 @@ class LocalizationFinder extends BaseCommand
         }
     }
 
-    public function isSubDirectory(string $directory, string $rootDirectory): bool
+    private function isSubDirectory(string $directory, string $rootDirectory): bool
     {
         return 0 === strncmp($directory, $rootDirectory, strlen($directory));
     }
