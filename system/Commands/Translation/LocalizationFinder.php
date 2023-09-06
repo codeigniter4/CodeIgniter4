@@ -230,6 +230,7 @@ class LocalizationFinder extends BaseCommand
                 <?php
 
                 return {$languageArrayString};
+
                 PHP;
         }
 
@@ -237,6 +238,7 @@ class LocalizationFinder extends BaseCommand
             <?php
 
             return [];
+
             PHP;
     }
 
