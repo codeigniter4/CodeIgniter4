@@ -23,7 +23,7 @@ class LocalizationFinder extends BaseCommand
 {
     protected $group       = 'Translation';
     protected $name        = 'lang:find';
-    protected $description = 'Find and save available phrases to translate';
+    protected $description = 'Find and save available phrases to translate.';
     protected $usage       = 'lang:find [options]';
     protected $arguments   = [];
     protected $options     = [
