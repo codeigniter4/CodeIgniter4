@@ -77,7 +77,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
             'locale' => self::$locale,
         ]);
 
-        $this->assertSame($status, -1);
+        $this->assertSame($status, EXIT_USER_INPUT);
     }
 
     public function testUpdateWithEmptyDirOption(): void
@@ -97,7 +97,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
             'dir' => 'Translation/NotExistFolder',
         ]);
 
-        $this->assertSame($status, -1);
+        $this->assertSame($status, EXIT_USER_INPUT);
     }
 
     public function testShowNewTranslation(): void
