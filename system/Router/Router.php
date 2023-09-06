@@ -185,13 +185,7 @@ class Router implements RouterInterface
         // Checks defined routes
         if ($this->checkRoutes($uri)) {
             if ($this->collection->isFiltered($this->matchedRoute[0])) {
-                $multipleFiltersEnabled = config(Feature::class)->multipleFilters ?? false;
-                if ($multipleFiltersEnabled) {
-                    $this->filtersInfo = $this->collection->getFiltersForRoute($this->matchedRoute[0]);
-                } else {
-                    // for backward compatibility
-                    $this->filterInfo = $this->collection->getFilterForRoute($this->matchedRoute[0]);
-                }
+                $this->filtersInfo = $this->collection->getFiltersForRoute($this->matchedRoute[0]);
             }
 
             return $this->controller;

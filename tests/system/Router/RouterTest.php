@@ -613,9 +613,6 @@ final class RouterTest extends CIUnitTestCase
 
     public function testRouteWorksWithMultipleFilters(): void
     {
-        $feature                  = config('Feature');
-        $feature->multipleFilters = true;
-
         $collection = $this->collection;
 
         $collection->add('foo', 'TestController::foo', ['filter' => ['filter1', 'filter2:param']]);
@@ -626,8 +623,6 @@ final class RouterTest extends CIUnitTestCase
         $this->assertSame('\TestController', $router->controllerName());
         $this->assertSame('foo', $router->methodName());
         $this->assertSame(['filter1', 'filter2:param'], $router->getFilters());
-
-        $feature->multipleFilters = false;
     }
 
     /**
