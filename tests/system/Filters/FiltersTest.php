@@ -834,7 +834,7 @@ final class FiltersTest extends CIUnitTestCase
         $filters       = $this->createFilters($filtersConfig);
 
         $filters = $filters->initialize('admin/foo/bar');
-        $filters->enableFilter('google', 'before');
+        $filters->enableFilters(['google'], 'before');
         $filters = $filters->getFilters();
 
         $this->assertContains('google', $filters['before']);
@@ -941,8 +941,8 @@ final class FiltersTest extends CIUnitTestCase
         $filters       = $this->createFilters($filtersConfig);
 
         $filters = $filters->initialize('admin/foo/bar');
-        $filters->enableFilter('role:admin , super', 'before');
-        $filters->enableFilter('role:admin , super', 'after');
+        $filters->enableFilters(['role:admin , super'], 'before');
+        $filters->enableFilters(['role:admin , super'], 'after');
         $found = $filters->getFilters();
 
         $this->assertContains('role', $found['before']);
@@ -973,8 +973,8 @@ final class FiltersTest extends CIUnitTestCase
         $filters       = $this->createFilters($filtersConfig);
 
         $filters = $filters->initialize('admin/foo/bar');
-        $filters->enableFilter('role', 'before');
-        $filters->enableFilter('role', 'after');
+        $filters->enableFilters(['role'], 'before');
+        $filters->enableFilters(['role'], 'after');
         $found = $filters->getFilters();
 
         $this->assertContains('role', $found['before']);
@@ -1005,7 +1005,7 @@ final class FiltersTest extends CIUnitTestCase
         $filters       = $this->createFilters($filtersConfig);
 
         $filters = $filters->initialize('admin/foo/bar');
-        $filters->enableFilter('goggle', 'before');
+        $filters->enableFilters(['goggle'], 'before');
     }
 
     /**
