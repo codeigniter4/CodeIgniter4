@@ -96,7 +96,7 @@ class LocalizationFinder extends BaseCommand
         /**
          * @var SplFileInfo $file
          */
-        foreach ($iterator as $file) {
+        foreach ($files as $file) {
             if ($this->isIgnoredFile($file)) {
                 continue;
             }
