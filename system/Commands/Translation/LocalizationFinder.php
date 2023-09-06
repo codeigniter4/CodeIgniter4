@@ -78,7 +78,7 @@ class LocalizationFinder extends BaseCommand
                 return EXIT_USER_INPUT;
             }
 
-            if (str_starts_with($tempCurrentDir, $this->languagePath)) {
+            if ($this->isSubDirectory($tempCurrentDir, $this->languagePath)) {
                 CLI::error('Error: Directory "' . $this->languagePath . '" restricted to scan.');
 
                 return EXIT_USER_INPUT;
@@ -341,5 +341,10 @@ class LocalizationFinder extends BaseCommand
         if ($this->verbose) {
             CLI::write($text, $foreground, $background);
         }
+    }
+
+    public function isSubDirectory(string $directory, string $rootDirectory): bool
+    {
+        return 0 === strncmp($directory, $rootDirectory, strlen($directory));
     }
 }
