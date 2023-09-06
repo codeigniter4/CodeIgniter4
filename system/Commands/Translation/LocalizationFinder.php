@@ -79,7 +79,7 @@ class LocalizationFinder extends BaseCommand
             }
 
             if (str_starts_with($tempCurrentDir, $this->languagePath)) {
-                CLI::error('Error: Dir ' . $this->languagePath . ' restricted to scan.');
+                CLI::error('Error: Directory "' . $this->languagePath . '" restricted to scan.');
 
                 return EXIT_USER_INPUT;
             }
