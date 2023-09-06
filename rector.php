@@ -38,6 +38,8 @@ use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\ConstructClassMethodToSetUpTestCaseRector;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Set\ValueObject\LevelSetList;
@@ -51,9 +53,8 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
         SetList::DEAD_CODE,
         LevelSetList::UP_TO_PHP_74,
-        PHPUnitSetList::PHPUNIT_SPECIFIC_METHOD,
+        PHPUnitSetList::PHPUNIT_CODE_QUALITY,
         PHPUnitSetList::PHPUNIT_80,
-        PHPUnitSetList::REMOVE_MOCKS,
     ]);
 
     $rectorConfig->parallel(240, 8, 1);
@@ -77,10 +78,16 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/tests/_support',
         JsonThrowOnErrorRector::class,
         StringifyStrNeedlesRector::class,
+        YieldDataProviderRector::class,
 
         RemoveUnusedPrivateMethodRector::class => [
             // private method called via getPrivateMethodInvoker
             __DIR__ . '/tests/system/Test/ReflectionHelperTest.php',
+        ],
+
+        ConstructClassMethodToSetUpTestCaseRector::class => [
+            // breaks the constructor
+            __DIR__ . '/system/Test/TestResponse.php',
         ],
 
         RemoveUnusedConstructorParamRector::class => [
