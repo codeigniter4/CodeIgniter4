@@ -71,6 +71,9 @@ class CLIRequest extends Request
         ignore_user_abort(true);
 
         $this->parseCommand();
+
+        // Set SiteURI for this request
+        $this->uri = new SiteURI($config, $this->getPath());
     }
 
     /**
