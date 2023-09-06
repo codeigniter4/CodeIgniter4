@@ -19,6 +19,8 @@ use Exception;
 
 /**
  * Web Page Caching
+ *
+ * @see \CodeIgniter\Cache\ResponseCacheTest
  */
 final class ResponseCache
 {

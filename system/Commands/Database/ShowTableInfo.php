@@ -18,6 +18,8 @@ use Config\Database;
 
 /**
  * Get table data if it exists in the database.
+ *
+ * @see \CodeIgniter\Commands\Database\ShowTableInfoTest
  */
 class ShowTableInfo extends BaseCommand
 {

@@ -22,6 +22,8 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Class Controller
+ *
+ * @see \CodeIgniter\ControllerTest
  */
 class Controller
 {

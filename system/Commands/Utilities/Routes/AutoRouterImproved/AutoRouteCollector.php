@@ -16,6 +16,8 @@ use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
 
 /**
  * Collects data for Auto Routing Improved.
+ *
+ * @see \CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\AutoRouteCollectorTest
  */
 final class AutoRouteCollector
 {

@@ -22,6 +22,8 @@ use Psr\Log\LoggerInterface;
  *
  * @phpstan-type ParserCallable (callable(mixed): mixed)
  * @phpstan-type ParserCallableString (callable(mixed): mixed)&string
+ *
+ * @see \CodeIgniter\View\ParserTest
  */
 class Parser extends View
 {

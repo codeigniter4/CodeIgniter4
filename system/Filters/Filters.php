@@ -21,6 +21,8 @@ use Config\Services;
 
 /**
  * Filters
+ *
+ * @see \CodeIgniter\Filters\FiltersTest
  */
 class Filters
 {

@@ -16,6 +16,8 @@ use ReflectionMethod;
 
 /**
  * Reads a controller and returns a list of auto route listing.
+ *
+ * @see \CodeIgniter\Commands\Utilities\Routes\ControllerMethodReaderTest
  */
 final class ControllerMethodReader
 {

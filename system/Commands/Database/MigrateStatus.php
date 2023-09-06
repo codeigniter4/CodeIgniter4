@@ -17,6 +17,8 @@ use Config\Services;
 
 /**
  * Displays a list of all migrations and whether they've been run or not.
+ *
+ * @see \CodeIgniter\Commands\Database\MigrateStatusTest
  */
 class MigrateStatus extends BaseCommand
 {

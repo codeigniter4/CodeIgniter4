@@ -33,6 +33,8 @@ use Throwable;
  * The wait() method is mostly testable, as long as you don't give it
  * an argument of "0".
  * These have been flagged to ignore for code coverage purposes.
+ *
+ * @see \CodeIgniter\CLI\CLITest
  */
 class CLI
 {

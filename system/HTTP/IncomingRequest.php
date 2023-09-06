@@ -42,6 +42,8 @@ use stdClass;
  * - Query string arguments (generally via $_GET, or as parsed via parse_str())
  * - Upload files, if any (as represented by $_FILES)
  * - Deserialized body binds (generally from $_POST)
+ *
+ * @see \CodeIgniter\HTTP\IncomingRequestTest
  */
 class IncomingRequest extends Request
 {

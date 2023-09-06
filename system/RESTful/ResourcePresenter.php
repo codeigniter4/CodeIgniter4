@@ -15,6 +15,8 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 /**
  * An extendable controller to help provide a UI for a resource.
+ *
+ * @see \CodeIgniter\RESTful\ResourcePresenterTest
  */
 class ResourcePresenter extends BaseResource
 {
