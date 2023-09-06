@@ -45,58 +45,70 @@ final class LocalizationFinderTest extends CIUnitTestCase
 
     public function testUpdateDefaultLocale(): void
     {
-        @mkdir(self::$languageTestPath . self::$locale, 0777, true);
+        $this->makeLocaleDirectory();
+
         Services::commands()->run('lang:find', [
             'dir' => 'Translation',
         ]);
+
         $this->realizeAssertion();
     }
 
     public function testUpdateWithLocaleOption(): void
     {
         self::$locale = config(App::class)->supportedLocales[0];
-        @mkdir(self::$languageTestPath . self::$locale, 0777, true);
+        $this->makeLocaleDirectory();
+
         Services::commands()->run('lang:find', [
             'dir'    => 'Translation',
             'locale' => self::$locale,
         ]);
+
         $this->realizeAssertion();
     }
 
     public function testUpdateWithIncorrectLocaleOption(): void
     {
         self::$locale = 'test_locale_incorrect';
-        @mkdir(self::$languageTestPath . self::$locale, 0777, true);
+        $this->makeLocaleDirectory();
+
         $status = Services::commands()->run('lang:find', [
             'dir'    => 'Translation',
             'locale' => self::$locale,
         ]);
+
         $this->assertSame($status, -1);
     }
 
     public function testUpdateWithEmptyDirOption(): void
     {
-        @mkdir(self::$languageTestPath . self::$locale, 0777, true);
+        $this->makeLocaleDirectory();
+
         Services::commands()->run('lang:find', []);
+
         $this->realizeAssertion();
     }
 
     public function testUpdateWithIncorrectDirOption(): void
     {
-        @mkdir(self::$languageTestPath . self::$locale, 0777, true);
+        $this->makeLocaleDirectory();
+
         $status = Services::commands()->run('lang:find', [
             'dir' => 'Translation/NotExistFolder',
         ]);
+
         $this->assertSame($status, -1);
     }
 
     public function testShowNewTranslation(): void
     {
-        @mkdir(self::$languageTestPath . self::$locale, 0777, true);
+        $this->makeLocaleDirectory();
+
         Services::commands()->run('lang:find', [
             'dir'      => 'Translation',
             'show-new' => null,
         ]);
+
         $this->assertStringContainsString($this->getActualTableWithNewKeys(), $this->getStreamFilterBuffer());
     }
 
@@ -203,6 +215,11 @@ final class LocalizationFinderTest extends CIUnitTestCase
         $this->assertSame($translationOneKeys, $this->getActualTranslationOneKeys());
         $this->assertSame($translationThreeKeys, $this->getActualTranslationThreeKeys());
         $this->assertSame($translationFourKeys, $this->getActualTranslationFourKeys());
+    }
+
+    private function makeLocaleDirectory(): void
+    {
+        @mkdir(self::$languageTestPath . self::$locale, 0777, true);
     }
 
     private function clearGeneratedFiles(): void
