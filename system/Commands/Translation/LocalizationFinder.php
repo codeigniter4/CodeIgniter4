@@ -43,9 +43,9 @@ class LocalizationFinder extends BaseCommand
     public function run(array $params)
     {
         $this->verbose      = array_key_exists('verbose', $params);
-        $cliOptionShowNew   = array_key_exists('show-new', $params);
-        $cliOptionLocale    = ! empty($params['locale']) ? $params['locale'] : null;
-        $cliOptionDir       = ! empty($params['dir']) ? $params['dir'] : null;
+        $optionShowNew      = array_key_exists('show-new', $params);
+        $optionLocale       = ! empty($params['locale']) ? $params['locale'] : null;
+        $optionDir          = ! empty($params['dir']) ? $params['dir'] : null;
         $currentLocale      = Locale::getDefault();
         $currentDir         = APPPATH;
         $this->languagePath = $currentDir . 'Language';
@@ -59,18 +59,18 @@ class LocalizationFinder extends BaseCommand
             $this->languagePath = SUPPORTPATH . 'Language/';
         }
 
-        if (is_string($cliOptionLocale)) {
-            if (! in_array($cliOptionLocale, config(App::class)->supportedLocales, true)) {
+        if (is_string($optionLocale)) {
+            if (! in_array($optionLocale, config(App::class)->supportedLocales, true)) {
                 CLI::error('Error: Supported locales ' . implode(', ', config(App::class)->supportedLocales));
 
                 return -1;
             }
 
-            $currentLocale = $cliOptionLocale;
+            $currentLocale = $optionLocale;
         }
 
-        if (is_string($cliOptionDir)) {
-            $tempCurrentDir = realpath($currentDir . $cliOptionDir);
+        if (is_string($optionDir)) {
+            $tempCurrentDir = realpath($currentDir . $optionDir);
 
             if (false === $tempCurrentDir) {
                 CLI::error('Error: Dir must be located in ' . $currentDir);
@@ -124,7 +124,7 @@ class LocalizationFinder extends BaseCommand
             $languageDiff = $this->arrayDiffRecursive($languageFoundKeys[$langFileName], $languageStoredKeys);
             $countNewKeys += $this->arrayCountRecursive($languageDiff);
 
-            if ($cliOptionShowNew) {
+            if ($optionShowNew) {
                 $tableRows = array_merge($this->arrayToTableRows($langFileName, $languageDiff), $tableRows);
             } else {
                 $newLanguageKeys = array_replace_recursive($languageFoundKeys[$langFileName], $languageStoredKeys);
@@ -146,7 +146,7 @@ class LocalizationFinder extends BaseCommand
             }
         }
 
-        if ($cliOptionShowNew && ! empty($tableRows)) {
+        if ($optionShowNew && ! empty($tableRows)) {
             sort($tableRows);
             CLI::table($tableRows, ['File', 'Key']);
         }
