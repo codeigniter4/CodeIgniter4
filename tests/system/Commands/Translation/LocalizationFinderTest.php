@@ -37,6 +37,12 @@ final class LocalizationFinderTest extends CIUnitTestCase
         $this->clearGeneratedFiles();
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->clearGeneratedFiles();
+    }
+
     public function testUpdateDefaultLocale(): void
     {
         @mkdir(self::$languageTestPath . self::$locale, 0777, true);
@@ -44,7 +50,6 @@ final class LocalizationFinderTest extends CIUnitTestCase
             'dir' => 'Translation',
         ]);
         $this->realizeAssertion();
-        $this->clearGeneratedFiles();
     }
 
     public function testUpdateWithLocaleOption(): void
@@ -56,7 +61,6 @@ final class LocalizationFinderTest extends CIUnitTestCase
             'locale' => self::$locale,
         ]);
         $this->realizeAssertion();
-        $this->clearGeneratedFiles();
     }
 
     public function testUpdateWithIncorrectLocaleOption(): void
@@ -68,7 +72,6 @@ final class LocalizationFinderTest extends CIUnitTestCase
             'locale' => self::$locale,
         ]);
         $this->assertSame($status, -1);
-        $this->clearGeneratedFiles();
     }
 
     public function testUpdateWithEmptyDirOption(): void
@@ -76,7 +79,6 @@ final class LocalizationFinderTest extends CIUnitTestCase
         @mkdir(self::$languageTestPath . self::$locale, 0777, true);
         Services::commands()->run('lang:find', []);
         $this->realizeAssertion();
-        $this->clearGeneratedFiles();
     }
 
     public function testUpdateWithIncorrectDirOption(): void
@@ -86,7 +88,6 @@ final class LocalizationFinderTest extends CIUnitTestCase
             'dir' => 'Translation/NotExistFolder',
         ]);
         $this->assertSame($status, -1);
-        $this->clearGeneratedFiles();
     }
 
     public function testShowNewTranslation(): void
@@ -97,7 +98,6 @@ final class LocalizationFinderTest extends CIUnitTestCase
             'show-new' => null,
         ]);
         $this->assertStringContainsString($this->getActualTableWithNewKeys(), $this->getStreamFilterBuffer());
-        $this->clearGeneratedFiles();
     }
 
     private function getActualTranslationOneKeys(): array
