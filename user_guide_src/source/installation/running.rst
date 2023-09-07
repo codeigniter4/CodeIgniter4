@@ -33,7 +33,7 @@ Open the **app/Config/App.php** file with a text editor.
 #. $baseURL
     Set your base URL to ``$baseURL``. If you need more flexibility, the baseURL may
     be set within the :ref:`.env <dotenv-file>` file as ``app.baseURL = 'http://example.com/'``.
-    (Always use a trailing slash on your base URL!)
+    **Always use a trailing slash on your base URL!**
 
     .. note:: If you don't set the ``baseURL`` correctly, in development mode,
         the debug toolbar may not load properly and web pages may take considerably
