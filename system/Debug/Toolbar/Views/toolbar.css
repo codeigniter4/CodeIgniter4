@@ -532,6 +532,9 @@
   #debug-bar .timeline .timer {
     background-color: #DD8615;
   }
+  #debug-bar .timeline .timeline-parent-open td {
+    color: #252525;
+  }
   .debug-view.show-view {
     border-color: #DD8615;
   }
