@@ -13,7 +13,7 @@ class BootstrapPublisher extends Publisher
      *
      * @var string
      */
-    protected $source = 'vendor/twbs/bootstrap/';
+    protected $source = VENDORPATH . 'twbs/bootstrap/';
 
     /**
      * FCPATH is always the default destination,
