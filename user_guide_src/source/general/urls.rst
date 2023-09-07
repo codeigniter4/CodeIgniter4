@@ -63,7 +63,7 @@ Query      page=2
 Removing the index.php file
 ===========================
 
-By default, the **index.php** file will be included in your URLs::
+When you use Apache Web Server, by default, the **index.php** file will be needed in your URLs::
 
     example.com/index.php/news/article/my_article
 
@@ -95,10 +95,10 @@ request for your index.php file.
 
 .. _urls-remove-index-php-nginx:
 
-NGINX
+nginx
 -----
 
-Under NGINX, you can define a location block and use the ``try_files`` directive to get the same effect as we did with
+Under nginx, you can define a location block and use the ``try_files`` directive to get the same effect as we did with
 the above Apache configuration:
 
 .. code-block:: nginx
