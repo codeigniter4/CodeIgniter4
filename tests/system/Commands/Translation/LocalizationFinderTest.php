@@ -34,7 +34,6 @@ final class LocalizationFinderTest extends CIUnitTestCase
         parent::setUp();
         self::$locale           = Locale::getDefault();
         self::$languageTestPath = SUPPORTPATH . 'Language/';
-        $this->clearGeneratedFiles();
     }
 
     protected function tearDown(): void
