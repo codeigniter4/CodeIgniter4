@@ -154,7 +154,7 @@ class LocalizationFinder extends BaseCommand
 
     private function isIgnoredFile(SplFileInfo $file): bool
     {
-        if ($file->isDir() || str_contains($file->getRealPath(), $this->languagePath)) {
+        if ($file->isDir() || $this->isSubDirectory($file->getRealPath(), $this->languagePath)) {
             return true;
         }
 
