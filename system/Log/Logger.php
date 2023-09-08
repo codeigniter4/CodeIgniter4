@@ -28,6 +28,8 @@ use Throwable;
  * The context array can contain arbitrary data, the only assumption that
  * can be made by implementors is that if an Exception instance is given
  * to produce a stack trace, it MUST be in a key named "exception".
+ *
+ * @see \CodeIgniter\Log\LoggerTest
  */
 class Logger implements LoggerInterface
 {

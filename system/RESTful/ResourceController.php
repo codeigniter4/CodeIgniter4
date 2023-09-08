@@ -16,6 +16,8 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 /**
  * An extendable controller to provide a RESTful API for a resource.
+ *
+ * @see \CodeIgniter\RESTful\ResourceControllerTest
  */
 class ResourceController extends BaseResource
 {

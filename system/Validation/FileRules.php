@@ -21,6 +21,8 @@ use InvalidArgumentException;
 
 /**
  * File validation rules
+ *
+ * @see \CodeIgniter\Validation\FileRulesTest
  */
 class FileRules
 {

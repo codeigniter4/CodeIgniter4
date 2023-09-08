@@ -16,6 +16,8 @@ use CodeIgniter\Config\Services;
 
 /**
  * Finds all controllers in a namespace for auto route listing.
+ *
+ * @see \CodeIgniter\Commands\Utilities\Routes\ControllerFinderTest
  */
 final class ControllerFinder
 {

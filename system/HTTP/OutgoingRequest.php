@@ -13,6 +13,8 @@ namespace CodeIgniter\HTTP;
 
 /**
  * Representation of an outgoing, client-side request.
+ *
+ * @see \CodeIgniter\HTTP\OutgoingRequestTest
  */
 class OutgoingRequest extends Message implements OutgoingRequestInterface
 {

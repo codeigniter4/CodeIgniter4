@@ -15,6 +15,8 @@ use RuntimeException;
 
 /**
  * Replace Text Content
+ *
+ * @see \CodeIgniter\Publisher\ContentReplacerTest
  */
 class ContentReplacer
 {

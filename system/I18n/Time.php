@@ -20,6 +20,7 @@ use DateTimeImmutable;
  * Requires the intl PHP extension.
  *
  * @property string $date
+ * @see \CodeIgniter\I18n\TimeTest
  */
 class Time extends DateTimeImmutable
 {

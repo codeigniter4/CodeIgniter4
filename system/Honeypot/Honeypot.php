@@ -19,6 +19,8 @@ use Config\Honeypot as HoneypotConfig;
 
 /**
  * class Honeypot
+ *
+ * @see \CodeIgniter\Honeypot\HoneypotTest
  */
 class Honeypot
 {

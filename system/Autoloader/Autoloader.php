@@ -53,6 +53,8 @@ use RuntimeException;
  *      // register the autoloader
  *      $loader->register();
  * ```
+ *
+ * @see \CodeIgniter\Autoloader\AutoloaderTest
  */
 class Autoloader
 {

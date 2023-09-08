@@ -25,6 +25,8 @@ use RuntimeException;
  *
  * Bridge class for using Faker to create example data based on
  * model specifications.
+ *
+ * @see \CodeIgniter\Test\FabricatorTest
  */
 class Fabricator
 {

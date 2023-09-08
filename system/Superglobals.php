@@ -15,6 +15,7 @@ namespace CodeIgniter;
  * Superglobals manipulation.
  *
  * @internal
+ * @see \CodeIgniter\SuperglobalsTest
  */
 final class Superglobals
 {
