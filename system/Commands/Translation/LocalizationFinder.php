@@ -27,9 +27,9 @@ class LocalizationFinder extends BaseCommand
     protected $usage       = 'lang:find [options]';
     protected $arguments   = [];
     protected $options     = [
-        '--locale'   => 'Apply changes to the selected locale (en, ru, etc...).',
+        '--locale'   => 'Specify locale (en, ru, etc...) to save files.',
         '--dir'      => 'Directory for searching for translations (in relation to the APPPATH).',
-        '--show-new' => 'See only new translations as table.',
+        '--show-new' => 'See only new translations as table. Do not write to files.',
         '--verbose'  => 'Output detailed information.',
     ];
 
@@ -74,7 +74,7 @@ class LocalizationFinder extends BaseCommand
             $tempCurrentDir = realpath($currentDir . $optionDir);
 
             if (false === $tempCurrentDir) {
-                CLI::error('Error: Dir must be located in ' . $currentDir);
+                CLI::error('Error: Directory must be located in "' . $currentDir . '"');
 
                 return EXIT_USER_INPUT;
             }
@@ -199,7 +199,7 @@ class LocalizationFinder extends BaseCommand
     }
 
     /**
-     * Compare recursive two arrays and return new array (diference)
+     * Compare recursive two arrays and return new array (difference)
      */
     private function arrayDiffRecursive(array $originalArray, array $compareArray): array
     {
