@@ -4,7 +4,7 @@
 $message  = lang('Text.info.success');
 $message2 = lang('Text.paragraph');
 
-// Save in Language/en/Text.php
+// The following will be saved in Language/en/Text.php
 return [
     'info' => [
         'success' => 'Text.info.success',
