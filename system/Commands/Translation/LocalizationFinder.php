@@ -163,7 +163,7 @@ class LocalizationFinder extends BaseCommand
 
     private function templateFile(array $language = []): string
     {
-        if (! empty($language)) {
+        if ([] !== $language) {
             $languageArrayString = $this->languageKeysDump($language);
 
             return <<<PHP
