@@ -260,7 +260,7 @@ abstract class BaseUtils
      *
      * @param array|string $params
      *
-     * @return mixed
+     * @return false|never|string
      *
      * @throws DatabaseException
      */
@@ -316,7 +316,7 @@ abstract class BaseUtils
     /**
      * Platform dependent version of the backup function.
      *
-     * @return mixed
+     * @return false|never|string
      */
     abstract public function _backup(?array $prefs = null);
 }
