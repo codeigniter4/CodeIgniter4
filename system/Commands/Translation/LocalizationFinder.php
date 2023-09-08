@@ -103,7 +103,7 @@ class LocalizationFinder extends BaseCommand
      */
     private function findTranslationsInFile($file): array
     {
-        $languageFoundKeys = [];
+        $foundLanguageKeys = [];
 
         if (is_string($file) && is_file($file)) {
             $file = new SplFileInfo($file);
@@ -142,14 +142,14 @@ class LocalizationFinder extends BaseCommand
                 /**
                  * Add found language keys to temporary array
                  */
-                $languageFoundKeys[$languageFileName][$phraseKeys[0]] = $phraseKey;
+                $foundLanguageKeys[$languageFileName][$phraseKeys[0]] = $phraseKey;
             } else {
                 $childKeys                            = $this->buildMultiArray($phraseKeys, $phraseKey);
-                $languageFoundKeys[$languageFileName] = array_replace_recursive($languageFoundKeys[$languageFileName] ?? [], $childKeys);
+                $foundLanguageKeys[$languageFileName] = array_replace_recursive($foundLanguageKeys[$languageFileName] ?? [], $childKeys);
             }
         }
 
-        return $languageFoundKeys;
+        return $foundLanguageKeys;
     }
 
     private function isIgnoredFile(SplFileInfo $file): bool
@@ -297,14 +297,14 @@ class LocalizationFinder extends BaseCommand
         $files    = iterator_to_array($iterator, true);
         ksort($files);
 
-        [$languageFoundKeys, $countFiles] = $this->findLanguageKeysInFiles($files);
-        ksort($languageFoundKeys);
+        [$foundLanguageKeys, $countFiles] = $this->findLanguageKeysInFiles($files);
+        ksort($foundLanguageKeys);
 
         /**
          * New translates
          */
         $languageDiff        = [];
-        $languageFoundGroups = array_unique(array_keys($languageFoundKeys));
+        $languageFoundGroups = array_unique(array_keys($foundLanguageKeys));
 
         foreach ($languageFoundGroups as $langFileName) {
             $languageStoredKeys = [];
@@ -317,13 +317,13 @@ class LocalizationFinder extends BaseCommand
                 $languageStoredKeys = require $languageFilePath;
             }
 
-            $languageDiff = $this->arrayDiffRecursive($languageFoundKeys[$langFileName], $languageStoredKeys);
+            $languageDiff = $this->arrayDiffRecursive($foundLanguageKeys[$langFileName], $languageStoredKeys);
             $countNewKeys += $this->arrayCountRecursive($languageDiff);
 
             if ($this->showNew) {
                 $tableRows = array_merge($this->arrayToTableRows($langFileName, $languageDiff), $tableRows);
             } else {
-                $newLanguageKeys = array_replace_recursive($languageFoundKeys[$langFileName], $languageStoredKeys);
+                $newLanguageKeys = array_replace_recursive($foundLanguageKeys[$langFileName], $languageStoredKeys);
 
                 /**
                  * New translates exists
@@ -356,7 +356,7 @@ class LocalizationFinder extends BaseCommand
      */
     private function findLanguageKeysInFiles(array $files): array
     {
-        $languageFoundKeys = [];
+        $foundLanguageKeys = [];
         $countFiles        = 0;
 
         foreach ($files as $file) {
@@ -366,9 +366,9 @@ class LocalizationFinder extends BaseCommand
 
             $this->writeIsVerbose('File found: ' . mb_substr($file->getRealPath(), mb_strlen(APPPATH)));
             $countFiles++;
-            $languageFoundKeys = array_replace_recursive($this->findTranslationsInFile($file), $languageFoundKeys);
+            $foundLanguageKeys = array_replace_recursive($this->findTranslationsInFile($file), $foundLanguageKeys);
         }
 
-        return [$languageFoundKeys, $countFiles];
+        return [$foundLanguageKeys, $countFiles];
     }
 }
