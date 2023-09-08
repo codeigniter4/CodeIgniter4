@@ -171,9 +171,6 @@ a list of URI path (relative to BaseURL) patterns that filter should apply to:
 .. _filters-filters-filter-arguments:
 
 Filter Arguments
-================
-
-Filter Arguments
 ----------------
 
 .. versionadded:: 4.4.0
