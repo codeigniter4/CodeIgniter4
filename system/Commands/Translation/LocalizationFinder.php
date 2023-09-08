@@ -352,6 +352,7 @@ class LocalizationFinder extends BaseCommand
      * @param SplFileInfo[] $files
      *
      * @return array<int, array|int>
+     * @phpstan-return list{0: array<string, array<string, string>>, 1: int}
      */
     private function findLanguageKeysInFiles(array $files): array
     {
