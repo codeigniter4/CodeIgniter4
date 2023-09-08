@@ -183,17 +183,16 @@ final class ParserFilterTest extends CIUnitTestCase
             EOF;
 
         // PHP 8.3 changes the output.
-        if (version_compare(PHP_VERSION, '8.3', '<')) {
+        if (PHP_VERSION_ID >= 80300) {
+            $expected = <<<'EOF'
+                <pre><code style="color: #000000"><span style="color: #0000BB">Sincerely ?&gt;</span></code></pre>
+                EOF;
+        } else {
             $expected = <<<'EOF'
                 <code><span style="color: #000000">
                 <span style="color: #0000BB">Sincerely&nbsp;</span>
                 </span>
                 </code>
-                EOF;
-        } else {
-            // PHP 8.3
-            $expected = <<<'EOF'
-                <pre><code style="color: #000000"><span style="color: #0000BB">Sincerely ?&gt;</span></code></pre>
                 EOF;
         }
 

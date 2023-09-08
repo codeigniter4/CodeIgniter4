@@ -264,11 +264,10 @@ final class TextHelperTest extends CIUnitTestCase
     public function testHighlightCode(): void
     {
         // PHP 8.3 changes the output.
-        if (version_compare(PHP_VERSION, '8.3', '<')) {
-            $expect = "<code><span style=\"color: #000000\">\n<span style=\"color: #0000BB\">&lt;?php&nbsp;var_dump</span><span style=\"color: #007700\">(</span><span style=\"color: #0000BB\">\$this</span><span style=\"color: #007700\">);&nbsp;</span><span style=\"color: #0000BB\">?&gt;&nbsp;</span>\n</span>\n</code>";
-        } else {
-            // PHP 8.3
+        if (PHP_VERSION_ID >= 80300) {
             $expect = '<pre><code style="color: #000000"><span style="color: #0000BB">&lt;?php var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">); </span><span style="color: #0000BB">?&gt; ?&gt;</span></code></pre>';
+        } else {
+            $expect = "<code><span style=\"color: #000000\">\n<span style=\"color: #0000BB\">&lt;?php&nbsp;var_dump</span><span style=\"color: #007700\">(</span><span style=\"color: #0000BB\">\$this</span><span style=\"color: #007700\">);&nbsp;</span><span style=\"color: #0000BB\">?&gt;&nbsp;</span>\n</span>\n</code>";
         }
 
         $this->assertSame($expect, highlight_code('<?php var_dump($this); ?>'));
