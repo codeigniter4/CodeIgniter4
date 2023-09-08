@@ -106,7 +106,7 @@ class IncomingRequest extends Request
 
     /**
      * The current locale of the application.
-     * Default value is set in Config\App.php
+     * Default value is set in app/Config/App.php
      *
      * @var string
      */
@@ -522,7 +522,7 @@ class IncomingRequest extends Request
     }
 
     /**
-     * Returns the default locale as set in Config\App.php
+     * Returns the default locale as set in app/Config/App.php
      */
     public function getDefaultLocale(): string
     {
