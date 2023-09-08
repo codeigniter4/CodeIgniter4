@@ -255,6 +255,7 @@ project:
 The translated messages will be automatically picked
 up because the translations folders get mapped appropriately.
 
+.. _generating-translation-files-via-command:
 
 Generating Translation Files via Command
 ========================================
