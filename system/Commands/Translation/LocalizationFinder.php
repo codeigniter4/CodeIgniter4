@@ -49,8 +49,8 @@ class LocalizationFinder extends BaseCommand
     {
         $this->verbose      = array_key_exists('verbose', $params);
         $this->showNew      = array_key_exists('show-new', $params);
-        $optionLocale       = ! empty($params['locale']) ? $params['locale'] : null;
-        $optionDir          = ! empty($params['dir']) ? $params['dir'] : null;
+        $optionLocale       = $params['locale'] ?? null;
+        $optionDir          = $params['dir'] ?? null;
         $currentLocale      = Locale::getDefault();
         $currentDir         = APPPATH;
         $this->languagePath = $currentDir . 'Language';
