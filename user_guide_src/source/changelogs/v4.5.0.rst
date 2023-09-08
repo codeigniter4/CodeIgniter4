@@ -47,6 +47,8 @@ Enhancements
 Commands
 ========
 
+- Added ``spark lang:find`` command to update translations keys. See :ref:`generating-translation-files-via-command` for the details.
+
 Testing
 =======
 
