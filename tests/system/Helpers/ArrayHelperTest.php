@@ -304,10 +304,10 @@ final class ArrayHelperTest extends CIUnitTestCase
     public function testArraySortByMultipleKeysFailsInconsistentArraySizes($data): void
     {
         // PHP 8 changes this error type
-        if (version_compare(PHP_VERSION, '8.0', '<')) {
-            $this->expectException(ErrorException::class);
-        } else {
+        if (PHP_VERSION_ID >= 80000) {
             $this->expectException(ValueError::class);
+        } else {
+            $this->expectException(ErrorException::class);
         }
 
         $this->expectExceptionMessage('Array sizes are inconsistent');

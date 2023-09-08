@@ -172,7 +172,7 @@ final class TimerTest extends CIUnitTestCase
 
     public function testRecordThrowsErrorOnCallableWithParams(): void
     {
-        if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
+        if (PHP_VERSION_ID >= 80000) {
             $this->expectException(ArgumentCountError::class);
         } else {
             $this->expectException(ErrorException::class);
