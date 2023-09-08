@@ -62,7 +62,10 @@ class LocalizationFinder extends BaseCommand
 
         if (is_string($optionLocale)) {
             if (! in_array($optionLocale, config(App::class)->supportedLocales, true)) {
-                CLI::error('Error: Supported locales ' . implode(', ', config(App::class)->supportedLocales));
+                CLI::error(
+                    'Error: "' . $optionLocale . '" is not supported. Supported locales: '
+                    . implode(', ', config(App::class)->supportedLocales)
+                );
 
                 return EXIT_USER_INPUT;
             }
