@@ -13,6 +13,7 @@ namespace CodeIgniter\Commands\Translation;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Commands\Translation\LocalizationFinder\ArrayHelper;
 use Config\App;
 use Locale;
 use RecursiveDirectoryIterator;
@@ -57,7 +58,7 @@ class LocalizationFinder extends BaseCommand
 
         if (ENVIRONMENT === 'testing') {
             $currentDir         = SUPPORTPATH . 'Services/';
-            $this->languagePath = SUPPORTPATH . 'Language/';
+            $this->languagePath = SUPPORTPATH . 'Language';
         }
 
         if (is_string($optionLocale)) {
@@ -112,7 +113,7 @@ class LocalizationFinder extends BaseCommand
         $fileContent = file_get_contents($file->getRealPath());
         preg_match_all('/lang\(\'([._a-z0-9\-]+)\'\)/ui', $fileContent, $matches);
 
-        if (empty($matches[1])) {
+        if ([] === $matches[1]) {
             return [];
         }
 
@@ -202,38 +203,6 @@ class LocalizationFinder extends BaseCommand
     }
 
     /**
-     * Compare recursive two arrays and return new array (difference)
-     */
-    private function arrayDiffRecursive(array $originalArray, array $compareArray): array
-    {
-        $difference = [];
-
-        if (count($compareArray) < 1) {
-            return $originalArray;
-        }
-
-        foreach ($originalArray as $originalKey => $originalValue) {
-            if (is_array($originalValue)) {
-                $diffArrays = null;
-
-                if (isset($compareArray[$originalKey])) {
-                    $diffArrays = $this->arrayDiffRecursive($originalValue, $compareArray[$originalKey]);
-                } else {
-                    $difference[$originalKey] = $originalValue;
-                }
-
-                if (! empty($diffArrays)) {
-                    $difference[$originalKey] = $diffArrays;
-                }
-            } elseif (is_string($originalValue) && ! array_key_exists($originalKey, $compareArray)) {
-                $difference[$originalKey] = $originalValue;
-            }
-        }
-
-        return $difference;
-    }
-
-    /**
      * Convert multi arrays to specific CLI table rows (flat array)
      */
     private function arrayToTableRows(string $langFileName, array $array): array
@@ -253,19 +222,6 @@ class LocalizationFinder extends BaseCommand
         }
 
         return $rows;
-    }
-
-    private function arrayCountRecursive(array $array, int $counter = 0): int
-    {
-        foreach ($array as $value) {
-            if (! is_array($value)) {
-                $counter++;
-            } else {
-                $counter = $this->arrayCountRecursive($value, $counter);
-            }
-        }
-
-        return $counter;
     }
 
     private function languageKeysDump(array $inputArray): string
@@ -317,8 +273,8 @@ class LocalizationFinder extends BaseCommand
                 $languageStoredKeys = require $languageFilePath;
             }
 
-            $languageDiff = $this->arrayDiffRecursive($foundLanguageKeys[$langFileName], $languageStoredKeys);
-            $countNewKeys += $this->arrayCountRecursive($languageDiff);
+            $languageDiff = ArrayHelper::recursiveDiff($foundLanguageKeys[$langFileName], $languageStoredKeys);
+            $countNewKeys += ArrayHelper::recursiveCount($languageDiff);
 
             if ($this->showNew) {
                 $tableRows = array_merge($this->arrayToTableRows($langFileName, $languageDiff), $tableRows);
@@ -339,7 +295,7 @@ class LocalizationFinder extends BaseCommand
             }
         }
 
-        if ($this->showNew && ! empty($tableRows)) {
+        if ($this->showNew && [] !== $tableRows) {
             sort($tableRows);
             CLI::table($tableRows, ['File', 'Key']);
         }
