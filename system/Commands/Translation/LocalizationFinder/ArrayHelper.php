@@ -14,8 +14,8 @@ namespace CodeIgniter\Commands\Translation\LocalizationFinder;
 class ArrayHelper
 {
     /**
-     * Compare recursive two associative arrays and return new array (difference)
-     * Returns keys that exist in $original but not in $compareWith
+     * Compare recursively two associative arrays and return difference as new array.
+     * Returns keys that exist in `$original` but not in `$compareWith`.
      */
     public static function recursiveDiff(array $original, array $compareWith): array
     {
@@ -55,7 +55,7 @@ class ArrayHelper
     }
 
     /**
-     * Count all keys (with nested keys)
+     * Recursively count all keys.
      */
     public static function recursiveCount(array $array, int $counter = 0): int
     {

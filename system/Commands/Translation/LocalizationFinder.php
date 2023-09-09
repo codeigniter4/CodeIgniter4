@@ -28,9 +28,9 @@ class LocalizationFinder extends BaseCommand
     protected $usage       = 'lang:find [options]';
     protected $arguments   = [];
     protected $options     = [
-        '--locale'   => 'Specify locale (en, ru, etc...) to save files.',
-        '--dir'      => 'Directory for searching for translations (in relation to the APPPATH).',
-        '--show-new' => 'See only new translations as table. Do not write to files.',
+        '--locale'   => 'Specify locale (en, ru, etc.) to save files.',
+        '--dir'      => 'Directory to search for translations relative to APPPATH.',
+        '--show-new' => 'Show only new translations in table. Does not write to files.',
         '--verbose'  => 'Output detailed information.',
     ];
 
