@@ -33,7 +33,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
     {
         parent::setUp();
         self::$locale           = Locale::getDefault();
-        self::$languageTestPath = SUPPORTPATH . 'Language/';
+        self::$languageTestPath = SUPPORTPATH . 'Language' . DIRECTORY_SEPARATOR;
     }
 
     protected function tearDown(): void
@@ -46,11 +46,9 @@ final class LocalizationFinderTest extends CIUnitTestCase
     {
         $this->makeLocaleDirectory();
 
-        Services::commands()->run('lang:find', [
-            'dir' => 'Translation',
-        ]);
+        command('lang:find --dir Translation');
 
-        $this->realizeAssertion();
+        $this->assertTranslationsExistAndHaveTranslatedKeys();
     }
 
     public function testUpdateWithLocaleOption(): void
@@ -58,12 +56,9 @@ final class LocalizationFinderTest extends CIUnitTestCase
         self::$locale = config(App::class)->supportedLocales[0];
         $this->makeLocaleDirectory();
 
-        Services::commands()->run('lang:find', [
-            'dir'    => 'Translation',
-            'locale' => self::$locale,
-        ]);
+        command('lang:find --dir Translation --locale ' . self::$locale);
 
-        $this->realizeAssertion();
+        $this->assertTranslationsExistAndHaveTranslatedKeys();
     }
 
     public function testUpdateWithIncorrectLocaleOption(): void
@@ -76,16 +71,16 @@ final class LocalizationFinderTest extends CIUnitTestCase
             'locale' => self::$locale,
         ]);
 
-        $this->assertSame($status, EXIT_USER_INPUT);
+        $this->assertSame(EXIT_USER_INPUT, $status);
     }
 
     public function testUpdateWithEmptyDirOption(): void
     {
         $this->makeLocaleDirectory();
 
-        Services::commands()->run('lang:find', []);
+        command('lang:find');
 
-        $this->realizeAssertion();
+        $this->assertTranslationsExistAndHaveTranslatedKeys();
     }
 
     public function testUpdateWithIncorrectDirOption(): void
@@ -96,17 +91,14 @@ final class LocalizationFinderTest extends CIUnitTestCase
             'dir' => 'Translation/NotExistFolder',
         ]);
 
-        $this->assertSame($status, EXIT_USER_INPUT);
+        $this->assertSame(EXIT_USER_INPUT, $status);
     }
 
     public function testShowNewTranslation(): void
     {
         $this->makeLocaleDirectory();
 
-        Services::commands()->run('lang:find', [
-            'dir'      => 'Translation',
-            'show-new' => null,
-        ]);
+        command('lang:find --dir Translation --show-new');
 
         $this->assertStringContainsString($this->getActualTableWithNewKeys(), $this->getStreamFilterBuffer());
     }
@@ -201,7 +193,7 @@ final class LocalizationFinderTest extends CIUnitTestCase
             TEXT_WRAP;
     }
 
-    private function realizeAssertion(): void
+    private function assertTranslationsExistAndHaveTranslatedKeys(): void
     {
         $this->assertFileExists(self::$languageTestPath . self::$locale . '/TranslationOne.php');
         $this->assertFileExists(self::$languageTestPath . self::$locale . '/TranslationThree.php');
