@@ -21,16 +21,16 @@ class ArrayHelper
     {
         $difference = [];
 
-        if ([] === $original) {
+        if ($original === []) {
             return [];
         }
 
-        if ([] === $compareWith) {
+        if ($compareWith === []) {
             return $original;
         }
 
         foreach ($original as $originalKey => $originalValue) {
-            if ([] === $originalValue) {
+            if ($originalValue === []) {
                 continue;
             }
 
@@ -43,7 +43,7 @@ class ArrayHelper
                     $difference[$originalKey] = $originalValue;
                 }
 
-                if ([] !== $diffArrays) {
+                if ($diffArrays !== []) {
                     $difference[$originalKey] = $diffArrays;
                 }
             } elseif (is_string($originalValue) && ! array_key_exists($originalKey, $compareWith)) {
