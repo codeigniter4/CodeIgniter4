@@ -57,7 +57,7 @@ class LocalizationFinder extends BaseCommand
         $this->languagePath = $currentDir . 'Language';
 
         if (ENVIRONMENT === 'testing') {
-            $currentDir         = SUPPORTPATH . 'Services/';
+            $currentDir         = SUPPORTPATH . 'Services' . DIRECTORY_SEPARATOR;
             $this->languagePath = SUPPORTPATH . 'Language';
         }
 
@@ -99,6 +99,58 @@ class LocalizationFinder extends BaseCommand
         return EXIT_SUCCESS;
     }
 
+    private function process(string $currentDir, string $currentLocale): void
+    {
+        $tableRows    = [];
+        $countNewKeys = 0;
+
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($currentDir));
+        $files    = iterator_to_array($iterator, true);
+        ksort($files);
+
+        [$foundLanguageKeys, $countFiles] = $this->findLanguageKeysInFiles($files);
+        ksort($foundLanguageKeys);
+
+        $languageDiff        = [];
+        $languageFoundGroups = array_unique(array_keys($foundLanguageKeys));
+
+        foreach ($languageFoundGroups as $langFileName) {
+            $languageStoredKeys = [];
+            $languageFilePath   = $this->languagePath . DIRECTORY_SEPARATOR . $currentLocale . DIRECTORY_SEPARATOR . $langFileName . '.php';
+
+            if (is_file($languageFilePath)) {
+                // Load old localization
+                $languageStoredKeys = require $languageFilePath;
+            }
+
+            $languageDiff = ArrayHelper::recursiveDiff($foundLanguageKeys[$langFileName], $languageStoredKeys);
+            $countNewKeys += ArrayHelper::recursiveCount($languageDiff);
+
+            if ($this->showNew) {
+                $tableRows = array_merge($this->arrayToTableRows($langFileName, $languageDiff), $tableRows);
+            } else {
+                $newLanguageKeys = array_replace_recursive($foundLanguageKeys[$langFileName], $languageStoredKeys);
+
+                if ($languageDiff !== []) {
+                    if (false === file_put_contents($languageFilePath, $this->templateFile($newLanguageKeys))) {
+                        $this->writeIsVerbose('Lang file ' . $langFileName . ' (error write).', 'red');
+                    } else {
+                        exec('composer cs-fix --quiet ' . $this->languagePath);
+                        $this->writeIsVerbose('Lang file "' . $langFileName . '" successful updated!', 'green');
+                    }
+                }
+            }
+        }
+
+        if ($this->showNew && $tableRows !== []) {
+            sort($tableRows);
+            CLI::table($tableRows, ['File', 'Key']);
+        }
+
+        $this->writeIsVerbose('Files found: ' . $countFiles);
+        $this->writeIsVerbose('New translates found: ' . $countNewKeys);
+    }
+
     /**
      * @param SplFileInfo|string $file
      */
@@ -113,16 +165,14 @@ class LocalizationFinder extends BaseCommand
         $fileContent = file_get_contents($file->getRealPath());
         preg_match_all('/lang\(\'([._a-z0-9\-]+)\'\)/ui', $fileContent, $matches);
 
-        if ([] === $matches[1]) {
+        if ($matches[1] === []) {
             return [];
         }
 
         foreach ($matches[1] as $phraseKey) {
             $phraseKeys = explode('.', $phraseKey);
 
-            /**
-             * Language key not have Filename or Lang key
-             */
+            // Language key not have Filename or Lang key
             if (count($phraseKeys) < 2) {
                 continue;
             }
@@ -136,16 +186,11 @@ class LocalizationFinder extends BaseCommand
                 continue;
             }
 
-            /**
-             * Language key as string
-             */
             if (count($phraseKeys) === 1) {
-                /**
-                 * Add found language keys to temporary array
-                 */
                 $foundLanguageKeys[$languageFileName][$phraseKeys[0]] = $phraseKey;
             } else {
-                $childKeys                            = $this->buildMultiArray($phraseKeys, $phraseKey);
+                $childKeys = $this->buildMultiArray($phraseKeys, $phraseKey);
+
                 $foundLanguageKeys[$languageFileName] = array_replace_recursive($foundLanguageKeys[$languageFileName] ?? [], $childKeys);
             }
         }
@@ -159,13 +204,13 @@ class LocalizationFinder extends BaseCommand
             return true;
         }
 
-        return 'php' !== $file->getExtension();
+        return $file->getExtension() !== 'php';
     }
 
     private function templateFile(array $language = []): string
     {
-        if ([] !== $language) {
-            $languageArrayString = $this->languageKeysDump($language);
+        if ($language !== []) {
+            $languageArrayString = var_export($language, true);
 
             return <<<PHP
                 <?php
@@ -224,11 +269,6 @@ class LocalizationFinder extends BaseCommand
         return $rows;
     }
 
-    private function languageKeysDump(array $inputArray): string
-    {
-        return var_export($inputArray, true);
-    }
-
     /**
      * Show details in the console if the flag is set
      */
@@ -242,66 +282,6 @@ class LocalizationFinder extends BaseCommand
     private function isSubDirectory(string $directory, string $rootDirectory): bool
     {
         return 0 === strncmp($directory, $rootDirectory, strlen($directory));
-    }
-
-    private function process(string $currentDir, string $currentLocale): void
-    {
-        $tableRows    = [];
-        $countNewKeys = 0;
-
-        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($currentDir));
-        $files    = iterator_to_array($iterator, true);
-        ksort($files);
-
-        [$foundLanguageKeys, $countFiles] = $this->findLanguageKeysInFiles($files);
-        ksort($foundLanguageKeys);
-
-        /**
-         * New translates
-         */
-        $languageDiff        = [];
-        $languageFoundGroups = array_unique(array_keys($foundLanguageKeys));
-
-        foreach ($languageFoundGroups as $langFileName) {
-            $languageStoredKeys = [];
-            $languageFilePath   = $this->languagePath . DIRECTORY_SEPARATOR . $currentLocale . DIRECTORY_SEPARATOR . $langFileName . '.php';
-
-            if (is_file($languageFilePath)) {
-                /**
-                 * Load old localization
-                 */
-                $languageStoredKeys = require $languageFilePath;
-            }
-
-            $languageDiff = ArrayHelper::recursiveDiff($foundLanguageKeys[$langFileName], $languageStoredKeys);
-            $countNewKeys += ArrayHelper::recursiveCount($languageDiff);
-
-            if ($this->showNew) {
-                $tableRows = array_merge($this->arrayToTableRows($langFileName, $languageDiff), $tableRows);
-            } else {
-                $newLanguageKeys = array_replace_recursive($foundLanguageKeys[$langFileName], $languageStoredKeys);
-
-                /**
-                 * New translates exists
-                 */
-                if ($languageDiff !== []) {
-                    if (false === file_put_contents($languageFilePath, $this->templateFile($newLanguageKeys))) {
-                        $this->writeIsVerbose('Lang file ' . $langFileName . ' (error write).', 'red');
-                    } else {
-                        exec('composer cs-fix --quiet ' . $this->languagePath);
-                        $this->writeIsVerbose('Lang file "' . $langFileName . '" successful updated!', 'green');
-                    }
-                }
-            }
-        }
-
-        if ($this->showNew && [] !== $tableRows) {
-            sort($tableRows);
-            CLI::table($tableRows, ['File', 'Key']);
-        }
-
-        $this->writeIsVerbose('Files found: ' . $countFiles);
-        $this->writeIsVerbose('New translates found: ' . $countNewKeys);
     }
 
     /**
