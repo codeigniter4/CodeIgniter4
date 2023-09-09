@@ -354,7 +354,8 @@ class Security implements SecurityInterface
         $body = (string) $request->getBody();
 
         if ($body !== '') {
-            if (! empty($json = json_decode($body)) && json_last_error() === JSON_ERROR_NONE) {
+            $json = json_decode($body);
+            if (! empty($json) && json_last_error() === JSON_ERROR_NONE) {
                 return $json->{$this->config->tokenName} ?? null;
             }
 
