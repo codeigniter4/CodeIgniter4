@@ -67,9 +67,13 @@ Database Groups
 
 A migration will only be run against a single database group. If you have multiple groups defined in
 **app/Config/Database.php**, then it will run against the ``$defaultGroup`` as specified
-in that same configuration file. There may be times when you need different schemas for different
+in that same configuration file.
+
+There may be times when you need different schemas for different
 database groups. Perhaps you have one database that is used for all general site information, while
-another database is used for mission critical data. You can ensure that migrations are run only
+another database is used for mission critical data.
+
+You can ensure that migrations are run only
 against the proper group by setting the ``$DBGroup`` property on your migration. This name must
 match the name of the database group exactly:
 
@@ -115,8 +119,8 @@ Migrates a database group with all available migrations:
 
 You can use (migrate) with the following options:
 
-- ``-g`` - to chose database group, otherwise default database group will be used.
-- ``-n`` - to choose namespace, otherwise (App) namespace will be used.
+- ``-g`` - to specify database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
+- ``-n`` - to choose namespace, otherwise ``App`` namespace will be used.
 - ``--all`` - to migrate all namespaces to the latest migration.
 
 This example will migrate ``Acme\Blog`` namespace with any new migrations on the test database group:
@@ -140,7 +144,7 @@ to minimize any potential conflicts between the main application and any modules
 rollback
 ========
 
-Rolls back all migrations, taking the database group to a blank slate, effectively migration 0:
+Rolls back all migrations to a blank slate, effectively migration 0:
 
 .. code-block:: console
 
@@ -148,7 +152,6 @@ Rolls back all migrations, taking the database group to a blank slate, effective
 
 You can use (rollback) with the following options:
 
-- ``-g`` - to choose database group, otherwise default database group will be used.
 - ``-b`` - to choose a batch: natural numbers specify the batch.
 - ``-f`` - to force a bypass confirmation question, it is only asked in a production environment.
 
@@ -163,8 +166,8 @@ Refreshes the database state by first rolling back all migrations, and then migr
 
 You can use (refresh) with the following options:
 
-- ``-g`` - to choose database group, otherwise default database group will be used.
-- ``-n`` - to choose namespace, otherwise (App) namespace will be used.
+- ``-g`` - to specify database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.
+- ``-n`` - to choose namespace, otherwise ``App`` namespace will be used.
 - ``--all`` - to refresh all namespaces.
 - ``-f`` - to force a bypass confirmation question, it is only asked in a production environment.
 
@@ -189,7 +192,7 @@ Displays a list of all migrations and the date and time they ran, or '--' if the
 
 You can use (status) with the following options:
 
-- ``-g`` - to choose database group, otherwise default database group will be used.
+- ``-g`` - to specify database group. If specified, only migrations for the specified database group will be checked. If not specified, all migrations will be checked.
 
 make:migration
 ==============
@@ -220,13 +223,15 @@ Migration Preferences
 
 The following is a table of all the config options for migrations, available in **app/Config/Migrations.php**.
 
-========================== ====================== ========================== =============================================================
-Preference                 Default                Options                    Description
-========================== ====================== ========================== =============================================================
-**enabled**                true                   true / false               Enable or disable migrations.
-**table**                  migrations             None                       The table name for storing the schema version number.
-**timestampFormat**        Y-m-d-His\_                                       The format to use for timestamps when creating a migration.
-========================== ====================== ========================== =============================================================
+==================== ============ ============= =============================================================
+Preference           Default      Options       Description
+==================== ============ ============= =============================================================
+**enabled**          true         true / false  Enable or disable migrations.
+**table**            migrations   None          The table name for storing the schema version number. This
+                                                table is always created in the default database group
+                                                (``$defaultGroup``).
+**timestampFormat**  Y-m-d-His\_                The format to use for timestamps when creating a migration.
+==================== ============ ============= =============================================================
 
 ***************
 Class Reference

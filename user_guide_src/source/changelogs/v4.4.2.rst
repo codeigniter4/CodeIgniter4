@@ -18,6 +18,11 @@ Message Changes
 Changes
 *******
 
+- **Database Migrations:** The ``-g`` option for the ``spark migrate:rollback``
+  command was removed. It did not work from the beginning. Also, the rollback
+  command returns the database(s) state to a specified batch number and cannot
+  specify only a specific database group.
+
 Deprecations
 ************
 
