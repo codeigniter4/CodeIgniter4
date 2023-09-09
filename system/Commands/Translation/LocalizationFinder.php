@@ -135,7 +135,6 @@ class LocalizationFinder extends BaseCommand
                     if (false === file_put_contents($languageFilePath, $this->templateFile($newLanguageKeys))) {
                         $this->writeIsVerbose('Lang file ' . $langFileName . ' (error write).', 'red');
                     } else {
-                        exec('composer cs-fix --quiet ' . $this->languagePath);
                         $this->writeIsVerbose('Lang file "' . $langFileName . '" successful updated!', 'green');
                     }
                 }
@@ -145,6 +144,10 @@ class LocalizationFinder extends BaseCommand
         if ($this->showNew && $tableRows !== []) {
             sort($tableRows);
             CLI::table($tableRows, ['File', 'Key']);
+        }
+
+        if (! $this->showNew && $countNewKeys > 0) {
+            CLI::write('Note: You need to run your linting tool to fix coding standards issues.', 'white', 'red');
         }
 
         $this->writeIsVerbose('Files found: ' . $countFiles);
