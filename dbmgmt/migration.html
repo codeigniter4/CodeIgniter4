@@ -408,9 +408,11 @@ To temporarily bypass the foreign key checks while running migrations, use the <
 <h3><a class="toc-backref" href="#id5">Database Groups</a><a class="headerlink" href="#database-groups" title="Permalink to this headline"></a></h3>
 <p>A migration will only be run against a single database group. If you have multiple groups defined in
 <strong>app/Config/Database.php</strong>, then it will run against the <code class="docutils literal notranslate"><span class="pre">$defaultGroup</span></code> as specified
-in that same configuration file. There may be times when you need different schemas for different
+in that same configuration file.</p>
+<p>There may be times when you need different schemas for different
 database groups. Perhaps you have one database that is used for all general site information, while
-another database is used for mission critical data. You can ensure that migrations are run only
+another database is used for mission critical data.</p>
+<p>You can ensure that migrations are run only
 against the proper group by setting the <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code> property on your migration. This name must
 match the name of the database group exactly:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -471,8 +473,8 @@ that wish to use them. The tools primarily provide access to the same methods th
 </div>
 <p>You can use (migrate) with the following options:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to chose database group, otherwise default database group will be used.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise (App) namespace will be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to specify database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace will be used.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--all</span></code> - to migrate all namespaces to the latest migration.</p></li>
 </ul>
 <p>This example will migrate <code class="docutils literal notranslate"><span class="pre">Acme\Blog</span></code> namespace with any new migrations on the test database group:</p>
@@ -490,13 +492,12 @@ to minimize any potential conflicts between the main application and any modules
 </section>
 <section id="rollback">
 <h3><a class="toc-backref" href="#id9">rollback</a><a class="headerlink" href="#rollback" title="Permalink to this headline"></a></h3>
-<p>Rolls back all migrations, taking the database group to a blank slate, effectively migration 0:</p>
+<p>Rolls back all migrations to a blank slate, effectively migration 0:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark migrate:rollback</span>
 </pre></div>
 </div>
 <p>You can use (rollback) with the following options:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to choose database group, otherwise default database group will be used.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-b</span></code> - to choose a batch: natural numbers specify the batch.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-f</span></code> - to force a bypass confirmation question, it is only asked in a production environment.</p></li>
 </ul>
@@ -509,8 +510,8 @@ to minimize any potential conflicts between the main application and any modules
 </div>
 <p>You can use (refresh) with the following options:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to choose database group, otherwise default database group will be used.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise (App) namespace will be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to specify database group. If specified, only migrations for the specified database group will be run. If not specified, all migrations will be run.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> - to choose namespace, otherwise <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace will be used.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--all</span></code> - to refresh all namespaces.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-f</span></code> - to force a bypass confirmation question, it is only asked in a production environment.</p></li>
 </ul>
@@ -533,7 +534,7 @@ to minimize any potential conflicts between the main application and any modules
 </div>
 <p>You can use (status) with the following options:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to choose database group, otherwise default database group will be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> - to specify database group. If specified, only migrations for the specified database group will be checked. If not specified, all migrations will be checked.</p></li>
 </ul>
 </section>
 <section id="make-migration">
@@ -564,9 +565,9 @@ database sessions:</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 19%" />
-<col style="width: 16%" />
-<col style="width: 19%" />
-<col style="width: 45%" />
+<col style="width: 11%" />
+<col style="width: 12%" />
+<col style="width: 58%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Preference</p></th>
@@ -584,7 +585,9 @@ database sessions:</p>
 <tr class="row-odd"><td><p><strong>table</strong></p></td>
 <td><p>migrations</p></td>
 <td><p>None</p></td>
-<td><p>The table name for storing the schema version number.</p></td>
+<td><p>The table name for storing the schema version number. This
+table is always created in the default database group
+(<code class="docutils literal notranslate"><span class="pre">$defaultGroup</span></code>).</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>timestampFormat</strong></p></td>
 <td><p>Y-m-d-His_</p></td>
@@ -753,7 +756,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 08, 2023.
+      <span class="lastupdated">Last updated on Sep 09, 2023.
       </span></p>
   </div>
 
