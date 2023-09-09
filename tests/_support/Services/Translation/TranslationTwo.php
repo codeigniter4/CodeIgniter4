@@ -17,9 +17,7 @@ class TranslationTwo
     {
         $langKey = 'TranslationTwo.error_key';
 
-        /**
-         * Error language keys
-         */
+        // Error language keys
         $translationError1 = lang('TranslationTwo');
         $translationError2 = lang(' ');
         $translationError3 = lang('');
@@ -28,8 +26,6 @@ class TranslationTwo
         $translationError6 = lang('TranslationTwo...');
         $translationError7 = lang('..invalid_nested_key..');
 
-        /**
-         * Empty in comments lang('') lang(' ')
-         */
+        // Empty in comments lang('') lang(' ')
     }
 }
