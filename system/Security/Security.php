@@ -318,16 +318,22 @@ class Security implements SecurityInterface
     {
         assert($request instanceof Request);
 
-        $json = json_decode($request->getBody() ?? '');
-
         if (isset($_POST[$this->config->tokenName])) {
             // We kill this since we're done and we don't want to pollute the POST array.
             unset($_POST[$this->config->tokenName]);
             $request->setGlobal('post', $_POST);
-        } elseif (isset($json->{$this->config->tokenName})) {
-            // We kill this since we're done and we don't want to pollute the JSON data.
-            unset($json->{$this->config->tokenName});
-            $request->setBody(json_encode($json));
+        } else {
+            $body = $request->getBody() ?? '';
+            if (! empty($json = json_decode($body)) && json_last_error() === JSON_ERROR_NONE) {
+                // We kill this since we're done and we don't want to pollute the JSON data.
+                unset($json->{$this->config->tokenName});
+                $request->setBody(json_encode($json));
+            } else {
+                parse_str($body, $parsed);
+                // We kill this since we're done and we don't want to pollute the BODY data.
+                unset($parsed[$this->config->tokenName]);
+                $request->setBody(http_build_query($parsed));
+            }
         }
     }
 
@@ -335,7 +341,7 @@ class Security implements SecurityInterface
     {
         assert($request instanceof IncomingRequest);
 
-        // Does the token exist in POST, HEADER or optionally php:://input - json data.
+        // Does the token exist in POST, HEADER or optionally php:://input - json data or PUT, DELETE, PATCH - raw data.
 
         if ($tokenValue = $request->getPost($this->config->tokenName)) {
             return $tokenValue;
@@ -346,10 +352,15 @@ class Security implements SecurityInterface
         }
 
         $body = (string) $request->getBody();
-        $json = json_decode($body);
 
-        if ($body !== '' && ! empty($json) && json_last_error() === JSON_ERROR_NONE) {
-            return $json->{$this->config->tokenName} ?? null;
+        if ($body !== '') {
+            if (! empty($json = json_decode($body)) && json_last_error() === JSON_ERROR_NONE) {
+                return $json->{$this->config->tokenName} ?? null;
+            }
+
+            parse_str($body, $parsed);
+
+            return $parsed[$this->config->tokenName] ?? null;
         }
 
         return null;

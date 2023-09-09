@@ -29,6 +29,8 @@ Deprecations
 Bugs Fixed
 **********
 
+- **Security:** Fixed a bug where the CSRF token wasn't checked if we sent it in the raw body (not JSON format) for PUT, PATCH, and DELETE requests.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.
