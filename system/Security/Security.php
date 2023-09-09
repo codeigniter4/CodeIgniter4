@@ -324,7 +324,8 @@ class Security implements SecurityInterface
             $request->setGlobal('post', $_POST);
         } else {
             $body = $request->getBody() ?? '';
-            if (! empty($json = json_decode($body)) && json_last_error() === JSON_ERROR_NONE) {
+            $json = json_decode($body);
+            if (! empty($json) && json_last_error() === JSON_ERROR_NONE) {
                 // We kill this since we're done and we don't want to pollute the JSON data.
                 unset($json->{$this->config->tokenName});
                 $request->setBody(json_encode($json));
