@@ -522,21 +522,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Common.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Function force_https\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Common.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function helper\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Common.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Function timer\\(\\) has parameter \\$callable with no signature specified for callable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Common.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Common.php',

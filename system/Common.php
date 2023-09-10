@@ -481,7 +481,7 @@ if (! function_exists('force_https')) {
         int $duration = 31_536_000,
         ?RequestInterface $request = null,
         ?ResponseInterface $response = null
-    ) {
+    ): void {
         $request ??= Services::request();
 
         if (! $request instanceof IncomingRequest) {
@@ -590,7 +590,7 @@ if (! function_exists('helper')) {
      *
      * @throws FileNotFoundException
      */
-    function helper($filenames)
+    function helper($filenames): void
     {
         static $loaded = [];
 
@@ -1138,6 +1138,8 @@ if (! function_exists('timer')) {
      * If callable is passed, it measures time of callable and
      * returns its return value if any.
      * Otherwise will start or stop the timer intelligently.
+     *
+     * @phpstan-param (callable(): mixed)|null $callable
      *
      * @return Timer
      */
