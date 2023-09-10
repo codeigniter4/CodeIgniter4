@@ -10,6 +10,7 @@ services:
 
 includes:
 	- phpstan-baseline.php
+	- vendor/phpstan/phpstan-strict-rules/rules.neon
 
 parameters:
 	phpVersion: 80100
@@ -41,3 +42,6 @@ parameters:
 	checkGenericClassInNonGenericObjectType: false
 	checkMissingCallableSignature: true
 	treatPhpDocTypesAsCertain: false
+	strictRules:
+		allRules: false
+		disallowedConstructs: true
