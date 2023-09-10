@@ -283,30 +283,29 @@
 <h1>Controller Filters<a class="headerlink" href="#controller-filters" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#creating-a-filter" id="id5">Creating a Filter</a></p>
+<li><p><a class="reference internal" href="#creating-a-filter" id="id4">Creating a Filter</a></p>
 <ul>
-<li><p><a class="reference internal" href="#before-filters" id="id6">Before Filters</a></p></li>
-<li><p><a class="reference internal" href="#after-filters" id="id7">After Filters</a></p></li>
+<li><p><a class="reference internal" href="#before-filters" id="id5">Before Filters</a></p></li>
+<li><p><a class="reference internal" href="#after-filters" id="id6">After Filters</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#configuring-filters" id="id8">Configuring Filters</a></p>
+<li><p><a class="reference internal" href="#configuring-filters" id="id7">Configuring Filters</a></p>
 <ul>
-<li><p><a class="reference internal" href="#aliases" id="id9">$aliases</a></p></li>
-<li><p><a class="reference internal" href="#globals" id="id10">$globals</a></p></li>
-<li><p><a class="reference internal" href="#methods" id="id11">$methods</a></p></li>
-<li><p><a class="reference internal" href="#filters" id="id12">$filters</a></p></li>
-<li><p><a class="reference internal" href="#filter-arguments" id="id13">Filter Arguments</a></p></li>
+<li><p><a class="reference internal" href="#aliases" id="id8">$aliases</a></p></li>
+<li><p><a class="reference internal" href="#globals" id="id9">$globals</a></p></li>
+<li><p><a class="reference internal" href="#methods" id="id10">$methods</a></p></li>
+<li><p><a class="reference internal" href="#filters" id="id11">$filters</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#confirming-filters" id="id14">Confirming Filters</a></p>
+<li><p><a class="reference internal" href="#confirming-filters" id="id12">Confirming Filters</a></p>
 <ul>
-<li><p><a class="reference internal" href="#filter-check" id="id15">filter:check</a></p></li>
+<li><p><a class="reference internal" href="#filter-check" id="id13">filter:check</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#provided-filters" id="id16">Provided Filters</a></p>
+<li><p><a class="reference internal" href="#provided-filters" id="id14">Provided Filters</a></p>
 <ul>
-<li><p><a class="reference internal" href="#invalidchars" id="id17">InvalidChars</a></p></li>
-<li><p><a class="reference internal" href="#secureheaders" id="id18">SecureHeaders</a></p></li>
+<li><p><a class="reference internal" href="#invalidchars" id="id15">InvalidChars</a></p></li>
+<li><p><a class="reference internal" href="#secureheaders" id="id16">SecureHeaders</a></p></li>
 </ul>
 </li>
 </ul>
@@ -325,7 +324,7 @@ and power.</p>
 <li><p>and more…</p></li>
 </ul>
 <section id="creating-a-filter">
-<h2><a class="toc-backref" href="#id5">Creating a Filter</a><a class="headerlink" href="#creating-a-filter" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Creating a Filter</a><a class="headerlink" href="#creating-a-filter" title="Permalink to this headline"></a></h2>
 <p>Filters are simple classes that implement <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Filters\FilterInterface</span></code>.
 They contain two methods: <code class="docutils literal notranslate"><span class="pre">before()</span></code> and <code class="docutils literal notranslate"><span class="pre">after()</span></code> which hold the code that
 will run before and after the controller respectively. Your class must contain both methods
@@ -353,7 +352,7 @@ but may leave the methods empty if they are not needed. A skeleton filter class 
 </pre></div>
 </div>
 <section id="before-filters">
-<h3><a class="toc-backref" href="#id6">Before Filters</a><a class="headerlink" href="#before-filters" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">Before Filters</a><a class="headerlink" href="#before-filters" title="Permalink to this headline"></a></h3>
 <section id="replacing-request">
 <h4>Replacing Request<a class="headerlink" href="#replacing-request" title="Permalink to this headline"></a></h4>
 <p>From any filter, you can return the <code class="docutils literal notranslate"><span class="pre">$request</span></code> object and it will replace the current Request, allowing you
@@ -400,7 +399,7 @@ example.</p>
 </section>
 </section>
 <section id="after-filters">
-<span id="id1"></span><h3><a class="toc-backref" href="#id7">After Filters</a><a class="headerlink" href="#after-filters" title="Permalink to this headline"></a></h3>
+<span id="id1"></span><h3><a class="toc-backref" href="#id6">After Filters</a><a class="headerlink" href="#after-filters" title="Permalink to this headline"></a></h3>
 <p>After filters are nearly identical to before filters, except that you can only return the <code class="docutils literal notranslate"><span class="pre">$response</span></code> object,
 and you cannot stop script execution. This does allow you to modify the final output, or simply do something with
 the final output. This could be used to ensure certain security headers were set the correct way, or to cache
@@ -408,8 +407,13 @@ the final output, or even to filter the final output with a bad words filter.</p
 </section>
 </section>
 <section id="configuring-filters">
-<h2><a class="toc-backref" href="#id8">Configuring Filters</a><a class="headerlink" href="#configuring-filters" title="Permalink to this headline"></a></h2>
-<p>Once you’ve created your filters, you need to configure when they get run. This is done in <strong>app/Config/Filters.php</strong> or <strong>app/Config/Routes.php</strong>.</p>
+<h2><a class="toc-backref" href="#id7">Configuring Filters</a><a class="headerlink" href="#configuring-filters" title="Permalink to this headline"></a></h2>
+<p>There are two ways to configure filters when they get run. One is done in
+<strong>app/Config/Filters.php</strong>, the other is done in <strong>app/Config/Routes.php</strong>.</p>
+<p>If you want to specify filter to a specific route, use <strong>app/Config/Routes.php</strong>
+and see <a class="reference internal" href="routing.html#applying-filters"><span class="std std-ref">URI Routing</span></a>.</p>
+<p>The filters that are specified to a route (in <strong>app/Config/Routes.php</strong>) are
+executed before the filters specified in <strong>app/Config/Filters.php</strong>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The safest way to apply filters is to <a class="reference internal" href="routing.html#use-defined-routes-only"><span class="std std-ref">disable auto-routing</span></a>, and <a class="reference internal" href="routing.html#applying-filters"><span class="std std-ref">set filters to routes</span></a>.</p>
@@ -424,7 +428,7 @@ For example, when <a class="reference internal" href="routing.html#auto-routing-
 it can be accessible with <code class="docutils literal notranslate"><span class="pre">blog</span></code>, <code class="docutils literal notranslate"><span class="pre">blog/index</span></code>, and <code class="docutils literal notranslate"><span class="pre">blog/index/1</span></code>, etc.</p>
 </div>
 <section id="aliases">
-<h3><a class="toc-backref" href="#id9">$aliases</a><a class="headerlink" href="#aliases" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">$aliases</a><a class="headerlink" href="#aliases" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">$aliases</span></code> array is used to associate a simple name with one or more fully-qualified class names that are the
 filters to run:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -469,7 +473,7 @@ different authentication system since you only change the filter’s class and y
 <p>You should define as many aliases as you need.</p>
 </section>
 <section id="globals">
-<h3><a class="toc-backref" href="#id10">$globals</a><a class="headerlink" href="#globals" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">$globals</a><a class="headerlink" href="#globals" title="Permalink to this headline"></a></h3>
 <p>The second section allows you to define any filters that should be applied to every request made by the framework.
 You should take care with how many you use here, since it could have performance implications to have too many
 run on every request. Filters can be specified by adding their alias to either the before or after array:</p>
@@ -549,7 +553,7 @@ URI paths, you can use an array of URI path patterns:</p>
 </section>
 </section>
 <section id="methods">
-<h3><a class="toc-backref" href="#id11">$methods</a><a class="headerlink" href="#methods" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">$methods</a><a class="headerlink" href="#methods" title="Permalink to this headline"></a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>If you use <code class="docutils literal notranslate"><span class="pre">$methods</span></code> filters, you should <a class="reference internal" href="routing.html#use-defined-routes-only"><span class="std std-ref">disable Auto Routing (Legacy)</span></a>
@@ -586,7 +590,7 @@ specify the method name in <strong>lowercase</strong>. It’s value would be an 
 all requests that were run from the command line.</p>
 </section>
 <section id="filters">
-<h3><a class="toc-backref" href="#id12">$filters</a><a class="headerlink" href="#filters" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11">$filters</a><a class="headerlink" href="#filters" title="Permalink to this headline"></a></h3>
 <p>This property is an array of filter aliases. For each alias, you can specify <code class="docutils literal notranslate"><span class="pre">before</span></code> and <code class="docutils literal notranslate"><span class="pre">after</span></code> arrays that contain
 a list of URI path (relative to BaseURL) patterns that filter should apply to:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -608,11 +612,8 @@ a list of URI path (relative to BaseURL) patterns that filter should apply to:</
 <span class="p">}</span>
 </pre></div>
 </div>
-</section>
 <section id="filter-arguments">
-<span id="filters-filters-filter-arguments"></span><h3><a class="toc-backref" href="#id13">Filter Arguments</a><a class="headerlink" href="#filter-arguments" title="Permalink to this headline"></a></h3>
-<section id="id2">
-<h4>Filter Arguments<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h4>
+<span id="filters-filters-filter-arguments"></span><h4>Filter Arguments<a class="headerlink" href="#filter-arguments" title="Permalink to this headline"></a></h4>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.4.0.</span></p>
 </div>
@@ -644,10 +645,10 @@ will be passed in <code class="docutils literal notranslate"><span class="pre">$
 </section>
 </section>
 <section id="confirming-filters">
-<h2><a class="toc-backref" href="#id14">Confirming Filters</a><a class="headerlink" href="#confirming-filters" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id12">Confirming Filters</a><a class="headerlink" href="#confirming-filters" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter has the following <a class="reference internal" href="../cli/spark_commands.html"><span class="doc">command</span></a> to check the filters for a route.</p>
 <section id="filter-check">
-<span id="spark-filter-check"></span><h3><a class="toc-backref" href="#id15">filter:check</a><a class="headerlink" href="#filter-check" title="Permalink to this headline"></a></h3>
+<span id="spark-filter-check"></span><h3><a class="toc-backref" href="#id13">filter:check</a><a class="headerlink" href="#filter-check" title="Permalink to this headline"></a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.3.0.</span></p>
 </div>
@@ -668,14 +669,14 @@ See <a class="reference internal" href="routing.html#routing-spark-routes"><span
 </section>
 </section>
 <section id="provided-filters">
-<h2><a class="toc-backref" href="#id16">Provided Filters</a><a class="headerlink" href="#provided-filters" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id14">Provided Filters</a><a class="headerlink" href="#provided-filters" title="Permalink to this headline"></a></h2>
 <p>The filters bundled with CodeIgniter4 are: <a class="reference internal" href="../libraries/honeypot.html"><span class="doc">Honeypot</span></a>, <a class="reference internal" href="../libraries/security.html#cross-site-request-forgery"><span class="std std-ref">CSRF</span></a>, <code class="docutils literal notranslate"><span class="pre">InvalidChars</span></code>, <code class="docutils literal notranslate"><span class="pre">SecureHeaders</span></code>, and <a class="reference internal" href="../testing/debugging.html#the-debug-toolbar"><span class="std std-ref">DebugToolbar</span></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The filters are executed in the order defined in the config file. However, if enabled, <code class="docutils literal notranslate"><span class="pre">DebugToolbar</span></code> is always executed last because it should be able to capture everything that happens in the other filters.</p>
 </div>
 <section id="invalidchars">
-<span id="id3"></span><h3><a class="toc-backref" href="#id17">InvalidChars</a><a class="headerlink" href="#invalidchars" title="Permalink to this headline"></a></h3>
+<span id="id2"></span><h3><a class="toc-backref" href="#id15">InvalidChars</a><a class="headerlink" href="#invalidchars" title="Permalink to this headline"></a></h3>
 <p>This filter prohibits user input data (<code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code>, <code class="docutils literal notranslate"><span class="pre">php://input</span></code>) from containing the following characters:</p>
 <ul class="simple">
 <li><p>invalid UTF-8 characters</p></li>
@@ -683,7 +684,7 @@ See <a class="reference internal" href="routing.html#routing-spark-routes"><span
 </ul>
 </section>
 <section id="secureheaders">
-<span id="id4"></span><h3><a class="toc-backref" href="#id18">SecureHeaders</a><a class="headerlink" href="#secureheaders" title="Permalink to this headline"></a></h3>
+<span id="id3"></span><h3><a class="toc-backref" href="#id16">SecureHeaders</a><a class="headerlink" href="#secureheaders" title="Permalink to this headline"></a></h3>
 <p>This filter adds HTTP response headers that your application can use to increase the security of your application.</p>
 <p>If you want to customize the headers, extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Filters\SecureHeaders</span></code> and override the <code class="docutils literal notranslate"><span class="pre">$headers</span></code> property. And change the <code class="docutils literal notranslate"><span class="pre">$aliases</span></code> property in <strong>app/Config/Filters.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -720,7 +721,7 @@ See <a class="reference internal" href="routing.html#routing-spark-routes"><span
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 09, 2023.
+      <span class="lastupdated">Last updated on Sep 10, 2023.
       </span></p>
   </div>
 
