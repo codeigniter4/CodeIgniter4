@@ -11,6 +11,9 @@
 
 namespace CodeIgniter\Validation;
 
+/**
+ * @see \CodeIgniter\Validation\DotArrayFilterTest
+ */
 final class DotArrayFilter
 {
     /**

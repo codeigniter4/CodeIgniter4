@@ -79,7 +79,14 @@ the final output, or even to filter the final output with a bad words filter.
 Configuring Filters
 *******************
 
-Once you've created your filters, you need to configure when they get run. This is done in **app/Config/Filters.php** or **app/Config/Routes.php**.
+There are two ways to configure filters when they get run. One is done in
+**app/Config/Filters.php**, the other is done in **app/Config/Routes.php**.
+
+If you want to specify filter to a specific route, use **app/Config/Routes.php**
+and see :ref:`URI Routing <applying-filters>`.
+
+The filters that are specified to a route (in **app/Config/Routes.php**) are
+executed before the filters specified in **app/Config/Filters.php**.
 
 .. Note:: The safest way to apply filters is to :ref:`disable auto-routing <use-defined-routes-only>`, and :ref:`set filters to routes <applying-filters>`.
 
@@ -162,9 +169,6 @@ a list of URI path (relative to BaseURL) patterns that filter should apply to:
 .. literalinclude:: filters/009.php
 
 .. _filters-filters-filter-arguments:
-
-Filter Arguments
-================
 
 Filter Arguments
 ----------------

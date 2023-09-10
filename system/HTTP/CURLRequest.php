@@ -18,6 +18,8 @@ use InvalidArgumentException;
 
 /**
  * A lightweight HTTP client for sending synchronous HTTP requests via cURL.
+ *
+ * @see \CodeIgniter\HTTP\CURLRequestTest
  */
 class CURLRequest extends OutgoingRequest
 {

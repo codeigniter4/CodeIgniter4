@@ -17,6 +17,8 @@ use CodeIgniter\Validation\FileRules as NonStrictFileRules;
 
 /**
  * File validation rules
+ *
+ * @see \CodeIgniter\Validation\StrictRules\FileRulesTest
  */
 class FileRules extends NonStrictFileRules
 {

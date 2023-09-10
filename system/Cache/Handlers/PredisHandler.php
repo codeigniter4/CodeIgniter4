@@ -20,6 +20,8 @@ use Predis\Collection\Iterator\Keyspace;
 
 /**
  * Predis cache handler
+ *
+ * @see \CodeIgniter\Cache\Handlers\PredisHandlerTest
  */
 class PredisHandler extends BaseHandler
 {

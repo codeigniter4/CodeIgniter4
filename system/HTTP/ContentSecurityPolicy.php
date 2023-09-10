@@ -22,6 +22,7 @@ use Config\ContentSecurityPolicy as ContentSecurityPolicyConfig;
  * @see http://www.html5rocks.com/en/tutorials/security/content-security-policy/
  * @see http://content-security-policy.com/
  * @see https://www.owasp.org/index.php/Content_Security_Policy
+ * @see \CodeIgniter\HTTP\ContentSecurityPolicyTest
  */
 class ContentSecurityPolicy
 {

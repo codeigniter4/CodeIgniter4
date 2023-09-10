@@ -23,6 +23,7 @@ use Locale;
 
 /**
  * @todo Implement nested resource routing (See CakePHP)
+ * @see \CodeIgniter\Router\RouteCollectionTest
  */
 class RouteCollection implements RouteCollectionInterface
 {

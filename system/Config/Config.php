@@ -13,6 +13,7 @@ namespace CodeIgniter\Config;
 
 /**
  * @deprecated Use CodeIgniter\Config\Factories::config()
+ * @see \CodeIgniter\Config\ConfigTest
  */
 class Config
 {
