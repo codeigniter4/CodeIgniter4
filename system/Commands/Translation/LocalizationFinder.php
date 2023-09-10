@@ -215,12 +215,14 @@ class LocalizationFinder extends BaseCommand
         if ($language !== []) {
             $languageArrayString = var_export($language, true);
 
-            return <<<PHP
+            $code = <<<PHP
                 <?php
 
                 return {$languageArrayString};
 
                 PHP;
+
+            return $this->replaceArraySyntax($code);
         }
 
         return <<<'PHP'
@@ -229,6 +231,47 @@ class LocalizationFinder extends BaseCommand
             return [];
 
             PHP;
+    }
+
+    private function replaceArraySyntax(string $code): string
+    {
+        $tokens    = token_get_all($code);
+        $newTokens = $tokens;
+
+        foreach ($tokens as $i => $token) {
+            if (is_array($token)) {
+                [$tokenId, $tokenValue] = $token;
+
+                // Replace "array ("
+                if (
+                    $tokenId === T_ARRAY
+                    && $tokens[$i + 1][0] === T_WHITESPACE
+                    && $tokens[$i + 2] === '('
+                ) {
+                    $newTokens[$i][1]     = '[';
+                    $newTokens[$i + 1][1] = '';
+                    $newTokens[$i + 2]    = '';
+                }
+
+                // Replace indent
+                if ($tokenId === T_WHITESPACE) {
+                    if (preg_match('/\n([ ]+)/u', $tokenValue, $matches)) {
+                        $newTokens[$i][1] = "\n{$matches[1]}{$matches[1]}";
+                    }
+                }
+            } // Replace ")"
+            elseif ($token === ')') {
+                $newTokens[$i] = ']';
+            }
+        }
+
+        $output = '';
+
+        foreach ($newTokens as $token) {
+            $output .= $token[1] ?? $token;
+        }
+
+        return $output;
     }
 
     /**
