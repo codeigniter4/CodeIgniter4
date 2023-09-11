@@ -20,6 +20,9 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
 
+/**
+ * @see \CodeIgniter\Commands\Translation\LocalizationFinderTest
+ */
 class LocalizationFinder extends BaseCommand
 {
     protected $group       = 'Translation';
@@ -254,10 +257,8 @@ class LocalizationFinder extends BaseCommand
                 }
 
                 // Replace indent
-                if ($tokenId === T_WHITESPACE) {
-                    if (preg_match('/\n([ ]+)/u', $tokenValue, $matches)) {
-                        $newTokens[$i][1] = "\n{$matches[1]}{$matches[1]}";
-                    }
+                if ($tokenId === T_WHITESPACE && preg_match('/\n([ ]+)/u', $tokenValue, $matches)) {
+                    $newTokens[$i][1] = "\n{$matches[1]}{$matches[1]}";
                 }
             } // Replace ")"
             elseif ($token === ')') {
