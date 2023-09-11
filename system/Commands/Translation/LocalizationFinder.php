@@ -181,9 +181,9 @@ class LocalizationFinder extends BaseCommand
             }
 
             $languageFileName   = array_shift($phraseKeys);
-            $isEmptyNestedArray = (! empty($languageFileName) && empty($phraseKeys[0]))
-                || (empty($languageFileName) && ! empty($phraseKeys[0]))
-                || (empty($languageFileName) && empty($phraseKeys[0]));
+            $isEmptyNestedArray = ($languageFileName !== '' && $phraseKeys[0] === '')
+                || ($languageFileName === '' && $phraseKeys[0] !== '')
+                || ($languageFileName === '' && $phraseKeys[0] === '');
 
             if ($isEmptyNestedArray) {
                 continue;
