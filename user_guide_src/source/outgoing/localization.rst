@@ -273,6 +273,8 @@ Previously saved keys do not change.
 
 .. literalinclude:: localization/019.php
 
+The language files generated will most likely not conform to your coding standards.
+It is recommended to format them. For example, run ``vendor/bin/php-cs-fixer fix ./app/Language`` if ``php-cs-fixer`` is installed.
 
 .. note:: The command ignores **app/Language/** path.
 
