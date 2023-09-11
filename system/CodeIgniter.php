@@ -416,7 +416,7 @@ class CodeIgniter
 
         $uri = $this->request->getPath();
 
-        if ($this->enableFilters) {
+        if ($this->enableFilters && $this->checkControllerNotFoundBeforeFilter()) {
             // Start up the filters
             $filters = Services::filters();
 
@@ -1109,5 +1109,23 @@ class CodeIgniter
         }
 
         return $buffer;
+    }
+
+    /**
+     * Check whether the controller is not found before the before filter.
+     */
+    protected function checkControllerNotFoundBeforeFilter(): bool
+    {
+        // Check whether the controller type is Closure.
+        if (is_object($this->controller) && (get_class($this->controller) === 'Closure')) {
+            return true;
+        }
+
+        // Try to autoload the class
+        if (! class_exists($this->controller, true) || $this->method[0] === '_') {
+            throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
+        }
+
+        return true;
     }
 }

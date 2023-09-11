@@ -13,6 +13,7 @@ namespace CodeIgniter;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\ConfigException;
+use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\RouteCollection;
@@ -925,5 +926,25 @@ final class CodeIgniterTest extends CIUnitTestCase
             // page for URL #2
             '$cacheQueryString=array' => [['important_parameter'], 3, $testingUrls],
         ];
+    }
+
+    /**
+     * See https://github.com/codeigniter4/CodeIgniter4/issues/7205
+     */
+    public function testRunControllerNotFoundBeforeFilter(): void
+    {
+        $_SERVER['argv'] = ['index.php'];
+        $_SERVER['argc'] = 1;
+
+        $_SERVER['REQUEST_URI'] = '/cannotFound';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+
+        // Inject mock router.
+        $routes = Services::routes();
+        $routes->setAutoRoute(true);
+
+        $this->expectException(PageNotFoundException::class);
+
+        $this->codeigniter->run($routes);
     }
 }
