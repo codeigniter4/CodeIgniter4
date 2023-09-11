@@ -3,14 +3,9 @@ services:
 		class: Utils\PHPStan\CheckUseStatementsAfterLicenseRule
 		tags:
 			- phpstan.rules.rule
-	-
-		class: Utils\PHPStan\CheckFrameworkExceptionInstantiationViaNamedConstructorRule
-		tags:
-			- phpstan.rules.rule
 
 includes:
 	- phpstan-baseline.php
-	- vendor/phpstan/phpstan-strict-rules/rules.neon
 
 parameters:
 	phpVersion: 80100
@@ -34,10 +29,6 @@ parameters:
 		- system/Validation/Views/single.php
 	scanDirectories:
 		- system/Helpers
-	dynamicConstantNames:
-		- APP_NAMESPACE
-		- CI_DEBUG
-		- ENVIRONMENT
 	checkMissingIterableValueType: false
 	checkGenericClassInNonGenericObjectType: false
 	checkMissingCallableSignature: true

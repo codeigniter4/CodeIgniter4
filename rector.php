@@ -67,7 +67,11 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/system/Test/bootstrap.php',
     ]);
 
-    $rectorConfig->phpstanConfig(__DIR__ . '/phpstan.neon.dist');
+    $rectorConfig->phpstanConfigs([
+        __DIR__ . '/phpstan.neon.dist',
+        __DIR__ . '/vendor/codeigniter/phpstan-codeigniter/extension.neon',
+        __DIR__ . '/vendor/phpstan/phpstan-strict-rules/rules.neon',
+    ]);
 
     // is there a file you need to skip?
     $rectorConfig->skip([
