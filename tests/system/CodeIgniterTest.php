@@ -26,6 +26,7 @@ use Config\Filters as FiltersConfig;
 use Config\Modules;
 use Config\Routing;
 use Tests\Support\Filters\Customfilter;
+use Tests\Support\Filters\RedirectFilter;
 
 /**
  * @runTestsInSeparateProcesses
@@ -942,6 +943,12 @@ final class CodeIgniterTest extends CIUnitTestCase
         // Inject mock router.
         $routes = Services::routes();
         $routes->setAutoRoute(true);
+
+        // Inject the before filter.
+        $filterConfig                            = config('Filters');
+        $filterConfig->aliases['redirectFilter'] = RedirectFilter::class;
+        $filterConfig->globals['before']         = ['redirectFilter'];
+        Services::filters($filterConfig);
 
         $this->expectException(PageNotFoundException::class);
 
