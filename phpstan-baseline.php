@@ -47,6 +47,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/CLI/BaseCommand.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Accessing offset \'ANSICON\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'NO_COLOR\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'argv\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 6,
 	'path' => __DIR__ . '/system/CLI/CLI.php',
@@ -215,6 +230,11 @@ $ignoreErrors[] = [
 	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfo\\:\\:\\$options is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$options\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Database/ShowTableInfo.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'encryption\\.key\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Encryption/GenerateKey.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -467,6 +487,26 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/ListCommands.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Accessing offset \'DOCUMENT_ROOT\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Commands/Server/rewrite.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'REQUEST_URI\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Server/rewrite.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Server/rewrite.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'CI_ENVIRONMENT\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/system/Commands/Utilities/Environment.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Utilities\\\\Environment\\:\\:\\$arguments is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$arguments\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Utilities/Environment.php',
@@ -485,6 +525,16 @@ $ignoreErrors[] = [
 	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Utilities\\\\Publish\\:\\:\\$arguments is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$arguments\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Utilities/Publish.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTP_HOST\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Utilities/Routes.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning non\\-falsy\\-string directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Utilities/Routes.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\:\\:\\$options is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$options\\.$#',
@@ -517,6 +567,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes/ControllerMethodReader.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Accessing offset \'REMOTE_ADDR\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Common.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'REQUEST_METHOD\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Common.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset string directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Common.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 8,
 	'path' => __DIR__ . '/system/Common.php',
@@ -532,14 +597,54 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/ComposerScripts.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Accessing offset \'CI_ENVIRONMENT\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Config/AutoloadConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset non\\-falsy\\-string directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/system/Config/BaseConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/BaseConfig.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Config/BaseService.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 3,
 	'path' => __DIR__ . '/system/Config/BaseService.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Accessing offset string directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Config/DotEnv.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset string of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/DotEnv.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Config/DotEnv.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'SERVER_PROTOCOL\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/Services.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/Services.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -1447,6 +1552,16 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Views.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Accessing offset \'SERVER_ADDR\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Email/Email.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'SERVER_NAME\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Email/Email.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 14,
 	'path' => __DIR__ . '/system/Email/Email.php',
@@ -1497,6 +1612,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Entity/Entity.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Events/Events.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Events\\\\Events\\:\\:on\\(\\) has parameter \\$callback with no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Events/Events.php',
@@ -1537,6 +1657,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Files/File.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Filters/Filters.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Filters/Filters.php',
@@ -1570,6 +1695,11 @@ $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 9,
 	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTP_USER_AGENT\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Return type \\(CodeIgniter\\\\HTTP\\\\DownloadResponse\\) of method CodeIgniter\\\\HTTP\\\\DownloadResponse\\:\\:noCache\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\HTTP\\\\Response\\)\\) of method CodeIgniter\\\\HTTP\\\\Response\\:\\:noCache\\(\\)$#',
@@ -1652,6 +1782,36 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/Files/UploadedFile.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTPS\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'QUERY_STRING\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'REQUEST_URI\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'SCRIPT_NAME\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset array\\|string directly on \\$_GET is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'QUERY_STRING\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 7,
 	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
@@ -1660,6 +1820,16 @@ $ignoreErrors[] = [
 	'message' => '#^PHPDoc type CodeIgniter\\\\HTTP\\\\URI of property CodeIgniter\\\\HTTP\\\\IncomingRequest\\:\\:\\$uri is not the same as PHPDoc type CodeIgniter\\\\HTTP\\\\URI\\|null of overridden property CodeIgniter\\\\HTTP\\\\OutgoingRequest\\:\\:\\$uri\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'CONTENT_TYPE\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HTTP/Message.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \\(int\\|string\\) directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HTTP/Message.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -1700,6 +1870,21 @@ $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 3,
 	'path' => __DIR__ . '/system/HTTP/Request.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'REQUEST_METHOD\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/system/HTTP/Response.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'SERVER_PROTOCOL\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HTTP/Response.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'SERVER_SOFTWARE\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/HTTP/Response.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -1745,6 +1930,16 @@ $ignoreErrors[] = [
 	'message' => '#^Strict comparison using \\!\\=\\= between mixed and null will always evaluate to true\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/URI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTP_REFERER\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/system/HTTP/UserAgent.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTP_USER_AGENT\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/HTTP/UserAgent.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -1972,6 +2167,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Model.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Accessing offset mixed directly on \\$_GET is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Pager/Pager.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 4,
 	'path' => __DIR__ . '/system/Pager/Pager.php',
@@ -1985,6 +2185,11 @@ $ignoreErrors[] = [
 	'message' => '#^Call to method CodeIgniter\\\\Pager\\\\PagerRenderer\\:\\:getNext\\(\\) with incorrect case\\: getnext$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Pager/Views/default_simple.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Argument \\#1 \\$name \\(class\\-string\\) passed to function model does not extend CodeIgniter\\\\\\\\Model\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/RESTful/BaseResource.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -2130,6 +2335,11 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:set404Override\\(\\) has parameter \\$callable with no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/RouteCollectionInterface.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'REQUEST_METHOD\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Router/Router.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getDefaultNamespace\\(\\)\\.$#',
@@ -2295,6 +2505,11 @@ $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 5,
 	'path' => __DIR__ . '/system/Session/Handlers/RedisHandler.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Accessing offset \'HTTP_X_REQUESTED_WITH\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Session/Session.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -2605,6 +2820,21 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Fabricator\\:\\:resetCounts\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Fabricator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Parameter \\#1 \\$name of function model expects a valid class string, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/Fabricator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'test\' directly on offset \'HTTPS\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning string directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -3132,6 +3362,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/TestResponse.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Accessing offset \'app\\.baseURL\' directly on \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/bootstrap.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'http\\://example\\.com/\' directly on offset \'app\\.baseURL\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/bootstrap.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Assigning \'testing\' directly on offset \'CI_ENVIRONMENT\' of \\$_SERVER is discouraged\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/bootstrap.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Throttle\\\\Throttler\\:\\:\\$testTime \\(int\\) on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Throttle/Throttler.php',
@@ -3245,11 +3490,6 @@ $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$node \\(PhpParser\\\\Node\\\\Expr\\\\New_\\) of method Utils\\\\PHPStan\\\\CheckFrameworkExceptionInstantiationViaNamedConstructorRule\\:\\:processNode\\(\\) should be contravariant with parameter \\$node \\(PhpParser\\\\Node\\) of method PHPStan\\\\Rules\\\\Rule\\<PhpParser\\\\Node\\>\\:\\:processNode\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/utils/PHPStan/CheckFrameworkExceptionInstantiationViaNamedConstructorRule.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$node \\(PhpParser\\\\Node\\\\Stmt\\) of method Utils\\\\PHPStan\\\\CheckUseStatementsAfterLicenseRule\\:\\:processNode\\(\\) should be contravariant with parameter \\$node \\(PhpParser\\\\Node\\) of method PHPStan\\\\Rules\\\\Rule\\<PhpParser\\\\Node\\>\\:\\:processNode\\(\\)$#',
