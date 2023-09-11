@@ -136,16 +136,20 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Character set
      *
+     * This value must be updated by Config\Database if the driver use it.
+     *
      * @var string
      */
-    protected $charset = 'utf8';
+    protected $charset = 'utf8mb4';
 
     /**
      * Collation
      *
+     * This value must be updated by Config\Database if the driver use it.
+     *
      * @var string
      */
-    protected $DBCollat = 'utf8_general_ci';
+    protected $DBCollat = 'utf8mb4_general_ci';
 
     /**
      * Swap Prefix
