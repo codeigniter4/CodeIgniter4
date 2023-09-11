@@ -75,7 +75,7 @@ final class GeneralModelTest extends CIUnitTestCase
 
         // from DB
         $this->assertTrue(isset($this->model->DBPrefix));
-        $this->assertSame('utf8mb4', $this->model->charset);
+        $this->assertSame('utf8', $this->model->charset);
 
         // from Builder
         $this->assertTrue(isset($this->model->QBNoEscape));
