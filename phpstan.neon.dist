@@ -36,3 +36,4 @@ parameters:
 	strictRules:
 		allRules: false
 		disallowedConstructs: true
+		matchingInheritedMethodNames: true
