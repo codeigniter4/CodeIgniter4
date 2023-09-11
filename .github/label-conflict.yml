@@ -1,9 +1,5 @@
 name: Auto Label Conflicts
 on:
-  push:
-    branches:
-      - 'develop'
-      - '4.*'
   pull_request:
     branches:
       - 'develop'
