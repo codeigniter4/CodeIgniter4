@@ -33,8 +33,8 @@ final class BaseConnectionTest extends CIUnitTestCase
         'DBPrefix' => 'test_',
         'pConnect' => true,
         'DBDebug'  => (ENVIRONMENT !== 'production'),
-        'charset'  => 'utf8',
-        'DBCollat' => 'utf8_general_ci',
+        'charset'  => 'utf8mb4',
+        'DBCollat' => 'utf8mb4_general_ci',
         'swapPre'  => '',
         'encrypt'  => false,
         'compress' => false,
@@ -51,8 +51,8 @@ final class BaseConnectionTest extends CIUnitTestCase
         'DBPrefix' => 'test_',
         'pConnect' => true,
         'DBDebug'  => (ENVIRONMENT !== 'production'),
-        'charset'  => 'utf8',
-        'DBCollat' => 'utf8_general_ci',
+        'charset'  => 'utf8mb4',
+        'DBCollat' => 'utf8mb4_general_ci',
         'swapPre'  => '',
         'encrypt'  => false,
         'compress' => false,
@@ -71,8 +71,8 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertSame('MockDriver', $db->DBDriver);
         $this->assertTrue($db->pConnect);
         $this->assertTrue($db->DBDebug);
-        $this->assertSame('utf8', $db->charset);
-        $this->assertSame('utf8_general_ci', $db->DBCollat);
+        $this->assertSame('utf8mb4', $db->charset);
+        $this->assertSame('utf8mb4_general_ci', $db->DBCollat);
         $this->assertSame('', $db->swapPre);
         $this->assertFalse($db->encrypt);
         $this->assertFalse($db->compress);
@@ -153,7 +153,7 @@ final class BaseConnectionTest extends CIUnitTestCase
     {
         $db = new MockConnection($this->options);
 
-        $this->assertSame('utf8', $db->charset);
+        $this->assertSame('utf8mb4', $db->charset);
     }
 
     public function testMagicGetMissing(): void

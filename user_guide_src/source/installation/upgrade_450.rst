@@ -39,7 +39,10 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
-- @TODO
+- app/Config/Database.php
+    - The default value of ``charset`` in ``$default`` has been change to ``utf8mb4``.
+    - The default value of ``DBCollat`` in ``$default`` has been change to ``utf8mb4_general_ci``.
+    - The default value of ``DBCollat`` in ``$tests`` has been change to ``''``.
 
 All Changes
 ===========
