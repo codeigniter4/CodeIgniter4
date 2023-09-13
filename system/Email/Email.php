@@ -862,7 +862,7 @@ class Email
         }
 
         foreach ($this->baseCharsets as $charset) {
-            if (strpos($this->charset, (string) $charset) === 0) {
+            if (strpos($this->charset, $charset) === 0) {
                 $this->encoding = '7bit';
 
                 break;
