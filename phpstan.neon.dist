@@ -21,7 +21,6 @@ parameters:
 		- app/Views/errors/cli/*
 		- app/Views/errors/html/*
 		- system/Commands/Generators/Views/*
-		- system/Config/Routes.php
 		- system/Debug/Toolbar/Views/toolbar.tpl.php
 		- system/Images/Handlers/GDHandler.php
 		- system/Test/Filters/CITestStreamFilter.php
