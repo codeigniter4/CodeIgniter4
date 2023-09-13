@@ -289,8 +289,9 @@ Minor releases (such as 4.2, 4.3 etc.) may introduce new features, but must do s
 <section id="what-are-not-breaking-changes">
 <h2>What are not Breaking Changes<a class="headerlink" href="#what-are-not-breaking-changes" title="Permalink to this headline"></a></h2>
 <ul class="simple">
-<li><p>The deprecated Config items are not covered by backwards compatibility (BC) promise. It may be removed in the next
-<strong>minor</strong> version or later.</p></li>
+<li><p>The deprecated items are not covered by backwards compatibility (BC) promise. It may be removed in the next next
+<strong>minor</strong> version or later. For example, if an item has been deprecated since 4.3.x,
+it may be removed in 4.5.0.</p></li>
 <li><p>System messages defined in <strong>system/Language/en/</strong> are strictly for internal framework use and are not covered by backwards compatibility (BC) promise. If developers are relying on language string output they should be checking it against the function call (<code class="docutils literal notranslate"><span class="pre">lang('...')</span></code>), not the content.</p></li>
 <li><p><a class="reference external" href="https://www.php.net/manual/en/functions.arguments.php#functions.named-arguments">Named arguments</a> are not covered by backwards compatibility (BC) promise. We may choose to rename method/function parameter names when necessary in order to improve the  codebase.</p></li>
 </ul>
@@ -309,7 +310,7 @@ Minor releases (such as 4.2, 4.3 etc.) may introduce new features, but must do s
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 12, 2023.
+      <span class="lastupdated">Last updated on Sep 13, 2023.
       </span></p>
   </div>
 
