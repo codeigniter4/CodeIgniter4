@@ -279,8 +279,8 @@ class Validation implements ValidationInterface
 
         foreach ($rules as $i => $rule) {
             $isCallable     = is_callable($rule);
-            $stringCallable = ($isCallable && is_string($rule)) ? true : false;
-            $arrayCallable  = ($isCallable && is_array($rule)) ? true : false;
+            $stringCallable = $isCallable && is_string($rule);
+            $arrayCallable  = $isCallable && is_array($rule);
 
             $passed = false;
             $param  = false;
@@ -297,13 +297,7 @@ class Validation implements ValidationInterface
             if ($this->isClosure($rule)) {
                 $passed = $rule($value, $data, $error, $field);
             } elseif ($isCallable) {
-                if ($stringCallable) {
-                    // The rule is a function.
-                    $passed = $rule($value);
-                } else {
-                    // The rule is an array.
-                    $passed = $rule($value, $data, $error, $field);
-                }
+                $passed = $stringCallable ? $rule($value) : $rule($value, $data, $error, $field);
             } else {
                 $found = false;
 
