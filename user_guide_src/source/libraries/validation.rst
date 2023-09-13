@@ -794,6 +794,29 @@ Or you can use the following parameters:
 .. literalinclude:: validation/041.php
    :lines: 2-
 
+.. _validation-using-callable-rule:
+
+Using Callable Rule
+===================
+
+.. versionadded:: 4.5.0
+
+If you like to use an array callback as a rule, you may use it instead of a Closure Rule.
+
+You need to use an array for validation rules:
+
+.. literalinclude:: validation/046.php
+   :lines: 2-
+
+You must set the error message for the callable rule.
+When you specify the error message, set the array key for the callable rule.
+In the above code, the ``required`` rule has the key ``0``, and the callable has ``1``.
+
+Or you can use the following parameters:
+
+.. literalinclude:: validation/047.php
+   :lines: 2-
+
 ***************
 Available Rules
 ***************
