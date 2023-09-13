@@ -37,7 +37,6 @@ use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
-use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
@@ -80,7 +79,6 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/tests/system/Filters/fixtures',
         __DIR__ . '/tests/_support',
         JsonThrowOnErrorRector::class,
-        StringifyStrNeedlesRector::class,
         YieldDataProviderRector::class,
 
         RemoveUnusedPrivateMethodRector::class => [

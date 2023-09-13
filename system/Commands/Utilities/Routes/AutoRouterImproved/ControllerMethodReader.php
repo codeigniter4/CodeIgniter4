@@ -26,6 +26,9 @@ final class ControllerMethodReader
      */
     private string $namespace;
 
+    /**
+     * @var string[]
+     */
     private array $httpMethods;
 
     /**
