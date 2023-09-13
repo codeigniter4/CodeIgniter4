@@ -1,9 +1,5 @@
 name: Auto Label Conflicts
-on:
-  pull_request:
-    branches:
-      - 'develop'
-      - '4.*'
+on: pull_request_target
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -15,13 +11,13 @@ permissions:
   pull-requests: write
 
 jobs:
-  auto-label:
+  auto-label-conflict:
     runs-on: ubuntu-latest
     steps:
       - uses: prince-chrismc/label-merge-conflicts-action@v3
         with:
           conflict_label_name: 'stale'
-          github_token: ${{ github.token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
           # --- Optional Inputs ---
           # To make sure the merge commit exactly matches the branch
