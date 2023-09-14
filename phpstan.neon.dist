@@ -34,5 +34,6 @@ parameters:
 	treatPhpDocTypesAsCertain: false
 	strictRules:
 		allRules: false
+		disallowedLooseComparison: true
 		disallowedConstructs: true
 		matchingInheritedMethodNames: true
