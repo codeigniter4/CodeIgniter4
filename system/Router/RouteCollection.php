@@ -1349,7 +1349,8 @@ class RouteCollection implements RouteCollectionInterface
          * Build our resulting string, inserting the $params in
          * the appropriate places.
          *
-         * @var string[] $placeholders
+         * @var arrray<int, string> $patterns
+         * @phpstan-var list<string> $patterns
          */
         $placeholders = $matches[0];
 
