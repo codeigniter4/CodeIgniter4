@@ -273,11 +273,10 @@ Previously saved keys do not change.
 
 .. literalinclude:: localization/019.php
 
+.. note:: When the command scans folders, **app/Language** will be skipped.
+
 The language files generated will most likely not conform to your coding standards.
 It is recommended to format them. For example, run ``vendor/bin/php-cs-fixer fix ./app/Language`` if ``php-cs-fixer`` is installed.
-
-.. note:: The command ignores **app/Language/** path.
-
 
 Before updating, it is possible to preview the translations found by the command:
 
