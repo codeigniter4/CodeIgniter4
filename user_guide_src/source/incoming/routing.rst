@@ -384,12 +384,18 @@ You specify a filter classname for the filter value:
 
 .. literalinclude:: routing/036.php
 
+.. _multiple-filters:
+
 Multiple Filters
 ----------------
 
 .. versionadded:: 4.1.5
 
-.. important:: *Multiple filters* is disabled by default. Because it breaks backward compatibility. If you want to use it, you need to configure. See :ref:`upgrade-415-multiple-filters-for-a-route` for the details.
+.. important:: Since v4.5.0, *Multiple Filters* are always enabled.
+    Prior to v4.5.0, *Multiple Filters* were disabled by default.
+    If you want to use with prior to v4.5.0, See
+    :ref:`Upgrading from 4.1.4 to 4.1.5 <upgrade-415-multiple-filters-for-a-route>`
+    for the details.
 
 You specify an array for the filter value:
 

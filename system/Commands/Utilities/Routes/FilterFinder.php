@@ -15,7 +15,6 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\Router\Router;
-use Config\Feature;
 use Config\Services;
 
 /**
@@ -37,13 +36,6 @@ final class FilterFinder
     private function getRouteFilters(string $uri): array
     {
         $this->router->handle($uri);
-
-        $multipleFiltersEnabled = config(Feature::class)->multipleFilters ?? false;
-        if (! $multipleFiltersEnabled) {
-            $filter = $this->router->getFilter();
-
-            return $filter === null ? [] : [$filter];
-        }
 
         return $this->router->getFilters();
     }

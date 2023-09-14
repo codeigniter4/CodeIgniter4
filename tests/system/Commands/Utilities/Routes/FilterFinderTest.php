@@ -171,8 +171,6 @@ final class FilterFinderTest extends CIUnitTestCase
 
     public function testFindGlobalsAndRouteMultipleFilters(): void
     {
-        config('Feature')->multipleFilters = true;
-
         $collection = $this->createRouteCollection();
         $collection->get('admin', ' AdminController::index', ['filter' => ['honeypot', InvalidChars::class]]);
         $router  = $this->createRouter($collection);
@@ -187,7 +185,5 @@ final class FilterFinderTest extends CIUnitTestCase
             'after'  => ['honeypot', InvalidChars::class, 'toolbar'],
         ];
         $this->assertSame($expected, $filters);
-
-        config('Feature')->multipleFilters = false;
     }
 }

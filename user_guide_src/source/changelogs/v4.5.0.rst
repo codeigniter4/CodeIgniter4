@@ -26,6 +26,21 @@ Interface Changes
 Method Signature Changes
 ========================
 
+.. _v450-removed-deprecated-items:
+
+Removed Deprecated Items
+========================
+
+Filters
+-------
+
+- The following deprecated items have been removed, because now :ref:`multiple-filters` are always enabled.
+
+    - ``Filters::enableFilter()``
+    - ``RouteCollection::getFilterForRoute()``
+    - ``Router::$filterInfo``
+    - ``Router::getFilter()``
+
 Enhancements
 ************
 
@@ -64,6 +79,10 @@ Message Changes
 
 Changes
 *******
+
+- **Config:**
+    - ``Config\Feature::$multipleFilters`` has been removed, because now
+      :ref:`multiple-filters` are always enabled.
 
 Deprecations
 ************

@@ -335,12 +335,8 @@ class Filters
      * are passed to the filter when executed.
      *
      * @param string $name filter_name or filter_name:arguments like 'role:admin,manager'
-     *
-     * @return $this
-     *
-     * @deprecated Use enableFilters(). This method will be private.
      */
-    public function enableFilter(string $name, string $when = 'before')
+    private function enableFilter(string $name, string $when = 'before'): void
     {
         // Get arguments and clean name
         [$name, $arguments]     = $this->getCleanName($name);
@@ -362,8 +358,6 @@ class Filters
             $this->filters[$when][]    = $name;
             $this->filtersClass[$when] = array_merge($this->filtersClass[$when], $classNames);
         }
-
-        return $this;
     }
 
     /**

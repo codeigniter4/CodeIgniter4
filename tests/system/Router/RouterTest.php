@@ -496,7 +496,7 @@ final class RouterTest extends CIUnitTestCase
 
         $this->assertSame('\TestController', $router->controllerName());
         $this->assertSame('foobar', $router->methodName());
-        $this->assertSame('test', $router->getFilter());
+        $this->assertSame(['test'], $router->getFilters());
     }
 
     /**
@@ -526,25 +526,25 @@ final class RouterTest extends CIUnitTestCase
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('index', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
 
         $router->handle('api/posts/new');
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('new', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
 
         $router->handle('api/posts/50');
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('show', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
 
         $router->handle('api/posts/50/edit');
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('edit', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
 
         // POST
         $this->collection->group(...$group);
@@ -556,7 +556,7 @@ final class RouterTest extends CIUnitTestCase
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('create', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
 
         // PUT
         $this->collection->group(...$group);
@@ -568,7 +568,7 @@ final class RouterTest extends CIUnitTestCase
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('update', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
 
         // PATCH
         $this->collection->group(...$group);
@@ -580,7 +580,7 @@ final class RouterTest extends CIUnitTestCase
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('update', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
 
         // DELETE
         $this->collection->group(...$group);
@@ -592,7 +592,7 @@ final class RouterTest extends CIUnitTestCase
 
         $this->assertSame('\App\Controllers\Api\PostController', $router->controllerName());
         $this->assertSame('delete', $router->methodName());
-        $this->assertSame('api-auth', $router->getFilter());
+        $this->assertSame(['api-auth'], $router->getFilters());
     }
 
     public function testRouteWorksWithClassnameFilter(): void
@@ -606,16 +606,13 @@ final class RouterTest extends CIUnitTestCase
 
         $this->assertSame('\TestController', $router->controllerName());
         $this->assertSame('foo', $router->methodName());
-        $this->assertSame(Customfilter::class, $router->getFilter());
+        $this->assertSame([Customfilter::class], $router->getFilters());
 
         $this->resetServices();
     }
 
     public function testRouteWorksWithMultipleFilters(): void
     {
-        $feature                  = config('Feature');
-        $feature->multipleFilters = true;
-
         $collection = $this->collection;
 
         $collection->add('foo', 'TestController::foo', ['filter' => ['filter1', 'filter2:param']]);
@@ -626,8 +623,6 @@ final class RouterTest extends CIUnitTestCase
         $this->assertSame('\TestController', $router->controllerName());
         $this->assertSame('foo', $router->methodName());
         $this->assertSame(['filter1', 'filter2:param'], $router->getFilters());
-
-        $feature->multipleFilters = false;
     }
 
     /**

@@ -18,6 +18,12 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+Removed Deprecated Items
+========================
+
+Some deprecated items have been removed. If you extend these classes and are
+using them, upgrade your code. See :ref:`v450-removed-deprecated-items` for details.
+
 Breaking Enhancements
 *********************
 
@@ -43,6 +49,9 @@ Config
     - The default value of ``charset`` in ``$default`` has been change to ``utf8mb4``.
     - The default value of ``DBCollat`` in ``$default`` has been change to ``utf8mb4_general_ci``.
     - The default value of ``DBCollat`` in ``$tests`` has been change to ``''``.
+- app/Config/Feature.php
+    - ``Config\Feature::$multipleFilters`` has been removed, because now
+      :ref:`multiple-filters` are always enabled.
 
 All Changes
 ===========

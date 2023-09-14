@@ -1229,25 +1229,6 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     /**
-     * Returns the filter that should be applied for a single route, along
-     * with any parameters it might have. Parameters are found by splitting
-     * the parameter name on a colon to separate the filter name from the parameter list,
-     * and the splitting the result on commas. So:
-     *
-     *    'role:admin,manager'
-     *
-     * has a filter of "role", with parameters of ['admin', 'manager'].
-     *
-     * @deprecated Use getFiltersForRoute()
-     */
-    public function getFilterForRoute(string $search, ?string $verb = null): string
-    {
-        $options = $this->loadRoutesOptions($verb);
-
-        return $options[$search]['filter'] ?? '';
-    }
-
-    /**
      * Returns the filters that should be applied for a single route, along
      * with any parameters it might have. Parameters are found by splitting
      * the parameter name on a colon to separate the filter name from the parameter list,
