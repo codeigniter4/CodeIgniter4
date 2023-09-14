@@ -1121,7 +1121,7 @@ class CodeIgniter
      *
      * @deprecated 4.4.0 No longer Used. Moved to index.php.
      *
-     * @return never
+     * @return void
      */
     protected function callExit($code)
     {
