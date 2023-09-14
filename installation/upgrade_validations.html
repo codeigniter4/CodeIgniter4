@@ -311,6 +311,8 @@
 Use <a class="reference internal" href="../libraries/validation.html#validation-using-rule-classes"><span class="std std-ref">Rule Classes</span></a> or
 <a class="reference internal" href="../libraries/validation.html#validation-using-closure-rule"><span class="std std-ref">Closure Rule</span></a>
 instead.</p></li>
+<li><p>In CI3, Callbacks/Callable rules were prioritized, but in CI4, Closure Rules are
+not prioritized, and are checked in the order in which they are listed.</p></li>
 <li><p>CI4 validation format rules do not permit empty string.</p></li>
 <li><p>CI4 validation never changes your data.</p></li>
 <li><p>Since v4.3.0, <a class="reference internal" href="../helpers/form_helper.html#validation_errors" title="validation_errors"><code class="xref php php-func docutils literal notranslate"><span class="pre">validation_errors()</span></code></a> has been introduced, but the API is different from CI3’s.</p></li>
@@ -480,7 +482,7 @@ instead.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 13, 2023.
+      <span class="lastupdated">Last updated on Sep 14, 2023.
       </span></p>
   </div>
 
