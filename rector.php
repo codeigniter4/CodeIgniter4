@@ -37,8 +37,6 @@ use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
-use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
-use Rector\PHPUnit\CodeQuality\Rector\Class_\ConstructClassMethodToSetUpTestCaseRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
@@ -57,7 +55,7 @@ return static function (RectorConfig $rectorConfig): void {
         PHPUnitSetList::PHPUNIT_100,
     ]);
 
-    $rectorConfig->parallel(240, 8, 1);
+    $rectorConfig->parallel();
 
     // paths to refactor; solid alternative to CLI arguments
     $rectorConfig->paths([__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils']);
@@ -81,19 +79,11 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/tests/system/Filters/fixtures',
         __DIR__ . '/tests/_support',
         JsonThrowOnErrorRector::class,
-        StringifyStrNeedlesRector::class,
         YieldDataProviderRector::class,
 
         RemoveUnusedPrivateMethodRector::class => [
             // private method called via getPrivateMethodInvoker
             __DIR__ . '/tests/system/Test/ReflectionHelperTest.php',
-        ],
-
-        ConstructClassMethodToSetUpTestCaseRector::class => [
-            // breaks the constructor
-            __DIR__ . '/system/Test/TestResponse.php',
-            // See https://github.com/rectorphp/rector/issues/8188
-            __DIR__ . '/system/Test/ControllerResponse.php',
         ],
 
         RemoveUnusedConstructorParamRector::class => [

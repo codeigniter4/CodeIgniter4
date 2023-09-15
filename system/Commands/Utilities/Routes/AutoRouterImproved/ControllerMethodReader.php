@@ -26,6 +26,10 @@ final class ControllerMethodReader
      */
     private string $namespace;
 
+    /**
+     * @var array<int, string>
+     * @phpstan-var list<string>
+     */
     private array $httpMethods;
 
     /**
