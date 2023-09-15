@@ -21,6 +21,7 @@ jobs:
       - name: Add comment for PR with conflict
         uses: peter-evans/create-or-update-comment@v3
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             :wave: Hi, @${{ github.event.pull_request.user.login }}!
