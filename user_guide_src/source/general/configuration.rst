@@ -237,6 +237,8 @@ expect your ``Config\App`` to magically have that property and value at run time
 When you have the property ``$default = ['encrypt' => false]`` in your
 ``Config\Database``, you cannot change the ``encrypt`` value to an array even if
 you put ``database.default.encrypt.ssl_verify = true`` in your **.env**.
+If you want to do like that, see
+:ref:`Database Configuration <database-config-with-env-file>`.
 
 Treating Environment Variables as Arrays
 ========================================
