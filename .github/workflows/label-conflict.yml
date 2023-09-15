@@ -1,35 +1,31 @@
-name: Auto Label Conflicts
+name: Auto Comment Conflicts
 on:
   pull_request:
     branches:
       - 'develop'
       - '4.*'
+    types:
+      - labeled
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
-permissions:
-  contents: read
-  issues: write
-  pull-requests: write
-
 jobs:
-  auto-label:
+  auto-comment-conflict:
+    permissions:
+      contents: read
+      pull-requests: write
+    if: github.event.label.name == 'stale'
     runs-on: ubuntu-latest
     steps:
-      - uses: prince-chrismc/label-merge-conflicts-action@v3
+      - name: Add comment for PR with conflict
+        uses: peter-evans/create-or-update-comment@v3
         with:
-          conflict_label_name: 'stale'
-          github_token: ${{ github.token }}
-
-          # --- Optional Inputs ---
-          # To make sure the merge commit exactly matches the branch
-          detect_merge_changes: true # or true to handle as conflicts
-          # By default a comment will be left, adding `conflict_comment: ''` will disable comments
-          # The optional `${author}` will be replaced with the username of the pull request
-          conflict_comment: |
-            :wave: Hi, @${author},
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            :wave: Hi, @${{ github.event.pull_request.user.login }}!
 
             We detected conflicts in your PR against the base branch :speak_no_evil:
             You may want to sync :arrows_counterclockwise: your branch with upstream!
