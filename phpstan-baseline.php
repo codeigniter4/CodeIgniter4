@@ -2422,11 +2422,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Router/RouterInterface.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Security/Security.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Session\\\\Exceptions\\\\SessionException\\:\\:forEmptySavepath\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Session/Exceptions/SessionException.php',
