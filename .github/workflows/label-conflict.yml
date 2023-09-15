@@ -16,6 +16,7 @@ jobs:
     if: github.event.label.name == 'stale'
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       pull-requests: write
     steps:
       - name: Add comment for PR with conflict
