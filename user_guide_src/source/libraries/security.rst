@@ -206,6 +206,8 @@ The order of checking the availability of the CSRF token is as follows:
 3. ``php://input`` (JSON request) - bear in mind that this approach is the slowest one since we have to decode JSON and then re-encode it
 4. ``php://input`` (raw body) - for PUT, PATCH, and DELETE type of requests
 
+.. note:: ``php://input`` (raw body) is checked since v4.4.2.
+
 *********************
 Other Helpful Methods
 *********************

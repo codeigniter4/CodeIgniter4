@@ -325,7 +325,7 @@ class Security implements SecurityInterface
         } else {
             $body = $request->getBody() ?? '';
             $json = json_decode($body);
-            if (! empty($json) && json_last_error() === JSON_ERROR_NONE) {
+            if ($json !== null && json_last_error() === JSON_ERROR_NONE) {
                 // We kill this since we're done and we don't want to pollute the JSON data.
                 unset($json->{$this->config->tokenName});
                 $request->setBody(json_encode($json));
@@ -356,7 +356,7 @@ class Security implements SecurityInterface
 
         if ($body !== '') {
             $json = json_decode($body);
-            if (! empty($json) && json_last_error() === JSON_ERROR_NONE) {
+            if ($json !== null && json_last_error() === JSON_ERROR_NONE) {
                 return $json->{$this->config->tokenName} ?? null;
             }
 
