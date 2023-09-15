@@ -223,6 +223,21 @@ Finally, you can check if a checkbox exists and is checked with the ``seeCheckbo
 .. literalinclude:: response/023.php
    :lines: 2-
 
+seeXPath()
+---------
+
+You can use ``seeXPath()`` to take advantage of the full power that xpath gives you.
+This method is aimed at more advanced users who want to write a more complex query
+using the DOMXPath object directly:
+
+.. literalinclude:: response/033.php
+   :lines: 2-
+
+The ``dontSeeXPath()`` method is the exact opposite:
+
+.. literalinclude:: response/034.php
+   :lines: 2-
+
 DOM Assertions
 ==============
 

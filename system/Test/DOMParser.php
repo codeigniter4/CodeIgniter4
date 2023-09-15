@@ -176,6 +176,24 @@ class DOMParser
     }
 
     /**
+     * Checks to see if the XPath can be found.
+     */
+    public function seeXPath(string $path): bool
+    {
+        $xpath = new DOMXPath($this->dom);
+
+        return (bool) $xpath->query($path)->length;
+    }
+
+    /**
+     * Checks to see if the XPath can't be found.
+     */
+    public function dontSeeXPath(string $path): bool
+    {
+        return ! $this->seeXPath($path);
+    }
+
+    /**
      * Search the DOM using an XPath expression.
      *
      * @return DOMNodeList|false
