@@ -348,7 +348,9 @@ class Security implements SecurityInterface
             return $tokenValue;
         }
 
-        if ($request->hasHeader($this->config->headerName) && ! empty($request->header($this->config->headerName)->getValue())) {
+        if ($request->hasHeader($this->config->headerName)
+            && $request->header($this->config->headerName)->getValue() !== ''
+            && $request->header($this->config->headerName)->getValue() !== []) {
             return $request->header($this->config->headerName)->getValue();
         }
 
