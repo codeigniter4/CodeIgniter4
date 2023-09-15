@@ -183,6 +183,10 @@ are considered for merging into the configuration object's properties.
 .. important:: You cannot add a new property by setting environment variables,
     nor change a scalar value to an array. See :ref:`env-var-replacements-for-data`.
 
+.. note:: This feature is implemented in the ``CodeIgniter\Config\BaseConfig``
+    class. So it will not work with a few files in the **app/Config** folder
+    that do not extends the class.
+
 If the prefix of a namespaced variable exactly matches the namespace of the configuration
 class, then the trailing part of the setting (after the dot) is treated as a configuration
 property. If it matches an existing configuration property, the environment variable's
