@@ -2913,7 +2913,7 @@ class BaseBuilder
      *
      * @return bool
      */
-    public function increment(string $column, int $value = 1)
+    public function increment(string $column, float $value = 1)
     {
         $column = $this->db->protectIdentifiers($column);
 
@@ -2933,7 +2933,7 @@ class BaseBuilder
      *
      * @return bool
      */
-    public function decrement(string $column, int $value = 1)
+    public function decrement(string $column, float $value = 1)
     {
         $column = $this->db->protectIdentifiers($column);
 
