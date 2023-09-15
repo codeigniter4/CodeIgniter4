@@ -1,4 +1,4 @@
-name: Auto Label Conflicts
+name: Auto Comment Conflicts
 on:
   pull_request:
     branches:
@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  auto-label-conflict:
+  auto-comment-conflict:
     if: github.event.label.name == 'stale'
     runs-on: ubuntu-latest
     permissions:
@@ -23,7 +23,7 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            :wave: Hi,
+            :wave: Hi, @${{ github.event.pull_request.user.login }}!
 
             We detected conflicts in your PR against the base branch :speak_no_evil:
             You may want to sync :arrows_counterclockwise: your branch with upstream!
