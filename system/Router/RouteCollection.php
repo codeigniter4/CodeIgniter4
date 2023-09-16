@@ -302,7 +302,8 @@ class RouteCollection implements RouteCollectionInterface
 
         // Normalize the path string in routeFiles array.
         foreach ($this->routeFiles as $routeKey => $routesFile) {
-            $this->routeFiles[$routeKey] = realpath($routesFile) ?: $routesFile;
+            $realpath                    = realpath($routesFile);
+            $this->routeFiles[$routeKey] = ($realpath === false) ? $routesFile : $realpath;
         }
     }
 
