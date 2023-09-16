@@ -198,6 +198,8 @@ class CodeIgniter
 
     /**
      * Handles some basic app and environment setup.
+     *
+     * @return void
      */
     public function initialize()
     {
@@ -223,6 +225,8 @@ class CodeIgniter
 
     /**
      * Checks system for missing required PHP extensions.
+     *
+     * @return void
      *
      * @throws FrameworkException
      *
@@ -251,6 +255,8 @@ class CodeIgniter
 
     /**
      * Initializes Kint
+     *
+     * @return void
      */
     protected function initializeKint()
     {
@@ -564,6 +570,8 @@ class CodeIgniter
      *
      * @codeCoverageIgnore
      *
+     * @return void
+     *
      * @deprecated 4.4.0 No longer used. Moved to index.php and spark.
      */
     protected function detectEnvironment()
@@ -579,6 +587,8 @@ class CodeIgniter
      *
      * If no boot file exists, we shouldn't continue because something
      * is wrong. At the very least, they should have error reporting setup.
+     *
+     * @return void
      */
     protected function bootstrapEnvironment()
     {
@@ -599,6 +609,8 @@ class CodeIgniter
      *
      * The timer is used to display total script execution both in the
      * debug toolbar, and potentially on the displayed page.
+     *
+     * @return void
      */
     protected function startBenchmark()
     {
@@ -628,6 +640,8 @@ class CodeIgniter
 
     /**
      * Get our Request object, (either IncomingRequest or CLIRequest).
+     *
+     * @return void
      */
     protected function getRequestObject()
     {
@@ -647,6 +661,8 @@ class CodeIgniter
     /**
      * Get our Response object, and set some default values, including
      * the HTTP protocol version and a default successful response.
+     *
+     * @return void
      */
     protected function getResponseObject()
     {
@@ -669,6 +685,8 @@ class CodeIgniter
      *
      * @param int $duration How long the Strict Transport Security
      *                      should be enforced for this URL.
+     *
+     * @return void
      */
     protected function forceSecureAccess($duration = 31_536_000)
     {
@@ -978,6 +996,8 @@ class CodeIgniter
      * @param ResponseInterface|string|null $returned
      *
      * @deprecated $cacheConfig is deprecated.
+     *
+     * @return void
      */
     protected function gatherOutput(?Cache $cacheConfig = null, $returned = null)
     {
@@ -1014,6 +1034,8 @@ class CodeIgniter
      * This helps provider safer, more reliable previous_url() detection.
      *
      * @param string|URI $uri
+     *
+     * @return void
      */
     public function storePreviousURL($uri)
     {
@@ -1055,6 +1077,8 @@ class CodeIgniter
     /**
      * Modifies the Request Object to use a different method if a POST
      * variable called _method is found.
+     *
+     * @return void
      */
     public function spoofRequestMethod()
     {
@@ -1096,6 +1120,8 @@ class CodeIgniter
      * @param int $code
      *
      * @deprecated 4.4.0 No longer Used. Moved to index.php.
+     *
+     * @return void
      */
     protected function callExit($code)
     {
