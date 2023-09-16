@@ -224,7 +224,7 @@ Finally, you can check if a checkbox exists and is checked with the ``seeCheckbo
    :lines: 2-
 
 seeXPath()
----------
+----------
 
 You can use ``seeXPath()`` to take advantage of the full power that xpath gives you.
 This method is aimed at more advanced users who want to write a more complex expressions
