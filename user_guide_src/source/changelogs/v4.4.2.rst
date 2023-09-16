@@ -22,6 +22,8 @@ Changes
   command was removed. It did not work from the beginning. Also, the rollback
   command returns the database(s) state to a specified batch number and cannot
   specify only a specific database group.
+- **DomParser:** The new methods were added ``seeXPath()`` and ``dontSeeXPath()``
+  which allows users to work directly with DOMXPath object, using complex expressions.
 
 Deprecations
 ************

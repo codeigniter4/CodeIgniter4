@@ -227,7 +227,7 @@ seeXPath()
 ---------
 
 You can use ``seeXPath()`` to take advantage of the full power that xpath gives you.
-This method is aimed at more advanced users who want to write a more complex query
+This method is aimed at more advanced users who want to write a more complex expressions
 using the DOMXPath object directly:
 
 .. literalinclude:: response/033.php
