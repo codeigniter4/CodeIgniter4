@@ -238,6 +238,8 @@ The ``dontSeeXPath()`` method is the exact opposite:
 .. literalinclude:: response/034.php
    :lines: 2-
 
+.. note:: This method was introduced in v4.5.0.
+
 DOM Assertions
 ==============
 
