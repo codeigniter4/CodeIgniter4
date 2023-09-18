@@ -606,7 +606,12 @@ meta tag for you:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">$_POST</span></code> array</p></li>
 <li><p>HTTP header</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">php://input</span></code> (JSON request) - bear in mind that this approach is the slowest one since we have to decode JSON and then re-encode it</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">php://input</span></code> (raw body) - for PUT, PATCH, and DELETE type of requests</p></li>
 </ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">php://input</span></code> (raw body) is checked since v4.4.2.</p>
+</div>
 </section>
 </section>
 <section id="other-helpful-methods">
@@ -640,7 +645,7 @@ the second optional parameter, <code class="docutils literal notranslate"><span 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 14, 2023.
+      <span class="lastupdated">Last updated on Sep 18, 2023.
       </span></p>
   </div>
 

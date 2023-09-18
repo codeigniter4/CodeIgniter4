@@ -306,6 +306,7 @@
 command was removed. It did not work from the beginning. Also, the rollback
 command returns the database(s) state to a specified batch number and cannot
 specify only a specific database group.</p></li>
+<li><p><strong>Security:</strong> The presence of the CSRF token is now also checked in the raw body (not JSON format) for PUT, PATCH, and DELETE type of requests.</p></li>
 </ul>
 </section>
 <section id="deprecations">
@@ -331,7 +332,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 14, 2023.
+      <span class="lastupdated">Last updated on Sep 18, 2023.
       </span></p>
   </div>
 
