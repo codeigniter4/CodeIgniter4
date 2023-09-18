@@ -253,7 +253,7 @@ class Exceptions
         $view         = 'production.php';
         $templatePath = rtrim($templatePath, '\\/ ') . DIRECTORY_SEPARATOR;
 
-        if (str_ireplace(['off', 'none', 'no', 'false', 'null'], '', ini_get('display_errors')) !== [] && str_ireplace(['off', 'none', 'no', 'false', 'null'], '', ini_get('display_errors')) !== '') {
+        if (str_ireplace(['off', 'none', 'no', 'false', 'null'], '', ini_get('display_errors')) !== '') {
             $view = 'error_exception.php';
         }
 
