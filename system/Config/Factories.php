@@ -145,7 +145,7 @@ class Factories
             }
 
             // Try to locate the class
-            $class = self::locateClass($options, $alias)
+            $class = self::locateClass($options, $alias);
             if ($class !== null) {
                 return new $class(...$arguments);
             }
