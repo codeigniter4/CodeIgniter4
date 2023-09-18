@@ -47,7 +47,7 @@ trait FeatureTestTrait
     {
         $collection = Services::routes();
 
-        if ($routes) {
+        if ($routes !== null && $routes !== []) {
             $collection->resetRoutes();
 
             foreach ($routes as $route) {

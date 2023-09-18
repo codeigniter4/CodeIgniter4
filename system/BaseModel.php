@@ -1194,7 +1194,7 @@ abstract class BaseModel
         // Since multiple models may use the Pager, the Pager must be shared.
         $pager = Services::pager();
 
-        if ($segment) {
+        if ($segment !== 0) {
             $pager->setSegment($segment, $group);
         }
 
@@ -1657,7 +1657,7 @@ abstract class BaseModel
         $properties = $this->objectToRawArray($data, $onlyChanged, $recursive);
 
         // Convert any Time instances to appropriate $dateFormat
-        if ($properties) {
+        if ($properties !== null && $properties !== []) {
             $properties = array_map(function ($value) {
                 if ($value instanceof Time) {
                     return $this->timeToDate($value);

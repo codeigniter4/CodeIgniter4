@@ -30,7 +30,7 @@ if (! function_exists('fake')) {
     {
         $fabricator = new Fabricator($model);
 
-        if ($overrides) {
+        if ($overrides !== null && $overrides !== []) {
             $fabricator->setOverrides($overrides);
         }
 

@@ -108,7 +108,7 @@ class Encryption
      */
     public function initialize(?EncryptionConfig $config = null)
     {
-        if ($config) {
+        if ($config instanceof \Config\Encryption) {
             $this->key    = $config->key;
             $this->driver = $config->driver;
             $this->digest = $config->digest ?? 'SHA512';

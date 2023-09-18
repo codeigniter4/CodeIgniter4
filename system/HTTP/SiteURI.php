@@ -213,7 +213,7 @@ class SiteURI extends URI
 
         $this->baseSegments = $this->convertToSegments($this->basePathWithoutIndexPage);
 
-        if ($this->indexPage) {
+        if ($this->indexPage !== '') {
             $this->baseSegments[] = $this->indexPage;
         }
     }
