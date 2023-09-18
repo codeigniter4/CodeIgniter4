@@ -11,11 +11,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   auto-comment-conflict:
-    permissions:
-      contents: read
-      pull-requests: write
     if: github.event.label.name == 'stale'
     runs-on: ubuntu-latest
     steps:
