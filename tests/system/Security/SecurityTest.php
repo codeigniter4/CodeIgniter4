@@ -218,6 +218,50 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame('{"foo":"bar"}', $request->getBody());
     }
 
+    public function testCSRFVerifyPutBodyThrowsExceptionOnNoMatch(): void
+    {
+        $_SERVER['REQUEST_METHOD']   = 'PUT';
+        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
+
+        $security = $this->createMockSecurity();
+        $request  = new IncomingRequest(
+            new MockAppConfig(),
+            new URI('http://badurl.com'),
+            null,
+            new UserAgent()
+        );
+
+        $request->setBody(
+            'csrf_test_name=8b9218a55906f9dcc1dc263dce7f005a'
+        );
+
+        $this->expectException(SecurityException::class);
+        $security->verify($request);
+    }
+
+    public function testCSRFVerifyPutBodyReturnsSelfOnMatch(): void
+    {
+        $_SERVER['REQUEST_METHOD']   = 'PUT';
+        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
+
+        $security = $this->createMockSecurity();
+        $request  = new IncomingRequest(
+            new MockAppConfig(),
+            new URI('http://badurl.com'),
+            null,
+            new UserAgent()
+        );
+
+        $request->setBody(
+            'csrf_test_name=8b9218a55906f9dcc1dc263dce7f005a&foo=bar'
+        );
+
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+        $this->assertLogged('info', 'CSRF token verified.');
+
+        $this->assertSame('foo=bar', $request->getBody());
+    }
+
     public function testSanitizeFilename(): void
     {
         $security = $this->createMockSecurity();

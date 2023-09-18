@@ -22,6 +22,7 @@ Changes
   command was removed. It did not work from the beginning. Also, the rollback
   command returns the database(s) state to a specified batch number and cannot
   specify only a specific database group.
+- **Security:** The presence of the CSRF token is now also checked in the raw body (not JSON format) for PUT, PATCH, and DELETE type of requests.
 
 Deprecations
 ************
