@@ -246,6 +246,19 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $this->assertLogged('info', 'CSRF token verified.');
     }
 
+    public function testCSRFVerifyPUTBodyReturnsSelfOnMatch(): void
+    {
+        $_SERVER['REQUEST_METHOD'] = 'PUT';
+
+        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request->setBody("csrf_test_name={$this->randomizedToken}&foo=bar");
+
+        $security = $this->createSecurity();
+
+        $this->assertInstanceOf(Security::class, $security->verify($request));
+        $this->assertLogged('info', 'CSRF token verified.');
+    }
+
     public function testCSRFVerifyJsonThrowsExceptionOnNoMatch(): void
     {
         $this->expectException(SecurityException::class);

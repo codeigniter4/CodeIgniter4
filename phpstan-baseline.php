@@ -22,6 +22,16 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\|string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 6,
 	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
@@ -33,6 +43,41 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:chunk\\(\\) has parameter \\$userFunc with no signature specified for Closure\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/BaseModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, array\\<string, string\\> given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/BaseModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, array\\|int\\|string\\|null given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/BaseModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, array\\|null given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/BaseModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, string given on the right side\\.$#',
+	'count' => 7,
+	'path' => __DIR__ . '/system/BaseModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, array\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/BaseModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, array\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/BaseModel.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, int given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
@@ -67,14 +112,79 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/CLI/CLI.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, array given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, array\\<int, string\\> given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, array\\|string\\|null given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, string\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, array given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, int given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in \\|\\|, string given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in \\|\\|, string\\|null given on the left side\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in \\|\\|, string\\|null given on the right side\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/system/CLI/CLI.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 5,
 	'path' => __DIR__ . '/system/CLI/CLI.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, array given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/CLI/Commands.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Cache/CacheFactory.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, string given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Cache/Handlers/BaseHandler.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Call to function property_exists\\(\\) with Config\\\\Cache and \'file\' will always evaluate to true\\.$#',
@@ -97,8 +207,28 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Cache/Handlers/FileHandler.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Cache/Handlers/PredisHandler.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, int given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Cache/Handlers/PredisHandler.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, int given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Cache/Handlers/RedisHandler.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 6,
+	'path' => __DIR__ . '/system/CodeIgniter.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, CodeIgniter\\\\HTTP\\\\ResponseInterface\\|null given\\.$#',
+	'count' => 1,
 	'path' => __DIR__ . '/system/CodeIgniter.php',
 ];
 $ignoreErrors[] = [
@@ -123,6 +253,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Database/MigrateStatus.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, array\\<int\\<0, max\\>, array\\<int, mixed\\>\\> given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Database/MigrateStatus.php',
 ];
@@ -187,6 +322,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Commands/Generators/CellGenerator.php',
@@ -203,6 +353,21 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\CommandGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/CommandGenerator.php',
 ];
@@ -227,6 +392,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Commands/Generators/ConfigGenerator.php',
@@ -243,6 +423,41 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ControllerGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an elseif condition, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in \\|\\|, mixed given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in \\|\\|, mixed given on the right side\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/ControllerGenerator.php',
 ];
@@ -267,6 +482,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Commands/Generators/EntityGenerator.php',
@@ -283,6 +513,21 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\FilterGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/FilterGenerator.php',
 ];
@@ -307,6 +552,26 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Commands/Generators/MigrationGenerator.php',
@@ -323,6 +588,26 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\ModelGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, mixed given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/ModelGenerator.php',
 ];
@@ -347,6 +632,31 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an elseif condition, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, mixed given\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Commands/Generators/ScaffoldGenerator.php',
@@ -363,6 +673,21 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SeederGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Generators/SeederGenerator.php',
 ];
@@ -387,6 +712,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
@@ -407,6 +747,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
@@ -420,6 +775,11 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\ListCommands\\:\\:listSimple\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/ListCommands.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, int given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Server/Serve.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Accessing offset \'DOCUMENT_ROOT\' directly on \\$_SERVER is discouraged\\.$#',
@@ -469,6 +829,16 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Assigning non\\-falsy\\-string directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Utilities/Routes.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, Config\\\\Routing given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Commands/Utilities/Routes.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
+	'count' => 3,
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes.php',
 ];
 $ignoreErrors[] = [
@@ -522,6 +892,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Common.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, string\\|null given on the left side\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/system/Common.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Common.php',
@@ -557,6 +932,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/BaseService.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/BaseService.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Accessing offset string directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Config/DotEnv.php',
@@ -570,6 +950,31 @@ $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Config/DotEnv.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/DotEnv.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, string given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/Factories.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Config/Factories.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, string\\|null given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Config/Factories.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Config/Factories.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Accessing offset \'SERVER_PROTOCOL\' directly on \\$_SERVER is discouraged\\.$#',
@@ -593,6 +998,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Controller.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Controller.php',
 ];
@@ -697,6 +1107,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, TWhenNot given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an elseif condition, \\(callable\\)\\|null given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, TWhen given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:\\$db \\(CodeIgniter\\\\Database\\\\BaseConnection\\) in empty\\(\\) is not falsy\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
@@ -749,6 +1174,16 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 10,
+	'path' => __DIR__ . '/system/Database/BaseResult.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, array\\<array\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/BaseResult.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, array\\<object\\> given\\.$#',
+	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseResult.php',
 ];
 $ignoreErrors[] = [
@@ -837,6 +1272,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Forge.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, string given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/Forge.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\Migration\\:\\:down\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Migration.php',
@@ -882,6 +1322,26 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/MigrationRunner.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, int\\<0, max\\> given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/MigrationRunner.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, max\\> given\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/system/Database/MigrationRunner.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, string\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/MigrationRunner.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/MigrationRunner.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactory\\:\\:injectMock\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/ModelFactory.php',
@@ -903,6 +1363,16 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\MySQLi\\\\Connection\\:\\:_close\\(\\) should return mixed but return statement is missing\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/MySQLi/Connection.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, int given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/MySQLi/Connection.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/MySQLi/Connection.php',
 ];
@@ -967,6 +1437,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^PHPDoc type CodeIgniter\\\\Database\\\\OCI8\\\\Connection of property CodeIgniter\\\\Database\\\\OCI8\\\\Builder\\:\\:\\$db is not the same as PHPDoc type CodeIgniter\\\\Database\\\\BaseConnection of overridden property CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:\\$db\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
@@ -979,6 +1454,21 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 5,
+	'path' => __DIR__ . '/system/Database/OCI8/Connection.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/OCI8/Connection.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, array\\<stdClass\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/OCI8/Connection.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, array\\|string given\\.$#',
+	'count' => 1,
 	'path' => __DIR__ . '/system/Database/OCI8/Connection.php',
 ];
 $ignoreErrors[] = [
@@ -1049,6 +1539,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 8,
+	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, array\\<int\\|string, array\\<int, int\\|string\\>\\|string\\> given\\.$#',
+	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
 ];
 $ignoreErrors[] = [
@@ -1337,6 +1832,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/SQLite3/Connection.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/SQLite3/Connection.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^PHPDoc type string of property CodeIgniter\\\\Database\\\\SQLite3\\\\Connection\\:\\:\\$escapeChar is not the same as PHPDoc type array\\|string of overridden property CodeIgniter\\\\Database\\\\BaseConnection\\<SQLite3,SQLite3Result\\>\\:\\:\\$escapeChar\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/SQLite3/Connection.php',
@@ -1432,8 +1932,28 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Debug/ExceptionHandler.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Debug/ExceptionHandler.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 3,
+	'path' => __DIR__ . '/system/Debug/Exceptions.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, Throwable\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Debug/Exceptions.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, int given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Debug/Exceptions.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
+	'count' => 1,
 	'path' => __DIR__ . '/system/Debug/Exceptions.php',
 ];
 $ignoreErrors[] = [
@@ -1502,6 +2022,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Email/Email.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, int given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Email/Email.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, string given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Email/Email.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Email/Email.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Static property CodeIgniter\\\\Email\\\\Email\\:\\:\\$func_overload \\(bool\\) in isset\\(\\) is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Email/Email.php',
@@ -1512,7 +2047,17 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Encryption/Encryption.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, Config\\\\Encryption\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Encryption/Encryption.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Encryption/Handlers/OpenSSLHandler.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, array\\|string\\|null given\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Encryption/Handlers/OpenSSLHandler.php',
 ];
@@ -1607,6 +2152,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Filters/Filters.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/HTTP/CLIRequest.php',
@@ -1618,6 +2168,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Constructor of class CodeIgniter\\\\HTTP\\\\CURLRequest has an unused parameter \\$config\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
 ];
@@ -1634,6 +2189,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Accessing offset \'HTTP_USER_AGENT\' directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 2,
+	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
+	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
 ];
 $ignoreErrors[] = [
@@ -1689,6 +2249,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
+	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, array given on the right side\\.$#',
+	'count' => 2,
 	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
 ];
 $ignoreErrors[] = [
@@ -1787,9 +2352,19 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/Negotiate.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HTTP/OutgoingRequest.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Return type \\(CodeIgniter\\\\HTTP\\\\URI\\|null\\) of method CodeIgniter\\\\HTTP\\\\OutgoingRequest\\:\\:getUri\\(\\) should be covariant with return type \\(CodeIgniter\\\\HTTP\\\\URI\\) of method CodeIgniter\\\\HTTP\\\\OutgoingRequestInterface\\:\\:getUri\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/OutgoingRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, array\\<string, string\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HTTP/RedirectResponse.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Variable \\$_GET on left side of \\?\\? always exists and is not nullable\\.$#',
@@ -1804,6 +2379,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 3,
+	'path' => __DIR__ . '/system/HTTP/Request.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
+	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/Request.php',
 ];
 $ignoreErrors[] = [
@@ -1827,6 +2407,21 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/Response.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, string\\|null given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HTTP/Response.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, string\\|null given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HTTP/Response.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/HTTP/Response.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 5,
 	'path' => __DIR__ . '/system/HTTP/Response.php',
@@ -1837,6 +2432,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/SiteURI.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HTTP/SiteURI.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Strict comparison using \\!\\=\\= between mixed and null will always evaluate to true\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/SiteURI.php',
@@ -1844,6 +2444,16 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 15,
+	'path' => __DIR__ . '/system/HTTP/URI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HTTP/URI.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
+	'count' => 2,
 	'path' => __DIR__ . '/system/HTTP/URI.php',
 ];
 $ignoreErrors[] = [
@@ -1882,6 +2492,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/UserAgent.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, array\\<string, string\\> given on the right side\\.$#',
+	'count' => 4,
+	'path' => __DIR__ . '/system/HTTP/UserAgent.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 3,
 	'path' => __DIR__ . '/system/Helpers/array_helper.php',
@@ -1890,6 +2505,66 @@ $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/date_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 1024\\> given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 128\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 16\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 1\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 2048\\> given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 256\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 2\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 32\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 4\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 512\\> given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 64\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 8\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Right side of && is always true\\.$#',
@@ -1917,8 +2592,28 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Helpers/form_helper.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, array given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/form_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, int\\<0, max\\> given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/form_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/form_helper.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 6,
+	'path' => __DIR__ . '/system/Helpers/html_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, string given\\.$#',
+	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/html_helper.php',
 ];
 $ignoreErrors[] = [
@@ -1932,8 +2627,18 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Helpers/test_helper.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, array\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/test_helper.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 3,
+	'path' => __DIR__ . '/system/Helpers/text_helper.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, string\\|null given\\.$#',
+	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/text_helper.php',
 ];
 $ignoreErrors[] = [
@@ -1947,6 +2652,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Helpers/url_helper.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Helpers/url_helper.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Variable \\$atts might not be defined\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/url_helper.php',
@@ -1955,6 +2665,11 @@ $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Honeypot/Honeypot.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in \\|\\|, int given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/HotReloader/HotReloader.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -2077,6 +2792,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Log/Logger.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, array given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Log/Logger.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$level \\(string\\) of method CodeIgniter\\\\Log\\\\Logger\\:\\:log\\(\\) should be contravariant with parameter \\$level \\(mixed\\) of method Psr\\\\Log\\\\LoggerInterface\\:\\:log\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Log/Logger.php',
@@ -2089,6 +2809,26 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Model\\:\\:chunk\\(\\) has parameter \\$userFunc with no signature specified for Closure\\.$#',
 	'count' => 1,
+	'path' => __DIR__ . '/system/Model.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, array given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Model.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, string given on the right side\\.$#',
+	'count' => 3,
+	'path' => __DIR__ . '/system/Model.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, string\\|null given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Model.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, array\\|int\\|string\\|null given\\.$#',
+	'count' => 2,
 	'path' => __DIR__ . '/system/Model.php',
 ];
 $ignoreErrors[] = [
@@ -2112,6 +2852,16 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Pager/Pager.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, array given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Pager/Pager.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, int given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Pager/Pager.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Pager/Pager.php',
@@ -2132,6 +2882,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/RESTful/BaseResource.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, object\\|string\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/RESTful/BaseResource.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^PHPDoc type CodeIgniter\\\\HTTP\\\\CLIRequest\\|CodeIgniter\\\\HTTP\\\\IncomingRequest of property CodeIgniter\\\\RESTful\\\\BaseResource\\:\\:\\$request is not the same as PHPDoc type CodeIgniter\\\\HTTP\\\\RequestInterface of overridden property CodeIgniter\\\\Controller\\:\\:\\$request\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/RESTful/BaseResource.php',
@@ -2147,6 +2902,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Router/AutoRouter.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, string\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Router/AutoRouter.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Router\\\\AutoRouter\\:\\:\\$cliRoutes type has no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/AutoRouter.php',
@@ -2155,6 +2915,11 @@ $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/AutoRouter.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, Config\\\\Routing given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Router/AutoRouterImproved.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^PHPDoc type int of property CodeIgniter\\\\Router\\\\Exceptions\\\\RedirectException\\:\\:\\$code is not the same as PHPDoc type mixed of overridden property Exception\\:\\:\\$code\\.$#',
@@ -2243,6 +3008,21 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Router\\\\RouteCollection\\:\\:set404Override\\(\\) has parameter \\$callable with no signature specified for callable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Router/RouteCollection.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, array\\<int\\|string, array\\|\\(callable\\)\\> given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Router/RouteCollection.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Router/RouteCollection.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, string\\|null given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/RouteCollection.php',
 ];
@@ -2357,11 +3137,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Router/RouterInterface.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Security/Security.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Session\\\\Exceptions\\\\SessionException\\:\\:forEmptySavepath\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Session/Exceptions/SessionException.php',
@@ -2402,6 +3177,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Session/Handlers/Database/PostgreHandler.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, mixed given\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Session/Handlers/Database/PostgreHandler.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Session/Handlers/DatabaseHandler.php',
@@ -2422,6 +3202,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Session/Handlers/FileHandler.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, string given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Session/Handlers/FileHandler.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^PHPDoc type string of property CodeIgniter\\\\Session\\\\Handlers\\\\FileHandler\\:\\:\\$savePath is not the same as PHPDoc type array\\|string of overridden property CodeIgniter\\\\Session\\\\Handlers\\\\BaseHandler\\:\\:\\$savePath\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Session/Handlers/FileHandler.php',
@@ -2437,8 +3222,23 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Session/Handlers/MemcachedHandler.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, mixed given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Session/Handlers/MemcachedHandler.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 5,
+	'path' => __DIR__ . '/system/Session/Handlers/RedisHandler.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in &&, string given on the right side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Session/Handlers/RedisHandler.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, int given\\.$#',
+	'count' => 1,
 	'path' => __DIR__ . '/system/Session/Handlers/RedisHandler.php',
 ];
 $ignoreErrors[] = [
@@ -2717,6 +3517,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, CodeIgniter\\\\CodeIgniter given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
@@ -2843,6 +3648,16 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, CodeIgniter\\\\Router\\\\RouteCollection\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, array\\|null given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
 ];
@@ -3322,6 +4137,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Validation/DotArrayFilter.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a negated boolean, array\\|null given\\.$#',
+	'count' => 6,
+	'path' => __DIR__ . '/system/Validation/FileRules.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 4,
 	'path' => __DIR__ . '/system/Validation/FormatRules.php',
@@ -3344,6 +4164,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Validation\\\\Validation\\:\\:isClosure\\(\\) has parameter \\$rule with no signature specified for Closure\\.$#',
 	'count' => 1,
+	'path' => __DIR__ . '/system/Validation/Validation.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, array given\\.$#',
+	'count' => 2,
 	'path' => __DIR__ . '/system/Validation/Validation.php',
 ];
 $ignoreErrors[] = [
@@ -3397,6 +4222,16 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/View/Table.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in a ternary operator condition, float given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/View/Table.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/View/Table.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\View\\\\Table\\:\\:\\$function type has no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/Table.php',
@@ -3404,6 +4239,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 3,
+	'path' => __DIR__ . '/system/View/View.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
+	'count' => 2,
 	'path' => __DIR__ . '/system/View/View.php',
 ];
 $ignoreErrors[] = [

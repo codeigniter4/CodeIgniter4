@@ -35,5 +35,6 @@ parameters:
 	strictRules:
 		allRules: false
 		disallowedLooseComparison: true
+		booleansInConditions: true
 		disallowedConstructs: true
 		matchingInheritedMethodNames: true
