@@ -1439,8 +1439,8 @@ abstract class BaseModel
         if (is_string($rules)) {
             [$rules, $customErrors] = $this->validation->loadRuleGroup($rules);
 
-            $this->validationRules    = $rules;
-            $this->validationMessages = $this->validationMessages + $customErrors;
+            $this->validationRules = $rules;
+            $this->validationMessages += $customErrors;
         }
 
         $this->validationRules[$field] = $fieldRules;
@@ -1510,7 +1510,7 @@ abstract class BaseModel
         if (is_string($rules)) {
             [$rules, $customErrors] = $this->validation->loadRuleGroup($rules);
 
-            $this->validationMessages = $this->validationMessages + $customErrors;
+            $this->validationMessages += $customErrors;
         }
 
         if (isset($options['except'])) {
