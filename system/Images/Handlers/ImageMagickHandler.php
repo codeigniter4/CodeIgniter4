@@ -340,11 +340,11 @@ class ImageMagickHandler extends BaseHandler
         // invert the offset. Note: The horizontal
         // offset flips itself automatically
         if ($options['vAlign'] === 'bottom') {
-            $options['vOffset'] = $options['vOffset'] * -1;
+            $options['vOffset'] *= -1;
         }
 
         if ($options['hAlign'] === 'right') {
-            $options['hOffset'] = $options['hOffset'] * -1;
+            $options['hOffset'] *= -1;
         }
 
         // Font

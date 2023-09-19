@@ -20,6 +20,6 @@ class MultiplierCell extends Cell
 
     public function mount(): void
     {
-        $this->value = $this->value * $this->multiplier;
+        $this->value *= $this->multiplier;
     }
 }

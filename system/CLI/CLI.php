@@ -851,7 +851,7 @@ class CLI
             $max = self::getWidth();
         }
 
-        $max = $max - $padLeft;
+        $max -= $padLeft;
 
         $lines = wordwrap($string, $max, PHP_EOL);
 
@@ -1079,7 +1079,7 @@ class CLI
                 $diff = $maxColsLengths[$column] - static::strlen($col);
 
                 if ($diff) {
-                    $tableRows[$row][$column] = $tableRows[$row][$column] . str_repeat(' ', $diff);
+                    $tableRows[$row][$column] .= str_repeat(' ', $diff);
                 }
 
                 $column++;
