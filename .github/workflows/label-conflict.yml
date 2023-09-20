@@ -1,0 +1,33 @@
+name: Auto Comment Conflicts
+on:
+  pull_request:
+    branches:
+      - 'develop'
+      - '4.*'
+    types:
+      - labeled
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  auto-comment-conflict:
+    permissions:
+      contents: read
+      pull-requests: write
+    if: github.event.label.name == 'stale'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add comment for PR with conflict
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            :wave: Hi, @${{ github.event.pull_request.user.login }}!
+
+            We detected conflicts in your PR against the base branch :speak_no_evil:
+            You may want to sync :arrows_counterclockwise: your branch with upstream!
+
+            Ref: https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/workflow.md#pushing-your-branch
