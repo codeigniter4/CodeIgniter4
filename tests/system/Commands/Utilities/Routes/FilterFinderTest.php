@@ -145,7 +145,7 @@ final class FilterFinderTest extends CIUnitTestCase
         $filters = $finder->find('admin');
 
         $expected = [
-            'before' => ['honeypot', 'csrf'],
+            'before' => ['csrf', 'honeypot'],
             'after'  => ['honeypot', 'toolbar'],
         ];
         $this->assertSame($expected, $filters);
@@ -163,7 +163,7 @@ final class FilterFinderTest extends CIUnitTestCase
         $filters = $finder->find('admin');
 
         $expected = [
-            'before' => [InvalidChars::class, 'csrf'],
+            'before' => ['csrf', InvalidChars::class],
             'after'  => [InvalidChars::class, 'toolbar'],
         ];
         $this->assertSame($expected, $filters);
@@ -181,7 +181,7 @@ final class FilterFinderTest extends CIUnitTestCase
         $filters = $finder->find('admin');
 
         $expected = [
-            'before' => ['honeypot', InvalidChars::class, 'csrf'],
+            'before' => ['csrf', 'honeypot', InvalidChars::class],
             'after'  => ['honeypot', InvalidChars::class, 'toolbar'],
         ];
         $this->assertSame($expected, $filters);

@@ -406,8 +406,8 @@ final class FiltersTest extends CIUnitTestCase
         $expected = [
             'before' => ['bar'],
             'after'  => [
-                'bazg',
                 'foof',
+                'bazg',
                 'toolbar',
             ],
         ];
@@ -1049,8 +1049,8 @@ final class FiltersTest extends CIUnitTestCase
                 'frak',
             ],
             'after' => [
-                'baz',
                 'frak',
+                'baz',
             ],
         ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
