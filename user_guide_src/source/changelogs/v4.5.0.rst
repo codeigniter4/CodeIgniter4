@@ -52,6 +52,9 @@ Commands
 Testing
 =======
 
+- **DomParser:** The new methods were added ``seeXPath()`` and ``dontSeeXPath()``
+  which allows users to work directly with DOMXPath object, using complex expressions.
+
 Database
 ========
 
