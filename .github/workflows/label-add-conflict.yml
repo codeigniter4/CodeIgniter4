@@ -1,4 +1,4 @@
-name: Auto Add Label "stale" & Comment Conflicts
+name: Auto Add "stale" label
 
 on:
   push:
@@ -11,13 +11,13 @@ on:
       - '4.*'
 
 jobs:
-  auto-label-comment-conflict:
-
+  build:
+    name: Check Conflicts
     permissions:
       contents: read
       pull-requests: write
-
     runs-on: ubuntu-22.04
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
