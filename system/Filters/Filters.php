@@ -15,6 +15,7 @@ use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Config\Feature;
 use Config\Filters as FiltersConfig;
 use Config\Modules;
 use Config\Services;
@@ -245,9 +246,15 @@ class Filters
             return $this;
         }
 
-        $this->processFilters($uri);
-        $this->processMethods();
-        $this->processGlobals($uri);
+        if (config(Feature::class)->oldFilterOrder) {
+            $this->processGlobals($uri);
+            $this->processMethods();
+            $this->processFilters($uri);
+        } else {
+            $this->processFilters($uri);
+            $this->processMethods();
+            $this->processGlobals($uri);
+        }
 
         // Set the toolbar filter to the last position to be executed
         if (in_array('toolbar', $this->filters['after'], true)
@@ -464,7 +471,11 @@ class Filters
         }
 
         if (isset($filters['before'])) {
-            $this->filters['before'] = array_merge($filters['before'], $this->filters['before']);
+            if (config(Feature::class)->oldFilterOrder) {
+                $this->filters['before'] = array_merge($this->filters['before'], $filters['before']);
+            } else {
+                $this->filters['before'] = array_merge($filters['before'], $this->filters['before']);
+            }
         }
 
         if (isset($filters['after'])) {
@@ -487,7 +498,11 @@ class Filters
         $method = strtolower($this->request->getMethod()) ?? 'cli';
 
         if (array_key_exists($method, $this->config->methods)) {
-            $this->filters['before'] = array_merge($this->config->methods[$method], $this->filters['before']);
+            if (config(Feature::class)->oldFilterOrder) {
+                $this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);
+            } else {
+                $this->filters['before'] = array_merge($this->config->methods[$method], $this->filters['before']);
+            }
         }
     }
 
@@ -541,7 +556,11 @@ class Filters
         }
 
         if (isset($filters['before'])) {
-            $this->filters['before'] = array_merge($filters['before'], $this->filters['before']);
+            if (config(Feature::class)->oldFilterOrder) {
+                $this->filters['before'] = array_merge($this->filters['before'], $filters['before']);
+            } else {
+                $this->filters['before'] = array_merge($filters['before'], $this->filters['before']);
+            }
         }
 
         if (isset($filters['after'])) {
