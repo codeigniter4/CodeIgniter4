@@ -1,4 +1,4 @@
-name: Auto Add/Remove "stale" label in single PR
+name: Auto Label "stale"
 
 on:
   pull_request:
@@ -7,7 +7,8 @@ on:
       - '4.*'
 
 jobs:
-  check-conflict:
+  build:
+    name: Check Conflicts
     runs-on: ubuntu-22.04
     permissions:
       contents: read

@@ -1,4 +1,4 @@
-name: Auto Add Label "stale" & Comment Conflicts for All PR
+name: Auto Label "stale" for All PRs
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
       - '4.*'
 
 jobs:
-  auto-label-comment-conflict:
+  build:
+    name: Check Conflicts
 
     permissions:
       contents: read
