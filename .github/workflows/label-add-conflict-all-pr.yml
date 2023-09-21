@@ -1,11 +1,7 @@
-name: Auto Add Label "stale" & Comment Conflicts
+name: Auto Add Label "stale" & Comment Conflicts for All PR
 
 on:
   push:
-    branches:
-      - develop
-      - '4.*'
-  pull_request:
     branches:
       - develop
       - '4.*'
