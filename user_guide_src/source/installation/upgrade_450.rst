@@ -25,6 +25,26 @@ Some method signature changes have been made. Classes that extend them should
 update their APIs to reflect the changes. See :ref:`ChangeLog <v450-method-signature-changes>`
 for details.
 
+.. _upgrade-450-filter-execution-order:
+
+Filter Execution Order
+======================
+
+The order in which Controller Filters are executed has changed.
+
+Before Filters::
+
+    Previous: route → globals → methods → filters
+         Now: globals → methods → filters → route
+
+After Filters::
+
+    Previous: route → globals → filters
+         Now: route → filters → globals
+
+If you wish to maintain the same execution order as in previous versions, set
+``true`` to ``Config\Feature::$oldFilterOrder``. See also :ref:`filter-execution-order`.
+
 Removed Deprecated Items
 ========================
 
