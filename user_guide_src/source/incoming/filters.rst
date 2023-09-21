@@ -85,10 +85,10 @@ There are two ways to configure filters when they get run. One is done in
 If you want to specify filter to a specific route, use **app/Config/Routes.php**
 and see :ref:`URI Routing <applying-filters>`.
 
-The filters that are specified to a route (in **app/Config/Routes.php**) are
-executed before the filters specified in **app/Config/Filters.php**.
-
 .. Note:: The safest way to apply filters is to :ref:`disable auto-routing <use-defined-routes-only>`, and :ref:`set filters to routes <applying-filters>`.
+
+app/Config/Filters.php
+======================
 
 The **app/Config/Filters.php** file contains four properties that allow you to
 configure exactly when the filters run.
@@ -99,7 +99,7 @@ configure exactly when the filters run.
     it can be accessible with ``blog``, ``blog/index``, and ``blog/index/1``, etc.
 
 $aliases
-========
+--------
 
 The ``$aliases`` array is used to associate a simple name with one or more fully-qualified class names that are the
 filters to run:
@@ -117,7 +117,7 @@ You can combine multiple filters into one alias, making complex sets of filters 
 You should define as many aliases as you need.
 
 $globals
-========
+--------
 
 The second section allows you to define any filters that should be applied to every request made by the framework.
 You should take care with how many you use here, since it could have performance implications to have too many
@@ -126,7 +126,7 @@ run on every request. Filters can be specified by adding their alias to either t
 .. literalinclude:: filters/005.php
 
 Except for a Few URIs
----------------------
+^^^^^^^^^^^^^^^^^^^^^
 
 There are times where you want to apply a filter to almost every request, but have a few that should be left alone.
 One common example is if you need to exclude a few URI's from the CSRF protection filter to allow requests from
@@ -143,7 +143,7 @@ URI paths, you can use an array of URI path patterns:
 .. literalinclude:: filters/007.php
 
 $methods
-========
+--------
 
 .. Warning:: If you use ``$methods`` filters, you should :ref:`disable Auto Routing (Legacy) <use-defined-routes-only>`
     because :ref:`auto-routing-legacy` permits any HTTP method to access a controller.
@@ -161,7 +161,7 @@ In addition to the standard HTTP methods, this also supports one special case: `
 all requests that were run from the command line.
 
 $filters
-========
+--------
 
 This property is an array of filter aliases. For each alias, you can specify ``before`` and ``after`` arrays that contain
 a list of URI path (relative to BaseURL) patterns that filter should apply to:
@@ -171,7 +171,7 @@ a list of URI path (relative to BaseURL) patterns that filter should apply to:
 .. _filters-filters-filter-arguments:
 
 Filter Arguments
-----------------
+^^^^^^^^^^^^^^^^
 
 .. versionadded:: 4.4.0
 
@@ -183,6 +183,22 @@ In this example, when the URI matches ``admin/*'``, the array ``['admin', 'super
 will be passed in ``$arguments`` to the ``group`` filter's ``before()`` methods.
 When the URI matches ``admin/users/*'``, the array ``['users.manage']``
 will be passed in ``$arguments`` to the ``permission`` filter's ``before()`` methods.
+
+Filter Execution Order
+======================
+
+.. important:: Starting with v4.5.0, the order in which filters are executed has
+    changed. If you wish to maintain the same execution order as in previous versions,
+    you must set ``true`` to ``Config\Feature::$oldFilterOrder``.
+
+Filters are executed in the following order:
+
+- **Before Filters**: globals → methods → filters → route
+- **After Filters**: route → filters → globals
+
+.. note:: Prior to v4.5.0, the filters that are specified to a route
+    (in **app/Config/Routes.php**) are executed before the filters specified in
+    **app/Config/Filters.php**.
 
 ******************
 Confirming Filters
