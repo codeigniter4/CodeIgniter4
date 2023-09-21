@@ -45,6 +45,8 @@ jobs:
 
             # CONFLICTING and no 'stale' label
             if [ "$mergeable" == "CONFLICTING" ] && [[ ! "$labels" == *"stale"* ]]; then
+              echo $url
+
               # Add "stale" label
               gh pr edit $url --add-label "stale"
 
