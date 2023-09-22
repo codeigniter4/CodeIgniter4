@@ -447,7 +447,7 @@ class CodeIgniter
             return $response;
         }
 
-        $routeFilter = $this->tryToRouteIt($routes);
+        $routeFilters = $this->tryToRouteIt($routes);
 
         $uri = $this->determinePath();
 
@@ -457,14 +457,14 @@ class CodeIgniter
 
             // If any filters were specified within the routes file,
             // we need to ensure it's active for the current request
-            if ($routeFilter !== null) {
-                $filters->enableFilters($routeFilter, 'before');
+            if ($routeFilters !== null) {
+                $filters->enableFilters($routeFilters, 'before');
 
                 if (! config(Feature::class)->oldFilterOrder) {
-                    $routeFilter = array_reverse($routeFilter);
+                    $routeFilters = array_reverse($routeFilters);
                 }
 
-                $filters->enableFilters($routeFilter, 'after');
+                $filters->enableFilters($routeFilters, 'after');
             }
 
             // Run "before" filters
