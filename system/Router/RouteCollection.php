@@ -302,7 +302,8 @@ class RouteCollection implements RouteCollectionInterface
 
         // Normalize the path string in routeFiles array.
         foreach ($this->routeFiles as $routeKey => $routesFile) {
-            $this->routeFiles[$routeKey] = realpath($routesFile) ?: $routesFile;
+            $realpath                    = realpath($routesFile);
+            $this->routeFiles[$routeKey] = ($realpath === false) ? $routesFile : $realpath;
         }
     }
 
@@ -1680,7 +1681,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     protected function loadRoutesOptions(?string $verb = null): array
     {
-        $verb = $verb ?: $this->getHTTPVerb();
+        $verb ??= $this->getHTTPVerb();
 
         $options = $this->routesOptions[$verb] ?? [];
 

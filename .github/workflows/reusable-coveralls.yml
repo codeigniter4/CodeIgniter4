@@ -57,7 +57,10 @@ jobs:
         run: composer update --ansi
 
       - name: Merge coverage files
-        run: vendor/bin/phpcov merge --clover build/logs/clover.xml build/cov
+        run: |
+          jq '.autoload."psr-4" += {"Config\\": "app/Config/"}' composer.json > temp.json && mv temp.json composer.json
+          composer dump-autoload
+          vendor/bin/phpcov merge --clover build/logs/clover.xml build/cov
 
       - name: Upload coverage to Coveralls
         run: vendor/bin/php-coveralls --verbose --exclude-no-stmt --ansi
