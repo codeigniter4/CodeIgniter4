@@ -31,6 +31,7 @@ use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Router\Router;
 use Config\App;
 use Config\Cache;
+use Config\Feature;
 use Config\Kint as KintConfig;
 use Config\Services;
 use Exception;
@@ -458,6 +459,11 @@ class CodeIgniter
             // we need to ensure it's active for the current request
             if ($routeFilter !== null) {
                 $filters->enableFilters($routeFilter, 'before');
+
+                if (! config(Feature::class)->oldFilterOrder) {
+                    $routeFilter = array_reverse($routeFilter);
+                }
+
                 $filters->enableFilters($routeFilter, 'after');
             }
 

@@ -210,8 +210,8 @@ final class FilterFinderTest extends CIUnitTestCase
                     'global2',
                 ],
                 'after' => [
-                    'global1',
                     'global2',
+                    'global1',
                 ],
             ],
             'methods' => [
@@ -239,12 +239,12 @@ final class FilterFinderTest extends CIUnitTestCase
                 'route2',
             ],
             'after' => [
-                'route1',
                 'route2',
-                'filter1',
+                'route1',
                 'filter2',
-                'global1',
+                'filter1',
                 'global2',
+                'global1',
             ],
         ];
         $this->assertSame($expected, $filters);

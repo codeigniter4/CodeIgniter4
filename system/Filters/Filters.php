@@ -564,6 +564,10 @@ class Filters
         }
 
         if (isset($filters['after'])) {
+            if (! config(Feature::class)->oldFilterOrder) {
+                $filters['after'] = array_reverse($filters['after']);
+            }
+
             $this->filters['after'] = array_merge($this->filters['after'], $filters['after']);
         }
     }
