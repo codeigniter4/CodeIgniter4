@@ -183,7 +183,7 @@ final class FilterFinderTest extends CIUnitTestCase
 
         $expected = [
             'before' => ['csrf', 'honeypot', InvalidChars::class],
-            'after'  => ['honeypot', InvalidChars::class, 'toolbar'],
+            'after'  => [InvalidChars::class, 'honeypot', 'toolbar'],
         ];
         $this->assertSame($expected, $filters);
     }
