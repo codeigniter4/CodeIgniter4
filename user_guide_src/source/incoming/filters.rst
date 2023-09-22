@@ -200,8 +200,9 @@ Filters are executed in the following order:
 
 .. note:: Prior to v4.5.0, the filters that are specified to a route
     (in **app/Config/Routes.php**) are executed before the filters specified in
-    **app/Config/Filters.php**. See
-    :ref:`Upgrading Guide <upgrade-450-filter-execution-order>` for details.
+    **app/Config/Filters.php**. And the After Filters in Route filters and Filters
+    filters execution order were not reversed.
+    See :ref:`Upgrading Guide <upgrade-450-filter-execution-order>` for details.
 
 ******************
 Confirming Filters
