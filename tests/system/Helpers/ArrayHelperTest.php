@@ -12,7 +12,6 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use ErrorException;
 use ValueError;
 
 /**
@@ -303,13 +302,7 @@ final class ArrayHelperTest extends CIUnitTestCase
      */
     public function testArraySortByMultipleKeysFailsInconsistentArraySizes($data): void
     {
-        // PHP 8 changes this error type
-        if (PHP_VERSION_ID >= 80000) {
-            $this->expectException(ValueError::class);
-        } else {
-            $this->expectException(ErrorException::class);
-        }
-
+        $this->expectException(ValueError::class);
         $this->expectExceptionMessage('Array sizes are inconsistent');
 
         $sortColumns = [

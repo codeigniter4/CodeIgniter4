@@ -139,11 +139,11 @@ Next Minor Version
 If you want to use the next minor version branch, after using the ``builds`` command
 edit **composer.json** manually.
 
-If you try the ``4.4`` branch, change the version to ``4.4.x-dev``::
+If you try the ``4.6`` branch, change the version to ``4.6.x-dev``::
 
     "require": {
-        "php": "^7.4 || ^8.0",
-        "codeigniter4/codeigniter4": "4.4.x-dev"
+        "php": "^8.0",
+        "codeigniter4/codeigniter4": "4.6.x-dev"
     },
 
 And run ``composer update`` to sync your vendor
