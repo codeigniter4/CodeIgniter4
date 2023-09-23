@@ -122,7 +122,7 @@ class Forge extends BaseForge
                 // so add null constraint is used only when it is different from the current null constraint.
                 // If a not null constraint is added to a column with a not null constraint,
                 // ORA-01442 will occur.
-                $wantToAddNull   = strpos($field[$i]['null'], ' NOT') === false;
+                $wantToAddNull   = ! str_contains($field[$i]['null'], ' NOT');
                 $currentNullable = $nullableMap[$field[$i]['name']];
 
                 if ($wantToAddNull === true && $currentNullable === true) {
@@ -188,7 +188,7 @@ class Forge extends BaseForge
     {
         $constraint = '';
         // @todo: can't cover multi pattern when set type.
-        if ($field['type'] === 'VARCHAR2' && strpos($field['length'], "('") === 0) {
+        if ($field['type'] === 'VARCHAR2' && str_starts_with($field['length'], "('")) {
             $constraint = ' CHECK(' . $this->db->escapeIdentifiers($field['name'])
                 . ' IN ' . $field['length'] . ')';
 

@@ -469,7 +469,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result     = $this->work($body);
         $nonceStyle = array_filter(
             $this->getPrivateProperty($this->csp, 'styleSrc'),
-            static fn ($value) => strpos($value, 'nonce-') === 0
+            static fn ($value) => str_starts_with($value, 'nonce-')
         );
 
         $this->assertStringContainsString('nonce=', $this->response->getBody());
@@ -546,7 +546,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result      = $this->work($body);
         $nonceScript = array_filter(
             $this->getPrivateProperty($this->csp, 'scriptSrc'),
-            static fn ($value) => strpos($value, 'nonce-') === 0
+            static fn ($value) => str_starts_with($value, 'nonce-')
         );
 
         $this->assertStringContainsString('nonce=', $this->response->getBody());

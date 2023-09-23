@@ -134,13 +134,13 @@ final class AutoRouter implements AutoRouterInterface
                     $handler = strtolower($handler);
 
                     // Like $routes->cli('hello/(:segment)', 'Home::$1')
-                    if (strpos($handler, '::$') !== false) {
+                    if (str_contains($handler, '::$')) {
                         throw new PageNotFoundException(
                             'Cannot access CLI Route: ' . $uri
                         );
                     }
 
-                    if (strpos($handler, $controller . '::' . $methodName) === 0) {
+                    if (str_starts_with($handler, $controller . '::' . $methodName)) {
                         throw new PageNotFoundException(
                             'Cannot access CLI Route: ' . $uri
                         );
@@ -166,7 +166,7 @@ final class AutoRouter implements AutoRouterInterface
 
         // Ensure the controller stores the fully-qualified class name
         // We have to check for a length over 1, since by default it will be '\'
-        if (strpos($this->controller, '\\') === false && strlen($this->defaultNamespace) > 1) {
+        if (! str_contains($this->controller, '\\') && strlen($this->defaultNamespace) > 1) {
             $this->controller = '\\' . ltrim(
                 str_replace(
                     '/',

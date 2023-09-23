@@ -309,7 +309,7 @@ trait GeneratorTrait
             '\\'
         ) . '\\';
 
-        if (strncmp($class, $namespace, strlen($namespace)) === 0) {
+        if (str_starts_with($class, $namespace)) {
             return $class; // @codeCoverageIgnore
         }
 

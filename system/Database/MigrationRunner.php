@@ -447,7 +447,7 @@ class MigrationRunner
      */
     protected function migrationFromFile(string $path, string $namespace)
     {
-        if (substr($path, -4) !== '.php') {
+        if (! str_ends_with($path, '.php')) {
             return false;
         }
 

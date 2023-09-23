@@ -11,10 +11,12 @@
 
 namespace CodeIgniter\Database;
 
+use Stringable;
+
 /**
  * Query builder
  */
-class Query implements QueryInterface
+class Query implements QueryInterface, Stringable
 {
     /**
      * The query string, as provided by the user.

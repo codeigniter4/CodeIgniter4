@@ -344,7 +344,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         // Check parameter count
         try {
             $this->checkParameters($uri);
-        } catch (MethodNotFoundException $e) {
+        } catch (MethodNotFoundException) {
             throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
         }
 
@@ -411,14 +411,14 @@ final class AutoRouterImproved implements AutoRouterInterface
     {
         try {
             $refClass = new ReflectionClass($this->controller);
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
             throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
         }
 
         try {
             $refMethod = $refClass->getMethod($this->method);
             $refParams = $refMethod->getParameters();
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
             throw new MethodNotFoundException();
         }
 
@@ -445,7 +445,7 @@ final class AutoRouterImproved implements AutoRouterInterface
                 'AutoRouterImproved does not support `_remap()` method.'
                 . ' Controller:' . $this->controller
             );
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
             // Do nothing.
         }
     }
@@ -459,7 +459,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         $paramPos = $this->paramPos ?? count($this->segments);
 
         for ($i = 0; $i < $paramPos; $i++) {
-            if (strpos($this->segments[$i], '_') !== false) {
+            if (str_contains($this->segments[$i], '_')) {
                 throw new PageNotFoundException(
                     'AutoRouterImproved prohibits access to the URI'
                     . ' containing underscores ("' . $this->segments[$i] . '")'

@@ -45,7 +45,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 
         try {
             $this->query->close();
-        } catch (BadMethodCallException $e) {
+        } catch (BadMethodCallException) {
             $this->query = null;
         }
     }

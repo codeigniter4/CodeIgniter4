@@ -191,7 +191,7 @@ final class DeleteModelTest extends LiveModelTestCase
 
         try {
             $this->createModel(UserModel::class)->delete($emptyValue);
-        } catch (DatabaseException $e) {
+        } catch (DatabaseException) {
             // Do nothing.
         }
 

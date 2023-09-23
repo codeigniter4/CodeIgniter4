@@ -11,10 +11,12 @@
 
 namespace CodeIgniter\Database;
 
+use Stringable;
+
 /**
  * @see \CodeIgniter\Database\RawSqlTest
  */
-class RawSql
+class RawSql implements Stringable
 {
     /**
      * @var string Raw SQL string

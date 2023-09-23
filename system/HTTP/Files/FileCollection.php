@@ -57,7 +57,7 @@ class FileCollection
         $this->populateFiles();
 
         if ($this->hasFile($name)) {
-            if (strpos($name, '.') !== false) {
+            if (str_contains($name, '.')) {
                 $name         = explode('.', $name);
                 $uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
 
@@ -84,7 +84,7 @@ class FileCollection
         $this->populateFiles();
 
         if ($this->hasFile($name)) {
-            if (strpos($name, '.') !== false) {
+            if (str_contains($name, '.')) {
                 $name         = explode('.', $name);
                 $uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
 
@@ -113,7 +113,7 @@ class FileCollection
     {
         $this->populateFiles();
 
-        if (strpos($fileID, '.') !== false) {
+        if (str_contains($fileID, '.')) {
             $segments = explode('.', $fileID);
 
             $el = $this->files;

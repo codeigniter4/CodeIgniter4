@@ -174,7 +174,7 @@ class Commands
         foreach (array_keys($collection) as $commandName) {
             $lev = levenshtein($name, $commandName);
 
-            if ($lev <= strlen($commandName) / 3 || strpos($commandName, $name) !== false) {
+            if ($lev <= strlen($commandName) / 3 || str_contains($commandName, $name)) {
                 $alternatives[$commandName] = $lev;
             }
         }

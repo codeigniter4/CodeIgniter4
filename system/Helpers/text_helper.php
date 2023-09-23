@@ -341,7 +341,7 @@ if (! function_exists('word_wrap')) {
         $str = preg_replace('| +|', ' ', $str);
 
         // Standardize newlines
-        if (strpos($str, "\r") !== false) {
+        if (str_contains($str, "\r")) {
             $str = str_replace(["\r\n", "\r"], "\n", $str);
         }
 

@@ -143,7 +143,7 @@ class Forge extends BaseForge
      */
     protected function _processColumn(array $field): string
     {
-        if ($field['type'] === 'TEXT' && strpos($field['length'], "('") === 0) {
+        if ($field['type'] === 'TEXT' && str_starts_with($field['length'], "('")) {
             $field['type'] .= ' CHECK(' . $this->db->escapeIdentifiers($field['name'])
                 . ' IN ' . $field['length'] . ')';
         }

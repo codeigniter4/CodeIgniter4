@@ -337,7 +337,7 @@ class Parser extends View
                     }
 
                     if (is_object($val)) {
-                        $val = 'Class: ' . get_class($val);
+                        $val = 'Class: ' . $val::class;
                     } elseif (is_resource($val)) {
                         $val = 'Resource';
                     }
@@ -467,7 +467,7 @@ class Parser extends View
 
         try {
             eval('?>' . $template . '<?php ');
-        } catch (ParseError $e) {
+        } catch (ParseError) {
             ob_end_clean();
 
             throw ViewException::forTagSyntaxError(str_replace(['?>', '<?php '], '', $template));
@@ -520,7 +520,7 @@ class Parser extends View
         return preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
             // Check for {! !} syntax to not escape this one.
             if (
-                strpos($matches[0], $this->leftDelimiter . '!') === 0
+                str_starts_with($matches[0], $this->leftDelimiter . '!')
                 && substr($matches[0], -1 - strlen($this->rightDelimiter)) === '!' . $this->rightDelimiter
             ) {
                 $escape = false;
@@ -567,11 +567,11 @@ class Parser extends View
             }
         }
         // No pipes, then we know we need to escape
-        elseif (strpos($key, '|') === false) {
+        elseif (! str_contains($key, '|')) {
             $escape = 'html';
         }
         // If there's a `noescape` then we're definitely false.
-        elseif (strpos($key, 'noescape') !== false) {
+        elseif (str_contains($key, 'noescape')) {
             $escape = false;
         }
         // If no `esc` filter is found, then we'll need to add one.

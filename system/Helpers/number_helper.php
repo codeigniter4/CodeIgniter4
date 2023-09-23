@@ -25,7 +25,7 @@ if (! function_exists('number_to_size')) {
         try {
             // @phpstan-ignore-next-line
             $num = 0 + str_replace(',', '', (string) $num);
-        } catch (ErrorException $ee) {
+        } catch (ErrorException) {
             // Catch "Warning:  A non-numeric value encountered"
             return false;
         }
@@ -80,7 +80,7 @@ if (! function_exists('number_to_amount')) {
         try {
             // @phpstan-ignore-next-line
             $num = 0 + str_replace(',', '', $num);
-        } catch (ErrorException $ee) {
+        } catch (ErrorException) {
             return false;
         }
 

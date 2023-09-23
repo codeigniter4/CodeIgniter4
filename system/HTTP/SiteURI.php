@@ -15,13 +15,14 @@ use BadMethodCallException;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
+use Stringable;
 
 /**
  * URI for the application site
  *
  * @see \CodeIgniter\HTTP\SiteURITest
  */
-class SiteURI extends URI
+class SiteURI extends URI implements Stringable
 {
     /**
      * The current baseURL.

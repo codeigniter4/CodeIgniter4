@@ -122,8 +122,8 @@ final class FrameworkCodeTest extends TestCase
             array_filter(
                 iterator_to_array($iterator, false),
                 static fn (SplFileInfo $file): bool => $file->isFile()
-                    && strpos($file->getPathname(), DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR) === false
-                    && strpos($file->getPathname(), DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR) === false
+                    && ! str_contains($file->getPathname(), DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR)
+                    && ! str_contains($file->getPathname(), DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR)
             )
         );
 

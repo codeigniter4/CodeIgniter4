@@ -504,7 +504,7 @@ class Model extends BaseModel
             return [];
         }
 
-        return [get_class($this->db) => $error['message']];
+        return [$this->db::class => $error['message']];
     }
 
     /**

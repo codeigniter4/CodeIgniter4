@@ -323,7 +323,7 @@ class CURLRequest extends OutgoingRequest
     protected function prepareURL(string $url): string
     {
         // If it's a full URI, then we have nothing to do here...
-        if (strpos($url, '://') !== false) {
+        if (str_contains($url, '://')) {
             return $url;
         }
 
@@ -378,16 +378,16 @@ class CURLRequest extends OutgoingRequest
         // Set the string we want to break our response from
         $breakString = "\r\n\r\n";
 
-        if (strpos($output, 'HTTP/1.1 100 Continue') === 0) {
+        if (str_starts_with($output, 'HTTP/1.1 100 Continue')) {
             $output = substr($output, strpos($output, $breakString) + 4);
         }
 
-        if (strpos($output, 'HTTP/1.1 200 Connection established') === 0) {
+        if (str_starts_with($output, 'HTTP/1.1 200 Connection established')) {
             $output = substr($output, strpos($output, $breakString) + 4);
         }
 
         // If request and response have Digest
-        if (isset($this->config['auth'][2]) && $this->config['auth'][2] === 'digest' && strpos($output, 'WWW-Authenticate: Digest') !== false) {
+        if (isset($this->config['auth'][2]) && $this->config['auth'][2] === 'digest' && str_contains($output, 'WWW-Authenticate: Digest')) {
             $output = substr($output, strpos($output, $breakString) + 4);
         }
 
@@ -487,7 +487,7 @@ class CURLRequest extends OutgoingRequest
                 } else {
                     $this->response->setHeader($title, $value);
                 }
-            } elseif (strpos($header, 'HTTP') === 0) {
+            } elseif (str_starts_with($header, 'HTTP')) {
                 preg_match('#^HTTP\/([12](?:\.[01])?) (\d+) (.+)#', $header, $matches);
 
                 if (isset($matches[1])) {

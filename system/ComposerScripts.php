@@ -71,7 +71,7 @@ final class ComposerScripts
 
         foreach (self::$dependencies as $key => $dependency) {
             // Kint may be removed.
-            if (! is_dir($dependency['from']) && strpos($key, 'kint') === 0) {
+            if (! is_dir($dependency['from']) && str_starts_with($key, 'kint')) {
                 continue;
             }
 

@@ -77,7 +77,7 @@ trait RequestTrait
         // @TODO Extract all this IP address logic to another class.
         foreach ($proxyIPs as $proxyIP => $header) {
             // Check if we have an IP address or a subnet
-            if (strpos($proxyIP, '/') === false) {
+            if (! str_contains($proxyIP, '/')) {
                 // An IP address (and not a subnet) is specified.
                 // We can compare right away.
                 if ($proxyIP === $this->ipAddress) {
@@ -98,7 +98,7 @@ trait RequestTrait
             }
 
             // If the proxy entry doesn't match the IP protocol - skip it
-            if (strpos($proxyIP, $separator) === false) {
+            if (! str_contains($proxyIP, $separator)) {
                 continue;
             }
 
