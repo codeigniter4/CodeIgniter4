@@ -794,7 +794,7 @@ if (! function_exists('log_message')) {
      *  - info
      *  - debug
      *
-     * @return bool
+     * @return void
      */
     function log_message(string $level, string $message, array $context = [])
     {
@@ -804,10 +804,12 @@ if (! function_exists('log_message')) {
         if (ENVIRONMENT === 'testing') {
             $logger = new TestLogger(new Logger());
 
-            return $logger->log($level, $message, $context);
+            $logger->log($level, $message, $context);
+
+            return;
         }
 
-        return Services::logger(true)->log($level, $message, $context); // @codeCoverageIgnore
+        Services::logger(true)->log($level, $message, $context); // @codeCoverageIgnore
     }
 }
 

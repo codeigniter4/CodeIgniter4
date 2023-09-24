@@ -15,6 +15,7 @@ use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Log\Handlers\HandlerInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
+use Stringable;
 use Throwable;
 
 /**
@@ -157,9 +158,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function emergency($message, array $context = []): bool
+    public function emergency(string|Stringable $message, array $context = []): void
     {
-        return $this->log('emergency', $message, $context);
+        $this->log('emergency', $message, $context);
     }
 
     /**
@@ -170,9 +171,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function alert($message, array $context = []): bool
+    public function alert(string|Stringable $message, array $context = []): void
     {
-        return $this->log('alert', $message, $context);
+        $this->log('alert', $message, $context);
     }
 
     /**
@@ -182,9 +183,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function critical($message, array $context = []): bool
+    public function critical(string|Stringable $message, array $context = []): void
     {
-        return $this->log('critical', $message, $context);
+        $this->log('critical', $message, $context);
     }
 
     /**
@@ -193,9 +194,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function error($message, array $context = []): bool
+    public function error(string|Stringable $message, array $context = []): void
     {
-        return $this->log('error', $message, $context);
+        $this->log('error', $message, $context);
     }
 
     /**
@@ -206,9 +207,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function warning($message, array $context = []): bool
+    public function warning(string|Stringable $message, array $context = []): void
     {
-        return $this->log('warning', $message, $context);
+        $this->log('warning', $message, $context);
     }
 
     /**
@@ -216,9 +217,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function notice($message, array $context = []): bool
+    public function notice(string|Stringable $message, array $context = []): void
     {
-        return $this->log('notice', $message, $context);
+        $this->log('notice', $message, $context);
     }
 
     /**
@@ -228,9 +229,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function info($message, array $context = []): bool
+    public function info(string|Stringable $message, array $context = []): void
     {
-        return $this->log('info', $message, $context);
+        $this->log('info', $message, $context);
     }
 
     /**
@@ -238,9 +239,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function debug($message, array $context = []): bool
+    public function debug(string|Stringable $message, array $context = []): void
     {
-        return $this->log('debug', $message, $context);
+        $this->log('debug', $message, $context);
     }
 
     /**
@@ -249,7 +250,7 @@ class Logger implements LoggerInterface
      * @param string $level
      * @param string $message
      */
-    public function log($level, $message, array $context = []): bool
+    public function log($level, string|Stringable $message, array $context = []): void
     {
         if (is_numeric($level)) {
             $level = array_search((int) $level, $this->logLevels, true);
@@ -262,7 +263,7 @@ class Logger implements LoggerInterface
 
         // Does the app want to log this right now?
         if (! in_array($level, $this->loggableLevels, true)) {
-            return false;
+            return;
         }
 
         // Parse our placeholders
@@ -295,8 +296,6 @@ class Logger implements LoggerInterface
                 break;
             }
         }
-
-        return true;
     }
 
     /**
