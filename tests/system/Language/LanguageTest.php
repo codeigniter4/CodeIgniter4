@@ -142,6 +142,8 @@ final class LanguageTest extends CIUnitTestCase
             'Invalid message format: "تم الكشف عن كلمة المرور {0} بسبب اختراق البيانات وشوهدت {1 ، عدد} مرة في {2} في كلمات المرور المخترقة.", args: "password,hits,wording"'
         );
 
+        $this->lang->setLocale('ar');
+
         $this->lang->setData('Auth', [
             'errorPasswordPwned' => 'تم الكشف عن كلمة المرور {0} بسبب اختراق البيانات وشوهدت {1 ، عدد} مرة في {2} في كلمات المرور المخترقة.',
         ]);
