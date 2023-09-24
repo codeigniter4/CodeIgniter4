@@ -311,6 +311,9 @@ To give a labeled error message you can set up as:
 
 .. _validation-withrequest:
 
+.. note:: ``setRules()`` will overwrite any rules that were set previously. To add more than one
+    rule to an existing set of rules, use ``setRule()`` multiple times.
+
 Setting Rules for Array Data
 ============================
 
