@@ -56,7 +56,7 @@ final class ComposerScripts
         ],
         'psr-log' => [
             'license' => __DIR__ . '/../vendor/psr/log/LICENSE',
-            'from'    => __DIR__ . '/../vendor/psr/log/Psr/Log/',
+            'from'    => __DIR__ . '/../vendor/psr/log/src/',
             'to'      => __DIR__ . '/ThirdParty/PSR/Log/',
         ],
     ];
@@ -84,7 +84,6 @@ final class ComposerScripts
         }
 
         self::copyKintInitFiles();
-        self::recursiveDelete(self::$dependencies['psr-log']['to'] . 'Test/');
     }
 
     /**
