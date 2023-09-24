@@ -208,7 +208,7 @@ See :ref:`initial-configuration` for the details.
 Upgrading
 ---------
 
-Whenever there is a new release, then from the command line in your project root::
+Whenever there is a new release, then from the command line in your project root:
 
 .. code-block:: console
 
