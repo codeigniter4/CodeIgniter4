@@ -12,6 +12,7 @@
 namespace CodeIgniter\Language;
 
 use Config\Services;
+use InvalidArgumentException;
 use MessageFormatter;
 
 /**
@@ -191,7 +192,14 @@ class Language
             return $message;
         }
 
-        return MessageFormatter::formatMessage($this->locale, $message, $args);
+        $formatted = MessageFormatter::formatMessage($this->locale, $message, $args);
+        if ($formatted === false) {
+            throw new InvalidArgumentException(
+                lang('Language.invalidMessageFormat', [$message, implode(',', $args)])
+            );
+        }
+
+        return $formatted;
     }
 
     /**
