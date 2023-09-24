@@ -971,6 +971,9 @@ Rule                    Parameter  Description                                  
 ======================= ========== ============================================= ===================================================
 uploaded                Yes         Fails if the name of the parameter does not  ``uploaded[field_name]``
                                     match the name of any uploaded files.
+                                    Prevents form from validating if file upload
+                                    is required.
+
 max_size                Yes         Fails if the uploaded file named in the      ``max_size[field_name,2048]``
                                     parameter is larger than the second
                                     parameter in kilobytes (kb). Or if the file
@@ -992,3 +995,7 @@ is_image                Yes         Fails if the file cannot be determined to be
 ======================= ========== ============================================= ===================================================
 
 The file validation rules apply for both single and multiple file uploads.
+
+.. note:: Only rules specifically created for file validation (like the ones listed in the table above) can be used to validate files.
+    Therefore, adding any general rules, like ``permit_empy``, to file validation rules array or string will prevend all rules for the
+    from file from being processed during validation.
