@@ -371,6 +371,7 @@ if (! function_exists('env')) {
             return $default;
         }
 
+        // Handle any boolean values
         return match (strtolower($value)) {
             'true'  => true,
             'false' => false,
