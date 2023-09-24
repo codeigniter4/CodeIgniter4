@@ -333,8 +333,8 @@ Miscellaneous Functions
 
     Logs a message using the Log Handlers defined in **app/Config/Logger.php**.
 
-    Level can be one of the following values: **emergency**, **alert**, **critical**, **error**, **warning**,
-    **notice**, **info**, or **debug**.
+    Level can be one of the following values: ``emergency``, ``alert``, ``critical``, ``error``, ``warning``,
+    ``notice``, ``info``, or ``debug``.
 
     Context can be used to substitute values in the message string. For full details, see the
     :doc:`Logging Information <logging>` page.
