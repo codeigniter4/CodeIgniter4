@@ -21,11 +21,27 @@ BREAKING
 Behavior Changes
 ================
 
+- **Logger:** The :php:func:`log_message()` function and the logger methods in
+  ``CodeIgniter\Log\Logger`` now do not return ``bool`` values. The return types
+  have been fixed to ``void`` to follow the PSR-3 interface.
+
 Interface Changes
 =================
 
+.. note:: As long as you have not extended the relevant CodeIgniter core classes
+    or implemented these interfaces, all these changes are backward compatible
+    and require no intervention.
+
+- **Logger:** The `psr/log <https://packagist.org/packages/psr/log>`_ package has
+  been upgraded to v2.0.0.
+
 Method Signature Changes
 ========================
+
+- **Logger:** The method signatures of the methods in ``CodeIgniter\Log\Logger``
+  that implements the PSR-3 interface have been fixed. The ``bool`` return
+  types are changed to ``void``. The ``$message`` parameters now have
+  ``string|Stringable`` types.
 
 .. _v450-removed-deprecated-items:
 
