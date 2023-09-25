@@ -27,13 +27,6 @@ use Throwable;
  * possible to test using travis-ci. It has been phpunit-annotated
  * to prevent messing up code coverage.
  *
- * Some of the methods require keyboard input, and are not unit-testable
- * as a result: input() and prompt().
- * validate() is internal, and not testable if prompt() isn't.
- * The wait() method is mostly testable, as long as you don't give it
- * an argument of "0".
- * These have been flagged to ignore for code coverage purposes.
- *
  * @see \CodeIgniter\CLI\CLITest
  */
 class CLI
