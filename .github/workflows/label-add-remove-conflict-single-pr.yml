@@ -1,0 +1,57 @@
+name: Auto Label "stale"
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - '4.*'
+
+jobs:
+  build:
+    name: Check Conflicts
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get PR Detail
+        id: PR-detail
+        run: echo "detail=$(gh pr view $PR_URL --json mergeable,url,labels)" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+
+      - name: 'Remove label "stale"'
+        env:
+          PR_DETAIL: ${{ steps.PR-detail.outputs.detail }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+
+          # MERGEABLE with 'stale' label
+          if [ "$(echo $PR_DETAIL | jq -r '.mergeable')" == "MERGEABLE" ] && \
+             [ "$(echo $PR_DETAIL | jq -r '.labels[] | select(.name == "stale")')" != "" ]; then
+             # remove 'stale' label
+             gh pr edit $PR_URL --remove-label "stale"
+          fi
+
+      - name: 'Check for conflicts and add label/comment'
+        env:
+          PR_DETAIL: ${{ steps.PR-detail.outputs.detail }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: |
+
+          # CONFLICTING with no "stale" label,
+          if [ "$(echo $PR_DETAIL | jq -r '.mergeable')" == "CONFLICTING" ] && \
+             [ "$(echo $PR_DETAIL | jq -r '.labels[] | select(.name == "stale")')" == "" ]; then
+              # add label
+              gh pr edit $PR_URL --add-label "stale"
+              # add comment
+              gh pr comment $PR_URL --body ":wave: Hi, @$AUTHOR!<br><br>We detected conflicts in your PR against the base branch :speak_no_evil:<br>You may want to sync :arrows_counterclockwise: your branch with upstream!<br><br>Ref: [Syncing Your Branch](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/workflow.md#pushing-your-branch)"
+          fi
