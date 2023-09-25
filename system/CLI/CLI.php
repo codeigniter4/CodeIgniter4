@@ -448,7 +448,7 @@ class CLI
     }
 
     /**
-     * Outputs a string to the cli on it's own line.
+     * Outputs a string to the cli on its own line.
      *
      * @return void
      */
@@ -834,7 +834,7 @@ class CLI
      * width.
      *
      * If an int is passed into $pad_left, then all strings after the first
-     * will padded with that many spaces to the left. Useful when printing
+     * will pad with that many spaces to the left. Useful when printing
      * short descriptions that need to start on an existing line.
      */
     public static function wrap(?string $string = null, int $max = 0, int $padLeft = 0): string
