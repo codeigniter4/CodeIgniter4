@@ -42,6 +42,8 @@ class CLI
      * Is the readline library on the system?
      *
      * @var bool
+     *
+     * @deprecated 4.4.2 Should be protected.
      */
     public static $readline_support = false;
 
@@ -49,6 +51,8 @@ class CLI
      * The message displayed at prompts.
      *
      * @var string
+     *
+     * @deprecated 4.4.2 Should be protected.
      */
     public static $wait_msg = 'Press any key to continue...';
 
