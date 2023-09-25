@@ -33,7 +33,7 @@ as the second parameter of the ``setStatusCode()`` method:
 .. literalinclude:: response/002.php
 
 You can set format an array into either JSON or XML and set the content type header to the appropriate mime with the
-``setJSON`` and ``setXML`` methods. Typically, you will send an array of data to be converted:
+``setJSON()`` and ``setXML()`` methods. Typically, you will send an array of data to be converted:
 
 .. literalinclude:: response/003.php
 
