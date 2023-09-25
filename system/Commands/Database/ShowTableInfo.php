@@ -102,6 +102,8 @@ class ShowTableInfo extends BaseCommand
         $this->db       = Database::connect();
         $this->DBPrefix = $this->db->getPrefix();
 
+        $this->showDBConfig();
+
         $tables = $this->db->listTables();
 
         if (array_key_exists('desc', $params)) {
@@ -143,6 +145,22 @@ class ShowTableInfo extends BaseCommand
         }
 
         $this->showDataOfTable($tableName, $limitRows, $limitFieldValue);
+    }
+
+    private function showDBConfig(): void
+    {
+        $data = [[
+            'hostname' => $this->db->hostname,
+            'database' => $this->db->getDatabase(),
+            'username' => $this->db->username,
+            'DBDriver' => $this->db->getPlatform(),
+            'DBPrefix' => $this->DBPrefix,
+            'port'     => $this->db->port,
+        ]];
+        CLI::table(
+            $data,
+            ['hostname', 'database', 'username', 'DBDriver', 'DBPrefix', 'port']
+        );
     }
 
     private function removeDBPrefix(): void
