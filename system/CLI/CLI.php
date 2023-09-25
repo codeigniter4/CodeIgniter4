@@ -258,7 +258,7 @@ class CLI
         $input = trim(static::input()) ?: $default;
 
         if ($validation) {
-            while (! static::validate(trim($field), $input, $validation)) {
+            while (! static::validate('"' . trim($field) . '"', $input, $validation)) {
                 $input = static::prompt($field, $options, $validation);
             }
         }
