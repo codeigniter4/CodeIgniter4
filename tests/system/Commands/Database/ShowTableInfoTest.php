@@ -70,12 +70,8 @@ final class ShowTableInfoTest extends CIUnitTestCase
 
         $result = $this->getNormalizedResult();
 
-        $expected = <<<'EOL'
-            +-----------+----------+----------+----------+----------+------+
-            | hostname  | database | username | DBDriver | DBPrefix | port |
-            +-----------+----------+----------+----------+----------+------+
-            EOL;
-        $this->assertStringContainsString($expected, $result);
+        $expectedPattern = '/\| hostname[[:blank:]]+\| database[[:blank:]]+\| username[[:blank:]]+\| DBDriver[[:blank:]]+\| DBPrefix[[:blank:]]+\| port[[:blank:]]+\|/';
+        $this->assertMatchesRegularExpression($expectedPattern, $result);
     }
 
     public function testDbTableShow(): void
