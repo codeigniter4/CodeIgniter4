@@ -1,17 +1,14 @@
-name: Auto Add Label "stale" & Comment Conflicts
+name: Auto Label "stale" for All PRs
 
 on:
   push:
     branches:
       - develop
       - '4.*'
-  pull_request:
-    branches:
-      - develop
-      - '4.*'
 
 jobs:
-  auto-label-comment-conflict:
+  build:
+    name: Check Conflicts
 
     permissions:
       contents: read
