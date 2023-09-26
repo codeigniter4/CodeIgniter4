@@ -771,7 +771,10 @@ class RouteCollection implements RouteCollectionInterface
         $callback = array_pop($params);
 
         if ($params && is_array($params[0])) {
-            $this->currentOptions = array_shift($params);
+            $this->currentOptions = array_merge(
+                $this->currentOptions ?? [],
+                array_shift($params)
+            );
         }
 
         if (is_callable($callback)) {
