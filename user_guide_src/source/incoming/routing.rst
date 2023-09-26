@@ -535,6 +535,8 @@ given route config options:
 
 .. literalinclude:: routing/027.php
 
+.. _routing-nesting-groups:
+
 Nesting Groups
 ==============
 
