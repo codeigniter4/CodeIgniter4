@@ -544,7 +544,15 @@ It is possible to nest groups within groups for finer organization if you need i
 
 This would handle the URL at **admin/users/list**.
 
-.. note:: Options passed to the outer ``group()`` (for example ``namespace`` and ``filter``) are not merged with the inner ``group()`` options.
+Options array passed to the outer ``group()`` are merged with the inner
+``group()`` options array. But note that if you specify the same key in the
+inner ``group()`` options, the value is overwritten.
+
+The above code runs ``myfilter:config`` for ``admin``, and only ``myfilter:region``
+for ``admin/users/list``.
+
+.. note:: Prior to v4.5.0, due to a bug, options passed to the outer ``group()``
+    are not merged with the inner ``group()`` options.
 
 .. _routing-priority:
 
