@@ -88,8 +88,12 @@ if (! function_exists('previous_url')) {
     {
         // Grab from the session first, if we have it,
         // since it's more reliable and safer.
+        if (isset($_SESSION)) {
+            $referer = session('_ci_previous_url');
+        }
+
         // Otherwise, grab a sanitized version from $_SERVER.
-        $referer = $_SESSION['_ci_previous_url'] ?? Services::request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL);
+        $referer ??= Services::request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL);
 
         $referer ??= site_url('/');
 
