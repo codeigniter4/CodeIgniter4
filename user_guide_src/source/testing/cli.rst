@@ -2,10 +2,72 @@
 Testing CLI Commands
 ####################
 
+.. contents::
+    :local:
+    :depth: 3
+
+.. _using-mock-input-output:
+
+*********************
+Using MockInputOutput
+*********************
+
+.. versionadded:: 4.5.0
+
+MockInputOutput
+===============
+
+**MockInputOutput** provides a esay way to write tests for commands that require
+user input, such as ``CLI::prompt()``, ``CLI::wait()``, and ``CLI::input()``.
+
+You can replace the ``InputOutput`` class with ``MockInputOutput`` during test
+execution to capture inputs and outputs.
+
+.. note:: When you use ``MockInputOutput``, you don't need to use
+    :ref:`stream-filter-trait`, :ref:`ci-test-stream-filter`, and
+    :ref:`php-stream-wrapper`.
+
+Helper Methods
+---------------
+
+getOutput(?int $index = null): string
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Gets the output.
+
+- If you call it like ``$io->getOutput()``, it returns the whole output string.
+- If you specify ``0`` or a positive number, it returns the output array item.
+  Each item has the output of a ``CLI::fwrite()`` call.
+- If you specify a negative number ``-n``, it returns the last ``n``-th item of
+  the output array.
+
+getOutputs(): array
+^^^^^^^^^^^^^^^^^^^
+
+Returns the output array. Each item has the output of a ``CLI::fwrite()`` call.
+
+How to Use
+==========
+
+- ``CLI::setInputOutput()`` can set the ``MockInputOutput`` instance to the ``CLI`` class.
+- ``CLI::resetInputOutput()`` resets the ``InputOutput`` instance in the ``CLI`` class.
+- ``MockInputOutput::setInputs()`` sets the user input array.
+- ``MockInputOutput::getOutput()`` gets the command output.
+
+The following test code is to test the command ``spark db:table``:
+
+.. literalinclude:: cli/001.php
+
+***********************
+Without MockInputOutput
+***********************
+
 .. _testing-cli-output:
 
 Testing CLI Output
 ==================
+
+.. _stream-filter-trait:
 
 StreamFilterTrait
 -----------------
@@ -17,10 +79,11 @@ StreamFilterTrait
 You may need to test things that are difficult to test. Sometimes, capturing a stream, like PHP's own STDOUT, or STDERR,
 might be helpful. The ``StreamFilterTrait`` helps you capture the output from the stream of your choice.
 
-**Overview of methods**
+How to Use
+^^^^^^^^^^
 
-- ``StreamFilterTrait::getStreamFilterBuffer()`` Get the captured data from the buffer.
-- ``StreamFilterTrait::resetStreamFilterBuffer()`` Reset captured data.
+- ``StreamFilterTrait::getStreamFilterBuffer()`` gets the captured data from the buffer.
+- ``StreamFilterTrait::resetStreamFilterBuffer()`` resets captured data.
 
 An example demonstrating this inside one of your test cases:
 
@@ -32,6 +95,8 @@ See :ref:`Testing Traits <testing-overview-traits>`.
 If you override the ``setUp()`` or ``tearDown()`` methods in your test, then you must call the ``parent::setUp()`` and
 ``parent::tearDown()`` methods respectively to configure the ``StreamFilterTrait``.
 
+.. _ci-test-stream-filter:
+
 CITestStreamFilter
 ------------------
 
@@ -40,7 +105,8 @@ CITestStreamFilter
 If you need to capture streams in only one test, then instead of using the StreamFilterTrait trait, you can manually
 add a filter to streams.
 
-**Overview of methods**
+How to Use
+^^^^^^^^^^
 
 - ``CITestStreamFilter::registration()`` Filter registration.
 - ``CITestStreamFilter::addOutputFilter()`` Adding a filter to the output stream.
@@ -55,6 +121,8 @@ add a filter to streams.
 Testing CLI Input
 =================
 
+.. _php-stream-wrapper:
+
 PhpStreamWrapper
 ----------------
 
@@ -68,7 +136,8 @@ such as ``CLI::prompt()``, ``CLI::wait()``, and ``CLI::input()``.
     see `The streamWrapper class <https://www.php.net/manual/en/class.streamwrapper.php>`_
     in the PHP maual.
 
-**Overview of methods**
+How to Use
+^^^^^^^^^^
 
 - ``PhpStreamWrapper::register()`` Register the ``PhpStreamWrapper`` to the ``php`` protocol.
 - ``PhpStreamWrapper::restore()`` Restore the php protocol wrapper back to the PHP built-in wrapper.
