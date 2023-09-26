@@ -16,12 +16,23 @@ namespace Utils\Rector;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassConst;
 use PHPStan\PhpDocParser\Ast\PhpDoc\VarTagValueNode;
+use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
+use Rector\Comments\NodeDocBlock\DocBlockUpdater;
 use Rector\Core\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 final class RemoveVarTagFromClassConstantRector extends AbstractRector
 {
+    private PhpDocInfoFactory $phpDocInfoFactory;
+    private DocBlockUpdater $docBlockUpdater;
+
+    public function __construct(PhpDocInfoFactory $phpDocInfoFactory, DocBlockUpdater $docBlockUpdater)
+    {
+        $this->phpDocInfoFactory = $phpDocInfoFactory;
+        $this->docBlockUpdater   = $docBlockUpdater;
+    }
+
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Remove @var tag from class constant', [
@@ -63,6 +74,8 @@ final class RemoveVarTagFromClassConstantRector extends AbstractRector
         }
 
         $phpDocInfo->removeByType(VarTagValueNode::class);
+
+        $this->docBlockUpdater->updateRefactoredNodeWithPhpDocInfo($node);
 
         return $node;
     }
