@@ -783,11 +783,11 @@ class Model extends BaseModel
      * @param object|string $data
      * @param bool          $recursive If true, inner entities will be cast as array as well
      *
-     * @return array|null Array
+     * @return array Array with raw values.
      *
      * @throws ReflectionException
      */
-    protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
+    protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): array
     {
         $properties = parent::objectToRawArray($data, $onlyChanged);
 
