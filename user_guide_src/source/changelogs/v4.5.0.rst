@@ -35,8 +35,19 @@ Interface Changes
 - **Logger:** The `psr/log <https://packagist.org/packages/psr/log>`_ package has
   been upgraded to v2.0.0.
 
+.. _v450-method-signature-changes:
+
 Method Signature Changes
 ========================
+
+Return Type Changes
+-------------------
+
+- **Model:** The return type of the ``objectToRawArray()`` method in the ``Model``
+  and ``BaseModel`` classes has been changed to ``array``.
+
+Others
+------
 
 - **Logger:** The method signatures of the methods in ``CodeIgniter\Log\Logger``
   that implements the PSR-3 interface have been fixed. The ``bool`` return

@@ -18,11 +18,18 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+Method Signature Changes
+========================
+
+Some method signature changes have been made. Classes that extend them should
+update their APIs to reflect the changes. See :ref:`ChangeLog <v450-method-signature-changes>`
+for details.
+
 Removed Deprecated Items
 ========================
 
 Some deprecated items have been removed. If you extend these classes and are
-using them, upgrade your code. See :ref:`v450-removed-deprecated-items` for details.
+using them, upgrade your code. See :ref:`ChangeLog <v450-removed-deprecated-items>` for details.
 
 Breaking Enhancements
 *********************
