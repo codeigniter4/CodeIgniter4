@@ -42,12 +42,18 @@ final class ParserPluginTest extends CIUnitTestCase
         $this->assertSame(current_url(), $this->parser->renderString($template));
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     *
+     * @group SeparateProcess
+     */
     public function testPreviousURL(): void
     {
         $template = '{+ previous_url +}';
 
         // Ensure a previous URL exists to work with.
-        $_SESSION['_ci_previous_url'] = 'http://example.com/foo';
+        session()->set('_ci_previous_url', 'http://example.com/foo');
 
         $this->assertSame(previous_url(), $this->parser->renderString($template));
     }

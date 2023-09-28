@@ -27,6 +27,8 @@ use Config\Routing;
 use Tests\Support\Filters\Customfilter;
 
 /**
+ * @runTestsInSeparateProcesses
+ *
  * @backupGlobals enabled
  *
  * @internal
