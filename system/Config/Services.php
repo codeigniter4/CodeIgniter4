@@ -521,7 +521,7 @@ class Services extends BaseService
         }
 
         // @TODO remove the following code for backward compatibility
-        return static::incomingrequest($config, $getShared);
+        return AppServices::incomingrequest($config, $getShared);
     }
 
     /**
