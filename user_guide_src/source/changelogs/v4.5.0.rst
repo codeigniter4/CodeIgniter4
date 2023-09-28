@@ -44,7 +44,7 @@ Return Type Changes
 -------------------
 
 - **Model:** The return type of the ``objectToRawArray()`` method in the ``Model``
-  and ``BaseModel`` classes has been changed to ``array``.
+  and ``BaseModel`` classes has been changed from ``?array`` to ``array``.
 
 Others
 ------
