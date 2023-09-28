@@ -324,13 +324,17 @@ Miscellaneous Functions
     :param   string   $level: The level of severity
     :param   string   $message: The message that is to be logged.
     :param   array    $context: An associative array of tags and their values that should be replaced in $message
-    :returns: true if was logged successfully or false if there was a problem logging it
+    :returns: void
     :rtype: bool
+
+    .. note:: Since v4.5.0, the return value is fixed to be compatible with PSR
+        Log. In previous versions, it returned ``true`` if was logged successfully
+        or ``false`` if there was a problem logging it.
 
     Logs a message using the Log Handlers defined in **app/Config/Logger.php**.
 
-    Level can be one of the following values: **emergency**, **alert**, **critical**, **error**, **warning**,
-    **notice**, **info**, or **debug**.
+    Level can be one of the following values: ``emergency``, ``alert``, ``critical``, ``error``, ``warning``,
+    ``notice``, ``info``, or ``debug``.
 
     Context can be used to substitute values in the message string. For full details, see the
     :doc:`Logging Information <logging>` page.
