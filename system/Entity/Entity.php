@@ -119,7 +119,7 @@ class Entity implements JsonSerializable
     protected $original = [];
 
     /**
-     * Holds info whenever properties have to be casted
+     * Holds info whenever properties have to be cast.
      */
     private bool $_cast = true;
 
@@ -158,7 +158,7 @@ class Entity implements JsonSerializable
     /**
      * General method that will return all public and protected values
      * of this entity as an array. All values are accessed through the
-     * __get() magic method so will have any casts, etc applied to them.
+     * __get() magic method so will have any casts, etc. applied to them.
      *
      * @param bool $onlyChanged If true, only return values that have changed since object creation
      * @param bool $cast        If true, properties will be cast.
