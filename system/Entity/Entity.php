@@ -45,7 +45,7 @@ class Entity implements JsonSerializable
      *
      * Example:
      *  $datamap = [
-     *      'class_property_name' => 'db_column_name'
+     *      class_property_alias => db_column_name
      *  ];
      *
      * @var array<string, string>
@@ -110,7 +110,7 @@ class Entity implements JsonSerializable
     protected $attributes = [];
 
     /**
-     * Holds original copies of all class vars so we can determine
+     * Holds original copies of all attributes, so we can determine
      * what's actually been changed and not accidentally write
      * nulls where we shouldn't.
      *
