@@ -1339,4 +1339,49 @@ final class EntityTest extends CIUnitTestCase
             ];
         };
     }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5905
+     */
+    public function testHasChangedCastsItem()
+    {
+        $data = [
+            'id'   => '1',
+            'name' => 'John',
+            'age'  => '35',
+        ];
+        $entity = new class ($data) extends Entity {
+            protected $casts = [
+                'id'   => 'integer',
+                'name' => 'string',
+                'age'  => 'integer',
+            ];
+        };
+        $entity->syncOriginal();
+
+        $entity->age = 35;
+
+        $this->assertFalse($entity->hasChanged('age'));
+    }
+
+    public function testHasChangedCastsWholeEntity()
+    {
+        $data = [
+            'id'   => '1',
+            'name' => 'John',
+            'age'  => '35',
+        ];
+        $entity = new class ($data) extends Entity {
+            protected $casts = [
+                'id'   => 'integer',
+                'name' => 'string',
+                'age'  => 'integer',
+            ];
+        };
+        $entity->syncOriginal();
+
+        $entity->age = 35;
+
+        $this->assertFalse($entity->hasChanged());
+    }
 }
