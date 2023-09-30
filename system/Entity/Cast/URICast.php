@@ -21,8 +21,16 @@ class URICast extends BaseCast
     /**
      * {@inheritDoc}
      */
-    public static function get($value, array $params = []): URI
+    public static function set($value, array $params = []): URI
     {
-        return $value instanceof URI ? $value : new URI($value);
+        if ($value instanceof URI) {
+            return $value;
+        }
+
+        if (! is_string($value)) {
+            self::invalidTypeValueError($value);
+        }
+
+        return new URI($value);
     }
 }

@@ -19,7 +19,15 @@ class FloatCast extends BaseCast
     /**
      * {@inheritDoc}
      */
-    public static function get($value, array $params = []): float
+    public static function set($value, array $params = []): float
+    {
+        return (float) $value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function fromDatabase($value, array $params = []): float
     {
         return (float) $value;
     }

@@ -2057,26 +2057,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Encryption/Handlers/SodiumHandler.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$value \\(bool\\|int\\|string\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\IntBoolCast\\:\\:set\\(\\) should be contravariant with parameter \\$value \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\BaseCast\\:\\:set\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Entity/Cast/IntBoolCast.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$value \\(bool\\|int\\|string\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\IntBoolCast\\:\\:set\\(\\) should be contravariant with parameter \\$value \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\CastInterface\\:\\:set\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Entity/Cast/IntBoolCast.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$value \\(int\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\IntBoolCast\\:\\:get\\(\\) should be contravariant with parameter \\$value \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\BaseCast\\:\\:get\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Entity/Cast/IntBoolCast.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$value \\(int\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\IntBoolCast\\:\\:get\\(\\) should be contravariant with parameter \\$value \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Entity\\\\Cast\\\\CastInterface\\:\\:get\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Entity/Cast/IntBoolCast.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 4,
 	'path' => __DIR__ . '/system/Entity/Entity.php',

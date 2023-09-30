@@ -19,8 +19,20 @@ class IntegerCast extends BaseCast
     /**
      * {@inheritDoc}
      */
-    public static function get($value, array $params = []): int
+    public static function set($value, array $params = []): int
     {
+        return (int) $value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function fromDatabase($value, array $params = []): int
+    {
+        if (! is_string($value) && ! is_int($value)) {
+            self::invalidTypeValueError($value);
+        }
+
         return (int) $value;
     }
 }

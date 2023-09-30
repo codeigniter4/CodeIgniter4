@@ -19,8 +19,20 @@ class BooleanCast extends BaseCast
     /**
      * {@inheritDoc}
      */
-    public static function get($value, array $params = []): bool
+    public static function set($value, array $params = []): bool
     {
+        return (bool) $value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function fromDatabase($value, array $params = []): bool
+    {
+        if (! is_string($value)) {
+            self::invalidTypeValueError($value);
+        }
+
         return (bool) $value;
     }
 }

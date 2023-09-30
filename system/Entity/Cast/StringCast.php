@@ -19,7 +19,7 @@ class StringCast extends BaseCast
     /**
      * {@inheritDoc}
      */
-    public static function get($value, array $params = []): string
+    public static function set($value, array $params = []): string
     {
         return (string) $value;
     }

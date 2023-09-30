@@ -19,18 +19,38 @@ namespace CodeIgniter\Entity\Cast;
 final class IntBoolCast extends BaseCast
 {
     /**
-     * @param int $value
+     * {@inheritDoc}
      */
-    public static function get($value, array $params = []): bool
+    public static function set($value, array $params = []): bool
     {
+        if (! is_bool($value) && ! is_int($value) && ! is_string($value)) {
+            self::invalidTypeValueError($value);
+        }
+
         return (bool) $value;
     }
 
     /**
-     * @param bool|int|string $value
+     * {@inheritDoc}
      */
-    public static function set($value, array $params = []): int
+    public static function fromDatabase($value, array $params = []): bool
     {
+        if (! is_int($value) && ! is_string($value)) {
+            self::invalidTypeValueError($value);
+        }
+
+        return (bool) $value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function toDatabase($value, array $params = []): int
+    {
+        if (! is_bool($value)) {
+            self::invalidTypeValueError($value);
+        }
+
         return (int) $value;
     }
 }

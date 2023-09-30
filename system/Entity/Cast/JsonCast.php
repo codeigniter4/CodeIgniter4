@@ -23,16 +23,20 @@ class JsonCast extends BaseCast
     /**
      * {@inheritDoc}
      */
-    public static function get($value, array $params = [])
+    public static function fromDatabase($value, array $params = [])
     {
+        if (! is_string($value)) {
+            self::invalidTypeValueError($value);
+        }
+
         $associative = in_array('array', $params, true);
 
-        $tmp = $value !== null ? ($associative ? [] : new stdClass()) : null;
+        // @TODO Can $value be null?
+        $tmp = ($associative ? [] : new stdClass());
 
         if (function_exists('json_decode')
             && (
-                (is_string($value)
-                    && strlen($value) > 1
+                (strlen($value) > 1
                     && in_array($value[0], ['[', '{', '"'], true))
                 || is_numeric($value)
             )
@@ -49,8 +53,10 @@ class JsonCast extends BaseCast
 
     /**
      * {@inheritDoc}
+     *
+     * @param mixed $value
      */
-    public static function set($value, array $params = []): string
+    public static function toDatabase($value, array $params = []): string
     {
         if (function_exists('json_encode')) {
             try {

@@ -20,9 +20,15 @@ class TimestampCast extends BaseCast
 {
     /**
      * {@inheritDoc}
+     *
+     * @return int
      */
-    public static function get($value, array $params = [])
+    public static function set($value, array $params = [])
     {
+        if (! is_string($value)) {
+            self::invalidTypeValueError($value);
+        }
+
         $value = strtotime($value);
 
         if ($value === false) {

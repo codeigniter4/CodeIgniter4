@@ -19,16 +19,24 @@ class CSVCast extends BaseCast
     /**
      * {@inheritDoc}
      */
-    public static function get($value, array $params = []): array
+    public static function fromDatabase($value, array $params = []): array
     {
+        if (! is_string($value)) {
+            self::invalidTypeValueError($value);
+        }
+
         return explode(',', $value);
     }
 
     /**
      * {@inheritDoc}
      */
-    public static function set($value, array $params = []): string
+    public static function toDatabase($value, array $params = []): string
     {
+        if (! is_array($value)) {
+            self::invalidTypeValueError($value);
+        }
+
         return implode(',', $value);
     }
 }

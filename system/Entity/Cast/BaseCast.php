@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Entity\Cast;
 
+use TypeError;
+
 /**
  * Class BaseCast
  */
@@ -67,5 +69,17 @@ abstract class BaseCast implements CastInterface
     public static function fromDatabase($value, array $params = [])
     {
         return $value;
+    }
+
+    /**
+     * Throws TypeError
+     *
+     * @param mixed $value
+     *
+     * @return never
+     */
+    protected static function invalidTypeValueError($value)
+    {
+        throw new TypeError('Invalid type value: ' . var_export($value, true));
     }
 }

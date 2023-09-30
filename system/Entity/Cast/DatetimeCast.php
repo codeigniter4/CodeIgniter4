@@ -27,7 +27,7 @@ class DatetimeCast extends BaseCast
      *
      * @throws Exception
      */
-    public static function get($value, array $params = [])
+    public static function set($value, array $params = [])
     {
         if ($value instanceof Time) {
             return $value;
@@ -45,6 +45,34 @@ class DatetimeCast extends BaseCast
             return Time::parse($value);
         }
 
-        return $value;
+        self::invalidTypeValueError($value);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return Time
+     *
+     * @throws Exception
+     */
+    public static function fromDatabase($value, array $params = [])
+    {
+        if (is_string($value)) {
+            return Time::parse($value);
+        }
+
+        self::invalidTypeValueError($value);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function toDatabase($value, array $params = []): string
+    {
+        if (! $value instanceof Time) {
+            self::invalidTypeValueError($value);
+        }
+
+        return (string) $value;
     }
 }
