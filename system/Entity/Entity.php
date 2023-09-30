@@ -205,6 +205,8 @@ class Entity implements JsonSerializable
      *
      * @param bool $onlyChanged If true, only return values that have changed since object creation
      * @param bool $recursive   If true, inner entities will be cast as array as well.
+     *
+     * @deprecated 4.5.0 Use toDatabase() instead.
      */
     public function toRawArray(bool $onlyChanged = false, bool $recursive = false): array
     {
@@ -236,6 +238,71 @@ class Entity implements JsonSerializable
                     $value = $value->toRawArray($onlyChanged, $recursive);
                 } elseif (is_callable([$value, 'toRawArray'])) {
                     $value = $value->toRawArray();
+                }
+            }
+
+            $return[$key] = $value;
+        }
+
+        return $return;
+    }
+
+    /**
+     * Returns the values for database of the current attributes.
+     *
+     * @param bool $onlyChanged If true, only return values that have changed since object creation
+     * @param bool $recursive   If true, inner entities will be cast as array as well.
+     */
+    public function toDatabase(bool $onlyChanged = false, bool $recursive = false): array
+    {
+        $return = [];
+
+        if (! $onlyChanged) {
+            $data = $this->attributes;
+
+            // Cast values
+            if ($this->_cast) {
+                foreach (array_keys($this->casts) as $field) {
+                    if (isset($data[$field])) {
+                        $data[$field] = $this->castAs($data[$field], $field, 'toDatabase');
+                    }
+                }
+            }
+
+            if ($recursive) {
+                return array_map(static function ($value) use ($onlyChanged, $recursive) {
+                    if ($value instanceof self) {
+                        $value = $value->toDatabase($onlyChanged, $recursive);
+                    } elseif (is_callable([$value, 'toDatabase'])) {
+                        // @TODO Should define Interface or Class.
+                        $value = $value->toDatabase();
+                    }
+
+                    return $value;
+                }, $data);
+            }
+
+            return $data;
+        }
+
+        foreach ($this->attributes as $key => $value) {
+            if (! $this->hasChanged($key)) {
+                continue;
+            }
+
+            // Cast values
+            if ($this->_cast) {
+                if (isset($this->casts[$key])) {
+                    $value = $this->castAs($value, $key, 'toDatabase');
+                }
+            }
+
+            if ($recursive) {
+                if ($value instanceof self) {
+                    $value = $value->toDatabase($onlyChanged, $recursive);
+                } elseif (is_callable([$value, 'toDatabase'])) {
+                    // @TODO Should define Interface or Class.
+                    $value = $value->toDatabase();
                 }
             }
 
@@ -290,11 +357,42 @@ class Entity implements JsonSerializable
      * Set raw data array without any mutations
      *
      * @return $this
+     *
+     * @deprecated 4.5.0 No longer used. `fromDatabase()` is used.
      */
     public function injectRawData(array $data)
     {
         $this->attributes = $data;
 
+        $this->syncOriginal();
+
+        return $this;
+    }
+
+    /**
+     * Set data from database
+     *
+     * @return $this
+     */
+    public function fromDatabase(array $data)
+    {
+        // Mutate dates
+        foreach ($this->dates as $field) {
+            if (isset($data[$field])) {
+                $data[$field] = $this->mutateDate($data[$field]);
+            }
+        }
+
+        // Cast values
+        if ($this->_cast) {
+            foreach (array_keys($this->casts) as $field) {
+                if (isset($data[$field])) {
+                    $data[$field] = $this->castAs($data[$field], $field, 'fromDatabase');
+                }
+            }
+        }
+
+        $this->attributes = $data;
         $this->syncOriginal();
 
         return $this;
@@ -353,7 +451,8 @@ class Entity implements JsonSerializable
      *
      * @param bool|float|int|string|null $value     Attribute value
      * @param string                     $attribute Attribute name
-     * @param string                     $method    Allowed to "get" and "set"
+     * @param string                     $method    Method name to run in the cast handler
+     * @phpstan-param 'get'|'set'|'toDatabase'|'fromDatabase' $method
      *
      * @return array|bool|float|int|object|string|null
      *
@@ -383,7 +482,7 @@ class Entity implements JsonSerializable
         // json-array type, we transform the required one.
         $type = $type === 'json-array' ? 'json[array]' : $type;
 
-        if (! in_array($method, ['get', 'set'], true)) {
+        if (! in_array($method, ['get', 'set', 'toDatabase', 'fromDatabase'], true)) {
             throw CastException::forInvalidMethod($method);
         }
 
