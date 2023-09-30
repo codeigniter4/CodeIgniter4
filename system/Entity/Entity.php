@@ -103,18 +103,21 @@ class Entity implements JsonSerializable
     ];
 
     /**
-     * Holds the current values of all class vars.
+     * Holds the current values of all class properties.
+     * The values are PHP representation, not the raw values from database.
      *
-     * @var array
+     * @var array<string, mixed>
      */
-    protected $attributes = [];
+    protected $attributes = [
+        // db_column_name => PHP_value
+    ];
 
     /**
      * Holds original copies of all attributes, so we can determine
      * what's actually been changed and not accidentally write
      * nulls where we shouldn't.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $original = [];
 
@@ -441,7 +444,7 @@ class Entity implements JsonSerializable
      */
     protected function mutateDate($value)
     {
-        return DatetimeCast::get($value);
+        return DatetimeCast::set($value);
     }
 
     /**
