@@ -568,7 +568,9 @@ class Entity implements JsonSerializable
             $value = $this->mutateDate($value);
         }
 
-        $value = $this->castAs($value, $dbColumn, 'set');
+        if ($this->_cast) {
+            $value = $this->castAs($value, $dbColumn, 'set');
+        }
 
         // if a setter method exists for this key, use that method to
         // insert this value. should be outside $isNullable check,
