@@ -26,7 +26,7 @@ class ArrayCast extends BaseCast
         }
 
         if ((strpos($value, 'a:') === 0 || strpos($value, 's:') === 0)) {
-            $value = unserialize($value);
+            $value = unserialize($value, ['allowed_classes' => false]);
         }
 
         return (array) $value;
