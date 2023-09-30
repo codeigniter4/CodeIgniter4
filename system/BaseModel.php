@@ -1657,7 +1657,7 @@ abstract class BaseModel
         $properties = $this->objectToRawArray($data, $onlyChanged, $recursive);
 
         // Convert any Time instances to appropriate $dateFormat
-        if ($properties) {
+        if ($properties !== []) {
             $properties = array_map(function ($value) {
                 if ($value instanceof Time) {
                     return $this->timeToDate($value);
@@ -1678,12 +1678,13 @@ abstract class BaseModel
      * @param bool          $onlyChanged Only Changed Property
      * @param bool          $recursive   If true, inner entities will be casted as array as well
      *
-     * @return array|null Array
+     * @return array Array with raw values.
      *
      * @throws ReflectionException
      */
-    protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
+    protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): array
     {
+        // @TODO Should define Interface or Class. Entity has toRawArray() now.
         if (method_exists($data, 'toRawArray')) {
             $properties = $data->toRawArray($onlyChanged, $recursive);
         } else {
