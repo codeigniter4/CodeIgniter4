@@ -17,6 +17,7 @@ use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
@@ -1684,8 +1685,11 @@ abstract class BaseModel
      */
     protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): array
     {
+        if ($data instanceof Entity) {
+            $properties = $data->toDatabase($onlyChanged, $recursive);
+        }
         // @TODO Should define Interface or Class. Entity has toRawArray() now.
-        if (method_exists($data, 'toRawArray')) {
+        elseif (method_exists($data, 'toRawArray')) {
             $properties = $data->toRawArray($onlyChanged, $recursive);
         } else {
             $mirror = new ReflectionClass($data);
@@ -1706,7 +1710,7 @@ abstract class BaseModel
     }
 
     /**
-     * Transform data to array.
+     * Transform data to array that can be save to database.
      *
      * @param array|object|null $data Data
      * @param string            $type Type of data (insert|update)
