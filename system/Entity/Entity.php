@@ -204,7 +204,7 @@ class Entity implements JsonSerializable
     }
 
     /**
-     * Returns the raw values of the current attributes.
+     * Returns the values for database of the current attributes.
      *
      * @param bool $onlyChanged If true, only return values that have changed since object creation
      * @param bool $recursive   If true, inner entities will be cast as array as well.
@@ -213,41 +213,7 @@ class Entity implements JsonSerializable
      */
     public function toRawArray(bool $onlyChanged = false, bool $recursive = false): array
     {
-        $return = [];
-
-        if (! $onlyChanged) {
-            if ($recursive) {
-                return array_map(static function ($value) use ($onlyChanged, $recursive) {
-                    if ($value instanceof self) {
-                        $value = $value->toRawArray($onlyChanged, $recursive);
-                    } elseif (is_callable([$value, 'toRawArray'])) {
-                        $value = $value->toRawArray();
-                    }
-
-                    return $value;
-                }, $this->attributes);
-            }
-
-            return $this->attributes;
-        }
-
-        foreach ($this->attributes as $key => $value) {
-            if (! $this->hasChanged($key)) {
-                continue;
-            }
-
-            if ($recursive) {
-                if ($value instanceof self) {
-                    $value = $value->toRawArray($onlyChanged, $recursive);
-                } elseif (is_callable([$value, 'toRawArray'])) {
-                    $value = $value->toRawArray();
-                }
-            }
-
-            $return[$key] = $value;
-        }
-
-        return $return;
+        return $this->toDatabase($onlyChanged, $recursive);
     }
 
     /**
