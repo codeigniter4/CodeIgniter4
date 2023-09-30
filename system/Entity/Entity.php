@@ -402,14 +402,18 @@ class Entity implements JsonSerializable
      * Converts the given string|timestamp|DateTime|Time instance
      * into the "CodeIgniter\I18n\Time" object.
      *
-     * @param DateTime|float|int|string|Time $value
+     * @param DateTime|float|int|string|Time|null $value
      *
-     * @return Time
+     * @return Time|null
      *
      * @throws Exception
      */
     protected function mutateDate($value)
     {
+        if ($value === null) {
+            return null;
+        }
+
         return DatetimeCast::set($value);
     }
 
