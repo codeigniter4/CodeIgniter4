@@ -40,23 +40,23 @@ class ObjectCast extends BaseCast
         }
 
         // @TODO How to implement?
-        return serialize($value);
+        return serialize((array) $value);
     }
 
     /**
      * {@inheritDoc}
      */
-    public static function fromDatabase($value, array $params = []): array
+    public static function fromDatabase($value, array $params = []): object
     {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
         }
 
         // @TODO How to implement?
-        if ((strpos($value, 'a:') === 0 || strpos($value, 's:') === 0)) {
-            $value = unserialize($value);
+        if ((strpos($value, 'a:') === 0)) {
+            return (object) unserialize($value, ['allowed_classes' => false]);
         }
 
-        return (array) $value;
+        self::invalidTypeValueError($value);
     }
 }

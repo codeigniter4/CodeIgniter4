@@ -11,12 +11,12 @@
 
 namespace CodeIgniter\Entity;
 
-use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Services;
+use stdClass;
 
 /**
  * @internal
@@ -85,8 +85,6 @@ final class EntityLiveTest extends CIUnitTestCase
      */
     public function testCastObject(): void
     {
-        $this->expectException(DatabaseException::class);
-
         $entity = new class () extends Entity {
             protected $casts = [
                 'id'     => 'int',
@@ -103,5 +101,10 @@ final class EntityLiveTest extends CIUnitTestCase
         };
         $entity->fill(['username' => 'johnsmith', 'active' => false, 'memo' => ['foo', 'bar']]);
         $model->save($entity);
+
+        $user = $model->asObject(get_class($entity))->find(1);
+
+        $this->assertInstanceOf(stdClass::class, $user->memo);
+        $this->assertSame(['foo', 'bar'], (array) $user->memo);
     }
 }
