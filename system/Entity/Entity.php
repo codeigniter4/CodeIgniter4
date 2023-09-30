@@ -260,10 +260,8 @@ class Entity implements JsonSerializable
             }
 
             // Cast values
-            if ($this->_cast) {
-                if (isset($this->casts[$key])) {
-                    $value = $this->castAs($value, $key, 'toDatabase');
-                }
+            if ($this->_cast && isset($this->casts[$key])) {
+                $value = $this->castAs($value, $key, 'toDatabase');
             }
 
             if ($recursive) {
