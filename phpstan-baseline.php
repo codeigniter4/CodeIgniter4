@@ -1467,11 +1467,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/OCI8/Connection.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, array\\|string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/OCI8/Connection.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^PHPDoc type string of property CodeIgniter\\\\Database\\\\OCI8\\\\Connection\\:\\:\\$escapeChar is not the same as PHPDoc type array\\|string of overridden property CodeIgniter\\\\Database\\\\BaseConnection\\<resource,resource\\>\\:\\:\\$escapeChar\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/OCI8/Connection.php',
