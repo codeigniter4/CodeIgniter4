@@ -103,7 +103,7 @@ class Result extends BaseResult
             return $row;
         }
         if (is_subclass_of($className, Entity::class)) {
-            return (new $className())->injectRawData((array) $row);
+            return (new $className())->fromDatabase((array) $row);
         }
 
         $instance = new $className();

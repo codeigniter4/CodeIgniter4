@@ -142,7 +142,7 @@ class Result extends BaseResult
         $classObj = new $className();
 
         if (is_subclass_of($className, Entity::class)) {
-            return $classObj->injectRawData($row);
+            return $classObj->fromDatabase($row);
         }
 
         $classSet = Closure::bind(function ($key, $value) {
