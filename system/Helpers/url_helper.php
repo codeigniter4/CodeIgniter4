@@ -93,9 +93,7 @@ if (! function_exists('previous_url')) {
         }
 
         // Otherwise, grab a sanitized version from $_SERVER.
-        $referer ??= Services::request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL);
-
-        $referer ??= site_url('/');
+        $referer ??= request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL) ?? site_url('/');
 
         return $returnObject ? new URI($referer) : $referer;
     }
