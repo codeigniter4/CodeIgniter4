@@ -109,7 +109,7 @@ trait ControllerTestTrait
             $tempUri = Services::uri();
             Services::injectMock('uri', $this->uri);
 
-            $this->withRequest(Services::request($this->appConfig, false));
+            $this->withRequest(Services::incommingrequest($this->appConfig, false));
 
             // Restore the URI service
             Services::injectMock('uri', $tempUri);
