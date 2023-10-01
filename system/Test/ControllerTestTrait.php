@@ -105,7 +105,7 @@ trait ControllerTestTrait
         }
 
         if (empty($this->request)) {
-            // Do some acrobatics so we can use the Request service with our own URI
+            // Do some acrobatics, so we can use the Request service with our own URI
             $tempUri = Services::uri();
             Services::injectMock('uri', $this->uri);
 
