@@ -941,7 +941,7 @@ final class ForgeTest extends CIUnitTestCase
                 ],
             ];
 
-            if (version_compare($this->db->getVersion(), '8.0.17', '>=')) {
+            if (version_compare($this->db->getVersion(), '8.0.17', '>=') && strpos($this->db->getVersion(), 'MariaDB') === false) {
                 // As of MySQL 8.0.17, the display width attribute for integer data types
                 // is deprecated and is not reported back anymore.
                 // @see https://dev.mysql.com/doc/refman/8.0/en/numeric-type-attributes.html
