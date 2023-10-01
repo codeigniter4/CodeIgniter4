@@ -278,7 +278,9 @@ class Validation implements ValidationInterface
         }
 
         foreach ($rules as $i => $rule) {
-            $isCallable = is_callable($rule);
+            $isCallable     = is_callable($rule);
+            $stringCallable = $isCallable && is_string($rule);
+            $arrayCallable  = $isCallable && is_array($rule);
 
             $passed = false;
             $param  = false;
@@ -295,7 +297,7 @@ class Validation implements ValidationInterface
             if ($this->isClosure($rule)) {
                 $passed = $rule($value, $data, $error, $field);
             } elseif ($isCallable) {
-                $passed = $param === false ? $rule($value) : $rule($value, $param, $data);
+                $passed = $stringCallable ? $rule($value) : $rule($value, $data, $error, $field);
             } else {
                 $found = false;
 
@@ -335,7 +337,7 @@ class Validation implements ValidationInterface
 
                 // @phpstan-ignore-next-line $error may be set by rule methods.
                 $this->errors[$field] = $error ?? $this->getErrorMessage(
-                    $this->isClosure($rule) ? $i : $rule,
+                    ($this->isClosure($rule) || $arrayCallable) ? $i : $rule,
                     $field,
                     $label,
                     $param,

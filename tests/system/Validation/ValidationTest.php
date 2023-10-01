@@ -344,6 +344,101 @@ class ValidationTest extends CIUnitTestCase
     }
 
     /**
+     * Validation rule1
+     *
+     * @param mixed $value
+     */
+    public function rule1($value)
+    {
+        return $value === 'abc';
+    }
+
+    public function testCallableRule(): void
+    {
+        $this->validation->setRules(
+            [
+                'foo' => ['required', [$this, 'rule1']],
+            ],
+            [
+                // Errors
+                'foo' => [
+                    // Specify the array key for the callable rule.
+                    1 => 'The value is not "abc"',
+                ],
+            ],
+        );
+
+        $data   = ['foo' => 'xyz'];
+        $result = $this->validation->run($data);
+
+        $this->assertFalse($result);
+        $this->assertSame(
+            ['foo' => 'The value is not "abc"'],
+            $this->validation->getErrors()
+        );
+        $this->assertSame([], $this->validation->getValidated());
+    }
+
+    /**
+     * Validation rule1
+     *
+     * @param mixed $value
+     */
+    public function rule2($value, array $data, ?string &$error, string $field)
+    {
+        if ($value !== 'abc') {
+            $error = 'The ' . $field . ' value is not "abc"';
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public function testCallableRuleWithParamError(): void
+    {
+        $this->validation->setRules([
+            'foo' => [
+                'required',
+                [$this, 'rule2'],
+            ],
+        ]);
+
+        $data   = ['foo' => 'xyz'];
+        $result = $this->validation->run($data);
+
+        $this->assertFalse($result);
+        $this->assertSame(
+            ['foo' => 'The foo value is not "abc"'],
+            $this->validation->getErrors()
+        );
+        $this->assertSame([], $this->validation->getValidated());
+    }
+
+    public function testCallableRuleWithLabel(): void
+    {
+        $this->validation->setRules([
+            'secret' => [
+                'label'  => 'シークレット',
+                'rules'  => ['required', [$this, 'rule1']],
+                'errors' => [
+                    // Specify the array key for the callable rule.
+                    1 => 'The {field} is invalid',
+                ],
+            ],
+        ]);
+
+        $data   = ['secret' => 'xyz'];
+        $result = $this->validation->run($data);
+
+        $this->assertFalse($result);
+        $this->assertSame(
+            ['secret' => 'The シークレット is invalid'],
+            $this->validation->getErrors()
+        );
+    }
+
+    /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5368
      *
      * @dataProvider provideCanValidatetArrayData

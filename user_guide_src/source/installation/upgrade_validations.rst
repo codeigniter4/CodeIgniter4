@@ -14,12 +14,15 @@ Documentations of Library
 What has been changed
 =====================
 - If you want to change validation error display, you have to set CI4 :ref:`validation View templates <validation-customizing-error-display>`.
-- CI4 validation has no Callbacks nor Callable in CI3.
-  Use :ref:`Rule Classes <validation-using-rule-classes>` or
-  :ref:`Closure Rule <validation-using-closure-rule>`
-  instead.
-- In CI3, Callbacks/Callable rules were prioritized, but in CI4, Closure Rules are
+- CI4 validation has no `Callbacks <http://www.codeigniter.com/userguide3/libraries/form_validation.html#callbacks-your-own-validation-methods>`_
+  in CI3.
+  Use :ref:`Callable Rules <validation-using-callable-rule>` (since v4.5.0) or
+  :ref:`Closure Rules <validation-using-closure-rule>` (since v4.3.0) or
+  :ref:`Rule Classes <validation-using-rule-classes>` instead.
+- In CI3, Callbacks/Callable rules were prioritized, but in CI4, Closure/Callable Rules are
   not prioritized, and are checked in the order in which they are listed.
+- Since v4.5.0, :ref:`Callable Rules <validation-using-callable-rule>` has been
+  introduced, but it is a bit different from CI3's `Callable <http://www.codeigniter.com/userguide3/libraries/form_validation.html#callable-use-anything-as-a-rule>`_.
 - CI4 validation format rules do not permit empty string.
 - CI4 validation never changes your data.
 - Since v4.3.0, :php:func:`validation_errors()` has been introduced, but the API is different from CI3's.
