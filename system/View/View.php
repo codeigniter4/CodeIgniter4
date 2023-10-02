@@ -356,7 +356,7 @@ class View implements RendererInterface
      */
     public function setVar(string $name, $value = null, ?string $context = null): RendererInterface
     {
-        if ($context !== null && $context !== '') {
+        if ($context !== null) {
             $value = esc($value, $context);
         }
 
