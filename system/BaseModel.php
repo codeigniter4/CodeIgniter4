@@ -1656,8 +1656,10 @@ abstract class BaseModel
     {
         $properties = $this->objectToRawArray($data, $onlyChanged, $recursive);
 
+        assert(is_array($properties));
+
         // Convert any Time instances to appropriate $dateFormat
-        if ($properties !== null && $properties !== []) {
+        if ($properties !== []) {
             $properties = array_map(function ($value) {
                 if ($value instanceof Time) {
                     return $this->timeToDate($value);
