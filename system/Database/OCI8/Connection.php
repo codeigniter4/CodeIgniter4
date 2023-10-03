@@ -602,7 +602,7 @@ class Connection extends BaseConnection
             }
         }
 
-        if (! $primaryColumnName) {
+        if ($primaryColumnName === '') {
             return 0;
         }
 
