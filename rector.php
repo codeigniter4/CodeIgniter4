@@ -77,6 +77,12 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/tests/system/Config/fixtures',
         __DIR__ . '/tests/system/Filters/fixtures',
         __DIR__ . '/tests/_support',
+
+        // Error: ] Could not process "tests/system/Entity/EntityLiveTest.php" file, due
+        //         to:
+        //         "Call to a member function getValue() on bool". On line: 172
+        __DIR__ . '/tests/system/Entity/EntityLiveTest.php',
+
         JsonThrowOnErrorRector::class,
         YieldDataProviderRector::class,
 
