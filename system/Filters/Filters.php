@@ -15,6 +15,7 @@ use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Config\Feature;
 use Config\Filters as FiltersConfig;
 use Config\Modules;
 use Config\Services;
@@ -245,9 +246,15 @@ class Filters
             return $this;
         }
 
-        $this->processGlobals($uri);
-        $this->processMethods();
-        $this->processFilters($uri);
+        if (config(Feature::class)->oldFilterOrder) {
+            $this->processGlobals($uri);
+            $this->processMethods();
+            $this->processFilters($uri);
+        } else {
+            $this->processFilters($uri);
+            $this->processMethods();
+            $this->processGlobals($uri);
+        }
 
         // Set the toolbar filter to the last position to be executed
         if (in_array('toolbar', $this->filters['after'], true)
@@ -436,6 +443,8 @@ class Filters
         // Add any global filters, unless they are excluded for this URI
         $sets = ['before', 'after'];
 
+        $filters = [];
+
         foreach ($sets as $set) {
             if (isset($this->config->globals[$set])) {
                 // look at each alias in the group
@@ -455,10 +464,22 @@ class Filters
                     }
 
                     if ($keep) {
-                        $this->filters[$set][] = $alias;
+                        $filters[$set][] = $alias;
                     }
                 }
             }
+        }
+
+        if (isset($filters['before'])) {
+            if (config(Feature::class)->oldFilterOrder) {
+                $this->filters['before'] = array_merge($this->filters['before'], $filters['before']);
+            } else {
+                $this->filters['before'] = array_merge($filters['before'], $this->filters['before']);
+            }
+        }
+
+        if (isset($filters['after'])) {
+            $this->filters['after'] = array_merge($this->filters['after'], $filters['after']);
         }
     }
 
@@ -477,7 +498,11 @@ class Filters
         $method = strtolower($this->request->getMethod()) ?? 'cli';
 
         if (array_key_exists($method, $this->config->methods)) {
-            $this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);
+            if (config(Feature::class)->oldFilterOrder) {
+                $this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);
+            } else {
+                $this->filters['before'] = array_merge($this->config->methods[$method], $this->filters['before']);
+            }
         }
     }
 
@@ -497,6 +522,8 @@ class Filters
         $uri = strtolower(trim($uri, '/ '));
 
         // Add any filters that apply to this URI
+        $filters = [];
+
         foreach ($this->config->filters as $alias => $settings) {
             // Look for inclusion rules
             if (isset($settings['before'])) {
@@ -506,7 +533,7 @@ class Filters
                     // Get arguments and clean name
                     [$name, $arguments] = $this->getCleanName($alias);
 
-                    $this->filters['before'][] = $name;
+                    $filters['before'][] = $name;
 
                     $this->registerArguments($name, $arguments);
                 }
@@ -519,13 +546,29 @@ class Filters
                     // Get arguments and clean name
                     [$name, $arguments] = $this->getCleanName($alias);
 
-                    $this->filters['after'][] = $name;
+                    $filters['after'][] = $name;
 
                     // The arguments may have already been registered in the before filter.
                     // So disable check.
                     $this->registerArguments($name, $arguments, false);
                 }
             }
+        }
+
+        if (isset($filters['before'])) {
+            if (config(Feature::class)->oldFilterOrder) {
+                $this->filters['before'] = array_merge($this->filters['before'], $filters['before']);
+            } else {
+                $this->filters['before'] = array_merge($filters['before'], $this->filters['before']);
+            }
+        }
+
+        if (isset($filters['after'])) {
+            if (! config(Feature::class)->oldFilterOrder) {
+                $filters['after'] = array_reverse($filters['after']);
+            }
+
+            $this->filters['after'] = array_merge($this->filters['after'], $filters['after']);
         }
     }
 
@@ -563,6 +606,8 @@ class Filters
      */
     protected function processAliasesToClass(string $position)
     {
+        $filtersClass = [];
+
         foreach ($this->filters[$position] as $alias => $rules) {
             if (is_numeric($alias) && is_string($rules)) {
                 $alias = $rules;
@@ -573,14 +618,20 @@ class Filters
             }
 
             if (is_array($this->config->aliases[$alias])) {
-                $this->filtersClass[$position] = array_merge($this->filtersClass[$position], $this->config->aliases[$alias]);
+                $filtersClass = array_merge($filtersClass, $this->config->aliases[$alias]);
             } else {
-                $this->filtersClass[$position][] = $this->config->aliases[$alias];
+                $filtersClass[] = $this->config->aliases[$alias];
             }
         }
 
         // when using enableFilter() we already write the class name in $filtersClass as well as the
         // alias in $filters. This leads to duplicates when using route filters.
+        if ($position === 'before') {
+            $this->filtersClass[$position] = array_merge($filtersClass, $this->filtersClass[$position]);
+        } else {
+            $this->filtersClass[$position] = array_merge($this->filtersClass[$position], $filtersClass);
+        }
+
         // Since some filters like rate limiters rely on being executed once a request we filter em here.
         $this->filtersClass[$position] = array_values(array_unique($this->filtersClass[$position]));
     }

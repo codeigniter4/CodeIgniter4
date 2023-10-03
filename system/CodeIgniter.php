@@ -31,6 +31,7 @@ use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Router\Router;
 use Config\App;
 use Config\Cache;
+use Config\Feature;
 use Config\Kint as KintConfig;
 use Config\Services;
 use Exception;
@@ -446,7 +447,7 @@ class CodeIgniter
             return $response;
         }
 
-        $routeFilter = $this->tryToRouteIt($routes);
+        $routeFilters = $this->tryToRouteIt($routes);
 
         $uri = $this->determinePath();
 
@@ -456,9 +457,14 @@ class CodeIgniter
 
             // If any filters were specified within the routes file,
             // we need to ensure it's active for the current request
-            if ($routeFilter !== null) {
-                $filters->enableFilters($routeFilter, 'before');
-                $filters->enableFilters($routeFilter, 'after');
+            if ($routeFilters !== null) {
+                $filters->enableFilters($routeFilters, 'before');
+
+                if (! config(Feature::class)->oldFilterOrder) {
+                    $routeFilters = array_reverse($routeFilters);
+                }
+
+                $filters->enableFilters($routeFilters, 'after');
             }
 
             // Run "before" filters

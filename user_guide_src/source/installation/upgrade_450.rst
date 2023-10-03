@@ -25,6 +25,53 @@ Some method signature changes have been made. Classes that extend them should
 update their APIs to reflect the changes. See :ref:`ChangeLog <v450-method-signature-changes>`
 for details.
 
+.. _upgrade-450-filter-execution-order:
+
+Filter Execution Order
+======================
+
+The order in which Controller Filters are executed has changed.
+If you wish to maintain the same execution order as in previous versions, set
+``true`` to ``Config\Feature::$oldFilterOrder``. See also :ref:`filter-execution-order`.
+
+1. The order of execution of filter groups has been changed.
+
+    Before Filters::
+
+        Previous: route → globals → methods → filters
+             Now: globals → methods → filters → route
+
+    After Filters::
+
+        Previous: route → globals → filters
+             Now: route → filters → globals
+
+2. The After Filters in *Route* filters and *Filters* filters execution order is now
+reversed.
+
+    When you have the following configuration:
+
+    .. code-block:: php
+
+        // In app/Config/Routes.php
+        $routes->get('/', 'Home::index', ['filter' => ['route1', 'route2']]);
+
+        // In app/Config/Filters.php
+        public array $filters = [
+            'filter1' => ['before' => '*', 'after' => '*'],
+            'filter2' => ['before' => '*', 'after' => '*'],
+        ];
+
+    Before Filters::
+
+        Previous: route1 → route2 → filter1 → filter2
+             Now: filter1 → filter2 → route1 → route2
+
+    After Filters::
+
+        Previous: route1 → route2 → filter1 → filter2
+             Now: route2 → route1 → filter2 → filter1
+
 Removed Deprecated Items
 ========================
 

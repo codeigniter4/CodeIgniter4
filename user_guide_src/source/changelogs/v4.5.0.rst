@@ -21,6 +21,15 @@ BREAKING
 Behavior Changes
 ================
 
+Filter Execution Order
+----------------------
+
+The order in which Controller Filters are executed has changed. See
+:ref:`Upgrading Guide <upgrade-450-filter-execution-order>` for details.
+
+Others
+------
+
 - **Logger:** The :php:func:`log_message()` function and the logger methods in
   ``CodeIgniter\Log\Logger`` now do not return ``bool`` values. The return types
   have been fixed to ``void`` to follow the PSR-3 interface.
