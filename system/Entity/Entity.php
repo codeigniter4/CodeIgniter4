@@ -454,6 +454,7 @@ class Entity implements JsonSerializable
         $type = $type === 'json-array' ? 'json[array]' : $type;
 
         if (! in_array($method, ['get', 'set', 'toDatabase', 'fromDatabase'], true)) {
+            /** @psalm-suppress NoValue */
             throw CastException::forInvalidMethod($method);
         }
 
