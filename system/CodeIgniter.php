@@ -1064,13 +1064,13 @@ class CodeIgniter
         }
 
         if (isset($_SESSION)) {
-            $_SESSION['_ci_previous_url'] = URI::createURIString(
+            session()->set('_ci_previous_url', URI::createURIString(
                 $uri->getScheme(),
                 $uri->getAuthority(),
                 $uri->getPath(),
                 $uri->getQuery(),
                 $uri->getFragment()
-            );
+            ));
         }
     }
 
