@@ -51,7 +51,7 @@ final class FilterCollector
             ];
         }
 
-        $request = Services::incommingrequest(null, false);
+        $request = Services::incomingrequest(null, false);
         $request->setMethod($method);
 
         $router  = $this->createRouter($request);
