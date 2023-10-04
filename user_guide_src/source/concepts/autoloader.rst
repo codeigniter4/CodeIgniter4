@@ -90,9 +90,14 @@ The key of each row is the name of the class that you want to locate. The value 
 Composer Support
 ****************
 
-Composer support is automatically initialized by default. By default, it looks for Composer's autoload file at
+Composer support is automatically initialized by default.
+
+By default, it looks for Composer's autoload file at
 ``ROOTPATH . 'vendor/autoload.php'``. If you need to change the location of that file for any reason, you can modify
 the value defined in **app/Config/Constants.php**.
 
-.. note:: If the same namespace is defined in both CodeIgniter and Composer, CodeIgniter's autoloader will be
+If the same namespace is defined in both CodeIgniter and Composer, Composer's
+autoloader will be the first one to get a chance to locate the file.
+
+.. note:: Prior to v4.5.0, if the same namespace was defined in both CodeIgniter and Composer, CodeIgniter's autoloader was
     the first one to get a chance to locate the file.
