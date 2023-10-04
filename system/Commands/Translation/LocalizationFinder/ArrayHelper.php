@@ -11,6 +11,9 @@
 
 namespace CodeIgniter\Commands\Translation\LocalizationFinder;
 
+/**
+ * @see \CodeIgniter\Commands\Translation\LocalizationFinder\ArrayHelperTest
+ */
 class ArrayHelper
 {
     /**
