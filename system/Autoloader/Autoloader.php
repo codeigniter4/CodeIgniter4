@@ -430,13 +430,6 @@ class Autoloader
         $this->addNamespace($newPaths);
     }
 
-    private function loadComposerClassmap(ClassLoader $composer): void
-    {
-        $classes = $composer->getClassMap();
-
-        $this->classmap = array_merge($this->classmap, $classes);
-    }
-
     /**
      * Locates autoload information from Composer, if available.
      *
