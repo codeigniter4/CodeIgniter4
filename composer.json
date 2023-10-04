@@ -58,7 +58,6 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
             "CodeIgniter\\": "system/",
             "Config\\": "app/Config/"
         },
