@@ -64,8 +64,23 @@ The value is the location to the directory the classes can be found in.
 
         php spark namespaces
 
+.. _autoloader-application-namespace:
+
+Application Namespace
+=====================
+
 By default, the application directory is namespace to the ``App`` namespace. You must namespace the controllers,
 libraries, or models in the application directory, and they will be found under the ``App`` namespace.
+
+Config Namespace
+----------------
+
+Config files are namespaced in the ``Config`` namespace, not in ``App\Config`` as you might
+expect. This allows the core system files to always be able to locate them, even when the application
+namespace has changed.
+
+Changing App Namespace
+----------------------
 
 You may change this namespace by editing the **app/Config/Constants.php** file and setting the
 new namespace value under the ``APP_NAMESPACE`` setting:
@@ -73,11 +88,27 @@ new namespace value under the ``APP_NAMESPACE`` setting:
 .. literalinclude:: autoloader/002.php
    :lines: 2-
 
-You will need to modify any existing files that are referencing the current namespace.
+And if you use Composer autoloader, you also need to change the ``App`` namespace
+in your **composer.json**, and run ``composer dump-autoload``.
 
-.. important:: Config files are namespaced in the ``Config`` namespace, not in ``App\Config`` as you might
-    expect. This allows the core system files to always be able to locate them, even when the application
-    namespace has changed.
+.. code-block:: text
+
+    {
+        ...
+        "autoload": {
+            "psr-4": {
+                "App\\": "app/"    <-- Change
+            },
+            ...
+        },
+        ...
+    }
+
+.. note:: Since v4.5.0 appstarter, the ``App\\`` namespace has been added to
+    **composer.json**'s ``autoload.psr-4``. If your **composer.json** does not
+    have it, adding it may improve your app's autoloading performance.
+
+You will need to modify any existing files that are referencing the current namespace.
 
 ********
 Classmap
@@ -109,28 +140,3 @@ autoloader will be the first one to get a chance to locate the file.
 
 .. note:: Prior to v4.5.0, if the same namespace was defined in both CodeIgniter and Composer, CodeIgniter's autoloader was
     the first one to get a chance to locate the file.
-
-.. _autoloader-composer-support-improve-performance:
-
-Improve Performance
-===================
-
-.. versionadded:: 4.5.0
-
-When you use Composer, you may improve the performance of autoloading with
-Composer's classmap dump.
-
-Add your ``App`` namespace in your **composer.json**, and run ``composer dump-autoload``.
-
-.. code-block:: text
-
-    {
-        ...
-        "autoload": {
-            "psr-4": {
-                "App\\": "app/",
-            },
-            ...
-        },
-        ...
-    }

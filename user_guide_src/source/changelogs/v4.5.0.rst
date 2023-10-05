@@ -116,9 +116,9 @@ Helpers and Functions
 Others
 ======
 
-- **Autoloader:** Autoloading performance when using Composer has been improved;
-  changing the ``autoload.psr4`` setting in **composer.json** may also improve
-  the performance of your app. See :ref:`autoloader-composer-support-improve-performance`.
+- **Autoloader:** Autoloading performance when using Composer has been improved.
+  Adding the ``App`` namespace in the ``autoload.psr4`` setting in **composer.json**
+  may also improve the performance of your app. See :ref:`autoloader-application-namespace`.
 
 Message Changes
 ***************
