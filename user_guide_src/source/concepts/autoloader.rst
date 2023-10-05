@@ -117,7 +117,7 @@ Improve Performance
 
 .. versionadded:: 4.5.0
 
-When you use Composer, you could improve the performance of autoloading with
+When you use Composer, you may improve the performance of autoloading with
 Composer's classmap dump.
 
 Add your ``App`` namespace in your **composer.json**, and run ``composer dump-autoload``.
