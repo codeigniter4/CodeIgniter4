@@ -101,8 +101,36 @@ By default, it looks for Composer's autoload file at
 ``ROOTPATH . 'vendor/autoload.php'``. If you need to change the location of that file for any reason, you can modify
 the value defined in **app/Config/Constants.php**.
 
+Priority of Autoloaders
+=======================
+
 If the same namespace is defined in both CodeIgniter and Composer, Composer's
 autoloader will be the first one to get a chance to locate the file.
 
 .. note:: Prior to v4.5.0, if the same namespace was defined in both CodeIgniter and Composer, CodeIgniter's autoloader was
     the first one to get a chance to locate the file.
+
+.. _autoloader-composer-support-improve-performance:
+
+Improve Performance
+===================
+
+.. versionadded:: 4.5.0
+
+When you use Composer, you could improve the performance of autoloading with
+Composer's classmap dump.
+
+Add your ``App`` namespace in your **composer.json**, and run ``composer dump-autoload``.
+
+.. code-block:: text
+
+    {
+        ...
+        "autoload": {
+            "psr-4": {
+                "App\\": "app/",
+            },
+            ...
+        },
+        ...
+    }
