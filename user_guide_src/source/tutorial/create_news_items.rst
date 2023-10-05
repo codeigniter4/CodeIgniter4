@@ -172,7 +172,7 @@ Create a News Item
 ******************
 
 Now point your browser to your local development environment where you
-installed CodeIgniter and add **/news/create** to the URL.
+installed CodeIgniter and add **/news/new** to the URL.
 Add some news and check out the different pages you made.
 
 .. image:: ../images/tutorial3.png
