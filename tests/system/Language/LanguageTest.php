@@ -14,6 +14,7 @@ namespace CodeIgniter\Language;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLanguage;
 use Config\Services;
+use InvalidArgumentException;
 use MessageFormatter;
 use Tests\Support\Language\SecondMockLanguage;
 
@@ -124,6 +125,30 @@ final class LanguageTest extends CIUnitTestCase
         ]);
 
         $this->assertSame(['45 related books.'], $this->lang->getLine('books.bookList', [91 / 2]));
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/shield/issues/851
+     */
+    public function testGetLineInvalidFormatMessage(): void
+    {
+        // No intl extension? then we can't test this - go away....
+        if (! class_exists(MessageFormatter::class)) {
+            $this->markTestSkipped('No intl support.');
+        }
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Invalid message format: "تم الكشف عن كلمة المرور {0} بسبب اختراق البيانات وشوهدت {1 ، عدد} مرة في {2} في كلمات المرور المخترقة.", args: "password,hits,wording"'
+        );
+
+        $this->lang->setLocale('ar');
+
+        $this->lang->setData('Auth', [
+            'errorPasswordPwned' => 'تم الكشف عن كلمة المرور {0} بسبب اختراق البيانات وشوهدت {1 ، عدد} مرة في {2} في كلمات المرور المخترقة.',
+        ]);
+
+        $this->lang->getLine('Auth.errorPasswordPwned', ['password', 'hits', 'wording']);
     }
 
     /**
