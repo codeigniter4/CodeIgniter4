@@ -773,11 +773,15 @@ class CodeIgniter
     }
 
     /**
-     * Replaces the elapsed_time tag.
+     * Replaces the elapsed_time and memory_usage tag.
      */
     public function displayPerformanceMetrics(string $output): string
     {
-        return str_replace('{elapsed_time}', (string) $this->totalTime, $output);
+        return str_replace(
+            ['{elapsed_time}', '{memory_usage}'],
+            [(string) $this->totalTime, number_format(memory_get_peak_usage() / 1024 / 1024, 3)],
+            $output
+        );
     }
 
     /**
