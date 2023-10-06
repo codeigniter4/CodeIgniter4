@@ -299,7 +299,7 @@ class Factories
         foreach ($files as $file) {
             $class = $locator->findQualifiedNameFromPath($file);
 
-            if ($class && self::verifyInstanceOf($options, $class)) {
+            if ($class !== false && self::verifyInstanceOf($options, $class)) {
                 return $class;
             }
         }
