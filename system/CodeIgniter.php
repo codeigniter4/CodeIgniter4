@@ -979,8 +979,7 @@ class CodeIgniter
         // Display 404 Errors
         $this->response->setStatusCode($e->getCode());
 
-        echo $this->outputBufferingEnd();
-        flush();
+        $this->outputBufferingEnd();
 
         // Throws new PageNotFoundException and remove exception message on production.
         throw PageNotFoundException::forPageNotFound(
