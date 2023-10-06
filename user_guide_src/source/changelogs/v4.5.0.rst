@@ -78,6 +78,11 @@ Filters
     - ``Router::$filterInfo``
     - ``Router::getFilter()``
 
+Others
+------
+
+- **Config:** The deprecated ``CodeIgniter\Config\Config`` class has been removed.
+
 Enhancements
 ************
 
