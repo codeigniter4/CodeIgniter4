@@ -72,6 +72,14 @@ reversed.
         Previous: route1 → route2 → filter1 → filter2
              Now: route2 → route1 → filter2 → filter1
 
+FileLocator::findQualifiedNameFromPath()
+========================================
+
+In previous versions, ``FileLocator::findQualifiedNameFromPath()`` returns Fully
+Qualified Classnames with a leading ``\``. Now the leading ``\`` has been removed.
+
+If you have code that expects a leading ``\``, fix it.
+
 Removed Deprecated Items
 ========================
 
