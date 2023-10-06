@@ -971,8 +971,8 @@ Rule                    Parameter  Description                                  
 ======================= ========== ============================================= ===================================================
 uploaded                Yes         Fails if the name of the parameter does not  ``uploaded[field_name]``
                                     match the name of any uploaded files.
-                                    If you want the file upload to be optional (not required),
-                                    do not define this rule.
+                                    If you want the file upload to be optional
+                                    (not required), do not define this rule.
 
 max_size                Yes         Fails if the uploaded file named in the      ``max_size[field_name,2048]``
                                     parameter is larger than the second
