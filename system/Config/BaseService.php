@@ -345,6 +345,10 @@ class BaseService
                 foreach ($files as $file) {
                     $classname = $locator->findQualifiedNameFromPath($file);
 
+                    if ($classname === false) {
+                        continue;
+                    }
+
                     if (! in_array($classname, [Services::class], true)) {
                         static::$services[] = new $classname();
                     }
@@ -381,6 +385,10 @@ class BaseService
                 // Get instances of all service classes and cache them locally.
                 foreach ($files as $file) {
                     $classname = $locator->findQualifiedNameFromPath($file);
+
+                    if ($classname === false) {
+                        continue;
+                    }
 
                     if ($classname !== Services::class) {
                         self::$serviceNames[] = $classname;

@@ -211,7 +211,12 @@ class BaseConfig
             $registrarsFiles = $locator->search('Config/Registrar.php');
 
             foreach ($registrarsFiles as $file) {
-                $className            = $locator->findQualifiedNameFromPath($file);
+                $className = $locator->findQualifiedNameFromPath($file);
+
+                if ($className === false) {
+                    continue;
+                }
+
                 static::$registrars[] = new $className();
             }
 
