@@ -278,7 +278,7 @@ final class FileLocatorTest extends CIUnitTestCase
     public function testFindQNameFromPathSimple(): void
     {
         $ClassName = $this->locator->findQualifiedNameFromPath(SYSTEMPATH . 'HTTP/Header.php');
-        $expected  = '\\' . Header::class;
+        $expected  = Header::class;
 
         $this->assertSame($expected, $ClassName);
     }

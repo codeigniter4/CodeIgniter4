@@ -273,7 +273,7 @@ class FileLocator
             }
 
             if (mb_strpos($path, $namespace['path']) === 0) {
-                $className = '\\' . $namespace['prefix'] . '\\' .
+                $className = $namespace['prefix'] . '\\' .
                         ltrim(str_replace(
                             '/',
                             '\\',
