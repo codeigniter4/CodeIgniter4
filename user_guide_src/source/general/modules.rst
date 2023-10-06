@@ -163,6 +163,13 @@ In that case, see :ref:`routing-priority`.
 Filters
 =======
 
+.. deprecated:: 4.4.2
+
+.. note:: This feature is deprecated. Use :ref:`registrars` instead like the
+    following:
+
+    .. literalinclude:: modules/015.php
+
 By default, :doc:`filters <../incoming/filters>` are automatically scanned for within modules.
 It can be turned off in the **Modules** config file, described above.
 
