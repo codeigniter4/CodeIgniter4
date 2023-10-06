@@ -4,7 +4,7 @@ namespace App\Libraries;
 
 use CodeIgniter\Router\RouteCollection;
 
-class RouteCollection extends RouteCollection
+class MyRouteCollection extends RouteCollection
 {
     // ...
 }
