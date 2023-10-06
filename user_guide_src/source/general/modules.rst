@@ -160,6 +160,8 @@ the **Modules** config file, described above.
 When working with modules, it can be a problem if the routes in the application contain wildcards.
 In that case, see :ref:`routing-priority`.
 
+.. _modules-filters:
+
 Filters
 =======
 

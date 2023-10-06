@@ -29,6 +29,10 @@ Changes
 Deprecations
 ************
 
+- **Filters:** The Auto-Discovery for Filters and ``Filters::discoverFilters()``
+  is deprecated. Use :ref:`registrars` instead. See :ref:`modules-filters` for
+  details.
+
 Bugs Fixed
 **********
 
