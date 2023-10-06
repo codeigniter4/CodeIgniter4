@@ -139,7 +139,7 @@ class Filters
         $files = $locator->search('Config/Filters.php');
 
         foreach ($files as $file) {
-            $className = $locator->getClassname($file);
+            $className = $locator->findQualifiedNameFromPath($file);
 
             // Don't include our main Filter config again...
             if ($className === FiltersConfig::class) {

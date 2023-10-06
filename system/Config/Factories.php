@@ -297,7 +297,7 @@ class Factories
 
         // Check all files for a valid class
         foreach ($files as $file) {
-            $class = $locator->getClassname($file);
+            $class = $locator->findQualifiedNameFromPath($file);
 
             if ($class && self::verifyInstanceOf($options, $class)) {
                 return $class;
