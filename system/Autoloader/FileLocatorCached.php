@@ -90,20 +90,6 @@ final class FileLocatorCached extends FileLocator
         $this->cacheHandler->delete($this->cacheKey);
     }
 
-    protected function getNamespaces()
-    {
-        if (isset($this->cache['getNamespaces'])) {
-            return $this->cache['getNamespaces'];
-        }
-
-        $namespaces = $this->locator->getNamespaces();
-
-        $this->cache['getNamespaces'] = $namespaces;
-        $this->cacheUpdated           = true;
-
-        return $namespaces;
-    }
-
     public function findQualifiedNameFromPath(string $path): false|string
     {
         if (isset($this->cache['findQualifiedNameFromPath'][$path])) {
