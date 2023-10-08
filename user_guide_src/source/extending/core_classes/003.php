@@ -2,9 +2,9 @@
 
 namespace App\Libraries;
 
-use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Router\RouteCollection as BaseRouteCollection;
 
-class RouteCollection extends RouteCollection
+class RouteCollection extends BaseRouteCollection
 {
     // ...
 }
