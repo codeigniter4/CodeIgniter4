@@ -25,6 +25,18 @@ final class FileLocatorCachedTest extends FileLocatorTest
     private FileVarExportHandler $handler;
     protected FileLocator $locator;
 
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
+
+        // Delete cache file.
+        $autoloader  = new Autoloader();
+        $handler     = new FileVarExportHandler();
+        $fileLocator = new FileLocator($autoloader);
+        $locator     = new FileLocatorCached($fileLocator, $handler);
+        $locator->deleteCache();
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -51,5 +63,21 @@ final class FileLocatorCachedTest extends FileLocatorTest
         $this->handler = new FileVarExportHandler();
         $fileLocator   = new FileLocator($autoloader);
         $this->locator = new FileLocatorCached($fileLocator, $this->handler);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->locator->__destruct();
+
+        parent::tearDown();
+    }
+
+    public function testDeleteCache()
+    {
+        $this->assertNotSame([], $this->handler->get('FileLocatorCache'));
+
+        $this->locator->deleteCache();
+
+        $this->assertFalse($this->handler->get('FileLocatorCache'));
     }
 }

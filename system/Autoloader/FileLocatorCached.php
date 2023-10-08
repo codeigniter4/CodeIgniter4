@@ -18,6 +18,8 @@ use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
  * FileLocator with Cache
  *
  * There is no FileLocator interface, so this extends FileLocator.
+ *
+ * @see \CodeIgniter\Autoloader\FileLocatorCachedTest
  */
 final class FileLocatorCached extends FileLocator
 {
@@ -78,6 +80,14 @@ final class FileLocatorCached extends FileLocator
         if ($this->cacheUpdated) {
             $this->cacheHandler->save($this->cacheKey, $this->cache, 3600 * 24);
         }
+    }
+
+    /**
+     * Delete cache data
+     */
+    public function deleteCache(): void
+    {
+        $this->cacheHandler->delete($this->cacheKey);
     }
 
     protected function getNamespaces()
