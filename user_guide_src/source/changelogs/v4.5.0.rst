@@ -119,6 +119,8 @@ Others
 - **Autoloader:** Autoloading performance when using Composer has been improved.
   Adding the ``App`` namespace in the ``autoload.psr4`` setting in **composer.json**
   may also improve the performance of your app. See :ref:`autoloader-application-namespace`.
+- **CodeIgniter:** Added a pseudo-variable ``{memory_usage}`` to show your memory
+  usage in your view files, which was supported by CodeIgniter 3.
 
 Message Changes
 ***************
