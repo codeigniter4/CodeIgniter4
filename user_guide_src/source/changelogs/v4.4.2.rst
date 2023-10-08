@@ -32,6 +32,9 @@ Deprecations
 Bugs Fixed
 **********
 
+- **CodeIgniter:** Fixed a bug that returned "200 OK" response status code when
+  Page Not Found.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.
