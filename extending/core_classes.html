@@ -397,9 +397,9 @@ identical to <a class="reference internal" href="#replacing-core-classes">Replac
 
 <span class="k">namespace</span> <span class="nx">App\Libraries</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">CodeIgniter\Router\RouteCollection</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Router\RouteCollection</span> <span class="k">as</span> <span class="nx">BaseRouteCollection</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">RouteCollection</span> <span class="k">extends</span> <span class="nx">RouteCollection</span>
+<span class="k">class</span> <span class="nc">RouteCollection</span> <span class="k">extends</span> <span class="nx">BaseRouteCollection</span>
 <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
