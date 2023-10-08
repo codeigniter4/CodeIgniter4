@@ -143,6 +143,7 @@ autoloader will be the first one to get a chance to locate the file.
 
 .. _file-locator-caching:
 
+*******************
 FileLocator Caching
 *******************
 
