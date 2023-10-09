@@ -159,6 +159,8 @@ final class AutoRouter implements AutoRouterInterface
         $file = APPPATH . 'Controllers/' . $this->directory . $controllerName . '.php';
         if (is_file($file)) {
             include_once $file;
+        } else {
+            throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
         }
 
         // Ensure the controller stores the fully-qualified class name
@@ -172,11 +174,6 @@ final class AutoRouter implements AutoRouterInterface
                 ),
                 '\\'
             );
-        }
-
-        // Check if the controller exists.
-        if (! class_exists($this->controller, true) || $this->method[0] === '_') {
-            throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
         }
 
         return [$this->directory, $this->controllerName(), $this->methodName(), $params];
