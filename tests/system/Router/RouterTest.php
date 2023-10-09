@@ -212,10 +212,14 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->setAutoRoute(true);
         $router = new Router($this->collection, $this->request);
 
-        $router->autoRoute('myController/someMethod');
+        copy(TESTPATH . 'system/Router/Controllers/MyController.php', APPPATH . 'Controllers/Mycontroller.php');
 
-        $this->assertSame('MyController', $router->controllerName());
-        $this->assertSame('someMethod', $router->methodName());
+        $router->autoRoute('Mycontroller/getSomemethod');
+
+        unlink(APPPATH . 'Controllers/Mycontroller.php');
+
+        $this->assertSame('Mycontroller', $router->controllerName());
+        $this->assertSame('getSomemethod', $router->methodName());
     }
 
     public function testAutoRouteFindsControllerWithFile(): void
@@ -223,9 +227,13 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->setAutoRoute(true);
         $router = new Router($this->collection, $this->request);
 
-        $router->autoRoute('myController');
+        copy(TESTPATH . 'system/Router/Controllers/MyController.php', APPPATH . 'Controllers/Mycontroller.php');
 
-        $this->assertSame('MyController', $router->controllerName());
+        $router->autoRoute('mycontroller');
+
+        unlink(APPPATH . 'Controllers/Mycontroller.php');
+
+        $this->assertSame('Mycontroller', $router->controllerName());
         $this->assertSame('index', $router->methodName());
     }
 
@@ -236,12 +244,16 @@ final class RouterTest extends CIUnitTestCase
 
         mkdir(APPPATH . 'Controllers/Subfolder');
 
-        $router->autoRoute('subfolder/myController/someMethod');
+        copy(TESTPATH . 'system/Router/Controllers/Subfolder/MyController.php', APPPATH . 'Controllers/Subfolder/Mycontroller.php');
+
+        $router->autoRoute('subfolder/Mycontroller/getSomemethod');
+
+        unlink(APPPATH . 'Controllers/Subfolder/Mycontroller.php');
 
         rmdir(APPPATH . 'Controllers/Subfolder');
 
-        $this->assertSame('MyController', $router->controllerName());
-        $this->assertSame('someMethod', $router->methodName());
+        $this->assertSame('Mycontroller', $router->controllerName());
+        $this->assertSame('getSomemethod', $router->methodName());
     }
 
     public function testAutoRouteFindsDashedSubfolder(): void
