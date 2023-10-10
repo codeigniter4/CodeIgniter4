@@ -44,6 +44,7 @@ class CLI
      * @var bool
      *
      * @deprecated 4.4.2 Should be protected.
+     * @TODO Fix to camelCase in the next major version.
      */
     public static $readline_support = false;
 
@@ -53,6 +54,7 @@ class CLI
      * @var string
      *
      * @deprecated 4.4.2 Should be protected.
+     * @TODO Fix to camelCase in the next major version.
      */
     public static $wait_msg = 'Press any key to continue...';
 
@@ -67,6 +69,8 @@ class CLI
      * Foreground color list
      *
      * @var array<string, string>
+     *
+     * @TODO Fix to camelCase in the next major version.
      */
     protected static $foreground_colors = [
         'black'        => '0;30',
@@ -92,6 +96,8 @@ class CLI
      * Background color list
      *
      * @var array<string, string>
+     *
+     * @TODO Fix to camelCase in the next major version.
      */
     protected static $background_colors = [
         'black'      => '40',
