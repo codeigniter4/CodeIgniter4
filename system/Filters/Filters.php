@@ -125,6 +125,8 @@ class Filters
      *
      * Sample :
      * $filters->aliases['custom-auth'] = \Acme\Blob\Filters\BlobAuth::class;
+     *
+     * @deprecated 4.4.2 Use Registrar instead.
      */
     private function discoverFilters(): void
     {
