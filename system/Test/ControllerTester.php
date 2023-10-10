@@ -108,7 +108,7 @@ trait ControllerTester
             $tempUri = Services::uri();
             Services::injectMock('uri', $this->uri);
 
-            $this->withRequest(Services::request($this->appConfig, false)->setBody($this->body));
+            $this->withRequest(Services::incomingrequest($this->appConfig, false)->setBody($this->body));
 
             // Restore the URI service
             Services::injectMock('uri', $tempUri);

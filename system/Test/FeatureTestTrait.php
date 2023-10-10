@@ -289,7 +289,7 @@ trait FeatureTestTrait
 
         Services::injectMock('uri', $uri);
 
-        $request = Services::request($config, false);
+        $request = Services::incomingrequest($config, false);
 
         $request->setMethod($method);
         $request->setProtocolVersion('1.1');

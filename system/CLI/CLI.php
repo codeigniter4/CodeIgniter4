@@ -179,7 +179,7 @@ class CLI
      * Named options must be in the following formats:
      * php index.php user -v --v -name=John --name=John
      *
-     * @param string $prefix You may specify a string with which to prompt the user.
+     * @param string|null $prefix You may specify a string with which to prompt the user.
      */
     public static function input(?string $prefix = null): string
     {
@@ -210,9 +210,9 @@ class CLI
      * // Do not provide options but requires a valid email
      * $email = CLI::prompt('What is your email?', null, 'required|valid_email');
      *
-     * @param string       $field      Output "field" question
-     * @param array|string $options    String to a default value, array to a list of options (the first option will be the default value)
-     * @param array|string $validation Validation rules
+     * @param string            $field      Output "field" question
+     * @param array|string      $options    String to a default value, array to a list of options (the first option will be the default value)
+     * @param array|string|null $validation Validation rules
      *
      * @return string The user input
      *
@@ -258,7 +258,7 @@ class CLI
         $input = trim(static::input()) ?: $default;
 
         if ($validation) {
-            while (! static::validate(trim($field), $input, $validation)) {
+            while (! static::validate('"' . trim($field) . '"', $input, $validation)) {
                 $input = static::prompt($field, $options, $validation);
             }
         }
@@ -448,7 +448,7 @@ class CLI
     }
 
     /**
-     * Outputs a string to the cli on it's own line.
+     * Outputs a string to the cli on its own line.
      *
      * @return void
      */
@@ -574,10 +574,10 @@ class CLI
      * Returns the given text with the correct color codes for a foreground and
      * optionally a background color.
      *
-     * @param string $text       The text to color
-     * @param string $foreground The foreground color
-     * @param string $background The background color
-     * @param string $format     Other formatting to apply. Currently only 'underline' is understood
+     * @param string      $text       The text to color
+     * @param string      $foreground The foreground color
+     * @param string|null $background The background color
+     * @param string|null $format     Other formatting to apply. Currently only 'underline' is understood
      *
      * @return string The color coded string
      */
@@ -834,7 +834,7 @@ class CLI
      * width.
      *
      * If an int is passed into $pad_left, then all strings after the first
-     * will padded with that many spaces to the left. Useful when printing
+     * will pad with that many spaces to the left. Useful when printing
      * short descriptions that need to start on an existing line.
      */
     public static function wrap(?string $string = null, int $max = 0, int $padLeft = 0): string

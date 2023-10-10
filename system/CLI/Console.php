@@ -12,6 +12,7 @@
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\CodeIgniter;
+use Config\App;
 use Config\Services;
 use Exception;
 
@@ -31,6 +32,10 @@ class Console
      */
     public function run()
     {
+        // Create CLIRequest
+        $appConfig = config(App::class);
+        Services::createRequest($appConfig, true);
+
         $runner  = Services::commands();
         $params  = array_merge(CLI::getSegments(), CLI::getOptions());
         $params  = $this->parseParamsForHelpOption($params);
