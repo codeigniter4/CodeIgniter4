@@ -38,6 +38,8 @@ Bugs Fixed
 
 - **CodeIgniter:** Fixed a bug that returned "200 OK" response status code when
   Page Not Found.
+- **Spark:** Fixed a bug that caused spark to not display exceptions in the
+  production mode or to display backtrace in json when an exception occurred.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
