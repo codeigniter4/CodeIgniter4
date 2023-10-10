@@ -9,9 +9,8 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Commands\TranslationLocalizationFinder;
+namespace CodeIgniter\Commands\Translation\LocalizationFinder;
 
-use CodeIgniter\Commands\Translation\LocalizationFinder\ArrayHelper;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
