@@ -9,13 +9,13 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Router\Controllers;
+namespace App\Controllers\Subfolder;
 
 use CodeIgniter\Controller;
 
-class Admin_user extends Controller
+class Mycontroller extends Controller
 {
-    public function show_list(): void
+    public function getSomemethod(): void
     {
     }
 }

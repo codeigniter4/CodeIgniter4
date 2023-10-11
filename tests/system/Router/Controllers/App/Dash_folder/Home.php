@@ -9,11 +9,11 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Router\Controllers;
+namespace App\Controllers\Dash_folder;
 
 use CodeIgniter\Controller;
 
-class Φ extends Controller
+class Home extends Controller
 {
     public function getIndex(): void
     {
