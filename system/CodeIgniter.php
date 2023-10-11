@@ -334,7 +334,7 @@ class CodeIgniter
      * This is "the loop" if you will. The main entry point into the script
      * that gets the required class instances, fires off the filters,
      * tries to route the response, loads the controller and generally
-     * makes all of the pieces work together.
+     * makes all the pieces work together.
      *
      * @return ResponseInterface|void
      */
@@ -724,7 +724,7 @@ class CodeIgniter
     /**
      * Tells the app that the final output should be cached.
      *
-     * @deprecated 4.4.0 Moved to ResponseCache::setTtl(). to No longer used.
+     * @deprecated 4.4.0 Moved to ResponseCache::setTtl(). No longer used.
      *
      * @return void
      */
@@ -796,7 +796,7 @@ class CodeIgniter
      * match a route against the current URI. If the route is a
      * "redirect route", will also handle the redirect.
      *
-     * @param RouteCollectionInterface|null $routes An collection interface to use in place
+     * @param RouteCollectionInterface|null $routes A collection interface to use in place
      *                                              of the config file.
      *
      * @return string|string[]|null Route filters, that is, the filters specified in the routes file
