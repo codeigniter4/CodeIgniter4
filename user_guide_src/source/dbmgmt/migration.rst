@@ -93,6 +93,7 @@ For example, assume that we have the following namespaces defined in our Autoloa
 configuration file:
 
 .. literalinclude:: migration/004.php
+    :lines: 2-
 
 This will look for any migrations located at both **APPPATH/Database/Migrations** and
 **ROOTPATH/MyCompany/Database/Migrations**. This makes it simple to include migrations in your

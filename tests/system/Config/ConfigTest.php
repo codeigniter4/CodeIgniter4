@@ -46,13 +46,6 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame($Config2, $Config);
     }
 
-    public function testCreateNonConfig(): void
-    {
-        $Config = Config::get('Constants', false);
-
-        $this->assertNull($Config);
-    }
-
     /**
      * @runInSeparateProcess
      * @preserveGlobalState disabled

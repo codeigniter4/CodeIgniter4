@@ -141,8 +141,6 @@ class Autoloader
         /** @var ClassLoader $composer */
         $composer = include COMPOSER_PATH;
 
-        $this->loadComposerClassmap($composer);
-
         // Should we load through Composer's namespaces, also?
         if ($modules->discoverInComposer) {
             // @phpstan-ignore-next-line
@@ -159,11 +157,11 @@ class Autoloader
      */
     public function register()
     {
-        // Prepend the PSR4  autoloader for maximum performance.
-        spl_autoload_register([$this, 'loadClass'], true, true);
+        // Register classmap loader for the files in our class map.
+        spl_autoload_register([$this, 'loadClassmap'], true);
 
-        // Now prepend another loader for the files in our class map.
-        spl_autoload_register([$this, 'loadClassmap'], true, true);
+        // Register the PSR-4 autoloader.
+        spl_autoload_register([$this, 'loadClass'], true);
 
         // Load our non-class files
         foreach ($this->files as $file) {
@@ -366,9 +364,13 @@ class Autoloader
     {
         $namespacePaths = $composer->getPrefixesPsr4();
 
-        // Get rid of CodeIgniter so we don't have duplicates
-        if (isset($namespacePaths['CodeIgniter\\'])) {
-            unset($namespacePaths['CodeIgniter\\']);
+        // Get rid of duplicated namespaces.
+        $duplicatedNamespaces = ['CodeIgniter', APP_NAMESPACE, 'Config'];
+
+        foreach ($duplicatedNamespaces as $ns) {
+            if (isset($namespacePaths[$ns . '\\'])) {
+                unset($namespacePaths[$ns . '\\']);
+            }
         }
 
         if (! method_exists(InstalledVersions::class, 'getAllRawData')) {
@@ -430,13 +432,6 @@ class Autoloader
         }
 
         $this->addNamespace($newPaths);
-    }
-
-    private function loadComposerClassmap(ClassLoader $composer): void
-    {
-        $classes = $composer->getClassMap();
-
-        $this->classmap = array_merge($this->classmap, $classes);
     }
 
     /**

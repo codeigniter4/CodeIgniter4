@@ -1,6 +1,6 @@
 <?php
 
 $psr4 = [
-    'App'       => APPPATH,
-    'MyCompany' => ROOTPATH . 'MyCompany',
+    APP_NAMESPACE => APPPATH,
+    'MyCompany'   => ROOTPATH . 'MyCompany',
 ];
