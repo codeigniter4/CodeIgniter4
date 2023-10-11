@@ -485,17 +485,6 @@ abstract class BaseModel
     abstract protected function doErrors();
 
     /**
-     * Returns the id value for the data array or object.
-     *
-     * @param array|object $data Data
-     *
-     * @return array|int|string|null
-     *
-     * @deprecated Add an override on getIdValue() instead. Will be removed in version 5.0.
-     */
-    abstract protected function idValue($data);
-
-    /**
      * Public getter to return the id value using the idValue() method.
      * For example with SQL this will return $data->$this->primaryKey.
      *
@@ -1796,59 +1785,6 @@ abstract class BaseModel
         }
 
         return null;
-    }
-
-    /**
-     * Replace any placeholders within the rules with the values that
-     * match the 'key' of any properties being set. For example, if
-     * we had the following $data array:
-     *
-     * [ 'id' => 13 ]
-     *
-     * and the following rule:
-     *
-     *  'required|is_unique[users,email,id,{id}]'
-     *
-     * The value of {id} would be replaced with the actual id in the form data:
-     *
-     *  'required|is_unique[users,email,id,13]'
-     *
-     * @param array $rules Validation rules
-     * @param array $data  Data
-     *
-     * @codeCoverageIgnore
-     *
-     * @deprecated use fillPlaceholders($rules, $data) from Validation instead
-     */
-    protected function fillPlaceholders(array $rules, array $data): array
-    {
-        $replacements = [];
-
-        foreach ($data as $key => $value) {
-            $replacements['{' . $key . '}'] = $value;
-        }
-
-        if (! empty($replacements)) {
-            foreach ($rules as &$rule) {
-                if (is_array($rule)) {
-                    foreach ($rule as &$row) {
-                        // Should only be an `errors` array
-                        // which doesn't take placeholders.
-                        if (is_array($row)) {
-                            continue;
-                        }
-
-                        $row = strtr($row, $replacements);
-                    }
-
-                    continue;
-                }
-
-                $rule = strtr($rule, $replacements);
-            }
-        }
-
-        return $rules;
     }
 
     /**
