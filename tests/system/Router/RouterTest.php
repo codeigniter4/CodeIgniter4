@@ -197,18 +197,18 @@ final class RouterTest extends CIUnitTestCase
     public function testAutoRouteFindsDefaultControllerAndMethod(): void
     {
         $this->collection->setAutoRoute(true);
-        $this->collection->setDefaultController('Test');
-        $this->collection->setDefaultMethod('test');
+        $this->collection->setDefaultController('Mycontroller');
+        $this->collection->setDefaultMethod('getSomemethod');
         $router = new Router($this->collection, $this->request);
 
-        copy(TESTPATH . 'system/Router/Controllers/Test.php', APPPATH . 'Controllers/Test.php');
+        copy(TESTPATH . 'system/Router/Controllers/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
 
         $router->autoRoute('/');
 
-        unlink(APPPATH . 'Controllers/Test.php');
+        unlink(APPPATH . 'Controllers/Mycontroller.php');
 
-        $this->assertSame('Test', $router->controllerName());
-        $this->assertSame('test', $router->methodName());
+        $this->assertSame('Mycontroller', $router->controllerName());
+        $this->assertSame('getSomemethod', $router->methodName());
     }
 
     public function testAutoRouteFindsControllerWithFileAndMethod(): void
