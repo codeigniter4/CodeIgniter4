@@ -703,6 +703,8 @@ class CodeIgniter
      * @return false|ResponseInterface
      *
      * @throws Exception
+     *
+     * @deprecated 4.4.2 The parameter $config is deprecated. No longer used.
      */
     public function displayCache(Cache $config)
     {
