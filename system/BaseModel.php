@@ -491,13 +491,8 @@ abstract class BaseModel
      * @param array|object $data
      *
      * @return array|int|string|null
-     *
-     * @todo: Make abstract in version 5.0
      */
-    public function getIdValue($data)
-    {
-        return $this->idValue($data);
-    }
+    abstract public function getIdValue($data);
 
     /**
      * Override countAllResults to account for soft deleted accounts.
