@@ -1073,7 +1073,7 @@ class Forge
         $sqls = [];
         $fk   = $this->foreignKeys;
 
-        if (empty($this->fields)) {
+        if ($this->fields === []) {
             $this->fields = array_flip(array_map(
                 static fn ($columnName) => $columnName->name,
                 $this->db->getFieldData($this->db->DBPrefix . $table)
@@ -1082,18 +1082,18 @@ class Forge
 
         $fields = $this->fields;
 
-        if (! empty($this->keys)) {
+        if ($this->keys !== []) {
             $sqls = $this->_processIndexes($this->db->DBPrefix . $table, true);
         }
 
-        if (! empty($this->primaryKeys)) {
+        if ($this->primaryKeys !== []) {
             $sqls[] = $this->_processPrimaryKeys($table, true);
         }
 
         $this->foreignKeys = $fk;
         $this->fields      = $fields;
 
-        if (! empty($this->foreignKeys)) {
+        if ($this->foreignKeys !== []) {
             $sqls = array_merge($sqls, $this->_processForeignKeys($table, true));
         }
 
