@@ -1084,12 +1084,10 @@ class Forge
 
         if (! empty($this->keys)) {
             $sqls = $this->_processIndexes($this->db->DBPrefix . $table, true);
+        }
 
-            $pk = $this->_processPrimaryKeys($table, true);
-
-            if ($pk !== '') {
-                $sqls[] = $pk;
-            }
+        if (! empty($this->primaryKeys)) {
+            $sqls[] = $this->_processPrimaryKeys($table, true);
         }
 
         $this->foreignKeys = $fk;
