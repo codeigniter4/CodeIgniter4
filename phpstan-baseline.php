@@ -1238,7 +1238,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 16,
+	'count' => 13,
 	'path' => __DIR__ . '/system/Database/Forge.php',
 ];
 $ignoreErrors[] = [
