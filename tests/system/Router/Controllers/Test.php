@@ -13,7 +13,10 @@ namespace CodeIgniter\Router\Controllers;
 
 use CodeIgniter\Controller;
 
-class Test extends Controller
+/**
+ * @internal
+ */
+final class Test extends Controller
 {
     public function test(): void
     {
