@@ -1778,8 +1778,12 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->setAutoRoute(true);
         $routes->setDefaultNamespace($namespace);
 
+        copy(TESTPATH . 'system/Router/Controllers/Product.php', APPPATH . 'Controllers/Product.php');
+
         $router = new Router($routes, Services::request());
         $router->handle('/product');
+
+        unlink(APPPATH . 'Controllers/Product.php');
 
         $this->assertSame('\App\\Controllers\\Product', $router->controllerName());
     }
@@ -1797,8 +1801,12 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->setDefaultNamespace($namespace);
         $routes->get('/product', 'Product');
 
+        copy(TESTPATH . 'system/Router/Controllers/Product.php', APPPATH . 'Controllers/Product.php');
+
         $router = new Router($routes, Services::request());
         $router->handle('/product');
+
+        unlink(APPPATH . 'Controllers/Product.php');
 
         $this->assertSame('\App\\Controllers\\Product', $router->controllerName());
     }
