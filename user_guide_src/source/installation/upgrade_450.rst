@@ -106,6 +106,9 @@ Config
 - app/Config/Feature.php
     - ``Config\Feature::$multipleFilters`` has been removed, because now
       :ref:`multiple-filters` are always enabled.
+- app/Config/Kint.php
+    - It no longer extends ``BaseConfig`` because enabling
+      :ref:`factories-config-caching` could cause errors.
 
 All Changes
 ===========

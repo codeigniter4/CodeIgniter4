@@ -296,7 +296,7 @@ class CodeIgniter
 
     private function configureKint(): void
     {
-        $config = config(KintConfig::class);
+        $config = new KintConfig();
 
         Kint::$depth_limit         = $config->maxDepth;
         Kint::$display_called_from = $config->displayCalledFrom;
