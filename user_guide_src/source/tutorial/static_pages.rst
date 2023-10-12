@@ -9,12 +9,50 @@ Static Pages
    :doc:`installed the framework <../installation/index>` in your
    development environment.
 
-The first thing you're going to do is set up a **controller** to handle
-static pages. A controller is simply a class that helps delegate work.
-It is the glue of your web application.
+The first thing you're going to do is set up routing rules to handle static pages.
+
+Setting Routing Rules
+*********************
+
+Routing associates a URI with a controller's method. A controller is simply a
+class that helps delegate work. We will create a controller later.
+
+Let's set up routing rules. Open the routes file located at **app/Config/Routes.php**.
+
+The only route directive there to start with should be:
+
+.. literalinclude:: static_pages/003.php
+
+This directive says that any incoming request without any content
+specified should be handled by the ``index()`` method inside the ``Home`` controller.
+
+Add the following lines, **after** the route directive for ``'/'``.
+
+.. literalinclude:: static_pages/004.php
+   :lines: 2-
+
+CodeIgniter reads its routing rules from top to bottom and routes the
+request to the first matching rule. Each rule is a regular expression
+(left-side) mapped to a controller and method name
+(right-side). When a request comes in, CodeIgniter looks for the first
+match, and calls the appropriate controller and method, possibly with
+arguments.
+
+More information about routing can be found in the :doc:`../incoming/routing`.
+
+Here, the second rule in the ``$routes`` object matches a GET request
+to the URI path **/pages**, and it maps to the ``index()`` method of the ``Pages`` class.
+
+The third rule in the ``$routes`` object matches a GET request to a URI segment
+using the placeholder ``(:segment)``, and passes the parameter to the
+``view()`` method of the ``Pages`` class.
 
 Let's Make our First Controller
 *******************************
+
+The next thing you're going to do is set up a **controller** to handle
+static pages. A controller is simply a class that helps delegate work.
+It is the glue of your web application.
 
 Create Pages Controller
 =======================
@@ -140,42 +178,6 @@ view.
     match the case of the actual directory and file itself or the system will
     throw errors on case-sensitive platforms. You can read more about it in
     :doc:`../outgoing/views`.
-
-Setting Routing Rules
-*********************
-
-We have made the controller. The next thing is to set routing rules.
-Routing associates a URI with a controller's method.
-
-Let's do that. Open the routes file located at **app/Config/Routes.php**.
-
-The only route directive there to start with should be:
-
-.. literalinclude:: static_pages/003.php
-
-This directive says that any incoming request without any content
-specified should be handled by the ``index()`` method inside the ``Home`` controller.
-
-Add the following lines, **after** the route directive for ``'/'``.
-
-.. literalinclude:: static_pages/004.php
-   :lines: 2-
-
-CodeIgniter reads its routing rules from top to bottom and routes the
-request to the first matching rule. Each rule is a regular expression
-(left-side) mapped to a controller and method name
-(right-side). When a request comes in, CodeIgniter looks for the first
-match, and calls the appropriate controller and method, possibly with
-arguments.
-
-More information about routing can be found in the :doc:`../incoming/routing`.
-
-Here, the second rule in the ``$routes`` object matches a GET request
-to the URI path **/pages**, and it maps to the ``index()`` method of the ``Pages`` class.
-
-The third rule in the ``$routes`` object matches a GET request to a URI segment
-using the placeholder ``(:segment)``, and passes the parameter to the
-``view()`` method of the ``Pages`` class.
 
 Running the App
 ***************

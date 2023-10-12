@@ -26,6 +26,23 @@ You can read more about the CSRF protection in :doc:`Security <../libraries/secu
     because :ref:`auto-routing-legacy` permits any HTTP method to access a controller.
     Accessing the controller with a method you don't expect could bypass the filter.
 
+Adding Routing Rules
+********************
+
+Before you can start adding news items into your CodeIgniter application
+you have to add an extra rule to **app/Config/Routes.php** file. Make sure your
+file contains the following:
+
+.. literalinclude:: create_news_items/004.php
+
+The route directive for ``'news/new'`` is placed before the directive for ``'news/(:segment)'`` to ensure that the form to create a news item is displayed.
+
+The ``$routes->post()`` line defines the router for a POST request. It matches
+only a POST request to the URI path **/news**, and it maps to the ``create()`` method of
+the ``News`` class.
+
+You can read more about different routing types in :ref:`defined-route-routing`.
+
 Create a Form
 *************
 
@@ -150,23 +167,6 @@ database. Notice that we leave out the ``id``? That's because you will almost
 never need to do that, since it is an auto-incrementing field in the database.
 This helps protect against Mass Assignment Vulnerabilities. If your model is
 handling your timestamps, you would also leave those out.
-
-Adding Routing Rules
-********************
-
-Before you can start adding news items into your CodeIgniter application
-you have to add an extra rule to **app/Config/Routes.php** file. Make sure your
-file contains the following:
-
-.. literalinclude:: create_news_items/004.php
-
-The route directive for ``'news/new'`` is placed before the directive for ``'news/(:segment)'`` to ensure that the form to create a news item is displayed.
-
-The ``$routes->post()`` line defines the router for a POST request. It matches
-only a POST request to the URI path **/news**, and it maps to the ``create()`` method of
-the ``News`` class.
-
-You can read more about different routing types in :ref:`defined-route-routing`.
 
 Create a News Item
 ******************
