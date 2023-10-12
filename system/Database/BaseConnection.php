@@ -45,6 +45,7 @@ use Throwable;
  * @property int        $transDepth
  * @property bool       $transFailure
  * @property bool       $transStatus
+ * @property string     $username
  *
  * @template TConnection
  * @template TResult

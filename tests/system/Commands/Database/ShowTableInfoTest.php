@@ -64,6 +64,16 @@ final class ShowTableInfoTest extends CIUnitTestCase
         $this->assertMatchesRegularExpression($expectedPattern, $result);
     }
 
+    public function testDbTableShowsDBConfig(): void
+    {
+        command('db:table');
+
+        $result = $this->getNormalizedResult();
+
+        $expectedPattern = '/\| hostname[[:blank:]]+\| database[[:blank:]]+\| username[[:blank:]]+\| DBDriver[[:blank:]]+\| DBPrefix[[:blank:]]+\| port[[:blank:]]+\|/';
+        $this->assertMatchesRegularExpression($expectedPattern, $result);
+    }
+
     public function testDbTableShow(): void
     {
         command('db:table --show');
