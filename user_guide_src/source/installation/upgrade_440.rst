@@ -91,7 +91,7 @@ When Passing Classname with Namespace to Factories
 The behavior of passing a classname with a namespace to Factories has been changed.
 See :ref:`ChangeLog <v440-factories>` for details.
 
-If you have code like ``model('\Myth\Auth\Models\UserModel::class')`` or
+If you have code like ``model(\Myth\Auth\Models\UserModel::class)`` or
 ``model('Myth\Auth\Models\UserModel')`` (the code may be in the third-party packages),
 and you expect to load your ``App\Models\UserModel``, you need to define the
 classname to be loaded before the first loading of that class::
