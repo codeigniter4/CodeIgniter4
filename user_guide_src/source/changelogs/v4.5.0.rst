@@ -35,6 +35,7 @@ Others
   have been fixed to ``void`` to follow the PSR-3 interface.
 - **Autoloader:** The prefix ``\`` in the fully qualified classname returned by
   ``FileLocator::findQualifiedNameFromPath()`` has been removed.
+- **BaseModel:** The ``getIdValue()`` method has been changed to ``abstract``.
 
 Interface Changes
 =================
@@ -84,6 +85,14 @@ Others
 ------
 
 - **Config:** The deprecated ``CodeIgniter\Config\Config`` class has been removed.
+
+Model
+-----
+
+- ``BaseModel::idValue()``
+- ``BaseModel::fillPlaceholders()``
+- ``Model::idValue()``
+- ``Model::classToArray()``
 
 Enhancements
 ************
