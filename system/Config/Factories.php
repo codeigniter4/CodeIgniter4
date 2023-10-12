@@ -100,6 +100,8 @@ class Factories
      */
     public static function define(string $component, string $alias, string $classname): void
     {
+        $component = strtolower($component);
+
         if (isset(self::$aliases[$component][$alias])) {
             if (self::$aliases[$component][$alias] === $classname) {
                 return;
@@ -130,12 +132,14 @@ class Factories
      */
     public static function __callStatic(string $component, array $arguments)
     {
+        $component = strtolower($component);
+
         // First argument is the class alias, second is options
         $alias   = trim(array_shift($arguments), '\\ ');
         $options = array_shift($arguments) ?? [];
 
         // Determine the component-specific options
-        $options = array_merge(self::getOptions(strtolower($component)), $options);
+        $options = array_merge(self::getOptions($component), $options);
 
         if (! $options['getShared']) {
             if (isset(self::$aliases[$component][$alias])) {
@@ -394,6 +398,8 @@ class Factories
      */
     public static function setOptions(string $component, array $values): array
     {
+        $component = strtolower($component);
+
         // Allow the config to replace the component name, to support "aliases"
         $values['component'] = strtolower($values['component'] ?? $component);
 
@@ -452,8 +458,9 @@ class Factories
      */
     public static function injectMock(string $component, string $alias, object $instance)
     {
-        // Force a configuration to exist for this component
         $component = strtolower($component);
+
+        // Force a configuration to exist for this component
         self::getOptions($component);
 
         $class = get_class($instance);
