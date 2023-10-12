@@ -409,7 +409,7 @@ for dashes (<strong>foo-bar</strong>).</p>
 <h3><a class="toc-backref" href="#id8">When Passing Classname with Namespace to Factories</a><a class="headerlink" href="#when-passing-classname-with-namespace-to-factories" title="Permalink to this headline"></a></h3>
 <p>The behavior of passing a classname with a namespace to Factories has been changed.
 See <a class="reference internal" href="../changelogs/v4.4.0.html#v440-factories"><span class="std std-ref">ChangeLog</span></a> for details.</p>
-<p>If you have code like <code class="docutils literal notranslate"><span class="pre">model('\Myth\Auth\Models\UserModel::class')</span></code> or
+<p>If you have code like <code class="docutils literal notranslate"><span class="pre">model(\Myth\Auth\Models\UserModel::class)</span></code> or
 <code class="docutils literal notranslate"><span class="pre">model('Myth\Auth\Models\UserModel')</span></code> (the code may be in the third-party packages),
 and you expect to load your <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code>, you need to define the
 classname to be loaded before the first loading of that class:</p>
