@@ -201,7 +201,7 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->setDefaultMethod('getSomemethod');
         $router = new Router($this->collection, $this->request);
 
-        copy(TESTPATH . 'system/Router/Controllers/App/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
+        copy(TESTPATH . '_support/_controller/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
 
         $router->autoRoute('/');
 
@@ -216,7 +216,7 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->setAutoRoute(true);
         $router = new Router($this->collection, $this->request);
 
-        copy(TESTPATH . 'system/Router/Controllers/App/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
+        copy(TESTPATH . '_support/_controller/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
 
         $router->autoRoute('mycontroller/getSomemethod');
 
@@ -231,7 +231,7 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->setAutoRoute(true);
         $router = new Router($this->collection, $this->request);
 
-        copy(TESTPATH . 'system/Router/Controllers/App/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
+        copy(TESTPATH . '_support/_controller/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
 
         $router->autoRoute('mycontroller');
 
@@ -248,7 +248,7 @@ final class RouterTest extends CIUnitTestCase
 
         mkdir(APPPATH . 'Controllers/Subfolder');
 
-        copy(TESTPATH . 'system/Router/Controllers/App/Subfolder/Mycontroller.php', APPPATH . 'Controllers/Subfolder/Mycontroller.php');
+        copy(TESTPATH . '_support/_controller/Subfolder/Mycontroller.php', APPPATH . 'Controllers/Subfolder/Mycontroller.php');
 
         $router->autoRoute('subfolder/mycontroller/getSomemethod');
 
@@ -267,7 +267,7 @@ final class RouterTest extends CIUnitTestCase
         $router->setTranslateURIDashes(true);
 
         mkdir(APPPATH . 'Controllers/Dash_folder');
-        copy(TESTPATH . 'system/Router/Controllers/App/Dash_folder/Mycontroller.php', APPPATH . 'Controllers/Dash_folder/Mycontroller.php');
+        copy(TESTPATH . '_support/_controller/Dash_folder/Mycontroller.php', APPPATH . 'Controllers/Dash_folder/Mycontroller.php');
 
         $router->autoRoute('dash-folder/mycontroller/somemethod');
 
@@ -286,7 +286,7 @@ final class RouterTest extends CIUnitTestCase
         $router->setTranslateURIDashes(true);
 
         mkdir(APPPATH . 'Controllers/Dash_folder');
-        copy(TESTPATH . 'system/Router/Controllers/App/Dash_folder/Dash_controller.php', APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
+        copy(TESTPATH . '_support/_controller/Dash_folder/Dash_controller.php', APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
 
         $router->autoRoute('dash-folder/dash-controller/getSomemethod');
 
@@ -305,7 +305,7 @@ final class RouterTest extends CIUnitTestCase
         $router->setTranslateURIDashes(true);
 
         mkdir(APPPATH . 'Controllers/Dash_folder');
-        copy(TESTPATH . 'system/Router/Controllers/App/Dash_folder/Dash_controller.php', APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
+        copy(TESTPATH . '_support/_controller/Dash_folder/Dash_controller.php', APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
 
         $router->autoRoute('dash-folder/dash-controller/getDash_method');
 
@@ -324,7 +324,7 @@ final class RouterTest extends CIUnitTestCase
         $router->setTranslateURIDashes(true);
 
         mkdir(APPPATH . 'Controllers/Dash_folder');
-        copy(TESTPATH . 'system/Router/Controllers/App/Dash_folder/Home.php', APPPATH . 'Controllers/Dash_folder/Home.php');
+        copy(TESTPATH . '_support/_controller/Dash_folder/Home.php', APPPATH . 'Controllers/Dash_folder/Home.php');
 
         $router->autoRoute('dash-folder');
 
@@ -343,7 +343,7 @@ final class RouterTest extends CIUnitTestCase
         $router->setTranslateURIDashes(true);
 
         mkdir(APPPATH . 'Controllers/Φ');
-        copy(TESTPATH . 'system/Router/Controllers/App/Φ/Home.php', APPPATH . 'Controllers/Φ/Home.php');
+        copy(TESTPATH . '_support/_controller/Φ/Home.php', APPPATH . 'Controllers/Φ/Home.php');
 
         $router->autoRoute('Φ');
 
@@ -361,7 +361,7 @@ final class RouterTest extends CIUnitTestCase
         $router = new Router($this->collection, $this->request);
         $router->setTranslateURIDashes(true);
 
-        copy(TESTPATH . 'system/Router/Controllers/App/Φ.php', APPPATH . 'Controllers/Φ.php');
+        copy(TESTPATH . '_support/_controller/Φ.php', APPPATH . 'Controllers/Φ.php');
 
         $router->autoRoute('Φ');
 
@@ -754,7 +754,7 @@ final class RouterTest extends CIUnitTestCase
         $router = new Router($this->collection, $this->request);
         $router->setTranslateURIDashes(true);
 
-        copy(TESTPATH . 'system/Router/Controllers/App/Admin_user.php', APPPATH . 'Controllers/Admin_user.php');
+        copy(TESTPATH . '_support/_controller/Admin_user.php', APPPATH . 'Controllers/Admin_user.php');
 
         $router->autoRoute('admin_user/show_list');
 
@@ -772,7 +772,7 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->setAutoRoute(true);
         $router = new Router($this->collection, $this->request);
 
-        copy(TESTPATH . 'system/Router/Controllers/App/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
+        copy(TESTPATH . '_support/_controller/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
 
         $router->autoRoute('mycontroller/getSomemethod/0/abc');
 
@@ -850,7 +850,7 @@ final class RouterTest extends CIUnitTestCase
         mkdir(APPPATH . 'Controllers/foo');
         mkdir(APPPATH . 'Controllers/foo/bar');
         mkdir(APPPATH . 'Controllers/foo/bar/baz');
-        copy(TESTPATH . 'system/Router/Controllers/App/foo/bar/baz/Some_controller.php', APPPATH . 'Controllers/foo/bar/baz/Some_controller.php');
+        copy(TESTPATH . '_support/_controller/foo/bar/baz/Some_controller.php', APPPATH . 'Controllers/foo/bar/baz/Some_controller.php');
 
         $router->setDirectory('foo/bar/baz', false, true);
         $router->handle('Some_controller/some_method/param1/param2/param3');
