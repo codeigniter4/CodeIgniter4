@@ -430,19 +430,19 @@ class Factories
     {
         if ($component) {
             unset(
-                static::$options[$component],
-                static::$aliases[$component],
-                static::$instances[$component],
-                static::$updated[$component]
+                self::$options[$component],
+                self::$aliases[$component],
+                self::$instances[$component],
+                self::$updated[$component]
             );
 
             return;
         }
 
-        static::$options   = [];
-        static::$aliases   = [];
-        static::$instances = [];
-        static::$updated   = [];
+        self::$options   = [];
+        self::$aliases   = [];
+        self::$instances = [];
+        self::$updated   = [];
     }
 
     /**
@@ -500,7 +500,7 @@ class Factories
      */
     public static function getComponentInstances(string $component): array
     {
-        if (! isset(static::$aliases[$component])) {
+        if (! isset(self::$aliases[$component])) {
             return [
                 'options'   => [],
                 'aliases'   => [],
@@ -509,8 +509,8 @@ class Factories
         }
 
         return [
-            'options'   => static::$options[$component],
-            'aliases'   => static::$aliases[$component],
+            'options'   => self::$options[$component],
+            'aliases'   => self::$aliases[$component],
             'instances' => self::$instances[$component],
         ];
     }
@@ -522,11 +522,11 @@ class Factories
      */
     public static function setComponentInstances(string $component, array $data): void
     {
-        static::$options[$component]   = $data['options'];
-        static::$aliases[$component]   = $data['aliases'];
-        static::$instances[$component] = $data['instances'];
+        self::$options[$component]   = $data['options'];
+        self::$aliases[$component]   = $data['aliases'];
+        self::$instances[$component] = $data['instances'];
 
-        unset(static::$updated[$component]);
+        unset(self::$updated[$component]);
     }
 
     /**
