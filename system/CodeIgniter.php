@@ -535,13 +535,6 @@ class CodeIgniter
             // Must be run after filters to preserve the Response headers.
             $this->pageCache->make($this->request, $this->response);
 
-            // Update the performance metrics
-            $body = $this->response->getBody();
-            if ($body !== null) {
-                $output = $this->displayPerformanceMetrics($body);
-                $this->response->setBody($output);
-            }
-
             // Save our current URI as the previous URI in the session
             // for safer, more accurate use with `previous_url()` helper function.
             $this->storePreviousURL(current_url(true));
@@ -780,11 +773,15 @@ class CodeIgniter
     }
 
     /**
-     * Replaces the elapsed_time tag.
+     * Replaces the elapsed_time and memory_usage tag.
      */
     public function displayPerformanceMetrics(string $output): string
     {
-        return str_replace('{elapsed_time}', (string) $this->totalTime, $output);
+        return str_replace(
+            ['{elapsed_time}', '{memory_usage}'],
+            [(string) $this->totalTime, number_format(memory_get_peak_usage() / 1024 / 1024, 3)],
+            $output
+        );
     }
 
     /**
@@ -1098,6 +1095,13 @@ class CodeIgniter
      */
     protected function sendResponse()
     {
+        // Update the performance metrics
+        $body = $this->response->getBody();
+        if ($body !== null) {
+            $output = $this->displayPerformanceMetrics($body);
+            $this->response->setBody($output);
+        }
+
         $this->response->send();
     }
 
