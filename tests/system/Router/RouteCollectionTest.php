@@ -395,7 +395,7 @@ final class RouteCollectionTest extends CIUnitTestCase
                 'filter' => ['csrf'],
             ],
             'admin/profile' => [
-                'filter' => ['honeypot'],
+                'filter' => ['csrf', 'honeypot'],
             ],
         ];
         $this->assertSame($expected, $routes->getRoutesOptions());
@@ -425,10 +425,10 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $expected = [
             'admin/dashboard' => [
-                'filter' => 'csrf',
+                'filter' => ['csrf'],
             ],
             'admin/profile' => [
-                'filter'    => 'csrf',
+                'filter'    => ['csrf'],
                 'namespace' => 'Admin',
             ],
         ];
