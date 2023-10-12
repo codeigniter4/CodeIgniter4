@@ -198,46 +198,28 @@ final class RoutesTest extends CIUnitTestCase
         $routes->loadRoutes();
 
         $routes->setAutoRoute(true);
-        $namespace = 'Tests\Support\Controllers';
-        $routes->setDefaultNamespace($namespace);
 
         command('routes');
 
         $expected = <<<'EOL'
-            +---------+-------------------------------+---------------+-----------------------------------------------------+----------------+---------------+
-            | Method  | Route                         | Name          | Handler                                             | Before Filters | After Filters |
-            +---------+-------------------------------+---------------+-----------------------------------------------------+----------------+---------------+
-            | GET     | /                             | »             | \App\Controllers\Home::index                        |                | toolbar       |
-            | GET     | closure                       | »             | (Closure)                                           |                | toolbar       |
-            | GET     | testing                       | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
-            | HEAD    | testing                       | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
-            | POST    | testing                       | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
-            | PUT     | testing                       | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
-            | DELETE  | testing                       | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
-            | OPTIONS | testing                       | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
-            | TRACE   | testing                       | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
-            | CONNECT | testing                       | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
-            | CLI     | testing                       | testing-index | \App\Controllers\TestController::index              |                |               |
-            | auto    | hello                         |               | \Tests\Support\Controllers\Hello::index             |                | toolbar       |
-            | auto    | hello/index[/...]             |               | \Tests\Support\Controllers\Hello::index             |                | toolbar       |
-            | auto    | newautorouting/getIndex[/...] |               | \Tests\Support\Controllers\Newautorouting::getIndex |                | toolbar       |
-            | auto    | newautorouting/postSave[/...] |               | \Tests\Support\Controllers\Newautorouting::postSave |                | toolbar       |
-            | auto    | popcorn                       |               | \Tests\Support\Controllers\Popcorn::index           |                | toolbar       |
-            | auto    | popcorn/index[/...]           |               | \Tests\Support\Controllers\Popcorn::index           |                | toolbar       |
-            | auto    | popcorn/pop[/...]             |               | \Tests\Support\Controllers\Popcorn::pop             |                | toolbar       |
-            | auto    | popcorn/popper[/...]          |               | \Tests\Support\Controllers\Popcorn::popper          |                | toolbar       |
-            | auto    | popcorn/weasel[/...]          |               | \Tests\Support\Controllers\Popcorn::weasel          |                | toolbar       |
-            | auto    | popcorn/oops[/...]            |               | \Tests\Support\Controllers\Popcorn::oops            |                | toolbar       |
-            | auto    | popcorn/goaway[/...]          |               | \Tests\Support\Controllers\Popcorn::goaway          |                | toolbar       |
-            | auto    | popcorn/index3[/...]          |               | \Tests\Support\Controllers\Popcorn::index3          |                | toolbar       |
-            | auto    | popcorn/canyon[/...]          |               | \Tests\Support\Controllers\Popcorn::canyon          |                | toolbar       |
-            | auto    | popcorn/cat[/...]             |               | \Tests\Support\Controllers\Popcorn::cat             |                | toolbar       |
-            | auto    | popcorn/json[/...]            |               | \Tests\Support\Controllers\Popcorn::json            |                | toolbar       |
-            | auto    | popcorn/xml[/...]             |               | \Tests\Support\Controllers\Popcorn::xml             |                | toolbar       |
-            | auto    | popcorn/toindex[/...]         |               | \Tests\Support\Controllers\Popcorn::toindex         |                | toolbar       |
-            | auto    | popcorn/echoJson[/...]        |               | \Tests\Support\Controllers\Popcorn::echoJson        |                | toolbar       |
-            | auto    | remap[/...]                   |               | \Tests\Support\Controllers\Remap::_remap            |                | toolbar       |
-            +---------+-------------------------------+---------------+-----------------------------------------------------+----------------+---------------+
+            +---------+------------------+---------------+----------------------------------------+----------------+---------------+
+            | Method  | Route            | Name          | Handler                                | Before Filters | After Filters |
+            +---------+------------------+---------------+----------------------------------------+----------------+---------------+
+            | GET     | /                | »             | \App\Controllers\Home::index           |                | toolbar       |
+            | GET     | closure          | »             | (Closure)                              |                | toolbar       |
+            | GET     | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | HEAD    | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | POST    | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | PUT     | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | DELETE  | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | OPTIONS | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | TRACE   | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | CONNECT | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | CLI     | testing          | testing-index | \App\Controllers\TestController::index |                |               |
+            | auto    | /                |               | \App\Controllers\Home::index           |                | toolbar       |
+            | auto    | home             |               | \App\Controllers\Home::index           |                | toolbar       |
+            | auto    | home/index[/...] |               | \App\Controllers\Home::index           |                | toolbar       |
+            +---------+------------------+---------------+----------------------------------------+----------------+---------------+
             EOL;
         $this->assertStringContainsString($expected, $this->getBuffer());
     }
