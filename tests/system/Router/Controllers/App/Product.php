@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Router\Controllers;
+namespace App\Controllers;
 
 use CodeIgniter\Controller;
 
