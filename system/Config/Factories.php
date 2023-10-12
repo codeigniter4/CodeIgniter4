@@ -502,12 +502,14 @@ class Factories
     {
         if (! isset(static::$aliases[$component])) {
             return [
+                'options'   => [],
                 'aliases'   => [],
                 'instances' => [],
             ];
         }
 
         return [
+            'options'   => static::$options[$component],
             'aliases'   => static::$aliases[$component],
             'instances' => self::$instances[$component],
         ];
@@ -520,9 +522,11 @@ class Factories
      */
     public static function setComponentInstances(string $component, array $data): void
     {
-        static::$aliases[$component] = $data['aliases'];
-        self::$instances[$component] = $data['instances'];
-        unset(self::$updated[$component]);
+        static::$options[$component]   = $data['options'];
+        static::$aliases[$component]   = $data['aliases'];
+        static::$instances[$component] = $data['instances'];
+
+        unset(static::$updated[$component]);
     }
 
     /**
