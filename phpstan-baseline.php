@@ -38,7 +38,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 16,
+	'count' => 15,
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
 $ignoreErrors[] = [
@@ -2793,7 +2793,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 21,
+	'count' => 18,
 	'path' => __DIR__ . '/system/Model.php',
 ];
 $ignoreErrors[] = [
