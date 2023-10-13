@@ -551,8 +551,7 @@ This would handle the URL at **admin/users/list**.
 The above code runs ``myfilter:config`` for the route ``admin``, and ``myfilter:config``
 and ``myfilter:region`` for the route ``admin/users/list``.
 
-But other options that you specify in the inner ``group()`` options, the value
-is overwritten.
+Any other overlapping options passed to the inner `group()` will overwrite their values.
 
 .. note:: Prior to v4.5.0, due to a bug, options passed to the outer ``group()``
     are not merged with the inner ``group()`` options.
