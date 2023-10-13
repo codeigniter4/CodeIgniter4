@@ -35,6 +35,8 @@ class Console
         // Create CLIRequest
         $appConfig = config(App::class);
         Services::createRequest($appConfig, true);
+        // Load Routes
+        Services::routes()->loadRoutes();
 
         $runner  = Services::commands();
         $params  = array_merge(CLI::getSegments(), CLI::getOptions());
