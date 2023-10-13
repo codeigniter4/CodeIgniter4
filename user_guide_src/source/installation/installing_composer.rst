@@ -142,7 +142,7 @@ edit **composer.json** manually.
 If you try the ``4.6`` branch, change the version to ``4.6.x-dev``::
 
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "codeigniter4/codeigniter4": "4.6.x-dev"
     },
 
