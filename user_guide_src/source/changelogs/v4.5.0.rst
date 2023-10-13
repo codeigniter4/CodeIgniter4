@@ -33,6 +33,8 @@ Others
 - **Logger:** The :php:func:`log_message()` function and the logger methods in
   ``CodeIgniter\Log\Logger`` now do not return ``bool`` values. The return types
   have been fixed to ``void`` to follow the PSR-3 interface.
+- **Autoloader:** The prefix ``\`` in the fully qualified classname returned by
+  ``FileLocator::findQualifiedNameFromPath()`` has been removed.
 
 Interface Changes
 =================

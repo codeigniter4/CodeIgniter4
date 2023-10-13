@@ -273,12 +273,15 @@ class FileLocator
             }
 
             if (mb_strpos($path, $namespace['path']) === 0) {
-                $className = '\\' . $namespace['prefix'] . '\\' .
-                        ltrim(str_replace(
+                $className = $namespace['prefix'] . '\\' .
+                    ltrim(
+                        str_replace(
                             '/',
                             '\\',
                             mb_substr($path, mb_strlen($namespace['path']))
-                        ), '\\');
+                        ),
+                        '\\'
+                    );
 
                 // Remove the file extension (.php)
                 $className = mb_substr($className, 0, -4);
