@@ -142,8 +142,13 @@ class View implements RendererInterface
      */
     protected $sectionStack = [];
 
-    public function __construct(ViewConfig $config, ?string $viewPath = null, ?FileLocatorInterface $loader = null, ?bool $debug = null, ?LoggerInterface $logger = null)
-    {
+    public function __construct(
+        ViewConfig $config,
+        ?string $viewPath = null,
+        ?FileLocatorInterface $loader = null,
+        ?bool $debug = null,
+        ?LoggerInterface $logger = null
+    ) {
         $this->config   = $config;
         $this->viewPath = rtrim($viewPath, '\\/ ') . DIRECTORY_SEPARATOR;
         $this->loader   = $loader ?? Services::locator();
