@@ -1156,6 +1156,10 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function reverseRoute(string $search, ...$params)
     {
+        if ($search === '') {
+            return false;
+        }
+
         // Named routes get higher priority.
         foreach ($this->routesNames as $verb => $collection) {
             if (array_key_exists($search, $collection)) {
