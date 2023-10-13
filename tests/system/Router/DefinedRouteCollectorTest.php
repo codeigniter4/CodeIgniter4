@@ -87,4 +87,45 @@ final class DefinedRouteCollectorTest extends CIUnitTestCase
         ];
         $this->assertSame($expected, $definedRoutes);
     }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/8039
+     */
+    public function testCollectSameFromWithDifferentVerb()
+    {
+        $routes = $this->createRouteCollection();
+        $routes->get('login', 'AuthController::showLogin', ['as' => 'loginShow']);
+        $routes->post('login', 'AuthController::login', ['as' => 'login']);
+        $routes->get('logout', 'AuthController::logout', ['as' => 'logout']);
+
+        $collector = new DefinedRouteCollector($routes);
+
+        $definedRoutes = [];
+
+        foreach ($collector->collect() as $route) {
+            $definedRoutes[] = $route;
+        }
+
+        $expected = [
+            [
+                'method'  => 'get',
+                'route'   => 'login',
+                'name'    => 'loginShow',
+                'handler' => '\\App\\Controllers\\AuthController::showLogin',
+            ],
+            [
+                'method'  => 'get',
+                'route'   => 'logout',
+                'name'    => 'logout',
+                'handler' => '\\App\\Controllers\\AuthController::logout',
+            ],
+            [
+                'method'  => 'post',
+                'route'   => 'login',
+                'name'    => 'login',
+                'handler' => '\\App\\Controllers\\AuthController::login',
+            ],
+        ];
+        $this->assertSame($expected, $definedRoutes);
+    }
 }
