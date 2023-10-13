@@ -53,8 +53,6 @@ final class FileLocatorCached implements FileLocatorInterface
      */
     public function __construct(FileLocator $locator, $cache = null)
     {
-        // Do not call parent constructor.
-
         $this->cacheHandler = $cache ?? new FileVarExportHandler();
         $this->locator      = $locator;
 
