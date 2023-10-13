@@ -272,8 +272,11 @@ further headers arrays or calls to ``setHeader()``.
 http_errors
 ===========
 
-By default, CURLRequest will fail if the HTTP code returned is greater than or equal to 400. You can set
-``http_errors`` to ``false`` to return the content instead:
+By default, CURLRequest will throw ``HTTPException`` if the HTTP code returned is
+greater than or equal to 400.
+
+If you want to see the response body, you can set ``http_errors`` to ``false`` to
+return the content instead:
 
 .. literalinclude:: curlrequest/026.php
 
