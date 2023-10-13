@@ -21,7 +21,7 @@ use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
  *
  * @see \CodeIgniter\Autoloader\FileLocatorCachedTest
  */
-final class FileLocatorCached extends FileLocator
+final class FileLocatorCached implements FileLocatorInterface
 {
     private FileLocator $locator;
 

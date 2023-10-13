@@ -17,7 +17,7 @@ namespace CodeIgniter\Autoloader;
  *
  * @see \CodeIgniter\Autoloader\FileLocatorTest
  */
-class FileLocator
+class FileLocator implements FileLocatorInterface
 {
     /**
      * The Autoloader to use.
