@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Publisher;
 
-use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Files\FileCollection;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Publisher\Exceptions\PublisherException;
@@ -105,7 +105,7 @@ class Publisher extends FileCollection
 
         self::$discovered[$directory] = [];
 
-        /** @var FileLocator $locator */
+        /** @var FileLocatorInterface $locator */
         $locator = service('locator');
 
         if ([] === $files = $locator->listFiles($directory)) {

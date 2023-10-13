@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\CLI;
 
-use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Log\Logger;
 use ReflectionClass;
 use ReflectionException;
@@ -87,7 +87,7 @@ class Commands
             return;
         }
 
-        /** @var FileLocator $locator */
+        /** @var FileLocatorInterface $locator */
         $locator = service('locator');
         $files   = $locator->listFiles('Commands/');
 
