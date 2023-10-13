@@ -25,9 +25,7 @@ use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Database;
-use ReflectionClass;
 use ReflectionException;
-use ReflectionProperty;
 
 /**
  * The Model class extends BaseModel and provides additional
@@ -511,20 +509,6 @@ class Model extends BaseModel
      * @param array|object $data Data
      *
      * @return array|int|string|null
-     *
-     * @deprecated Use getIdValue() instead. Will be removed in version 5.0.
-     */
-    protected function idValue($data)
-    {
-        return $this->getIdValue($data);
-    }
-
-    /**
-     * Returns the id value for the data array or object
-     *
-     * @param array|object $data Data
-     *
-     * @return array|int|string|null
      */
     public function getIdValue($data)
     {
@@ -888,71 +872,5 @@ class Model extends BaseModel
         if (in_array($name, $this->builderMethodsNotAvailable, true)) {
             throw ModelException::forMethodNotAvailable(static::class, $name . '()');
         }
-    }
-
-    /**
-     * Takes a class an returns an array of it's public and protected
-     * properties as an array suitable for use in creates and updates.
-     *
-     * @param object|string $data
-     * @param string|null   $primaryKey
-     *
-     * @throws ReflectionException
-     *
-     * @codeCoverageIgnore
-     *
-     * @deprecated 4.1.0
-     */
-    public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = true): array
-    {
-        if (method_exists($data, 'toRawArray')) {
-            $properties = $data->toRawArray($onlyChanged);
-
-            // Always grab the primary key otherwise updates will fail.
-            if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties, true) && ! empty($data->{$primaryKey})) {
-                $properties[$primaryKey] = $data->{$primaryKey};
-            }
-        } else {
-            $mirror = new ReflectionClass($data);
-            $props  = $mirror->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
-
-            $properties = [];
-
-            // Loop over each property,
-            // saving the name/value in a new array we can return.
-            foreach ($props as $prop) {
-                // Must make protected values accessible.
-                $prop->setAccessible(true);
-                $properties[$prop->getName()] = $prop->getValue($data);
-            }
-        }
-
-        // Convert any Time instances to appropriate $dateFormat
-        if ($properties) {
-            foreach ($properties as $key => $value) {
-                if ($value instanceof Time) {
-                    switch ($dateFormat) {
-                        case 'datetime':
-                            $converted = $value->format('Y-m-d H:i:s');
-                            break;
-
-                        case 'date':
-                            $converted = $value->format('Y-m-d');
-                            break;
-
-                        case 'int':
-                            $converted = $value->getTimestamp();
-                            break;
-
-                        default:
-                            $converted = (string) $value;
-                    }
-
-                    $properties[$key] = $converted;
-                }
-            }
-        }
-
-        return $properties;
     }
 }

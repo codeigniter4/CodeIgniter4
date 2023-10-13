@@ -80,6 +80,14 @@ Qualified Classnames with a leading ``\``. Now the leading ``\`` has been remove
 
 If you have code that expects a leading ``\``, fix it.
 
+BaseModel::getIdValue()
+=======================
+
+The ``BaseModel::getIdValue()`` has been changed to ``abstract``, and the implementation
+has been removed.
+
+If you extneds ``BaseModel``, implement the ``getIdValue()`` method in the child class.
+
 Removed Deprecated Items
 ========================
 
