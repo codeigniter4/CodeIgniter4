@@ -51,6 +51,14 @@ Interface Changes
 Method Signature Changes
 ========================
 
+FileLocatorInterface
+--------------------
+
+- **Router:** The first parameter of the ``RouteCollection`` constructor has been changed
+  from ``FileLocator`` to ``FileLocatorInterface``.
+- **View:** The third parameter of the ``View`` constructor has been changed
+  from ``FileLocator`` to ``FileLocatorInterface``.
+
 Return Type Changes
 -------------------
 
@@ -128,6 +136,7 @@ Others
       Adding the ``App`` namespace in the ``autoload.psr4`` setting in **composer.json**
       may also improve the performance of your app. See :ref:`autoloader-application-namespace`.
     - FileLocator Caching implemented. See :ref:`file-locator-caching` for details.
+    - ``FileLocatorInterface`` has been added.
 - **CodeIgniter:** Added a pseudo-variable ``{memory_usage}`` to show your memory
   usage in your view files, which was supported by CodeIgniter 3.
 
