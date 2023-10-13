@@ -57,7 +57,7 @@ final class ShowTableInfoMockIOTest extends CIUnitTestCase
         $result = $io->getOutput();
 
         $expectedPattern = '/Which table do you want to see\? \[0, 1, 2, 3, 4, 5, 6, 7, 8, 9.*?\]: a
-The Which table do you want to see\? field must be one of: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.*?./';
+The "Which table do you want to see\?" field must be one of: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.*?./';
         $this->assertMatchesRegularExpression($expectedPattern, $result);
 
         $expected = 'Data of Table "db_migrations":';
