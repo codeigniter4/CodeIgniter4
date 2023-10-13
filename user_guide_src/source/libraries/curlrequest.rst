@@ -214,7 +214,7 @@ cookie
 ======
 
 This specifies the filename that CURL should use to read cookie values from, and
-to save cookie values to. This is done using the CURL_COOKIEJAR and CURL_COOKIEFILE options.
+to save cookie values to. This is done using the ``CURL_COOKIEJAR`` and ``CURL_COOKIEFILE`` options.
 An example:
 
 .. literalinclude:: curlrequest/021.php
@@ -223,8 +223,10 @@ debug
 =====
 
 When ``debug`` is passed and set to ``true``, this will enable additional debugging to echo to STDERR during the
-script execution. This is done by passing CURLOPT_VERBOSE and echoing the output. So, when you're running a built-in
-server via ``spark serve`` you will see the output in the console. Otherwise, the output will be written to
+script execution.
+
+This is done by passing ``CURLOPT_VERBOSE`` and echoing the output. So, when you're running a built-in
+server via ``spark serve``, you will see the output in the console. Otherwise, the output will be written to
 the server's error log.
 
 .. literalinclude:: curlrequest/034.php
