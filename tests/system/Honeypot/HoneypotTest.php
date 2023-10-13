@@ -100,6 +100,24 @@ final class HoneypotTest extends CIUnitTestCase
         $this->assertMatchesRegularExpression($regex, $this->response->getBody());
     }
 
+    public function testNotAttachHoneypotWithCSP(): void
+    {
+        $this->resetServices();
+
+        $config             = new App();
+        $config->CSPEnabled = true;
+        Factories::injectMock('config', 'App', $config);
+        $this->response = Services::response($config, false);
+
+        $this->config   = new HoneypotConfig();
+        $this->honeypot = new Honeypot($this->config);
+
+        $this->response->setBody('<head></head><body></body>');
+        $this->honeypot->attachHoneypot($this->response);
+
+        $this->assertSame('<head></head><body></body>', $this->response->getBody());
+    }
+
     public function testHasntContent(): void
     {
         unset($_POST[$this->config->name]);
