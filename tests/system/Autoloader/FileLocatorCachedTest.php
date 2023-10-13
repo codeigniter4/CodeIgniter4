@@ -23,7 +23,7 @@ use Config\Modules;
 final class FileLocatorCachedTest extends FileLocatorTest
 {
     private FileVarExportHandler $handler;
-    protected FileLocator $locator;
+    protected FileLocatorInterface $locator;
 
     public static function tearDownAfterClass(): void
     {
