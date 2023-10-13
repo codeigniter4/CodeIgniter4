@@ -12,7 +12,7 @@
 namespace CodeIgniter\Router;
 
 use Closure;
-use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
 use Config\Modules;
@@ -245,7 +245,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Handle to the file locator to use.
      *
-     * @var FileLocator
+     * @var FileLocatorInterface
      */
     protected $fileLocator;
 
@@ -283,7 +283,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Constructor
      */
-    public function __construct(FileLocator $locator, Modules $moduleConfig, Routing $routing)
+    public function __construct(FileLocatorInterface $locator, Modules $moduleConfig, Routing $routing)
     {
         $this->fileLocator  = $locator;
         $this->moduleConfig = $moduleConfig;

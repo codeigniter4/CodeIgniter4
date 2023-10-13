@@ -12,6 +12,7 @@
 namespace CodeIgniter\View;
 
 use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Debug\Toolbar\Collectors\Views;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\View\Exceptions\ViewException;
@@ -63,7 +64,7 @@ class View implements RendererInterface
      * we need to attempt to find a view
      * that's not in standard place.
      *
-     * @var FileLocator
+     * @var FileLocatorInterface
      */
     protected $loader;
 
@@ -141,7 +142,7 @@ class View implements RendererInterface
      */
     protected $sectionStack = [];
 
-    public function __construct(ViewConfig $config, ?string $viewPath = null, ?FileLocator $loader = null, ?bool $debug = null, ?LoggerInterface $logger = null)
+    public function __construct(ViewConfig $config, ?string $viewPath = null, ?FileLocatorInterface $loader = null, ?bool $debug = null, ?LoggerInterface $logger = null)
     {
         $this->config   = $config;
         $this->viewPath = rtrim($viewPath, '\\/ ') . DIRECTORY_SEPARATOR;

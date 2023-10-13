@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\View;
 
-use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\View as ViewConfig;
 use ParseError;
@@ -79,7 +79,7 @@ class Parser extends View
     /**
      * Constructor
      *
-     * @param FileLocator|null $loader
+     * @param FileLocatorInterface|null $loader
      */
     public function __construct(ViewConfig $config, ?string $viewPath = null, $loader = null, ?bool $debug = null, ?LoggerInterface $logger = null)
     {

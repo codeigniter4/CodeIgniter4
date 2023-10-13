@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
-use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Config\Services;
 
 /**
@@ -26,7 +26,7 @@ final class ControllerFinder
      */
     private string $namespace;
 
-    private FileLocator $locator;
+    private FileLocatorInterface $locator;
 
     /**
      * @param string $namespace namespace to search
