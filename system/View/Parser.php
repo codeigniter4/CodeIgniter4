@@ -81,8 +81,13 @@ class Parser extends View
      *
      * @param FileLocatorInterface|null $loader
      */
-    public function __construct(ViewConfig $config, ?string $viewPath = null, $loader = null, ?bool $debug = null, ?LoggerInterface $logger = null)
-    {
+    public function __construct(
+        ViewConfig $config,
+        ?string $viewPath = null,
+        $loader = null,
+        ?bool $debug = null,
+        ?LoggerInterface $logger = null
+    ) {
         // Ensure user plugins override core plugins.
         $this->plugins = $config->plugins;
 
