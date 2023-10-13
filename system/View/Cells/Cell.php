@@ -118,7 +118,7 @@ class Cell
     /**
      * Provides capability to render on string casting.
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->render();
     }
