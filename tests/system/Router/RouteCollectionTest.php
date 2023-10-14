@@ -337,6 +337,104 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
     }
 
+    public function testGroupNestedWithOuterOptionsWithoutInnerOptions(): void
+    {
+        $routes = $this->getCollector();
+
+        $routes->group(
+            'admin',
+            ['namespace' => 'Admin', 'filter' => ['csrf']],
+            static function ($routes) {
+                $routes->get('dashboard', static function () {
+                });
+
+                $routes->group('profile', static function ($routes) {
+                    $routes->get('/', static function () {
+                    });
+                });
+            }
+        );
+
+        $expected = [
+            'admin/dashboard' => [
+                'namespace' => 'Admin',
+                'filter'    => ['csrf'],
+            ],
+            'admin/profile' => [
+                'namespace' => 'Admin',
+                'filter'    => ['csrf'],
+            ],
+        ];
+        $this->assertSame($expected, $routes->getRoutesOptions());
+    }
+
+    public function testGroupNestedWithOuterAndInnerOption(): void
+    {
+        $routes = $this->getCollector();
+
+        $routes->group(
+            'admin',
+            ['filter' => ['csrf']],
+            static function ($routes) {
+                $routes->get('dashboard', static function () {
+                });
+
+                $routes->group(
+                    'profile',
+                    ['filter' => ['honeypot']],
+                    static function ($routes) {
+                        $routes->get('/', static function () {
+                        });
+                    }
+                );
+            }
+        );
+
+        $expected = [
+            'admin/dashboard' => [
+                'filter' => ['csrf'],
+            ],
+            'admin/profile' => [
+                'filter' => ['csrf', 'honeypot'],
+            ],
+        ];
+        $this->assertSame($expected, $routes->getRoutesOptions());
+    }
+
+    public function testGroupNestedWithoutOuterOptionWithInnerOption(): void
+    {
+        $routes = $this->getCollector();
+
+        $routes->group(
+            'admin',
+            ['filter' => 'csrf'],
+            static function ($routes) {
+                $routes->get('dashboard', static function () {
+                });
+
+                $routes->group(
+                    'profile',
+                    ['namespace' => 'Admin'],
+                    static function ($routes) {
+                        $routes->get('/', static function () {
+                        });
+                    }
+                );
+            }
+        );
+
+        $expected = [
+            'admin/dashboard' => [
+                'filter' => ['csrf'],
+            ],
+            'admin/profile' => [
+                'filter'    => ['csrf'],
+                'namespace' => 'Admin',
+            ],
+        ];
+        $this->assertSame($expected, $routes->getRoutesOptions());
+    }
+
     public function testGroupingWorksWithEmptyStringPrefix(): void
     {
         $routes = $this->getCollector();

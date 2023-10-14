@@ -535,6 +535,8 @@ given route config options:
 
 .. literalinclude:: routing/027.php
 
+.. _routing-nesting-groups:
+
 Nesting Groups
 ==============
 
@@ -544,7 +546,15 @@ It is possible to nest groups within groups for finer organization if you need i
 
 This would handle the URL at **admin/users/list**.
 
-.. note:: Options passed to the outer ``group()`` (for example ``namespace`` and ``filter``) are not merged with the inner ``group()`` options.
+**Filter** option passed to the outer ``group()`` are merged with the inner
+``group()`` filter option.
+The above code runs ``myfilter:config`` for the route ``admin``, and ``myfilter:config``
+and ``myfilter:region`` for the route ``admin/users/list``.
+
+Any other overlapping options passed to the inner `group()` will overwrite their values.
+
+.. note:: Prior to v4.5.0, due to a bug, options passed to the outer ``group()``
+    are not merged with the inner ``group()`` options.
 
 .. _routing-priority:
 

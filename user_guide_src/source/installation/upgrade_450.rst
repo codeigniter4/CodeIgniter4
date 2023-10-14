@@ -18,6 +18,37 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+.. _upgrade-450-nested-route-groups-and-options:
+
+Nested Route Groups and Options
+===============================
+
+A bug that prevented options passed to outer ``group()`` from being merged with
+options in inner ``group()`` has been fixed.
+
+Check and correct your route configuration as it could change the values of the
+options applied.
+
+For example,
+
+.. code-block:: php
+
+    $routes->group('admin', ['filter' => 'csrf'], static function ($routes) {
+        $routes->get('/', static function () {
+            // ...
+        });
+
+        $routes->group('users', ['namespace' => 'Users'], static function ($routes) {
+            $routes->get('/', static function () {
+                // ...
+            });
+        });
+    });
+
+Now the ``csrf`` filter is executed for both the route ``admin`` and ``admin/users``.
+In previous versions, it is executed only for the route ``admin``.
+See also :ref:`routing-nesting-groups`.
+
 Method Signature Changes
 ========================
 
