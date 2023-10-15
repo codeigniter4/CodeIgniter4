@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Test;
 
-use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\RequestInterface;
 use Tests\Support\Filters\Customfilter;
 
