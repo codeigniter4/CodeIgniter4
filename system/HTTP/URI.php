@@ -177,7 +177,7 @@ class URI
                 : ltrim($path, '/');
         }
 
-        if ($query !== null) {
+        if ($query !== '' && $query !== null) {
             $uri .= '?' . $query;
         }
 
