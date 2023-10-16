@@ -181,7 +181,7 @@ class URI
             $uri .= '?' . $query;
         }
 
-        if ($fragment !== null && $fragment !== '') {
+        if ($fragment !== null) {
             $uri .= '#' . $fragment;
         }
 
