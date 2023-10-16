@@ -112,6 +112,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     // auto import fully qualified class names
     $rectorConfig->importNames();
+    $rectorConfig->removeUnusedImports();
 
     $rectorConfig->rule(UnderscoreToCamelCaseVariableNameRector::class);
     $rectorConfig->rule(SimplifyUselessVariableRector::class);

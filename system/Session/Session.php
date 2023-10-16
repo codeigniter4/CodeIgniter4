@@ -13,7 +13,6 @@ namespace CodeIgniter\Session;
 
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\I18n\Time;
-use Config\App;
 use Config\Cookie as CookieConfig;
 use Config\Services;
 use Config\Session as SessionConfig;

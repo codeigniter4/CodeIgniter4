@@ -19,7 +19,6 @@ use Config\Modules;
 use Config\Routing;
 use Config\Services;
 use InvalidArgumentException;
-use Locale;
 
 /**
  * @todo Implement nested resource routing (See CakePHP)
