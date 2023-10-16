@@ -22,7 +22,6 @@ use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\ModelException;
-use CodeIgniter\I18n\Time;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Database;
 use ReflectionException;
