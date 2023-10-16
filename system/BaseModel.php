@@ -1178,7 +1178,7 @@ abstract class BaseModel
         // Since multiple models may use the Pager, the Pager must be shared.
         $pager = Services::pager();
 
-        if ($segment) {
+        if ($segment !== 0) {
             $pager->setSegment($segment, $group);
         }
 
@@ -1639,6 +1639,8 @@ abstract class BaseModel
     protected function objectToArray($data, bool $onlyChanged = true, bool $recursive = false): array
     {
         $properties = $this->objectToRawArray($data, $onlyChanged, $recursive);
+
+        assert(is_array($properties));
 
         // Convert any Time instances to appropriate $dateFormat
         if ($properties !== []) {

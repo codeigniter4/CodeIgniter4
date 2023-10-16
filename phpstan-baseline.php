@@ -27,11 +27,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 6,
 	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
@@ -137,16 +132,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/CLI/CLI.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, array given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, int given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in \\|\\|, string given on the left side\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/CLI/CLI.php',
@@ -165,11 +150,6 @@ $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 5,
 	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, array given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/Commands.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -207,23 +187,8 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Cache/Handlers/PredisHandler.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, int given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Cache/Handlers/PredisHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, int given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Cache/Handlers/RedisHandler.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 6,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, CodeIgniter\\\\HTTP\\\\ResponseInterface\\|null given\\.$#',
-	'count' => 1,
 	'path' => __DIR__ . '/system/CodeIgniter.php',
 ];
 $ignoreErrors[] = [
@@ -958,11 +923,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a negated boolean, string\\|null given\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Config/Factories.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Config/Factories.php',
 ];
@@ -1917,28 +1877,8 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Debug/ExceptionHandler.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/ExceptionHandler.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 3,
-	'path' => __DIR__ . '/system/Debug/Exceptions.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, Throwable\\|null given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Exceptions.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, int given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Exceptions.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
-	'count' => 1,
 	'path' => __DIR__ . '/system/Debug/Exceptions.php',
 ];
 $ignoreErrors[] = [
@@ -2029,11 +1969,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 2,
-	'path' => __DIR__ . '/system/Encryption/Encryption.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, Config\\\\Encryption\\|null given\\.$#',
-	'count' => 1,
 	'path' => __DIR__ . '/system/Encryption/Encryption.php',
 ];
 $ignoreErrors[] = [
@@ -2153,11 +2088,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Constructor of class CodeIgniter\\\\HTTP\\\\CURLRequest has an unused parameter \\$config\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
 ];
@@ -2417,11 +2347,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/SiteURI.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/SiteURI.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Strict comparison using \\!\\=\\= between mixed and null will always evaluate to true\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/SiteURI.php',
@@ -2429,16 +2354,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 15,
-	'path' => __DIR__ . '/system/HTTP/URI.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/URI.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/system/HTTP/URI.php',
 ];
 $ignoreErrors[] = [
@@ -2612,11 +2527,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Helpers/test_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, array\\|null given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/test_helper.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 3,
 	'path' => __DIR__ . '/system/Helpers/text_helper.php',
@@ -2777,11 +2687,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Log/Logger.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, array given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Log/Logger.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$level \\(string\\) of method CodeIgniter\\\\Log\\\\Logger\\:\\:log\\(\\) should be contravariant with parameter \\$level \\(mixed\\) of method Psr\\\\Log\\\\LoggerInterface\\:\\:log\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Log/Logger.php',
@@ -2838,11 +2743,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in an if condition, array given\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Pager/Pager.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, int given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Pager/Pager.php',
 ];
@@ -3632,11 +3532,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, array\\|null given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$bodyFormat \\(string\\) in isset\\(\\) is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
@@ -4142,11 +4037,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Validation/Validation.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, array given\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Validation/Validation.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Validation/Validation.php',
@@ -4214,11 +4104,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 3,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/system/View/View.php',
 ];
 $ignoreErrors[] = [

@@ -159,7 +159,7 @@ class RedisHandler extends BaseHandler
             return false;
         }
 
-        if ($ttl) {
+        if ($ttl !== 0) {
             $this->redis->expireAt($key, Time::now()->getTimestamp() + $ttl);
         }
 

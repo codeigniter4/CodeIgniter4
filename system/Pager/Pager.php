@@ -136,7 +136,7 @@ class Pager implements PagerInterface
      */
     public function store(string $group, int $page, ?int $perPage, int $total, int $segment = 0)
     {
-        if ($segment) {
+        if ($segment !== 0) {
             $this->setSegment($segment, $group);
         }
 
@@ -409,7 +409,7 @@ class Pager implements PagerInterface
 
         $this->calculateCurrentPage($group);
 
-        if ($_GET) {
+        if ($_GET !== []) {
             $this->groups[$group]['uri'] = $this->groups[$group]['uri']->setQueryArray($_GET);
         }
     }

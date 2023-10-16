@@ -578,7 +578,7 @@ class CURLRequest extends OutgoingRequest
         if (! empty($config['decode_content'])) {
             $accept = $this->getHeaderLine('Accept-Encoding');
 
-            if ($accept) {
+            if ($accept !== '') {
                 $curlOptions[CURLOPT_ENCODING] = $accept;
             } else {
                 $curlOptions[CURLOPT_ENCODING]   = '';

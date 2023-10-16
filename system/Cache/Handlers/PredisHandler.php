@@ -133,7 +133,7 @@ class PredisHandler extends BaseHandler
             return false;
         }
 
-        if ($ttl) {
+        if ($ttl !== 0) {
             $this->redis->expireat($key, Time::now()->getTimestamp() + $ttl);
         }
 

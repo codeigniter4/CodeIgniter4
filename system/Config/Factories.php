@@ -145,7 +145,8 @@ class Factories
             }
 
             // Try to locate the class
-            if ($class = self::locateClass($options, $alias)) {
+            $class = self::locateClass($options, $alias);
+            if ($class !== null) {
                 return new $class(...$arguments);
             }
 
@@ -422,7 +423,7 @@ class Factories
      */
     public static function reset(?string $component = null)
     {
-        if ($component) {
+        if ($component !== null) {
             unset(
                 static::$options[$component],
                 static::$aliases[$component],

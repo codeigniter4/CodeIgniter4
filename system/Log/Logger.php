@@ -126,7 +126,7 @@ class Logger implements LoggerInterface
 
         // Now convert loggable levels to strings.
         // We only use numbers to make the threshold setting convenient for users.
-        if ($this->loggableLevels) {
+        if ($this->loggableLevels !== []) {
             $temp = [];
 
             foreach ($this->loggableLevels as $level) {
