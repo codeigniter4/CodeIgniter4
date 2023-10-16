@@ -38,6 +38,7 @@ final class MiscUrlTest extends CIUnitTestCase
         parent::setUp();
 
         Services::reset(true);
+        Services::routes()->loadRoutes();
 
         // Set a common base configuration (overriden by individual tests)
         $this->config            = new App();
