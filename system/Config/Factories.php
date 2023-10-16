@@ -423,7 +423,7 @@ class Factories
      */
     public static function reset(?string $component = null)
     {
-        if ($component !== null && $component !== '') {
+        if ($component !== null) {
             unset(
                 static::$options[$component],
                 static::$aliases[$component],
