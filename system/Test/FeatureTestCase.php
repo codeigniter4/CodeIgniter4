@@ -55,7 +55,7 @@ class FeatureTestCase extends CIUnitTestCase
     {
         $collection = Services::routes();
 
-        if ($routes) {
+        if ($routes !== null) {
             $collection->resetRoutes();
 
             foreach ($routes as $route) {

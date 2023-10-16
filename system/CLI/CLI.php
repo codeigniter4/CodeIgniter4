@@ -267,7 +267,7 @@ class CLI
         // Read the input from keyboard.
         $input = trim(static::input()) ?: $default;
 
-        if ($validation) {
+        if ($validation !== []) {
             while (! static::validate('"' . trim($field) . '"', $input, $validation)) {
                 $input = static::prompt($field, $options, $validation);
             }
@@ -1088,7 +1088,7 @@ class CLI
             foreach ($tableRows[$row] as $col) {
                 $diff = $maxColsLengths[$column] - static::strlen($col);
 
-                if ($diff) {
+                if ($diff !== 0) {
                     $tableRows[$row][$column] .= str_repeat(' ', $diff);
                 }
 

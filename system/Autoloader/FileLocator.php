@@ -205,7 +205,7 @@ class FileLocator
      */
     protected function ensureExt(string $path, string $ext): string
     {
-        if ($ext) {
+        if ($ext !== '') {
             $ext = '.' . $ext;
 
             if (substr($path, -strlen($ext)) !== $ext) {

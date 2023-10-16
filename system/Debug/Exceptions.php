@@ -201,7 +201,7 @@ class Exceptions
             return $this->handleDeprecationError($message, $file, $line);
         }
 
-        if (error_reporting() & $severity) {
+        if ((error_reporting() & $severity) !== 0) {
             throw new ErrorException($message, 0, $severity, $file, $line);
         }
 
@@ -227,7 +227,7 @@ class Exceptions
 
         ['type' => $type, 'message' => $message, 'file' => $file, 'line' => $line] = $error;
 
-        if ($this->exceptionCaughtByExceptionHandler) {
+        if ($this->exceptionCaughtByExceptionHandler instanceof Throwable) {
             $message .= "\n【Previous Exception】\n"
                 . get_class($this->exceptionCaughtByExceptionHandler) . "\n"
                 . $this->exceptionCaughtByExceptionHandler->getMessage() . "\n"
@@ -253,7 +253,7 @@ class Exceptions
         $view         = 'production.php';
         $templatePath = rtrim($templatePath, '\\/ ') . DIRECTORY_SEPARATOR;
 
-        if (str_ireplace(['off', 'none', 'no', 'false', 'null'], '', ini_get('display_errors'))) {
+        if (str_ireplace(['off', 'none', 'no', 'false', 'null'], '', ini_get('display_errors')) !== '') {
             $view = 'error_exception.php';
         }
 
