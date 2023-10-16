@@ -140,3 +140,51 @@ autoloader will be the first one to get a chance to locate the file.
 
 .. note:: Prior to v4.5.0, if the same namespace was defined in both CodeIgniter and Composer, CodeIgniter's autoloader was
     the first one to get a chance to locate the file.
+
+.. _file-locator-caching:
+
+*******************
+FileLocator Caching
+*******************
+
+.. versionadded:: 4.5.0
+
+**FileLocator** is responsible for finding files or getting a classname from a file,
+which cannot be achieved with PHP autoloading.
+
+To improve its performance, FileLocator Caching has been implemented.
+
+How It Works
+============
+
+- Save the all found data by FileLocator into a cache file when destructing,
+  if the cache data is updated.
+- Restore cached data when instantiating if cached data is available.
+
+The cached data are used permanently.
+
+How to Delete Cached Data
+=========================
+
+Once stored, the cached data never expire.
+
+So if you add or remove files or change existing file paths, or namespaces, old
+cached data will be returned and your app may not work properly.
+
+In that case, you must manually delete the cache file. If you add a CodeIgniter
+package via Composer, you also need to delete the cache file.
+
+You can use the ``spark cache:clear`` command:
+
+.. code-block:: console
+
+    php spark cache:clear
+
+Or simply delete the **writable/cache/FileLocatorCache** file.
+
+How to Enable FileLocator Caching
+=================================
+
+Add the following code in **app/Config/Services.php**:
+
+.. literalinclude:: autoloader/004.php

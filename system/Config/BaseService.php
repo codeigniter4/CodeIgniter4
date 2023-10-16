@@ -13,6 +13,7 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\ResponseCache;
 use CodeIgniter\CLI\Commands;
@@ -226,7 +227,7 @@ class BaseService
      * within namespaced folders, as well as convenience methods for
      * loading 'helpers', and 'libraries'.
      *
-     * @return FileLocator
+     * @return FileLocatorInterface
      */
     public static function locator(bool $getShared = true)
     {
