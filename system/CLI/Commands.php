@@ -100,9 +100,9 @@ class Commands
         // Loop over each file checking to see if a command with that
         // alias exists in the class.
         foreach ($files as $file) {
-            $className = $locator->getClassname($file);
+            $className = $locator->findQualifiedNameFromPath($file);
 
-            if ($className === '' || ! class_exists($className)) {
+            if ($className === false || ! class_exists($className)) {
                 continue;
             }
 

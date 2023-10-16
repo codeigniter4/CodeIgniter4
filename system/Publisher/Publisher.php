@@ -114,9 +114,9 @@ class Publisher extends FileCollection
 
         // Loop over each file checking to see if it is a Publisher
         foreach (array_unique($files) as $file) {
-            $className = $locator->getClassname($file);
+            $className = $locator->findQualifiedNameFromPath($file);
 
-            if ($className !== '' && class_exists($className) && is_a($className, self::class, true)) {
+            if ($className !== false && class_exists($className) && is_a($className, self::class, true)) {
                 self::$discovered[$directory][] = new $className();
             }
         }

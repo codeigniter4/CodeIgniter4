@@ -952,11 +952,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/DotEnv.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, string given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Factories.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/Factories.php',
