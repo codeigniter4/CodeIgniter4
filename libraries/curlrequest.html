@@ -649,7 +649,7 @@ You can pass 0 to wait indefinitely:</p>
 <section id="cookie">
 <h3><a class="toc-backref" href="#id13">cookie</a><a class="headerlink" href="#cookie" title="Permalink to this headline"></a></h3>
 <p>This specifies the filename that CURL should use to read cookie values from, and
-to save cookie values to. This is done using the CURL_COOKIEJAR and CURL_COOKIEFILE options.
+to save cookie values to. This is done using the <code class="docutils literal notranslate"><span class="pre">CURL_COOKIEJAR</span></code> and <code class="docutils literal notranslate"><span class="pre">CURL_COOKIEFILE</span></code> options.
 An example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -660,8 +660,9 @@ An example:</p>
 <section id="debug">
 <h3><a class="toc-backref" href="#id14">debug</a><a class="headerlink" href="#debug" title="Permalink to this headline"></a></h3>
 <p>When <code class="docutils literal notranslate"><span class="pre">debug</span></code> is passed and set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, this will enable additional debugging to echo to STDERR during the
-script execution. This is done by passing CURLOPT_VERBOSE and echoing the output. So, when you’re running a built-in
-server via <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">serve</span></code> you will see the output in the console. Otherwise, the output will be written to
+script execution.</p>
+<p>This is done by passing <code class="docutils literal notranslate"><span class="pre">CURLOPT_VERBOSE</span></code> and echoing the output. So, when you’re running a built-in
+server via <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">serve</span></code>, you will see the output in the console. Otherwise, the output will be written to
 the server’s error log.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -728,16 +729,19 @@ further headers arrays or calls to <code class="docutils literal notranslate"><s
 </section>
 <section id="http-errors">
 <h3><a class="toc-backref" href="#id18">http_errors</a><a class="headerlink" href="#http-errors" title="Permalink to this headline"></a></h3>
-<p>By default, CURLRequest will fail if the HTTP code returned is greater than or equal to 400. You can set
-<code class="docutils literal notranslate"><span class="pre">http_errors</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> to return the content instead:</p>
+<p>By default, CURLRequest will throw <code class="docutils literal notranslate"><span class="pre">HTTPException</span></code> if the HTTP code returned is
+greater than or equal to 400.</p>
+<p>If you want to see the response body, you can set <code class="docutils literal notranslate"><span class="pre">http_errors</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> to
+return the content instead:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/status/500&#39;</span><span class="p">);</span>
-<span class="c1">// Will fail verbosely</span>
+<span class="c1">// If the response code is 500, an HTTPException is thrown,</span>
+<span class="c1">// and a detailed error report is displayed if in development mode.</span>
 
-<span class="nv">$res</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/status/500&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;http_errors&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
-<span class="k">echo</span> <span class="nv">$res</span><span class="o">-&gt;</span><span class="na">getStatusCode</span><span class="p">();</span>
-<span class="c1">// 500</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/status/500&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;http_errors&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
+<span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getStatusCode</span><span class="p">();</span> <span class="c1">// 500</span>
+<span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getBody</span><span class="p">();</span>       <span class="c1">// You can see the response body.</span>
 </pre></div>
 </div>
 </section>
