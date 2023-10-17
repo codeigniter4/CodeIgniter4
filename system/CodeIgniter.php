@@ -336,6 +336,8 @@ class CodeIgniter
      * tries to route the response, loads the controller and generally
      * makes all the pieces work together.
      *
+     * @param bool $returnResponse Used for testing purposes only.
+     *
      * @return ResponseInterface|void
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
@@ -621,6 +623,9 @@ class CodeIgniter
      * @param CLIRequest|IncomingRequest $request
      *
      * @return $this
+     *
+     * @internal Used for testing purposes only.
+     * @testTag
      */
     public function setRequest($request)
     {
