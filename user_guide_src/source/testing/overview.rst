@@ -244,6 +244,10 @@ Removes all mocked classes from the Services class, bringing it back to its orig
 
 You can also use the ``$this->resetServices()`` method that ``CIUnitTestCase`` provides.
 
+.. note:: This method resets the all states of Services, and the ``RouteCollection``
+    will have no routes. If you want to use your routes to be loaded, you need to
+    call the ``loadRoutes()`` method like ``Services::routes()->loadRoutes()``.
+
 Services::resetSingle(string $name)
 -----------------------------------
 
