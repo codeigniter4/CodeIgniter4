@@ -412,7 +412,7 @@ without route definitions. The auto-routing is disabled by default.
 
 .. important:: Auto Routing (Legacy) routes a HTTP request with **any** HTTP method to a controller method.
 
-.. important:: If Auto Routing (Legacy) doesn't find the controller, it will throw page not found exception before the filter executes.
+.. important:: If Auto Routing (Legacy) doesn't find the controller, it will throw page not found exception before the filter executes in version **4.5**.
 
 Consider this URI::
 
