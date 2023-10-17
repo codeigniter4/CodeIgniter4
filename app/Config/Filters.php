@@ -7,6 +7,8 @@ use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
+use CodeIgniter\Filters\PageCache;
+use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
 
 class Filters extends BaseConfig
@@ -24,6 +26,27 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'pagecache'     => PageCache::class,
+        'performance'   => PerformanceMetrics::class,
+    ];
+
+    /**
+     * List of special required filters.
+     *
+     * The filters listed here is special. They are applied before and after
+     * other kinds of filters, and always applied even if a route does not exist.
+     *
+     * @var array<string, array<int, string>>
+     */
+    public array $required = [
+        'before' => [
+            'pagecache',
+        ],
+        'after' => [
+            'pagecache',
+            'performance',
+            'toolbar',
+        ],
     ];
 
     /**
@@ -39,7 +62,6 @@ class Filters extends BaseConfig
             // 'invalidchars',
         ],
         'after' => [
-            'toolbar',
             // 'honeypot',
             // 'secureheaders',
         ],

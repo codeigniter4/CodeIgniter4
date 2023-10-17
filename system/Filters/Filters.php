@@ -225,6 +225,94 @@ class Filters
     }
 
     /**
+     * Runs required filters for the specified position.
+     *
+     * @return RequestInterface|ResponseInterface|string|null
+     *
+     * @throws FilterException
+     */
+    public function runRequired(string $position = 'before')
+    {
+        // Set the toolbar filter to the last position to be executed
+        if (
+            in_array('toolbar', $this->config->required['after'], true)
+            && ($count = count($this->config->required['after'])) > 1
+            && $this->config->required['after'][$count - 1] !== 'toolbar'
+        ) {
+            array_splice(
+                $this->config->required['after'],
+                array_search('toolbar', $this->config->required['after'], true),
+                1
+            );
+            $this->config->required['after'][] = 'toolbar';
+        }
+
+        $filtersClass = [];
+
+        foreach ($this->config->required[$position] as $alias) {
+            if (! array_key_exists($alias, $this->config->aliases)) {
+                throw FilterException::forNoAlias($alias);
+            }
+
+            if (is_array($this->config->aliases[$alias])) {
+                $filtersClass[$position] = array_merge($filtersClass[$position], $this->config->aliases[$alias]);
+            } else {
+                $filtersClass[$position][] = $this->config->aliases[$alias];
+            }
+        }
+
+        foreach ($filtersClass[$position] as $className) {
+            $class = new $className();
+
+            if (! $class instanceof FilterInterface) {
+                throw FilterException::forIncorrectInterface(get_class($class));
+            }
+
+            if ($position === 'before') {
+                $result = $class->before(
+                    $this->request,
+                    $this->argumentsClass[$className] ?? null
+                );
+
+                if ($result instanceof RequestInterface) {
+                    $this->request = $result;
+
+                    continue;
+                }
+
+                // If the response object was sent back,
+                // then send it and quit.
+                if ($result instanceof ResponseInterface) {
+                    // short circuit - bypass any other filters
+                    return $result;
+                }
+                // Ignore an empty result
+                if (empty($result)) {
+                    continue;
+                }
+
+                return $result;
+            }
+
+            if ($position === 'after') {
+                $result = $class->after(
+                    $this->request,
+                    $this->response,
+                    $this->argumentsClass[$className] ?? null
+                );
+
+                if ($result instanceof ResponseInterface) {
+                    $this->response = $result;
+
+                    continue;
+                }
+            }
+        }
+
+        return $position === 'before' ? $this->request : $this->response;
+    }
+
+    /**
      * Runs through our list of filters provided by the configuration
      * object to get them ready for use, including getting uri masks
      * to proper regex, removing those we can from the possibilities
@@ -665,7 +753,7 @@ class Filters
     private function pathApplies(string $uri, $paths)
     {
         // empty path matches all
-        if (empty($paths)) {
+        if ($paths === '' || $paths === []) {
             return true;
         }
 
