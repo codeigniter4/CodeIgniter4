@@ -1,8 +1,9 @@
 <?php
 
 $client->request('GET', '/status/500');
-// Will fail verbosely
+// If the response code is 500, an HTTPException is thrown,
+// and a detailed error report is displayed if in development mode.
 
-$res = $client->request('GET', '/status/500', ['http_errors' => false]);
-echo $res->getStatusCode();
-// 500
+$response = $client->request('GET', '/status/500', ['http_errors' => false]);
+echo $response->getStatusCode(); // 500
+echo $response->getBody();       // You can see the response body.

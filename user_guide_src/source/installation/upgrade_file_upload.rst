@@ -7,7 +7,7 @@ Upgrade Working with Uploaded Files
 
 Documentations
 ==============
-- `Output Class Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/file_uploading.html>`_
+- `File Uploading Class Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/file_uploading.html>`_
 - :doc:`Working with Uploaded Files Documentation CodeIgniter 4.X </libraries/uploaded_files>`
 
 What has been changed
