@@ -136,25 +136,6 @@ class CodeIgniter
     protected static $cacheTTL = 0;
 
     /**
-     * Request path to use.
-     *
-     * @var string
-     *
-     * @deprecated No longer used.
-     */
-    protected $path;
-
-    /**
-     * Should the Response instance "pretend"
-     * to keep from setting headers/cookies/etc
-     *
-     * @var bool
-     *
-     * @deprecated No longer used.
-     */
-    protected $useSafeOutput = false;
-
-    /**
      * Context
      *  web:     Invoked by HTTP request
      *  php-cli: Invoked by CLI via `php public/index.php`
@@ -381,22 +362,6 @@ class CodeIgniter
         }
 
         $this->sendResponse();
-    }
-
-    /**
-     * Set our Response instance to "pretend" mode so that things like
-     * cookies and headers are not actually sent, allowing PHP 7.2+ to
-     * not complain when ini_set() function is used.
-     *
-     * @return $this
-     *
-     * @deprecated No longer used.
-     */
-    public function useSafeOutput(bool $safe = true)
-    {
-        $this->useSafeOutput = $safe;
-
-        return $this;
     }
 
     /**
@@ -844,28 +809,7 @@ class CodeIgniter
      */
     protected function determinePath()
     {
-        if (! empty($this->path)) {
-            return $this->path;
-        }
-
         return method_exists($this->request, 'getPath') ? $this->request->getPath() : $this->request->getUri()->getPath();
-    }
-
-    /**
-     * Allows the request path to be set from outside the class,
-     * instead of relying on CLIRequest or IncomingRequest for the path.
-     *
-     * This is not used now.
-     *
-     * @return $this
-     *
-     * @deprecated No longer used.
-     */
-    public function setPath(string $path)
-    {
-        $this->path = $path;
-
-        return $this;
     }
 
     /**
