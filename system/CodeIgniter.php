@@ -357,8 +357,6 @@ class CodeIgniter
         $this->getRequestObject();
         $this->getResponseObject();
 
-        $this->spoofRequestMethod();
-
         try {
             $this->forceSecureAccess();
 
@@ -642,6 +640,8 @@ class CodeIgniter
     protected function getRequestObject()
     {
         if ($this->request instanceof Request) {
+            $this->spoofRequestMethod();
+
             return;
         }
 
@@ -652,6 +652,8 @@ class CodeIgniter
         }
 
         $this->request = Services::request();
+
+        $this->spoofRequestMethod();
     }
 
     /**
