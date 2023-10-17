@@ -414,7 +414,7 @@ class CodeIgniter
 
         $routeFilters = $this->tryToRouteIt($routes);
 
-        $uri = $this->determinePath();
+        $uri = $this->request->getPath();
 
         if ($this->enableFilters) {
             // Start up the filters
@@ -780,14 +780,14 @@ class CodeIgniter
         // $routes is defined in Config/Routes.php
         $this->router = Services::router($routes, $this->request);
 
-        $path = $this->determinePath();
+        $uri = $this->request->getPath();
 
         $this->benchmark->stop('bootstrap');
         $this->benchmark->start('routing');
 
         $this->outputBufferingStart();
 
-        $this->controller = $this->router->handle($path);
+        $this->controller = $this->router->handle($uri);
         $this->method     = $this->router->methodName();
 
         // If a {locale} segment was matched in the final route,
@@ -806,6 +806,8 @@ class CodeIgniter
      * on the CLI/IncomingRequest path.
      *
      * @return string
+     *
+     * @deprecated 4.5.0 No longer used.
      */
     protected function determinePath()
     {
