@@ -809,7 +809,7 @@ class CodeIgniter
      */
     protected function determinePath()
     {
-        return method_exists($this->request, 'getPath') ? $this->request->getPath() : $this->request->getUri()->getPath();
+        return $this->request->getPath();
     }
 
     /**
