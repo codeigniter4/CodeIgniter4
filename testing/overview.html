@@ -681,6 +681,12 @@ class exactly. The second parameter is the instance to replace it with.</p>
 <h4><a class="toc-backref" href="#id17">Services::reset()</a><a class="headerlink" href="#services-reset" title="Permalink to this headline"></a></h4>
 <p>Removes all mocked classes from the Services class, bringing it back to its original state.</p>
 <p>You can also use the <code class="docutils literal notranslate"><span class="pre">$this-&gt;resetServices()</span></code> method that <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> provides.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method resets the all states of Services, and the <code class="docutils literal notranslate"><span class="pre">RouteCollection</span></code>
+will have no routes. If you want to use your routes to be loaded, you need to
+call the <code class="docutils literal notranslate"><span class="pre">loadRoutes()</span></code> method like <code class="docutils literal notranslate"><span class="pre">Services::routes()-&gt;loadRoutes()</span></code>.</p>
+</div>
 </section>
 <section id="services-resetsingle-string-name">
 <h4><a class="toc-backref" href="#id18">Services::resetSingle(string $name)</a><a class="headerlink" href="#services-resetsingle-string-name" title="Permalink to this headline"></a></h4>
