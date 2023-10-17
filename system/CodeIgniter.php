@@ -171,7 +171,7 @@ class CodeIgniter
     /**
      * Whether to return Response object or send response.
      *
-     * @deprecated No longer used.
+     * @deprecated 4.4.0 No longer used.
      */
     protected bool $returnResponse = false;
 
