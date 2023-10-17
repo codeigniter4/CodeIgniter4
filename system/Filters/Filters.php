@@ -233,6 +233,10 @@ class Filters
      */
     public function runRequired(string $position = 'before')
     {
+        if (! isset($this->config->required[$position]) || $this->config->required[$position] === []) {
+            return $position === 'before' ? $this->request : $this->response;
+        }
+
         // Set the toolbar filter to the last position to be executed
         if (
             in_array('toolbar', $this->config->required['after'], true)
