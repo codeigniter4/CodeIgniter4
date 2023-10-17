@@ -360,6 +360,8 @@ class CodeIgniter
         $this->spoofRequestMethod();
 
         try {
+            $this->forceSecureAccess();
+
             $this->response = $this->handleRequest($routes, config(Cache::class), $returnResponse);
         } catch (ResponsableInterface|DeprecatedRedirectException $e) {
             $this->outputBufferingEnd();
@@ -435,8 +437,6 @@ class CodeIgniter
      */
     protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
     {
-        $this->forceSecureAccess();
-
         if ($this->request instanceof IncomingRequest && strtolower($this->request->getMethod()) === 'cli') {
             return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
         }
