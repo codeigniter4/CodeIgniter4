@@ -376,14 +376,14 @@ class CodeIgniter
 
         $this->runRequiredAfterFilters($filters);
 
+        // Is there a post-system event?
+        Events::trigger('post_system');
+
         if ($returnResponse) {
             return $this->response;
         }
 
         $this->sendResponse();
-
-        // Is there a post-system event?
-        Events::trigger('post_system');
     }
 
     /**
