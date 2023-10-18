@@ -175,16 +175,7 @@ class Filters
         $this->initialize(strtolower($uri));
 
         if ($position === 'before') {
-            $result = $this->runBefore($this->filtersClass[$position]);
-
-            // If the response object was sent back,
-            // then send it and quit.
-            if ($result instanceof ResponseInterface) {
-                // short circuit - bypass any other filters
-                return $result;
-            }
-
-            return $result;
+            return $this->runBefore($this->filtersClass[$position]);
         }
 
         // After
@@ -301,16 +292,7 @@ class Filters
         }
 
         if ($position === 'before') {
-            $result = $this->runBefore($filterClasses[$position]);
-
-            // If the response object was sent back,
-            // then send it and quit.
-            if ($result instanceof ResponseInterface) {
-                // short circuit - bypass any other filters
-                return $result;
-            }
-
-            return $result;
+            return $this->runBefore($filterClasses[$position]);
         }
 
         // After
