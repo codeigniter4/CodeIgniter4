@@ -300,55 +300,21 @@ class Filters
             }
         }
 
-        foreach ($filtersClass[$position] as $className) {
-            $class = new $className();
+        if ($position === 'before') {
+            $result = $this->runBefore($filterClasses[$position]);
 
-            if (! $class instanceof FilterInterface) {
-                throw FilterException::forIncorrectInterface(get_class($class));
-            }
-
-            if ($position === 'before') {
-                $result = $class->before(
-                    $this->request,
-                    $this->argumentsClass[$className] ?? null
-                );
-
-                if ($result instanceof RequestInterface) {
-                    $this->request = $result;
-
-                    continue;
-                }
-
-                // If the response object was sent back,
-                // then send it and quit.
-                if ($result instanceof ResponseInterface) {
-                    // short circuit - bypass any other filters
-                    return $result;
-                }
-                // Ignore an empty result
-                if (empty($result)) {
-                    continue;
-                }
-
+            // If the response object was sent back,
+            // then send it and quit.
+            if ($result instanceof ResponseInterface) {
+                // short circuit - bypass any other filters
                 return $result;
             }
 
-            if ($position === 'after') {
-                $result = $class->after(
-                    $this->request,
-                    $this->response,
-                    $this->argumentsClass[$className] ?? null
-                );
-
-                if ($result instanceof ResponseInterface) {
-                    $this->response = $result;
-
-                    continue;
-                }
-            }
+            return $result;
         }
 
-        return $position === 'before' ? $this->request : $this->response;
+        // After
+        return $this->runAfter($filterClasses[$position]);
     }
 
     /**
