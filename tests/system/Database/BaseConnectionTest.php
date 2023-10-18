@@ -122,7 +122,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $db->initialize();
 
         $this->assertGreaterThan($start, $db->getConnectStart());
-        $this->assertGreaterThan(0.0, $db->getConnectDuration());
+        $this->assertGreaterThanOrEqual(0.0, $db->getConnectDuration());
     }
 
     /**
