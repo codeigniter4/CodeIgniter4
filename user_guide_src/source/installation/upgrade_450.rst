@@ -132,6 +132,11 @@ Removed Deprecated Items
 Some deprecated items have been removed. If you extend these classes and are
 using them, upgrade your code. See :ref:`ChangeLog <v450-removed-deprecated-items>` for details.
 
+Auto Routing (Legacy) 
+=======================
+
+If the auto routing cannot found the controller, it will throw page not found exception before the filter executed.
+
 Breaking Enhancements
 *********************
 

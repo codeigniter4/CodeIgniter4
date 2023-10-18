@@ -18,6 +18,8 @@ Highlights
 BREAKING
 ********
 
+- **AutoRouting Legacy:** Add a condition to check if the controller exists.
+
 Behavior Changes
 ================
 
