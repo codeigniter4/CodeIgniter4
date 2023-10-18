@@ -1,5 +1,49 @@
 # Changelog
 
+## [v4.4.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.1) (2023-10-019)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.1...v4.4.2)
+
+### Fixed Bugs
+
+* Fix: [Session] the problem of secondary retrieving values ​​in RedisHandler by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/7887
+* fix: `spark migrate` `-g` option by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7894
+* fix: [DebugBar] dark mode `timeline-color-open` color text on `Debug` by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/7907
+* fix: base_url()/site_url() does not work on CLI by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7901
+* Fix: Routing::loadRoutes() in windows do not validate correctly $routesFiles by @pjsde in https://github.com/codeigniter4/CodeIgniter4/pull/7930
+* fix: Services::request() should call AppServices instead static by @pjsde in https://github.com/codeigniter4/CodeIgniter4/pull/7985
+* fix: lang() may return false by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7966
+* fix: CI returns "200 OK" when PageNotFound by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8011
+* fix: spark may not show exceptions or show backtrace as json by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7962
+* fix: CLI prompt validation message by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7977
+* fix: CSP style nonce is added even if honeypot is not attached by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8025
+* fix: named routes don't work with spark by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8028
+* fix: add a primary key to an existing table by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/8031
+* fix: reverse route for `''` is not `false` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8024
+* fix: `spark routes` may show incorrect route names by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8040
+* fix: Factories caching bug by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8037
+* fix: file sort order in Files DebugBar by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8048
+
+### Enhancements
+
+* fix: check for CSRF token in the raw body by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/7915
+
+### Refactoring
+
+* fix: add types to View $filters and $plugins by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/7885
+* test: use PHP_VERSION_ID instead of PHP_VERSION by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7913
+* [PHP 8.3] refactor: ReflectionProperty::setValue() signature deprecation by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7911
+* refactor: remove unneeded arguments to session by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/7919
+* fix: types for common functions by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/7917
+* Refactor: Apply PHPStan rule "Short ternary operator is not allowed" to RouteCollection by @pjsde in https://github.com/codeigniter4/CodeIgniter4/pull/7947
+* refactor: remove $_SESSION from methods and functions by @pjsde in https://github.com/codeigniter4/CodeIgniter4/pull/7982
+* refactor: if condition in OCI8/Connection.php by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7994
+* style: remove unnecessary () in Toolbar by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8013
+* refactor: replace deprecated `Services::request(config, false)` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7998
+* refactor: delete duplicate code for Composer loading by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8004
+* [Rector] Apply BooleanInIfConditionRuleFixerRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/7951
+
+**Full Changelog**: https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.1...v4.4.2
+
 ## [v4.4.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.1) (2023-09-05)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.0...v4.4.1)
 
