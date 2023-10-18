@@ -173,55 +173,90 @@ class Filters
     {
         $this->initialize(strtolower($uri));
 
-        foreach ($this->filtersClass[$position] as $className) {
+        if ($position === 'before') {
+            $result = $this->runBefore($this->filtersClass[$position]);
+
+            // If the response object was sent back,
+            // then send it and quit.
+            if ($result instanceof ResponseInterface) {
+                // short circuit - bypass any other filters
+                return $result;
+            }
+
+            return $result;
+        }
+
+        if ($position === 'after') {
+            $result = $this->runAfter($this->filtersClass[$position]);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return RequestInterface|ResponseInterface|string
+     */
+    private function runBefore(array $filterClasses)
+    {
+        foreach ($filterClasses as $className) {
             $class = new $className();
 
             if (! $class instanceof FilterInterface) {
                 throw FilterException::forIncorrectInterface(get_class($class));
             }
 
-            if ($position === 'before') {
-                $result = $class->before(
-                    $this->request,
-                    $this->argumentsClass[$className] ?? null
-                );
+            $result = $class->before(
+                $this->request,
+                $this->argumentsClass[$className] ?? null
+            );
 
-                if ($result instanceof RequestInterface) {
-                    $this->request = $result;
+            if ($result instanceof RequestInterface) {
+                $this->request = $result;
 
-                    continue;
-                }
+                continue;
+            }
 
-                // If the response object was sent back,
-                // then send it and quit.
-                if ($result instanceof ResponseInterface) {
-                    // short circuit - bypass any other filters
-                    return $result;
-                }
-                // Ignore an empty result
-                if (empty($result)) {
-                    continue;
-                }
-
+            // If the response object was sent back,
+            // then send it and quit.
+            if ($result instanceof ResponseInterface) {
+                // short circuit - bypass any other filters
                 return $result;
             }
 
-            if ($position === 'after') {
-                $result = $class->after(
-                    $this->request,
-                    $this->response,
-                    $this->argumentsClass[$className] ?? null
-                );
+            // Ignore an empty result
+            if (empty($result)) {
+                continue;
+            }
 
-                if ($result instanceof ResponseInterface) {
-                    $this->response = $result;
+            return $result;
+        }
 
-                    continue;
-                }
+        return $this->request;
+    }
+
+    private function runAfter(array $filterClasses): ResponseInterface
+    {
+        foreach ($filterClasses as $className) {
+            $class = new $className();
+
+            if (! $class instanceof FilterInterface) {
+                throw FilterException::forIncorrectInterface(get_class($class));
+            }
+
+            $result = $class->after(
+                $this->request,
+                $this->response,
+                $this->argumentsClass[$className] ?? null
+            );
+
+            if ($result instanceof ResponseInterface) {
+                $this->response = $result;
+
+                continue;
             }
         }
 
-        return $position === 'before' ? $this->request : $this->response;
+        return $this->response;
     }
 
     /**
