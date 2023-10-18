@@ -822,7 +822,7 @@ final class TableTest extends CIUnitTestCase
      */
     public function testGenerateTableWithHeadingContainFieldNamedData(): void
     {
-        $table_template = [
+        $tableTemplate = [
             'table_open' => '<table border="1" cellpadding="2" cellspacing="1">',
 
             'thead_open'  => '<thead>',
@@ -857,7 +857,7 @@ final class TableTest extends CIUnitTestCase
             'table_close' => '</table>',
         ];
 
-        $table = new \CodeIgniter\View\Table($table_template);
+        $table = new Table($tableTemplate);
         $table->setHeading([
             'codigo'         => 'Codigo Orçamento',
             'data'           => 'Data do Orçamento',
