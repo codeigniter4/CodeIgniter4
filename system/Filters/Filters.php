@@ -286,7 +286,7 @@ class Filters
             $this->config->required['after'][] = 'toolbar';
         }
 
-        $filtersClass = [];
+        $filterClasses = [];
 
         foreach ($this->config->required[$position] as $alias) {
             if (! array_key_exists($alias, $this->config->aliases)) {
@@ -294,9 +294,9 @@ class Filters
             }
 
             if (is_array($this->config->aliases[$alias])) {
-                $filtersClass[$position] = array_merge($filtersClass[$position], $this->config->aliases[$alias]);
+                $filterClasses[$position] = array_merge($filterClasses[$position], $this->config->aliases[$alias]);
             } else {
-                $filtersClass[$position][] = $this->config->aliases[$alias];
+                $filterClasses[$position][] = $this->config->aliases[$alias];
             }
         }
 
@@ -717,7 +717,7 @@ class Filters
      */
     protected function processAliasesToClass(string $position)
     {
-        $filtersClass = [];
+        $filterClasses = [];
 
         foreach ($this->filters[$position] as $alias => $rules) {
             if (is_numeric($alias) && is_string($rules)) {
@@ -729,18 +729,18 @@ class Filters
             }
 
             if (is_array($this->config->aliases[$alias])) {
-                $filtersClass = [...$filtersClass, ...$this->config->aliases[$alias]];
+                $filterClasses = [...$filterClasses, ...$this->config->aliases[$alias]];
             } else {
-                $filtersClass[] = $this->config->aliases[$alias];
+                $filterClasses[] = $this->config->aliases[$alias];
             }
         }
 
-        // when using enableFilter() we already write the class name in $filtersClass as well as the
+        // when using enableFilter() we already write the class name in $filterClasses as well as the
         // alias in $filters. This leads to duplicates when using route filters.
         if ($position === 'before') {
-            $this->filtersClass[$position] = array_merge($filtersClass, $this->filtersClass[$position]);
+            $this->filtersClass[$position] = array_merge($filterClasses, $this->filtersClass[$position]);
         } else {
-            $this->filtersClass[$position] = array_merge($this->filtersClass[$position], $filtersClass);
+            $this->filtersClass[$position] = array_merge($this->filtersClass[$position], $filterClasses);
         }
 
         // Since some filters like rate limiters rely on being executed once a request we filter em here.
