@@ -68,6 +68,7 @@ final class FilterTestTraitTest extends CIUnitTestCase
         $result = $caller();
 
         $this->assertSame('http://hellowworld.com', $result->getBody());
+        $this->assertNull(Services::response()->getBody());
 
         $this->resetServices();
     }
