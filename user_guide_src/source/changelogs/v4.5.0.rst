@@ -118,6 +118,15 @@ CodeIgniter
 - ``useSafeOutput()``
 - ``setPath()``
 
+Test
+----
+
+- ``CIDatabaseTestCase``
+- ``ControllerResponse``
+- ``ControllerTester``
+- ``FeatureResponse``
+- ``FeatureTestCase``
+
 Others
 ------
 
