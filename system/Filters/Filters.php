@@ -164,6 +164,7 @@ class Filters
      * uri and position.
      *
      * @param string $uri URI path relative to baseURL
+     * @phpstan-param 'before'|'after' $position
      *
      * @return RequestInterface|ResponseInterface|string|null
      *
@@ -186,11 +187,8 @@ class Filters
             return $result;
         }
 
-        if ($position === 'after') {
-            $result = $this->runAfter($this->filtersClass[$position]);
-        }
-
-        return $result;
+        // After
+        return $this->runAfter($this->filtersClass[$position]);
     }
 
     /**
@@ -263,6 +261,8 @@ class Filters
      * Runs required filters for the specified position.
      *
      * @return RequestInterface|ResponseInterface|string|null
+     *
+     * @phpstan-param 'before'|'after' $position
      *
      * @throws FilterException
      */
