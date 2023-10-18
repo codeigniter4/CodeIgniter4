@@ -82,6 +82,8 @@ You can stop simulation by passing false:
 
 .. literalinclude:: events/008.php
 
+.. _event-points:
+
 Event Points
 ============
 
