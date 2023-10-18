@@ -119,6 +119,13 @@ has been removed.
 
 If you extneds ``BaseModel``, implement the ``getIdValue()`` method in the child class.
 
+Factories
+=========
+
+:doc:`../concepts/factories` has been changed to a final class.
+In the unlikely event, you have inherited the Factories, stop inheriting and
+copy the code into your Factories class.
+
 Removed Deprecated Items
 ========================
 

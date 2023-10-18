@@ -34,6 +34,12 @@ Due to a bug fix, the behavior has changed so that options passed to the outer
 ``group()`` are merged with the options of the inner ``group()``.
 See :ref:`Upgrading Guide <upgrade-450-nested-route-groups-and-options>` for details.
 
+Factories class
+---------------
+
+:doc:`../concepts/factories` has been changed to a final class. It is a static
+class, and even if it were extended, there is no way to replace it.
+
 Others
 ------
 
