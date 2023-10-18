@@ -157,11 +157,12 @@ final class AutoRouter implements AutoRouterInterface
 
         // Load the file so that it's available for CodeIgniter.
         $file = APPPATH . 'Controllers/' . $this->directory . $controllerName . '.php';
-        if (is_file($file)) {
-            include_once $file;
-        } else {
+
+        if (! is_file($file)) {
             throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
         }
+
+        include_once $file;
 
         // Ensure the controller stores the fully-qualified class name
         // We have to check for a length over 1, since by default it will be '\'
