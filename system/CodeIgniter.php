@@ -340,6 +340,20 @@ class CodeIgniter
         $this->getRequestObject();
         $this->getResponseObject();
 
+        try {
+            $this->forceSecureAccess();
+        } catch (RedirectException $e) {
+            $this->response = $e->getResponse();
+
+            if ($returnResponse) {
+                return $this->response;
+            }
+
+            $this->sendResponse();
+
+            return;
+        }
+
         Events::trigger('pre_system');
 
         $this->benchmark->stop('bootstrap');
@@ -355,8 +369,6 @@ class CodeIgniter
             $this->response = $possibleResponse;
         } else {
             try {
-                $this->forceSecureAccess();
-
                 $this->response = $this->handleRequest($routes, config(Cache::class), $returnResponse);
             } catch (ResponsableInterface|DeprecatedRedirectException $e) {
                 $this->outputBufferingEnd();
