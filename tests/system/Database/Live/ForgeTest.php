@@ -941,7 +941,7 @@ final class ForgeTest extends CIUnitTestCase
                 ],
             ];
 
-            if (version_compare($this->db->getVersion(), '8.0.17', '>=')) {
+            if (version_compare($this->db->getVersion(), '8.0.17', '>=') && strpos($this->db->getVersion(), 'MariaDB') === false) {
                 // As of MySQL 8.0.17, the display width attribute for integer data types
                 // is deprecated and is not reported back anymore.
                 // @see https://dev.mysql.com/doc/refman/8.0/en/numeric-type-attributes.html
@@ -1651,6 +1651,87 @@ final class ForgeTest extends CIUnitTestCase
 
         // test inserting data
         $this->insertDataTest();
+
+        // drop tables to avoid any future conflicts
+        $this->forge->dropTable('actions', true);
+        $this->forge->dropTable('user2', true);
+    }
+
+    public function testProcessIndexesWithKeyOnly(): void
+    {
+        // make sure tables don't exist
+        $this->forge->dropTable('actions', true);
+
+        $this->createActionsTable();
+        $this->forge->addKey('name', false, false, 'db_actions_name');
+
+        // create indexes
+        $this->forge->processIndexes('actions');
+
+        // get a list of all indexes
+        $allIndexes = $this->db->getIndexData('actions');
+
+        // check that db_actions_name key exists
+        $indexes = array_filter(
+            $allIndexes,
+            static fn ($index) => ($index->name === 'db_actions_name')
+                && ($index->fields === [0 => 'name'])
+        );
+        $this->assertCount(1, $indexes);
+
+        // drop tables to avoid any future conflicts
+        $this->forge->dropTable('actions', true);
+    }
+
+    public function testProcessIndexesWithPrimaryKeyOnly(): void
+    {
+        // make sure tables don't exist
+        $this->forge->dropTable('actions', true);
+
+        $this->createActionsTable();
+        $this->forge->addPrimaryKey('id');
+
+        // create indexes
+        $this->forge->processIndexes('actions');
+
+        // get a list of all indexes
+        $allIndexes = $this->db->getIndexData('actions');
+
+        // check that the primary key exists
+        $indexes = array_filter(
+            $allIndexes,
+            static fn ($index) => $index->type === 'PRIMARY'
+        );
+        $this->assertCount(1, $indexes);
+
+        // drop tables to avoid any future conflicts
+        $this->forge->dropTable('actions', true);
+    }
+
+    public function testProcessIndexesWithForeignKeyOnly(): void
+    {
+        // make sure tables don't exist
+        $this->forge->dropTable('actions', true);
+        $this->forge->dropTable('user2', true);
+
+        $this->createUser2TableWithKeys();
+        $this->populateUser2Table();
+        $this->createActionsTable();
+
+        // SQLite does not support custom foreign key name
+        if ($this->db->DBDriver === 'SQLite3') {
+            $this->forge->addForeignKey('userid', 'user', 'id');
+            $this->forge->addForeignKey('userid2', 'user2', 'id');
+        } else {
+            $this->forge->addForeignKey('userid', 'user', 'id', '', '', 'db_actions_userid_foreign');
+            $this->forge->addForeignKey('userid2', 'user2', 'id', '', '', 'db_actions_userid2_foreign');
+        }
+
+        // create indexes
+        $this->forge->processIndexes('actions');
+
+        // check that the two foreign keys exist
+        $this->assertCount(2, $this->db->getForeignKeyData('actions'));
 
         // drop tables to avoid any future conflicts
         $this->forge->dropTable('actions', true);

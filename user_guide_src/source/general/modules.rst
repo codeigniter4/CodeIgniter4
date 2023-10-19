@@ -160,8 +160,17 @@ the **Modules** config file, described above.
 When working with modules, it can be a problem if the routes in the application contain wildcards.
 In that case, see :ref:`routing-priority`.
 
+.. _modules-filters:
+
 Filters
 =======
+
+.. deprecated:: 4.4.2
+
+.. note:: This feature is deprecated. Use :ref:`registrars` instead like the
+    following:
+
+    .. literalinclude:: modules/015.php
 
 By default, :doc:`filters <../incoming/filters>` are automatically scanned for within modules.
 It can be turned off in the **Modules** config file, described above.

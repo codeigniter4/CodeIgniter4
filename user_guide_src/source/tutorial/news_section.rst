@@ -120,6 +120,17 @@ that are going to display the news items to the user. This could be done
 in our ``Pages`` controller created earlier, but for the sake of clarity,
 a new ``News`` controller is defined.
 
+Adding Routing Rules
+====================
+
+Modify your **app/Config/Routes.php** file, so it looks as follows:
+
+.. literalinclude:: news_section/008.php
+
+This makes sure the requests reach the ``News`` controller instead of
+going directly to the ``Pages`` controller. The second ``$routes->get()`` line
+routes URI's with a slug to the ``show()`` method in the ``News`` controller.
+
 Create News Controller
 ======================
 
@@ -199,17 +210,6 @@ The only thing left to do is create the corresponding view at
 **app/Views/news/view.php**. Put the following code in this file.
 
 .. literalinclude:: news_section/007.php
-
-Adding Routing Rules
-********************
-
-Modify your **app/Config/Routes.php** file, so it looks as follows:
-
-.. literalinclude:: news_section/008.php
-
-This makes sure the requests reach the ``News`` controller instead of
-going directly to the ``Pages`` controller. The second ``$routes->get()`` line
-routes URI's with a slug to the ``show()`` method in the ``News`` controller.
 
 Point your browser to your "news" page, i.e., **localhost:8080/news**,
 you should see a list of the news items, each of which has a link

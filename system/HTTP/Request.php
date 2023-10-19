@@ -16,6 +16,8 @@ use Config\App;
 
 /**
  * Representation of an incoming, server-side HTTP request.
+ *
+ * @see \CodeIgniter\HTTP\RequestTest
  */
 class Request extends OutgoingRequest implements RequestInterface
 {

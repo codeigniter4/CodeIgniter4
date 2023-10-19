@@ -18,6 +18,8 @@ What has been changed
   Use :ref:`Rule Classes <validation-using-rule-classes>` or
   :ref:`Closure Rule <validation-using-closure-rule>`
   instead.
+- In CI3, Callbacks/Callable rules were prioritized, but in CI4, Closure Rules are
+  not prioritized, and are checked in the order in which they are listed.
 - CI4 validation format rules do not permit empty string.
 - CI4 validation never changes your data.
 - Since v4.3.0, :php:func:`validation_errors()` has been introduced, but the API is different from CI3's.

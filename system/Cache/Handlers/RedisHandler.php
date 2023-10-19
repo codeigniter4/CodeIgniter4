@@ -19,6 +19,8 @@ use RedisException;
 
 /**
  * Redis cache handler
+ *
+ * @see \CodeIgniter\Cache\Handlers\RedisHandlerTest
  */
 class RedisHandler extends BaseHandler
 {
@@ -157,7 +159,7 @@ class RedisHandler extends BaseHandler
             return false;
         }
 
-        if ($ttl) {
+        if ($ttl !== 0) {
             $this->redis->expireAt($key, Time::now()->getTimestamp() + $ttl);
         }
 

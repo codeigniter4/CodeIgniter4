@@ -168,4 +168,26 @@ final class RedisHandlerTest extends CIUnitTestCase
         $handler = $this->getInstance();
         $this->assertSame(1, $handler->gc(3600));
     }
+
+    /**
+     * See https://github.com/codeigniter4/CodeIgniter4/issues/7695
+     */
+    public function testSecondaryReadAfterClose(): void
+    {
+        $handler = $this->getInstance();
+        $handler->open($this->sessionSavePath, $this->sessionName);
+
+        $expected = <<<'DATA'
+            __ci_last_regenerate|i:1664607454;_ci_previous_url|s:32:"http://localhost:8080/index.php/";key|s:5:"value";
+            DATA;
+        $this->assertSame($expected, $handler->read('555556b43phsnnf8if6bo33b635e4447'));
+
+        $handler->close();
+
+        $handler->open($this->sessionSavePath, $this->sessionName);
+
+        $this->assertSame($expected, $handler->read('555556b43phsnnf8if6bo33b635e4447'));
+
+        $handler->close();
+    }
 }

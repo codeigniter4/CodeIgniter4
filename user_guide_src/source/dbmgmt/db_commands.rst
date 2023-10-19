@@ -38,7 +38,7 @@ When you have a table named ``my_table``, you can see the field names and the re
 
 .. code-block:: console
 
-    .. code-block:: consolephp spark db:table my_table
+    php spark db:table my_table
 
 If the table ``my_table`` is not in the database, CodeIgniter displays a list of available tables to select.
 

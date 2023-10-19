@@ -33,6 +33,8 @@ use Throwable;
  * The wait() method is mostly testable, as long as you don't give it
  * an argument of "0".
  * These have been flagged to ignore for code coverage purposes.
+ *
+ * @see \CodeIgniter\CLI\CLITest
  */
 class CLI
 {
@@ -40,6 +42,9 @@ class CLI
      * Is the readline library on the system?
      *
      * @var bool
+     *
+     * @deprecated 4.4.2 Should be protected.
+     * @TODO Fix to camelCase in the next major version.
      */
     public static $readline_support = false;
 
@@ -47,6 +52,9 @@ class CLI
      * The message displayed at prompts.
      *
      * @var string
+     *
+     * @deprecated 4.4.2 Should be protected.
+     * @TODO Fix to camelCase in the next major version.
      */
     public static $wait_msg = 'Press any key to continue...';
 
@@ -61,6 +69,8 @@ class CLI
      * Foreground color list
      *
      * @var array<string, string>
+     *
+     * @TODO Fix to camelCase in the next major version.
      */
     protected static $foreground_colors = [
         'black'        => '0;30',
@@ -86,6 +96,8 @@ class CLI
      * Background color list
      *
      * @var array<string, string>
+     *
+     * @TODO Fix to camelCase in the next major version.
      */
     protected static $background_colors = [
         'black'      => '40',
@@ -177,7 +189,7 @@ class CLI
      * Named options must be in the following formats:
      * php index.php user -v --v -name=John --name=John
      *
-     * @param string $prefix You may specify a string with which to prompt the user.
+     * @param string|null $prefix You may specify a string with which to prompt the user.
      */
     public static function input(?string $prefix = null): string
     {
@@ -208,9 +220,9 @@ class CLI
      * // Do not provide options but requires a valid email
      * $email = CLI::prompt('What is your email?', null, 'required|valid_email');
      *
-     * @param string       $field      Output "field" question
-     * @param array|string $options    String to a default value, array to a list of options (the first option will be the default value)
-     * @param array|string $validation Validation rules
+     * @param string            $field      Output "field" question
+     * @param array|string      $options    String to a default value, array to a list of options (the first option will be the default value)
+     * @param array|string|null $validation Validation rules
      *
      * @return string The user input
      *
@@ -255,8 +267,8 @@ class CLI
         // Read the input from keyboard.
         $input = trim(static::input()) ?: $default;
 
-        if ($validation) {
-            while (! static::validate(trim($field), $input, $validation)) {
+        if ($validation !== []) {
+            while (! static::validate('"' . trim($field) . '"', $input, $validation)) {
                 $input = static::prompt($field, $options, $validation);
             }
         }
@@ -446,7 +458,7 @@ class CLI
     }
 
     /**
-     * Outputs a string to the cli on it's own line.
+     * Outputs a string to the cli on its own line.
      *
      * @return void
      */
@@ -572,10 +584,10 @@ class CLI
      * Returns the given text with the correct color codes for a foreground and
      * optionally a background color.
      *
-     * @param string $text       The text to color
-     * @param string $foreground The foreground color
-     * @param string $background The background color
-     * @param string $format     Other formatting to apply. Currently only 'underline' is understood
+     * @param string      $text       The text to color
+     * @param string      $foreground The foreground color
+     * @param string|null $background The background color
+     * @param string|null $format     Other formatting to apply. Currently only 'underline' is understood
      *
      * @return string The color coded string
      */
@@ -832,7 +844,7 @@ class CLI
      * width.
      *
      * If an int is passed into $pad_left, then all strings after the first
-     * will padded with that many spaces to the left. Useful when printing
+     * will pad with that many spaces to the left. Useful when printing
      * short descriptions that need to start on an existing line.
      */
     public static function wrap(?string $string = null, int $max = 0, int $padLeft = 0): string
@@ -849,7 +861,7 @@ class CLI
             $max = self::getWidth();
         }
 
-        $max = $max - $padLeft;
+        $max -= $padLeft;
 
         $lines = wordwrap($string, $max, PHP_EOL);
 
@@ -1076,8 +1088,8 @@ class CLI
             foreach ($tableRows[$row] as $col) {
                 $diff = $maxColsLengths[$column] - static::strlen($col);
 
-                if ($diff) {
-                    $tableRows[$row][$column] = $tableRows[$row][$column] . str_repeat(' ', $diff);
+                if ($diff !== 0) {
+                    $tableRows[$row][$column] .= str_repeat(' ', $diff);
                 }
 
                 $column++;

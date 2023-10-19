@@ -16,6 +16,8 @@ use ReflectionMethod;
 
 /**
  * Reads a controller and returns a list of auto route listing.
+ *
+ * @see \CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\ControllerMethodReaderTest
  */
 final class ControllerMethodReader
 {
@@ -24,6 +26,10 @@ final class ControllerMethodReader
      */
     private string $namespace;
 
+    /**
+     * @var array<int, string>
+     * @phpstan-var list<string>
+     */
     private array $httpMethods;
 
     /**

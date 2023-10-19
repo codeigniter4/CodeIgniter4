@@ -120,6 +120,8 @@ to keep up with. You can create a publication definition in your project to sync
 
 .. literalinclude:: publisher/009.php
 
+.. note:: Directory ``$destination`` must be created before executing the command.
+
 Now add the dependency via Composer and call ``spark publish`` to run the publication:
 
 .. code-block:: console

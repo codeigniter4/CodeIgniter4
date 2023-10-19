@@ -25,31 +25,53 @@ section of the User Guide to begin learning how to build dynamic PHP application
 Initial Configuration
 *********************
 
-#. Open the **app/Config/App.php** file with a text editor and
-   set your base URL to ``$baseURL``. If you need more flexibility, the baseURL may
-   be set within the :ref:`.env <dotenv-file>` file as ``app.baseURL = 'http://example.com/'``.
-   (Always use a trailing slash on your base URL!)
+Configure for Your Site URIs
+============================
+
+Open the **app/Config/App.php** file with a text editor.
+
+#. $baseURL
+    Set your base URL to ``$baseURL``. If you need more flexibility, the baseURL may
+    be set within the :ref:`.env <dotenv-file>` file as ``app.baseURL = 'http://example.com/'``.
+    **Always use a trailing slash on your base URL!**
 
     .. note:: If you don't set the ``baseURL`` correctly, in development mode,
         the debug toolbar may not load properly and web pages may take considerably
         longer to display.
 
-#. If you intend to use a database, open the
-   **app/Config/Database.php** file with a text editor and set your
-   database settings. Alternately, these could be set in your **.env** file.
-#. If it is not on the production server, set ``CI_ENVIRONMENT`` to ``development``
-   in **.env** file to take advantage of the debugging tools provided. See
-   :ref:`setting-development-mode` for the detail.
+#. $indexPage
+    If you don't want to include **index.php** in your site URIs, set ``$indexPage`` to ``''``.
+    The setting will be used when the framework generates your site URIs.
 
-    .. important:: In production environments, you should disable error display and
-        any other development-only functionality. In CodeIgniter, this can be done
-        by setting the environment to "production". By default, the application will
-        run using the "production" environment. See also :ref:`environment-constant`.
+    .. note:: You may need to configure your web server to access your site with a URL
+        that does not contain **index.php**. See :ref:`CodeIgniter URLs <urls-remove-index-php>`.
 
-.. note:: If you will be running your site using a web server (e.g., Apache or Nginx),
-    you will need to modify the permissions for the **writable** folder inside
-    your project, so that it is writable by the user or account used by your
-    web server.
+Configure Database Connection Settings
+======================================
+
+If you intend to use a database, open the
+**app/Config/Database.php** file with a text editor and set your
+database settings. Alternately, these could be set in your **.env** file.
+
+Set to Development Mode
+=======================
+
+If it is not on the production server, set ``CI_ENVIRONMENT`` to ``development``
+in **.env** file to take advantage of the debugging tools provided. See
+:ref:`setting-development-mode` for the detail.
+
+.. important:: In production environments, you should disable error display and
+    any other development-only functionality. In CodeIgniter, this can be done
+    by setting the environment to "production". By default, the application will
+    run using the "production" environment. See also :ref:`environment-constant`.
+
+Set Writable Folder Permission
+==============================
+
+If you will be running your site using a web server (e.g., Apache or nginx),
+you will need to modify the permissions for the **writable** folder inside
+your project, so that it is writable by the user or account used by your
+web server.
 
 ************************
 Local Development Server
@@ -355,10 +377,10 @@ Setting Environment
 See :ref:`Handling Multiple Environments <environment-apache>`.
 
 ******************
-Hosting with Nginx
+Hosting with nginx
 ******************
 
-Nginx is the second most widely used HTTP server for web hosting.
+nginx is the second most widely used HTTP server for web hosting.
 Here you can find an example configuration using PHP 8.1 FPM (unix sockets) under Ubuntu Server.
 
 default.conf

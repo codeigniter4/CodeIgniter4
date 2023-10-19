@@ -105,6 +105,8 @@ within the class' constructor:
 
 .. literalinclude:: configuration/008.php
 
+.. _database-config-with-env-file:
+
 **************************
 Configuring with .env File
 **************************

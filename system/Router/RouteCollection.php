@@ -19,10 +19,10 @@ use Config\Modules;
 use Config\Routing;
 use Config\Services;
 use InvalidArgumentException;
-use Locale;
 
 /**
  * @todo Implement nested resource routing (See CakePHP)
+ * @see \CodeIgniter\Router\RouteCollectionTest
  */
 class RouteCollection implements RouteCollectionInterface
 {
@@ -301,7 +301,8 @@ class RouteCollection implements RouteCollectionInterface
 
         // Normalize the path string in routeFiles array.
         foreach ($this->routeFiles as $routeKey => $routesFile) {
-            $this->routeFiles[$routeKey] = realpath($routesFile) ?: $routesFile;
+            $realpath                    = realpath($routesFile);
+            $this->routeFiles[$routeKey] = ($realpath === false) ? $routesFile : $realpath;
         }
     }
 
@@ -317,6 +318,10 @@ class RouteCollection implements RouteCollectionInterface
         if ($this->didDiscover) {
             return $this;
         }
+
+        // Normalize the path string in routesFile
+        $realpath   = realpath($routesFile);
+        $routesFile = ($realpath === false) ? $routesFile : $realpath;
 
         // Include the passed in routesFile if it doesn't exist.
         // Only keeping that around for BC purposes for now.
@@ -1150,6 +1155,10 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function reverseRoute(string $search, ...$params)
     {
+        if ($search === '') {
+            return false;
+        }
+
         // Named routes get higher priority.
         foreach ($this->routesNames as $verb => $collection) {
             if (array_key_exists($search, $collection)) {
@@ -1292,9 +1301,16 @@ class RouteCollection implements RouteCollectionInterface
             return '/' . ltrim($from, '/');
         }
 
-        // Build our resulting string, inserting the $params in
-        // the appropriate places.
-        foreach ($matches[0] as $index => $pattern) {
+        /**
+         * Build our resulting string, inserting the $params in
+         * the appropriate places.
+         *
+         * @var array<int, string> $patterns
+         * @phpstan-var list<string> $patterns
+         */
+        $patterns = $matches[0];
+
+        foreach ($patterns as $index => $pattern) {
             if (! preg_match('#^' . $pattern . '$#u', $params[$index])) {
                 throw RouterException::forInvalidParameterType();
             }
@@ -1337,9 +1353,16 @@ class RouteCollection implements RouteCollectionInterface
             $locale = $params[$placeholderCount];
         }
 
-        // Build our resulting string, inserting the $params in
-        // the appropriate places.
-        foreach ($matches[0] as $index => $placeholder) {
+        /**
+         * Build our resulting string, inserting the $params in
+         * the appropriate places.
+         *
+         * @var array<int, string> $placeholders
+         * @phpstan-var list<string> $placeholders
+         */
+        $placeholders = $matches[0];
+
+        foreach ($placeholders as $index => $placeholder) {
             if (! isset($params[$index])) {
                 throw new InvalidArgumentException(
                     'Missing argument for "' . $placeholder . '" in route "' . $from . '".'
@@ -1680,7 +1703,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     protected function loadRoutesOptions(?string $verb = null): array
     {
-        $verb = $verb ?: $this->getHTTPVerb();
+        $verb ??= $this->getHTTPVerb();
 
         $options = $this->routesOptions[$verb] ?? [];
 

@@ -62,13 +62,13 @@ class Files extends BaseCollector
 
             if (strpos($path, 'SYSTEMPATH') !== false) {
                 $coreFiles[] = [
-                    'name' => basename($file),
                     'path' => $path,
+                    'name' => basename($file),
                 ];
             } else {
                 $userFiles[] = [
-                    'name' => basename($file),
                     'path' => $path,
+                    'name' => basename($file),
                 ];
             }
         }

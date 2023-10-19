@@ -15,6 +15,8 @@ use InvalidArgumentException;
 
 /**
  * Environment-specific configuration
+ *
+ * @see \CodeIgniter\Config\DotEnvTest
  */
 class DotEnv
 {

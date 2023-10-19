@@ -23,6 +23,8 @@ use RuntimeException;
 
 /**
  * Class View
+ *
+ * @see \CodeIgniter\View\ViewTest
  */
 class View implements RendererInterface
 {
@@ -334,7 +336,7 @@ class View implements RendererInterface
      */
     public function setData(array $data = [], ?string $context = null): RendererInterface
     {
-        if ($context) {
+        if ($context !== null) {
             $data = \esc($data, $context);
         }
 
@@ -354,7 +356,7 @@ class View implements RendererInterface
      */
     public function setVar(string $name, $value = null, ?string $context = null): RendererInterface
     {
-        if ($context) {
+        if ($context !== null) {
             $value = esc($value, $context);
         }
 

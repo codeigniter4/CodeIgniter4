@@ -438,13 +438,13 @@ final class CLITest extends CIUnitTestCase
     {
         $height = new ReflectionProperty(CLI::class, 'height');
         $height->setAccessible(true);
-        $height->setValue(null);
+        $height->setValue(null, null);
 
         $this->assertIsInt(CLI::getHeight());
 
         $width = new ReflectionProperty(CLI::class, 'width');
         $width->setAccessible(true);
-        $width->setValue(null);
+        $width->setValue(null, null);
 
         $this->assertIsInt(CLI::getWidth());
     }

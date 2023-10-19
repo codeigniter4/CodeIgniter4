@@ -35,13 +35,13 @@ use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
-use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
-use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
+use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
 use Utils\Rector\RemoveVarTagFromClassConstantRector;
@@ -51,12 +51,11 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
         SetList::DEAD_CODE,
         LevelSetList::UP_TO_PHP_74,
-        PHPUnitSetList::PHPUNIT_SPECIFIC_METHOD,
-        PHPUnitSetList::PHPUNIT_80,
-        PHPUnitSetList::REMOVE_MOCKS,
+        PHPUnitSetList::PHPUNIT_CODE_QUALITY,
+        PHPUnitSetList::PHPUNIT_100,
     ]);
 
-    $rectorConfig->parallel(240, 8, 1);
+    $rectorConfig->parallel();
 
     // paths to refactor; solid alternative to CLI arguments
     $rectorConfig->paths([__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils']);
@@ -66,7 +65,11 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/system/Test/bootstrap.php',
     ]);
 
-    $rectorConfig->phpstanConfig(__DIR__ . '/phpstan.neon.dist');
+    $rectorConfig->phpstanConfigs([
+        __DIR__ . '/phpstan.neon.dist',
+        __DIR__ . '/vendor/codeigniter/phpstan-codeigniter/extension.neon',
+        __DIR__ . '/vendor/phpstan/phpstan-strict-rules/rules.neon',
+    ]);
 
     // is there a file you need to skip?
     $rectorConfig->skip([
@@ -76,7 +79,7 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/tests/system/Filters/fixtures',
         __DIR__ . '/tests/_support',
         JsonThrowOnErrorRector::class,
-        StringifyStrNeedlesRector::class,
+        YieldDataProviderRector::class,
 
         RemoveUnusedPrivateMethodRector::class => [
             // private method called via getPrivateMethodInvoker
@@ -102,9 +105,6 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/system/Session/Handlers',
         ],
 
-        // sometime too detail
-        CountOnNullRector::class,
-
         // use mt_rand instead of random_int on purpose on non-cryptographically random
         RandomFunctionRector::class,
 
@@ -113,6 +113,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     // auto import fully qualified class names
     $rectorConfig->importNames();
+    $rectorConfig->removeUnusedImports();
 
     $rectorConfig->rule(UnderscoreToCamelCaseVariableNameRector::class);
     $rectorConfig->rule(SimplifyUselessVariableRector::class);
@@ -140,4 +141,5 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(StringClassNameToClassConstantRector::class);
     $rectorConfig->rule(PrivatizeFinalClassPropertyRector::class);
     $rectorConfig->rule(CompleteDynamicPropertiesRector::class);
+    $rectorConfig->rule(BooleanInIfConditionRuleFixerRector::class);
 };

@@ -24,6 +24,8 @@ use TypeError;
 
 /**
  * Validator
+ *
+ * @see \CodeIgniter\Validation\ValidationTest
  */
 class Validation implements ValidationInterface
 {
@@ -523,7 +525,7 @@ class Validation implements ValidationInterface
             ],
         ];
 
-        if ($errors) {
+        if ($errors !== []) {
             $ruleSet[$field]['errors'] = $errors;
         }
 
@@ -771,7 +773,7 @@ class Validation implements ValidationInterface
 
                         // Check if the rule does not have placeholders
                         foreach ($placeholderRules as $placeholderRule) {
-                            if ($this->retrievePlaceholders($placeholderRule, $data)) {
+                            if ($this->retrievePlaceholders($placeholderRule, $data) !== []) {
                                 throw new LogicException(
                                     'The placeholder field cannot use placeholder: ' . $field
                                 );

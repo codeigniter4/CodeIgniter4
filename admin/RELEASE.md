@@ -79,7 +79,7 @@ the existing content.
   * fill in the "All Changes" section, and add it to **upgrading.rst**
     * git diff --name-status origin/master -- . ':!system'
   * Remove the section titles that have no items
-  * Update the "from" version in the title. E.g., `from 4.3.x` → `from 4.3.8`
+  * [Minor version only] Update the "from" version in the title. E.g., `from 4.3.x` → `from 4.3.8`
 * Commit the changes with `Prep for 4.x.x release` and push to origin
 * Create a new PR from `release-4.x.x` to `develop`:
   * Title: `Prep for 4.x.x release`

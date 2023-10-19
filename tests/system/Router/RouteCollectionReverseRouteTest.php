@@ -52,6 +52,16 @@ final class RouteCollectionReverseRouteTest extends CIUnitTestCase
         return (new RouteCollection($loader, $moduleConfig, new Routing()))->setHTTPVerb('get');
     }
 
+    public function testReverseRoutingEmptyString(): void
+    {
+        $routes = $this->getCollector();
+
+        $routes->add('/', 'Home::index');
+
+        $match = $routes->reverseRoute('');
+        $this->assertFalse($match);
+    }
+
     public function testReverseRoutingFindsSimpleMatch(): void
     {
         $routes = $this->getCollector();

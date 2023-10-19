@@ -19,6 +19,8 @@ use Config\Services;
 
 /**
  * Honeypot filter
+ *
+ * @see \CodeIgniter\Filters\HoneypotTest
  */
 class Honeypot implements FilterInterface
 {

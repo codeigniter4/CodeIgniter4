@@ -16,6 +16,8 @@ use Generator;
 
 /**
  * Collect all defined routes for display.
+ *
+ * @see \CodeIgniter\Router\DefinedRouteCollectorTest
  */
 final class DefinedRouteCollector
 {
@@ -55,7 +57,7 @@ final class DefinedRouteCollector
                         $handler = $view ? '(View) ' . $view : '(Closure)';
                     }
 
-                    $routeName = $this->routeCollection->getRoutesOptions($route)['as'] ?? $route;
+                    $routeName = $this->routeCollection->getRoutesOptions($route, $method)['as'] ?? $route;
 
                     yield [
                         'method'  => $method,

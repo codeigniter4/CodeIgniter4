@@ -3,10 +3,6 @@ services:
 		class: Utils\PHPStan\CheckUseStatementsAfterLicenseRule
 		tags:
 			- phpstan.rules.rule
-	-
-		class: Utils\PHPStan\CheckFrameworkExceptionInstantiationViaNamedConstructorRule
-		tags:
-			- phpstan.rules.rule
 
 includes:
 	- phpstan-baseline.php
@@ -25,7 +21,6 @@ parameters:
 		- app/Views/errors/cli/*
 		- app/Views/errors/html/*
 		- system/Commands/Generators/Views/*
-		- system/Config/Routes.php
 		- system/Debug/Toolbar/Views/toolbar.tpl.php
 		- system/Images/Handlers/GDHandler.php
 		- system/Test/Filters/CITestStreamFilter.php
@@ -33,11 +28,18 @@ parameters:
 		- system/Validation/Views/single.php
 	scanDirectories:
 		- system/Helpers
-	dynamicConstantNames:
-		- APP_NAMESPACE
-		- CI_DEBUG
-		- ENVIRONMENT
 	checkMissingIterableValueType: false
 	checkGenericClassInNonGenericObjectType: false
 	checkMissingCallableSignature: true
 	treatPhpDocTypesAsCertain: false
+	strictRules:
+		allRules: false
+		disallowedLooseComparison: true
+		booleansInConditions: true
+		disallowedConstructs: true
+		matchingInheritedMethodNames: true
+	ignoreErrors:
+		- '#^Call to function config with Config\\.+\:\:class is discouraged\.$#'
+	codeigniter:
+		additionalConfigNamespaces:
+			- CodeIgniter\Config\

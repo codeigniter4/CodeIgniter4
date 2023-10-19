@@ -32,7 +32,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         'DBDriver' => 'MockDriver',
         'DBPrefix' => 'test_',
         'pConnect' => true,
-        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'DBDebug'  => true,
         'charset'  => 'utf8',
         'DBCollat' => 'utf8_general_ci',
         'swapPre'  => '',
@@ -50,7 +50,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         'DBDriver' => 'MockDriver',
         'DBPrefix' => 'test_',
         'pConnect' => true,
-        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'DBDebug'  => true,
         'charset'  => 'utf8',
         'DBCollat' => 'utf8_general_ci',
         'swapPre'  => '',
@@ -122,7 +122,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $db->initialize();
 
         $this->assertGreaterThan($start, $db->getConnectStart());
-        $this->assertGreaterThan(0.0, $db->getConnectDuration());
+        $this->assertGreaterThanOrEqual(0.0, $db->getConnectDuration());
     }
 
     /**

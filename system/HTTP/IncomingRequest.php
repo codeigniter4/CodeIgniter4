@@ -42,6 +42,8 @@ use stdClass;
  * - Query string arguments (generally via $_GET, or as parsed via parse_str())
  * - Upload files, if any (as represented by $_FILES)
  * - Deserialized body binds (generally from $_POST)
+ *
+ * @see \CodeIgniter\HTTP\IncomingRequestTest
  */
 class IncomingRequest extends Request
 {
@@ -106,7 +108,7 @@ class IncomingRequest extends Request
 
     /**
      * The current locale of the application.
-     * Default value is set in Config\App.php
+     * Default value is set in app/Config/App.php
      *
      * @var string
      */
@@ -522,7 +524,7 @@ class IncomingRequest extends Request
     }
 
     /**
-     * Returns the default locale as set in Config\App.php
+     * Returns the default locale as set in app/Config/App.php
      */
     public function getDefaultLocale(): string
     {
@@ -825,35 +827,42 @@ class IncomingRequest extends Request
      */
     public function getOldInput(string $key)
     {
-        // If the session hasn't been started, or no
-        // data was previously saved, we're done.
-        if (empty($_SESSION['_ci_old_input'])) {
+        // If the session hasn't been started, we're done.
+        if (! isset($_SESSION)) {
+            return null;
+        }
+
+        // Get previously saved in session
+        $old = session('_ci_old_input');
+
+        // If no data was previously saved, we're done.
+        if ($old === null) {
             return null;
         }
 
         // Check for the value in the POST array first.
-        if (isset($_SESSION['_ci_old_input']['post'][$key])) {
-            return $_SESSION['_ci_old_input']['post'][$key];
+        if (isset($old['post'][$key])) {
+            return $old['post'][$key];
         }
 
         // Next check in the GET array.
-        if (isset($_SESSION['_ci_old_input']['get'][$key])) {
-            return $_SESSION['_ci_old_input']['get'][$key];
+        if (isset($old['get'][$key])) {
+            return $old['get'][$key];
         }
 
         helper('array');
 
         // Check for an array value in POST.
-        if (isset($_SESSION['_ci_old_input']['post'])) {
-            $value = dot_array_search($key, $_SESSION['_ci_old_input']['post']);
+        if (isset($old['post'])) {
+            $value = dot_array_search($key, $old['post']);
             if ($value !== null) {
                 return $value;
             }
         }
 
         // Check for an array value in GET.
-        if (isset($_SESSION['_ci_old_input']['get'])) {
-            $value = dot_array_search($key, $_SESSION['_ci_old_input']['get']);
+        if (isset($old['get'])) {
+            $value = dot_array_search($key, $old['get']);
             if ($value !== null) {
                 return $value;
             }

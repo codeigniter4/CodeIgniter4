@@ -92,7 +92,7 @@ Running Development Server
 ==========================
 
 With that out of the way it's time to view your application in a browser. You can
-serve it through any server of your choice, Apache, Nginx, etc, but CodeIgniter
+serve it through any server of your choice, Apache, nginx, etc, but CodeIgniter
 comes with a simple command that takes advantage of PHP's built-in server to get
 you up and running fast on your development machines. Type the following on the
 command line from the root of your project:

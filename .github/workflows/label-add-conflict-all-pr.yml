@@ -1,0 +1,51 @@
+name: Auto Label "stale" for All PRs
+
+on:
+  push:
+    branches:
+      - develop
+      - '4.*'
+
+jobs:
+  build:
+    name: Check Conflicts
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get PR List
+        id: PR-list
+        run: echo "pr_list=$(gh pr list -L 100 --json mergeable,url,labels,author)" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 'Add label "stale" and comment'
+        env:
+          PR_LIST: ${{ steps.PR-list.outputs.pr_list }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+
+          IFS=$'\n' # Set Internal Field Separator to newline to handle array elements
+
+          # Iterate through the PRs in PR_LIST
+          for pr in $(echo "$PR_LIST" | jq -c '.[]'); do
+            mergeable=$(echo "$pr" | jq -r '.mergeable')
+            author=$(echo "$pr" | jq -r '.author.login')
+            labels=$(echo "$pr" | jq -c '.labels[].name' | tr -d '[]"')
+            url=$(echo "$pr" | jq -r '.url')
+
+            # CONFLICTING and no 'stale' label
+            if [ "$mergeable" == "CONFLICTING" ] && [[ ! "$labels" == *"stale"* ]]; then
+              # Add "stale" label
+              gh pr edit $url --add-label "stale"
+
+              # Add a comment
+              gh pr comment $url --body ":wave: Hi, @$author!<br><br>We detected conflicts in your PR against the base branch :speak_no_evil:<br>You may want to sync :arrows_counterclockwise: your branch with upstream!<br><br>Ref: [Syncing Your Branch](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/workflow.md#pushing-your-branch)"
+            fi
+          done

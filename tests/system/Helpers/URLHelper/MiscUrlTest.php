@@ -38,6 +38,7 @@ final class MiscUrlTest extends CIUnitTestCase
         parent::setUp();
 
         Services::reset(true);
+        Services::routes()->loadRoutes();
 
         // Set a common base configuration (overriden by individual tests)
         $this->config            = new App();
@@ -52,13 +53,19 @@ final class MiscUrlTest extends CIUnitTestCase
         $_SERVER = [];
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     *
+     * @group SeparateProcess
+     */
     public function testPreviousURLUsesSessionFirst(): void
     {
         $uri1 = 'http://example.com/one?two';
         $uri2 = 'http://example.com/two?foo';
 
-        $_SERVER['HTTP_REFERER']      = $uri1;
-        $_SESSION['_ci_previous_url'] = $uri2;
+        $_SERVER['HTTP_REFERER'] = $uri1;
+        session()->set('_ci_previous_url', $uri2);
 
         $this->config->baseURL = 'http://example.com/public';
 
@@ -80,6 +87,12 @@ final class MiscUrlTest extends CIUnitTestCase
         Factories::injectMock('config', 'App', $this->config);
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     *
+     * @group SeparateProcess
+     */
     public function testPreviousURLUsesRefererIfNeeded(): void
     {
         $uri1 = 'http://example.com/one?two';

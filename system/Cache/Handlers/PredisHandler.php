@@ -20,6 +20,8 @@ use Predis\Collection\Iterator\Keyspace;
 
 /**
  * Predis cache handler
+ *
+ * @see \CodeIgniter\Cache\Handlers\PredisHandlerTest
  */
 class PredisHandler extends BaseHandler
 {
@@ -131,7 +133,7 @@ class PredisHandler extends BaseHandler
             return false;
         }
 
-        if ($ttl) {
+        if ($ttl !== 0) {
             $this->redis->expireat($key, Time::now()->getTimestamp() + $ttl);
         }
 

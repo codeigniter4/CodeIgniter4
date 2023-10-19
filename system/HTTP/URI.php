@@ -18,6 +18,8 @@ use InvalidArgumentException;
 
 /**
  * Abstraction for a uniform resource identifier (URI).
+ *
+ * @see \CodeIgniter\HTTP\URITest
  */
 class URI
 {
@@ -175,11 +177,11 @@ class URI
                 : ltrim($path, '/');
         }
 
-        if ($query) {
+        if ($query !== '' && $query !== null) {
             $uri .= '?' . $query;
         }
 
-        if ($fragment) {
+        if ($fragment !== '' && $fragment !== null) {
             $uri .= '#' . $fragment;
         }
 
@@ -1104,7 +1106,7 @@ class URI
             if ($relative->getPath() === '') {
                 $transformed->setPath($this->getPath());
 
-                if ($relative->getQuery()) {
+                if ($relative->getQuery() !== '') {
                     $transformed->setQuery($relative->getQuery());
                 } else {
                     $transformed->setQuery($this->getQuery());

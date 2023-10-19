@@ -18,6 +18,8 @@ use InvalidArgumentException;
 
 /**
  * A lightweight HTTP client for sending synchronous HTTP requests via cURL.
+ *
+ * @see \CodeIgniter\HTTP\CURLRequestTest
  */
 class CURLRequest extends OutgoingRequest
 {
@@ -576,7 +578,7 @@ class CURLRequest extends OutgoingRequest
         if (! empty($config['decode_content'])) {
             $accept = $this->getHeaderLine('Accept-Encoding');
 
-            if ($accept) {
+            if ($accept !== '') {
                 $curlOptions[CURLOPT_ENCODING] = $accept;
             } else {
                 $curlOptions[CURLOPT_ENCODING]   = '';

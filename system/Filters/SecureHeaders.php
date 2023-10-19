@@ -16,6 +16,8 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 /**
  * Add Common Security Headers
+ *
+ * @see \CodeIgniter\Filters\SecureHeadersTest
  */
 class SecureHeaders implements FilterInterface
 {

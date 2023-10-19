@@ -367,7 +367,7 @@ Class Reference
         :returns:    Attachment Content-ID or false if not found
         :rtype:    string
 
-        Sets and returns an attachment's Content-ID, which enables your to embed an inline
+        Sets and returns an attachment's Content-ID, which enables you to embed an inline
         (picture) attachment into HTML. First parameter must be the already attached file name.
 
         .. literalinclude:: email/022.php
