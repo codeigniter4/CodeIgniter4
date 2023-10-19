@@ -1,6 +1,6 @@
 # Changelog
 
-## [v4.4.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.1) (2023-10-019)
+## [v4.4.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.1) (2023-10-19)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.1...v4.4.2)
 
 ### Fixed Bugs
