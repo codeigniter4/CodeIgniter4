@@ -109,6 +109,14 @@ Model
 - ``Model::idValue()``
 - ``Model::classToArray()``
 
+CodeIgniter
+-----------
+
+- ``$path``
+- ``$useSafeOutput``
+- ``useSafeOutput()``
+- ``setPath()``
+
 Enhancements
 ************
 
@@ -168,6 +176,9 @@ Changes
 
 Deprecations
 ************
+
+- **CodeIgniter:** The ``determinePath()`` method has been deprecated. No longer
+  used.
 
 Bugs Fixed
 **********

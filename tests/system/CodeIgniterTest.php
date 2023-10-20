@@ -87,7 +87,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argv'] = ['index.php'];
         $_SERVER['argc'] = 1;
 
-        $response = $this->codeigniter->useSafeOutput(true)->run(null, true);
+        $response = $this->codeigniter->run(null, true);
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $response->getBody());
     }
@@ -164,7 +164,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $router = Services::router($routes, Services::incomingrequest());
         Services::injectMock('router', $router);
 
-        $response = $this->codeigniter->useSafeOutput(true)->run($routes, true);
+        $response = $this->codeigniter->run($routes, true);
 
         $this->assertStringContainsString('Oops', $response->getBody());
     }

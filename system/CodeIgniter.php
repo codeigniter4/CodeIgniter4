@@ -136,25 +136,6 @@ class CodeIgniter
     protected static $cacheTTL = 0;
 
     /**
-     * Request path to use.
-     *
-     * @var string
-     *
-     * @deprecated No longer used.
-     */
-    protected $path;
-
-    /**
-     * Should the Response instance "pretend"
-     * to keep from setting headers/cookies/etc
-     *
-     * @var bool
-     *
-     * @deprecated No longer used.
-     */
-    protected $useSafeOutput = false;
-
-    /**
      * Context
      *  web:     Invoked by HTTP request
      *  php-cli: Invoked by CLI via `php public/index.php`
@@ -171,7 +152,7 @@ class CodeIgniter
     /**
      * Whether to return Response object or send response.
      *
-     * @deprecated No longer used.
+     * @deprecated 4.4.0 No longer used.
      */
     protected bool $returnResponse = false;
 
@@ -336,6 +317,8 @@ class CodeIgniter
      * tries to route the response, loads the controller and generally
      * makes all the pieces work together.
      *
+     * @param bool $returnResponse Used for testing purposes only.
+     *
      * @return ResponseInterface|void
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
@@ -355,9 +338,9 @@ class CodeIgniter
         $this->getRequestObject();
         $this->getResponseObject();
 
-        $this->spoofRequestMethod();
-
         try {
+            $this->forceSecureAccess();
+
             $this->response = $this->handleRequest($routes, config(Cache::class), $returnResponse);
         } catch (ResponsableInterface|DeprecatedRedirectException $e) {
             $this->outputBufferingEnd();
@@ -379,22 +362,6 @@ class CodeIgniter
         }
 
         $this->sendResponse();
-    }
-
-    /**
-     * Set our Response instance to "pretend" mode so that things like
-     * cookies and headers are not actually sent, allowing PHP 7.2+ to
-     * not complain when ini_set() function is used.
-     *
-     * @return $this
-     *
-     * @deprecated No longer used.
-     */
-    public function useSafeOutput(bool $safe = true)
-    {
-        $this->useSafeOutput = $safe;
-
-        return $this;
     }
 
     /**
@@ -433,8 +400,6 @@ class CodeIgniter
      */
     protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
     {
-        $this->forceSecureAccess();
-
         if ($this->request instanceof IncomingRequest && strtolower($this->request->getMethod()) === 'cli') {
             return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
         }
@@ -449,7 +414,7 @@ class CodeIgniter
 
         $routeFilters = $this->tryToRouteIt($routes);
 
-        $uri = $this->determinePath();
+        $uri = $this->request->getPath();
 
         if ($this->enableFilters) {
             // Start up the filters
@@ -621,6 +586,9 @@ class CodeIgniter
      * @param CLIRequest|IncomingRequest $request
      *
      * @return $this
+     *
+     * @internal Used for testing purposes only.
+     * @testTag
      */
     public function setRequest($request)
     {
@@ -637,6 +605,8 @@ class CodeIgniter
     protected function getRequestObject()
     {
         if ($this->request instanceof Request) {
+            $this->spoofRequestMethod();
+
             return;
         }
 
@@ -647,6 +617,8 @@ class CodeIgniter
         }
 
         $this->request = Services::request();
+
+        $this->spoofRequestMethod();
     }
 
     /**
@@ -808,14 +780,14 @@ class CodeIgniter
         // $routes is defined in Config/Routes.php
         $this->router = Services::router($routes, $this->request);
 
-        $path = $this->determinePath();
+        $uri = $this->request->getPath();
 
         $this->benchmark->stop('bootstrap');
         $this->benchmark->start('routing');
 
         $this->outputBufferingStart();
 
-        $this->controller = $this->router->handle($path);
+        $this->controller = $this->router->handle($uri);
         $this->method     = $this->router->methodName();
 
         // If a {locale} segment was matched in the final route,
@@ -834,31 +806,12 @@ class CodeIgniter
      * on the CLI/IncomingRequest path.
      *
      * @return string
+     *
+     * @deprecated 4.5.0 No longer used.
      */
     protected function determinePath()
     {
-        if (! empty($this->path)) {
-            return $this->path;
-        }
-
-        return method_exists($this->request, 'getPath') ? $this->request->getPath() : $this->request->getUri()->getPath();
-    }
-
-    /**
-     * Allows the request path to be set from outside the class,
-     * instead of relying on CLIRequest or IncomingRequest for the path.
-     *
-     * This is not used now.
-     *
-     * @return $this
-     *
-     * @deprecated No longer used.
-     */
-    public function setPath(string $path)
-    {
-        $this->path = $path;
-
-        return $this;
+        return $this->request->getPath();
     }
 
     /**
