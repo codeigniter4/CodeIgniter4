@@ -66,7 +66,7 @@ jobs:
     # Service containers cannot be extracted to caller workflows yet
     services:
       mysql:
-        image: mysql:${{ inputs.mysql-version || '8.0' }}
+        image: mysql:${{ inputs.mysql-version || '8.1' }}
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: test

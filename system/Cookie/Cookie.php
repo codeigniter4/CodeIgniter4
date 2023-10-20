@@ -633,7 +633,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
-    public function __toString()
+    public function __toString(): string
     {
         $cookieHeader = [];
 
