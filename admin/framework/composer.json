@@ -14,7 +14,7 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "laminas/laminas-escaper": "^2.9",
+        "laminas/laminas-escaper": "^2.13",
         "psr/log": "^2.0"
     },
     "require-dev": {
