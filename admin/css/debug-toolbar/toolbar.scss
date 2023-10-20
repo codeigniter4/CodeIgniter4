@@ -302,6 +302,10 @@
         margin-left: 0;
         width: 100%;
 
+        ::before {
+            display: none;
+        }
+
         th {
             border-left: 1px solid;
             font-size: $base-size - 4;

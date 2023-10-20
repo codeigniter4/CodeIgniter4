@@ -219,6 +219,9 @@
   margin-left: 0;
   width: 100%;
 }
+#debug-bar .timeline ::before {
+  display: none;
+}
 #debug-bar .timeline th {
   border-left: 1px solid;
   font-size: 12px;
