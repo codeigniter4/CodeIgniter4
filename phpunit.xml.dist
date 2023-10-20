@@ -18,24 +18,10 @@
         </testsuite>
     </testsuites>
     <extensions>
-        <extension class="Nexus\PHPUnit\Extension\Tachycardia">
-            <arguments>
-                <array>
-                    <element key="timeLimit">
-                        <double>0.50</double>
-                    </element>
-                    <element key="reportable">
-                        <integer>30</integer>
-                    </element>
-                    <element key="precision">
-                        <integer>2</integer>
-                    </element>
-                    <element key="tabulate">
-                        <boolean>false</boolean>
-                    </element>
-                </array>
-            </arguments>
-        </extension>
+        <bootstrap class="Nexus\PHPUnit\Tachycardia\TachycardiaExtension">
+            <parameter name="time-limit" value="0.50" />
+            <parameter name="report-count" value="30" />
+        </bootstrap>
     </extensions>
     <php>
         <server name="app.baseURL" value="http://example.com/"/>
