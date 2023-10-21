@@ -15,7 +15,6 @@ use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
-use Config\Modules;
 
 /**
  * @internal
@@ -58,7 +57,6 @@ class FactoriesCacheFileVarExportHandlerTest extends CIUnitTestCase
 
         $this->assertArrayHasKey('aliases', $cachedData);
         $this->assertArrayHasKey('instances', $cachedData);
-        $this->assertArrayHasKey(Modules::class, $cachedData['aliases']);
         $this->assertArrayHasKey('App', $cachedData['aliases']);
     }
 

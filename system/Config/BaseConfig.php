@@ -82,7 +82,7 @@ class BaseConfig
      */
     public function __construct()
     {
-        static::$moduleConfig = config(Modules::class);
+        static::$moduleConfig = new Modules();
 
         if (! static::$override) {
             return;
