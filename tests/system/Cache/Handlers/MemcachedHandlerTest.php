@@ -23,7 +23,7 @@ use Exception;
  *
  * @internal
  */
-final class MemcachedHandlerTest extends AbstractHandlerTest
+final class MemcachedHandlerTest extends AbstractHandlerTestCase
 {
     private Cache $config;
 
