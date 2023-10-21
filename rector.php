@@ -40,6 +40,9 @@ use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php80\Rector\FunctionLike\MixedTypeRector;
+use Rector\Php81\Rector\ClassConst\FinalizePublicClassConstantRector;
+use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
+use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
 use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\AnnotationWithValueToAttributeRector;
 use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\CoversAnnotationWithValueToAttributeRector;
 use Rector\PHPUnit\AnnotationsToAttributes\Rector\ClassMethod\DataProviderAnnotationToAttributeRector;
@@ -50,6 +53,7 @@ use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
@@ -57,7 +61,7 @@ use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
         SetList::DEAD_CODE,
-        LevelSetList::UP_TO_PHP_80,
+        LevelSetList::UP_TO_PHP_81,
         PHPUnitSetList::PHPUNIT_CODE_QUALITY,
         PHPUnitSetList::PHPUNIT_100,
     ]);
@@ -85,6 +89,7 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/tests/system/Config/fixtures',
         __DIR__ . '/tests/system/Filters/fixtures',
         __DIR__ . '/tests/_support',
+
         JsonThrowOnErrorRector::class,
         YieldDataProviderRector::class,
 
@@ -121,6 +126,14 @@ return static function (RectorConfig $rectorConfig): void {
         // PHP 8.0 features but cause breaking changes
         ClassPropertyAssignToConstructorPromotionRector::class,
         MixedTypeRector::class,
+
+        // PHP 8.1 features but cause breaking changes
+        ReadOnlyPropertyRector::class,
+        FinalizePublicClassConstantRector::class,
+        ReturnNeverTypeRector::class,
+
+        // Unnecessary (string) is inserted
+        NullToStrictStringFuncCallArgRector::class,
 
         // PHPUnit 10 (requires PHP 8.1) features
         DataProviderAnnotationToAttributeRector::class,
