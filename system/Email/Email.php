@@ -1652,7 +1652,7 @@ class Email
     /**
      * Strip line-breaks via callback
      *
-     * @param string $matches
+     * @param array<int|string, string> $matches
      *
      * @return string
      */
