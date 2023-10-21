@@ -22,7 +22,7 @@ use Config\App;
  */
 final class SampleURIGenerator
 {
-    private RouteCollection $routes;
+    private readonly RouteCollection $routes;
 
     /**
      * Sample URI path for placeholder.

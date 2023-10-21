@@ -42,7 +42,6 @@ use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Php80\Rector\FunctionLike\MixedTypeRector;
 use Rector\Php81\Rector\ClassConst\FinalizePublicClassConstantRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
-use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
 use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\AnnotationWithValueToAttributeRector;
 use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\CoversAnnotationWithValueToAttributeRector;
 use Rector\PHPUnit\AnnotationsToAttributes\Rector\ClassMethod\DataProviderAnnotationToAttributeRector;
@@ -128,7 +127,6 @@ return static function (RectorConfig $rectorConfig): void {
         MixedTypeRector::class,
 
         // PHP 8.1 features but cause breaking changes
-        ReadOnlyPropertyRector::class,
         FinalizePublicClassConstantRector::class => [
             __DIR__ . '/system/Cache/Handlers/BaseHandler.php',
             __DIR__ . '/system/Cache/Handlers/FileHandler.php',

@@ -21,7 +21,7 @@ use Generator;
  */
 final class DefinedRouteCollector
 {
-    private RouteCollection $routeCollection;
+    private readonly RouteCollection $routeCollection;
 
     public function __construct(RouteCollection $routes)
     {

@@ -24,7 +24,7 @@ final class ControllerMethodReader
     /**
      * @var string the default namespace
      */
-    private string $namespace;
+    private readonly string $namespace;
 
     /**
      * @param string $namespace the default namespace

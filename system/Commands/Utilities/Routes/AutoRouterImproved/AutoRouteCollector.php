@@ -24,18 +24,18 @@ final class AutoRouteCollector
     /**
      * @var string namespace to search
      */
-    private string $namespace;
+    private readonly string $namespace;
 
-    private string $defaultController;
-    private string $defaultMethod;
-    private array $httpMethods;
+    private readonly string $defaultController;
+    private readonly string $defaultMethod;
+    private readonly array $httpMethods;
 
     /**
      * List of controllers in Defined Routes that should not be accessed via Auto-Routing.
      *
      * @var class-string[]
      */
-    private array $protectedControllers;
+    private readonly array $protectedControllers;
 
     /**
      * @var string URI prefix for Module Routing

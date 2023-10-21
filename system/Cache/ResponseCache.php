@@ -47,7 +47,7 @@ final class ResponseCache
      */
     private int $ttl = 0;
 
-    private CacheInterface $cache;
+    private readonly CacheInterface $cache;
 
     public function __construct(CacheConfig $config, CacheInterface $cache)
     {

@@ -21,10 +21,10 @@ final class AutoRouteCollector
     /**
      * @var string namespace to search
      */
-    private string $namespace;
+    private readonly string $namespace;
 
-    private string $defaultController;
-    private string $defaultMethod;
+    private readonly string $defaultController;
+    private readonly string $defaultMethod;
 
     /**
      * @param string $namespace namespace to search

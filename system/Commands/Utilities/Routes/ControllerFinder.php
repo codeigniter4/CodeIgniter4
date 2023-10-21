@@ -24,9 +24,9 @@ final class ControllerFinder
     /**
      * @var string namespace to search
      */
-    private string $namespace;
+    private readonly string $namespace;
 
-    private FileLocatorInterface $locator;
+    private readonly FileLocatorInterface $locator;
 
     /**
      * @param string $namespace namespace to search

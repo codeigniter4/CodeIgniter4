@@ -159,7 +159,7 @@ class Security implements SecurityInterface
      */
     protected $samesite = Cookie::SAMESITE_LAX;
 
-    private IncomingRequest $request;
+    private readonly IncomingRequest $request;
 
     /**
      * CSRF Cookie Name without Prefix

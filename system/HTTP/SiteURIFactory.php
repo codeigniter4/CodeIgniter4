@@ -24,8 +24,8 @@ use Config\App;
  */
 final class SiteURIFactory
 {
-    private App $appConfig;
-    private Superglobals $superglobals;
+    private readonly App $appConfig;
+    private readonly Superglobals $superglobals;
 
     public function __construct(App $appConfig, Superglobals $superglobals)
     {

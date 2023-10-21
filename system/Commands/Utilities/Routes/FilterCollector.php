@@ -29,7 +29,7 @@ final class FilterCollector
      *
      * If set to true, route filters are not found.
      */
-    private bool $resetRoutes;
+    private readonly bool $resetRoutes;
 
     public function __construct(bool $resetRoutes = false)
     {

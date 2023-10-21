@@ -24,7 +24,7 @@ final class AutoRouter implements AutoRouterInterface
      *
      * @var array<string, Closure|string> [routeKey => handler]
      */
-    private array $cliRoutes;
+    private readonly array $cliRoutes;
 
     /**
      * Sub-directory that contains the requested controller class.
@@ -51,12 +51,12 @@ final class AutoRouter implements AutoRouterInterface
     /**
      * HTTP verb for the request.
      */
-    private string $httpVerb;
+    private readonly string $httpVerb;
 
     /**
      * Default namespace for controllers.
      */
-    private string $defaultNamespace;
+    private readonly string $defaultNamespace;
 
     public function __construct(
         array $cliRoutes,

@@ -24,12 +24,12 @@ final class ControllerMethodReader
     /**
      * @var string the default namespace
      */
-    private string $namespace;
+    private readonly string $namespace;
 
     /**
      * @var list<string>
      */
-    private array $httpMethods;
+    private readonly array $httpMethods;
 
     /**
      * @param string $namespace the default namespace

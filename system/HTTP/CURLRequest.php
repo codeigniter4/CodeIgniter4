@@ -89,7 +89,7 @@ class CURLRequest extends OutgoingRequest
     /**
      * The default options from the constructor. Applied to all requests.
      */
-    private array $defaultOptions;
+    private readonly array $defaultOptions;
 
     /**
      * Whether share options between requests or not.
@@ -97,7 +97,7 @@ class CURLRequest extends OutgoingRequest
      * If true, all the options won't be reset between requests.
      * It may cause an error request with unnecessary headers.
      */
-    private bool $shareOptions;
+    private readonly bool $shareOptions;
 
     /**
      * Takes an array of options to set the following possible class properties:

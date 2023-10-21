@@ -29,7 +29,7 @@ final class AutoRouterImproved implements AutoRouterInterface
      *
      * @var class-string[]
      */
-    private array $protectedControllers;
+    private readonly array $protectedControllers;
 
     /**
      * Sub-directory that contains the requested controller class.
@@ -57,7 +57,7 @@ final class AutoRouterImproved implements AutoRouterInterface
      * Whether dashes in URI's should be converted
      * to underscores when determining method names.
      */
-    private bool $translateURIDashes;
+    private readonly bool $translateURIDashes;
 
     /**
      * The namespace for controllers.
@@ -67,12 +67,12 @@ final class AutoRouterImproved implements AutoRouterInterface
     /**
      * The name of the default controller class.
      */
-    private string $defaultController;
+    private readonly string $defaultController;
 
     /**
      * The name of the default method without HTTP verb prefix.
      */
-    private string $defaultMethod;
+    private readonly string $defaultMethod;
 
     /**
      * The URI segments.
