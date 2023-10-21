@@ -123,7 +123,17 @@ return static function (RectorConfig $rectorConfig): void {
         SimplifyRegexPatternRector::class,
 
         // PHP 8.0 features but cause breaking changes
-        ClassPropertyAssignToConstructorPromotionRector::class,
+        ClassPropertyAssignToConstructorPromotionRector::class => [
+            __DIR__ . '/system/Database/BaseResult.php',
+            __DIR__ . '/system/Database/RawSql.php',
+            __DIR__ . '/system/Debug/BaseExceptionHandler.php',
+            __DIR__ . '/system/Filters/Filters.php',
+            __DIR__ . '/system/HTTP/CURLRequest.php',
+            __DIR__ . '/system/HTTP/DownloadResponse.php',
+            __DIR__ . '/system/HTTP/IncomingRequest.php',
+            __DIR__ . '/system/Security/Security.php',
+            __DIR__ . '/system/Session/Session.php',
+        ],
         MixedTypeRector::class,
 
         // PHP 8.1 features but cause breaking changes
