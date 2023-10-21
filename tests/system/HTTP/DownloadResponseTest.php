@@ -38,7 +38,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame(200, $response->getStatusCode());
     }
 
-    public function testCantSetStatusCode(): void
+    public function testCantSetStatusCode(): never
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
@@ -137,7 +137,7 @@ final class DownloadResponseTest extends CIUnitTestCase
         $this->assertSame('private, no-transform, no-store, must-revalidate', $response->getHeaderLine('Cache-control'));
     }
 
-    public function testCantSetCache(): void
+    public function testCantSetCache(): never
     {
         $response = new DownloadResponse('unit-test.txt', true);
 

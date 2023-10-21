@@ -473,7 +473,7 @@ final class SiteURITest extends CIUnitTestCase
         $this->assertSame(0, $uri->getTotalSegments());
     }
 
-    public function testSetURI()
+    public function testSetURI(): never
     {
         $this->expectException(BadMethodCallException::class);
 

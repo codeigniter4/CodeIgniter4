@@ -598,7 +598,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
-        $routes->get('/', static function () {
+        $routes->get('/', static function (): never {
             throw new RedirectException('redirect-exception', 503);
         });
 
