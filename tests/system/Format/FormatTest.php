@@ -52,10 +52,7 @@ final class FormatTest extends CIUnitTestCase
 
     public function testGetFormatterExpectsExceptionOnUndefinedClass(): void
     {
-        $this->format->getConfig()->formatters = array_merge(
-            $this->format->getConfig()->formatters,
-            ['text/xml' => 'App\Foo']
-        );
+        $this->format->getConfig()->formatters = [...$this->format->getConfig()->formatters, 'text/xml' => 'App\Foo'];
 
         $this->expectException(FormatException::class);
         $this->expectExceptionMessage('"App\Foo" is not a valid Formatter class.');
@@ -64,10 +61,7 @@ final class FormatTest extends CIUnitTestCase
 
     public function testGetFormatterExpectsExceptionOnClassNotImplementingFormatterInterface(): void
     {
-        $this->format->getConfig()->formatters = array_merge(
-            $this->format->getConfig()->formatters,
-            ['text/xml' => URI::class]
-        );
+        $this->format->getConfig()->formatters = [...$this->format->getConfig()->formatters, 'text/xml' => URI::class];
 
         $this->expectException(FormatException::class);
         $this->expectExceptionMessage('"CodeIgniter\HTTP\URI" is not a valid Formatter class.');

@@ -156,10 +156,10 @@ class Autoloader
     public function register()
     {
         // Register classmap loader for the files in our class map.
-        spl_autoload_register([$this, 'loadClassmap'], true);
+        spl_autoload_register($this->loadClassmap(...), true);
 
         // Register the PSR-4 autoloader.
-        spl_autoload_register([$this, 'loadClass'], true);
+        spl_autoload_register($this->loadClass(...), true);
 
         // Load our non-class files
         foreach ($this->files as $file) {
@@ -174,8 +174,8 @@ class Autoloader
      */
     public function unregister(): void
     {
-        spl_autoload_unregister([$this, 'loadClass']);
-        spl_autoload_unregister([$this, 'loadClassmap']);
+        spl_autoload_unregister($this->loadClass(...));
+        spl_autoload_unregister($this->loadClassmap(...));
     }
 
     /**
@@ -465,7 +465,7 @@ class Autoloader
             $newPaths[rtrim($key, '\\ ')] = $value;
         }
 
-        $this->prefixes = array_merge($this->prefixes, $newPaths);
+        $this->prefixes = [...$this->prefixes, ...$newPaths];
         $this->classmap = array_merge($this->classmap, $classes);
     }
 

@@ -1262,7 +1262,7 @@ abstract class BaseConnection implements ConnectionInterface
     public function escape($str)
     {
         if (is_array($str)) {
-            return array_map([&$this, 'escape'], $str);
+            return array_map($this->escape(...), $str);
         }
 
         /** @psalm-suppress NoValue I don't know why ERROR. */

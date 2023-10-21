@@ -144,8 +144,8 @@ class AutoloadConfig
             $this->classmap['CIDatabaseTestCase']         = SYSTEMPATH . 'Test/CIDatabaseTestCase.php';
         }
 
-        $this->psr4     = array_merge($this->corePsr4, $this->psr4);
-        $this->classmap = array_merge($this->coreClassmap, $this->classmap);
+        $this->psr4     = [...$this->corePsr4, ...$this->psr4];
+        $this->classmap = [...$this->coreClassmap, ...$this->classmap];
         $this->files    = [...$this->coreFiles, ...$this->files];
     }
 }

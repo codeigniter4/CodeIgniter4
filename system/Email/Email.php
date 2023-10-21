@@ -1644,10 +1644,7 @@ class Email
     {
         $this->finalBody = preg_replace_callback(
             '/\{unwrap\}(.*?)\{\/unwrap\}/si',
-            [
-                $this,
-                'removeNLCallback',
-            ],
+            $this->removeNLCallback(...),
             $this->finalBody
         );
     }

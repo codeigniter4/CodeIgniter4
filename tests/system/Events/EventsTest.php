@@ -289,7 +289,7 @@ final class EventsTest extends CIUnitTestCase
             }
         };
 
-        Events::on('foo', [$box, 'hold']);
+        Events::on('foo', $box->hold(...));
 
         $this->assertTrue(Events::trigger('foo', 'bar'));
 

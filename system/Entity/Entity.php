@@ -401,7 +401,7 @@ class Entity implements JsonSerializable
 
         $type = trim($type, '[]');
 
-        $handlers = array_merge($this->defaultCastHandlers, $this->castHandlers);
+        $handlers = [...$this->defaultCastHandlers, ...$this->castHandlers];
 
         if (empty($handlers[$type])) {
             return $value;

@@ -358,7 +358,7 @@ class ValidationTest extends CIUnitTestCase
     {
         $this->validation->setRules(
             [
-                'foo' => ['required', [$this, 'rule1']],
+                'foo' => ['required', $this->rule1(...)],
             ],
             [
                 // Errors
@@ -401,7 +401,7 @@ class ValidationTest extends CIUnitTestCase
         $this->validation->setRules([
             'foo' => [
                 'required',
-                [$this, 'rule2'],
+                $this->rule2(...),
             ],
         ]);
 
@@ -421,7 +421,7 @@ class ValidationTest extends CIUnitTestCase
         $this->validation->setRules([
             'secret' => [
                 'label'  => 'シークレット',
-                'rules'  => ['required', [$this, 'rule1']],
+                'rules'  => ['required', $this->rule1(...)],
                 'errors' => [
                     // Specify the array key for the callable rule.
                     1 => 'The {field} is invalid',

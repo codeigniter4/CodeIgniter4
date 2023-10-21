@@ -104,15 +104,15 @@ class Typography
         // match and yank <pre> tags if they exist.  It's cheaper to do this separately since most content will
         // not contain <pre> tags, and it keeps the PCRE patterns below simpler and faster
         if (str_contains($str, '<pre')) {
-            $str = preg_replace_callback('#<pre.*?>.*?</pre>#si', [$this, 'protectCharacters'], $str);
+            $str = preg_replace_callback('#<pre.*?>.*?</pre>#si', $this->protectCharacters(...), $str);
         }
 
         // Convert quotes within tags to temporary markers.
-        $str = preg_replace_callback('#<.+?>#si', [$this, 'protectCharacters'], $str);
+        $str = preg_replace_callback('#<.+?>#si', $this->protectCharacters(...), $str);
 
         // Do the same with braces if necessary
         if ($this->protectBracedQuotes === false) {
-            $str = preg_replace_callback('#\{.+?\}#si', [$this, 'protectCharacters'], $str);
+            $str = preg_replace_callback('#\{.+?\}#si', $this->protectCharacters(...), $str);
         }
 
         // Convert "ignore" tags to temporary marker.  The parser splits out the string at every tag
