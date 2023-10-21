@@ -129,7 +129,15 @@ return static function (RectorConfig $rectorConfig): void {
 
         // PHP 8.1 features but cause breaking changes
         ReadOnlyPropertyRector::class,
-        FinalizePublicClassConstantRector::class,
+        FinalizePublicClassConstantRector::class => [
+            __DIR__ . '/system/Cache/Handlers/BaseHandler.php',
+            __DIR__ . '/system/Cache/Handlers/FileHandler.php',
+            __DIR__ . '/system/CodeIgniter.php',
+            __DIR__ . '/system/Events/Events.php',
+            __DIR__ . '/system/Log/Handlers/ChromeLoggerHandler.php',
+            __DIR__ . '/system/Log/Handlers/ErrorlogHandler.php',
+            __DIR__ . '/system/Security/Security.php',
+        ],
         ReturnNeverTypeRector::class => [
             __DIR__ . '/system/Cache/Handlers/MemcachedHandler.php',
             __DIR__ . '/system/Cache/Handlers/WincacheHandler.php',
