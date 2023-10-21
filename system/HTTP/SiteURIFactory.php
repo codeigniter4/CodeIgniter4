@@ -24,13 +24,10 @@ use Config\App;
  */
 final class SiteURIFactory
 {
-    private readonly App $appConfig;
-    private readonly Superglobals $superglobals;
-
-    public function __construct(App $appConfig, Superglobals $superglobals)
-    {
-        $this->appConfig    = $appConfig;
-        $this->superglobals = $superglobals;
+    public function __construct(
+        private readonly App $appConfig,
+        private readonly Superglobals $superglobals
+    ) {
     }
 
     /**

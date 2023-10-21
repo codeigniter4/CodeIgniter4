@@ -25,13 +25,6 @@ use ReflectionException;
 final class AutoRouterImproved implements AutoRouterInterface
 {
     /**
-     * List of controllers in Defined Routes that should not be accessed via this Auto-Routing.
-     *
-     * @var class-string[]
-     */
-    private readonly array $protectedControllers;
-
-    /**
      * Sub-directory that contains the requested controller class.
      */
     private ?string $directory = null;
@@ -54,25 +47,9 @@ final class AutoRouterImproved implements AutoRouterInterface
     private array $params = [];
 
     /**
-     * Whether dashes in URI's should be converted
-     * to underscores when determining method names.
-     */
-    private readonly bool $translateURIDashes;
-
-    /**
      * The namespace for controllers.
      */
     private string $namespace;
-
-    /**
-     * The name of the default controller class.
-     */
-    private readonly string $defaultController;
-
-    /**
-     * The name of the default method without HTTP verb prefix.
-     */
-    private readonly string $defaultMethod;
 
     /**
      * The URI segments.
@@ -106,18 +83,24 @@ final class AutoRouterImproved implements AutoRouterInterface
      * @deprecated $httpVerb is deprecated. No longer used.
      */
     public function __construct(// @phpstan-ignore-line
-        array $protectedControllers,
+        /**
+         * List of controllers in Defined Routes that should not be accessed via this Auto-Routing.
+         */
+        private readonly array $protectedControllers,
         string $namespace,
-        string $defaultController,
-        string $defaultMethod,
-        bool $translateURIDashes,
+        private readonly string $defaultController,
+        /**
+         * The name of the default method without HTTP verb prefix.
+         */
+        private readonly string $defaultMethod,
+        /**
+         * Whether dashes in URI's should be converted
+         * to underscores when determining method names.
+         */
+        private readonly bool $translateURIDashes,
         string $httpVerb
     ) {
-        $this->protectedControllers = $protectedControllers;
-        $this->namespace            = rtrim($namespace, '\\');
-        $this->translateURIDashes   = $translateURIDashes;
-        $this->defaultController    = $defaultController;
-        $this->defaultMethod        = $defaultMethod;
+        $this->namespace = rtrim($namespace, '\\');
 
         // Set the default values
         $this->controller = $this->defaultController;

@@ -20,59 +20,40 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 final class AutoRouter implements AutoRouterInterface
 {
     /**
-     * List of CLI routes that do not contain '*' routes.
-     *
-     * @var array<string, Closure|string> [routeKey => handler]
-     */
-    private readonly array $cliRoutes;
-
-    /**
      * Sub-directory that contains the requested controller class.
      * Primarily used by 'autoRoute'.
      */
     private ?string $directory = null;
 
-    /**
-     * The name of the controller class.
-     */
-    private string $controller;
-
-    /**
-     * The name of the method to use.
-     */
-    private string $method;
-
-    /**
-     * Whether dashes in URI's should be converted
-     * to underscores when determining method names.
-     */
-    private bool $translateURIDashes;
-
-    /**
-     * HTTP verb for the request.
-     */
-    private readonly string $httpVerb;
-
-    /**
-     * Default namespace for controllers.
-     */
-    private readonly string $defaultNamespace;
-
     public function __construct(
-        array $cliRoutes,
-        string $defaultNamespace,
-        string $defaultController,
-        string $defaultMethod,
-        bool $translateURIDashes,
-        string $httpVerb
+        /**
+         * List of CLI routes that do not contain '*' routes.
+         *
+         * @var array<string, Closure|string> [routeKey => handler]
+         */
+        private readonly array $cliRoutes,
+        /**
+         * Default namespace for controllers.
+         */
+        private readonly string $defaultNamespace,
+        /**
+         * The name of the controller class.
+         */
+        private string $controller,
+        /**
+         * The name of the method to use.
+         */
+        private string $method,
+        /**
+         * Whether dashes in URI's should be converted
+         * to underscores when determining method names.
+         */
+        private bool $translateURIDashes,
+        /**
+         * HTTP verb for the request.
+         */
+        private readonly string $httpVerb
     ) {
-        $this->cliRoutes          = $cliRoutes;
-        $this->defaultNamespace   = $defaultNamespace;
-        $this->translateURIDashes = $translateURIDashes;
-        $this->httpVerb           = $httpVerb;
-
-        $this->controller = $defaultController;
-        $this->method     = $defaultMethod;
     }
 
     /**

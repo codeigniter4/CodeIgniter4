@@ -21,23 +21,16 @@ use ReflectionMethod;
  */
 final class ControllerMethodReader
 {
-    /**
-     * @var string the default namespace
-     */
-    private readonly string $namespace;
-
-    /**
-     * @var list<string>
-     */
-    private readonly array $httpMethods;
-
-    /**
-     * @param string $namespace the default namespace
-     */
-    public function __construct(string $namespace, array $httpMethods)
-    {
-        $this->namespace   = $namespace;
-        $this->httpMethods = $httpMethods;
+    public function __construct(
+        /**
+         * @var string $namespace the default namespace
+         */
+        private readonly string $namespace,
+        /**
+         * list<string>
+         */
+        private readonly array $httpMethods
+    ) {
     }
 
     /**

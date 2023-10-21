@@ -47,12 +47,11 @@ final class ResponseCache
      */
     private int $ttl = 0;
 
-    private readonly CacheInterface $cache;
-
-    public function __construct(CacheConfig $config, CacheInterface $cache)
-    {
+    public function __construct(
+        CacheConfig $config,
+        private readonly CacheInterface $cache
+    ) {
         $this->cacheQueryString = $config->cacheQueryString;
-        $this->cache            = $cache;
     }
 
     /**
