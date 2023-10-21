@@ -1,51 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="system/Test/bootstrap.php"
-         backupGlobals="false"
-         beStrictAboutOutputDuringTests="true"
-         beStrictAboutTodoAnnotatedTests="true"
-         cacheResultFile="build/.phpunit.cache/test-results"
-         colors="true"
-         columns="max"
-         failOnRisky="true"
-         failOnWarning="true"
-         verbose="true">
-
-    <coverage cacheDirectory="build/.phpunit.cache/code-coverage"
-              processUncoveredFiles="true"
-              ignoreDeprecatedCodeUnits="true">
-        <include>
-            <directory suffix=".php">system</directory>
-        </include>
-
-        <exclude>
-            <directory>system/Commands/Generators/Views</directory>
-            <directory>system/Debug/Toolbar/Views</directory>
-            <directory>system/Pager/Views</directory>
-            <directory>system/ThirdParty</directory>
-            <directory>system/Validation/Views</directory>
-            <file>system/bootstrap.php</file>
-            <file>system/ComposerScripts.php</file>
-            <file>system/Config/Routes.php</file>
-            <file>system/Test/bootstrap.php</file>
-            <file>system/Test/ControllerTester.php</file>
-            <file>system/Test/FeatureTestCase.php</file>
-        </exclude>
-
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.4/phpunit.xsd"
+         bootstrap="system/Test/bootstrap.php" backupGlobals="false"
+         beStrictAboutOutputDuringTests="true" colors="true" columns="max"
+         failOnRisky="true" failOnWarning="true"
+         cacheDirectory=".phpunit.cache">
+    <coverage ignoreDeprecatedCodeUnits="true">
         <report>
             <clover outputFile="build/logs/clover.xml"/>
             <html outputDirectory="build/coverage/html" highLowerBound="80"/>
             <text outputFile="build/coverage/text/coverage.txt"/>
         </report>
     </coverage>
-
     <testsuites>
         <testsuite name="System">
             <directory>tests/system</directory>
         </testsuite>
     </testsuites>
-
     <extensions>
         <extension class="Nexus\PHPUnit\Extension\Tachycardia">
             <arguments>
@@ -66,7 +37,6 @@
             </arguments>
         </extension>
     </extensions>
-
     <php>
         <server name="app.baseURL" value="http://example.com/"/>
         <server name="CODEIGNITER_SCREAM_DEPRECATIONS" value="1"/>
@@ -77,4 +47,22 @@
         <!-- Directory containing the front controller (index.php) -->
         <const name="PUBLICPATH" value="./public/"/>
     </php>
+    <source>
+        <include>
+            <directory suffix=".php">system</directory>
+        </include>
+        <exclude>
+            <directory>system/Commands/Generators/Views</directory>
+            <directory>system/Debug/Toolbar/Views</directory>
+            <directory>system/Pager/Views</directory>
+            <directory>system/ThirdParty</directory>
+            <directory>system/Validation/Views</directory>
+            <file>system/bootstrap.php</file>
+            <file>system/ComposerScripts.php</file>
+            <file>system/Config/Routes.php</file>
+            <file>system/Test/bootstrap.php</file>
+            <file>system/Test/ControllerTester.php</file>
+            <file>system/Test/FeatureTestCase.php</file>
+        </exclude>
+    </source>
 </phpunit>
