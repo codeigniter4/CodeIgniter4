@@ -22,7 +22,7 @@ use Config\Cache;
  *
  * @internal
  */
-final class RedisHandlerTest extends AbstractHandlerTest
+final class RedisHandlerTest extends AbstractHandlerTestCase
 {
     private Cache $config;
 
