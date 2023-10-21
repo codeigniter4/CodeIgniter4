@@ -28,7 +28,7 @@ use InvalidArgumentException;
  * @method static Model|null      models(string $alias, array $options = [], ?ConnectionInterface &$conn = null)
  * @see \CodeIgniter\Config\FactoriesTest
  */
-class Factories
+final class Factories
 {
     /**
      * Store of component-specific options, usually
@@ -36,7 +36,7 @@ class Factories
      *
      * @var array<string, array<string, bool|string|null>>
      */
-    protected static $options = [];
+    private static $options = [];
 
     /**
      * Explicit options for the Config
@@ -65,7 +65,7 @@ class Factories
      * @var array<string, array<string, string>>
      * @phpstan-var array<string, array<string, class-string>>
      */
-    protected static $aliases = [];
+    private static $aliases = [];
 
     /**
      * Store for instances of any component that
@@ -79,7 +79,7 @@ class Factories
      * @var array<string, array<string, object>>
      * @phpstan-var  array<string, array<class-string, object>>
      */
-    protected static $instances = [];
+    private static $instances = [];
 
     /**
      * Whether the component instances are updated?
@@ -88,7 +88,7 @@ class Factories
      *
      * @internal For caching only
      */
-    protected static $updated = [];
+    private static $updated = [];
 
     /**
      * Define the class to load. You can *override* the concrete class.
@@ -252,7 +252,7 @@ class Factories
      * @param array  $options The array of component-specific directives
      * @param string $alias   Class alias. See the $aliases property.
      */
-    protected static function locateClass(array $options, string $alias): ?string
+    private static function locateClass(array $options, string $alias): ?string
     {
         // Check for low-hanging fruit
         if (
@@ -328,7 +328,7 @@ class Factories
      * @param array  $options The array of component-specific directives
      * @param string $alias   Class alias. See the $aliases property.
      */
-    protected static function verifyPreferApp(array $options, string $alias): bool
+    private static function verifyPreferApp(array $options, string $alias): bool
     {
         // Anything without that restriction passes
         if (! $options['preferApp']) {
@@ -349,7 +349,7 @@ class Factories
      * @param array  $options The array of component-specific directives
      * @param string $alias   Class alias. See the $aliases property.
      */
-    protected static function verifyInstanceOf(array $options, string $alias): bool
+    private static function verifyInstanceOf(array $options, string $alias): bool
     {
         // Anything without that restriction passes
         if (! $options['instanceOf']) {
