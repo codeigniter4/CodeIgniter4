@@ -2642,11 +2642,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Router/AutoRouter.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Router\\\\AutoRouter\\:\\:\\$cliRoutes type has no signature specified for Closure\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/AutoRouter.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/AutoRouter.php',
