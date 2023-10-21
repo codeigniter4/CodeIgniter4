@@ -130,7 +130,19 @@ return static function (RectorConfig $rectorConfig): void {
         // PHP 8.1 features but cause breaking changes
         ReadOnlyPropertyRector::class,
         FinalizePublicClassConstantRector::class,
-        ReturnNeverTypeRector::class,
+        ReturnNeverTypeRector::class => [
+            __DIR__ . '/system/Cache/Handlers/MemcachedHandler.php',
+            __DIR__ . '/system/Cache/Handlers/WincacheHandler.php',
+            __DIR__ . '/system/CodeIgniter.php',
+            __DIR__ . '/system/Database/MySQLi/Utils.php',
+            __DIR__ . '/system/Database/OCI8/Utils.php',
+            __DIR__ . '/system/Database/Postgre/Utils.php',
+            __DIR__ . '/system/Database/SQLSRV/Utils.php',
+            __DIR__ . '/system/Database/SQLite3/Utils.php',
+            __DIR__ . '/system/HTTP/DownloadResponse.php',
+            __DIR__ . '/system/HTTP/SiteURI.php',
+            __DIR__ . '/system/Helpers/kint_helper.php',
+        ],
 
         // Unnecessary (string) is inserted
         NullToStrictStringFuncCallArgRector::class,
