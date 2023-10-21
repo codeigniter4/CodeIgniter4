@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upgrading From a Previous Version &mdash; CodeIgniter 4.4.2 documentation</title>
+  <title>Version 4.4.3 &mdash; CodeIgniter 4.4.2 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
@@ -22,8 +22,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Backward Compatibility Notes" href="backward_compatibility_notes.html" />
-    <link rel="prev" title="Version 4.0.0-alpha.1" href="../changelogs/v4.0.0-alpha.1.html" /> 
+    <link rel="next" title="Version 4.4.2" href="v4.4.2.html" />
+    <link rel="prev" title="Change Logs" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -57,14 +57,14 @@
 </li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="installing_composer.html">Composer Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Upgrading From a Previous Version</a></li>
-<li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../installation/index.html">Installation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Change Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
 </ul>
 </li>
 </ul>
@@ -264,13 +264,14 @@
 
       <div class="wy-nav-content">
         <div class="rst-content">
-<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/installation/upgrading.rst">Edit this page</a>
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/changelogs/v4.4.3.rst">Edit this page</a>
 
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">Installation</a></li>
-      <li class="breadcrumb-item active">Upgrading From a Previous Version</li>
+          <li class="breadcrumb-item"><a href="../installation/index.html">Installation</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Change Logs</a></li>
+      <li class="breadcrumb-item active">Version 4.4.3</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -279,85 +280,45 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="upgrading-from-a-previous-version">
-<h1>Upgrading From a Previous Version<a class="headerlink" href="#upgrading-from-a-previous-version" title="Permalink to this headline"></a></h1>
-<p>Please read the upgrade notes corresponding to the version you are
-upgrading from.</p>
-<p>See also <a class="reference internal" href="backward_compatibility_notes.html"><span class="doc">Backward Compatibility Notes</span></a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you don’t know what version of CodeIgniter you are currently running,
-you can get it from <a class="reference internal" href="../testing/debugging.html#the-debug-toolbar"><span class="std std-ref">the Debug Toolbar</span></a>,
-or simply echo the constant <code class="docutils literal notranslate"><span class="pre">\CodeIgniter\CodeIgniter::CI_VERSION</span></code>.</p>
-</div>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="backward_compatibility_notes.html">Backward Compatibility Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_443.html">Upgrading from 4.4.2 to 4.4.3</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_442.html">Upgrading from 4.4.1 to 4.4.2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_441.html">Upgrading from 4.4.0 to 4.4.1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_440.html">Upgrading from 4.3.8 to 4.4.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_438.html">Upgrading from 4.3.7 to 4.3.8</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_437.html">Upgrading from 4.3.6 to 4.3.7</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_436.html">Upgrading from 4.3.5 to 4.3.6</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_435.html">Upgrading from 4.3.4 to 4.3.5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_434.html">Upgrading from 4.3.3 to 4.3.4</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_433.html">Upgrading from 4.3.2 to 4.3.3</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_432.html">Upgrading from 4.3.1 to 4.3.2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_431.html">Upgrading from 4.3.0 to 4.3.1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_430.html">Upgrading from 4.2.12 to 4.3.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_4212.html">Upgrading from 4.2.11 to 4.2.12</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_4211.html">Upgrading from 4.2.10 to 4.2.11</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_4210.html">Upgrading from 4.2.9 to 4.2.10</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_428.html">Upgrading from 4.2.7 to 4.2.8</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_427.html">Upgrading from 4.2.6 to 4.2.7</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_426.html">Upgrading from 4.2.5 to 4.2.6</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_425.html">Upgrading from 4.2.3 to 4.2.5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_423.html">Upgrading from 4.2.2 to 4.2.3</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_422.html">Upgrading from 4.2.1 to 4.2.2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_421.html">Upgrading from 4.2.0 to 4.2.1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_420.html">Upgrading from 4.1.9 to 4.2.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_418.html">Upgrading from 4.1.7 to 4.1.8</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_417.html">Upgrading from 4.1.6 to 4.1.7</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_416.html">Upgrading from 4.1.5 to 4.1.6</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_415.html">Upgrading from 4.1.4 to 4.1.5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_414.html">Upgrading from 4.1.3 to 4.1.4</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_413.html">Upgrading from 4.1.2 to 4.1.3</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_412.html">Upgrading from 4.1.1 to 4.1.2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_410.html">Upgrading from 4.0.5 to 4.1.0 or 4.1.1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_405.html">Upgrading from 4.0.4 to 4.0.5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_404.html">Upgrading from 4.0.x to 4.0.4</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_4xx.html">Upgrading from 3.x to 4.x</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_models.html">Upgrade Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_views.html">Upgrade Views</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_controllers.html">Upgrade Controllers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_configuration.html">Upgrade Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_database.html">Upgrade Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_emails.html">Upgrade Emails</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_encryption.html">Upgrade Encryption</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_file_upload.html">Upgrade Working with Uploaded Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_html_tables.html">Upgrade HTML Tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_localization.html">Upgrade Localization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_migrations.html">Upgrade Migrations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_pagination.html">Upgrade Pagination</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_responses.html">Upgrade HTTP Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_routing.html">Upgrade Routing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_security.html">Upgrade Security</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_sessions.html">Upgrade Sessions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_validations.html">Upgrade Validations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_view_parser.html">Upgrade View Parser</a></li>
-</ul>
-</li>
+  <section id="version-4-4-3">
+<h1>Version 4.4.3<a class="headerlink" href="#version-4-4-3" title="Permalink to this headline"></a></h1>
+<p>Release Date: Unreleased</p>
+<p><strong>4.4.3 release of CodeIgniter4</strong></p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p></li>
+<li><p><a class="reference internal" href="#message-changes" id="id2">Message Changes</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id3">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id4">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id5">Bugs Fixed</a></p></li>
 </ul>
 </div>
+<section id="breaking">
+<h2><a class="toc-backref" href="#id1">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this headline"></a></h2>
+</section>
+<section id="message-changes">
+<h2><a class="toc-backref" href="#id2">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this headline"></a></h2>
+</section>
+<section id="changes">
+<h2><a class="toc-backref" href="#id3">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
+</section>
+<section id="deprecations">
+<h2><a class="toc-backref" href="#id4">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
+</section>
+<section id="bugs-fixed">
+<h2><a class="toc-backref" href="#id5">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
+<p>See the repo’s
+<a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
+for a complete list of bugs fixed.</p>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../changelogs/v4.0.0-alpha.1.html" class="btn btn-neutral float-left" title="Version 4.0.0-alpha.1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="backward_compatibility_notes.html" class="btn btn-neutral float-right" title="Backward Compatibility Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Change Logs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="v4.4.2.html" class="btn btn-neutral float-right" title="Version 4.4.2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
