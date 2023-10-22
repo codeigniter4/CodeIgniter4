@@ -82,19 +82,14 @@ You can stop simulation by passing false:
 
 .. literalinclude:: events/008.php
 
-.. _event-points:
-
 Event Points
 ============
 
 The following is a list of available event points within the CodeIgniter core code:
 
-* **pre_system** Called early during system execution. The URI, Request, and
-  Response have been instantiated, but page cache checking, routing, and execution
-  of "before" controller filters have not yet occurred.
+* **pre_system** Called very early during system execution. Only the benchmark and events class have been loaded at this point. No routing or other processes have happened.
 * **post_controller_constructor** Called immediately after your controller is instantiated, but prior to any method calls happening.
-* **post_system** Called right before the final rendered page is sent to the browser,
-  at the end of system execution, after the execution of "after" controller filters.
+* **post_system** Called after the final rendered page is sent to the browser, at the end of system execution after the finalized data is sent to the browser.
 * **email** Called after an email sent successfully from ``CodeIgniter\Email\Email``. Receives an array of the ``Email`` class's properties as a parameter.
 * **DBQuery** Called after a database query whether successful or not. Receives the ``Query`` object.
 * **migrate** Called after a successful migration call to ``latest()`` or ``regress()``. Receives the current properties of ``MigrationRunner`` as well as the name of the method.
