@@ -11,8 +11,11 @@
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\Modules;
 use Encryption;
+use PHPUnit\Framework\MockObject\MockObject;
 use RegistrarConfig;
 use RuntimeException;
 use SimpleConfig;
@@ -45,6 +48,8 @@ final class BaseConfigTest extends CIUnitTestCase
         if (! class_exists('Encryption', false)) {
             require $this->fixturesFolder . '/Encryption.php';
         }
+
+        BaseConfig::$registrars = [];
     }
 
     public function testBasicValues(): void
@@ -265,32 +270,27 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->foo);
     }
 
-    public function testNotEnabled(): void
+    public function testDiscoveryNotEnabledWillNotPopulateRegistrarsArray(): void
     {
-        $modulesConfig          = config('Modules');
-        $modulesConfig->enabled = false;
+        /** @var MockObject&Modules $modules */
+        $modules = $this->createMock(Modules::class);
+        $modules->method('shouldDiscover')->with('registrars')->willReturn(false);
 
-        $config              = new RegistrarConfig();
-        $config::$registrars = [];
-        $expected            = $config::$registrars;
+        $config = new RegistrarConfig($modules);
 
-        $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
-        $method();
-
-        $this->assertSame($expected, $config::$registrars);
+        $this->assertSame([], $config::$registrars);
     }
 
-    public function testDidDiscovery(): void
+    public function testRedoingDiscoveryWillStillSetDidDiscoveryPropertyToTrue(): void
     {
-        $modulesConfig          = config('Modules');
-        $modulesConfig->enabled = true;
+        /** @var FileLocator&MockObject $locator */
+        $locator = $this->createMock(FileLocator::class);
+        $locator->method('search')->with('Config/Registrar.php')->willReturn([]);
+        Services::injectMock('locator', $locator);
 
-        $config              = new RegistrarConfig();
-        $config::$registrars = [];
+        $config = new RegistrarConfig();
         $this->setPrivateProperty($config, 'didDiscovery', false);
-
-        $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
-        $method();
+        ($this->getPrivateMethodInvoker($config, 'registerProperties'))();
 
         $this->assertTrue($this->getPrivateProperty($config, 'didDiscovery'));
     }

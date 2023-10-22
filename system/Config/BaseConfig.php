@@ -80,9 +80,9 @@ class BaseConfig
      *
      * The "shortPrefix" is the lowercase-only config class name.
      */
-    public function __construct()
+    public function __construct(?Modules $modules = null)
     {
-        static::$moduleConfig = new Modules();
+        static::$moduleConfig = $modules ?? new Modules();
 
         if (! static::$override) {
             return;
