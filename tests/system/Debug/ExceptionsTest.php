@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -73,6 +71,7 @@ final class ExceptionsTest extends CIUnitTestCase
         $maybeNull = PHP_VERSION_ID >= 80100 ? null : 'random string';
 
         try {
+            // We test DEPRECATED error, so cannot set `declare(strict_types=1)` in this file.
             strlen($maybeNull);
             $this->assertLogContains('error', '[DEPRECATED] strlen(): ');
         } catch (ErrorException $e) {
