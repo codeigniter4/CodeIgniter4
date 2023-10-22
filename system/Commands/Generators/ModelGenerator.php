@@ -102,7 +102,7 @@ class ModelGenerator extends BaseCommand
         }
 
         // Add or remove the DBGroup line based on the presence of the dbgroup option
-        $addDBGroupLine = is_string($dbGroup) ? true : false;
+        $addDBGroupLine = is_string($dbGroup);
 
         $table  = is_string($table) ? $table : plural(strtolower($baseClass));
         $return = is_string($return) ? $return : 'array';
