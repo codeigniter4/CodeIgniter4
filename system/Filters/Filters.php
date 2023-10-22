@@ -621,7 +621,7 @@ class Filters
             }
 
             if (is_array($this->config->aliases[$alias])) {
-                $filtersClass = array_merge($filtersClass, $this->config->aliases[$alias]);
+                $filtersClass = [...$filtersClass, ...$this->config->aliases[$alias]];
             } else {
                 $filtersClass[] = $this->config->aliases[$alias];
             }
