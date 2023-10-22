@@ -38,7 +38,7 @@ class DatetimeCast extends BaseCast
         }
 
         if (is_numeric($value)) {
-            return Time::createFromTimestamp($value);
+            return Time::createFromTimestamp((int) $value);
         }
 
         if (is_string($value)) {

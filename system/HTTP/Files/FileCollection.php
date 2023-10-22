@@ -185,7 +185,7 @@ class FileCollection
             $array['tmp_name'] ?? null,
             $array['name'] ?? null,
             $array['type'] ?? null,
-            $array['size'] ?? null,
+            ($array['size'] ?? null) === null ? null : (int) $array['size'],
             $array['error'] ?? null,
             $array['full_path'] ?? null
         );

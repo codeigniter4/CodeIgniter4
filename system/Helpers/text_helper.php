@@ -131,7 +131,7 @@ if (! function_exists('entities_to_ascii')) {
     {
         if (preg_match_all('/\&#(\d+)\;/', $str, $matches)) {
             for ($i = 0, $s = count($matches[0]); $i < $s; $i++) {
-                $digits = $matches[1][$i];
+                $digits = (int) $matches[1][$i];
                 $out    = '';
                 if ($digits < 128) {
                     $out .= chr($digits);

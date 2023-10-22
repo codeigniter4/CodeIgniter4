@@ -91,6 +91,8 @@ class XMLFormatter implements FormatterInterface
             '\\x{FDF0}-\\x{FFFD}\\x{10000}-\\x{EFFFF}';
         $validName = $startChar . '\\.\\d\\x{B7}\\x{300}-\\x{36F}\\x{203F}-\\x{2040}';
 
+        $key = (string) $key;
+
         $key = trim($key);
         $key = preg_replace("/[^{$validName}-]+/u", '', $key);
         $key = preg_replace("/^[^{$startChar}]+/u", 'item$0', $key);

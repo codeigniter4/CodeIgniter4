@@ -175,7 +175,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         // Let others do something with this query
         Events::trigger('DBQuery', $query);
 
-        if ($this->db->isWriteType($query)) {
+        if ($this->db->isWriteType((string) $query)) {
             return true;
         }
 

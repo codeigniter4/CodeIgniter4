@@ -357,7 +357,7 @@ class Query implements QueryInterface
                 $escapedValue = '(' . implode(',', $escapedValue) . ')';
             }
 
-            $sql = substr_replace($sql, $escapedValue, $matches[0][$c][1], $ml);
+            $sql = substr_replace($sql, (string) $escapedValue, $matches[0][$c][1], $ml);
         } while ($c !== 0);
 
         return $sql;

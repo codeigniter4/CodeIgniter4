@@ -320,15 +320,15 @@ interface ResponseInterface extends MessageInterface
      * Accepts an arbitrary number of binds (up to 7) or an associative
      * array in the first parameter containing all the values.
      *
-     * @param array|string $name     Cookie name or array containing binds
-     * @param string       $value    Cookie value
-     * @param int          $expire   Cookie expiration time in seconds
-     * @param string       $domain   Cookie domain (e.g.: '.yourdomain.com')
-     * @param string       $path     Cookie path (default: '/')
-     * @param string       $prefix   Cookie name prefix
-     * @param bool         $secure   Whether to only transfer cookies via SSL
-     * @param bool         $httponly Whether only make the cookie accessible via HTTP (no javascript)
-     * @param string|null  $samesite
+     * @param array|Cookie|string $name     Cookie name / array containing binds / Cookie object
+     * @param string              $value    Cookie value
+     * @param int                 $expire   Cookie expiration time in seconds
+     * @param string              $domain   Cookie domain (e.g.: '.yourdomain.com')
+     * @param string              $path     Cookie path (default: '/')
+     * @param string              $prefix   Cookie name prefix
+     * @param bool                $secure   Whether to only transfer cookies via SSL
+     * @param bool                $httponly Whether only make the cookie accessible via HTTP (no javascript)
+     * @param string|null         $samesite
      *
      * @return $this
      */

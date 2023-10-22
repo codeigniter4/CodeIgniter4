@@ -38,6 +38,10 @@ class Filters
             $value = strtotime($value);
         }
 
+        if ($value !== null) {
+            $value = (int) $value;
+        }
+
         return date($format, $value);
     }
 
@@ -158,7 +162,7 @@ class Filters
             'duration'   => NumberFormatter::DURATION,
         ];
 
-        return format_number($value, $precision, $locale, ['type' => $types[$type]]);
+        return format_number((float) $value, $precision, $locale, ['type' => $types[$type]]);
     }
 
     /**
@@ -179,7 +183,7 @@ class Filters
             'fraction' => $fraction,
         ];
 
-        return format_number($value, 2, $locale, $options);
+        return format_number((float) $value, 2, $locale, $options);
     }
 
     /**
