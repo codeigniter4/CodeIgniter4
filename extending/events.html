@@ -291,23 +291,23 @@ Other scripts can “subscribe” to that event by registering with the Events c
 action when that event is triggered.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#enabling-events" id="id2">Enabling Events</a></p></li>
-<li><p><a class="reference internal" href="#defining-an-event" id="id3">Defining an Event</a></p>
+<li><p><a class="reference internal" href="#enabling-events" id="id1">Enabling Events</a></p></li>
+<li><p><a class="reference internal" href="#defining-an-event" id="id2">Defining an Event</a></p>
 <ul>
-<li><p><a class="reference internal" href="#setting-priorities" id="id4">Setting Priorities</a></p></li>
+<li><p><a class="reference internal" href="#setting-priorities" id="id3">Setting Priorities</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#publishing-your-own-events" id="id5">Publishing your own Events</a></p></li>
-<li><p><a class="reference internal" href="#simulating-events" id="id6">Simulating Events</a></p></li>
-<li><p><a class="reference internal" href="#event-points" id="id7">Event Points</a></p></li>
+<li><p><a class="reference internal" href="#publishing-your-own-events" id="id4">Publishing your own Events</a></p></li>
+<li><p><a class="reference internal" href="#simulating-events" id="id5">Simulating Events</a></p></li>
+<li><p><a class="reference internal" href="#event-points" id="id6">Event Points</a></p></li>
 </ul>
 </div>
 <section id="enabling-events">
-<h2><a class="toc-backref" href="#id2">Enabling Events</a><a class="headerlink" href="#enabling-events" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1">Enabling Events</a><a class="headerlink" href="#enabling-events" title="Permalink to this headline"></a></h2>
 <p>Events are always enabled, and are available globally.</p>
 </section>
 <section id="defining-an-event">
-<h2><a class="toc-backref" href="#id3">Defining an Event</a><a class="headerlink" href="#defining-an-event" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Defining an Event</a><a class="headerlink" href="#defining-an-event" title="Permalink to this headline"></a></h2>
 <p>Most events are defined within the <strong>app/Config/Events.php</strong> file. You can subscribe an action to an event with
 the <code class="docutils literal notranslate"><span class="pre">Events</span></code> class’ <code class="docutils literal notranslate"><span class="pre">on()</span></code> method. The first parameter is the name of the event to subscribe to. The second parameter is
 a callable that will be run when that event is triggered:</p>
@@ -340,7 +340,7 @@ a callable that will be run when that event is triggered:</p>
 </pre></div>
 </div>
 <section id="setting-priorities">
-<h3><a class="toc-backref" href="#id4">Setting Priorities</a><a class="headerlink" href="#setting-priorities" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3">Setting Priorities</a><a class="headerlink" href="#setting-priorities" title="Permalink to this headline"></a></h3>
 <p>Since multiple methods can be subscribed to a single event, you will need a way to define in what order those methods
 are called. You can do this by passing a priority value as the third parameter of the <code class="docutils literal notranslate"><span class="pre">on()</span></code> method. Lower values
 are executed first, with a value of 1 having the highest priority, and there being no limit on the lower values:</p>
@@ -370,7 +370,7 @@ the subscribers will stop.</p>
 </section>
 </section>
 <section id="publishing-your-own-events">
-<h2><a class="toc-backref" href="#id5">Publishing your own Events</a><a class="headerlink" href="#publishing-your-own-events" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Publishing your own Events</a><a class="headerlink" href="#publishing-your-own-events" title="Permalink to this headline"></a></h2>
 <p>The Events library makes it simple for you to create events in your own code, also. To use this feature, you would simply
 need to call the <code class="docutils literal notranslate"><span class="pre">trigger()</span></code> method on the <strong>Events</strong> class with the name of the event:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -391,7 +391,7 @@ given the arguments in the same order as defined:</p>
 </div>
 </section>
 <section id="simulating-events">
-<h2><a class="toc-backref" href="#id6">Simulating Events</a><a class="headerlink" href="#simulating-events" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Simulating Events</a><a class="headerlink" href="#simulating-events" title="Permalink to this headline"></a></h2>
 <p>During testing, you might not want the events to actually fire, as sending out hundreds of emails a day is both slow
 and counter-productive. You can tell the Events class to only simulate running the events with the <code class="docutils literal notranslate"><span class="pre">simulate()</span></code> method.
 When <strong>true</strong>, all events will be skipped over during the trigger method. Everything else will work as normal, though.</p>
@@ -408,15 +408,12 @@ When <strong>true</strong>, all events will be skipped over during the trigger m
 </div>
 </section>
 <section id="event-points">
-<span id="id1"></span><h2><a class="toc-backref" href="#id7">Event Points</a><a class="headerlink" href="#event-points" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Event Points</a><a class="headerlink" href="#event-points" title="Permalink to this headline"></a></h2>
 <p>The following is a list of available event points within the CodeIgniter core code:</p>
 <ul class="simple">
-<li><p><strong>pre_system</strong> Called early during system execution. The URI, Request, and
-Response have been instantiated, but page cache checking, routing, and execution
-of “before” controller filters have not yet occurred.</p></li>
+<li><p><strong>pre_system</strong> Called very early during system execution. Only the benchmark and events class have been loaded at this point. No routing or other processes have happened.</p></li>
 <li><p><strong>post_controller_constructor</strong> Called immediately after your controller is instantiated, but prior to any method calls happening.</p></li>
-<li><p><strong>post_system</strong> Called right before the final rendered page is sent to the browser,
-at the end of system execution, after the execution of “after” controller filters.</p></li>
+<li><p><strong>post_system</strong> Called after the final rendered page is sent to the browser, at the end of system execution after the finalized data is sent to the browser.</p></li>
 <li><p><strong>email</strong> Called after an email sent successfully from <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code>. Receives an array of the <code class="docutils literal notranslate"><span class="pre">Email</span></code> class’s properties as a parameter.</p></li>
 <li><p><strong>DBQuery</strong> Called after a database query whether successful or not. Receives the <code class="docutils literal notranslate"><span class="pre">Query</span></code> object.</p></li>
 <li><p><strong>migrate</strong> Called after a successful migration call to <code class="docutils literal notranslate"><span class="pre">latest()</span></code> or <code class="docutils literal notranslate"><span class="pre">regress()</span></code>. Receives the current properties of <code class="docutils literal notranslate"><span class="pre">MigrationRunner</span></code> as well as the name of the method.</p></li>
