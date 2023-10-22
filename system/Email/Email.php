@@ -898,7 +898,7 @@ class Email
     {
         $timezone = date('Z');
         $operator = ($timezone[0] === '-') ? '-' : '+';
-        $timezone = abs($timezone);
+        $timezone = abs((int) $timezone);
         $timezone = floor($timezone / 3600) * 100 + ($timezone % 3600) / 60;
 
         return sprintf('%s %s%04d', date('D, j M Y H:i:s'), $operator, $timezone);
