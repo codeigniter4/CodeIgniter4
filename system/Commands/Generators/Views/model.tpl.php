@@ -6,7 +6,9 @@ use CodeIgniter\Model;
 
 class {class} extends Model
 {
+<?php if ($addDBGroupLine): ?>
     protected $DBGroup          = '{dbGroup}';
+<?php endif; ?>
     protected $table            = '{table}';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
