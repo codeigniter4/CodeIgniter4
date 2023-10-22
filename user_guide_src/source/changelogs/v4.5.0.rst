@@ -102,11 +102,6 @@ Filters
     - ``Router::$filterInfo``
     - ``Router::getFilter()``
 
-Others
-------
-
-- **Config:** The deprecated ``CodeIgniter\Config\Config`` class has been removed.
-
 Model
 -----
 
@@ -122,6 +117,20 @@ CodeIgniter
 - ``$useSafeOutput``
 - ``useSafeOutput()``
 - ``setPath()``
+
+Test
+----
+
+- ``CIDatabaseTestCase``
+- ``ControllerResponse``
+- ``ControllerTester``
+- ``FeatureResponse``
+- ``FeatureTestCase``
+
+Others
+------
+
+- **Config:** The deprecated ``CodeIgniter\Config\Config`` class has been removed.
 
 Enhancements
 ************
