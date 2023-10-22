@@ -619,7 +619,7 @@ class Parser extends View
             $replace = $this->config->filters[$filter]($replace, ...$param);
         }
 
-        return $replace;
+        return (string) $replace;
     }
 
     // Plugins
