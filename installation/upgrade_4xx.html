@@ -454,6 +454,12 @@ replaced by <a class="reference internal" href="../extending/events.html"><span 
 <li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$hook['post_controller_constructor']</span></code> you now use
 <code class="docutils literal notranslate"><span class="pre">Events::on('post_controller_constructor',</span> <span class="pre">['MyClass',</span> <span class="pre">'MyFunction']);</span></code>, with the namespace <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Events\Events;</span></code>.</p></li>
 <li><p>Events are always enabled, and are available globally.</p></li>
+<li><p>The hook point <code class="docutils literal notranslate"><span class="pre">pre_controller</span></code> and <code class="docutils literal notranslate"><span class="pre">post_controller</span></code> have been removed.
+Use <a class="reference internal" href="../incoming/filters.html"><span class="doc">Controller Filters</span></a> instead.</p></li>
+<li><p>The hook point <code class="docutils literal notranslate"><span class="pre">display_override</span></code> and <code class="docutils literal notranslate"><span class="pre">cache_override</span></code> have been removed.
+Because the base methods have been removed.</p></li>
+<li><p>The hook point <code class="docutils literal notranslate"><span class="pre">post_system</span></code> has moved just before sending the final rendered
+page.</p></li>
 </ul>
 </section>
 <section id="extending-the-framework">
@@ -527,7 +533,7 @@ steps and examples to adjust your code.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 21, 2023.
+      <span class="lastupdated">Last updated on Oct 22, 2023.
       </span></p>
   </div>
 
