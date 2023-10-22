@@ -67,11 +67,9 @@ class IncomingRequest extends Request
      * AFTER the baseURL. So, if hosted in a sub-folder this will
      * appear different than actual URI path. If you need that use getPath().
      *
-     * @deprecated Will be protected. Use getUri() instead.
-     *
      * @var URI
      */
-    public $uri;
+    protected $uri;
 
     /**
      * The detected URI path (relative to the baseURL).
@@ -125,10 +123,8 @@ class IncomingRequest extends Request
      * Configuration settings.
      *
      * @var App
-     *
-     * @deprecated Will be protected.
      */
-    public $config;
+    protected $config;
 
     /**
      * Holds the old data from a redirect.

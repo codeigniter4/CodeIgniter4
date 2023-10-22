@@ -130,6 +130,8 @@ Test
 Others
 ------
 
+- **IncomingRequest::** The visibility of the deprecated properties ``$uri`` and
+  ``$config`` has been changed to protected.
 - **Config:** The deprecated ``CodeIgniter\Config\Config`` class has been removed.
 
 Enhancements
