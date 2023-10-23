@@ -73,7 +73,7 @@ final class CreditCardRulesTest extends CIUnitTestCase
             ],
             'random_test' => [
                 'amex',
-                $this->generateCardNumber('37', 16),
+                $this->generateCardNumber(37, 16),
                 false,
             ],
             'invalid_type' => [
