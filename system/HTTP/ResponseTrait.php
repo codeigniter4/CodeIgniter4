@@ -554,7 +554,7 @@ trait ResponseTrait
      *
      * @param array|Cookie|string $name     Cookie name / array containing binds / Cookie object
      * @param string              $value    Cookie value
-     * @param string              $expire   Cookie expiration time in seconds
+     * @param int                 $expire   Cookie expiration time in seconds
      * @param string              $domain   Cookie domain (e.g.: '.yourdomain.com')
      * @param string              $path     Cookie path (default: '/')
      * @param string              $prefix   Cookie name prefix ('': the default prefix)
@@ -567,7 +567,7 @@ trait ResponseTrait
     public function setCookie(
         $name,
         $value = '',
-        $expire = '',
+        $expire = 0,
         $domain = '',
         $path = '/',
         $prefix = '',
@@ -700,7 +700,7 @@ trait ResponseTrait
         }
 
         if (! $found) {
-            $this->setCookie($name, '', '', $domain, $path, $prefix);
+            $this->setCookie($name, '', 0, $domain, $path, $prefix);
         }
 
         return $this;
