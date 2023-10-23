@@ -453,7 +453,7 @@ The methods provided by the parent class that are available are:
         followed by the response body. For the main application response, you do not need to call
         this as it is handled automatically by CodeIgniter.
 
-    .. php:method:: setCookie($name = ''[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = false[, $httponly = false[, $samesite = null]]]]]]]])
+    .. php:method:: setCookie($name = ''[, $value = ''[, $expire = 0[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = false[, $httponly = false[, $samesite = null]]]]]]]])
 
         :param array|Cookie|string $name: Cookie name *or* associative array of all of the parameters available to this method *or* an instance of ``CodeIgniter\Cookie\Cookie``
         :param string $value: Cookie value
@@ -481,7 +481,7 @@ The methods provided by the parent class that are available are:
         .. literalinclude:: response/023.php
 
         Only the ``name`` and ``value`` are required. To delete a cookie set it with the
-        ``expire`` blank.
+        ``value`` blank.
 
         The ``expire`` is set in **seconds**, which will be added to the current
         time. Do not include the time, but rather only the number of seconds

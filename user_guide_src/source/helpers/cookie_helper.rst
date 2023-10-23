@@ -21,7 +21,7 @@ Available Functions
 
 The following functions are available:
 
-.. php:function:: set_cookie($name[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = false[, $httpOnly = false[, $sameSite = '']]]]]]]])
+.. php:function:: set_cookie($name[, $value = ''[, $expire = 0[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = false[, $httpOnly = false[, $sameSite = '']]]]]]]])
 
     :param    array|Cookie|string    $name: Cookie name *or* associative array of all of the parameters available to this function *or* an instance of ``CodeIgniter\Cookie\Cookie``
     :param    string    $value: Cookie value
