@@ -246,7 +246,7 @@ directory:
 
 .. literalinclude:: modules/009.php
 
-You can specify namespaces. See :ref:`helpers-loading-from-non-standard-locations` for details.
+You can specify namespaces. See :ref:`helpers-loading-from-specified-namespace` for details.
 
 Language Files
 ==============
