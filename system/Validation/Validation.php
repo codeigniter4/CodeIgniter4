@@ -168,6 +168,17 @@ class Validation implements ValidationInterface
             }
 
             if (strpos($field, '*') !== false) {
+
+                // The solution I think is check whether the rule is required and the field is match with the whole array amount.
+                // If it isn't, We need to fill it up.
+                // But seems there is the better way?
+                if (in_array('required', $rules, true) === true) {
+                    dd($data, $field);
+                }
+
+                // The problem occurs here.
+                // It'll filter out the array that follow the rule.
+                // And the after code will all use the filtered array.
                 $values = array_filter(array_flatten_with_dots($data), static fn ($key) => preg_match(
                     '/^'
                     . str_replace(['\.\*', '\*\.'], ['\..+', '.+\.'], preg_quote($field, '/'))
