@@ -337,7 +337,7 @@ class Validation implements ValidationInterface
 
                 // @phpstan-ignore-next-line $error may be set by rule methods.
                 $this->errors[$field] = $error ?? $this->getErrorMessage(
-                    ($this->isClosure($rule) || $arrayCallable) ? $i : $rule,
+                    ($this->isClosure($rule) || $arrayCallable) ? (string) $i : $rule,
                     $field,
                     $label,
                     $param,
