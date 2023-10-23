@@ -581,14 +581,11 @@ trait ResponseTrait
             return $this;
         }
 
-        /** @var CookieConfig|null $cookieConfig */
         $cookieConfig = config(CookieConfig::class);
 
-        if ($cookieConfig instanceof CookieConfig) {
-            $secure ??= $cookieConfig->secure;
-            $httponly ??= $cookieConfig->httponly;
-            $samesite ??= $cookieConfig->samesite;
-        }
+        $secure ??= $cookieConfig->secure;
+        $httponly ??= $cookieConfig->httponly;
+        $samesite ??= $cookieConfig->samesite;
 
         if (is_array($name)) {
             // always leave 'name' in last place, as the loop will break otherwise, due to ${$item}
