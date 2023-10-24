@@ -1909,7 +1909,9 @@ file upload related rules:</p>
 <tr class="row-even"><td><p>uploaded</p></td>
 <td><p>Yes</p></td>
 <td><p>Fails if the name of the parameter does not
-match the name of any uploaded files.</p></td>
+match the name of any uploaded files.
+If you want the file upload to be optional
+(not required), do not define this rule.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">uploaded[field_name]</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>max_size</p></td>
@@ -1953,6 +1955,12 @@ an image based on the mime type.</p></td>
 </tbody>
 </table>
 <p>The file validation rules apply for both single and multiple file uploads.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only rules specifically created for file validation (like the ones listed in the table above) can be used to validate files.
+Therefore, adding any general rules, like <code class="docutils literal notranslate"><span class="pre">permit_empty</span></code>, to file validation rules array or string, the file validation will not
+work correctly.</p>
+</div>
 </section>
 </section>
 </section>
@@ -1969,7 +1977,7 @@ an image based on the mime type.</p></td>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 23, 2023.
+      <span class="lastupdated">Last updated on Oct 24, 2023.
       </span></p>
   </div>
 
