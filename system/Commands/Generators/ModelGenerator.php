@@ -101,9 +101,6 @@ class ModelGenerator extends BaseCommand
             $baseClass = $match[1];
         }
 
-        // Add or remove the DBGroup line based on the presence of the dbgroup option
-        $addDBGroupLine = is_string($dbGroup);
-
         $table  = is_string($table) ? $table : plural(strtolower($baseClass));
         $return = is_string($return) ? $return : 'array';
 
@@ -131,6 +128,6 @@ class ModelGenerator extends BaseCommand
             $return = "'{$return}'";
         }
 
-        return $this->parseTemplate($class, ['{dbGroup}', '{table}', '{return}'], [$dbGroup, $table, $return], compact('addDBGroupLine'));
+        return $this->parseTemplate($class, ['{dbGroup}', '{table}', '{return}'], [$dbGroup, $table, $return], compact('dbGroup'));
     }
 }

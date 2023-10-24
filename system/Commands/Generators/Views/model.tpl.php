@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class {class} extends Model
 {
-<?php if ($addDBGroupLine): ?>
+<?php if (is_string($dbGroup)): ?>
     protected $DBGroup          = '{dbGroup}';
 <?php endif; ?>
     protected $table            = '{table}';
