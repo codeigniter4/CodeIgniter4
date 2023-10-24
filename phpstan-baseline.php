@@ -654,41 +654,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SessionMigrationGenerator\\:\\:generateClass\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Commands\\\\Generators\\\\SessionMigrationGenerator\\:\\:generateView\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, mixed given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, mixed given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Generators/SessionMigrationGenerator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/system/Commands/Generators/ValidationGenerator.php',
 ];
 $ignoreErrors[] = [
