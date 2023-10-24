@@ -997,5 +997,5 @@ is_image                Yes         Fails if the file cannot be determined to be
 The file validation rules apply for both single and multiple file uploads.
 
 .. note:: Only rules specifically created for file validation (like the ones listed in the table above) can be used to validate files.
-    Therefore, adding any general rules, like ``permit_empy``, to file validation rules array or string, the file validation will not
+    Therefore, adding any general rules, like ``permit_empty``, to file validation rules array or string, the file validation will not
     work correctly.
