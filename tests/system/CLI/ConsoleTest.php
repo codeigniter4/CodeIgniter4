@@ -90,7 +90,7 @@ final class ConsoleTest extends CIUnitTestCase
 
     public function testHelpCommandDetails(): void
     {
-        $this->initCLI('help', 'session:migration');
+        $this->initCLI('help', 'make:migration');
 
         $console = new Console();
         $console->run();
