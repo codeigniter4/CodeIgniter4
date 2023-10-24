@@ -153,6 +153,12 @@ Hooks
 - Instead of CI3's ``$hook['post_controller_constructor']`` you now use
   ``Events::on('post_controller_constructor', ['MyClass', 'MyFunction']);``, with the namespace ``CodeIgniter\Events\Events;``.
 - Events are always enabled, and are available globally.
+- The hook point ``pre_controller`` and ``post_controller`` have been removed.
+  Use :doc:`../incoming/filters` instead.
+- The hook point ``display_override`` and ``cache_override`` have been removed.
+  Because the base methods have been removed.
+- The hook point ``post_system`` has moved just before sending the final rendered
+  page.
 
 Extending the Framework
 =======================
