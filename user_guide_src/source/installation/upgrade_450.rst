@@ -119,14 +119,13 @@ has been removed.
 
 If you extneds ``BaseModel``, implement the ``getIdValue()`` method in the child class.
 
-<<<<<<< HEAD
 Factories
 =========
 
 :doc:`../concepts/factories` has been changed to a final class.
 In the unlikely event, you have inherited the Factories, stop inheriting and
 copy the code into your Factories class.
-=======
+
 Auto Routing (Legacy)
 =====================
 
@@ -138,7 +137,6 @@ the filters will not be executed if the controller is not found.
 
 If you have code that depends on this bug, for example if you expect global filters
 to be executed even for non-existent pages, please add the necessary routes.
->>>>>>> 60f7e69cf4 (docs: modify the upgrade docs.)
 
 Removed Deprecated Items
 ========================
