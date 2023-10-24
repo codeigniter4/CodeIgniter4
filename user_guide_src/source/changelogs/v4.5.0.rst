@@ -127,6 +127,12 @@ Test
 - ``FeatureResponse``
 - ``FeatureTestCase``
 
+Spark Commands
+--------------
+
+- ``migrate:create``
+- ``session:migration``
+
 Others
 ------
 
