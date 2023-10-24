@@ -199,7 +199,7 @@ abstract class BaseModel
     /**
      * Our validator instance.
      *
-     * @var ValidationInterface
+     * @var ValidationInterface|null
      */
     protected $validation;
 
@@ -326,10 +326,6 @@ abstract class BaseModel
         $this->tempUseSoftDeletes = $this->useSoftDeletes;
         $this->tempAllowCallbacks = $this->allowCallbacks;
 
-        /**
-         * @var ValidationInterface|null $validation
-         */
-        $validation ??= Services::validation(null, false);
         $this->validation = $validation;
 
         $this->initialize();
@@ -1153,6 +1149,10 @@ abstract class BaseModel
      */
     public function errors(bool $forceDB = false)
     {
+        if ($this->validation === null) {
+            return $this->doErrors();
+        }
+
         // Do we have validation errors?
         if (! $forceDB && ! $this->skipValidation && ($errors = $this->validation->getErrors())) {
             return $errors;
@@ -1421,6 +1421,8 @@ abstract class BaseModel
         // ValidationRules can be either a string, which is the group name,
         // or an array of rules.
         if (is_string($rules)) {
+            $this->ensureValidation();
+
             [$rules, $customErrors] = $this->validation->loadRuleGroup($rules);
 
             $this->validationRules = $rules;
@@ -1455,9 +1457,13 @@ abstract class BaseModel
      */
     public function validate($data): bool
     {
+        if ($this->skipValidation || empty($data)) {
+            return true;
+        }
+
         $rules = $this->getValidationRules();
 
-        if ($this->skipValidation || empty($rules) || empty($data)) {
+        if (empty($rules)) {
             return true;
         }
 
@@ -1473,6 +1479,8 @@ abstract class BaseModel
         if (empty($rules)) {
             return true;
         }
+
+        $this->ensureValidation();
 
         $this->validation->reset()->setRules($rules, $this->validationMessages);
 
@@ -1492,6 +1500,8 @@ abstract class BaseModel
         // ValidationRules can be either a string, which is the group name,
         // or an array of rules.
         if (is_string($rules)) {
+            $this->ensureValidation();
+
             [$rules, $customErrors] = $this->validation->loadRuleGroup($rules);
 
             $this->validationMessages += $customErrors;
@@ -1504,6 +1514,13 @@ abstract class BaseModel
         }
 
         return $rules;
+    }
+
+    protected function ensureValidation(): void
+    {
+        if ($this->validation === null) {
+            $this->validation = Services::validation(null, false);
+        }
     }
 
     /**
