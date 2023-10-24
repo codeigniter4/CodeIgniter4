@@ -9,9 +9,6 @@ Release Date: October 19, 2023
     :local:
     :depth: 3
 
-BREAKING
-********
-
 Message Changes
 ***************
 
