@@ -55,7 +55,7 @@ class BaseConfig
     /**
      * The modules configuration.
      *
-     * @var Modules
+     * @var Modules|null
      */
     protected static $moduleConfig;
 
@@ -75,14 +75,23 @@ class BaseConfig
     }
 
     /**
+     * @internal For testing purposes only.
+     * @testTag
+     */
+    public static function setModules(Modules $modules): void
+    {
+        static::$moduleConfig = $modules;
+    }
+
+    /**
      * Will attempt to get environment variables with names
      * that match the properties of the child class.
      *
      * The "shortPrefix" is the lowercase-only config class name.
      */
-    public function __construct(?Modules $modules = null)
+    public function __construct()
     {
-        static::$moduleConfig = $modules ?? new Modules();
+        static::$moduleConfig ??= new Modules();
 
         if (! static::$override) {
             return;

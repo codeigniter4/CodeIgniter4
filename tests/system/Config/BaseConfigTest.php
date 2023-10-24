@@ -50,6 +50,7 @@ final class BaseConfigTest extends CIUnitTestCase
         }
 
         BaseConfig::$registrars = [];
+        BaseConfig::setModules(new Modules()); // reset to clean copy of Modules
     }
 
     public function testBasicValues(): void
@@ -276,7 +277,8 @@ final class BaseConfigTest extends CIUnitTestCase
         $modules = $this->createMock(Modules::class);
         $modules->method('shouldDiscover')->with('registrars')->willReturn(false);
 
-        $config = new RegistrarConfig($modules);
+        RegistrarConfig::setModules($modules);
+        $config = new RegistrarConfig();
 
         $this->assertSame([], $config::$registrars);
     }
