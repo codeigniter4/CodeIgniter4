@@ -28,16 +28,16 @@ in your :doc:`controller <../incoming/controllers>` and
 :doc:`views <../outgoing/views>`.
 
 Helpers are typically stored in your **system/Helpers**, or
-**app/Helpers** directory. CodeIgniter will look first in your
-**app/Helpers** directory. If the directory does not exist or the
-specified helper is not located there CI will instead look in your
-global **system/Helpers** directory.
+**app/Helpers** directory.
 
-****************
-Loading a Helper
-****************
+***************
+Loading Helpers
+***************
 
 .. note:: The URL helper is always loaded so you do not need to load it yourself.
+
+Loading a Helper
+================
 
 Loading a helper file is quite simple using the following method:
 
@@ -57,6 +57,23 @@ For example, to load the **Cookie Helper** file, which is named
 
 .. note:: The Helper loading method above does not return a value, so
     don't try to assign it to a variable. Just use it as shown.
+
+Auto-Discovery and Composer Packages
+------------------------------------
+
+By default, CodeIgniter will search for the helper files in all defined namespaces
+by :ref:`auto-discovery`.
+You can check your defined namespaces by the spark command. See :ref:`confirming-namespaces`.
+
+If you use many Composer packages, you will have many defined namespaces.
+CodeIgniter will scan all namespaces by default.
+
+To avoid wasting time scanning for irrelevant Composer packages, you can manually
+specify packages for Auto-Discovery. See :ref:`modules-specify-composer-packages`
+for details.
+
+Or you can :ref:`specify a namespace <helpers-loading-from-specified-namespace>`
+for a helper that you want to load.
 
 Loading Multiple Helpers
 ========================
@@ -81,14 +98,14 @@ it.
 However if you want to load in your controller constructor, you can use the ``$helpers``
 property in Controller instead. See :ref:`Controllers <controllers-helpers>`.
 
-.. _helpers-loading-from-non-standard-locations:
+.. _helpers-loading-from-specified-namespace:
 
-Loading from Non-standard Locations
-===================================
+Loading from Specified Namespace
+================================
 
 Helpers can be loaded from directories outside of **app/Helpers** and
-**system/Helpers**, as long as that path can be found through a namespace that
-has been set up within the PSR-4 section of the :doc:`Autoloader config file <../concepts/autoloader>`.
+**system/Helpers**, as long as that path can be found in defined namespaces.
+
 You would prefix the name of the Helper with the namespace that it can be located
 in. Within that namespaced directory, the loader expects it to live within a
 sub-directory named **Helpers**. An example will help understand this.

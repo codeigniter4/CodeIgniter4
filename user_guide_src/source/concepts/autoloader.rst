@@ -42,8 +42,10 @@ Configuration
 Initial configuration is done in **app/Config/Autoload.php**. This file contains two primary
 arrays: one for the classmap, and one for PSR-4 compatible namespaces.
 
+.. _autoloader-namespaces:
+
 Namespaces
-**********
+==========
 
 The recommended method for organizing your classes is to create one or more namespaces for your
 application's files. This is most important for any business-logic related classes, entity classes,
@@ -55,11 +57,19 @@ those classes can be found in:
 The key of each row is the namespace itself. This does not need a trailing back slash.
 The value is the location to the directory the classes can be found in.
 
-.. note:: You can check the namespace configuration by ``spark namespaces`` command:
+.. _confirming-namespaces:
 
-    .. code-block:: console
+Confirming Namespaces
+=====================
 
-        php spark namespaces
+You can check the namespace configuration by ``spark namespaces`` command:
+
+.. code-block:: console
+
+    php spark namespaces
+
+Application Namespace
+=====================
 
 By default, the application directory is namespace to the ``App`` namespace. You must namespace the controllers,
 libraries, or models in the application directory, and they will be found under the ``App`` namespace.
@@ -77,7 +87,7 @@ You will need to modify any existing files that are referencing the current name
     namespace has changed.
 
 Classmap
-********
+========
 
 The classmap is used extensively by CodeIgniter to eke the last ounces of performance out of the system
 by not hitting the file-system with extra ``is_file()`` calls. You can use the classmap to link to

@@ -240,12 +240,13 @@ For Windows:
 Helpers
 =======
 
-Helpers will be automatically discovered within defined namespaces when using the ``helper()`` function, as long as it
-is within the namespaces **Helpers** directory:
+Helpers will be automatically discovered within defined namespaces when using the
+:php:func:`helper()` function, as long as it is within the namespaces **Helpers**
+directory:
 
 .. literalinclude:: modules/009.php
 
-You can specify namespaces. See :ref:`helpers-loading-from-non-standard-locations` for details.
+You can specify namespaces. See :ref:`helpers-loading-from-specified-namespace` for details.
 
 Language Files
 ==============
