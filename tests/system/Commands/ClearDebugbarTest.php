@@ -39,7 +39,7 @@ final class ClearDebugbarTest extends CIUnitTestCase
 
         // create 10 dummy debugbar json files
         for ($i = 0; $i < 10; $i++) {
-            $path = str_replace($time, $time - $i, $path);
+            $path = str_replace((string) $time, (string) ($time - $i), $path);
             file_put_contents($path, "{}\n");
 
             $time -= $i;

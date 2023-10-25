@@ -250,10 +250,12 @@ final class CookieHelperTest extends CIUnitTestCase
 
     public function testSameSiteParam(): void
     {
-        set_cookie($this->name, $this->value, $this->expire, '', '', '', '', '', 'Strict');
+        set_cookie($this->name, $this->value, $this->expire, '', '', '', null, null, 'Strict');
 
         $this->assertTrue($this->response->hasCookie($this->name));
+
         $theCookie = $this->response->getCookie($this->name);
+
         $this->assertSame('Strict', $theCookie->getSameSite());
 
         delete_cookie($this->name);

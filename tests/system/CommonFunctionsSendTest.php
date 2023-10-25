@@ -43,7 +43,7 @@ final class CommonFunctionsSendTest extends CIUnitTestCase
 
         $response = redirect()->route('login')
             ->setCookie('foo', 'onething', YEAR)
-            ->setCookie('login_time', $loginTime, YEAR);
+            ->setCookie('login_time', (string) $loginTime, YEAR);
         $response->pretend(false);
         $this->assertTrue($response->hasCookie('foo', 'onething'));
         $this->assertTrue($response->hasCookie('login_time'));

@@ -92,7 +92,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $root = vfsStream::setup('root', null, $this->structure);
         $this->assertTrue($root->hasChild('foo'));
 
-        $this->assertSame($expected, directory_map(vfsStream::url('root'), false, true));
+        $this->assertSame($expected, directory_map(vfsStream::url('root'), 0, true));
     }
 
     public function testDirectoryMapLimitsRecursion(): void
