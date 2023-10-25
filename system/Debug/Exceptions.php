@@ -254,11 +254,11 @@ class Exceptions
         $templatePath = rtrim($templatePath, '\\/ ') . DIRECTORY_SEPARATOR;
 
         if (
-            str_ireplace(
-                ['off', 'none', 'no', 'false', 'null', '0'],
-                '',
-                ini_get('display_errors')
-            ) !== ''
+            in_array(
+                strtolower(ini_get('display_errors')),
+                ['1', 'true', 'on', 'yes'],
+                true
+            )
         ) {
             $view = 'error_exception.php';
         }
