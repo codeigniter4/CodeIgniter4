@@ -137,6 +137,8 @@ Others
 ------
 
 - **IncomingRequest::** The visibility of the deprecated properties ``$uri`` and
+- **RequestInterface:** The deprecated ``isValidIP()`` method has been removed.
+- **Request:** The deprecated ``isValidIP()`` method has been removed.
   ``$config`` has been changed to protected.
 - **Config:** The deprecated ``CodeIgniter\Config\Config`` class has been removed.
 
