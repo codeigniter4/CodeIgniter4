@@ -464,7 +464,9 @@ extra steps without repeating the constructor parameters, for example extending 
 <section id="connecting-to-the-database">
 <h3><a class="toc-backref" href="#id8">Connecting to the Database</a><a class="headerlink" href="#connecting-to-the-database" title="Permalink to this headline"></a></h3>
 <p>When the class is first instantiated, if no database connection instance is passed to the constructor,
-it will automatically connect to the default database group, as set in the configuration. You can
+and if you don’t set the <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code> property on your model class,
+it will automatically connect to the default database group, as set in the database configuration.</p>
+<p>You can
 modify which group is used on a per-model basis by adding the <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code> property to your class.
 This ensures that within the model any references to <code class="docutils literal notranslate"><span class="pre">$this-&gt;db</span></code> are made through the appropriate
 connection.</p>
