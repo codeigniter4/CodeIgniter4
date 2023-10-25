@@ -271,6 +271,9 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->foo);
     }
 
+    /**
+     * @psalm-suppress UndefinedClass
+     */
     public function testDiscoveryNotEnabledWillNotPopulateRegistrarsArray(): void
     {
         /** @var MockObject&Modules $modules */
@@ -286,6 +289,9 @@ final class BaseConfigTest extends CIUnitTestCase
         RegistrarConfig::setModules(new Modules());
     }
 
+    /**
+     * @psalm-suppress UndefinedClass
+     */
     public function testRedoingDiscoveryWillStillSetDidDiscoveryPropertyToTrue(): void
     {
         /** @var FileLocator&MockObject $locator */
