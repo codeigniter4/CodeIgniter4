@@ -1463,7 +1463,7 @@ abstract class BaseModel
 
         $rules = $this->getValidationRules();
 
-        if (empty($rules)) {
+        if ($rules === []) {
             return true;
         }
 
