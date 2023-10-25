@@ -33,7 +33,7 @@
         "phpunit/phpcov": "^8.2",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1 || ^2.0",
-        "rector/rector": "0.18.5",
+        "rector/rector": "0.18.6",
         "vimeo/psalm": "^5.0"
     },
     "suggest": {
