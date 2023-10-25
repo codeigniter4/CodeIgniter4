@@ -30,6 +30,8 @@ By default, CodeIgniter has three environments defined.
 If you want another environment, e.g., for staging, you can add custom environments.
 See `Adding Environments`_.
 
+.. _setting-environment:
+
 *******************
 Setting Environment
 *******************
