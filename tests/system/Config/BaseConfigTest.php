@@ -276,11 +276,14 @@ final class BaseConfigTest extends CIUnitTestCase
         /** @var MockObject&Modules $modules */
         $modules = $this->createMock(Modules::class);
         $modules->method('shouldDiscover')->with('registrars')->willReturn(false);
-
         RegistrarConfig::setModules($modules);
+
         $config = new RegistrarConfig();
 
         $this->assertSame([], $config::$registrars);
+
+        // Reset Modules Config.
+        RegistrarConfig::setModules(new Modules());
     }
 
     public function testRedoingDiscoveryWillStillSetDidDiscoveryPropertyToTrue(): void
@@ -295,5 +298,8 @@ final class BaseConfigTest extends CIUnitTestCase
         $config = new RegistrarConfig();
 
         $this->assertTrue($this->getPrivateProperty($config, 'didDiscovery'));
+
+        // Reset locator.
+        $this->resetServices();
     }
 }
