@@ -38,6 +38,3 @@ parameters:
 		booleansInConditions: true
 		disallowedConstructs: true
 		matchingInheritedMethodNames: true
-	codeigniter:
-		additionalConfigNamespaces:
-			- CodeIgniter\Config\
