@@ -69,7 +69,7 @@ Connecting to the Database
 ==========================
 
 When the class is first instantiated, if no database connection instance is passed to the constructor,
-and if you don't set the ``$DBGroup`` property to your model class,
+and if you don't set the ``$DBGroup`` property on your model class,
 it will automatically connect to the default database group, as set in the database configuration.
 
 You can
