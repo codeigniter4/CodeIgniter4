@@ -290,9 +290,9 @@ final class BaseConfigTest extends CIUnitTestCase
         $locator->method('search')->with('Config/Registrar.php')->willReturn([]);
         Services::injectMock('locator', $locator);
 
+        $this->setPrivateProperty(RegistrarConfig::class, 'didDiscovery', false);
+
         $config = new RegistrarConfig();
-        $this->setPrivateProperty($config, 'didDiscovery', false);
-        ($this->getPrivateMethodInvoker($config, 'registerProperties'))();
 
         $this->assertTrue($this->getPrivateProperty($config, 'didDiscovery'));
     }
