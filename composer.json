@@ -19,7 +19,7 @@
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.5",
-        "codeigniter/phpstan-codeigniter": "^v1.1",
+        "codeigniter/phpstan-codeigniter": "^1.4",
         "ergebnis/composer-normalize": "^2.28",
         "fakerphp/faker": "^1.9",
         "kint-php/kint": "^5.0.4",

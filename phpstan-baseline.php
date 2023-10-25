@@ -872,16 +872,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/BaseConfig.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/BaseConfig.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Config/BaseService.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 3,
 	'path' => __DIR__ . '/system/Config/BaseService.php',
