@@ -27,16 +27,6 @@ interface RequestInterface extends OutgoingRequestInterface
     public function getIPAddress(): string;
 
     /**
-     * Validate an IP address
-     *
-     * @param string $ip    IP Address
-     * @param string $which IP protocol: 'ipv4' or 'ipv6'
-     *
-     * @deprecated Use Validation instead
-     */
-    public function isValidIP(string $ip, ?string $which = null): bool;
-
-    /**
      * Fetch an item from the $_SERVER array.
      * Supplied by RequestTrait.
      *
