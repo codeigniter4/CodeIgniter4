@@ -23,12 +23,6 @@ The following file received significant changes and
 
 - app/Views/errors/html/error_exception.php
 
-Breaking Changes
-****************
-
-Breaking Enhancements
-*********************
-
 Project Files
 *************
 
@@ -38,24 +32,12 @@ these files being outside of the **system** scope they will not be changed witho
 There are some third-party CodeIgniter modules available to assist with merging changes to
 the project space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
 
-Content Changes
-===============
-
-The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:
-
-Config
-------
-
-- @TODO
-
 All Changes
 ===========
 
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
 - app/Config/Boot/development.php
 - app/Config/Boot/production.php
 - app/Config/Boot/testing.php
