@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\HTTP;
 
-use CodeIgniter\Validation\FormatRules;
 use Config\App;
 
 /**
@@ -48,21 +47,6 @@ class Request extends OutgoingRequest implements RequestInterface
         if (empty($this->uri)) {
             $this->uri = new URI();
         }
-    }
-
-    /**
-     * Validate an IP address
-     *
-     * @param string $ip    IP Address
-     * @param string $which IP protocol: 'ipv4' or 'ipv6'
-     *
-     * @deprecated 4.0.5 Use Validation instead
-     *
-     * @codeCoverageIgnore
-     */
-    public function isValidIP(?string $ip = null, ?string $which = null): bool
-    {
-        return (new FormatRules())->valid_ip($ip, $which);
     }
 
     /**
