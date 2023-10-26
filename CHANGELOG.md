@@ -1,6 +1,6 @@
 # Changelog
 
-## [v4.4.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.1) (2023-10-26)
+## [v4.4.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.3) (2023-10-26)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.2...v4.4.3)
 
 ### SECURITY
@@ -17,7 +17,7 @@
 * docs: fix event points descriptions by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8076
 * docs: fix helper loading by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8084
 
-## [v4.4.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.1) (2023-10-19)
+## [v4.4.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.2) (2023-10-19)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.1...v4.4.2)
 
 ### Fixed Bugs
