@@ -1,5 +1,22 @@
 # Changelog
 
+## [v4.4.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.1) (2023-10-26)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.2...v4.4.3)
+
+### SECURITY
+
+* *Detailed Error Report is Displayed in Production Environment* was fixed. See the [Security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-hwxf-qxj7-7rfj) for more information.
+
+### Fixed Bugs
+
+* fix: FilterTestTrait::getFilterCaller() does not support Filter classes as array by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8058
+* fix: add dbgroup to model template only when specified as an option by @sammyskills in https://github.com/codeigniter4/CodeIgniter4/pull/8077
+* Update phpstan-codeigniter and fix errors on Modules by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/8036
+* fix: [Validation] exact_length does not pass int values by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8088
+* fix: [Table] field named `data` will produce bugged output by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/8054
+* docs: fix event points descriptions by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8076
+* docs: fix helper loading by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8084
+
 ## [v4.4.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.1) (2023-10-19)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.1...v4.4.2)
 
