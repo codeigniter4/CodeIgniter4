@@ -55,6 +55,8 @@ final class BaseConfigTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
+        parent::tearDown();
+
         $this->resetServices();
     }
 
