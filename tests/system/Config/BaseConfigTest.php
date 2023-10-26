@@ -49,8 +49,17 @@ final class BaseConfigTest extends CIUnitTestCase
             require $this->fixturesFolder . '/Encryption.php';
         }
 
-        BaseConfig::$registrars = [];
-        BaseConfig::setModules(new Modules()); // reset to clean copy of Modules
+        BaseConfig::reset();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        // This test modifies BaseConfig::$modules, so should reset.
+        BaseConfig::reset();
+        // This test modifies Services locator, so should reset.
+        $this->resetServices();
     }
 
     public function testBasicValues(): void
@@ -284,9 +293,6 @@ final class BaseConfigTest extends CIUnitTestCase
         $config = new RegistrarConfig();
 
         $this->assertSame([], $config::$registrars);
-
-        // Reset Modules Config.
-        RegistrarConfig::setModules(new Modules());
     }
 
     /**
@@ -304,8 +310,5 @@ final class BaseConfigTest extends CIUnitTestCase
         $config = new RegistrarConfig();
 
         $this->assertTrue($this->getPrivateProperty($config, 'didDiscovery'));
-
-        // Reset locator.
-        $this->resetServices();
     }
 }
