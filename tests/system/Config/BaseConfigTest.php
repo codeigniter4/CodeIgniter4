@@ -49,8 +49,17 @@ final class BaseConfigTest extends CIUnitTestCase
             require $this->fixturesFolder . '/Encryption.php';
         }
 
-        BaseConfig::$registrars = [];
-        BaseConfig::setModules(new Modules()); // reset to clean copy of Modules
+        BaseConfig::reset();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        // This test modifies BaseConfig::$modules, so should reset.
+        BaseConfig::reset();
+        // This test modifies Services locator, so should reset.
+        $this->resetServices();
     }
 
     public function testBasicValues(): void
@@ -271,18 +280,24 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->foo);
     }
 
+    /**
+     * @psalm-suppress UndefinedClass
+     */
     public function testDiscoveryNotEnabledWillNotPopulateRegistrarsArray(): void
     {
         /** @var MockObject&Modules $modules */
         $modules = $this->createMock(Modules::class);
         $modules->method('shouldDiscover')->with('registrars')->willReturn(false);
-
         RegistrarConfig::setModules($modules);
+
         $config = new RegistrarConfig();
 
         $this->assertSame([], $config::$registrars);
     }
 
+    /**
+     * @psalm-suppress UndefinedClass
+     */
     public function testRedoingDiscoveryWillStillSetDidDiscoveryPropertyToTrue(): void
     {
         /** @var FileLocator&MockObject $locator */
