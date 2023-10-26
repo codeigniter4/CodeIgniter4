@@ -69,7 +69,10 @@ Connecting to the Database
 ==========================
 
 When the class is first instantiated, if no database connection instance is passed to the constructor,
-it will automatically connect to the default database group, as set in the configuration. You can
+and if you don't set the ``$DBGroup`` property on your model class,
+it will automatically connect to the default database group, as set in the database configuration.
+
+You can
 modify which group is used on a per-model basis by adding the ``$DBGroup`` property to your class.
 This ensures that within the model any references to ``$this->db`` are made through the appropriate
 connection.

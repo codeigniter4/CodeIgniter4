@@ -398,8 +398,10 @@ class RulesTest extends CIUnitTestCase
 
     /**
      * @dataProvider provideExactLength
+     *
+     * @param int|string|null $data
      */
-    public function testExactLength(?string $data, bool $expected): void
+    public function testExactLength($data, bool $expected): void
     {
         $this->validation->setRules(['foo' => 'exact_length[3]']);
         $this->assertSame($expected, $this->validation->run(['foo' => $data]));
@@ -408,10 +410,13 @@ class RulesTest extends CIUnitTestCase
     public static function provideExactLength(): iterable
     {
         yield from [
-            'null'    => [null, false],
-            'exact'   => ['bar', true],
-            'less'    => ['ba', false],
-            'greater' => ['bars', false],
+            'null'        => [null, false],
+            'exact'       => ['bar', true],
+            'exact_int'   => [123, true],
+            'less'        => ['ba', false],
+            'less_int'    => [12, false],
+            'greater'     => ['bars', false],
+            'greater_int' => [1234, false],
         ];
     }
 

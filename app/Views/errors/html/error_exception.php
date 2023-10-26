@@ -44,6 +44,7 @@ $errorId = uniqid('error', true);
         <?php endif; ?>
     </div>
 
+    <?php if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE) : ?>
     <div class="container">
 
         <ul class="tabs" id="tabs">
@@ -66,7 +67,7 @@ $errorId = uniqid('error', true);
                     <li>
                         <p>
                             <!-- Trace info -->
-                            <?php if (isset($row['file']) && is_file($row['file'])) :?>
+                            <?php if (isset($row['file']) && is_file($row['file'])) : ?>
                                 <?php
                                 if (isset($row['function']) && in_array($row['function'], ['include', 'include_once', 'require', 'require_once'], true)) {
                                     echo esc($row['function'] . ' ' . clean_path($row['file']));
@@ -375,6 +376,7 @@ $errorId = uniqid('error', true);
         </div>  <!-- /tab-content -->
 
     </div> <!-- /container -->
+    <?php endif; ?>
 
     <div class="footer">
         <div class="container">
@@ -382,7 +384,8 @@ $errorId = uniqid('error', true);
             <p>
                 Displayed at <?= esc(date('H:i:sa')) ?> &mdash;
                 PHP: <?= esc(PHP_VERSION) ?>  &mdash;
-                CodeIgniter: <?= esc(CodeIgniter::CI_VERSION) ?>
+                CodeIgniter: <?= esc(CodeIgniter::CI_VERSION) ?> --
+                Environment: <?= ENVIRONMENT ?>
             </p>
 
         </div>

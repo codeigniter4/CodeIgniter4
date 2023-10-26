@@ -38,8 +38,3 @@ parameters:
 		booleansInConditions: true
 		disallowedConstructs: true
 		matchingInheritedMethodNames: true
-	ignoreErrors:
-		- '#^Call to function config with Config\\.+\:\:class is discouraged\.$#'
-	codeigniter:
-		additionalConfigNamespaces:
-			- CodeIgniter\Config\

@@ -12,6 +12,7 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\RequestInterface;
+use Config\Services;
 use Tests\Support\Filters\Customfilter;
 
 /**
@@ -62,12 +63,23 @@ final class FilterTestTraitTest extends CIUnitTestCase
         $this->getFilterCaller('test-customfilter', 'banana');
     }
 
+    public function testCallerSupportArray(): void
+    {
+        $this->filtersConfig->aliases['test-customfilter'] = [Customfilter::class];
+
+        $caller = $this->getFilterCaller('test-customfilter', 'before');
+        $result = $caller();
+
+        $this->assertSame('http://hellowworld.com', $result->getBody());
+    }
+
     public function testCallerUsesClonedInstance(): void
     {
         $caller = $this->getFilterCaller('test-customfilter', 'before');
         $result = $caller();
 
         $this->assertSame('http://hellowworld.com', $result->getBody());
+        $this->assertNull(Services::response()->getBody());
 
         $this->resetServices();
     }

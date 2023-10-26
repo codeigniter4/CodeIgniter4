@@ -52,7 +52,6 @@ final class ModelGeneratorTest extends CIUnitTestCase
         $this->assertFileExists($file);
         $this->assertStringContainsString('extends Model', $this->getFileContent($file));
         $this->assertStringContainsString('protected $table            = \'users\';', $this->getFileContent($file));
-        $this->assertStringContainsString('protected $DBGroup          = \'default\';', $this->getFileContent($file));
         $this->assertStringContainsString('protected $returnType       = \'array\';', $this->getFileContent($file));
     }
 

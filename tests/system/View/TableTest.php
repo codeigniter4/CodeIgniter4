@@ -816,6 +816,64 @@ final class TableTest extends CIUnitTestCase
             ],
         ];
     }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/8051
+     */
+    public function testGenerateTableWithHeadingContainFieldNamedData(): void
+    {
+        $table = new Table();
+        $table->setHeading([
+            'codigo'         => 'Codigo Orçamento',
+            'data'           => 'Data do Orçamento',
+            'tipo_desconto'  => 'Tipo de Desconto',
+            'valor_desconto' => 'Valor do Desconto',
+        ])->setSyncRowsWithHeading(true);
+
+        $sampleData = [
+            [
+                'id'             => 1,
+                'id_cliente'     => 1,
+                'codigo'         => 'codigo1',
+                'data'           => '2023-10-16 21:53:25',
+                'tipo_desconto'  => 'NENHUM',
+                'valor_desconto' => '',
+                'created_at'     => '2023-10-16 21:53:25',
+                'updated_at'     => '2023-10-16 21:53:25',
+                'deleted_at'     => '',
+            ],
+            [
+                'id'             => 2,
+                'id_cliente'     => 2,
+                'codigo'         => 'codigo2',
+                'data'           => '2023-10-16 21:53:25',
+                'tipo_desconto'  => 'REAL',
+                'valor_desconto' => 10.00,
+                'created_at'     => '2023-10-16 21:53:25',
+                'updated_at'     => '2023-10-16 21:53:25',
+                'deleted_at'     => '',
+            ],
+            [
+                'id'             => 3,
+                'id_cliente'     => 3,
+                'codigo'         => 'codigo3',
+                'data'           => '2023-10-16 21:53:25',
+                'tipo_desconto'  => 'PERCENTUAL',
+                'valor_desconto' => 10.00,
+                'created_at'     => '2023-10-16 21:53:25',
+                'updated_at'     => '2023-10-16 21:53:25',
+                'deleted_at'     => '',
+            ],
+        ];
+
+        $generated = $table->generate($sampleData);
+
+        $this->assertStringContainsString('<th>Codigo Orçamento</th><th>Data do Orçamento</th><th>Tipo de Desconto</th><th>Valor do Desconto</th>', $generated);
+
+        $this->assertStringContainsString('<td>codigo1</td><td>2023-10-16 21:53:25</td><td>NENHUM</td><td></td>', $generated);
+        $this->assertStringContainsString('<td>codigo2</td><td>2023-10-16 21:53:25</td><td>REAL</td><td>10</td>', $generated);
+        $this->assertStringContainsString('<td>codigo3</td><td>2023-10-16 21:53:25</td><td>PERCENTUAL</td><td>10</td>', $generated);
+    }
 }
 
 // We need this for the _set_from_db_result() test
