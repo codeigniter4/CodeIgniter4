@@ -290,34 +290,46 @@
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#mandatory-file-changes" id="id1">Mandatory File Changes</a></p></li>
-<li><p><a class="reference internal" href="#breaking-changes" id="id2">Breaking Changes</a></p></li>
-<li><p><a class="reference internal" href="#breaking-enhancements" id="id3">Breaking Enhancements</a></p></li>
-<li><p><a class="reference internal" href="#project-files" id="id4">Project Files</a></p>
+<li><p><a class="reference internal" href="#mandatory-file-changes" id="id1">Mandatory File Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#content-changes" id="id5">Content Changes</a></p></li>
-<li><p><a class="reference internal" href="#all-changes" id="id6">All Changes</a></p></li>
+<li><p><a class="reference internal" href="#error-exception-php" id="id2">error_exception.php</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#breaking-changes" id="id3">Breaking Changes</a></p></li>
+<li><p><a class="reference internal" href="#breaking-enhancements" id="id4">Breaking Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#project-files" id="id5">Project Files</a></p>
+<ul>
+<li><p><a class="reference internal" href="#content-changes" id="id6">Content Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id7">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <section id="mandatory-file-changes">
 <h2><a class="toc-backref" href="#id1">Mandatory File Changes</a><a class="headerlink" href="#mandatory-file-changes" title="Permalink to this headline"></a></h2>
+<section id="error-exception-php">
+<h3><a class="toc-backref" href="#id2">error_exception.php</a><a class="headerlink" href="#error-exception-php" title="Permalink to this headline"></a></h3>
+<p>The following file received significant changes and
+<strong>you must merge the updated versions</strong> with your application:</p>
+<ul class="simple">
+<li><p>app/Views/errors/html/error_exception.php</p></li>
+</ul>
+</section>
 </section>
 <section id="breaking-changes">
-<h2><a class="toc-backref" href="#id2">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
 </section>
 <section id="breaking-enhancements">
-<h2><a class="toc-backref" href="#id3">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
 </section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id4">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
 <p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
 these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
 <p>There are some third-party CodeIgniter modules available to assist with merging changes to
 the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 <section id="content-changes">
-<h3><a class="toc-backref" href="#id5">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
 <p>The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:</p>
 <section id="config">
@@ -328,11 +340,17 @@ and it is recommended that you merge the updated versions with your application:
 </section>
 </section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id6">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
 <li><p>&#64;TODO</p></li>
+<li><p>app/Config/Boot/development.php</p></li>
+<li><p>app/Config/Boot/production.php</p></li>
+<li><p>app/Config/Boot/testing.php</p></li>
+<li><p>app/Config/Filters.php</p></li>
+<li><p>app/Views/errors/html/error_404.php</p></li>
+<li><p>app/Views/errors/html/error_exception.php</p></li>
 </ul>
 </section>
 </section>
@@ -350,7 +368,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 25, 2023.
+      <span class="lastupdated">Last updated on Oct 26, 2023.
       </span></p>
   </div>
 
