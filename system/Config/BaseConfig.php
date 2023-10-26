@@ -84,6 +84,18 @@ class BaseConfig
     }
 
     /**
+     * @internal For testing purposes only.
+     * @testTag
+     */
+    public static function reset(): void
+    {
+        static::$registrars   = [];
+        static::$override     = true;
+        static::$didDiscovery = false;
+        static::$moduleConfig = null;
+    }
+
+    /**
      * Will attempt to get environment variables with names
      * that match the properties of the child class.
      *
