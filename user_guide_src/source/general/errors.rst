@@ -49,8 +49,12 @@ Error Reporting
 ---------------
 
 By default, CodeIgniter will display a detailed error report with all errors in the ``development`` and ``testing`` environments, and will not
-display any errors in the ``production`` environment. You can change this by setting the ``CI_ENVIRONMENT`` variable
-in the :ref:`.env <dotenv-file>` file.
+display any errors in the ``production`` environment.
+
+.. image:: ../images/error.png
+
+You can change your environment by setting the ``CI_ENVIRONMENT`` variable.
+See :ref:`setting-environment`.
 
 .. important:: Disabling error reporting DOES NOT stop logs from being written if there are errors.
 

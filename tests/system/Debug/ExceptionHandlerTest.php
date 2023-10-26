@@ -70,6 +70,21 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         $this->assertSame('error_404.php', $viewFile);
     }
 
+    public function testDetermineViewsDisplayErrorsOffRuntimeException(): void
+    {
+        ini_set('display_errors', '0');
+
+        $determineView = $this->getPrivateMethodInvoker($this->handler, 'determineView');
+
+        $exception    = new RuntimeException('Exception');
+        $templatePath = APPPATH . 'Views/errors/html';
+        $viewFile     = $determineView($exception, $templatePath);
+
+        $this->assertSame('production.php', $viewFile);
+
+        ini_set('display_errors', '1');
+    }
+
     public function testCollectVars(): void
     {
         $collectVars = $this->getPrivateMethodInvoker($this->handler, 'collectVars');
