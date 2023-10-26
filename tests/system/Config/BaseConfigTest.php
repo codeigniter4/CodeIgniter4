@@ -53,6 +53,11 @@ final class BaseConfigTest extends CIUnitTestCase
         BaseConfig::setModules(new Modules()); // reset to clean copy of Modules
     }
 
+    protected function tearDown(): void
+    {
+        $this->resetServices();
+    }
+
     public function testBasicValues(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, '.env');
