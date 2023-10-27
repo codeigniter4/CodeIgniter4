@@ -348,7 +348,7 @@ class BaseService
                         continue;
                     }
 
-                    if (! in_array($classname, [Services::class], true)) {
+                    if ($classname !== Services::class) {
                         static::$services[] = new $classname();
                     }
                 }

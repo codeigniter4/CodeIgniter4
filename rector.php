@@ -16,6 +16,7 @@ use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
 use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
 use Rector\CodeQuality\Rector\FuncCall\SimplifyRegexPatternRector;
 use Rector\CodeQuality\Rector\FuncCall\SimplifyStrposLowerRector;
+use Rector\CodeQuality\Rector\FuncCall\SingleInArrayToCompareRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
@@ -142,4 +143,5 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(PrivatizeFinalClassPropertyRector::class);
     $rectorConfig->rule(CompleteDynamicPropertiesRector::class);
     $rectorConfig->rule(BooleanInIfConditionRuleFixerRector::class);
+    $rectorConfig->rule(SingleInArrayToCompareRector::class);
 };
