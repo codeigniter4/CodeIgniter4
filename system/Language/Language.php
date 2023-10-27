@@ -129,16 +129,18 @@ class Language
     protected function getTranslationOutput(string $locale, string $file, string $parsedLine)
     {
         $output = $this->language[$locale][$file][$parsedLine] ?? null;
+
         if ($output !== null) {
             return $output;
         }
 
-        foreach (explode('.', $parsedLine) as $row) {
+        foreach (preg_split('/\.(?=[^.])/', $parsedLine, -1, PREG_SPLIT_NO_EMPTY) as $row) {
             if (! isset($current)) {
                 $current = $this->language[$locale][$file] ?? null;
             }
 
             $output = $current[$row] ?? null;
+
             if (is_array($output)) {
                 $current = $output;
             }
@@ -148,7 +150,7 @@ class Language
             return $output;
         }
 
-        $row = current(explode('.', $parsedLine));
+        $row = current(preg_split('/\.(?=[^.])/', $parsedLine, -1, PREG_SPLIT_NO_EMPTY));
         $key = substr($parsedLine, strlen($row) + 1);
 
         return $this->language[$locale][$file][$row][$key] ?? null;

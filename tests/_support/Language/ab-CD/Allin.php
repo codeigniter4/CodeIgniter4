@@ -10,8 +10,14 @@
  */
 
 return [
-    'one' => 'Pyramid of Giza',
-    'tre' => 'Colossus of Rhodes',
-    'fiv' => 'Temple of Artemis',
-    'sev' => 'Hanging Gardens of Babylon',
+    'one'       => 'Pyramid of Giza',
+    'tre'       => 'Colossus of Rhodes',
+    'fiv'       => 'Temple of Artemis',
+    'sev'       => 'Hanging Gardens of Babylon',
+    'level_one' => [
+        'The string with the dot at the end.' => 'The string with the dot at the end.',
+        'level_two'                           => [
+            'The string with the dot at the end.' => 'The string with the dot at the end.',
+        ],
+    ],
 ];

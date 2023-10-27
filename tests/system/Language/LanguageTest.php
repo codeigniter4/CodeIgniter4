@@ -356,4 +356,12 @@ final class LanguageTest extends CIUnitTestCase
         $this->assertSame('The fieldname field is very short.', $this->lang->getLine('Foo.bar.min_length1', ['field' => 'fieldname']));
         $this->assertSame('The fieldname field is very short.', $this->lang->getLine('Foo.baz.min_length3.short', ['field' => 'fieldname']));
     }
+
+    public function testLanguageKeyWithDotAsNonMetacharacter(): void
+    {
+        $this->lang = Services::language('ab-CD', false);
+
+        $this->assertSame('The string with the dot at the end.', $this->lang->getLine('Allin.level_one.The string with the dot at the end.'));
+        $this->assertSame('The string with the dot at the end.', $this->lang->getLine('Allin.level_one.level_two.The string with the dot at the end.'));
+    }
 }
