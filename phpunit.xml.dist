@@ -12,27 +12,17 @@
             <text outputFile="build/coverage/text/coverage.txt"/>
         </report>
     </coverage>
-    <testsuites>
-        <testsuite name="System">
-            <directory>tests/system</directory>
-        </testsuite>
-    </testsuites>
     <extensions>
         <bootstrap class="Nexus\PHPUnit\Tachycardia\TachycardiaExtension">
             <parameter name="time-limit" value="0.50" />
             <parameter name="report-count" value="30" />
         </bootstrap>
     </extensions>
-    <php>
-        <server name="app.baseURL" value="http://example.com/"/>
-        <server name="CODEIGNITER_SCREAM_DEPRECATIONS" value="1"/>
-        <!-- Directory containing phpunit.xml -->
-        <const name="HOMEPATH" value="./"/>
-        <!-- Directory containing the Paths config file -->
-        <const name="CONFIGPATH" value="./app/Config/"/>
-        <!-- Directory containing the front controller (index.php) -->
-        <const name="PUBLICPATH" value="./public/"/>
-    </php>
+    <testsuites>
+        <testsuite name="System">
+            <directory>tests/system</directory>
+        </testsuite>
+    </testsuites>
     <source>
         <include>
             <directory suffix=".php">system</directory>
@@ -51,4 +41,14 @@
             <file>system/Test/FeatureTestCase.php</file>
         </exclude>
     </source>
+    <php>
+        <server name="app.baseURL" value="http://example.com/"/>
+        <server name="CODEIGNITER_SCREAM_DEPRECATIONS" value="1"/>
+        <!-- Directory containing phpunit.xml -->
+        <const name="HOMEPATH" value="./"/>
+        <!-- Directory containing the Paths config file -->
+        <const name="CONFIGPATH" value="./app/Config/"/>
+        <!-- Directory containing the front controller (index.php) -->
+        <const name="PUBLICPATH" value="./public/"/>
+    </php>
 </phpunit>
