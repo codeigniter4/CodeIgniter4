@@ -50,6 +50,7 @@ jobs:
           echo "version=8.1" >> $GITHUB_OUTPUT
 
   sanity-tests:
+    name: Others
     needs: coverage-php-version
 
     strategy:
@@ -77,6 +78,7 @@ jobs:
       extra-composer-options: ${{ matrix.composer-option }}
 
   database-live-tests:
+    name: DatabaseLive
     needs:
       - coverage-php-version
       - sanity-tests
@@ -120,6 +122,7 @@ jobs:
       extra-composer-options: ${{ matrix.composer-option }}
 
   separate-process-tests:
+    name: SeparateProcess
     needs:
       - coverage-php-version
       - sanity-tests
@@ -149,6 +152,7 @@ jobs:
       extra-composer-options: ${{ matrix.composer-option }}
 
   cache-live-tests:
+    name: CacheLive
     needs:
       - coverage-php-version
       - sanity-tests
