@@ -322,7 +322,7 @@ interface ResponseInterface extends MessageInterface
      *
      * @param array|string $name     Cookie name or array containing binds
      * @param string       $value    Cookie value
-     * @param string       $expire   Cookie expiration time in seconds
+     * @param int          $expire   Cookie expiration time in seconds
      * @param string       $domain   Cookie domain (e.g.: '.yourdomain.com')
      * @param string       $path     Cookie path (default: '/')
      * @param string       $prefix   Cookie name prefix
@@ -335,7 +335,7 @@ interface ResponseInterface extends MessageInterface
     public function setCookie(
         $name,
         $value = '',
-        $expire = '',
+        $expire = 0,
         $domain = '',
         $path = '/',
         $prefix = '',

@@ -57,6 +57,8 @@ Interface Changes
     or implemented these interfaces, all these changes are backward compatible
     and require no intervention.
 
+- **ResponseInterface:** The default value of the third parameter ``$expire`` of
+  the ``ResponseInterface::setCookie()`` has been fixed from ``''`` to ``0``.
 - **Logger:** The `psr/log <https://packagist.org/packages/psr/log>`_ package has
   been upgraded to v2.0.0.
 
@@ -64,6 +66,15 @@ Interface Changes
 
 Method Signature Changes
 ========================
+
+Setting Cookies
+---------------
+
+The third parameter ``$expire`` in :php:func:`set_cookie()` and
+:php:meth:`CodeIgniter\\HTTP\\Response::setCookie()` has been fixed.
+
+The type has been changed from ``string`` to ``int``, and the default value has
+been changed from ``''`` to  ``0``.
 
 FileLocatorInterface
 --------------------

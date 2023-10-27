@@ -26,7 +26,7 @@ if (! function_exists('set_cookie')) {
      *
      * @param array|Cookie|string $name     Cookie name / array containing binds / Cookie object
      * @param string              $value    The value of the cookie
-     * @param string              $expire   The number of seconds until expiration
+     * @param int                 $expire   The number of seconds until expiration
      * @param string              $domain   For site-wide cookie. Usually: .yourdomain.com
      * @param string              $path     The cookie path
      * @param string              $prefix   The cookie prefix ('': the default prefix)
@@ -41,7 +41,7 @@ if (! function_exists('set_cookie')) {
     function set_cookie(
         $name,
         string $value = '',
-        string $expire = '',
+        int $expire = 0,
         string $domain = '',
         string $path = '/',
         string $prefix = '',
