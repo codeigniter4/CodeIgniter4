@@ -125,16 +125,21 @@ class Exceptions
 
         [$statusCode, $exitCode] = $this->determineCodes($exception);
 
+        $this->request = Services::request();
+
         if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true)) {
-            log_message('critical', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
-                'message' => $exception->getMessage(),
-                'exFile'  => clean_path($exception->getFile()), // {file} refers to THIS file
-                'exLine'  => $exception->getLine(), // {line} refers to THIS line
-                'trace'   => self::renderBacktrace($exception->getTrace()),
+            $uri       = $this->request->getPath() === '' ? '/' : $this->request->getPath();
+            $routeInfo = '[Method: ' . strtoupper($this->request->getMethod()) . ', Route: ' . $uri . ']';
+
+            log_message('critical', "{message}\n{routeInfo}\nin {exFile} on line {exLine}.\n{trace}", [
+                'message'   => $exception->getMessage(),
+                'routeInfo' => $routeInfo,
+                'exFile'    => clean_path($exception->getFile()), // {file} refers to THIS file
+                'exLine'    => $exception->getLine(), // {line} refers to THIS line
+                'trace'     => self::renderBacktrace($exception->getTrace()),
             ]);
         }
 
-        $this->request  = Services::request();
         $this->response = Services::response();
 
         // Get the first exception.
