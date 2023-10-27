@@ -90,6 +90,19 @@ Return Type Changes
 - **Model:** The return type of the ``objectToRawArray()`` method in the ``Model``
   and ``BaseModel`` classes has been changed from ``?array`` to ``array``.
 
+Traditional Validation Rules
+----------------------------
+
+To add ``declare(strict_types=1)`` to the framework codebase, the method parameter
+type ``?string`` for a value to validate in the all Traditional Validation rule
+classes ``CodeIgniter\Validation\FormatRules`` and ``CodeIgniter\Validation\Rules``
+are removed.
+
+For example, the method signature changed as follows::
+
+    Before: public function integer(?string $str = null): bool
+    After:  public function integer($str = null): bool
+
 Others
 ------
 

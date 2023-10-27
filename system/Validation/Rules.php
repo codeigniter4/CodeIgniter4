@@ -131,9 +131,15 @@ class Rules
      * Example:
      *    is_unique[table.field,ignore_field,ignore_value]
      *    is_unique[users.email,id,5]
+     *
+     * @param string|null $str
      */
-    public function is_unique(?string $str, string $field, array $data): bool
+    public function is_unique($str, string $field, array $data): bool
     {
+        if (! is_string($str) && $str !== null) {
+            $str = (string) $str;
+        }
+
         [$field, $ignoreField, $ignoreValue] = array_pad(
             explode(',', $field),
             3,

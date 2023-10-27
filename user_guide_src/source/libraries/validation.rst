@@ -213,15 +213,29 @@ Traditional and Strict Rules
 ============================
 
 CodeIgniter 4 has two kinds of Validation rule classes.
-The traditional rule classes (**Traditional Rules**) have the namespace ``CodeIgniter\Validation``,
-and the new classes (**Strict Rules**) have ``CodeIgniter\Validation\StrictRules``, which provide strict validation.
+
+The default rule classes (**Strict Rules**) have the namespace
+``CodeIgniter\Validation\StrictRules``, and they provide strict validation.
+
+The traditional rule classes (**Traditional Rules**) have the namespace
+``CodeIgniter\Validation``. They are provided for backward compatibility only.
+They may not validate non-string values correctly and need not be used in new
+projects.
 
 .. note:: Since v4.3.0, **Strict Rules** are used by default for better security.
+
+Strict Rules
+------------
+
+.. versionadded:: 4.2.0
+
+The **Strict Rules** don't use implicit type conversion.
 
 Traditional Rules
 -----------------
 
-.. warning:: When validating data that contains non-string values, such as JSON data, it is recommended to use **Strict Rules**.
+.. warning:: When validating data that contains non-string values, such as JSON data,
+    you should use **Strict Rules**.
 
 The **Traditional Rules** implicitly assume that string values are validated,
 and the input value may be converted implicitly to a string value.
@@ -231,15 +245,12 @@ However, for example, if you use JSON input data, it may be a type of bool/null/
 When you validate the boolean ``true``, it is converted to string ``'1'`` with the Traditional rule classes.
 If you validate it with the ``integer`` rule, ``'1'`` passes the validation.
 
-Strict Rules
-------------
-
-.. versionadded:: 4.2.0
-
-The **Strict Rules** don't use implicit type conversion.
-
 Using Traditional Rules
 -----------------------
+
+.. warning:: The **Traditional Rules** are provided for backward compatibility only.
+    They may not validate non-string values correctly and need not be used in new
+    projects.
 
 If you want to use traditional rules, you need to change the rule classes in **app/Config/Validation.php**:
 
