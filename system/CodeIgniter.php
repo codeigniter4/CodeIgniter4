@@ -108,7 +108,7 @@ class CodeIgniter
     /**
      * Controller to use.
      *
-     * @var Closure|string
+     * @var (Closure(mixed...): ResponseInterface|string)|string
      */
     protected $controller;
 

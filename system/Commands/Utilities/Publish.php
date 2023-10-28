@@ -63,7 +63,7 @@ class Publish extends BaseCommand
     /**
      * the Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [];
 

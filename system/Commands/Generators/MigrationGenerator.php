@@ -56,7 +56,7 @@ class MigrationGenerator extends BaseCommand
     /**
      * The Command's Arguments
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [
         'name' => 'The migration class name.',
@@ -65,7 +65,7 @@ class MigrationGenerator extends BaseCommand
     /**
      * The Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [
         '--session'   => 'Generates the migration file for database sessions.',
