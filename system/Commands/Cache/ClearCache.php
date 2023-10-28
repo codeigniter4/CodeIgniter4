@@ -52,7 +52,7 @@ class ClearCache extends BaseCommand
     /**
      * the Command's Arguments
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [
         'driver' => 'The cache driver to use',

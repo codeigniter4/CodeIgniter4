@@ -52,7 +52,7 @@ class MigrateRefresh extends BaseCommand
     /**
      * the Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [
         '-n'    => 'Set migration namespace',
