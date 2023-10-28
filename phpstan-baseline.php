@@ -187,11 +187,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/CodeIgniter.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\CodeIgniter\\:\\:\\$controller type has no signature specified for Closure\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Database/CreateDatabase.php',
