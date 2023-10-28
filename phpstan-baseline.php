@@ -197,27 +197,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Database/CreateDatabase.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Database\\\\CreateDatabase\\:\\:\\$arguments is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$arguments\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/CreateDatabase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Database\\\\CreateDatabase\\:\\:\\$options is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$options\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/CreateDatabase.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Database/MigrateStatus.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a negated boolean, array\\<int\\<0, max\\>, array\\<int, mixed\\>\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/MigrateStatus.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Database\\\\MigrateStatus\\:\\:\\$options is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$options\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Database/MigrateStatus.php',
 ];
@@ -232,27 +217,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Database/Seed.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Database\\\\Seed\\:\\:\\$arguments is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$arguments\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/Seed.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfo\\:\\:showAllTables\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Database/ShowTableInfo.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfo\\:\\:showDataOfTable\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/ShowTableInfo.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfo\\:\\:\\$arguments is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$arguments\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/ShowTableInfo.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfo\\:\\:\\$options is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$options\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Database/ShowTableInfo.php',
 ];
@@ -757,24 +727,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Utilities/Environment.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Utilities\\\\Environment\\:\\:\\$arguments is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$arguments\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/Environment.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Utilities\\\\FilterCheck\\:\\:\\$arguments is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$arguments\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/FilterCheck.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Utilities/Namespaces.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Utilities\\\\Publish\\:\\:\\$arguments is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$arguments\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/Publish.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Accessing offset \'HTTP_HOST\' directly on \\$_SERVER is discouraged\\.$#',
@@ -794,11 +749,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
 	'count' => 3,
-	'path' => __DIR__ . '/system/Commands/Utilities/Routes.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\:\\:\\$options is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$options\\.$#',
-	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes.php',
 ];
 $ignoreErrors[] = [
