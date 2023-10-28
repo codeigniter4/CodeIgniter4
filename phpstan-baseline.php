@@ -2,11 +2,6 @@
 
 $ignoreErrors = [];
 $ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string\\> of property Config\\\\Modules\\:\\:\\$aliases is not the same as PHPDoc type array of overridden property CodeIgniter\\\\Modules\\\\Modules\\:\\:\\$aliases\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Modules.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^PHPDoc type CodeIgniter\\\\HTTP\\\\CLIRequest\\|CodeIgniter\\\\HTTP\\\\IncomingRequest of property App\\\\Controllers\\\\BaseController\\:\\:\\$request is not the same as PHPDoc type CodeIgniter\\\\HTTP\\\\RequestInterface of overridden property CodeIgniter\\\\Controller\\:\\:\\$request\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/app/Controllers/BaseController.php',
