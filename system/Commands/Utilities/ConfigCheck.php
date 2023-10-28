@@ -114,18 +114,12 @@ final class ConfigCheck extends BaseCommand
         $output = ob_get_clean();
 
         $output = trim($output);
-        $output = preg_replace(
-            '/\x1b\[36m.*┘\x1b\[0m/su',
-            '',
-            $output
-        );
-        $output = preg_replace(
-            '/\x1b\[36m.*Called from .*\x1b\[0m/su',
-            '',
-            $output
-        );
 
-        return trim($output);
+        $lines = explode("\n", $output);
+        array_splice($lines, 0, 3);
+        array_splice($lines, -3);
+
+        return implode("\n", $lines);
     }
 
     /**
