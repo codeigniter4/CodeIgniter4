@@ -1,3 +1,4 @@
+#################
 Version {version}
 #################
 
@@ -9,18 +10,23 @@ Release Date: Unreleased
     :local:
     :depth: 3
 
+********
 BREAKING
 ********
 
+***************
 Message Changes
 ***************
 
+*******
 Changes
 *******
 
+************
 Deprecations
 ************
 
+**********
 Bugs Fixed
 **********
 

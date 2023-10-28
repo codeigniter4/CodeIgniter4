@@ -2,7 +2,7 @@
 
 > Documentation guide based on the releases of `4.0.5` and `4.1.0` on January 31, 2021.
 >
-> Updated for `4.3.0` on January 10, 2023.
+> Updated for `4.4.3` on October 27, 2023.
 >
 > -MGatner, kenjis
 
@@ -53,12 +53,18 @@ Work off direct clones of the repos so the release branches persist for a time.
 * [ ] Clone both **codeigniter4/CodeIgniter4** and **codeigniter4/userguide** and
   resolve any necessary PRs
     ```console
+    rm -rf CodeIgniter4.bk userguide.bk
+    mv CodeIgniter4 CodeIgniter4.bk
+    mv userguide userguide.bk
     git clone git@github.com:codeigniter4/CodeIgniter4.git
     git clone git@github.com:codeigniter4/userguide.git
     ```
 * [ ] Vet the **admin/** folders for any removed hidden files (Action deploy scripts
   *do not remove these*)
-  * git diff --name-status origin/master admin/
+  ```console
+  cd CodeIgniter4
+  git diff --name-status origin/master admin/
+  ```
 * [ ] Merge any Security Advisory PRs in private forks
 
 ## Process
@@ -67,21 +73,24 @@ Work off direct clones of the repos so the release branches persist for a time.
 > been included with their PR, so this process assumes you will not be
 > generating much new content.
 
-* [ ] Create a new branch `release-4.x.x`
-* [ ] Update **system/CodeIgniter.php** with the new version number:
-  `const CI_VERSION = '4.x.x';`
-* [ ] Update **user_guide_src/source/conf.py** with the new `version = '4.x'` (if applicable)
-  and `release = '4.x.x'`
 * [ ] Replace **CHANGELOG.md** with the new version generated above
 * [ ] Update **user_guide_src/source/changelogs/{version}.rst**
-  * Set the date to format `Release Date: January 31, 2021`
   * Remove the section titles that have no items
 * [ ] Update **user_guide_src/source/installation/upgrade_{ver}.rst**
   * fill in the "All Changes" section, and add it to **upgrading.rst**
     * git diff --name-status origin/master -- . ':!system'
   * Remove the section titles that have no items
   * [Minor version only] Update the "from" version in the title. E.g., `from 4.3.x` → `from 4.3.8`
-* [ ] Commit the changes with `Prep for 4.x.x release` and push to origin
+* [ ] Run `php admin/prepare-release.php 4.x.x` and push to origin
+  * The above command does the following:
+    * Create a new branch `release-4.x.x`
+    * Update **system/CodeIgniter.php** with the new version number:
+      `const CI_VERSION = '4.x.x';`
+    * Update **user_guide_src/source/conf.py** with the new `version = '4.x'` (if applicable)
+      and `release = '4.x.x'`
+    * Update **user_guide_src/source/changelogs/{version}.rst**
+      * Set the date to format `Release Date: January 31, 2021`
+    * Commit the changes with `Prep for 4.x.x release`
 * [ ] Create a new PR from `release-4.x.x` to `develop`:
   * Title: `Prep for 4.x.x release`
   * Description:
@@ -119,6 +128,7 @@ Work off direct clones of the repos so the release branches persist for a time.
 * [ ] Run the following commands to install and test `appstarter` and verify the new
   version:
     ```console
+    rm -rf release-test
     composer create-project codeigniter4/appstarter release-test
     cd release-test
     composer test && composer info codeigniter4/framework
@@ -152,7 +162,7 @@ Work off direct clones of the repos so the release branches persist for a time.
     git switch -c 4.x
     git push origin HEAD
     ```
-* [ ] Publish any Security Advisories that were resolved from private forks
+* [ ] Request CVEs and Publish any Security Advisories that were resolved from private forks
   (note: publishing is restricted to administrators):
 * [ ] Announce the release on the forums and Slack channel
   (note: this forum is restricted to administrators):
@@ -160,11 +170,13 @@ Work off direct clones of the repos so the release branches persist for a time.
     https://forum.codeigniter.com/forum-2.html
   * The content is somewhat organic, but should include any major features and
     changes as well as a link to the User Guide's changelog
+* [ ] Run `php admin/create-new-changelog.php <current_version> <new_version>`
+  * The above command does the following:
+    * Create **user_guide_src/source/changelogs/{next_version}.rst** and add it to
+      **index.rst** (See **next-changelog-*.rst**)
+    * Create **user_guide_src/source/installation/upgrade_{next_version}.rst** and add it to
+      **upgrading.rst** (See **next-upgrading-guide.rst**)
 * [ ] Create a PR for new changelog and upgrade for the next version
-  * Create **user_guide_src/source/changelogs/{next_version}.rst** and add it to
-    **index.rst** (See **next-changelog-*.rst**)
-  * Create **user_guide_src/source/installation/upgrade_{next_version}.rst** and add it to
-    **upgrading.rst** (See **next-upgrading-guide.rst**)
 
 ## Appendix
 
