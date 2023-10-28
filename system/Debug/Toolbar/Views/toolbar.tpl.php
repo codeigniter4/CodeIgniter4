@@ -23,7 +23,7 @@
 </style>
 
 <script id="toolbar_js">
-    var ciSiteURL = "<?= site_url() ?>"
+    var ciSiteURL = "<?= rtrim(site_url(), '/') ?>"
     <?= file_get_contents(__DIR__ . '/toolbar.js') ?>
 </script>
 <div id="debug-icon" class="debug-bar-ndisplay">
