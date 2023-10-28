@@ -43,6 +43,8 @@ class, and even if it were extended, there is no way to replace it.
 Others
 ------
 
+- **AutoRouting Legacy:** Changed so that a ``PageNotFoundException`` is thrown
+  if the controller corresponding to the request URI does not exist.
 - **Logger:** The :php:func:`log_message()` function and the logger methods in
   ``CodeIgniter\Log\Logger`` now do not return ``bool`` values. The return types
   have been fixed to ``void`` to follow the PSR-3 interface.

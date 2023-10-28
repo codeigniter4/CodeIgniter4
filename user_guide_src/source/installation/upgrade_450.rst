@@ -126,6 +126,18 @@ Factories
 In the unlikely event, you have inherited the Factories, stop inheriting and
 copy the code into your Factories class.
 
+Auto Routing (Legacy)
+=====================
+
+In previous versions, the controller filters might be executed even when the
+corresponding controller was not found.
+
+This bug has been fixed and now a ``PageNotFoundException`` will be thrown and
+the filters will not be executed if the controller is not found.
+
+If you have code that depends on this bug, for example if you expect global filters
+to be executed even for non-existent pages, please add the necessary routes.
+
 Removed Deprecated Items
 ========================
 

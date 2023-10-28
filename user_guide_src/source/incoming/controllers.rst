@@ -412,6 +412,10 @@ without route definitions. The auto-routing is disabled by default.
 
 .. important:: Auto Routing (Legacy) routes a HTTP request with **any** HTTP method to a controller method.
 
+.. important:: Since v4.5.0, if Auto Routing (Legacy) doesn't find the controller,
+    it will throw ``PageNotFoundException`` exception before the Controller Filters
+    execute.
+
 Consider this URI::
 
     example.com/index.php/helloworld/

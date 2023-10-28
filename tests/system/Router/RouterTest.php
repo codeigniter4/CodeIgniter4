@@ -197,14 +197,18 @@ final class RouterTest extends CIUnitTestCase
     public function testAutoRouteFindsDefaultControllerAndMethod(): void
     {
         $this->collection->setAutoRoute(true);
-        $this->collection->setDefaultController('Test');
-        $this->collection->setDefaultMethod('test');
+        $this->collection->setDefaultController('Mycontroller');
+        $this->collection->setDefaultMethod('getSomemethod');
         $router = new Router($this->collection, $this->request);
+
+        copy(TESTPATH . '_support/_controller/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
 
         $router->autoRoute('/');
 
-        $this->assertSame('Test', $router->controllerName());
-        $this->assertSame('test', $router->methodName());
+        unlink(APPPATH . 'Controllers/Mycontroller.php');
+
+        $this->assertSame('Mycontroller', $router->controllerName());
+        $this->assertSame('getSomemethod', $router->methodName());
     }
 
     public function testAutoRouteFindsControllerWithFileAndMethod(): void
@@ -212,10 +216,14 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->setAutoRoute(true);
         $router = new Router($this->collection, $this->request);
 
-        $router->autoRoute('myController/someMethod');
+        copy(TESTPATH . '_support/_controller/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
 
-        $this->assertSame('MyController', $router->controllerName());
-        $this->assertSame('someMethod', $router->methodName());
+        $router->autoRoute('mycontroller/getSomemethod');
+
+        unlink(APPPATH . 'Controllers/Mycontroller.php');
+
+        $this->assertSame('Mycontroller', $router->controllerName());
+        $this->assertSame('getSomemethod', $router->methodName());
     }
 
     public function testAutoRouteFindsControllerWithFile(): void
@@ -223,9 +231,13 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->setAutoRoute(true);
         $router = new Router($this->collection, $this->request);
 
-        $router->autoRoute('myController');
+        copy(TESTPATH . '_support/_controller/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
 
-        $this->assertSame('MyController', $router->controllerName());
+        $router->autoRoute('mycontroller');
+
+        unlink(APPPATH . 'Controllers/Mycontroller.php');
+
+        $this->assertSame('Mycontroller', $router->controllerName());
         $this->assertSame('index', $router->methodName());
     }
 
@@ -236,12 +248,16 @@ final class RouterTest extends CIUnitTestCase
 
         mkdir(APPPATH . 'Controllers/Subfolder');
 
-        $router->autoRoute('subfolder/myController/someMethod');
+        copy(TESTPATH . '_support/_controller/Subfolder/Mycontroller.php', APPPATH . 'Controllers/Subfolder/Mycontroller.php');
+
+        $router->autoRoute('subfolder/mycontroller/getSomemethod');
+
+        unlink(APPPATH . 'Controllers/Subfolder/Mycontroller.php');
 
         rmdir(APPPATH . 'Controllers/Subfolder');
 
-        $this->assertSame('MyController', $router->controllerName());
-        $this->assertSame('someMethod', $router->methodName());
+        $this->assertSame('Mycontroller', $router->controllerName());
+        $this->assertSame('getSomemethod', $router->methodName());
     }
 
     public function testAutoRouteFindsDashedSubfolder(): void
@@ -251,9 +267,11 @@ final class RouterTest extends CIUnitTestCase
         $router->setTranslateURIDashes(true);
 
         mkdir(APPPATH . 'Controllers/Dash_folder');
+        copy(TESTPATH . '_support/_controller/Dash_folder/Mycontroller.php', APPPATH . 'Controllers/Dash_folder/Mycontroller.php');
 
         $router->autoRoute('dash-folder/mycontroller/somemethod');
 
+        unlink(APPPATH . 'Controllers/Dash_folder/Mycontroller.php');
         rmdir(APPPATH . 'Controllers/Dash_folder');
 
         $this->assertSame('Dash_folder/', $router->directory());
@@ -268,16 +286,16 @@ final class RouterTest extends CIUnitTestCase
         $router->setTranslateURIDashes(true);
 
         mkdir(APPPATH . 'Controllers/Dash_folder');
-        file_put_contents(APPPATH . 'Controllers/Dash_folder/Dash_controller.php', '');
+        copy(TESTPATH . '_support/_controller/Dash_folder/Dash_controller.php', APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
 
-        $router->autoRoute('dash-folder/dash-controller/somemethod');
+        $router->autoRoute('dash-folder/dash-controller/getSomemethod');
 
         unlink(APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
         rmdir(APPPATH . 'Controllers/Dash_folder');
 
         $this->assertSame('Dash_folder/', $router->directory());
         $this->assertSame('Dash_controller', $router->controllerName());
-        $this->assertSame('somemethod', $router->methodName());
+        $this->assertSame('getSomemethod', $router->methodName());
     }
 
     public function testAutoRouteFindsDashedMethod(): void
@@ -287,16 +305,16 @@ final class RouterTest extends CIUnitTestCase
         $router->setTranslateURIDashes(true);
 
         mkdir(APPPATH . 'Controllers/Dash_folder');
-        file_put_contents(APPPATH . 'Controllers/Dash_folder/Dash_controller.php', '');
+        copy(TESTPATH . '_support/_controller/Dash_folder/Dash_controller.php', APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
 
-        $router->autoRoute('dash-folder/dash-controller/dash-method');
+        $router->autoRoute('dash-folder/dash-controller/getDash_method');
 
         unlink(APPPATH . 'Controllers/Dash_folder/Dash_controller.php');
         rmdir(APPPATH . 'Controllers/Dash_folder');
 
         $this->assertSame('Dash_folder/', $router->directory());
         $this->assertSame('Dash_controller', $router->controllerName());
-        $this->assertSame('dash_method', $router->methodName());
+        $this->assertSame('getDash_method', $router->methodName());
     }
 
     public function testAutoRouteFindsDefaultDashFolder(): void
@@ -306,9 +324,11 @@ final class RouterTest extends CIUnitTestCase
         $router->setTranslateURIDashes(true);
 
         mkdir(APPPATH . 'Controllers/Dash_folder');
+        copy(TESTPATH . '_support/_controller/Dash_folder/Home.php', APPPATH . 'Controllers/Dash_folder/Home.php');
 
         $router->autoRoute('dash-folder');
 
+        unlink(APPPATH . 'Controllers/Dash_folder/Home.php');
         rmdir(APPPATH . 'Controllers/Dash_folder');
 
         $this->assertSame('Dash_folder/', $router->directory());
@@ -323,9 +343,11 @@ final class RouterTest extends CIUnitTestCase
         $router->setTranslateURIDashes(true);
 
         mkdir(APPPATH . 'Controllers/Φ');
+        copy(TESTPATH . '_support/_controller/Φ/Home.php', APPPATH . 'Controllers/Φ/Home.php');
 
         $router->autoRoute('Φ');
 
+        unlink(APPPATH . 'Controllers/Φ/Home.php');
         rmdir(APPPATH . 'Controllers/Φ');
 
         $this->assertSame('Φ/', $router->directory());
@@ -339,11 +361,11 @@ final class RouterTest extends CIUnitTestCase
         $router = new Router($this->collection, $this->request);
         $router->setTranslateURIDashes(true);
 
-        file_put_contents(APPPATH . 'Controllers/Φ', '');
+        copy(TESTPATH . '_support/_controller/Φ.php', APPPATH . 'Controllers/Φ.php');
 
         $router->autoRoute('Φ');
 
-        unlink(APPPATH . 'Controllers/Φ');
+        unlink(APPPATH . 'Controllers/Φ.php');
 
         $this->assertSame('Φ', $router->controllerName());
         $this->assertSame('index', $router->methodName());
@@ -732,7 +754,11 @@ final class RouterTest extends CIUnitTestCase
         $router = new Router($this->collection, $this->request);
         $router->setTranslateURIDashes(true);
 
-        $router->autoRoute('admin-user/show-list');
+        copy(TESTPATH . '_support/_controller/Admin_user.php', APPPATH . 'Controllers/Admin_user.php');
+
+        $router->autoRoute('admin_user/show_list');
+
+        unlink(APPPATH . 'Controllers/Admin_user.php');
 
         $this->assertSame('Admin_user', $router->controllerName());
         $this->assertSame('show_list', $router->methodName());
@@ -746,10 +772,14 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->setAutoRoute(true);
         $router = new Router($this->collection, $this->request);
 
-        $router->autoRoute('myController/someMethod/0/abc');
+        copy(TESTPATH . '_support/_controller/Mycontroller.php', APPPATH . 'Controllers/Mycontroller.php');
 
-        $this->assertSame('MyController', $router->controllerName());
-        $this->assertSame('someMethod', $router->methodName());
+        $router->autoRoute('mycontroller/getSomemethod/0/abc');
+
+        $this->assertSame('Mycontroller', $router->controllerName());
+        $this->assertSame('getSomemethod', $router->methodName());
+
+        unlink(APPPATH . 'Controllers/Mycontroller.php');
 
         $expected = [
             '0',
@@ -817,8 +847,18 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->setAutoRoute(true);
         $router = new Router($this->collection, $this->request);
 
+        mkdir(APPPATH . 'Controllers/foo');
+        mkdir(APPPATH . 'Controllers/foo/bar');
+        mkdir(APPPATH . 'Controllers/foo/bar/baz');
+        copy(TESTPATH . '_support/_controller/foo/bar/baz/Some_controller.php', APPPATH . 'Controllers/foo/bar/baz/Some_controller.php');
+
         $router->setDirectory('foo/bar/baz', false, true);
         $router->handle('Some_controller/some_method/param1/param2/param3');
+
+        unlink(APPPATH . 'Controllers/foo/bar/baz/Some_controller.php');
+        rmdir(APPPATH . 'Controllers/foo/bar/baz');
+        rmdir(APPPATH . 'Controllers/foo/bar');
+        rmdir(APPPATH . 'Controllers/foo');
 
         $this->assertSame('foo/bar/baz/', $router->directory());
         $this->assertSame('Some_controller', $router->controllerName());

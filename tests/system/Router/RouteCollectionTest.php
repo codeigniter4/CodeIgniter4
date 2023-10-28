@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Router;
 
+use App\Controllers\Product;
 use CodeIgniter\Config\Services;
 use CodeIgniter\controller;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -1778,10 +1779,14 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->setAutoRoute(true);
         $routes->setDefaultNamespace($namespace);
 
+        copy(TESTPATH . '_support/_controller/Product.php', APPPATH . 'Controllers/Product.php');
+
         $router = new Router($routes, Services::request());
         $router->handle('/product');
 
-        $this->assertSame('\App\\Controllers\\Product', $router->controllerName());
+        unlink(APPPATH . 'Controllers/Product.php');
+
+        $this->assertSame('\\' . Product::class, $router->controllerName());
     }
 
     /**
@@ -1797,10 +1802,14 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->setDefaultNamespace($namespace);
         $routes->get('/product', 'Product');
 
+        copy(TESTPATH . '_support/_controller/Product.php', APPPATH . 'Controllers/Product.php');
+
         $router = new Router($routes, Services::request());
         $router->handle('/product');
 
-        $this->assertSame('\App\\Controllers\\Product', $router->controllerName());
+        unlink(APPPATH . 'Controllers/Product.php');
+
+        $this->assertSame('\\' . Product::class, $router->controllerName());
     }
 
     public function testRoutePriorityDetected(): void
