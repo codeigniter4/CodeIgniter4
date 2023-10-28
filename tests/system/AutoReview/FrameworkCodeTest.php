@@ -41,7 +41,7 @@ final class FrameworkCodeTest extends TestCase
     /**
      * @dataProvider provideEachTestClassHasCorrectGroupAnnotation
      *
-     * @phpstan-param class-string $class
+     * @param class-string $class
      */
     public function testEachTestClassHasCorrectGroupAnnotation(string $class): void
     {

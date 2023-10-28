@@ -84,7 +84,7 @@ class ShowTableInfo extends BaseCommand
     ];
 
     /**
-     * @phpstan-var  list<list<string|int>> Table Data.
+     * @var list<list<int|string>> Table Data.
      */
     private array $tbody;
 

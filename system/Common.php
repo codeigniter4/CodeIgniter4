@@ -1139,7 +1139,7 @@ if (! function_exists('timer')) {
      * returns its return value if any.
      * Otherwise will start or stop the timer intelligently.
      *
-     * @phpstan-param (callable(): mixed)|null $callable
+     * @param (callable(): mixed)|null $callable
      *
      * @return Timer
      */

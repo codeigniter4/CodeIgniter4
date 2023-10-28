@@ -75,8 +75,7 @@ class Autoloader
     /**
      * Stores files as a list.
      *
-     * @var string[]
-     * @phpstan-var list<string>
+     * @var list<string>
      */
     protected $files = [];
 
@@ -84,8 +83,7 @@ class Autoloader
      * Stores helper list.
      * Always load the URL helper, it should be used in most apps.
      *
-     * @var string[]
-     * @phpstan-var list<string>
+     * @var list<string>
      */
     protected $helpers = ['url'];
 
@@ -119,7 +117,7 @@ class Autoloader
             $this->files = $config->files;
         }
 
-        if (isset($config->helpers)) { // @phpstan-ignore-line
+        if (isset($config->helpers)) {
             $this->helpers = [...$this->helpers, ...$config->helpers];
         }
 
@@ -185,8 +183,7 @@ class Autoloader
     /**
      * Registers namespaces with the autoloader.
      *
-     * @param array<string, array<int, string>|string>|string $namespace
-     * @phpstan-param array<string, list<string>|string>|string $namespace
+     * @param array<string, list<string>|string>|string $namespace
      *
      * @return $this
      */

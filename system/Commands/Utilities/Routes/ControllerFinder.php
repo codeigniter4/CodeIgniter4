@@ -38,8 +38,7 @@ final class ControllerFinder
     }
 
     /**
-     * @return string[]
-     * @phpstan-return class-string[]
+     * @return class-string[]
      */
     public function find(): array
     {
@@ -66,7 +65,7 @@ final class ControllerFinder
                 $classnameOrEmpty = $this->locator->getClassname($file);
 
                 if ($classnameOrEmpty !== '') {
-                    /** @phpstan-var class-string $classname */
+                    /** @var class-string $classname */
                     $classname = $classnameOrEmpty;
 
                     $classes[] = $classname;

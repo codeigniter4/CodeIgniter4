@@ -222,8 +222,7 @@ class FileHandler extends BaseHandler
      * Does the heavy lifting of actually retrieving the file and
      * verifying it's age.
      *
-     * @return array<string, mixed>|false
-     * @phpstan-return array{data: mixed, ttl: int, time: int}|false
+     * @return array{data: mixed, ttl: int, time: int}|false
      */
     protected function getItem(string $filename)
     {

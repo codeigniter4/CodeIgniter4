@@ -68,7 +68,7 @@ final class ResponseCacheTest extends CIUnitTestCase
     }
 
     /**
-     * @phpstan-param list<string> $params
+     * @param list<string> $params
      */
     private function createCLIRequest(array $params = [], ?AppConfig $appConfig = null): CLIRequest
     {

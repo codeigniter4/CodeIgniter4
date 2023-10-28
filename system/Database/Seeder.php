@@ -25,8 +25,7 @@ class Seeder
     /**
      * The name of the database group to use.
      *
-     * @var string
-     * @phpstan-var non-empty-string
+     * @var non-empty-string
      */
     protected $DBGroup;
 

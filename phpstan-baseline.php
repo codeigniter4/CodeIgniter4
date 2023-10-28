@@ -17,6 +17,11 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
 ];
 $ignoreErrors[] = [
+	'message' => '#^Property Config\\\\Autoload\\:\\:\\$helpers \\(array\\<int, string\\>\\) in isset\\(\\) is not nullable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
+];
+$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 13,
 	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
