@@ -565,7 +565,7 @@ or the value that was validated you can add the ``{field}``, ``{param}`` and ``{
 On a field with the human name Username and a rule of ``min_length[6]`` with a value of "Pizza", an error would display: "Supplied value (Pizza) for Username must have
 at least 6 characters."
 
-.. warning:: If you get the error messages with ``getErrors()`` or ``getError()``, the messages are not HTML escaped. If you use user input data like ``({value})`` to make the error message, it might contain HTML tags. If you don't escape the messages before displying them, XSS attacks are possible.
+.. warning:: If you get the error messages with ``getErrors()`` or ``getError()``, the messages are not HTML escaped. If you use user input data like ``({value})`` to make the error message, it might contain HTML tags. If you don't escape the messages before displaying them, XSS attacks are possible.
 
 .. note:: When using label-style error messages, if you pass the second parameter to ``setRules()``, it will be overwritten with the value of the first parameter.
 
