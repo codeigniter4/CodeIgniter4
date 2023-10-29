@@ -213,16 +213,13 @@ final class RulesTest extends TraditionalRulesTest
         yield from [
             'foo bar not exist'        => [[], false],
             'bar not exist'            => [['foo' => null], false],
-            'foo not exist'            => [['bar' => null], true],
+            'foo not exist'            => [['bar' => null], false],
             'foo bar null'             => [['foo' => null, 'bar' => null], true],
             'foo bar string match'     => [['foo' => 'match', 'bar' => 'match'], true],
             'foo bar string not match' => [['foo' => 'match', 'bar' => 'nope'], false],
-            // TypeError: CodeIgniter\Validation\Rules::matches(): Argument #1 ($str) must be of type ?string, float given
-            // 'foo bar float match' => [['foo' => 1.2, 'bar' => 1.2], true],
-            // TypeError: CodeIgniter\Validation\Rules::matches(): Argument #1 ($str) must be of type ?string, float given
-            // 'foo bar float not match' => [['foo' => 1.2, 'bar' => 2.3], false],
-            // TypeError: CodeIgniter\Validation\Rules::matches(): Argument #1 ($str) must be of type ?string, float given
-            // 'foo bar bool match' => [['foo' => true, 'bar' => true], true],
+            'foo bar float match'      => [['foo' => 1.2, 'bar' => 1.2], true],
+            'foo bar float not match'  => [['foo' => 1.2, 'bar' => 2.3], false],
+            'foo bar bool match'       => [['foo' => true, 'bar' => true], true],
         ];
     }
 
@@ -245,7 +242,7 @@ final class RulesTest extends TraditionalRulesTest
             'foo bar string match'     => [['foo' => 'match', 'bar' => 'match'], false],
             'foo bar string not match' => [['foo' => 'match', 'bar' => 'nope'], true],
             'foo bar float match'      => [['foo' => 1.2, 'bar' => 1.2], false],
-            'foo bar float not match'  => [['foo' => 1.2, 'bar' => 2.3], false],
+            'foo bar float not match'  => [['foo' => 1.2, 'bar' => 2.3], true],
             'foo bar bool match'       => [['foo' => true, 'bar' => true], false],
         ];
     }
