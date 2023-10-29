@@ -119,7 +119,8 @@ You should define as many aliases as you need.
 $globals
 ========
 
-The second section allows you to define any filters that should be applied to every request made by the framework.
+The second section allows you to define any filters that should be applied to every valid request made by the framework.
+
 You should take care with how many you use here, since it could have performance implications to have too many
 run on every request.
 
