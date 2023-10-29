@@ -1367,14 +1367,14 @@ class RouteCollection implements RouteCollectionInterface
             // or maybe $placeholder is not a placeholder, but a regex.
             $pattern = $this->placeholders[$placeholderName] ?? $placeholder;
 
-            if (! preg_match('#^' . $pattern . '$#u', $params[$index])) {
+            if (! preg_match('#^' . $pattern . '$#u', (string) $params[$index])) {
                 throw RouterException::forInvalidParameterType();
             }
 
             // Ensure that the param we're inserting matches
             // the expected param type.
             $pos  = strpos($from, $placeholder);
-            $from = substr_replace($from, $params[$index], $pos, strlen($placeholder));
+            $from = substr_replace($from, (string) $params[$index], $pos, strlen($placeholder));
         }
 
         $from = $this->replaceLocale($from, $locale);

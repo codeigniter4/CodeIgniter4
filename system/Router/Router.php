@@ -382,7 +382,9 @@ class Router implements RouterInterface
         foreach ($routes as $routeKey => $handler) {
             $routeKey = $routeKey === '/'
                 ? $routeKey
-                : ltrim($routeKey, '/ ');
+                // $routeKey may be int, because it is an array key,
+                // and the URI `/1` is valid. The leading `/` is removed.
+                : ltrim((string) $routeKey, '/ ');
 
             $matchedKey = $routeKey;
 

@@ -1066,7 +1066,7 @@ class CLI
 
             foreach ($tableRows[$row] as $col) {
                 // Sets the size of this column in the current row
-                $allColsLengths[$row][$column] = static::strlen($col);
+                $allColsLengths[$row][$column] = static::strlen((string) $col);
 
                 // If the current column does not have a value among the larger ones
                 // or the value of this is greater than the existing one
@@ -1086,7 +1086,7 @@ class CLI
             $column = 0;
 
             foreach ($tableRows[$row] as $col) {
-                $diff = $maxColsLengths[$column] - static::strlen($col);
+                $diff = $maxColsLengths[$column] - static::strlen((string) $col);
 
                 if ($diff !== 0) {
                     $tableRows[$row][$column] .= str_repeat(' ', $diff);
@@ -1106,7 +1106,7 @@ class CLI
                 $cols = '+';
 
                 foreach ($tableRows[$row] as $col) {
-                    $cols .= str_repeat('-', static::strlen($col) + 2) . '+';
+                    $cols .= str_repeat('-', static::strlen((string) $col) + 2) . '+';
                 }
                 $table .= $cols . PHP_EOL;
             }

@@ -576,7 +576,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
         $answer1 = redirect()->route('login')
             ->setCookie('foo', 'onething', YEAR)
-            ->setCookie('login_time', $loginTime, YEAR);
+            ->setCookie('login_time', (string) $loginTime, YEAR);
 
         $this->assertTrue($answer1->hasCookie('foo', 'onething'));
         $this->assertTrue($answer1->hasCookie('login_time'));

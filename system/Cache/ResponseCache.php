@@ -83,7 +83,7 @@ final class ResponseCache
             ? $uri->getQuery(is_array($this->cacheQueryString) ? ['only' => $this->cacheQueryString] : [])
             : '';
 
-        return md5($uri->setFragment('')->setQuery($query));
+        return md5((string) $uri->setFragment('')->setQuery($query));
     }
 
     /**

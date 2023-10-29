@@ -744,7 +744,7 @@ class CodeIgniter
             ? $uri->getQuery(is_array($config->cacheQueryString) ? ['only' => $config->cacheQueryString] : [])
             : '';
 
-        return md5($uri->setFragment('')->setQuery($query));
+        return md5((string) $uri->setFragment('')->setQuery($query));
     }
 
     /**
