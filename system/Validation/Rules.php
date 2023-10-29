@@ -187,7 +187,7 @@ class Rules
             return $str === dot_array_search($field, $data);
         }
 
-        return isset($data[$field]) ? ($str === $data[$field]) : false;
+        return isset($data[$field]) && $str === $data[$field];
     }
 
     /**
