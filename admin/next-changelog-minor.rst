@@ -1,3 +1,4 @@
+#################
 Version {version}
 #################
 
@@ -9,11 +10,13 @@ Release Date: Unreleased
     :local:
     :depth: 3
 
+**********
 Highlights
 **********
 
 - TBD
 
+********
 BREAKING
 ********
 
@@ -26,6 +29,7 @@ Interface Changes
 Method Signature Changes
 ========================
 
+************
 Enhancements
 ************
 
@@ -59,15 +63,19 @@ Helpers and Functions
 Others
 ======
 
+***************
 Message Changes
 ***************
 
+*******
 Changes
 *******
 
+************
 Deprecations
 ************
 
+**********
 Bugs Fixed
 **********
 
