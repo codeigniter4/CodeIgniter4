@@ -303,13 +303,13 @@ class RulesTest extends CIUnitTestCase
         yield from [
             'foo bar not exist'        => [[], false],
             'bar not exist'            => [['foo' => null], false],
-            'foo not exist'            => [['bar' => null], true], // Strict Rule: false
-            'foo bar null'             => [['foo' => null, 'bar' => null], true],
+            'foo not exist'            => [['bar' => null], false],
+            'foo bar null'             => [['foo' => null, 'bar' => null], false], // Strict Rule: true
             'foo bar string match'     => [['foo' => 'match', 'bar' => 'match'], true],
             'foo bar string not match' => [['foo' => 'match', 'bar' => 'nope'], false],
-            'foo bar float match'      => [['foo' => 1.2, 'bar' => 1.2], false], // Strict Rule: true
+            'foo bar float match'      => [['foo' => 1.2, 'bar' => 1.2], true],
             'foo bar float not match'  => [['foo' => 1.2, 'bar' => 2.3], false],
-            'foo bar bool match'       => [['foo' => true, 'bar' => true], false], // Strict Rule: true
+            'foo bar bool match'       => [['foo' => true, 'bar' => true], true],
         ];
     }
 
@@ -348,9 +348,9 @@ class RulesTest extends CIUnitTestCase
             'foo bar null'             => [['foo' => null, 'bar' => null], false],
             'foo bar string match'     => [['foo' => 'match', 'bar' => 'match'], false],
             'foo bar string not match' => [['foo' => 'match', 'bar' => 'nope'], true],
-            'foo bar float match'      => [['foo' => 1.2, 'bar' => 1.2], true], // Strict Rule: false
+            'foo bar float match'      => [['foo' => 1.2, 'bar' => 1.2], false],
             'foo bar float not match'  => [['foo' => 1.2, 'bar' => 2.3], true],
-            'foo bar bool match'       => [['foo' => true, 'bar' => true], true], // Strict Rule: false
+            'foo bar bool match'       => [['foo' => true, 'bar' => true], false],
         ];
     }
 
