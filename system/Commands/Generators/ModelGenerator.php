@@ -83,7 +83,7 @@ class ModelGenerator extends BaseCommand
         $this->template  = 'model.tpl.php';
 
         $this->classNameLang = 'CLI.generator.className.model';
-        $this->execute($params);
+        $this->generateClass($params);
     }
 
     /**

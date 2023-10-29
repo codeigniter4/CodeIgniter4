@@ -72,6 +72,6 @@ class Unsuffixable extends BaseCommand
         $this->template  = 'command.tpl.php';
 
         $this->setEnabledSuffixing(false);
-        $this->execute($params);
+        $this->generateClass($params);
     }
 }

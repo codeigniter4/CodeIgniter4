@@ -79,6 +79,6 @@ class FilterGenerator extends BaseCommand
         $this->template  = 'filter.tpl.php';
 
         $this->classNameLang = 'CLI.generator.className.filter';
-        $this->execute($params);
+        $this->generateClass($params);
     }
 }
