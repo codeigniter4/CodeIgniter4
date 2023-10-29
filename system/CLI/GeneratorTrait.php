@@ -143,7 +143,13 @@ trait GeneratorTrait
             CLI::write(lang('CLI.generator.usingCINamespace'), 'yellow');
             CLI::newLine();
 
-            if (CLI::prompt('Are you sure you want to continue?', ['y', 'n'], 'required') === 'n') {
+            if (
+                CLI::prompt(
+                    'Are you sure you want to continue?',
+                    ['y', 'n'],
+                    'required'
+                ) === 'n'
+            ) {
                 CLI::newLine();
                 CLI::write(lang('CLI.generator.cancelOperation'), 'yellow');
                 CLI::newLine();
@@ -160,7 +166,11 @@ trait GeneratorTrait
         // Overwriting files unknowingly is a serious annoyance, So we'll check if
         // we are duplicating things, If 'force' option is not supplied, we bail.
         if (! $this->getOption('force') && $isFile) {
-            CLI::error(lang('CLI.generator.fileExist', [clean_path($target)]), 'light_gray', 'red');
+            CLI::error(
+                lang('CLI.generator.fileExist', [clean_path($target)]),
+                'light_gray',
+                'red'
+            );
             CLI::newLine();
 
             return;
@@ -179,7 +189,11 @@ trait GeneratorTrait
         // contents from the template, and then we'll do the necessary replacements.
         if (! write_file($target, $content)) {
             // @codeCoverageIgnoreStart
-            CLI::error(lang('CLI.generator.fileError', [clean_path($target)]), 'light_gray', 'red');
+            CLI::error(
+                lang('CLI.generator.fileError', [clean_path($target)]),
+                'light_gray',
+                'red'
+            );
             CLI::newLine();
 
             return;
@@ -187,13 +201,19 @@ trait GeneratorTrait
         }
 
         if ($this->getOption('force') && $isFile) {
-            CLI::write(lang('CLI.generator.fileOverwrite', [clean_path($target)]), 'yellow');
+            CLI::write(
+                lang('CLI.generator.fileOverwrite', [clean_path($target)]),
+                'yellow'
+            );
             CLI::newLine();
 
             return;
         }
 
-        CLI::write(lang('CLI.generator.fileCreate', [clean_path($target)]), 'green');
+        CLI::write(
+            lang('CLI.generator.fileCreate', [clean_path($target)]),
+            'green'
+        );
         CLI::newLine();
     }
 
@@ -244,15 +264,34 @@ trait GeneratorTrait
             $class = $matches[1] . ucfirst($matches[2]);
         }
 
-        if ($this->enabledSuffixing && $this->getOption('suffix') && preg_match($pattern, $class) !== 1) {
+        if (
+            $this->enabledSuffixing && $this->getOption('suffix')
+            && preg_match($pattern, $class) !== 1
+        ) {
             $class .= ucfirst($component);
         }
 
         // Trims input, normalize separators, and ensure that all paths are in Pascalcase.
-        $class = ltrim(implode('\\', array_map('pascalize', explode('\\', str_replace('/', '\\', trim($class))))), '\\/');
+        $class = ltrim(
+            implode(
+                '\\',
+                array_map(
+                    'pascalize',
+                    explode('\\', str_replace('/', '\\', trim($class)))
+                )
+            ),
+            '\\/'
+        );
 
         // Gets the namespace from input. Don't forget the ending backslash!
-        $namespace = trim(str_replace('/', '\\', $this->getOption('namespace') ?? APP_NAMESPACE), '\\') . '\\';
+        $namespace = trim(
+            str_replace(
+                '/',
+                '\\',
+                $this->getOption('namespace') ?? APP_NAMESPACE
+            ),
+            '\\'
+        ) . '\\';
 
         if (strncmp($class, $namespace, strlen($namespace)) === 0) {
             return $class; // @codeCoverageIgnore
@@ -268,21 +307,39 @@ trait GeneratorTrait
     protected function renderTemplate(array $data = []): string
     {
         try {
-            return view(config(Generators::class)->views[$this->name], $data, ['debug' => false]);
+            return view(
+                config(Generators::class)->views[$this->name],
+                $data,
+                ['debug' => false]
+            );
         } catch (Throwable $e) {
             log_message('error', (string) $e);
 
-            return view("CodeIgniter\\Commands\\Generators\\Views\\{$this->template}", $data, ['debug' => false]);
+            return view(
+                "CodeIgniter\\Commands\\Generators\\Views\\{$this->template}",
+                $data,
+                ['debug' => false]
+            );
         }
     }
 
     /**
      * Performs pseudo-variables contained within view file.
      */
-    protected function parseTemplate(string $class, array $search = [], array $replace = [], array $data = []): string
-    {
+    protected function parseTemplate(
+        string $class,
+        array $search = [],
+        array $replace = [],
+        array $data = []
+    ): string {
         // Retrieves the namespace part from the fully qualified class name.
-        $namespace = trim(implode('\\', array_slice(explode('\\', $class), 0, -1)), '\\');
+        $namespace = trim(
+            implode(
+                '\\',
+                array_slice(explode('\\', $class), 0, -1)
+            ),
+            '\\'
+        );
         $search[]  = '<@php';
         $search[]  = '{namespace}';
         $search[]  = '{class}';
@@ -302,7 +359,14 @@ trait GeneratorTrait
     {
         $template = $this->prepare($class);
 
-        if ($this->sortImports && preg_match('/(?P<imports>(?:^use [^;]+;$\n?)+)/m', $template, $match)) {
+        if (
+            $this->sortImports
+            && preg_match(
+                '/(?P<imports>(?:^use [^;]+;$\n?)+)/m',
+                $template,
+                $match
+            )
+        ) {
             $imports = explode("\n", trim($match['imports']));
             sort($imports);
 
@@ -317,22 +381,45 @@ trait GeneratorTrait
      */
     protected function buildPath(string $class): string
     {
-        $namespace = trim(str_replace('/', '\\', $this->getOption('namespace') ?? APP_NAMESPACE), '\\');
+        $namespace = trim(
+            str_replace(
+                '/',
+                '\\',
+                $this->getOption('namespace') ?? APP_NAMESPACE
+            ),
+            '\\'
+        );
 
         // Check if the namespace is actually defined and we are not just typing gibberish.
         $base = Services::autoloader()->getNamespace($namespace);
 
         if (! $base = reset($base)) {
-            CLI::error(lang('CLI.namespaceNotDefined', [$namespace]), 'light_gray', 'red');
+            CLI::error(
+                lang('CLI.namespaceNotDefined', [$namespace]),
+                'light_gray',
+                'red'
+            );
             CLI::newLine();
 
             return '';
         }
 
         $base = realpath($base) ?: $base;
-        $file = $base . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, trim(str_replace($namespace . '\\', '', $class), '\\')) . '.php';
+        $file = $base . DIRECTORY_SEPARATOR
+            . str_replace(
+                '\\',
+                DIRECTORY_SEPARATOR,
+                trim(str_replace($namespace . '\\', '', $class), '\\')
+            ) . '.php';
 
-        return implode(DIRECTORY_SEPARATOR, array_slice(explode(DIRECTORY_SEPARATOR, $file), 0, -1)) . DIRECTORY_SEPARATOR . $this->basename($file);
+        return implode(
+            DIRECTORY_SEPARATOR,
+            array_slice(
+                explode(DIRECTORY_SEPARATOR, $file),
+                0,
+                -1
+            )
+        ) . DIRECTORY_SEPARATOR . $this->basename($file);
     }
 
     /**

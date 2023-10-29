@@ -88,7 +88,11 @@ class CellGenerator extends BaseCommand
 
         $className = $this->qualifyClassName();
         $viewName  = decamelize(class_basename($className));
-        $viewName  = preg_replace('/([a-z][a-z0-9_\/\\\\]+)(_cell)$/i', '$1', $viewName) ?? $viewName;
+        $viewName  = preg_replace(
+            '/([a-z][a-z0-9_\/\\\\]+)(_cell)$/i',
+            '$1',
+            $viewName
+        ) ?? $viewName;
         $namespace = substr($className, 0, strrpos($className, '\\') + 1);
 
         $this->generateView($namespace . $viewName, $params);
