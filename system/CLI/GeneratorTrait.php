@@ -36,7 +36,15 @@ trait GeneratorTrait
     protected $directory;
 
     /**
-     * View template name
+     * (Optional) View template path
+     *
+     * We use special namespaced paths like:
+     *      `CodeIgniter\Commands\Generators\Views\cell.tpl.php`.
+     */
+    protected ?string $templatePath = null;
+
+    /**
+     * View template name for fallback
      *
      * @var string
      */
@@ -118,6 +126,8 @@ trait GeneratorTrait
 
     /**
      * Generate a view file from an existing template.
+     *
+     * @param string $view namespaced view name that is generated
      */
     protected function generateView(string $view, array $params)
     {
@@ -135,6 +145,8 @@ trait GeneratorTrait
 
     /**
      * Handles writing the file to disk, and all of the safety checks around that.
+     *
+     * @param string $target file path
      */
     private function generateFile(string $target, string $content): void
     {
@@ -219,6 +231,10 @@ trait GeneratorTrait
 
     /**
      * Prepare options and do the necessary replacements.
+     *
+     * @param string $class namespaced classname or namespaced view.
+     *
+     * @return string generated file content
      */
     protected function prepare(string $class): string
     {
@@ -307,11 +323,9 @@ trait GeneratorTrait
     protected function renderTemplate(array $data = []): string
     {
         try {
-            return view(
-                config(Generators::class)->views[$this->name],
-                $data,
-                ['debug' => false]
-            );
+            $template = $this->templatePath ?? config(Generators::class)->views[$this->name];
+
+            return view($template, $data, ['debug' => false]);
         } catch (Throwable $e) {
             log_message('error', (string) $e);
 
@@ -325,6 +339,10 @@ trait GeneratorTrait
 
     /**
      * Performs pseudo-variables contained within view file.
+     *
+     * @param string $class namespaced classname or namespaced view.
+     *
+     * @return string generated file content
      */
     protected function parseTemplate(
         string $class,
@@ -378,6 +396,8 @@ trait GeneratorTrait
 
     /**
      * Builds the file path from the class name.
+     *
+     * @param string $class namespaced classname or namespaced view.
      */
     protected function buildPath(string $class): string
     {

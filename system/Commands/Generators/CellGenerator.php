@@ -13,6 +13,7 @@ namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\GeneratorTrait;
+use Config\Generators;
 
 /**
  * Generates a skeleton Cell and its view.
@@ -78,11 +79,13 @@ class CellGenerator extends BaseCommand
 
         $params = array_merge($params, ['suffix' => null]);
 
+        $this->templatePath  = config(Generators::class)->views[$this->name]['class'];
         $this->template      = 'cell.tpl.php';
         $this->classNameLang = 'CLI.generator.className.cell';
+
         $this->generateClass($params);
 
-        $this->name          = 'make:cell_view';
+        $this->templatePath  = config(Generators::class)->views[$this->name]['view'];
         $this->template      = 'cell_view.tpl.php';
         $this->classNameLang = 'CLI.generator.viewName.cell';
 
