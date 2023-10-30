@@ -16,6 +16,7 @@ namespace CodeIgniter\Config;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use TypeError;
 
 /**
  * @backupGlobals enabled
@@ -112,12 +113,9 @@ final class DotEnvTest extends CIUnitTestCase
 
     public function testLoadsNoneStringFiles(): void
     {
-        $dotenv = new DotEnv($this->fixturesFolder, 2);
-        $dotenv->load();
-        $this->assertSame('bar', getenv('FOO'));
-        $this->assertSame('baz', getenv('BAR'));
-        $this->assertSame('with spaces', getenv('SPACED'));
-        $this->assertSame('', getenv('NULL'));
+        $this->expectException(TypeError::class);
+
+        new DotEnv($this->fixturesFolder, 2);
     }
 
     public function testCommentedLoadsVars(): void
