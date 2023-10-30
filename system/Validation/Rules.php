@@ -443,6 +443,6 @@ class Rules
         ?string $error = null,
         ?string $field = null
     ): bool {
-        return (bool) (array_key_exists($field, $data));
+        return array_key_exists($field, $data);
     }
 }
