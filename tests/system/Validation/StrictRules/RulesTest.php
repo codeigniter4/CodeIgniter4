@@ -55,6 +55,11 @@ final class RulesTest extends TraditionalRulesTest
         yield from [
             [
                 ['foo' => 'permit_empty'],
+                [],
+                true,
+            ],
+            [
+                ['foo' => 'permit_empty'],
                 ['foo' => ''],
                 true,
             ],

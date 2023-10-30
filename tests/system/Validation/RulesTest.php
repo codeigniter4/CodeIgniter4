@@ -63,6 +63,7 @@ class RulesTest extends CIUnitTestCase
     public static function provideRequired(): iterable
     {
         yield from [
+            [[], false],
             [['foo' => null], false],
             [['foo' => 123], true],
             [['foo' => null, 'bar' => 123], false],
@@ -140,6 +141,11 @@ class RulesTest extends CIUnitTestCase
             // If the rule is only `permit_empty`, any value will pass.
             [
                 ['foo' => 'permit_empty|valid_email'],
+                [],
+                true,
+            ],
+            [
+                ['foo' => 'permit_empty|valid_email'],
                 ['foo' => ''],
                 true,
             ],
@@ -203,8 +209,8 @@ class RulesTest extends CIUnitTestCase
                 ['foo' => 'invalid'],
                 false,
             ],
-            // Required has more priority
             [
+                // Required has more priority
                 ['foo' => 'permit_empty|required|valid_email'],
                 ['foo' => ''],
                 false,
@@ -224,8 +230,8 @@ class RulesTest extends CIUnitTestCase
                 ['foo' => false],
                 false,
             ],
-            // This tests will return true because the input data is trimmed
             [
+                // This tests will return true because the input data is trimmed
                 ['foo' => 'permit_empty|required'],
                 ['foo' => '0'],
                 true,
@@ -280,8 +286,8 @@ class RulesTest extends CIUnitTestCase
                 ['foo' => '', 'bar' => 1],
                 true,
             ],
-            // Testing with closure
             [
+                // Testing with closure
                 ['foo' => ['permit_empty', static fn ($value) => true]],
                 ['foo' => ''],
                 true,
