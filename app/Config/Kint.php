@@ -26,8 +26,7 @@ class Kint
     */
 
     /**
-     * @var array<int, ConstructablePluginInterface|string>
-     * @phpstan-var list<class-string<ConstructablePluginInterface>|ConstructablePluginInterface>
+     * @var list<class-string<ConstructablePluginInterface>|ConstructablePluginInterface>
      */
     public $plugins;
 
@@ -45,14 +44,12 @@ class Kint
     public int $richSort     = AbstractRenderer::SORT_FULL;
 
     /**
-     * @var array<string, string>
-     * @phpstan-var array<string, class-string<ValuePluginInterface>>
+     * @var array<string, class-string<ValuePluginInterface>>
      */
     public $richObjectPlugins;
 
     /**
-     * @var array<string, string>
-     * @phpstan-var array<string, class-string<TabPluginInterface>>
+     * @var array<string, class-string<TabPluginInterface>>
      */
     public $richTabPlugins;
 

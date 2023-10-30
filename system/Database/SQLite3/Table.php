@@ -28,8 +28,7 @@ class Table
     /**
      * All of the fields this table represents.
      *
-     * @var array
-     * @phpstan-var array<string, array<string, bool|int|string|null>>
+     * @var array<string, array<string, bool|int|string|null>>
      */
     protected $fields = [];
 

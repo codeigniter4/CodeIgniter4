@@ -94,8 +94,7 @@ class Logger implements LoggerInterface
      * value is an associative array of configuration
      * items.
      *
-     * @var array
-     * @phpstan-var array<class-string, array<string, list<string>|string|int>>
+     * @var array<class-string, array<string, int|list<string>|string>>
      */
     protected $handlerConfig = [];
 

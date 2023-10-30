@@ -80,7 +80,6 @@ class Database extends BaseCollector
      * @internal
      *
      * @return void
-     * @phpstan-return never|void
      */
     public static function collect(Query $query)
     {

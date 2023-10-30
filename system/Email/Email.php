@@ -352,8 +352,7 @@ class Email
      * Character sets valid for 7-bit encoding,
      * excluding language suffix.
      *
-     * @var array<int, string>
-     * @phpstan-var list<string>
+     * @var list<string>
      */
     protected $baseCharsets = [
         'us-ascii',

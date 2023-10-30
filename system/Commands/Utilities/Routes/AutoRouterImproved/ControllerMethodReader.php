@@ -27,8 +27,7 @@ final class ControllerMethodReader
     private string $namespace;
 
     /**
-     * @var array<int, string>
-     * @phpstan-var list<string>
+     * @var list<string>
      */
     private array $httpMethods;
 
@@ -44,10 +43,9 @@ final class ControllerMethodReader
     /**
      * Returns found route info in the controller.
      *
-     * @phpstan-param class-string $class
+     * @param class-string $class
      *
-     * @return array<int, array<string, array|string>>
-     * @phpstan-return list<array<string, string|array>>
+     * @return list<array<string, array|string>>
      */
     public function read(string $class, string $defaultController = 'Home', string $defaultMethod = 'index'): array
     {
@@ -154,7 +152,7 @@ final class ControllerMethodReader
     }
 
     /**
-     * @phpstan-param class-string $classname
+     * @param class-string $classname
      *
      * @return string URI path part from the folder(s) and controller
      */
@@ -179,7 +177,7 @@ final class ControllerMethodReader
     /**
      * Gets a route for the default controller.
      *
-     * @phpstan-return list<array>
+     * @return list<array>
      */
     private function getRouteForDefaultController(
         string $classShortname,

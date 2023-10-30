@@ -63,8 +63,7 @@ abstract class BaseModel
      * The Database connection group that
      * should be instantiated.
      *
-     * @var string|null
-     * @phpstan-var non-empty-string|null
+     * @var non-empty-string|null
      */
     protected $DBGroup;
 

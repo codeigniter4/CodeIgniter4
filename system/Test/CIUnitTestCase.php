@@ -135,8 +135,7 @@ abstract class CIUnitTestCase extends TestCase
      * The name of the database group to connect to.
      * If not present, will use the defaultGroup.
      *
-     * @var string
-     * @phpstan-var non-empty-string
+     * @var non-empty-string
      */
     protected $DBGroup = 'tests';
 

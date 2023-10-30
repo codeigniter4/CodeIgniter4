@@ -19,7 +19,7 @@ class Session extends BaseConfig
      * - `CodeIgniter\Session\Handlers\MemcachedHandler`
      * - `CodeIgniter\Session\Handlers\RedisHandler`
      *
-     * @phpstan-var class-string<BaseHandler>
+     * @var class-string<BaseHandler>
      */
     public string $driver = FileHandler::class;
 

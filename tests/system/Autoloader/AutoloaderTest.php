@@ -35,7 +35,7 @@ final class AutoloaderTest extends CIUnitTestCase
     private Autoloader $loader;
 
     /**
-     * @phpstan-var Closure(string): (false|string)
+     * @var Closure(string): (false|string)
      */
     private Closure $classLoader;
 

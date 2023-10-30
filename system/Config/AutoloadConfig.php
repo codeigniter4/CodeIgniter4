@@ -45,8 +45,7 @@ class AutoloadConfig
      * but this should be done prior to creating any namespaced classes,
      * else you will need to modify all of those classes for this to work.
      *
-     * @var array<string, array<int, string>|string>
-     * @phpstan-var array<string, string|list<string>>
+     * @var array<string, list<string>|string>
      */
     public $psr4 = [];
 
@@ -72,8 +71,7 @@ class AutoloadConfig
      * that will be autoloaded. This can be useful for bootstrap operations
      * or for loading functions.
      *
-     * @var array<int, string>
-     * @phpstan-var list<string>
+     * @var list<string>
      */
     public $files = [];
 
