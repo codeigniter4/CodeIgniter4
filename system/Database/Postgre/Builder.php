@@ -306,7 +306,7 @@ class Builder extends BaseBuilder
     public function join(string $table, $cond, string $type = '', ?bool $escape = null)
     {
         if (! in_array('FULL OUTER', $this->joinTypes, true)) {
-            $this->joinTypes = array_merge($this->joinTypes, ['FULL OUTER']);
+            $this->joinTypes = [...$this->joinTypes, 'FULL OUTER'];
         }
 
         return parent::join($table, $cond, $type, $escape);

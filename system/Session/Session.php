@@ -505,7 +505,7 @@ class Session implements SessionInterface
         }
 
         $userdata = [];
-        $_exclude = array_merge(['__ci_vars'], $this->getFlashKeys(), $this->getTempKeys());
+        $_exclude = ['__ci_vars', ...$this->getFlashKeys(), ...$this->getTempKeys()];
 
         $keys = array_keys($_SESSION);
 
@@ -537,7 +537,7 @@ class Session implements SessionInterface
     public function push(string $key, array $data)
     {
         if ($this->has($key) && is_array($value = $this->get($key))) {
-            $this->set($key, array_merge($value, $data));
+            $this->set($key, [...$value, ...$data]);
         }
     }
 

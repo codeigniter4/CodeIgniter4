@@ -42,7 +42,7 @@ final class RouteCollectionTest extends CIUnitTestCase
             'Config' => APPPATH . 'Config',
             'App'    => APPPATH,
         ];
-        $config = array_merge($config, $defaults);
+        $config = [...$config, ...$defaults];
 
         Services::autoloader()->addNamespace($config);
 

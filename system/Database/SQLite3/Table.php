@@ -271,7 +271,7 @@ class Table
             $fk[] = $obj;
         }
 
-        $this->foreignKeys = array_merge($this->foreignKeys, $fk);
+        $this->foreignKeys = [...$this->foreignKeys, ...$fk];
 
         return $this;
     }

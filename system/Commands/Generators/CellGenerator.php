@@ -77,7 +77,7 @@ class CellGenerator extends BaseCommand
         $this->component = 'Cell';
         $this->directory = 'Cells';
 
-        $params = array_merge($params, ['suffix' => null]);
+        $params = [...$params, 'suffix' => null];
 
         $this->templatePath  = config(Generators::class)->views[$this->name]['class'];
         $this->template      = 'cell.tpl.php';

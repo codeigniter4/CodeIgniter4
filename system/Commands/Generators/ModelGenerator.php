@@ -123,7 +123,7 @@ class ModelGenerator extends BaseCommand
             }
 
             $return = '\\' . trim($return, '\\') . '::class';
-            $this->call('make:entity', array_merge([$baseClass], $this->params));
+            $this->call('make:entity', [$baseClass, ...$this->params]);
         } else {
             $return = "'{$return}'";
         }

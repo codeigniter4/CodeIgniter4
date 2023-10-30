@@ -130,7 +130,7 @@ class LocalizationFinder extends BaseCommand
             $countNewKeys += ArrayHelper::recursiveCount($languageDiff);
 
             if ($this->showNew) {
-                $tableRows = array_merge($this->arrayToTableRows($langFileName, $languageDiff), $tableRows);
+                $tableRows = [...$this->arrayToTableRows($langFileName, $languageDiff), ...$tableRows];
             } else {
                 $newLanguageKeys = array_replace_recursive($foundLanguageKeys[$langFileName], $languageStoredKeys);
 
@@ -303,7 +303,7 @@ class LocalizationFinder extends BaseCommand
 
         foreach ($array as $value) {
             if (is_array($value)) {
-                $rows = array_merge($rows, $this->arrayToTableRows($langFileName, $value));
+                $rows = [...$rows, ...$this->arrayToTableRows($langFileName, $value)];
 
                 continue;
             }

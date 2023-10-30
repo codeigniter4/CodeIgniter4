@@ -91,7 +91,7 @@ class Events
             return false; // @codeCoverageIgnore
         }, $files));
 
-        static::$files = array_unique(array_merge($files, [$events]));
+        static::$files = array_unique([...$files, $events]);
 
         foreach (static::$files as $file) {
             include $file;

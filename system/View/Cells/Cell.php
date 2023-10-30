@@ -75,7 +75,7 @@ class Cell implements Stringable
     {
         $properties = $this->getPublicProperties();
         $properties = $this->includeComputedProperties($properties);
-        $properties = array_merge($properties, $data);
+        $properties = [...$properties, ...$data];
 
         $view = (string) $view;
 

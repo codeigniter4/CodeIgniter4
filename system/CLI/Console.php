@@ -39,7 +39,7 @@ class Console
         Services::routes()->loadRoutes();
 
         $runner  = Services::commands();
-        $params  = array_merge(CLI::getSegments(), CLI::getOptions());
+        $params  = [...CLI::getSegments(), ...CLI::getOptions()];
         $params  = $this->parseParamsForHelpOption($params);
         $command = array_shift($params) ?? 'list';
 

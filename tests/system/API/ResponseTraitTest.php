@@ -81,7 +81,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $headers = [
             'Accept' => 'text/html',
         ];
-        $headers = array_merge($headers, $userHeaders);
+        $headers = [...$headers, ...$userHeaders];
 
         foreach ($headers as $key => $value) {
             $this->request->setHeader($key, $value);

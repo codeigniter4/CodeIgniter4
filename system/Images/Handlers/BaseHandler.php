@@ -413,7 +413,7 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     public function text(string $text, array $options = [])
     {
-        $options                = array_merge($this->textDefaults, $options);
+        $options                = [...$this->textDefaults, ...$options];
         $options['color']       = trim($options['color'], '# ');
         $options['shadowColor'] = trim($options['shadowColor'], '# ');
 

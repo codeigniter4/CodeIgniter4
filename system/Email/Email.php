@@ -2249,7 +2249,7 @@ class Email
     protected function setArchiveValues(): array
     {
         // Get property values and add anything prepped in tmpArchive
-        $this->archive = array_merge(get_object_vars($this), $this->tmpArchive);
+        $this->archive = [...get_object_vars($this), ...$this->tmpArchive];
         unset($this->archive['archive']);
 
         // Clear tmpArchive for next run

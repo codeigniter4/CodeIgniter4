@@ -136,7 +136,7 @@ if (! function_exists('array_flatten_with_dots')) {
             $newKey = $id . $key;
 
             if (is_array($value) && $value !== []) {
-                $flattened = array_merge($flattened, array_flatten_with_dots($value, $newKey . '.'));
+                $flattened = [...$flattened, ...array_flatten_with_dots($value, $newKey . '.')];
             } else {
                 $flattened[$newKey] = $value;
             }

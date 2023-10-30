@@ -1094,7 +1094,7 @@ class Forge
         $this->fields      = $fields;
 
         if ($this->foreignKeys !== []) {
-            $sqls = array_merge($sqls, $this->_processForeignKeys($table, true));
+            $sqls = [...$sqls, ...$this->_processForeignKeys($table, true)];
         }
 
         foreach ($sqls as $sql) {

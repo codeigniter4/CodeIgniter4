@@ -53,7 +53,7 @@ class PredisHandler extends BaseHandler
         $this->prefix = $config->prefix;
 
         if (isset($config->redis)) {
-            $this->config = array_merge($this->config, $config->redis);
+            $this->config = [...$this->config, ...$config->redis];
         }
     }
 

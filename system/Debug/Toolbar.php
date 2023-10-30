@@ -326,7 +326,7 @@ class Toolbar
         }
 
         // Make sure our younger siblings know their relatives, too
-        return array_merge([$element], $this->structureTimelineData($elements));
+        return [$element, ...$this->structureTimelineData($elements)];
     }
 
     /**

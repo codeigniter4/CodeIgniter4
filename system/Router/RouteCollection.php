@@ -390,7 +390,7 @@ class RouteCollection implements RouteCollectionInterface
             $placeholder = [$placeholder => $pattern];
         }
 
-        $this->placeholders = array_merge($this->placeholders, $placeholder);
+        $this->placeholders = [...$this->placeholders, ...$placeholder];
 
         return $this;
     }
@@ -783,7 +783,7 @@ class RouteCollection implements RouteCollectionInterface
             if (isset($options['filter'])) {
                 // Merge filters.
                 $currentFilter     = (array) ($this->currentOptions['filter'] ?? []);
-                $options['filter'] = array_merge($currentFilter, (array) $options['filter']);
+                $options['filter'] = [...$currentFilter, ...(array) $options['filter']];
             }
 
             // Merge options other than filters.
@@ -1147,7 +1147,7 @@ class RouteCollection implements RouteCollectionInterface
             ->render($view, $options);
 
         $routeOptions = $options ?? [];
-        $routeOptions = array_merge($routeOptions, ['view' => $view]);
+        $routeOptions = [...$routeOptions, 'view' => $view];
 
         $this->create(Method::GET, $from, $to, $routeOptions);
 

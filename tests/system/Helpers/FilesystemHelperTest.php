@@ -243,11 +243,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testDeleteFilesLeavesHTFiles(): void
     {
-        $structure = array_merge($this->structure, [
-            '.htaccess'  => 'Deny All',
-            'index.html' => 'foo',
-            'index.php'  => 'blah',
-        ]);
+        $structure = [...$this->structure, '.htaccess' => 'Deny All', 'index.html' => 'foo', 'index.php' => 'blah'];
 
         $vfs = vfsStream::setup('root', null, $structure);
 
@@ -265,11 +261,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testDeleteFilesIncludingHidden(): void
     {
-        $structure = array_merge($this->structure, [
-            '.htaccess'  => 'Deny All',
-            'index.html' => 'foo',
-            'index.php'  => 'blah',
-        ]);
+        $structure = [...$this->structure, '.htaccess' => 'Deny All', 'index.html' => 'foo', 'index.php' => 'blah'];
 
         $vfs = vfsStream::setup('root', null, $structure);
 

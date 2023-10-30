@@ -51,7 +51,7 @@ class MemcachedHandler extends BaseHandler
     {
         $this->prefix = $config->prefix;
 
-        $this->config = array_merge($this->config, $config->memcached);
+        $this->config = [...$this->config, ...$config->memcached];
     }
 
     /**

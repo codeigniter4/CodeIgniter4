@@ -870,8 +870,8 @@ final class IncomingRequestTest extends CIUnitTestCase
     {
         $_GET['get']   = '3';
         $_POST['post'] = '5';
-        $this->assertSame(array_merge($_GET, $_POST), $this->request->getPostGet());
-        $this->assertSame(array_merge($_POST, $_GET), $this->request->getGetPost());
+        $this->assertSame([...$_GET, ...$_POST], $this->request->getPostGet());
+        $this->assertSame([...$_POST, ...$_GET], $this->request->getGetPost());
     }
 
     public function testGetBodyWithFalseBody(): void
