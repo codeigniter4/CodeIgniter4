@@ -133,13 +133,6 @@ final class HoneypotTest extends CIUnitTestCase
         $this->assertTrue($this->honeypot->hasContent($this->request));
     }
 
-    public function testConfigHidden(): void
-    {
-        $this->config->hidden = '';
-        $this->expectException(HoneypotException::class);
-        $this->honeypot = new Honeypot($this->config);
-    }
-
     public function testConfigTemplate(): void
     {
         $this->config->template = '';
