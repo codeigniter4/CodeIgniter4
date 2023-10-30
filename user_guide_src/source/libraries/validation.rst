@@ -271,6 +271,21 @@ for including multiple Rulesets, and collections of rules that can be easily reu
 .. note:: You may never need to use this method, as both the :doc:`Controller </incoming/controllers>` and
     the :doc:`Model </models/model>` provide methods to make validation even easier.
 
+********************
+How Validation Works
+********************
+
+- The validation never changes data to be validated.
+- The validation checks each field in turn according to the Validation Rules you
+  set. If any rule returns false, the check for that field ends there.
+- The Format Rules do not permit empty string. If you want to permit empty string,
+  add the ``permit_empty`` rule.
+- If a field does not exist in the data to be validated, the value is interpreted
+  as ``null``. If you want to check that the field exists, add the ``field_exists``
+  rule.
+
+.. note:: The ``field_exists`` rule can be used since v4.5.0.
+
 ************************
 Setting Validation Rules
 ************************
@@ -894,6 +909,8 @@ differs                 Yes        Fails if field does not differ from the one  
                                    in the parameter.
 exact_length            Yes        Fails if field is not exactly the parameter   ``exact_length[5]`` or ``exact_length[5,8,12]``
                                    value. One or more comma-separated values.
+field_exists            Yes        Fails if field does not exist. (This rule was
+                                   added in v4.5.0.)
 greater_than            Yes        Fails if field is less than or equal to       ``greater_than[8]``
                                    the parameter value or not numeric.
 greater_than_equal_to   Yes        Fails if field is less than the parameter     ``greater_than_equal_to[5]``
