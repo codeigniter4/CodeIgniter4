@@ -851,4 +851,44 @@ class RulesTest extends CIUnitTestCase
             ],
         ];
     }
+
+    /**
+     * @dataProvider provideFieldExists
+     */
+    public function testFieldExists(array $rules, array $data, bool $expected): void
+    {
+        $this->validation->setRules($rules);
+        $this->assertSame($expected, $this->validation->run($data));
+    }
+
+    public static function provideFieldExists(): iterable
+    {
+        yield from [
+            [
+                ['foo' => 'field_exists'],
+                ['foo' => ''],
+                true,
+            ],
+            [
+                ['foo' => 'field_exists'],
+                ['foo' => null],
+                true,
+            ],
+            [
+                ['foo' => 'field_exists'],
+                ['foo' => false],
+                true,
+            ],
+            [
+                ['foo' => 'field_exists'],
+                ['foo' => []],
+                true,
+            ],
+            [
+                ['foo' => 'field_exists'],
+                [],
+                false,
+            ],
+        ];
+    }
 }

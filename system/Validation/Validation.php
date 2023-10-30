@@ -323,8 +323,9 @@ class Validation implements ValidationInterface
                         continue;
                     }
 
-                    $found  = true;
-                    $passed = $param === false
+                    $found = true;
+
+                    $passed = ($param === false && $rule !== 'field_exists')
                         ? $set->{$rule}($value, $error)
                         : $set->{$rule}($value, $param, $data, $error, $field);
 

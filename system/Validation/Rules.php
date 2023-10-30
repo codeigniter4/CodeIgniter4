@@ -427,4 +427,22 @@ class Rules
 
         return true;
     }
+
+    /**
+     * The field exists in $data.
+     *
+     * @param array|bool|float|int|object|string|null $value The field value.
+     * @param string|null                             $param The rule's parameter.
+     * @param array                                   $data  The data to be validated.
+     * @param string|null                             $field The field name.
+     */
+    public function field_exists(
+        $value = null,
+        ?string $param = null,
+        array $data = [],
+        ?string $error = null,
+        ?string $field = null
+    ): bool {
+        return (bool) (array_key_exists($field, $data));
+    }
 }
