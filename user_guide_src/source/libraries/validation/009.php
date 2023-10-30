@@ -6,12 +6,7 @@
  *     'contacts' => [
  *        'name' => 'Joe Smith',
  *         'friends' => [
- *             [
- *                 'name' => 'Fred Flinstone',
- *             ],
- *             [
- *                 'name' => 'Wilma',
- *             ],
+ *             'name' => 'Fred Flinstone',
  *         ]
  *     ]
  * ]
@@ -22,7 +17,7 @@ $validation->setRules([
     'contacts.name' => 'required|max_length[60]',
 ]);
 
-// Fred Flintsone & Wilma
+// Fred Flintsone
 $validation->setRules([
     'contacts.friends.name' => 'required|max_length[60]',
 ]);
