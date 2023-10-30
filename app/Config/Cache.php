@@ -158,8 +158,7 @@ class Cache extends BaseConfig
      * This is an array of cache engine alias' and class names. Only engines
      * that are listed here are allowed to be used.
      *
-     * @var array<string, string>
-     * @phpstan-var array<string, class-string<CacheInterface>>
+     * @var array<string, class-string<CacheInterface>>
      */
     public array $validHandlers = [
         'dummy'     => DummyHandler::class,

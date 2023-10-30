@@ -27,8 +27,7 @@ class App extends BaseConfig
      *      'http://accounts.example.com/':
      *          ['media.example.com', 'accounts.example.com']
      *
-     * @var string[]
-     * @phpstan-var list<string>
+     * @var list<string>
      */
     public array $allowedHostnames = [];
 

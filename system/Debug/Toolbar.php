@@ -435,7 +435,6 @@ class Toolbar
      * @codeCoverageIgnore
      *
      * @return void
-     * @phpstan-return never|void
      */
     public function respond()
     {

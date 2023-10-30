@@ -88,8 +88,7 @@ class BaseBuilder
      * QB keys
      * list of column names.
      *
-     * @var string[]
-     * @phpstan-var list<string>
+     * @var list<string>
      */
     protected $QBKeys = [];
 
@@ -131,8 +130,7 @@ class BaseBuilder
     /**
      * QB data sets
      *
-     * @var array[]|string[]
-     * @phpstan-var array<string, string>|list<list<string|int>>
+     * @var array<string, string>|list<list<int|string>>
      */
     protected $QBSet = [];
 
@@ -164,7 +162,7 @@ class BaseBuilder
      * Holds additional options and data used to render SQL
      * and is reset by resetWrite()
      *
-     * @phpstan-var array{
+     * @var array{
      *   updateFieldsAdditional?: array,
      *   tableIdentity?: string,
      *   updateFields?: array,
@@ -173,7 +171,6 @@ class BaseBuilder
      *   sql?: string,
      *   alias?: string
      * }
-     * @var array
      */
     protected $QBOptions;
 
@@ -1967,11 +1964,9 @@ class BaseBuilder
      *
      * @used-by batchExecute
      *
-     * @param string   $table Protected table name
-     * @param string[] $keys  QBKeys
-     * @phpstan-param list<string> $keys QBKeys
-     * @param array<array<int|string>> $values QBSet
-     * @phpstan-param list<list<string|int>> $values QBSet
+     * @param string                 $table  Protected table name
+     * @param list<string>           $keys   QBKeys
+     * @param list<list<int|string>> $values QBSet
      */
     protected function _upsertBatch(string $table, array $keys, array $values): string
     {
@@ -2196,11 +2191,9 @@ class BaseBuilder
      *
      * @used-by batchExecute
      *
-     * @param string   $table Protected table name
-     * @param string[] $keys  QBKeys
-     * @phpstan-param list<string> $keys QBKeys
-     * @param array<array<int|string>> $values QBSet
-     * @phpstan-param list<list<string|int>> $values QBSet
+     * @param string                 $table  Protected table name
+     * @param list<string>           $keys   QBKeys
+     * @param list<list<int|string>> $values QBSet
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
@@ -2566,11 +2559,9 @@ class BaseBuilder
      *
      * @used-by batchExecute
      *
-     * @param string   $table Protected table name
-     * @param string[] $keys  QBKeys
-     * @phpstan-param list<string> $keys QBKeys
-     * @param array[] $values QBSet
-     * @phpstan-param list<list<string|int>> $values QBSet
+     * @param string                 $table  Protected table name
+     * @param list<string>           $keys   QBKeys
+     * @param list<list<int|string>> $values QBSet
      */
     protected function _updateBatch(string $table, array $keys, array $values): string
     {
@@ -2830,11 +2821,9 @@ class BaseBuilder
      *
      * @used-by batchExecute
      *
-     * @param string   $table Protected table name
-     * @param string[] $keys  QBKeys
-     * @phpstan-param list<string> $keys QBKeys
-     * @param array<array<int|string>> $values QBSet
-     * @phpstan-param list<list<string|int>> $values QBSet
+     * @param string       $table Protected table name
+     * @param list<string> $keys  QBKeys
+     * @paramst<string|int>> $values QBSet
      */
     protected function _deleteBatch(string $table, array $keys, array $values): string
     {
@@ -3412,8 +3401,7 @@ class BaseBuilder
     /**
      * Returns the SQL string operator from where key
      *
-     * @return array<int, string>|false
-     * @phpstan-return list<string>|false
+     * @return false|list<string>
      */
     private function getOperatorFromWhereKey(string $whereKey)
     {
