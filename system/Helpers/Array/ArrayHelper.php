@@ -133,8 +133,12 @@ final class ArrayHelper
      *
      * @used-by groupBy()
      */
-    private static function arrayAttachIndexedValue(array $result, array $row, array $indexes, bool $includeEmpty): array
-    {
+    private static function arrayAttachIndexedValue(
+        array $result,
+        array $row,
+        array $indexes,
+        bool $includeEmpty
+    ): array {
         if (($index = array_shift($indexes)) === null) {
             $result[] = $row;
 
