@@ -2293,7 +2293,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Helpers/array_helper.php',
 ];
 $ignoreErrors[] = [
