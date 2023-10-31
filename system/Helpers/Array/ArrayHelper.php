@@ -85,7 +85,7 @@ final class ArrayHelper
 
         // If this is the last index, make sure to return it now,
         // and not try to recurse through things.
-        if (empty($indexes)) {
+        if ($indexes === []) {
             return $array[$currentIndex];
         }
 
