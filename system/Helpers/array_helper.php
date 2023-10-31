@@ -22,7 +22,7 @@ if (! function_exists('dot_array_search')) {
      */
     function dot_array_search(string $index, array $array)
     {
-        return ArrayHelper::dotArraySearch($index, $array);
+        return ArrayHelper::dotSearch($index, $array);
     }
 }
 
@@ -158,6 +158,6 @@ if (! function_exists('array_group_by')) {
      */
     function array_group_by(array $array, array $indexes, bool $includeEmpty = false): array
     {
-        return ArrayHelper::arrayGroupBy($array, $indexes, $includeEmpty);
+        return ArrayHelper::groupBy($array, $indexes, $includeEmpty);
     }
 }

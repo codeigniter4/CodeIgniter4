@@ -22,7 +22,7 @@ final class ArrayHelper
      *
      * @return array|bool|int|object|string|null
      */
-    public static function dotArraySearch(string $index, array $array)
+    public static function dotSearch(string $index, array $array)
     {
         // See https://regex101.com/r/44Ipql/1
         $segments = preg_split(
@@ -107,7 +107,7 @@ final class ArrayHelper
      *
      * @return array Result array where rows are grouped together by indexes values.
      */
-    public static function arrayGroupBy(array $array, array $indexes, bool $includeEmpty = false): array
+    public static function groupBy(array $array, array $indexes, bool $includeEmpty = false): array
     {
         if ($indexes === []) {
             return $array;
