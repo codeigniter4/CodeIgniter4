@@ -12,7 +12,7 @@
 namespace CodeIgniter\Helpers\Array;
 
 /**
- * @see \CodeIgniter\Helpers\Array\ArrayHelperTest
+ * @see \CodeIgniter\Helpers\Array\ArrayHelperRecursiveDiffTest
  */
 final class ArrayHelper
 {

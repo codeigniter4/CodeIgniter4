@@ -18,7 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  *
  * @internal
  */
-final class ArrayHelperTest extends CIUnitTestCase
+final class ArrayHelperRecursiveDiffTest extends CIUnitTestCase
 {
     private array $compareWith;
 
