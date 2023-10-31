@@ -12,6 +12,11 @@
 namespace CodeIgniter\Helpers\Array;
 
 /**
+ * @interal This is internal implementation for the framework.
+ *
+ * If there are any methods that should be provided, make them
+ * public APIs via helper functions.
+ *
  * @see \CodeIgniter\Helpers\Array\ArrayHelperRecursiveDiffTest
  */
 final class ArrayHelper
