@@ -29,6 +29,8 @@ final class ArrayHelper
      *
      * @used-by dot_array_search()
      *
+     * @param string $index The index as dot array syntax.
+     *
      * @return array|bool|int|object|string|null
      */
     public static function dotSearch(string $index, array $array)
@@ -36,7 +38,12 @@ final class ArrayHelper
         return self::arraySearchDot(self::convertToArray($index), $array);
     }
 
-    private static function convertToArray(string $index)
+    /**
+     * @param string $index The index as dot array syntax.
+     *
+     * @return list<string> The index as an array.
+     */
+    private static function convertToArray(string $index): array
     {
         // See https://regex101.com/r/44Ipql/1
         $segments = preg_split(
