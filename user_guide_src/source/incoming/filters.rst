@@ -119,9 +119,12 @@ You should define as many aliases as you need.
 $globals
 ========
 
-The second section allows you to define any filters that should be applied to every request made by the framework.
+The second section allows you to define any filters that should be applied to every valid request made by the framework.
+
 You should take care with how many you use here, since it could have performance implications to have too many
-run on every request. Filters can be specified by adding their alias to either the before or after array:
+run on every request.
+
+Filters can be specified by adding their alias to either the ``before`` or ``after`` array:
 
 .. literalinclude:: filters/005.php
 
@@ -130,14 +133,18 @@ Except for a Few URIs
 
 There are times where you want to apply a filter to almost every request, but have a few that should be left alone.
 One common example is if you need to exclude a few URI's from the CSRF protection filter to allow requests from
-third-party websites to hit one or two specific URI's, while keeping the rest of them protected. To do this, add
+third-party websites to hit one or two specific URI's, while keeping the rest of them protected.
+
+To do this, add
 an array with the ``except`` key and a URI path (relative to BaseURL) to match as the value alongside the alias:
 
 .. literalinclude:: filters/006.php
 
 Any place you can use a URI path (relative to BaseURL) in the filter settings, you can use a regular expression or, like in this example, use
 an asterisk (``*``) for a wildcard that will match all characters after that. In this example, any URI path starting with ``api/``
-would be exempted from CSRF protection, but the site's forms would all be protected. If you need to specify multiple
+would be exempted from CSRF protection, but the site's forms would all be protected.
+
+If you need to specify multiple
 URI paths, you can use an array of URI path patterns:
 
 .. literalinclude:: filters/007.php
