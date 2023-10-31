@@ -830,7 +830,8 @@ alpha_numeric_punct     No         Fails if field contains anything other than
                                    alphanumeric, space, or this limited set of
                                    punctuation characters: ``~`` (tilde),
                                    ``!`` (exclamation), ``#`` (number),
-                                   ``$`` (dollar), ``% (percent), & (ampersand),
+                                   ``$`` (dollar), ``%`` (percent),
+                                   ``&`` (ampersand),
                                    ``*`` (asterisk), ``-`` (dash),
                                    ``_`` (underscore), ``+`` (plus),
                                    ``=`` (equals), ``|`` (vertical bar),
