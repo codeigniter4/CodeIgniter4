@@ -168,12 +168,21 @@ class Validation implements ValidationInterface
             }
 
             if (strpos($field, '*') !== false) {
-                $values = array_filter(array_flatten_with_dots($data), static fn ($key) => preg_match(
-                    '/^'
-                    . str_replace(['\.\*', '\*\.'], ['\..+', '.+\.'], preg_quote($field, '/'))
-                    . '$/',
-                    $key
-                ), ARRAY_FILTER_USE_KEY);
+                $flattenedArray = array_flatten_with_dots($data);
+
+                $pattern = '/\A'
+                    . str_replace(
+                        ['\.\*', '\*\.'],
+                        ['\.[^.]+', '[^.]+\.'],
+                        preg_quote($field, '/')
+                    )
+                    . '\z/';
+                $values = array_filter(
+                    $flattenedArray,
+                    static fn ($key) => preg_match($pattern, $key),
+                    ARRAY_FILTER_USE_KEY
+                );
+
                 // if keys not found
                 $values = $values ?: [$field => null];
             } else {
@@ -814,7 +823,13 @@ class Validation implements ValidationInterface
      */
     public function hasError(string $field): bool
     {
-        $pattern = '/^' . str_replace('\.\*', '\..+', preg_quote($field, '/')) . '$/';
+        $pattern = '/\A'
+            . str_replace(
+                ['\.\*', '\*\.'],
+                ['\.[^.]+', '[^.]+\.'],
+                preg_quote($field, '/')
+            )
+            . '\z/';
 
         return (bool) preg_grep($pattern, array_keys($this->getErrors()));
     }
@@ -829,10 +844,18 @@ class Validation implements ValidationInterface
             $field = array_key_first($this->rules);
         }
 
-        $errors = array_filter($this->getErrors(), static fn ($key) => preg_match(
-            '/^' . str_replace(['\.\*', '\*\.'], ['\..+', '.+\.'], preg_quote($field, '/')) . '$/',
-            $key
-        ), ARRAY_FILTER_USE_KEY);
+        $pattern = '/\A'
+            . str_replace(
+                ['\.\*', '\*\.'],
+                ['\.[^.]+', '[^.]+\.'],
+                preg_quote($field, '/')
+            )
+            . '\z/';
+        $errors = array_filter(
+            $this->getErrors(),
+            static fn ($key) => preg_match($pattern, $key),
+            ARRAY_FILTER_USE_KEY
+        );
 
         return $errors === [] ? '' : implode("\n", $errors);
     }
