@@ -17,6 +17,149 @@ namespace CodeIgniter\Helpers\Array;
 final class ArrayHelper
 {
     /**
+     * Searches an array through dot syntax. Supports
+     * wildcard searches, like foo.*.bar
+     *
+     * @return array|bool|int|object|string|null
+     */
+    public static function dotArraySearch(string $index, array $array)
+    {
+        // See https://regex101.com/r/44Ipql/1
+        $segments = preg_split(
+            '/(?<!\\\\)\./',
+            rtrim($index, '* '),
+            0,
+            PREG_SPLIT_NO_EMPTY
+        );
+
+        $segments = array_map(static fn ($key) => str_replace('\.', '.', $key), $segments);
+
+        return self::arraySearchDot($segments, $array);
+    }
+
+    /**
+     * Used by `dotArraySearch()` to recursively search the
+     * array with wildcards.
+     *
+     * @return array|bool|float|int|object|string|null
+     */
+    private static function arraySearchDot(array $indexes, array $array)
+    {
+        // If index is empty, returns null.
+        if ($indexes === []) {
+            return null;
+        }
+
+        // Grab the current index
+        $currentIndex = array_shift($indexes);
+
+        if (! isset($array[$currentIndex]) && $currentIndex !== '*') {
+            return null;
+        }
+
+        // Handle Wildcard (*)
+        if ($currentIndex === '*') {
+            $answer = [];
+
+            foreach ($array as $value) {
+                if (! is_array($value)) {
+                    return null;
+                }
+
+                $answer[] = self::arraySearchDot($indexes, $value);
+            }
+
+            $answer = array_filter($answer, static fn ($value) => $value !== null);
+
+            if ($answer !== []) {
+                if (count($answer) === 1) {
+                    // If array only has one element, we return that element for BC.
+                    return current($answer);
+                }
+
+                return $answer;
+            }
+
+            return null;
+        }
+
+        // If this is the last index, make sure to return it now,
+        // and not try to recurse through things.
+        if (empty($indexes)) {
+            return $array[$currentIndex];
+        }
+
+        // Do we need to recursively search this value?
+        if (is_array($array[$currentIndex]) && $array[$currentIndex] !== []) {
+            return self::arraySearchDot($indexes, $array[$currentIndex]);
+        }
+
+        // Otherwise, not found.
+        return null;
+    }
+
+    /**
+     * Groups all rows by their index values. Result's depth equals number of indexes
+     *
+     * @param array $array        Data array (i.e. from query result)
+     * @param array $indexes      Indexes to group by. Dot syntax used. Returns $array if empty
+     * @param bool  $includeEmpty If true, null and '' are also added as valid keys to group
+     *
+     * @return array Result array where rows are grouped together by indexes values.
+     */
+    public static function arrayGroupBy(array $array, array $indexes, bool $includeEmpty = false): array
+    {
+        if ($indexes === []) {
+            return $array;
+        }
+
+        $result = [];
+
+        foreach ($array as $row) {
+            $result = self::arrayAttachIndexedValue($result, $row, $indexes, $includeEmpty);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Used by `arrayGroupBy()` to recursively attach $row to the $indexes path of values found by
+     * `dot_array_search()`
+     *
+     * @internal This should not be used on its own
+     */
+    private static function arrayAttachIndexedValue(array $result, array $row, array $indexes, bool $includeEmpty): array
+    {
+        if (($index = array_shift($indexes)) === null) {
+            $result[] = $row;
+
+            return $result;
+        }
+
+        $value = dot_array_search($index, $row);
+
+        if (! is_scalar($value)) {
+            $value = '';
+        }
+
+        if (is_bool($value)) {
+            $value = (int) $value;
+        }
+
+        if (! $includeEmpty && $value === '') {
+            return $result;
+        }
+
+        if (! array_key_exists($value, $result)) {
+            $result[$value] = [];
+        }
+
+        $result[$value] = self::arrayAttachIndexedValue($result[$value], $row, $indexes, $includeEmpty);
+
+        return $result;
+    }
+
+    /**
      * Compare recursively two associative arrays and return difference as new array.
      * Returns keys that exist in `$original` but not in `$compareWith`.
      */
