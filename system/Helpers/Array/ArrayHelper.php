@@ -17,8 +17,10 @@ namespace CodeIgniter\Helpers\Array;
 final class ArrayHelper
 {
     /**
-     * Searches an array through dot syntax. Supports
-     * wildcard searches, like foo.*.bar
+     * Searches an array through dot syntax. Supports wildcard searches,
+     * like `foo.*.bar`.
+     *
+     * @used-by dot_array_search()
      *
      * @return array|bool|int|object|string|null
      */
@@ -38,8 +40,9 @@ final class ArrayHelper
     }
 
     /**
-     * Used by `dotArraySearch()` to recursively search the
-     * array with wildcards.
+     * Recursively search the array with wildcards.
+     *
+     * @used-by dotSearch()
      *
      * @return array|bool|float|int|object|string|null
      */
@@ -101,6 +104,8 @@ final class ArrayHelper
     /**
      * Groups all rows by their index values. Result's depth equals number of indexes
      *
+     * @used-by array_group_by()
+     *
      * @param array $array        Data array (i.e. from query result)
      * @param array $indexes      Indexes to group by. Dot syntax used. Returns $array if empty
      * @param bool  $includeEmpty If true, null and '' are also added as valid keys to group
@@ -123,10 +128,10 @@ final class ArrayHelper
     }
 
     /**
-     * Used by `arrayGroupBy()` to recursively attach $row to the $indexes path of values found by
-     * `dot_array_search()`
+     * Recursively attach $row to the $indexes path of values found by
+     * `dot_array_search()`.
      *
-     * @internal This should not be used on its own
+     * @used-by groupBy()
      */
     private static function arrayAttachIndexedValue(array $result, array $row, array $indexes, bool $includeEmpty): array
     {
