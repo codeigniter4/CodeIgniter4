@@ -13,7 +13,7 @@ namespace CodeIgniter\Commands\Translation;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\Commands\Translation\LocalizationFinder\ArrayHelper;
+use CodeIgniter\Helpers\Array\ArrayHelper;
 use Config\App;
 use Locale;
 use RecursiveDirectoryIterator;

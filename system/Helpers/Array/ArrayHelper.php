@@ -9,10 +9,10 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Commands\Translation\LocalizationFinder;
+namespace CodeIgniter\Helpers\Array;
 
 /**
- * @see \CodeIgniter\Commands\Translation\LocalizationFinder\ArrayHelperTest
+ * @see \CodeIgniter\Helpers\Array\ArrayHelperTest
  */
 class ArrayHelper
 {
