@@ -14,7 +14,7 @@ namespace CodeIgniter\Helpers\Array;
 /**
  * @see \CodeIgniter\Helpers\Array\ArrayHelperTest
  */
-class ArrayHelper
+final class ArrayHelper
 {
     /**
      * Compare recursively two associative arrays and return difference as new array.
