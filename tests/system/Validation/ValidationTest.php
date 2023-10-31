@@ -1631,4 +1631,50 @@ class ValidationTest extends CIUnitTestCase
             $this->validation->getError('a.1.c')
         );
     }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/8128
+     */
+    public function testRuleWithAsteriskToMultiDimensionalArray(): void
+    {
+        $data = [
+            'contacts' => [
+                'name' => 'Joe Smith',
+                'just' => [
+                    'friends' => [
+                        [
+                            'name' => 'Fred Flinstone',
+                        ],
+                        [
+                            'name' => 'Wilma',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->validation->setRules(
+            ['contacts.just.friends.*.name' => 'required|max_length[1]']
+        );
+        $this->assertFalse($this->validation->run($data));
+        $this->assertSame(
+            [
+                'contacts.just.friends.0.name' => 'The contacts.just.friends.*.name field cannot exceed 1 characters in length.',
+                'contacts.just.friends.1.name' => 'The contacts.just.friends.*.name field cannot exceed 1 characters in length.',
+            ],
+            $this->validation->getErrors()
+        );
+
+        $this->validation->reset();
+        $this->validation->setRules(
+            ['contacts.*.name' => 'required|max_length[1]']
+        );
+        $this->assertFalse($this->validation->run($data));
+        $this->assertSame(
+            // The data for `contacts.*.name` does not exist. So it is interpreted
+            // as `null`, and this error message returns.
+            ['contacts.*.name' => 'The contacts.*.name field is required.'],
+            $this->validation->getErrors()
+        );
+    }
 }
