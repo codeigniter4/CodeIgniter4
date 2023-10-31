@@ -31,6 +31,11 @@ final class ArrayHelper
      */
     public static function dotSearch(string $index, array $array)
     {
+        return self::arraySearchDot(self::convertToArray($index), $array);
+    }
+
+    private static function convertToArray(string $index)
+    {
         // See https://regex101.com/r/44Ipql/1
         $segments = preg_split(
             '/(?<!\\\\)\./',
@@ -39,9 +44,10 @@ final class ArrayHelper
             PREG_SPLIT_NO_EMPTY
         );
 
-        $segments = array_map(static fn ($key) => str_replace('\.', '.', $key), $segments);
-
-        return self::arraySearchDot($segments, $array);
+        return array_map(
+            static fn ($key) => str_replace('\.', '.', $key),
+            $segments
+        );
     }
 
     /**
