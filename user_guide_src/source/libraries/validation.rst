@@ -314,6 +314,8 @@ To give a labeled error message you can set up as:
 .. note:: ``setRules()`` will overwrite any rules that were set previously. To add more than one
     rule to an existing set of rules, use ``setRule()`` multiple times.
 
+.. _validation-dot-array-syntax:
+
 Setting Rules for Array Data
 ============================
 
@@ -327,6 +329,10 @@ You can use the ``*`` wildcard symbol to match any one level of the array:
 
 .. literalinclude:: validation/010.php
    :lines: 2-
+
+.. note:: Prior to v4.4.4, due to a bug, the wildcard ``*`` validated data in incorrect
+    dimensions. See :ref:`Upgrading <upgrade-444-validation-with-dot-array-syntax>`
+    for details.
 
 "dot array syntax" can also be useful when you have single dimension array data.
 For example, data returned by multi select dropdown:

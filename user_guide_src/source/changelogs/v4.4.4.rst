@@ -14,6 +14,13 @@ Release Date: Unreleased
 BREAKING
 ********
 
+Validation with Dot Array Syntax
+================================
+
+A validation rule with the wildcard ``*`` now validates only data in correct
+dimensions as "dot array syntax".
+See :ref:`Upgrading <upgrade-444-validation-with-dot-array-syntax>` for details.
+
 ***************
 Message Changes
 ***************

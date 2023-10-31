@@ -20,6 +20,25 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+.. _upgrade-444-validation-with-dot-array-syntax:
+
+Validation with Dot Array Syntax
+================================
+
+If you are using :ref:`dot array syntax <validation-dot-array-syntax>` in validation
+rules, a bug where ``*`` would validate data in incorrect dimensions has been fixed.
+
+In previous versions, the rule key ``contacts.*.name`` captured data with any
+level like ``contacts.*.name``, ``contacts.*.*.name``, ``contacts.*.*.*.name``,
+etc., incorrectly.
+
+The following code explains details:
+
+.. literalinclude:: upgrade_444/001.php
+   :lines: 2-
+
+If you have code that depends on the bug, fix the the rule key.
+
 *********************
 Breaking Enhancements
 *********************
