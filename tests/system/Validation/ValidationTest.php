@@ -1228,17 +1228,17 @@ class ValidationTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideDotNotationOnIfExistRule
+     * @dataProvider provideIfExistRuleWithAsterisk
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4521
      */
-    public function testDotNotationOnIfExistRule(bool $expected, array $rules, array $data): void
+    public function testIfExistRuleWithAsterisk(bool $expected, array $rules, array $data): void
     {
         $actual = $this->validation->setRules($rules)->run($data);
         $this->assertSame($expected, $actual);
     }
 
-    public static function provideDotNotationOnIfExistRule(): iterable
+    public static function provideIfExistRuleWithAsterisk(): iterable
     {
         yield 'dot-on-end-fail' => [
             false,
@@ -1613,7 +1613,7 @@ class ValidationTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5942
      */
-    public function testRequireWithoutWithWildCard(): void
+    public function testRequireWithoutWithAsterisk(): void
     {
         $data = [
             'a' => [
