@@ -26,8 +26,8 @@ Calling a View Cell
 
 No matter which type of View Cell you are using, you can call it from any view by using the ``view_cell()`` helper function.
 
-The first parameter is (1) *the name of the class and method* (Simple Cell) or (2) *the name of the class* (Controlled Cell) to call,
-and the second parameter is an array of parameters to pass to the method:
+The first parameter is (1) *the name of the class and method* (Simple Cell) or (2) *the name of the class and optional method* (Controlled Cell) to call,
+and the second parameter is an array or string of parameters to pass to the method:
 
 .. literalinclude:: view_cells/001.php
 
