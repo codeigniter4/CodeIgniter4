@@ -4,11 +4,19 @@ View Cells
 
 Many applications have small view fragments that can be repeated from page to page, or in different places on the pages. These are often help boxes, navigation controls, ads, login forms, etc. CodeIgniter lets you encapsulate the logic for these presentation blocks within View Cells. They are basically mini-views that can be included in other views. They can have logic built in to handle any cell-specific display logic. They can be used to make your views more readable and maintainable by separating the logic for each cell into its own class.
 
-CodeIgniter supports two types of View Cells: simple and controlled. Simple View Cells can be generated from any class and method of your choice and does not have to follow any rules, except that it must return a string. Controlled View Cells must be generated from a class that extends ``Codeigniter\View\Cells\Cell`` class which provides additional capability making your View Cells more flexible and faster to use.
-
 .. contents::
     :local:
     :depth: 2
+
+***************************
+Simple and Controlled Cells
+***************************
+
+CodeIgniter supports two types of View Cells: simple and controlled.
+
+**Simple View Cells** can be generated from any class and method of your choice and does not have to follow any rules, except that it must return a string.
+
+**Controlled View Cells** must be generated from a class that extends ``Codeigniter\View\Cells\Cell`` class which provides additional capability making your View Cells more flexible and faster to use.
 
 .. _app-cells:
 
