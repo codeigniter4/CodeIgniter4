@@ -17,7 +17,7 @@ Using MockInputOutput
 MockInputOutput
 ===============
 
-**MockInputOutput** provides a esay way to write tests for commands that require
+**MockInputOutput** provides an easy way to write tests for commands that require
 user input, such as ``CLI::prompt()``, ``CLI::wait()``, and ``CLI::input()``.
 
 You can replace the ``InputOutput`` class with ``MockInputOutput`` during test
