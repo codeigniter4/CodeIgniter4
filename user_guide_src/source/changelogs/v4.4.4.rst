@@ -21,6 +21,12 @@ A validation rule with the wildcard ``*`` now validates only data in correct
 dimensions as "dot array syntax".
 See :ref:`Upgrading <upgrade-444-validation-with-dot-array-syntax>` for details.
 
+Validation rules matches and differs
+====================================
+
+Bugs have been fixed in the case where ``matches`` and ``differs`` in the Strict
+and Traditional rules validate data of non-string types.
+
 ***************
 Message Changes
 ***************
