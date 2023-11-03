@@ -248,6 +248,8 @@ Deprecations
 
 - **CodeIgniter:** The ``determinePath()`` method has been deprecated. No longer
   used.
+- **Response:** The constructor parameter ``$config`` has been deprecated. No
+  longer used.
 
 Bugs Fixed
 **********
