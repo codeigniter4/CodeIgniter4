@@ -79,6 +79,6 @@ class SeederGenerator extends BaseCommand
         $this->template  = 'seeder.tpl.php';
 
         $this->classNameLang = 'CLI.generator.className.seeder';
-        $this->execute($params);
+        $this->generateClass($params);
     }
 }

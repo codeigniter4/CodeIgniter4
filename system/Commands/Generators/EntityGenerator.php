@@ -79,6 +79,6 @@ class EntityGenerator extends BaseCommand
         $this->template  = 'entity.tpl.php';
 
         $this->classNameLang = 'CLI.generator.className.entity';
-        $this->execute($params);
+        $this->generateClass($params);
     }
 }
