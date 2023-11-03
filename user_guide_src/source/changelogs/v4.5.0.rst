@@ -136,6 +136,22 @@ Model
 - ``Model::idValue()``
 - ``Model::classToArray()``
 
+Response
+--------
+
+- The visibility of the deprecated property ``ResponseTrait::$CSP`` has been
+  changed to protected.
+- The following deprecated properties have been removed.
+
+    - ``ResponseTrait::$CSPEnabled``
+    - ``ResponseTrait::$cookiePrefix``
+    - ``ResponseTrait::$cookieDomain``
+    - ``ResponseTrait::$cookiePath``
+    - ``ResponseTrait::$cookieSecure``
+    - ``ResponseTrait::$cookieHTTPOnly``
+    - ``ResponseTrait::$cookieSameSite``
+    - ``ResponseTrait::$cookies``
+
 CodeIgniter
 -----------
 
