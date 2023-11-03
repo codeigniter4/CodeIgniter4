@@ -439,13 +439,13 @@ abstract class CIUnitTestCase extends TestCase
      * where the result is close but not exactly equal to the
      * expected time, for reasons beyond our control.
      *
-     * @param mixed $actual
+     * @param float|int $actual
      *
      * @throws Exception
      */
     public function assertCloseEnough(int $expected, $actual, string $message = '', int $tolerance = 1)
     {
-        $difference = abs($expected - (int) floor($actual));
+        $difference = abs($expected - (int) floor((float) $actual));
 
         $this->assertLessThanOrEqual($tolerance, $difference, $message);
     }

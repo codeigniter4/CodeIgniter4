@@ -115,7 +115,7 @@ class MigrateStatus extends BaseCommand
             ksort($migrations);
 
             foreach ($migrations as $uid => $migration) {
-                $migrations[$uid]->name = mb_substr($migration->name, mb_strpos($migration->name, $uid . '_'));
+                $migrations[$uid]->name = mb_substr($migration->name, (int) mb_strpos($migration->name, $uid . '_'));
 
                 $date  = '---';
                 $group = '---';
