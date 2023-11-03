@@ -127,7 +127,7 @@ class RedisHandler extends BaseHandler
         if (
             ! $redis->connect(
                 $this->savePath['protocol'] . '://' . $this->savePath['host'],
-                ($this->savePath['host'][0] === '/' ? 0 : (int) $this->savePath['port']),
+                ($this->savePath['host'][0] === '/') ? 0 : (int) $this->savePath['port'],
                 $this->savePath['timeout']
             )
         ) {
