@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Commands\Translation\LocalizationFinder;
+namespace CodeIgniter\Helpers\Array;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
@@ -18,7 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  *
  * @internal
  */
-final class ArrayHelperTest extends CIUnitTestCase
+final class ArrayHelperRecursiveDiffTest extends CIUnitTestCase
 {
     private array $compareWith;
 
