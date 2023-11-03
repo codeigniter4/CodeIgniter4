@@ -752,7 +752,7 @@ class MigrationRunner
             ->get()
             ->getResultObject();
 
-        return count($migration) ? $migration[0]->version : 0;
+        return count($migration) ? $migration[0]->version : '0';
     }
 
     /**
