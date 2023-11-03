@@ -36,6 +36,8 @@ class PageCache implements FilterInterface
      * Checks page cache and return if found.
      *
      * @param array|null $arguments
+     *
+     * @return ResponseInterface|void
      */
     public function before(RequestInterface $request, $arguments = null)
     {
