@@ -715,14 +715,14 @@ rule to an existing set of rules, use <code class="docutils literal notranslate"
 </section>
 </section>
 <section id="setting-rules-for-array-data">
-<h3><a class="toc-backref" href="#id19">Setting Rules for Array Data</a><a class="headerlink" href="#setting-rules-for-array-data" title="Permalink to this headline"></a></h3>
+<span id="validation-dot-array-syntax"></span><h3><a class="toc-backref" href="#id19">Setting Rules for Array Data</a><a class="headerlink" href="#setting-rules-for-array-data" title="Permalink to this headline"></a></h3>
 <p>If your data is in a nested associative array, you can use “dot array syntax” to
 easily validate your data:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm"> * The data to test:</span>
 <span class="cm"> * [</span>
 <span class="cm"> *     &#39;contacts&#39; =&gt; [</span>
-<span class="cm"> *        &#39;name&#39; =&gt; &#39;Joe Smith&#39;,</span>
+<span class="cm"> *         &#39;name&#39; =&gt; &#39;Joe Smith&#39;,</span>
 <span class="cm"> *         &#39;friends&#39; =&gt; [</span>
 <span class="cm"> *             [</span>
 <span class="cm"> *                 &#39;name&#39; =&gt; &#39;Fred Flinstone&#39;,</span>
@@ -739,19 +739,20 @@ easily validate your data:</p>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
     <span class="s1">&#39;contacts.name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[60]&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
-
-<span class="c1">// Fred Flintsone &amp; Wilma</span>
-<span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
-    <span class="s1">&#39;contacts.friends.name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[60]&#39;</span><span class="p">,</span>
-<span class="p">]);</span>
 </pre></div>
 </div>
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">*</span></code> wildcard symbol to match any one level of the array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Fred Flintsone &amp; Wilma</span>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
-    <span class="s1">&#39;contacts.*.name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[60]&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;contacts.friends.*.name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[60]&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to v4.4.4, due to a bug, the wildcard <code class="docutils literal notranslate"><span class="pre">*</span></code> validated data in incorrect
+dimensions. See <a class="reference internal" href="../installation/upgrade_444.html#upgrade-444-validation-with-dot-array-syntax"><span class="std std-ref">Upgrading</span></a>
+for details.</p>
 </div>
 <p>“dot array syntax” can also be useful when you have single dimension array data.
 For example, data returned by multi select dropdown:</p>
@@ -1196,7 +1197,7 @@ We can simply use the language lines defined in this file, like this:</p>
 </pre></div>
 </div>
 <p>If no errors exist, an empty array will be returned.</p>
-<p>When using a wildcard, the error will point to a specific field, replacing the asterisk with the appropriate key/keys:</p>
+<p>When using a wildcard (<code class="docutils literal notranslate"><span class="pre">*</span></code>), the error will point to a specific field, replacing the asterisk with the appropriate key/keys:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// for data</span>
 <span class="s1">&#39;contacts&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
     <span class="s1">&#39;friends&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
@@ -1210,10 +1211,10 @@ We can simply use the language lines defined in this file, like this:</p>
 <span class="p">]</span>
 
 <span class="c1">// rule</span>
-<span class="s1">&#39;contacts.*.name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span>
+<span class="s1">&#39;contacts.friends.*.name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span>
 
 <span class="c1">// error will be</span>
-<span class="s1">&#39;contacts.friends.1.name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The contacts.*.name field is required.&#39;</span>
+<span class="s1">&#39;contacts.friends.1.name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The contacts.friends.*.name field is required.&#39;</span>
 </pre></div>
 </div>
 </section>
@@ -1610,8 +1611,9 @@ alphanumeric or space characters.</p></td>
 alphanumeric, space, or this limited set of
 punctuation characters: <code class="docutils literal notranslate"><span class="pre">~</span></code> (tilde),
 <code class="docutils literal notranslate"><span class="pre">!</span></code> (exclamation), <code class="docutils literal notranslate"><span class="pre">#</span></code> (number),
-<code class="docutils literal notranslate"><span class="pre">$</span></code> (dollar), <code class="docutils literal notranslate"><span class="pre">%</span> <span class="pre">(percent),</span> <span class="pre">&amp;</span> <span class="pre">(ampersand),</span>
-<span class="pre">``*</span></code> (asterisk), <code class="docutils literal notranslate"><span class="pre">-</span></code> (dash),
+<code class="docutils literal notranslate"><span class="pre">$</span></code> (dollar), <code class="docutils literal notranslate"><span class="pre">%</span></code> (percent),
+<code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (ampersand),
+<code class="docutils literal notranslate"><span class="pre">*</span></code> (asterisk), <code class="docutils literal notranslate"><span class="pre">-</span></code> (dash),
 <code class="docutils literal notranslate"><span class="pre">_</span></code> (underscore), <code class="docutils literal notranslate"><span class="pre">+</span></code> (plus),
 <code class="docutils literal notranslate"><span class="pre">=</span></code> (equals), <code class="docutils literal notranslate"><span class="pre">|</span></code> (vertical bar),
 <code class="docutils literal notranslate"><span class="pre">:</span></code> (colon), <code class="docutils literal notranslate"><span class="pre">.</span></code> (period).</p></td>
@@ -1977,7 +1979,7 @@ work correctly.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 01, 2023.
+      <span class="lastupdated">Last updated on Nov 03, 2023.
       </span></p>
   </div>
 
