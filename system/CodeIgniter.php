@@ -340,20 +340,6 @@ class CodeIgniter
         $this->getRequestObject();
         $this->getResponseObject();
 
-        try {
-            $this->forceSecureAccess();
-        } catch (RedirectException $e) {
-            $this->response = $e->getResponse();
-
-            if ($returnResponse) {
-                return $this->response;
-            }
-
-            $this->sendResponse();
-
-            return;
-        }
-
         Events::trigger('pre_system');
 
         $this->benchmark->stop('bootstrap');
@@ -700,6 +686,8 @@ class CodeIgniter
      *                      should be enforced for this URL.
      *
      * @return void
+     *
+     * @deprecated 4.5.0 No longer used. Moved to ForceHTTPS filter.
      */
     protected function forceSecureAccess($duration = 31_536_000)
     {
