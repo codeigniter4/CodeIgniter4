@@ -237,7 +237,7 @@ class CLI
             $default     = $options;
         }
 
-        if (is_array($options) && $options) {
+        if (is_array($options) && $options !== []) {
             $opts               = $options;
             $extraOutputDefault = static::color((string) $opts[0], 'green');
 
