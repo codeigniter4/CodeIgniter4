@@ -124,7 +124,13 @@ class RedisHandler extends BaseHandler
 
         $redis = new Redis();
 
-        if (! $redis->connect($this->savePath['protocol'] . '://' . $this->savePath['host'], ($this->savePath['host'][0] === '/' ? 0 : (int) $this->savePath['port']), $this->savePath['timeout'])) {
+        if (
+            ! $redis->connect(
+                $this->savePath['protocol'] . '://' . $this->savePath['host'],
+                ($this->savePath['host'][0] === '/' ? 0 : (int) $this->savePath['port']),
+                $this->savePath['timeout']
+            )
+        ) {
             $this->logger->error('Session: Unable to connect to Redis with the configured settings.');
         } elseif (isset($this->savePath['password']) && ! $redis->auth($this->savePath['password'])) {
             $this->logger->error('Session: Unable to authenticate to Redis instance.');
