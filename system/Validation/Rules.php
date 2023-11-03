@@ -37,18 +37,30 @@ class Rules
 
     /**
      * Equals the static value provided.
+     *
+     * @param string|null $str
      */
-    public function equals(?string $str, string $val): bool
+    public function equals($str, string $val): bool
     {
+        if (! is_string($str) && $str !== null) {
+            $str = (string) $str;
+        }
+
         return $str === $val;
     }
 
     /**
      * Returns true if $str is $val characters long.
      * $val = "5" (one) | "5,8,12" (multiple values)
+     *
+     * @param string|null $str
      */
-    public function exact_length(?string $str, string $val): bool
+    public function exact_length($str, string $val): bool
     {
+        if (! is_string($str) && $str !== null) {
+            $str = (string) $str;
+        }
+
         $val = explode(',', $val);
 
         foreach ($val as $tmp) {
@@ -62,17 +74,29 @@ class Rules
 
     /**
      * Greater than
+     *
+     * @param string|null $str
      */
-    public function greater_than(?string $str, string $min): bool
+    public function greater_than($str, string $min): bool
     {
+        if (! is_string($str) && $str !== null) {
+            $str = (string) $str;
+        }
+
         return is_numeric($str) && $str > $min;
     }
 
     /**
      * Equal to or Greater than
+     *
+     * @param string|null $str
      */
-    public function greater_than_equal_to(?string $str, string $min): bool
+    public function greater_than_equal_to($str, string $min): bool
     {
+        if (! is_string($str) && $str !== null) {
+            $str = (string) $str;
+        }
+
         return is_numeric($str) && $str >= $min;
     }
 
@@ -84,9 +108,15 @@ class Rules
      * Example:
      *    is_not_unique[table.field,where_field,where_value]
      *    is_not_unique[menu.id,active,1]
+     *
+     * @param string|null $str
      */
-    public function is_not_unique(?string $str, string $field, array $data): bool
+    public function is_not_unique($str, string $field, array $data): bool
     {
+        if (! is_string($str) && $str !== null) {
+            $str = (string) $str;
+        }
+
         // Grab any data for exclusion of a single row.
         [$field, $whereField, $whereValue] = array_pad(
             explode(',', $field),
@@ -115,9 +145,15 @@ class Rules
 
     /**
      * Value should be within an array of values
+     *
+     * @param string|null $value
      */
-    public function in_list(?string $value, string $list): bool
+    public function in_list($value, string $list): bool
     {
+        if (! is_string($value) && $value !== null) {
+            $value = (string) $value;
+        }
+
         $list = array_map('trim', explode(',', $list));
 
         return in_array($value, $list, true);
@@ -166,17 +202,29 @@ class Rules
 
     /**
      * Less than
+     *
+     * @param string|null $str
      */
-    public function less_than(?string $str, string $max): bool
+    public function less_than($str, string $max): bool
     {
+        if (! is_string($str) && $str !== null) {
+            $str = (string) $str;
+        }
+
         return is_numeric($str) && $str < $max;
     }
 
     /**
      * Equal to or Less than
+     *
+     * @param string|null $str
      */
-    public function less_than_equal_to(?string $str, string $max): bool
+    public function less_than_equal_to($str, string $max): bool
     {
+        if (! is_string($str) && $str !== null) {
+            $str = (string) $str;
+        }
+
         return is_numeric($str) && $str <= $max;
     }
 
@@ -196,33 +244,57 @@ class Rules
 
     /**
      * Returns true if $str is $val or fewer characters in length.
+     *
+     * @param string|null $str
      */
-    public function max_length(?string $str, string $val): bool
+    public function max_length($str, string $val): bool
     {
+        if (! is_string($str) && $str !== null) {
+            $str = (string) $str;
+        }
+
         return is_numeric($val) && $val >= mb_strlen($str ?? '');
     }
 
     /**
      * Returns true if $str is at least $val length.
+     *
+     * @param string|null $str
      */
-    public function min_length(?string $str, string $val): bool
+    public function min_length($str, string $val): bool
     {
+        if (! is_string($str) && $str !== null) {
+            $str = (string) $str;
+        }
+
         return is_numeric($val) && $val <= mb_strlen($str ?? '');
     }
 
     /**
      * Does not equal the static value provided.
+     *
+     * @param string|null $str
      */
-    public function not_equals(?string $str, string $val): bool
+    public function not_equals($str, string $val): bool
     {
+        if (! is_string($str) && $str !== null) {
+            $str = (string) $str;
+        }
+
         return $str !== $val;
     }
 
     /**
      * Value should not be within an array of values.
+     *
+     * @param string|null $value
      */
-    public function not_in_list(?string $value, string $list): bool
+    public function not_in_list($value, string $list): bool
     {
+        if (! is_string($value) && $value !== null) {
+            $value = (string) $value;
+        }
+
         return ! $this->in_list($value, $list);
     }
 
