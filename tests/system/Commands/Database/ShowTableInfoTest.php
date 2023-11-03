@@ -66,7 +66,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
 
     public function testDbTableShowsDBConfig(): void
     {
-        command('db:table');
+        command('db:table --show');
 
         $result = $this->getNormalizedResult();
 
