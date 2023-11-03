@@ -97,11 +97,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/CLI/CLI.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, array given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in &&, array\\<int, string\\> given on the right side\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/CLI/CLI.php',
