@@ -314,6 +314,8 @@ To give a labeled error message you can set up as:
 .. note:: ``setRules()`` will overwrite any rules that were set previously. To add more than one
     rule to an existing set of rules, use ``setRule()`` multiple times.
 
+.. _validation-dot-array-syntax:
+
 Setting Rules for Array Data
 ============================
 
@@ -327,6 +329,10 @@ You can use the ``*`` wildcard symbol to match any one level of the array:
 
 .. literalinclude:: validation/010.php
    :lines: 2-
+
+.. note:: Prior to v4.4.4, due to a bug, the wildcard ``*`` validated data in incorrect
+    dimensions. See :ref:`Upgrading <upgrade-444-validation-with-dot-array-syntax>`
+    for details.
 
 "dot array syntax" can also be useful when you have single dimension array data.
 For example, data returned by multi select dropdown:
@@ -591,7 +597,7 @@ If you need to retrieve all error messages for failed fields, you can use the ``
 
 If no errors exist, an empty array will be returned.
 
-When using a wildcard, the error will point to a specific field, replacing the asterisk with the appropriate key/keys::
+When using a wildcard (``*``), the error will point to a specific field, replacing the asterisk with the appropriate key/keys::
 
     // for data
     'contacts' => [
@@ -606,10 +612,10 @@ When using a wildcard, the error will point to a specific field, replacing the a
     ]
 
     // rule
-    'contacts.*.name' => 'required'
+    'contacts.friends.*.name' => 'required'
 
     // error will be
-    'contacts.friends.1.name' => 'The contacts.*.name field is required.'
+    'contacts.friends.1.name' => 'The contacts.friends.*.name field is required.'
 
 Getting a Single Error
 ======================
@@ -830,7 +836,8 @@ alpha_numeric_punct     No         Fails if field contains anything other than
                                    alphanumeric, space, or this limited set of
                                    punctuation characters: ``~`` (tilde),
                                    ``!`` (exclamation), ``#`` (number),
-                                   ``$`` (dollar), ``% (percent), & (ampersand),
+                                   ``$`` (dollar), ``%`` (percent),
+                                   ``&`` (ampersand),
                                    ``*`` (asterisk), ``-`` (dash),
                                    ``_`` (underscore), ``+`` (plus),
                                    ``=`` (equals), ``|`` (vertical bar),
