@@ -16,6 +16,8 @@ namespace CodeIgniter\HotReloader;
  */
 final class HotReloader
 {
+    private string $refreshFile = WRITEPATH . 'cache/hot-reload';
+
     public function run(): void
     {
         if (session_status() === PHP_SESSION_ACTIVE) {
@@ -29,31 +31,40 @@ final class HotReloader
         header('Access-Control-Allow-Methods: GET');
 
         ob_end_clean();
-        set_time_limit(0);
 
-        $hasher  = new DirectoryHasher();
-        $appHash = $hasher->hash();
-
-        while (true) {
-            if (connection_status() !== CONNECTION_NORMAL || connection_aborted()) {
-                break;
+        if (connection_status() !== CONNECTION_NORMAL || connection_aborted()) {
+            if (is_file($this->refreshFile)) {
+                unlink($this->refreshFile);
             }
 
-            $currentHash = $hasher->hash();
-
-            // If hash has changed, tell the browser to reload.
-            if ($currentHash !== $appHash) {
-                $appHash = $currentHash;
-
-                $this->sendEvent('reload', ['time' => date('Y-m-d H:i:s')]);
-                break;
-            }
-            if (mt_rand(1, 10) > 8) {
-                $this->sendEvent('ping', ['time' => date('Y-m-d H:i:s')]);
-            }
-
-            sleep(1);
+            return;
         }
+
+        $appHash = '';
+        $hasher  = new DirectoryHasher();
+
+        $currentHash = $hasher->hash();
+
+        if (is_file($this->refreshFile)) {
+            $appHash = (string) file_get_contents($this->refreshFile);
+        }
+
+        if ($appHash === '') {
+            $appHash = $currentHash;
+            file_put_contents($this->refreshFile, $currentHash);
+        }
+
+        // If hash has changed, tell the browser to reload.
+        if ($currentHash !== $appHash) {
+            $this->sendEvent('reload', ['time' => date('Y-m-d H:i:s')]);
+
+            file_put_contents($this->refreshFile, $currentHash);
+
+            return;
+        }
+
+        $this->sendEvent('ping', ['time' => date('Y-m-d H:i:s')]);
+        sleep(1);
     }
 
     /**
