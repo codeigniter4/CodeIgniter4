@@ -12,7 +12,7 @@ Content Security Policy
 What is Content Security Policy?
 ********************************
 
-One of the best protections you have against XSS attacks is to implement a Content Security Policy on the site.
+One of the best protections you have against XSS attacks is to implement a Content Security Policy (CSP) on the site.
 This forces you to whitelist every single source of content that is pulled in from your site's HTML,
 including images, stylesheets, javascript files, etc. The browser will refuse content from sources that don't meet
 the whitelist. This whitelist is created within the response's ``Content-Security-Policy`` header and has many
