@@ -12,11 +12,13 @@ Content Security Policy
 What is Content Security Policy?
 ********************************
 
-One of the best protections you have against XSS attacks is to implement a Content Security Policy (CSP) on the site.
-This forces you to whitelist every single source of content that is pulled in from your site's HTML,
-including images, stylesheets, javascript files, etc. The browser will refuse content from sources that don't meet
-the whitelist. This whitelist is created within the response's ``Content-Security-Policy`` header and has many
-different ways it can be configured.
+One of the best protections you have against XSS attacks is to implement a Content
+Security Policy (CSP) on the site. This requires you to specify and authorize each
+source of content that is included in your site's HTML, including images,
+stylesheets, JavaScript files, and so on. The browser will reject content from
+sources that are not explicitly approved. This authorization is defined within
+the response's ``Content-Security-Policy`` header and offers various configuration
+options.
 
 This sounds complex, and on some sites, can definitely be challenging. For many simple sites, though, where all content
 is served by the same domain (http://example.com), it is very simple to integrate.
