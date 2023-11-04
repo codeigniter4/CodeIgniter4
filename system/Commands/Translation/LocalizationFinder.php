@@ -111,7 +111,7 @@ class LocalizationFinder extends BaseCommand
         $files    = iterator_to_array($iterator, true);
         ksort($files);
 
-        [$foundLanguageKeys, $countFiles] = $this->findLanguageKeysInFiles($files);
+        [$foundLanguageKeys, $badLanguageKeys, $countFiles] = $this->findLanguageKeysInFiles($files);
         ksort($foundLanguageKeys);
 
         $languageDiff        = [];
@@ -155,14 +155,28 @@ class LocalizationFinder extends BaseCommand
 
         $this->writeIsVerbose('Files found: ' . $countFiles);
         $this->writeIsVerbose('New translates found: ' . $countNewKeys);
+        $this->writeIsVerbose('Bad translates found: ' . count($badLanguageKeys));
+
+        if ($this->verbose && $badLanguageKeys !== []) {
+            $tableBadRows = [];
+
+            foreach ($badLanguageKeys as $key => $value) {
+                $tableBadRows[] = [$key, $value];
+            }
+
+            CLI::table($tableBadRows, ['№', 'Bad key']);
+        }
     }
 
     /**
      * @param SplFileInfo|string $file
+     *
+     * @return array<int, array>
      */
     private function findTranslationsInFile($file): array
     {
         $foundLanguageKeys = [];
+        $badLanguageKeys   = [];
 
         if (is_string($file) && is_file($file)) {
             $file = new SplFileInfo($file);
@@ -172,7 +186,7 @@ class LocalizationFinder extends BaseCommand
         preg_match_all('/lang\(\'([._a-z0-9\-]+)\'\)/ui', $fileContent, $matches);
 
         if ($matches[1] === []) {
-            return [];
+            return [[], []];
         }
 
         foreach ($matches[1] as $phraseKey) {
@@ -180,6 +194,8 @@ class LocalizationFinder extends BaseCommand
 
             // Language key not have Filename or Lang key
             if (count($phraseKeys) < 2) {
+                $badLanguageKeys[] = $phraseKey;
+
                 continue;
             }
 
@@ -189,6 +205,8 @@ class LocalizationFinder extends BaseCommand
                 || ($languageFileName === '' && $phraseKeys[0] === '');
 
             if ($isEmptyNestedArray) {
+                $badLanguageKeys[] = $phraseKey;
+
                 continue;
             }
 
@@ -201,7 +219,7 @@ class LocalizationFinder extends BaseCommand
             }
         }
 
-        return $foundLanguageKeys;
+        return [$foundLanguageKeys, $badLanguageKeys];
     }
 
     private function isIgnoredFile(SplFileInfo $file): bool
@@ -335,11 +353,11 @@ class LocalizationFinder extends BaseCommand
      * @param SplFileInfo[] $files
      *
      * @return array<int, array|int>
-     * @phpstan-return list{0: array<string, array<string, string>>, 1: int}
+     * @phpstan-return list{0: array<string, array<string, string>>, 1: array<string, array<string, string>>, 2: int}
      */
     private function findLanguageKeysInFiles(array $files): array
     {
-        $foundLanguageKeys = [];
+        $foundLanguageKeys = [[], []];
         $countFiles        = 0;
 
         foreach ($files as $file) {
@@ -349,9 +367,13 @@ class LocalizationFinder extends BaseCommand
 
             $this->writeIsVerbose('File found: ' . mb_substr($file->getRealPath(), mb_strlen(APPPATH)));
             $countFiles++;
-            $foundLanguageKeys = array_replace_recursive($this->findTranslationsInFile($file), $foundLanguageKeys);
+
+            $findInFile = $this->findTranslationsInFile($file);
+
+            $foundLanguageKeys[0] = array_replace_recursive($findInFile[0], $foundLanguageKeys[0]);
+            $foundLanguageKeys[1] = array_merge($findInFile[1], $foundLanguageKeys[1]);
         }
 
-        return [$foundLanguageKeys, $countFiles];
+        return [$foundLanguageKeys[0], array_unique($foundLanguageKeys[1]), $countFiles];
     }
 }
