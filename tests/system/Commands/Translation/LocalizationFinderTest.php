@@ -103,6 +103,15 @@ final class LocalizationFinderTest extends CIUnitTestCase
         $this->assertStringContainsString($this->getActualTableWithNewKeys(), $this->getStreamFilterBuffer());
     }
 
+    public function testShowBadTranslation(): void
+    {
+        $this->makeLocaleDirectory();
+
+        command('lang:find --dir Translation --verbose');
+
+        $this->assertStringContainsString($this->getActualTableWithBadKeys(), $this->getStreamFilterBuffer());
+    }
+
     private function getActualTranslationOneKeys(): array
     {
         return [
@@ -190,6 +199,21 @@ final class LocalizationFinderTest extends CIUnitTestCase
             | TranslationThree | TranslationThree.formFields.new.name               |
             | TranslationThree | TranslationThree.formFields.new.short_tag          |
             +------------------+----------------------------------------------------+
+            TEXT_WRAP;
+    }
+
+    private function getActualTableWithBadKeys(): string
+    {
+        return <<<'TEXT_WRAP'
+            +---+------------------------+
+            | № | Bad key                |
+            +---+------------------------+
+            | 0 | TranslationTwo         |
+            | 1 | .invalid_key           |
+            | 2 | TranslationTwo.        |
+            | 3 | TranslationTwo...      |
+            | 4 | ..invalid_nested_key.. |
+            +---+------------------------+
             TEXT_WRAP;
     }
 
