@@ -18,7 +18,7 @@ Fetch API
 .. code-block:: javascript
 
     fetch(url, {
-        method: "get",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest"
