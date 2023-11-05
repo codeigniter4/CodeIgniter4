@@ -33,7 +33,7 @@ class Filters extends BaseConfig
     /**
      * List of special required filters.
      *
-     * The filters listed here is special. They are applied before and after
+     * The filters listed here are special. They are applied before and after
      * other kinds of filters, and always applied even if a route does not exist.
      *
      * @var array<string, array<int, string>>
