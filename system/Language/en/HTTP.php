@@ -19,6 +19,7 @@ return [
 
     // IncomingRequest
     'invalidNegotiationType' => '"{0}" is not a valid negotiation type. Must be one of: media, charset, encoding, language.',
+    'invalidJSON'            => 'Failed to parse JSON string. Error: {0}',
 
     // Message
     'invalidHTTPProtocol' => 'Invalid HTTP Protocol Version: {0}',

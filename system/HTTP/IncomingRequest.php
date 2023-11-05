@@ -573,10 +573,18 @@ class IncomingRequest extends Request
      * @see http://php.net/manual/en/function.json-decode.php
      *
      * @return array|bool|float|int|stdClass|null
+     *
+     * @throws HTTPException When the body is invalid as JSON.
      */
     public function getJSON(bool $assoc = false, int $depth = 512, int $options = 0)
     {
-        return json_decode($this->body ?? '', $assoc, $depth, $options);
+        $result = json_decode($this->body ?? '', $assoc, $depth, $options);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw HTTPException::forInvalidJSON(json_last_error_msg());
+        }
+
+        return $result;
     }
 
     /**

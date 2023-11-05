@@ -73,6 +73,19 @@ class HTTPException extends FrameworkException
     }
 
     /**
+     * Thrown in IncomingRequest when the json_decode() produces
+     *  an error code other than JSON_ERROR_NONE.
+     *
+     * @param string $error The error message
+     *
+     * @return static
+     */
+    public static function forInvalidJSON(?string $error = null)
+    {
+        return new static(lang('HTTP.invalidJSON', [$error]));
+    }
+
+    /**
      * For Message
      *
      * @return HTTPException

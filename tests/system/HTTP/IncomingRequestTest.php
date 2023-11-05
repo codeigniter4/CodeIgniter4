@@ -528,6 +528,19 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertNull($request->getJSON());
     }
 
+    public function testGetJSONWithInvalidJSONString(): void
+    {
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('Failed to parse JSON string. Error: Syntax error');
+
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+        $json            = 'Invalid JSON string';
+        $request         = $this->createRequest($config, $json);
+
+        $request->getJSON();
+    }
+
     public function testCanGrabGetRawInput(): void
     {
         $rawstring = 'username=admin001&role=administrator&usepass=0';
