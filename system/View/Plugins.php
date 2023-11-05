@@ -32,7 +32,7 @@ class Plugins
     /**
      * Wrap helper function to use as view plugin.
      *
-     * @return mixed|string|URI
+     * @return string|URI
      */
     public static function previousURL()
     {
