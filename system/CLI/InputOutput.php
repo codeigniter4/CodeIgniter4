@@ -48,7 +48,13 @@ class InputOutput
 
         echo $prefix;
 
-        return fgets(fopen('php://stdin', 'rb'));
+        $input = fgets(fopen('php://stdin', 'rb'));
+
+        if ($input === false) {
+            $input = '';
+        }
+
+        return $input;
     }
 
     /**
