@@ -264,18 +264,24 @@ class Filters
         }
 
         // Set the toolbar filter to the last position to be executed
-        if (
-            in_array('toolbar', $this->config->required['after'], true)
-            && ($count = count($this->config->required['after'])) > 1
-            && $this->config->required['after'][$count - 1] !== 'toolbar'
-        ) {
-            array_splice(
-                $this->config->required['after'],
-                array_search('toolbar', $this->config->required['after'], true),
-                1
-            );
-            $this->config->required['after'][] = 'toolbar';
+        $afters = [];
+        $found  = false;
+
+        foreach ($this->config->required['after'] as $alias) {
+            if ($alias === 'toolbar') {
+                $found = true;
+
+                continue;
+            }
+
+            $afters[] = $alias;
         }
+
+        if ($found) {
+            $afters[] = 'toolbar';
+        }
+
+        $this->config->required['after'] = $afters;
 
         $filterClasses = [];
 
