@@ -23,8 +23,7 @@ final class MockInputOutput extends InputOutput
     /**
      * String to be entered by the user.
      *
-     * @var array<int, string>
-     * @phpstan-var list<string>
+     * @var list<string>
      */
     private array $inputs = [];
 
