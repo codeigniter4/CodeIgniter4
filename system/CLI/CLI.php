@@ -27,13 +27,6 @@ use Throwable;
  * possible to test using travis-ci. It has been phpunit-annotated
  * to prevent messing up code coverage.
  *
- * Some of the methods require keyboard input, and are not unit-testable
- * as a result: input() and prompt().
- * validate() is internal, and not testable if prompt() isn't.
- * The wait() method is mostly testable, as long as you don't give it
- * an argument of "0".
- * These have been flagged to ignore for code coverage purposes.
- *
  * @see \CodeIgniter\CLI\CLITest
  */
 class CLI
@@ -43,7 +36,7 @@ class CLI
      *
      * @var bool
      *
-     * @deprecated 4.4.2 Should be protected.
+     * @deprecated 4.4.2 Should be protected, and no longer used.
      * @TODO Fix to camelCase in the next major version.
      */
     public static $readline_support = false;
@@ -153,6 +146,11 @@ class CLI
     protected static $isColored = false;
 
     /**
+     * Input and Output for CLI.
+     */
+    protected static ?InputOutput $io = null;
+
+    /**
      * Static "constructor".
      *
      * @return void
@@ -181,6 +179,8 @@ class CLI
             // For "! defined('STDOUT')" see: https://github.com/codeigniter4/CodeIgniter4/issues/7047
             define('STDOUT', 'php://output'); // @codeCoverageIgnore
         }
+
+        static::resetInputOutput();
     }
 
     /**
@@ -193,14 +193,7 @@ class CLI
      */
     public static function input(?string $prefix = null): string
     {
-        // readline() can't be tested.
-        if (static::$readline_support && ENVIRONMENT !== 'testing') {
-            return readline($prefix); // @codeCoverageIgnore
-        }
-
-        echo $prefix;
-
-        return fgets(fopen('php://stdin', 'rb'));
+        return static::$io->input($prefix);
     }
 
     /**
@@ -225,8 +218,6 @@ class CLI
      * @param array|string|null $validation Validation rules
      *
      * @return string The user input
-     *
-     * @codeCoverageIgnore
      */
     public static function prompt(string $field, $options = null, $validation = null): string
     {
@@ -265,7 +256,7 @@ class CLI
         static::fwrite(STDOUT, $field . (trim($field) ? ' ' : '') . $extraOutput . ': ');
 
         // Read the input from keyboard.
-        $input = trim(static::input()) ?: $default;
+        $input = trim(static::$io->input()) ?: $default;
 
         if ($validation !== []) {
             while (! static::validate('"' . trim($field) . '"', $input, $validation)) {
@@ -285,8 +276,6 @@ class CLI
      * @param array|string|null $validation Validation rules
      *
      * @return string The selected key of $options
-     *
-     * @codeCoverageIgnore
      */
     public static function promptByKey($text, array $options, $validation = null): string
     {
@@ -415,8 +404,6 @@ class CLI
      * @param string       $field Prompt "field" output
      * @param string       $value Input value
      * @param array|string $rules Validation rules
-     *
-     * @codeCoverageIgnore
      */
     protected static function validate(string $field, string $value, $rules): bool
     {
@@ -533,11 +520,8 @@ class CLI
         } elseif ($seconds > 0) {
             sleep($seconds);
         } else {
-            // this chunk cannot be tested because of keyboard input
-            // @codeCoverageIgnoreStart
             static::write(static::$wait_msg);
-            static::input();
-            // @codeCoverageIgnoreEnd
+            static::$io->input();
         }
     }
 
@@ -566,8 +550,6 @@ class CLI
 
     /**
      * Clears the screen of output
-     *
-     * @codeCoverageIgnore
      *
      * @return void
      */
@@ -761,8 +743,6 @@ class CLI
 
     /**
      * Populates the CLI's dimensions.
-     *
-     * @codeCoverageIgnore
      *
      * @return void
      */
@@ -1137,15 +1117,27 @@ class CLI
      */
     protected static function fwrite($handle, string $string)
     {
-        if (! is_cli()) {
-            // @codeCoverageIgnoreStart
-            echo $string;
+        static::$io->fwrite($handle, $string);
+    }
 
-            return;
-            // @codeCoverageIgnoreEnd
-        }
+    /**
+     * Testing purpose only
+     *
+     * @testTag
+     */
+    public static function setInputOutput(InputOutput $io): void
+    {
+        static::$io = $io;
+    }
 
-        fwrite($handle, $string);
+    /**
+     * Testing purpose only
+     *
+     * @testTag
+     */
+    public static function resetInputOutput(): void
+    {
+        static::$io = new InputOutput();
     }
 }
 
