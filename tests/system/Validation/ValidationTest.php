@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Validation;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
@@ -787,6 +788,25 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame(['role' => 'administrator'], $this->validation->getValidated());
 
         unset($_SERVER['CONTENT_TYPE']);
+    }
+
+    public function testJsonInputInvalid(): void
+    {
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('Failed to parse JSON string. Error: Syntax error');
+
+        $config  = new App();
+        $json    = 'invalid';
+        $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request->setHeader('Content-Type', 'application/json');
+
+        $rules = [
+            'role' => 'if_exist|max_length[5]',
+        ];
+        $this->validation
+            ->withRequest($request->withMethod('POST'))
+            ->setRules($rules)
+            ->run();
     }
 
     /**
