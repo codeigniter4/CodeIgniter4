@@ -275,9 +275,55 @@ See :ref:`URI Routing <routing-spark-routes>` for details.
 Provided Filters
 ****************
 
-The filters bundled with CodeIgniter4 are: :doc:`Honeypot <../libraries/honeypot>`, :ref:`CSRF <cross-site-request-forgery>`, ``InvalidChars``, ``SecureHeaders``, and :ref:`DebugToolbar <the-debug-toolbar>`.
+The filters bundled with CodeIgniter4 are:
+
+- ``csrf`` => :ref:`CSRF <cross-site-request-forgery>`
+- ``toolbar`` => :ref:`DebugToolbar <the-debug-toolbar>`
+- ``honeypot`` => :doc:`Honeypot <../libraries/honeypot>`
+- ``invalidchars`` => :ref:`invalidchars`
+- ``secureheaders`` => :ref:`secureheaders`
+- ``forcehttps`` => :ref:`forcehttps`
+- ``pagecache`` => :doc:`PageCache <../general/caching>`
+- ``performance`` => :ref:`performancemetrics`
 
 .. note:: The filters are executed in the order defined in the config file. However, if enabled, ``DebugToolbar`` is always executed last because it should be able to capture everything that happens in the other filters.
+
+.. _forcehttps:
+
+ForceHTTPS
+==========
+
+.. versionadded:: 4.5.0
+
+This filter provides the "Force Global Secure Requests" feature.
+
+If you set ``Config\App:$forceGlobalSecureRequests`` to true, this will force
+every request made to this application to be made via a secure connection (HTTPS).
+If the incoming request is not secure, the user will be redirected to a secure
+version of the page and the HTTP Strict Transport Security (HSTS) header will be
+set.
+
+.. _performancemetrics:
+
+PerformanceMetrics
+==================
+
+.. versionadded:: 4.5.0
+
+This filter provides the pseudo-variables for performance metrics.
+
+If you would like to display the total elapsed time from the moment CodeIgniter
+starts to the moment right before the final output is sent to the browser,
+simply place this pseudo-variable in one of your view::
+
+    {elapsed_time}
+
+If you would like to show your memory usage in your view files, use this
+pseudo-variable::
+
+    {memory_usage}
+
+If you don't need this feature, remove ``'performance'`` from ``$required['after']``.
 
 .. _invalidchars:
 
