@@ -225,8 +225,10 @@ Filter Execution Order
 
 Filters are executed in the following order:
 
-- **Before Filters**: globals → methods → filters → route
-- **After Filters**: route → filters → globals
+- **Before Filters**: required → globals → methods → filters → route
+- **After Filters**: route → filters → globals → required
+
+.. note:: The *required* filters can be used since v4.5.0.
 
 .. note:: Prior to v4.5.0, the filters that are specified to a route
     (in **app/Config/Routes.php**) are executed before the filters specified in
