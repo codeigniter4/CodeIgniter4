@@ -116,10 +116,33 @@ You can combine multiple filters into one alias, making complex sets of filters 
 
 You should define as many aliases as you need.
 
+.. _filters-required:
+
+$required
+---------
+
+.. versionadded:: 4.5.0
+
+The second section allows you to define **Required Filters**.
+They are special filters that are applied to every request made by the
+framework. They are applied before and after other kinds of filters that are
+explained below.
+
+.. note:: The Required Filters are always executed even if a route does not exist.
+
+You should take care with how many you use here, since it could have performance
+implications to have too many run on every request. But the filters set by default
+provide framework functionality. If removed, those functions will no longer work.
+See :ref:`provided-filters` for details.
+
+Filters can be specified by adding their alias to either the ``before`` or ``after`` array:
+
+.. literalinclude:: filters/013.php
+
 $globals
 --------
 
-The second section allows you to define any filters that should be applied to every valid request made by the framework.
+The third section allows you to define any filters that should be applied to every valid request made by the framework.
 
 You should take care with how many you use here, since it could have performance implications to have too many
 run on every request.
@@ -243,6 +266,8 @@ The output is like the following:
 You can also see the routes and filters by the ``spark routes`` command,
 but it might not show accurate filters when you use regular expressions for routes.
 See :ref:`URI Routing <routing-spark-routes>` for details.
+
+.. _provided-filters:
 
 ****************
 Provided Filters
