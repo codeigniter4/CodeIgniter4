@@ -667,21 +667,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Server/Serve.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Accessing offset \'DOCUMENT_ROOT\' directly on \\$_SERVER is discouraged\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Server/rewrite.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Accessing offset \'REQUEST_URI\' directly on \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Server/rewrite.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Assigning \'/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Server/rewrite.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Accessing offset \'CI_ENVIRONMENT\' directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 3,
 	'path' => __DIR__ . '/system/Commands/Utilities/Environment.php',
@@ -3680,21 +3665,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:assertStatus\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Accessing offset \'app\\.baseURL\' directly on \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/bootstrap.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Assigning \'http\\://example\\.com/\' directly on offset \'app\\.baseURL\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/bootstrap.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Assigning \'testing\' directly on offset \'CI_ENVIRONMENT\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/bootstrap.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Throttle\\\\Throttler\\:\\:\\$testTime \\(int\\) on left side of \\?\\? is not nullable\\.$#',
