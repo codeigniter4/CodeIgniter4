@@ -1122,6 +1122,8 @@ class CLI
 
     /**
      * Testing purpose only
+     *
+     * @testTag
      */
     public static function setInputOutput(InputOutput $io): void
     {
@@ -1130,6 +1132,8 @@ class CLI
 
     /**
      * Testing purpose only
+     *
+     * @testTag
      */
     public static function resetInputOutput(): void
     {
