@@ -17,7 +17,7 @@ use CodeIgniter\Test\PhpStreamWrapper;
 use InvalidArgumentException;
 use LogicException;
 
-class MockInputOutput extends InputOutput
+final class MockInputOutput extends InputOutput
 {
     /**
      * String to be entered by the user.
