@@ -183,7 +183,7 @@ Testing
 
 - **DomParser:** The new methods were added ``seeXPath()`` and ``dontSeeXPath()``
   which allows users to work directly with DOMXPath object, using complex expressions.
-- **CLI:** The new ``InputOutput`` class was added and now you can write test
+- **CLI:** The new ``InputOutput`` class was added and now you can write tests
   for commands more easily if you use ``MockInputOutput``.
   See :ref:`using-mock-input-output`.
 
