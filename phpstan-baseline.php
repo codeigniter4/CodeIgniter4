@@ -3037,11 +3037,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Session/Handlers/RedisHandler.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, int given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Session/Handlers/RedisHandler.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Accessing offset \'HTTP_X_REQUESTED_WITH\' directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Session/Session.php',
