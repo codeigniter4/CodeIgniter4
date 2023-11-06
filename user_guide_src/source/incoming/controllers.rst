@@ -112,6 +112,7 @@ rule and message array formats, as well as available rules:
     or :ref:`$request->getRawInput() <incomingrequest-retrieving-raw-data>`
     or :ref:`$request->getVar() <incomingrequest-getting-data>`, and an attacker
     could change what data is validated.
+    Instead of withRequest(), use validateData() to validate POST data only.       withRequest() uses $request->getVar() which returns $_GET, $_POST and $_COOKIE data in that order. Newer values override older values. Post values will be overriden by the cookies if they have the same name.
 
 .. note:: The :ref:`$this->validator->getValidated() <validation-getting-validated-data>`
     method can be used since v4.4.0.
