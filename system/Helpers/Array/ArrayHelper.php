@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Helpers\Array;
 
+use InvalidArgumentException;
+
 /**
  * @interal This is internal implementation for the framework.
  *
@@ -27,9 +29,21 @@ final class ArrayHelper
      *
      * @used-by dot_array_search()
      *
+     * @param string $index The index as dot array syntax.
+     *
      * @return array|bool|int|object|string|null
      */
     public static function dotSearch(string $index, array $array)
+    {
+        return self::arraySearchDot(self::convertToArray($index), $array);
+    }
+
+    /**
+     * @param string $index The index as dot array syntax.
+     *
+     * @return list<string> The index as an array.
+     */
+    private static function convertToArray(string $index): array
     {
         // See https://regex101.com/r/44Ipql/1
         $segments = preg_split(
@@ -39,9 +53,10 @@ final class ArrayHelper
             PREG_SPLIT_NO_EMPTY
         );
 
-        $segments = array_map(static fn ($key) => str_replace('\.', '.', $key), $segments);
-
-        return self::arraySearchDot($segments, $array);
+        return array_map(
+            static fn ($key) => str_replace('\.', '.', $key),
+            $segments
+        );
     }
 
     /**
@@ -104,6 +119,59 @@ final class ArrayHelper
 
         // Otherwise, not found.
         return null;
+    }
+
+    /**
+     * array_key_exists() with dot array syntax.
+     *
+     * If wildcard `*` is used, all items for the key after it must have the key.
+     */
+    public static function dotKeyExists(string $index, array $array): bool
+    {
+        if (str_ends_with($index, '*') || str_contains($index, '*.*')) {
+            throw new InvalidArgumentException(
+                'You must set key right after "*". Invalid index: "' . $index . '"'
+            );
+        }
+
+        $indexes = self::convertToArray($index);
+
+        // If indexes is empty, returns false.
+        if ($indexes === []) {
+            return false;
+        }
+
+        $currentArray = $array;
+
+        // Grab the current index
+        while ($currentIndex = array_shift($indexes)) {
+            if ($currentIndex === '*') {
+                $currentIndex = array_shift($indexes);
+
+                foreach ($currentArray as $item) {
+                    if (! array_key_exists($currentIndex, $item)) {
+                        return false;
+                    }
+                }
+
+                // If indexes is empty, all elements are checked.
+                if ($indexes === []) {
+                    return true;
+                }
+
+                $currentArray = self::dotSearch('*.' . $currentIndex, $currentArray);
+
+                continue;
+            }
+
+            if (! array_key_exists($currentIndex, $currentArray)) {
+                return false;
+            }
+
+            $currentArray = $currentArray[$currentIndex];
+        }
+
+        return true;
     }
 
     /**
