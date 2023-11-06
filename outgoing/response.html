@@ -130,6 +130,7 @@
 <li class="toctree-l2"><a class="reference internal" href="table.html">HTML Table Class</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">HTTP Responses</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="csp.html">Content Security Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="localization.html">Localization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="alternative_php.html">Alternate PHP Syntax for View Files</a></li>
 </ul>
@@ -285,45 +286,38 @@
 a server responding to the client that called it.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#working-with-the-response" id="id4">Working with the Response</a></p>
+<li><p><a class="reference internal" href="#working-with-the-response" id="id3">Working with the Response</a></p>
 <ul>
-<li><p><a class="reference internal" href="#setting-the-output" id="id5">Setting the Output</a></p></li>
-<li><p><a class="reference internal" href="#setting-headers" id="id6">Setting Headers</a></p></li>
+<li><p><a class="reference internal" href="#setting-the-output" id="id4">Setting the Output</a></p></li>
+<li><p><a class="reference internal" href="#setting-headers" id="id5">Setting Headers</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#redirect" id="id7">Redirect</a></p>
+<li><p><a class="reference internal" href="#redirect" id="id6">Redirect</a></p>
 <ul>
-<li><p><a class="reference internal" href="#redirect-to-a-uri-path" id="id8">Redirect to a URI path</a></p></li>
-<li><p><a class="reference internal" href="#redirect-to-a-defined-route" id="id9">Redirect to a Defined Route</a></p></li>
-<li><p><a class="reference internal" href="#redirect-back" id="id10">Redirect Back</a></p></li>
-<li><p><a class="reference internal" href="#redirect-status-code" id="id11">Redirect Status Code</a></p></li>
+<li><p><a class="reference internal" href="#redirect-to-a-uri-path" id="id7">Redirect to a URI path</a></p></li>
+<li><p><a class="reference internal" href="#redirect-to-a-defined-route" id="id8">Redirect to a Defined Route</a></p></li>
+<li><p><a class="reference internal" href="#redirect-back" id="id9">Redirect Back</a></p></li>
+<li><p><a class="reference internal" href="#redirect-status-code" id="id10">Redirect Status Code</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#force-file-download" id="id12">Force File Download</a></p>
+<li><p><a class="reference internal" href="#force-file-download" id="id11">Force File Download</a></p>
 <ul>
-<li><p><a class="reference internal" href="#open-file-in-browser" id="id13">Open File in Browser</a></p></li>
+<li><p><a class="reference internal" href="#open-file-in-browser" id="id12">Open File in Browser</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#http-caching" id="id14">HTTP Caching</a></p></li>
-<li><p><a class="reference internal" href="#content-security-policy" id="id15">Content Security Policy</a></p>
-<ul>
-<li><p><a class="reference internal" href="#turning-csp-on" id="id16">Turning CSP On</a></p></li>
-<li><p><a class="reference internal" href="#runtime-configuration" id="id17">Runtime Configuration</a></p></li>
-<li><p><a class="reference internal" href="#inline-content" id="id18">Inline Content</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#class-reference" id="id19">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#http-caching" id="id13">HTTP Caching</a></p></li>
+<li><p><a class="reference internal" href="#class-reference" id="id14">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="working-with-the-response">
-<h2><a class="toc-backref" href="#id4">Working with the Response</a><a class="headerlink" href="#working-with-the-response" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Working with the Response</a><a class="headerlink" href="#working-with-the-response" title="Permalink to this headline"></a></h2>
 <p>A Response class is instantiated for you and passed into your controllers. It can be accessed through
 <code class="docutils literal notranslate"><span class="pre">$this-&gt;response</span></code>. Many times you will not need to touch the class directly, since CodeIgniter takes care of
 sending the headers and the body for you. This is great if the page successfully created the content it was asked to.
 When things go wrong, or you need to send very specific status codes back, or even take advantage of the
 powerful HTTP caching, it’s there for you.</p>
 <section id="setting-the-output">
-<h3><a class="toc-backref" href="#id5">Setting the Output</a><a class="headerlink" href="#setting-the-output" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4">Setting the Output</a><a class="headerlink" href="#setting-the-output" title="Permalink to this headline"></a></h3>
 <p>When you need to set the output of the script directly, and not rely on CodeIgniter to automatically get it, you
 do it manually with the <code class="docutils literal notranslate"><span class="pre">setBody</span></code> method. This is usually used in conjunction with setting the status code of
 the response:</p>
@@ -356,7 +350,7 @@ as the second parameter of the <code class="docutils literal notranslate"><span 
 </div>
 </section>
 <section id="setting-headers">
-<h3><a class="toc-backref" href="#id6">Setting Headers</a><a class="headerlink" href="#setting-headers" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">Setting Headers</a><a class="headerlink" href="#setting-headers" title="Permalink to this headline"></a></h3>
 <p>Often, you will need to set headers to be set for the response. The Response class makes this very simple to do,
 with the <code class="docutils literal notranslate"><span class="pre">setHeader()</span></code> method. The first parameter is the name of the header. The second parameter is the value,
 which can be either a string or an array of values that will be combined correctly when sent to the client.
@@ -387,7 +381,7 @@ parameter. This is not case-sensitive.</p>
 </section>
 </section>
 <section id="redirect">
-<span id="response-redirect"></span><h2><a class="toc-backref" href="#id7">Redirect</a><a class="headerlink" href="#redirect" title="Permalink to this headline"></a></h2>
+<span id="response-redirect"></span><h2><a class="toc-backref" href="#id6">Redirect</a><a class="headerlink" href="#redirect" title="Permalink to this headline"></a></h2>
 <p>If you want to create a redirect, use the <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a> function. It
 returns a <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance.</p>
 <div class="admonition important">
@@ -399,7 +393,7 @@ or the <code class="docutils literal notranslate"><span class="pre">initControll
 If you forget to return <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code>, no redirection will occur.</p>
 </div>
 <section id="redirect-to-a-uri-path">
-<h3><a class="toc-backref" href="#id8">Redirect to a URI path</a><a class="headerlink" href="#redirect-to-a-uri-path" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Redirect to a URI path</a><a class="headerlink" href="#redirect-to-a-uri-path" title="Permalink to this headline"></a></h3>
 <p>When you want to pass a URI path (relative to baseURL), use <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;to()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go to specific URI path. &quot;admin/home&quot; is the URI path relative to baseURL.</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">to</span><span class="p">(</span><span class="s1">&#39;admin/home&#39;</span><span class="p">);</span>
@@ -413,7 +407,7 @@ Like <code class="docutils literal notranslate"><span class="pre">return</span> 
 </div>
 </section>
 <section id="redirect-to-a-defined-route">
-<h3><a class="toc-backref" href="#id9">Redirect to a Defined Route</a><a class="headerlink" href="#redirect-to-a-defined-route" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Redirect to a Defined Route</a><a class="headerlink" href="#redirect-to-a-defined-route" title="Permalink to this headline"></a></h3>
 <p>When you want to pass a <a class="reference internal" href="../incoming/routing.html#using-named-routes"><span class="std std-ref">route name</span></a> or Controller::method
 for <a class="reference internal" href="../incoming/routing.html#reverse-routing"><span class="std std-ref">reverse routing</span></a>, use <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;route()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go to a named route. &quot;user_gallery&quot; is the route name, not a URI path.</span>
@@ -429,7 +423,7 @@ treating it the same as using <code class="docutils literal notranslate"><span c
 </div>
 </section>
 <section id="redirect-back">
-<h3><a class="toc-backref" href="#id10">Redirect Back</a><a class="headerlink" href="#redirect-back" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">Redirect Back</a><a class="headerlink" href="#redirect-back" title="Permalink to this headline"></a></h3>
 <p>When you want to redirect back, use <code class="docutils literal notranslate"><span class="pre">redirect()-&gt;back()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Go back to the previous page.</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">();</span>
@@ -455,7 +449,7 @@ If the Session hasn’t been loaded, or is otherwise unavailable, then a sanitiz
 </div>
 </section>
 <section id="redirect-status-code">
-<span id="response-redirect-status-code"></span><h3><a class="toc-backref" href="#id11">Redirect Status Code</a><a class="headerlink" href="#redirect-status-code" title="Permalink to this headline"></a></h3>
+<span id="response-redirect-status-code"></span><h3><a class="toc-backref" href="#id10">Redirect Status Code</a><a class="headerlink" href="#redirect-status-code" title="Permalink to this headline"></a></h3>
 <p>The default HTTP status code for GET requests is 302. However, when using HTTP/1.1
 or later, 303 is used for POST/PUT/DELETE requests and 307 for all other requests.</p>
 <p>You can specify the status code:</p>
@@ -480,7 +474,7 @@ See <a class="reference internal" href="../changelogs/v4.3.4.html#v434-redirect-
 </section>
 </section>
 <section id="force-file-download">
-<span id="id1"></span><h2><a class="toc-backref" href="#id12">Force File Download</a><a class="headerlink" href="#force-file-download" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id11">Force File Download</a><a class="headerlink" href="#force-file-download" title="Permalink to this headline"></a></h2>
 <p>The Response class provides a simple way to send a file to the client, prompting the browser to download the data
 to your computer. This sets the appropriate headers to make it happen.</p>
 <p>The first parameter is the <strong>name you want the downloaded file to be named</strong>, the second parameter is the
@@ -519,7 +513,7 @@ pass <code class="docutils literal notranslate"><span class="pre">null</span></c
 to be passed through all <strong>after</strong> filters before being sent to the client.</p>
 </div>
 <section id="open-file-in-browser">
-<span id="id2"></span><h3><a class="toc-backref" href="#id13">Open File in Browser</a><a class="headerlink" href="#open-file-in-browser" title="Permalink to this headline"></a></h3>
+<span id="id2"></span><h3><a class="toc-backref" href="#id12">Open File in Browser</a><a class="headerlink" href="#open-file-in-browser" title="Permalink to this headline"></a></h3>
 <p>Some browsers can display files such as PDF. To tell the browser to display the file instead of saving it, call the
 <code class="docutils literal notranslate"><span class="pre">DownloadResponse::inline()</span></code> method.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -533,7 +527,7 @@ to be passed through all <strong>after</strong> filters before being sent to the
 </section>
 </section>
 <section id="http-caching">
-<h2><a class="toc-backref" href="#id14">HTTP Caching</a><a class="headerlink" href="#http-caching" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id13">HTTP Caching</a><a class="headerlink" href="#http-caching" title="Permalink to this headline"></a></h2>
 <p>Built into the HTTP specification are tools help the client (often the web browser) cache the results. Used correctly,
 this can lead to a huge performance boost to your application because it will tell the client that they don’t need
 to contact the server at all since nothing has changed. And you can’t get faster than that.</p>
@@ -558,170 +552,8 @@ to the <code class="docutils literal notranslate"><span class="pre">Cache-Contro
 situation. While most of the options are applied to the <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> header, it intelligently handles
 the <code class="docutils literal notranslate"><span class="pre">etag</span></code> and <code class="docutils literal notranslate"><span class="pre">last-modified</span></code> options to their appropriate header.</p>
 </section>
-<section id="content-security-policy">
-<span id="id3"></span><h2><a class="toc-backref" href="#id15">Content Security Policy</a><a class="headerlink" href="#content-security-policy" title="Permalink to this headline"></a></h2>
-<p>One of the best protections you have against XSS attacks is to implement a Content Security Policy on the site.
-This forces you to whitelist every single source of content that is pulled in from your site’s HTML,
-including images, stylesheets, javascript files, etc. The browser will refuse content from sources that don’t meet
-the whitelist. This whitelist is created within the response’s <code class="docutils literal notranslate"><span class="pre">Content-Security-Policy</span></code> header and has many
-different ways it can be configured.</p>
-<p>This sounds complex, and on some sites, can definitely be challenging. For many simple sites, though, where all content
-is served by the same domain (<a class="reference external" href="http://example.com">http://example.com</a>), it is very simple to integrate.</p>
-<p>As this is a complex subject, this user guide will not go over all of the details. For more information, you should
-visit the following sites:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://content-security-policy.com/">Content Security Policy main site</a></p></li>
-<li><p><a class="reference external" href="https://www.w3.org/TR/CSP">W3C Specification</a></p></li>
-<li><p><a class="reference external" href="https://www.html5rocks.com/en/tutorials/security/content-security-policy/">Introduction at HTML5Rocks</a></p></li>
-<li><p><a class="reference external" href="https://www.sitepoint.com/improving-web-security-with-the-content-security-policy/">Article at SitePoint</a></p></li>
-</ul>
-<section id="turning-csp-on">
-<h3><a class="toc-backref" href="#id16">Turning CSP On</a><a class="headerlink" href="#turning-csp-on" title="Permalink to this headline"></a></h3>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>The <a class="reference internal" href="../testing/debugging.html#the-debug-toolbar"><span class="std std-ref">Debug Toolbar</span></a> may use Kint, which
-outputs inline scripts. Therefore, when CSP is turned on, CSP nonce is
-automatically output for the Debug Toolbar. However, if you are not using
-CSP nonce, this will change the CSP header to something you do not intend,
-and it will behave differently than in production; if you want to verify CSP
-behavior, turn off the Debug Toolbar.</p>
-</div>
-<p>By default, support for this is off. To enable support in your application, edit the <code class="docutils literal notranslate"><span class="pre">CSPEnabled</span></code> value in
-<strong>app/Config/App.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
-
-<span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
-
-<span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="nx">bool</span> <span class="nv">$CSPEnabled</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
-
-    <span class="c1">// ...</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>When enabled, the response object will contain an instance of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\ContentSecurityPolicy</span></code>. The
-values set in <strong>app/Config/ContentSecurityPolicy.php</strong> are applied to that instance, and if no changes are
-needed during runtime, then the correctly formatted header is sent and you’re all done.</p>
-<p>With CSP enabled, two header lines are added to the HTTP response: a <strong>Content-Security-Policy</strong> header, with
-policies identifying content types or origins that are explicitly allowed for different
-contexts, and a <strong>Content-Security-Policy-Report-Only</strong> header, which identifies content types
-or origins that will be allowed but which will also be reported to the destination
-of your choice.</p>
-<p>Our implementation provides for a default treatment, changeable through the <code class="docutils literal notranslate"><span class="pre">reportOnly()</span></code> method.
-When an additional entry is added to a CSP directive, as shown below, it will be added
-to the CSP header appropriate for blocking or preventing. That can be overridden on a per
-call basis, by providing an optional second parameter to the adding method call.</p>
-</section>
-<section id="runtime-configuration">
-<h3><a class="toc-backref" href="#id17">Runtime Configuration</a><a class="headerlink" href="#runtime-configuration" title="Permalink to this headline"></a></h3>
-<p>If your application needs to make changes at run-time, you can access the instance at <code class="docutils literal notranslate"><span class="pre">$this-&gt;response-&gt;getCSP()</span></code> in your controllers. The
-class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
-Examples are shown below, with different combinations of parameters, though all accept either a directive
-name or an array of them:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="c1">// get the CSP instance</span>
-<span class="nv">$csp</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">getCSP</span><span class="p">();</span>
-
-<span class="c1">// specify the default directive treatment</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">reportOnly</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
-
-<span class="c1">// specify the origin to use if none provided for a directive</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">setDefaultSrc</span><span class="p">(</span><span class="s1">&#39;cdn.example.com&#39;</span><span class="p">);</span>
-
-<span class="c1">// specify the URL that &quot;report-only&quot; reports get sent to</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">setReportURI</span><span class="p">(</span><span class="s1">&#39;http://example.com/csp/reports&#39;</span><span class="p">);</span>
-
-<span class="c1">// specify that HTTP requests be upgraded to HTTPS</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">upgradeInsecureRequests</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
-
-<span class="c1">// add types or origins to CSP directives</span>
-<span class="c1">// assuming that the default treatment is to block rather than just report</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addBaseURI</span><span class="p">(</span><span class="s1">&#39;example.com&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// report only</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://youtube.com&#39;</span><span class="p">);</span> <span class="c1">// blocked</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addConnectSrc</span><span class="p">(</span><span class="s1">&#39;https://*.facebook.com&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span> <span class="c1">// blocked</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addFontSrc</span><span class="p">(</span><span class="s1">&#39;fonts.example.com&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addFormAction</span><span class="p">(</span><span class="s1">&#39;self&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addFrameAncestor</span><span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// report this one</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addImageSrc</span><span class="p">(</span><span class="s1">&#39;cdn.example.com&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addMediaSrc</span><span class="p">(</span><span class="s1">&#39;cdn.example.com&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addManifestSrc</span><span class="p">(</span><span class="s1">&#39;cdn.example.com&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addObjectSrc</span><span class="p">(</span><span class="s1">&#39;cdn.example.com&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span> <span class="c1">// reject from here</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addPluginType</span><span class="p">(</span><span class="s1">&#39;application/pdf&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span> <span class="c1">// reject this media type</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addScriptSrc</span><span class="p">(</span><span class="s1">&#39;scripts.example.com&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// allow but report requests from here</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addStyleSrc</span><span class="p">(</span><span class="s1">&#39;css.example.com&#39;</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addSandbox</span><span class="p">([</span><span class="s1">&#39;allow-forms&#39;</span><span class="p">,</span> <span class="s1">&#39;allow-scripts&#39;</span><span class="p">]);</span>
-</pre></div>
-</div>
-<p>The first parameter to each of the “add” methods is an appropriate string value,
-or an array of them.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">reportOnly()</span></code> method allows you to specify the default reporting treatment
-for subsequent sources, unless over-ridden. For instance, you could specify
-that youtube.com was allowed, and then provide several allowed but reported sources:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="c1">// get the CSP instance</span>
-<span class="nv">$csp</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">getCSP</span><span class="p">();</span>
-
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://youtube.com&#39;</span><span class="p">);</span> <span class="c1">// allowed</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">reportOnly</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://metube.com&#39;</span><span class="p">);</span> <span class="c1">// allowed but reported</span>
-<span class="nv">$csp</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://ourtube.com&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span> <span class="c1">// allowed</span>
-</pre></div>
-</div>
-</section>
-<section id="inline-content">
-<h3><a class="toc-backref" href="#id18">Inline Content</a><a class="headerlink" href="#inline-content" title="Permalink to this headline"></a></h3>
-<p>It is possible to set a website to not protect even inline scripts and styles on its own pages, since this might have
-been the result of user-generated content. To protect against this, CSP allows you to specify a nonce within the
-<code class="docutils literal notranslate"><span class="pre">&lt;style&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code> tags, and to add those values to the response’s header. This is a pain to handle in real
-life, and is most secure when generated on the fly. To make this simple, you can include a <code class="docutils literal notranslate"><span class="pre">{csp-style-nonce}</span></code> or
-<code class="docutils literal notranslate"><span class="pre">{csp-script-nonce}</span></code> placeholder in the tag and it will be handled for you automatically:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Original</span>
-<span class="o">&lt;</span><span class="nx">script</span> <span class="p">{</span><span class="nx">csp</span><span class="o">-</span><span class="nx">script</span><span class="o">-</span><span class="nx">nonce</span><span class="p">}</span><span class="o">&gt;</span>
-    <span class="nx">console</span><span class="o">.</span><span class="nb">log</span><span class="p">(</span><span class="s2">&quot;Script won&#39;t run as it doesn&#39;t contain a nonce attribute&quot;</span><span class="p">);</span>
-<span class="o">&lt;/</span><span class="nx">script</span><span class="o">&gt;</span>
-
-<span class="c1">// Becomes</span>
-<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">nonce</span><span class="o">=</span><span class="s2">&quot;Eskdikejidojdk978Ad8jf&quot;</span><span class="o">&gt;</span>
-    <span class="nx">console</span><span class="o">.</span><span class="nb">log</span><span class="p">(</span><span class="s2">&quot;Script won&#39;t run as it doesn&#39;t contain a nonce attribute&quot;</span><span class="p">);</span>
-<span class="o">&lt;/</span><span class="nx">script</span><span class="o">&gt;</span>
-
-<span class="c1">// OR</span>
-<span class="o">&lt;</span><span class="nx">style</span> <span class="p">{</span><span class="nx">csp</span><span class="o">-</span><span class="nx">style</span><span class="o">-</span><span class="nx">nonce</span><span class="p">}</span><span class="o">&gt;</span>
-    <span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
-<span class="o">&lt;/</span><span class="nx">style</span><span class="o">&gt;</span>
-</pre></div>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>If an attacker injects a string like <code class="docutils literal notranslate"><span class="pre">&lt;script</span> <span class="pre">{csp-script-nonce}&gt;</span></code>, it might become the real nonce attribute with this functionality. You can customize the placeholder string with the <code class="docutils literal notranslate"><span class="pre">$scriptNonceTag</span></code> and <code class="docutils literal notranslate"><span class="pre">$styleNonceTag</span></code> properties in <strong>app/Config/ContentSecurityPolicy.php</strong>.</p>
-</div>
-<p>If you don’t like this auto replacement functionality, you can turn it off with setting <code class="docutils literal notranslate"><span class="pre">$autoNonce</span> <span class="pre">=</span> <span class="pre">false</span></code> in <strong>app/Config/ContentSecurityPolicy.php</strong>.</p>
-<p>In this case, you can use the functions, <a class="reference internal" href="../general/common_functions.html#csp_script_nonce" title="csp_script_nonce"><code class="xref php php-func docutils literal notranslate"><span class="pre">csp_script_nonce()</span></code></a> and <a class="reference internal" href="../general/common_functions.html#csp_style_nonce" title="csp_style_nonce"><code class="xref php php-func docutils literal notranslate"><span class="pre">csp_style_nonce()</span></code></a>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Original</span>
-<span class="o">&lt;</span><span class="nx">script</span> <span class="o">&lt;?=</span> <span class="nx">csp_script_nonce</span><span class="p">()</span> <span class="cp">?&gt;</span>&gt;
-    console.log(&quot;Script won&#39;t run as it doesn&#39;t contain a nonce attribute&quot;);
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-// Becomes
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">nonce</span><span class="o">=</span><span class="s">&quot;Eskdikejidojdk978Ad8jf&quot;</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Script won&#39;t run as it doesn&#39;t contain a nonce attribute&quot;</span><span class="p">);</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-
-// OR
-<span class="p">&lt;</span><span class="nt">style</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">csp_style_nonce</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="o">.</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="o">.</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</pre></div>
-</div>
-</section>
-</section>
 <section id="class-reference">
-<h2><a class="toc-backref" href="#id19">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id14">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In addition to the methods listed here, this class inherits the methods from the
@@ -1169,7 +1001,7 @@ request only.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 05, 2023.
+      <span class="lastupdated">Last updated on Nov 06, 2023.
       </span></p>
   </div>
 
