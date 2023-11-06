@@ -923,6 +923,17 @@ The *Route* column shows the route path to match. The route of a defined route i
 
 Since v4.3.0, the *Name* column shows the route name. ``»`` indicates the name is the same as the route path.
 
+Prior to v4.5.0, routes with ``{locale}`` and the enabled parameter ``$routes->shouldUseSupportedLocalesOnly(true)`` in **app/Config/Routes.php** were shown ``<unknown>`` in the *Filters* column. This was due to the fact that it was impossible to resolve filters for all languages.
+Now routes having ``{locale}`` are output as ``!filtername``. This means that filters are set for a group of languages, but there is no guarantee of execution for each language.
+
+.. code-block:: none
+
+    +--------+---------------+------+-----------+----------------+---------------+
+    | Method | Route         | Name | Handler   | Before Filters | After Filters |
+    +--------+---------------+------+-----------+----------------+---------------+
+    | GET    | {locale}/feed | »    | (Closure) |                | !toolbar      |
+    +--------+---------------+------+-----------+----------------+---------------+
+
 .. important:: The system is not perfect. If you use Custom Placeholders, *Filters* might not be correct. If you want to check filters for a route, you can use :ref:`spark filter:check <spark-filter-check>` command.
 
 Auto Routing (Improved)
