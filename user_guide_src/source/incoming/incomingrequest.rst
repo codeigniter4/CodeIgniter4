@@ -101,6 +101,11 @@ Getting Data
 
 The ``getVar()`` method will pull from ``$_REQUEST``, so will return any data from ``$_GET``, ``$POST``, or ``$_COOKIE`` (depending on php.ini `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_).
 
+.. warning:: If you want to validate POST data only, don't use ``getVar()``.
+    Newer values override older values. POST values may be overridden by the
+    cookies if they have the same name, and you set "C" after "P" in
+    `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_.
+
 .. note:: If the incoming request has a ``Content-Type`` header set to ``application/json``,
     the ``getVar()`` method returns the JSON data instead of ``$_REQUEST`` data.
 
