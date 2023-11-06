@@ -35,22 +35,11 @@ use InvalidArgumentException;
 trait ResponseTrait
 {
     /**
-     * Whether Content Security Policy is being enforced.
-     *
-     * @var bool
-     *
-     * @deprecated Use $this->CSP->enabled() instead.
-     */
-    protected $CSPEnabled = false;
-
-    /**
      * Content security policy handler
      *
      * @var ContentSecurityPolicy
-     *
-     * @deprecated Will be protected. Use `getCSP()` instead.
      */
-    public $CSP;
+    protected $CSP;
 
     /**
      * CookieStore instance.
@@ -58,69 +47,6 @@ trait ResponseTrait
      * @var CookieStore
      */
     protected $cookieStore;
-
-    /**
-     * Set a cookie name prefix if you need to avoid collisions
-     *
-     * @var string
-     *
-     * @deprecated Use the dedicated Cookie class instead.
-     */
-    protected $cookiePrefix = '';
-
-    /**
-     * Set to .your-domain.com for site-wide cookies
-     *
-     * @var string
-     *
-     * @deprecated Use the dedicated Cookie class instead.
-     */
-    protected $cookieDomain = '';
-
-    /**
-     * Typically will be a forward slash
-     *
-     * @var string
-     *
-     * @deprecated Use the dedicated Cookie class instead.
-     */
-    protected $cookiePath = '/';
-
-    /**
-     * Cookie will only be set if a secure HTTPS connection exists.
-     *
-     * @var bool
-     *
-     * @deprecated Use the dedicated Cookie class instead.
-     */
-    protected $cookieSecure = false;
-
-    /**
-     * Cookie will only be accessible via HTTP(S) (no javascript)
-     *
-     * @var bool
-     *
-     * @deprecated Use the dedicated Cookie class instead.
-     */
-    protected $cookieHTTPOnly = false;
-
-    /**
-     * Cookie SameSite setting
-     *
-     * @var string
-     *
-     * @deprecated Use the dedicated Cookie class instead.
-     */
-    protected $cookieSameSite = Cookie::SAMESITE_LAX;
-
-    /**
-     * Stores all cookies that were set in the response.
-     *
-     * @var array
-     *
-     * @deprecated Use the dedicated Cookie class instead.
-     */
-    protected $cookies = [];
 
     /**
      * Type of format the body is in.
