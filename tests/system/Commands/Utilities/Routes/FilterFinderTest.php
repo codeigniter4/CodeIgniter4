@@ -52,6 +52,13 @@ final class FilterFinderTest extends CIUnitTestCase
         $this->moduleConfig->enabled = false;
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->resetServices();
+    }
+
     private function createRouteCollection(array $routes = []): RouteCollection
     {
         $collection = new RouteCollection(Services::locator(), $this->moduleConfig, new Routing());
@@ -137,7 +144,7 @@ final class FilterFinderTest extends CIUnitTestCase
     public function testFindGlobalsAndRouteFilters(): void
     {
         $collection = $this->createRouteCollection();
-        $collection->get('admin', ' AdminController::index', ['filter' => 'honeypot']);
+        $collection->get('admin', 'AdminController::index', ['filter' => 'honeypot']);
         $router  = $this->createRouter($collection);
         $filters = $this->createFilters();
 
@@ -155,7 +162,7 @@ final class FilterFinderTest extends CIUnitTestCase
     public function testFindGlobalsAndRouteClassnameFilters(): void
     {
         $collection = $this->createRouteCollection();
-        $collection->get('admin', ' AdminController::index', ['filter' => InvalidChars::class]);
+        $collection->get('admin', 'AdminController::index', ['filter' => InvalidChars::class]);
         $router  = $this->createRouter($collection);
         $filters = $this->createFilters();
 
@@ -173,7 +180,7 @@ final class FilterFinderTest extends CIUnitTestCase
     public function testFindGlobalsAndRouteMultipleFilters(): void
     {
         $collection = $this->createRouteCollection();
-        $collection->get('admin', ' AdminController::index', ['filter' => ['honeypot', InvalidChars::class]]);
+        $collection->get('admin', 'AdminController::index', ['filter' => ['honeypot', InvalidChars::class]]);
         $router  = $this->createRouter($collection);
         $filters = $this->createFilters();
 
@@ -311,6 +318,44 @@ final class FilterFinderTest extends CIUnitTestCase
                 'filter1',
                 'filter2',
             ],
+        ];
+        $this->assertSame($expected, $filters);
+    }
+
+    public function testFindFiltersWithAnyLocales(): void
+    {
+        $collection = $this->createRouteCollection();
+        $collection->useSupportedLocalesOnly(false);
+        $collection->get('{locale}/admin/(:segment)', 'AdminController::index/$1');
+        Services::injectMock('routes', $collection);
+        $router  = $this->createRouter($collection);
+        $filters = $this->createFilters();
+        $finder  = new FilterFinder($router, $filters);
+
+        $filters = $finder->find('{locale}/admin/settings');
+
+        $expected = [
+            'before' => ['csrf'],
+            'after'  => ['toolbar'],
+        ];
+        $this->assertSame($expected, $filters);
+    }
+
+    public function testFindFiltersWithSupportedLocalesOnly(): void
+    {
+        $collection = $this->createRouteCollection();
+        $collection->useSupportedLocalesOnly(true);
+        $collection->get('{locale}/admin/(:segment)', 'AdminController::index/$1');
+        Services::injectMock('routes', $collection);
+        $router  = $this->createRouter($collection);
+        $filters = $this->createFilters();
+        $finder  = new FilterFinder($router, $filters);
+
+        $filters = $finder->find('{locale}/admin/settings');
+
+        $expected = [
+            'before' => ['!csrf'],
+            'after'  => ['!toolbar'],
         ];
         $this->assertSame($expected, $filters);
     }
