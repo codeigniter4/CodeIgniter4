@@ -293,7 +293,10 @@ class RedisHandler extends BaseHandler
         $attempt = 0;
 
         do {
-            if (($ttl = $this->redis->ttl($lockKey)) > 0) {
+            $ttl = $this->redis->ttl($lockKey);
+            assert(is_int($ttl));
+
+            if ($ttl > 0) {
                 sleep(1);
 
                 continue;
