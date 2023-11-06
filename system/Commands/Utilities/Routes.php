@@ -18,6 +18,7 @@ use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\AutoRouteCollector 
 use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
 use CodeIgniter\Commands\Utilities\Routes\SampleURIGenerator;
 use CodeIgniter\Router\DefinedRouteCollector;
+use Config\App;
 use Config\Feature;
 use Config\Routing;
 use Config\Services;
@@ -119,7 +120,22 @@ class Routes extends BaseCommand
 
         foreach ($definedRouteCollector->collect() as $route) {
             $sampleUri = $uriGenerator->get($route['route']);
-            $filters   = $filterCollector->get($route['method'], $sampleUri);
+
+            // Fix for the search filters command
+            $isSupportedLocaleOnly = false;
+
+            if (strpos($sampleUri, '{locale}') !== false && Services::routes()->shouldUseSupportedLocalesOnly()) {
+                $isSupportedLocaleOnly = true;
+
+                $sampleUri = str_replace('{locale}', config(App::class)->defaultLocale, $sampleUri);
+            }
+
+            $filters = $filterCollector->get($route['method'], $sampleUri);
+
+            if ($isSupportedLocaleOnly) {
+                $filters['before'] = array_map(static fn ($filter) => '!' . $filter, $filters['before']);
+                $filters['after']  = array_map(static fn ($filter) => '!' . $filter, $filters['after']);
+            }
 
             $routeName = ($route['route'] === $route['name']) ? '»' : $route['name'];
 

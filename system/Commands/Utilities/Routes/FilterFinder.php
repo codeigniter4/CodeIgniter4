@@ -15,7 +15,6 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\Router\Router;
-use Config\App;
 use Config\Feature;
 use Config\Services;
 
@@ -51,15 +50,6 @@ final class FilterFinder
     {
         $this->filters->reset();
 
-        // Fix for the search filters command
-        $isSupportedLocaleOnly = false;
-
-        if (strpos($uri, '{locale}') !== false && Services::routes()->shouldUseSupportedLocalesOnly()) {
-            $isSupportedLocaleOnly = true;
-
-            $uri = str_replace('{locale}', config(App::class)->defaultLocale, $uri);
-        }
-
         // Add route filters
         try {
             $routeFilters = $this->getRouteFilters($uri);
@@ -74,14 +64,7 @@ final class FilterFinder
 
             $this->filters->initialize($uri);
 
-            $filters = $this->filters->getFilters();
-
-            if ($isSupportedLocaleOnly) {
-                $filters['before'] = array_map(static fn ($filter) => '!' . $filter, $filters['before']);
-                $filters['after']  = array_map(static fn ($filter) => '!' . $filter, $filters['after']);
-            }
-
-            return $filters;
+            return $this->filters->getFilters();
         } catch (RedirectException $e) {
             return [
                 'before' => [],
