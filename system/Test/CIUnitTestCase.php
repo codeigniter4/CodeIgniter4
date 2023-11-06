@@ -445,7 +445,7 @@ abstract class CIUnitTestCase extends TestCase
      */
     public function assertCloseEnough(int $expected, $actual, string $message = '', int $tolerance = 1)
     {
-        $difference = abs($expected - (int) floor((float) $actual));
+        $difference = abs($expected - (int) floor($actual));
 
         $this->assertLessThanOrEqual($tolerance, $difference, $message);
     }
