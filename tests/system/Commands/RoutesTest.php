@@ -223,4 +223,32 @@ final class RoutesTest extends CIUnitTestCase
             EOL;
         $this->assertStringContainsString($expected, $this->getBuffer());
     }
+
+    public function testRoutesCommandWithAnyLocales(): void
+    {
+        $routes = $this->getCleanRoutes();
+        $routes->useSupportedLocalesOnly(false);
+        $routes->get('{locale}/admin/(:segment)', 'AdminController::index/$1', ['as' => 'admin']);
+
+        command('routes');
+
+        $expected = <<<'EOL'
+            | GET     | {locale}/admin/([^/]+) | admin         | \App\Controllers\AdminController::index/$1 |                | toolbar       |
+            EOL;
+        $this->assertStringContainsString($expected, $this->getBuffer());
+    }
+
+    public function testRoutesCommandWithSupportedLocalesOnly(): void
+    {
+        $routes = $this->getCleanRoutes();
+        $routes->useSupportedLocalesOnly(true);
+        $routes->get('{locale}/admin/(:segment)', 'AdminController::index/$1', ['as' => 'admin']);
+
+        command('routes');
+
+        $expected = <<<'EOL'
+            | GET     | {locale}/admin/([^/]+) | admin         | \App\Controllers\AdminController::index/$1 |                | !toolbar      |
+            EOL;
+        $this->assertStringContainsString($expected, $this->getBuffer());
+    }
 }

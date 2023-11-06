@@ -52,13 +52,6 @@ final class FilterFinderTest extends CIUnitTestCase
         $this->moduleConfig->enabled = false;
     }
 
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        $this->resetServices();
-    }
-
     private function createRouteCollection(array $routes = []): RouteCollection
     {
         $collection = new RouteCollection(Services::locator(), $this->moduleConfig, new Routing());
@@ -318,44 +311,6 @@ final class FilterFinderTest extends CIUnitTestCase
                 'filter1',
                 'filter2',
             ],
-        ];
-        $this->assertSame($expected, $filters);
-    }
-
-    public function testFindFiltersWithAnyLocales(): void
-    {
-        $collection = $this->createRouteCollection();
-        $collection->useSupportedLocalesOnly(false);
-        $collection->get('{locale}/admin/(:segment)', 'AdminController::index/$1');
-        Services::injectMock('routes', $collection);
-        $router  = $this->createRouter($collection);
-        $filters = $this->createFilters();
-        $finder  = new FilterFinder($router, $filters);
-
-        $filters = $finder->find('{locale}/admin/settings');
-
-        $expected = [
-            'before' => ['csrf'],
-            'after'  => ['toolbar'],
-        ];
-        $this->assertSame($expected, $filters);
-    }
-
-    public function testFindFiltersWithSupportedLocalesOnly(): void
-    {
-        $collection = $this->createRouteCollection();
-        $collection->useSupportedLocalesOnly(true);
-        $collection->get('{locale}/admin/(:segment)', 'AdminController::index/$1');
-        Services::injectMock('routes', $collection);
-        $router  = $this->createRouter($collection);
-        $filters = $this->createFilters();
-        $finder  = new FilterFinder($router, $filters);
-
-        $filters = $finder->find('{locale}/admin/settings');
-
-        $expected = [
-            'before' => ['!csrf'],
-            'after'  => ['!toolbar'],
         ];
         $this->assertSame($expected, $filters);
     }
