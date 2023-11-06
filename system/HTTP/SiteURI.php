@@ -197,7 +197,7 @@ class SiteURI extends URI
         // Validate baseURL
         if (filter_var($baseURL, FILTER_VALIDATE_URL) === false) {
             throw new ConfigException(
-                'Config\App::$baseURL is invalid.'
+                'Config\App::$baseURL "' . $baseURL . '" is not a valid URL.'
             );
         }
 
