@@ -362,6 +362,7 @@ data to be validated:
     is not HTML form post (``Content-Type: multipart/form-data``),
     or gets data from :ref:`$request->getVar() <incomingrequest-getting-data>`,
     and an attacker could change what data is validated.
+    Instead of withRequest(), use validateData() to validate POST data only. withRequest() uses $request->getVar() which returns $_GET, $_POST and $_COOKIE data in that order. Newer values override older values. Post values will be overriden by the cookies if they have the same name.
 
 .. note:: The :ref:`getValidated() <validation-getting-validated-data>`
     method can be used since v4.4.0.
