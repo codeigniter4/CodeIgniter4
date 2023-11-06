@@ -51,9 +51,12 @@ final class FilterFinder
     {
         $this->filters->reset();
 
-        $isLocaleExist = strpos($uri, '{locale}') !== false;
+        // Fix for the search filters command
+        $isSupportedLocaleOnly = false;
 
-        if ($isLocaleExist) {
+        if (strpos($uri, '{locale}') !== false && Services::routes()->shouldUseSupportedLocalesOnly()) {
+            $isSupportedLocaleOnly = true;
+
             $uri = str_replace('{locale}', config(App::class)->defaultLocale, $uri);
         }
 
@@ -73,7 +76,7 @@ final class FilterFinder
 
             $filters = $this->filters->getFilters();
 
-            if ($isLocaleExist) {
+            if ($isSupportedLocaleOnly) {
                 $filters['before'] = array_map(static fn ($filter) => '!' . $filter, $filters['before']);
                 $filters['after']  = array_map(static fn ($filter) => '!' . $filter, $filters['after']);
             }
