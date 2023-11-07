@@ -24,9 +24,10 @@ class Rules
     /**
      * The value does not match another field in $data.
      *
-     * @param array $data Other field/value pairs
+     * @param string|null $str
+     * @param array       $data Other field/value pairs
      */
-    public function differs(?string $str, string $field, array $data): bool
+    public function differs($str, string $field, array $data): bool
     {
         if (strpos($field, '.') !== false) {
             return $str !== dot_array_search($field, $data);
@@ -231,15 +232,16 @@ class Rules
     /**
      * Matches the value of another field in $data.
      *
-     * @param array $data Other field/value pairs
+     * @param string|null $str
+     * @param array       $data Other field/value pairs
      */
-    public function matches(?string $str, string $field, array $data): bool
+    public function matches($str, string $field, array $data): bool
     {
         if (strpos($field, '.') !== false) {
             return $str === dot_array_search($field, $data);
         }
 
-        return array_key_exists($field, $data) && $str === $data[$field];
+        return isset($data[$field]) && $str === $data[$field];
     }
 
     /**

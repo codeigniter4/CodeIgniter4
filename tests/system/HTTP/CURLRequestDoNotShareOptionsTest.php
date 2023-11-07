@@ -267,14 +267,14 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
     public function testOptionsDelay(): void
     {
         $request = $this->getRequest();
-        $this->assertSame(0.0, $request->getDelay());
+        $this->assertEqualsWithDelta(0.0, $request->getDelay(), PHP_FLOAT_EPSILON);
 
         $options = [
             'delay'   => 2000,
             'headers' => ['fruit' => 'apple'],
         ];
         $request = $this->getRequest($options);
-        $this->assertSame(2.0, $request->getDelay());
+        $this->assertEqualsWithDelta(2.0, $request->getDelay(), PHP_FLOAT_EPSILON);
     }
 
     public function testPatchSetsCorrectMethod(): void
@@ -356,10 +356,10 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertTrue($options[CURLOPT_FRESH_CONNECT]);
 
         $this->assertArrayHasKey(CURLOPT_TIMEOUT_MS, $options);
-        $this->assertSame(0.0, $options[CURLOPT_TIMEOUT_MS]);
+        $this->assertEqualsWithDelta(0.0, $options[CURLOPT_TIMEOUT_MS], PHP_FLOAT_EPSILON);
 
         $this->assertArrayHasKey(CURLOPT_CONNECTTIMEOUT_MS, $options);
-        $this->assertSame(150000.0, $options[CURLOPT_CONNECTTIMEOUT_MS]);
+        $this->assertEqualsWithDelta(150000.0, $options[CURLOPT_CONNECTTIMEOUT_MS], PHP_FLOAT_EPSILON);
     }
 
     public function testAuthBasicOption(): void
@@ -734,7 +734,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $request->get('products');
 
         // we still need to check the code coverage to make sure this was done
-        $this->assertSame(0.1, $request->getDelay());
+        $this->assertEqualsWithDelta(0.1, $request->getDelay(), PHP_FLOAT_EPSILON);
     }
 
     public function testSendContinued(): void

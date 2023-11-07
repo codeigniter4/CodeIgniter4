@@ -39,6 +39,17 @@ The following code explains details:
 
 If you have code that depends on the bug, fix the the rule key.
 
+Validation rules matches and differs
+====================================
+
+Because bugs have been fixed in the case where ``matches`` and ``differs`` in
+the Strict and Traditional rules validate data of non-string types, if you are
+using these rules and validate non-string data, the validation results might be
+changed (fixed).
+
+Note that Traditional Rules should not be used to validate data that is not a
+string.
+
 *********************
 Breaking Enhancements
 *********************

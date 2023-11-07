@@ -165,9 +165,14 @@ class IncomingRequest extends Request
             $body = file_get_contents('php://input');
         }
 
+        // If file_get_contents() returns false or empty string, set null.
+        if ($body === false || $body === '') {
+            $body = null;
+        }
+
         $this->config       = $config;
         $this->uri          = $uri;
-        $this->body         = ! empty($body) ? $body : null;
+        $this->body         = $body;
         $this->userAgent    = $userAgent;
         $this->validLocales = $config->supportedLocales;
 

@@ -64,8 +64,15 @@ parameter. This is not case-sensitive.
 Redirect
 ========
 
-If you want to create a redirect, use the :php:func:`redirect()` function. It
-returns a ``RedirectResponse`` instance.
+If you want to create a redirect, use the :php:func:`redirect()` function.
+
+It returns a ``RedirectResponse`` instance. It is a different instance from the
+global response instance that ``Services::response()`` returns.
+
+.. warning:: If you set Cookies or Response Headers before you call ``redirect()``,
+    they are set to the global response instance, and they are not automatically
+    copied to the ``RedirectResponse`` instance. To send them, you need to call
+    the ``withCookies()`` or ``withHeaders()`` method manually.
 
 .. important:: If you want to redirect, an instance of ``RedirectResponse`` must
     be returned in a method of the :doc:`Controller <../incoming/controllers>` or
@@ -112,6 +119,30 @@ When you want to redirect back, use ``redirect()->back()``:
 .. note:: ``redirect()->back()`` is not the same as browser "back" button.
     It takes a visitor to "the last page viewed during the Session" when the Session is available.
     If the Session hasn't been loaded, or is otherwise unavailable, then a sanitized version of HTTP_REFERER will be used.
+
+Redirect with Cookies
+---------------------
+
+If you set Cookies before you call ``redirect()``, they are set to the global
+response instance, and they are not automatically copied to the ``RedirectResponse``
+instance.
+
+To send the Cookies, you need to call the ``withCookies()`` method manually.
+
+.. literalinclude:: ./response/034.php
+    :lines: 2-
+
+Redirect with Headers
+---------------------
+
+If you set Response Headers before you call ``redirect()``, they are set to the
+global response instance, and they are not automatically copied to the
+``RedirectResponse`` instance.
+
+To send the Headers, you need to call the ``withHeaders()`` method manually.
+
+.. literalinclude:: ./response/035.php
+    :lines: 2-
 
 .. _response-redirect-status-code:
 

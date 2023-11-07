@@ -71,6 +71,12 @@ Config for CSRF
 CSRF Protection Methods
 -----------------------
 
+.. warning:: If you use :doc:`Session <./sessions>`, be sure to use Session based
+    CSRF protection. Cookie based CSRF protection will not prevent Same-site attacks.
+    See
+    `GHSA-5hm8-vh6r-2cjq <https://github.com/codeigniter4/shield/security/advisories/GHSA-5hm8-vh6r-2cjq>`_
+    for details.
+
 By default, the Cookie based CSRF Protection is used. It is
 `Double Submit Cookie <https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#double-submit-cookie>`_
 on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.
@@ -101,7 +107,9 @@ Token Regeneration
 ------------------
 
 Tokens may be either regenerated on every submission (default) or
-kept the same throughout the life of the CSRF cookie. The default
+kept the same throughout the life of the Session or CSRF cookie.
+
+The default
 regeneration of tokens provides stricter security, but may result
 in usability concerns as other tokens become invalid (back/forward
 navigation, multiple tabs/windows, asynchronous actions, etc). You
@@ -109,6 +117,10 @@ may alter this behavior by editing the following config parameter value in
 **app/Config/Security.php**:
 
 .. literalinclude:: security/004.php
+
+.. warning:: If you use Cookie based CSRF protection, and :php:func:`redirect()`
+    after the submission, you must call ``withCookie()`` to send the regenerated
+    CSRF cookie. See :ref:`response-redirect` for details.
 
 .. note:: Since v4.2.3, you can regenerate CSRF token manually with the
     ``Security::generateHash()`` method.
