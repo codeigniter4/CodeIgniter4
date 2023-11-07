@@ -76,7 +76,8 @@ You can also check if the request was made through and HTTPS connection with the
 Retrieving Input
 ****************
 
-You can retrieve input from ``$_SERVER``, ``$_GET``, ``$_POST``, and ``$_ENV`` through the Request object.
+You can retrieve input from ``$_GET``, ``$_POST``, ``$_COOKIE``, ``$_SERVER``
+and ``$_ENV`` through the Request object.
 The data is not automatically filtered and returns the raw input data as passed in the request.
 
 .. note:: It is bad practice to use global variables. Basically, it should be avoided
