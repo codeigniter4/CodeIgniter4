@@ -427,7 +427,8 @@ on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.</p>
 <section id="token-regeneration">
 <h4><a class="toc-backref" href="#id10">Token Regeneration</a><a class="headerlink" href="#token-regeneration" title="Permalink to this headline"></a></h4>
 <p>Tokens may be either regenerated on every submission (default) or
-kept the same throughout the life of the CSRF cookie. The default
+kept the same throughout the life of the Session or CSRF cookie.</p>
+<p>The default
 regeneration of tokens provides stricter security, but may result
 in usability concerns as other tokens become invalid (back/forward
 navigation, multiple tabs/windows, asynchronous actions, etc). You
@@ -446,6 +447,12 @@ may alter this behavior by editing the following config parameter value in
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you use Cookie based CSRF protection, and <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a>
+after the submission, you must call <code class="docutils literal notranslate"><span class="pre">withCookie()</span></code> to send the regenerated
+CSRF cookie. See <a class="reference internal" href="../outgoing/response.html#response-redirect"><span class="std std-ref">Redirect</span></a> for details.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
