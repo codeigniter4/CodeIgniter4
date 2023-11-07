@@ -847,7 +847,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame(array_merge($_POST, $_GET), $this->request->getGetPost());
     }
 
-    public function testWithFalseBody(): void
+    public function testGetBodyWithFalseBody(): void
     {
         // Use `false` here to simulate file_get_contents returning a false value
         $request = $this->createRequest(null, false);
