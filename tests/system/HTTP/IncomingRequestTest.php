@@ -856,6 +856,13 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertNull($request->getBody());
     }
 
+    public function testGetBodyWithZero(): void
+    {
+        $request = $this->createRequest(null, '0');
+
+        $this->assertSame('0', $request->getBody());
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/3020
      */
