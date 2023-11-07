@@ -518,7 +518,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertNull($request->getJsonVar('myKey'));
     }
 
-    public function testgetJSONReturnsNullFromNullBody(): void
+    public function testGetJSONReturnsNullFromNullBody(): void
     {
         $config          = new App();
         $config->baseURL = 'http://example.com/';
