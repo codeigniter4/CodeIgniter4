@@ -518,7 +518,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertNull($request->getJsonVar('myKey'));
     }
 
-    public function testgetJSONReturnsNullFromNullBody(): void
+    public function testGetJSONReturnsNullFromNullBody(): void
     {
         $config          = new App();
         $config->baseURL = 'http://example.com/';
@@ -847,13 +847,20 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame(array_merge($_POST, $_GET), $this->request->getGetPost());
     }
 
-    public function testWithFalseBody(): void
+    public function testGetBodyWithFalseBody(): void
     {
         // Use `false` here to simulate file_get_contents returning a false value
         $request = $this->createRequest(null, false);
 
         $this->assertNotFalse($request->getBody());
         $this->assertNull($request->getBody());
+    }
+
+    public function testGetBodyWithZero(): void
+    {
+        $request = $this->createRequest(null, '0');
+
+        $this->assertSame('0', $request->getBody());
     }
 
     /**
