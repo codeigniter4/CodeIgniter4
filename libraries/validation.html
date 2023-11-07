@@ -777,6 +777,15 @@ For example, data returned by multi select dropdown:</p>
 </section>
 <section id="withrequest">
 <span id="validation-withrequest"></span><h3><a class="toc-backref" href="#id20">withRequest()</a><a class="headerlink" href="#withrequest" title="Permalink to this headline"></a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you want to validate POST data only, don’t use <code class="docutils literal notranslate"><span class="pre">withRequest()</span></code>.
+This method uses <a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-getting-data"><span class="std std-ref">$request-&gt;getVar()</span></a>
+which returns <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code> or <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code> data in that order
+(depending on php.ini <a class="reference external" href="https://www.php.net/manual/en/ini.core.php#ini.request-order">request-order</a>).
+Newer values override older values. POST values may be overridden by the
+cookies if they have the same name.</p>
+</div>
 <p>One of the most common times you will use the validation library is when validating
 data that was input from an HTTP Request. If desired, you can pass an instance of the
 current Request object and it will take all of the input data and set it as the
