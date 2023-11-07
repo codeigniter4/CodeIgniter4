@@ -87,15 +87,44 @@ modify this by passing the duration (in seconds) as the first parameter:
 Validating Data
 ***************
 
+.. _controller-validatedata:
+
+$this->validateData()
+=====================
+
+.. versionadded:: 4.2.0
+
+To simplify data checking, the controller also provides the convenience method
+``validateData()``.
+
+The method accepts an array of data to validate in the first parameter, and an
+array of rules in the second parameter, and in the optional third parameter,
+an array of custom error messages to display if the items are not valid.
+
+The :doc:`Validation Library docs </libraries/validation>` have details on
+rule and message array formats, as well as available rules:
+
+.. literalinclude:: controllers/006.php
+
 .. _controller-validate:
 
 $this->validate()
 =================
 
-To simplify data checking, the controller also provides the convenience method ``validate()``.
+The controller also provides the convenience method ``validate()``.
+
+.. warning:: Instead of ``validate()``, use ``validateData()`` to validate POST
+    data only. ``validate()`` uses ``$request->getVar()`` which returns
+    ``$_GET``, ``$_POST`` or ``$_COOKIE`` data in that order (depending on php.ini
+    `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_).
+    Newer values override older values. POST values may be overridden by the
+    cookies if they have the same name.
+
 The method accepts an array of rules in the first parameter,
 and in the optional second parameter, an array of custom error messages to display
-if the items are not valid. Internally, this uses the controller's
+if the items are not valid.
+
+Internally, this uses the controller's
 ``$this->request`` instance to get the data to be validated.
 
 The :doc:`Validation Library docs </libraries/validation>` have details on
@@ -122,19 +151,6 @@ the ``$rules`` array with the name of the group as defined in **app/Config/Valid
 .. literalinclude:: controllers/005.php
 
 .. note:: Validation can also be handled automatically in the model, but sometimes it's easier to do it in the controller. Where is up to you.
-
-.. _controller-validatedata:
-
-$this->validateData()
-=====================
-
-.. versionadded:: 4.2.0
-
-Sometimes you may want to check the controller method parameters or other custom data.
-In that case, you can use the ``$this->validateData()`` method.
-The method accepts an array of data to validate in the first parameter:
-
-.. literalinclude:: controllers/006.php
 
 Protecting Methods
 ******************
