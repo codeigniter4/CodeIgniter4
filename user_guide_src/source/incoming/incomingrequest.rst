@@ -99,6 +99,9 @@ With CodeIgniter's built-in methods you can simply do this:
 Getting Data
 ============
 
+getVar()
+--------
+
 The ``getVar()`` method will pull from ``$_REQUEST``, so will return any data from ``$_GET``, ``$POST``, or ``$_COOKIE`` (depending on php.ini `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_).
 
 .. warning:: If you want to validate POST data only, don't use ``getVar()``.
@@ -108,6 +111,9 @@ The ``getVar()`` method will pull from ``$_REQUEST``, so will return any data fr
 
 .. note:: If the incoming request has a ``Content-Type`` header set to ``application/json``,
     the ``getVar()`` method returns the JSON data instead of ``$_REQUEST`` data.
+
+get*()
+------
 
 While this
 is convenient, you will often need to use a more specific method, like:
