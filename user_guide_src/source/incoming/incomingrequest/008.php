@@ -1,3 +1,3 @@
 <?php
 
-$something = $request->getVar('foo');
+$something = $request->getPost('foo');

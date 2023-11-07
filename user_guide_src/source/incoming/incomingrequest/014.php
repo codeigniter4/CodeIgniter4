@@ -1,3 +1,3 @@
 <?php
 
-$email = $request->getVar('email', FILTER_SANITIZE_EMAIL);
+$email = $request->getPost('email', FILTER_SANITIZE_EMAIL);
