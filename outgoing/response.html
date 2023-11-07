@@ -297,16 +297,18 @@ a server responding to the client that called it.</p>
 <li><p><a class="reference internal" href="#redirect-to-a-uri-path" id="id7">Redirect to a URI path</a></p></li>
 <li><p><a class="reference internal" href="#redirect-to-a-defined-route" id="id8">Redirect to a Defined Route</a></p></li>
 <li><p><a class="reference internal" href="#redirect-back" id="id9">Redirect Back</a></p></li>
-<li><p><a class="reference internal" href="#redirect-status-code" id="id10">Redirect Status Code</a></p></li>
+<li><p><a class="reference internal" href="#redirect-with-cookies" id="id10">Redirect with Cookies</a></p></li>
+<li><p><a class="reference internal" href="#redirect-with-headers" id="id11">Redirect with Headers</a></p></li>
+<li><p><a class="reference internal" href="#redirect-status-code" id="id12">Redirect Status Code</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#force-file-download" id="id11">Force File Download</a></p>
+<li><p><a class="reference internal" href="#force-file-download" id="id13">Force File Download</a></p>
 <ul>
-<li><p><a class="reference internal" href="#open-file-in-browser" id="id12">Open File in Browser</a></p></li>
+<li><p><a class="reference internal" href="#open-file-in-browser" id="id14">Open File in Browser</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#http-caching" id="id13">HTTP Caching</a></p></li>
-<li><p><a class="reference internal" href="#class-reference" id="id14">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#http-caching" id="id15">HTTP Caching</a></p></li>
+<li><p><a class="reference internal" href="#class-reference" id="id16">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="working-with-the-response">
@@ -382,8 +384,16 @@ parameter. This is not case-sensitive.</p>
 </section>
 <section id="redirect">
 <span id="response-redirect"></span><h2><a class="toc-backref" href="#id6">Redirect</a><a class="headerlink" href="#redirect" title="Permalink to this headline"></a></h2>
-<p>If you want to create a redirect, use the <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a> function. It
-returns a <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance.</p>
+<p>If you want to create a redirect, use the <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a> function.</p>
+<p>It returns a <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance. It is a different instance from the
+global response instance that <code class="docutils literal notranslate"><span class="pre">Services::response()</span></code> returns.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you set Cookies or Response Headers before you call <code class="docutils literal notranslate"><span class="pre">redirect()</span></code>,
+they are set to the global response instance, and they are not automatically
+copied to the <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance. To send them, you need to call
+the <code class="docutils literal notranslate"><span class="pre">withCookies()</span></code> or <code class="docutils literal notranslate"><span class="pre">withHeaders()</span></code> method manually.</p>
+</div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>If you want to redirect, an instance of <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> must
@@ -433,12 +443,6 @@ treating it the same as using <code class="docutils literal notranslate"><span c
 
 <span class="c1">// Set a flash message.</span>
 <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">);</span>
-
-<span class="c1">// Copies all cookies from global response instance.</span>
-<span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">withCookies</span><span class="p">();</span>
-
-<span class="c1">// Copies all headers from the global response instance.</span>
-<span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">withHeaders</span><span class="p">();</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -448,8 +452,30 @@ It takes a visitor to “the last page viewed during the Session” when the Ses
 If the Session hasn’t been loaded, or is otherwise unavailable, then a sanitized version of HTTP_REFERER will be used.</p>
 </div>
 </section>
+<section id="redirect-with-cookies">
+<h3><a class="toc-backref" href="#id10">Redirect with Cookies</a><a class="headerlink" href="#redirect-with-cookies" title="Permalink to this headline"></a></h3>
+<p>If you set Cookies before you call <code class="docutils literal notranslate"><span class="pre">redirect()</span></code>, they are set to the global
+response instance, and they are not automatically copied to the <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code>
+instance.</p>
+<p>To send the Cookies, you need to call the <code class="docutils literal notranslate"><span class="pre">withCookies()</span></code> method manually.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Copies all cookies from global response instance.</span>
+<span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">withCookies</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="redirect-with-headers">
+<h3><a class="toc-backref" href="#id11">Redirect with Headers</a><a class="headerlink" href="#redirect-with-headers" title="Permalink to this headline"></a></h3>
+<p>If you set Response Headers before you call <code class="docutils literal notranslate"><span class="pre">redirect()</span></code>, they are set to the
+global response instance, and they are not automatically copied to the
+<code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance.</p>
+<p>To send the Headers, you need to call the <code class="docutils literal notranslate"><span class="pre">withHeaders()</span></code> method manually.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Copies all headers from the global response instance.</span>
+<span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">back</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">withHeaders</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
 <section id="redirect-status-code">
-<span id="response-redirect-status-code"></span><h3><a class="toc-backref" href="#id10">Redirect Status Code</a><a class="headerlink" href="#redirect-status-code" title="Permalink to this headline"></a></h3>
+<span id="response-redirect-status-code"></span><h3><a class="toc-backref" href="#id12">Redirect Status Code</a><a class="headerlink" href="#redirect-status-code" title="Permalink to this headline"></a></h3>
 <p>The default HTTP status code for GET requests is 302. However, when using HTTP/1.1
 or later, 303 is used for POST/PUT/DELETE requests and 307 for all other requests.</p>
 <p>You can specify the status code:</p>
@@ -474,7 +500,7 @@ See <a class="reference internal" href="../changelogs/v4.3.4.html#v434-redirect-
 </section>
 </section>
 <section id="force-file-download">
-<span id="id1"></span><h2><a class="toc-backref" href="#id11">Force File Download</a><a class="headerlink" href="#force-file-download" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id13">Force File Download</a><a class="headerlink" href="#force-file-download" title="Permalink to this headline"></a></h2>
 <p>The Response class provides a simple way to send a file to the client, prompting the browser to download the data
 to your computer. This sets the appropriate headers to make it happen.</p>
 <p>The first parameter is the <strong>name you want the downloaded file to be named</strong>, the second parameter is the
@@ -513,7 +539,7 @@ pass <code class="docutils literal notranslate"><span class="pre">null</span></c
 to be passed through all <strong>after</strong> filters before being sent to the client.</p>
 </div>
 <section id="open-file-in-browser">
-<span id="id2"></span><h3><a class="toc-backref" href="#id12">Open File in Browser</a><a class="headerlink" href="#open-file-in-browser" title="Permalink to this headline"></a></h3>
+<span id="id2"></span><h3><a class="toc-backref" href="#id14">Open File in Browser</a><a class="headerlink" href="#open-file-in-browser" title="Permalink to this headline"></a></h3>
 <p>Some browsers can display files such as PDF. To tell the browser to display the file instead of saving it, call the
 <code class="docutils literal notranslate"><span class="pre">DownloadResponse::inline()</span></code> method.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -527,7 +553,7 @@ to be passed through all <strong>after</strong> filters before being sent to the
 </section>
 </section>
 <section id="http-caching">
-<h2><a class="toc-backref" href="#id13">HTTP Caching</a><a class="headerlink" href="#http-caching" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id15">HTTP Caching</a><a class="headerlink" href="#http-caching" title="Permalink to this headline"></a></h2>
 <p>Built into the HTTP specification are tools help the client (often the web browser) cache the results. Used correctly,
 this can lead to a huge performance boost to your application because it will tell the client that they don’t need
 to contact the server at all since nothing has changed. And you can’t get faster than that.</p>
@@ -553,7 +579,7 @@ situation. While most of the options are applied to the <code class="docutils li
 the <code class="docutils literal notranslate"><span class="pre">etag</span></code> and <code class="docutils literal notranslate"><span class="pre">last-modified</span></code> options to their appropriate header.</p>
 </section>
 <section id="class-reference">
-<h2><a class="toc-backref" href="#id14">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id16">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In addition to the methods listed here, this class inherits the methods from the
