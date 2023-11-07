@@ -71,6 +71,12 @@ Config for CSRF
 CSRF Protection Methods
 -----------------------
 
+.. warning:: If you use :doc:`Session <./sessions>`, be sure to use Session based
+    CSRF protection. Cookie based CSRF protection will not prevent Same-site attacks.
+    See
+    `GHSA-5hm8-vh6r-2cjq <https://github.com/codeigniter4/shield/security/advisories/GHSA-5hm8-vh6r-2cjq>`_
+    for details.
+
 By default, the Cookie based CSRF Protection is used. It is
 `Double Submit Cookie <https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#double-submit-cookie>`_
 on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.
