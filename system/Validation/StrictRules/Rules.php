@@ -36,13 +36,26 @@ class Rules
      * @param array|bool|float|int|object|string|null $str
      * @param array                                   $data Other field/value pairs
      */
-    public function differs($str, string $field, array $data): bool
-    {
-        if (! is_string($str)) {
+    public function differs(
+        $str,
+        string $otherField,
+        array $data,
+        ?string $error = null,
+        ?string $field = null
+    ): bool {
+        if (strpos($otherField, '.') !== false) {
+            return $str !== dot_array_search($otherField, $data);
+        }
+
+        if (! array_key_exists($field, $data)) {
             return false;
         }
 
-        return $this->nonStrictRules->differs($str, $field, $data);
+        if (! array_key_exists($otherField, $data)) {
+            return false;
+        }
+
+        return $str !== ($data[$otherField] ?? null);
     }
 
     /**
@@ -254,9 +267,26 @@ class Rules
      * @param array|bool|float|int|object|string|null $str
      * @param array                                   $data Other field/value pairs
      */
-    public function matches($str, string $field, array $data): bool
-    {
-        return $this->nonStrictRules->matches($str, $field, $data);
+    public function matches(
+        $str,
+        string $otherField,
+        array $data,
+        ?string $error = null,
+        ?string $field = null
+    ): bool {
+        if (strpos($otherField, '.') !== false) {
+            return $str === dot_array_search($otherField, $data);
+        }
+
+        if (! array_key_exists($field, $data)) {
+            return false;
+        }
+
+        if (! array_key_exists($otherField, $data)) {
+            return false;
+        }
+
+        return $str === ($data[$otherField] ?? null);
     }
 
     /**
