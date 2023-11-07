@@ -373,6 +373,14 @@ In previous versions, you need to use
 <h3><a class="toc-backref" href="#id7">Config for CSRF</a><a class="headerlink" href="#config-for-csrf" title="Permalink to this headline"></a></h3>
 <section id="csrf-protection-methods">
 <span id="id1"></span><h4><a class="toc-backref" href="#id8">CSRF Protection Methods</a><a class="headerlink" href="#csrf-protection-methods" title="Permalink to this headline"></a></h4>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you use <a class="reference internal" href="sessions.html"><span class="doc">Session</span></a>, be sure to use Session based
+CSRF protection. Cookie based CSRF protection will not prevent Same-site attacks.
+See
+<a class="reference external" href="https://github.com/codeigniter4/shield/security/advisories/GHSA-5hm8-vh6r-2cjq">GHSA-5hm8-vh6r-2cjq</a>
+for details.</p>
+</div>
 <p>By default, the Cookie based CSRF Protection is used. It is
 <a class="reference external" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#double-submit-cookie">Double Submit Cookie</a>
 on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.</p>
