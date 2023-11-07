@@ -40,6 +40,8 @@ final class SampleURIGeneratorTest extends CIUnitTestCase
             'placeholder num'     => ['shop/product/([0-9]+)', 'shop/product/123'],
             'placeholder segment' => ['shop/product/([^/]+)', 'shop/product/abc_123'],
             'placeholder any'     => ['shop/product/(.*)', 'shop/product/123/abc'],
+            'locale'              => ['{locale}/home', 'en/home'],
+            'locale segment'      => ['{locale}/product/([^/]+)', 'en/product/abc_123'],
             'auto route'          => ['home/index[/...]', 'home/index/1/2/3/4/5'],
         ];
     }
