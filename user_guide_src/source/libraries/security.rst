@@ -112,6 +112,10 @@ may alter this behavior by editing the following config parameter value in
 
 .. literalinclude:: security/004.php
 
+.. warning:: If you use Cookie based CSRF protection, and :php:func:`redirect()`
+    after the submission, you must call ``withCookie()`` to send the regenerated
+    CSRF cookie. See :ref:`response-redirect` for details.
+
 .. note:: Since v4.2.3, you can regenerate CSRF token manually with the
     ``Security::generateHash()`` method.
 
