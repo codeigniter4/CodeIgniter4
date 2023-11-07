@@ -101,7 +101,9 @@ Token Regeneration
 ------------------
 
 Tokens may be either regenerated on every submission (default) or
-kept the same throughout the life of the CSRF cookie. The default
+kept the same throughout the life of the Session or CSRF cookie.
+
+The default
 regeneration of tokens provides stricter security, but may result
 in usability concerns as other tokens become invalid (back/forward
 navigation, multiple tabs/windows, asynchronous actions, etc). You
