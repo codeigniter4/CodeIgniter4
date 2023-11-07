@@ -343,6 +343,13 @@ For example, data returned by multi select dropdown:
 withRequest()
 =============
 
+.. warning:: If you want to validate POST data only, don't use ``withRequest()``.
+    This method uses :ref:`$request->getVar() <incomingrequest-getting-data>`
+    which returns ``$_GET``, ``$_POST`` or ``$_COOKIE`` data in that order
+    (depending on php.ini `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_).
+    Newer values override older values. POST values may be overridden by the
+    cookies if they have the same name.
+
 One of the most common times you will use the validation library is when validating
 data that was input from an HTTP Request. If desired, you can pass an instance of the
 current Request object and it will take all of the input data and set it as the
