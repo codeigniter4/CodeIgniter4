@@ -213,9 +213,9 @@ class CLI
      * // Do not provide options but requires a valid email
      * $email = CLI::prompt('What is your email?', null, 'required|valid_email');
      *
-     * @param string            $field      Output "field" question
-     * @param array|string      $options    String to a default value, array to a list of options (the first option will be the default value)
-     * @param array|string|null $validation Validation rules
+     * @param string                  $field      Output "field" question
+     * @param list<int|string>|string $options    String to a default value, array to a list of options (the first option will be the default value)
+     * @param array|string|null       $validation Validation rules
      *
      * @return string The user input
      */
@@ -237,9 +237,9 @@ class CLI
             $default     = $options;
         }
 
-        if (is_array($options) && $options) {
+        if (is_array($options) && $options !== []) {
             $opts               = $options;
-            $extraOutputDefault = static::color($opts[0], 'green');
+            $extraOutputDefault = static::color((string) $opts[0], 'green');
 
             unset($opts[0]);
 

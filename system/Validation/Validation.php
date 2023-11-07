@@ -806,7 +806,7 @@ class Validation implements ValidationInterface
                         }
 
                         // Replace the placeholder in the rule
-                        $ruleSet = str_replace('{' . $field . '}', $data[$field], $ruleSet);
+                        $ruleSet = str_replace('{' . $field . '}', (string) $data[$field], $ruleSet);
                     }
                 }
             }

@@ -439,7 +439,7 @@ abstract class CIUnitTestCase extends TestCase
      * where the result is close but not exactly equal to the
      * expected time, for reasons beyond our control.
      *
-     * @param mixed $actual
+     * @param float|int $actual
      *
      * @throws Exception
      */
