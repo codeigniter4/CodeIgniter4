@@ -86,14 +86,14 @@ final class SelectTest extends CIUnitTestCase
     {
         $result = $this->db->table('job')->selectAvg('id')->get()->getRow();
 
-        $this->assertSame(2.5, (float) $result->id);
+        $this->assertEqualsWithDelta(2.5, (float) $result->id, PHP_FLOAT_EPSILON);
     }
 
     public function testSelectAvgWithAlias(): void
     {
         $result = $this->db->table('job')->selectAvg('id', 'xam')->get()->getRow();
 
-        $this->assertSame(2.5, (float) $result->xam);
+        $this->assertEqualsWithDelta(2.5, (float) $result->xam, PHP_FLOAT_EPSILON);
     }
 
     public function testSelectSum(): void
