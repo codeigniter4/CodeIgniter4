@@ -492,7 +492,7 @@ The methods provided by the parent classes that are available are:
         :rtype: array|bool|float|int|object|string|null
 
         This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()``
-        methods, only it fetches getServer data (``$_SERVER``):
+        methods, only it fetches Server data (``$_SERVER``):
 
         .. literalinclude:: incomingrequest/036.php
 
