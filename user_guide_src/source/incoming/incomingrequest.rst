@@ -182,14 +182,13 @@ The second and third parameters match up to the ``$depth`` and ``$flags`` argume
 Getting Specific Data from JSON
 ===============================
 
-You can get a specific piece of data from a JSON stream by passing a variable name into ``getVar()`` for the
+You can get a specific piece of data from a JSON stream by passing a variable name into ``getJsonVar()`` for the
 data that you want or you can use "dot" notation to dig into the JSON to get data that is not on the root level.
 
 .. literalinclude:: incomingrequest/010.php
 
-If you want the result to be an associative array instead of an object, you can use ``getJsonVar()`` instead and pass
-true in the second parameter. This function can also be used if you can't guarantee that the incoming request will have the
-correct ``Content-Type`` header.
+If you want the result to be an associative array instead of an object, you can
+pass true in the second parameter:
 
 .. literalinclude:: incomingrequest/011.php
 

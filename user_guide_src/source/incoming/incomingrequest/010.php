@@ -10,8 +10,8 @@
  * }
  */
 
-$data = $request->getVar('foo');
+$data = $request->getJsonVar('foo');
 // $data = "bar"
 
-$data = $request->getVar('fizz.buzz');
+$data = $request->getJsonVar('fizz.buzz');
 // $data = "baz"
