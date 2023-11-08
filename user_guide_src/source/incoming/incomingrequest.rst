@@ -378,15 +378,15 @@ The methods provided by the parent classes that are available are:
 
         .. literalinclude:: incomingrequest/028.php
 
-        To return an array of all POST items call without any parameters.
+        To return an array of all REQUEST items call without any parameters.
 
-        To return all POST items and pass them through the filter, set the
+        To return all REQUEST items and pass them through the filter, set the
         first parameter to null while setting the second parameter to the filter
         you want to use:
 
         .. literalinclude:: incomingrequest/029.php
 
-        To return an array of multiple POST parameters, pass all the required keys as an array:
+        To return an array of multiple REQUEST parameters, pass all the required keys as an array:
 
         .. literalinclude:: incomingrequest/030.php
 
