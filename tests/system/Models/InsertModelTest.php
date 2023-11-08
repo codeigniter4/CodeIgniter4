@@ -120,7 +120,7 @@ final class InsertModelTest extends LiveModelTestCase
         $this->assertSame(2, $this->model->insertBatch($jobData));
 
         $result = $this->model->where('name', 'Philosopher')->first();
-        $this->assertCloseEnough(time(), $result->created_at);
+        $this->assertCloseEnough(time(), (int) $result->created_at);
     }
 
     public function testInsertBatchSetsDatetimeTimestamps(): void
