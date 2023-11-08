@@ -417,7 +417,7 @@ The methods provided by the parent classes that are available are:
         :returns:       ``$_POST`` if no parameters supplied, otherwise the POST value if found, or null if not
         :rtype: array|bool|float|int|object|string|null
 
-            This method is identical to ``getVar()``, only it fetches POST data.
+        This method is identical to ``getVar()``, only it fetches POST data.
 
     .. php:method:: getPostGet([$index = null[, $filter = null[, $flags = null]]])
 
