@@ -100,6 +100,54 @@ With CodeIgniter's built-in methods you can simply do this:
 Getting Data
 ============
 
+getGet()
+--------
+
+The ``getGet()`` method will pull from ``$_GET``.
+
+* ``$request->getGet()``
+
+getPost()
+---------
+
+The ``getPost()`` method will pull from ``$_POST``.
+
+* ``$request->getPost()``
+
+getCookie()
+-----------
+
+The ``getCookie()`` method will pull from ``$_COOKIE``.
+
+* ``$request->getCookie()``
+
+getServer()
+-----------
+
+The ``getServer()`` method will pull from ``$_SERVER``.
+
+* ``$request->getServer()``
+
+getEnv()
+--------
+
+The ``getEnv()`` method will pull from ``$_ENV``.
+
+* ``$request->getEnv()``
+
+getPostGet()
+------------
+
+In addition, there are a few utility methods for retrieving information from either ``$_GET`` or ``$_POST``, while
+maintaining the ability to control the order you look for it:
+
+* ``$request->getPostGet()`` - checks ``$_POST`` first, then ``$_GET``
+
+getGetPost()
+------------
+
+* ``$request->getGetPost()`` - checks ``$_GET`` first, then ``$_POST``
+
 getVar()
 --------
 
@@ -112,24 +160,6 @@ The ``getVar()`` method will pull from ``$_REQUEST``, so will return any data fr
 
 .. note:: If the incoming request has a ``Content-Type`` header set to ``application/json``,
     the ``getVar()`` method returns the JSON data instead of ``$_REQUEST`` data.
-
-get*()
-------
-
-While this
-is convenient, you will often need to use a more specific method, like:
-
-* ``$request->getGet()``
-* ``$request->getPost()``
-* ``$request->getCookie()``
-* ``$request->getServer()``
-* ``$request->getEnv()``
-
-In addition, there are a few utility methods for retrieving information from either ``$_GET`` or ``$_POST``, while
-maintaining the ability to control the order you look for it:
-
-* ``$request->getPostGet()`` - checks ``$_POST`` first, then ``$_GET``
-* ``$request->getGetPost()`` - checks ``$_GET`` first, then ``$_POST``
 
 .. _incomingrequest-getting-json-data:
 
