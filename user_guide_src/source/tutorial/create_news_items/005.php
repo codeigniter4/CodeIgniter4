@@ -13,8 +13,10 @@ class News extends BaseController
     {
         helper('form');
 
+        $data = $this->request->getPost(['title', 'body']);
+
         // Checks whether the submitted data passed the validation rules.
-        if (! $this->validate([
+        if (! $this->validateData($data, [
             'title' => 'required|max_length[255]|min_length[3]',
             'body'  => 'required|max_length[5000]|min_length[10]',
         ])) {
