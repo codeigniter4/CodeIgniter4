@@ -151,6 +151,10 @@ getGetPost()
 getVar()
 --------
 
+.. important:: This method exists only for backward compatibility. Do not use it
+    in new projects. Even if you are already using it, we recommend that you use
+    another, more appropriate method.
+
 The ``getVar()`` method will pull from ``$_REQUEST``, so will return any data from ``$_GET``, ``$POST``, or ``$_COOKIE`` (depending on php.ini `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_).
 
 .. warning:: If you want to validate POST data only, don't use ``getVar()``.
@@ -361,6 +365,10 @@ The methods provided by the parent classes that are available are:
                         `Filter flags <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns:   ``$_REQUEST`` if no parameters supplied, otherwise the REQUEST value if found, or null if not
         :rtype: array|bool|float|int|object|string|null
+
+        .. important:: This method exists only for backward compatibility. Do not use it
+            in new projects. Even if you are already using it, we recommend that you use
+            another, more appropriate method.
 
         This method is identical to ``getGet()``, only it fetches REQUEST data.
 
