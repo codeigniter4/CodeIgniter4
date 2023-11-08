@@ -497,10 +497,8 @@ The methods provided by the parent classes that are available are:
 
         .. literalinclude:: incomingrequest/037.php
 
-    .. php:method:: getUserAgent([$filter = null])
+    .. php:method:: getUserAgent()
 
-        :param  int     $filter: The type of filter to apply. A list of filters can be found in
-                        `Types of filters <https://www.php.net/manual/en/filter.filters.php>`__.
         :returns:  The User Agent string, as found in the SERVER data, or null if not found.
         :rtype: CodeIgniter\\HTTP\\UserAgent
 
