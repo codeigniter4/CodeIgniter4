@@ -405,7 +405,34 @@ The methods provided by the parent classes that are available are:
         :returns:       ``$_GET`` if no parameters supplied, otherwise the GET value if found, or null if not
         :rtype: array|bool|float|int|object|string|null
 
-        This method is identical to ``getVar()``, only it fetches GET data.
+        The first parameter will contain the name of the GET item you are looking for:
+
+        .. literalinclude:: incomingrequest/041.php
+
+        The method returns null if the item you are attempting to retrieve
+        does not exist.
+
+        The second optional parameter lets you run the data through the PHP's
+        filters. Pass in the desired filter type as the second parameter:
+
+        .. literalinclude:: incomingrequest/042.php
+
+        To return an array of all GET items call without any parameters.
+
+        To return all REQUEST items and pass them through the filter, set the
+        first parameter to null while setting the second parameter to the filter
+        you want to use:
+
+        .. literalinclude:: incomingrequest/043.php
+
+        To return an array of multiple GET parameters, pass all the required keys as an array:
+
+        .. literalinclude:: incomingrequest/044.php
+
+        Same rule applied here, to retrieve the parameters with filtering, set the second parameter to
+        the filter type to apply:
+
+        .. literalinclude:: incomingrequest/045.php
 
     .. php:method:: getPost([$index = null[, $filter = null[, $flags = null]]])
 
