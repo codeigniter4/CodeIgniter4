@@ -247,6 +247,8 @@ Others
 Message Changes
 ***************
 
+- Added ``Validation.field_exists`` error message.
+
 Changes
 *******
 
