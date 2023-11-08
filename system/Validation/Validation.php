@@ -356,8 +356,10 @@ class Validation implements ValidationInterface
 
                 $param = ($param === false) ? '' : $param;
 
+                $fieldForErrors = ($rule === 'field_exists') ? $originalField : $field;
+
                 // @phpstan-ignore-next-line $error may be set by rule methods.
-                $this->errors[$field] = $error ?? $this->getErrorMessage(
+                $this->errors[$fieldForErrors] = $error ?? $this->getErrorMessage(
                     ($this->isClosure($rule) || $arrayCallable) ? (string) $i : $rule,
                     $field,
                     $label,

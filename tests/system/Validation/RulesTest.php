@@ -948,8 +948,7 @@ class RulesTest extends CIUnitTestCase
 
         $this->assertFalse($this->validation->run($data));
         $this->assertSame(
-            // This errror message is not perfect.
-            ['fiz.bar.baz' => 'The fiz.*.baz field must exist.'],
+            ['fiz.*.baz' => 'The fiz.*.baz field must exist.'],
             $this->validation->getErrors()
         );
     }
