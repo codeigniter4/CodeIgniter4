@@ -508,7 +508,7 @@ The methods provided by the parent classes that are available are:
         :returns:  The User Agent string, as found in the SERVER data, or null if not found.
         :rtype: CodeIgniter\\HTTP\\UserAgent
 
-        This method returns the User Agent string from the SERVER data:
+        This method returns the User Agent instance from the SERVER data:
 
         .. literalinclude:: incomingrequest/038.php
 
