@@ -177,7 +177,7 @@ By default, this will return any objects in the JSON data as objects. If you wan
 arrays, pass in ``true`` as the first parameter.
 
 The second and third parameters match up to the ``depth`` and ``options`` arguments of the
-`json_decode <https://www.php.net/manual/en/function.json-decode.php>`_ PHP function.
+`json_decode() <https://www.php.net/manual/en/function.json-decode.php>`_ PHP function.
 
 If the incoming request has a ``Content-Type`` header set to ``application/json``, you can also use ``getVar()`` to get
 the JSON stream. Using ``getVar()`` in this way will always return an object.
