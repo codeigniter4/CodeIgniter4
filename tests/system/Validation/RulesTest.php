@@ -47,6 +47,7 @@ class RulesTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->validation = new Validation((object) $this->config, Services::renderer());
         $this->validation->reset();
     }
@@ -863,32 +864,93 @@ class RulesTest extends CIUnitTestCase
 
     public static function provideFieldExists(): iterable
     {
+        // Do not use `foo`, because there is a lang file `Foo`, and
+        // the error message may be messed up.
         yield from [
-            [
-                ['foo' => 'field_exists'],
-                ['foo' => ''],
+            'empty string' => [
+                ['fiz' => 'field_exists'],
+                ['fiz' => ''],
                 true,
             ],
-            [
-                ['foo' => 'field_exists'],
-                ['foo' => null],
+            'null' => [
+                ['fiz' => 'field_exists'],
+                ['fiz' => null],
                 true,
             ],
-            [
-                ['foo' => 'field_exists'],
-                ['foo' => false],
+            'false' => [
+                ['fiz' => 'field_exists'],
+                ['fiz' => false],
                 true,
             ],
-            [
-                ['foo' => 'field_exists'],
-                ['foo' => []],
+            'empty array' => [
+                ['fiz' => 'field_exists'],
+                ['fiz' => []],
                 true,
             ],
-            [
-                ['foo' => 'field_exists'],
+            'empty data' => [
+                ['fiz' => 'field_exists'],
                 [],
                 false,
             ],
+            'dot array syntax: true' => [
+                ['fiz.bar' => 'field_exists'],
+                [
+                    'fiz' => ['bar' => null],
+                ],
+                true,
+            ],
+            'dot array syntax: false' => [
+                ['fiz.bar' => 'field_exists'],
+                [],
+                false,
+            ],
+            'dot array syntax asterisk: true' => [
+                ['fiz.*.baz' => 'field_exists'],
+                [
+                    'fiz' => [
+                        'bar' => [
+                            'baz' => null,
+                        ],
+                    ],
+                ],
+                true,
+            ],
+            'dot array syntax asterisk: false' => [
+                ['fiz.*.baz' => 'field_exists'],
+                [
+                    'fiz' => [
+                        'bar' => [
+                            'baz' => null,
+                        ],
+                        'hoge' => [
+                            // 'baz' is missing.
+                        ],
+                    ],
+                ],
+                false,
+            ],
         ];
+    }
+
+    public function testFieldExistsErrorMessage(): void
+    {
+        $this->validation->setRules(['fiz.*.baz' => 'field_exists']);
+        $data = [
+            'fiz' => [
+                'bar' => [
+                    'baz' => null,
+                ],
+                'hoge' => [
+                    // 'baz' is missing.
+                ],
+            ],
+        ];
+
+        $this->assertFalse($this->validation->run($data));
+        $this->assertSame(
+            // This errror message is not perfect.
+            ['fiz.bar.baz' => 'The fiz.*.baz field must exist.'],
+            $this->validation->getErrors()
+        );
     }
 }

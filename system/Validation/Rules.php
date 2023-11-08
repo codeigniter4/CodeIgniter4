@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Validation;
 
+use CodeIgniter\Helpers\Array\ArrayHelper;
 use Config\Database;
 use InvalidArgumentException;
 
@@ -443,6 +444,10 @@ class Rules
         ?string $error = null,
         ?string $field = null
     ): bool {
+        if (strpos($field, '.') !== false) {
+            return ArrayHelper::dotKeyExists($field, $data);
+        }
+
         return array_key_exists($field, $data);
     }
 }

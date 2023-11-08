@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation\StrictRules;
 
+use CodeIgniter\Helpers\Array\ArrayHelper;
 use CodeIgniter\Validation\Rules as NonStrictRules;
 use Config\Database;
 
@@ -419,6 +420,10 @@ class Rules
         ?string $error = null,
         ?string $field = null
     ): bool {
+        if (strpos($field, '.') !== false) {
+            return ArrayHelper::dotKeyExists($field, $data);
+        }
+
         return array_key_exists($field, $data);
     }
 }

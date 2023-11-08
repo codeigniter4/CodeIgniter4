@@ -184,7 +184,7 @@ class Validation implements ValidationInterface
 
             if ($values === []) {
                 // We'll process the values right away if an empty array
-                $this->processRules($field, $setup['label'] ?? $field, $values, $rules, $data);
+                $this->processRules($field, $setup['label'] ?? $field, $values, $rules, $data, $field);
 
                 continue;
             }
@@ -196,7 +196,7 @@ class Validation implements ValidationInterface
                 }
             } else {
                 // Process single field
-                $this->processRules($field, $setup['label'] ?? $field, $values, $rules, $data);
+                $this->processRules($field, $setup['label'] ?? $field, $values, $rules, $data, $field);
             }
         }
 
@@ -325,9 +325,13 @@ class Validation implements ValidationInterface
 
                     $found = true;
 
-                    $passed = ($param === false && $rule !== 'field_exists')
-                        ? $set->{$rule}($value, $error)
-                        : $set->{$rule}($value, $param, $data, $error, $field);
+                    if ($rule === 'field_exists') {
+                        $passed = $set->{$rule}($value, $param, $data, $error, $originalField);
+                    } else {
+                        $passed = ($param === false)
+                            ? $set->{$rule}($value, $error)
+                            : $set->{$rule}($value, $param, $data, $error, $field);
+                    }
 
                     break;
                 }
