@@ -578,7 +578,11 @@ class IncomingRequest extends Request
      */
     public function getJSON(bool $assoc = false, int $depth = 512, int $options = 0)
     {
-        $result = json_decode($this->body ?? '', $assoc, $depth, $options);
+        if ($this->body === null) {
+            return null;
+        }
+
+        $result = json_decode($this->body, $assoc, $depth, $options);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw HTTPException::forInvalidJSON(json_last_error_msg());
