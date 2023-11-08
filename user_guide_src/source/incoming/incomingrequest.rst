@@ -396,7 +396,7 @@ The methods provided by the parent classes that are available are:
 
         To return an array of all GET items call without any parameters.
 
-        To return all REQUEST items and pass them through the filter, set the
+        To return all GET items and pass them through the filter, set the
         first parameter to null while setting the second parameter to the filter
         you want to use:
 
