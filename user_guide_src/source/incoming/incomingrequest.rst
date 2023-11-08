@@ -176,7 +176,7 @@ You can grab the contents of ``php://input`` as a JSON stream with ``getJSON()``
 By default, this will return any objects in the JSON data as objects. If you want that converted to associative
 arrays, pass in ``true`` as the first parameter.
 
-The second and third parameters match up to the ``depth`` and ``options`` arguments of the
+The second and third parameters match up to the ``$depth`` and ``$flags`` arguments of the
 `json_decode() <https://www.php.net/manual/en/function.json-decode.php>`_ PHP function.
 
 Getting Specific Data from JSON
