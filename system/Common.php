@@ -768,14 +768,14 @@ if (! function_exists('lang')) {
             $language->setLocale($locale);
         }
 
-        $line = $language->getLine($line, $args);
+        $lines = $language->getLine($line, $args);
 
         if ($locale && $locale !== $activeLocale) {
             // Reset to active locale
             $language->setLocale($activeLocale);
         }
 
-        return $line;
+        return $lines;
     }
 }
 
