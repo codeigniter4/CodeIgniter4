@@ -829,16 +829,16 @@ The following is a list of all the native rules that are available to use:
 Rule                    Parameter  Description                                   Example
 ======================= ========== ============================================= ===================================================
 alpha                   No         Fails if field has anything other than
-                                   alphabetic characters.
+                                   alphabetic characters in ASCII.
 alpha_space             No         Fails if field contains anything other than
-                                   alphabetic characters or spaces.
+                                   alphabetic characters or spaces in ASCII.
 alpha_dash              No         Fails if field contains anything other than
                                    alphanumeric characters, underscores or
-                                   dashes.
+                                   dashes in ASCII.
 alpha_numeric           No         Fails if field contains anything other than
-                                   alphanumeric characters.
+                                   alphanumeric characters in ASCII.
 alpha_numeric_space     No         Fails if field contains anything other than
-                                   alphanumeric or space characters.
+                                   alphanumeric or space characters in ASCII.
 alpha_numeric_punct     No         Fails if field contains anything other than
                                    alphanumeric, space, or this limited set of
                                    punctuation characters: ``~`` (tilde),
