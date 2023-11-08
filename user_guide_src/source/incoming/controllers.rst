@@ -111,6 +111,10 @@ rule and message array formats, as well as available rules:
 $this->validate()
 =================
 
+.. important:: This method exists only for backward compatibility. Do not use it
+    in new projects. Even if you are already using it, we recommend that you use
+    the ``validateData()`` method instead.
+
 The controller also provides the convenience method ``validate()``.
 
 .. warning:: Instead of ``validate()``, use ``validateData()`` to validate POST
