@@ -907,7 +907,13 @@ The *Route* column shows the route path to match. The route of a defined route i
 
 Since v4.3.0, the *Name* column shows the route name. ``»`` indicates the name is the same as the route path.
 
-.. important:: The system is not perfect. If you use Custom Placeholders, *Filters* might not be correct. If you want to check filters for a route, you can use :ref:`spark filter:check <spark-filter-check>` command.
+.. important:: The system is not perfect.
+    For routes containing regular expression patterns like ``([^/]+)`` or ``{locale}``,
+    the *Filters* displayed might not be correct (if you set complicated URI pattern
+    for the filters in **app/Config/Filters.php**), or it is displayed as ``<unknown>``.
+
+    The :ref:`spark filter:check <spark-filter-check>` command can be used to check
+    for 100% accurate filters.
 
 Auto Routing (Improved)
 -----------------------
