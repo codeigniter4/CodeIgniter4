@@ -366,34 +366,7 @@ The methods provided by the parent classes that are available are:
         :returns:   ``$_REQUEST`` if no parameters supplied, otherwise the REQUEST value if found, or null if not
         :rtype: array|bool|float|int|object|string|null
 
-        The first parameter will contain the name of the REQUEST item you are looking for:
-
-        .. literalinclude:: incomingrequest/027.php
-
-        The method returns null if the item you are attempting to retrieve
-        does not exist.
-
-        The second optional parameter lets you run the data through the PHP's
-        filters. Pass in the desired filter type as the second parameter:
-
-        .. literalinclude:: incomingrequest/028.php
-
-        To return an array of all REQUEST items call without any parameters.
-
-        To return all REQUEST items and pass them through the filter, set the
-        first parameter to null while setting the second parameter to the filter
-        you want to use:
-
-        .. literalinclude:: incomingrequest/029.php
-
-        To return an array of multiple REQUEST parameters, pass all the required keys as an array:
-
-        .. literalinclude:: incomingrequest/030.php
-
-        Same rule applied here, to retrieve the parameters with filtering, set the second parameter to
-        the filter type to apply:
-
-        .. literalinclude:: incomingrequest/031.php
+        This method is identical to ``getGet()``, only it fetches REQUEST data.
 
     .. php:method:: getGet([$index = null[, $filter = null[, $flags = null]]])
 
@@ -444,7 +417,7 @@ The methods provided by the parent classes that are available are:
         :returns:       ``$_POST`` if no parameters supplied, otherwise the POST value if found, or null if not
         :rtype: array|bool|float|int|object|string|null
 
-        This method is identical to ``getVar()``, only it fetches POST data.
+        This method is identical to ``getGet()``, only it fetches POST data.
 
     .. php:method:: getPostGet([$index = null[, $filter = null[, $flags = null]]])
 
