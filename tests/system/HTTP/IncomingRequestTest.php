@@ -18,6 +18,7 @@ use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use InvalidArgumentException;
+use JsonException;
 use TypeError;
 
 /**
@@ -539,6 +540,19 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request         = $this->createRequest($config, $json);
 
         $request->getJSON();
+    }
+
+    public function testGetJSONWithJsonThrowOnErrorAndInvalidJSONString(): void
+    {
+        $this->expectException(JsonException::class);
+        $this->expectExceptionMessage('Syntax error');
+
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+        $json            = 'Invalid JSON string';
+        $request         = $this->createRequest($config, $json);
+
+        $request->getJSON(false, 512, JSON_THROW_ON_ERROR);
     }
 
     public function testCanGrabGetRawInput(): void
