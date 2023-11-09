@@ -65,7 +65,7 @@ class Controller
     /**
      * Once validation has been run, will hold the Validation instance.
      *
-     * @var ValidationInterface
+     * @var ValidationInterface|null
      */
     protected $validator;
 
