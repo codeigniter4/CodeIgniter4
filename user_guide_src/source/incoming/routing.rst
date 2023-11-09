@@ -290,6 +290,10 @@ routes defined within this closure are only accessible from the given environmen
 Routes with any HTTP verbs
 ==========================
 
+.. important:: This method exists only for backward compatibility. Do not use it
+    in new projects. Even if you are already using it, we recommend that you use
+    another, more appropriate method.
+
 .. warning:: While the ``add()`` method seems to be convenient, it is recommended to always use the HTTP-verb-based
     routes, described above, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
     requests. If the URI specified in the ``add()`` method is accessible by the GET method, the CSRF protection
@@ -306,6 +310,10 @@ You can use the ``add()`` method:
 
 Mapping Multiple Routes
 =======================
+
+.. important:: This method exists only for backward compatibility. Do not use it
+    in new projects. Even if you are already using it, we recommend that you use
+    another, more appropriate method.
 
 .. warning:: The ``map()`` method is not recommended as well as ``add()``
     because it calls ``add()`` internally.
