@@ -422,6 +422,10 @@ CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Rout
 Auto Routing (Legacy)
 *********************
 
+.. important:: This feature exists only for backward compatibility. Do not use it
+    in new projects. Even if you are already using it, we recommend that you use
+    the :ref:`auto-routing-improved` instead.
+
 This section describes the functionality of Auto Routing (Legacy) that is a routing system from CodeIgniter 3.
 It automatically routes an HTTP request, and executes the corresponding controller method
 without route definitions. The auto-routing is disabled by default.
