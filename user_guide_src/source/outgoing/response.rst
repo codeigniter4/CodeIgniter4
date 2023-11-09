@@ -57,6 +57,10 @@ which can be either a string or an array of values that will be combined correct
 Using these functions instead of using the native PHP functions allows you to ensure that no headers are sent
 prematurely, causing errors, and makes testing possible.
 
+.. note:: This method just sets headers to the response instance. So, if you create
+    and return another response instance (e.g., if you call :php:func:`redirect()`),
+    the headers set here will not be sent automatically.
+
 appendHeader()
 ^^^^^^^^^^^^^^
 
