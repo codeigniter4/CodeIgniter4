@@ -12,8 +12,11 @@ a server responding to the client that called it.
 Working with the Response
 =========================
 
-A Response class is instantiated for you and passed into your controllers. It can be accessed through
-``$this->response``. Many times you will not need to touch the class directly, since CodeIgniter takes care of
+A Response class is instantiated for you and passed into your controllers. It can
+be accessed through ``$this->response``. It is the same instance that
+``Services::response()`` returns. We call it the global response instance.
+
+Many times you will not need to touch the class directly, since CodeIgniter takes care of
 sending the headers and the body for you. This is great if the page successfully created the content it was asked to.
 When things go wrong, or you need to send very specific status codes back, or even take advantage of the
 powerful HTTP caching, it's there for you.
