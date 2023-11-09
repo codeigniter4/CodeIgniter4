@@ -461,8 +461,10 @@ loaded before use.</p>
     <span class="p">{</span>
         <span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">);</span>
 
+        <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">([</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;body&#39;</span><span class="p">]);</span>
+
         <span class="c1">// Checks whether the submitted data passed the validation rules.</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validateData</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="p">[</span>
             <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[255]|min_length[3]&#39;</span><span class="p">,</span>
             <span class="s1">&#39;body&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[5000]|min_length[10]&#39;</span><span class="p">,</span>
         <span class="p">]))</span> <span class="p">{</span>
@@ -489,11 +491,19 @@ loaded before use.</p>
 </pre></div>
 </div>
 <p>The code above adds a lot of functionality.</p>
+<section id="retrieve-the-data">
+<h5>Retrieve the Data<a class="headerlink" href="#retrieve-the-data" title="Permalink to this headline"></a></h5>
+<p>First, we use the <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest</span></a>
+object <code class="docutils literal notranslate"><span class="pre">$this-&gt;request</span></code>, which is set in the controller by the framework.</p>
+<p>We get the necessary items from the <strong>POST</strong> data by the user and set them in the
+<code class="docutils literal notranslate"><span class="pre">$data</span></code> variable.</p>
+</section>
 <section id="validate-the-data">
 <h5>Validate the Data<a class="headerlink" href="#validate-the-data" title="Permalink to this headline"></a></h5>
-<p>You’ll use the Controller-provided helper function <a class="reference internal" href="../incoming/controllers.html#controller-validate"><span class="std std-ref">validate()</span></a> to validate the submitted data.
-In this case, the title and body fields are required and in the specific length.
-CodeIgniter has a powerful validation library as demonstrated
+<p>Next, you’ll use the Controller-provided helper function
+<a class="reference internal" href="../incoming/controllers.html#controller-validatedata"><span class="std std-ref">validateData()</span></a> to validate the submitted data.
+In this case, the title and body fields are required and in the specific length.</p>
+<p>CodeIgniter has a powerful validation library as demonstrated
 above. You can read more about the <a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation library</span></a>.</p>
 <p>If the validation fails, we call the <code class="docutils literal notranslate"><span class="pre">new()</span></code> method you just created and return
 the HTML form.</p>
