@@ -343,6 +343,10 @@ For example, data returned by multi select dropdown:
 withRequest()
 =============
 
+.. important:: This method exists only for backward compatibility. Do not use it
+    in new projects. Even if you are already using it, we recommend that you use
+    another, more appropriate method.
+
 .. warning:: If you want to validate POST data only, don't use ``withRequest()``.
     This method uses :ref:`$request->getVar() <incomingrequest-getting-data>`
     which returns ``$_GET``, ``$_POST`` or ``$_COOKIE`` data in that order
