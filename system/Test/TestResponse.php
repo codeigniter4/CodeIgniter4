@@ -28,8 +28,6 @@ use PHPUnit\Framework\TestCase;
  *
  * @no-final
  *
- * @internal
- *
  * @mixin DOMParser
  * @see \CodeIgniter\Test\TestResponseTest
  */
