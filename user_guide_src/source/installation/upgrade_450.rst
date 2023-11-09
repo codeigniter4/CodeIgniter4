@@ -15,6 +15,40 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Mandatory File Changes
 **********************
 
+Config Files
+============
+
+app/Config/Filters.php
+----------------------
+
+Required Filters have been added, so add that settings. See
+:ref:`Upgrading <v450-required-filters>` for details.
+
+Add the following items in the ``$aliases`` property::
+
+    public array $aliases = [
+        // ...
+        'forcehttps'    => \CodeIgniter\Filters\ForceHTTPS::class,
+        'pagecache'     => \CodeIgniter\Filters\PageCache::class,
+        'performance'   => \CodeIgniter\Filters\PerformanceMetrics::class,
+    ];
+
+Add the new property ``$required``, and set the following::
+
+    public array $required = [
+        'before' => [
+            'forcehttps', // Force Global Secure Requests
+            'pagecache',  // Web Page Caching
+        ],
+        'after' => [
+            'pagecache',   // Web Page Caching
+            'performance', // Performance Metrics
+            'toolbar',     // Debug Toolbar
+        ],
+    ];
+
+Remove  ``'toolbar'`` from the ``$global['after']``.
+
 Breaking Changes
 ****************
 

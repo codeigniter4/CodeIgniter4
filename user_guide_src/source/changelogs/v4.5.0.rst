@@ -255,8 +255,10 @@ Libraries
 Helpers and Functions
 =====================
 
-Controller Filters
-==================
+.. _v450-required-filters:
+
+Required Filters
+================
 
 The :ref:`Required Filters <filters-required>` has been introduced. They are new
 special filters that are applied before and after other kinds of filters, and
