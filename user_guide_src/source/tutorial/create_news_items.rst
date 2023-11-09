@@ -106,11 +106,22 @@ You're going to do three things here:
 
 The code above adds a lot of functionality.
 
+Retrieve the Data
+^^^^^^^^^^^^^^^^^
+
+First, we use the :doc:`IncomingRequest <../incoming/incomingrequest>`
+object ``$this->request``, which is set in the controller by the framework.
+
+We get the necessary items from the **POST** data by the user and set them in the
+``$data`` variable.
+
 Validate the Data
 ^^^^^^^^^^^^^^^^^
 
-You'll use the Controller-provided helper function :ref:`validate() <controller-validate>` to validate the submitted data.
+Next, you'll use the Controller-provided helper function
+:ref:`validateData() <controller-validatedata>` to validate the submitted data.
 In this case, the title and body fields are required and in the specific length.
+
 CodeIgniter has a powerful validation library as demonstrated
 above. You can read more about the :doc:`Validation library <../libraries/validation>`.
 
