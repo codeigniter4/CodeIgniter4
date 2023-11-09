@@ -4,7 +4,7 @@ Controller Filters
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 Controller Filters allow you to perform actions either before or after the controllers execute. Unlike :doc:`events <../extending/events>`,
 you can choose the specific URIs or routes in which the filters will be applied to. Before filters may
