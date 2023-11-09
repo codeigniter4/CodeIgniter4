@@ -8,7 +8,7 @@ class StoreController extends BaseController
     {
         $data = [
             'id'   => $id,
-            'name' => $this->request->getVar('name'),
+            'name' => $this->request->getPost('name'),
         ];
 
         $rule = [
