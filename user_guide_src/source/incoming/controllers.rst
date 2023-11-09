@@ -97,9 +97,9 @@ $this->validateData()
 To simplify data checking, the controller also provides the convenience method
 ``validateData()``.
 
-The method accepts an array of data to validate in the first parameter, and an
-array of rules in the second parameter, and in the optional third parameter,
-an array of custom error messages to display if the items are not valid.
+The method accepts (1) an array of data to validate, (2) an array of rules,
+(3) an optional array of custom error messages to display if the items are not valid,
+(4) an optional database group to use.
 
 The :doc:`Validation Library docs </libraries/validation>` have details on
 rule and message array formats, as well as available rules:
