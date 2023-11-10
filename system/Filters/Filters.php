@@ -496,11 +496,19 @@ class Filters
 
         $method = $this->request->getMethod();
 
-        if (config(Feature::class)->lowerCaseFilterMethods) {
+        $found = false;
+
+        if (array_key_exists($method, $this->config->methods)) {
+            $found = true;
+        }
+        // Checks lowercase HTTP method for backward compatibility.
+        // @TODO remove this in the future.
+        elseif (array_key_exists(strtolower($method), $this->config->methods)) {
+            $found  = true;
             $method = strtolower($method);
         }
 
-        if (array_key_exists($method, $this->config->methods)) {
+        if ($found) {
             if (config(Feature::class)->oldFilterOrder) {
                 $this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);
             } else {
