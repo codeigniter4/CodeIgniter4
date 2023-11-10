@@ -281,6 +281,14 @@ Deprecations
   used.
 - **Response:** The constructor parameter ``$config`` has been deprecated. No
   longer used.
+- **Filters::** The feature that ``Filters`` accept the lowercase HTTP method keys
+  of ``Config\Filters::$methods`` has been deprecated. Use correct uppercase HTTP
+  method keys instead.
+- **RouteCollection:** The feature that the ``match()`` method accepts the lowercase
+  HTTP methods has been deprecated. Use correct uppercase HTTP methods instead.
+- **FeatureTestTrait:** The feature that the ``withRoutes()`` method accepts the
+  lowercase HTTP methods has been deprecated. Use correct uppercase HTTP methods
+  instead.
 
 Bugs Fixed
 **********

@@ -1012,7 +1012,10 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         foreach ($verbs as $verb) {
-            // @TODO We should use correct uppercase verb.
+            /**
+             * @TODO We should use correct uppercase verb.
+             * @deprecated 4.5.0
+             */
             $verb = strtolower($verb);
 
             $this->{$verb}($from, $to, $options);

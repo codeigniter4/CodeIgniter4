@@ -51,7 +51,10 @@ trait FeatureTestTrait
             $collection->resetRoutes();
 
             foreach ($routes as $route) {
-                // @TODO For backward compatibility. Remove strtolower() in the future.
+                /**
+                 * @TODO For backward compatibility. Remove strtolower() in the future.
+                 * @deprecated 4.5.0
+                 */
                 $method = strtolower($route[0]);
 
                 if (isset($route[3])) {

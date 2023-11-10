@@ -502,6 +502,7 @@ class Filters
             $found = true;
         }
         // Checks lowercase HTTP method for backward compatibility.
+        // @deprecated 4.5.0
         // @TODO remove this in the future.
         elseif (array_key_exists(strtolower($method), $this->config->methods)) {
             $found  = true;
