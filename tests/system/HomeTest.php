@@ -28,7 +28,7 @@ final class HomeTest extends CIUnitTestCase
     {
         $this->withRoutes([
             [
-                'get',
+                'GET',
                 'home',
                 '\App\Controllers\Home::index',
             ],

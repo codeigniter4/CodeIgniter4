@@ -36,7 +36,7 @@ trait FeatureTestTrait
      *
      * Example routes:
      * [
-     *    ['get', 'home', 'Home::index']
+     *    ['GET', 'home', 'Home::index'],
      * ]
      *
      * @param array|null $routes Array to set routes
@@ -51,10 +51,13 @@ trait FeatureTestTrait
             $collection->resetRoutes();
 
             foreach ($routes as $route) {
+                // @TODO For backward compatibility. Remove strtolower() in the future.
+                $method = strtolower($route[0]);
+
                 if (isset($route[3])) {
-                    $collection->{$route[0]}($route[1], $route[2], $route[3]);
+                    $collection->{$method}($route[1], $route[2], $route[3]);
                 } else {
-                    $collection->{$route[0]}($route[1], $route[2]);
+                    $collection->{$method}($route[1], $route[2]);
                 }
             }
         }
