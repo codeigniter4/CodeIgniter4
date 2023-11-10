@@ -148,7 +148,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes = $this->getCollector();
 
-        $routes->match(['get'], 'home', 'controller');
+        $routes->match(['GET'], 'home', 'controller');
 
         $expects = [
             'home' => '\controller',
@@ -180,7 +180,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes = $this->getCollector();
 
-        $routes->match(['put'], 'home', 'controller');
+        $routes->match(['PUT'], 'home', 'controller');
 
         $routes = $routes->getRoutes();
 
@@ -816,12 +816,12 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $expected = ['here' => '\there'];
 
-        $routes->match(['get', 'post'], 'here', 'there');
+        $routes->match(['GET', 'POST'], 'here', 'there');
         $this->assertSame($expected, $routes->getRoutes());
 
         Services::request()->setMethod('post');
         $routes = $this->getCollector();
-        $routes->match(['get', 'post'], 'here', 'there');
+        $routes->match(['GET', 'POST'], 'here', 'there');
         $this->assertSame($expected, $routes->getRoutes());
     }
 
