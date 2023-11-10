@@ -8,7 +8,7 @@ $routes->head('from', 'to', $options);
 $routes->options('from', 'to', $options);
 $routes->delete('from', 'to', $options);
 $routes->patch('from', 'to', $options);
-$routes->match(['get', 'put'], 'from', 'to', $options);
+$routes->match(['GET', 'PUT'], 'from', 'to', $options);
 $routes->resource('photos', $options);
 $routes->map($array, $options);
 $routes->group('name', $options, static function () {});
