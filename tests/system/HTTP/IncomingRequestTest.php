@@ -840,7 +840,7 @@ final class IncomingRequestTest extends CIUnitTestCase
     public function testSpoofing(): void
     {
         $this->request->setMethod('WINK');
-        $this->assertSame('wink', $this->request->getMethod());
+        $this->assertSame('WINK', $this->request->getMethod());
     }
 
     /**

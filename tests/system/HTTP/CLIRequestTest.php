@@ -525,8 +525,7 @@ final class CLIRequestTest extends CIUnitTestCase
     public function testMethodReturnsRightStuff(): void
     {
         // Defaults method to CLI now.
-        $this->assertSame('cli', $this->request->getMethod());
-        $this->assertSame('CLI', $this->request->getMethod(true));
+        $this->assertSame('CLI', $this->request->getMethod());
     }
 
     public function testMethodIsCliReturnsAlwaysTrue(): void

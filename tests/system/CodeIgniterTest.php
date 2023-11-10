@@ -733,7 +733,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         ob_get_clean();
 
-        $this->assertSame('put', Services::incomingrequest()->getMethod());
+        $this->assertSame('PUT', Services::incomingrequest()->getMethod());
     }
 
     public function testSpoofRequestMethodCannotUseGET(): void
@@ -758,7 +758,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         ob_get_clean();
 
-        $this->assertSame('post', Services::incomingrequest()->getMethod());
+        $this->assertSame('POST', Services::incomingrequest()->getMethod());
     }
 
     /**

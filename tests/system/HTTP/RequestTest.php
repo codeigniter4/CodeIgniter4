@@ -639,7 +639,6 @@ final class RequestTest extends CIUnitTestCase
     public function testMethodReturnsRightStuff(): void
     {
         // Defaults method to GET now.
-        $this->assertSame('get', $this->request->getMethod());
-        $this->assertSame('GET', $this->request->getMethod(true));
+        $this->assertSame('GET', $this->request->getMethod());
     }
 }

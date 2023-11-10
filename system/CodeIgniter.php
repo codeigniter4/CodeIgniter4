@@ -1027,7 +1027,7 @@ class CodeIgniter
     public function spoofRequestMethod()
     {
         // Only works with POSTED forms
-        if (strtolower($this->request->getMethod()) !== 'post') {
+        if ($this->request->getMethod() !== 'POST') {
             return;
         }
 
@@ -1038,7 +1038,7 @@ class CodeIgniter
         }
 
         // Only allows PUT, PATCH, DELETE
-        if (in_array(strtoupper($method), ['PUT', 'PATCH', 'DELETE'], true)) {
+        if (in_array($method, ['PUT', 'PATCH', 'DELETE'], true)) {
             $this->request = $this->request->setMethod($method);
         }
     }

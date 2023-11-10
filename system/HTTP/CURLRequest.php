@@ -130,7 +130,7 @@ class CURLRequest extends OutgoingRequest
      * Sends an HTTP request to the specified $url. If this is a relative
      * URL, it will be merged with $this->baseURI to form a complete URL.
      *
-     * @param string $method
+     * @param string $method HTTP method
      */
     public function request($method, string $url, array $options = []): ResponseInterface
     {
@@ -177,7 +177,7 @@ class CURLRequest extends OutgoingRequest
      */
     public function get(string $url, array $options = []): ResponseInterface
     {
-        return $this->request('get', $url, $options);
+        return $this->request('GET', $url, $options);
     }
 
     /**
@@ -185,7 +185,7 @@ class CURLRequest extends OutgoingRequest
      */
     public function delete(string $url, array $options = []): ResponseInterface
     {
-        return $this->request('delete', $url, $options);
+        return $this->request('DELETE', $url, $options);
     }
 
     /**
@@ -193,7 +193,7 @@ class CURLRequest extends OutgoingRequest
      */
     public function head(string $url, array $options = []): ResponseInterface
     {
-        return $this->request('head', $url, $options);
+        return $this->request('HEAD', $url, $options);
     }
 
     /**
@@ -201,7 +201,7 @@ class CURLRequest extends OutgoingRequest
      */
     public function options(string $url, array $options = []): ResponseInterface
     {
-        return $this->request('options', $url, $options);
+        return $this->request('OPTIONS', $url, $options);
     }
 
     /**
@@ -209,7 +209,7 @@ class CURLRequest extends OutgoingRequest
      */
     public function patch(string $url, array $options = []): ResponseInterface
     {
-        return $this->request('patch', $url, $options);
+        return $this->request('PATCH', $url, $options);
     }
 
     /**
@@ -217,7 +217,7 @@ class CURLRequest extends OutgoingRequest
      */
     public function post(string $url, array $options = []): ResponseInterface
     {
-        return $this->request('post', $url, $options);
+        return $this->request('POST', $url, $options);
     }
 
     /**
@@ -225,7 +225,7 @@ class CURLRequest extends OutgoingRequest
      */
     public function put(string $url, array $options = []): ResponseInterface
     {
-        return $this->request('put', $url, $options);
+        return $this->request('PUT', $url, $options);
     }
 
     /**
@@ -340,17 +340,6 @@ class CURLRequest extends OutgoingRequest
     }
 
     /**
-     * Get the request method. Overrides the Request class' method
-     * since users expect a different answer here.
-     *
-     * @param bool|false $upper Whether to return in upper or lower case.
-     */
-    public function getMethod(bool $upper = false): string
-    {
-        return ($upper) ? strtoupper($this->method) : strtolower($this->method);
-    }
-
-    /**
      * Fires the actual cURL request.
      *
      * @return ResponseInterface
@@ -446,8 +435,6 @@ class CURLRequest extends OutgoingRequest
      */
     protected function applyMethod(string $method, array $curlOptions): array
     {
-        $method = strtoupper($method);
-
         $this->method                       = $method;
         $curlOptions[CURLOPT_CUSTOMREQUEST] = $method;
 

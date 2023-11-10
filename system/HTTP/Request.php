@@ -50,20 +50,6 @@ class Request extends OutgoingRequest implements RequestInterface
     }
 
     /**
-     * Get the request method.
-     *
-     * @param bool $upper Whether to return in upper or lower case.
-     *
-     * @deprecated 4.0.5 The $upper functionality will be removed and this will revert to its PSR-7 equivalent
-     *
-     * @codeCoverageIgnore
-     */
-    public function getMethod(bool $upper = false): string
-    {
-        return ($upper) ? strtoupper($this->method) : strtolower($this->method);
-    }
-
-    /**
      * Sets the request method. Used when spoofing the request.
      *
      * @return $this

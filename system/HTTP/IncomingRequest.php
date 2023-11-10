@@ -406,7 +406,7 @@ class IncomingRequest extends Request
         $httpMethods = ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS'];
 
         if (in_array($valueUpper, $httpMethods, true)) {
-            return strtoupper($this->getMethod()) === $valueUpper;
+            return $this->getMethod() === $valueUpper;
         }
 
         if ($valueUpper === 'JSON') {

@@ -849,7 +849,7 @@ class ValidationTest extends CIUnitTestCase
         $rules = [
             'role' => 'required|min_length[5]',
         ];
-        $result = $this->validation->withRequest($request->withMethod('patch'))->setRules($rules)->run();
+        $result = $this->validation->withRequest($request->withMethod('PATCH'))->setRules($rules)->run();
 
         $this->assertTrue($result);
         $this->assertSame([], $this->validation->getErrors());
@@ -874,7 +874,7 @@ class ValidationTest extends CIUnitTestCase
             'role' => 'required|min_length[5]',
         ];
         $result = $this->validation
-            ->withRequest($request->withMethod('patch'))
+            ->withRequest($request->withMethod('PATCH'))
             ->setRules($rules)
             ->run();
 
@@ -930,7 +930,7 @@ class ValidationTest extends CIUnitTestCase
             'p' => 'required|array_count[2]',
         ];
         $result = $this->validation
-            ->withRequest($request->withMethod('patch'))
+            ->withRequest($request->withMethod('PATCH'))
             ->setRules($rules)
             ->run();
 
@@ -1113,7 +1113,7 @@ class ValidationTest extends CIUnitTestCase
         $request = new IncomingRequest($config, new SiteURI($config), http_build_query($body), new UserAgent());
 
         $this->validation->setRules($rules);
-        $this->validation->withRequest($request->withMethod('post'))->run($body);
+        $this->validation->withRequest($request->withMethod('POST'))->run($body);
         $this->assertSame($results, $this->validation->getErrors());
     }
 
@@ -1196,7 +1196,7 @@ class ValidationTest extends CIUnitTestCase
             'name_user.*' => 'alpha_numeric',
         ]);
 
-        $this->validation->withRequest($request->withMethod('post'))->run();
+        $this->validation->withRequest($request->withMethod('POST'))->run();
         $this->assertSame([], $this->validation->getErrors());
     }
 
@@ -1231,7 +1231,7 @@ class ValidationTest extends CIUnitTestCase
             'contacts.friends.*.name' => 'required',
         ]);
 
-        $this->validation->withRequest($request->withMethod('post'))->run();
+        $this->validation->withRequest($request->withMethod('POST'))->run();
         $this->assertSame([
             'id_user.0'               => 'The id_user.* field must contain only numbers.',
             'name_user.0'             => 'The name_user.* field may only contain alphabetical characters.',
@@ -1265,7 +1265,7 @@ class ValidationTest extends CIUnitTestCase
             'id_user' => 'numeric',
         ]);
 
-        $this->validation->withRequest($request->withMethod('post'))->run();
+        $this->validation->withRequest($request->withMethod('POST'))->run();
         $this->assertSame([
             'id_user' => 'The id_user field must contain only numbers.',
         ], $this->validation->getErrors());

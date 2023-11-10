@@ -494,8 +494,11 @@ class Filters
             return;
         }
 
-        // Request method won't be set for CLI-based requests
-        $method = strtolower($this->request->getMethod()) ?? 'cli';
+        $method = $this->request->getMethod();
+
+        if (config(Feature::class)->lowerCaseFilterMethods) {
+            $method = strtolower($method);
+        }
 
         if (array_key_exists($method, $this->config->methods)) {
             if (config(Feature::class)->oldFilterOrder) {
