@@ -21,6 +21,23 @@ BREAKING
 Behavior Changes
 ================
 
+Lowercase HTTP Method Name
+--------------------------
+
+For historical reasons, the framework used HTTP method names in lower case like
+"get", "post".
+But the method token is case-sensitive because it might be used as a gateway
+to object-based systems with case-sensitive method names. By convention,
+standardized methods are defined in all-uppercase US-ASCII letters.
+See https://www.rfc-editor.org/rfc/rfc9110#name-overview.
+
+Now the framework uses the correct HTTP method names like "GET", "POST".
+
+- ``Request::getMethod()`` returns uppercase HTTP methods.
+- ``CURLRequest::request()`` does not change the accepted HTTP methods to uppercase.
+
+See :ref:`upgrade-450-lowercase-http-method-name` for details.
+
 Filter Execution Order
 ----------------------
 
@@ -118,6 +135,16 @@ Others
 Removed Deprecated Items
 ========================
 
+Request
+-------
+
+- The ``$upper`` parameter in ``getMethod()`` in ``RequestInterface`` and ``Request``
+  has been removed. See :ref:`upgrade-450-lowercase-http-method-name`.
+- The deprecated ``isValidIP()`` method in ``RequestInterface`` and ``Request``
+  has been removed.
+- The visibility of the deprecated properties ``$uri`` and ``$config`` in
+  ``IncomingRequest`` has been changed to protected.
+
 Filters
 -------
 
@@ -183,10 +210,6 @@ Spark Commands
 Others
 ------
 
-- **IncomingRequest:** The visibility of the deprecated properties ``$uri`` and
-  ``$config`` has been changed to protected.
-- **RequestInterface:** The deprecated ``isValidIP()`` method has been removed.
-- **Request:** The deprecated ``isValidIP()`` method has been removed.
 - **Config:** The deprecated ``CodeIgniter\Config\Config`` class has been removed.
 
 Enhancements
