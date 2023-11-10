@@ -65,7 +65,7 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->map($routes);
 
         $this->request = Services::request();
-        $this->request->setMethod('get');
+        $this->request->setMethod('GET');
     }
 
     public function testEmptyURIMatchesRoot(): void
