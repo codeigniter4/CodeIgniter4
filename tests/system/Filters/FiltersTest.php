@@ -89,7 +89,7 @@ final class FiltersTest extends CIUnitTestCase
             'aliases' => ['foo' => ''],
             'globals' => [],
             'methods' => [
-                'cli' => ['foo'],
+                'CLI' => ['foo'],
             ],
         ];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
@@ -113,7 +113,7 @@ final class FiltersTest extends CIUnitTestCase
             'aliases' => ['foo' => ''],
             'globals' => [],
             'methods' => [
-                'get' => ['foo'],
+                'GET' => ['foo'],
             ],
         ];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
@@ -137,8 +137,8 @@ final class FiltersTest extends CIUnitTestCase
             ],
             'globals' => [],
             'methods' => [
-                'post' => ['foo'],
-                'get'  => ['bar'],
+                'POST' => ['foo'],
+                'GET'  => ['bar'],
             ],
         ];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
@@ -162,8 +162,8 @@ final class FiltersTest extends CIUnitTestCase
             ],
             'globals' => [],
             'methods' => [
-                'post' => ['foo'],
-                'get'  => ['bar'],
+                'POST' => ['foo'],
+                'GET'  => ['bar'],
             ],
         ];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
@@ -348,8 +348,8 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
             'methods' => [
-                'post' => ['foo'],
-                'get'  => ['bar'],
+                'POST' => ['foo'],
+                'GET'  => ['bar'],
             ],
             'filters' => [
                 'foof' => [
@@ -391,7 +391,7 @@ final class FiltersTest extends CIUnitTestCase
                 ],
             ],
             'methods' => [
-                'get' => ['bar'],
+                'GET' => ['bar'],
             ],
             'filters' => [
                 'foof' => [
