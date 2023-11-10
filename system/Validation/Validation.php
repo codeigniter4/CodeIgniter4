@@ -131,7 +131,7 @@ class Validation implements ValidationInterface
      * @TODO Type ?string for $dbGroup should be removed.
      *      See https://github.com/codeigniter4/CodeIgniter4/issues/6723
      */
-    public function run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool
+    public function run(?array $data = null, ?string $group = null, $dbGroup = null): bool
     {
         if ($data === null) {
             $data = $this->data;
