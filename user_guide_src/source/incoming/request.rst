@@ -57,16 +57,12 @@ Class Reference
         Accepts an optional second string parameter of ``ipv4`` or ``ipv6`` to specify
         an IP format. The default checks for both formats.
 
-    .. php:method:: getMethod([$upper = false])
+    .. php:method:: getMethod()
 
-        .. important:: Use of the ``$upper`` parameter is deprecated. It will be removed in future releases.
-
-        :param bool $upper: Whether to return the request method name in upper or lower case
         :returns: HTTP request method
         :rtype: string
 
-        Returns the ``$_SERVER['REQUEST_METHOD']``, with the option to set it
-        in uppercase or lowercase.
+        Returns the ``$_SERVER['REQUEST_METHOD']``.
 
         .. literalinclude:: request/003.php
 
