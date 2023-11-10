@@ -280,7 +280,7 @@ class Security implements SecurityInterface
     public function verify(RequestInterface $request)
     {
         // Protects POST, PUT, DELETE, PATCH
-        $method           = strtoupper($request->getMethod());
+        $method           = $request->getMethod();
         $methodsToProtect = ['POST', 'PUT', 'DELETE', 'PATCH'];
         if (! in_array($method, $methodsToProtect, true)) {
             return $this;

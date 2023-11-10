@@ -128,7 +128,7 @@ class Exceptions
 
         if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true)) {
             $uri       = $this->request->getPath() === '' ? '/' : $this->request->getPath();
-            $routeInfo = '[Method: ' . strtoupper($this->request->getMethod()) . ', Route: ' . $uri . ']';
+            $routeInfo = '[Method: ' . $this->request->getMethod() . ', Route: ' . $uri . ']';
 
             log_message('critical', "{message}\n{routeInfo}\nin {exFile} on line {exLine}.\n{trace}", [
                 'message'   => $exception->getMessage(),
