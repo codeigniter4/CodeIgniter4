@@ -656,7 +656,7 @@ will be passed in <code class="docutils literal notranslate"><span class="pre">$
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.3.0.</span></p>
 </div>
-<p>Check the filters for the route <code class="docutils literal notranslate"><span class="pre">/</span></code> with <strong>GET</strong> method:</p>
+<p>For example, check the filters for the route <code class="docutils literal notranslate"><span class="pre">/</span></code> with <strong>GET</strong> method:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark filter:check get /</span>
 </pre></div>
 </div>
@@ -668,8 +668,9 @@ will be passed in <code class="docutils literal notranslate"><span class="pre">$
 +--------+-------+----------------+---------------+
 </pre></div>
 </div>
-<p>You can also see the routes and filters by the <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">routes</span></code> command.
-See <a class="reference internal" href="routing.html#routing-spark-routes"><span class="std std-ref">URI Routing</span></a>.</p>
+<p>You can also see the routes and filters by the <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">routes</span></code> command,
+but it might not show accurate filters when you use regular expressions for routes.
+See <a class="reference internal" href="routing.html#routing-spark-routes"><span class="std std-ref">URI Routing</span></a> for details.</p>
 </section>
 </section>
 <section id="provided-filters">
@@ -725,7 +726,7 @@ See <a class="reference internal" href="routing.html#routing-spark-routes"><span
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 09, 2023.
+      <span class="lastupdated">Last updated on Nov 10, 2023.
       </span></p>
   </div>
 
