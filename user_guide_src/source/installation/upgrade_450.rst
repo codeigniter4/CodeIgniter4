@@ -23,6 +23,9 @@ Breaking Changes
 Lowercase HTTP Method Name
 ==========================
 
+Request::getMethod()
+--------------------
+
 For historical reasons, ``Request::getMethod()`` returned HTTP method names in
 lower case by default.
 
@@ -39,8 +42,12 @@ If you want lowercase HTTP method names, use PHP's ``strtolower()`` function::
 
     strtolower($request->getMethod())
 
-And you should use uppercase HTTP method names in your app code. You should update
-the keys in ``$methods`` in **app/Config/Filters.php**::
+And you should use uppercase HTTP method names in your app code.
+
+app/Config/Filters.php
+----------------------
+
+You should update the keys in ``$methods`` in **app/Config/Filters.php**::
 
     public array $methods = [
         'POST' => ['invalidchars', 'csrf'],
