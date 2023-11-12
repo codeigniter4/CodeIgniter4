@@ -15,7 +15,7 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App as AppConfig;
@@ -53,7 +53,7 @@ final class ResponseCacheTest extends CIUnitTestCase
 
         $appConfig ??= $this->appConfig;
 
-        $siteUri = new URI($appConfig->baseURL . $uri);
+        $siteUri = new SiteURI($appConfig, $uri);
         if ($query !== []) {
             $_GET = $_REQUEST = $query;
             $siteUri->setQueryArray($query);

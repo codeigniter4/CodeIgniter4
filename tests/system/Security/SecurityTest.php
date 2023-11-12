@@ -14,7 +14,7 @@ namespace CodeIgniter\Security;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -101,15 +101,22 @@ final class SecurityTest extends CIUnitTestCase
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
 
         $security = $this->createMockSecurity();
-        $request  = new IncomingRequest(
-            new MockAppConfig(),
-            new URI('http://badurl.com'),
-            null,
-            new UserAgent()
-        );
+        $request  = $this->createIncomingRequest();
 
         $this->expectException(SecurityException::class);
         $security->verify($request);
+    }
+
+    private function createIncomingRequest(): IncomingRequest
+    {
+        $config = new MockAppConfig();
+
+        return new IncomingRequest(
+            $config,
+            new SiteURI($config),
+            null,
+            new UserAgent()
+        );
     }
 
     public function testCSRFVerifyPostReturnsSelfOnMatch(): void
@@ -120,12 +127,7 @@ final class SecurityTest extends CIUnitTestCase
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
 
         $security = $this->createMockSecurity();
-        $request  = new IncomingRequest(
-            new MockAppConfig(),
-            new URI('http://badurl.com'),
-            null,
-            new UserAgent()
-        );
+        $request  = $this->createIncomingRequest();
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
         $this->assertLogged('info', 'CSRF token verified.');
@@ -139,12 +141,7 @@ final class SecurityTest extends CIUnitTestCase
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
 
         $security = $this->createMockSecurity();
-        $request  = new IncomingRequest(
-            new MockAppConfig(),
-            new URI('http://badurl.com'),
-            null,
-            new UserAgent()
-        );
+        $request  = $this->createIncomingRequest();
 
         $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
 
@@ -159,12 +156,7 @@ final class SecurityTest extends CIUnitTestCase
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
 
         $security = $this->createMockSecurity();
-        $request  = new IncomingRequest(
-            new MockAppConfig(),
-            new URI('http://badurl.com'),
-            null,
-            new UserAgent()
-        );
+        $request  = $this->createIncomingRequest();
 
         $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005a');
 
@@ -180,12 +172,7 @@ final class SecurityTest extends CIUnitTestCase
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
 
         $security = $this->createMockSecurity();
-        $request  = new IncomingRequest(
-            new MockAppConfig(),
-            new URI('http://badurl.com'),
-            null,
-            new UserAgent()
-        );
+        $request  = $this->createIncomingRequest();
 
         $request->setBody(
             '{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a"}'
@@ -201,12 +188,7 @@ final class SecurityTest extends CIUnitTestCase
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
 
         $security = $this->createMockSecurity();
-        $request  = new IncomingRequest(
-            new MockAppConfig(),
-            new URI('http://badurl.com'),
-            null,
-            new UserAgent()
-        );
+        $request  = $this->createIncomingRequest();
 
         $request->setBody(
             '{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005a","foo":"bar"}'
@@ -224,12 +206,7 @@ final class SecurityTest extends CIUnitTestCase
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005b';
 
         $security = $this->createMockSecurity();
-        $request  = new IncomingRequest(
-            new MockAppConfig(),
-            new URI('http://badurl.com'),
-            null,
-            new UserAgent()
-        );
+        $request  = $this->createIncomingRequest();
 
         $request->setBody(
             'csrf_test_name=8b9218a55906f9dcc1dc263dce7f005a'
@@ -245,12 +222,7 @@ final class SecurityTest extends CIUnitTestCase
         $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
 
         $security = $this->createMockSecurity();
-        $request  = new IncomingRequest(
-            new MockAppConfig(),
-            new URI('http://badurl.com'),
-            null,
-            new UserAgent()
-        );
+        $request  = $this->createIncomingRequest();
 
         $request->setBody(
             'csrf_test_name=8b9218a55906f9dcc1dc263dce7f005a&foo=bar'
@@ -282,12 +254,7 @@ final class SecurityTest extends CIUnitTestCase
         Factories::injectMock('config', 'Security', $config);
 
         $security = new MockSecurity($config);
-        $request  = new IncomingRequest(
-            new MockAppConfig(),
-            new URI('http://badurl.com'),
-            null,
-            new UserAgent()
-        );
+        $request  = $this->createIncomingRequest();
 
         $oldHash = $security->getHash();
         $security->verify($request);
@@ -307,12 +274,7 @@ final class SecurityTest extends CIUnitTestCase
         Factories::injectMock('config', 'Security', $config);
 
         $security = $this->createMockSecurity($config);
-        $request  = new IncomingRequest(
-            new MockAppConfig(),
-            new URI('http://badurl.com'),
-            null,
-            new UserAgent()
-        );
+        $request  = $this->createIncomingRequest();
 
         $oldHash = $security->getHash();
         $security->verify($request);
@@ -333,12 +295,7 @@ final class SecurityTest extends CIUnitTestCase
         Factories::injectMock('config', 'Security', $config);
 
         $security = $this->createMockSecurity($config);
-        $request  = new IncomingRequest(
-            new MockAppConfig(),
-            new URI('http://badurl.com'),
-            null,
-            new UserAgent()
-        );
+        $request  = $this->createIncomingRequest();
 
         $oldHash = $security->getHash();
         $security->verify($request);
