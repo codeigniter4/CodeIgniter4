@@ -20,6 +20,8 @@ What has been changed
 - CI4 provides :doc:`Request </incoming/incomingrequest>` and :doc:`Responses </outgoing/response>`
   objects for you to work with - more powerful than the CI3-way.
 - If you want a base controller (``MY_Controller`` in CI3), use **app/Controllers/BaseController.php**.
+- Calling ``echo`` within Controllers, as in CI3, is still supported, but
+  it is recommended that a string or Response object be returned from Controllers.
 
 Upgrade Guide
 =============

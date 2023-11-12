@@ -11,7 +11,9 @@ Controllers are the heart of your application, as they determine how HTTP reques
 What is a Controller?
 *********************
 
-A Controller is simply a class file that handles a HTTP request. :doc:`URI Routing <routing>` associates a URI with a controller.
+A Controller is simply a class file that handles a HTTP request.
+:doc:`URI Routing <routing>` associates a URI with a controller. It returns a
+view string or ``Response`` object.
 
 Every controller you create should extend ``BaseController`` class.
 This class provides several features that are available to all of your controllers.
