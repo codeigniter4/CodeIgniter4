@@ -95,8 +95,15 @@ Model, View and Controller
 Core Class Changes
 ==================
 
-- CI3's `Input <http://codeigniter.com/userguide3/libraries/input.html>`_ corresponds to CI4's :doc:`IncomingRequest </incoming/incomingrequest>`.
-- CI3's `Output <http://codeigniter.com/userguide3/libraries/output.html>`_ corresponds to CI4's :doc:`Responses </outgoing/response>`.
+- Input
+    - CI3's `Input <http://codeigniter.com/userguide3/libraries/input.html>`_
+      corresponds to CI4's :doc:`IncomingRequest </incoming/incomingrequest>`.
+    - For historical reasons, CI3 and CI4 used incorrect HTTP method names like
+      "get", "post". Since v4.5.0, CI4 uses the correct HTTP method names like
+      "GET", "POST".
+- Output
+    - CI3's `Output <http://codeigniter.com/userguide3/libraries/output.html>`_
+      corresponds to CI4's :doc:`Responses </outgoing/response>`.
 
 Class Loading
 =============
