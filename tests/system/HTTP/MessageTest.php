@@ -207,7 +207,7 @@ final class MessageTest extends CIUnitTestCase
     /**
      * @dataProvider provideArrayHeaderValue
      *
-     * @param mixed $arrayHeaderValue
+     * @param array $arrayHeaderValue
      */
     public function testSetHeaderWithExistingArrayValuesAppendStringValue($arrayHeaderValue): void
     {
@@ -220,7 +220,7 @@ final class MessageTest extends CIUnitTestCase
     /**
      * @dataProvider provideArrayHeaderValue
      *
-     * @param mixed $arrayHeaderValue
+     * @param array $arrayHeaderValue
      */
     public function testSetHeaderWithExistingArrayValuesAppendArrayValue($arrayHeaderValue): void
     {
