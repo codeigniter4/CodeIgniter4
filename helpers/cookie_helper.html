@@ -332,6 +332,13 @@ due to a bug, and these values from <strong>app/Config/Cookie.php</strong> were 
 cookies. Refer to the <a class="reference internal" href="../outgoing/response.html"><span class="doc">Response Library</span></a> for
 a description of its use, as this function is an alias for
 <a class="reference internal" href="../outgoing/response.html#CodeIgniter\HTTP\Response::setCookie" title="CodeIgniter\HTTP\Response::setCookie"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response::setCookie()</span></code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This helper function just sets browser cookies to the global response
+instance that <code class="docutils literal notranslate"><span class="pre">Services::response()</span></code> returns. So, if you create and
+return another response instance (e.g., if you call <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a>),
+the cookies set here will not be sent automatically.</p>
+</div>
 </dd></dl>
 
 <dl class="php function">
@@ -394,6 +401,8 @@ values, only the name of the cookie is needed.</p>
 </div>
 <p>This function is otherwise identical to <a class="reference internal" href="#set_cookie" title="set_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_cookie()</span></code></a>, except that it
 does not have the <code class="docutils literal notranslate"><span class="pre">value</span></code> and <code class="docutils literal notranslate"><span class="pre">expire</span></code> parameters.</p>
+<p>This also just sets browser cookies for deleting the cookies to the global
+response instance that <code class="docutils literal notranslate"><span class="pre">Services::response()</span></code> returns.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When you use <a class="reference internal" href="#set_cookie" title="set_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_cookie()</span></code></a>,
@@ -425,7 +434,9 @@ parameters.</p>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
-<p>Checks if a cookie exists by name. This is an alias of <code class="docutils literal notranslate"><span class="pre">Response::hasCookie()</span></code>.</p>
+<p>Checks if a cookie exists by name in the global response instance that
+<code class="docutils literal notranslate"><span class="pre">Services::response()</span></code> returns. This is an alias of
+<a class="reference internal" href="../outgoing/response.html#CodeIgniter\HTTP\Response::hasCookie" title="CodeIgniter\HTTP\Response::hasCookie"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response::hasCookie()</span></code></a>.</p>
 </dd></dl>
 
 </section>
@@ -443,7 +454,7 @@ parameters.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 10, 2023.
+      <span class="lastupdated">Last updated on Nov 12, 2023.
       </span></p>
   </div>
 

@@ -313,8 +313,10 @@ a server responding to the client that called it.</p>
 </div>
 <section id="working-with-the-response">
 <h2><a class="toc-backref" href="#id3">Working with the Response</a><a class="headerlink" href="#working-with-the-response" title="Permalink to this headline"></a></h2>
-<p>A Response class is instantiated for you and passed into your controllers. It can be accessed through
-<code class="docutils literal notranslate"><span class="pre">$this-&gt;response</span></code>. Many times you will not need to touch the class directly, since CodeIgniter takes care of
+<p>A Response class is instantiated for you and passed into your controllers. It can
+be accessed through <code class="docutils literal notranslate"><span class="pre">$this-&gt;response</span></code>. It is the same instance that
+<code class="docutils literal notranslate"><span class="pre">Services::response()</span></code> returns. We call it the global response instance.</p>
+<p>Many times you will not need to touch the class directly, since CodeIgniter takes care of
 sending the headers and the body for you. This is great if the page successfully created the content it was asked to.
 When things go wrong, or you need to send very specific status codes back, or even take advantage of the
 powerful HTTP caching, it’s there for you.</p>
@@ -353,17 +355,29 @@ as the second parameter of the <code class="docutils literal notranslate"><span 
 </section>
 <section id="setting-headers">
 <h3><a class="toc-backref" href="#id5">Setting Headers</a><a class="headerlink" href="#setting-headers" title="Permalink to this headline"></a></h3>
+<section id="setheader">
+<h4>setHeader()<a class="headerlink" href="#setheader" title="Permalink to this headline"></a></h4>
 <p>Often, you will need to set headers to be set for the response. The Response class makes this very simple to do,
-with the <code class="docutils literal notranslate"><span class="pre">setHeader()</span></code> method. The first parameter is the name of the header. The second parameter is the value,
-which can be either a string or an array of values that will be combined correctly when sent to the client.
-Using these functions instead of using the native PHP functions allows you to ensure that no headers are sent
-prematurely, causing errors, and makes testing possible.</p>
+with the <code class="docutils literal notranslate"><span class="pre">setHeader()</span></code> method.</p>
+<p>The first parameter is the name of the header. The second parameter is the value,
+which can be either a string or an array of values that will be combined correctly when sent to the client.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Location&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;WWW-Authenticate&#39;</span><span class="p">,</span> <span class="s1">&#39;Negotiate&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>Using these functions instead of using the native PHP functions allows you to ensure that no headers are sent
+prematurely, causing errors, and makes testing possible.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method just sets headers to the response instance. So, if you create
+and return another response instance (e.g., if you call <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a>),
+the headers set here will not be sent automatically.</p>
+</div>
+</section>
+<section id="appendheader">
+<h4>appendHeader()<a class="headerlink" href="#appendheader" title="Permalink to this headline"></a></h4>
 <p>If the header exists and can have more than one value, you may use the <code class="docutils literal notranslate"><span class="pre">appendHeader()</span></code> and <code class="docutils literal notranslate"><span class="pre">prependHeader()</span></code>
 methods to add the value to the end or beginning of the values list, respectively. The first parameter is the name
 of the header, while the second is the value to append or prepend.</p>
@@ -373,6 +387,9 @@ of the header, while the second is the value to append or prepend.</p>
     <span class="o">-&gt;</span><span class="na">appendHeader</span><span class="p">(</span><span class="s1">&#39;Cache-Control&#39;</span><span class="p">,</span> <span class="s1">&#39;must-revalidate&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+</section>
+<section id="removeheader">
+<h4>removeHeader()<a class="headerlink" href="#removeheader" title="Permalink to this headline"></a></h4>
 <p>Headers can be removed from the response with the <code class="docutils literal notranslate"><span class="pre">removeHeader()</span></code> method, which takes the header name as the only
 parameter. This is not case-sensitive.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -380,6 +397,7 @@ parameter. This is not case-sensitive.</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">removeHeader</span><span class="p">(</span><span class="s1">&#39;Location&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+</section>
 </section>
 </section>
 <section id="redirect">
@@ -854,7 +872,8 @@ this as it is handled automatically by CodeIgniter.</p>
 <p>Prior to v4.2.7, the default values of <code class="docutils literal notranslate"><span class="pre">$secure</span></code> and <code class="docutils literal notranslate"><span class="pre">$httponly</span></code> were <code class="docutils literal notranslate"><span class="pre">false</span></code>
 due to a bug, and these values from <strong>app/Config/Cookie.php</strong> were never used.</p>
 </div>
-<p>Sets a cookie containing the values you specify. There are two ways to
+<p>Sets a cookie containing the values you specify to the Response instance.</p>
+<p>There are two ways to
 pass information to this method so that a cookie can be set: Array
 Method, and Discrete Parameters:</p>
 <p><strong>Array Method</strong></p>
@@ -926,6 +945,10 @@ parameters:</p>
 </dd>
 </dl>
 <p>Delete an existing cookie.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This also just sets browser cookie for deleting the cookie.</p>
+</div>
 <p>Only the <code class="docutils literal notranslate"><span class="pre">name</span></code> is required.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">prefix</span></code> is only needed if you need to avoid name collisions with
 other identically named cookies for your server.</p>
@@ -1027,7 +1050,7 @@ request only.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 10, 2023.
+      <span class="lastupdated">Last updated on Nov 12, 2023.
       </span></p>
   </div>
 
