@@ -63,7 +63,7 @@ final class FilterTestTraitTest extends CIUnitTestCase
         $this->getFilterCaller('test-customfilter', 'banana');
     }
 
-    public function testCallerSupportArray(): void
+    public function testCallerSupportsArray(): void
     {
         $this->filtersConfig->aliases['test-customfilter'] = [Customfilter::class];
 
@@ -73,7 +73,7 @@ final class FilterTestTraitTest extends CIUnitTestCase
         $this->assertSame('http://hellowworld.com', $result->getBody());
     }
 
-    public function testCallerSupportClassname(): void
+    public function testCallerSupportsClassname(): void
     {
         $caller = $this->getFilterCaller(Customfilter::class, 'before');
         $result = $caller();
