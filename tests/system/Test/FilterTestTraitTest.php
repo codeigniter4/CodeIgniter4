@@ -73,6 +73,14 @@ final class FilterTestTraitTest extends CIUnitTestCase
         $this->assertSame('http://hellowworld.com', $result->getBody());
     }
 
+    public function testCallerSupportClassname(): void
+    {
+        $caller = $this->getFilterCaller(Customfilter::class, 'before');
+        $result = $caller();
+
+        $this->assertSame('http://hellowworld.com', $result->getBody());
+    }
+
     public function testCallerUsesClonedInstance(): void
     {
         $caller = $this->getFilterCaller('test-customfilter', 'before');
