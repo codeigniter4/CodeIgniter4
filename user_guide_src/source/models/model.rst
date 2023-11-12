@@ -186,7 +186,7 @@ $updatedField
 ^^^^^^^^^^^^^
 
 Specifies which database field should use for keep data record update timestamp.
-Leave it empty (``''``) to avoid update it (even ``$useTimestamps`` is enabled).
+Leave it empty (``''``) to avoid updating it (even ``$useTimestamps`` is enabled).
 
 $deletedField
 ^^^^^^^^^^^^^
