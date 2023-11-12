@@ -93,7 +93,7 @@ trait MessageTrait
 
                 $this->setHeader($header, $_SERVER[$key]);
 
-                // Add us to the header map so we can find them case-insensitively
+                // Add us to the header map, so we can find them case-insensitively
                 $this->headerMap[strtolower($header)] = $header;
             }
         }
