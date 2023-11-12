@@ -435,7 +435,7 @@ class Model extends BaseModel
 
             $set[$this->deletedField] = $this->setDate();
 
-            if ($this->useTimestamps && $this->updatedField) {
+            if ($this->useTimestamps && $this->updatedField !== '') {
                 $set[$this->updatedField] = $this->setDate();
             }
 
