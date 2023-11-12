@@ -12,8 +12,11 @@ a server responding to the client that called it.
 Working with the Response
 =========================
 
-A Response class is instantiated for you and passed into your controllers. It can be accessed through
-``$this->response``. Many times you will not need to touch the class directly, since CodeIgniter takes care of
+A Response class is instantiated for you and passed into your controllers. It can
+be accessed through ``$this->response``. It is the same instance that
+``Services::response()`` returns. We call it the global response instance.
+
+Many times you will not need to touch the class directly, since CodeIgniter takes care of
 sending the headers and the body for you. This is great if the page successfully created the content it was asked to.
 When things go wrong, or you need to send very specific status codes back, or even take advantage of the
 powerful HTTP caching, it's there for you.
@@ -40,19 +43,35 @@ You can set format an array into either JSON or XML and set the content type hea
 Setting Headers
 ---------------
 
+setHeader()
+^^^^^^^^^^^
+
 Often, you will need to set headers to be set for the response. The Response class makes this very simple to do,
-with the ``setHeader()`` method. The first parameter is the name of the header. The second parameter is the value,
+with the ``setHeader()`` method.
+
+The first parameter is the name of the header. The second parameter is the value,
 which can be either a string or an array of values that will be combined correctly when sent to the client.
+
+.. literalinclude:: response/004.php
+
 Using these functions instead of using the native PHP functions allows you to ensure that no headers are sent
 prematurely, causing errors, and makes testing possible.
 
-.. literalinclude:: response/004.php
+.. note:: This method just sets headers to the response instance. So, if you create
+    and return another response instance (e.g., if you call :php:func:`redirect()`),
+    the headers set here will not be sent automatically.
+
+appendHeader()
+^^^^^^^^^^^^^^
 
 If the header exists and can have more than one value, you may use the ``appendHeader()`` and ``prependHeader()``
 methods to add the value to the end or beginning of the values list, respectively. The first parameter is the name
 of the header, while the second is the value to append or prepend.
 
 .. literalinclude:: response/005.php
+
+removeHeader()
+^^^^^^^^^^^^^^
 
 Headers can be removed from the response with the ``removeHeader()`` method, which takes the header name as the only
 parameter. This is not case-sensitive.
@@ -384,7 +403,9 @@ The methods provided by the parent class that are available are:
         .. note:: Prior to v4.2.7, the default values of ``$secure`` and ``$httponly`` were ``false``
             due to a bug, and these values from **app/Config/Cookie.php** were never used.
 
-        Sets a cookie containing the values you specify. There are two ways to
+        Sets a cookie containing the values you specify to the Response instance.
+
+        There are two ways to
         pass information to this method so that a cookie can be set: Array
         Method, and Discrete Parameters:
 
@@ -438,6 +459,8 @@ The methods provided by the parent class that are available are:
         :rtype: void
 
         Delete an existing cookie.
+
+        .. note:: This also just sets browser cookie for deleting the cookie.
 
         Only the ``name`` is required.
 

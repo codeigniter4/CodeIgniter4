@@ -142,7 +142,12 @@ Helpers
 - In CI4, ``redirect()`` is completely changed from CI3's.
     - `redirect() Documentation CodeIgniter 3.X <https://codeigniter.com/userguide3/helpers/url_helper.html#redirect>`_
     - `redirect() Documentation CodeIgniter 4.X <../general/common_functions.html#redirect>`_
-    - In CI4, ``redirect()`` returns a ``RedirectResponse`` instance instead of redirecting and terminating script execution. You must return it.
+    - In CI4, :php:func:`redirect()` returns a ``RedirectResponse`` instance instead of
+      redirecting and terminating script execution. You must return it from Controllers
+      or Controller Filters.
+    - Cookies and Headers you set before calling ``redirect()`` are not automatically
+      carried over to a ``RedirectResponse``. You need to call ``withCookies()``
+      or ``withHeaders()`` manually if you want to send them.
     - You need to change CI3's ``redirect('login/form')`` to ``return redirect()->to('login/form')``.
 
 Hooks
