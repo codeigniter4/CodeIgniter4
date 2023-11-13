@@ -750,11 +750,11 @@ abstract class BaseModel
         // Set created_at and updated_at with same time
         $date = $this->setDate();
 
-        if ($this->useTimestamps && $this->createdField && ! array_key_exists($this->createdField, $data)) {
+        if ($this->useTimestamps && $this->createdField !== '' && ! array_key_exists($this->createdField, $data)) {
             $data[$this->createdField] = $date;
         }
 
-        if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, $data)) {
+        if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, $data)) {
             $data[$this->updatedField] = $date;
         }
 
@@ -837,11 +837,11 @@ abstract class BaseModel
                 // Set created_at and updated_at with same time
                 $date = $this->setDate();
 
-                if ($this->useTimestamps && $this->createdField && ! array_key_exists($this->createdField, $row)) {
+                if ($this->useTimestamps && $this->createdField !== '' && ! array_key_exists($this->createdField, $row)) {
                     $row[$this->createdField] = $date;
                 }
 
-                if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, $row)) {
+                if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, $row)) {
                     $row[$this->updatedField] = $date;
                 }
             }
@@ -909,7 +909,7 @@ abstract class BaseModel
             throw DataException::forEmptyDataset('update');
         }
 
-        if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, $data)) {
+        if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, $data)) {
             $data[$this->updatedField] = $this->setDate();
         }
 
@@ -994,7 +994,7 @@ abstract class BaseModel
                     $row[$index] = $updateIndex;
                 }
 
-                if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, $row)) {
+                if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, $row)) {
                     $row[$this->updatedField] = $this->setDate();
                 }
             }
@@ -1127,7 +1127,7 @@ abstract class BaseModel
             return false;
         }
 
-        if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, (array) $data)) {
+        if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, (array) $data)) {
             $data[$this->updatedField] = $this->setDate();
         }
 

@@ -224,7 +224,7 @@ filter:check
 
 .. versionadded:: 4.3.0
 
-Check the filters for the route ``/`` with **GET** method:
+For example, check the filters for the route ``/`` with **GET** method:
 
 .. code-block:: console
 
@@ -240,8 +240,9 @@ The output is like the following:
     | GET    | /     |                | toolbar       |
     +--------+-------+----------------+---------------+
 
-You can also see the routes and filters by the ``spark routes`` command.
-See :ref:`URI Routing <routing-spark-routes>`.
+You can also see the routes and filters by the ``spark routes`` command,
+but it might not show accurate filters when you use regular expressions for routes.
+See :ref:`URI Routing <routing-spark-routes>` for details.
 
 ****************
 Provided Filters
