@@ -166,7 +166,7 @@ $useTimestamps
 This boolean value determines whether the current date is automatically added to all inserts
 and updates. If ``true``, will set the current time in the format specified by `$dateFormat`_. This
 requires that the table have columns named **created_at**, **updated_at** and **deleted_at** in the appropriate
-data type.
+data type. See also `$createdField`_, `$updatedField`_, and `$deletedField`_.
 
 $dateFormat
 ^^^^^^^^^^^
@@ -238,7 +238,7 @@ Callbacks
 $allowCallbacks
 ^^^^^^^^^^^^^^^
 
-Whether the callbacks defined below should be used.
+Whether the callbacks defined below should be used. See :ref:`model-events`.
 
 $beforeInsert
 ^^^^^^^^^^^^^
@@ -266,7 +266,7 @@ $afterUpdateBatch
 ^^^^^^^^^^^^^^^^^
 
 These arrays allow you to specify callback methods that will be run on the data at the
-time specified in the property name.
+time specified in the property name. See :ref:`model-events`.
 
 Working with Data
 *****************
@@ -713,6 +713,8 @@ and specify the model's method at the end of the method chaining.
 .. note:: You can also access the model's database connection seamlessly:
 
     .. literalinclude:: model/046.php
+
+.. _model-events:
 
 Model Events
 ************
