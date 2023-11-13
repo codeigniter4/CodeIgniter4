@@ -57,11 +57,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, string given on the right side\\.$#',
-	'count' => 7,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a ternary operator condition, array\\|null given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
@@ -2628,7 +2623,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in &&, string given on the right side\\.$#',
-	'count' => 3,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Model.php',
 ];
 $ignoreErrors[] = [
