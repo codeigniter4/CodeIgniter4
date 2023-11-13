@@ -28,9 +28,11 @@ Config for CURLRequest
 Sharing Options
 ===============
 
-.. note:: Since v4.4.0, the default value has been changed to ``false``. This
-    setting exists only for backward compatibility. New users do not need to
-    change the setting.
+.. important:: This setting exists only for backward compatibility. Do not use it
+    in new projects. Even if you are already using it, we recommend that you disable
+    it.
+
+.. note:: Since v4.4.0, the default value has been changed to ``false``.
 
 If you want to share all the options between requests, set ``$shareOptions`` to
 ``true`` in **app/Config/CURLRequest.php**:
