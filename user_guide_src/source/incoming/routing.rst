@@ -801,6 +801,10 @@ will be routed to ``Acme\Blog\Controllers\Foo::getBar()``.
 Auto Routing (Legacy)
 *********************
 
+.. important:: This feature exists only for backward compatibility. Do not use it
+    in new projects. Even if you are already using it, we recommend that you use
+    the :ref:`auto-routing-improved` instead.
+
 Auto Routing (Legacy) is a routing system from CodeIgniter 3.
 It can automatically route HTTP requests based on conventions and execute the corresponding controller methods.
 
