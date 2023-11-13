@@ -338,11 +338,15 @@ will provide it, so please check with your host to verify if you run into proble
 <h2><a class="toc-backref" href="#id1">Config for CURLRequest</a><a class="headerlink" href="#config-for-curlrequest" title="Permalink to this headline"></a></h2>
 <section id="sharing-options">
 <span id="curlrequest-sharing-options"></span><h3><a class="toc-backref" href="#id2">Sharing Options</a><a class="headerlink" href="#sharing-options" title="Permalink to this headline"></a></h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This setting exists only for backward compatibility. Do not use it
+in new projects. Even if you are already using it, we recommend that you disable
+it.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since v4.4.0, the default value has been changed to <code class="docutils literal notranslate"><span class="pre">false</span></code>. This
-setting exists only for backward compatibility. New users do not need to
-change the setting.</p>
+<p>Since v4.4.0, the default value has been changed to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 </div>
 <p>If you want to share all the options between requests, set <code class="docutils literal notranslate"><span class="pre">$shareOptions</span></code> to
 <code class="docutils literal notranslate"><span class="pre">true</span></code> in <strong>app/Config/CURLRequest.php</strong>:</p>
