@@ -763,7 +763,7 @@ when a controller is found that matches the URI, but no segment exists for the m
 ``index``.
 
 In this example, if the user were to visit **example.com/products**, and a ``Products`` controller existed, the
-``Products::listAll()`` method would be executed:
+``Products::getListAll()`` method would be executed:
 
 .. literalinclude:: routing/048.php
 
