@@ -119,6 +119,10 @@ class FileLocator
      */
     public function getClassname(string $file): string
     {
+        if(is_dir($file)) {
+            return '';
+        }
+
         $php       = file_get_contents($file);
         $tokens    = token_get_all($php);
         $dlm       = false;
