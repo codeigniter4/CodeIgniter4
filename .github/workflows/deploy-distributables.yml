@@ -66,7 +66,7 @@ jobs:
         run: ./source/.github/scripts/deploy-framework ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/framework ${GITHUB_REF##*/}
 
       - name: Release
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.ACCESS_TOKEN}}
           script: |
@@ -116,7 +116,7 @@ jobs:
         run: ./source/.github/scripts/deploy-appstarter ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/appstarter ${GITHUB_REF##*/}
 
       - name: Release
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.ACCESS_TOKEN}}
           script: |
@@ -172,7 +172,7 @@ jobs:
         run: ./source/.github/scripts/deploy-userguide ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/userguide ${GITHUB_REF##*/}
 
       - name: Release
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.ACCESS_TOKEN}}
           script: |
