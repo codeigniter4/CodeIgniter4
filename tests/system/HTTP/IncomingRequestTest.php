@@ -223,7 +223,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config->defaultLocale    = 'es';
         $config->baseURL          = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), null, new UserAgent());
+        $request = new IncomingRequest($config, new SiteURI($config), null, new UserAgent());
 
         $request->setValidLocales(['ja']);
         $request->setLocale('ja');
@@ -901,7 +901,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $_SERVER['REQUEST_URI'] = $path;
         $_SERVER['SCRIPT_NAME'] = $path;
-        $request                = new IncomingRequest($config, new URI($path), null, new UserAgent());
+        $request                = new IncomingRequest($config, new SiteURI($config, $path), null, new UserAgent());
         $this->assertSame($detectPath, $request->detectPath());
     }
 
@@ -914,7 +914,8 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testSetPath(): void
     {
-        $request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
+        $config  = new App();
+        $request = new IncomingRequest($config, new SiteURI($config), null, new UserAgent());
         $this->assertSame('', $request->getPath());
 
         $request->setPath('foobar');

@@ -17,7 +17,7 @@ use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Model;
 use CodeIgniter\Router\RouteCollection;
@@ -312,7 +312,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $resource = new MockResourceController();
 
         $config = new App();
-        $uri    = new URI();
+        $uri    = new SiteURI($config);
         $agent  = new UserAgent();
 
         $request  = new IncomingRequest($config, $uri, '', $agent);
@@ -340,7 +340,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $resource = new MockResourceController();
 
         $config = new App();
-        $uri    = new URI();
+        $uri    = new SiteURI($config);
         $agent  = new UserAgent();
 
         $request  = new IncomingRequest($config, $uri, '', $agent);

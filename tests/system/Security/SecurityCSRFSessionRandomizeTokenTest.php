@@ -14,7 +14,7 @@ namespace CodeIgniter\Security;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Session\Handlers\ArrayHandler;
@@ -25,6 +25,7 @@ use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
+use Config\App;
 use Config\Cookie;
 use Config\Logger as LoggerConfig;
 use Config\Security as SecurityConfig;
@@ -136,11 +137,17 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'POST';
         unset($_POST['csrf_test_name']);
 
-        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
-
+        $request  = $this->createIncomingRequest();
         $security = $this->createSecurity();
 
         $security->verify($request);
+    }
+
+    private function createIncomingRequest(?App $config = null): IncomingRequest
+    {
+        $config ??= new MockAppConfig();
+
+        return new IncomingRequest($config, new SiteURI($config), null, new UserAgent());
     }
 
     public function testCSRFVerifyPostThrowsExceptionOnNoMatch(): void
@@ -151,8 +158,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['csrf_test_name']   = '8b9218a55906f9dcc1dc263dce7f005b';
 
-        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
-
+        $request  = $this->createIncomingRequest();
         $security = $this->createSecurity();
 
         $security->verify($request);
@@ -166,8 +172,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['csrf_test_name']   = '!';
 
-        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
-
+        $request  = $this->createIncomingRequest();
         $security = $this->createSecurity();
 
         $security->verify($request);
@@ -179,8 +184,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $_POST['foo']              = 'bar';
         $_POST['csrf_test_name']   = $this->randomizedToken;
 
-        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
-
+        $request  = $this->createIncomingRequest();
         $security = $this->createSecurity();
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
@@ -192,9 +196,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
-        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request = $this->createIncomingRequest();
         $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005b');
-
         $security = $this->createSecurity();
 
         $this->expectException(SecurityException::class);
@@ -208,9 +211,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['foo']              = 'bar';
 
-        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request = $this->createIncomingRequest();
         $request->setHeader('X-CSRF-TOKEN', $this->randomizedToken);
-
         $security = $this->createSecurity();
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
@@ -222,9 +224,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'PUT';
 
-        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request = $this->createIncomingRequest();
         $request->setHeader('X-CSRF-TOKEN', '8b9218a55906f9dcc1dc263dce7f005b');
-
         $security = $this->createSecurity();
 
         $this->expectException(SecurityException::class);
@@ -237,9 +238,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'PUT';
 
-        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request = $this->createIncomingRequest();
         $request->setHeader('X-CSRF-TOKEN', $this->randomizedToken);
-
         $security = $this->createSecurity();
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
@@ -250,9 +250,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'PUT';
 
-        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request = $this->createIncomingRequest();
         $request->setBody("csrf_test_name={$this->randomizedToken}&foo=bar");
-
         $security = $this->createSecurity();
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
@@ -266,9 +265,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
 
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
-        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request = $this->createIncomingRequest();
         $request->setBody('{"csrf_test_name":"8b9218a55906f9dcc1dc263dce7f005b"}');
-
         $security = $this->createSecurity();
 
         $security->verify($request);
@@ -278,9 +276,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
-        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $request = $this->createIncomingRequest();
         $request->setBody('{"csrf_test_name":"' . $this->randomizedToken . '","foo":"bar"}');
-
         $security = $this->createSecurity();
 
         $this->assertInstanceOf(Security::class, $security->verify($request));
@@ -298,9 +295,8 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $config->regenerate     = false;
         Factories::injectMock('config', 'Security', $config);
 
-        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
-
-        $security = new MockSecurity($this->config);
+        $request  = $this->createIncomingRequest();
+        $security = new MockSecurity($config);
 
         $oldHash = $security->getHash();
         $security->verify($request);
@@ -319,8 +315,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         $config->regenerate     = true;
         Factories::injectMock('config', 'Security', $config);
 
-        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
-
+        $request  = $this->createIncomingRequest();
         $security = $this->createSecurity();
 
         $oldHash = $security->getHash();
