@@ -10,11 +10,6 @@
       <code>public $plugins = [];</code>
     </UndefinedDocblockClass>
   </file>
-  <file src="system/Cache/FactoriesCache/FileVarExportHandler.php">
-    <UndefinedVariable>
-      <code>$val</code>
-    </UndefinedVariable>
-  </file>
   <file src="system/Cache/Handlers/MemcachedHandler.php">
     <UndefinedClass>
       <code>Memcache</code>
@@ -39,9 +34,9 @@
   </file>
   <file src="system/Config/View.php">
     <UndefinedDocblockClass>
-      <code><![CDATA[array<string, ParserCallableString>]]></code>
-      <code><![CDATA[array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>]]></code>
-      <code><![CDATA[array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>]]></code>
+      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, parser_callable_string>]]></code>
       <code><![CDATA[protected $coreFilters = [
         'abs'            => '\abs',
         'capitalize'     => '\CodeIgniter\View\Filters::capitalize',
@@ -144,8 +139,8 @@
   </file>
   <file src="system/View/Parser.php">
     <UndefinedDocblockClass>
-      <code><![CDATA[array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>]]></code>
-      <code><![CDATA[array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>]]></code>
+      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
       <code>protected $plugins = [];</code>
       <code>protected $plugins = [];</code>
     </UndefinedDocblockClass>
