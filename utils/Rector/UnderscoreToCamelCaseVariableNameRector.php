@@ -43,7 +43,7 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
 
     public function __construct(
         private readonly ReservedKeywordAnalyzer $reservedKeywordAnalyzer,
-        private PhpDocInfoFactory $phpDocInfoFactory
+        private readonly PhpDocInfoFactory $phpDocInfoFactory
     ) {
     }
 
