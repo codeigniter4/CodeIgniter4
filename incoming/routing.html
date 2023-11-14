@@ -1422,7 +1422,7 @@ When the default controller is <code class="docutils literal notranslate"><span 
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
 <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
 <p>In this example, if the user were to visit <strong>example.com/products</strong>, and a <code class="docutils literal notranslate"><span class="pre">Products</span></code> controller existed, the
-<code class="docutils literal notranslate"><span class="pre">Products::listAll()</span></code> method would be executed:</p>
+<code class="docutils literal notranslate"><span class="pre">Products::getListAll()</span></code> method would be executed:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultMethod</span><span class="p">(</span><span class="s1">&#39;listAll&#39;</span><span class="p">);</span>
@@ -1668,7 +1668,7 @@ due to a bug.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 13, 2023.
+      <span class="lastupdated">Last updated on Nov 14, 2023.
       </span></p>
   </div>
 
