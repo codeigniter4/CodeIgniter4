@@ -19,59 +19,59 @@ class Method
     /**
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT
      */
-    public const CONNECT = 'CONNECT';
+    final public const CONNECT = 'CONNECT';
 
     /**
      * Idempotent
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE
      */
-    public const DELETE = 'DELETE';
+    final public const DELETE = 'DELETE';
 
     /**
      * Safe, Idempotent, Cacheable
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET
      */
-    public const GET = 'GET';
+    final public const GET = 'GET';
 
     /**
      * Safe, Idempotent, Cacheable
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/HEAD
      */
-    public const HEAD = 'HEAD';
+    final public const HEAD = 'HEAD';
 
     /**
      * Safe, Idempotent
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS
      */
-    public const OPTIONS = 'OPTIONS';
+    final public const OPTIONS = 'OPTIONS';
 
     /**
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH
      */
-    public const PATCH = 'PATCH';
+    final public const PATCH = 'PATCH';
 
     /**
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST
      */
-    public const POST = 'POST';
+    final public const POST = 'POST';
 
     /**
      * Idempotent
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT
      */
-    public const PUT = 'PUT';
+    final public const PUT = 'PUT';
 
     /**
      * Safe, Idempotent
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/TRACE
      */
-    public const TRACE = 'TRACE';
+    final public const TRACE = 'TRACE';
 
     /**
      * Returns all HTTP methods.

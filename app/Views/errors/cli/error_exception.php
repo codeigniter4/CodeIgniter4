@@ -14,7 +14,7 @@ while ($prevException = $last->getPrevious()) {
     $last = $prevException;
 
     CLI::write('  Caused by:');
-    CLI::write('  [' . get_class($prevException) . ']', 'red');
+    CLI::write('  [' . $prevException::class . ']', 'red');
     CLI::write('  ' . $prevException->getMessage());
     CLI::write('  at ' . CLI::color(clean_path($prevException->getFile()) . ':' . $prevException->getLine(), 'green'));
     CLI::newLine();

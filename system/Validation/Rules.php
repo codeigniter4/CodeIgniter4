@@ -444,7 +444,7 @@ class Rules
         ?string $error = null,
         ?string $field = null
     ): bool {
-        if (strpos($field, '.') !== false) {
+        if (str_contains($field, '.')) {
             return ArrayHelper::dotKeyExists($field, $data);
         }
 

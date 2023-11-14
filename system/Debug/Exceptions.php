@@ -130,7 +130,7 @@ class Exceptions
             $uri       = $this->request->getPath() === '' ? '/' : $this->request->getPath();
             $routeInfo = '[Method: ' . $this->request->getMethod() . ', Route: ' . $uri . ']';
 
-            log_message('critical', get_class($exception) . ": {message}\n{routeInfo}\nin {exFile} on line {exLine}.\n{trace}", [
+            log_message('critical', $exception::class . ": {message}\n{routeInfo}\nin {exFile} on line {exLine}.\n{trace}", [
                 'message'   => $exception->getMessage(),
                 'routeInfo' => $routeInfo,
                 'exFile'    => clean_path($exception->getFile()), // {file} refers to THIS file
@@ -144,7 +144,7 @@ class Exceptions
             while ($prevException = $last->getPrevious()) {
                 $last = $prevException;
 
-                log_message('critical', '[Caused by] ' . get_class($prevException) . ": {message}\nin {exFile} on line {exLine}.\n{trace}", [
+                log_message('critical', '[Caused by] ' . $prevException::class . ": {message}\nin {exFile} on line {exLine}.\n{trace}", [
                     'message' => $prevException->getMessage(),
                     'exFile'  => clean_path($prevException->getFile()), // {file} refers to THIS file
                     'exLine'  => $prevException->getLine(), // {line} refers to THIS line

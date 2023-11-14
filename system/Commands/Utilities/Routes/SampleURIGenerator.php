@@ -52,7 +52,7 @@ final class SampleURIGenerator
     {
         $sampleUri = $routeKey;
 
-        if (strpos($routeKey, '{locale}') !== false) {
+        if (str_contains($routeKey, '{locale}')) {
             $sampleUri = str_replace(
                 '{locale}',
                 config(App::class)->defaultLocale,

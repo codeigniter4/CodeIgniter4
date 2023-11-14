@@ -30,7 +30,7 @@ class Router implements RouterInterface
     /**
      * List of allowed HTTP methods (and CLI for command line use).
      */
-    public const HTTP_METHODS = [
+    final public const HTTP_METHODS = [
         Method::GET,
         Method::HEAD,
         Method::POST,

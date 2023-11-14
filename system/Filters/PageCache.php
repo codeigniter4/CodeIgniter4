@@ -25,7 +25,7 @@ use Config\Services;
  */
 class PageCache implements FilterInterface
 {
-    private ResponseCache $pageCache;
+    private readonly ResponseCache $pageCache;
 
     public function __construct()
     {

@@ -21,7 +21,7 @@ class InputOutput
     /**
      * Is the readline library on the system?
      */
-    private bool $readlineSupport;
+    private readonly bool $readlineSupport;
 
     public function __construct()
     {

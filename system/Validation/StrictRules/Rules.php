@@ -44,7 +44,7 @@ class Rules
         ?string $error = null,
         ?string $field = null
     ): bool {
-        if (strpos($otherField, '.') !== false) {
+        if (str_contains($otherField, '.')) {
             return $str !== dot_array_search($otherField, $data);
         }
 
@@ -275,7 +275,7 @@ class Rules
         ?string $error = null,
         ?string $field = null
     ): bool {
-        if (strpos($otherField, '.') !== false) {
+        if (str_contains($otherField, '.')) {
             return $str === dot_array_search($otherField, $data);
         }
 
@@ -420,7 +420,7 @@ class Rules
         ?string $error = null,
         ?string $field = null
     ): bool {
-        if (strpos($field, '.') !== false) {
+        if (str_contains($field, '.')) {
             return ArrayHelper::dotKeyExists($field, $data);
         }
 
