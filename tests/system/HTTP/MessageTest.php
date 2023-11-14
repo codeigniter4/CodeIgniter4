@@ -355,4 +355,23 @@ final class MessageTest extends CIUnitTestCase
 
         $this->message->appendHeader('Set-Cookie', 'HttpOnly');
     }
+
+    public function testGetHeaderLineWithMultipleHeaders(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The header "Set-Cookie" already has multiple headers. You cannot use getHeaderLine().'
+        );
+
+        $this->message->addHeader(
+            'Set-Cookie',
+            'logged_in=no; Path=/'
+        );
+        $this->message->addHeader(
+            'Set-Cookie',
+            'sessid=123456; Path=/'
+        );
+
+        $this->message->getHeaderLine('Set-Cookie');
+    }
 }
