@@ -111,12 +111,12 @@ is used with methods like ``find()`` to know what column to match the specified 
 $useAutoIncrement
 -----------------
 
-Specifies if the table uses an auto-increment feature for ``$primaryKey``. If set to ``false``
+Specifies if the table uses an auto-increment feature for `$primaryKey`_. If set to ``false``
 then you are responsible for providing primary key value for every record in the table. This
 feature may be handy when we want to implement 1:1 relation or use UUIDs for our model. The
 default value is ``true``.
 
-.. note:: If you set ``$useAutoIncrement`` to ``false``, then make sure to set your primary
+.. note:: If you set `$useAutoIncrement`_ to ``false``, then make sure to set your primary
     key in the database to ``unique``. This way you will make sure that all of Model's features
     will still work the same as before.
 
@@ -142,8 +142,8 @@ part of a security trail. If true, the **find*()** methods will only return non-
 the ``withDeleted()`` method is called prior to calling the **find*()** method.
 
 This requires either a DATETIME or INTEGER field in the database as per the model's
-``$dateFormat`` setting. The default field name is ``deleted_at`` however this name can be
-configured to any name of your choice by using ``$deletedField`` property.
+`$dateFormat`_ setting. The default field name is ``deleted_at`` however this name can be
+configured to any name of your choice by using `$deletedField`_ property.
 
 .. important:: The ``deleted_at`` field must be nullable.
 
@@ -155,7 +155,7 @@ This array should be updated with the field names that can be set during ``save(
 against just taking input from a form and throwing it all at the model, resulting in
 potential mass assignment vulnerabilities.
 
-.. note:: The ``$primaryKey`` field should never be an allowed field.
+.. note:: The `$primaryKey`_ field should never be an allowed field.
 
 Dates
 -----
@@ -164,29 +164,29 @@ $useTimestamps
 ^^^^^^^^^^^^^^
 
 This boolean value determines whether the current date is automatically added to all inserts
-and updates. If true, will set the current time in the format specified by ``$dateFormat``. This
+and updates. If ``true``, will set the current time in the format specified by `$dateFormat`_. This
 requires that the table have columns named **created_at**, **updated_at** and **deleted_at** in the appropriate
-data type.
+data type. See also `$createdField`_, `$updatedField`_, and `$deletedField`_.
 
 $dateFormat
 ^^^^^^^^^^^
 
-This value works with ``$useTimestamps`` and ``$useSoftDeletes`` to ensure that the correct type of
+This value works with `$useTimestamps`_ and `$useSoftDeletes`_ to ensure that the correct type of
 date value gets inserted into the database. By default, this creates DATETIME values, but
-valid options are: ``'datetime'``, ``'date'``, or ``'int'`` (a PHP timestamp). Using **useSoftDeletes** or
-**useTimestamps** with an invalid or missing **dateFormat** will cause an exception.
+valid options are: ``'datetime'``, ``'date'``, or ``'int'`` (a PHP timestamp). Using `$useSoftDeletes`_ or
+`$useTimestamps`_ with an invalid or missing `$dateFormat`_ will cause an exception.
 
 $createdField
 ^^^^^^^^^^^^^
 
 Specifies which database field to use for data record create timestamp.
-Leave it empty (``''``) to avoid updating it (even if ``$useTimestamps`` is enabled).
+Set to an empty string (``''``) to avoid updating it (even if `$useTimestamps`_ is enabled).
 
 $updatedField
 ^^^^^^^^^^^^^
 
 Specifies which database field should use for keep data record update timestamp.
-Leave it empty (``''``) to avoid updating it (even ``$useTimestamps`` is enabled).
+Set to an empty string (``''``) to avoid updating it (even `$useTimestamps`_ is enabled).
 
 $deletedField
 ^^^^^^^^^^^^^
@@ -238,24 +238,16 @@ Callbacks
 $allowCallbacks
 ^^^^^^^^^^^^^^^
 
-Whether the callbacks defined below should be used.
+Whether the callbacks defined below should be used. See :ref:`model-events`.
 
 $beforeInsert
 ^^^^^^^^^^^^^
 $afterInsert
 ^^^^^^^^^^^^
-$beforeInsertBatch
-^^^^^^^^^^^^^^^^^^
-$afterInsertBatch
-^^^^^^^^^^^^^^^^^
 $beforeUpdate
 ^^^^^^^^^^^^^
 $afterUpdate
 ^^^^^^^^^^^^^
-$beforeUpdateBatch
-^^^^^^^^^^^^^^^^^^
-$afterUpdateBatch
-^^^^^^^^^^^^^^^^^
 $beforeFind
 ^^^^^^^^^^^
 $afterFind
@@ -264,9 +256,17 @@ $beforeDelete
 ^^^^^^^^^^^^^
 $afterDelete
 ^^^^^^^^^^^^
+$beforeInsertBatch
+^^^^^^^^^^^^^^^^^^
+$afterInsertBatch
+^^^^^^^^^^^^^^^^^
+$beforeUpdateBatch
+^^^^^^^^^^^^^^^^^^
+$afterUpdateBatch
+^^^^^^^^^^^^^^^^^
 
 These arrays allow you to specify callback methods that will be run on the data at the
-time specified in the property name.
+time specified in the property name. See :ref:`model-events`.
 
 Working with Data
 *****************
@@ -284,7 +284,7 @@ Returns a single row where the primary key matches the value passed in as the fi
 
 .. literalinclude:: model/006.php
 
-The value is returned in the format specified in ``$returnType``.
+The value is returned in the format specified in `$returnType`_.
 
 You can specify more than one row to return by passing an array of primaryKey values instead
 of just one:
@@ -329,7 +329,7 @@ Returns the first row in the result set. This is best used in combination with t
 withDeleted()
 -------------
 
-If ``$useSoftDeletes`` is true, then the **find*()** methods will not return any rows where ``deleted_at IS NOT NULL``.
+If `$useSoftDeletes`_ is true, then the **find*()** methods will not return any rows where ``deleted_at IS NOT NULL``.
 To temporarily override this, you can use the ``withDeleted()`` method prior to calling the **find*()** method.
 
 .. literalinclude:: model/013.php
@@ -351,7 +351,7 @@ insert()
 The first parameter is an associative array of data to create a new row of data in the database.
 If an object is passed instead of an array, it will attempt to convert it to an array.
 
-The array's keys must match the name of the columns in the ``$table``, while the array's values are the values to save for that key.
+The array's keys must match the name of the columns in the `$table`_, while the array's values are the values to save for that key.
 
 The optional second parameter is of type boolean, and if it is set to false, the method will return a boolean value,
 which indicates the success or failure of the query.
@@ -376,15 +376,15 @@ You can enable the check again by calling ``allowEmptyInserts(false)``.
 update()
 --------
 
-Updates an existing record in the database. The first parameter is the ``$primaryKey`` of the record to update.
+Updates an existing record in the database. The first parameter is the `$primaryKey`_ of the record to update.
 An associative array of data is passed into this method as the second parameter. The array's keys must match the name
-of the columns in a ``$table``, while the array's values are the values to save for that key:
+of the columns in a `$table`_, while the array's values are the values to save for that key:
 
 .. literalinclude:: model/016.php
 
 .. important:: Since v4.3.0, this method raises a ``DatabaseException``
     if it generates an SQL statement without a WHERE clause.
-    In previous versions, if it is called without ``$primaryKey`` specified and
+    In previous versions, if it is called without `$primaryKey`_ specified and
     an SQL statement was generated without a WHERE clause, the query would still
     execute and all records in the table would be updated.
 
@@ -440,7 +440,7 @@ Takes a primary key value as the first parameter and deletes the matching record
 
 .. literalinclude:: model/023.php
 
-If the model's ``$useSoftDeletes`` value is true, this will update the row to set ``deleted_at`` to the current
+If the model's `$useSoftDeletes`_ value is true, this will update the row to set ``deleted_at`` to the current
 date and time. You can force a permanent delete by setting the second parameter as true.
 
 An array of primary keys can be passed in as the first parameter to delete multiple records at once:
@@ -481,13 +481,13 @@ prior to saving to the database with the ``insert()``, ``update()``, or ``save()
 Setting Validation Rules
 ------------------------
 
-The first step is to fill out the ``$validationRules`` class property with the fields and rules that should
-be applied. If you have custom error message that you want to use, place them in the ``$validationMessages`` array:
+The first step is to fill out the `$validationRules`_ class property with the fields and rules that should
+be applied. If you have custom error message that you want to use, place them in the `$validationMessages`_ array:
 
 .. literalinclude:: model/027.php
 
 If you'd rather organize your rules and error messages within the Validation configuration file, you can do that
-and simply set ``$validationRules`` to the name of the validation rule group you created:
+and simply set `$validationRules`_ to the name of the validation rule group you created:
 
 .. literalinclude:: model/034.php
 
@@ -614,7 +614,7 @@ Protecting Fields
 =================
 
 To help protect against Mass Assignment Attacks, the Model class **requires** that you list all of the field names
-that can be changed during inserts and updates in the ``$allowedFields`` class property. Any data provided
+that can be changed during inserts and updates in the `$allowedFields`_ class property. Any data provided
 in addition to these will be removed prior to hitting the database. This is great for ensuring that timestamps,
 or primary keys do not get changed.
 
@@ -629,7 +629,7 @@ Runtime Return Type Changes
 ===========================
 
 You can specify the format that data should be returned as when using the **find*()** methods as the class property,
-``$returnType``. There may be times that you would like the data back in a different format, though. The Model
+`$returnType`_. There may be times that you would like the data back in a different format, though. The Model
 provides methods that allow you to do just that.
 
 .. note:: These methods only change the return type for the next **find*()** method call. After that,
@@ -674,7 +674,7 @@ You can get access to the **shared** instance of the Query Builder any time you 
 
 .. literalinclude:: model/043.php
 
-This builder is already set up with the model's ``$table``.
+This builder is already set up with the model's `$table`_.
 
 .. note:: Once you get the Query Builder instance, you can call methods of the
     :doc:`Query Builder <../database/query_builder>`.
@@ -714,14 +714,23 @@ and specify the model's method at the end of the method chaining.
 
     .. literalinclude:: model/046.php
 
+.. _model-events:
+
 Model Events
 ************
 
 There are several points within the model's execution that you can specify multiple callback methods to run.
-These methods can be used to normalize data, hash passwords, save related entities, and much more. The following
-points in the model's execution can be affected, each through a class property: ``$beforeInsert``, ``$afterInsert``,
-``$beforeInsertBatch``, ``$afterInsertBatch``, ``$beforeUpdate``, ``$afterUpdate``, ``$beforeUpdateBatch``,
-``$afterUpdateBatch``, ``$afterFind``, and ``$afterDelete``.
+These methods can be used to normalize data, hash passwords, save related entities, and much more.
+
+The following
+points in the model's execution can be affected, each through a class property:
+
+- `$beforeInsert`_, `$afterInsert`_
+- `$beforeUpdate`_, `$afterUpdate`_
+- `$beforeFind`_, `$afterFind`_
+- `$beforeDelete`_, `$afterDelete`_
+- `$beforeInsertBatch`_, `$afterInsertBatch`_
+- `$beforeUpdateBatch`_, `$afterUpdateBatch`_
 
 .. note:: ``$beforeInsertBatch``, ``$afterInsertBatch``, ``$beforeUpdateBatch`` and
     ``$afterUpdateBatch`` can be used since v4.3.0.
@@ -741,13 +750,13 @@ must return the original $data array so other callbacks have the full informatio
 Specifying Callbacks To Run
 ===========================
 
-You specify when to run the callbacks by adding the method name to the appropriate class property (``$beforeInsert``, ``$afterUpdate``,
+You specify when to run the callbacks by adding the method name to the appropriate class property (`$beforeInsert`_, `$afterUpdate`_,
 etc). Multiple callbacks can be added to a single event and they will be processed one after the other. You can
 use the same callback in multiple events:
 
 .. literalinclude:: model/051.php
 
-Additionally, each model may allow (default) or deny callbacks class-wide by setting its ``$allowCallbacks`` property:
+Additionally, each model may allow (default) or deny callbacks class-wide by setting its `$allowCallbacks`_ property:
 
 .. literalinclude:: model/052.php
 
@@ -769,20 +778,12 @@ beforeInsert      **data** = the key/value pairs that are being inserted. If an 
 afterInsert       **id** = the primary key of the new row, or 0 on failure.
                   **data** = the key/value pairs being inserted.
                   **result** = the results of the insert() method used through the Query Builder.
-beforeInsertBatch **data** = associative array of values that are being inserted. If an object or Entity class is passed to the
-                  insertBatch method, it is first converted to an array.
-afterInsertBatch  **data** = the associative array of values being inserted.
-                  **result** = the results of the insertbatch() method used through the Query Builder.
 beforeUpdate      **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs that are being updated. If an object or Entity class is passed to the
                   update method, it is first converted to an array.
 afterUpdate       **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs being updated.
                   **result** = the results of the update() method used through the Query Builder.
-beforeUpdateBatch **data** = associative array of values that are being updated. If an object or Entity class is passed to the
-                  updateBatch method, it is first converted to an array.
-afterUpdateBatch  **data** = the key/value pairs being updated.
-                  **result** = the results of the updateBatch() method used through the Query Builder.
 beforeFind        The name of the calling **method**, whether a **singleton** was requested, and these additional fields:
 - first()         No additional fields
 - find()          **id** = the primary key of the row being searched for.
@@ -796,6 +797,14 @@ afterDelete       **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
                   **result** = the result of the delete() call on the Query Builder.
                   **data** = unused.
+beforeInsertBatch **data** = associative array of values that are being inserted. If an object or Entity class is passed to the
+                  insertBatch method, it is first converted to an array.
+afterInsertBatch  **data** = the associative array of values being inserted.
+                  **result** = the results of the insertbatch() method used through the Query Builder.
+beforeUpdateBatch **data** = associative array of values that are being updated. If an object or Entity class is passed to the
+                  updateBatch method, it is first converted to an array.
+afterUpdateBatch  **data** = the key/value pairs being updated.
+                  **result** = the results of the updateBatch() method used through the Query Builder.
 ================= =========================================================================================================
 
 Modifying Find* Data

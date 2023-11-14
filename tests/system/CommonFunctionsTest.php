@@ -18,7 +18,7 @@ use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Session\Handlers\FileHandler;
@@ -411,7 +411,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->routes = $this->createRouteCollection();
         Services::injectMock('routes', $this->routes);
 
-        $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
+        $this->request = new MockIncomingRequest($this->config, new SiteURI($this->config), null, new UserAgent());
         Services::injectMock('request', $this->request);
 
         // setup & ask for a redirect...
@@ -446,7 +446,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->routes = $this->createRouteCollection();
         Services::injectMock('routes', $this->routes);
 
-        $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
+        $this->request = new MockIncomingRequest($this->config, new SiteURI($this->config), null, new UserAgent());
         Services::injectMock('request', $this->request);
 
         // setup & ask for a redirect...
@@ -481,7 +481,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->routes = $this->createRouteCollection();
         Services::injectMock('routes', $this->routes);
 
-        $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
+        $this->request = new MockIncomingRequest($this->config, new SiteURI($this->config), null, new UserAgent());
         Services::injectMock('request', $this->request);
 
         $locations = [

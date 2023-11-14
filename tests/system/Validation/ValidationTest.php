@@ -12,7 +12,7 @@
 namespace CodeIgniter\Validation;
 
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
@@ -843,7 +843,7 @@ class ValidationTest extends CIUnitTestCase
         $rawstring       = 'username=admin001&role=administrator&usepass=0';
         $config          = new App();
         $config->baseURL = 'http://example.com/';
-        $request         = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
+        $request         = new IncomingRequest($config, new SiteURI($config), $rawstring, new UserAgent());
 
         $rules = [
             'role' => 'required|min_length[5]',
@@ -867,7 +867,7 @@ class ValidationTest extends CIUnitTestCase
         $json            = json_encode($data);
         $config          = new App();
         $config->baseURL = 'http://example.com/';
-        $request         = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request         = new IncomingRequest($config, new SiteURI($config), $json, new UserAgent());
 
         $rules = [
             'role' => 'required|min_length[5]',
@@ -904,7 +904,7 @@ class ValidationTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request = new IncomingRequest($config, new SiteURI($config), $json, new UserAgent());
 
         $rules = [
             'p' => 'required|array_count[2]',
@@ -1090,7 +1090,7 @@ class ValidationTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), http_build_query($body), new UserAgent());
+        $request = new IncomingRequest($config, new SiteURI($config), http_build_query($body), new UserAgent());
 
         $this->validation->setRules($rules);
         $this->validation->withRequest($request->withMethod('post'))->run($body);
@@ -1169,7 +1169,7 @@ class ValidationTest extends CIUnitTestCase
             ],
         ];
 
-        $request = new IncomingRequest($config, new URI(), 'php://input', new UserAgent());
+        $request = new IncomingRequest($config, new SiteURI($config), 'php://input', new UserAgent());
 
         $this->validation->setRules([
             'id_user.*'   => 'numeric',
@@ -1203,7 +1203,7 @@ class ValidationTest extends CIUnitTestCase
             ],
         ];
 
-        $request = new IncomingRequest($config, new URI(), 'php://input', new UserAgent());
+        $request = new IncomingRequest($config, new SiteURI($config), 'php://input', new UserAgent());
 
         $this->validation->setRules([
             'id_user.*'               => 'numeric',
@@ -1239,7 +1239,7 @@ class ValidationTest extends CIUnitTestCase
             'id_user' => 'gh',
         ];
 
-        $request = new IncomingRequest($config, new URI(), 'php://input', new UserAgent());
+        $request = new IncomingRequest($config, new SiteURI($config), 'php://input', new UserAgent());
 
         $this->validation->setRules([
             'id_user' => 'numeric',

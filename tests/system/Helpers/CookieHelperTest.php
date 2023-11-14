@@ -15,7 +15,7 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
@@ -49,7 +49,7 @@ final class CookieHelperTest extends CIUnitTestCase
 
         Services::injectMock('response', new MockResponse(new App()));
         $this->response = Services::response();
-        $this->request  = new IncomingRequest(new App(), new URI(), null, new UserAgent());
+        $this->request  = new IncomingRequest(new App(), new SiteURI(new App()), null, new UserAgent());
         Services::injectMock('request', $this->request);
 
         helper('cookie');

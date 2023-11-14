@@ -15,7 +15,7 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Format\FormatterInterface;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
@@ -42,7 +42,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->formatter = new JSONFormatter();
     }
 
-    protected function makeController(array $userConfig = [], string $uri = 'http://example.com', array $userHeaders = [])
+    protected function makeController(array $userConfig = [], string $routePath = '', array $userHeaders = [])
     {
         $config = new App();
 
@@ -73,7 +73,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         Factories::injectMock('config', 'Cookie', $cookie);
 
         if ($this->request === null) {
-            $this->request  = new MockIncomingRequest($config, new URI($uri), null, new UserAgent());
+            $this->request  = new MockIncomingRequest($config, new SiteURI($config, $routePath), null, new UserAgent());
             $this->response = new MockResponse($config);
         }
 
@@ -115,7 +115,7 @@ final class ResponseTraitTest extends CIUnitTestCase
     public function testNoFormatterJSON(): void
     {
         $this->formatter = null;
-        $controller      = $this->makeController([], 'http://codeigniter.com', ['Accept' => 'application/json']);
+        $controller      = $this->makeController([], '', ['Accept' => 'application/json']);
 
         $this->invoke($controller, 'respondCreated', [['id' => 3], 'A Custom Reason']);
 
@@ -133,7 +133,7 @@ final class ResponseTraitTest extends CIUnitTestCase
     public function testNoFormatter(): void
     {
         $this->formatter = null;
-        $controller      = $this->makeController([], 'http://codeigniter.com', ['Accept' => 'application/json']);
+        $controller      = $this->makeController([], '', ['Accept' => 'application/json']);
 
         $this->invoke($controller, 'respondCreated', ['A Custom Reason']);
 
@@ -484,8 +484,9 @@ final class ResponseTraitTest extends CIUnitTestCase
         $original                = $_SERVER;
         $_SERVER['CONTENT_TYPE'] = $mimeType;
 
-        $this->makeController([], 'http://codeigniter.com', ['Accept' => $mimeType]);
+        $this->makeController([], '', ['Accept' => $mimeType]);
         $this->assertSame($mimeType, $this->request->getHeaderLine('Accept'), 'Request header...');
+
         $this->response->setContentType($contentType);
         $this->assertSame($contentType, $this->response->getHeaderLine('Content-Type'), 'Response header pre-response...');
 
@@ -554,7 +555,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         }
         Factories::injectMock('config', 'Cookie', $cookie);
 
-        $request  = new MockIncomingRequest($config, new URI($config->baseURL), null, new UserAgent());
+        $request  = new MockIncomingRequest($config, new SiteURI($config), null, new UserAgent());
         $response = new MockResponse($config);
 
         $controller = new class ($request, $response) {
