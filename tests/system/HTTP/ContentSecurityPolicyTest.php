@@ -642,4 +642,19 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->getHeaderEmitted('Content-Security-Policy');
         $this->assertStringContainsString("script-src 'self' 'nonce-", $result);
     }
+
+    public function testClearDirective(): void
+    {
+        $this->prepare();
+
+        $this->csp->addStyleSrc('css.example.com');
+        $this->csp->clearDirective('style-src');
+
+        $this->csp->finalize($this->response);
+
+        $header = $this->response->getHeaderLine('Content-Security-Policy');
+
+        $this->assertStringNotContainsString('style-src ', $header);
+        $this->assertStringNotContainsString('css.example.com', $header);
+    }
 }

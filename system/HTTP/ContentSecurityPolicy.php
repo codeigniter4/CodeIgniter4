@@ -819,4 +819,14 @@ class ContentSecurityPolicy
             $this->reportOnlyHeaders[$name] = implode(' ', $reportSources);
         }
     }
+
+    /**
+     * Clear the directive.
+     *
+     * @param string $directive CSP directive
+     */
+    public function clearDirective(string $directive): void
+    {
+        $this->{$this->directives[$directive]} = [];
+    }
 }
