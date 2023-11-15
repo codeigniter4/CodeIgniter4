@@ -99,11 +99,11 @@ jobs:
           - SQLSRV
           - SQLite3
         mysql-version:
-          - '5.7'
+          - '8.0'
         include:
           - php-version: '7.4'
             db-platform: MySQLi
-            mysql-version: '8.0'
+            mysql-version: '5.7'
           - php-version: '8.3'
             composer-option: '--ignore-platform-req=php'
 
