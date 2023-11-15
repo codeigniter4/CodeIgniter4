@@ -119,7 +119,7 @@ class FileLocator
      */
     public function getClassname(string $file): string
     {
-        if(is_dir($file)) {
+        if (is_dir($file)) {
             return '';
         }
 
