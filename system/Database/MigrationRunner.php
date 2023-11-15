@@ -836,7 +836,8 @@ class MigrationRunner
             throw new RuntimeException($message);
         }
 
-        $instance = new $class();
+        /** @var Migration $instance */
+        $instance = new $class(Database::forge($this->db));
         $group    = $instance->getDBGroup() ?? config(Database::class)->defaultGroup;
 
         if (ENVIRONMENT !== 'testing' && $group === 'tests' && $this->groupFilter !== 'tests') {
