@@ -978,7 +978,13 @@ valid_cc_number         Yes        Verifies that the credit card number matches 
 Rules for File Uploads
 ======================
 
-These validation rules enable you to do the basic checks you might need to verify that uploaded files meet your business needs.
+When you validate uploaded files, you must use the rules specifically created for
+file validation.
+
+.. important:: Only rules that listed in the table below can be used to validate
+    files. Therefore, adding any general rules, like ``permit_empty``, to file
+    validation rules array or string, the file validation will not work correctly.
+
 Since the value of a file upload HTML field doesn't exist, and is stored in the ``$_FILES`` global, the name of the input field will
 need to be used twice. Once to specify the field name as you would for any other rule, but again as the first parameter of all
 file upload related rules::
@@ -1020,7 +1026,3 @@ is_image                Yes         Fails if the file cannot be determined to be
 ======================= ========== ============================================= ===================================================
 
 The file validation rules apply for both single and multiple file uploads.
-
-.. note:: Only rules specifically created for file validation (like the ones listed in the table above) can be used to validate files.
-    Therefore, adding any general rules, like ``permit_empty``, to file validation rules array or string, the file validation will not
-    work correctly.
