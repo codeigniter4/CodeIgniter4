@@ -122,14 +122,11 @@ class MigrationRunner
     protected $groupSkip = false;
 
     /**
-     * Constructor.
+     * The migration can manage multiple databases. So it should always use the
+     * default DB group so that it creates the `migrations` table in the default
+     * DB group. Therefore, passing $db is for testing purposes only.
      *
-     * When passing in $db, you may pass any of the following to connect:
-     * - group name
-     * - existing connection instance
-     * - array of database configuration values
-     *
-     * @param array|ConnectionInterface|string|null $db
+     * @param array|ConnectionInterface|string|null $db DB group. For testing purposes only.
      *
      * @throws ConfigException
      */
