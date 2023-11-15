@@ -313,6 +313,9 @@ Changes
 - **Config:**
     - ``Config\Feature::$multipleFilters`` has been removed, because now
       :ref:`multiple-filters` are always enabled.
+    - The default error level in the production environment
+      (**app/Config/Boot/production.php**) has been changed to use the same error
+      level in the development environment.
 - **RouteCollection:** The HTTP method keys in the protected property ``$routes``
   has been fixed from lowercase to uppercase.
 
