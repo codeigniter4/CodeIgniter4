@@ -33,6 +33,12 @@ The use of the `ssl_key` option in CURLRequest was removed
 Due to a bug, we were using the undocumented `ssl_key` config option to define the CA bundle in CURLRequest.
 This was fixed and is now working according to documentation. You can define your CA bundle via the `verify` option.
 
+Filesystem Helper
+====================================
+
+``get_filenames()`` now follows symlink folders, which it previously just returned
+without following.
+
 ***************
 Message Changes
 ***************
