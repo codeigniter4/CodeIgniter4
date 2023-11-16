@@ -204,7 +204,7 @@ The following functions are available:
     :returns:    Symbolic permissions string
     :rtype:    string
 
-    Takes numeric permissions (such as is returned by ``fileperms()``) and returns
+    Takes numeric permissions (such as is returned by `fileperms() <https://www.php.net/manual/en/function.fileperms.php>`_) and returns
     standard symbolic notation of file permissions.
 
     .. literalinclude:: filesystem_helper/012.php
@@ -215,7 +215,7 @@ The following functions are available:
     :returns:    Octal permissions string
     :rtype:    string
 
-    Takes numeric permissions (such as is returned by ``fileperms()``) and returns
+    Takes numeric permissions (such as is returned by `fileperms() <https://www.php.net/manual/en/function.fileperms.php>`_) and returns
     a three character octal notation of file permissions.
 
     .. literalinclude:: filesystem_helper/013.php
