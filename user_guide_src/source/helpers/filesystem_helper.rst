@@ -113,7 +113,7 @@ The following functions are available:
 
     .. literalinclude:: filesystem_helper/007.php
 
-    The default mode is 'wb'. Please see the `PHP user guide <https://www.php.net/manual/en/function.fopen.php>`_
+    The default mode is ``'wb'``. Please see `fopen() <https://www.php.net/manual/en/function.fopen.php>`_ in the PHP manual
     for mode options.
 
     .. note:: In order for this function to write data to a file, its permissions must
