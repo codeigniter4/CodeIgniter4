@@ -3713,16 +3713,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 8,
-	'path' => __DIR__ . '/system/View/Cell.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\View\\\\Cell\\:\\:\\$cache \\(CodeIgniter\\\\Cache\\\\CacheInterface\\) in empty\\(\\) is not falsy\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/View/Cell.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/Filters.php',
 ];
@@ -3764,16 +3754,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 3,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#2 \\$context \\(\'attr\'\\|\'css\'\\|\'html\'\\|\'js\'\\|\'raw\'\\|\'url\'\\|null\\) of method CodeIgniter\\\\View\\\\View\\:\\:setData\\(\\) should be contravariant with parameter \\$context \\(string\\|null\\) of method CodeIgniter\\\\View\\\\RendererInterface\\:\\:setData\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#3 \\$context \\(\'attr\'\\|\'css\'\\|\'html\'\\|\'js\'\\|\'raw\'\\|\'url\'\\|null\\) of method CodeIgniter\\\\View\\\\View\\:\\:setVar\\(\\) should be contravariant with parameter \\$context \\(string\\|null\\) of method CodeIgniter\\\\View\\\\RendererInterface\\:\\:setVar\\(\\)$#',
-	'count' => 1,
 	'path' => __DIR__ . '/system/View/View.php',
 ];
 $ignoreErrors[] = [

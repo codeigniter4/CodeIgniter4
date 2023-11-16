@@ -612,6 +612,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
     public function testForceHttpsNullRequestAndResponse(): void
     {
         $this->assertNull(Services::response()->header('Location'));
+
         Services::response()->setCookie('force', 'cookie');
         Services::response()->setHeader('Force', 'header');
         Services::response()->setBody('default body');
@@ -632,6 +633,25 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
         $this->expectException(RedirectException::class);
         force_https();
+    }
+
+    public function testForceHttpsWithBaseUrlSubFolder(): void
+    {
+        $config          = config(App::class);
+        $config->baseURL = 'https://example.jp/codeIgniter/';
+        $uri             = new SiteURI($config, 'en/home?foo=bar');
+        $request         = new IncomingRequest($config, $uri, '', new UserAgent());
+        Services::injectMock('request', $request);
+
+        try {
+            force_https();
+        } catch (Exception $e) {
+            $this->assertInstanceOf(RedirectException::class, $e);
+            $this->assertSame(
+                'https://example.jp/codeIgniter/index.php/en/home?foo=bar',
+                $e->getResponse()->header('Location')->getValue()
+            );
+        }
     }
 
     /**
