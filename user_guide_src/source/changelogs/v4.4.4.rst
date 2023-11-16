@@ -30,7 +30,7 @@ and Traditional rules validate data of non-string types.
 Filesystem Helper
 ====================================
 
-``get_filenames()`` now follows symlink folders, which it previously just returned
+:php:func:`get_filenames()` now follows symlink folders, which it previously just returned
 without following.
 
 ***************

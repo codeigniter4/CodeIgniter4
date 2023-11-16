@@ -164,7 +164,7 @@ The following functions are available:
     the second parameter to 'relative' for relative paths or any other non-empty value for
     a full file path.
 
-    Prior to v4.4.4, due to a bug, this function did not follow symlink folders.
+    .. note:: Prior to v4.4.4, due to a bug, this function did not follow symlink folders.
 
     Example:
 
