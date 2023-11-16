@@ -24,7 +24,7 @@ The following functions are available:
 .. php:function:: directory_map($sourceDir[, $directoryDepth = 0[, $hidden = false]])
 
     :param    string  $sourceDir: Path to the source directory
-    :param    int   $directoryDepth: Depth of directories to traverse (0 = fully recursive, 1 = current dir, etc)
+    :param    int   $directoryDepth: Depth of directories to traverse (``0`` = fully recursive, ``1`` = current dir, etc)
     :param    bool    $hidden: Whether to include hidden paths
     :returns:    An array of files
     :rtype:    array
@@ -33,17 +33,17 @@ The following functions are available:
 
     .. literalinclude:: filesystem_helper/002.php
 
-    .. note:: Paths are almost always relative to your main index.php file.
+    .. note:: Paths are almost always relative to your main **index.php** file.
 
     Sub-folders contained within the directory will be mapped as well. If
     you wish to control the recursion depth, you can do so using the second
-    parameter (integer). A depth of 1 will only map the top level directory:
+    parameter (integer). A depth of ``1`` will only map the top level directory:
 
     .. literalinclude:: filesystem_helper/003.php
 
     By default, hidden files will not be included in the returned array and
     hidden directories will be skipped. To override this behavior, you may
-    set a third parameter to true (boolean):
+    set a third parameter to ``true`` (boolean):
 
     .. literalinclude:: filesystem_helper/004.php
 
@@ -99,7 +99,7 @@ The following functions are available:
     :param    string    $path: File path
     :param    string    $data: Data to write to file
     :param    string    $mode: ``fopen()`` mode
-    :returns:    true if the write was successful, false in case of an error
+    :returns:    ``true`` if the write was successful, ``false`` in case of an error
     :rtype:    bool
 
     Writes data to the file specified in the path. If the file does not exist then the
@@ -120,7 +120,7 @@ The following functions are available:
         be set such that it is writable. If the file does not already exist,
         then the directory containing it must be writable.
 
-    .. note:: The path is relative to your main site index.php file, NOT your
+    .. note:: The path is relative to your main site **index.php** file, NOT your
         controller or view files. CodeIgniter uses a front controller so paths
         are always relative to the main site index.
 
@@ -132,7 +132,7 @@ The following functions are available:
     :param    bool    $delDir: Whether to also delete directories
     :param    bool    $htdocs: Whether to skip deleting .htaccess and index page files
     :param  bool    $hidden: Whether to also delete hidden files (files beginning with a period)
-    :returns:    true on success, false in case of an error
+    :returns:    ``true`` on success, ``false`` in case of an error
     :rtype:    bool
 
     Deletes ALL files contained in the supplied path.
@@ -141,7 +141,7 @@ The following functions are available:
 
     .. literalinclude:: filesystem_helper/008.php
 
-    If the second parameter is set to true, any directories contained within the supplied
+    If the second parameter is set to ``true``, any directories contained within the supplied
     root path will be deleted as well.
 
     Example:
