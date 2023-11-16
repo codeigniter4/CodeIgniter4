@@ -27,6 +27,12 @@ Validation rules matches and differs
 Bugs have been fixed in the case where ``matches`` and ``differs`` in the Strict
 and Traditional rules validate data of non-string types.
 
+Filesystem Helper
+====================================
+
+``get_filenames()`` now follows symlink folders, which it previously just returned
+without following.
+
 ***************
 Message Changes
 ***************
