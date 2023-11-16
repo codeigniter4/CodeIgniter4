@@ -36,7 +36,7 @@ This was fixed and is now working according to documentation. You can define you
 Filesystem Helper
 ====================================
 
-``get_filenames()`` now follows symlink folders, which it previously just returned
+:php:func:`get_filenames()` now follows symlink folders, which it previously just returned
 without following.
 
 ***************
