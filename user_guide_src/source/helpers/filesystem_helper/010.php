@@ -1,3 +1,3 @@
 <?php
 
-$controllers = get_filenames(APPPATH . 'controllers/');
+$controllers = get_filenames(APPPATH . 'Controllers/');
