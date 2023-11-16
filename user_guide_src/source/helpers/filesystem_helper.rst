@@ -2,8 +2,8 @@
 Filesystem Helper
 #################
 
-The Directory Helper file contains functions that assist in working with
-directories.
+The Filesystem Helper file contains functions that assist in working with
+files and directories.
 
 .. contents::
     :local:
