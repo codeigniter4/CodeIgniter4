@@ -502,27 +502,11 @@ if (! function_exists('force_https')) {
             Services::session()->regenerate(); // @codeCoverageIgnore
         }
 
-        $baseURL = config(App::class)->baseURL;
-
-        if (strpos($baseURL, 'https://') === 0) {
-            $authority = substr($baseURL, strlen('https://'));
-        } elseif (strpos($baseURL, 'http://') === 0) {
-            $authority = substr($baseURL, strlen('http://'));
-        } else {
-            $authority = $baseURL;
-        }
-
-        $uri = URI::createURIString(
-            'https',
-            $authority,
-            $request->getUri()->getPath(), // Absolute URIs should use a "/" for an empty path
-            $request->getUri()->getQuery(),
-            $request->getUri()->getFragment()
-        );
+        $uri = $request->getUri()->withScheme('https');
 
         // Set an HSTS header
         $response->setHeader('Strict-Transport-Security', 'max-age=' . $duration)
-            ->redirect($uri)
+            ->redirect((string) $uri)
             ->setStatusCode(307)
             ->setBody('')
             ->getCookieStore()
