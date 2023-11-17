@@ -138,20 +138,6 @@ class ContentSecurityPolicy
     /**
      * Used for security enforcement
      *
-     * @var string
-     */
-    protected $reportURI;
-
-    /**
-     * Used for security enforcement
-     *
-     * @var array|string
-     */
-    protected $sandbox = [];
-
-    /**
-     * Used for security enforcement
-     *
      * @var array|string
      */
     protected $scriptSrc = [];
@@ -169,6 +155,20 @@ class ContentSecurityPolicy
      * @var array|string
      */
     protected $manifestSrc = [];
+
+    /**
+     * Used for security enforcement
+     *
+     * @var array|string
+     */
+    protected $sandbox = [];
+
+    /**
+     * Used for security enforcement
+     *
+     * @var string
+     */
+    protected $reportURI;
 
     /**
      * Used for security enforcement
