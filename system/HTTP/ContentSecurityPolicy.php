@@ -827,6 +827,12 @@ class ContentSecurityPolicy
      */
     public function clearDirective(string $directive): void
     {
+        if ($directive === 'report-uris') {
+            $this->{$this->directives[$directive]} = null;
+
+            return;
+        }
+
         $this->{$this->directives[$directive]} = [];
     }
 }

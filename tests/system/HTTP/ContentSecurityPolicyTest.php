@@ -650,11 +650,14 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $this->csp->addStyleSrc('css.example.com');
         $this->csp->clearDirective('style-src');
 
+        $this->csp->setReportURI('http://example.com/csp/reports');
+        $this->csp->clearDirective('report-uri');
         $this->csp->finalize($this->response);
 
         $header = $this->response->getHeaderLine('Content-Security-Policy');
 
         $this->assertStringNotContainsString('style-src ', $header);
         $this->assertStringNotContainsString('css.example.com', $header);
+        $this->assertStringNotContainsString('report-uri', $header);
     }
 }
