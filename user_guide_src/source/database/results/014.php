@@ -7,5 +7,5 @@ $rows = $query->getCustomResultObject('User');
 foreach ($rows as $row) {
     echo $row->id;
     echo $row->email;
-    echo $row->last_login('Y-m-d');
+    echo $row->lastLogin('Y-m-d');
 }
