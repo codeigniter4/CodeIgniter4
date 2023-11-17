@@ -66,7 +66,9 @@ call basis, by providing an optional second parameter to the adding method call.
 Runtime Configuration
 *********************
 
-If your application needs to make changes at run-time, you can access the instance at ``$this->response->getCSP()`` in your controllers. The
+If your application needs to make changes at run-time, you can access the instance at ``$this->response->getCSP()`` in your controllers.
+
+The
 class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
 Examples are shown below, with different combinations of parameters, though all accept either a directive
 name or an array of them:
@@ -76,11 +78,26 @@ name or an array of them:
 The first parameter to each of the "add" methods is an appropriate string value,
 or an array of them.
 
+Report Only
+===========
+
 The ``reportOnly()`` method allows you to specify the default reporting treatment
-for subsequent sources, unless over-ridden. For instance, you could specify
+for subsequent sources, unless over-ridden.
+
+For instance, you could specify
 that youtube.com was allowed, and then provide several allowed but reported sources:
 
 .. literalinclude:: csp/013.php
+
+.. _csp-clear-directives:
+
+Clear Directives
+================
+
+If you want to clear existing CSP directives, you can use the ``clearDirective()``
+method:
+
+.. literalinclude:: csp/014.php
 
 **************
 Inline Content
