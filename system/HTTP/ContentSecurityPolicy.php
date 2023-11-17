@@ -166,7 +166,7 @@ class ContentSecurityPolicy
     /**
      * Used for security enforcement
      *
-     * @var string
+     * @var string|null
      */
     protected $reportURI;
 
