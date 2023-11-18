@@ -31,6 +31,8 @@ and Traditional rules validate data of non-string types.
 Message Changes
 ***************
 
+- Added ``HTTP.invalidJSON`` error message.
+
 *******
 Changes
 *******
