@@ -228,6 +228,8 @@ parameters:
       - CodeIgniter\HTTP\Header
       - CodeIgniter\HTTP\IncomingRequest
       - CodeIgniter\HTTP\ResponseInterface
+    CodeIgniter\Database\DataConverter\Cast\URICast:
+      - CodeIgniter\HTTP\URI
     CodeIgniter\Entity\Cast\URICast:
       - CodeIgniter\HTTP\URI
     CodeIgniter\Log\Handlers\ChromeLoggerHandler:
