@@ -63,11 +63,27 @@ final class FilterTestTraitTest extends CIUnitTestCase
         $this->getFilterCaller('test-customfilter', 'banana');
     }
 
-    public function testCallerSupportArray(): void
+    public function testCallerSupportsArray(): void
     {
         $this->filtersConfig->aliases['test-customfilter'] = [Customfilter::class];
 
         $caller = $this->getFilterCaller('test-customfilter', 'before');
+        $result = $caller();
+
+        $this->assertSame('http://hellowworld.com', $result->getBody());
+    }
+
+    public function testCallerSupportsClassname(): void
+    {
+        $caller = $this->getFilterCaller(Customfilter::class, 'before');
+        $result = $caller();
+
+        $this->assertSame('http://hellowworld.com', $result->getBody());
+    }
+
+    public function testCallerSupportsFilterInstance(): void
+    {
+        $caller = $this->getFilterCaller(new Customfilter(), 'before');
         $result = $caller();
 
         $this->assertSame('http://hellowworld.com', $result->getBody());
