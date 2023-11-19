@@ -797,7 +797,7 @@ class ValidationTest extends CIUnitTestCase
 
         $config  = new App();
         $json    = 'invalid';
-        $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request = new IncomingRequest($config, new SiteURI($config), $json, new UserAgent());
         $request->setHeader('Content-Type', 'application/json');
 
         $rules = [
