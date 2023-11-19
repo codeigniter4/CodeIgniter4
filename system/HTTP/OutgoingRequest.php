@@ -68,7 +68,7 @@ class OutgoingRequest extends Message implements OutgoingRequestInterface
     /**
      * Retrieves the HTTP method of the request.
      *
-     * @return string Returns the request method.
+     * @return string Returns the request method (always uppercase)
      */
     public function getMethod(): string
     {
