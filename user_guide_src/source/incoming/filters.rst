@@ -314,7 +314,7 @@ This filter provides the pseudo-variables for performance metrics.
 
 If you would like to display the total elapsed time from the moment CodeIgniter
 starts to the moment right before the final output is sent to the browser,
-simply place this pseudo-variable in one of your view::
+simply place this pseudo-variable in one of your views::
 
     {elapsed_time}
 

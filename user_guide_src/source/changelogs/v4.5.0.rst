@@ -260,7 +260,7 @@ Helpers and Functions
 Required Filters
 ================
 
-The :ref:`Required Filters <filters-required>` has been introduced. They are new
+New :ref:`Required Filters <filters-required>` have been introduced. They are
 special filters that are applied before and after other kinds of filters, and
 always applied even if a route does not exist.
 

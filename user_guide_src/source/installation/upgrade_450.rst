@@ -21,7 +21,7 @@ Config Files
 app/Config/Filters.php
 ----------------------
 
-Required Filters have been added, so add that settings. See
+Required Filters have been added, so add that setting. See
 :ref:`Upgrading <v450-required-filters>` for details.
 
 Add the following items in the ``$aliases`` property::
