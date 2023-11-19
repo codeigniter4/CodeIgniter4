@@ -1012,6 +1012,14 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         foreach ($verbs as $verb) {
+            if ($verb === strtolower($verb)) {
+                @trigger_error(
+                    'Passing lowercase HTTP method "' . $verb . '" is deprecated.'
+                    . ' Use uppercase HTTP method like "' . strtoupper($verb) . '".',
+                    E_USER_DEPRECATED
+                );
+            }
+
             /**
              * @TODO We should use correct uppercase verb.
              * @deprecated 4.5.0

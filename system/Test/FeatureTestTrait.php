@@ -51,6 +51,14 @@ trait FeatureTestTrait
             $collection->resetRoutes();
 
             foreach ($routes as $route) {
+                if ($route[0] === strtolower($route[0])) {
+                    @trigger_error(
+                        'Passing lowercase HTTP method "' . $route[0] . '" is deprecated.'
+                        . ' Use uppercase HTTP method like "' . strtoupper($route[0]) . '".',
+                        E_USER_DEPRECATED
+                    );
+                }
+
                 /**
                  * @TODO For backward compatibility. Remove strtolower() in the future.
                  * @deprecated 4.5.0
