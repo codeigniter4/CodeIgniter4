@@ -407,9 +407,6 @@ class CodeIgniter
     {
         $filters->setResponse($this->response);
 
-        // After filter debug toolbar requires 'total_execution'.
-        $this->totalTime = $this->benchmark->getElapsedTime('total_execution');
-
         // Run required after filters
         $this->benchmark->start('required_after_filters');
         $response = $filters->runRequired('after');
@@ -760,6 +757,9 @@ class CodeIgniter
      */
     public function getPerformanceStats(): array
     {
+        // After filter debug toolbar requires 'total_execution'.
+        $this->totalTime = $this->benchmark->getElapsedTime('total_execution');
+
         return [
             'startTime' => $this->startTime,
             'totalTime' => $this->totalTime,

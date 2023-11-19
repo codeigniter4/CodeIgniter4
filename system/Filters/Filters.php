@@ -277,8 +277,13 @@ class Filters
         }
 
         if ($position === 'after') {
-            // Set the toolbar filter to the last position to be executed
-            $filters = $this->setToolbarToLast($filters);
+            if (in_array('toolbar', $this->filters['after'], true)) {
+                // It was already run in globals filters. So remove it.
+                $filters = $this->setToolbarToLast($filters, true);
+            } else {
+                // Set the toolbar filter to the last position to be executed
+                $filters = $this->setToolbarToLast($filters);
+            }
         }
 
         $filterClasses = [];
@@ -307,8 +312,9 @@ class Filters
      * Set the toolbar filter to the last position to be executed.
      *
      * @param list<string> $filters `after` filter array
+     * @param bool         $remove  if true, remove `toolbar` filter
      */
-    private function setToolbarToLast(array $filters): array
+    private function setToolbarToLast(array $filters, bool $remove = false): array
     {
         $afters = [];
         $found  = false;
@@ -323,7 +329,7 @@ class Filters
             $afters[] = $alias;
         }
 
-        if ($found) {
+        if ($found && ! $remove) {
             $afters[] = 'toolbar';
         }
 
