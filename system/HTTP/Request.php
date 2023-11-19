@@ -41,7 +41,7 @@ class Request extends OutgoingRequest implements RequestInterface
     public function __construct($config = null) // @phpstan-ignore-line
     {
         if (empty($this->method)) {
-            $this->method = $this->getServer('REQUEST_METHOD') ?? 'GET';
+            $this->method = $this->getServer('REQUEST_METHOD') ?? Method::GET;
         }
 
         if (empty($this->uri)) {

@@ -112,7 +112,7 @@ class CURLRequest extends OutgoingRequest
             throw HTTPException::forMissingCurl(); // @codeCoverageIgnore
         }
 
-        parent::__construct('GET', $uri);
+        parent::__construct(Method::GET, $uri);
 
         $this->responseOrig   = $response ?? new Response(config(App::class));
         $this->baseURI        = $uri->useRawQueryString();
@@ -177,7 +177,7 @@ class CURLRequest extends OutgoingRequest
      */
     public function get(string $url, array $options = []): ResponseInterface
     {
-        return $this->request('GET', $url, $options);
+        return $this->request(Method::GET, $url, $options);
     }
 
     /**
@@ -217,7 +217,7 @@ class CURLRequest extends OutgoingRequest
      */
     public function post(string $url, array $options = []): ResponseInterface
     {
-        return $this->request('POST', $url, $options);
+        return $this->request(Method::POST, $url, $options);
     }
 
     /**
@@ -225,7 +225,7 @@ class CURLRequest extends OutgoingRequest
      */
     public function put(string $url, array $options = []): ResponseInterface
     {
-        return $this->request('PUT', $url, $options);
+        return $this->request(Method::PUT, $url, $options);
     }
 
     /**
@@ -445,7 +445,7 @@ class CURLRequest extends OutgoingRequest
             return $this->applyBody($curlOptions);
         }
 
-        if ($method === 'PUT' || $method === 'POST') {
+        if ($method === Method::PUT || $method === Method::POST) {
             // See http://tools.ietf.org/html/rfc7230#section-3.3.2
             if ($this->header('content-length') === null && ! isset($this->config['multipart'])) {
                 $this->setHeader('Content-Length', '0');

@@ -404,7 +404,7 @@ class IncomingRequest extends Request
     {
         $valueUpper = strtoupper($type);
 
-        $httpMethods = ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS'];
+        $httpMethods = Method::all();
 
         if (in_array($valueUpper, $httpMethods, true)) {
             return $this->getMethod() === $valueUpper;

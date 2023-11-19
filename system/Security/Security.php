@@ -13,6 +13,7 @@ namespace CodeIgniter\Security;
 
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\I18n\Time;
@@ -281,7 +282,7 @@ class Security implements SecurityInterface
     {
         // Protects POST, PUT, DELETE, PATCH
         $method           = $request->getMethod();
-        $methodsToProtect = ['POST', 'PUT', 'DELETE', 'PATCH'];
+        $methodsToProtect = [Method::POST, Method::PUT, Method::DELETE, Method::PATCH];
         if (! in_array($method, $methodsToProtect, true)) {
             return $this;
         }
