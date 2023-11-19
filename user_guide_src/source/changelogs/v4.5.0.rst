@@ -240,6 +240,8 @@ Others
     - ``FileLocatorInterface`` has been added.
 - **CodeIgniter:** Added a pseudo-variable ``{memory_usage}`` to show your memory
   usage in your view files, which was supported by CodeIgniter 3.
+- **CSP:** Added ``ContentSecurityPolicy::clearDirective()`` method to clear
+  existing CSP directives. See :ref:`csp-clear-directives`.
 
 Message Changes
 ***************
