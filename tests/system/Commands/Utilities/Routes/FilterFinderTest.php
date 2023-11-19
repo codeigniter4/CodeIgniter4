@@ -87,7 +87,7 @@ final class FilterFinderTest extends CIUnitTestCase
                 ],
             ],
             'methods' => [
-                'get' => [],
+                'GET' => [],
             ],
             'filters' => [
                 'honeypot' => ['before' => ['form/*', 'survey/*']],
@@ -215,7 +215,7 @@ final class FilterFinderTest extends CIUnitTestCase
                 ],
             ],
             'methods' => [
-                'get' => ['method1', 'method2'],
+                'GET' => ['method1', 'method2'],
             ],
             'filters' => [
                 'filter1' => ['before' => '*', 'after' => '*'],
@@ -280,7 +280,7 @@ final class FilterFinderTest extends CIUnitTestCase
                 ],
             ],
             'methods' => [
-                'get' => ['method1', 'method2'],
+                'GET' => ['method1', 'method2'],
             ],
             'filters' => [
                 'filter1' => ['before' => '*', 'after' => '*'],
