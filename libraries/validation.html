@@ -1903,8 +1903,15 @@ The Validation library <strong>never alters the data</strong> to validate.</p>
 </section>
 <section id="rules-for-file-uploads">
 <span id="id3"></span><h3><a class="toc-backref" href="#id44">Rules for File Uploads</a><a class="headerlink" href="#rules-for-file-uploads" title="Permalink to this headline"></a></h3>
-<p>These validation rules enable you to do the basic checks you might need to verify that uploaded files meet your business needs.
-Since the value of a file upload HTML field doesn’t exist, and is stored in the <code class="docutils literal notranslate"><span class="pre">$_FILES</span></code> global, the name of the input field will
+<p>When you validate uploaded files, you must use the rules specifically created for
+file validation.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Only rules that listed in the table below can be used to validate
+files. Therefore, adding any general rules, like <code class="docutils literal notranslate"><span class="pre">permit_empty</span></code>, to file
+validation rules array or string, the file validation will not work correctly.</p>
+</div>
+<p>Since the value of a file upload HTML field doesn’t exist, and is stored in the <code class="docutils literal notranslate"><span class="pre">$_FILES</span></code> global, the name of the input field will
 need to be used twice. Once to specify the field name as you would for any other rule, but again as the first parameter of all
 file upload related rules:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In the HTML</span>
@@ -1980,12 +1987,6 @@ an image based on the mime type.</p></td>
 </tbody>
 </table>
 <p>The file validation rules apply for both single and multiple file uploads.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Only rules specifically created for file validation (like the ones listed in the table above) can be used to validate files.
-Therefore, adding any general rules, like <code class="docutils literal notranslate"><span class="pre">permit_empty</span></code>, to file validation rules array or string, the file validation will not
-work correctly.</p>
-</div>
 </section>
 </section>
 </section>
@@ -2002,7 +2003,7 @@ work correctly.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 18, 2023.
+      <span class="lastupdated">Last updated on Nov 19, 2023.
       </span></p>
   </div>
 
