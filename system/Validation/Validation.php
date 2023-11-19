@@ -184,7 +184,7 @@ class Validation implements ValidationInterface
 
             if ($values === []) {
                 // We'll process the values right away if an empty array
-                $this->processRules($field, $setup['label'] ?? $field, $values, $rules, $data);
+                $this->processRules($field, $setup['label'] ?? $field, $values, $rules, $data, $field);
 
                 continue;
             }
@@ -196,7 +196,7 @@ class Validation implements ValidationInterface
                 }
             } else {
                 // Process single field
-                $this->processRules($field, $setup['label'] ?? $field, $values, $rules, $data);
+                $this->processRules($field, $setup['label'] ?? $field, $values, $rules, $data, $field);
             }
         }
 
@@ -323,10 +323,15 @@ class Validation implements ValidationInterface
                         continue;
                     }
 
-                    $found  = true;
-                    $passed = $param === false
-                        ? $set->{$rule}($value, $error)
-                        : $set->{$rule}($value, $param, $data, $error, $field);
+                    $found = true;
+
+                    if ($rule === 'field_exists') {
+                        $passed = $set->{$rule}($value, $param, $data, $error, $originalField);
+                    } else {
+                        $passed = ($param === false)
+                            ? $set->{$rule}($value, $error)
+                            : $set->{$rule}($value, $param, $data, $error, $field);
+                    }
 
                     break;
                 }
@@ -351,8 +356,10 @@ class Validation implements ValidationInterface
 
                 $param = ($param === false) ? '' : $param;
 
+                $fieldForErrors = ($rule === 'field_exists') ? $originalField : $field;
+
                 // @phpstan-ignore-next-line $error may be set by rule methods.
-                $this->errors[$field] = $error ?? $this->getErrorMessage(
+                $this->errors[$fieldForErrors] = $error ?? $this->getErrorMessage(
                     ($this->isClosure($rule) || $arrayCallable) ? (string) $i : $rule,
                     $field,
                     $label,

@@ -47,6 +47,7 @@ class RulesTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->validation = new Validation((object) $this->config, Services::renderer());
         $this->validation->reset();
     }
@@ -63,6 +64,7 @@ class RulesTest extends CIUnitTestCase
     public static function provideRequired(): iterable
     {
         yield from [
+            [[], false],
             [['foo' => null], false],
             [['foo' => 123], true],
             [['foo' => null, 'bar' => 123], false],
@@ -140,6 +142,11 @@ class RulesTest extends CIUnitTestCase
             // If the rule is only `permit_empty`, any value will pass.
             [
                 ['foo' => 'permit_empty|valid_email'],
+                [],
+                true,
+            ],
+            [
+                ['foo' => 'permit_empty|valid_email'],
                 ['foo' => ''],
                 true,
             ],
@@ -203,8 +210,8 @@ class RulesTest extends CIUnitTestCase
                 ['foo' => 'invalid'],
                 false,
             ],
-            // Required has more priority
             [
+                // Required has more priority
                 ['foo' => 'permit_empty|required|valid_email'],
                 ['foo' => ''],
                 false,
@@ -224,8 +231,8 @@ class RulesTest extends CIUnitTestCase
                 ['foo' => false],
                 false,
             ],
-            // This tests will return true because the input data is trimmed
             [
+                // This tests will return true because the input data is trimmed
                 ['foo' => 'permit_empty|required'],
                 ['foo' => '0'],
                 true,
@@ -280,8 +287,8 @@ class RulesTest extends CIUnitTestCase
                 ['foo' => '', 'bar' => 1],
                 true,
             ],
-            // Testing with closure
             [
+                // Testing with closure
                 ['foo' => ['permit_empty', static fn ($value) => true]],
                 ['foo' => ''],
                 true,
@@ -844,5 +851,105 @@ class RulesTest extends CIUnitTestCase
                 true,
             ],
         ];
+    }
+
+    /**
+     * @dataProvider provideFieldExists
+     */
+    public function testFieldExists(array $rules, array $data, bool $expected): void
+    {
+        $this->validation->setRules($rules);
+        $this->assertSame($expected, $this->validation->run($data));
+    }
+
+    public static function provideFieldExists(): iterable
+    {
+        // Do not use `foo`, because there is a lang file `Foo`, and
+        // the error message may be messed up.
+        yield from [
+            'empty string' => [
+                ['fiz' => 'field_exists'],
+                ['fiz' => ''],
+                true,
+            ],
+            'null' => [
+                ['fiz' => 'field_exists'],
+                ['fiz' => null],
+                true,
+            ],
+            'false' => [
+                ['fiz' => 'field_exists'],
+                ['fiz' => false],
+                true,
+            ],
+            'empty array' => [
+                ['fiz' => 'field_exists'],
+                ['fiz' => []],
+                true,
+            ],
+            'empty data' => [
+                ['fiz' => 'field_exists'],
+                [],
+                false,
+            ],
+            'dot array syntax: true' => [
+                ['fiz.bar' => 'field_exists'],
+                [
+                    'fiz' => ['bar' => null],
+                ],
+                true,
+            ],
+            'dot array syntax: false' => [
+                ['fiz.bar' => 'field_exists'],
+                [],
+                false,
+            ],
+            'dot array syntax asterisk: true' => [
+                ['fiz.*.baz' => 'field_exists'],
+                [
+                    'fiz' => [
+                        'bar' => [
+                            'baz' => null,
+                        ],
+                    ],
+                ],
+                true,
+            ],
+            'dot array syntax asterisk: false' => [
+                ['fiz.*.baz' => 'field_exists'],
+                [
+                    'fiz' => [
+                        'bar' => [
+                            'baz' => null,
+                        ],
+                        'hoge' => [
+                            // 'baz' is missing.
+                        ],
+                    ],
+                ],
+                false,
+            ],
+        ];
+    }
+
+    public function testFieldExistsErrorMessage(): void
+    {
+        $this->validation->setRules(['fiz.*.baz' => 'field_exists']);
+        $data = [
+            'fiz' => [
+                'bar' => [
+                    'baz' => null,
+                ],
+                'hoge' => [
+                    // 'baz' is missing.
+                ],
+            ],
+        ];
+
+        $this->assertFalse($this->validation->run($data));
+        $this->assertSame(
+            ['fiz.*.baz' => 'The fiz.*.baz field must exist.'],
+            $this->validation->getErrors()
+        );
     }
 }

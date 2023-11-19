@@ -226,6 +226,9 @@ Model
 Libraries
 =========
 
+- **Validation:** Added the new rule ``field_exists`` that checks the filed
+  exists in the data to be validated.
+
 Helpers and Functions
 =====================
 
@@ -245,6 +248,8 @@ Others
 
 Message Changes
 ***************
+
+- Added ``Validation.field_exists`` error message.
 
 Changes
 *******
