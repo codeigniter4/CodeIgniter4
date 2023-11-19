@@ -256,6 +256,8 @@ class Filters
      * @phpstan-param 'before'|'after' $position
      *
      * @throws FilterException
+     *
+     * @internal
      */
     public function runRequired(string $position = 'before')
     {
