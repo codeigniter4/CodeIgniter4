@@ -262,26 +262,36 @@ class Filters
      */
     public function runRequired(string $position = 'before')
     {
-        if (! isset($this->config->required[$position]) || $this->config->required[$position] === []) {
+        // For backward compatibility. For users who do not update Config\Filters.
+        if (! isset($this->config->required[$position])) {
+            $baseConfig = config(BaseFiltersConfig::class);
+            $filters    = $baseConfig->required[$position];
+            $aliases    = $baseConfig->aliases;
+        } else {
+            $filters = $this->config->required[$position];
+            $aliases = $this->config->aliases;
+        }
+
+        if ($filters === []) {
             return $position === 'before' ? $this->request : $this->response;
         }
 
+        if ($position === 'after') {
+            // Set the toolbar filter to the last position to be executed
+            $filters = $this->setToolbarToLast($filters);
         }
-
-        // Set the toolbar filter to the last position to be executed
-        $this->config->required['after'] = $this->setToolbarToLast($this->config->required['after']);
 
         $filterClasses = [];
 
-        foreach ($this->config->required[$position] as $alias) {
-            if (! array_key_exists($alias, $this->config->aliases)) {
+        foreach ($filters as $alias) {
+            if (! array_key_exists($alias, $aliases)) {
                 throw FilterException::forNoAlias($alias);
             }
 
-            if (is_array($this->config->aliases[$alias])) {
-                $filterClasses[$position] = array_merge($filterClasses[$position], $this->config->aliases[$alias]);
+            if (is_array($aliases[$alias])) {
+                $filterClasses[$position] = array_merge($filterClasses[$position], $aliases[$alias]);
             } else {
-                $filterClasses[$position][] = $this->config->aliases[$alias];
+                $filterClasses[$position][] = $aliases[$alias];
             }
         }
 
