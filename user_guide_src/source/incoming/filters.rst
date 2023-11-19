@@ -4,7 +4,7 @@ Controller Filters
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 Controller Filters allow you to perform actions either before or after the controllers execute. Unlike :doc:`events <../extending/events>`,
 you can choose the specific URIs or routes in which the filters will be applied to. Before filters may
@@ -116,10 +116,33 @@ You can combine multiple filters into one alias, making complex sets of filters 
 
 You should define as many aliases as you need.
 
+.. _filters-required:
+
+$required
+---------
+
+.. versionadded:: 4.5.0
+
+The second section allows you to define **Required Filters**.
+They are special filters that are applied to every request made by the
+framework. They are applied before and after other kinds of filters that are
+explained below.
+
+.. note:: The Required Filters are always executed even if a route does not exist.
+
+You should take care with how many you use here, since it could have performance
+implications to have too many run on every request. But the filters set by default
+provide framework functionality. If removed, those functions will no longer work.
+See :ref:`provided-filters` for details.
+
+Filters can be specified by adding their alias to either the ``before`` or ``after`` array:
+
+.. literalinclude:: filters/013.php
+
 $globals
 --------
 
-The second section allows you to define any filters that should be applied to every valid request made by the framework.
+The third section allows you to define any filters that should be applied to every valid request made by the framework.
 
 You should take care with how many you use here, since it could have performance implications to have too many
 run on every request.
@@ -202,8 +225,10 @@ Filter Execution Order
 
 Filters are executed in the following order:
 
-- **Before Filters**: globals → methods → filters → route
-- **After Filters**: route → filters → globals
+- **Before Filters**: required → globals → methods → filters → route
+- **After Filters**: route → filters → globals → required
+
+.. note:: The *required* filters can be used since v4.5.0.
 
 .. note:: Prior to v4.5.0, the filters that are specified to a route
     (in **app/Config/Routes.php**) are executed before the filters specified in
@@ -244,13 +269,61 @@ You can also see the routes and filters by the ``spark routes`` command,
 but it might not show accurate filters when you use regular expressions for routes.
 See :ref:`URI Routing <routing-spark-routes>` for details.
 
+.. _provided-filters:
+
 ****************
 Provided Filters
 ****************
 
-The filters bundled with CodeIgniter4 are: :doc:`Honeypot <../libraries/honeypot>`, :ref:`CSRF <cross-site-request-forgery>`, ``InvalidChars``, ``SecureHeaders``, and :ref:`DebugToolbar <the-debug-toolbar>`.
+The filters bundled with CodeIgniter4 are:
+
+- ``csrf`` => :ref:`CSRF <cross-site-request-forgery>`
+- ``toolbar`` => :ref:`DebugToolbar <the-debug-toolbar>`
+- ``honeypot`` => :doc:`Honeypot <../libraries/honeypot>`
+- ``invalidchars`` => :ref:`invalidchars`
+- ``secureheaders`` => :ref:`secureheaders`
+- ``forcehttps`` => :ref:`forcehttps`
+- ``pagecache`` => :doc:`PageCache <../general/caching>`
+- ``performance`` => :ref:`performancemetrics`
 
 .. note:: The filters are executed in the order defined in the config file. However, if enabled, ``DebugToolbar`` is always executed last because it should be able to capture everything that happens in the other filters.
+
+.. _forcehttps:
+
+ForceHTTPS
+==========
+
+.. versionadded:: 4.5.0
+
+This filter provides the "Force Global Secure Requests" feature.
+
+If you set ``Config\App:$forceGlobalSecureRequests`` to true, this will force
+every request made to this application to be made via a secure connection (HTTPS).
+If the incoming request is not secure, the user will be redirected to a secure
+version of the page and the HTTP Strict Transport Security (HSTS) header will be
+set.
+
+.. _performancemetrics:
+
+PerformanceMetrics
+==================
+
+.. versionadded:: 4.5.0
+
+This filter provides the pseudo-variables for performance metrics.
+
+If you would like to display the total elapsed time from the moment CodeIgniter
+starts to the moment right before the final output is sent to the browser,
+simply place this pseudo-variable in one of your views::
+
+    {elapsed_time}
+
+If you would like to show your memory usage in your view files, use this
+pseudo-variable::
+
+    {memory_usage}
+
+If you don't need this feature, remove ``'performance'`` from ``$required['after']``.
 
 .. _invalidchars:
 

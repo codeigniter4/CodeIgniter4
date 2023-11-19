@@ -440,8 +440,10 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argv'] = ['index.php', '/'];
         $_SERVER['argc'] = 2;
 
-        $config = new App();
+        $filterConfig                       = config(FiltersConfig::class);
+        $filterConfig->required['before'][] = 'forcehttps';
 
+        $config                            = config(App::class);
         $config->forceGlobalSecureRequests = true;
 
         $codeigniter = new MockCodeIgniter($config);

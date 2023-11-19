@@ -45,7 +45,7 @@ final class FilterCheckTest extends CIUnitTestCase
         command('filter:check get /');
 
         $this->assertStringContainsString(
-            '|GET|/||toolbar|',
+            '|GET|/|||',
             str_replace(' ', '', $this->getBuffer())
         );
     }

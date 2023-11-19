@@ -61,16 +61,16 @@ final class RoutesTest extends CIUnitTestCase
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
             | Method  | Route   | Name          | Handler                                | Before Filters | After Filters |
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
-            | GET     | /       | »             | \App\Controllers\Home::index           |                | toolbar       |
-            | GET     | closure | »             | (Closure)                              |                | toolbar       |
-            | GET     | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | POST    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | PUT     | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | DELETE  | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | OPTIONS | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | TRACE   | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | CONNECT | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | GET     | /       | »             | \App\Controllers\Home::index           |                |               |
+            | GET     | closure | »             | (Closure)                              |                |               |
+            | GET     | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | POST    | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | PUT     | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | DELETE  | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | OPTIONS | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | TRACE   | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | CONNECT | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | CLI     | testing | testing-index | \App\Controllers\TestController::index |                |               |
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
             EOL;
@@ -87,16 +87,16 @@ final class RoutesTest extends CIUnitTestCase
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
             | Method  | Route   | Name          | Handler ↓                              | Before Filters | After Filters |
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
-            | GET     | closure | »             | (Closure)                              |                | toolbar       |
-            | GET     | /       | »             | \App\Controllers\Home::index           |                | toolbar       |
-            | GET     | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | POST    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | PUT     | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | DELETE  | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | OPTIONS | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | TRACE   | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | CONNECT | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | GET     | closure | »             | (Closure)                              |                |               |
+            | GET     | /       | »             | \App\Controllers\Home::index           |                |               |
+            | GET     | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | POST    | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | PUT     | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | DELETE  | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | OPTIONS | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | TRACE   | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | CONNECT | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | CLI     | testing | testing-index | \App\Controllers\TestController::index |                |               |
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
             EOL;
@@ -114,17 +114,17 @@ final class RoutesTest extends CIUnitTestCase
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
             | Method  | Route   | Name          | Handler                                | Before Filters | After Filters |
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
-            | GET     | /       | »             | \App\Controllers\Blog::index           |                | toolbar       |
-            | GET     | closure | »             | (Closure)                              |                | toolbar       |
-            | GET     | all     | »             | \App\Controllers\AllDomain::index      |                | toolbar       |
-            | GET     | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | POST    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | PUT     | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | DELETE  | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | OPTIONS | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | TRACE   | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | CONNECT | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | GET     | /       | »             | \App\Controllers\Blog::index           |                |               |
+            | GET     | closure | »             | (Closure)                              |                |               |
+            | GET     | all     | »             | \App\Controllers\AllDomain::index      |                |               |
+            | GET     | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | POST    | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | PUT     | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | DELETE  | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | OPTIONS | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | TRACE   | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | CONNECT | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | CLI     | testing | testing-index | \App\Controllers\TestController::index |                |               |
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
             EOL;
@@ -142,17 +142,17 @@ final class RoutesTest extends CIUnitTestCase
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
             | Method  | Route   | Name          | Handler                                | Before Filters | After Filters |
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
-            | GET     | /       | »             | \App\Controllers\Sub::index            |                | toolbar       |
-            | GET     | closure | »             | (Closure)                              |                | toolbar       |
-            | GET     | all     | »             | \App\Controllers\AllDomain::index      |                | toolbar       |
-            | GET     | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | POST    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | PUT     | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | DELETE  | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | OPTIONS | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | TRACE   | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | CONNECT | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | GET     | /       | »             | \App\Controllers\Sub::index            |                |               |
+            | GET     | closure | »             | (Closure)                              |                |               |
+            | GET     | all     | »             | \App\Controllers\AllDomain::index      |                |               |
+            | GET     | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | POST    | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | PUT     | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | DELETE  | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | OPTIONS | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | TRACE   | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            | CONNECT | testing | testing-index | \App\Controllers\TestController::index |                |               |
             | CLI     | testing | testing-index | \App\Controllers\TestController::index |                |               |
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
             EOL;
@@ -174,19 +174,19 @@ final class RoutesTest extends CIUnitTestCase
             +------------+--------------------------------+---------------+-----------------------------------------------------+----------------+---------------+
             | Method     | Route                          | Name          | Handler                                             | Before Filters | After Filters |
             +------------+--------------------------------+---------------+-----------------------------------------------------+----------------+---------------+
-            | GET        | /                              | »             | \App\Controllers\Home::index                        |                | toolbar       |
-            | GET        | closure                        | »             | (Closure)                                           |                | toolbar       |
-            | GET        | testing                        | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
-            | HEAD       | testing                        | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
-            | POST       | testing                        | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
-            | PUT        | testing                        | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
-            | DELETE     | testing                        | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
-            | OPTIONS    | testing                        | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
-            | TRACE      | testing                        | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
-            | CONNECT    | testing                        | testing-index | \App\Controllers\TestController::index              |                | toolbar       |
+            | GET        | /                              | »             | \App\Controllers\Home::index                        |                |               |
+            | GET        | closure                        | »             | (Closure)                                           |                |               |
+            | GET        | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
+            | HEAD       | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
+            | POST       | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
+            | PUT        | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
+            | DELETE     | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
+            | OPTIONS    | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
+            | TRACE      | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
+            | CONNECT    | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
             | CLI        | testing                        | testing-index | \App\Controllers\TestController::index              |                |               |
-            | GET(auto)  | newautorouting[/..]            |               | \Tests\Support\Controllers\Newautorouting::getIndex |                | toolbar       |
-            | POST(auto) | newautorouting/save/../..[/..] |               | \Tests\Support\Controllers\Newautorouting::postSave |                | toolbar       |
+            | GET(auto)  | newautorouting[/..]            |               | \Tests\Support\Controllers\Newautorouting::getIndex |                |               |
+            | POST(auto) | newautorouting/save/../..[/..] |               | \Tests\Support\Controllers\Newautorouting::postSave |                |               |
             +------------+--------------------------------+---------------+-----------------------------------------------------+----------------+---------------+
             EOL;
         $this->assertStringContainsString($expected, $this->getBuffer());
@@ -205,20 +205,20 @@ final class RoutesTest extends CIUnitTestCase
             +---------+------------------+---------------+----------------------------------------+----------------+---------------+
             | Method  | Route            | Name          | Handler                                | Before Filters | After Filters |
             +---------+------------------+---------------+----------------------------------------+----------------+---------------+
-            | GET     | /                | »             | \App\Controllers\Home::index           |                | toolbar       |
-            | GET     | closure          | »             | (Closure)                              |                | toolbar       |
-            | GET     | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | HEAD    | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | POST    | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | PUT     | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | DELETE  | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | OPTIONS | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | TRACE   | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
-            | CONNECT | testing          | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | GET     | /                | »             | \App\Controllers\Home::index           |                |               |
+            | GET     | closure          | »             | (Closure)                              |                |               |
+            | GET     | testing          | testing-index | \App\Controllers\TestController::index |                |               |
+            | HEAD    | testing          | testing-index | \App\Controllers\TestController::index |                |               |
+            | POST    | testing          | testing-index | \App\Controllers\TestController::index |                |               |
+            | PUT     | testing          | testing-index | \App\Controllers\TestController::index |                |               |
+            | DELETE  | testing          | testing-index | \App\Controllers\TestController::index |                |               |
+            | OPTIONS | testing          | testing-index | \App\Controllers\TestController::index |                |               |
+            | TRACE   | testing          | testing-index | \App\Controllers\TestController::index |                |               |
+            | CONNECT | testing          | testing-index | \App\Controllers\TestController::index |                |               |
             | CLI     | testing          | testing-index | \App\Controllers\TestController::index |                |               |
-            | auto    | /                |               | \App\Controllers\Home::index           |                | toolbar       |
-            | auto    | home             |               | \App\Controllers\Home::index           |                | toolbar       |
-            | auto    | home/index[/...] |               | \App\Controllers\Home::index           |                | toolbar       |
+            | auto    | /                |               | \App\Controllers\Home::index           |                |               |
+            | auto    | home             |               | \App\Controllers\Home::index           |                |               |
+            | auto    | home/index[/...] |               | \App\Controllers\Home::index           |                |               |
             +---------+------------------+---------------+----------------------------------------+----------------+---------------+
             EOL;
         $this->assertStringContainsString($expected, $this->getBuffer());

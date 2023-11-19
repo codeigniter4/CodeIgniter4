@@ -17,6 +17,7 @@ use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
@@ -339,30 +340,81 @@ class CodeIgniter
         $this->getRequestObject();
         $this->getResponseObject();
 
-        try {
-            $this->forceSecureAccess();
+        Events::trigger('pre_system');
 
-            $this->response = $this->handleRequest($routes, config(Cache::class), $returnResponse);
-        } catch (ResponsableInterface|DeprecatedRedirectException $e) {
-            $this->outputBufferingEnd();
-            if ($e instanceof DeprecatedRedirectException) {
-                $e = new RedirectException($e->getMessage(), $e->getCode(), $e);
+        $this->benchmark->stop('bootstrap');
+
+        $this->benchmark->start('required_before_filters');
+        // Start up the filters
+        $filters = Services::filters();
+        // Run required before filters
+        $possibleResponse = $this->runRequiredBeforeFilters($filters);
+
+        // If a ResponseInterface instance is returned then send it back to the client and stop
+        if ($possibleResponse instanceof ResponseInterface) {
+            $this->response = $possibleResponse;
+        } else {
+            try {
+                $this->response = $this->handleRequest($routes, config(Cache::class), $returnResponse);
+            } catch (ResponsableInterface|DeprecatedRedirectException $e) {
+                $this->outputBufferingEnd();
+                if ($e instanceof DeprecatedRedirectException) {
+                    $e = new RedirectException($e->getMessage(), $e->getCode(), $e);
+                }
+
+                $this->response = $e->getResponse();
+            } catch (PageNotFoundException $e) {
+                $this->response = $this->display404errors($e);
+            } catch (Throwable $e) {
+                $this->outputBufferingEnd();
+
+                throw $e;
             }
-
-            $this->response = $e->getResponse();
-        } catch (PageNotFoundException $e) {
-            $this->response = $this->display404errors($e);
-        } catch (Throwable $e) {
-            $this->outputBufferingEnd();
-
-            throw $e;
         }
+
+        $this->runRequiredAfterFilters($filters);
+
+        // Is there a post-system event?
+        Events::trigger('post_system');
 
         if ($returnResponse) {
             return $this->response;
         }
 
         $this->sendResponse();
+    }
+
+    /**
+     * Run required before filters.
+     */
+    private function runRequiredBeforeFilters(Filters $filters): ?ResponseInterface
+    {
+        $possibleResponse = $filters->runRequired('before');
+        $this->benchmark->stop('required_before_filters');
+
+        // If a ResponseInterface instance is returned then send it back to the client and stop
+        if ($possibleResponse instanceof ResponseInterface) {
+            return $possibleResponse;
+        }
+
+        return null;
+    }
+
+    /**
+     * Run required after filters.
+     */
+    private function runRequiredAfterFilters(Filters $filters): void
+    {
+        $filters->setResponse($this->response);
+
+        // Run required after filters
+        $this->benchmark->start('required_after_filters');
+        $response = $filters->runRequired('after');
+        $this->benchmark->stop('required_after_filters');
+
+        if ($response instanceof ResponseInterface) {
+            $this->response = $response;
+        }
     }
 
     /**
@@ -405,20 +457,11 @@ class CodeIgniter
             return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
         }
 
-        Events::trigger('pre_system');
-
-        // Check for a cached page. Execution will stop
-        // if the page has been cached.
-        if (($response = $this->displayCache($cacheConfig)) instanceof ResponseInterface) {
-            return $response;
-        }
-
         $routeFilters = $this->tryToRouteIt($routes);
 
         $uri = $this->request->getPath();
 
         if ($this->enableFilters) {
-            // Start up the filters
             $filters = Services::filters();
 
             // If any filters were specified within the routes file,
@@ -478,9 +521,6 @@ class CodeIgniter
             $filters = Services::filters();
             $filters->setResponse($this->response);
 
-            // After filter debug toolbar requires 'total_execution'.
-            $this->totalTime = $this->benchmark->getElapsedTime('total_execution');
-
             // Run "after" filters
             $this->benchmark->start('after_filters');
             $response = $filters->run($uri, 'after');
@@ -496,20 +536,12 @@ class CodeIgniter
             ! $this->response instanceof DownloadResponse
             && ! $this->response instanceof RedirectResponse
         ) {
-            // Cache it without the performance metrics replaced
-            // so that we can have live speed updates along the way.
-            // Must be run after filters to preserve the Response headers.
-            $this->pageCache->make($this->request, $this->response);
-
             // Save our current URI as the previous URI in the session
             // for safer, more accurate use with `previous_url()` helper function.
             $this->storePreviousURL(current_url(true));
         }
 
         unset($uri);
-
-        // Is there a post-system event?
-        Events::trigger('post_system');
 
         return $this->response;
     }
@@ -651,6 +683,8 @@ class CodeIgniter
      *                      should be enforced for this URL.
      *
      * @return void
+     *
+     * @deprecated 4.5.0 No longer used. Moved to ForceHTTPS filter.
      */
     protected function forceSecureAccess($duration = 31_536_000)
     {
@@ -668,6 +702,7 @@ class CodeIgniter
      *
      * @throws Exception
      *
+     * @deprecated 4.5.0 PageCache required filter is used. No longer used.
      * @deprecated 4.4.2 The parameter $config is deprecated. No longer used.
      */
     public function displayCache(Cache $config)
@@ -722,6 +757,9 @@ class CodeIgniter
      */
     public function getPerformanceStats(): array
     {
+        // After filter debug toolbar requires 'total_execution'.
+        $this->totalTime = $this->benchmark->getElapsedTime('total_execution');
+
         return [
             'startTime' => $this->startTime,
             'totalTime' => $this->totalTime,
@@ -750,6 +788,8 @@ class CodeIgniter
 
     /**
      * Replaces the elapsed_time and memory_usage tag.
+     *
+     * @deprecated 4.5.0 PerformanceMetrics required filter is used. No longer used.
      */
     public function displayPerformanceMetrics(string $output): string
     {
@@ -774,6 +814,8 @@ class CodeIgniter
      */
     protected function tryToRouteIt(?RouteCollectionInterface $routes = null)
     {
+        $this->benchmark->start('routing');
+
         if ($routes === null) {
             $routes = Services::routes()->loadRoutes();
         }
@@ -782,9 +824,6 @@ class CodeIgniter
         $this->router = Services::router($routes, $this->request);
 
         $uri = $this->request->getPath();
-
-        $this->benchmark->stop('bootstrap');
-        $this->benchmark->start('routing');
 
         $this->outputBufferingStart();
 
@@ -1052,13 +1091,6 @@ class CodeIgniter
      */
     protected function sendResponse()
     {
-        // Update the performance metrics
-        $body = $this->response->getBody();
-        if ($body !== null) {
-            $output = $this->displayPerformanceMetrics($body);
-            $this->response->setBody($output);
-        }
-
         $this->response->send();
     }
 

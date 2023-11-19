@@ -66,7 +66,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
                 '',
                 '\\Tests\\Support\\Controllers\\Newautorouting::getIndex',
                 '',
-                'toolbar',
+                '',
             ],
             1 => [
                 'POST(auto)',
@@ -74,7 +74,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
                 '',
                 '\\Tests\\Support\\Controllers\\Newautorouting::postSave',
                 'honeypot',
-                'toolbar',
+                '',
             ],
         ];
         $this->assertSame($expected, $routes);
@@ -94,7 +94,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
                 '',
                 '\\Tests\\Support\\Controllers\\Newautorouting::getIndex',
                 '',
-                'toolbar',
+                '',
             ],
             1 => [
                 'POST(auto)',
@@ -102,7 +102,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
                 '',
                 '\\Tests\\Support\\Controllers\\Newautorouting::postSave',
                 '',
-                'toolbar',
+                '',
             ],
         ];
         $this->assertSame($expected, $routes);

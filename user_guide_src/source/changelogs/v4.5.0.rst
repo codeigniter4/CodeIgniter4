@@ -255,6 +255,37 @@ Libraries
 Helpers and Functions
 =====================
 
+.. _v450-required-filters:
+
+Required Filters
+================
+
+New :ref:`Required Filters <filters-required>` have been introduced. They are
+special filters that are applied before and after other kinds of filters, and
+always applied even if a route does not exist.
+
+The following existing functionalities have been reimplemented as Required Filters.
+
+- :ref:`Force Global Secure Requests <forcehttps>`
+- :doc:`../general/caching`
+- :ref:`performancemetrics`
+- :ref:`the-debug-toolbar`
+
+The Benchmark **Timers** used by Debug Toolbar now collect *Required Before Filters*
+and *Required After Filters* data.
+
+The benchmark points have been changed:
+
+- Before
+
+   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``, Instantiating RouteCollection object, Loading Routes files, Instantiating Router object,
+   - ``routing``: Routing,
+- After
+
+   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``.
+   - ``required_before_filters``: Instantiating Filters object, Running *Required Before Filters*.
+   - ``routing``: Instantiating RouteCollection object, Loading Routes files, Instantiating Router object, Routing,
+
 Others
 ======
 

@@ -64,9 +64,17 @@ class Routes extends BaseCollector
             try {
                 $method = new ReflectionMethod($router->controllerName(), $router->methodName());
             } catch (ReflectionException $e) {
-                // If we're here, the method doesn't exist
-                // and is likely calculated in _remap.
-                $method = new ReflectionMethod($router->controllerName(), '_remap');
+                try {
+                    // If we're here, the method doesn't exist
+                    // and is likely calculated in _remap.
+                    $method = new ReflectionMethod($router->controllerName(), '_remap');
+                } catch (ReflectionException) {
+                    // If we're here, page cache is returned. The router is not executed.
+                    return [
+                        'matchedRoute' => [],
+                        'routes'       => [],
+                    ];
+                }
             }
         }
 

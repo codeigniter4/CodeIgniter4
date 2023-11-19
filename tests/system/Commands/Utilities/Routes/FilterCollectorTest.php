@@ -36,7 +36,6 @@ final class FilterCollectorTest extends CIUnitTestCase
             'before' => [
             ],
             'after' => [
-                'toolbar',
             ],
         ];
         $this->assertSame($expected, $filters);
