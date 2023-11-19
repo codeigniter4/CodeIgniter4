@@ -15,6 +15,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
@@ -65,7 +66,7 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->map($routes);
 
         $this->request = Services::request();
-        $this->request->setMethod('GET');
+        $this->request->setMethod(Method::GET);
     }
 
     public function testEmptyURIMatchesRoot(): void
