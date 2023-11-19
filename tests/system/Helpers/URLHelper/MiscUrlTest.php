@@ -966,7 +966,7 @@ final class MiscUrlTest extends CIUnitTestCase
 
         $routes = Services::routes();
         $routes->group('(:alpha)', static function ($routes): void {
-            $routes->match(['get'], 'login', 'Common\LoginController::loginView', ['as' => 'loginURL']);
+            $routes->match(['GET'], 'login', 'Common\LoginController::loginView', ['as' => 'loginURL']);
         });
 
         url_to('loginURL');

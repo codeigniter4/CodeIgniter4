@@ -1,3 +1,3 @@
 <?php
 
-$routes->match(['get', 'put'], 'products', 'Product::feature');
+$routes->match(['GET', 'PUT'], 'products', 'Product::feature');

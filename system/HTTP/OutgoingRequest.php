@@ -66,15 +66,13 @@ class OutgoingRequest extends Message implements OutgoingRequestInterface
     }
 
     /**
-     * Get the request method.
+     * Retrieves the HTTP method of the request.
      *
-     * @param bool $upper Whether to return in upper or lower case.
-     *
-     * @deprecated The $upper functionality will be removed and this will revert to its PSR-7 equivalent
+     * @return string Returns the request method (always uppercase)
      */
-    public function getMethod(bool $upper = false): string
+    public function getMethod(): string
     {
-        return ($upper) ? strtoupper($this->method) : strtolower($this->method);
+        return $this->method;
     }
 
     /**

@@ -41,26 +41,12 @@ class Request extends OutgoingRequest implements RequestInterface
     public function __construct($config = null) // @phpstan-ignore-line
     {
         if (empty($this->method)) {
-            $this->method = $this->getServer('REQUEST_METHOD') ?? 'GET';
+            $this->method = $this->getServer('REQUEST_METHOD') ?? Method::GET;
         }
 
         if (empty($this->uri)) {
             $this->uri = new URI();
         }
-    }
-
-    /**
-     * Get the request method.
-     *
-     * @param bool $upper Whether to return in upper or lower case.
-     *
-     * @deprecated 4.0.5 The $upper functionality will be removed and this will revert to its PSR-7 equivalent
-     *
-     * @codeCoverageIgnore
-     */
-    public function getMethod(bool $upper = false): string
-    {
-        return ($upper) ? strtoupper($this->method) : strtolower($this->method);
     }
 
     /**

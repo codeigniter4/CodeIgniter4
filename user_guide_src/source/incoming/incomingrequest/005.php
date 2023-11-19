@@ -1,4 +1,4 @@
 <?php
 
-// Returns 'post'
+// Returns 'POST'
 $method = $request->getMethod();

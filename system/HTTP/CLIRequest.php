@@ -56,7 +56,7 @@ class CLIRequest extends Request
      *
      * @var string
      */
-    protected $method = 'cli';
+    protected $method = 'CLI';
 
     /**
      * Constructor

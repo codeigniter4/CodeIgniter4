@@ -396,17 +396,18 @@ class IncomingRequest extends Request
     /**
      * Checks this request type.
      *
-     * @param string $type HTTP verb or 'json' or 'ajax'
+     * @param string $type HTTP verb or 'json' or 'ajax'.
+     *                     HTTP verb should be case-sensitive, but this is case-insensitive.
      * @phpstan-param string|'get'|'post'|'put'|'delete'|'head'|'patch'|'options'|'json'|'ajax' $type
      */
     public function is(string $type): bool
     {
         $valueUpper = strtoupper($type);
 
-        $httpMethods = ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS'];
+        $httpMethods = Method::all();
 
         if (in_array($valueUpper, $httpMethods, true)) {
-            return strtoupper($this->getMethod()) === $valueUpper;
+            return $this->getMethod() === $valueUpper;
         }
 
         if ($valueUpper === 'JSON') {

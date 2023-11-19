@@ -21,6 +21,7 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\ResponsableInterface;
@@ -1027,7 +1028,7 @@ class CodeIgniter
     public function spoofRequestMethod()
     {
         // Only works with POSTED forms
-        if (strtolower($this->request->getMethod()) !== 'post') {
+        if ($this->request->getMethod() !== Method::POST) {
             return;
         }
 
@@ -1038,7 +1039,7 @@ class CodeIgniter
         }
 
         // Only allows PUT, PATCH, DELETE
-        if (in_array(strtoupper($method), ['PUT', 'PATCH', 'DELETE'], true)) {
+        if (in_array($method, [Method::PUT, Method::PATCH, Method::DELETE], true)) {
             $this->request = $this->request->setMethod($method);
         }
     }

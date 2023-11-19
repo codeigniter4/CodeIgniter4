@@ -92,6 +92,19 @@ Model, View and Controller
     upgrade_views
     upgrade_controllers
 
+Core Class Changes
+==================
+
+- Input
+    - CI3's `Input <http://codeigniter.com/userguide3/libraries/input.html>`_
+      corresponds to CI4's :doc:`IncomingRequest </incoming/incomingrequest>`.
+    - For historical reasons, CI3 and CI4 used incorrect HTTP method names like
+      "get", "post". Since v4.5.0, CI4 uses the correct HTTP method names like
+      "GET", "POST".
+- Output
+    - CI3's `Output <http://codeigniter.com/userguide3/libraries/output.html>`_
+      corresponds to CI4's :doc:`Responses </outgoing/response>`.
+
 Class Loading
 =============
 
@@ -194,8 +207,6 @@ Upgrading Libraries
   `Trackback <http://codeigniter.com/userguide3/libraries/trackback.html>`_,
   `XML-RPC /-Server <http://codeigniter.com/userguide3/libraries/xmlrpc.html>`_,
   and `Zip Encoding <http://codeigniter.com/userguide3/libraries/zip.html>`_.
-- CI3's `Input <http://codeigniter.com/userguide3/libraries/input.html>`_ corresponds to CI4's :doc:`IncomingRequest </incoming/incomingrequest>`.
-- CI3's `Output <http://codeigniter.com/userguide3/libraries/output.html>`_ corresponds to CI4's :doc:`Responses </outgoing/response>`.
 - All the other libraries, which exist in both CodeIgniter versions, can be upgraded with some adjustments.
   The most important and mostly used libraries received an Upgrade Guide, which will help you with simple
   steps and examples to adjust your code.

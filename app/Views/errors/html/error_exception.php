@@ -205,7 +205,7 @@ $errorId = uniqid('error', true);
                         </tr>
                         <tr>
                             <td>HTTP Method</td>
-                            <td><?= esc(strtoupper($request->getMethod())) ?></td>
+                            <td><?= esc($request->getMethod()) ?></td>
                         </tr>
                         <tr>
                             <td>IP Address</td>

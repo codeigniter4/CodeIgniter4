@@ -150,7 +150,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->execute('popper');
 
         $req = $result->request();
-        $this->assertSame('get', $req->getMethod());
+        $this->assertSame('GET', $req->getMethod());
     }
 
     public function testFailureResponse(): void

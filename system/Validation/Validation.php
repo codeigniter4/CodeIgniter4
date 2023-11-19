@@ -13,6 +13,7 @@ namespace CodeIgniter\Validation;
 
 use Closure;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
@@ -508,7 +509,7 @@ class Validation implements ValidationInterface
             return $this;
         }
 
-        if (in_array(strtolower($request->getMethod()), ['put', 'patch', 'delete'], true)
+        if (in_array($request->getMethod(), [Method::PUT, Method::PATCH, Method::DELETE], true)
             && strpos($request->getHeaderLine('Content-Type'), 'multipart/form-data') === false
         ) {
             $this->data = $request->getRawInput();

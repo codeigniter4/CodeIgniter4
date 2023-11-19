@@ -36,7 +36,7 @@ trait FeatureTestTrait
      *
      * Example routes:
      * [
-     *    ['get', 'home', 'Home::index']
+     *    ['GET', 'home', 'Home::index'],
      * ]
      *
      * @param array|null $routes Array to set routes
@@ -51,10 +51,24 @@ trait FeatureTestTrait
             $collection->resetRoutes();
 
             foreach ($routes as $route) {
+                if ($route[0] === strtolower($route[0])) {
+                    @trigger_error(
+                        'Passing lowercase HTTP method "' . $route[0] . '" is deprecated.'
+                        . ' Use uppercase HTTP method like "' . strtoupper($route[0]) . '".',
+                        E_USER_DEPRECATED
+                    );
+                }
+
+                /**
+                 * @TODO For backward compatibility. Remove strtolower() in the future.
+                 * @deprecated 4.5.0
+                 */
+                $method = strtolower($route[0]);
+
                 if (isset($route[3])) {
-                    $collection->{$route[0]}($route[1], $route[2], $route[3]);
+                    $collection->{$method}($route[1], $route[2], $route[3]);
                 } else {
-                    $collection->{$route[0]}($route[1], $route[2]);
+                    $collection->{$method}($route[1], $route[2]);
                 }
             }
         }

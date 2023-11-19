@@ -18,6 +18,58 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+.. _upgrade-450-lowercase-http-method-name:
+
+Lowercase HTTP Method Name
+==========================
+
+Request::getMethod()
+--------------------
+
+For historical reasons, ``Request::getMethod()`` returned HTTP method names in
+lower case by default.
+
+But the method token is case-sensitive because it might be used as a gateway
+to object-based systems with case-sensitive method names. By convention,
+standardized methods are defined in all-uppercase US-ASCII letters.
+See https://www.rfc-editor.org/rfc/rfc9110#name-overview.
+
+Now the deprecated ``$upper`` parameter in ``Request::getMethod()`` has been
+removed, and the ``getMethod()`` returns the as-is HTTP method name. That is,
+uppercase like "GET", "POST", and so on.
+
+If you want lowercase HTTP method names, use PHP's ``strtolower()`` function::
+
+    strtolower($request->getMethod())
+
+And you should use uppercase HTTP method names in your app code.
+
+app/Config/Filters.php
+----------------------
+
+You should update the keys in ``$methods`` in **app/Config/Filters.php**::
+
+    public array $methods = [
+        'POST' => ['invalidchars', 'csrf'],
+        'GET'  => ['csrf'],
+    ];
+
+CURLRequest::request()
+----------------------
+
+In previous versions, you could pass lowercase HTTP methods to the ``request()``
+method. But this bug has been fixed.
+
+Now you must pass the correct HTTP method names like "GET", "POST". Otherwise
+you would get the error response::
+
+    $client   = \Config\Services::curlrequest();
+    $response = $client->request('get', 'https://www.google.com/', [
+        'http_errors' => false,
+    ]);
+    $response->getStatusCode(); // In previous versions: 200
+                                //     In this verrsion: 405
+
 .. _upgrade-450-nested-route-groups-and-options:
 
 Nested Route Groups and Options

@@ -494,10 +494,28 @@ class Filters
             return;
         }
 
-        // Request method won't be set for CLI-based requests
-        $method = strtolower($this->request->getMethod()) ?? 'cli';
+        $method = $this->request->getMethod();
+
+        $found = false;
 
         if (array_key_exists($method, $this->config->methods)) {
+            $found = true;
+        }
+        // Checks lowercase HTTP method for backward compatibility.
+        // @deprecated 4.5.0
+        // @TODO remove this in the future.
+        elseif (array_key_exists(strtolower($method), $this->config->methods)) {
+            @trigger_error(
+                'Setting lowercase HTTP method key "' . strtolower($method) . '" is deprecated.'
+                . ' Use uppercase HTTP method like "' . strtoupper($method) . '".',
+                E_USER_DEPRECATED
+            );
+
+            $found  = true;
+            $method = strtolower($method);
+        }
+
+        if ($found) {
             if (config(Feature::class)->oldFilterOrder) {
                 $this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);
             } else {

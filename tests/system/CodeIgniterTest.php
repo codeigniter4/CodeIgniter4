@@ -14,6 +14,7 @@ namespace CodeIgniter;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\RouteCollection;
@@ -721,7 +722,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
         $_SERVER['REQUEST_METHOD']  = 'POST';
 
-        $_POST['_method'] = 'PUT';
+        $_POST['_method'] = Method::PUT;
 
         $routes = \Config\Services::routes();
         $routes->setDefaultNamespace('App\Controllers');
@@ -733,7 +734,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         ob_get_clean();
 
-        $this->assertSame('put', Services::incomingrequest()->getMethod());
+        $this->assertSame(Method::PUT, Services::incomingrequest()->getMethod());
     }
 
     public function testSpoofRequestMethodCannotUseGET(): void
@@ -758,7 +759,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run();
         ob_get_clean();
 
-        $this->assertSame('post', Services::incomingrequest()->getMethod());
+        $this->assertSame('POST', Services::incomingrequest()->getMethod());
     }
 
     /**

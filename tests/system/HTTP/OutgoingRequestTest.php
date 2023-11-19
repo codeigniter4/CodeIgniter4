@@ -44,8 +44,8 @@ final class OutgoingRequestTest extends CIUnitTestCase
 
         $newRequest = $request->withMethod('POST');
 
-        $this->assertSame('GET', strtoupper($request->getMethod()));
-        $this->assertSame('POST', strtoupper($newRequest->getMethod()));
+        $this->assertSame('GET', $request->getMethod());
+        $this->assertSame('POST', $newRequest->getMethod());
     }
 
     public function testWithUri(): void
