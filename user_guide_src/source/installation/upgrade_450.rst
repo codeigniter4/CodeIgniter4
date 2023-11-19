@@ -15,40 +15,6 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Mandatory File Changes
 **********************
 
-Config Files
-============
-
-app/Config/Filters.php
-----------------------
-
-Required Filters have been added, so add that setting. See
-:ref:`Upgrading <v450-required-filters>` for details.
-
-Add the following items in the ``$aliases`` property::
-
-    public array $aliases = [
-        // ...
-        'forcehttps'    => \CodeIgniter\Filters\ForceHTTPS::class,
-        'pagecache'     => \CodeIgniter\Filters\PageCache::class,
-        'performance'   => \CodeIgniter\Filters\PerformanceMetrics::class,
-    ];
-
-Add the new property ``$required``, and set the following::
-
-    public array $required = [
-        'before' => [
-            'forcehttps', // Force Global Secure Requests
-            'pagecache',  // Web Page Caching
-        ],
-        'after' => [
-            'pagecache',   // Web Page Caching
-            'performance', // Performance Metrics
-            'toolbar',     // Debug Toolbar
-        ],
-    ];
-
-Remove  ``'toolbar'`` from the ``$global['after']``.
-
 Breaking Changes
 ****************
 
@@ -250,6 +216,44 @@ and it is recommended that you merge the updated versions with your application:
 
 Config
 ------
+
+app/Config/Filters.php
+^^^^^^^^^^^^^^^^^^^^^^
+
+Required Filters have been added, so the following changes were made. See also
+:ref:`Upgrading <v450-required-filters>`.
+
+The base class has been changed::
+
+    class Filters extends \CodeIgniter\Config\Filters
+
+The following items are added in the ``$aliases`` property::
+
+    public array $aliases = [
+        // ...
+        'forcehttps'    => \CodeIgniter\Filters\ForceHTTPS::class,
+        'pagecache'     => \CodeIgniter\Filters\PageCache::class,
+        'performance'   => \CodeIgniter\Filters\PerformanceMetrics::class,
+    ];
+
+A new property ``$required`` is added, and set as the following::
+
+    public array $required = [
+        'before' => [
+            'forcehttps', // Force Global Secure Requests
+            'pagecache',  // Web Page Caching
+        ],
+        'after' => [
+            'pagecache',   // Web Page Caching
+            'performance', // Performance Metrics
+            'toolbar',     // Debug Toolbar
+        ],
+    ];
+
+The  ``'toolbar'`` in the ``$global['after']`` was removed.
+
+Others
+^^^^^^
 
 - app/Config/Database.php
     - The default value of ``charset`` in ``$default`` has been change to ``utf8mb4``.
