@@ -266,25 +266,10 @@ class Filters
             return $position === 'before' ? $this->request : $this->response;
         }
 
+        }
+
         // Set the toolbar filter to the last position to be executed
-        $afters = [];
-        $found  = false;
-
-        foreach ($this->config->required['after'] as $alias) {
-            if ($alias === 'toolbar') {
-                $found = true;
-
-                continue;
-            }
-
-            $afters[] = $alias;
-        }
-
-        if ($found) {
-            $afters[] = 'toolbar';
-        }
-
-        $this->config->required['after'] = $afters;
+        $this->config->required['after'] = $this->setToolbarToLast($this->config->required['after']);
 
         $filterClasses = [];
 
@@ -306,6 +291,33 @@ class Filters
 
         // After
         return $this->runAfter($filterClasses[$position]);
+    }
+
+    /**
+     * Set the toolbar filter to the last position to be executed.
+     *
+     * @param list<string> $filters `after` filter array
+     */
+    private function setToolbarToLast(array $filters): array
+    {
+        $afters = [];
+        $found  = false;
+
+        foreach ($filters as $alias) {
+            if ($alias === 'toolbar') {
+                $found = true;
+
+                continue;
+            }
+
+            $afters[] = $alias;
+        }
+
+        if ($found) {
+            $afters[] = 'toolbar';
+        }
+
+        return $afters;
     }
 
     /**
@@ -342,13 +354,7 @@ class Filters
         }
 
         // Set the toolbar filter to the last position to be executed
-        if (in_array('toolbar', $this->filters['after'], true)
-            && ($count = count($this->filters['after'])) > 1
-            && $this->filters['after'][$count - 1] !== 'toolbar'
-        ) {
-            array_splice($this->filters['after'], array_search('toolbar', $this->filters['after'], true), 1);
-            $this->filters['after'][] = 'toolbar';
-        }
+        $this->filters['after'] = $this->setToolbarToLast($this->filters['after']);
 
         $this->processAliasesToClass('before');
         $this->processAliasesToClass('after');
