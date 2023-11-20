@@ -42,7 +42,7 @@ final class FilterCheckTest extends CIUnitTestCase
 
     public function testFilterCheckDefinedRoute(): void
     {
-        command('filter:check get /');
+        command('filter:check GET /');
 
         $this->assertStringContainsString(
             '|GET|/|||',
@@ -52,7 +52,7 @@ final class FilterCheckTest extends CIUnitTestCase
 
     public function testFilterCheckInvalidRoute(): void
     {
-        command('filter:check put product/123');
+        command('filter:check PUT product/123');
 
         $this->assertStringContainsString(
             'Can\'t find a route: "PUT product/123"',

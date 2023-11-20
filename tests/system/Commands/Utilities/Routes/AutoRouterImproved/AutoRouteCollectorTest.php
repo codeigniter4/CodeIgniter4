@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved;
 
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Filters;
 use Config\Services;
@@ -47,7 +48,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
             $namespace,
             'Home',
             'index',
-            ['get', 'post'],
+            [Method::GET, Method::POST],
             [],
         );
     }
