@@ -25,6 +25,7 @@ foreach ($helperDirs as $dir) {
 
 $dirs = [
     'tests/_support/Controllers',
+    'tests/system/Config/fixtures',
 ];
 
 foreach ($dirs as $dir) {
