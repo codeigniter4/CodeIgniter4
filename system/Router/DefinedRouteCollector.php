@@ -12,7 +12,6 @@
 namespace CodeIgniter\Router;
 
 use Closure;
-use CodeIgniter\HTTP\Method;
 use Generator;
 
 /**

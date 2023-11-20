@@ -29,8 +29,6 @@ class Router implements RouterInterface
 {
     /**
      * List of allowed HTTP methods (and CLI for command line use).
-     *
-     * @var list<string>
      */
     public const HTTP_METHODS = [
         Method::GET,

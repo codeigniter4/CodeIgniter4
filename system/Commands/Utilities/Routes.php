@@ -17,7 +17,6 @@ use CodeIgniter\Commands\Utilities\Routes\AutoRouteCollector;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\AutoRouteCollector as AutoRouteCollectorImproved;
 use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
 use CodeIgniter\Commands\Utilities\Routes\SampleURIGenerator;
-use CodeIgniter\HTTP\Method;
 use CodeIgniter\Router\DefinedRouteCollector;
 use CodeIgniter\Router\Router;
 use Config\Feature;
