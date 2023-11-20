@@ -82,7 +82,7 @@ class FilterCheck extends BaseCommand
             return EXIT_ERROR;
         }
 
-        $method = strtolower($params[0]);
+        $method = $params[0];
         $route  = $params[1];
 
         // Load Routes
