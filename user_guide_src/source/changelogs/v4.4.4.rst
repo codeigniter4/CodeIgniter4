@@ -41,6 +41,10 @@ Changes
 Deprecations
 ************
 
+- **Request:** The :php:meth:`CodeIgniter\\HTTP\\Request::getEnv()` method is
+  deprecated. This method does not work from the beginning. Use :php:func:`env()`
+  instead.
+
 **********
 Bugs Fixed
 **********

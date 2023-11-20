@@ -203,9 +203,12 @@ trait RequestTrait
      * @param array|int|null    $flags
      *
      * @return mixed
+     *
+     * @deprecated 4.4.4 This method does not work from the beginning. Use `env()`.
      */
     public function getEnv($index = null, $filter = null, $flags = null)
     {
+        // @phpstan-ignore-next-line
         return $this->fetchGlobal('env', $index, $filter, $flags);
     }
 

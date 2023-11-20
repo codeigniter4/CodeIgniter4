@@ -131,6 +131,9 @@ The ``getServer()`` method will pull from ``$_SERVER``.
 getEnv()
 --------
 
+.. deprecated:: 4.4.4 This method does not work from the beginning. Use
+    :php:func:`env()` instead.
+
 The ``getEnv()`` method will pull from ``$_ENV``.
 
 * ``$request->getEnv()``
