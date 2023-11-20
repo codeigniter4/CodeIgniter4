@@ -453,7 +453,7 @@ class CodeIgniter
      */
     protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
     {
-        if ($this->request instanceof IncomingRequest && strtolower($this->request->getMethod()) === 'cli') {
+        if ($this->request instanceof IncomingRequest && $this->request->getMethod() === 'CLI') {
             return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
         }
 
