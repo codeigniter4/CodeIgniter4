@@ -162,7 +162,7 @@ class Routes extends BaseCommand
                 $autoRoutes = $autoRouteCollector->get();
 
                 foreach ($autoRoutes as &$routes) {
-                    // There is no `auto` method, but it is intentional not to get route filters.
+                    // There is no `AUTO` method, but it is intentional not to get route filters.
                     $filters = $filterCollector->get('AUTO', $uriGenerator->get($routes[1]));
 
                     $routes[] = implode(' ', array_map('class_basename', $filters['before']));
