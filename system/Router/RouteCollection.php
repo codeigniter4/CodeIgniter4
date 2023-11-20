@@ -632,7 +632,19 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function setHTTPVerb(string $verb)
     {
-        $this->HTTPVerb = strtolower($verb);
+        if ($verb !== '*' && $verb === strtolower($verb)) {
+            @trigger_error(
+                'Passing lowercase HTTP method "' . $verb . '" is deprecated.'
+                . ' Use uppercase HTTP method like "' . strtoupper($verb) . '".',
+                E_USER_DEPRECATED
+            );
+        }
+
+        /**
+         * @deprecated 4.5.0
+         * @TODO Remove strtoupper() in the future.
+         */
+        $this->HTTPVerb = strtoupper($verb);
 
         return $this;
     }
@@ -1745,6 +1757,20 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function getRegisteredControllers(?string $verb = '*'): array
     {
+        if ($verb !== '*' && $verb === strtolower($verb)) {
+            @trigger_error(
+                'Passing lowercase HTTP method "' . $verb . '" is deprecated.'
+                . ' Use uppercase HTTP method like "' . strtoupper($verb) . '".',
+                E_USER_DEPRECATED
+            );
+        }
+
+        /**
+         * @deprecated 4.5.0
+         * @TODO Remove this in the future.
+         */
+        $verb = strtoupper($verb);
+
         $controllers = [];
 
         if ($verb === '*') {
