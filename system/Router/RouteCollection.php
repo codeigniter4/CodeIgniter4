@@ -13,6 +13,7 @@ namespace CodeIgniter\Router;
 
 use Closure;
 use CodeIgniter\Autoloader\FileLocatorInterface;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
 use Config\Modules;
@@ -136,16 +137,16 @@ class RouteCollection implements RouteCollectionInterface
      * ]
      */
     protected $routes = [
-        '*'       => [],
-        'options' => [],
-        'get'     => [],
-        'head'    => [],
-        'post'    => [],
-        'put'     => [],
-        'delete'  => [],
-        'trace'   => [],
-        'connect' => [],
-        'cli'     => [],
+        '*'             => [],
+        Method::OPTIONS => [],
+        Method::GET     => [],
+        Method::HEAD    => [],
+        Method::POST    => [],
+        Method::PUT     => [],
+        Method::DELETE  => [],
+        Method::TRACE   => [],
+        Method::CONNECT => [],
+        'CLI'           => [],
     ];
 
     /**
@@ -160,16 +161,16 @@ class RouteCollection implements RouteCollectionInterface
      * ]
      */
     protected $routesNames = [
-        '*'       => [],
-        'options' => [],
-        'get'     => [],
-        'head'    => [],
-        'post'    => [],
-        'put'     => [],
-        'delete'  => [],
-        'trace'   => [],
-        'connect' => [],
-        'cli'     => [],
+        '*'             => [],
+        Method::OPTIONS => [],
+        Method::GET     => [],
+        Method::HEAD    => [],
+        Method::POST    => [],
+        Method::PUT     => [],
+        Method::DELETE  => [],
+        Method::TRACE   => [],
+        Method::CONNECT => [],
+        'CLI'           => [],
     ];
 
     /**
@@ -190,7 +191,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * The current method that the script is being called by.
      *
-     * @var string HTTP verb (lower case) like `get`,`post` or `*`
+     * @var string HTTP verb like `GET`,`POST` or `*` or `CLI`
      */
     protected $HTTPVerb = '*';
 
@@ -198,18 +199,18 @@ class RouteCollection implements RouteCollectionInterface
      * The default list of HTTP methods (and CLI for command line usage)
      * that is allowed if no other method is provided.
      *
-     * @var array
+     * @var list<string>
      */
     protected $defaultHTTPMethods = [
-        'options',
-        'get',
-        'head',
-        'post',
-        'put',
-        'delete',
-        'trace',
-        'connect',
-        'cli',
+        Method::OPTIONS,
+        Method::GET,
+        Method::HEAD,
+        Method::POST,
+        Method::PUT,
+        Method::DELETE,
+        Method::TRACE,
+        Method::CONNECT,
+        'CLI',
     ];
 
     /**
@@ -560,7 +561,8 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Returns the raw array of available routes.
      *
-     * @param bool $includeWildcard Whether to include '*' routes.
+     * @param string $verb            HTTP verb like `GET`,`POST` or `*` or `CLI`.
+     * @param bool   $includeWildcard Whether to include '*' routes.
      */
     public function getRoutes(?string $verb = null, bool $includeWildcard = true): array
     {
@@ -604,6 +606,8 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * Returns one or all routes options
+     *
+     * @param string|null $verb HTTP verb like `GET`,`POST` or `*` or `CLI`.
      *
      * @return array<string, int|string> [key => value]
      */
@@ -696,10 +700,10 @@ class RouteCollection implements RouteCollectionInterface
             $routeName  = $to;
             $routeKey   = $this->routesNames['*'][$routeName];
             $redirectTo = [$routeKey => $this->routes['*'][$routeKey]['handler']];
-        } elseif (array_key_exists($to, $this->routesNames['get'])) {
+        } elseif (array_key_exists($to, $this->routesNames[Method::GET])) {
             $routeName  = $to;
-            $routeKey   = $this->routesNames['get'][$routeName];
-            $redirectTo = [$routeKey => $this->routes['get'][$routeKey]['handler']];
+            $routeKey   = $this->routesNames[Method::GET][$routeName];
+            $redirectTo = [$routeKey => $this->routes[Method::GET][$routeKey]['handler']];
         } else {
             // The named route is not found.
             $redirectTo = $to;
@@ -1051,7 +1055,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function get(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
-        $this->create('get', $from, $to, $options);
+        $this->create(Method::GET, $from, $to, $options);
 
         return $this;
     }
@@ -1063,7 +1067,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function post(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
-        $this->create('post', $from, $to, $options);
+        $this->create(Method::POST, $from, $to, $options);
 
         return $this;
     }
@@ -1075,7 +1079,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function put(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
-        $this->create('put', $from, $to, $options);
+        $this->create(Method::PUT, $from, $to, $options);
 
         return $this;
     }
@@ -1087,7 +1091,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function delete(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
-        $this->create('delete', $from, $to, $options);
+        $this->create(Method::DELETE, $from, $to, $options);
 
         return $this;
     }
@@ -1099,7 +1103,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function head(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
-        $this->create('head', $from, $to, $options);
+        $this->create(Method::HEAD, $from, $to, $options);
 
         return $this;
     }
@@ -1111,7 +1115,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function patch(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
-        $this->create('patch', $from, $to, $options);
+        $this->create(Method::PATCH, $from, $to, $options);
 
         return $this;
     }
@@ -1123,7 +1127,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function options(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
-        $this->create('options', $from, $to, $options);
+        $this->create(Method::OPTIONS, $from, $to, $options);
 
         return $this;
     }
@@ -1135,7 +1139,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function cli(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
-        $this->create('cli', $from, $to, $options);
+        $this->create('CLI', $from, $to, $options);
 
         return $this;
     }
@@ -1153,7 +1157,7 @@ class RouteCollection implements RouteCollectionInterface
         $routeOptions = $options ?? [];
         $routeOptions = array_merge($routeOptions, ['view' => $view]);
 
-        $this->create('get', $from, $to, $routeOptions);
+        $this->create(Method::GET, $from, $to, $routeOptions);
 
         return $this;
     }
@@ -1264,6 +1268,8 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * Checks a route (using the "from") to see if it's filtered or not.
+     *
+     * @param string|null $verb HTTP verb like `GET`,`POST` or `*` or `CLI`.
      */
     public function isFiltered(string $search, ?string $verb = null): bool
     {
@@ -1282,7 +1288,8 @@ class RouteCollection implements RouteCollectionInterface
      *
      * has a filter of "role", with parameters of ['admin', 'manager'].
      *
-     * @param string $search routeKey
+     * @param string      $search routeKey
+     * @param string|null $verb   HTTP verb like `GET`,`POST` or `*` or `CLI`.
      *
      * @return list<string> filter_name or filter_name:arguments like 'role:admin,manager'
      */
@@ -1751,7 +1758,8 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Get all controllers in Route Handlers
      *
-     * @param string|null $verb HTTP verb. `'*'` returns all controllers in any verb.
+     * @param string|null $verb HTTP verb like `GET`,`POST` or `*` or `CLI`.
+     *                          `'*'` returns all controllers in any verb.
      *
      * @return list<string> controller name list
      */

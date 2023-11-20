@@ -12,6 +12,7 @@
 namespace CodeIgniter\Router;
 
 use Closure;
+use CodeIgniter\HTTP\Method;
 use Generator;
 
 /**
@@ -34,16 +35,16 @@ final class DefinedRouteCollector
     public function collect(): Generator
     {
         $methods = [
-            'get',
-            'head',
-            'post',
-            'patch',
-            'put',
-            'delete',
-            'options',
-            'trace',
-            'connect',
-            'cli',
+            Method::GET,
+            Method::HEAD,
+            Method::POST,
+            Method::PATCH,
+            Method::PUT,
+            Method::DELETE,
+            Method::OPTIONS,
+            Method::TRACE,
+            Method::CONNECT,
+            'CLI',
         ];
 
         foreach ($methods as $method) {
