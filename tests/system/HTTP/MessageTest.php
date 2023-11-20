@@ -13,6 +13,7 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
+use InvalidArgumentException;
 
 /**
  * @internal
@@ -207,7 +208,7 @@ final class MessageTest extends CIUnitTestCase
     /**
      * @dataProvider provideArrayHeaderValue
      *
-     * @param mixed $arrayHeaderValue
+     * @param array $arrayHeaderValue
      */
     public function testSetHeaderWithExistingArrayValuesAppendStringValue($arrayHeaderValue): void
     {
@@ -220,7 +221,7 @@ final class MessageTest extends CIUnitTestCase
     /**
      * @dataProvider provideArrayHeaderValue
      *
-     * @param mixed $arrayHeaderValue
+     * @param array $arrayHeaderValue
      */
     public function testSetHeaderWithExistingArrayValuesAppendArrayValue($arrayHeaderValue): void
     {
@@ -303,5 +304,74 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame('en-us,en;q=0.50', $this->message->header('accept-language')->getValue());
 
         $_SERVER = $original; // restore so code coverage doesn't break
+    }
+
+    public function testAddHeaderAddsFirstHeader(): void
+    {
+        $this->message->addHeader(
+            'Set-Cookie',
+            'logged_in=no; Path=/'
+        );
+
+        $header = $this->message->header('Set-Cookie');
+
+        $this->assertInstanceOf(Header::class, $header);
+        $this->assertSame('logged_in=no; Path=/', $header->getValue());
+    }
+
+    public function testAddHeaderAddsTwoHeaders(): void
+    {
+        $this->message->addHeader(
+            'Set-Cookie',
+            'logged_in=no; Path=/'
+        );
+        $this->message->addHeader(
+            'Set-Cookie',
+            'sessid=123456; Path=/'
+        );
+
+        $headers = $this->message->header('Set-Cookie');
+
+        $this->assertCount(2, $headers);
+        $this->assertSame('logged_in=no; Path=/', $headers[0]->getValue());
+        $this->assertSame('sessid=123456; Path=/', $headers[1]->getValue());
+    }
+
+    public function testAppendHeaderWithMultipleHeaders(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The header "Set-Cookie" already has multiple headers. You cannot change them. If you really need to change, remove the header first.'
+        );
+
+        $this->message->addHeader(
+            'Set-Cookie',
+            'logged_in=no; Path=/'
+        );
+        $this->message->addHeader(
+            'Set-Cookie',
+            'sessid=123456; Path=/'
+        );
+
+        $this->message->appendHeader('Set-Cookie', 'HttpOnly');
+    }
+
+    public function testGetHeaderLineWithMultipleHeaders(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The header "Set-Cookie" already has multiple headers. You cannot use getHeaderLine().'
+        );
+
+        $this->message->addHeader(
+            'Set-Cookie',
+            'logged_in=no; Path=/'
+        );
+        $this->message->addHeader(
+            'Set-Cookie',
+            'sessid=123456; Path=/'
+        );
+
+        $this->message->getHeaderLine('Set-Cookie');
     }
 }

@@ -64,7 +64,7 @@ class Header
 
     /**
      * Gets the raw value of the header. This may return either a string
-     * of an array, depending on whether the header has multiple values or not.
+     * or an array, depending on whether the header has multiple values or not.
      *
      * @return array<int|string, array<string, string>|string>|string
      */
