@@ -302,11 +302,26 @@ uses this to collect the queries to display in the Toolbar.</p>
 <p>This event is triggered whenever a new query has been run, whether successful or not. The only parameter is
 a <a class="reference internal" href="queries.html"><span class="doc">Query</span></a> instance of the current query. You could use this to display all queries
 in STDOUT, or logging to a file, or even creating tools to do automatic query analysis to help you spot
-potentially missing indexes, slow queries, etc. An example usage might be:</p>
+potentially missing indexes, slow queries, etc.</p>
+<p>An example usage might be:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// In app/Config/Events.php</span>
-<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;DBQuery&#39;</span><span class="p">,</span> <span class="s1">&#39;CodeIgniter\Debug\Toolbar\Collectors\Database::collect&#39;</span><span class="p">);</span>
+
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Events\Events</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Exceptions\FrameworkException</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\HotReloader\HotReloader</span><span class="p">;</span>
+
+<span class="c1">// ...</span>
+
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span>
+    <span class="s1">&#39;DBQuery&#39;</span><span class="p">,</span>
+    <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nx">\CodeIgniter\Database\Query</span> <span class="nv">$query</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">log_message</span><span class="p">(</span><span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="nv">$query</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">);</span>
 </pre></div>
 </div>
 </section>
