@@ -1,12 +1,14 @@
 <?php
 
+namespace App\Entities;
+
 class User
 {
     public $id;
     public $email;
     public $username;
 
-    protected $last_login;
+    protected $lastLogin;
 
     public function lastLogin($format)
     {

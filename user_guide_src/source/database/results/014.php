@@ -2,10 +2,10 @@
 
 $query = $db->query('YOUR QUERY');
 
-$rows = $query->getCustomResultObject('User');
+$rows = $query->getCustomResultObject(\App\Entities\User::class);
 
 foreach ($rows as $row) {
     echo $row->id;
     echo $row->email;
-    echo $row->last_login('Y-m-d');
+    echo $row->lastLogin('Y-m-d');
 }
