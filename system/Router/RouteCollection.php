@@ -1762,6 +1762,8 @@ class RouteCollection implements RouteCollectionInterface
      *                          `'*'` returns all controllers in any verb.
      *
      * @return list<string> controller name list
+     *
+     * @interal
      */
     public function getRegisteredControllers(?string $verb = '*'): array
     {
