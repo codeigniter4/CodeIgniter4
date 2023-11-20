@@ -39,6 +39,6 @@ abstract class BaseCast implements CastInterface
      */
     protected static function invalidTypeValueError(mixed $value): never
     {
-        throw new TypeError('Invalid type value: ' . var_export($value, true));
+        throw new TypeError('Invalid type: ' . get_debug_type($value));
     }
 }
