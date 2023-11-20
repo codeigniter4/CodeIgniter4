@@ -421,7 +421,7 @@ final class RouterTest extends CIUnitTestCase
         $router = new Router($this->collection, $this->request);
 
         $this->expectException(PageNotFoundException::class);
-        $this->expectExceptionMessage("Can't find a route for 'get: url/not-exists'");
+        $this->expectExceptionMessage("Can't find a route for 'GET: url/not-exists'");
 
         $router->handle('url/not-exists');
     }
@@ -573,7 +573,7 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->group(...$group);
 
         $router = new Router($this->collection, $this->request);
-        $this->collection->setHTTPVerb('post');
+        $this->collection->setHTTPVerb(Method::POST);
 
         $router->handle('api/posts');
 
@@ -585,7 +585,7 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->group(...$group);
 
         $router = new Router($this->collection, $this->request);
-        $this->collection->setHTTPVerb('put');
+        $this->collection->setHTTPVerb(Method::PUT);
 
         $router->handle('api/posts/50');
 
@@ -597,7 +597,7 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->group(...$group);
 
         $router = new Router($this->collection, $this->request);
-        $this->collection->setHTTPVerb('patch');
+        $this->collection->setHTTPVerb(Method::PATCH);
 
         $router->handle('api/posts/50');
 
@@ -609,7 +609,7 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->group(...$group);
 
         $router = new Router($this->collection, $this->request);
-        $this->collection->setHTTPVerb('delete');
+        $this->collection->setHTTPVerb(Method::DELETE);
 
         $router->handle('api/posts/50');
 
@@ -653,7 +653,7 @@ final class RouterTest extends CIUnitTestCase
      */
     public function testMatchesCorrectlyWithMixedVerbs(): void
     {
-        $this->collection->setHTTPVerb('get');
+        $this->collection->setHTTPVerb(Method::GET);
 
         $this->collection->add('/', 'Home::index');
         $this->collection->get('news', 'News::index');
@@ -688,7 +688,7 @@ final class RouterTest extends CIUnitTestCase
         $this->collection->add('auth', 'Main::index');
 
         $router = new Router($this->collection, $this->request);
-        $this->collection->setHTTPVerb('post');
+        $this->collection->setHTTPVerb(Method::POST);
 
         $router->handle('auth');
         $this->assertSame('\Main', $router->controllerName());
@@ -703,7 +703,7 @@ final class RouterTest extends CIUnitTestCase
 
         $router = new Router($this->collection, $this->request);
 
-        $this->collection->setHTTPVerb('get');
+        $this->collection->setHTTPVerb(Method::GET);
 
         $router->handle('module');
         $this->assertSame('\Main', $router->controllerName());
