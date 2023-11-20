@@ -127,7 +127,7 @@ class MigrateStatus extends BaseCommand
                         continue;
                     }
 
-                    $date  = date('Y-m-d H:i:s', $row->time);
+                    $date  = date('Y-m-d H:i:s', (int) $row->time);
                     $group = $row->group;
                     $batch = $row->batch;
                     // @codeCoverageIgnoreEnd

@@ -256,7 +256,7 @@ class CLI
         static::fwrite(STDOUT, $field . (trim($field) ? ' ' : '') . $extraOutput . ': ');
 
         // Read the input from keyboard.
-        $input = trim(static::$io->input()) ?: $default;
+        $input = trim(static::$io->input()) ?: (string) $default;
 
         if ($validation !== []) {
             while (! static::validate('"' . trim($field) . '"', $input, $validation)) {
