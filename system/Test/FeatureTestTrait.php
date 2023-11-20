@@ -181,7 +181,8 @@ trait FeatureTestTrait
 
         $request = $this->setupRequest($method, $path);
         $request = $this->setupHeaders($request);
-        $request = $this->populateGlobals($method, $request, $params);
+        $name    = strtolower($method);
+        $request = $this->populateGlobals($name, $request, $params);
         $request = $this->setRequestBody($request, $params);
 
         // Initialize the RouteCollection
