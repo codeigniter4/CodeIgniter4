@@ -14,6 +14,7 @@ namespace CodeIgniter\Test;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\URI;
@@ -225,7 +226,7 @@ trait FeatureTestTrait
      */
     public function get(string $path, ?array $params = null)
     {
-        return $this->call('get', $path, $params);
+        return $this->call(Method::GET, $path, $params);
     }
 
     /**
@@ -238,7 +239,7 @@ trait FeatureTestTrait
      */
     public function post(string $path, ?array $params = null)
     {
-        return $this->call('post', $path, $params);
+        return $this->call(Method::POST, $path, $params);
     }
 
     /**
@@ -251,7 +252,7 @@ trait FeatureTestTrait
      */
     public function put(string $path, ?array $params = null)
     {
-        return $this->call('put', $path, $params);
+        return $this->call(Method::PUT, $path, $params);
     }
 
     /**
@@ -264,7 +265,7 @@ trait FeatureTestTrait
      */
     public function patch(string $path, ?array $params = null)
     {
-        return $this->call('patch', $path, $params);
+        return $this->call(Method::PATCH, $path, $params);
     }
 
     /**
@@ -277,7 +278,7 @@ trait FeatureTestTrait
      */
     public function delete(string $path, ?array $params = null)
     {
-        return $this->call('delete', $path, $params);
+        return $this->call(Method::DELETE, $path, $params);
     }
 
     /**
@@ -290,7 +291,7 @@ trait FeatureTestTrait
      */
     public function options(string $path, ?array $params = null)
     {
-        return $this->call('options', $path, $params);
+        return $this->call(Method::OPTIONS, $path, $params);
     }
 
     /**
