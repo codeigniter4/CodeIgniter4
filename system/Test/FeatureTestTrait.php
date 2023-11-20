@@ -161,6 +161,20 @@ trait FeatureTestTrait
      */
     public function call(string $method, string $path, ?array $params = null)
     {
+        if ($method === strtolower($method)) {
+            @trigger_error(
+                'Passing lowercase HTTP method "' . $method . '" is deprecated.'
+                . ' Use uppercase HTTP method like "' . strtoupper($method) . '".',
+                E_USER_DEPRECATED
+            );
+        }
+
+        /**
+         * @deprecated 4.5.0
+         * @TODO remove this in the future.
+         */
+        $method = strtoupper($method);
+
         // Simulate having a blank session
         $_SESSION                  = [];
         $_SERVER['REQUEST_METHOD'] = $method;
