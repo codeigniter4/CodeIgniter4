@@ -561,8 +561,8 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Returns the raw array of available routes.
      *
-     * @param string $verb            HTTP verb like `GET`,`POST` or `*` or `CLI`.
-     * @param bool   $includeWildcard Whether to include '*' routes.
+     * @param string|null $verb            HTTP verb like `GET`,`POST` or `*` or `CLI`.
+     * @param bool        $includeWildcard Whether to include '*' routes.
      */
     public function getRoutes(?string $verb = null, bool $includeWildcard = true): array
     {
