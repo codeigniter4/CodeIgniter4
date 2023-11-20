@@ -19,6 +19,7 @@ use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
 use CodeIgniter\Commands\Utilities\Routes\SampleURIGenerator;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\Router\DefinedRouteCollector;
+use CodeIgniter\Router\Router;
 use Config\Feature;
 use Config\Routing;
 use Config\Services;
@@ -99,18 +100,7 @@ class Routes extends BaseCommand
             unset($_SERVER['HTTP_HOST']);
         }
 
-        $methods = [
-            Method::GET,
-            Method::HEAD,
-            Method::POST,
-            Method::PATCH,
-            Method::PUT,
-            Method::DELETE,
-            Method::OPTIONS,
-            Method::TRACE,
-            Method::CONNECT,
-            'CLI',
-        ];
+        $methods = Router::HTTP_METHODS;
 
         $tbody           = [];
         $uriGenerator    = new SampleURIGenerator();
