@@ -332,7 +332,7 @@ trait RequestTrait
      * Saves a copy of the current state of one of several PHP globals,
      * so we can retrieve them later.
      *
-     * @param string $name Supergrlobal name (lowercase)
+     * @param string $name Superglobal name (lowercase)
      * @phpstan-param 'get'|'post'|'request'|'cookie'|'server' $name
      *
      * @return void
