@@ -76,6 +76,15 @@ final class RoutesTest extends CIUnitTestCase
             +---------+---------+---------------+----------------------------------------+----------------+---------------+
             EOL;
         $this->assertStringContainsString($expected, $this->getBuffer());
+
+        $expected = <<<'EOL'
+            Required Before Filters: forcehttps, pagecache
+             Required After Filters: pagecache, performance, toolbar
+            EOL;
+        $this->assertStringContainsString(
+            $expected,
+            preg_replace('/\033\[.+?m/u', '', $this->getBuffer())
+        );
     }
 
     public function testRoutesCommandSortByHandler(): void
