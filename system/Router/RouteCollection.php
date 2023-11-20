@@ -142,6 +142,7 @@ class RouteCollection implements RouteCollectionInterface
         Method::GET     => [],
         Method::HEAD    => [],
         Method::POST    => [],
+        Method::PATCH   => [],
         Method::PUT     => [],
         Method::DELETE  => [],
         Method::TRACE   => [],
@@ -166,6 +167,7 @@ class RouteCollection implements RouteCollectionInterface
         Method::GET     => [],
         Method::HEAD    => [],
         Method::POST    => [],
+        Method::PATCH   => [],
         Method::PUT     => [],
         Method::DELETE  => [],
         Method::TRACE   => [],
@@ -201,17 +203,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @var list<string>
      */
-    protected $defaultHTTPMethods = [
-        Method::OPTIONS,
-        Method::GET,
-        Method::HEAD,
-        Method::POST,
-        Method::PUT,
-        Method::DELETE,
-        Method::TRACE,
-        Method::CONNECT,
-        'CLI',
-    ];
+    public $defaultHTTPMethods = Router::HTTP_METHODS;
 
     /**
      * The name of the current group, if any.
