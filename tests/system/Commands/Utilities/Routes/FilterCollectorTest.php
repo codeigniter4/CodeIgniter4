@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 
@@ -30,7 +31,7 @@ final class FilterCollectorTest extends CIUnitTestCase
 
         $collector = new FilterCollector();
 
-        $filters = $collector->get('get', '/');
+        $filters = $collector->get(Method::GET, '/');
 
         $expected = [
             'before' => [
