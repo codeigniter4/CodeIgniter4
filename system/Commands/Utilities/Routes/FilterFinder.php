@@ -77,4 +77,20 @@ final class FilterFinder
             ];
         }
     }
+
+    /**
+     * Returns Required Filters
+     *
+     * @return array{before: list<string>, after:list<string>}
+     */
+    public function getRequiredFilters(): array
+    {
+        [$requiredBefore] = $this->filters->getRequiredFilters('before');
+        [$requiredAfter]  = $this->filters->getRequiredFilters('after');
+
+        return [
+            'before' => $requiredBefore,
+            'after'  => $requiredAfter,
+        ];
+    }
 }

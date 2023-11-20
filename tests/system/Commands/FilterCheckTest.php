@@ -45,8 +45,8 @@ final class FilterCheckTest extends CIUnitTestCase
         command('filter:check GET /');
 
         $this->assertStringContainsString(
-            '|GET|/|||',
-            str_replace(' ', '', $this->getBuffer())
+            '| GET    | /     | forcehttps pagecache | pagecache performance toolbar |',
+            preg_replace('/\033\[.+?m/u', '', $this->getBuffer())
         );
     }
 
