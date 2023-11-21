@@ -161,8 +161,14 @@ class RedirectResponse extends Response
      */
     public function withHeaders()
     {
-        foreach (Services::response()->headers() as $name => $header) {
-            $this->setHeader($name, $header->getValue());
+        foreach (Services::response()->headers() as $name => $value) {
+            if ($value instanceof Header) {
+                $this->setHeader($name, $value->getValue());
+            } else {
+                foreach ($value as $header) {
+                    $this->addHeader($name, $header->getValue());
+                }
+            }
         }
 
         return $this;

@@ -398,8 +398,22 @@ trait ResponseTrait
         header(sprintf('HTTP/%s %s %s', $this->getProtocolVersion(), $this->getStatusCode(), $this->getReasonPhrase()), true, $this->getStatusCode());
 
         // Send all of our headers
-        foreach (array_keys($this->headers()) as $name) {
-            header($name . ': ' . $this->getHeaderLine($name), false, $this->getStatusCode());
+        foreach ($this->headers() as $name => $value) {
+            if ($value instanceof Header) {
+                header(
+                    $name . ': ' . $value->getValueLine(),
+                    false,
+                    $this->getStatusCode()
+                );
+            } else {
+                foreach ($value as $header) {
+                    header(
+                        $name . ': ' . $header->getValueLine(),
+                        false,
+                        $this->getStatusCode()
+                    );
+                }
+            }
         }
 
         return $this;
