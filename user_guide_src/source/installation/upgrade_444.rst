@@ -16,6 +16,14 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Mandatory File Changes
 **********************
 
+Error Files
+===========
+
+Update the following files to show correct error messages:
+
+- app/Views/errors/cli/error_exception.php
+- app/Views/errors/html/error_exception.php
+
 ****************
 Breaking Changes
 ****************
