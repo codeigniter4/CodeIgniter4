@@ -482,7 +482,7 @@ class CURLRequest extends OutgoingRequest
                 $title = substr($header, 0, $pos);
                 $value = substr($header, $pos + 1);
 
-                $this->response->setHeader($title, $value);
+                $this->response->addHeader($title, $value);
             } elseif (strpos($header, 'HTTP') === 0) {
                 preg_match('#^HTTP\/([12](?:\.[01])?) (\d+) (.+)#', $header, $matches);
 
