@@ -84,6 +84,8 @@ use ReflectionProperty;
  * @method $this where($key, $value = null, ?bool $escape = null)
  * @method $this whereIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this whereNotIn(?string $key = null, $values = null, ?bool $escape = null)
+ *
+ * @phpstan-import-type row_array from BaseModel
  */
 class Model extends BaseModel
 {
@@ -178,6 +180,7 @@ class Model extends BaseModel
      * @param array|int|string|null $id        One primary key or an array of primary keys
      *
      * @return array|object|null The resulting row of data, or null.
+     * @phpstan-return ($singleton is true ? row_array|null|object : list<row_array|object>)
      */
     protected function doFind(bool $singleton, $id = null)
     {
@@ -224,6 +227,7 @@ class Model extends BaseModel
      * @param int $offset Offset
      *
      * @return array
+     * @phpstan-return list<row_array|object>
      */
     protected function doFindAll(int $limit = 0, int $offset = 0)
     {
@@ -244,6 +248,7 @@ class Model extends BaseModel
      * This method works only with dbCalls.
      *
      * @return array|object|null
+     * @phpstan-return row_array|object|null
      */
     protected function doFirst()
     {
@@ -411,7 +416,7 @@ class Model extends BaseModel
      * @param array|int|string|null $id    The rows primary key(s)
      * @param bool                  $purge Allows overriding the soft deletes setting.
      *
-     * @return bool|string
+     * @return bool|string SQL string when testMode
      *
      * @throws DatabaseException
      */
@@ -450,7 +455,7 @@ class Model extends BaseModel
      * through soft deletes (deleted = 1)
      * This method works only with dbCalls.
      *
-     * @return bool|string Returns a string if in test mode.
+     * @return bool|string Returns a SQL string if in test mode.
      */
     protected function doPurgeDeleted()
     {
@@ -491,7 +496,7 @@ class Model extends BaseModel
      *  ['source' => 'message']
      * This method works only with dbCalls.
      *
-     * @return array<string,string>
+     * @return array<string, string>
      */
     protected function doErrors()
     {
