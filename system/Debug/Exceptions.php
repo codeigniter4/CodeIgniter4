@@ -136,11 +136,6 @@ class Exceptions
         $this->request  = Services::request();
         $this->response = Services::response();
 
-        // Get the first exception.
-        while ($prevException = $exception->getPrevious()) {
-            $exception = $prevException;
-        }
-
         if (method_exists($this->config, 'handler')) {
             // Use new ExceptionHandler
             $handler = $this->config->handler($statusCode, $exception);
@@ -325,7 +320,14 @@ class Exceptions
      */
     protected function collectVars(Throwable $exception, int $statusCode): array
     {
-        $trace = $exception->getTrace();
+        // Get the first exception.
+        $firstException = $exception;
+
+        while ($prevException = $firstException->getPrevious()) {
+            $firstException = $prevException;
+        }
+
+        $trace = $firstException->getTrace();
 
         if ($this->config->sensitiveDataInTrace !== []) {
             $trace = $this->maskSensitiveData($trace, $this->config->sensitiveDataInTrace);

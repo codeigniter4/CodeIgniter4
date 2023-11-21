@@ -3,17 +3,26 @@
 use CodeIgniter\CLI\CLI;
 
 // The main Exception
-CLI::newLine();
 CLI::write('[' . get_class($exception) . ']', 'light_gray', 'red');
-CLI::newLine();
 CLI::write($message);
-CLI::newLine();
 CLI::write('at ' . CLI::color(clean_path($exception->getFile()) . ':' . $exception->getLine(), 'green'));
 CLI::newLine();
 
+$last = $exception;
+
+while ($prevException = $last->getPrevious()) {
+    $last = $prevException;
+
+    CLI::write('  Caused by:');
+    CLI::write('  [' . get_class($prevException) . ']', 'red');
+    CLI::write('  ' . $prevException->getMessage());
+    CLI::write('  at ' . CLI::color(clean_path($prevException->getFile()) . ':' . $prevException->getLine(), 'green'));
+    CLI::newLine();
+}
+
 // The backtrace
 if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE) {
-    $backtraces = $exception->getTrace();
+    $backtraces = $last->getTrace();
 
     if ($backtraces) {
         CLI::write('Backtrace:', 'green');
