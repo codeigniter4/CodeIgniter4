@@ -408,7 +408,7 @@ To temporarily bypass the foreign key checks while running migrations, use the <
 <section id="database-groups">
 <h3><a class="toc-backref" href="#id5">Database Groups</a><a class="headerlink" href="#database-groups" title="Permalink to this headline"></a></h3>
 <p>A migration will only be run against a single database group. If you have multiple groups defined in
-<strong>app/Config/Database.php</strong>, then it will run against the <code class="docutils literal notranslate"><span class="pre">$defaultGroup</span></code> as specified
+<strong>app/Config/Database.php</strong>, then by default it will run against the <code class="docutils literal notranslate"><span class="pre">$defaultGroup</span></code> as specified
 in that same configuration file.</p>
 <p>There may be times when you need different schemas for different
 database groups. Perhaps you have one database that is used for all general site information, while
@@ -437,6 +437,11 @@ match the name of the database group exactly:</p>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <strong>migrations</strong> table that tracks which migrations have already been
+run will be always created in the default database group.</p>
 </div>
 </section>
 <section id="namespaces">
@@ -757,7 +762,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 21, 2023.
+      <span class="lastupdated">Last updated on Nov 22, 2023.
       </span></p>
   </div>
 
