@@ -146,8 +146,9 @@ class Toolbar
                 $data['vars']['headers'][esc($name)] = esc($value->getValueLine());
             } else {
                 foreach ($value as $i => $header) {
+                    $index = $i + 1;
                     $data['vars']['headers'][esc($name)] ??= '';
-                    $data['vars']['headers'][esc($name)] .= ' (' . $i + 1 . ') '
+                    $data['vars']['headers'][esc($name)] .= ' (' . $index . ') '
                         . esc($header->getValueLine());
                 }
             }
@@ -171,8 +172,9 @@ class Toolbar
                 $data['vars']['response']['headers'][esc($name)] = esc($value->getValueLine());
             } else {
                 foreach ($value as $i => $header) {
+                    $index = $i + 1;
                     $data['vars']['response']['headers'][esc($name)] ??= '';
-                    $data['vars']['response']['headers'][esc($name)] .= ' (' . $i + 1 . ') '
+                    $data['vars']['response']['headers'][esc($name)] .= ' (' . $index . ') '
                         . esc($header->getValueLine());
                 }
             }
