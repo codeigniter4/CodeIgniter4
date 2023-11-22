@@ -14,28 +14,26 @@ namespace CodeIgniter\Database\DataConverter\Cast;
 use TypeError;
 
 /**
- * Class BaseCast
+ * @template TPhpValue PHP data type
+ * @template TToDb     Data type to pass to database driver
+ * @template TDbColumn Data type from database driver
+ *
+ * @implements CastInterface<TPhpValue, TToDb, TDbColumn>
  */
 abstract class BaseCast implements CastInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    public static function fromDatabase($value, array $params = [])
+    public static function fromDatabase(mixed $value, array $params = []): mixed
+    {
+        return $value;
+    }
+
+    public static function toDatabase(mixed $value, array $params = []): mixed
     {
         return $value;
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public static function toDatabase($value, array $params = [])
-    {
-        return $value;
-    }
-
-    /**
-     * Throws TypeError
+     * @throws TypeError
      */
     protected static function invalidTypeValueError(mixed $value): never
     {

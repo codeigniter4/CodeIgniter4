@@ -16,14 +16,16 @@ use CodeIgniter\I18n\Time;
 /**
  * Class TimestampCast
  *
- * DB column: timestamp <--> PHP: Time
+ * PHP: Time <--> DB column: timestamp
+ *
+ * @extends BaseCast<Time, int, int|string>
  */
 class TimestampCast extends BaseCast
 {
     /**
      * {@inheritDoc}
      */
-    public static function fromDatabase($value, array $params = []): Time
+    public static function fromDatabase(mixed $value, array $params = []): Time
     {
         if (! is_int($value) && ! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -35,7 +37,7 @@ class TimestampCast extends BaseCast
     /**
      * {@inheritDoc}
      */
-    public static function toDatabase($value, array $params = []): int
+    public static function toDatabase(mixed $value, array $params = []): int
     {
         if (! $value instanceof Time) {
             self::invalidTypeValueError($value);

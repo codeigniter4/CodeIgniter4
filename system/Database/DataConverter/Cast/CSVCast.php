@@ -14,14 +14,16 @@ namespace CodeIgniter\Database\DataConverter\Cast;
 /**
  * Class CSVCast
  *
- * DB column: string <--> PHP: array
+ * PHP: array <--> DB column: string
+ *
+ * @extends BaseCast<array, string, string>
  */
 class CSVCast extends BaseCast
 {
     /**
      * {@inheritDoc}
      */
-    public static function fromDatabase($value, array $params = []): array
+    public static function fromDatabase(mixed $value, array $params = []): array
     {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -33,7 +35,7 @@ class CSVCast extends BaseCast
     /**
      * {@inheritDoc}
      */
-    public static function toDatabase($value, array $params = []): string
+    public static function toDatabase(mixed $value, array $params = []): string
     {
         if (! is_array($value)) {
             self::invalidTypeValueError($value);

@@ -18,14 +18,16 @@ use stdClass;
 /**
  * Class JsonCast
  *
- * DB column: string <--> PHP: array|stdClass
+ * PHP: array|stdClass <--> DB column: string
+ *
+ * @extends BaseCast<array|stdClass, string, string>
  */
 class JsonCast extends BaseCast
 {
     /**
      * {@inheritDoc}
      */
-    public static function fromDatabase($value, array $params = [])
+    public static function fromDatabase(mixed $value, array $params = []): array|stdClass
     {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -51,10 +53,8 @@ class JsonCast extends BaseCast
 
     /**
      * {@inheritDoc}
-     *
-     * @param mixed $value
      */
-    public static function toDatabase($value, array $params = []): string
+    public static function toDatabase(mixed $value, array $params = []): string
     {
         try {
             $output = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);

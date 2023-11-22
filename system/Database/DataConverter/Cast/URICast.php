@@ -16,14 +16,16 @@ use CodeIgniter\HTTP\URI;
 /**
  * Class URICast
  *
- * DB column: string <--> PHP: URI
+ * PHP: URI <--> DB column: string
+ *
+ * @extends BaseCast<URI, string, string>
  */
 class URICast extends BaseCast
 {
     /**
      * {@inheritDoc}
      */
-    public static function fromDatabase($value, array $params = []): URI
+    public static function fromDatabase(mixed $value, array $params = []): URI
     {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -35,7 +37,7 @@ class URICast extends BaseCast
     /**
      * {@inheritDoc}
      */
-    public static function toDatabase($value, array $params = []): string
+    public static function toDatabase(mixed $value, array $params = []): string
     {
         if (! $value instanceof URI) {
             self::invalidTypeValueError($value);

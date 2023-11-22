@@ -14,14 +14,16 @@ namespace CodeIgniter\Database\DataConverter\Cast;
 /**
  * Class FloatCast
  *
- * DB column: float <--> PHP: float
+ * PHP: float <--> DB column: float
+ *
+ * @extends BaseCast<float, float, float|string>
  */
 class FloatCast extends BaseCast
 {
     /**
      * {@inheritDoc}
      */
-    public static function fromDatabase($value, array $params = []): float
+    public static function fromDatabase(mixed $value, array $params = []): float
     {
         return (float) $value;
     }

@@ -17,7 +17,9 @@ use Exception;
 /**
  * Class DatetimeCast
  *
- * DB column: datetime <--> PHP: Time
+ * PHP: Time <--> DB column: datetime
+ *
+ * @extends BaseCast<Time, string, string>
  */
 class DatetimeCast extends BaseCast
 {
@@ -26,7 +28,7 @@ class DatetimeCast extends BaseCast
      *
      * @throws Exception
      */
-    public static function fromDatabase($value, array $params = []): Time
+    public static function fromDatabase(mixed $value, array $params = []): Time
     {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -38,7 +40,7 @@ class DatetimeCast extends BaseCast
     /**
      * {@inheritDoc}
      */
-    public static function toDatabase($value, array $params = []): string
+    public static function toDatabase(mixed $value, array $params = []): string
     {
         if (! $value instanceof Time) {
             self::invalidTypeValueError($value);

@@ -14,14 +14,16 @@ namespace CodeIgniter\Database\DataConverter\Cast;
 /**
  * Class BooleanCast
  *
- * DB column: bool|int(0/1) <--> PHP: bool
+ * PHP: bool <--> DB column: bool|int(0/1)
+ *
+ * @extends BaseCast<bool, bool, string|int>
  */
 class BooleanCast extends BaseCast
 {
     /**
      * {@inheritDoc}
      */
-    public static function fromDatabase($value, array $params = []): bool
+    public static function fromDatabase(mixed $value, array $params = []): bool
     {
         // For PostgreSQL
         if ($value === 't') {

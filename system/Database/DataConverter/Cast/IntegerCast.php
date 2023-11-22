@@ -14,14 +14,16 @@ namespace CodeIgniter\Database\DataConverter\Cast;
 /**
  * Class IntegerCast
  *
- * DB column: int <--> PHP: int
+ * PHP: int <--> DB column: int
+ *
+ * @extends BaseCast<int, int, int|string>
  */
 class IntegerCast extends BaseCast
 {
     /**
      * {@inheritDoc}
      */
-    public static function fromDatabase($value, array $params = []): int
+    public static function fromDatabase(mixed $value, array $params = []): int
     {
         if (! is_string($value) && ! is_int($value)) {
             self::invalidTypeValueError($value);

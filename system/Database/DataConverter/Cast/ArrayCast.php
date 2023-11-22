@@ -14,14 +14,13 @@ namespace CodeIgniter\Database\DataConverter\Cast;
 /**
  * Class ArrayCast
  *
- * DB column: string <--> PHP: array
+ * PHP: array <--> DB column: string
+ *
+ * @extends BaseCast<mixed[], string, string>
  */
 class ArrayCast extends BaseCast implements CastInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    public static function fromDatabase($value, array $params = []): array
+    public static function fromDatabase(mixed $value, array $params = []): array
     {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -34,10 +33,7 @@ class ArrayCast extends BaseCast implements CastInterface
         return (array) $value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public static function toDatabase($value, array $params = []): string
+    public static function toDatabase(mixed $value, array $params = []): string
     {
         return serialize($value);
     }
