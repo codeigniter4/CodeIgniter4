@@ -16,7 +16,7 @@ use CodeIgniter\I18n\Time;
 /**
  * Class TimestampCast
  *
- * PHP: Time <--> DB column: timestamp
+ * PHP: Time <--> DB column: int
  *
  * @extends BaseCast<Time, int, int|string>
  */
