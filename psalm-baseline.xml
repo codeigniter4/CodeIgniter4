@@ -26,12 +26,6 @@
       <code>Memcache|Memcached</code>
     </UndefinedDocblockClass>
   </file>
-  <file src="system/Commands/Utilities/Routes/ControllerMethodReader.php">
-    <DuplicateArrayKey>
-      <code>$routeWithoutController</code>
-      <code>$routeWithoutController</code>
-    </DuplicateArrayKey>
-  </file>
   <file src="system/Config/View.php">
     <UndefinedDocblockClass>
       <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
@@ -91,6 +85,17 @@
       <code><![CDATA[$this->db->transStatus]]></code>
     </InaccessibleProperty>
   </file>
+  <file src="system/Database/DataConverter/Cast/ArrayCast.php">
+    <MissingTemplateParam>
+      <code>CastInterface</code>
+    </MissingTemplateParam>
+  </file>
+  <file src="system/Database/DataConverter/Cast/CastInterface.php">
+    <UndefinedDocblockClass>
+      <code>TDbColumn</code>
+      <code>TPhpValue</code>
+    </UndefinedDocblockClass>
+  </file>
   <file src="system/Database/OCI8/Connection.php">
     <UndefinedConstant>
       <code>OCI_COMMIT_ON_SUCCESS</code>
@@ -132,11 +137,6 @@
       <code>#[ReturnTypeWillChange]</code>
     </MissingImmutableAnnotation>
   </file>
-  <file src="system/Test/ControllerResponse.php">
-    <UnsupportedPropertyReferenceUsage>
-      <code><![CDATA[$this->dom = &$this->domParser]]></code>
-    </UnsupportedPropertyReferenceUsage>
-  </file>
   <file src="system/View/Parser.php">
     <UndefinedDocblockClass>
       <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
@@ -164,11 +164,6 @@
       <code>$this</code>
     </InvalidScope>
   </file>
-  <file src="tests/system/CLI/ConsoleTest.php">
-    <DuplicateArrayKey>
-      <code>$command</code>
-    </DuplicateArrayKey>
-  </file>
   <file src="tests/system/CommonFunctionsTest.php">
     <UndefinedClass>
       <code>UnexsistenceClass</code>
@@ -180,12 +175,6 @@
       <code><![CDATA['App\Models\UserModel']]></code>
       <code><![CDATA['Config\TestRegistrar']]></code>
     </UndefinedClass>
-  </file>
-  <file src="tests/system/Database/BaseConnectionTest.php">
-    <InaccessibleProperty>
-      <code><![CDATA[$db->username]]></code>
-      <code><![CDATA[$db->username]]></code>
-    </InaccessibleProperty>
   </file>
   <file src="tests/system/Database/Live/OCI8/CallStoredProcedureTest.php">
     <UndefinedConstant>
