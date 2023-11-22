@@ -300,7 +300,8 @@ class Validation implements ValidationInterface
             $arrayCallable  = $isCallable && is_array($rule);
 
             $passed = false;
-            $param  = false;
+            /** @var string|null $param */
+            $param = null;
 
             if (! $isCallable && preg_match('/(.*?)\[(.*)\]/', $rule, $match)) {
                 $rule  = $match[1];
@@ -327,10 +328,9 @@ class Validation implements ValidationInterface
                     $found = true;
 
                     if ($rule === 'field_exists') {
-                        $param  = ($param === false) ? null : $param;
                         $passed = $set->{$rule}($value, $param, $data, $error, $originalField);
                     } else {
-                        $passed = ($param === false)
+                        $passed = ($param === null)
                             ? $set->{$rule}($value, $error)
                             : $set->{$rule}($value, $param, $data, $error, $field);
                     }
@@ -355,8 +355,6 @@ class Validation implements ValidationInterface
                 } elseif (is_object($value)) {
                     $value = json_encode($value);
                 }
-
-                $param = ($param === false) ? '' : $param;
 
                 $fieldForErrors = ($rule === 'field_exists') ? $originalField : $field;
 
