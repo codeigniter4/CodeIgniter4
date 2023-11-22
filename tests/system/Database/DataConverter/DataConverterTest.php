@@ -29,7 +29,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'     => 'int',
             'remark' => 'json',
         ];
-        $converter = new DataConverter($types);
+        $converter = $this->createDataConverter($types);
 
         $this->assertInstanceOf(DataConverter::class, $converter);
     }
@@ -39,7 +39,7 @@ final class DataConverterTest extends CIUnitTestCase
      */
     public function testConvertDataFromDB(array $types, array $dbData, array $expected): void
     {
-        $converter = new DataConverter($types);
+        $converter = $this->createDataConverter($types);
 
         $data = $converter->fromDatabase($dbData);
 
@@ -51,7 +51,7 @@ final class DataConverterTest extends CIUnitTestCase
      */
     public function testConvertDataToDB(array $types, array $phpData, array $expected): void
     {
-        $converter = new DataConverter($types);
+        $converter = $this->createDataConverter($types);
 
         $data = $converter->toDatabase($phpData);
 
@@ -328,7 +328,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'   => 'int',
             'date' => 'datetime',
         ];
-        $converter = new DataConverter($types);
+        $converter = $this->createDataConverter($types);
 
         $dbData = [
             'id'   => '1',
@@ -347,7 +347,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'   => 'int',
             'date' => 'datetime',
         ];
-        $converter = new DataConverter($types);
+        $converter = $this->createDataConverter($types);
 
         $phpData = [
             'id'   => '1',
@@ -364,7 +364,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'   => 'int',
             'date' => 'timestamp',
         ];
-        $converter = new DataConverter($types);
+        $converter = $this->createDataConverter($types);
 
         $dbData = [
             'id'   => '1',
@@ -382,7 +382,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'   => 'int',
             'date' => 'timestamp',
         ];
-        $converter = new DataConverter($types);
+        $converter = $this->createDataConverter($types);
 
         $phpData = [
             'id'   => '1',
@@ -399,7 +399,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'  => 'int',
             'url' => 'uri',
         ];
-        $converter = new DataConverter($types);
+        $converter = $this->createDataConverter($types);
 
         $dbData = [
             'id'  => '1',
@@ -417,7 +417,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'  => 'int',
             'url' => 'uri',
         ];
-        $converter = new DataConverter($types);
+        $converter = $this->createDataConverter($types);
 
         $phpData = [
             'id'  => '1',
@@ -437,7 +437,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'     => 'invalid',
             'remark' => 'json-array',
         ];
-        $converter = new DataConverter($types);
+        $converter = $this->createDataConverter($types);
 
         $dbData = [
             'id'     => '1',
@@ -457,12 +457,17 @@ final class DataConverterTest extends CIUnitTestCase
             'id'     => 'int',
             'remark' => 'json-array',
         ];
-        $converter = new DataConverter($types, ['int' => DataConverter::class]);
+        $converter = $this->createDataConverter($types, ['int' => DataConverter::class]);
 
         $dbData = [
             'id'     => '1',
             'remark' => '{"foo":"bar", "baz":true}',
         ];
         $converter->fromDatabase($dbData);
+    }
+
+    private function createDataConverter(array $types, array $handlers = []): DataConverter
+    {
+        return new DataConverter($types, $handlers);
     }
 }
