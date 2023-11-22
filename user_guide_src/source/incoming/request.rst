@@ -107,6 +107,9 @@ Class Reference
 
     .. php:method:: getEnv([$index = null[, $filter = null[, $flags = null]]])
 
+        .. deprecated:: 4.4.4 This method does not work from the beginning. Use
+            :php:func:`env()` instead.
+
         :param    mixed     $index: Value name
         :param    int       $filter: The type of filter to apply. A list of filters can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.php>`__.
         :param    int|array $flags: Flags to apply. A list of flags can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.flags.php>`__.

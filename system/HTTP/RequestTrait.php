@@ -35,10 +35,9 @@ trait RequestTrait
     protected $ipAddress = '';
 
     /**
-     * Stores values we've retrieved from
-     * PHP globals.
+     * Stores values we've retrieved from PHP globals.
      *
-     * @var array
+     * @var array{get?: array, post?: array, request?: array, cookie?: array, server?: array}
      */
     protected $globals = [];
 
@@ -204,22 +203,27 @@ trait RequestTrait
      * @param array|int|null    $flags
      *
      * @return mixed
+     *
+     * @deprecated 4.4.4 This method does not work from the beginning. Use `env()`.
      */
     public function getEnv($index = null, $filter = null, $flags = null)
     {
+        // @phpstan-ignore-next-line
         return $this->fetchGlobal('env', $index, $filter, $flags);
     }
 
     /**
      * Allows manually setting the value of PHP global, like $_GET, $_POST, etc.
      *
+     * @param string $name Supergrlobal name (lowercase)
+     * @phpstan-param 'get'|'post'|'request'|'cookie'|'server' $name
      * @param mixed $value
      *
      * @return $this
      */
-    public function setGlobal(string $method, $value)
+    public function setGlobal(string $name, $value)
     {
-        $this->globals[$method] = $value;
+        $this->globals[$name] = $value;
 
         return $this;
     }
@@ -234,19 +238,18 @@ trait RequestTrait
      *
      * http://php.net/manual/en/filter.filters.sanitize.php
      *
-     * @param string            $method Input filter constant
+     * @param string $name Supergrlobal name (lowercase)
+     * @phpstan-param 'get'|'post'|'request'|'cookie'|'server' $name
      * @param array|string|null $index
      * @param int|null          $filter Filter constant
      * @param array|int|null    $flags  Options
      *
      * @return array|bool|float|int|object|string|null
      */
-    public function fetchGlobal(string $method, $index = null, ?int $filter = null, $flags = null)
+    public function fetchGlobal(string $name, $index = null, ?int $filter = null, $flags = null)
     {
-        $method = strtolower($method);
-
-        if (! isset($this->globals[$method])) {
-            $this->populateGlobals($method);
+        if (! isset($this->globals[$name])) {
+            $this->populateGlobals($name);
         }
 
         // Null filters cause null values to return.
@@ -257,9 +260,9 @@ trait RequestTrait
         if ($index === null) {
             $values = [];
 
-            foreach ($this->globals[$method] as $key => $value) {
+            foreach ($this->globals[$name] as $key => $value) {
                 $values[$key] = is_array($value)
-                    ? $this->fetchGlobal($method, $key, $filter, $flags)
+                    ? $this->fetchGlobal($name, $key, $filter, $flags)
                     : filter_var($value, $filter, $flags);
             }
 
@@ -271,7 +274,7 @@ trait RequestTrait
             $output = [];
 
             foreach ($index as $key) {
-                $output[$key] = $this->fetchGlobal($method, $key, $filter, $flags);
+                $output[$key] = $this->fetchGlobal($name, $key, $filter, $flags);
             }
 
             return $output;
@@ -279,7 +282,7 @@ trait RequestTrait
 
         // Does the index contain array notation?
         if (($count = preg_match_all('/(?:^[^\[]+)|\[[^]]*\]/', $index, $matches)) > 1) {
-            $value = $this->globals[$method];
+            $value = $this->globals[$name];
 
             for ($i = 0; $i < $count; $i++) {
                 $key = trim($matches[0][$i], '[]');
@@ -297,7 +300,7 @@ trait RequestTrait
         }
 
         if (! isset($value)) {
-            $value = $this->globals[$method][$index] ?? null;
+            $value = $this->globals[$name][$index] ?? null;
         }
 
         if (is_array($value)
@@ -326,20 +329,23 @@ trait RequestTrait
     }
 
     /**
-     * Saves a copy of the current state of one of several PHP globals
+     * Saves a copy of the current state of one of several PHP globals,
      * so we can retrieve them later.
+     *
+     * @param string $name Superglobal name (lowercase)
+     * @phpstan-param 'get'|'post'|'request'|'cookie'|'server' $name
      *
      * @return void
      */
-    protected function populateGlobals(string $method)
+    protected function populateGlobals(string $name)
     {
-        if (! isset($this->globals[$method])) {
-            $this->globals[$method] = [];
+        if (! isset($this->globals[$name])) {
+            $this->globals[$name] = [];
         }
 
         // Don't populate ENV as it might contain
         // sensitive data that we don't want to get logged.
-        switch ($method) {
+        switch ($name) {
             case 'get':
                 $this->globals['get'] = $_GET;
                 break;
