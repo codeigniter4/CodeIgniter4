@@ -37,15 +37,10 @@ class JsonCast extends BaseCast
 
         $output = ($associative ? [] : new stdClass());
 
-        if (
-            (strlen($value) > 1 && in_array($value[0], ['[', '{', '"'], true))
-            || is_numeric($value)
-        ) {
-            try {
-                $output = json_decode($value, $associative, 512, JSON_THROW_ON_ERROR);
-            } catch (JsonException $e) {
-                throw CastException::forInvalidJsonFormat($e->getCode());
-            }
+        try {
+            $output = json_decode($value, $associative, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            throw CastException::forInvalidJsonFormat($e->getCode());
         }
 
         return $output;
