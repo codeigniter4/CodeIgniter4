@@ -107,12 +107,12 @@ class DataConverter
      * Add ? at the beginning of $type  (i.e. ?string) to get `null`
      * instead of casting $value if ($value === null).
      *
-     * @param bool|float|int|string|null $value  The value to convert
-     * @param string                     $column The column name
-     * @param string                     $method Allowed to "fromDatabase" and "toDatabase"
+     * @param mixed  $value  The value to convert
+     * @param string $column The column name
+     * @param string $method Allowed to "fromDatabase" and "toDatabase"
      * @phpstan-param 'fromDatabase'|'toDatabase' $method
      *
-     * @return array|bool|float|int|object|string|null
+     * @return mixed
      */
     protected function castAs($value, string $column, string $method = 'fromDatabase')
     {
