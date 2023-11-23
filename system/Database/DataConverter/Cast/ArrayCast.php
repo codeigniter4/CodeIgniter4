@@ -16,7 +16,7 @@ namespace CodeIgniter\Database\DataConverter\Cast;
  *
  * PHP: array <--> DB column: string
  *
- * @extends BaseCast<mixed[], string, string>
+ * @extends BaseCast<mixed[], string, mixed>
  */
 class ArrayCast extends BaseCast implements CastInterface
 {

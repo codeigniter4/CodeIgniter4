@@ -18,7 +18,7 @@ use CodeIgniter\I18n\Time;
  *
  * PHP: Time <--> DB column: int
  *
- * @extends BaseCast<Time, int, int|string>
+ * @extends BaseCast<Time, int, mixed>
  */
 class TimestampCast extends BaseCast
 {

@@ -16,7 +16,7 @@ namespace CodeIgniter\Database\DataConverter\Cast;
  *
  * PHP: bool DB <--> column: int(0/1)
  *
- * @extends BaseCast<bool, int, int|string>
+ * @extends BaseCast<bool, int, mixed>
  */
 final class IntBoolCast extends BaseCast
 {

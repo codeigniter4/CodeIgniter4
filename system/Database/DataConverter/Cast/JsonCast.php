@@ -20,7 +20,7 @@ use stdClass;
  *
  * PHP: array|stdClass <--> DB column: string
  *
- * @extends BaseCast<array|stdClass, string, string>
+ * @extends BaseCast<array|stdClass, string, mixed>
  */
 class JsonCast extends BaseCast
 {

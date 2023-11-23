@@ -18,7 +18,7 @@ use CodeIgniter\HTTP\URI;
  *
  * PHP: URI <--> DB column: string
  *
- * @extends BaseCast<URI, string, string>
+ * @extends BaseCast<URI, string, mixed>
  */
 class URICast extends BaseCast
 {

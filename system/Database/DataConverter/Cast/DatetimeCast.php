@@ -12,21 +12,18 @@
 namespace CodeIgniter\Database\DataConverter\Cast;
 
 use CodeIgniter\I18n\Time;
-use Exception;
 
 /**
  * Class DatetimeCast
  *
  * PHP: Time <--> DB column: datetime
  *
- * @extends BaseCast<Time, string, string>
+ * @extends BaseCast<Time, string, mixed>
  */
 class DatetimeCast extends BaseCast
 {
     /**
      * {@inheritDoc}
-     *
-     * @throws Exception
      */
     public static function fromDatabase(mixed $value, array $params = []): Time
     {
