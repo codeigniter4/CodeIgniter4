@@ -39,7 +39,7 @@ abstract class BaseCast implements CastInterface
     {
         $message = '[' . $class . '] Invalid value type: ' . get_debug_type($value);
         if (is_scalar($value)) {
-            $message .= ', and its value: ' . $value;
+            $message .= ', and its value: ' . var_export($value, true);
         }
 
         throw new TypeError($message);
