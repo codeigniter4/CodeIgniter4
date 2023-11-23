@@ -22,12 +22,12 @@ use TypeError;
  */
 abstract class BaseCast implements CastInterface
 {
-    public static function fromDatabase(mixed $value, array $params = []): mixed
+    public static function fromDataSource(mixed $value, array $params = []): mixed
     {
         return $value;
     }
 
-    public static function toDatabase(mixed $value, array $params = []): mixed
+    public static function toDataSource(mixed $value, array $params = []): mixed
     {
         return $value;
     }

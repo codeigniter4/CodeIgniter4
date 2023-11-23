@@ -23,7 +23,7 @@ use CodeIgniter\I18n\Time;
  */
 class TimestampCast extends BaseCast
 {
-    public static function fromDatabase(mixed $value, array $params = []): Time
+    public static function fromDataSource(mixed $value, array $params = []): Time
     {
         if (! is_int($value) && ! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -32,7 +32,7 @@ class TimestampCast extends BaseCast
         return Time::createFromTimestamp((int) $value);
     }
 
-    public static function toDatabase(mixed $value, array $params = []): int
+    public static function toDataSource(mixed $value, array $params = []): int
     {
         if (! $value instanceof Time) {
             self::invalidTypeValueError($value);

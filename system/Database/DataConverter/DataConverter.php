@@ -25,7 +25,7 @@ use CodeIgniter\Database\DataConverter\Cast\URICast;
 use InvalidArgumentException;
 
 /**
- * PHP data <==> DB data converter
+ * PHP data <==> DataSource data converter
  *
  * @see \CodeIgniter\Database\DataConverter\DataConverterTest
  */
@@ -75,28 +75,28 @@ class DataConverter
     }
 
     /**
-     * Converts data from DB to PHP array with specified type values.
+     * Converts data from DataSource to PHP array with specified type values.
      */
-    public function fromDatabase(array $dbData): array
+    public function fromDataSource(array $dbData): array
     {
         $output = [];
 
         foreach ($dbData as $column => $value) {
-            $output[$column] = $this->castAs($value, $column, 'fromDatabase');
+            $output[$column] = $this->castAs($value, $column, 'fromDataSource');
         }
 
         return $output;
     }
 
     /**
-     * Converts PHP array to data for DB column types.
+     * Converts PHP array to data for DataSource column types.
      */
-    public function toDatabase(array $phpData): array
+    public function toDataSource(array $phpData): array
     {
         $output = [];
 
         foreach ($phpData as $column => $value) {
-            $output[$column] = $this->castAs($value, $column, 'toDatabase');
+            $output[$column] = $this->castAs($value, $column, 'toDataSource');
         }
 
         return $output;
@@ -109,12 +109,10 @@ class DataConverter
      *
      * @param mixed  $value  The value to convert
      * @param string $column The column name
-     * @param string $method Allowed to "fromDatabase" and "toDatabase"
-     * @phpstan-param 'fromDatabase'|'toDatabase' $method
-     *
-     * @return mixed
+     * @param string $method Allowed to "fromDataSource" and "toDataSource"
+     * @phpstan-param 'fromDataSource'|'toDataSource' $method
      */
-    protected function castAs($value, string $column, string $method = 'fromDatabase')
+    protected function castAs($value, string $column, string $method = 'fromDataSource'): mixed
     {
         // If the type is not defined, return as it is.
         if (! isset($this->types[$column])) {

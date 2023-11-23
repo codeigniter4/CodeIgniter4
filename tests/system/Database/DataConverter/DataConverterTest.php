@@ -42,7 +42,7 @@ final class DataConverterTest extends CIUnitTestCase
     {
         $converter = $this->createDataConverter($types);
 
-        $data = $converter->fromDatabase($dbData);
+        $data = $converter->fromDataSource($dbData);
 
         $this->assertSame($expected, $data);
     }
@@ -54,7 +54,7 @@ final class DataConverterTest extends CIUnitTestCase
     {
         $converter = $this->createDataConverter($types);
 
-        $data = $converter->toDatabase($phpData);
+        $data = $converter->toDataSource($phpData);
 
         $this->assertSame($expected, $data);
     }
@@ -335,7 +335,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'   => '1',
             'date' => '2023-11-18 14:18:18',
         ];
-        $data = $converter->fromDatabase($dbData);
+        $data = $converter->fromDataSource($dbData);
 
         $this->assertInstanceOf(Time::class, $data['date']);
         $expectedDate = Time::parse('2023-11-18 14:18:18');
@@ -354,7 +354,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'   => '1',
             'date' => Time::parse('2023-11-18 14:18:18'),
         ];
-        $data = $converter->toDatabase($phpData);
+        $data = $converter->toDataSource($phpData);
 
         $this->assertSame('2023-11-18 14:18:18', $data['date']);
     }
@@ -371,7 +371,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'   => '1',
             'date' => '1700285831',
         ];
-        $data = $converter->fromDatabase($dbData);
+        $data = $converter->fromDataSource($dbData);
 
         $this->assertInstanceOf(Time::class, $data['date']);
         $this->assertSame(1_700_285_831, $data['date']->getTimestamp());
@@ -389,7 +389,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'   => '1',
             'date' => Time::createFromTimestamp(1_700_285_831),
         ];
-        $data = $converter->toDatabase($phpData);
+        $data = $converter->toDataSource($phpData);
 
         $this->assertSame(1_700_285_831, $data['date']);
     }
@@ -406,7 +406,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'  => '1',
             'url' => 'http://example.com/',
         ];
-        $data = $converter->fromDatabase($dbData);
+        $data = $converter->fromDataSource($dbData);
 
         $this->assertInstanceOf(URI::class, $data['url']);
         $this->assertSame('http://example.com/', (string) $data['url']);
@@ -424,7 +424,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'  => '1',
             'url' => new URI('http://example.com/'),
         ];
-        $data = $converter->toDatabase($phpData);
+        $data = $converter->toDataSource($phpData);
 
         $this->assertSame('http://example.com/', $data['url']);
     }
@@ -444,7 +444,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'     => '1',
             'remark' => '{"foo":"bar", "baz":true}',
         ];
-        $converter->fromDatabase($dbData);
+        $converter->fromDataSource($dbData);
     }
 
     public function testInvalidValue(): void
@@ -464,7 +464,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'     => '1',
             'remark' => true,
         ];
-        $converter->fromDatabase($dbData);
+        $converter->fromDataSource($dbData);
     }
 
     public function testInvalidCastHandler(): void
@@ -484,7 +484,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'     => '1',
             'remark' => '{"foo":"bar", "baz":true}',
         ];
-        $converter->fromDatabase($dbData);
+        $converter->fromDataSource($dbData);
     }
 
     private function createDataConverter(array $types, array $handlers = []): DataConverter

@@ -19,22 +19,22 @@ namespace CodeIgniter\Database\DataConverter\Cast;
 interface CastInterface
 {
     /**
-     * Takes value from database, returns its value for PHP.
+     * Takes value from DataSource, returns its value for PHP.
      *
      * @param TDbColumn    $value  Data from database driver
      * @param list<string> $params Additional param
      *
      * @return TPhpValue
      */
-    public static function fromDatabase(mixed $value, array $params = []): mixed;
+    public static function fromDataSource(mixed $value, array $params = []): mixed;
 
     /**
-     * Takes the PHP value, returns its value for database.
+     * Takes the PHP value, returns its value for DataSource.
      *
      * @param TPhpValue    $value  PHP data
      * @param list<string> $params Additional param
      *
      * @return TToDb Data to pass to database driver
      */
-    public static function toDatabase(mixed $value, array $params = []): mixed;
+    public static function toDataSource(mixed $value, array $params = []): mixed;
 }

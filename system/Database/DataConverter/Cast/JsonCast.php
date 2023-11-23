@@ -25,7 +25,7 @@ use stdClass;
  */
 class JsonCast extends BaseCast
 {
-    public static function fromDatabase(mixed $value, array $params = []): array|stdClass
+    public static function fromDataSource(mixed $value, array $params = []): array|stdClass
     {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -44,7 +44,7 @@ class JsonCast extends BaseCast
         return $output;
     }
 
-    public static function toDatabase(mixed $value, array $params = []): string
+    public static function toDataSource(mixed $value, array $params = []): string
     {
         try {
             $output = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
