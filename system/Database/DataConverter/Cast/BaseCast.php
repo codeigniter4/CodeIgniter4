@@ -22,11 +22,17 @@ use TypeError;
  */
 abstract class BaseCast implements CastInterface
 {
+    /**
+     * {@inheritDoc}
+     */
     public static function fromDatabase(mixed $value, array $params = []): mixed
     {
         return $value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public static function toDatabase(mixed $value, array $params = []): mixed
     {
         return $value;
