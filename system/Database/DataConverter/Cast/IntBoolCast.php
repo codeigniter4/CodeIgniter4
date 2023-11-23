@@ -26,7 +26,7 @@ final class IntBoolCast extends BaseCast
     public static function fromDatabase(mixed $value, array $params = []): bool
     {
         if (! is_int($value) && ! is_string($value)) {
-            self::invalidTypeValueError($value);
+            self::invalidTypeValueError($value, self::class);
         }
 
         return (bool) $value;
@@ -38,7 +38,7 @@ final class IntBoolCast extends BaseCast
     public static function toDatabase(mixed $value, array $params = []): int
     {
         if (! is_bool($value)) {
-            self::invalidTypeValueError($value);
+            self::invalidTypeValueError($value, self::class);
         }
 
         return (int) $value;

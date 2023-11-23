@@ -157,7 +157,7 @@ class DataConverter
         $handlers = array_merge($this->defaultCastHandlers, $this->castHandlers);
 
         if (! isset($handlers[$type])) {
-            throw new InvalidArgumentException('No such handler. Invalid type: ' . $type);
+            throw new InvalidArgumentException('No such handler for "' . $column . '". Invalid type: ' . $type);
         }
 
         $handler = $handlers[$type];

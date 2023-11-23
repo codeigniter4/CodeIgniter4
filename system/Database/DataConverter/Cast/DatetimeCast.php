@@ -31,7 +31,7 @@ class DatetimeCast extends BaseCast
     public static function fromDatabase(mixed $value, array $params = []): Time
     {
         if (! is_string($value)) {
-            self::invalidTypeValueError($value);
+            self::invalidTypeValueError($value, self::class);
         }
 
         return Time::parse($value);
@@ -43,7 +43,7 @@ class DatetimeCast extends BaseCast
     public static function toDatabase(mixed $value, array $params = []): string
     {
         if (! $value instanceof Time) {
-            self::invalidTypeValueError($value);
+            self::invalidTypeValueError($value, self::class);
         }
 
         return (string) $value;

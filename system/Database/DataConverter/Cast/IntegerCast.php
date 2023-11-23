@@ -26,7 +26,7 @@ class IntegerCast extends BaseCast
     public static function fromDatabase(mixed $value, array $params = []): int
     {
         if (! is_string($value) && ! is_int($value)) {
-            self::invalidTypeValueError($value);
+            self::invalidTypeValueError($value, self::class);
         }
 
         return (int) $value;

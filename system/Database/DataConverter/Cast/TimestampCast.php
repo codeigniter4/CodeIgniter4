@@ -28,7 +28,7 @@ class TimestampCast extends BaseCast
     public static function fromDatabase(mixed $value, array $params = []): Time
     {
         if (! is_int($value) && ! is_string($value)) {
-            self::invalidTypeValueError($value);
+            self::invalidTypeValueError($value, self::class);
         }
 
         return Time::createFromTimestamp((int) $value);
@@ -40,7 +40,7 @@ class TimestampCast extends BaseCast
     public static function toDatabase(mixed $value, array $params = []): int
     {
         if (! $value instanceof Time) {
-            self::invalidTypeValueError($value);
+            self::invalidTypeValueError($value, self::class);
         }
 
         return $value->getTimestamp();

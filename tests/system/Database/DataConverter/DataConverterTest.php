@@ -15,6 +15,7 @@ use CodeIgniter\HTTP\URI;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use InvalidArgumentException;
+use TypeError;
 
 /**
  * @internal
@@ -431,7 +432,7 @@ final class DataConverterTest extends CIUnitTestCase
     public function testInvalidType(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('No such handler. Invalid type: invalid');
+        $this->expectExceptionMessage('No such handler for "id". Invalid type: invalid');
 
         $types = [
             'id'     => 'invalid',
@@ -442,6 +443,26 @@ final class DataConverterTest extends CIUnitTestCase
         $dbData = [
             'id'     => '1',
             'remark' => '{"foo":"bar", "baz":true}',
+        ];
+        $converter->fromDatabase($dbData);
+    }
+
+    public function testInvalidValue(): void
+    {
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage(
+            '[CodeIgniter\Database\DataConverter\Cast\JsonCast] Invalid value type: bool, and its value: 1'
+        );
+
+        $types = [
+            'id'     => 'int',
+            'remark' => 'json-array',
+        ];
+        $converter = $this->createDataConverter($types);
+
+        $dbData = [
+            'id'     => '1',
+            'remark' => true,
         ];
         $converter->fromDatabase($dbData);
     }
