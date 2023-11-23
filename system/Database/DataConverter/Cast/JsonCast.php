@@ -30,7 +30,7 @@ class JsonCast extends BaseCast
     public static function fromDatabase(mixed $value, array $params = []): array|stdClass
     {
         if (! is_string($value)) {
-            self::invalidTypeValueError($value, self::class);
+            self::invalidTypeValueError($value);
         }
 
         $associative = in_array('array', $params, true);

@@ -28,7 +28,7 @@ class URICast extends BaseCast
     public static function fromDatabase(mixed $value, array $params = []): URI
     {
         if (! is_string($value)) {
-            self::invalidTypeValueError($value, self::class);
+            self::invalidTypeValueError($value);
         }
 
         return new URI($value);
@@ -40,7 +40,7 @@ class URICast extends BaseCast
     public static function toDatabase(mixed $value, array $params = []): string
     {
         if (! $value instanceof URI) {
-            self::invalidTypeValueError($value, self::class);
+            self::invalidTypeValueError($value);
         }
 
         return (string) $value;

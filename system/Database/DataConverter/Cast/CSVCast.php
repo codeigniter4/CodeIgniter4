@@ -26,7 +26,7 @@ class CSVCast extends BaseCast
     public static function fromDatabase(mixed $value, array $params = []): array
     {
         if (! is_string($value)) {
-            self::invalidTypeValueError($value, self::class);
+            self::invalidTypeValueError($value);
         }
 
         return explode(',', $value);
@@ -38,7 +38,7 @@ class CSVCast extends BaseCast
     public static function toDatabase(mixed $value, array $params = []): string
     {
         if (! is_array($value)) {
-            self::invalidTypeValueError($value, self::class);
+            self::invalidTypeValueError($value);
         }
 
         return implode(',', $value);

@@ -23,7 +23,7 @@ class ArrayCast extends BaseCast implements CastInterface
     public static function fromDatabase(mixed $value, array $params = []): array
     {
         if (! is_string($value)) {
-            self::invalidTypeValueError($value, self::class);
+            self::invalidTypeValueError($value);
         }
 
         if ((strpos($value, 'a:') === 0 || strpos($value, 's:') === 0)) {
