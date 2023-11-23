@@ -21,9 +21,6 @@ namespace CodeIgniter\Database\DataConverter\Cast;
  */
 class BooleanCast extends BaseCast
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function fromDatabase(mixed $value, array $params = []): bool
     {
         // For PostgreSQL

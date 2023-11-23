@@ -21,9 +21,6 @@ namespace CodeIgniter\Database\DataConverter\Cast;
  */
 class CSVCast extends BaseCast
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function fromDatabase(mixed $value, array $params = []): array
     {
         if (! is_string($value)) {
@@ -33,9 +30,6 @@ class CSVCast extends BaseCast
         return explode(',', $value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function toDatabase(mixed $value, array $params = []): string
     {
         if (! is_array($value)) {

@@ -21,9 +21,6 @@ namespace CodeIgniter\Database\DataConverter\Cast;
  */
 class IntegerCast extends BaseCast
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function fromDatabase(mixed $value, array $params = []): int
     {
         if (! is_string($value) && ! is_int($value)) {

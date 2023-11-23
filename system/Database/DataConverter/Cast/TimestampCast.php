@@ -23,9 +23,6 @@ use CodeIgniter\I18n\Time;
  */
 class TimestampCast extends BaseCast
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function fromDatabase(mixed $value, array $params = []): Time
     {
         if (! is_int($value) && ! is_string($value)) {
@@ -35,9 +32,6 @@ class TimestampCast extends BaseCast
         return Time::createFromTimestamp((int) $value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function toDatabase(mixed $value, array $params = []): int
     {
         if (! $value instanceof Time) {

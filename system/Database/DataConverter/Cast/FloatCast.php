@@ -21,9 +21,6 @@ namespace CodeIgniter\Database\DataConverter\Cast;
  */
 class FloatCast extends BaseCast
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function fromDatabase(mixed $value, array $params = []): float
     {
         if (! is_float($value) && ! is_string($value)) {

@@ -25,9 +25,6 @@ use stdClass;
  */
 class JsonCast extends BaseCast
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function fromDatabase(mixed $value, array $params = []): array|stdClass
     {
         if (! is_string($value)) {
@@ -47,9 +44,6 @@ class JsonCast extends BaseCast
         return $output;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function toDatabase(mixed $value, array $params = []): string
     {
         try {

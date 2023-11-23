@@ -23,9 +23,6 @@ use CodeIgniter\HTTP\URI;
  */
 class URICast extends BaseCast
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function fromDatabase(mixed $value, array $params = []): URI
     {
         if (! is_string($value)) {
@@ -35,9 +32,6 @@ class URICast extends BaseCast
         return new URI($value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function toDatabase(mixed $value, array $params = []): string
     {
         if (! $value instanceof URI) {

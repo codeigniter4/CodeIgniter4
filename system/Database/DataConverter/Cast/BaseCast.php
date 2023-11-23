@@ -22,25 +22,16 @@ use TypeError;
  */
 abstract class BaseCast implements CastInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function fromDatabase(mixed $value, array $params = []): mixed
     {
         return $value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function toDatabase(mixed $value, array $params = []): mixed
     {
         return $value;
     }
 
-    /**
-     * @throws TypeError
-     */
     protected static function invalidTypeValueError(mixed $value): never
     {
         $message = '[' . static::class . '] Invalid value type: ' . get_debug_type($value);
