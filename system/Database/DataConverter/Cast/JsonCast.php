@@ -18,7 +18,8 @@ use stdClass;
 /**
  * Class JsonCast
  *
- * PHP: array|stdClass <--> DB column: string
+ * (PHP) [array|stdClass --> string] --> (DB driver) --> (DB column) string
+ *       [               <-- string] <-- (DB driver) <-- (DB column) string
  *
  * @extends BaseCast<array|stdClass, string, mixed>
  */

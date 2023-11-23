@@ -14,7 +14,8 @@ namespace CodeIgniter\Database\DataConverter\Cast;
 /**
  * Class IntegerCast
  *
- * PHP: int <--> DB column: int
+ * (PHP) [int --> int       ] --> (DB driver) --> (DB column) int
+ *       [    <-- int|string] <-- (DB driver) <-- (DB column) int
  *
  * @extends BaseCast<int, int, mixed>
  */

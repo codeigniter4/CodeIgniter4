@@ -16,7 +16,8 @@ use CodeIgniter\I18n\Time;
 /**
  * Class DatetimeCast
  *
- * PHP: Time <--> DB column: datetime
+ * (PHP) [Time --> string] --> (DB driver) --> (DB column) datetime
+ *       [     <-- string] <-- (DB driver) <-- (DB column) datetime
  *
  * @extends BaseCast<Time, string, mixed>
  */

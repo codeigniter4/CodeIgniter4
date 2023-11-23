@@ -16,7 +16,8 @@ use CodeIgniter\HTTP\URI;
 /**
  * Class URICast
  *
- * PHP: URI <--> DB column: string
+ * (PHP) [URI --> string] --> (DB driver) --> (DB column) string
+ *       [    <-- string] <-- (DB driver) <-- (DB column) string
  *
  * @extends BaseCast<URI, string, mixed>
  */
