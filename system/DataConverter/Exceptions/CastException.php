@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\DataConverter\Exceptions;
+namespace CodeIgniter\DataConverter\Exceptions;
 
 use CodeIgniter\Entity\Exceptions\CastException as EntityCastException;
 

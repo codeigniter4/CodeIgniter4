@@ -35,6 +35,10 @@ parameters:
       collectors:
         - type: className
           regex: ^Codeigniter\\Database\\.*
+    - name: DataConverter
+      collectors:
+        - type: className
+          regex: ^Codeigniter\\DataConverter\\.*
     - name: Email
       collectors:
         - type: className
@@ -166,6 +170,9 @@ parameters:
       - Entity
       - Events
       - I18n
+    DataConverter:
+      - I18n
+      - URI
     Email:
       - I18n
       - Events
@@ -228,8 +235,8 @@ parameters:
       - CodeIgniter\HTTP\Header
       - CodeIgniter\HTTP\IncomingRequest
       - CodeIgniter\HTTP\ResponseInterface
-    CodeIgniter\Database\DataConverter\Cast\URICast:
-      - CodeIgniter\HTTP\URI
+    CodeIgniter\DataConverter\Exceptions\CastException:
+      - CodeIgniter\Entity\Exceptions\CastException
     CodeIgniter\Entity\Cast\URICast:
       - CodeIgniter\HTTP\URI
     CodeIgniter\Log\Handlers\ChromeLoggerHandler:

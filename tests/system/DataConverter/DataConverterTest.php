@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\DataConverter;
+namespace CodeIgniter\DataConverter;
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\I18n\Time;
@@ -451,7 +451,7 @@ final class DataConverterTest extends CIUnitTestCase
     {
         $this->expectException(TypeError::class);
         $this->expectExceptionMessage(
-            '[CodeIgniter\Database\DataConverter\Cast\JsonCast] Invalid value type: bool, and its value: true'
+            '[CodeIgniter\DataConverter\Cast\JsonCast] Invalid value type: bool, and its value: true'
         );
 
         $types = [
@@ -471,7 +471,7 @@ final class DataConverterTest extends CIUnitTestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Invalid class type. It must implement CastInterface. class: CodeIgniter\Database\DataConverter\DataConverter'
+            'Invalid class type. It must implement CastInterface. class: CodeIgniter\DataConverter\DataConverter'
         );
 
         $types = [

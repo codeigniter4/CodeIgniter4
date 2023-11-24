@@ -9,25 +9,25 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\DataConverter;
+namespace CodeIgniter\DataConverter;
 
-use CodeIgniter\Database\DataConverter\Cast\ArrayCast;
-use CodeIgniter\Database\DataConverter\Cast\BooleanCast;
-use CodeIgniter\Database\DataConverter\Cast\CastInterface;
-use CodeIgniter\Database\DataConverter\Cast\CSVCast;
-use CodeIgniter\Database\DataConverter\Cast\DatetimeCast;
-use CodeIgniter\Database\DataConverter\Cast\FloatCast;
-use CodeIgniter\Database\DataConverter\Cast\IntBoolCast;
-use CodeIgniter\Database\DataConverter\Cast\IntegerCast;
-use CodeIgniter\Database\DataConverter\Cast\JsonCast;
-use CodeIgniter\Database\DataConverter\Cast\TimestampCast;
-use CodeIgniter\Database\DataConverter\Cast\URICast;
+use CodeIgniter\DataConverter\Cast\ArrayCast;
+use CodeIgniter\DataConverter\Cast\BooleanCast;
+use CodeIgniter\DataConverter\Cast\CastInterface;
+use CodeIgniter\DataConverter\Cast\CSVCast;
+use CodeIgniter\DataConverter\Cast\DatetimeCast;
+use CodeIgniter\DataConverter\Cast\FloatCast;
+use CodeIgniter\DataConverter\Cast\IntBoolCast;
+use CodeIgniter\DataConverter\Cast\IntegerCast;
+use CodeIgniter\DataConverter\Cast\JsonCast;
+use CodeIgniter\DataConverter\Cast\TimestampCast;
+use CodeIgniter\DataConverter\Cast\URICast;
 use InvalidArgumentException;
 
 /**
  * PHP data <==> DataSource data converter
  *
- * @see \CodeIgniter\Database\DataConverter\DataConverterTest
+ * @see \CodeIgniter\DataConverter\DataConverterTest
  */
 class DataConverter
 {
