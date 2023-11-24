@@ -76,27 +76,31 @@ class DataConverter
 
     /**
      * Converts data from DataSource to PHP array with specified type values.
+     *
+     * @param array<string, mixed> $data DataSource data
      */
-    public function fromDataSource(array $dbData): array
+    public function fromDataSource(array $data): array
     {
         $output = [];
 
-        foreach ($dbData as $column => $value) {
-            $output[$column] = $this->castAs($value, $column, 'fromDataSource');
+        foreach ($data as $field => $value) {
+            $output[$field] = $this->castAs($value, $field, 'fromDataSource');
         }
 
         return $output;
     }
 
     /**
-     * Converts PHP array to data for DataSource column types.
+     * Converts PHP array to data for DataSource field types.
+     *
+     * @param array<string, mixed> $phpData PHP data
      */
     public function toDataSource(array $phpData): array
     {
         $output = [];
 
-        foreach ($phpData as $column => $value) {
-            $output[$column] = $this->castAs($value, $column, 'toDataSource');
+        foreach ($phpData as $field => $value) {
+            $output[$field] = $this->castAs($value, $field, 'toDataSource');
         }
 
         return $output;
@@ -108,18 +112,18 @@ class DataConverter
      * instead of casting $value if ($value === null).
      *
      * @param mixed  $value  The value to convert
-     * @param string $column The column name
+     * @param string $field  The field name
      * @param string $method Allowed to "fromDataSource" and "toDataSource"
      * @phpstan-param 'fromDataSource'|'toDataSource' $method
      */
-    protected function castAs($value, string $column, string $method = 'fromDataSource'): mixed
+    protected function castAs($value, string $field, string $method = 'fromDataSource'): mixed
     {
         // If the type is not defined, return as it is.
-        if (! isset($this->types[$column])) {
+        if (! isset($this->types[$field])) {
             return $value;
         }
 
-        $type = $this->types[$column];
+        $type = $this->types[$field];
 
         $isNullable = false;
 
@@ -155,7 +159,7 @@ class DataConverter
         $handlers = array_merge($this->defaultCastHandlers, $this->castHandlers);
 
         if (! isset($handlers[$type])) {
-            throw new InvalidArgumentException('No such handler for "' . $column . '". Invalid type: ' . $type);
+            throw new InvalidArgumentException('No such handler for "' . $field . '". Invalid type: ' . $type);
         }
 
         $handler = $handlers[$type];
