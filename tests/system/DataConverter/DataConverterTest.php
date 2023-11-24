@@ -506,6 +506,24 @@ final class DataConverterTest extends CIUnitTestCase
         $converter->fromDataSource($dbData);
     }
 
+    public function testNotNullable(): void
+    {
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage('Field "remark" is not nullable, but null was passed.');
+
+        $types = [
+            'id'     => 'int',
+            'remark' => 'json-array',
+        ];
+        $converter = $this->createDataConverter($types);
+
+        $dbData = [
+            'id'     => 1,
+            'remark' => null,
+        ];
+        $converter->toDataSource($dbData);
+    }
+
     private function createDataConverter(array $types, array $handlers = []): DataConverter
     {
         return new DataConverter($types, $handlers);

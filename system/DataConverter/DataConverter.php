@@ -23,6 +23,7 @@ use CodeIgniter\DataConverter\Cast\JsonCast;
 use CodeIgniter\DataConverter\Cast\TimestampCast;
 use CodeIgniter\DataConverter\Cast\URICast;
 use InvalidArgumentException;
+use TypeError;
 
 /**
  * PHP data <==> DataSource data converter
@@ -127,6 +128,7 @@ class DataConverter
 
         $isNullable = false;
 
+        // Is nullable?
         if (str_starts_with($type, '?')) {
             $isNullable = true;
 
@@ -135,6 +137,10 @@ class DataConverter
             }
 
             $type = substr($type, 1);
+        } elseif ($value === null) {
+            $message = 'Field "' . $field . '" is not nullable, but null was passed.';
+
+            throw new TypeError($message);
         }
 
         // In order not to create a separate handler for the
