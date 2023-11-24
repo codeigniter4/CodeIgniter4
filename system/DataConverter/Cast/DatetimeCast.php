@@ -29,7 +29,12 @@ class DatetimeCast extends BaseCast
             self::invalidTypeValueError($value);
         }
 
-        return Time::parse($value);
+        /**
+         * @see https://www.php.net/manual/en/datetimeimmutable.createfromformat.php#datetimeimmutable.createfromformat.parameters
+         */
+        $format = $params[0] ?? 'Y-m-d H:i:s';
+
+        return Time::createFromFormat($format, $value);
     }
 
     public static function toDataSource(mixed $value, array $params = []): string
