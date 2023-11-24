@@ -19,6 +19,8 @@ use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\DataConverter\DataConverter;
+use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
@@ -99,13 +101,23 @@ abstract class BaseModel
      * Used by asArray() and asObject() to provide
      * temporary overrides of model default.
      *
-     * @var string
+     * @var 'array'|'object'|class-string
      */
     protected $tempReturnType;
 
     /**
      * Whether we should limit fields in inserts
      * and updates to those available in $allowedFields or not.
+     * @var array<string, string> [column => type]
+     */
+    protected $casts = [];
+
+    protected ?DataConverter $converter = null;
+
+    /**
+     * If this model should use "softDeletes" and
+     * simply set a date when rows are deleted, or
+     * do hard deletes.
      *
      * @var bool
      */
@@ -346,6 +358,17 @@ abstract class BaseModel
         $this->validation = $validation;
 
         $this->initialize();
+        $this->createDataConverter();
+    }
+
+    /**
+     * Creates DataConverter instance.
+     */
+    protected function createDataConverter(): void
+    {
+        if ($this->casts !== []) {
+            $this->converter = new DataConverter($this->casts);
+        }
     }
 
     /**
@@ -1684,7 +1707,7 @@ abstract class BaseModel
      * class vars with the same name as the collection columns,
      * or at least allows them to be created.
      *
-     * @param string $class Class Name
+     * @param 'object'|class-string $class Class Name
      *
      * @return $this
      */
@@ -1882,5 +1905,52 @@ abstract class BaseModel
         $this->allowEmptyInserts = $value;
 
         return $this;
+    }
+
+    /**
+     * Takes database data array and creates a return type object.
+     *
+     * @param class-string         $classname
+     * @param array<string, mixed> $row       Raw data from database
+     */
+    protected function reconstructObject(string $classname, array $row): object
+    {
+        $phpData = $this->converter->fromDataSource($row);
+
+        // "reconstruct" is a reserved method name.
+        if (method_exists($classname, 'reconstruct')) {
+            return $classname::reconstruct($phpData);
+        }
+
+        $classObj = new $classname();
+
+        $classSet = Closure::bind(function ($key, $value) {
+            $this->{$key} = $value;
+        }, $classObj, $classname);
+
+        foreach ($phpData as $key => $value) {
+            $classSet($key, $value);
+        }
+
+        return $classObj;
+    }
+
+    /**
+     * Converts database data array to return type value.
+     *
+     * @param array<string, mixed>          $row        Raw data from database
+     * @param 'array'|'object'|class-string $returnType
+     */
+    protected function convertToReturnType(array $row, string $returnType): array|object
+    {
+        if ($returnType === 'array') {
+            return $this->converter->fromDataSource($row);
+        }
+
+        if ($returnType === 'object') {
+            return (object) $this->converter->fromDataSource($row);
+        }
+
+        return $this->reconstructObject($returnType, $row);
     }
 }

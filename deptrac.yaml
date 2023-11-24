@@ -203,6 +203,7 @@ parameters:
       - I18n
     Model:
       - Database
+      - DataConverter
       - Entity
       - I18n
       - Pager

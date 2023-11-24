@@ -186,6 +186,11 @@ class Model extends BaseModel
     {
         $builder = $this->builder();
 
+        if ($this->casts !== []) {
+            $returnType = $this->tempReturnType;
+            $this->asArray();
+        }
+
         if ($this->tempUseSoftDeletes) {
             $builder->where($this->table . '.' . $this->deletedField, null);
         }
@@ -202,6 +207,12 @@ class Model extends BaseModel
             $row = $builder->get()->getResult($this->tempReturnType);
         }
 
+        if ($this->casts !== []) {
+            $row = $this->convertToReturnType($row, $returnType);
+
+            $this->tempReturnType = $returnType;
+        }
+
         return $row;
     }
 
@@ -216,7 +227,15 @@ class Model extends BaseModel
      */
     protected function doFindColumn(string $columnName)
     {
-        return $this->select($columnName)->asArray()->find();
+        $results = $this->select($columnName)->asArray()->find();
+
+        if ($this->casts !== []) {
+            foreach ($results as $i => $row) {
+                $results[$i] = $this->converter->fromDataSource($row);
+            }
+        }
+
+        return $results;
     }
 
     /**
@@ -238,13 +257,28 @@ class Model extends BaseModel
 
         $builder = $this->builder();
 
+        if ($this->casts !== []) {
+            $returnType = $this->tempReturnType;
+            $this->asArray();
+        }
+
         if ($this->tempUseSoftDeletes) {
             $builder->where($this->table . '.' . $this->deletedField, null);
         }
 
-        return $builder->limit($limit, $offset)
+        $results = $builder->limit($limit, $offset)
             ->get()
             ->getResult($this->tempReturnType);
+
+        if ($this->casts !== []) {
+            foreach ($results as $i => $row) {
+                $results[$i] = $this->convertToReturnType($row, $returnType);
+            }
+
+            $this->tempReturnType = $returnType;
+        }
+
+        return $results;
     }
 
     /**
@@ -259,6 +293,11 @@ class Model extends BaseModel
     {
         $builder = $this->builder();
 
+        if ($this->casts !== []) {
+            $returnType = $this->tempReturnType;
+            $this->asArray();
+        }
+
         if ($this->tempUseSoftDeletes) {
             $builder->where($this->table . '.' . $this->deletedField, null);
         } elseif ($this->useSoftDeletes && ($builder->QBGroupBy === []) && $this->primaryKey) {
@@ -271,7 +310,15 @@ class Model extends BaseModel
             $builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
         }
 
-        return $builder->limit(1, 0)->get()->getFirstRow($this->tempReturnType);
+        $row = $builder->limit(1, 0)->get()->getFirstRow($this->tempReturnType);
+
+        if ($this->casts !== []) {
+            $row = $this->convertToReturnType($row, $returnType);
+
+            $this->tempReturnType = $returnType;
+        }
+
+        return $row;
     }
 
     /**
