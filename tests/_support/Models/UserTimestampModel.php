@@ -20,7 +20,6 @@ class UserTimestampModel extends Model
         'name',
         'email',
         'country',
-        'deleted_at',
     ];
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
