@@ -267,6 +267,23 @@ component name:
 
 .. note:: All component Factories are reset by default between each test. Modify your test case's ``$setUpMethods`` if you need instances to persist.
 
+Testing and Time
+================
+
+Testing time-dependent code can be challenging. However, when using the
+:doc:`Time <../libraries/time>` class, the current time can be fixed or changed
+at will during testing.
+
+Below is a sample test code that fixes the current time:
+
+.. literalinclude:: overview/021.php
+
+You can fix the current time with the ``Time::setTestNow()`` method.
+Optionally, you can specify a locale as the second parameter.
+
+Don't forget to reset the current time after the test with calling it without
+parameters.
+
 .. _testing-cli-output:
 
 Testing CLI Output
