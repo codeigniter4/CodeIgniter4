@@ -150,8 +150,8 @@ class FileHandler extends BaseHandler
      */
     public function increment(string $key, int $offset = 1)
     {
-        $key = static::validateKey($key, $this->prefix);
-        $tmp = $this->getItem($key);
+        $prefixedKey = static::validateKey($key, $this->prefix);
+        $tmp         = $this->getItem($prefixedKey);
 
         if ($tmp === false) {
             $tmp = ['data' => 0, 'ttl' => 60];
