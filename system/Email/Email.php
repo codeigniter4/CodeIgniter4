@@ -731,7 +731,7 @@ class Email
     }
 
     /**
-     * @param string $email
+     * @param array|string $email
      *
      * @return array
      */

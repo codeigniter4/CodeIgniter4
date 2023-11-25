@@ -254,14 +254,16 @@ abstract class BaseResult implements ResultInterface
      *
      * If row doesn't exist, returns null.
      *
-     * @param int    $n    The index of the results to return
-     * @param string $type The type of result object. 'array', 'object' or class name.
+     * @param int|string $n    The index of the results to return, or column name.
+     * @param string     $type The type of result object. 'array', 'object' or class name.
+     * @phpstan-param class-string|'array'|'object' $type
      *
      * @return array|object|stdClass|null
      * @phpstan-return ($type is 'object' ? stdClass|null : ($type is 'array' ? array|null : object|null))
      */
     public function getRow($n = 0, string $type = 'object')
     {
+        // $n is a column name.
         if (! is_numeric($n)) {
             // We cache the row data for subsequent uses
             if (! is_array($this->rowData)) {
