@@ -163,6 +163,10 @@ final class TimestampModelTest extends LiveModelTestCase
         $this->assertSame('2023-11-25 12:00:00', (string) $user->updated_at);
     }
 
+    /**
+     * We do not recommend to add timestamp fields to $allowedFields.
+     * If you want to add old data to these fields, use Query Builder.
+     */
     public function testAllowDatesInsertArrayWithoutDatesSetsTimestamp(): void
     {
         Time::setTestNow('2023-11-25 12:00:00');
@@ -182,6 +186,10 @@ final class TimestampModelTest extends LiveModelTestCase
         $this->assertSame('2023-11-25 12:00:00', $user['updated_at']);
     }
 
+    /**
+     * We do not recommend to add timestamp fields to $allowedFields.
+     * If you want to add old data to these fields, use Query Builder.
+     */
     public function testAllowDatesInsertArrayWithDatesSetsTimestamp(): void
     {
         Time::setTestNow('2023-11-25 12:00:00');
@@ -201,6 +209,10 @@ final class TimestampModelTest extends LiveModelTestCase
         $this->assertSame('2000-01-01 12:00:00', $user['updated_at']);
     }
 
+    /**
+     * We do not recommend to add timestamp fields to $allowedFields.
+     * If you want to add old data to these fields, use Query Builder.
+     */
     public function testAllowDatesUpdateArrayUpdatesUpdatedAt(): void
     {
         Time::setTestNow('2023-11-25 12:00:00');
@@ -225,6 +237,10 @@ final class TimestampModelTest extends LiveModelTestCase
         $this->assertSame('2000-01-01 12:00:00', $user['updated_at']);
     }
 
+    /**
+     * We do not recommend to add timestamp fields to $allowedFields.
+     * If you want to add old data to these fields, use Query Builder.
+     */
     public function testAllowDatesUpdateEntityUpdatesUpdatedAt(): void
     {
         Time::setTestNow('2023-11-25 12:00:00');
