@@ -52,6 +52,8 @@ the controller that should be used:
 
 .. literalinclude:: restful/003.php
 
+See also :ref:`controllers-namespace`.
+
 Change the Placeholder Used
 ===========================
 
@@ -121,6 +123,8 @@ You can specify the controller that should be used by passing in the ``controlle
 the controller that should be used:
 
 .. literalinclude:: restful/011.php
+
+See also :ref:`controllers-namespace`.
 
 Change the Placeholder Used
 ===========================
