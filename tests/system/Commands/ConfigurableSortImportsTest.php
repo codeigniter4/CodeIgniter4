@@ -12,36 +12,23 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ConfigurableSortImportsTest extends CIUnitTestCase
 {
-    protected $streamFilter;
+    use StreamFilterTrait;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-    }
-
-    protected function tearDown(): void
-    {
-        stream_filter_remove($this->streamFilter);
-    }
-
-    public function testPublishLanguageWithoutOptions()
+    public function testPublishLanguageWithoutOptions(): void
     {
         command('publish:language');
 
         $file = APPPATH . 'Language/en/Foobar.php';
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
         $this->assertNotSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
         if (is_file($file)) {
@@ -49,12 +36,12 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         }
     }
 
-    public function testEnabledSortImportsWillDisruptLanguageFilePublish()
+    public function testEnabledSortImportsWillDisruptLanguageFilePublish(): void
     {
         command('publish:language --lang es');
 
         $file = APPPATH . 'Language/es/Foobar.php';
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
         $this->assertNotSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
         if (is_file($file)) {
@@ -66,12 +53,12 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         }
     }
 
-    public function testDisabledSortImportsWillNotAffectLanguageFilesPublish()
+    public function testDisabledSortImportsWillNotAffectLanguageFilesPublish(): void
     {
         command('publish:language --lang ar --sort off');
 
         $file = APPPATH . 'Language/ar/Foobar.php';
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
         $this->assertSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
         if (is_file($file)) {

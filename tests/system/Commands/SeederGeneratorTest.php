@@ -12,45 +12,39 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class SeederGeneratorTest extends CIUnitTestCase
 {
-    protected $streamFilter;
-
-    protected function setUp(): void
-    {
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-    }
+    use StreamFilterTrait;
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->streamFilter);
+        parent::tearDown();
 
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
+        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
-        if (file_exists($file)) {
+        if (is_file($file)) {
             unlink($file);
         }
     }
 
-    public function testGenerateSeeder()
+    public function testGenerateSeeder(): void
     {
         command('make:seeder cars');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Database/Seeds/Cars.php');
     }
 
-    public function testGenerateSeederWithOptionSuffix()
+    public function testGenerateSeederWithOptionSuffix(): void
     {
         command('make:seeder cars -suffix');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Database/Seeds/CarsSeeder.php');
     }
 }

@@ -8,19 +8,22 @@ To get around this problem, the most efficient solution (so far) is to manually 
 
 Here's how to force the ``X-Requested-With`` header to be sent in the Fetch API and other JavaScript libraries.
 
+.. contents::
+    :local:
+    :depth: 2
+
 Fetch API
 =========
 
 .. code-block:: javascript
 
     fetch(url, {
-        method: "get",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest"
         }
     });
-
 
 jQuery
 ======
@@ -34,7 +37,6 @@ For libraries like jQuery for example, it is not necessary to make explicit the 
         headers: {'X-Requested-With': 'XMLHttpRequest'}
     });
 
-
 VueJS
 =====
 
@@ -44,10 +46,20 @@ In VueJS you just need to add the following code to the ``created`` function, as
 
     axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-
 React
 =====
 
 .. code-block:: javascript
 
     axios.get("your url", {headers: {'Content-Type': 'application/json'}})
+
+htmx
+====
+
+You can use `ajax-header <https://htmx.org/extensions/ajax-header/>`_ extension.
+
+.. code-block:: html
+
+    <body hx-ext="ajax-header">
+    ...
+    </body>

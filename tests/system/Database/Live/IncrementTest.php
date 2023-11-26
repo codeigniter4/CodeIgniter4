@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @group DatabaseLive
@@ -24,9 +25,9 @@ final class IncrementTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed    = CITestSeeder::class;
 
-    public function testIncrement()
+    public function testIncrement(): void
     {
         $this->hasInDatabase('job', ['name' => 'incremental', 'description' => '6']);
 
@@ -37,7 +38,7 @@ final class IncrementTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '7']);
     }
 
-    public function testIncrementWithValue()
+    public function testIncrementWithValue(): void
     {
         $this->hasInDatabase('job', ['name' => 'incremental', 'description' => '6']);
 
@@ -48,7 +49,21 @@ final class IncrementTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '8']);
     }
 
-    public function testDecrement()
+    public function testResetStateAfterIncrement(): void
+    {
+        $this->hasInDatabase('job', ['name' => 'account1', 'description' => '10']);
+        $this->hasInDatabase('job', ['name' => 'account2', 'description' => '10']);
+
+        $builder = $this->db->table('job');
+
+        $builder->where('name', 'account1')->increment('description');
+        $builder->where('name', 'account2')->increment('description');
+
+        $this->seeInDatabase('job', ['name' => 'account1', 'description' => '11']);
+        $this->seeInDatabase('job', ['name' => 'account2', 'description' => '11']);
+    }
+
+    public function testDecrement(): void
     {
         $this->hasInDatabase('job', ['name' => 'incremental', 'description' => '6']);
 
@@ -59,7 +74,7 @@ final class IncrementTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '5']);
     }
 
-    public function testDecrementWithValue()
+    public function testDecrementWithValue(): void
     {
         $this->hasInDatabase('job', ['name' => 'incremental', 'description' => '6']);
 
@@ -68,5 +83,19 @@ final class IncrementTest extends CIUnitTestCase
             ->decrement('description', 2);
 
         $this->seeInDatabase('job', ['name' => 'incremental', 'description' => '4']);
+    }
+
+    public function testResetStateAfterDecrement(): void
+    {
+        $this->hasInDatabase('job', ['name' => 'account1', 'description' => '10']);
+        $this->hasInDatabase('job', ['name' => 'account2', 'description' => '10']);
+
+        $builder = $this->db->table('job');
+
+        $builder->where('name', 'account1')->decrement('description');
+        $builder->where('name', 'account2')->decrement('description');
+
+        $this->seeInDatabase('job', ['name' => 'account1', 'description' => '9']);
+        $this->seeInDatabase('job', ['name' => 'account2', 'description' => '9']);
     }
 }

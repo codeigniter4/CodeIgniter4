@@ -1,0 +1,365 @@
+Version 4.4.0
+#############
+
+Release Date: August 25, 2023
+
+**4.4.0 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+Highlights
+**********
+
+- The Debug Toolbar now has a new “Hot Reload” feature
+  (*contributed by* `lonnieezell <https://github.com/lonnieezell>`_).
+  See `Testing`_.
+
+BREAKING
+********
+
+Behavior Changes
+================
+
+URI::setSegment() and Non-Existent Segment
+------------------------------------------
+
+An exception is now thrown when you set the last ``+2`` segment.
+In previous versions, an exception was thrown only if the last segment ``+3``
+or more was specified. See :ref:`upgrade-440-uri-setsegment`.
+
+The next segment (``+1``) of the current last segment can be set as before.
+
+.. _v440-factories:
+
+Factories
+---------
+
+Passing Classname with Namespace
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Now ``preferApp`` works only when you request
+:ref:`a classname without a namespace <factories-passing-classname-without-namespace>`.
+
+For example, when you call ``model(\Myth\Auth\Models\UserModel::class)`` or
+``model('Myth\Auth\Models\UserModel')``:
+
+   - before:
+
+      - returns ``App\Models\UserModel`` if exists and ``preferApp`` is true (default)
+      - returns ``Myth\Auth\Models\UserModel`` if exists and ``preferApp`` is false
+
+   - after:
+
+      - returns ``Myth\Auth\Models\UserModel`` even if ``preferApp`` is true (default)
+      - returns ``App\Models\UserModel`` if you define ``Factories::define('models', 'Myth\Auth\Models\UserModel', 'App\Models\UserModel')`` before calling the ``model()``
+
+If you had passed a non-existent classname by mistake, the previous version
+would have returned a class instance in the ``App`` or ``Config`` namespace
+because of the ``preferApp`` feature.
+
+For example, in a controller (``namespace App\Controllers``), if you called
+``config(Config\App::class)`` by mistake (note the class is missing the leading ``\``),
+meaning you actually passed ``App\Controllers\Config\App``.
+But that class does not exist, so now Factories will return ``null``.
+
+Property Name
+^^^^^^^^^^^^^
+
+The property ``Factories::$basenames`` has been renamed to ``$aliases``.
+
+Autoloader
+----------
+
+Previously, CodeIgniter's autoloader allowed loading class names ending with the `.php` extension. This means instantiating objects like `new Foo.php()` was possible
+and would instantiate as `new Foo()`. Since `Foo.php` is an invalid class name, this behavior of the autoloader is changed. Now, instantiating such classes would fail.
+
+.. _v440-codeigniter-and-exit:
+
+CodeIgniter and exit()
+----------------------
+
+The ``CodeIgniter::run()`` method no longer calls ``exit(EXIT_SUCCESS)``. The
+exit call is moved to **public/index.php**.
+
+.. _v440-site-uri-changes:
+
+Site URI Changes
+----------------
+
+A new ``SiteURI`` class that extends the ``URI`` class and represents the site
+URI has been added, and now it is used in many places that need the current URI.
+
+``$this->request->getUri()`` in controllers returns the ``SiteURI`` instance.
+Also, :php:func:`site_url()`, :php:func:`base_url()`, and :php:func:`current_url()`
+use the SiteURI internally.
+
+getPath()
+^^^^^^^^^
+
+The ``getPath()`` method now always returns the full URI path with leading ``/``.
+Therefore, when your baseURL has sub-directories and you want to get the relative
+path to baseURL, you must use the new ``getRoutePath()`` method instead.
+
+For example::
+
+            baseURL: http://localhost:8888/CodeIgniter4/
+    The current URI: http://localhost:8888/CodeIgniter4/foo/bar
+          getPath(): /CodeIgniter4/foo/bar
+     getRoutePath(): foo/bar
+
+Site URI Values
+^^^^^^^^^^^^^^^
+
+The SiteURI class normalizes site URIs more strictly than before, and some bugs
+have been fixed.
+
+As a result, the framework may return site URIs or the URI paths slightly differently
+than in previous versions.
+For example, ``/`` will be added after ``index.php``::
+
+    http://example.com/test/index.php?page=1
+    ↓
+    http://example.com/test/index.php/?page=1
+
+.. _v440-interface-changes:
+
+Interface Changes
+=================
+
+.. note:: As long as you have not extended the relevant CodeIgniter core classes
+    or implemented these interfaces, all these changes are backward compatible
+    and require no intervention.
+
+- **Validation:** Added the ``getValidated()`` method in ``ValidationInterface``.
+
+.. _v440-method-signature-changes:
+
+Method Signature Changes
+========================
+
+.. _v440-parameter-type-changes:
+
+Parameter Type Changes
+----------------------
+
+- **Services:**
+    - The first parameter of ``Services::security()`` has been changed from
+      ``Config\App`` to ``Config\Security``.
+    - The first parameter of ``Services::session()`` has been changed from
+      ``Config\App`` to ``Config\Session``.
+- **Session:**
+    - The second parameter of ``Session::__construct()`` has been changed from
+      ``Config\App`` to ``Config\Session``.
+    - The first parameter of ``__construct()`` in the database's ``BaseHandler``,
+      ``DatabaseHandler``, ``FileHandler``, ``MemcachedHandler``, and ``RedisHandler``
+      has been changed from ``Config\App`` to ``Config\Session``.
+- **Security:** The first parameter of ``Security::__construct()`` has been
+  changed from ``Config\App`` to ``Config\Security``.
+- **Validation:** The method signature of ``Validation::check()`` has been changed.
+  The ``string`` typehint on the ``$rule`` parameter was removed.
+- **CodeIgniter:** The method signature of ``CodeIgniter::setRequest()`` has been
+  changed. The ``Request`` typehint on the ``$request`` parameter was removed.
+- **FeatureTestCase:**
+    - The method signature of ``FeatureTestCase::populateGlobals()`` has been
+      changed. The ``Request`` typehint on the ``$request`` parameter was removed.
+    - The method signature of ``FeatureTestCase::setRequestBody()`` has been
+      changed. The ``Request`` typehint on the ``$request`` parameter and the
+      return type ``Request`` were removed.
+
+Added Parameters
+----------------
+
+- **Routing:** The third parameter ``Routing $routing`` has been added to
+  ``RouteCollection::__construct()``.
+
+Removed Parameters
+------------------
+
+- **Services:** The second parameter ``$request`` and the third parameter
+  ``$response`` in ``Services::exceptions()`` have been removed.
+- **Error Handling:** The second parameter ``$request`` and the third parameter
+  ``$response`` in ``CodeIgniter\Debug\Exceptions::__construct()`` have been removed.
+
+Return Type Changes
+-------------------
+
+- **Autoloader:** The return signatures of the `loadClass` and `loadClassmap` methods are made `void`
+  to be compatible as callbacks in `spl_autoload_register` and `spl_autoload_unregister` functions.
+
+Enhancements
+************
+
+Commands
+========
+
+- **spark routes:**
+    - Now you can specify the host in the request URL.
+      See :ref:`routing-spark-routes-specify-host`.
+    - It shows view files of :ref:`view-routes` in *Handler* like the following:
+
+        +---------+-------------+------+------------------------------+----------------+---------------+
+        | Method  | Route       | Name | Handler                      | Before Filters | After Filters |
+        +---------+-------------+------+------------------------------+----------------+---------------+
+        | GET     | about       | »    | (View) pages/about           |                | toolbar       |
+        +---------+-------------+------+------------------------------+----------------+---------------+
+
+
+Testing
+=======
+
+- **DebugBar:**
+    - The Debug Toolbar now has a new "Hot Reload" feature that can be used to
+      automatically reload the page when a file is changed.
+      See :ref:`debug-toolbar-hot-reload`.
+    - Now :ref:`view-routes` are displayed in *DEFINED ROUTES* on the *Routes* tab.
+
+Database
+========
+
+- **MySQLi:** Added the ``numberNative`` attribute to the Database Config to keep the variable type obtained after SQL Query consistent with the type set in the database.
+  See :ref:`Database Configuration <database-config-explanation-of-values>`.
+- **SQLSRV:** Field Metadata now includes ``nullable``. See :ref:`db-metadata-getfielddata`.
+
+Model
+=====
+
+- Added special getter/setter to Entity to avoid method name conflicts.
+  See :ref:`entities-special-getter-setter`.
+
+Libraries
+=========
+
+- **Validation:** Added ``Validation::getValidated()`` method that gets
+  the actual validated data. See :ref:`validation-getting-validated-data` for details.
+- **Images:** The option ``$quality`` can now be used to compress WebP images.
+- **Uploaded Files:** Added ``UploadedFiles::getClientPath()`` method that returns
+  the value of the `full_path` index of the file if it was uploaded via directory upload.
+- **CURLRequest:** Added a request option ``proxy``. See
+  :ref:`CURLRequest Class <curlrequest-request-options-proxy>`.
+- **URI:** A new ``SiteURI`` class that extends ``URI`` and represents the site
+  URI has been added.
+
+Helpers and Functions
+=====================
+
+- **Array:** Added :php:func:`array_group_by()` helper function to group data
+  values together. Supports dot-notation syntax.
+- **Common:** :php:func:`force_https()` no longer terminates the application, but throws a ``RedirectException``.
+
+Others
+======
+
+- **DownloadResponse:** Added ``DownloadResponse::inline()`` method that sets
+  the ``Content-Disposition: inline`` header to display the file in the browser.
+  See :ref:`open-file-in-browser` for details.
+- **View:** Added optional 2nd parameter ``$saveData`` on ``renderSection()`` to prevent from auto cleans the data after displaying. See :ref:`View Layouts <creating-a-layout>` for details.
+- **Auto Routing (Improved)**:
+    - Now you can route to Modules. See :ref:`auto-routing-improved-module-routing`
+      for details.
+    - If a controller is found that corresponds to a URI segment and that controller
+      does not have a method defined for the URI segment, the default method will
+      now be executed. This addition allows for more flexible handling of URIs in
+      auto routing. See :ref:`controller-default-method-fallback` for details.
+- **Filters:** Now you can use Filter Arguments with :ref:`$filters property <filters-filters-filter-arguments>`.
+- **Request:** Added ``IncomingRequest::setValidLocales()`` method to set valid locales.
+- **Table:** Added ``Table::setSyncRowsWithHeading()`` method to synchronize row columns with headings. See :ref:`table-sync-rows-with-headings` for details.
+- **Error Handling:** Now you can use :ref:`custom-exception-handlers`.
+- **RedirectException:**
+    - It can also take an object that implements ``ResponseInterface`` as its first argument.
+    - It implements ``ResponsableInterface``.
+- **Factories:**
+    - You can now define the classname that will actually be loaded.
+      See :ref:`factories-defining-classname-to-be-loaded`.
+    - Config Caching implemented. See :ref:`factories-config-caching` for details.
+
+Message Changes
+***************
+
+- Added ``Core.invalidDirectory`` error message.
+- Improved ``HTTP.invalidHTTPProtocol`` error message.
+
+Changes
+*******
+
+- **Images:** The default quality for WebP in ``GDHandler`` has been changed from 80 to 90.
+- **Config:**
+    - The deprecated Cookie items in **app/Config/App.php** has been removed.
+    - The deprecated Session items in **app/Config/App.php** has been removed.
+    - The deprecated CSRF items in **app/Config/App.php** has been removed.
+    - Routing settings have been moved to **app/Config/Routing.php** config file.
+      See :ref:`Upgrading Guide <upgrade-440-config-routing>`.
+- **DownloadResponse:** When generating response headers, does not replace the ``Content-Disposition`` header if it was previously specified.
+- **Autoloader:**
+    - Before v4.4.0, CodeIgniter autoloader did not allow special
+      characters that are illegal in filenames on certain operating systems.
+      The symbols that can be used are ``/``, ``_``, ``.``, ``:``, ``\`` and space.
+      So if you installed CodeIgniter under the folder that contains the special
+      characters like ``(``, ``)``, etc., CodeIgniter didn't work. Since v4.4.0,
+      this restriction has been removed.
+    - The methods ``Autoloader::loadClass()`` and ``Autoloader::loadClassmap()`` are now both
+      marked ``@internal``.
+- **RouteCollection:** The array structure of the protected property ``$routes``
+  has been modified for performance.
+- **HSTS:** Now :php:func:`force_https()` or
+  ``Config\App::$forceGlobalSecureRequests = true`` sets the HTTP status code 307,
+  which allows the HTTP request method to be preserved after the redirect.
+  In previous versions, it was 302.
+
+Deprecations
+************
+
+- **Entity:** ``Entity::setAttributes()`` is deprecated. Use ``Entity::injectRawData()`` instead.
+- **Error Handling:** Many methods and properties in ``CodeIgniter\Debug\Exceptions``
+  are deprecated. Because these methods have been moved to ``BaseExceptionHandler`` or
+  ``ExceptionHandler``.
+- **Autoloader:** ``Autoloader::sanitizeFilename()`` is deprecated.
+- **CodeIgniter:**
+    - ``CodeIgniter::$returnResponse`` property is deprecated. No longer used.
+    - ``CodeIgniter::$cacheTTL`` property is deprecated. No longer used. Use ``ResponseCache`` instead.
+    - ``CodeIgniter::cache()`` method is deprecated. No longer used. Use ``ResponseCache`` instead.
+    - ``CodeIgniter::cachePage()`` method is deprecated. No longer used. Use ``ResponseCache`` instead.
+    - ``CodeIgniter::generateCacheName()`` method is deprecated. No longer used. Use ``ResponseCache`` instead.
+    - ``CodeIgniter::callExit()`` method is deprecated. No longer used.
+- **RedirectException:** ``\CodeIgniter\Router\Exceptions\RedirectException`` is deprecated. Use ``\CodeIgniter\HTTP\Exceptions\RedirectException`` instead.
+- **Session:** The property ``$sessionDriverName``, ``$sessionCookieName``,
+  ``$sessionExpiration``, ``$sessionSavePath``, ``$sessionMatchIP``,
+  ``$sessionTimeToUpdate``, and ``$sessionRegenerateDestroy`` in ``Session`` are
+  deprecated, and no longer used. Use ``$config`` instead.
+- **Security:** The property ``$csrfProtection``, ``$tokenRandomize``,
+  ``$tokenName``, ``$headerName``, ``$expires``, ``$regenerate``, and
+  ``$redirect`` in ``Security`` are deprecated, and no longer used. Use
+  ``$config`` instead.
+- **URI:**
+    - ``URI::$uriString`` is deprecated.
+    - ``URI::$baseURL`` is deprecated. Use ``SiteURI`` instead.
+    - ``URI::setSilent()`` is deprecated.
+    - ``URI::setScheme()`` is deprecated. Use ``withScheme()`` instead.
+    - ``URI::setURI()`` is deprecated.
+- **IncomingRequest:**
+    - ``IncomingRequest::detectURI()`` is deprecated and no longer used.
+    - ``IncomingRequest::detectPath()`` is deprecated, and no longer used. It
+      moved to ``SiteURIFactory``.
+    - ``IncomingRequest::parseRequestURI()`` is deprecated, and no longer used. It
+      moved to ``SiteURIFactory``.
+    - ``IncomingRequest::parseQueryString()`` is deprecated, and no longer used. It
+      moved to ``SiteURIFactory``.
+    - ``IncomingRequest::setPath()`` is deprecated.
+
+Bugs Fixed
+**********
+
+- **Auto Routing (Improved)**: In previous versions, when ``$translateURIDashes``
+  is true, two URIs correspond to a single controller method, one URI for dashes
+  (e.g., **foo-bar**) and one URI for underscores (e.g., **foo_bar**). This bug
+  has been fixed. Now the URI for underscores (**foo_bar**) is not accessible.
+- **Output Buffering:** Bug fix with output buffering.
+- **ControllerTestTrait:** ``ControllerTestTrait::withUri()`` creates a new Request
+  instance with the URI. Because the Request instance should have the URI instance.
+  Also if the hostname in the URI string is invalid with ``Config\App``, the valid
+  hostname will be set.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

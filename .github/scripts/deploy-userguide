@@ -1,0 +1,42 @@
+#!/bin/bash
+
+## Deploy codeigniter4/userguide
+
+# Setup variables
+SOURCE=$1
+TARGET=$2
+RELEASE=$3
+VERSION=`echo "$RELEASE" | cut -c 2-`
+
+echo "Preparing for version $3"
+echo "Merging files from $1 to $2"
+
+# Prepare the source
+cd $SOURCE
+git checkout master
+cd user_guide_src
+make html
+make epub
+
+# Prepare the target
+cd $TARGET
+git checkout master
+rm -rf docs
+
+# Copy common files
+cp -Rf ${SOURCE}/LICENSE ./
+
+# Copy repo-specific files
+cp -Rf ${SOURCE}/admin/userguide/. ./
+
+# Copy files
+cp -Rf ${SOURCE}/user_guide_src/build/html ./docs
+cp -Rf ${SOURCE}/user_guide_src/build/epub/CodeIgniter.epub ./CodeIgniter${VERSION}.epub
+
+# Ensure underscore prefixed files are published
+touch ${TARGET}/docs/.nojekyll
+
+# Commit the changes
+git add .
+git commit -m "Release ${RELEASE}"
+git push

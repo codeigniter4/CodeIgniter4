@@ -17,6 +17,8 @@ use Tests\Support\Models\JobModel;
 use Tests\Support\Models\UserModel;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class ModelFactoryTest extends CIUnitTestCase
@@ -30,32 +32,32 @@ final class ModelFactoryTest extends CIUnitTestCase
         ModelFactory::reset();
     }
 
-    public function testCreateSeparateInstances()
+    public function testCreateSeparateInstances(): void
     {
         $basenameModel  = ModelFactory::get('JobModel', false);
-        $namespaceModel = ModelFactory::get('Tests\\Support\\Models\\JobModel', false);
+        $namespaceModel = ModelFactory::get(JobModel::class, false);
 
         $this->assertInstanceOf(JobModel::class, $basenameModel);
         $this->assertInstanceOf(JobModel::class, $namespaceModel);
         $this->assertNotSame($basenameModel, $namespaceModel);
     }
 
-    public function testCreateSharedInstance()
+    public function testCreateSharedInstance(): void
     {
         $basenameModel  = ModelFactory::get('JobModel', true);
-        $namespaceModel = ModelFactory::get('Tests\\Support\\Models\\JobModel', true);
+        $namespaceModel = ModelFactory::get(JobModel::class, true);
 
         $this->assertSame($basenameModel, $namespaceModel);
     }
 
-    public function testInjection()
+    public function testInjection(): void
     {
         ModelFactory::injectMock('Banana', new JobModel());
 
         $this->assertInstanceOf(JobModel::class, ModelFactory::get('Banana'));
     }
 
-    public function testReset()
+    public function testReset(): void
     {
         ModelFactory::injectMock('Banana', new JobModel());
 
@@ -64,12 +66,12 @@ final class ModelFactoryTest extends CIUnitTestCase
         $this->assertNull(ModelFactory::get('Banana'));
     }
 
-    public function testBasenameReturnsExistingNamespaceInstance()
+    public function testBasenameDoesNotReturnExistingNamespaceInstance(): void
     {
         ModelFactory::injectMock(UserModel::class, new JobModel());
 
         $basenameModel = ModelFactory::get('UserModel');
 
-        $this->assertInstanceOf(JobModel::class, $basenameModel);
+        $this->assertInstanceOf(UserModel::class, $basenameModel);
     }
 }

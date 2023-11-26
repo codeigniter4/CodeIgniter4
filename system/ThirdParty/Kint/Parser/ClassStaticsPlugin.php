@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,42 +27,66 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Kint\Object\InstanceObject;
-use Kint\Object\Representation\Representation;
+use Kint\Zval\InstanceValue;
+use Kint\Zval\Representation\Representation;
+use Kint\Zval\Value;
 use ReflectionClass;
+use ReflectionClassConstant;
 use ReflectionProperty;
+use UnitEnum;
 
-class ClassStaticsPlugin extends Plugin
+class ClassStaticsPlugin extends AbstractPlugin
 {
-    private static $cache = array();
+    private static $cache = [];
 
-    public function getTypes()
+    public function getTypes(): array
     {
-        return array('object');
+        return ['object'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parse(&$var, Value &$o, int $trigger): void
     {
+        if (!$o instanceof InstanceValue) {
+            return;
+        }
+
         $class = \get_class($var);
         $reflection = new ReflectionClass($class);
 
         // Constants
-        // TODO: PHP 7.1 allows private consts but reflection doesn't have a way to check them yet
         if (!isset(self::$cache[$class])) {
-            $consts = array();
+            $consts = [];
 
             foreach ($reflection->getConstants() as $name => $val) {
-                $const = BasicObject::blank($name, '\\'.$class.'::'.$name);
+                // Skip enum constants
+                if ($var instanceof UnitEnum && $val instanceof UnitEnum && $o->classname == \get_class($val)) {
+                    continue;
+                }
+
+                $const = Value::blank($name);
                 $const->const = true;
                 $const->depth = $o->depth + 1;
                 $const->owner_class = $class;
-                $const->operator = BasicObject::OPERATOR_STATIC;
+                $const->operator = Value::OPERATOR_STATIC;
+
+                $creflection = new ReflectionClassConstant($class, $name);
+
+                $const->access = Value::ACCESS_PUBLIC;
+                if ($creflection->isProtected()) {
+                    $const->access = Value::ACCESS_PROTECTED;
+                } elseif ($creflection->isPrivate()) {
+                    $const->access = Value::ACCESS_PRIVATE;
+                }
+
+                if ($this->parser->childHasPath($o, $const)) {
+                    $const->access_path = '\\'.$class.'::'.$name;
+                }
+
                 $const = $this->parser->parse($val, $const);
 
                 $consts[] = $const;
@@ -73,18 +99,18 @@ class ClassStaticsPlugin extends Plugin
         $statics->contents = self::$cache[$class];
 
         foreach ($reflection->getProperties(ReflectionProperty::IS_STATIC) as $static) {
-            $prop = new BasicObject();
+            $prop = new Value();
             $prop->name = '$'.$static->getName();
             $prop->depth = $o->depth + 1;
             $prop->static = true;
-            $prop->operator = BasicObject::OPERATOR_STATIC;
+            $prop->operator = Value::OPERATOR_STATIC;
             $prop->owner_class = $static->getDeclaringClass()->name;
 
-            $prop->access = BasicObject::ACCESS_PUBLIC;
+            $prop->access = Value::ACCESS_PUBLIC;
             if ($static->isProtected()) {
-                $prop->access = BasicObject::ACCESS_PROTECTED;
+                $prop->access = Value::ACCESS_PROTECTED;
             } elseif ($static->isPrivate()) {
-                $prop->access = BasicObject::ACCESS_PRIVATE;
+                $prop->access = Value::ACCESS_PRIVATE;
             }
 
             if ($this->parser->childHasPath($o, $prop)) {
@@ -92,31 +118,37 @@ class ClassStaticsPlugin extends Plugin
             }
 
             $static->setAccessible(true);
-            $static = $static->getValue();
-            $statics->contents[] = $this->parser->parse($static, $prop);
+
+            if (KINT_PHP74 && !$static->isInitialized()) {
+                $prop->type = 'uninitialized';
+                $statics->contents[] = $prop;
+            } else {
+                $static = $static->getValue();
+                $statics->contents[] = $this->parser->parse($static, $prop);
+            }
         }
 
         if (empty($statics->contents)) {
             return;
         }
 
-        \usort($statics->contents, array('Kint\\Parser\\ClassStaticsPlugin', 'sort'));
+        \usort($statics->contents, ['Kint\\Parser\\ClassStaticsPlugin', 'sort']);
 
         $o->addRepresentation($statics);
     }
 
-    private static function sort(BasicObject $a, BasicObject $b)
+    private static function sort(Value $a, Value $b): int
     {
         $sort = ((int) $a->const) - ((int) $b->const);
         if ($sort) {
             return $sort;
         }
 
-        $sort = BasicObject::sortByAccess($a, $b);
+        $sort = Value::sortByAccess($a, $b);
         if ($sort) {
             return $sort;
         }
 
-        return InstanceObject::sortByHierarchy($a->owner_class, $b->owner_class);
+        return InstanceValue::sortByHierarchy($a->owner_class, $b->owner_class);
     }
 }

@@ -53,7 +53,7 @@ class ModelGenerator extends BaseCommand
     /**
      * The Command's Arguments
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [
         'name' => 'The model class name.',
@@ -62,7 +62,7 @@ class ModelGenerator extends BaseCommand
     /**
      * The Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [
         '--table'     => 'Supply a table name. Default: "the lowercased plural of the class name".',
@@ -101,9 +101,8 @@ class ModelGenerator extends BaseCommand
             $baseClass = $match[1];
         }
 
-        $table   = is_string($table) ? $table : plural(strtolower($baseClass));
-        $dbGroup = is_string($dbGroup) ? $dbGroup : 'default';
-        $return  = is_string($return) ? $return : 'array';
+        $table  = is_string($table) ? $table : plural(strtolower($baseClass));
+        $return = is_string($return) ? $return : 'array';
 
         if (! in_array($return, ['array', 'object', 'entity'], true)) {
             // @codeCoverageIgnoreStart
@@ -129,6 +128,6 @@ class ModelGenerator extends BaseCommand
             $return = "'{$return}'";
         }
 
-        return $this->parseTemplate($class, ['{table}', '{dbGroup}', '{return}'], [$table, $dbGroup, $return]);
+        return $this->parseTemplate($class, ['{dbGroup}', '{table}', '{return}'], [$dbGroup, $table, $return], compact('dbGroup'));
     }
 }

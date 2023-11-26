@@ -12,6 +12,7 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\I18n\Time;
 use Config\Cache;
 
 /**
@@ -21,6 +22,8 @@ use Config\Cache;
  */
 final class RedisHandlerTest extends AbstractHandlerTest
 {
+    private Cache $config;
+
     private static function getKeyArray()
     {
         return [
@@ -30,11 +33,13 @@ final class RedisHandlerTest extends AbstractHandlerTest
         ];
     }
 
-    private $config;
-
     protected function setUp(): void
     {
         parent::setUp();
+
+        if (! extension_loaded('redis')) {
+            $this->markTestSkipped('redis extension not loaded.');
+        }
 
         $this->config = new Cache();
 
@@ -50,12 +55,12 @@ final class RedisHandlerTest extends AbstractHandlerTest
         }
     }
 
-    public function testNew()
+    public function testNew(): void
     {
         $this->assertInstanceOf(RedisHandler::class, $this->handler);
     }
 
-    public function testDestruct()
+    public function testDestruct(): void
     {
         $this->handler = new RedisHandler($this->config);
         $this->handler->initialize();
@@ -69,7 +74,7 @@ final class RedisHandlerTest extends AbstractHandlerTest
      *
      * @timeLimit 3.5
      */
-    public function testGet()
+    public function testGet(): void
     {
         $this->handler->save(self::$key1, 'value', 2);
 
@@ -86,11 +91,9 @@ final class RedisHandlerTest extends AbstractHandlerTest
      *
      * @timeLimit 3.5
      */
-    public function testRemember()
+    public function testRemember(): void
     {
-        $this->handler->remember(self::$key1, 2, static function () {
-            return 'value';
-        });
+        $this->handler->remember(self::$key1, 2, static fn () => 'value');
 
         $this->assertSame('value', $this->handler->get(self::$key1));
         $this->assertNull($this->handler->get(self::$dummy));
@@ -99,24 +102,24 @@ final class RedisHandlerTest extends AbstractHandlerTest
         $this->assertNull($this->handler->get(self::$key1));
     }
 
-    public function testSave()
+    public function testSave(): void
     {
         $this->assertTrue($this->handler->save(self::$key1, 'value'));
     }
 
-    public function testSavePermanent()
+    public function testSavePermanent(): void
     {
         $this->assertTrue($this->handler->save(self::$key1, 'value', 0));
         $metaData = $this->handler->getMetaData(self::$key1);
 
         $this->assertNull($metaData['expire']);
-        $this->assertLessThanOrEqual(1, $metaData['mtime'] - time());
+        $this->assertLessThanOrEqual(1, $metaData['mtime'] - Time::now()->getTimestamp());
         $this->assertSame('value', $metaData['data']);
 
         $this->assertTrue($this->handler->delete(self::$key1));
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->handler->save(self::$key1, 'value');
 
@@ -124,7 +127,7 @@ final class RedisHandlerTest extends AbstractHandlerTest
         $this->assertFalse($this->handler->delete(self::$dummy));
     }
 
-    public function testDeleteMatchingPrefix()
+    public function testDeleteMatchingPrefix(): void
     {
         // Save 101 items to match on
         for ($i = 1; $i <= 101; $i++) {
@@ -144,7 +147,7 @@ final class RedisHandlerTest extends AbstractHandlerTest
         $this->assertSame('keys=88', $dbInfo[0]);
     }
 
-    public function testDeleteMatchingSuffix()
+    public function testDeleteMatchingSuffix(): void
     {
         // Save 101 items to match on
         for ($i = 1; $i <= 101; $i++) {
@@ -164,30 +167,48 @@ final class RedisHandlerTest extends AbstractHandlerTest
         $this->assertSame('keys=90', $dbInfo[0]);
     }
 
-    // FIXME: I don't like all Hash logic very much. It's wasting memory.
-    // public function testIncrement()
-    // {
-    // }
+    public function testIncrementAndDecrement(): void
+    {
+        $this->handler->save('counter', 100);
 
-    // public function testDecrement()
-    // {
-    // }
+        foreach (range(1, 10) as $step) {
+            $this->handler->increment('counter', $step);
+        }
 
-    public function testClean()
+        $this->assertSame(155, $this->handler->get('counter'));
+
+        $this->handler->decrement('counter', 20);
+        $this->assertSame(135, $this->handler->get('counter'));
+
+        $this->handler->increment('counter', 5);
+        $this->assertSame(140, $this->handler->get('counter'));
+    }
+
+    public function testClean(): void
     {
         $this->handler->save(self::$key1, 1);
 
         $this->assertTrue($this->handler->clean());
     }
 
-    public function testGetCacheInfo()
+    public function testGetCacheInfo(): void
     {
         $this->handler->save(self::$key1, 'value');
 
         $this->assertIsArray($this->handler->getCacheInfo());
     }
 
-    public function testIsSupported()
+    public function testGetMetadataNotNull(): void
+    {
+        $this->handler->save(self::$key1, 'value');
+
+        $metadata = $this->handler->getMetaData(self::$key1);
+
+        $this->assertNotNull($metadata);
+        $this->assertIsArray($metadata);
+    }
+
+    public function testIsSupported(): void
     {
         $this->assertTrue($this->handler->isSupported());
     }

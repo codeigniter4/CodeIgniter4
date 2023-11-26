@@ -1,30 +1,51 @@
 {
     "name": "codeigniter4/framework",
-    "type": "project",
     "description": "The CodeIgniter framework v4",
-    "homepage": "https://codeigniter.com",
     "license": "MIT",
+    "type": "project",
+    "homepage": "https://codeigniter.com",
+    "support": {
+        "forum": "https://forum.codeigniter.com/",
+        "source": "https://github.com/codeigniter4/CodeIgniter4",
+        "slack": "https://codeigniterchat.slack.com"
+    },
     "require": {
-        "php": "^7.3 || ^8.0",
-        "ext-curl": "*",
+        "php": "^7.4 || ^8.0",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "kint-php/kint": "^3.3",
         "laminas/laminas-escaper": "^2.9",
         "psr/log": "^1.1"
     },
     "require-dev": {
-        "codeigniter/coding-standard": "^1.1",
+        "codeigniter/coding-standard": "^1.5",
         "fakerphp/faker": "^1.9",
-        "friendsofphp/php-cs-fixer": "^3.1",
+        "friendsofphp/php-cs-fixer": "3.13.0",
+        "kint-php/kint": "^5.0.4",
         "mikey179/vfsstream": "^1.6",
-        "nexusphp/cs-config": "^3.3",
+        "nexusphp/cs-config": "^3.6",
         "phpunit/phpunit": "^9.1",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1 || ^2.0"
     },
     "suggest": {
-        "ext-fileinfo": "Improves mime type detection for files"
+        "ext-curl": "If you use CURLRequest class",
+        "ext-dom": "If you use TestResponse",
+        "ext-exif": "If you run Image class tests",
+        "ext-fileinfo": "Improves mime type detection for files",
+        "ext-gd": "If you use Image class GDHandler",
+        "ext-imagick": "If you use Image class ImageMagickHandler",
+        "ext-libxml": "If you use TestResponse",
+        "ext-memcache": "If you use Cache class MemcachedHandler with Memcache",
+        "ext-memcached": "If you use Cache class MemcachedHandler with Memcached",
+        "ext-mysqli": "If you use MySQL",
+        "ext-oci8": "If you use Oracle Database",
+        "ext-pgsql": "If you use PostgreSQL",
+        "ext-readline": "Improves CLI::input() usability",
+        "ext-redis": "If you use Cache class RedisHandler",
+        "ext-simplexml": "If you format XML",
+        "ext-sqlite3": "If you use SQLite3",
+        "ext-sqlsrv": "If you use SQL Server",
+        "ext-xdebug": "If you use CIUnitTestCase::assertHeaderEmitted()"
     },
     "autoload": {
         "psr-4": {
@@ -34,15 +55,12 @@
             "**/Database/Migrations/**"
         ]
     },
-    "scripts": {
-        "post-update-cmd": [
-            "CodeIgniter\\ComposerScripts::postUpdate"
-        ],
-        "test": "phpunit"
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
     },
-    "support": {
-        "forum": "http://forum.codeigniter.com/",
-        "source": "https://github.com/codeigniter4/CodeIgniter4",
-        "slack": "https://codeigniterchat.slack.com"
+    "scripts": {
+        "test": "phpunit"
     }
 }

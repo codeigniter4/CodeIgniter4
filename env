@@ -21,16 +21,9 @@
 #--------------------------------------------------------------------
 
 # app.baseURL = ''
+# If you have trouble with `.`, you could also use `_`.
+# app_baseURL = ''
 # app.forceGlobalSecureRequests = false
-
-# app.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'
-# app.sessionCookieName = 'ci_session'
-# app.sessionExpiration = 7200
-# app.sessionSavePath = null
-# app.sessionMatchIP = false
-# app.sessionTimeToUpdate = 300
-# app.sessionRegenerateDestroy = false
-
 # app.CSPEnabled = false
 
 #--------------------------------------------------------------------
@@ -43,13 +36,15 @@
 # database.default.password = root
 # database.default.DBDriver = MySQLi
 # database.default.DBPrefix =
+# database.default.port = 3306
 
 # database.tests.hostname = localhost
-# database.tests.database = ci4
+# database.tests.database = ci4_test
 # database.tests.username = root
 # database.tests.password = root
 # database.tests.DBDriver = MySQLi
 # database.tests.DBPrefix =
+# database.tests.port = 3306
 
 #--------------------------------------------------------------------
 # CONTENT SECURITY POLICY
@@ -60,7 +55,7 @@
 # contentsecuritypolicy.scriptSrc = 'self'
 # contentsecuritypolicy.styleSrc = 'self'
 # contentsecuritypolicy.imageSrc = 'self'
-# contentsecuritypolicy.base_uri = null
+# contentsecuritypolicy.baseURI = null
 # contentsecuritypolicy.childSrc = null
 # contentsecuritypolicy.connectSrc = 'self'
 # contentsecuritypolicy.fontSrc = null
@@ -73,6 +68,9 @@
 # contentsecuritypolicy.reportURI = null
 # contentsecuritypolicy.sandbox = false
 # contentsecuritypolicy.upgradeInsecureRequests = false
+# contentsecuritypolicy.styleNonceTag = '{csp-style-nonce}'
+# contentsecuritypolicy.scriptNonceTag = '{csp-script-nonce}'
+# contentsecuritypolicy.autoNonce = true
 
 #--------------------------------------------------------------------
 # COOKIE
@@ -110,16 +108,36 @@
 # SECURITY
 #--------------------------------------------------------------------
 
+# security.csrfProtection = 'cookie'
+# security.tokenRandomize = false
 # security.tokenName = 'csrf_token_name'
 # security.headerName = 'X-CSRF-TOKEN'
 # security.cookieName = 'csrf_cookie_name'
 # security.expires = 7200
 # security.regenerate = true
-# security.redirect = true
+# security.redirect = false
 # security.samesite = 'Lax'
+
+#--------------------------------------------------------------------
+# SESSION
+#--------------------------------------------------------------------
+
+# session.driver = 'CodeIgniter\Session\Handlers\FileHandler'
+# session.cookieName = 'ci_session'
+# session.expiration = 7200
+# session.savePath = null
+# session.matchIP = false
+# session.timeToUpdate = 300
+# session.regenerateDestroy = false
 
 #--------------------------------------------------------------------
 # LOGGER
 #--------------------------------------------------------------------
 
 # logger.threshold = 4
+
+#--------------------------------------------------------------------
+# CURLRequest
+#--------------------------------------------------------------------
+
+# curlrequest.shareOptions = false

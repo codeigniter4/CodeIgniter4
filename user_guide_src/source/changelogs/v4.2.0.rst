@@ -1,0 +1,166 @@
+Version 4.2.0
+#############
+
+Release Date: June 3, 2022
+
+**4.2.0 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+Highlights
+**********
+
+- Update minimal PHP requirement to 7.4.
+- To make the default configuration more secure, auto-routing has been changed to disabled by default.
+- **OCI8 Driver for Oracle Database** (*contributed by* `ytetsuro <https://github.com/ytetsuro>`_). See `Database`_.
+- **Improved Auto Routing** (opt-in) (*contributed by* `kenjis <https://github.com/kenjis>`_). See `New Improved Auto Routing`_.
+- Query Builder **Subqueries** and **UNION** support (*contributed by* `Andrey Pyzhikov <https://github.com/iRedds>`_). See `Database`_.
+
+New Contributors
+================
+
+* `@fdomgjoni99 <https://github.com/fdomgjoni99>`_ made their first contribution in `#5608 <https://github.com/codeigniter4/CodeIgniter4/pull/5608>`_
+* `@Nudasoft <https://github.com/Nudasoft>`_ made their first contribution in `#5715 <https://github.com/codeigniter4/CodeIgniter4/pull/5715>`_
+* `@beganovich <https://github.com/beganovich>`_ made their first contribution in `#5823 <https://github.com/codeigniter4/CodeIgniter4/pull/5823>`_
+* `@tcgumus <https://github.com/tcgumus>`_ made their first contribution in `#5851 <https://github.com/codeigniter4/CodeIgniter4/pull/5851>`_
+* `@michaelrk02 <https://github.com/michaelrk02>`_ made their first contribution in `#5878 <https://github.com/codeigniter4/CodeIgniter4/pull/5878>`_
+* `@datamweb <https://github.com/datamweb>`_ made their first contribution in `#5894 <https://github.com/codeigniter4/CodeIgniter4/pull/5894>`_
+* `@xlii-chl <https://github.com/xlii-chl>`_ made their first contribution in `#5884 <https://github.com/codeigniter4/CodeIgniter4/pull/5884>`_
+* `@valmorflores <https://github.com/valmorflores>`_ made their first contribution in `#6051 <https://github.com/codeigniter4/CodeIgniter4/pull/6051>`_
+* `@tearoom6 <https://github.com/tearoom6>`_ made their first contribution in `#6012 <https://github.com/codeigniter4/CodeIgniter4/pull/6012>`_
+* `@lonnie-vault <https://github.com/lonnie-vault>`_ made their first contribution in `#6060 <https://github.com/codeigniter4/CodeIgniter4/pull/6060>`_
+
+BREAKING
+********
+
+Method Signature Changes
+========================
+
+- The method signature of ``CodeIgniter\Database\BaseBuilder::join()`` and ``CodeIgniter\Database\*\Builder::join()`` have been changed.
+- The method signature of ``Validation::setRule()`` has been changed. The ``string`` typehint on the ``$rules`` parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.
+- The method signature of ``CodeIgniter\CLI\CommandRunner::_remap()`` has been changed to fix a bug.
+- The default parameter values for ``Service::reset()`` and ``CIUnitTestCase::resetServices()`` have been changed from ``false`` to ``true``. This is to eliminate unexpected problems during testing, such as ``lang()`` not getting translated messages.
+
+Behavior Changes
+================
+
+- The ``CodeIgniter\CodeIgniter`` class has a new property ``$context`` and it must have the correct context at runtime. So the following files have been changed:
+    - ``public/index.php``
+    - ``spark``
+- The ``system/bootstrap.php`` file has been modified to easily implement `Preloading <https://www.php.net/manual/en/opcache.preloading.php>`_. Returning a ``CodeIgniter`` instance and loading ``.env`` file have been moved to ``index.php`` and ``spark``.
+- The ``CodeIgniter\Autoloader\Autoloader::initialize()`` has changed the behavior to fix a bug. It used to use Composer classmap only when ``$modules->discoverInComposer`` is true. Now it always uses the Composer classmap if Composer is available.
+- The color code output by :ref:`CLI::color() <cli-library-color>` has been changed to fix a bug.
+- To prevent unexpected access from the web browser, if a controller is added to a cli route (``$routes->cli()``), all methods of that controller are no longer accessible via auto-routing.
+- There is a possible backward compatibility break for those users extending the History Collector and they should probably update ``History::setFiles()`` method.
+- The :php:func:`dot_array_search()`'s unexpected behavior has been fixed. Now ``dot_array_search('foo.bar.baz', ['foo' => ['bar' => 23]])`` returns ``null``. The previous versions returned ``23``.
+- The ``CodeIgniter::storePreviousURL()`` has been changed to store only the URLs whose Content-Type was ``text/html``. It also affects the behavior of :php:func:`previous_url()` and :php:func:`redirect()->back() <redirect>`.
+
+Enhancements
+************
+
+.. _v420-new-improved-auto-routing:
+
+New Improved Auto Routing
+=========================
+
+Added an optional new more secure auto router. These are the changes from the legacy auto-routing:
+
+- A controller method needs HTTP verb prefix like ``getIndex()``, ``postCreate()``.
+    - Developers always know the HTTP method, so requests by an unexpected HTTP method does not pass.
+- The Default Controller (``Home`` by default) and the Default Method (``index`` by default) must be omitted in the URI.
+    - It restricts one-to-one correspondence between controller methods and URIs.
+    - E.g. by default, you can access ``/``, but ``/home`` and ``/home/index`` will be 404.
+- It checks method parameter count.
+    - If there are more parameters in the URI than the method parameters, it results in 404.
+- It does not support ``_remap()`` method.
+    - It restricts one-to-one correspondence between controller methods and URIs.
+- Can't access controllers in Defined Routes.
+    - It completely separates controllers accessible via **Auto Routes** from those accessible via **Defined Routes**.
+
+See :ref:`auto-routing-improved` for the details.
+
+Database
+========
+
+- Added new OCI8 driver for database.
+    - It can access Oracle Database and supports SQL and PL/SQL statements.
+- QueryBuilder
+    - Added Subqueries in the FROM section. See :ref:`query-builder-from-subquery`.
+    - Added Subqueries in the SELECT section. See :ref:`query-builder-select`.
+    - The ``BaseBuilder::buildSubquery()`` method can take an optional third argument ``string $alias``.
+    - Union queries. See :ref:`query-builder-union`.
+- Raw SQL string support
+    - Added the class ``CodeIgniter\Database\RawSql`` which expresses raw SQL strings.
+    - :ref:`select() <query-builder-select-rawsql>`, :ref:`where() <query-builder-where-rawsql>`, :ref:`like() <query-builder-like-rawsql>`, :ref:`join() <query-builder-join-rawsql>` accept the ``CodeIgniter\Database\RawSql`` instance.
+    - ``DBForge::addField()`` default value raw SQL string support. See :ref:`forge-addfield-default-value-rawsql`.
+- SQLite3 has a new Config item ``foreignKeys`` that enables foreign key constraints.
+
+Helpers and Functions
+=====================
+
+- HTML helper ``script_tag()`` now uses ``null`` values to write boolean attributes in minimized form: ``<script src="..." defer />``. See the sample code for :php:func:`script_tag()`.
+- Added 4th parameter ``$includeDir`` to ``get_filenames()``. See :php:func:`get_filenames()`.
+- Exception information logged through ``log_message()`` has now improved. It now includes the file and line where the exception originated. It also does not truncate the message anymore.
+    - The log format has also changed. If users are depending on the log format in their apps, the new log format is "<1-based count> <cleaned filepath>(<line>): <class><function><args>"
+
+Commands
+========
+
+- Added ``spark db:table`` command. See :doc:`../dbmgmt/db_commands` for the details.
+    - You can now see the names of all the tables in the database you are currently connected in the terminal.
+        - ``spark db:table --show``
+    - Or you can see the field names and the records of a table.
+        - ``spark db:table my_table``
+        - ``spark db:table my_table --limit-rows 50 --limit-field-value 20 --desc``
+    - Or you can see metadata like the column type, max length of a table.
+        - ``spark db:table my_table --metadata``
+- The ``spark routes`` command now shows closure routes, auto routes, and filters. See :ref:`URI Routing <routing-spark-routes>`.
+
+Others
+======
+
+- Added ``$this->validateData()`` in Controller. See :ref:`controller-validatedata`.
+- Content Security Policy (CSP) enhancements
+    - Added the configs ``$scriptNonceTag`` and ``$styleNonceTag`` in  ``Config\ContentSecurityPolicy`` to customize the CSP placeholders (``{csp-script-nonce}`` and ``{csp-style-nonce}``)
+    - Added the config ``$autoNonce`` in ``Config\ContentSecurityPolicy`` to disable the CSP placeholder replacement
+    - Added the functions ``csp_script_nonce()`` and ``csp_style_nonce()`` to get nonce attributes
+    - See :ref:`content-security-policy` for details.
+- New :doc:`../outgoing/view_decorators` allow modifying the generated HTML prior to caching.
+- Added Validation Strict Rules. See :ref:`validation-traditional-and-strict-rules`.
+- Added support for webp files to **app/Config/Mimes.php**.
+- ``RouteCollection::addRedirect()`` can now use placeholders. See :ref:`redirecting-routes` for details.
+- Debugbar enhancements
+    - Debug toolbar is now using ``microtime()`` instead of ``time()``.
+- Added a sample file for `Preloading <https://www.php.net/manual/en/opcache.preloading.php>`_. See **preload.php**.
+
+Changes
+*******
+
+- Update minimal PHP requirement to 7.4.
+- To make the default configuration more secure, auto-routing has been changed to disabled by default.
+- Validation. Changed generation of errors when using fields with a wildcard (*). Now the error key contains the full path. See :ref:`validation-getting-all-errors`.
+- ``Validation::getError()`` when using a wildcard will return all found errors matching the mask as a string.
+- The current version of Content Security Policy (CSP) outputs one nonce for script and one for style tags. The previous version outputted one nonce for each tag.
+- The process of sending cookies has been moved to the ``Response`` class. Now the ``Session`` class doesn't send cookies, set them to the Response.
+
+Deprecations
+************
+
+- ``CodeIgniter\Database\SQLSRV\Connection::getError()`` is deprecated. Use ``CodeIgniter\Database\SQLSRV\Connection::error()`` instead.
+- ``CodeIgniter\Debug\Exceptions::cleanPath()`` and ``CodeIgniter\Debug\Toolbar\Collectors\BaseCollector::cleanPath()`` are deprecated. Use the ``clean_path()`` function instead.
+- ``CodeIgniter\Log\Logger::cleanFilenames()`` and ``CodeIgniter\Test\TestLogger::cleanup()`` are both deprecated. Use the ``clean_path()`` function instead.
+- ``CodeIgniter\Router\Router::setDefaultController()`` is deprecated.
+- The constant ``SPARKED`` in **spark** is deprecated. Use the ``$context`` property in ``CodeIgniter\CodeIgniter`` instead.
+- ``CodeIgniter\Autoloader\Autoloader::discoverComposerNamespaces()`` is deprecated, and no longer used.
+- The constants ``EVENT_PRIORITY_LOW``, ``EVENT_PRIORITY_NORMAL`` and ``EVENT_PRIORITY_HIGH`` are deprecated. Use the class constants ``CodeIgniter\Events\Events::PRIORITY_LOW``, ``CodeIgniter\Events\Events::PRIORITY_NORMAL`` and ``CodeIgniter\Events\Events::PRIORITY_HIGH`` instead.
+
+Bugs Fixed
+**********
+
+- The SQLSRV driver ignores the port value from the config.
+
+See the repo's
+`CHANGELOG_4.2.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.2.md>`_
+for a complete list of bugs fixed.

@@ -13,24 +13,26 @@ namespace CodeIgniter\Test;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ReflectionHelperTest extends CIUnitTestCase
 {
-    public function testGetPrivatePropertyWithObject()
+    public function testGetPrivatePropertyWithObject(): void
     {
         $obj    = new __TestForReflectionHelper();
         $actual = $this->getPrivateProperty($obj, 'private');
         $this->assertSame('secret', $actual);
     }
 
-    public function testGetPrivatePropertyWithObjectStaticCall()
+    public function testGetPrivatePropertyWithObjectStaticCall(): void
     {
         $obj    = new __TestForReflectionHelper();
         $actual = CIUnitTestCase::getPrivateProperty($obj, 'private');
         $this->assertSame('secret', $actual);
     }
 
-    public function testGetPrivatePropertyWithStatic()
+    public function testGetPrivatePropertyWithStatic(): void
     {
         $actual = $this->getPrivateProperty(
             __TestForReflectionHelper::class,
@@ -39,7 +41,7 @@ final class ReflectionHelperTest extends CIUnitTestCase
         $this->assertSame('xyz', $actual);
     }
 
-    public function testSetPrivatePropertyWithObject()
+    public function testSetPrivatePropertyWithObject(): void
     {
         $obj = new __TestForReflectionHelper();
         $this->setPrivateProperty(
@@ -50,7 +52,7 @@ final class ReflectionHelperTest extends CIUnitTestCase
         $this->assertSame('open', $obj->getPrivate());
     }
 
-    public function testSetPrivatePropertyWithStatic()
+    public function testSetPrivatePropertyWithStatic(): void
     {
         $this->setPrivateProperty(
             __TestForReflectionHelper::class,
@@ -63,7 +65,7 @@ final class ReflectionHelperTest extends CIUnitTestCase
         );
     }
 
-    public function testGetPrivateMethodInvokerWithObject()
+    public function testGetPrivateMethodInvokerWithObject(): void
     {
         $obj    = new __TestForReflectionHelper();
         $method = $this->getPrivateMethodInvoker(
@@ -76,7 +78,7 @@ final class ReflectionHelperTest extends CIUnitTestCase
         );
     }
 
-    public function testGetPrivateMethodInvokerWithStatic()
+    public function testGetPrivateMethodInvokerWithStatic(): void
     {
         $method = $this->getPrivateMethodInvoker(
             __TestForReflectionHelper::class,
@@ -91,8 +93,8 @@ final class ReflectionHelperTest extends CIUnitTestCase
 
 class __TestForReflectionHelper
 {
-    private $private               = 'secret';
-    private static $static_private = 'xyz';
+    private string $private               = 'secret';
+    private static string $static_private = 'xyz';
 
     public function getPrivate()
     {

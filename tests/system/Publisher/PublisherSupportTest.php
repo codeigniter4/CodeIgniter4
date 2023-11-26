@@ -9,29 +9,28 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+namespace CodeIgniter\Publisher;
+
 use CodeIgniter\Publisher\Exceptions\PublisherException;
-use CodeIgniter\Publisher\Publisher;
 use CodeIgniter\Test\CIUnitTestCase;
 use Tests\Support\Publishers\TestPublisher;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class PublisherSupportTest extends CIUnitTestCase
 {
     /**
      * A known, valid file
-     *
-     * @var string
      */
-    private $file = SUPPORTPATH . 'Files/baker/banana.php';
+    private string $file = SUPPORTPATH . 'Files/baker/banana.php';
 
     /**
      * A known, valid directory
-     *
-     * @var string
      */
-    private $directory = SUPPORTPATH . 'Files/able/';
+    private string $directory = SUPPORTPATH . 'Files/able/';
 
     /**
      * Initialize the helper, since some
@@ -45,7 +44,7 @@ final class PublisherSupportTest extends CIUnitTestCase
         helper(['filesystem']);
     }
 
-    public function testDiscoverDefault()
+    public function testDiscoverDefault(): void
     {
         $result = Publisher::discover();
 
@@ -53,14 +52,14 @@ final class PublisherSupportTest extends CIUnitTestCase
         $this->assertInstanceOf(TestPublisher::class, $result[0]);
     }
 
-    public function testDiscoverNothing()
+    public function testDiscoverNothing(): void
     {
         $result = Publisher::discover('Nothing');
 
         $this->assertSame([], $result);
     }
 
-    public function testDiscoverStores()
+    public function testDiscoverStores(): void
     {
         $publisher = Publisher::discover()[0];
         $publisher->set([])->addFile($this->file);
@@ -70,21 +69,21 @@ final class PublisherSupportTest extends CIUnitTestCase
         $this->assertSame([$this->file], $result[0]->get());
     }
 
-    public function testGetSource()
+    public function testGetSource(): void
     {
         $publisher = new Publisher(ROOTPATH);
 
         $this->assertSame(ROOTPATH, $publisher->getSource());
     }
 
-    public function testGetDestination()
+    public function testGetDestination(): void
     {
         $publisher = new Publisher(ROOTPATH, SUPPORTPATH);
 
         $this->assertSame(SUPPORTPATH, $publisher->getDestination());
     }
 
-    public function testGetScratch()
+    public function testGetScratch(): void
     {
         $publisher = new Publisher();
         $this->assertNull($this->getPrivateProperty($publisher, 'scratch'));
@@ -106,7 +105,7 @@ final class PublisherSupportTest extends CIUnitTestCase
         $this->assertDirectoryDoesNotExist($scratch);
     }
 
-    public function testGetErrors()
+    public function testGetErrors(): void
     {
         $publisher = new Publisher();
         $this->assertSame([], $publisher->getErrors());
@@ -120,7 +119,7 @@ final class PublisherSupportTest extends CIUnitTestCase
         $this->assertSame($expected, $publisher->getErrors());
     }
 
-    public function testWipeDirectory()
+    public function testWipeDirectory(): void
     {
         $directory = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . bin2hex(random_bytes(6));
         mkdir($directory, 0700);
@@ -132,7 +131,7 @@ final class PublisherSupportTest extends CIUnitTestCase
         $this->assertDirectoryDoesNotExist($directory);
     }
 
-    public function testWipeIgnoresFiles()
+    public function testWipeIgnoresFiles(): void
     {
         $method = $this->getPrivateMethodInvoker(Publisher::class, 'wipeDirectory');
         $method($this->file);
@@ -140,10 +139,11 @@ final class PublisherSupportTest extends CIUnitTestCase
         $this->assertFileExists($this->file);
     }
 
-    public function testWipe()
+    public function testWipe(): void
     {
         $directory = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . bin2hex(random_bytes(6));
         mkdir($directory, 0700);
+        $directory = realpath($directory) ?: $directory;
         $this->assertDirectoryExists($directory);
         config('Publisher')->restrictions[$directory] = ''; // Allow the directory
 

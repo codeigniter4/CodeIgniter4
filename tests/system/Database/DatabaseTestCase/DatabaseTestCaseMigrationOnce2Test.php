@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\DatabaseTestCase;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Config\Database;
 use Config\Services;
 
 /**
@@ -55,12 +56,30 @@ final class DatabaseTestCaseMigrationOnce2Test extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');
+        $forge = Database::forge();
+        $forge->dropTable('foo', true);
+
+        $this->setUpMethods[] = 'setUpAddNamespace';
 
         parent::setUp();
     }
 
-    public function testMigrationDone()
+    protected function setUpAddNamespace(): void
+    {
+        Services::autoloader()->addNamespace(
+            'Tests\Support\MigrationTestMigrations',
+            SUPPORTPATH . 'MigrationTestMigrations'
+        );
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->regressDatabase();
+    }
+
+    public function testMigrationDone(): void
     {
         $this->seeInDatabase('foo', ['key' => 'foobar']);
     }

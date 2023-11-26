@@ -21,6 +21,8 @@ use Config\App;
  * test cases need to be run as separate processes.
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class TestCaseEmissionsTest extends CIUnitTestCase
 {
@@ -40,9 +42,9 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
-    public function testHeadersEmitted()
+    public function testHeadersEmitted(): void
     {
         $response = new Response(new App());
         $response->pretend(false);
@@ -68,9 +70,9 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
-    public function testHeadersNotEmitted()
+    public function testHeadersNotEmitted(): void
     {
         $response = new Response(new App());
         $response->pretend(false);

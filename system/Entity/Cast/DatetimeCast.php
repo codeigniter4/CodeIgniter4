@@ -23,6 +23,8 @@ class DatetimeCast extends BaseCast
     /**
      * {@inheritDoc}
      *
+     * @return Time
+     *
      * @throws Exception
      */
     public static function get($value, array $params = [])
@@ -32,7 +34,7 @@ class DatetimeCast extends BaseCast
         }
 
         if ($value instanceof DateTime) {
-            return Time::instance($value);
+            return Time::createFromInstance($value);
         }
 
         if (is_numeric($value)) {

@@ -12,12 +12,21 @@
 namespace CodeIgniter\RESTful;
 
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 abstract class BaseResource extends Controller
 {
+    /**
+     * Instance of the main Request object.
+     *
+     * @var CLIRequest|IncomingRequest
+     */
+    protected $request;
+
     /**
      * @var string|null The model that holding this resource's data
      */
@@ -30,10 +39,13 @@ abstract class BaseResource extends Controller
 
     /**
      * Constructor.
+     *
+     * @return void
      */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);
+
         $this->setModel($this->modelName);
     }
 
@@ -42,6 +54,8 @@ abstract class BaseResource extends Controller
      * Given either the name or the object, determine the other.
      *
      * @param object|string|null $which
+     *
+     * @return void
      */
     public function setModel($which = null)
     {

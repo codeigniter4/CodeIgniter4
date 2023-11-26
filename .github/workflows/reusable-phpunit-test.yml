@@ -1,0 +1,214 @@
+name: Reusable PHPUnit Test
+
+on:
+  workflow_call:
+    inputs:
+      job-name:
+        description: Name of the job to appear in GitHub UI
+        type: string
+        required: true
+      php-version:
+        description: The PHP version the workflow should run
+        type: string
+        required: true
+      job-id:
+        description: Job ID to be used as part of cache key and artifact name
+        type: string
+        required: false
+      db-platform:
+        description: The database platform to be tested
+        type: string
+        required: false
+      mysql-version:
+        description: Version of the mysql Docker image
+        type: string
+        required: false
+      group-name:
+        description: The @group to test
+        type: string
+        required: false
+      enable-artifact-upload:
+        description: Whether artifact uploading of coverage results should be enabled
+        type: boolean
+        required: false
+      enable-coverage:
+        description: Whether coverage should be enabled
+        type: boolean
+        required: false
+      enable-profiling:
+        description: Whether slow tests should be profiled
+        type: boolean
+        required: false
+      extra-extensions:
+        description: Additional PHP extensions that are needed to be enabled
+        type: string
+        required: false
+      extra-composer-options:
+        description: Additional Composer options that should be appended to the `composer update` call
+        type: string
+        required: false
+      extra-phpunit-options:
+        description: Additional PHPUnit options that should be appended to the `vendor/bin/phpunit` call
+        type: string
+        required: false
+
+env:
+  NLS_LANG: 'AMERICAN_AMERICA.UTF8'
+  NLS_DATE_FORMAT: 'YYYY-MM-DD HH24:MI:SS'
+  NLS_TIMESTAMP_FORMAT: 'YYYY-MM-DD HH24:MI:SS'
+  NLS_TIMESTAMP_TZ_FORMAT: 'YYYY-MM-DD HH24:MI:SS'
+
+jobs:
+  tests:
+    name: ${{ inputs.job-name }}
+    runs-on: ubuntu-22.04
+
+    # Service containers cannot be extracted to caller workflows yet
+    services:
+      mysql:
+        image: mysql:${{ inputs.mysql-version || '8.0' }}
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd=pg_isready
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          SA_PASSWORD: 1Secure*Password1
+          ACCEPT_EULA: Y
+          MSSQL_PID: Developer
+        ports:
+          - 1433:1433
+        options: >-
+          --health-cmd="/opt/mssql-tools/bin/sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q 'SELECT @@VERSION'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+      oracle:
+        image: gvenzl/oracle-xe:21
+        env:
+          ORACLE_RANDOM_PASSWORD: true
+          APP_USER: ORACLE
+          APP_USER_PASSWORD: ORACLE
+        ports:
+          - 1521:1521
+        options: >-
+          --health-cmd healthcheck.sh
+          --health-interval 20s
+          --health-timeout 10s
+          --health-retries 10
+
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+      memcached:
+        image: memcached:1.6-alpine
+        ports:
+          - 11211:11211
+
+    steps:
+      - name: Create database for MSSQL Server
+        if: ${{ inputs.db-platform == 'SQLSRV' }}
+        run: sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q "CREATE DATABASE test"
+
+      - name: Install latest ImageMagick
+        if: ${{ contains(inputs.extra-extensions, 'imagick') }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install --reinstall libgs9-common fonts-noto-mono libgs9:amd64 libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 libopenjp2-7:amd64 fonts-droid-fallback fonts-dejavu-core
+          sudo apt-get install -y gsfonts libmagickwand-dev imagemagick
+          sudo apt-get install --fix-broken
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ inputs.php-version }}
+          tools: composer
+          extensions: gd, ${{ inputs.extra-extensions }}
+          coverage: ${{ env.COVERAGE_DRIVER }}
+        env:
+          COVERAGE_DRIVER: ${{ inputs.enable-coverage && 'xdebug' || 'none' }}
+
+      - name: Setup global environment variables
+        run: |
+          echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME=${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-db-${{ inputs.db-platform || 'none' }}" >> $GITHUB_ENV
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
+          key: ${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-db-${{ inputs.db-platform || 'none' }}-${{ hashFiles('**/composer.*') }}
+          restore-keys: |
+            ${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-db-${{ inputs.db-platform || 'none' }}-
+            ${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-
+            ${{ inputs.job-id || github.job }}-
+
+      - name: Cache PHPUnit's static analysis cache
+        if: ${{ inputs.enable-artifact-upload }}
+        uses: actions/cache@v3
+        with:
+          path: build/.phpunit.cache/code-coverage
+          key: phpunit-code-coverage-${{ hashFiles('**/phpunit.*') }}
+          restore-keys: |
+            phpunit-code-coverage-
+
+      - name: Install dependencies
+        run: |
+          composer config --global github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+          composer update --ansi ${{ inputs.extra-composer-options }}
+
+      - name: Compute additional PHPUnit options
+        run: |
+          echo "EXTRA_PHPUNIT_OPTIONS=${{ format('{0} {1} {2}', env.GROUP_OPTION, env.COVERAGE_OPTION, inputs.extra-phpunit-options) }}" >> $GITHUB_ENV
+        env:
+          COVERAGE_OPTION: ${{ inputs.enable-coverage && format('--coverage-php build/cov/coverage-{0}.cov', env.ARTIFACT_NAME) || '--no-coverage' }}
+          GROUP_OPTION: ${{ inputs.group-name && format('--group {0}', inputs.group-name) || '' }}
+
+      - name: Run tests
+        run: script -e -c "vendor/bin/phpunit --color=always ${{ env.EXTRA_PHPUNIT_OPTIONS }}"
+        env:
+          DB: ${{ inputs.db-platform }}
+          TACHYCARDIA_MONITOR_GA: ${{ inputs.enable-profiling && 'enabled' || '' }}
+          TERM: xterm-256color
+
+      - name: Upload coverage results as artifact
+        if: ${{ inputs.enable-artifact-upload }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: build/cov/coverage-${{ env.ARTIFACT_NAME }}.cov
+          if-no-files-found: error
+          retention-days: 1

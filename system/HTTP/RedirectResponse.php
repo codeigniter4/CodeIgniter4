@@ -17,6 +17,8 @@ use Config\Services;
 
 /**
  * Handle a redirect response
+ *
+ * @see \CodeIgniter\HTTP\RedirectResponseTest
  */
 class RedirectResponse extends Response
 {
@@ -24,7 +26,7 @@ class RedirectResponse extends Response
      * Sets the URI to redirect to and, optionally, the HTTP status code to use.
      * If no code is provided it will be automatically determined.
      *
-     * @param string   $uri  The URI to redirect to
+     * @param string   $uri  The URI path (relative to baseURL) to redirect to
      * @param int|null $code HTTP status code
      *
      * @return $this
@@ -44,16 +46,20 @@ class RedirectResponse extends Response
      * Sets the URI to redirect to but as a reverse-routed or named route
      * instead of a raw URI.
      *
-     * @throws HTTPException
+     * @param string $route Route name or Controller::method
      *
      * @return $this
+     *
+     * @throws HTTPException
      */
-    public function route(string $route, array $params = [], int $code = 302, string $method = 'auto')
+    public function route(string $route, array $params = [], ?int $code = null, string $method = 'auto')
     {
+        $namedRoute = $route;
+
         $route = Services::routes()->reverseRoute($route, ...$params);
 
         if (! $route) {
-            throw HTTPException::forInvalidRedirectRoute($route);
+            throw HTTPException::forInvalidRedirectRoute($namedRoute);
         }
 
         return $this->redirect(site_url($route), $method, $code);
@@ -75,8 +81,8 @@ class RedirectResponse extends Response
     }
 
     /**
-     * Specifies that the current $_GET and $_POST arrays should be
-     * packaged up with the response.
+     * Sets the current $_GET and $_POST arrays in the session.
+     * This also saves the validation errors.
      *
      * It will then be available via the 'old()' helper function.
      *
@@ -85,19 +91,32 @@ class RedirectResponse extends Response
     public function withInput()
     {
         $session = Services::session();
-
         $session->setFlashdata('_ci_old_input', [
             'get'  => $_GET ?? [],
             'post' => $_POST ?? [],
         ]);
 
-        // If the validation has any errors, transmit those back
-        // so they can be displayed when the validation is handled
-        // within a method different than displaying the form.
+        $this->withErrors();
+
+        return $this;
+    }
+
+    /**
+     * Sets validation errors in the session.
+     *
+     * If the validation has any errors, transmit those back
+     * so they can be displayed when the validation is handled
+     * within a method different than displaying the form.
+     *
+     * @return $this
+     */
+    private function withErrors(): self
+    {
         $validation = Services::validation();
 
         if ($validation->getErrors()) {
-            $session->setFlashdata('_ci_validation_errors', serialize($validation->getErrors()));
+            $session = Services::session();
+            $session->setFlashdata('_ci_validation_errors', $validation->getErrors());
         }
 
         return $this;

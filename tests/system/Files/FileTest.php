@@ -11,81 +11,109 @@
 
 namespace CodeIgniter\Files;
 
+use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
+use ZipArchive;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FileTest extends CIUnitTestCase
 {
-    public function testNewGoodChecked()
+    public function testNewGoodChecked(): void
     {
         $path = SYSTEMPATH . 'Common.php';
         $file = new File($path, true);
         $this->assertSame($path, $file->getRealPath());
     }
 
-    public function testNewGoodUnchecked()
+    public function testNewGoodUnchecked(): void
     {
         $path = SYSTEMPATH . 'Common.php';
         $file = new File($path, false);
         $this->assertSame($path, $file->getRealPath());
     }
 
-    public function testNewBadUnchecked()
+    public function testNewBadUnchecked(): void
     {
         $path = SYSTEMPATH . 'bogus';
         $file = new File($path, false);
         $this->assertFalse($file->getRealPath());
     }
 
-    public function testGuessExtension()
+    public function testGuessExtension(): void
     {
         $file = new File(SYSTEMPATH . 'Common.php');
         $this->assertSame('php', $file->guessExtension());
+
         $file = new File(SYSTEMPATH . 'index.html');
         $this->assertSame('html', $file->guessExtension());
+
         $file = new File(ROOTPATH . 'phpunit.xml.dist');
         $this->assertSame('xml', $file->guessExtension());
+
+        $tmp  = tempnam(SUPPORTPATH, 'foo');
+        $file = new File($tmp, true);
+        $this->assertNull($file->guessExtension());
+        unlink($tmp);
     }
 
-    public function testRandomName()
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/6046
+     */
+    public function testGuessExtensionOnZip(): void
+    {
+        $tmp = SUPPORTPATH . 'foobar.zip';
+
+        $zip = new ZipArchive();
+        $zip->open($tmp, ZipArchive::CREATE | ZipArchive::CHECKCONS | ZipArchive::EXCL);
+        $zip->addFile(SYSTEMPATH . 'Common.php');
+        $zip->close();
+
+        $file = new File($tmp, true);
+        $this->assertSame('zip', $file->guessExtension());
+        unlink($tmp);
+    }
+
+    public function testRandomName(): void
     {
         $file    = new File(SYSTEMPATH . 'Common.php');
         $result1 = $file->getRandomName();
         $this->assertNotSame($result1, $file->getRandomName());
     }
 
-    public function testCanAccessSplFileInfoMethods()
+    public function testCanAccessSplFileInfoMethods(): void
     {
         $file = new File(SYSTEMPATH . 'Common.php');
         $this->assertSame('file', $file->getType());
     }
 
-    public function testGetSizeReturnsKB()
+    public function testGetSizeReturnsKB(): void
     {
         $file = new File(SYSTEMPATH . 'Common.php');
         $size = number_format(filesize(SYSTEMPATH . 'Common.php') / 1024, 3);
         $this->assertSame($size, $file->getSizeByUnit('kb'));
     }
 
-    public function testGetSizeReturnsMB()
+    public function testGetSizeReturnsMB(): void
     {
         $file = new File(SYSTEMPATH . 'Common.php');
         $size = number_format(filesize(SYSTEMPATH . 'Common.php') / 1024 / 1024, 3);
         $this->assertSame($size, $file->getSizeByUnit('mb'));
     }
 
-    public function testGetSizeReturnsBytes()
+    public function testGetSizeReturnsBytes(): void
     {
         $file = new File(SYSTEMPATH . 'Common.php');
         $size = filesize(SYSTEMPATH . 'Common.php');
         $this->assertSame($size, $file->getSizeByUnit('b'));
     }
 
-    public function testThrowsExceptionIfNotAFile()
+    public function testThrowsExceptionIfNotAFile(): void
     {
-        $this->expectException('CodeIgniter\Files\Exceptions\FileNotFoundException');
+        $this->expectException(FileNotFoundException::class);
 
         new File(SYSTEMPATH . 'Commoner.php', true);
     }

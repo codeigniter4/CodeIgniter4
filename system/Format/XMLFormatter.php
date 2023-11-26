@@ -17,15 +17,17 @@ use SimpleXMLElement;
 
 /**
  * XML data formatter
+ *
+ * @see \CodeIgniter\Format\XMLFormatterTest
  */
 class XMLFormatter implements FormatterInterface
 {
     /**
      * Takes the given data and formats it.
      *
-     * @param mixed $data
+     * @param array|bool|float|int|object|string|null $data
      *
-     * @return bool|string (XML string | false)
+     * @return false|string (XML string | false)
      */
     public function format($data)
     {
@@ -34,10 +36,7 @@ class XMLFormatter implements FormatterInterface
         // SimpleXML is installed but default
         // but best to check, and then provide a fallback.
         if (! extension_loaded('simplexml')) {
-            // never thrown in travis-ci
-            // @codeCoverageIgnoreStart
-            throw FormatException::forMissingExtension();
-            // @codeCoverageIgnoreEnd
+            throw FormatException::forMissingExtension(); // @codeCoverageIgnore
         }
 
         $options = $config->formatterOptions['application/xml'] ?? 0;
@@ -56,6 +55,8 @@ class XMLFormatter implements FormatterInterface
      * @see http://www.codexworld.com/convert-array-to-xml-in-php/
      *
      * @param SimpleXMLElement $output
+     *
+     * @return void
      */
     protected function arrayToXML(array $data, &$output)
     {

@@ -82,10 +82,7 @@ class CreateDatabase extends BaseCommand
         }
 
         try {
-            /**
-             * @var Database $config
-             */
-            $config = config('Database');
+            $config = config(Database::class);
 
             // Set to an empty database to prevent connection errors.
             $group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
@@ -148,8 +145,8 @@ class CreateDatabase extends BaseCommand
         } catch (Throwable $e) {
             $this->showError($e);
         } finally {
-            // Reset the altered config no matter what happens.
             Factories::reset('config');
+            Database::connect(null, false);
         }
     }
 }

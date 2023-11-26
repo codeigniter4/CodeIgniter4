@@ -1,0 +1,32 @@
+name: Check Signed PR
+on:
+  pull_request:
+    branches:
+      - 'develop'
+      - '4.*'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  build:
+    name: Check Signed Commit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check signed commits in PR
+        uses: 1Password/check-signed-commits-action@v1
+        with:
+          comment: |
+            You must GPG-sign your work, certifying that you either wrote the work or otherwise have the right to pass it on to an open-source project. See Developer's Certificate of Origin. See [signing][1].
+
+            **Note that all your commits must be signed.** If you have an unsigned commit, you can sign the previous commits by referring to [gpg-signing-old-commits][2].
+            [1]: https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#signing
+            [2]: https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/workflow.md#gpg-signing-old-commits

@@ -1,0 +1,16 @@
+Version 4.1.9
+#############
+
+Release Date: February 25, 2022
+
+**4.1.9 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+SECURITY
+********
+
+- *Remote CLI Command Execution Vulnerability* was fixed. See the `Security advisory GHSA-xjp4-6w75-qrj7 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-xjp4-6w75-qrj7>`_ for more information.
+- *Cross-Site Request Forgery (CSRF) Protection Bypass Vulnerability* was fixed. See the `Security advisory GHSA-4v37-24gm-h554 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-4v37-24gm-h554>`_ for more information.

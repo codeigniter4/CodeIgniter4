@@ -18,6 +18,8 @@ use RecursiveIteratorIterator;
  * Class FileCollection
  *
  * Provides easy access to uploaded files for a request.
+ *
+ * @see \CodeIgniter\HTTP\Files\FileCollectionTest
  */
 class FileCollection
 {
@@ -75,7 +77,7 @@ class FileCollection
     /**
      * Verify if a file exist in the collection of uploaded files and is have been uploaded with multiple option.
      *
-     * @return array|null
+     * @return list<UploadedFile>|null
      */
     public function getFileMultiple(string $name)
     {
@@ -135,6 +137,8 @@ class FileCollection
      * of UploadedFile for each one, saving the results to this->files.
      *
      * Called by files(), file(), and hasFile()
+     *
+     * @return void
      */
     protected function populateFiles()
     {
@@ -159,7 +163,7 @@ class FileCollection
      * Given a file array, will create UploadedFile instances. Will
      * loop over an array and create objects for each.
      *
-     * @return array|UploadedFile
+     * @return UploadedFile|UploadedFile[]
      */
     protected function createFileObject(array $array)
     {
@@ -182,7 +186,8 @@ class FileCollection
             $array['name'] ?? null,
             $array['type'] ?? null,
             $array['size'] ?? null,
-            $array['error'] ?? null
+            $array['error'] ?? null,
+            $array['full_path'] ?? null
         );
     }
 
@@ -220,6 +225,10 @@ class FileCollection
                     $pointer = &$stack[count($stack) - 1];
                     $pointer = &$pointer[$key];
                     $stack[] = &$pointer;
+
+                    // RecursiveIteratorIterator::hasChildren() can be used. RecursiveIteratorIterator
+                    // forwards all unknown method calls to the underlying RecursiveIterator internally.
+                    // See https://github.com/php/doc-en/issues/787#issuecomment-881446121
                     if (! $iterator->hasChildren()) {
                         $pointer[$field] = $val;
                     }
@@ -231,12 +240,12 @@ class FileCollection
     }
 
     /**
-     * Navigate through a array looking for a particular index
+     * Navigate through an array looking for a particular index
      *
      * @param array $index The index sequence we are navigating down
      * @param array $value The portion of the array to process
      *
-     * @return mixed
+     * @return list<UploadedFile>|UploadedFile|null
      */
     protected function getValueDotNotationSyntax(array $index, array $value)
     {

@@ -11,10 +11,14 @@
 
 namespace CodeIgniter\Database\Live;
 
+use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @group DatabaseLive
@@ -25,50 +29,38 @@ final class PreparedQueryTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected $refresh = true;
-    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed                   = CITestSeeder::class;
+    private ?BasePreparedQuery $query = null;
 
-    public function testPrepareReturnsPreparedQuery()
+    protected function setUp(): void
     {
-        $query = $this->db->prepare(static function ($db) {
-            return $db->table('user')->insert([
-                'name'  => 'a',
-                'email' => 'b@example.com',
-            ]);
-        });
+        parent::setUp();
 
-        $this->assertInstanceOf(BasePreparedQuery::class, $query);
-
-        $ec  = $this->db->escapeChar;
-        $pre = $this->db->DBPrefix;
-
-        $placeholders = '?, ?';
-
-        if ($this->db->DBDriver === 'Postgre') {
-            $placeholders = '$1, $2';
-        }
-
-        if ($this->db->DBDriver === 'SQLSRV') {
-            $database = $this->db->getDatabase();
-            $expected = "INSERT INTO {$ec}{$database}{$ec}.{$ec}{$this->db->schema}{$ec}.{$ec}{$pre}user{$ec} ({$ec}name{$ec},{$ec}email{$ec}) VALUES ({$placeholders})";
-        } else {
-            $expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}) VALUES ({$placeholders})";
-        }
-        $this->assertSame($expected, $query->getQueryString());
-
-        $query->close();
+        $this->query = null;
     }
 
-    public function testPrepareReturnsManualPreparedQuery()
+    protected function tearDown(): void
     {
-        $query = $this->db->prepare(static function ($db) {
-            $sql = "INSERT INTO {$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
+        parent::tearDown();
 
-            return (new Query($db))->setQuery($sql);
-        });
+        try {
+            $this->query->close();
+        } catch (BadMethodCallException $e) {
+            $this->query = null;
+        }
+    }
 
-        $this->assertInstanceOf(BasePreparedQuery::class, $query);
+    public function testPrepareReturnsPreparedQuery(): void
+    {
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->insert([
+            'name'    => 'a',
+            'email'   => 'b@example.com',
+            'country' => 'JP',
+        ]));
 
+        $this->assertInstanceOf(BasePreparedQuery::class, $this->query);
+
+        $ec  = $this->db->escapeChar;
         $pre = $this->db->DBPrefix;
 
         $placeholders = '?, ?, ?';
@@ -77,49 +69,202 @@ final class PreparedQueryTest extends CIUnitTestCase
             $placeholders = '$1, $2, $3';
         }
 
-        $expected = "INSERT INTO {$pre}user (name, email, country) VALUES ({$placeholders})";
-        $this->assertSame($expected, $query->getQueryString());
+        if ($this->db->DBDriver === 'SQLSRV') {
+            $database = $this->db->getDatabase();
+            $expected = "INSERT INTO {$ec}{$database}{$ec}.{$ec}{$this->db->schema}{$ec}.{$ec}{$pre}user{$ec} ({$ec}name{$ec},{$ec}email{$ec},{$ec}country{$ec}) VALUES ({$placeholders})";
+        } else {
+            $expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}, {$ec}country{$ec}) VALUES ({$placeholders})";
+        }
 
-        $query->close();
+        $this->assertSame($expected, $this->query->getQueryString());
     }
 
-    public function testExecuteRunsQueryAndReturnsResultObject()
+    public function testPrepareReturnsManualPreparedQuery(): void
     {
-        $query = $this->db->prepare(static function ($db) {
-            return $db->table('user')->insert([
-                'name'    => 'a',
-                'email'   => 'b@example.com',
-                'country' => 'x',
-            ]);
-        });
-
-        $query->execute('foo', 'foo@example.com', 'US');
-        $query->execute('bar', 'bar@example.com', 'GB');
-
-        $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'foo', 'email' => 'foo@example.com']);
-        $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'bar', 'email' => 'bar@example.com']);
-
-        $query->close();
-    }
-
-    public function testExecuteRunsQueryAndReturnsManualResultObject()
-    {
-        $query = $this->db->prepare(static function ($db) {
-            $sql = "INSERT INTO {$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
-
-            if ($db->DBDriver === 'SQLSRV') {
-                $sql = "INSERT INTO {$db->schema}.{$db->DBPrefix}user (name, email, country) VALUES (?, ?, ?)";
-            }
+        $this->query = $this->db->prepare(static function ($db) {
+            $sql = "INSERT INTO {$db->protectIdentifiers($db->DBPrefix . 'user')} ("
+                . $db->protectIdentifiers('name') . ', '
+                . $db->protectIdentifiers('email') . ', '
+                . $db->protectIdentifiers('country')
+                . ') VALUES (?, ?, ?)';
 
             return (new Query($db))->setQuery($sql);
         });
 
-        $query->execute('foo', 'foo@example.com', '');
-        $query->execute('bar', 'bar@example.com', '');
+        $this->assertInstanceOf(BasePreparedQuery::class, $this->query);
+
+        $ec  = $this->db->escapeChar;
+        $pre = $this->db->DBPrefix;
+
+        $placeholders = '?, ?, ?';
+
+        if ($this->db->DBDriver === 'Postgre') {
+            $placeholders = '$1, $2, $3';
+        }
+
+        $expected = "INSERT INTO {$ec}{$pre}user{$ec} ({$ec}name{$ec}, {$ec}email{$ec}, {$ec}country{$ec}) VALUES ({$placeholders})";
+
+        $this->assertSame($expected, $this->query->getQueryString());
+    }
+
+    public function testExecuteRunsQueryAndReturnsTrue(): void
+    {
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->insert([
+            'name'    => 'a',
+            'email'   => 'b@example.com',
+            'country' => 'x',
+        ]));
+
+        $this->assertTrue($this->query->execute('foo', 'foo@example.com', 'US'));
+        $this->assertTrue($this->query->execute('bar', 'bar@example.com', 'GB'));
+
+        $this->dontSeeInDatabase($this->db->DBPrefix . 'user', ['name' => 'a', 'email' => 'b@example.com']);
+        $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'foo', 'email' => 'foo@example.com']);
+        $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'bar', 'email' => 'bar@example.com']);
+    }
+
+    public function testExecuteRunsQueryManualAndReturnsTrue(): void
+    {
+        $this->query = $this->db->prepare(static function ($db) {
+            $sql = "INSERT INTO {$db->protectIdentifiers($db->DBPrefix . 'user')} ("
+                . $db->protectIdentifiers('name') . ', '
+                . $db->protectIdentifiers('email') . ', '
+                . $db->protectIdentifiers('country')
+                . ') VALUES (?, ?, ?)';
+
+            return (new Query($db))->setQuery($sql);
+        });
+
+        $this->assertTrue($this->query->execute('foo', 'foo@example.com', 'US'));
+        $this->assertTrue($this->query->execute('bar', 'bar@example.com', 'GB'));
 
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'foo', 'email' => 'foo@example.com']);
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'bar', 'email' => 'bar@example.com']);
+    }
 
-        $query->close();
+    public function testExecuteRunsQueryAndReturnsFalse(): void
+    {
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('without_auto_increment')->insert([
+            'key'   => 'a',
+            'value' => 'b',
+        ]));
+
+        $this->disableDBDebug();
+
+        $this->assertTrue($this->query->execute('foo1', 'bar'));
+        $this->assertFalse($this->query->execute('foo1', 'baz'));
+
+        $this->enableDBDebug();
+
+        $this->seeInDatabase($this->db->DBPrefix . 'without_auto_increment', ['key' => 'foo1', 'value' => 'bar']);
+        $this->dontSeeInDatabase($this->db->DBPrefix . 'without_auto_increment', ['key' => 'foo1', 'value' => 'baz']);
+    }
+
+    public function testExecuteRunsQueryManualAndReturnsFalse(): void
+    {
+        $this->query = $this->db->prepare(static function ($db) {
+            $sql = "INSERT INTO {$db->protectIdentifiers($db->DBPrefix . 'without_auto_increment')} ("
+                . $db->protectIdentifiers('key') . ', '
+                . $db->protectIdentifiers('value')
+                . ') VALUES (?, ?)';
+
+            return (new Query($db))->setQuery($sql);
+        });
+
+        $this->disableDBDebug();
+
+        $this->assertTrue($this->query->execute('foo1', 'bar'));
+        $this->assertFalse($this->query->execute('foo1', 'baz'));
+
+        $this->enableDBDebug();
+
+        $this->seeInDatabase($this->db->DBPrefix . 'without_auto_increment', ['key' => 'foo1', 'value' => 'bar']);
+        $this->dontSeeInDatabase($this->db->DBPrefix . 'without_auto_increment', ['key' => 'foo1', 'value' => 'baz']);
+    }
+
+    public function testExecuteSelectQueryAndCheckTypeAndResult(): void
+    {
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->select('name, email, country')->where([
+            'name' => 'foo',
+        ])->get());
+
+        $result = $this->query->execute('Derek Jones');
+
+        $this->assertInstanceOf(ResultInterface::class, $result);
+
+        $expectedRow = ['name' => 'Derek Jones', 'email' => 'derek@world.com', 'country' => 'US'];
+        $this->assertSame($expectedRow, $result->getRowArray());
+    }
+
+    public function testExecuteSelectQueryManualAndCheckTypeAndResult(): void
+    {
+        $this->query = $this->db->prepare(static function ($db) {
+            $sql = 'SELECT '
+                . $db->protectIdentifiers('name') . ', '
+                . $db->protectIdentifiers('email') . ', '
+                . $db->protectIdentifiers('country') . ' '
+                . "FROM {$db->protectIdentifiers($db->DBPrefix . 'user')}"
+                . "WHERE {$db->protectIdentifiers('name')} = ?";
+
+            return (new Query($db))->setQuery($sql);
+        });
+
+        $result = $this->query->execute('Derek Jones');
+
+        $this->assertInstanceOf(ResultInterface::class, $result);
+
+        $expectedRow = ['name' => 'Derek Jones', 'email' => 'derek@world.com', 'country' => 'US'];
+        $this->assertSame($expectedRow, $result->getRowArray());
+    }
+
+    public function testExecuteRunsInvalidQuery(): void
+    {
+        $this->expectException(DatabaseException::class);
+
+        // Not null `country` is missing
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->insert([
+            'name'  => 'a',
+            'email' => 'b@example.com',
+        ]));
+
+        $this->query->execute('foo', 'foo@example.com', 'US');
+    }
+
+    public function testDeallocatePreparedQueryThenTryToExecute(): void
+    {
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->insert([
+            'name'    => 'a',
+            'email'   => 'b@example.com',
+            'country' => 'x',
+        ]));
+
+        $this->query->close();
+
+        // Try to execute a non-existing prepared statement
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage('You must call prepare before trying to execute a prepared statement.');
+
+        $this->query->execute('bar', 'bar@example.com', 'GB');
+    }
+
+    public function testDeallocatePreparedQueryThenTryToClose(): void
+    {
+        $this->query = $this->db->prepare(
+            static fn ($db) => $db->table('user')->insert([
+                'name'    => 'a',
+                'email'   => 'b@example.com',
+                'country' => 'x',
+            ])
+        );
+
+        $this->query->close();
+
+        // Try to close a non-existing prepared statement
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage(
+            'Cannot call close on a non-existing prepared statement.'
+        );
+
+        $this->query->close();
     }
 }

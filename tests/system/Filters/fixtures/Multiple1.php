@@ -19,12 +19,12 @@ class Multiple1 implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        $request->csp = 'http://exampleMultipleCSP.com';
+        $request->setHeader('x-csp', 'http://exampleMultipleCSP.com');
 
         return $request;
     }
 
-    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null): void
     {
     }
 }

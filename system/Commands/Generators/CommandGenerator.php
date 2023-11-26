@@ -53,7 +53,7 @@ class CommandGenerator extends BaseCommand
     /**
      * The Command's Arguments
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [
         'name' => 'The command class name.',
@@ -62,12 +62,12 @@ class CommandGenerator extends BaseCommand
     /**
      * The Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [
         '--command'   => 'The command name. Default: "command:name"',
         '--type'      => 'The command type. Options [basic, generator]. Default: "basic".',
-        '--group'     => 'The command group. Default: [basic -> "CodeIgniter", generator -> "Generators"].',
+        '--group'     => 'The command group. Default: [basic -> "App", generator -> "Generators"].',
         '--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
         '--suffix'    => 'Append the component title to the class name (e.g. User => UserCommand).',
         '--force'     => 'Force overwrite existing file.',
@@ -106,7 +106,7 @@ class CommandGenerator extends BaseCommand
         }
 
         if (! is_string($group)) {
-            $group = $type === 'generator' ? 'Generators' : 'CodeIgniter';
+            $group = $type === 'generator' ? 'Generators' : 'App';
         }
 
         return $this->parseTemplate(

@@ -13,25 +13,25 @@ namespace CodeIgniter\CLI;
 
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\DotEnv;
-use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ConsoleTest extends CIUnitTestCase
 {
-    private $stream_filter;
+    use StreamFilterTrait;
+
+    private DotEnv $env;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        CITestStreamFilter::$buffer = '';
-        $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
 
         $this->env = new DotEnv(ROOTPATH);
         $this->env->load();
@@ -41,57 +41,108 @@ final class ConsoleTest extends CIUnitTestCase
             $_SERVER['app.baseURL'] = 'http://example.com/';
         }
 
-        $_SERVER['argv'] = [
-            'spark',
-            'list',
-        ];
-        $_SERVER['argc'] = 2;
-        CLI::init();
-
         $this->app = new MockCodeIgniter(new MockCLIConfig());
+        $this->app->initialize();
     }
 
-    protected function tearDown(): void
+    public function testHeader(): void
     {
-        stream_filter_remove($this->stream_filter);
-    }
-
-    public function testNew()
-    {
-        $console = new Console($this->app);
-        $this->assertInstanceOf(Console::class, $console);
-    }
-
-    public function testHeader()
-    {
-        $console = new Console($this->app);
+        $console = new Console();
         $console->showHeader();
-        $result = CITestStreamFilter::$buffer;
-        $this->assertTrue(strpos($result, sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION)) > 0);
+        $this->assertGreaterThan(
+            0,
+            strpos(
+                $this->getStreamFilterBuffer(),
+                sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION)
+            )
+        );
     }
 
-    public function testNoHeader()
+    public function testNoHeader(): void
     {
-        $console = new Console($this->app);
+        $console = new Console();
         $console->showHeader(true);
-        $result = CITestStreamFilter::$buffer;
-        $this->assertSame('', $result);
+        $this->assertSame('', $this->getStreamFilterBuffer());
     }
 
-    public function testRun()
+    public function testRun(): void
     {
-        $request = new CLIRequest(config('App'));
-        $this->app->setRequest($request);
+        $this->initCLI();
 
-        $console = new Console($this->app);
-        $console->run(true);
-        $result = CITestStreamFilter::$buffer;
-
-        // close open buffer
-        ob_end_clean();
+        $console = new Console();
+        $console->run();
 
         // make sure the result looks like a command list
-        $this->assertStringContainsString('Lists the available commands.', $result);
-        $this->assertStringContainsString('Displays basic usage information.', $result);
+        $this->assertStringContainsString('Lists the available commands.', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
+    }
+
+    public function testBadCommand(): void
+    {
+        $this->initCLI('bogus');
+
+        $console = new Console();
+        $console->run();
+
+        // make sure the result looks like a command list
+        $this->assertStringContainsString('Command "bogus" not found', $this->getStreamFilterBuffer());
+    }
+
+    public function testHelpCommandDetails(): void
+    {
+        $this->initCLI('help', 'session:migration');
+
+        $console = new Console();
+        $console->run();
+
+        // make sure the result looks like more detailed help
+        $this->assertStringContainsString('Description:', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('Usage:', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('Options:', $this->getStreamFilterBuffer());
+    }
+
+    public function testHelpCommandUsingHelpOption(): void
+    {
+        $this->initCLI('env', '--help');
+
+        (new Console())->run();
+
+        $this->assertStringContainsString('env [<environment>]', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString(
+            'Retrieves the current environment, or set a new one.',
+            $this->getStreamFilterBuffer()
+        );
+    }
+
+    public function testHelpOptionIsOnlyPassed(): void
+    {
+        $this->initCLI('--help');
+
+        (new Console())->run();
+
+        // Since calling `php spark` is the same as calling `php spark list`,
+        // `php spark --help` should be the same as `php spark list --help`
+        $this->assertStringContainsString('Lists the available commands.', $this->getStreamFilterBuffer());
+    }
+
+    public function testHelpArgumentAndHelpOptionCombined(): void
+    {
+        $this->initCLI('help', '--help');
+
+        (new Console())->run();
+
+        // Same as calling `php spark help` only
+        $this->assertStringContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
+    }
+
+    /**
+     * @param array $command
+     */
+    protected function initCLI(...$command): void
+    {
+        $_SERVER['argv'] = ['spark', ...$command];
+        $_SERVER['argc'] = count($_SERVER['argv']);
+
+        CLI::init();
     }
 }

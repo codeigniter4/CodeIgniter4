@@ -13,7 +13,10 @@ namespace CodeIgniter\Helpers\URLHelper;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\SiteURIFactory;
+use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
@@ -25,20 +28,12 @@ use Config\App;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group Others
  */
 final class SiteUrlTest extends CIUnitTestCase
 {
-    /**
-     * @var App
-     */
-    private $config;
-
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-
-        helper('url');
-    }
+    private App $config;
 
     protected function setUp(): void
     {
@@ -47,7 +42,6 @@ final class SiteUrlTest extends CIUnitTestCase
         Services::reset(true);
 
         $this->config = new App();
-        Factories::injectMock('config', 'App', $this->config);
     }
 
     protected function tearDown(): void
@@ -55,6 +49,23 @@ final class SiteUrlTest extends CIUnitTestCase
         parent::tearDown();
 
         $_SERVER = [];
+    }
+
+    private function createRequest(?App $config = null, $body = null, ?string $path = null): void
+    {
+        $config ??= new App();
+
+        $factory = new SiteURIFactory($config, new Superglobals());
+        $uri     = $factory->createFromGlobals();
+
+        if ($path !== null) {
+            $uri->setPath($path);
+        }
+
+        $request = new IncomingRequest($config, $uri, $body, new UserAgent());
+        Services::injectMock('request', $request);
+
+        Factories::injectMock('config', 'App', $config);
     }
 
     /**
@@ -67,28 +78,43 @@ final class SiteUrlTest extends CIUnitTestCase
      * @param bool        $secure
      * @param string      $path
      * @param string      $expectedSiteUrl
+     * @param string      $expectedBaseUrl
      *
-     * @dataProvider configProvider
+     * @dataProvider provideUrls
      */
-    public function testUrls($baseURL, $indexPage, $scheme, $secure, $path, $expectedSiteUrl)
-    {
+    public function testUrls(
+        $baseURL,
+        $indexPage,
+        $scheme,
+        $secure,
+        $path,
+        $expectedSiteUrl,
+        $expectedBaseUrl
+    ): void {
         // Set the config
         $this->config->baseURL                   = $baseURL;
         $this->config->indexPage                 = $indexPage;
         $this->config->forceGlobalSecureRequests = $secure;
 
-        $this->assertSame($expectedSiteUrl, site_url($path, $scheme, $this->config));
+        $this->createRequest($this->config);
 
-        // base_url is always the trimmed site_url without index page
-        $expectedBaseUrl = $indexPage === '' ? $expectedSiteUrl : str_replace('/' . $indexPage, '', $expectedSiteUrl);
-        $expectedBaseUrl = rtrim($expectedBaseUrl, '/');
+        $this->assertSame($expectedSiteUrl, site_url($path, $scheme, $this->config));
         $this->assertSame($expectedBaseUrl, base_url($path, $scheme));
     }
 
-    public function configProvider()
+    public static function provideUrls(): iterable
     {
-        // baseURL, indexPage, scheme, path, expectedSiteUrl
+        // baseURL, indexPage, scheme, secure, path, expectedSiteUrl, expectedBaseUrl
         return [
+            'forceGlobalSecure' => [
+                'http://example.com/',
+                'index.php',
+                null,
+                true,
+                '',
+                'https://example.com/index.php',
+                'https://example.com/',
+            ],
             [
                 'http://example.com/',
                 'index.php',
@@ -96,14 +122,16 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 '',
                 'http://example.com/index.php',
+                'http://example.com/',
             ],
-            [
+            'baseURL missing /' => [
                 'http://example.com',
                 'index.php',
                 null,
                 false,
                 '',
                 'http://example.com/index.php',
+                'http://example.com/',
             ],
             [
                 'http://example.com/',
@@ -111,6 +139,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 null,
                 false,
                 '',
+                'http://example.com/',
                 'http://example.com/',
             ],
             [
@@ -120,6 +149,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 '',
                 'http://example.com/banana.php',
+                'http://example.com/',
             ],
             [
                 'http://example.com/',
@@ -128,6 +158,52 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 'abc',
                 'http://example.com/abc',
+                'http://example.com/abc',
+            ],
+            [
+                'http://example.com/',
+                '',
+                null,
+                false,
+                '/abc',
+                'http://example.com/abc',
+                'http://example.com/abc',
+            ],
+            [
+                'http://example.com/',
+                '',
+                null,
+                false,
+                '/abc/',
+                'http://example.com/abc/',
+                'http://example.com/abc/',
+            ],
+            [
+                'http://example.com/',
+                '',
+                null,
+                false,
+                '/abc/def',
+                'http://example.com/abc/def',
+                'http://example.com/abc/def',
+            ],
+            'URL decode' => [
+                'http://example.com/',
+                '',
+                null,
+                false,
+                'template/meet-%26-greet',
+                'http://example.com/template/meet-&-greet',
+                'http://example.com/template/meet-&-greet',
+            ],
+            'URL encode' => [
+                'http://example.com/',
+                '',
+                null,
+                false,
+                '<s>alert</s>',
+                'http://example.com/%3Cs%3Ealert%3C/s%3E',
+                'http://example.com/%3Cs%3Ealert%3C/s%3E',
             ],
             [
                 'http://example.com/public/',
@@ -136,6 +212,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 '',
                 'http://example.com/public/index.php',
+                'http://example.com/public/',
             ],
             [
                 'http://example.com/public/',
@@ -143,6 +220,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 null,
                 false,
                 '',
+                'http://example.com/public/',
                 'http://example.com/public/',
             ],
             [
@@ -151,6 +229,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 null,
                 false,
                 '',
+                'http://example.com/public/',
                 'http://example.com/public/',
             ],
             [
@@ -160,6 +239,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 '/',
                 'http://example.com/public/index.php/',
+                'http://example.com/public/',
             ],
             [
                 'http://example.com/public/',
@@ -168,6 +248,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 '/',
                 'http://example.com/public/index.php/',
+                'http://example.com/public/',
             ],
             [
                 'http://example.com/',
@@ -176,6 +257,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 'foo',
                 'http://example.com/index.php/foo',
+                'http://example.com/foo',
             ],
             [
                 'http://example.com/',
@@ -184,6 +266,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 '0',
                 'http://example.com/index.php/0',
+                'http://example.com/0',
             ],
             [
                 'http://example.com/public',
@@ -192,6 +275,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 'foo',
                 'http://example.com/public/index.php/foo',
+                'http://example.com/public/foo',
             ],
             [
                 'http://example.com/',
@@ -200,6 +284,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 'foo?bar=bam',
                 'http://example.com/index.php/foo?bar=bam',
+                'http://example.com/foo?bar=bam',
             ],
             [
                 'http://example.com/',
@@ -208,6 +293,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 'test#banana',
                 'http://example.com/index.php/test#banana',
+                'http://example.com/test#banana',
             ],
             [
                 'http://example.com/',
@@ -216,6 +302,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 'foo',
                 'ftp://example.com/index.php/foo',
+                'ftp://example.com/foo',
             ],
             [
                 'http://example.com/',
@@ -224,6 +311,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 'news/local/123',
                 'http://example.com/index.php/news/local/123',
+                'http://example.com/news/local/123',
             ],
             [
                 'http://example.com/',
@@ -232,11 +320,26 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 ['news', 'local', '123'],
                 'http://example.com/index.php/news/local/123',
+                'http://example.com/news/local/123',
             ],
         ];
     }
 
-    // base_url
+    public function testSiteURLWithEmptyStringScheme(): void
+    {
+        $this->config->baseURL                   = 'http://example.com/';
+        $this->config->indexPage                 = 'index.php';
+        $this->config->forceGlobalSecureRequests = false;
+
+        $this->assertSame(
+            '//example.com/index.php/test',
+            site_url('test', '', $this->config)
+        );
+        $this->assertSame(
+            '//example.com/img/test.jpg',
+            base_url('img/test.jpg', '')
+        );
+    }
 
     /**
      * These tests are only really relevant to show that base_url()
@@ -244,34 +347,114 @@ final class SiteUrlTest extends CIUnitTestCase
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/240
      */
-    public function testBaseURLDiscovery()
+    public function testBaseURLDiscovery(): void
     {
         $this->config->baseURL = 'http://example.com/';
 
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/test';
 
-        $this->assertSame('http://example.com', base_url());
+        $this->createRequest($this->config);
+
+        $this->assertSame('http://example.com/', base_url());
 
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/test/page';
 
-        $this->assertSame('http://example.com', base_url());
+        $this->createRequest($this->config);
+
+        $this->assertSame('http://example.com/', base_url());
         $this->assertSame('http://example.com/profile', base_url('profile'));
     }
 
-    public function testBaseURLService()
+    public function testBaseURLService(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/ci/v4/x/y';
 
         $this->config->baseURL = 'http://example.com/ci/v4/';
-        $request               = Services::request($this->config);
-        $request->uri          = new URI('http://example.com/ci/v4/x/y');
 
-        Services::injectMock('request', $request);
+        $this->createRequest($this->config);
 
-        $this->assertSame('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $this->config));
-        $this->assertSame('http://example.com/ci/v4/controller/method', base_url('controller/method', null));
+        $this->assertSame(
+            'http://example.com/ci/v4/index.php/controller/method',
+            site_url('controller/method', null, $this->config)
+        );
+        $this->assertSame(
+            'http://example.com/ci/v4/controller/method',
+            base_url('controller/method', null)
+        );
+    }
+
+    public function testBaseURLWithCLIRequest(): void
+    {
+        unset($_SERVER['HTTP_HOST'], $_SERVER['REQUEST_URI']);
+
+        $this->config->baseURL = 'http://example.com/';
+
+        $this->createRequest($this->config);
+
+        $this->assertSame(
+            'http://example.com/index.php/controller/method',
+            site_url('controller/method', null, $this->config)
+        );
+        $this->assertSame(
+            'http://example.com/controller/method',
+            base_url('controller/method', null)
+        );
+    }
+
+    public function testSiteURLWithAllowedHostname(): void
+    {
+        $_SERVER['HTTP_HOST']   = 'www.example.jp';
+        $_SERVER['REQUEST_URI'] = '/public';
+        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+
+        $this->config->baseURL          = 'http://example.com/public/';
+        $this->config->allowedHostnames = ['www.example.jp'];
+
+        $this->createRequest($this->config);
+
+        $this->assertSame(
+            'http://www.example.jp/public/index.php/controller/method',
+            site_url('controller/method')
+        );
+    }
+
+    public function testSiteURLWithAltConfig(): void
+    {
+        $_SERVER['HTTP_HOST']   = 'www.example.jp';
+        $_SERVER['REQUEST_URI'] = '/public';
+        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+
+        $this->config->baseURL          = 'http://example.com/public/';
+        $this->config->allowedHostnames = ['www.example.jp'];
+
+        $this->createRequest($this->config);
+
+        $altConfig          = clone $this->config;
+        $altConfig->baseURL = 'http://alt.example.com/public/';
+
+        $this->assertSame(
+            'http://alt.example.com/public/index.php/controller/method',
+            site_url('controller/method', null, $altConfig)
+        );
+    }
+
+    public function testBaseURLWithAllowedHostname(): void
+    {
+        $_SERVER['HTTP_HOST']   = 'www.example.jp';
+        $_SERVER['REQUEST_URI'] = '/public';
+        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+
+        $this->config->baseURL          = 'http://example.com/public/';
+        $this->config->allowedHostnames = ['www.example.jp'];
+
+        $this->createRequest($this->config);
+
+        $this->assertSame(
+            'http://www.example.jp/public/controller/method',
+            base_url('controller/method', null)
+        );
     }
 }

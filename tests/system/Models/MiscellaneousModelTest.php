@@ -12,7 +12,7 @@
 namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
-use InvalidArgumentException;
+use CodeIgniter\I18n\Time;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SimpleEntity;
@@ -20,6 +20,8 @@ use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class MiscellaneousModelTest extends LiveModelTestCase
@@ -28,7 +30,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
     {
         $rowCount = 0;
 
-        $this->createModel(UserModel::class)->chunk(2, static function ($row) use (&$rowCount) {
+        $this->createModel(UserModel::class)->chunk(2, static function ($row) use (&$rowCount): void {
             $rowCount++;
         });
 
@@ -50,8 +52,11 @@ final class MiscellaneousModelTest extends LiveModelTestCase
 
         $this->assertTrue($this->model->save($entity));
 
-        $result = $this->model->where('name', 'Senior Developer')->get()->getFirstRow();
-        $this->assertSame(date('Y-m-d', $time), date('Y-m-d', $result->created_at));
+        $result = $this->model->where('name', 'Senior Developer')->first();
+        $this->assertSame(
+            Time::createFromTimestamp($time)->toDateTimeString(),
+            $result->created_at->toDateTimeString()
+        );
     }
 
     /**
@@ -93,12 +98,12 @@ final class MiscellaneousModelTest extends LiveModelTestCase
         $this->assertFalse($this->model->replace($jobData));
 
         $error = $this->model->errors();
-        $this->assertTrue(isset($error['description']));
+        $this->assertArrayHasKey('description', $error);
     }
 
     public function testUndefinedTypeInTransformDataToArray(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Invalid type "whatever" used upon transforming data to array.');
 
         $this->createModel(JobModel::class);

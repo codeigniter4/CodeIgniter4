@@ -20,13 +20,13 @@ class GoogleYou implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        $response      = Services::response();
-        $response->csp = 'http://google.com';
+        $response = Services::response();
+        $response->setBody('http://google.com');
 
         return $response;
     }
 
-    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null): void
     {
     }
 }

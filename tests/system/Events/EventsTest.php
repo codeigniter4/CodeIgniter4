@@ -17,15 +17,15 @@ use Config\Modules;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class EventsTest extends CIUnitTestCase
 {
     /**
      * Accessible event manager instance
-     *
-     * @var MockEvents
      */
-    protected $manager;
+    private Events $manager;
 
     protected function setUp(): void
     {
@@ -43,9 +43,9 @@ final class EventsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         /**
          * @var Modules $config
@@ -55,27 +55,27 @@ final class EventsTest extends CIUnitTestCase
 
         // it should start out empty
         MockEvents::setFiles([]);
-        $this->assertEmpty($this->manager->getFiles());
+        $this->assertEmpty(Events::getFiles());
 
         // make sure we have a default events file
         $default = [APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Events.php'];
         $this->manager->unInitialize();
         MockEvents::initialize();
-        $this->assertSame($default, $this->manager->getFiles());
+        $this->assertSame($default, Events::getFiles());
 
         // but we should be able to change it through the backdoor
         MockEvents::setFiles(['/peanuts']);
-        $this->assertSame(['/peanuts'], $this->manager->getFiles());
+        $this->assertSame(['/peanuts'], Events::getFiles());
 
         // re-initializing should have no effect
         MockEvents::initialize();
-        $this->assertSame(['/peanuts'], $this->manager->getFiles());
+        $this->assertSame(['/peanuts'], Events::getFiles());
     }
 
-    public function testPerformance()
+    public function testPerformance(): void
     {
         $result = null;
-        Events::on('foo', static function ($arg) use (&$result) {
+        Events::on('foo', static function ($arg) use (&$result): void {
             $result = $arg;
         });
         Events::trigger('foo', 'bar');
@@ -85,11 +85,11 @@ final class EventsTest extends CIUnitTestCase
         $this->assertGreaterThan(0, count($logged));
     }
 
-    public function testListeners()
+    public function testListeners(): void
     {
-        $callback1 = static function () {
+        $callback1 = static function (): void {
         };
-        $callback2 = static function () {
+        $callback2 = static function (): void {
         };
 
         Events::on('foo', $callback1, EVENT_PRIORITY_HIGH);
@@ -98,11 +98,11 @@ final class EventsTest extends CIUnitTestCase
         $this->assertSame([$callback1, $callback2], Events::listeners('foo'));
     }
 
-    public function testHandleEvent()
+    public function testHandleEvent(): void
     {
         $result = null;
 
-        Events::on('foo', static function ($arg) use (&$result) {
+        Events::on('foo', static function ($arg) use (&$result): void {
             $result = $arg;
         });
 
@@ -111,7 +111,7 @@ final class EventsTest extends CIUnitTestCase
         $this->assertSame('bar', $result);
     }
 
-    public function testCancelEvent()
+    public function testCancelEvent(): void
     {
         $result = 0;
 
@@ -122,7 +122,7 @@ final class EventsTest extends CIUnitTestCase
 
             return false;
         });
-        Events::on('foo', static function ($arg) use (&$result) {
+        Events::on('foo', static function ($arg) use (&$result): void {
             $result = 2;
         });
 
@@ -130,7 +130,7 @@ final class EventsTest extends CIUnitTestCase
         $this->assertSame(1, $result);
     }
 
-    public function testPriority()
+    public function testPriority(): void
     {
         $result = 0;
 
@@ -151,23 +151,23 @@ final class EventsTest extends CIUnitTestCase
         $this->assertSame(2, $result);
     }
 
-    public function testPriorityWithMultiple()
+    public function testPriorityWithMultiple(): void
     {
         $result = [];
 
-        Events::on('foo', static function () use (&$result) {
+        Events::on('foo', static function () use (&$result): void {
             $result[] = 'a';
-        }, EVENT_PRIORITY_NORMAL);
+        }, Events::PRIORITY_NORMAL);
 
-        Events::on('foo', static function () use (&$result) {
+        Events::on('foo', static function () use (&$result): void {
             $result[] = 'b';
-        }, EVENT_PRIORITY_LOW);
+        }, Events::PRIORITY_LOW);
 
-        Events::on('foo', static function () use (&$result) {
+        Events::on('foo', static function () use (&$result): void {
             $result[] = 'c';
-        }, EVENT_PRIORITY_HIGH);
+        }, Events::PRIORITY_HIGH);
 
-        Events::on('foo', static function () use (&$result) {
+        Events::on('foo', static function () use (&$result): void {
             $result[] = 'd';
         }, 75);
 
@@ -175,11 +175,11 @@ final class EventsTest extends CIUnitTestCase
         $this->assertSame(['c', 'd', 'a', 'b'], $result);
     }
 
-    public function testRemoveListener()
+    public function testRemoveListener(): void
     {
         $result = false;
 
-        $callback = static function () use (&$result) {
+        $callback = static function () use (&$result): void {
             $result = true;
         };
 
@@ -195,11 +195,11 @@ final class EventsTest extends CIUnitTestCase
         $this->assertFalse($result);
     }
 
-    public function testRemoveListenerTwice()
+    public function testRemoveListenerTwice(): void
     {
         $result = false;
 
-        $callback = static function () use (&$result) {
+        $callback = static function () use (&$result): void {
             $result = true;
         };
 
@@ -216,11 +216,11 @@ final class EventsTest extends CIUnitTestCase
         $this->assertFalse($result);
     }
 
-    public function testRemoveUnknownListener()
+    public function testRemoveUnknownListener(): void
     {
         $result = false;
 
-        $callback = static function () use (&$result) {
+        $callback = static function () use (&$result): void {
             $result = true;
         };
 
@@ -236,11 +236,11 @@ final class EventsTest extends CIUnitTestCase
         $this->assertTrue($result);
     }
 
-    public function testRemoveAllListenersWithSingleEvent()
+    public function testRemoveAllListenersWithSingleEvent(): void
     {
         $result = false;
 
-        $callback = static function () use (&$result) {
+        $callback = static function () use (&$result): void {
             $result = true;
         };
 
@@ -253,11 +253,11 @@ final class EventsTest extends CIUnitTestCase
         $this->assertSame([], $listeners);
     }
 
-    public function testRemoveAllListenersWithMultipleEvents()
+    public function testRemoveAllListenersWithMultipleEvents(): void
     {
         $result = false;
 
-        $callback = static function () use (&$result) {
+        $callback = static function () use (&$result): void {
             $result = true;
         };
 
@@ -271,19 +271,19 @@ final class EventsTest extends CIUnitTestCase
     }
 
     // Basically if it doesn't crash this should be good...
-    public function testHandleEventCallableInternalFunc()
+    public function testHandleEventCallableInternalFunc(): void
     {
         Events::on('foo', 'strlen');
 
         $this->assertTrue(Events::trigger('foo', 'bar'));
     }
 
-    public function testHandleEventCallableClass()
+    public function testHandleEventCallableClass(): void
     {
         $box = new class () {
             public $logged;
 
-            public function hold(string $value)
+            public function hold(string $value): void
             {
                 $this->logged = $value;
             }
@@ -296,11 +296,11 @@ final class EventsTest extends CIUnitTestCase
         $this->assertSame('bar', $box->logged);
     }
 
-    public function testSimulate()
+    public function testSimulate(): void
     {
         $result = 0;
 
-        $callback = static function () use (&$result) {
+        $callback = static function () use (&$result): void {
             $result += 2;
         };
 

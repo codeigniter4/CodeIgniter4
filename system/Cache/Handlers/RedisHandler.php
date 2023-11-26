@@ -12,12 +12,15 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Exceptions\CriticalError;
+use CodeIgniter\I18n\Time;
 use Config\Cache;
 use Redis;
 use RedisException;
 
 /**
  * Redis cache handler
+ *
+ * @see \CodeIgniter\Cache\Handlers\RedisHandlerTest
  */
 class RedisHandler extends BaseHandler
 {
@@ -37,17 +40,18 @@ class RedisHandler extends BaseHandler
     /**
      * Redis connection
      *
-     * @var Redis
+     * @var Redis|null
      */
     protected $redis;
 
+    /**
+     * Note: Use `CacheFactory::getHandler()` to instantiate.
+     */
     public function __construct(Cache $config)
     {
         $this->prefix = $config->prefix;
 
-        if (! empty($config)) {
-            $this->config = array_merge($this->config, $config->redis);
-        }
+        $this->config = array_merge($this->config, $config->redis);
     }
 
     /**
@@ -155,8 +159,8 @@ class RedisHandler extends BaseHandler
             return false;
         }
 
-        if ($ttl) {
-            $this->redis->expireAt($key, time() + $ttl);
+        if ($ttl !== 0) {
+            $this->redis->expireAt($key, Time::now()->getTimestamp() + $ttl);
         }
 
         return true;
@@ -174,6 +178,8 @@ class RedisHandler extends BaseHandler
 
     /**
      * {@inheritDoc}
+     *
+     * @return int
      */
     public function deleteMatching(string $pattern)
     {
@@ -202,7 +208,7 @@ class RedisHandler extends BaseHandler
     {
         $key = static::validateKey($key, $this->prefix);
 
-        return $this->redis->hIncrBy($key, 'data', $offset);
+        return $this->redis->hIncrBy($key, '__ci_value', $offset);
     }
 
     /**
@@ -210,9 +216,7 @@ class RedisHandler extends BaseHandler
      */
     public function decrement(string $key, int $offset = 1)
     {
-        $key = static::validateKey($key, $this->prefix);
-
-        return $this->redis->hIncrBy($key, 'data', -$offset);
+        return $this->increment($key, -$offset);
     }
 
     /**
@@ -236,15 +240,15 @@ class RedisHandler extends BaseHandler
      */
     public function getMetaData(string $key)
     {
-        $key   = static::validateKey($key, $this->prefix);
         $value = $this->get($key);
 
         if ($value !== null) {
-            $time = time();
-            $ttl  = $this->redis->ttl($key);
+            $time = Time::now()->getTimestamp();
+            $ttl  = $this->redis->ttl(static::validateKey($key, $this->prefix));
+            assert(is_int($ttl));
 
             return [
-                'expire' => $ttl > 0 ? time() + $ttl : null,
+                'expire' => $ttl > 0 ? $time + $ttl : null,
                 'mtime'  => $time,
                 'data'   => $value,
             ];

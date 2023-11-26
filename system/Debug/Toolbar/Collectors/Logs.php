@@ -81,6 +81,8 @@ class Logs extends BaseCollector
 
     /**
      * Ensures the data has been collected.
+     *
+     * @return array
      */
     protected function collectLogs()
     {

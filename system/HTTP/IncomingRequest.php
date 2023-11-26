@@ -18,11 +18,12 @@ use Config\App;
 use Config\Services;
 use InvalidArgumentException;
 use Locale;
+use stdClass;
 
 /**
  * Class IncomingRequest
  *
- * Represents an incoming, getServer-side HTTP request.
+ * Represents an incoming, server-side HTTP request.
  *
  * Per the HTTP specification, this interface includes properties for
  * each of the following:
@@ -41,6 +42,8 @@ use Locale;
  * - Query string arguments (generally via $_GET, or as parsed via parse_str())
  * - Upload files, if any (as represented by $_FILES)
  * - Deserialized body binds (generally from $_POST)
+ *
+ * @see \CodeIgniter\HTTP\IncomingRequestTest
  */
 class IncomingRequest extends Request
 {
@@ -51,6 +54,8 @@ class IncomingRequest extends Request
      * Set automatically based on Config setting.
      *
      * @var bool
+     *
+     * @deprecated Not used
      */
     protected $enableCSRF = false;
 
@@ -59,15 +64,17 @@ class IncomingRequest extends Request
      *
      * Note: This WILL NOT match the actual URL in the browser since for
      * everything this cares about (and the router, etc) is the portion
-     * AFTER the script name. So, if hosted in a sub-folder this will
-     * appear different than actual URL. If you need that use getPath().
+     * AFTER the baseURL. So, if hosted in a sub-folder this will
+     * appear different than actual URI path. If you need that use getPath().
+     *
+     * @deprecated Will be protected. Use getUri() instead.
      *
      * @var URI
      */
     public $uri;
 
     /**
-     * The detected path (relative to SCRIPT_NAME).
+     * The detected URI path (relative to the baseURL).
      *
      * Note: current_url() uses this to build its URI,
      * so this becomes the source for the "current URL"
@@ -101,7 +108,7 @@ class IncomingRequest extends Request
 
     /**
      * The current locale of the application.
-     * Default value is set in Config\App.php
+     * Default value is set in app/Config/App.php
      *
      * @var string
      */
@@ -118,6 +125,8 @@ class IncomingRequest extends Request
      * Configuration settings.
      *
      * @var App
+     *
+     * @deprecated Will be protected.
      */
     public $config;
 
@@ -139,9 +148,7 @@ class IncomingRequest extends Request
      * Constructor
      *
      * @param App         $config
-     * @param URI         $uri
      * @param string|null $body
-     * @param UserAgent   $userAgent
      */
     public function __construct($config, ?URI $uri = null, $body = 'php://input', ?UserAgent $userAgent = null)
     {
@@ -149,22 +156,63 @@ class IncomingRequest extends Request
             throw new InvalidArgumentException('You must supply the parameters: uri, userAgent.');
         }
 
-        // Get our body from php://input
-        if ($body === 'php://input') {
+        $this->populateHeaders();
+
+        if (
+            $body === 'php://input'
+            // php://input is not available with enctype="multipart/form-data".
+            // See https://www.php.net/manual/en/wrappers.php.php#wrappers.php.input
+            && strpos($this->getHeaderLine('Content-Type'), 'multipart/form-data') === false
+            && (int) $this->getHeaderLine('Content-Length') <= $this->getPostMaxSize()
+        ) {
+            // Get our body from php://input
             $body = file_get_contents('php://input');
+        }
+
+        // If file_get_contents() returns false or empty string, set null.
+        if ($body === false || $body === '') {
+            $body = null;
         }
 
         $this->config       = $config;
         $this->uri          = $uri;
-        $this->body         = ! empty($body) ? $body : null;
+        $this->body         = $body;
         $this->userAgent    = $userAgent;
         $this->validLocales = $config->supportedLocales;
 
         parent::__construct($config);
 
-        $this->populateHeaders();
-        $this->detectURI($config->uriProtocol, $config->baseURL);
+        if ($uri instanceof SiteURI) {
+            $this->setPath($uri->getRoutePath());
+        } else {
+            $this->setPath($uri->getPath());
+        }
+
         $this->detectLocale($config);
+    }
+
+    private function getPostMaxSize(): int
+    {
+        $postMaxSize = ini_get('post_max_size');
+
+        switch (strtoupper(substr($postMaxSize, -1))) {
+            case 'G':
+                $postMaxSize = (int) str_replace('G', '', $postMaxSize) * 1024 ** 3;
+                break;
+
+            case 'M':
+                $postMaxSize = (int) str_replace('M', '', $postMaxSize) * 1024 ** 2;
+                break;
+
+            case 'K':
+                $postMaxSize = (int) str_replace('K', '', $postMaxSize) * 1024;
+                break;
+
+            default:
+                $postMaxSize = (int) $postMaxSize;
+        }
+
+        return $postMaxSize;
     }
 
     /**
@@ -172,6 +220,8 @@ class IncomingRequest extends Request
      * content negotiation.
      *
      * @param App $config
+     *
+     * @return void
      */
     public function detectLocale($config)
     {
@@ -188,19 +238,21 @@ class IncomingRequest extends Request
      * Sets up our URI object based on the information we have. This is
      * either provided by the user in the baseURL Config setting, or
      * determined from the environment as needed.
+     *
+     * @return void
+     *
+     * @deprecated 4.4.0 No longer used.
      */
     protected function detectURI(string $protocol, string $baseURL)
     {
-        // Passing the config is unnecessary but left for legacy purposes
-        $config          = clone $this->config;
-        $config->baseURL = $baseURL;
-
-        $this->setPath($this->detectPath($protocol), $config);
+        $this->setPath($this->detectPath($this->config->uriProtocol), $this->config);
     }
 
     /**
      * Detects the relative path based on
      * the URIProtocol Config setting.
+     *
+     * @deprecated 4.4.0 Moved to SiteURIFactory.
      */
     public function detectPath(string $protocol = ''): string
     {
@@ -231,6 +283,8 @@ class IncomingRequest extends Request
      * fixing the query string if necessary.
      *
      * @return string The URI it found.
+     *
+     * @deprecated 4.4.0 Moved to SiteURIFactory.
      */
     protected function parseRequestURI(): string
     {
@@ -246,7 +300,10 @@ class IncomingRequest extends Request
         $uri   = $parts['path'] ?? '';
 
         // Strip the SCRIPT_NAME path from the URI
-        if ($uri !== '' && isset($_SERVER['SCRIPT_NAME'][0]) && pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php') {
+        if (
+            $uri !== '' && isset($_SERVER['SCRIPT_NAME'][0])
+            && pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php'
+        ) {
             // Compare each segment, dropping them until there is no match
             $segments = $keep = explode('/', $uri);
 
@@ -263,7 +320,7 @@ class IncomingRequest extends Request
         }
 
         // This section ensures that even on servers that require the URI to contain the query string (Nginx) a correct
-        // URI is found, and also fixes the QUERY_STRING getServer var and $_GET array.
+        // URI is found, and also fixes the QUERY_STRING Server var and $_GET array.
         if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0) {
             $query                   = explode('?', $query, 2);
             $uri                     = $query[0];
@@ -286,13 +343,15 @@ class IncomingRequest extends Request
      * Parse QUERY_STRING
      *
      * Will parse QUERY_STRING and automatically detect the URI from it.
+     *
+     * @deprecated 4.4.0 Moved to SiteURIFactory.
      */
     protected function parseQueryString(): string
     {
         $uri = $_SERVER['QUERY_STRING'] ?? @getenv('QUERY_STRING');
 
         if (trim($uri, '/') === '') {
-            return '';
+            return '/';
         }
 
         if (strncmp($uri, '/', 1) === 0) {
@@ -339,11 +398,38 @@ class IncomingRequest extends Request
     }
 
     /**
+     * Checks this request type.
+     *
+     * @param string $type HTTP verb or 'json' or 'ajax'
+     * @phpstan-param string|'get'|'post'|'put'|'delete'|'head'|'patch'|'options'|'json'|'ajax' $type
+     */
+    public function is(string $type): bool
+    {
+        $valueUpper = strtoupper($type);
+
+        $httpMethods = ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS'];
+
+        if (in_array($valueUpper, $httpMethods, true)) {
+            return strtoupper($this->getMethod()) === $valueUpper;
+        }
+
+        if ($valueUpper === 'JSON') {
+            return strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false;
+        }
+
+        if ($valueUpper === 'AJAX') {
+            return $this->isAJAX();
+        }
+
+        throw new InvalidArgumentException('Unknown type: ' . $type);
+    }
+
+    /**
      * Determines if this request was made from the command line (CLI).
      */
     public function isCLI(): bool
     {
-        return is_cli();
+        return false;
     }
 
     /**
@@ -351,7 +437,8 @@ class IncomingRequest extends Request
      */
     public function isAJAX(): bool
     {
-        return $this->hasHeader('X-Requested-With') && strtolower($this->header('X-Requested-With')->getValue()) === 'xmlhttprequest';
+        return $this->hasHeader('X-Requested-With')
+            && strtolower($this->header('X-Requested-With')->getValue()) === 'xmlhttprequest';
     }
 
     /**
@@ -372,60 +459,32 @@ class IncomingRequest extends Request
     }
 
     /**
-     * Sets the relative path and updates the URI object.
+     * Sets the URI path relative to baseURL.
+     *
      * Note: Since current_url() accesses the shared request
      * instance, this can be used to change the "current URL"
      * for testing.
      *
-     * @param string $path   URI path relative to SCRIPT_NAME
-     * @param App    $config Optional alternate config to use
+     * @param string   $path   URI path relative to baseURL
+     * @param App|null $config Optional alternate config to use
      *
      * @return $this
+     *
+     * @deprecated 4.4.0 This method will be private. The parameter $config is deprecated. No longer used.
      */
     public function setPath(string $path, ?App $config = null)
     {
         $this->path = $path;
-        $this->uri->setPath($path);
-
-        $config = $config ?? $this->config;
-
-        // It's possible the user forgot a trailing slash on their
-        // baseURL, so let's help them out.
-        $baseURL = $config->baseURL === '' ? $config->baseURL : rtrim($config->baseURL, '/ ') . '/';
-
-        // Based on our baseURL provided by the developer
-        // set our current domain name, scheme
-        if ($baseURL !== '') {
-            $this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
-            $this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
-            $this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
-
-            // Ensure we have any query vars
-            $this->uri->setQuery($_SERVER['QUERY_STRING'] ?? '');
-
-            // Check if the baseURL scheme needs to be coerced into its secure version
-            if ($config->forceGlobalSecureRequests && $this->uri->getScheme() === 'http') {
-                $this->uri->setScheme('https');
-            }
-        } elseif (! is_cli()) {
-            // @codeCoverageIgnoreStart
-            exit('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
-            // @codeCoverageIgnoreEnd
-        }
 
         return $this;
     }
 
     /**
-     * Returns the path relative to SCRIPT_NAME,
+     * Returns the URI path relative to baseURL,
      * running detection as necessary.
      */
     public function getPath(): string
     {
-        if ($this->path === null) {
-            $this->detectPath($this->config->uriProtocol);
-        }
-
         return $this->path;
     }
 
@@ -449,16 +508,28 @@ class IncomingRequest extends Request
     }
 
     /**
+     * Set the valid locales.
+     *
+     * @return $this
+     */
+    public function setValidLocales(array $locales)
+    {
+        $this->validLocales = $locales;
+
+        return $this;
+    }
+
+    /**
      * Gets the current locale, with a fallback to the default
      * locale if none is set.
      */
     public function getLocale(): string
     {
-        return $this->locale ?? $this->defaultLocale;
+        return $this->locale;
     }
 
     /**
-     * Returns the default locale as set in Config\App.php
+     * Returns the default locale as set in app/Config/App.php
      */
     public function getDefaultLocale(): string
     {
@@ -472,27 +543,16 @@ class IncomingRequest extends Request
      *
      * @param array|string|null $index
      * @param int|null          $filter Filter constant
-     * @param mixed             $flags
+     * @param array|int|null    $flags
      *
-     * @return mixed
+     * @return array|bool|float|int|stdClass|string|null
      */
     public function getVar($index = null, $filter = null, $flags = null)
     {
-        if (strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false && $this->body !== null) {
-            if ($index === null) {
-                return $this->getJSON();
-            }
-
-            if (is_array($index)) {
-                $output = [];
-
-                foreach ($index as $key) {
-                    $output[$key] = $this->getJsonVar($key, false, $filter, $flags);
-                }
-
-                return $output;
-            }
-
+        if (
+            strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false
+            && $this->body !== null
+        ) {
             return $this->getJsonVar($index, false, $filter, $flags);
         }
 
@@ -512,41 +572,98 @@ class IncomingRequest extends Request
      *
      * @see http://php.net/manual/en/function.json-decode.php
      *
-     * @return mixed
+     * @return array|bool|float|int|stdClass|null
+     *
+     * @throws HTTPException When the body is invalid as JSON.
      */
     public function getJSON(bool $assoc = false, int $depth = 512, int $options = 0)
     {
-        return json_decode($this->body, $assoc, $depth, $options);
+        if ($this->body === null) {
+            return null;
+        }
+
+        $result = json_decode($this->body, $assoc, $depth, $options);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw HTTPException::forInvalidJSON(json_last_error_msg());
+        }
+
+        return $result;
     }
 
     /**
      * Get a specific variable from a JSON input stream
      *
-     * @param string         $index  The variable that you want which can use dot syntax for getting specific values.
-     * @param bool           $assoc  If true, return the result as an associative array.
-     * @param int|null       $filter Filter Constant
-     * @param array|int|null $flags  Option
+     * @param array|string|null $index  The variable that you want which can use dot syntax for getting specific values.
+     * @param bool              $assoc  If true, return the result as an associative array.
+     * @param int|null          $filter Filter Constant
+     * @param array|int|null    $flags  Option
      *
-     * @return mixed
+     * @return array|bool|float|int|stdClass|string|null
      */
-    public function getJsonVar(string $index, bool $assoc = false, ?int $filter = null, $flags = null)
+    public function getJsonVar($index = null, bool $assoc = false, ?int $filter = null, $flags = null)
     {
         helper('array');
 
-        $data = dot_array_search($index, $this->getJSON(true));
+        $data = $this->getJSON(true);
+        if (! is_array($data)) {
+            return null;
+        }
+
+        if (is_string($index)) {
+            $data = dot_array_search($index, $data);
+        } elseif (is_array($index)) {
+            $result = [];
+
+            foreach ($index as $key) {
+                $result[$key] = dot_array_search($key, $data);
+            }
+
+            [$data, $result] = [$result, null];
+        }
 
         if ($data === null) {
             return null;
         }
 
-        if (! is_array($data)) {
-            $filter = $filter ?? FILTER_DEFAULT;
-            $flags  = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
+        $filter ??= FILTER_DEFAULT;
+        $flags = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
 
-            return filter_var($data, $filter, $flags);
+        if ($filter !== FILTER_DEFAULT
+            || (
+                (is_numeric($flags) && $flags !== 0)
+                || is_array($flags) && $flags !== []
+            )
+        ) {
+            if (is_array($data)) {
+                // Iterate over array and append filter and flags
+                array_walk_recursive($data, static function (&$val) use ($filter, $flags) {
+                    $valType = gettype($val);
+                    $val     = filter_var($val, $filter, $flags);
+
+                    if (in_array($valType, ['int', 'integer', 'float', 'double', 'bool', 'boolean'], true) && $val !== false) {
+                        settype($val, $valType);
+                    }
+                });
+            } else {
+                $dataType = gettype($data);
+                $data     = filter_var($data, $filter, $flags);
+
+                if (in_array($dataType, ['int', 'integer', 'float', 'double', 'bool', 'boolean'], true) && $data !== false) {
+                    settype($data, $dataType);
+                }
+            }
         }
 
         if (! $assoc) {
+            if (is_array($index)) {
+                foreach ($data as &$val) {
+                    $val = is_array($val) ? json_decode(json_encode($val)) : $val;
+                }
+
+                return $data;
+            }
+
             return json_decode(json_encode($data));
         }
 
@@ -557,11 +674,65 @@ class IncomingRequest extends Request
      * A convenience method that grabs the raw input stream(send method in PUT, PATCH, DELETE) and decodes
      * the String into an array.
      *
-     * @return mixed
+     * @return array
      */
     public function getRawInput()
     {
-        parse_str($this->body, $output);
+        parse_str($this->body ?? '', $output);
+
+        return $output;
+    }
+
+    /**
+     * Gets a specific variable from raw input stream (send method in PUT, PATCH, DELETE).
+     *
+     * @param array|string|null $index  The variable that you want which can use dot syntax for getting specific values.
+     * @param int|null          $filter Filter Constant
+     * @param array|int|null    $flags  Option
+     *
+     * @return array|bool|float|int|object|string|null
+     */
+    public function getRawInputVar($index = null, ?int $filter = null, $flags = null)
+    {
+        helper('array');
+
+        parse_str($this->body ?? '', $output);
+
+        if (is_string($index)) {
+            $output = dot_array_search($index, $output);
+        } elseif (is_array($index)) {
+            $data = [];
+
+            foreach ($index as $key) {
+                $data[$key] = dot_array_search($key, $output);
+            }
+
+            [$output, $data] = [$data, null];
+        }
+
+        $filter ??= FILTER_DEFAULT;
+        $flags = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
+
+        if (is_array($output)
+            && (
+                $filter !== FILTER_DEFAULT
+                || (
+                    (is_numeric($flags) && $flags !== 0)
+                    || is_array($flags) && $flags !== []
+                )
+            )
+        ) {
+            // Iterate over array and append filter and flags
+            array_walk_recursive($output, static function (&$val) use ($filter, $flags) {
+                $val = filter_var($val, $filter, $flags);
+            });
+
+            return $output;
+        }
+
+        if (is_string($output)) {
+            return filter_var($output, $filter, $flags);
+        }
 
         return $output;
     }
@@ -571,9 +742,9 @@ class IncomingRequest extends Request
      *
      * @param array|string|null $index  Index for item to fetch from $_GET.
      * @param int|null          $filter A filter name to apply.
-     * @param mixed|null        $flags
+     * @param array|int|null    $flags
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function getGet($index = null, $filter = null, $flags = null)
     {
@@ -585,9 +756,9 @@ class IncomingRequest extends Request
      *
      * @param array|string|null $index  Index for item to fetch from $_POST.
      * @param int|null          $filter A filter name to apply
-     * @param mixed             $flags
+     * @param array|int|null    $flags
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function getPost($index = null, $filter = null, $flags = null)
     {
@@ -599,16 +770,22 @@ class IncomingRequest extends Request
      *
      * @param array|string|null $index  Index for item to fetch from $_POST or $_GET
      * @param int|null          $filter A filter name to apply
-     * @param mixed             $flags
+     * @param array|int|null    $flags
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function getPostGet($index = null, $filter = null, $flags = null)
     {
+        if ($index === null) {
+            return array_merge($this->getGet($index, $filter, $flags), $this->getPost($index, $filter, $flags));
+        }
+
         // Use $_POST directly here, since filter_has_var only
         // checks the initial POST data, not anything that might
         // have been added since.
-        return isset($_POST[$index]) ? $this->getPost($index, $filter, $flags) : (isset($_GET[$index]) ? $this->getGet($index, $filter, $flags) : $this->getPost($index, $filter, $flags));
+        return isset($_POST[$index])
+            ? $this->getPost($index, $filter, $flags)
+            : (isset($_GET[$index]) ? $this->getGet($index, $filter, $flags) : $this->getPost($index, $filter, $flags));
     }
 
     /**
@@ -616,16 +793,22 @@ class IncomingRequest extends Request
      *
      * @param array|string|null $index  Index for item to be fetched from $_GET or $_POST
      * @param int|null          $filter A filter name to apply
-     * @param mixed             $flags
+     * @param array|int|null    $flags
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function getGetPost($index = null, $filter = null, $flags = null)
     {
+        if ($index === null) {
+            return array_merge($this->getPost($index, $filter, $flags), $this->getGet($index, $filter, $flags));
+        }
+
         // Use $_GET directly here, since filter_has_var only
         // checks the initial GET data, not anything that might
         // have been added since.
-        return isset($_GET[$index]) ? $this->getGet($index, $filter, $flags) : (isset($_POST[$index]) ? $this->getPost($index, $filter, $flags) : $this->getGet($index, $filter, $flags));
+        return isset($_GET[$index])
+            ? $this->getGet($index, $filter, $flags)
+            : (isset($_POST[$index]) ? $this->getPost($index, $filter, $flags) : $this->getGet($index, $filter, $flags));
     }
 
     /**
@@ -633,9 +816,9 @@ class IncomingRequest extends Request
      *
      * @param array|string|null $index  Index for item to be fetched from $_COOKIE
      * @param int|null          $filter A filter name to be applied
-     * @param mixed             $flags
+     * @param array|int|null    $flags
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function getCookie($index = null, $filter = null, $flags = null)
     {
@@ -657,39 +840,46 @@ class IncomingRequest extends Request
      * with redirect_with_input(). It first checks for the data in the old
      * POST data, then the old GET data and finally check for dot arrays
      *
-     * @return mixed
+     * @return array|string|null
      */
     public function getOldInput(string $key)
     {
-        // If the session hasn't been started, or no
-        // data was previously saved, we're done.
-        if (empty($_SESSION['_ci_old_input'])) {
+        // If the session hasn't been started, we're done.
+        if (! isset($_SESSION)) {
+            return null;
+        }
+
+        // Get previously saved in session
+        $old = session('_ci_old_input');
+
+        // If no data was previously saved, we're done.
+        if ($old === null) {
             return null;
         }
 
         // Check for the value in the POST array first.
-        if (isset($_SESSION['_ci_old_input']['post'][$key])) {
-            return $_SESSION['_ci_old_input']['post'][$key];
+        if (isset($old['post'][$key])) {
+            return $old['post'][$key];
         }
 
         // Next check in the GET array.
-        if (isset($_SESSION['_ci_old_input']['get'][$key])) {
-            return $_SESSION['_ci_old_input']['get'][$key];
+        if (isset($old['get'][$key])) {
+            return $old['get'][$key];
         }
 
         helper('array');
 
         // Check for an array value in POST.
-        if (isset($_SESSION['_ci_old_input']['post'])) {
-            $value = dot_array_search($key, $_SESSION['_ci_old_input']['post']);
+        if (isset($old['post'])) {
+            $value = dot_array_search($key, $old['post']);
             if ($value !== null) {
                 return $value;
             }
         }
 
         // Check for an array value in GET.
-        if (isset($_SESSION['_ci_old_input']['get'])) {
-            $value = dot_array_search($key, $_SESSION['_ci_old_input']['get']);
+        if (isset($old['get'])) {
+            $value = dot_array_search($key, $old['get']);
             if ($value !== null) {
                 return $value;
             }
@@ -747,7 +937,7 @@ class IncomingRequest extends Request
      *
      * Do some final cleaning of the URI and return it, currently only used in static::_parse_request_uri()
      *
-     * @deprecated Use URI::removeDotSegments() directly
+     * @deprecated 4.1.2 Use URI::removeDotSegments() directly
      */
     protected function removeRelativeDirectory(string $uri): string
     {

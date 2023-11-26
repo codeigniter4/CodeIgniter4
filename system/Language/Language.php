@@ -12,12 +12,15 @@
 namespace CodeIgniter\Language;
 
 use Config\Services;
+use InvalidArgumentException;
 use MessageFormatter;
 
 /**
  * Handle system messages and localization.
  *
  * Locale-based, built on top of PHP internationalization.
+ *
+ * @see \CodeIgniter\Language\LanguageTest
  */
 class Language
 {
@@ -57,7 +60,7 @@ class Language
     {
         $this->locale = $locale;
 
-        if (class_exists('MessageFormatter')) {
+        if (class_exists(MessageFormatter::class)) {
             $this->intlSupport = true;
         }
     }
@@ -85,7 +88,7 @@ class Language
      * Parses the language string for a file, loads the file, if necessary,
      * getting the line.
      *
-     * @return string|string[]
+     * @return list<string>|string
      */
     public function getLine(string $line, array $args = [])
     {
@@ -115,7 +118,7 @@ class Language
             $output = $this->getTranslationOutput('en', $file, $parsedLine);
         }
 
-        $output = $output ?? $line;
+        $output ??= $line;
 
         return $this->formatMessage($output, $args);
     }
@@ -189,7 +192,14 @@ class Language
             return $message;
         }
 
-        return MessageFormatter::formatMessage($this->locale, $message, $args);
+        $formatted = MessageFormatter::formatMessage($this->locale, $message, $args);
+        if ($formatted === false) {
+            throw new InvalidArgumentException(
+                lang('Language.invalidMessageFormat', [$message, implode(',', $args)])
+            );
+        }
+
+        return $formatted;
     }
 
     /**
@@ -252,7 +262,9 @@ class Language
         }
 
         if (isset($strings[1])) {
-            $strings = array_replace_recursive(...$strings);
+            $string = array_shift($strings);
+
+            $strings = array_replace_recursive($string, ...$strings);
         } elseif (isset($strings[0])) {
             $strings = $strings[0];
         }

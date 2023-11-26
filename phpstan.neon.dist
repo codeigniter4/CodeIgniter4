@@ -3,48 +3,38 @@ services:
 		class: Utils\PHPStan\CheckUseStatementsAfterLicenseRule
 		tags:
 			- phpstan.rules.rule
-	-
-		class: Utils\PHPStan\CheckFrameworkExceptionInstantiationViaNamedConstructorRule
-		tags:
-			- phpstan.rules.rule
+
+includes:
+	- phpstan-baseline.php
 
 parameters:
+	phpVersion: 80100
 	tmpDir: build/phpstan
-	level: 5
+	level: 6
+	bootstrapFiles:
+		- phpstan-bootstrap.php
 	paths:
 		- app
 		- system
 		- utils/PHPStan
-	treatPhpDocTypesAsCertain: false
-	bootstrapFiles:
-		- system/Test/bootstrap.php
-	excludes_analyse:
+	excludePaths:
 		- app/Views/errors/cli/*
 		- app/Views/errors/html/*
 		- system/Commands/Generators/Views/*
-		- system/Config/Routes.php
 		- system/Debug/Toolbar/Views/toolbar.tpl.php
 		- system/Images/Handlers/GDHandler.php
 		- system/Test/Filters/CITestStreamFilter.php
 		- system/ThirdParty/*
 		- system/Validation/Views/single.php
-	ignoreErrors:
-		- '#Access to an undefined property CodeIgniter\\Database\\BaseConnection::\$mysqli|\$schema#'
-		- '#Access to an undefined property CodeIgniter\\Database\\ConnectionInterface::(\$DBDriver|\$connID|\$likeEscapeStr|\$likeEscapeChar|\$escapeChar|\$protectIdentifiers|\$schema)#'
-		- '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::_(disable|enable)ForeignKeyChecks\(\)#'
-		- '#Call to an undefined method CodeIgniter\\Router\\RouteCollectionInterface::(getDefaultNamespace|isFiltered|getFilterForRoute|getFiltersForRoute|getRoutesOptions)\(\)#'
-		- '#Cannot access property [\$a-z_]+ on ((bool\|)?object\|resource)#'
-		- '#Cannot call method [a-zA-Z_]+\(\) on ((bool\|)?object\|resource)#'
-		- '#Method CodeIgniter\\Router\\RouteCollectionInterface::getRoutes\(\) invoked with 1 parameter, 0 required#'
-		- '#Method CodeIgniter\\Validation\\ValidationInterface::run\(\) invoked with 3 parameters, 0-2 required#'
-		- '#Negated boolean expression is always (true|false)#'
-		- '#Return type \(bool\) of method CodeIgniter\\HTTP\\Files\\UploadedFile::move\(\) should be compatible with return type \(CodeIgniter\\Files\\File\) of method CodeIgniter\\Files\\File::move\(\)#'
-	parallel:
-		processTimeout: 300.0
 	scanDirectories:
 		- system/Helpers
-	dynamicConstantNames:
-		- APP_NAMESPACE
-		- CI_DEBUG
-		- ENVIRONMENT
-		- SODIUM_LIBRARY_VERSION
+	checkMissingIterableValueType: false
+	checkGenericClassInNonGenericObjectType: false
+	checkMissingCallableSignature: true
+	treatPhpDocTypesAsCertain: false
+	strictRules:
+		allRules: false
+		disallowedLooseComparison: true
+		booleansInConditions: true
+		disallowedConstructs: true
+		matchingInheritedMethodNames: true

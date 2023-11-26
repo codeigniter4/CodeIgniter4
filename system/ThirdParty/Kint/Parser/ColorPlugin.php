@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,22 +27,22 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Kint\Object\Representation\ColorRepresentation;
+use Kint\Zval\Representation\ColorRepresentation;
+use Kint\Zval\Value;
 
-class ColorPlugin extends Plugin
+class ColorPlugin extends AbstractPlugin
 {
-    public function getTypes()
+    public function getTypes(): array
     {
-        return array('string');
+        return ['string'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parse(&$var, Value &$o, int $trigger): void
     {
         if (\strlen($var) > 32) {
             return;

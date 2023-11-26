@@ -49,7 +49,7 @@ class Unsuffixable extends BaseCommand
     /**
      * The Command's Arguments
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [
         'name' => 'Class name',
@@ -58,14 +58,14 @@ class Unsuffixable extends BaseCommand
     /**
      * The Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [];
 
     /**
      * Actually execute a command.
      */
-    public function run(array $params)
+    public function run(array $params): void
     {
         $this->component = 'Command';
         $this->directory = 'Commands';

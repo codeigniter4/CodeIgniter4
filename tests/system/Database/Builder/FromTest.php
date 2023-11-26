@@ -18,6 +18,8 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FromTest extends CIUnitTestCase
 {
@@ -30,7 +32,7 @@ final class FromTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testSimpleFrom()
+    public function testSimpleFrom(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 
@@ -41,7 +43,7 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testFromThatOverwrites()
+    public function testFromThatOverwrites(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 
@@ -52,7 +54,7 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testFromWithMultipleTables()
+    public function testFromWithMultipleTables(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 
@@ -63,7 +65,7 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testFromWithMultipleTablesAsString()
+    public function testFromWithMultipleTablesAsString(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 
@@ -74,7 +76,7 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testFromReset()
+    public function testFromReset(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 
@@ -101,7 +103,28 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testFromWithMultipleTablesAsStringWithSQLSRV()
+    public function testFromSubquery(): void
+    {
+        $expectedSQL = 'SELECT * FROM (SELECT * FROM "users") "alias"';
+        $subquery    = new BaseBuilder('users', $this->db);
+        $builder     = $this->db->newQuery()->fromSubquery($subquery, 'alias');
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+        $expectedSQL = 'SELECT * FROM (SELECT "id", "name" FROM "users") "users_1"';
+        $subquery    = (new BaseBuilder('users', $this->db))->select('id, name');
+        $builder     = $this->db->newQuery()->fromSubquery($subquery, 'users_1');
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+        $expectedSQL = 'SELECT * FROM (SELECT * FROM "users") "alias", "some_table"';
+        $subquery    = new BaseBuilder('users', $this->db);
+        $builder     = $this->db->newQuery()->fromSubquery($subquery, 'alias')->from('some_table');
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testFromWithMultipleTablesAsStringWithSQLSRV(): void
     {
         $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
 
@@ -110,6 +133,21 @@ final class FromTest extends CIUnitTestCase
         $builder->from(['jobs, roles']);
 
         $expectedSQL = 'SELECT * FROM "test"."dbo"."user", "test"."dbo"."jobs", "test"."dbo"."roles"';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testFromSubqueryWithSQLSRV(): void
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $subquery = new SQLSRVBuilder('users', $this->db);
+
+        $builder = new SQLSRVBuilder('jobs', $this->db);
+
+        $builder->fromSubquery($subquery, 'users_1');
+
+        $expectedSQL = 'SELECT * FROM "test"."dbo"."jobs", (SELECT * FROM "test"."dbo"."users") "users_1"';
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }

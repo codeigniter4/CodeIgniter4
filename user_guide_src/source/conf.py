@@ -12,19 +12,21 @@
 #
 # import os
 # import sys
+import datetime
 # sys.path.insert(0, os.path.abspath('.'))
 
 # -- Project information -----------------------------------------------------
 
 project = 'CodeIgniter'
 author = 'CodeIgniter Foundation'
-copyright = '2019-2021 CodeIgniter Foundation'
+year_now = datetime.date.today().year
+copyright = '2019-' + str(year_now) + ' CodeIgniter Foundation'
 
 # The short X.Y version.
-version = '4.1'
+version = '4.4'
 
 # The full version, including alpha/beta/rc tags.
-release = '4.1.4'
+release = '4.4.3'
 
 # -- General configuration ---------------------------------------------------
 
@@ -78,7 +80,6 @@ html_theme_options = {
 	'includehidden': False,
 	'logo_only': True,
 	'display_version': False,
-	'style_nav_header_background': '#DD4814',
 }
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
@@ -87,7 +88,7 @@ html_last_updated_fmt = '%b %d, %Y'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = '_static/ci-logo-text.png'
+html_logo = '_static/ci-logo-text.svg'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs. This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -104,7 +105,9 @@ htmlhelp_basename = 'CodeIgniterdoc'
 html_copy_source = False
 
 # A list of CSS files.
-html_css_files = []
+html_css_files = [
+    'css/citheme_dark.css'
+]
 
 # A list of JS files.
 html_js_files = [
@@ -137,4 +140,4 @@ man_pages = [
 epub_title = 'CodeIgniter4'
 epub_author = 'CodeIgniter Foundation'
 epub_publisher = 'CodeIgniter Foundation'
-epub_copyright = '2019-2021 CodeIgniter Foundation'
+epub_copyright = copyright

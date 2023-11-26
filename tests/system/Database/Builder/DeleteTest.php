@@ -16,6 +16,8 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class DeleteTest extends CIUnitTestCase
 {
@@ -28,7 +30,7 @@ final class DeleteTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -46,7 +48,7 @@ final class DeleteTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testGetCompiledDelete()
+    public function testGetCompiledDelete(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -60,7 +62,21 @@ final class DeleteTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, $sql);
     }
 
-    public function testGetCompiledDeleteWithLimit()
+    public function testGetCompiledDeleteWithTableAlias(): void
+    {
+        $builder = $this->db->table('jobs j');
+
+        $builder->where('id', 1);
+        $sql = $builder->getCompiledDelete();
+
+        $expectedSQL = <<<'EOL'
+            DELETE FROM "jobs"
+            WHERE "id" = 1
+            EOL;
+        $this->assertSame($expectedSQL, $sql);
+    }
+
+    public function testGetCompiledDeleteWithLimit(): void
     {
         $builder = $this->db->table('jobs');
 

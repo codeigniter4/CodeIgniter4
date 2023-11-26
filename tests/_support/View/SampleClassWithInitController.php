@@ -23,7 +23,9 @@ use Psr\Log\LoggerInterface;
  */
 class SampleClassWithInitController
 {
-    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    private ResponseInterface $response;
+
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger): void
     {
         $this->response = $response;
     }

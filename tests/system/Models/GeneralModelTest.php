@@ -23,15 +23,15 @@ use Tests\Support\Models\UserModel;
  * features without requiring a database connection.
  *
  * @internal
+ *
+ * @group Others
  */
 final class GeneralModelTest extends CIUnitTestCase
 {
     /**
      * Current instance of the Model.
-     *
-     * @var Model
      */
-    private $model;
+    private ?object $model = null;
 
     protected function setUp(): void
     {
@@ -73,10 +73,6 @@ final class GeneralModelTest extends CIUnitTestCase
         $this->assertFalse(isset($this->model->foobar));
         $this->assertNull($this->model->foobar);
 
-        $this->model->flavor = 'chocolate';
-        $this->assertTrue(isset($this->model->flavor));
-        $this->assertSame('chocolate', $this->model->flavor);
-
         // from DB
         $this->assertTrue(isset($this->model->DBPrefix));
         $this->assertSame('utf8', $this->model->charset);
@@ -104,7 +100,7 @@ final class GeneralModelTest extends CIUnitTestCase
             'updated_at',
         ];
 
-        $model                       = new class () extends Model {
+        $model = new class () extends Model {
             protected $allowedFields = [
                 'id',
                 'created_at',

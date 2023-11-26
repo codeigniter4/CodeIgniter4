@@ -16,10 +16,12 @@ use DOMDocument;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class XMLFormatterTest extends CIUnitTestCase
 {
-    protected $xmlFormatter;
+    private XMLFormatter $xmlFormatter;
 
     protected function setUp(): void
     {
@@ -27,7 +29,7 @@ final class XMLFormatterTest extends CIUnitTestCase
         $this->xmlFormatter = new XMLFormatter();
     }
 
-    public function testBasicXML()
+    public function testBasicXML(): void
     {
         $data = [
             'foo' => 'bar',
@@ -42,7 +44,7 @@ final class XMLFormatterTest extends CIUnitTestCase
         $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
-    public function testFormatXMLWithMultilevelArray()
+    public function testFormatXMLWithMultilevelArray(): void
     {
         $data = [
             'foo' => ['bar'],
@@ -57,7 +59,7 @@ final class XMLFormatterTest extends CIUnitTestCase
         $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
-    public function testFormatXMLWithMultilevelArrayAndNumericKey()
+    public function testFormatXMLWithMultilevelArrayAndNumericKey(): void
     {
         $data = [
             ['foo'],
@@ -72,7 +74,7 @@ final class XMLFormatterTest extends CIUnitTestCase
         $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
-    public function testStringFormatting()
+    public function testStringFormatting(): void
     {
         $data     = ['Something'];
         $expected = <<<'EOH'
@@ -84,7 +86,7 @@ final class XMLFormatterTest extends CIUnitTestCase
         $this->assertSame($expected, $this->xmlFormatter->format($data));
     }
 
-    public function testValidatingXmlTags()
+    public function testValidatingXmlTags(): void
     {
         $data = [
             'BBB096630BD' => 'foo',
@@ -100,9 +102,9 @@ final class XMLFormatterTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider invalidTagsProvider
+     * @dataProvider provideValidatingInvalidTags
      */
-    public function testValidatingInvalidTags(string $expected, array $input)
+    public function testValidatingInvalidTags(string $expected, array $input): void
     {
         $expectedXML = <<<EOH
             <?xml version="1.0"?>
@@ -113,7 +115,7 @@ final class XMLFormatterTest extends CIUnitTestCase
         $this->assertSame($expectedXML, $this->xmlFormatter->format($input));
     }
 
-    public function invalidTagsProvider()
+    public static function provideValidatingInvalidTags(): iterable
     {
         return [
             [
@@ -143,7 +145,7 @@ final class XMLFormatterTest extends CIUnitTestCase
         ];
     }
 
-    public function testDeepNestedArrayToXml()
+    public function testDeepNestedArrayToXml(): void
     {
         $data = [
             'data' => [

@@ -6,14 +6,15 @@ The Inflector Helper file contains functions that permit you to change
 **English** words to plural, singular, camel case, etc.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 Loading this Helper
 ===================
 
-This helper is loaded using the following code::
+This helper is loaded using the following code:
 
-    helper('inflector');
+.. literalinclude:: inflector_helper/001.php
 
 Available Functions
 ===================
@@ -26,9 +27,9 @@ The following functions are available:
     :returns:    A singular word
     :rtype:    string
 
-    Changes a plural word to singular. Example::
+    Changes a plural word to singular. Example:
 
-        echo singular('dogs'); // Prints 'dog'
+    .. literalinclude:: inflector_helper/002.php
 
 .. php:function:: plural($string)
 
@@ -36,9 +37,9 @@ The following functions are available:
     :returns:    A plural word
     :rtype:    string
 
-    Changes a singular word to plural. Example::
+    Changes a singular word to plural. Example:
 
-        echo plural('dog'); // Prints 'dogs'
+    .. literalinclude:: inflector_helper/003.php
 
 .. php:function:: counted($count, $string)
 
@@ -47,9 +48,9 @@ The following functions are available:
     :returns:    A singular or plural phrase
     :rtype:    string
 
-    Changes a word and its count to a phrase. Example::
+    Changes a word and its count to a phrase. Example:
 
-        echo counted(3, 'dog'); // Prints '3 dogs'
+    .. literalinclude:: inflector_helper/004.php
 
 .. php:function:: camelize($string)
 
@@ -58,9 +59,9 @@ The following functions are available:
     :rtype:    string
 
     Changes a string of words separated by spaces or underscores to camel
-    case. Example::
+    case. Example:
 
-        echo camelize('my_dog_spot'); // Prints 'myDogSpot'
+    .. literalinclude:: inflector_helper/005.php
 
 .. php:function:: pascalize($string)
 
@@ -69,9 +70,9 @@ The following functions are available:
     :rtype:    string
 
     Changes a string of words separated by spaces or underscores to Pascal
-    case, which is camel case with the first letter capitalized. Example::
+    case, which is camel case with the first letter capitalized. Example:
 
-        echo pascalize('my_dog_spot'); // Prints 'MyDogSpot'
+    .. literalinclude:: inflector_helper/006.php
 
 .. php:function:: underscore($string)
 
@@ -80,9 +81,20 @@ The following functions are available:
     :rtype:    string
 
     Takes multiple words separated by spaces and underscores them.
-    Example::
+    Example:
 
-        echo underscore('my dog spot'); // Prints 'my_dog_spot'
+    .. literalinclude:: inflector_helper/007.php
+
+.. php:function:: decamelize($string)
+
+    :param    string    $string: Input string
+    :returns:    String containing underscores between words
+    :rtype:    string
+
+    Takes multiple words in camelCase or PascalCase and converts them to snake_case.
+    Example:
+
+    .. literalinclude:: inflector_helper/014.php
 
 .. php:function:: humanize($string[, $separator = '_'])
 
@@ -94,13 +106,13 @@ The following functions are available:
     Takes multiple words separated by underscores and adds spaces between
     them. Each word is capitalized.
 
-    Example::
+    Example:
 
-        echo humanize('my_dog_spot'); // Prints 'My Dog Spot'
+    .. literalinclude:: inflector_helper/008.php
 
-    To use dashes instead of underscores::
+    To use dashes instead of underscores:
 
-        echo humanize('my-dog-spot', '-'); // Prints 'My Dog Spot'
+    .. literalinclude:: inflector_helper/009.php
 
 .. php:function:: is_pluralizable($word)
 
@@ -108,9 +120,9 @@ The following functions are available:
     :returns:    true if the word is countable or false if not
     :rtype:    bool
 
-    Checks if the given word has a plural version. Example::
+    Checks if the given word has a plural version. Example:
 
-        is_pluralizable('equipment'); // Returns false
+    .. literalinclude:: inflector_helper/010.php
 
 .. php:function:: dasherize($string)
 
@@ -118,9 +130,9 @@ The following functions are available:
     :returns:    Dasherized string
     :rtype:    string
 
-    Replaces underscores with dashes in the string. Example::
+    Replaces underscores with dashes in the string. Example:
 
-        dasherize('hello_world'); // Returns 'hello-world'
+    .. literalinclude:: inflector_helper/011.php
 
 .. php:function:: ordinal($integer)
 
@@ -130,9 +142,9 @@ The following functions are available:
 
     Returns the suffix that should be added to a
     number to denote the position such as
-    1st, 2nd, 3rd, 4th. Example::
+    1st, 2nd, 3rd, 4th. Example:
 
-        ordinal(1); // Returns 'st'
+    .. literalinclude:: inflector_helper/012.php
 
 .. php:function:: ordinalize($integer)
 
@@ -142,6 +154,6 @@ The following functions are available:
 
     Turns a number into an ordinal string used
     to denote the position such as 1st, 2nd, 3rd, 4th.
-    Example::
+    Example:
 
-        ordinalize(1); // Returns '1st'
+    .. literalinclude:: inflector_helper/013.php

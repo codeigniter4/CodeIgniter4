@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
+  <file src="app/Config/View.php">
+    <UndefinedDocblockClass>
+      <code><![CDATA[array<string, ParserCallableString>]]></code>
+      <code><![CDATA[array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>]]></code>
+      <code><![CDATA[array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>]]></code>
+      <code>public $filters = [];</code>
+      <code>public $plugins = [];</code>
+      <code>public $plugins = [];</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="system/Cache/Handlers/MemcachedHandler.php">
+    <UndefinedClass>
+      <code>Memcache</code>
+      <code>Memcache</code>
+      <code>Memcache</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass>
+      <code><![CDATA[$this->memcached]]></code>
+      <code><![CDATA[$this->memcached]]></code>
+      <code><![CDATA[$this->memcached]]></code>
+      <code><![CDATA[$this->memcached]]></code>
+      <code><![CDATA[$this->memcached]]></code>
+      <code><![CDATA[$this->memcached]]></code>
+      <code>Memcache|Memcached</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="system/Commands/Utilities/Routes/ControllerMethodReader.php">
+    <DuplicateArrayKey>
+      <code>$routeWithoutController</code>
+      <code>$routeWithoutController</code>
+    </DuplicateArrayKey>
+  </file>
+  <file src="system/Config/View.php">
+    <UndefinedDocblockClass>
+      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, parser_callable_string>]]></code>
+      <code><![CDATA[protected $coreFilters = [
+        'abs'            => '\abs',
+        'capitalize'     => '\CodeIgniter\View\Filters::capitalize',
+        'date'           => '\CodeIgniter\View\Filters::date',
+        'date_modify'    => '\CodeIgniter\View\Filters::date_modify',
+        'default'        => '\CodeIgniter\View\Filters::default',
+        'esc'            => '\CodeIgniter\View\Filters::esc',
+        'excerpt'        => '\CodeIgniter\View\Filters::excerpt',
+        'highlight'      => '\CodeIgniter\View\Filters::highlight',
+        'highlight_code' => '\CodeIgniter\View\Filters::highlight_code',
+        'limit_words'    => '\CodeIgniter\View\Filters::limit_words',
+        'limit_chars'    => '\CodeIgniter\View\Filters::limit_chars',
+        'local_currency' => '\CodeIgniter\View\Filters::local_currency',
+        'local_number'   => '\CodeIgniter\View\Filters::local_number',
+        'lower'          => '\strtolower',
+        'nl2br'          => '\CodeIgniter\View\Filters::nl2br',
+        'number_format'  => '\number_format',
+        'prose'          => '\CodeIgniter\View\Filters::prose',
+        'round'          => '\CodeIgniter\View\Filters::round',
+        'strip_tags'     => '\strip_tags',
+        'title'          => '\CodeIgniter\View\Filters::title',
+        'upper'          => '\strtoupper',
+    ];]]></code>
+      <code><![CDATA[protected $corePlugins = [
+        'csp_script_nonce'  => '\CodeIgniter\View\Plugins::cspScriptNonce',
+        'csp_style_nonce'   => '\CodeIgniter\View\Plugins::cspStyleNonce',
+        'current_url'       => '\CodeIgniter\View\Plugins::currentURL',
+        'previous_url'      => '\CodeIgniter\View\Plugins::previousURL',
+        'mailto'            => '\CodeIgniter\View\Plugins::mailto',
+        'safe_mailto'       => '\CodeIgniter\View\Plugins::safeMailto',
+        'lang'              => '\CodeIgniter\View\Plugins::lang',
+        'validation_errors' => '\CodeIgniter\View\Plugins::validationErrors',
+        'route'             => '\CodeIgniter\View\Plugins::route',
+        'siteURL'           => '\CodeIgniter\View\Plugins::siteURL',
+    ];]]></code>
+      <code><![CDATA[protected $corePlugins = [
+        'csp_script_nonce'  => '\CodeIgniter\View\Plugins::cspScriptNonce',
+        'csp_style_nonce'   => '\CodeIgniter\View\Plugins::cspStyleNonce',
+        'current_url'       => '\CodeIgniter\View\Plugins::currentURL',
+        'previous_url'      => '\CodeIgniter\View\Plugins::previousURL',
+        'mailto'            => '\CodeIgniter\View\Plugins::mailto',
+        'safe_mailto'       => '\CodeIgniter\View\Plugins::safeMailto',
+        'lang'              => '\CodeIgniter\View\Plugins::lang',
+        'validation_errors' => '\CodeIgniter\View\Plugins::validationErrors',
+        'route'             => '\CodeIgniter\View\Plugins::route',
+        'siteURL'           => '\CodeIgniter\View\Plugins::siteURL',
+    ];]]></code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="system/Database/BasePreparedQuery.php">
+    <InaccessibleProperty>
+      <code><![CDATA[$this->db->transStatus]]></code>
+    </InaccessibleProperty>
+  </file>
+  <file src="system/Database/OCI8/Connection.php">
+    <UndefinedConstant>
+      <code>OCI_COMMIT_ON_SUCCESS</code>
+      <code>OCI_COMMIT_ON_SUCCESS</code>
+      <code>OCI_COMMIT_ON_SUCCESS</code>
+      <code>OCI_NO_AUTO_COMMIT</code>
+      <code>SQLT_CHR</code>
+    </UndefinedConstant>
+  </file>
+  <file src="system/Debug/Toolbar/Views/toolbar.tpl.php">
+    <InaccessibleMethod>
+      <code>renderTimeline</code>
+    </InaccessibleMethod>
+    <UndefinedGlobalVariable>
+      <code>$config</code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="system/Email/Email.php">
+    <LoopInvalidation>
+      <code>$timestamp</code>
+    </LoopInvalidation>
+  </file>
+  <file src="system/HTTP/Files/FileCollection.php">
+    <EmptyArrayAccess>
+      <code>$output[$name]</code>
+    </EmptyArrayAccess>
+  </file>
+  <file src="system/Helpers/text_helper.php">
+    <LoopInvalidation>
+      <code>$count</code>
+      <code>$count</code>
+      <code>$count</code>
+    </LoopInvalidation>
+  </file>
+  <file src="system/I18n/TimeTrait.php">
+    <MissingImmutableAnnotation>
+      <code>#[ReturnTypeWillChange]</code>
+      <code>#[ReturnTypeWillChange]</code>
+      <code>#[ReturnTypeWillChange]</code>
+    </MissingImmutableAnnotation>
+  </file>
+  <file src="system/Test/ControllerResponse.php">
+    <UnsupportedPropertyReferenceUsage>
+      <code><![CDATA[$this->dom = &$this->domParser]]></code>
+    </UnsupportedPropertyReferenceUsage>
+  </file>
+  <file src="system/View/Parser.php">
+    <UndefinedDocblockClass>
+      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code>protected $plugins = [];</code>
+      <code>protected $plugins = [];</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="tests/_support/Config/Filters.php">
+    <UndefinedGlobalVariable>
+      <code>$filters</code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="tests/_support/Config/Routes.php">
+    <UndefinedGlobalVariable>
+      <code>$routes</code>
+      <code>$routes</code>
+      <code>$routes</code>
+      <code>$routes</code>
+      <code>$routes</code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="tests/_support/View/Cells/colors.php">
+    <InvalidScope>
+      <code>$this</code>
+    </InvalidScope>
+  </file>
+  <file src="tests/system/CLI/ConsoleTest.php">
+    <DuplicateArrayKey>
+      <code>$command</code>
+    </DuplicateArrayKey>
+  </file>
+  <file src="tests/system/CommonFunctionsTest.php">
+    <UndefinedClass>
+      <code>UnexsistenceClass</code>
+    </UndefinedClass>
+  </file>
+  <file src="tests/system/Config/FactoriesTest.php">
+    <UndefinedClass>
+      <code><![CDATA['App\Models\UserModel']]></code>
+      <code><![CDATA['App\Models\UserModel']]></code>
+      <code><![CDATA['Config\TestRegistrar']]></code>
+    </UndefinedClass>
+  </file>
+  <file src="tests/system/Database/BaseConnectionTest.php">
+    <InaccessibleProperty>
+      <code><![CDATA[$db->username]]></code>
+      <code><![CDATA[$db->username]]></code>
+    </InaccessibleProperty>
+  </file>
+  <file src="tests/system/Database/Live/OCI8/CallStoredProcedureTest.php">
+    <UndefinedConstant>
+      <code>OCI_ASSOC</code>
+      <code>OCI_B_CURSOR</code>
+      <code>OCI_RETURN_NULLS</code>
+    </UndefinedConstant>
+  </file>
+  <file src="tests/system/Entity/EntityTest.php">
+    <EmptyArrayAccess>
+      <code>$current[$key]</code>
+    </EmptyArrayAccess>
+  </file>
+  <file src="tests/system/HTTP/RedirectResponseTest.php">
+    <EmptyArrayAccess>
+      <code><![CDATA[$_SESSION['_ci_old_input']]]></code>
+    </EmptyArrayAccess>
+  </file>
+  <file src="tests/system/Test/ControllerTestTraitTest.php">
+    <UndefinedClass>
+      <code>NeverHeardOfIt</code>
+    </UndefinedClass>
+  </file>
+</files>

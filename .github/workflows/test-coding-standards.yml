@@ -12,22 +12,28 @@ on:
       - 'spark'
       - '.github/workflows/test-coding-standards.yml'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   lint:
     name: PHP ${{ matrix.php-version }} Lint with PHP CS Fixer
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     strategy:
       fail-fast: false
       matrix:
         php-version:
-          - '7.3'
           - '7.4'
           - '8.0'
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -37,13 +43,12 @@ jobs:
           coverage: none
 
       - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
+          path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
           key: ${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.php-version }}-
@@ -53,7 +58,10 @@ jobs:
         run: composer update --ansi --no-interaction
 
       - name: Run lint on `app/`, `admin/`, `public/`
-        run: vendor/bin/php-cs-fixer fix --verbose --ansi --dry-run --config=.no-header.php-cs-fixer.dist.php --using-cache=no --diff
+        run: vendor/bin/php-cs-fixer fix --verbose --ansi --dry-run --config=.php-cs-fixer.no-header.php --using-cache=no --diff
 
       - name: Run lint on `system/`, `tests`, `utils/`, and root PHP files
         run: vendor/bin/php-cs-fixer fix --verbose --ansi --dry-run --using-cache=no --diff
+
+      - name: Run lint on `user_guide_src/source/`
+        run: vendor/bin/php-cs-fixer fix --verbose --ansi --dry-run --config=.php-cs-fixer.user-guide.php --using-cache=no --diff

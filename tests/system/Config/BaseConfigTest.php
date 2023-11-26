@@ -11,18 +11,25 @@
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\Modules;
 use Encryption;
+use PHPUnit\Framework\MockObject\MockObject;
 use RegistrarConfig;
 use RuntimeException;
 use SimpleConfig;
+use Tests\Support\Config\BadRegistrar;
+use Tests\Support\Config\TestRegistrar;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class BaseConfigTest extends CIUnitTestCase
 {
-    protected $fixturesFolder;
+    private string $fixturesFolder;
 
     protected function setUp(): void
     {
@@ -41,9 +48,21 @@ final class BaseConfigTest extends CIUnitTestCase
         if (! class_exists('Encryption', false)) {
             require $this->fixturesFolder . '/Encryption.php';
         }
+
+        BaseConfig::reset();
     }
 
-    public function testBasicValues()
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        // This test modifies BaseConfig::$modules, so should reset.
+        BaseConfig::reset();
+        // This test modifies Services locator, so should reset.
+        $this->resetServices();
+    }
+
+    public function testBasicValues(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
@@ -55,11 +74,30 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame(18, $config->golf);
     }
 
+    public function testUseDefaultValueTypeIntAndFloatValues(): void
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
+        $dotenv->load();
+        $config = new SimpleConfig();
+
+        $this->assertEqualsWithDelta(0.0, $config->float, PHP_FLOAT_EPSILON);
+        $this->assertSame(999, $config->int);
+    }
+
+    public function testUseDefaultValueTypeStringValue(): void
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
+        $dotenv->load();
+        $config = new SimpleConfig();
+
+        $this->assertSame('123456', $config->password);
+    }
+
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
-    public function testServerValues()
+    public function testServerValues(): void
     {
         $_SERVER = [
             'simpleconfig.shortie' => 123,
@@ -73,7 +111,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('456', $config->longie);
     }
 
-    public function testEnvironmentOverrides()
+    public function testEnvironmentOverrides(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
@@ -87,7 +125,7 @@ final class BaseConfigTest extends CIUnitTestCase
         // override config with shortPrefix ENV var
         $this->assertSame('hubbahubba', $config->delta);
         // incorrect env name should not inject property
-        $this->assertObjectNotHasAttribute('notthere', $config);
+        $this->assertFalse(property_exists($config, 'notthere'));
         // empty ENV var should not affect config setting
         $this->assertSame('pineapple', $config->fruit);
         // non-empty ENV var should overrideconfig setting
@@ -98,9 +136,12 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->onedeep_value);
         // array property name with underscore and key with underscore
         $this->assertSame('foo', $config->one_deep['under_deep']);
+
+        // The default property value is null but has type
+        $this->assertSame(20, $config->size);
     }
 
-    public function testPrefixedValues()
+    public function testPrefixedValues(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
@@ -110,7 +151,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('baz', $config->onedeep);
     }
 
-    public function testPrefixedArrayValues()
+    public function testPrefixedArrayValues(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
@@ -125,7 +166,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertFalse($config->crew['doctor']);
     }
 
-    public function testArrayValues()
+    public function testArrayValues(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, '.env');
         $dotenv->load();
@@ -137,7 +178,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->second);
     }
 
-    public function testSetsDefaultValues()
+    public function testSetsDefaultValues(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
         $dotenv->load();
@@ -150,9 +191,9 @@ final class BaseConfigTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
-    public function testSetsDefaultValuesEncryptionUsingHex2Bin()
+    public function testSetsDefaultValuesEncryptionUsingHex2Bin(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'encryption.env');
         $dotenv->load();
@@ -165,9 +206,9 @@ final class BaseConfigTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
-    public function testSetDefaultValuesEncryptionUsingBase64()
+    public function testSetDefaultValuesEncryptionUsingBase64(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'base64encryption.env');
         $dotenv->load();
@@ -177,7 +218,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('OpenSSL', $config->driver);
     }
 
-    public function testSetsDefaultValuesHex2Bin()
+    public function testSetsDefaultValuesHex2Bin(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
         $dotenv->load();
@@ -188,7 +229,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('MCrypt', $config->driver);
     }
 
-    public function testSetDefaultValuesBase64()
+    public function testSetDefaultValuesBase64(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
         $dotenv->load();
@@ -198,7 +239,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('MCrypt', $config->driver);
     }
 
-    public function testRecognizesLooseValues()
+    public function testRecognizesLooseValues(): void
     {
         $dotenv = new DotEnv($this->fixturesFolder, 'loose.env');
         $dotenv->load();
@@ -211,10 +252,10 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertFalse($config->QFALSE);
     }
 
-    public function testRegistrars()
+    public function testRegistrars(): void
     {
         $config              = new RegistrarConfig();
-        $config::$registrars = ['\Tests\Support\Config\TestRegistrar'];
+        $config::$registrars = [TestRegistrar::class];
         $this->setPrivateProperty($config, 'didDiscovery', true);
         $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
         $method();
@@ -223,17 +264,13 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->foo);
         // add to an existing array property
         $this->assertSame(['baz', 'first', 'second'], $config->bar);
-        // add a new property
-        $this->assertSame('nice', $config->format);
-        // add a new array property
-        $this->assertSame(['apple', 'banana'], $config->fruit);
     }
 
-    public function testBadRegistrar()
+    public function testBadRegistrar(): void
     {
         // Shouldn't change any values.
         $config              = new RegistrarConfig();
-        $config::$registrars = ['\Tests\Support\Config\BadRegistrar'];
+        $config::$registrars = [BadRegistrar::class];
         $this->setPrivateProperty($config, 'didDiscovery', true);
 
         $this->expectException(RuntimeException::class);
@@ -243,32 +280,34 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->foo);
     }
 
-    public function testNotEnabled()
+    /**
+     * @psalm-suppress UndefinedClass
+     */
+    public function testDiscoveryNotEnabledWillNotPopulateRegistrarsArray(): void
     {
-        $modulesConfig          = config('Modules');
-        $modulesConfig->enabled = false;
+        /** @var MockObject&Modules $modules */
+        $modules = $this->createMock(Modules::class);
+        $modules->method('shouldDiscover')->with('registrars')->willReturn(false);
+        RegistrarConfig::setModules($modules);
 
-        $config              = new RegistrarConfig();
-        $config::$registrars = [];
-        $expected            = $config::$registrars;
+        $config = new RegistrarConfig();
 
-        $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
-        $method();
-
-        $this->assertSame($expected, $config::$registrars);
+        $this->assertSame([], $config::$registrars);
     }
 
-    public function testDidDiscovery()
+    /**
+     * @psalm-suppress UndefinedClass
+     */
+    public function testRedoingDiscoveryWillStillSetDidDiscoveryPropertyToTrue(): void
     {
-        $modulesConfig          = config('Modules');
-        $modulesConfig->enabled = true;
+        /** @var FileLocator&MockObject $locator */
+        $locator = $this->createMock(FileLocator::class);
+        $locator->method('search')->with('Config/Registrar.php')->willReturn([]);
+        Services::injectMock('locator', $locator);
 
-        $config              = new RegistrarConfig();
-        $config::$registrars = [];
-        $this->setPrivateProperty($config, 'didDiscovery', false);
+        $this->setPrivateProperty(RegistrarConfig::class, 'didDiscovery', false);
 
-        $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
-        $method();
+        $config = new RegistrarConfig();
 
         $this->assertTrue($this->getPrivateProperty($config, 'didDiscovery'));
     }

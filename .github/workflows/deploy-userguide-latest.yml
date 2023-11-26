@@ -12,14 +12,26 @@ on:
     paths:
       - 'user_guide_src/**'
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: Deploy to gh-pages
+    permissions:
+      # Allow ad-m/github-push-action to push commit to branch gh-pages
+      contents: write
     if: (github.repository == 'codeigniter4/CodeIgniter4')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          coverage: none
 
       # Build the latest User Guide
       - name: Build with Sphinx
@@ -27,9 +39,16 @@ jobs:
         with:
           docs-folder: user_guide_src/
 
+      - name: Add "Edit this page" links
+        run: |
+          cd user_guide_src
+          # Fix permissions
+          sudo chown -R runner:docker build/html/
+          php add-edit-this-page build/html/
+
       # Create an artifact of the html output
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: HTML Documentation
           path: user_guide_src/build/html/

@@ -13,10 +13,12 @@ namespace CodeIgniter\Database\SQLSRV;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
-use Exception;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Prepared query for Postgre
+ *
+ * @extends BasePreparedQuery<resource, resource, resource>
  */
 class PreparedQuery extends BasePreparedQuery
 {
@@ -28,11 +30,16 @@ class PreparedQuery extends BasePreparedQuery
     protected $parameters = [];
 
     /**
-     * The result boolean from a sqlsrv_execute.
+     * A reference to the db connection to use.
      *
-     * @var bool
+     * @var Connection
      */
-    protected $result;
+    protected $db;
+
+    public function __construct(Connection $db)
+    {
+        parent::__construct($db);
+    }
 
     /**
      * Prepares the query against the database, and saves the connection
@@ -43,11 +50,9 @@ class PreparedQuery extends BasePreparedQuery
      *
      * @param array $options Options takes an associative array;
      *
-     * @throws Exception
-     *
-     * @return mixed
+     * @throws DatabaseException
      */
-    public function _prepare(string $sql, array $options = [])
+    public function _prepare(string $sql, array $options = []): PreparedQuery
     {
         // Prepare parameters for the query
         $queryString = $this->getQueryString();
@@ -58,6 +63,10 @@ class PreparedQuery extends BasePreparedQuery
         $this->statement = sqlsrv_prepare($this->db->connID, $sql, $parameters);
 
         if (! $this->statement) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException($this->db->getAllErrorMessages());
+            }
+
             $info              = $this->db->error();
             $this->errorCode   = $info['code'];
             $this->errorString = $info['message'];
@@ -68,7 +77,7 @@ class PreparedQuery extends BasePreparedQuery
 
     /**
      * Takes a new set of data and runs it against the currently
-     * prepared query. Upon success, will return a Results object.
+     * prepared query.
      */
     public function _execute(array $data): bool
     {
@@ -80,23 +89,35 @@ class PreparedQuery extends BasePreparedQuery
             $this->parameters[$key] = $value;
         }
 
-        $this->result = sqlsrv_execute($this->statement);
+        $result = sqlsrv_execute($this->statement);
 
-        return (bool) $this->result;
+        if ($result === false && $this->db->DBDebug) {
+            throw new DatabaseException($this->db->getAllErrorMessages());
+        }
+
+        return $result;
     }
 
     /**
-     * Returns the result object for the prepared query.
+     * Returns the statement resource for the prepared query or false when preparing failed.
      *
-     * @return mixed
+     * @return resource|null
      */
     public function _getResult()
     {
-        return $this->result;
+        return $this->statement;
     }
 
     /**
-     * Handle parameters
+     * Deallocate prepared statements.
+     */
+    protected function _close(): bool
+    {
+        return sqlsrv_free_stmt($this->statement);
+    }
+
+    /**
+     * Handle parameters.
      */
     protected function parameterize(string $queryString): array
     {

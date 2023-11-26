@@ -15,6 +15,8 @@ use Closure;
 
 /**
  * Dummy cache handler
+ *
+ * @see \CodeIgniter\Cache\Handlers\DummyHandlerTest
  */
 class DummyHandler extends BaseHandler
 {
@@ -59,6 +61,8 @@ class DummyHandler extends BaseHandler
 
     /**
      * {@inheritDoc}
+     *
+     * @return int
      */
     public function deleteMatching(string $pattern)
     {

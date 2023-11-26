@@ -12,13 +12,16 @@
 namespace CodeIgniter\Format;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use RuntimeException;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class JSONFormatterTest extends CIUnitTestCase
 {
-    protected $jsonFormatter;
+    private JSONFormatter $jsonFormatter;
 
     protected function setUp(): void
     {
@@ -26,7 +29,7 @@ final class JSONFormatterTest extends CIUnitTestCase
         $this->jsonFormatter = new JSONFormatter();
     }
 
-    public function testBasicJSON()
+    public function testBasicJSON(): void
     {
         $data = [
             'foo' => 'bar',
@@ -39,7 +42,7 @@ final class JSONFormatterTest extends CIUnitTestCase
         $this->assertSame($expected, $this->jsonFormatter->format($data));
     }
 
-    public function testUnicodeOutput()
+    public function testUnicodeOutput(): void
     {
         $data = [
             'foo' => 'База данни грешка',
@@ -52,7 +55,7 @@ final class JSONFormatterTest extends CIUnitTestCase
         $this->assertSame($expected, $this->jsonFormatter->format($data));
     }
 
-    public function testKeepsURLs()
+    public function testKeepsURLs(): void
     {
         $data = [
             'foo' => 'https://www.example.com/foo/bar',
@@ -65,9 +68,9 @@ final class JSONFormatterTest extends CIUnitTestCase
         $this->assertSame($expected, $this->jsonFormatter->format($data));
     }
 
-    public function testJSONError()
+    public function testJSONError(): void
     {
-        $this->expectException('RuntimeException');
+        $this->expectException(RuntimeException::class);
 
         $data     = ["\xB1\x31"];
         $expected = 'Boom';

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -26,21 +28,21 @@
 namespace Kint\Renderer;
 
 use Kint\Kint;
-use Kint\Object\BasicObject;
-use Kint\Object\BlobObject;
+use Kint\Zval\BlobValue;
+use Kint\Zval\Value;
 
 class PlainRenderer extends TextRenderer
 {
-    public static $pre_render_sources = array(
-        'script' => array(
-            array('Kint\\Renderer\\PlainRenderer', 'renderJs'),
-            array('Kint\\Renderer\\Text\\MicrotimePlugin', 'renderJs'),
-        ),
-        'style' => array(
-            array('Kint\\Renderer\\PlainRenderer', 'renderCss'),
-        ),
-        'raw' => array(),
-    );
+    public static $pre_render_sources = [
+        'script' => [
+            ['Kint\\Renderer\\PlainRenderer', 'renderJs'],
+            ['Kint\\Renderer\\Text\\MicrotimePlugin', 'renderJs'],
+        ],
+        'style' => [
+            ['Kint\\Renderer\\PlainRenderer', 'renderCss'],
+        ],
+        'raw' => [],
+    ];
 
     /**
      * Path to the CSS file to load by default.
@@ -61,64 +63,62 @@ class PlainRenderer extends TextRenderer
     public static $always_pre_render = false;
 
     protected $force_pre_render = false;
-    protected $pre_render;
 
     public function __construct()
     {
         parent::__construct();
-
-        $this->pre_render = self::$needs_pre_render;
-
-        if (self::$always_pre_render) {
-            $this->setPreRender(true);
-        }
+        $this->setForcePreRender(self::$always_pre_render);
     }
 
-    public function setCallInfo(array $info)
+    public function setCallInfo(array $info): void
     {
         parent::setCallInfo($info);
 
         if (\in_array('@', $this->call_info['modifiers'], true)) {
-            $this->setPreRender(true);
+            $this->setForcePreRender(true);
         }
     }
 
-    public function setStatics(array $statics)
+    public function setStatics(array $statics): void
     {
         parent::setStatics($statics);
 
         if (!empty($statics['return'])) {
-            $this->setPreRender(true);
+            $this->setForcePreRender(true);
         }
     }
 
-    public function setPreRender($pre_render)
+    public function setForcePreRender(bool $force_pre_render): void
     {
-        $this->pre_render = $pre_render;
-        $this->force_pre_render = true;
+        $this->force_pre_render = $force_pre_render;
     }
 
-    public function getPreRender()
+    public function getForcePreRender(): bool
     {
-        return $this->pre_render;
+        return $this->force_pre_render;
     }
 
-    public function colorValue($string)
+    public function shouldPreRender(): bool
+    {
+        return $this->getForcePreRender() || self::$needs_pre_render;
+    }
+
+    public function colorValue(string $string): string
     {
         return '<i>'.$string.'</i>';
     }
 
-    public function colorType($string)
+    public function colorType(string $string): string
     {
         return '<b>'.$string.'</b>';
     }
 
-    public function colorTitle($string)
+    public function colorTitle(string $string): string
     {
         return '<u>'.$string.'</u>';
     }
 
-    public function renderTitle(BasicObject $o)
+    public function renderTitle(Value $o): string
     {
         if (self::$disable_utf8) {
             return $this->utf8ToHtmlentity(parent::renderTitle($o));
@@ -127,11 +127,11 @@ class PlainRenderer extends TextRenderer
         return parent::renderTitle($o);
     }
 
-    public function preRender()
+    public function preRender(): string
     {
         $output = '';
 
-        if ($this->pre_render) {
+        if ($this->shouldPreRender()) {
             foreach (self::$pre_render_sources as $type => $values) {
                 $contents = '';
                 foreach ($values as $v) {
@@ -155,7 +155,7 @@ class PlainRenderer extends TextRenderer
             }
 
             // Don't pre-render on every dump
-            if (!$this->force_pre_render) {
+            if (!$this->getForcePreRender()) {
                 self::$needs_pre_render = false;
             }
         }
@@ -163,7 +163,7 @@ class PlainRenderer extends TextRenderer
         return $output.'<div class="kint-plain">';
     }
 
-    public function postRender()
+    public function postRender(): string
     {
         if (self::$disable_utf8) {
             return $this->utf8ToHtmlentity(parent::postRender()).'</div>';
@@ -172,7 +172,7 @@ class PlainRenderer extends TextRenderer
         return parent::postRender().'</div>';
     }
 
-    public function ideLink($file, $line)
+    public function ideLink(string $file, int $line): string
     {
         $path = $this->escape(Kint::shortenPath($file)).':'.$line;
         $ideLink = Kint::getIdeLink($file, $line);
@@ -190,10 +190,10 @@ class PlainRenderer extends TextRenderer
         return '<a '.$class.'href="'.$this->escape($ideLink).'">'.$path.'</a>';
     }
 
-    public function escape($string, $encoding = false)
+    public function escape(string $string, $encoding = false): string
     {
         if (false === $encoding) {
-            $encoding = BlobObject::detectEncoding($string);
+            $encoding = BlobValue::detectEncoding($string);
         }
 
         $original_encoding = $encoding;
@@ -206,27 +206,27 @@ class PlainRenderer extends TextRenderer
 
         // this call converts all non-ASCII characters into numeirc htmlentities
         if (\function_exists('mb_encode_numericentity') && 'ASCII' !== $original_encoding) {
-            $string = \mb_encode_numericentity($string, array(0x80, 0xffff, 0, 0xffff), $encoding);
+            $string = \mb_encode_numericentity($string, [0x80, 0xFFFF, 0, 0xFFFF], $encoding);
         }
 
         return $string;
     }
 
-    protected function utf8ToHtmlentity($string)
+    protected function utf8ToHtmlentity(string $string): string
     {
         return \str_replace(
-            array('┌', '═', '┐', '│', '└', '─', '┘'),
-            array('&#9484;', '&#9552;', '&#9488;', '&#9474;', '&#9492;', '&#9472;', '&#9496;'),
+            ['┌', '═', '┐', '│', '└', '─', '┘'],
+            ['&#9484;', '&#9552;', '&#9488;', '&#9474;', '&#9492;', '&#9472;', '&#9496;'],
             $string
         );
     }
 
-    protected static function renderJs()
+    protected static function renderJs(): string
     {
         return \file_get_contents(KINT_DIR.'/resources/compiled/shared.js').\file_get_contents(KINT_DIR.'/resources/compiled/plain.js');
     }
 
-    protected static function renderCss()
+    protected static function renderCss(): string
     {
         if (\file_exists(KINT_DIR.'/resources/compiled/'.self::$theme)) {
             return \file_get_contents(KINT_DIR.'/resources/compiled/'.self::$theme);

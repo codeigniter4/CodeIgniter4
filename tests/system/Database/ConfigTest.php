@@ -16,12 +16,14 @@ use CodeIgniter\Test\ReflectionHelper;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ConfigTest extends CIUnitTestCase
 {
     use ReflectionHelper;
 
-    protected $group = [
+    private array $group = [
         'DSN'      => '',
         'hostname' => 'localhost',
         'username' => 'first',
@@ -30,7 +32,7 @@ final class ConfigTest extends CIUnitTestCase
         'DBDriver' => 'MySQLi',
         'DBPrefix' => 'test_',
         'pConnect' => true,
-        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'DBDebug'  => true,
         'charset'  => 'utf8',
         'DBCollat' => 'utf8_general_ci',
         'swapPre'  => '',
@@ -40,7 +42,7 @@ final class ConfigTest extends CIUnitTestCase
         'failover' => [],
         'port'     => 3306,
     ];
-    protected $dsnGroup = [
+    private array $dsnGroup = [
         'DSN'      => 'MySQLi://user:pass@localhost:3306/dbname?DBPrefix=test_&pConnect=true&charset=latin1&DBCollat=latin1_swedish_ci',
         'hostname' => '',
         'username' => '',
@@ -49,7 +51,7 @@ final class ConfigTest extends CIUnitTestCase
         'DBDriver' => 'SQLite3',
         'DBPrefix' => 't_',
         'pConnect' => false,
-        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'DBDebug'  => true,
         'charset'  => 'utf8',
         'DBCollat' => 'utf8_general_ci',
         'swapPre'  => '',
@@ -59,7 +61,7 @@ final class ConfigTest extends CIUnitTestCase
         'failover' => [],
         'port'     => 3306,
     ];
-    protected $dsnGroupPostgre = [
+    private array $dsnGroupPostgre = [
         'DSN'      => 'Postgre://user:pass@localhost:5432/dbname?DBPrefix=test_&connect_timeout=5&sslmode=1',
         'hostname' => '',
         'username' => '',
@@ -68,7 +70,7 @@ final class ConfigTest extends CIUnitTestCase
         'DBDriver' => 'SQLite3',
         'DBPrefix' => 't_',
         'pConnect' => false,
-        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'DBDebug'  => true,
         'charset'  => 'utf8',
         'DBCollat' => 'utf8_general_ci',
         'swapPre'  => '',
@@ -78,7 +80,7 @@ final class ConfigTest extends CIUnitTestCase
         'failover' => [],
         'port'     => 5432,
     ];
-    protected $dsnGroupPostgreNative = [
+    private array $dsnGroupPostgreNative = [
         'DSN'      => 'pgsql:host=localhost;port=5432;dbname=database_name',
         'hostname' => '',
         'username' => '',
@@ -87,7 +89,7 @@ final class ConfigTest extends CIUnitTestCase
         'DBDriver' => 'Postgre',
         'DBPrefix' => 't_',
         'pConnect' => false,
-        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'DBDebug'  => true,
         'charset'  => 'utf8',
         'DBCollat' => 'utf8_general_ci',
         'swapPre'  => '',
@@ -103,7 +105,7 @@ final class ConfigTest extends CIUnitTestCase
         $this->setPrivateProperty(Config::class, 'instances', []);
     }
 
-    public function testConnectionGroup()
+    public function testConnectionGroup(): void
     {
         $conn = Config::connect($this->group, false);
         $this->assertInstanceOf(BaseConnection::class, $conn);
@@ -121,7 +123,7 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame($this->group['DBCollat'], $this->getPrivateProperty($conn, 'DBCollat'));
     }
 
-    public function testConnectionGroupWithDSN()
+    public function testConnectionGroupWithDSN(): void
     {
         $conn = Config::connect($this->dsnGroup, false);
         $this->assertInstanceOf(BaseConnection::class, $conn);
@@ -141,7 +143,7 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame([], $this->getPrivateProperty($conn, 'failover'));
     }
 
-    public function testConnectionGroupWithDSNPostgre()
+    public function testConnectionGroupWithDSNPostgre(): void
     {
         $conn = Config::connect($this->dsnGroupPostgre, false);
         $this->assertInstanceOf(BaseConnection::class, $conn);
@@ -169,7 +171,7 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame($expected, $this->getPrivateProperty($conn, 'DSN'));
     }
 
-    public function testConnectionGroupWithDSNPostgreNative()
+    public function testConnectionGroupWithDSNPostgreNative(): void
     {
         $conn = Config::connect($this->dsnGroupPostgreNative, false);
         $this->assertInstanceOf(BaseConnection::class, $conn);
@@ -187,5 +189,48 @@ final class ConfigTest extends CIUnitTestCase
         $this->assertSame('utf8_general_ci', $this->getPrivateProperty($conn, 'DBCollat'));
         $this->assertTrue($this->getPrivateProperty($conn, 'strictOn'));
         $this->assertSame([], $this->getPrivateProperty($conn, 'failover'));
+    }
+
+    /**
+     * @dataProvider provideConvertDSN
+     *
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/7550
+     */
+    public function testConvertDSN(string $input, string $expected): void
+    {
+        $this->dsnGroupPostgreNative['DSN'] = $input;
+        $conn                               = Config::connect($this->dsnGroupPostgreNative, false);
+        $this->assertInstanceOf(BaseConnection::class, $conn);
+
+        $method = $this->getPrivateMethodInvoker($conn, 'convertDSN');
+        $method();
+
+        $this->assertSame($expected, $this->getPrivateProperty($conn, 'DSN'));
+    }
+
+    public static function provideConvertDSN(): iterable
+    {
+        yield from [
+            [
+                'pgsql:host=localhost;port=5432;dbname=database_name;user=username;password=password',
+                'host=localhost port=5432 dbname=database_name user=username password=password',
+            ],
+            [
+                'pgsql:host=localhost;port=5432;dbname=database_name;user=username;password=we;port=we',
+                'host=localhost port=5432 dbname=database_name user=username password=we;port=we',
+            ],
+            [
+                'pgsql:host=localhost;port=5432;dbname=database_name',
+                'host=localhost port=5432 dbname=database_name',
+            ],
+            [
+                "pgsql:host=localhost;port=5432;dbname=database_name;options='--client_encoding=UTF8'",
+                "host=localhost port=5432 dbname=database_name options='--client_encoding=UTF8'",
+            ],
+            [
+                'pgsql:host=localhost;port=5432;dbname=database_name;something=stupid',
+                'host=localhost port=5432 dbname=database_name;something=stupid',
+            ],
+        ];
     }
 }

@@ -20,7 +20,7 @@ git checkout master
 rm -rf *
 
 # Copy common files
-releasable='app public writable env LICENSE spark system'
+releasable='app public writable env LICENSE spark system preload.php'
 for fff in $releasable;
 do
     cp -Rf ${SOURCE}/$fff ./
@@ -28,6 +28,8 @@ done
 
 # Copy repo-specific files
 cp -Rf ${SOURCE}/admin/framework/. ./
+# Copy tests files
+cp -Rf ${SOURCE}/admin/starter/tests/. ./tests/
 
 # Commit the changes
 git add .

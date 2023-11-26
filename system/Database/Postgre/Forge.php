@@ -66,6 +66,11 @@ class Forge extends BaseForge
     protected $null = 'NULL';
 
     /**
+     * @var Connection
+     */
+    protected $db;
+
+    /**
      * CREATE TABLE attributes
      *
      * @param array $attributes Associative array of table attributes
@@ -76,7 +81,7 @@ class Forge extends BaseForge
     }
 
     /**
-     * @param mixed $field
+     * @param array|string $field
      *
      * @return array|bool|string
      */
@@ -104,10 +109,12 @@ class Forge extends BaseForge
                     . " SET DEFAULT {$data['default']}";
             }
 
-            if (isset($data['null'])) {
-                $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                    . ($data['null'] === true ? ' DROP' : ' SET') . ' NOT NULL';
+            $nullable = true; // Nullable by default.
+            if (isset($data['null']) && ($data['null'] === false || $data['null'] === ' NOT ' . $this->null)) {
+                $nullable = false;
             }
+            $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
+                . ($nullable === true ? ' DROP' : ' SET') . ' NOT NULL';
 
             if (! empty($data['new_name'])) {
                 $sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($data['name'])
@@ -130,7 +137,7 @@ class Forge extends BaseForge
     protected function _processColumn(array $field): string
     {
         return $this->db->escapeIdentifiers($field['name'])
-            . ' ' . $field['type'] . $field['length']
+            . ' ' . $field['type'] . ($field['type'] === 'text' ? '' : $field['length'])
             . $field['default']
             . $field['null']
             . $field['auto_increment']
@@ -189,5 +196,21 @@ class Forge extends BaseForge
         }
 
         return $sql;
+    }
+
+    /**
+     * Constructs sql to check if key is a constraint.
+     */
+    protected function _dropKeyAsConstraint(string $table, string $constraintName): string
+    {
+        return "SELECT con.conname
+               FROM pg_catalog.pg_constraint con
+                INNER JOIN pg_catalog.pg_class rel
+                           ON rel.oid = con.conrelid
+                INNER JOIN pg_catalog.pg_namespace nsp
+                           ON nsp.oid = connamespace
+               WHERE nsp.nspname = '{$this->db->schema}'
+                     AND rel.relname = '" . trim($table, '"') . "'
+                     AND con.conname = '" . trim($constraintName, '"') . "'";
     }
 }

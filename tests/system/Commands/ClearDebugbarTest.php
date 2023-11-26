@@ -12,32 +12,27 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ClearDebugbarTest extends CIUnitTestCase
 {
-    protected $streamFilter;
-    protected $time;
+    use StreamFilterTrait;
+
+    private int $time;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        CITestStreamFilter::$buffer = '';
-        $this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
-        $this->time                 = time();
+        $this->time = time();
     }
 
-    protected function tearDown(): void
-    {
-        stream_filter_remove($this->streamFilter);
-    }
-
-    protected function createDummyDebugbarJson()
+    protected function createDummyDebugbarJson(): void
     {
         $time = $this->time;
         $path = WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$time}.json";
@@ -51,7 +46,7 @@ final class ClearDebugbarTest extends CIUnitTestCase
         }
     }
 
-    public function testClearDebugbarWorks()
+    public function testClearDebugbarWorks(): void
     {
         // test clean debugbar dir
         $this->assertFileDoesNotExist(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
@@ -61,7 +56,7 @@ final class ClearDebugbarTest extends CIUnitTestCase
         $this->assertFileExists(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
 
         command('debugbar:clear');
-        $result = CITestStreamFilter::$buffer;
+        $result = $this->getStreamFilterBuffer();
 
         $this->assertFileDoesNotExist(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
         $this->assertFileExists(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . '.gitkeep');

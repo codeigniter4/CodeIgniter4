@@ -13,19 +13,18 @@ namespace CodeIgniter\Validation;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
+use InvalidArgumentException;
 use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FileRulesTest extends CIUnitTestCase
 {
-    /**
-     * @var Validation
-     */
-    protected $validation;
-
-    protected $config = [
+    private Validation $validation;
+    private array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
@@ -45,7 +44,9 @@ final class FileRulesTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        $this->resetServices();
         parent::setUp();
+
         $this->validation = new Validation((object) $this->config, Services::renderer());
         $this->validation->reset();
 
@@ -62,9 +63,9 @@ final class FileRulesTest extends CIUnitTestCase
             'bigfile' => [
                 'tmp_name' => TESTPATH . '_support/Validation/uploads/phpUxc0ty',
                 'name'     => 'my-big-file.png',
-                'size'     => 1024000,
+                'size'     => 1_024_000,
                 'type'     => 'image/png',
-                'error'    => 0,
+                'error'    => UPLOAD_ERR_OK,
                 'width'    => 640,
                 'height'   => 400,
             ],
@@ -73,7 +74,7 @@ final class FileRulesTest extends CIUnitTestCase
                 'name'     => 'my-photo.png',
                 'size'     => 4614,
                 'type'     => 'image/png',
-                'error'    => 1, // upload_max_filesize exceeded
+                'error'    => UPLOAD_ERR_INI_SIZE,
                 'width'    => 640,
                 'height'   => 400,
             ],
@@ -88,15 +89,15 @@ final class FileRulesTest extends CIUnitTestCase
                 ],
                 'size' => [
                     4614,
-                    1024000,
+                    1_024_000,
                 ],
                 'type' => [
                     'image/png',
                     'image/png',
                 ],
                 'error' => [
-                    0,
-                    0,
+                    UPLOAD_ERR_OK,
+                    UPLOAD_ERR_OK,
                 ],
                 'width' => [
                     640,
@@ -118,15 +119,15 @@ final class FileRulesTest extends CIUnitTestCase
                 ],
                 'size' => [
                     4614,
-                    1024000,
+                    1_024_000,
                 ],
                 'type' => [
                     'image/png',
                     'image/png',
                 ],
                 'error' => [
-                    1,
-                    0,
+                    UPLOAD_ERR_INI_SIZE,
+                    UPLOAD_ERR_OK,
                 ],
                 'width' => [
                     640,
@@ -140,149 +141,120 @@ final class FileRulesTest extends CIUnitTestCase
         ];
     }
 
-    public function testUploadedTrue()
+    public function testUploadedTrue(): void
     {
-        $this->validation->setRules([
-            'avatar' => 'uploaded[avatar]',
-        ]);
-
+        $this->validation->setRules(['avatar' => 'uploaded[avatar]']);
         $this->assertTrue($this->validation->run([]));
     }
 
-    public function testUploadedFalse()
+    public function testUploadedFalse(): void
     {
-        $this->validation->setRules([
-            'avatar' => 'uploaded[userfile]',
-        ]);
-
+        $this->validation->setRules(['avatar' => 'uploaded[userfile]']);
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testUploadedArrayReturnsTrue()
+    public function testUploadedArrayReturnsTrue(): void
     {
-        $this->validation->setRules([
-            'images' => 'uploaded[images]',
-        ]);
-
+        $this->validation->setRules(['images' => 'uploaded[images]']);
         $this->assertTrue($this->validation->run([]));
     }
 
-    public function testUploadedArrayReturnsFalse()
+    public function testUploadedArrayReturnsFalse(): void
     {
-        $this->validation->setRules([
-            'photos' => 'uploaded[photos]',
-        ]);
-
+        $this->validation->setRules(['photos' => 'uploaded[photos]']);
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testMaxSize()
+    public function testMaxSize(): void
     {
-        $this->validation->setRules([
-            'avatar' => 'max_size[avatar,100]',
-        ]);
-
+        $this->validation->setRules(['avatar' => 'max_size[avatar,100]']);
         $this->assertTrue($this->validation->run([]));
     }
 
-    public function testMaxSizeBigFile()
+    public function testMaxSizeBigFile(): void
     {
-        $this->validation->setRules([
-            'bigfile' => 'max_size[bigfile,9999]',
-        ]);
-
+        $this->validation->setRules(['bigfile' => 'max_size[bigfile,9999]']);
         $this->assertTrue($this->validation->run([]));
     }
 
-    public function testMaxSizeFail()
+    public function testMaxSizeFail(): void
     {
-        $this->validation->setRules([
-            'avatar' => 'max_size[avatar,4]',
-        ]);
+        $this->validation->setRules(['avatar' => 'max_size[avatar,4]']);
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testMaxSizeFailDueToUploadMaxFilesizeExceededInPhpIni()
+    public function testMaxSizeFailDueToUploadMaxFilesizeExceededInPhpIni(): void
     {
-        $this->validation->setRules([
-            'photo' => 'max_size[photo,100]',
-        ]);
+        $this->validation->setRules(['photo' => 'max_size[photo,100]']);
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testMaxSizeBigFileFail()
+    public function testMaxSizeBigFileFail(): void
     {
-        $this->validation->setRules([
-            'bigfile' => 'max_size[bigfile,10]',
-        ]);
-
+        $this->validation->setRules(['bigfile' => 'max_size[bigfile,10]']);
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testMaxSizeBad()
+    public function testMaxSizeBad(): void
     {
-        $this->validation->setRules([
-            'avatar' => 'max_size[userfile,50]',
-        ]);
+        $this->validation->setRules(['avatar' => 'max_size[userfile,50]']);
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testMaxDims()
+    public function testMaxSizeInvalidParam(): void
     {
-        $this->validation->setRules([
-            'avatar' => 'max_dims[avatar,640,480]',
-        ]);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid max_size parameter: "avatar.100"');
+
+        $this->validation->setRules(['avatar' => 'max_size[avatar.100]']);
+        $this->validation->run([]);
+    }
+
+    public function testMaxDims(): void
+    {
+        $this->validation->setRules(['avatar' => 'max_dims[avatar,640,480]']);
         $this->assertTrue($this->validation->run([]));
     }
 
-    public function testMaxDimsFail()
+    public function testMaxDimsFail(): void
     {
-        $this->validation->setRules([
-            'avatar' => 'max_dims[avatar,600,480]',
-        ]);
+        $this->validation->setRules(['avatar' => 'max_dims[avatar,600,480]']);
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testMaxDimsBad()
+    public function testMaxDimsBad(): void
     {
-        $this->validation->setRules([
-            'avatar' => 'max_dims[unknown,640,480]',
-        ]);
+        $this->validation->setRules(['avatar' => 'max_dims[unknown,640,480]']);
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testIsImage()
+    public function testIsImage(): void
     {
-        $this->validation->setRules([
-            'avatar' => 'is_image[avatar]',
-        ]);
+        $this->validation->setRules(['avatar' => 'is_image[avatar]']);
         $this->assertTrue($this->validation->run([]));
     }
 
-    public function testIsntImage()
+    public function testIsntImage(): void
     {
         $_FILES['stuff'] = [
             'tmp_name' => TESTPATH . '_support/Validation/uploads/abc77tz',
             'name'     => 'address.book',
             'size'     => 12345,
             'type'     => 'application/address',
-            'error'    => 0,
+            'error'    => UPLOAD_ERR_OK,
         ];
-        $this->validation->setRules([
-            'avatar' => 'is_image[stuff]',
-        ]);
+
+        $this->validation->setRules(['avatar' => 'is_image[stuff]']);
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testAlsoIsntImage()
+    public function testAlsoIsntImage(): void
     {
-        $this->validation->setRules([
-            'avatar' => 'is_image[unknown]',
-        ]);
+        $this->validation->setRules(['avatar' => 'is_image[unknown]']);
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testMimeTypeOk()
+    public function testMimeTypeOk(): void
     {
         $this->validation->setRules([
             'avatar' => 'mime_in[avatar,image/jpg,image/jpeg,image/gif,image/png]',
@@ -290,7 +262,7 @@ final class FileRulesTest extends CIUnitTestCase
         $this->assertTrue($this->validation->run([]));
     }
 
-    public function testMimeTypeNotOk()
+    public function testMimeTypeNotOk(): void
     {
         $this->validation->setRules([
             'avatar' => 'mime_in[avatar,application/xls,application/doc,application/ppt]',
@@ -298,7 +270,7 @@ final class FileRulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testMimeTypeImpossible()
+    public function testMimeTypeImpossible(): void
     {
         $this->validation->setRules([
             'avatar' => 'mime_in[unknown,application/xls,application/doc,application/ppt]',
@@ -306,27 +278,21 @@ final class FileRulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testExtensionOk()
+    public function testExtensionOk(): void
     {
-        $this->validation->setRules([
-            'avatar' => 'ext_in[avatar,jpg,jpeg,gif,png]',
-        ]);
+        $this->validation->setRules(['avatar' => 'ext_in[avatar,jpg,jpeg,gif,png]']);
         $this->assertTrue($this->validation->run([]));
     }
 
-    public function testExtensionNotOk()
+    public function testExtensionNotOk(): void
     {
-        $this->validation->setRules([
-            'avatar' => 'ext_in[avatar,xls,doc,ppt]',
-        ]);
+        $this->validation->setRules(['avatar' => 'ext_in[avatar,xls,doc,ppt]']);
         $this->assertFalse($this->validation->run([]));
     }
 
-    public function testExtensionImpossible()
+    public function testExtensionImpossible(): void
     {
-        $this->validation->setRules([
-            'avatar' => 'ext_in[unknown,xls,doc,ppt]',
-        ]);
+        $this->validation->setRules(['avatar' => 'ext_in[unknown,xls,doc,ppt]']);
         $this->assertFalse($this->validation->run([]));
     }
 }

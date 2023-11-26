@@ -15,8 +15,4 @@ use CodeIgniter\HTTP\IncomingRequest;
 
 class MockIncomingRequest extends IncomingRequest
 {
-    protected function detectURI($protocol, $baseURL)
-    {
-        // Do nothing...
-    }
 }

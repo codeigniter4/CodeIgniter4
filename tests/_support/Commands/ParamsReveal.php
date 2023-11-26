@@ -21,7 +21,7 @@ class ParamsReveal extends BaseCommand
     protected $description = 'Reveal params';
     public static $args;
 
-    public function run(array $params)
+    public function run(array $params): void
     {
         static::$args = $params;
     }

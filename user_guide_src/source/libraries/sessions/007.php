@@ -1,0 +1,3 @@
+<?php
+
+$item = session('item');

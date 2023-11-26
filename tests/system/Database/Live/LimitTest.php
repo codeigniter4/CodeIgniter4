@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @group DatabaseLive
@@ -24,9 +25,9 @@ final class LimitTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed    = CITestSeeder::class;
 
-    public function testLimit()
+    public function testLimit(): void
     {
         $jobs = $this->db->table('job')
             ->limit(2)
@@ -38,7 +39,7 @@ final class LimitTest extends CIUnitTestCase
         $this->assertSame('Politician', $jobs[1]->name);
     }
 
-    public function testLimitAndOffset()
+    public function testLimitAndOffset(): void
     {
         $jobs = $this->db->table('job')
             ->limit(2, 2)

@@ -26,12 +26,15 @@ class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
      */
     protected static $logs = [];
 
+    protected string $destination;
+
     /**
      * Where would the log be written?
      */
     public function __construct(array $config)
     {
         parent::__construct($config);
+
         $this->handles     = $config['handles'] ?? [];
         $this->destination = $this->path . 'log-' . date('Y-m-d') . '.' . $this->fileExtension;
 
@@ -44,8 +47,8 @@ class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
      * will stop. Any handlers that have not run, yet, will not
      * be run.
      *
-     * @param $level
-     * @param $message
+     * @param string $level
+     * @param string $message
      */
     public function handle($level, $message): bool
     {

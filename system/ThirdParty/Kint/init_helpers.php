@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -24,18 +26,19 @@
  */
 
 use Kint\Kint;
+use Kint\Renderer\CliRenderer;
 
 if (!\function_exists('d')) {
     /**
      * Alias of Kint::dump().
      *
+     * @param mixed ...$args
+     *
      * @return int|string
      */
-    function d()
+    function d(...$args)
     {
-        $args = \func_get_args();
-
-        return \call_user_func_array(array('Kint', 'dump'), $args);
+        return Kint::dump(...$args);
     }
 
     Kint::$aliases[] = 'd';
@@ -48,34 +51,35 @@ if (!\function_exists('s')) {
      * Alias of Kint::dump(), however the output is in plain htmlescaped text
      * with some minor visibility enhancements added.
      *
-     * If run in CLI mode, output is not escaped.
+     * If run in CLI colors are disabled
      *
-     * To force rendering mode without autodetecting anything:
-     *
-     * Kint::$enabled_mode = Kint::MODE_PLAIN;
-     * Kint::dump( $variable );
+     * @param mixed ...$args
      *
      * @return int|string
      */
-    function s()
+    function s(...$args)
     {
-        if (!Kint::$enabled_mode) {
+        if (false === Kint::$enabled_mode) {
             return 0;
         }
 
-        $stash = Kint::$enabled_mode;
+        $kstash = Kint::$enabled_mode;
+        $cstash = CliRenderer::$cli_colors;
 
         if (Kint::MODE_TEXT !== Kint::$enabled_mode) {
             Kint::$enabled_mode = Kint::MODE_PLAIN;
+
             if (PHP_SAPI === 'cli' && true === Kint::$cli_detection) {
                 Kint::$enabled_mode = Kint::$mode_default_cli;
             }
         }
 
-        $args = \func_get_args();
-        $out = \call_user_func_array(array('Kint', 'dump'), $args);
+        CliRenderer::$cli_colors = false;
 
-        Kint::$enabled_mode = $stash;
+        $out = Kint::dump(...$args);
+
+        Kint::$enabled_mode = $kstash;
+        CliRenderer::$cli_colors = $cstash;
 
         return $out;
     }

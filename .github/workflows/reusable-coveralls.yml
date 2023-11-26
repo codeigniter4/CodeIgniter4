@@ -1,0 +1,68 @@
+name: Reusable Coveralls Upload
+
+on:
+  workflow_call:
+    inputs:
+      php-version:
+        description: The PHP version the workflow should run
+        type: string
+        required: true
+
+jobs:
+  coveralls:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ inputs.php-version }}
+          tools: composer
+          coverage: xdebug
+
+      - name: Download coverage files
+        uses: actions/download-artifact@v3
+        with:
+          path: build/cov
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: build/cov
+
+      - name: Get composer cache directory
+        run: |
+          echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
+          key: ${{ github.job }}-php-${{ inputs.php-version }}-${{ hashFiles('**/composer.*') }}
+          restore-keys: |
+            ${{ github.job }}-php-${{ inputs.php-version }}-
+            ${{ github.job }}-
+
+      - name: Cache PHPUnit's static analysis cache
+        uses: actions/cache@v3
+        with:
+          path: build/.phpunit.cache/code-coverage
+          key: phpunit-code-coverage-${{ hashFiles('**/phpunit.*') }}
+          restore-keys: |
+            phpunit-code-coverage-
+
+      - name: Install dependencies
+        run: composer update --ansi
+
+      - name: Merge coverage files
+        run: |
+          jq '.autoload."psr-4" += {"Config\\": "app/Config/"}' composer.json > temp.json && mv temp.json composer.json
+          composer dump-autoload
+          vendor/bin/phpcov merge --clover build/logs/clover.xml build/cov
+
+      - name: Upload coverage to Coveralls
+        run: vendor/bin/php-coveralls --verbose --exclude-no-stmt --ansi
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}

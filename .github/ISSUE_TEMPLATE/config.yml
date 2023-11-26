@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+contact_links:
+  - name: CodeIgniter Forum
+    url: https://forum.codeigniter.com/forum-30.html
+    about: Please ask your support questions in the forums. Thanks!
+
+  - name: CodeIgniter Slack channel
+    url: https://codeigniterchat.slack.com
+    about: Engage with other members of the community in our Slack channel.

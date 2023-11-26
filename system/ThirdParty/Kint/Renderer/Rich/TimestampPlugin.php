@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -27,16 +29,16 @@ namespace Kint\Renderer\Rich;
 
 use DateTime;
 use DateTimeZone;
-use Kint\Object\Representation\Representation;
+use Kint\Zval\Representation\Representation;
 
-class TimestampPlugin extends Plugin implements TabPluginInterface
+class TimestampPlugin extends AbstractPlugin implements TabPluginInterface
 {
-    public function renderTab(Representation $r)
+    public function renderTab(Representation $r): ?string
     {
-        $dt = DateTime::createFromFormat('U', $r->contents);
-
-        if ($dt) {
+        if ($dt = DateTime::createFromFormat('U', (string) $r->contents)) {
             return '<pre>'.$dt->setTimeZone(new DateTimeZone('UTC'))->format('Y-m-d H:i:s T').'</pre>';
         }
+
+        return null;
     }
 }

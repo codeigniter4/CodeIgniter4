@@ -14,17 +14,15 @@ namespace CodeIgniter\Cookie;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTimeImmutable;
-use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CookieStoreTest extends CIUnitTestCase
 {
-    /**
-     * @var array
-     */
-    private $defaults;
+    private array $defaults;
 
     protected function setUp(): void
     {
@@ -97,29 +95,6 @@ final class CookieStoreTest extends CIUnitTestCase
         $this->assertTrue($bottle->has('test'));
         $this->assertTrue($store->has('dev'));
         $this->assertFalse($jar->has('dev'));
-    }
-
-    public function testCookieDispatching(): void
-    {
-        $cookies = [
-            'dev'  => new Cookie('dev', 'cookie'),
-            'prod' => new Cookie('prod', 'cookie', ['raw' => true]),
-        ];
-
-        $dev  = $cookies['dev']->getOptions();
-        $prod = $cookies['prod']->getOptions();
-
-        /**
-         * @var MockObject&CookieStore $store
-         */
-        $store = $this->getMockBuilder(CookieStore::class)
-            ->setConstructorArgs([$cookies])
-            ->onlyMethods(['setRawCookie', 'setCookie'])
-            ->getMock();
-
-        $store->expects($this->once())->method('setRawCookie')->with('prod', 'cookie', $prod);
-        $store->expects($this->once())->method('setCookie')->with('dev', 'cookie', $dev);
-        $store->dispatch();
     }
 
     public function testCookiesFunction(): void

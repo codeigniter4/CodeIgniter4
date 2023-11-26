@@ -15,26 +15,19 @@ use Config\App;
 
 class MockCLIConfig extends App
 {
-    public $baseURL          = 'http://example.com/';
-    public $uriProtocol      = 'REQUEST_URI';
-    public $cookiePrefix     = '';
-    public $cookieDomain     = '';
-    public $cookiePath       = '/';
-    public $cookieSecure     = false;
-    public $cookieHTTPOnly   = false;
-    public $cookieSameSite   = 'Lax';
-    public $proxyIPs         = '';
-    public $CSRFProtection   = false;
-    public $CSRFTokenName    = 'csrf_test_name';
-    public $CSRFCookieName   = 'csrf_cookie_name';
-    public $CSRFExpire       = 7200;
-    public $CSRFRegenerate   = true;
-    public $CSRFExcludeURIs  = ['http://example.com'];
-    public $CSRFSameSite     = 'Lax';
-    public $CSPEnabled       = false;
-    public $defaultLocale    = 'en';
-    public $negotiateLocale  = false;
-    public $supportedLocales = [
+    public string $baseURL         = 'http://example.com/';
+    public string $uriProtocol     = 'REQUEST_URI';
+    public array $proxyIPs         = [];
+    public string $CSRFTokenName   = 'csrf_test_name';
+    public string $CSRFCookieName  = 'csrf_cookie_name';
+    public int $CSRFExpire         = 7200;
+    public bool $CSRFRegenerate    = true;
+    public $CSRFExcludeURIs        = ['http://example.com'];
+    public string $CSRFSameSite    = 'Lax';
+    public bool $CSPEnabled        = false;
+    public string $defaultLocale   = 'en';
+    public bool $negotiateLocale   = false;
+    public array $supportedLocales = [
         'en',
         'es',
     ];

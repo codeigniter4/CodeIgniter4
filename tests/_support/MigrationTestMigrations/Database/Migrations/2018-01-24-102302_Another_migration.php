@@ -13,7 +13,7 @@ namespace Tests\Support\MigrationTestMigrations\Database\Migrations;
 
 class Migration_another_migration extends \CodeIgniter\Database\Migration
 {
-    public function up()
+    public function up(): void
     {
         $fields = [
             'value' => [
@@ -29,7 +29,7 @@ class Migration_another_migration extends \CodeIgniter\Database\Migration
         ]);
     }
 
-    public function down()
+    public function down(): void
     {
         if ($this->db->tableExists('foo')) {
             $this->forge->dropColumn('foo', 'value');

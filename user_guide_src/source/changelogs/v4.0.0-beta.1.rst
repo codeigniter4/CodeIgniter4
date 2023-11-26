@@ -3,7 +3,12 @@ Version 4.0.0-beta.1
 
 Release Date: Mar 1, 2019
 
-Highlights:
+.. contents::
+    :local:
+    :depth: 2
+
+Highlights
+----------
 
 - New View Layouts provide simple way to create site site view templates.
 - Fixed user guide CSS for proper wide table display
@@ -11,17 +16,22 @@ Highlights:
 - Numerous database, migration & model bugs fixed
 - Refactored unit testing for appstarter & framework distributions
 
-New messages:
+New Messages
+------------
 
 - Database.tableNotFound
 - HTTP.uploadErr...
 
-App changes:
+App Changes
+-----------
 
 - app/Config/Cache has new setting: database
 - app/Views/welcome_message has logo tinted
 - composer.json has a case correction
 - env adds CI_ENVIRONMENT suggestion
+
+Changed Files
+-------------
 
 The list of changed files follows, with PR numbers shown.
 
@@ -134,8 +144,8 @@ The list of changed files follows, with PR numbers shown.
 - composer.json #1755
 - .env #1749
 
-PRs merged:
------------
+PRs merged
+----------
 
 - #1774 Housekeeping for beta.1
 - #1768 Helper changes - signatures & typos
@@ -158,7 +168,7 @@ PRs merged:
 - #1737 Added support for dropTable and modifyTable with SQLite driver
 - #1736 Accommodate long travis execution times
 - #1733 Fix increment and decrement errors with Postgres
-- #1732 Don't check from CLI in Routes. Fixes #1724 
+- #1732 Don't check from CLI in Routes. Fixes #1724
 - #1729 New View Layout functionality for simple template
 - #1725 Update Request.php
 - #1723 Log an error if redis authentication is failed

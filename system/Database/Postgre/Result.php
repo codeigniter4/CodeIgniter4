@@ -13,10 +13,14 @@ namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Entity\Entity;
+use PgSql\Connection as PgSqlConnection;
+use PgSql\Result as PgSqlResult;
 use stdClass;
 
 /**
  * Result for Postgre
+ *
+ * @extends BaseResult<PgSqlConnection, PgSqlResult>
  */
 class Result extends BaseResult
 {
@@ -65,10 +69,12 @@ class Result extends BaseResult
 
     /**
      * Frees the current result.
+     *
+     * @return void
      */
     public function freeResult()
     {
-        if (is_resource($this->resultID)) {
+        if ($this->resultID !== false) {
             pg_free_result($this->resultID);
             $this->resultID = false;
         }
@@ -79,7 +85,7 @@ class Result extends BaseResult
      * internally before fetching results to make sure the result set
      * starts at zero.
      *
-     * @return mixed
+     * @return bool
      */
     public function dataSeek(int $n = 0)
     {
@@ -91,7 +97,7 @@ class Result extends BaseResult
      *
      * Overridden by driver classes.
      *
-     * @return mixed
+     * @return array|false
      */
     protected function fetchAssoc()
     {
@@ -103,12 +109,12 @@ class Result extends BaseResult
      *
      * Overridden by child classes.
      *
-     * @return bool|Entity|object
+     * @return Entity|false|object|stdClass
      */
     protected function fetchObject(string $className = 'stdClass')
     {
         if (is_subclass_of($className, Entity::class)) {
-            return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);
+            return empty($data = $this->fetchAssoc()) ? false : (new $className())->injectRawData($data);
         }
 
         return pg_fetch_object($this->resultID, null, $className);

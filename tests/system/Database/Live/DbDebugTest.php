@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 
@@ -25,23 +26,29 @@ final class DbDebugTest extends CIUnitTestCase
 
     protected $refresh = true;
 
-    public function testDBDebugTrue()
+    public function testDBDebugTrue(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', true);
-        $this->expectException('Exception');
+        $this->enableDBDebug();
+
+        $this->expectException(DatabaseException::class);
+
         $this->db->simpleQuery('SELECT * FROM db_error');
     }
 
-    public function testDBDebugFalse()
+    public function testDBDebugFalse(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
+
         $result = $this->db->simpleQuery('SELECT * FROM db_error');
+
         $this->assertFalse($result);
     }
 
     protected function tearDown(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', true);
+        $this->enableDBDebug();
+
         parent::tearDown();
     }
 }

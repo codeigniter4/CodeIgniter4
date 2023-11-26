@@ -9,27 +9,26 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-use CodeIgniter\Publisher\Publisher;
+namespace CodeIgniter\Publisher;
+
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class PublisherInputTest extends CIUnitTestCase
 {
     /**
      * A known, valid file
-     *
-     * @var string
      */
-    private $file = SUPPORTPATH . 'Files/baker/banana.php';
+    private string $file = SUPPORTPATH . 'Files/baker/banana.php';
 
     /**
      * A known, valid directory
-     *
-     * @var string
      */
-    private $directory = SUPPORTPATH . 'Files/able/';
+    private string $directory = SUPPORTPATH . 'Files/able/';
 
     /**
      * Initialize the helper, since some
@@ -43,7 +42,7 @@ final class PublisherInputTest extends CIUnitTestCase
         helper(['filesystem']);
     }
 
-    public function testAddPathFile()
+    public function testAddPathFile(): void
     {
         $publisher = new Publisher(SUPPORTPATH . 'Files');
 
@@ -52,7 +51,7 @@ final class PublisherInputTest extends CIUnitTestCase
         $this->assertSame([$this->file], $publisher->get());
     }
 
-    public function testAddPathFileRecursiveDoesNothing()
+    public function testAddPathFileRecursiveDoesNothing(): void
     {
         $publisher = new Publisher(SUPPORTPATH . 'Files');
 
@@ -61,7 +60,7 @@ final class PublisherInputTest extends CIUnitTestCase
         $this->assertSame([$this->file], $publisher->get());
     }
 
-    public function testAddPathDirectory()
+    public function testAddPathDirectory(): void
     {
         $publisher = new Publisher(SUPPORTPATH . 'Files');
 
@@ -76,7 +75,7 @@ final class PublisherInputTest extends CIUnitTestCase
         $this->assertSame($expected, $publisher->get());
     }
 
-    public function testAddPathDirectoryRecursive()
+    public function testAddPathDirectoryRecursive(): void
     {
         $publisher = new Publisher(SUPPORTPATH);
 
@@ -92,7 +91,7 @@ final class PublisherInputTest extends CIUnitTestCase
         $this->assertSame($expected, $publisher->get());
     }
 
-    public function testAddPaths()
+    public function testAddPaths(): void
     {
         $publisher = new Publisher(SUPPORTPATH . 'Files');
 
@@ -111,7 +110,7 @@ final class PublisherInputTest extends CIUnitTestCase
         $this->assertSame($expected, $publisher->get());
     }
 
-    public function testAddPathsRecursive()
+    public function testAddPathsRecursive(): void
     {
         $publisher = new Publisher(SUPPORTPATH);
 
@@ -131,7 +130,7 @@ final class PublisherInputTest extends CIUnitTestCase
         $this->assertSame($expected, $publisher->get());
     }
 
-    public function testAddUri()
+    public function testAddUri(): void
     {
         $publisher = new Publisher();
         $publisher->addUri('https://raw.githubusercontent.com/codeigniter4/CodeIgniter4/develop/composer.json');
@@ -141,7 +140,7 @@ final class PublisherInputTest extends CIUnitTestCase
         $this->assertSame([$scratch . 'composer.json'], $publisher->get());
     }
 
-    public function testAddUris()
+    public function testAddUris(): void
     {
         $publisher = new Publisher();
         $publisher->addUris([

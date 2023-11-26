@@ -11,18 +11,21 @@
 
 namespace CodeIgniter\View;
 
+use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\View;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ParserFilterTest extends CIUnitTestCase
 {
-    protected $loader;
-    protected $viewsDir;
-    protected $config;
+    private FileLocator $loader;
+    private string $viewsDir;
+    private View $config;
 
     protected function setUp(): void
     {
@@ -33,7 +36,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->config   = new View();
     }
 
-    public function testAbs()
+    public function testAbs(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -48,7 +51,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('55', $parser->renderString($template));
     }
 
-    public function testCapitalize()
+    public function testCapitalize(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -63,7 +66,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('Wonder Twins', $parser->renderString($template));
     }
 
-    public function testDate()
+    public function testDate(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -85,7 +88,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame("{$todayDash} {$todayDash} {$todayDot} {$todaySpace} {$todayColon} {$todaySlash} {$todayBackslash}", $parser->renderString($template));
     }
 
-    public function testDateModify()
+    public function testDateModify(): void
     {
         $parser    = new Parser($this->config, $this->viewsDir, $this->loader);
         $tommorrow = date('Y-m-d', strtotime('+1 day'));
@@ -101,7 +104,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame("{$tommorrow} {$tommorrow}", $parser->renderString($template));
     }
 
-    public function testDefault()
+    public function testDefault(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -117,7 +120,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('foo bar test', $parser->renderString($template));
     }
 
-    public function testEsc()
+    public function testEsc(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -134,7 +137,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame("{$value1} {$value2}", $parser->renderString($template));
     }
 
-    public function testExcerpt()
+    public function testExcerpt(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -148,7 +151,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('... red fox jumped over ...', $parser->renderString($template));
     }
 
-    public function testHighlight()
+    public function testHighlight(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -162,7 +165,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('The quick red fox <mark>jumped over</mark> the lazy brown dog', $parser->renderString($template));
     }
 
-    public function testHighlightCode()
+    public function testHighlightCode(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -178,10 +181,25 @@ final class ParserFilterTest extends CIUnitTestCase
             </span>
             </code>
             EOF;
+
+        // PHP 8.3 changes the output.
+        if (PHP_VERSION_ID >= 80300) {
+            $expected = <<<'EOF'
+                <pre><code style="color: #000000"><span style="color: #0000BB">Sincerely ?&gt;</span></code></pre>
+                EOF;
+        } else {
+            $expected = <<<'EOF'
+                <code><span style="color: #000000">
+                <span style="color: #0000BB">Sincerely&nbsp;</span>
+                </span>
+                </code>
+                EOF;
+        }
+
         $this->assertSame($expected, $parser->renderString($template));
     }
 
-    public function testProse()
+    public function testProse(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -195,7 +213,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame($expected, $parser->renderString($template));
     }
 
-    public function testLimitChars()
+    public function testLimitChars(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -209,7 +227,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('The quick&#8230;', $parser->renderString($template));
     }
 
-    public function testLimitWords()
+    public function testLimitWords(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -223,7 +241,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('The quick red fox&#8230;', $parser->renderString($template));
     }
 
-    public function testLower()
+    public function testLower(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -237,7 +255,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('something', $parser->renderString($template));
     }
 
-    public function testNL2BR()
+    public function testNL2BR(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -248,10 +266,10 @@ final class ParserFilterTest extends CIUnitTestCase
         $template = '{ value1|nl2br }';
 
         $parser->setData($data);
-        $this->assertSame("first<br />\nsecond", $parser->renderString($template));
+        $this->assertSame("first<br>\nsecond", $parser->renderString($template));
     }
 
-    public function testNumberFormat()
+    public function testNumberFormat(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -265,21 +283,23 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('1,098.35', $parser->renderString($template));
     }
 
-    public function testRound()
+    public function testRound(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
         $data = [
-            'value1' => 5.55,
+            'value1' => 5.555,
         ];
 
-        $template = '{ value1|round(1) } { value1|round(1, common) } { value1|round(ceil) } { value1|round(floor) } { value1|round(unknown) }';
+        $template = '{ value1|round(1) } / { value1|round(1, common) }'
+            . ' / { value1|round(ceil) } / { value1|round(floor) }'
+            . ' / { value1|round(unknown) }';
 
         $parser->setData($data);
-        $this->assertSame('5.6 5.6 6 5 5.55', $parser->renderString($template));
+        $this->assertSame('5.6 / 5.6 / 6 / 5 / 5.555', $parser->renderString($template));
     }
 
-    public function testStripTags()
+    public function testStripTags(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -293,7 +313,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('Middle <b>Middle</b>', $parser->renderString($template));
     }
 
-    public function testTitle()
+    public function testTitle(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -307,7 +327,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('Though She Be Little', $parser->renderString($template));
     }
 
-    public function testUpper()
+    public function testUpper(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
@@ -321,12 +341,12 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('THOUGH SHE BE LITTLE', $parser->renderString($template));
     }
 
-    public function testLocalNumberBase()
+    public function testLocalNumberBase(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
         $data = [
-            'mynum' => 1234567.891234567890000,
+            'mynum' => 1_234_567.8912346,
         ];
 
         $template = '{ mynum|local_number }';
@@ -335,12 +355,12 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('1,234,567.8912', $parser->renderString($template));
     }
 
-    public function testLocalNumberPrecision()
+    public function testLocalNumberPrecision(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
         $data = [
-            'mynum' => 1234567.891234567890000,
+            'mynum' => 1_234_567.8912346,
         ];
 
         $template = '{ mynum|local_number(decimal,2) }';
@@ -349,12 +369,12 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('1,234,567.89', $parser->renderString($template));
     }
 
-    public function testLocalNumberType()
+    public function testLocalNumberType(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
         $data = [
-            'mynum' => 1234567.891234567890000,
+            'mynum' => 1_234_567.8912346,
         ];
 
         $template = '{ mynum|local_number(spellout) }';
@@ -363,12 +383,12 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('one million two hundred thirty-four thousand five hundred sixty-seven point eight nine one two three four six', $parser->renderString($template));
     }
 
-    public function testLocalNumberLocale()
+    public function testLocalNumberLocale(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
         $data = [
-            'mynum' => 1234567.891234567890000,
+            'mynum' => 1_234_567.8912346,
         ];
 
         $template = '{ mynum|local_number(decimal,4,de_DE) }';
@@ -377,12 +397,12 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame('1.234.567,8912', $parser->renderString($template));
     }
 
-    public function testLocalCurrency()
+    public function testLocalCurrency(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
         $data = [
-            'mynum' => 1234567.891234567890000,
+            'mynum' => 1_234_567.8912346,
         ];
 
         $template = '{ mynum|local_currency(EUR,de_DE,2) }';
@@ -391,7 +411,21 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame("1.234.567,89\u{a0}€", $parser->renderString($template));
     }
 
-    public function testParsePairWithAbs()
+    public function testLocalCurrencyWithoutFraction(): void
+    {
+        $parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+        $data = [
+            'mynum' => 1_234_567.8912346,
+        ];
+
+        $template = '{ mynum|local_currency(EUR,de_DE) }';
+
+        $parser->setData($data);
+        $this->assertSame("1.234.568\u{a0}€", $parser->renderString($template));
+    }
+
+    public function testParsePairWithAbs(): void
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 

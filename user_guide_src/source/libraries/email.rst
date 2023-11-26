@@ -18,7 +18,7 @@ CodeIgniter's robust Email Class supports the following features:
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 ***********************
 Using the Email Library
@@ -30,19 +30,11 @@ Sending Email
 Sending email is not only simple, but you can configure it on the fly or
 set your preferences in the **app/Config/Email.php** file.
 
-Here is a basic example demonstrating how you might send email::
+Here is a basic example demonstrating how you might send email:
 
-    $email = \Config\Services::email();
+.. literalinclude:: email/001.php
 
-    $email->setFrom('your@example.com', 'Your Name');
-    $email->setTo('someone@example.com');
-    $email->setCC('another@another-example.com');
-    $email->setBCC('them@their-example.com');
-
-    $email->setSubject('Email Test');
-    $email->setMessage('Testing the email class.');
-
-    $email->send();
+.. _setting-email-preferences:
 
 Setting Email Preferences
 =========================
@@ -52,16 +44,14 @@ messages are sent. You can either set them manually as described here,
 or automatically via preferences stored in your config file, described
 below:
 
+Setting Email Preferences by Passing an Array
+---------------------------------------------
+
 Preferences are set by passing an array of preference values to the
 email initialize method. Here is an example of how you might set some
-preferences::
+preferences:
 
-    $config['protocol'] = 'sendmail';
-    $config['mailPath'] = '/usr/sbin/sendmail';
-    $config['charset']  = 'iso-8859-1';
-    $config['wordWrap'] = true;
-
-    $email->initialize($config);
+.. literalinclude:: email/002.php
 
 .. note:: Most of the preferences have default values that will be used
     if you do not set them.
@@ -76,15 +66,10 @@ Email properties. Then save the file and it will be used automatically.
 You will NOT need to use the ``$email->initialize()`` method if
 you set your preferences in the config file.
 
-Reviewing Preferences
----------------------
-
-The settings used for the last successful send are available from the
-instance property ``$archive``. This is helpful for testing and debugging
-to determine that actual values at the time of the ``send()`` call.
+.. _email-ssl-tls-for-smtp:
 
 SSL versus TLS for SMTP Protocol
-================================
+--------------------------------
 
 To protect the username, password and email content while communicating with the SMTP server,
 encryption on the channel should be used. Two different standards are widely deployed and
@@ -102,13 +87,20 @@ will upgrade the channel to use encryption using the ``STARTTLS`` SMTP command.
 
 Upgrading a connection on port 465 may or may not be supported by the server, so the
 ``STARTTLS`` SMTP command may fail if the server does not allow it. If you set the port to 465,
-you should try to leave the ``SMTPCrypto`` setting blank since the communication is
+you should try to set the ``SMTPCrypto`` to an empty string (``''``) since the communication is
 secured using TLS from the start and the ``STARTTLS`` is not needed.
 
 If your configuration requires you to connect to port 587, you should most likely set
 ``SMTPCrypto`` to ``tls`` as this will implement the ``STARTTLS`` command while communicating
 with the SMTP server to switch from clear-text to an encrypted channel. The initial communication
 will be made in clear-text and the channel will be upgraded to TLS with the ``STARTTLS`` command.
+
+Reviewing Preferences
+---------------------
+
+The settings used for the last successful send are available from the
+instance property ``$archive``. This is helpful for testing and debugging
+to determine that actual values at the time of the ``send()`` call.
 
 Email Preferences
 =================
@@ -121,18 +113,19 @@ Preference          Default Value          Options                      Descript
 =================== ====================== ============================ =======================================================================
 **userAgent**       CodeIgniter            None                         The "user agent".
 **protocol**        mail                   mail, sendmail, or smtp      The mail sending protocol.
-**mailpath**        /usr/sbin/sendmail     None                         The server path to Sendmail.
+**mailPath**        /usr/sbin/sendmail     None                         The server path to Sendmail.
 **SMTPHost**        No Default             None                         SMTP Server Address.
 **SMTPUser**        No Default             None                         SMTP Username.
 **SMTPPass**        No Default             None                         SMTP Password.
-**SMTPPort**        25                     None                         SMTP Port. (If set to 465, TLS will be used for the connection
-                                                                        regardless of SMTPCrypto setting.)
+**SMTPPort**        25                     None                         SMTP Port. (If set to ``465``, TLS will be used for the connection
+                                                                        regardless of ``SMTPCrypto`` setting.)
 **SMTPTimeout**     5                      None                         SMTP Timeout (in seconds).
 **SMTPKeepAlive**   false                  true or false (boolean)      Enable persistent SMTP connections.
-**SMTPCrypto**      No Default             tls or ssl                   SMTP Encryption. Setting this to "ssl" will create a secure
-                                                                        channel to the server using SSL and "tls" will issue a
+**SMTPCrypto**      tls                    tls, ssl, or empty string    SMTP Encryption. Setting this to ``ssl`` will create a secure
+                                                                        channel to the server using SSL, and ``tls`` will issue a
                                                                         ``STARTTLS`` command to the server. Connection on port 465 should
-                                                                        set this to blank.
+                                                                        set this to an empty string (``''``). See also
+                                                                        :ref:`email-ssl-tls-for-smtp`.
 **wordWrap**        true                   true or false (boolean)      Enable word-wrap.
 **wrapChars**       76                                                  Character count to wrap at.
 **mailType**        text                   text or html                 Type of mail. If you send HTML email you must send it as a complete web
@@ -165,14 +158,15 @@ message like this::
     More text that will be
     wrapped normally.
 
-
 Place the item you do not want word-wrapped between: {unwrap} {/unwrap}
 
 ***************
 Class Reference
 ***************
 
-.. php:class:: CodeIgniter\\Email\\Email
+.. php:namespace:: CodeIgniter\Email
+
+.. php:class:: Email
 
     .. php:method:: setFrom($from[, $name = ''[, $returnPath = null]])
 
@@ -182,13 +176,13 @@ Class Reference
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the email address and name of the person sending the email::
+        Sets the email address and name of the person sending the email:
 
-            $email->setFrom('you@example.com', 'Your Name');
+        .. literalinclude:: email/003.php
 
-        You can also set a Return-Path, to help redirect undelivered mail::
+        You can also set a Return-Path, to help redirect undelivered mail:
 
-            $email->setFrom('you@example.com', 'Your Name', 'returned_emails@example.com');
+        .. literalinclude:: email/004.php
 
         .. note:: Return-Path can't be used if you've configured 'smtp' as
             your protocol.
@@ -201,9 +195,9 @@ Class Reference
         :rtype:    CodeIgniter\\Email\\Email
 
         Sets the reply-to address. If the information is not provided the
-        information in the `setFrom <#setFrom>`_ method is used. Example::
+        information in the `setFrom <#setFrom>`_ method is used. Example:
 
-            $email->setReplyTo('you@example.com', 'Your Name');
+        .. literalinclude:: email/005.php
 
     .. php:method:: setTo($to)
 
@@ -212,17 +206,13 @@ Class Reference
         :rtype:    CodeIgniter\\Email\\Email
 
         Sets the email address(s) of the recipient(s). Can be a single e-mail,
-        a comma-delimited list or an array::
+        a comma-delimited list or an array:
 
-            $email->setTo('someone@example.com');
+        .. literalinclude:: email/006.php
 
-        ::
+        .. literalinclude:: email/007.php
 
-            $email->setTo('one@example.com, two@example.com, three@example.com');
-
-        ::
-
-            $email->setTo(['one@example.com', 'two@example.com', 'three@example.com']);
+        .. literalinclude:: email/008.php
 
     .. php:method:: setCC($cc)
 
@@ -253,9 +243,9 @@ Class Reference
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the email subject::
+        Sets the email subject:
 
-            $email->setSubject('This is my subject');
+        .. literalinclude:: email/009.php
 
     .. php:method:: setMessage($body)
 
@@ -263,9 +253,9 @@ Class Reference
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the e-mail message body::
+        Sets the e-mail message body:
 
-            $email->setMessage('This is my message');
+        .. literalinclude:: email/010.php
 
     .. php:method:: setAltMessage($str)
 
@@ -273,9 +263,9 @@ Class Reference
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype:    CodeIgniter\\Email\\Email
 
-        Sets the alternative e-mail message body::
+        Sets the alternative e-mail message body:
 
-            $email->setAltMessage('This is the alternative message');
+        .. literalinclude:: email/011.php
 
         This is an optional message string which can be used if you send
         HTML formatted email. It lets you specify an alternative message
@@ -285,17 +275,15 @@ Class Reference
         and strip the tags.
 
     .. php:method:: setHeader($header, $value)
-        :noindex:
 
         :param    string    $header: Header name
         :param    string    $value: Header value
         :returns:    CodeIgniter\\Email\\Email instance (method chaining)
         :rtype: CodeIgniter\\Email\\Email
 
-        Appends additional headers to the e-mail::
+        Appends additional headers to the e-mail:
 
-            $email->setHeader('Header1', 'Value1');
-            $email->setHeader('Header2', 'Value2');
+        .. literalinclude:: email/012.php
 
     .. php:method:: clear($clearAttachments = false)
 
@@ -307,23 +295,12 @@ Class Reference
         is intended for use if you run the email sending method in a loop,
         permitting the data to be reset between cycles.
 
-        ::
-
-            foreach ($list as $name => $address)
-            {
-                $email->clear();
-
-                $email->setTo($address);
-                $email->setFrom('your@example.com');
-                $email->setSubject('Here is your info '.$name);
-                $email->setMessage('Hi ' . $name . ' Here is the info you requested.');
-                $email->send();
-            }
+        .. literalinclude:: email/013.php
 
         If you set the parameter to true any attachments will be cleared as
-        well::
+        well:
 
-            $email->clear(true);
+        .. literalinclude:: email/014.php
 
     .. php:method:: send($autoClear = true)
 
@@ -332,20 +309,14 @@ Class Reference
         :rtype:    bool
 
         The e-mail sending method. Returns boolean true or false based on
-        success or failure, enabling it to be used conditionally::
+        success or failure, enabling it to be used conditionally:
 
-            if (! $email->send())
-            {
-                // Generate error
-            }
+        .. literalinclude:: email/015.php
 
         This method will automatically clear all parameters if the request was
-        successful. To stop this behaviour pass false::
+        successful. To stop this behaviour pass false:
 
-            if ($email->send(false))
-            {
-                // Parameters won't be cleared
-            }
+        .. literalinclude:: email/016.php
 
         .. note:: In order to use the ``printDebugger()`` method, you need
             to avoid clearing the email parameters.
@@ -367,30 +338,28 @@ Class Reference
 
         Enables you to send an attachment. Put the file path/name in the first
         parameter. For multiple attachments use the method multiple times.
-        For example::
+        For example:
 
-            $email->attach('/path/to/photo1.jpg');
-            $email->attach('/path/to/photo2.jpg');
-            $email->attach('/path/to/photo3.jpg');
+        .. literalinclude:: email/017.php
 
         To use the default disposition (attachment), leave the second parameter blank,
-        otherwise use a custom disposition::
+        otherwise use a custom disposition:
 
-            $email->attach('image.jpg', 'inline');
+        .. literalinclude:: email/018.php
 
-        You can also use a URL::
+        You can also use a URL:
 
-            $email->attach('http://example.com/filename.pdf');
+        .. literalinclude:: email/019.php
 
-        If you'd like to use a custom file name, you can use the third parameter::
+        If you'd like to use a custom file name, you can use the third parameter:
 
-            $email->attach('filename.pdf', 'attachment', 'report.pdf');
+        .. literalinclude:: email/020.php
 
         If you need to use a buffer string instead of a real - physical - file you can
         use the first parameter as buffer, the third parameter as file name and the fourth
-        parameter as mime-type::
+        parameter as mime-type:
 
-            $email->attach($buffer, 'attachment', 'report.pdf', 'application/pdf');
+        .. literalinclude:: email/021.php
 
     .. php:method:: setAttachmentCID($filename)
 
@@ -398,19 +367,10 @@ Class Reference
         :returns:    Attachment Content-ID or false if not found
         :rtype:    string
 
-        Sets and returns an attachment's Content-ID, which enables your to embed an inline
+        Sets and returns an attachment's Content-ID, which enables you to embed an inline
         (picture) attachment into HTML. First parameter must be the already attached file name.
-        ::
 
-            $filename = '/img/photo1.jpg';
-            $email->attach($filename);
-
-            foreach ($list as $address) {
-                $email->setTo($address);
-                $cid = $email->setAttachmentCID($filename);
-                $email->setMessage('<img src="cid:'. $cid .'" alt="photo1" />');
-                $email->send();
-            }
+        .. literalinclude:: email/022.php
 
         .. note:: Content-ID for each e-mail must be re-created for it to be unique.
 
@@ -426,14 +386,8 @@ Class Reference
         You can optionally specify which parts of the message should be printed.
         Valid options are: **headers**, **subject**, **body**.
 
-        Example::
+        Example:
 
-            // You need to pass false while sending in order for the email data
-            // to not be cleared - if that happens, printDebugger() would have
-            // nothing to output.
-            $email->send(false);
-
-            // Will only print the email headers, excluding the message subject and body
-            $email->printDebugger(['headers']);
+        .. literalinclude:: email/023.php
 
         .. note:: By default, all of the raw data will be printed.

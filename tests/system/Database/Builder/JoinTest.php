@@ -13,12 +13,15 @@ namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class JoinTest extends CIUnitTestCase
 {
@@ -31,7 +34,7 @@ final class JoinTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testJoinSimple()
+    public function testJoinSimple(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 
@@ -42,7 +45,7 @@ final class JoinTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testJoinIsNull()
+    public function testJoinIsNull(): void
     {
         $builder = new BaseBuilder('table1', $this->db);
 
@@ -53,7 +56,7 @@ final class JoinTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testJoinIsNotNull()
+    public function testJoinIsNotNull(): void
     {
         $builder = new BaseBuilder('table1', $this->db);
 
@@ -64,7 +67,7 @@ final class JoinTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testJoinMultipleConditions()
+    public function testJoinMultipleConditions(): void
     {
         $builder = new BaseBuilder('table1', $this->db);
 
@@ -75,7 +78,29 @@ final class JoinTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testFullOuterJoin()
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/3832
+     */
+    public function testJoinRawSql(): void
+    {
+        $builder = new BaseBuilder('device', $this->db);
+
+        $sql = 'user.id = device.user_id
+            AND (
+                (1=1 OR 1=1)
+                OR
+                (1=1 OR 1=1)
+            )';
+        $builder->join('user', new RawSql($sql), 'LEFT');
+
+        $expectedSQL = 'SELECT * FROM "device" LEFT JOIN "user" ON user.id = device.user_id AND ( (1=1 OR 1=1) OR (1=1 OR 1=1) )';
+
+        $output = str_replace("\n", ' ', $builder->getCompiledSelect());
+        $output = preg_replace('/\s+/', ' ', $output);
+        $this->assertSame($expectedSQL, $output);
+    }
+
+    public function testFullOuterJoin(): void
     {
         $builder = new PostgreBuilder('jobs', $this->db);
         $builder->testMode();
@@ -86,7 +111,7 @@ final class JoinTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
-    public function testJoinWithAlias()
+    public function testJoinWithAlias(): void
     {
         $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
 

@@ -11,8 +11,10 @@
 
 namespace CodeIgniter\Models;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity\Entity;
+use InvalidArgumentException;
 use stdClass;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
@@ -22,6 +24,8 @@ use Tests\Support\Models\ValidModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class UpdateModelTest extends LiveModelTestCase
@@ -96,7 +100,9 @@ final class UpdateModelTest extends LiveModelTestCase
 
     public function testUpdateResultFail(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
+        $this->createModel(UserModel::class);
 
         $data = [
             'name'    => 'Foo',
@@ -104,14 +110,16 @@ final class UpdateModelTest extends LiveModelTestCase
             'country' => 'US',
             'deleted' => 0,
         ];
-
-        $this->createModel(UserModel::class);
         $this->model->insert($data);
 
         $this->setPrivateProperty($this->model, 'allowedFields', ['name123']);
+
         $result = $this->model->update(1, ['name123' => 'Foo Bar 1']);
+
         $this->assertFalse($result);
         $this->dontSeeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar 1']);
+
+        $this->enableDBDebug();
     }
 
     public function testUpdateBatchSuccess(): void
@@ -139,6 +147,27 @@ final class UpdateModelTest extends LiveModelTestCase
         ]);
     }
 
+    public function testUpdateBatchInvalidIndex(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The index ("not_exist") for updateBatch() is missing in the data: {"name":"Derek Jones","country":"Greece"}'
+        );
+
+        $data = [
+            [
+                'name'    => 'Derek Jones',
+                'country' => 'Greece',
+            ],
+            [
+                'name'    => 'Ahmadinejad',
+                'country' => 'Greece',
+            ],
+        ];
+
+        $this->createModel(UserModel::class)->updateBatch($data, 'not_exist');
+    }
+
     public function testUpdateBatchValidationFail(): void
     {
         $data = [
@@ -153,7 +182,7 @@ final class UpdateModelTest extends LiveModelTestCase
         $this->assertFalse($this->model->updateBatch($data, 'name'));
 
         $error = $this->model->errors();
-        $this->assertTrue(isset($error['country']));
+        $this->assertArrayHasKey('country', $error);
     }
 
     public function testUpdateBatchWithEntity(): void
@@ -200,11 +229,16 @@ final class UpdateModelTest extends LiveModelTestCase
         $entity1->name    = 'Jones Martin';
         $entity1->country = 'India';
         $entity1->deleted = 0;
+        $entity1->syncOriginal();
+        // Update the entity.
+        $entity1->country = 'China';
 
+        // This entity is not updated.
         $entity2->id      = 4;
         $entity2->name    = 'Jones Martin';
         $entity2->country = 'India';
         $entity2->deleted = 0;
+        $entity2->syncOriginal();
 
         $this->assertSame(2, $this->createModel(UserModel::class)->updateBatch([$entity1, $entity2], 'id'));
     }
@@ -326,6 +360,7 @@ final class UpdateModelTest extends LiveModelTestCase
 
         $entity->id      = 1;
         $entity->name    = 'Jones Martin';
+        $entity->email   = 'jones@example.org';
         $entity->country = 'India';
         $entity->deleted = 0;
 
@@ -370,5 +405,37 @@ final class UpdateModelTest extends LiveModelTestCase
             'country' => '4',
             'email'   => '1+1',
         ]);
+    }
+
+    /**
+     * @dataProvider provideUpdateThrowDatabaseExceptionWithoutWhereClause
+     *
+     * @param false|null $id
+     */
+    public function testUpdateThrowDatabaseExceptionWithoutWhereClause($id, string $exception, string $exceptionMessage): void
+    {
+        $this->expectException($exception);
+        $this->expectExceptionMessage($exceptionMessage);
+
+        // $useSoftDeletes = false
+        $this->createModel(JobModel::class);
+
+        $this->model->update($id, ['name' => 'Foo Bar']);
+    }
+
+    public static function provideUpdateThrowDatabaseExceptionWithoutWhereClause(): iterable
+    {
+        yield from [
+            [
+                null,
+                DatabaseException::class,
+                'Updates are not allowed unless they contain a "where" or "like" clause.',
+            ],
+            [
+                false,
+                InvalidArgumentException::class,
+                'update(): argument #1 ($id) should not be boolean.',
+            ],
+        ];
     }
 }

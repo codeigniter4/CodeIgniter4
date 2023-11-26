@@ -24,6 +24,8 @@ use Tests\Support\Models\ValidModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class SaveModelTest extends LiveModelTestCase
@@ -55,17 +57,20 @@ final class SaveModelTest extends LiveModelTestCase
 
     public function testSaveNewRecordArrayFail(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
         $this->createModel(JobModel::class);
 
         $data = [
             'name123'     => 'Apprentice',
             'description' => 'That thing you do.',
         ];
-
         $result = $this->model->protect(false)->save($data);
+
         $this->assertFalse($result);
         $this->dontSeeInDatabase('job', ['name' => 'Apprentice']);
+
+        $this->enableDBDebug();
     }
 
     public function testSaveUpdateRecordArray(): void
@@ -84,7 +89,8 @@ final class SaveModelTest extends LiveModelTestCase
 
     public function testSaveUpdateRecordArrayFail(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
         $this->createModel(JobModel::class);
 
         $data = [
@@ -92,10 +98,12 @@ final class SaveModelTest extends LiveModelTestCase
             'name123'     => 'Apprentice',
             'description' => 'That thing you do.',
         ];
-
         $result = $this->model->protect(false)->save($data);
+
         $this->assertFalse($result);
         $this->dontSeeInDatabase('job', ['name' => 'Apprentice']);
+
+        $this->enableDBDebug();
     }
 
     public function testSaveUpdateRecordObject(): void
@@ -257,7 +265,7 @@ final class SaveModelTest extends LiveModelTestCase
             ];
         };
 
-        $testModel                   = new class () extends Model {
+        $testModel = new class () extends Model {
             protected $table         = 'empty';
             protected $allowedFields = [
                 'name',
@@ -287,7 +295,7 @@ final class SaveModelTest extends LiveModelTestCase
         ];
 
         $this->expectException(DataException::class);
-        $this->expectExceptionMessage('Allowed fields must be specified for model: Tests\Support\Models\JobModel');
+        $this->expectExceptionMessage('Allowed fields must be specified for model: "Tests\Support\Models\JobModel"');
 
         $this->model->save($data);
     }
@@ -311,6 +319,29 @@ final class SaveModelTest extends LiveModelTestCase
         ];
 
         $this->model->save($update);
+        $this->assertSame($insert['key'], $this->model->getInsertID());
+        $this->seeInDatabase('without_auto_increment', $update);
+    }
+
+    public function testUseAutoIncrementSetToFalseSaveObject(): void
+    {
+        $this->createModel(WithoutAutoIncrementModel::class);
+
+        $insert = [
+            'key'   => 'some_random_key',
+            'value' => 'some value',
+        ];
+        $this->model->save((object) $insert);
+
+        $this->assertSame($insert['key'], $this->model->getInsertID());
+        $this->seeInDatabase('without_auto_increment', $insert);
+
+        $update = [
+            'key'   => 'some_random_key',
+            'value' => 'some different value',
+        ];
+        $this->model->save((object) $update);
+
         $this->assertSame($insert['key'], $this->model->getInsertID());
         $this->seeInDatabase('without_auto_increment', $update);
     }

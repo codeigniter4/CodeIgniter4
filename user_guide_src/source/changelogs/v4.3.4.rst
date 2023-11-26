@@ -1,0 +1,66 @@
+Version 4.3.4
+#############
+
+Release Date: April 27, 2023
+
+**4.3.4 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+BREAKING
+********
+
+Behavior Changes
+================
+
+.. _v434-redirect-status-code:
+
+Redirect Status Code
+--------------------
+
+- Due to a bug, in previous versions, when using HTTP/1.1 or later the status
+  code of the actual redirect response might be changed even if a status code was
+  specified. For example, for a GET request, 302 would change to 307; for a POST
+  request, 307 and 302 would change to 303.
+- Starting with this version, if you specify a status code in
+  :ref:`redirect <response-redirect-status-code>`, that code will always be used
+  in the response.
+- The default code for GET requests has been corrected from 307 to 302 when using
+  HTTP/1.1 or later.
+- The default code for HEAD and OPTIONS requests has been corrected from 303 to
+  307 when using HTTP/1.1 or later.
+- In ``$routes->addRedirect()``, 302 is specified by default. Therefor 302 will
+  always be used when you don't specify a status code. In previous versions,
+  302 might be changed.
+
+.. _v434-forge-modifycolumn:
+
+Forge::modifyColumn()
+---------------------
+
+- The :ref:`$forge->modifyColumn() <db-forge-modifyColumn>` has been fixed. Due
+  to a bug, in previous versions, SQLite3/Postgres/SQLSRV might change
+  ``NULL``/``NOT NULL`` unpredictably.
+- In previous versions, the OCI8 driver did not change ``NULL``/``NOT NULL``
+  when you don't specify the ``null`` key.
+- Now in all database drivers ``$forge->modifyColumn()`` always sets ``NULL``
+  when you don't specify the ``null`` key.
+- The ``NULL``/``NOT NULL`` change may still be unexpectedly, it is recommended
+  to always specify the ``null`` key.
+
+Deprecations
+************
+
+- **Text Helper:** :php:func:`random_string()`'s type ``basic``, ``md5``, and
+  ``sha1`` are deprecated. They are not cryptographically secure.
+
+Bugs Fixed
+**********
+
+- **CURLRequest:** Fixed a bug where the response class was shared between requests.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

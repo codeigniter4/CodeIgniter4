@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,27 +27,27 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Kint\Object\Representation\MicrotimeRepresentation;
+use Kint\Zval\Representation\MicrotimeRepresentation;
+use Kint\Zval\Value;
 
-class MicrotimePlugin extends Plugin
+class MicrotimePlugin extends AbstractPlugin
 {
     private static $last = null;
     private static $start = null;
     private static $times = 0;
     private static $group = 0;
 
-    public function getTypes()
+    public function getTypes(): array
     {
-        return array('string', 'double');
+        return ['string', 'double'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parse(&$var, Value &$o, int $trigger): void
     {
         if (0 !== $o->depth) {
             return;
@@ -63,9 +65,9 @@ class MicrotimePlugin extends Plugin
                 return;
             }
 
-            $sec = \floor($var);
+            $sec = (int) \floor($var);
             $usec = $var - $sec;
-            $usec = \floor($usec * 1000000);
+            $usec = (int) \floor($usec * 1000000);
         }
 
         $time = $sec + ($usec / 1000000);
@@ -79,7 +81,7 @@ class MicrotimePlugin extends Plugin
             self::$start = $time;
         }
 
-        self::$last = array($sec, $usec);
+        self::$last = [$sec, $usec];
 
         if (null !== $lap) {
             $total = $time - self::$start;
@@ -95,7 +97,7 @@ class MicrotimePlugin extends Plugin
         $o->hints[] = 'microtime';
     }
 
-    public static function clean()
+    public static function clean(): void
     {
         self::$last = null;
         self::$start = null;

@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\CLI;
 
+use Config\Exceptions;
 use Psr\Log\LoggerInterface;
 use ReflectionException;
 use Throwable;
@@ -18,14 +19,14 @@ use Throwable;
 /**
  * BaseCommand is the base class used in creating CLI commands.
  *
- * @property array           $arguments
- * @property Commands        $commands
- * @property string          $description
- * @property string          $group
- * @property LoggerInterface $logger
- * @property string          $name
- * @property array           $options
- * @property string          $usage
+ * @property array<string, string> $arguments
+ * @property Commands              $commands
+ * @property string                $description
+ * @property string                $group
+ * @property LoggerInterface       $logger
+ * @property string                $name
+ * @property array<string, string> $options
+ * @property string                $usage
  */
 abstract class BaseCommand
 {
@@ -61,14 +62,14 @@ abstract class BaseCommand
     /**
      * the Command's options description
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [];
 
     /**
      * the Command's Arguments description
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [];
 
@@ -96,16 +97,18 @@ abstract class BaseCommand
     /**
      * Actually execute a command.
      *
-     * @param array<string, mixed> $params
+     * @param array<int|string, string|null> $params
+     *
+     * @return int|void
      */
     abstract public function run(array $params);
 
     /**
      * Can be used by a command to run other commands.
      *
-     * @throws ReflectionException
+     * @return int|void
      *
-     * @return mixed
+     * @throws ReflectionException
      */
     protected function call(string $command, array $params = [])
     {
@@ -114,17 +117,22 @@ abstract class BaseCommand
 
     /**
      * A simple method to display an error with line/file, in child commands.
+     *
+     * @return void
      */
     protected function showError(Throwable $e)
     {
         $exception = $e;
         $message   = $e->getMessage();
+        $config    = config(Exceptions::class);
 
-        require APPPATH . 'Views/errors/cli/error_exception.php';
+        require $config->errorViewPath . '/cli/error_exception.php';
     }
 
     /**
      * Show Help includes (Usage, Arguments, Description, Options).
+     *
+     * @return void
      */
     public function showHelp()
     {
@@ -202,7 +210,7 @@ abstract class BaseCommand
     /**
      * Makes it simple to access our protected properties.
      *
-     * @return mixed
+     * @return array|Commands|LoggerInterface|string|null
      */
     public function __get(string $key)
     {

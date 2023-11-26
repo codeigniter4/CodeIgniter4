@@ -12,14 +12,21 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use InvalidArgumentException;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FilesystemHelperTest extends CIUnitTestCase
 {
+    /**
+     * @var array<string, array<string, mixed[]>>|array<string, array<string, string>>|array<string, mixed>|array<string, mixed[]>|array<string, string>|mixed
+     */
+    private array $structure;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -37,11 +44,12 @@ final class FilesystemHelperTest extends CIUnitTestCase
             'simpleFile'    => 'A tap-tap-tapping upon my door',
             '.hidden'       => 'There is no spoon',
         ];
+
+        helper('filesystem');
     }
 
-    public function testDirectoryMapDefaults()
+    public function testDirectoryMapDefaults(): void
     {
-        helper('filesystem');
         $this->assertTrue(function_exists('directory_map'));
 
         $expected = [
@@ -63,9 +71,8 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($expected, directory_map(vfsStream::url('root')));
     }
 
-    public function testDirectoryMapShowsHiddenFiles()
+    public function testDirectoryMapShowsHiddenFiles(): void
     {
-        helper('filesystem');
         $this->assertTrue(function_exists('directory_map'));
 
         $expected = [
@@ -88,7 +95,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($expected, directory_map(vfsStream::url('root'), false, true));
     }
 
-    public function testDirectoryMapLimitsRecursion()
+    public function testDirectoryMapLimitsRecursion(): void
     {
         $this->assertTrue(function_exists('directory_map'));
 
@@ -106,12 +113,12 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($expected, directory_map(vfsStream::url('root'), 1, true));
     }
 
-    public function testDirectoryMapHandlesNotfound()
+    public function testDirectoryMapHandlesNotfound(): void
     {
         $this->assertSame([], directory_map(SUPPORTPATH . 'Files/shaker/'));
     }
 
-    public function testDirectoryMirror()
+    public function testDirectoryMirror(): void
     {
         $this->assertTrue(function_exists('directory_mirror'));
 
@@ -127,7 +134,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertFileExists($root . 'boo/bam/zab');
     }
 
-    public function testDirectoryMirrorOverwrites()
+    public function testDirectoryMirrorOverwrites(): void
     {
         $this->assertTrue(function_exists('directory_mirror'));
 
@@ -144,7 +151,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($this->structure['foo']['faz'], $result);
     }
 
-    public function testDirectoryMirrorNotOverwrites()
+    public function testDirectoryMirrorNotOverwrites(): void
     {
         $this->assertTrue(function_exists('directory_mirror'));
 
@@ -161,7 +168,35 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($this->structure['boo']['faz'], $result);
     }
 
-    public function testWriteFileSuccess()
+    public function testDirectoryMirrorSkipExistingFolder(): void
+    {
+        $this->assertTrue(function_exists('directory_mirror'));
+
+        $this->structure = [
+            'src' => [
+                'AnEmptyFolder' => [],
+            ],
+            'dest' => [
+                'AnEmptyFolder' => [],
+            ],
+        ];
+        vfsStream::setup('root', null, $this->structure);
+        $root = rtrim(vfsStream::url('root') . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+        // skips the existing folder
+        directory_mirror($root . 'src', $root . 'dest');
+
+        $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
+        $this->assertSame([], $structure['root']['dest']['AnEmptyFolder']);
+
+        // skips the existing folder (the same as overwrite = true)
+        directory_mirror($root . 'src', $root . 'dest', false);
+
+        $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
+        $this->assertSame([], $structure['root']['dest']['AnEmptyFolder']);
+    }
+
+    public function testWriteFileSuccess(): void
     {
         $vfs = vfsStream::setup('root');
 
@@ -169,14 +204,14 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertFileExists($vfs->getChild('test.php')->url());
     }
 
-    public function testWriteFileFailure()
+    public function testWriteFileFailure(): void
     {
         vfsStream::setup('root');
 
         $this->assertFalse(write_file(vfsStream::url('apple#test.php'), 'Simple'));
     }
 
-    public function testDeleteFilesDefaultsToOneLevelDeep()
+    public function testDeleteFilesDefaultsToOneLevelDeep(): void
     {
         $this->assertTrue(function_exists('delete_files'));
 
@@ -191,7 +226,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertTrue($vfs->hasChild('AnEmptyFolder'));
     }
 
-    public function testDeleteFilesHandlesRecursion()
+    public function testDeleteFilesHandlesRecursion(): void
     {
         $this->assertTrue(function_exists('delete_files'));
 
@@ -206,7 +241,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertFalse($vfs->hasChild('AnEmptyFolder'));
     }
 
-    public function testDeleteFilesLeavesHTFiles()
+    public function testDeleteFilesLeavesHTFiles(): void
     {
         $structure = array_merge($this->structure, [
             '.htaccess'  => 'Deny All',
@@ -228,7 +263,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertTrue($vfs->hasChild('index.php'));
     }
 
-    public function testDeleteFilesIncludingHidden()
+    public function testDeleteFilesIncludingHidden(): void
     {
         $structure = array_merge($this->structure, [
             '.htaccess'  => 'Deny All',
@@ -250,14 +285,14 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertTrue($vfs->hasChild('index.php'));
     }
 
-    public function testDeleteFilesFailure()
+    public function testDeleteFilesFailure(): void
     {
         $this->assertFalse(delete_files(SUPPORTPATH . 'Files/shaker/'));
     }
 
-    public function testGetFilenames()
+    public function testGetFilenames(): void
     {
-        $this->assertTrue(function_exists('delete_files'));
+        $this->assertTrue(function_exists('get_filenames'));
 
         // Not sure the directory names should actually show up
         // here but this matches v3.x results.
@@ -277,9 +312,25 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($expected, get_filenames($vfs->url(), false));
     }
 
-    public function testGetFilenamesWithHidden()
+    public function testGetFilenamesWithoutDirectories(): void
     {
-        $this->assertTrue(function_exists('delete_files'));
+        $vfs = vfsStream::setup('root', null, $this->structure);
+
+        $filenames = get_filenames($vfs->url(), true, false, false);
+
+        $expected = [
+            'vfs://root/boo/far',
+            'vfs://root/boo/faz',
+            'vfs://root/foo/bar',
+            'vfs://root/foo/baz',
+            'vfs://root/simpleFile',
+        ];
+        $this->assertSame($expected, $filenames);
+    }
+
+    public function testGetFilenamesWithHidden(): void
+    {
+        $this->assertTrue(function_exists('get_filenames'));
 
         // Not sure the directory names should actually show up
         // here but this matches v3.x results.
@@ -300,7 +351,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($expected, get_filenames($vfs->url(), false, true));
     }
 
-    public function testGetFilenamesWithRelativeSource()
+    public function testGetFilenamesWithRelativeSource(): void
     {
         $this->assertTrue(function_exists('get_filenames'));
 
@@ -320,7 +371,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($expected, get_filenames($vfs->url(), null));
     }
 
-    public function testGetFilenamesWithFullSource()
+    public function testGetFilenamesWithFullSource(): void
     {
         $this->assertTrue(function_exists('get_filenames'));
 
@@ -340,12 +391,12 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($expected, get_filenames($vfs->url(), true));
     }
 
-    public function testGetFilenamesFailure()
+    public function testGetFilenamesFailure(): void
     {
         $this->assertSame([], get_filenames(SUPPORTPATH . 'Files/shaker/'));
     }
 
-    public function testGetDirFileInfo()
+    public function testGetDirFileInfo(): void
     {
         $file = SUPPORTPATH . 'Files/baker/banana.php';
         $info = get_file_info($file);
@@ -363,7 +414,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($expected, get_dir_file_info(SUPPORTPATH . 'Files/baker'));
     }
 
-    public function testGetDirFileInfoNested()
+    public function testGetDirFileInfoNested(): void
     {
         $expected = [
             'banana.php',
@@ -376,14 +427,14 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertEmpty(array_diff($expected, array_keys($results)));
     }
 
-    public function testGetDirFileInfoFailure()
+    public function testGetDirFileInfoFailure(): void
     {
         $expected = [];
 
         $this->assertSame($expected, get_dir_file_info(SUPPORTPATH . 'Files#baker'));
     }
 
-    public function testGetFileInfo()
+    public function testGetFileInfo(): void
     {
         $file = SUPPORTPATH . 'Files/baker/banana.php';
         $info = get_file_info($file);
@@ -398,7 +449,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($expected, get_file_info(SUPPORTPATH . 'Files/baker/banana.php'));
     }
 
-    public function testGetFileInfoCustom()
+    public function testGetFileInfoCustom(): void
     {
         $expected = [
             'readable'   => true,
@@ -409,7 +460,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($expected, get_file_info(SUPPORTPATH . 'Files/baker/banana.php', 'readable,writable,executable'));
     }
 
-    public function testGetFileInfoPerms()
+    public function testGetFileInfoPerms(): void
     {
         $file     = SUPPORTPATH . 'Files/baker/banana.php';
         $expected = 0664;
@@ -420,14 +471,14 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $stuff['fileperms'] & 0777);
     }
 
-    public function testGetFileNotThereInfo()
+    public function testGetFileNotThereInfo(): void
     {
         $expected = null;
 
         $this->assertSame($expected, get_file_info(SUPPORTPATH . 'Files/icer'));
     }
 
-    public function testSameFileSame()
+    public function testSameFileSame(): void
     {
         $file1 = SUPPORTPATH . 'Files/able/apple.php';
         $file2 = SUPPORTPATH . 'Files/able/apple.php';
@@ -435,7 +486,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertTrue(same_file($file1, $file2));
     }
 
-    public function testSameFileIdentical()
+    public function testSameFileIdentical(): void
     {
         $file1 = SUPPORTPATH . 'Files/able/apple.php';
         $file2 = SUPPORTPATH . 'Files/baker/banana.php';
@@ -443,7 +494,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertTrue(same_file($file1, $file2));
     }
 
-    public function testSameFileDifferent()
+    public function testSameFileDifferent(): void
     {
         $file1 = SUPPORTPATH . 'Files/able/apple.php';
         $file2 = SUPPORTPATH . 'Images/ci-logo.gif';
@@ -451,7 +502,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertFalse(same_file($file1, $file2));
     }
 
-    public function testSameFileOrder()
+    public function testSameFileOrder(): void
     {
         $file1 = SUPPORTPATH . 'Files/able/apple.php';
         $file2 = SUPPORTPATH . 'Images/ci-logo.gif';
@@ -459,7 +510,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertFalse(same_file($file2, $file1));
     }
 
-    public function testSameFileDirectory()
+    public function testSameFileDirectory(): void
     {
         $file1 = SUPPORTPATH . 'Files/able/apple.php';
         $file2 = SUPPORTPATH . 'Images/';
@@ -467,14 +518,14 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertFalse(same_file($file1, $file2));
     }
 
-    public function testOctalPermissions()
+    public function testOctalPermissions(): void
     {
         $this->assertSame('777', octal_permissions(0777));
         $this->assertSame('655', octal_permissions(0655));
         $this->assertSame('123', octal_permissions(0123));
     }
 
-    public function testSymbolicPermissions()
+    public function testSymbolicPermissions(): void
     {
         $expected = [
             0777    => 'urwxrwxrwx',
@@ -494,19 +545,19 @@ final class FilesystemHelperTest extends CIUnitTestCase
         }
     }
 
-    public function testRealPathURL()
+    public function testRealPathURL(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         set_realpath('http://somewhere.com/overtherainbow');
     }
 
-    public function testRealPathInvalid()
+    public function testRealPathInvalid(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         set_realpath(SUPPORTPATH . 'root/../', true);
     }
 
-    public function testRealPathResolved()
+    public function testRealPathResolved(): void
     {
         $this->assertSame(SUPPORTPATH . 'Models/', set_realpath(SUPPORTPATH . 'Files/../Models', true));
     }

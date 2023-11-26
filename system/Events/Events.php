@@ -14,15 +14,17 @@ namespace CodeIgniter\Events;
 use Config\Modules;
 use Config\Services;
 
-define('EVENT_PRIORITY_LOW', 200);
-define('EVENT_PRIORITY_NORMAL', 100);
-define('EVENT_PRIORITY_HIGH', 10);
-
 /**
  * Events
+ *
+ * @see \CodeIgniter\Events\EventsTest
  */
 class Events
 {
+    public const PRIORITY_LOW    = 200;
+    public const PRIORITY_NORMAL = 100;
+    public const PRIORITY_HIGH   = 10;
+
     /**
      * The list of listeners.
      *
@@ -63,6 +65,8 @@ class Events
 
     /**
      * Ensures that we have a events file ready.
+     *
+     * @return void
      */
     public static function initialize()
     {
@@ -71,8 +75,7 @@ class Events
             return;
         }
 
-        /** @var Modules $config */
-        $config = config('Modules');
+        $config = config(Modules::class);
         $events = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Events.php';
         $files  = [];
 
@@ -109,8 +112,10 @@ class Events
      * @param string   $eventName
      * @param callable $callback
      * @param int      $priority
+     *
+     * @return void
      */
-    public static function on($eventName, $callback, $priority = EVENT_PRIORITY_NORMAL)
+    public static function on($eventName, $callback, $priority = self::PRIORITY_NORMAL)
     {
         if (! isset(static::$listeners[$eventName])) {
             static::$listeners[$eventName] = [
@@ -223,6 +228,8 @@ class Events
      * removed, otherwise all listeners for all events are removed.
      *
      * @param string|null $eventName
+     *
+     * @return void
      */
     public static function removeAllListeners($eventName = null)
     {
@@ -235,6 +242,8 @@ class Events
 
     /**
      * Sets the path to the file that routes are read from.
+     *
+     * @return void
      */
     public static function setFiles(array $files)
     {
@@ -246,7 +255,7 @@ class Events
      *
      * @return string[]
      */
-    public function getFiles()
+    public static function getFiles()
     {
         return static::$files;
     }
@@ -255,6 +264,8 @@ class Events
      * Turns simulation on or off. When on, events will not be triggered,
      * simply logged. Useful during testing when you don't actually want
      * the tests to run.
+     *
+     * @return void
      */
     public static function simulate(bool $choice = true)
     {

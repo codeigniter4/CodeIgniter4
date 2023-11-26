@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,78 +27,32 @@
 
 namespace Kint\Renderer\Rich;
 
-use Kint\Object\BasicObject;
-use Kint\Object\BlobObject;
-use Kint\Object\ClosureObject;
-use Kint\Object\MethodObject;
 use Kint\Renderer\RichRenderer;
+use Kint\Utils;
+use Kint\Zval\ClosureValue;
+use Kint\Zval\MethodValue;
+use Kint\Zval\Value;
 
-class CallablePlugin extends Plugin implements ObjectPluginInterface
+class CallablePlugin extends ClosurePlugin
 {
-    protected static $method_cache = array();
+    protected static $method_cache = [];
 
-    public function renderObject(BasicObject $o)
+    protected $closure_plugin = null;
+
+    public function renderValue(Value $o): ?string
     {
-        if ($o instanceof MethodObject) {
+        if ($o instanceof MethodValue) {
             return $this->renderMethod($o);
         }
 
-        if ($o instanceof ClosureObject) {
-            return $this->renderClosure($o);
+        if ($o instanceof ClosureValue) {
+            return parent::renderValue($o);
         }
 
-        return $this->renderCallable($o);
+        return null;
     }
 
-    protected function renderClosure(ClosureObject $o)
-    {
-        $children = $this->renderer->renderChildren($o);
-
-        $header = '';
-
-        if (null !== ($s = $o->getModifiers())) {
-            $header .= '<var>'.$s.'</var> ';
-        }
-
-        if (null !== ($s = $o->getName())) {
-            $header .= '<dfn>'.$this->renderer->escape($s).'('.$this->renderer->escape($o->getParams()).')</dfn>';
-        }
-
-        if (null !== ($s = $o->getValueShort())) {
-            if (RichRenderer::$strlen_max && BlobObject::strlen($s) > RichRenderer::$strlen_max) {
-                $s = \substr($s, 0, RichRenderer::$strlen_max).'...';
-            }
-            $header .= ' '.$this->renderer->escape($s);
-        }
-
-        return '<dl>'.$this->renderer->renderHeaderWrapper($o, (bool) \strlen($children), $header).$children.'</dl>';
-    }
-
-    protected function renderCallable(BasicObject $o)
-    {
-        $children = $this->renderer->renderChildren($o);
-
-        $header = '';
-
-        if (null !== ($s = $o->getModifiers())) {
-            $header .= '<var>'.$s.'</var> ';
-        }
-
-        if (null !== ($s = $o->getName())) {
-            $header .= '<dfn>'.$this->renderer->escape($s).'</dfn>';
-        }
-
-        if (null !== ($s = $o->getValueShort())) {
-            if (RichRenderer::$strlen_max && BlobObject::strlen($s) > RichRenderer::$strlen_max) {
-                $s = \substr($s, 0, RichRenderer::$strlen_max).'...';
-            }
-            $header .= ' '.$this->renderer->escape($s);
-        }
-
-        return '<dl>'.$this->renderer->renderHeaderWrapper($o, (bool) \strlen($children), $header).$children.'</dl>';
-    }
-
-    protected function renderMethod(MethodObject $o)
+    protected function renderMethod(MethodValue $o): string
     {
         if (!empty(self::$method_cache[$o->owner_class][$o->name])) {
             $children = self::$method_cache[$o->owner_class][$o->name]['children'];
@@ -154,17 +110,17 @@ class CallablePlugin extends Plugin implements ObjectPluginInterface
         }
 
         if (null !== ($s = $o->getValueShort())) {
-            if (RichRenderer::$strlen_max && BlobObject::strlen($s) > RichRenderer::$strlen_max) {
-                $s = \substr($s, 0, RichRenderer::$strlen_max).'...';
+            if (RichRenderer::$strlen_max) {
+                $s = Utils::truncateString($s, RichRenderer::$strlen_max);
             }
             $header .= ' '.$this->renderer->escape($s);
         }
 
         if (\strlen($o->owner_class) && \strlen($o->name)) {
-            self::$method_cache[$o->owner_class][$o->name] = array(
+            self::$method_cache[$o->owner_class][$o->name] = [
                 'header' => $header,
                 'children' => $children,
-            );
+            ];
         }
 
         $header = $this->renderer->renderHeaderWrapper($o, (bool) \strlen($children), $header);

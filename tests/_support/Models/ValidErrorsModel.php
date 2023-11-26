@@ -24,6 +24,7 @@ class ValidErrorsModel extends Model
         'description',
     ];
     protected $validationRules = [
+        'id'   => 'permit_empty|is_natural_no_zero',
         'name' => [
             'required',
             'min_length[10]',

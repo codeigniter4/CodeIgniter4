@@ -13,6 +13,9 @@ namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Honeypot;
 
@@ -20,13 +23,20 @@ use Config\Honeypot;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class HoneypotTest extends CIUnitTestCase
 {
-    protected $config;
-    protected $honey;
-    protected $request;
-    protected $response;
+    private \Config\Filters $config;
+    private Honeypot $honey;
+
+    /**
+     * @var CLIRequest|IncomingRequest|null
+     */
+    private $request;
+
+    private ?Response $response = null;
 
     protected function setUp(): void
     {
@@ -39,7 +49,7 @@ final class HoneypotTest extends CIUnitTestCase
         $_POST[$this->honey->name] = 'hey';
     }
 
-    public function testBeforeTriggered()
+    public function testBeforeTriggered(): void
     {
         $this->config->globals = [
             'before' => ['honeypot'],
@@ -53,10 +63,10 @@ final class HoneypotTest extends CIUnitTestCase
         $uri     = 'admin/foo/bar';
 
         $this->expectException(HoneypotException::class);
-        $request = $filters->run($uri, 'before');
+        $filters->run($uri, 'before');
     }
 
-    public function testBeforeClean()
+    public function testBeforeClean(): void
     {
         $this->config->globals = [
             'before' => ['honeypot'],
@@ -78,9 +88,9 @@ final class HoneypotTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
-    public function testAfter()
+    public function testAfter(): void
     {
         $this->config->globals = [
             'before' => [],
@@ -100,9 +110,9 @@ final class HoneypotTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
-    public function testAfterNotApplicable()
+    public function testAfterNotApplicable(): void
     {
         $this->config->globals = [
             'before' => [],

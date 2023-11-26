@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,25 +27,25 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Kint\Object\Representation\SplFileInfoRepresentation;
+use Kint\Zval\Representation\SplFileInfoRepresentation;
+use Kint\Zval\Value;
 use SplFileInfo;
 
-class FsPathPlugin extends Plugin
+class FsPathPlugin extends AbstractPlugin
 {
-    public static $blacklist = array('/', '.');
+    public static $blacklist = ['/', '.'];
 
-    public function getTypes()
+    public function getTypes(): array
     {
-        return array('string');
+        return ['string'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parse(&$var, Value &$o, int $trigger): void
     {
         if (\strlen($var) > 2048) {
             return;

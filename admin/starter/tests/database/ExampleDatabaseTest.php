@@ -2,6 +2,7 @@
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Tests\Support\Database\Seeds\ExampleSeeder;
 use Tests\Support\Models\ExampleModel;
 
 /**
@@ -10,6 +11,8 @@ use Tests\Support\Models\ExampleModel;
 final class ExampleDatabaseTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
+
+    protected $seed = ExampleSeeder::class;
 
     public function testModelFindAll()
     {
@@ -28,6 +31,7 @@ final class ExampleDatabaseTest extends CIUnitTestCase
         $this->setPrivateProperty($model, 'useSoftDeletes', true);
         $this->setPrivateProperty($model, 'tempUseSoftDeletes', true);
 
+        /** @var stdClass $object */
         $object = $model->first();
         $model->delete($object->id);
 

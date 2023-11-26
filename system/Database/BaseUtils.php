@@ -49,17 +49,17 @@ abstract class BaseUtils
     /**
      * Class constructor
      */
-    public function __construct(ConnectionInterface &$db)
+    public function __construct(ConnectionInterface $db)
     {
-        $this->db = &$db;
+        $this->db = $db;
     }
 
     /**
      * List databases
      *
-     * @throws DatabaseException
-     *
      * @return array|bool
+     *
+     * @throws DatabaseException
      */
     public function listDatabases()
     {
@@ -101,9 +101,9 @@ abstract class BaseUtils
     /**
      * Optimize Table
      *
-     * @throws DatabaseException
-     *
      * @return bool
+     *
+     * @throws DatabaseException
      */
     public function optimizeTable(string $tableName)
     {
@@ -123,9 +123,9 @@ abstract class BaseUtils
     /**
      * Optimize Database
      *
-     * @throws DatabaseException
-     *
      * @return mixed
+     *
+     * @throws DatabaseException
      */
     public function optimizeDatabase()
     {
@@ -168,9 +168,9 @@ abstract class BaseUtils
     /**
      * Repair Table
      *
-     * @throws DatabaseException
-     *
      * @return mixed
+     *
+     * @throws DatabaseException
      */
     public function repairTable(string $tableName)
     {
@@ -200,7 +200,7 @@ abstract class BaseUtils
     public function getCSVFromResult(ResultInterface $query, string $delim = ',', string $newline = "\n", string $enclosure = '"')
     {
         $out = '';
-        // First generate the headings from the table column names
+
         foreach ($query->getFieldNames() as $name) {
             $out .= $enclosure . str_replace($enclosure, $enclosure . $enclosure, $name) . $enclosure . $delim;
         }
@@ -212,7 +212,7 @@ abstract class BaseUtils
             $line = [];
 
             foreach ($row as $item) {
-                $line[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, $item) . $enclosure;
+                $line[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, $item ?? '') . $enclosure;
             }
 
             $out .= implode($delim, $line) . $newline;
@@ -260,9 +260,9 @@ abstract class BaseUtils
      *
      * @param array|string $params
      *
-     * @throws DatabaseException
+     * @return false|never|string
      *
-     * @return mixed
+     * @throws DatabaseException
      */
     public function backup($params = [])
     {
@@ -309,13 +309,14 @@ abstract class BaseUtils
             return $this->_backup($prefs);
         }
 
+        // @TODO gzencode() requires `ext-zlib`, but _backup() is not implemented in all databases.
         return gzencode($this->_backup($prefs));
     }
 
     /**
      * Platform dependent version of the backup function.
      *
-     * @return mixed
+     * @return false|never|string
      */
     abstract public function _backup(?array $prefs = null);
 }

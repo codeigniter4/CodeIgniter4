@@ -185,6 +185,21 @@ if (! function_exists('underscore')) {
     }
 }
 
+if (! function_exists('decamelize')) {
+    /**
+     * Decamelize
+     *
+     * Takes multiple words separated by camel case and
+     * underscores them.
+     *
+     * @param string $string Input string
+     */
+    function decamelize(string $string): string
+    {
+        return strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', trim($string)));
+    }
+}
+
 if (! function_exists('humanize')) {
     /**
      * Humanize

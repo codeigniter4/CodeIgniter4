@@ -14,6 +14,9 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorTrait;
+use Config\Database;
+use Config\Migrations;
+use Config\Session as SessionConfig;
 
 /**
  * Generates a skeleton migration file.
@@ -53,7 +56,7 @@ class MigrationGenerator extends BaseCommand
     /**
      * The Command's Arguments
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [
         'name' => 'The migration class name.',
@@ -62,7 +65,7 @@ class MigrationGenerator extends BaseCommand
     /**
      * The Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [
         '--session'   => 'Generates the migration file for database sessions.',
@@ -95,6 +98,7 @@ class MigrationGenerator extends BaseCommand
      */
     protected function prepare(string $class): string
     {
+        $data            = [];
         $data['session'] = false;
 
         if ($this->getOption('session')) {
@@ -104,8 +108,12 @@ class MigrationGenerator extends BaseCommand
             $data['session']  = true;
             $data['table']    = is_string($table) ? $table : 'ci_sessions';
             $data['DBGroup']  = is_string($DBGroup) ? $DBGroup : 'default';
-            $data['DBDriver'] = config('Database')->{$data['DBGroup']}['DBDriver'];
-            $data['matchIP']  = config('App')->sessionMatchIP;
+            $data['DBDriver'] = config(Database::class)->{$data['DBGroup']}['DBDriver'];
+
+            /** @var SessionConfig|null $session */
+            $session = config(SessionConfig::class);
+
+            $data['matchIP'] = $session->matchIP;
         }
 
         return $this->parseTemplate($class, [], [], $data);
@@ -116,6 +124,6 @@ class MigrationGenerator extends BaseCommand
      */
     protected function basename(string $filename): string
     {
-        return gmdate(config('Migrations')->timestampFormat) . basename($filename);
+        return gmdate(config(Migrations::class)->timestampFormat) . basename($filename);
     }
 }

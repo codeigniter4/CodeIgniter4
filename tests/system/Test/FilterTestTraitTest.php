@@ -11,8 +11,8 @@
 
 namespace CodeIgniter\Test;
 
-use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\RequestInterface;
+use Config\Services;
 use Tests\Support\Filters\Customfilter;
 
 /**
@@ -25,6 +25,8 @@ use Tests\Support\Filters\Customfilter;
  *  - class: \Tests\Support\Filters\Customfilter::class
  *
  * @internal
+ *
+ * @group Others
  */
 final class FilterTestTraitTest extends CIUnitTestCase
 {
@@ -39,13 +41,13 @@ final class FilterTestTraitTest extends CIUnitTestCase
         $this->filtersConfig->globals['before']            = ['test-customfilter'];
     }
 
-    public function testDidRunTraitSetUp()
+    public function testDidRunTraitSetUp(): void
     {
         $this->assertTrue($this->doneFilterSetUp);
         $this->assertInstanceOf(RequestInterface::class, $this->request);
     }
 
-    public function testGetCallerReturnsClosure()
+    public function testGetCallerReturnsClosure(): void
     {
         $caller = $this->getFilterCaller('test-customfilter', 'before');
 
@@ -53,7 +55,7 @@ final class FilterTestTraitTest extends CIUnitTestCase
         $this->assertInstanceOf('Closure', $caller);
     }
 
-    public function testGetCallerInvalidPosition()
+    public function testGetCallerInvalidPosition(): void
     {
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Invalid filter position passed: banana');
@@ -61,42 +63,68 @@ final class FilterTestTraitTest extends CIUnitTestCase
         $this->getFilterCaller('test-customfilter', 'banana');
     }
 
-    public function testCallerUsesClonedInstance()
+    public function testCallerSupportsArray(): void
+    {
+        $this->filtersConfig->aliases['test-customfilter'] = [Customfilter::class];
+
+        $caller = $this->getFilterCaller('test-customfilter', 'before');
+        $result = $caller();
+
+        $this->assertSame('http://hellowworld.com', $result->getBody());
+    }
+
+    public function testCallerSupportsClassname(): void
+    {
+        $caller = $this->getFilterCaller(Customfilter::class, 'before');
+        $result = $caller();
+
+        $this->assertSame('http://hellowworld.com', $result->getBody());
+    }
+
+    public function testCallerSupportsFilterInstance(): void
+    {
+        $caller = $this->getFilterCaller(new Customfilter(), 'before');
+        $result = $caller();
+
+        $this->assertSame('http://hellowworld.com', $result->getBody());
+    }
+
+    public function testCallerUsesClonedInstance(): void
     {
         $caller = $this->getFilterCaller('test-customfilter', 'before');
         $result = $caller();
 
-        $this->assertObjectNotHasAttribute('url', $this->request);
+        $this->assertSame('http://hellowworld.com', $result->getBody());
+        $this->assertNull(Services::response()->getBody());
 
-        $this->assertObjectHasAttribute('url', $result);
-        $this->assertSame('http://hellowworld.com', $result->url);
+        $this->resetServices();
     }
 
-    public function testGetFiltersForRoute()
+    public function testGetFiltersForRoute(): void
     {
         $result = $this->getFiltersForRoute('/', 'before');
 
         $this->assertSame(['test-customfilter'], $result);
     }
 
-    public function testAssertFilter()
+    public function testAssertFilter(): void
     {
         $this->assertFilter('/', 'before', 'test-customfilter');
         $this->assertFilter('/', 'after', 'toolbar');
     }
 
-    public function testAssertNotFilter()
+    public function testAssertNotFilter(): void
     {
         $this->assertNotFilter('/', 'before', 'foobar');
         $this->assertNotFilter('/', 'after', 'test-customfilter');
     }
 
-    public function testAssertHasFilters()
+    public function testAssertHasFilters(): void
     {
         $this->assertHasFilters('/', 'before');
     }
 
-    public function testAssertNotHasFilters()
+    public function testAssertNotHasFilters(): void
     {
         $this->filtersConfig->globals['before'] = [];
 

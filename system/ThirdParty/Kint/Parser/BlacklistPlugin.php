@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,64 +27,42 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Kint\Object\InstanceObject;
+use Kint\Zval\InstanceValue;
+use Kint\Zval\Value;
 
-class BlacklistPlugin extends Plugin
+class BlacklistPlugin extends AbstractPlugin
 {
     /**
      * List of classes and interfaces to blacklist.
      *
      * @var array
      */
-    public static $blacklist = array();
+    public static $blacklist = [];
 
     /**
      * List of classes and interfaces to blacklist except when dumped directly.
      *
      * @var array
      */
-    public static $shallow_blacklist = array();
+    public static $shallow_blacklist = ['Psr\\Container\\ContainerInterface'];
 
-    /**
-     * Maximum size of arrays before blacklisting.
-     *
-     * @var int
-     */
-    public static $array_limit = 10000;
-
-    /**
-     * Maximum size of arrays before blacklisting except when dumped directly.
-     *
-     * @var int
-     */
-    public static $shallow_array_limit = 1000;
-
-    public function getTypes()
+    public function getTypes(): array
     {
-        return array('object', 'array');
+        return ['object'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_BEGIN;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
-    {
-        if (\is_object($var)) {
-            return $this->parseObject($var, $o);
-        }
-        if (\is_array($var)) {
-            return $this->parseArray($var, $o);
-        }
-    }
-
-    protected function parseObject(&$var, BasicObject &$o)
+    public function parse(&$var, Value &$o, int $trigger): void
     {
         foreach (self::$blacklist as $class) {
             if ($var instanceof $class) {
-                return $this->blacklistObject($var, $o);
+                $this->blacklistValue($var, $o);
+
+                return;
             }
         }
 
@@ -92,48 +72,25 @@ class BlacklistPlugin extends Plugin
 
         foreach (self::$shallow_blacklist as $class) {
             if ($var instanceof $class) {
-                return $this->blacklistObject($var, $o);
+                $this->blacklistValue($var, $o);
+
+                return;
             }
         }
     }
 
-    protected function blacklistObject(&$var, BasicObject &$o)
+    /**
+     * @param object &$var
+     */
+    protected function blacklistValue(&$var, Value &$o): void
     {
-        $object = new InstanceObject();
+        $object = new InstanceValue();
         $object->transplant($o);
         $object->classname = \get_class($var);
-        $object->hash = \spl_object_hash($var);
+        $object->spl_object_hash = \spl_object_hash($var);
         $object->clearRepresentations();
         $object->value = null;
         $object->size = null;
-        $object->hints[] = 'blacklist';
-
-        $o = $object;
-
-        $this->parser->haltParse();
-    }
-
-    protected function parseArray(array &$var, BasicObject &$o)
-    {
-        if (\count($var) > self::$array_limit) {
-            return $this->blacklistArray($var, $o);
-        }
-
-        if ($o->depth <= 0) {
-            return;
-        }
-
-        if (\count($var) > self::$shallow_array_limit) {
-            return $this->blacklistArray($var, $o);
-        }
-    }
-
-    protected function blacklistArray(array &$var, BasicObject &$o)
-    {
-        $object = new BasicObject();
-        $object->transplant($o);
-        $object->value = null;
-        $object->size = \count($var);
         $object->hints[] = 'blacklist';
 
         $o = $object;

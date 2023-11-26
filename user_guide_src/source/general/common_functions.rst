@@ -9,7 +9,6 @@ These do not require loading any additional libraries or helpers.
     :local:
     :depth: 2
 
-
 ================
 Global Functions
 ================
@@ -27,10 +26,24 @@ Service Accessors
     is provided, will return the value of $key as stored in the cache currently,
     or null if no value is found.
 
-    Examples::
+    Examples:
 
-        $foo = cache('foo');
-        $cache = cache();
+    .. literalinclude:: common_functions/001.php
+
+.. php:function:: config(string $name[, bool $getShared = true])
+
+    :param string $name: The config classname.
+    :param bool $getShared: Whether to return a shared instance.
+    :returns: The config instances.
+    :rtype: object|null
+
+    More simple way of getting config instances from Factories.
+
+    See :ref:`Configuration <configuration-config>` and
+    :ref:`Factories <factories-config>` for details.
+
+    The ``config()`` uses ``Factories::config()`` internally.
+    See :ref:`factories-loading-class` for details on the first parameter ``$name``.
 
 .. php:function:: cookie(string $name[, string $value = ''[, array $options = []]])
 
@@ -63,11 +76,11 @@ Service Accessors
     or return a default value if it is not found. Will format boolean values
     to actual booleans instead of string representations.
 
-    Especially useful when used in conjunction with .env files for setting
+    Especially useful when used in conjunction with **.env** files for setting
     values that are specific to the environment itself, like database
     settings, API keys, etc.
 
-.. php:function:: esc($data[, $context = 'html' [, $encoding]])
+.. php:function:: esc($data[, $context = 'html'[, $encoding]])
 
     :param   string|array   $data: The information to be escaped.
     :param   string   $context: The escaping context. Default is 'html'.
@@ -81,7 +94,7 @@ Service Accessors
     If $data is a string, then it simply escapes and returns it.
     If $data is an array, then it loops over it, escaping each 'value' of the key/value pairs.
 
-    Valid context values: html, js, css, url, attr, raw, null
+    Valid context values: ``html``, ``js``, ``css``, ``url``, ``attr``, ``raw``
 
 .. php:function:: helper($filename)
 
@@ -91,7 +104,7 @@ Service Accessors
 
     For full details, see the :doc:`helpers` page.
 
-.. php:function:: lang($line[, $args[, $locale ]])
+.. php:function:: lang($line[, $args[, $locale]])
 
     :param string $line: The line of text to retrieve
     :param array  $args: An array of data to substitute for placeholders.
@@ -101,43 +114,41 @@ Service Accessors
 
     For more information, see the :doc:`Localization </outgoing/localization>` page.
 
-.. php:function:: model($name [, $getShared = true [, &$conn = null ]])
+.. php:function:: model($name[, $getShared = true[, &$conn = null]])
 
-    :param string                   $name:
-    :param boolean                  $getShared:
-    :param ConnectionInterface|null $conn:
-    :returns: More simple way of getting model instances
-    :rtype: mixed
+    :param string                   $name: The model classname.
+    :param boolean                  $getShared: Whether to return a shared instance.
+    :param ConnectionInterface|null $conn: The database connection.
+    :returns: The model instances
+    :rtype: object
 
-.. php:function:: old( $key[, $default = null, [, $escape = 'html' ]] )
+    More simple way of getting model instances.
+
+    The ``model()`` uses ``Factories::models()`` internally.
+    See :ref:`factories-loading-class` for details on the first parameter ``$name``.
+
+    See also the :ref:`Using CodeIgniter's Model <accessing-models>`.
+
+.. php:function:: old($key[, $default = null,[, $escape = 'html']])
 
     :param string $key: The name of the old form data to check for.
-    :param mixed  $default: The default value to return if $key doesn't exist.
-    :param mixed  $escape: An `escape <#esc>`_ context or false to disable it.
+    :param string|null  $default: The default value to return if $key doesn't exist.
+    :param false|string  $escape: An `escape <#esc>`_ context or false to disable it.
     :returns: The value of the defined key, or the default value.
-    :rtype: mixed
+    :rtype: array|string|null
 
     Provides a simple way to access "old input data" from submitting a form.
 
-    Example::
+    Example:
 
-        // in controller, checking form submittal
-        if (! $model->save($user))
-        {
-            // 'withInput' is what specifies "old data"
-            // should be saved.
-            return redirect()->back()->withInput();
-        }
+    .. literalinclude:: common_functions/002.php
 
-        // In the view
-        <input type="email" name="email" value="<?= old('email') ?>">
-        // Or with arrays
-        <input type="email" name="user[email]" value="<?= old('user.email') ?>">
+.. note:: If you are using the :php:func:`set_value()`, :php:func:`set_select()`,
+    :php:func:`set_checkbox()`, and :php:func:`set_radio()` functions in
+    :doc:`form helper </helpers/form_helper>`, this feature is built-in. You only
+    need to use this function when not using the form helper.
 
-.. note:: If you are using the :doc:`form helper </helpers/form_helper>`, this feature is built-in. You only
-        need to use this function when not using the form helper.
-
-.. php:function:: session( [$key] )
+.. php:function:: session([$key])
 
     :param string $key: The name of the session item to check for.
     :returns: An instance of the Session object if no $key, the value found in the session for $key, or null.
@@ -146,7 +157,7 @@ Service Accessors
     Provides a convenient way to access the session class and to retrieve a
     stored value. For more information, see the :doc:`Sessions </libraries/sessions>` page.
 
-.. php:function:: timer( [$name] )
+.. php:function:: timer([$name])
 
     :param string $name: The name of the benchmark point.
     :returns: The Timer instance
@@ -156,17 +167,11 @@ Service Accessors
     of a benchmark point as the only parameter. This will start timing from this point, or stop
     timing if a timer with this name is already running.
 
-    Example::
+    Example:
 
-        // Get an instance
-        $timer = timer();
+    .. literalinclude:: common_functions/003.php
 
-        // Set timer start and stop points
-        timer('controller_loading');    // Will start the timer
-        . . .
-        timer('controller_loading');    // Will stop the running timer
-
-.. php:function:: view ($name [, $data [, $options ]])
+.. php:function:: view($name[, $data[, $options]])
 
     :param   string   $name: The name of the file to load
     :param   array    $data: An array of key/value pairs to make available within the view.
@@ -179,22 +184,22 @@ Service Accessors
     a convenience method that can be used in Controllers,
     libraries, and routed closures.
 
-    Currently, only one option is available for use within the `$options` array, `saveData` which specifies
-    that data will persistent between multiple calls to `view()` within the same request. By default, the
-    data for that view is forgotten after displaying that single view file.
+    Currently, these options are available for use within the ``$options`` array:
 
-    The $option array is provided primarily to facilitate third-party integrations with
+    - ``saveData`` specifies that data will persistent between multiple calls to ``view()`` within the same request. If you do not want the data to be persisted, specify false.
+    - ``cache`` specifies the number of seconds to cache the view for. See :ref:`caching-views` for the details.
+    - ``debug`` can be set to false to disable the addition of debug code for :ref:`Debug Toolbar <the-debug-toolbar>`.
+
+    The ``$option`` array is provided primarily to facilitate third-party integrations with
     libraries like Twig.
 
-    Example::
+    Example:
 
-        $data = ['user' => $user];
-
-        echo view('user_profile', $data);
+    .. literalinclude:: common_functions/004.php
 
     For more details, see the :doc:`Views </outgoing/views>` page.
 
-.. php:function:: view_cell ( $library [, $params = null [, $ttl = 0 [, $cacheName = null]]] )
+.. php:function:: view_cell($library[, $params = null[, $ttl = 0[, $cacheName = null]]])
 
     :param string      $library:
     :param null        $params:
@@ -208,35 +213,51 @@ Service Accessors
 Miscellaneous Functions
 =======================
 
-.. php:function:: app_timezone ()
+.. php:function:: app_timezone()
 
     :returns: The timezone the application has been set to display dates in.
     :rtype: string
 
     Returns the timezone the application has been set to display dates in.
 
-.. php:function:: csrf_token ()
+.. php:function:: csp_script_nonce()
+
+    :returns: The CSP nonce attribute for script tag.
+    :rtype: string
+
+    Returns the nonce attribute for a script tag. For example: ``nonce="Eskdikejidojdk978Ad8jf"``.
+    See :ref:`content-security-policy`.
+
+.. php:function:: csp_style_nonce()
+
+    :returns: The CSP nonce attribute for style tag.
+    :rtype: string
+
+    Returns the nonce attribute for a style tag. For example: ``nonce="Eskdikejidojdk978Ad8jf"``.
+    See :ref:`content-security-policy`.
+
+.. php:function:: csrf_token()
 
     :returns: The name of the current CSRF token.
     :rtype: string
 
     Returns the name of the current CSRF token.
 
-.. php:function:: csrf_header ()
+.. php:function:: csrf_header()
 
     :returns: The name of the header for current CSRF token.
     :rtype: string
 
     The name of the header for current CSRF token.
 
-.. php:function:: csrf_hash ()
+.. php:function:: csrf_hash()
 
     :returns: The current value of the CSRF hash.
     :rtype: string
 
     Returns the current CSRF hash value.
 
-.. php:function:: csrf_field ()
+.. php:function:: csrf_field()
 
     :returns: A string with the HTML for hidden input with all required CSRF information.
     :rtype: string
@@ -245,7 +266,7 @@ Miscellaneous Functions
 
         <input type="hidden" name="{csrf_token}" value="{csrf_hash}">
 
-.. php:function:: csrf_meta ()
+.. php:function:: csrf_meta()
 
     :returns: A string with the HTML for meta tag with all required CSRF information.
     :rtype: string
@@ -254,7 +275,7 @@ Miscellaneous Functions
 
         <meta name="{csrf_header}" content="{csrf_hash}">
 
-.. php:function:: force_https ( $duration = 31536000 [, $request = null [, $response = null]] )
+.. php:function:: force_https($duration = 31536000[, $request = null[, $response = null]])
 
     :param  int  $duration: The number of seconds browsers should convert links to this resource to HTTPS.
     :param  RequestInterface $request: An instance of the current Request object.
@@ -262,27 +283,43 @@ Miscellaneous Functions
 
     Checks to see if the page is currently being accessed via HTTPS. If it is, then
     nothing happens. If it is not, then the user is redirected back to the current URI
-    but through HTTPS. Will set the HTTP Strict Transport Security header, which instructs
-    modern browsers to automatically modify any HTTP requests to HTTPS requests for the $duration.
+    but through HTTPS. Will set the HTTP Strict Transport Security (HTST) header, which instructs
+    modern browsers to automatically modify any HTTP requests to HTTPS requests for the ``$duration``.
 
-.. php:function:: function_usable ( $function_name )
+    .. note:: This function is also used when you set
+        ``Config\App:$forceGlobalSecureRequests`` to true.
+
+.. php:function:: function_usable($function_name)
 
     :param string $function_name: Function to check for
     :returns: true if the function exists and is safe to call, false otherwise.
     :rtype: bool
 
-.. php:function:: is_cli ()
+.. php:function:: is_cli()
 
     :returns: true if the script is being executed from the command line or false otherwise.
     :rtype: bool
 
-.. php:function:: is_really_writable ( $file )
+.. php:function:: is_really_writable($file)
 
     :param string $file: The filename being checked.
     :returns: true if you can write to the file, false otherwise.
     :rtype: bool
 
-.. php:function:: log_message ($level, $message [, $context])
+.. php:function:: is_windows([$mock = null])
+
+    :param bool|null $mock: If given and is a boolean then it will be used as the return value.
+    :rtype: bool
+
+    Detect if platform is running in Windows.
+
+    .. note:: The boolean value provided to $mock will persist in subsequent calls. To reset this
+        mock value, the user must pass an explicit ``null`` to the function call. This will
+        refresh the function to use auto-detection.
+
+    .. literalinclude:: common_functions/012.php
+
+.. php:function:: log_message($level, $message [, $context])
 
     :param   string   $level: The level of severity
     :param   string   $message: The message that is to be logged.
@@ -298,38 +335,13 @@ Miscellaneous Functions
     Context can be used to substitute values in the message string. For full details, see the
     :doc:`Logging Information <logging>` page.
 
-.. php:function:: redirect( string $route )
+.. php:function:: redirect(string $route)
 
-    :param  string  $route: The reverse-routed or named route to redirect the user to.
+    :param  string  $route: The route name or Controller::method to redirect the user to.
+    :rtype: RedirectResponse
 
-    Returns a RedirectResponse instance allowing you to easily create redirects::
-
-        // Go back to the previous page
-        return redirect()->back();
-
-        // Go to specific UI
-        return redirect()->to('/admin');
-
-        // Go to a named/reverse-routed URI
-        return redirect()->route('named_route');
-
-        // Keep the old input values upon redirect so they can be used by the `old()` function
-        return redirect()->back()->withInput();
-
-        // Set a flash message
-        return redirect()->back()->with('foo', 'message');
-
-        // Copies all cookies from global response instance
-        return redirect()->back()->withCookies();
-
-        // Copies all headers from the global response instance
-        return redirect()->back()->withHeaders();
-
-    When passing an argument into the function, it is treated as a named/reverse-routed route, not a relative/full URI,
-    treating it the same as using redirect()->route()::
-
-        // Go to a named/reverse-routed URI
-        return redirect('named_route');
+    Returns a RedirectResponse instance allowing you to easily create redirects.
+    See :ref:`response-redirect` for details.
 
 .. php:function:: remove_invisible_characters($str[, $urlEncoded = true])
 
@@ -341,22 +353,55 @@ Miscellaneous Functions
     This function prevents inserting null characters between ASCII
     characters, like Java\\0script.
 
-    Example::
+    Example:
 
-        remove_invisible_characters('Java\\0script');
-        // Returns: 'Javascript'
+    .. literalinclude:: common_functions/007.php
 
-.. php:function:: route_to ( $method [, ...$params] )
+.. php:function:: request()
 
-    :param   string  $method: The named route alias, or name of the controller/method to match.
-    :param   mixed   $params: One or more parameters to be passed to be matched in the route.
+    .. versionadded:: 4.3.0
 
-    Generates a URI relative to the domain name (not **baseUrl**) for you based on either a named route alias,
-    or a controller::method combination. Will take parameters into effect, if provided.
+    :returns:    The shared Request object.
+    :rtype:    IncomingRequest|CLIRequest
 
-    For full details, see the :doc:`/incoming/routing` page.
+    This function is a wrapper for ``Services::request()``.
 
-.. php:function:: service ( $name [, ...$params] )
+.. php:function:: response()
+
+    .. versionadded:: 4.3.0
+
+    :returns:    The shared Response object.
+    :rtype:    Response
+
+    This function is a wrapper for ``Services::response()``.
+
+.. php:function:: route_to($method[, ...$params])
+
+    :param   string       $method: Route name or Controller::method
+    :param   int|string   ...$params: One or more parameters to be passed to the route. The last parameter allows you to set the locale.
+    :returns: a route path (URI path relative to baseURL)
+    :rtype: string
+
+    .. note:: This function requires the controller/method to have a route defined in **app/Config/routes.php**.
+
+    .. important:: ``route_to()`` returns a *route* path, not a full URI path for your site.
+        If your **baseURL** contains sub folders, the return value is not the same
+        as the URI to link. In that case, just use :php:func:`url_to()` instead.
+        See also :ref:`urls-url-structure`.
+
+    Generates a route for you based on a controller::method combination. Will take parameters into effect, if provided.
+
+    .. literalinclude:: common_functions/009.php
+
+    Generates a route for you based on a route name.
+
+    .. literalinclude:: common_functions/010.php
+
+    Since v4.3.0, when you use ``{locale}`` in your route, you can optionally specify the locale value as the last parameter.
+
+    .. literalinclude:: common_functions/011.php
+
+.. php:function:: service($name[, ...$params])
 
     :param   string   $name: The name of the service to load
     :param   mixed    $params: One or more parameters to pass to the service method.
@@ -367,12 +412,11 @@ Miscellaneous Functions
     This will always return a shared instance of the class, so no matter how many times this is called
     during a single request, only one class instance will be created.
 
-    Example::
+    Example:
 
-        $logger = service('logger');
-        $renderer = service('renderer', APPPATH.'views/');
+    .. literalinclude:: common_functions/008.php
 
-.. php:function:: single_service ( $name [, ...$params] )
+.. php:function:: single_service($name [, ...$params])
 
     :param   string   $name: The name of the service to load
     :param   mixed    $params: One or more parameters to pass to the service method.
@@ -391,7 +435,7 @@ Miscellaneous Functions
 
     Fetch a config file item with slash appended (if not empty)
 
-.. php:function:: stringify_attributes ( $attributes [, $js] )
+.. php:function:: stringify_attributes($attributes [, $js])
 
     :param   mixed    $attributes: string, array of key value pairs, or object
     :param   boolean  $js: true if values do not need quotes (Javascript-style)

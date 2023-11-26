@@ -42,9 +42,9 @@ trait DatabaseTestTrait
      */
     private static $doneSeed = false;
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Staging
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Runs the trait set up methods.
@@ -89,9 +89,9 @@ trait DatabaseTestTrait
         }
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Migrations
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Migrate on setUp
@@ -163,9 +163,9 @@ trait DatabaseTestTrait
         }
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Seeds
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Seed on setUp
@@ -205,9 +205,9 @@ trait DatabaseTestTrait
         $this->seeder->call($name);
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Utility
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Reset $doneMigration and $doneSeed
@@ -248,9 +248,9 @@ trait DatabaseTestTrait
      * Fetches a single column from a database row with criteria
      * matching $where.
      *
-     * @throws DatabaseException
-     *
      * @return bool
+     *
+     * @throws DatabaseException
      */
     public function grabFromDatabase(string $table, string $column, array $where)
     {
@@ -264,9 +264,9 @@ trait DatabaseTestTrait
         return $query->{$column} ?? false;
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Assertions
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Asserts that records that match the conditions in $where DO
@@ -322,5 +322,23 @@ trait DatabaseTestTrait
             ->countAllResults();
 
         $this->assertEquals($expected, $count, 'Wrong number of matching rows in database.');
+    }
+
+    /**
+     * Sets $DBDebug to false.
+     *
+     * WARNING: this value will persist! take care to roll it back.
+     */
+    protected function disableDBDebug(): void
+    {
+        $this->setPrivateProperty($this->db, 'DBDebug', false);
+    }
+
+    /**
+     * Sets $DBDebug to true.
+     */
+    protected function enableDBDebug(): void
+    {
+        $this->setPrivateProperty($this->db, 'DBDebug', true);
     }
 }

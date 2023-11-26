@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Filters;
 
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
@@ -22,6 +24,7 @@ use Config\Services;
  * This filter is not intended to be used from the command line.
  *
  * @codeCoverageIgnore
+ * @see \CodeIgniter\Filters\CSRFTest
  */
 class CSRF implements FilterInterface
 {
@@ -37,13 +40,13 @@ class CSRF implements FilterInterface
      *
      * @param array|null $arguments
      *
-     * @throws SecurityException
+     * @return RedirectResponse|void
      *
-     * @return mixed|void
+     * @throws SecurityException
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        if ($request->isCLI()) {
+        if (! $request instanceof IncomingRequest) {
             return;
         }
 
@@ -65,7 +68,7 @@ class CSRF implements FilterInterface
      *
      * @param array|null $arguments
      *
-     * @return mixed|void
+     * @return void
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {

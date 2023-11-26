@@ -17,6 +17,7 @@ return [
     'generator'          => [
         'cancelOperation' => 'Operation has been cancelled.',
         'className'       => [
+            'cell'       => 'Cell class name',
             'command'    => 'Command class name',
             'config'     => 'Config class name',
             'controller' => 'Controller class name',
@@ -31,18 +32,21 @@ return [
         'commandType'      => 'Command type',
         'databaseGroup'    => 'Database group',
         'fileCreate'       => 'File created: {0}',
-        'fileError'        => 'Error while creating file: {0}',
-        'fileExist'        => 'File exists: {0}',
-        'fileOverwrite'    => 'File overwritten: {0}',
+        'fileError'        => 'Error while creating file: "{0}"',
+        'fileExist'        => 'File exists: "{0}"',
+        'fileOverwrite'    => 'File overwritten: "{0}"',
         'parentClass'      => 'Parent class',
         'returnType'       => 'Return type',
         'tableName'        => 'Table name',
         'usingCINamespace' => 'Warning: Using the "CodeIgniter" namespace will generate the file in the system directory.',
+        'viewName'         => [
+            'cell' => 'Cell view name',
+        ],
     ],
     'helpArguments'       => 'Arguments:',
     'helpDescription'     => 'Description:',
     'helpOptions'         => 'Options:',
     'helpUsage'           => 'Usage:',
-    'invalidColor'        => 'Invalid {0} color: {1}.',
+    'invalidColor'        => 'Invalid "{0}" color: "{1}".',
     'namespaceNotDefined' => 'Namespace "{0}" is not defined.',
 ];

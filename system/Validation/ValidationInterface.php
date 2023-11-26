@@ -20,24 +20,26 @@ interface ValidationInterface
 {
     /**
      * Runs the validation process, returning true/false determining whether
-     * or not validation was successful.
+     * validation was successful or not.
      *
-     * @param array  $data  The array of data to validate.
-     * @param string $group The pre-defined group of rules to apply.
+     * @param array|null  $data    The array of data to validate.
+     * @param string|null $group   The predefined group of rules to apply.
+     * @param string|null $dbGroup The database group to use.
      */
-    public function run(?array $data = null, ?string $group = null): bool;
+    public function run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool;
 
     /**
      * Check; runs the validation process, returning true or false
      * determining whether or not validation was successful.
      *
-     * @param mixed    $value  Value to validation.
-     * @param string   $rule   Rule.
-     * @param string[] $errors Errors.
+     * @param array|bool|float|int|object|string|null $value   Value to validate.
+     * @param array|string                            $rules
+     * @param string[]                                $errors
+     * @param string|null                             $dbGroup The database group to use.
      *
      * @return bool True if valid, else false.
      */
-    public function check($value, string $rule, array $errors = []): bool;
+    public function check($value, $rules, array $errors = [], $dbGroup = null): bool;
 
     /**
      * Takes a Request object and grabs the input data to use from its
@@ -46,14 +48,54 @@ interface ValidationInterface
     public function withRequest(RequestInterface $request): ValidationInterface;
 
     /**
+     * Sets an individual rule and custom error messages for a single field.
+     *
+     * The custom error message should be just the messages that apply to
+     * this field, like so:
+     *
+     *    [
+     *        'rule' => 'message',
+     *        'rule' => 'message',
+     *    ]
+     *
+     * @param array|string $rules
+     *
+     * @return $this
+     */
+    public function setRule(string $field, ?string $label, $rules, array $errors = []);
+
+    /**
      * Stores the rules that should be used to validate the items.
      */
     public function setRules(array $rules, array $messages = []): ValidationInterface;
 
     /**
+     * Returns all of the rules currently defined.
+     */
+    public function getRules(): array;
+
+    /**
      * Checks to see if the rule for key $field has been set or not.
      */
     public function hasRule(string $field): bool;
+
+    /**
+     * Get rule group.
+     *
+     * @param string $group Group.
+     *
+     * @return string[] Rule group.
+     */
+    public function getRuleGroup(string $group): array;
+
+    /**
+     * Set rule group.
+     *
+     * @param string $group Group.
+     *
+     * @return void
+     */
+    public function setRuleGroup(string $group);
 
     /**
      * Returns the error for a specified $field (or empty string if not set).
@@ -83,4 +125,36 @@ interface ValidationInterface
      * you need to process more than one array.
      */
     public function reset(): ValidationInterface;
+
+    /**
+     * Loads custom rule groups (if set) into the current rules.
+     *
+     * Rules can be pre-defined in Config\Validation and can
+     * be any name, but must all still be an array of the
+     * same format used with setRules(). Additionally, check
+     * for {group}_errors for an array of custom error messages.
+     *
+     * @return array
+     */
+    public function loadRuleGroup(?string $group = null);
+
+    /**
+     * Checks to see if an error exists for the given field.
+     */
+    public function hasError(string $field): bool;
+
+    /**
+     * Returns the rendered HTML of the errors as defined in $template.
+     */
+    public function listErrors(string $template = 'list'): string;
+
+    /**
+     * Displays a single error in formatted HTML as defined in the $template view.
+     */
+    public function showError(string $field, string $template = 'single'): string;
+
+    /**
+     * Returns the actual validated data.
+     */
+    public function getValidated(): array;
 }

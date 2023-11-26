@@ -17,6 +17,8 @@ use Config\Services;
 
 /**
  * Displays a list of all migrations and whether they've been run or not.
+ *
+ * @see \CodeIgniter\Commands\Database\MigrateStatusTest
  */
 class MigrateStatus extends BaseCommand
 {
@@ -79,8 +81,8 @@ class MigrateStatus extends BaseCommand
      */
     public function run(array $params)
     {
-        $runner = Services::migrations();
-        $group  = $params['g'] ?? CLI::getOption('g');
+        $runner     = Services::migrations();
+        $paramGroup = $params['g'] ?? CLI::getOption('g');
 
         // Get all namespaces
         $namespaces = Services::autoloader()->getNamespace();
@@ -108,7 +110,8 @@ class MigrateStatus extends BaseCommand
                 continue;
             }
 
-            $history = $runner->getHistory((string) $group);
+            $runner->setNamespace($namespace);
+            $history = $runner->getHistory((string) $paramGroup);
             ksort($migrations);
 
             foreach ($migrations as $uid => $migration) {

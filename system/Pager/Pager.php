@@ -24,6 +24,8 @@ use Config\Pager as PagerConfig;
  * pagination links and reading the current url's query variable, "page"
  * to determine the current page. This class can support multiple
  * paginations on a single page.
+ *
+ * @see \CodeIgniter\Pager\PagerTest
  */
 class Pager implements PagerInterface
 {
@@ -122,7 +124,8 @@ class Pager implements PagerInterface
 
         $pager = new PagerRenderer($this->getDetails($group));
 
-        return $this->view->setVar('pager', $pager)->render($this->config->templates[$template]);
+        return $this->view->setVar('pager', $pager)
+            ->render($this->config->templates[$template]);
     }
 
     /**
@@ -133,7 +136,7 @@ class Pager implements PagerInterface
      */
     public function store(string $group, int $page, ?int $perPage, int $total, int $segment = 0)
     {
-        if ($segment) {
+        if ($segment !== 0) {
             $this->setSegment($segment, $group);
         }
 
@@ -143,7 +146,7 @@ class Pager implements PagerInterface
             $page = $this->groups[$group]['currentPage'];
         }
 
-        $perPage   = $perPage ?? $this->config->perPage;
+        $perPage ??= $this->config->perPage;
         $pageCount = (int) ceil($total / $perPage);
 
         $this->groups[$group]['currentPage'] = $page > $pageCount ? $pageCount : $page;
@@ -157,11 +160,15 @@ class Pager implements PagerInterface
     /**
      * Sets segment for a group.
      *
-     * @return mixed
+     * @return $this
      */
     public function setSegment(int $number, string $group = 'default')
     {
         $this->segment[$group] = $number;
+
+        // Recalculate current page
+        $this->ensureGroup($group);
+        $this->calculateCurrentPage($group);
 
         return $this;
     }
@@ -169,7 +176,7 @@ class Pager implements PagerInterface
     /**
      * Sets the path that an aliased group of links will use.
      *
-     * @return mixed
+     * @return $this
      */
     public function setPath(string $path, string $group = 'default')
     {
@@ -279,7 +286,15 @@ class Pager implements PagerInterface
             $uri->setQueryArray($query);
         }
 
-        return $returnObject === true ? $uri : URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
+        return ($returnObject === true)
+            ? $uri
+            : URI::createURIString(
+                $uri->getScheme(),
+                $uri->getAuthority(),
+                $uri->getPath(),
+                $uri->getQuery(),
+                $uri->getFragment()
+            );
     }
 
     /**
@@ -374,7 +389,7 @@ class Pager implements PagerInterface
     /**
      * Ensures that an array exists for the group specified.
      *
-     * @param int $perPage
+     * @return void
      */
     protected function ensureGroup(string $group, ?int $perPage = null)
     {
@@ -383,6 +398,7 @@ class Pager implements PagerInterface
         }
 
         $this->groups[$group] = [
+            'currentUri'   => clone current_url(true),
             'uri'          => clone current_url(true),
             'hasMore'      => false,
             'total'        => null,
@@ -393,19 +409,22 @@ class Pager implements PagerInterface
 
         $this->calculateCurrentPage($group);
 
-        if ($_GET) {
+        if ($_GET !== []) {
             $this->groups[$group]['uri'] = $this->groups[$group]['uri']->setQueryArray($_GET);
         }
     }
 
     /**
      * Calculating the current page
+     *
+     * @return void
      */
     protected function calculateCurrentPage(string $group)
     {
         if (array_key_exists($group, $this->segment)) {
             try {
-                $this->groups[$group]['currentPage'] = (int) $this->groups[$group]['uri']->setSilent(false)->getSegment($this->segment[$group]);
+                $this->groups[$group]['currentPage'] = (int) $this->groups[$group]['currentUri']
+                    ->setSilent(false)->getSegment($this->segment[$group]);
             } catch (HTTPException $e) {
                 $this->groups[$group]['currentPage'] = 1;
             }

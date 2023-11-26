@@ -11,42 +11,48 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCURLRequest;
 use Config\App;
+use Config\CURLRequest as ConfigCURLRequest;
 use CURLFile;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CURLRequestTest extends CIUnitTestCase
 {
-    /**
-     * @var MockCURLRequest
-     */
-    protected $request;
+    private CURLRequest $request;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        Services::reset();
+        $this->resetServices();
         $this->request = $this->getRequest();
     }
 
     protected function getRequest(array $options = [])
     {
         $uri = isset($options['base_uri']) ? new URI($options['base_uri']) : new URI();
+        $app = new App();
 
-        return new MockCURLRequest(($app = new App()), $uri, new Response($app), $options);
+        $config               = new ConfigCURLRequest();
+        $config->shareOptions = true;
+        Factories::injectMock('config', 'CURLRequest', $config);
+
+        return new MockCURLRequest(($app), $uri, new Response($app), $options);
     }
 
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4707
      */
-    public function testPrepareURLIgnoresAppConfig()
+    public function testPrepareURLIgnoresAppConfig(): void
     {
         config('App')->baseURL = 'http://example.com/fruit/';
 
@@ -60,7 +66,7 @@ final class CURLRequestTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1029
      */
-    public function testGetRemembersBaseURI()
+    public function testGetRemembersBaseURI(): void
     {
         $request = $this->getRequest(['base_uri' => 'http://www.foo.com/api/v1/']);
 
@@ -74,7 +80,7 @@ final class CURLRequestTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1029
      */
-    public function testGetRemembersBaseURIWithHelperMethod()
+    public function testGetRemembersBaseURIWithHelperMethod(): void
     {
         $request = Services::curlrequest(['base_uri' => 'http://www.foo.com/api/v1/']);
 
@@ -83,17 +89,17 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('/api/v1/', $uri->getPath());
     }
 
-    public function testSendReturnsResponse()
+    public function testSendReturnsResponse(): void
     {
         $output = 'Howdy Stranger.';
 
         $response = $this->request->setOutput($output)->send('get', 'http://example.com');
 
-        $this->assertInstanceOf('CodeIgniter\\HTTP\\Response', $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertSame($output, $response->getBody());
     }
 
-    public function testGetSetsCorrectMethod()
+    public function testGetSetsCorrectMethod(): void
     {
         $this->request->get('http://example.com');
 
@@ -105,7 +111,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('GET', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testDeleteSetsCorrectMethod()
+    public function testDeleteSetsCorrectMethod(): void
     {
         $this->request->delete('http://example.com');
 
@@ -117,7 +123,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('DELETE', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testHeadSetsCorrectMethod()
+    public function testHeadSetsCorrectMethod(): void
     {
         $this->request->head('http://example.com');
 
@@ -129,7 +135,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('HEAD', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testOptionsSetsCorrectMethod()
+    public function testOptionsSetsCorrectMethod(): void
     {
         $this->request->options('http://example.com');
 
@@ -141,7 +147,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('OPTIONS', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testOptionsBaseURIOption()
+    public function testOptionsBaseURIOption(): void
     {
         $options = ['base_uri' => 'http://www.foo.com/api/v1/'];
         $request = $this->getRequest($options);
@@ -149,7 +155,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('http://www.foo.com/api/v1/', $request->getBaseURI()->__toString());
     }
 
-    public function testOptionsBaseURIOverride()
+    public function testOptionsBaseURIOverride(): void
     {
         $options = [
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -160,7 +166,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('http://bogus/com', $request->getBaseURI()->__toString());
     }
 
-    public function testOptionsHeaders()
+    public function testOptionsHeaders(): void
     {
         $options = [
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -176,30 +182,7 @@ final class CURLRequestTest extends CIUnitTestCase
     /**
      * @backupGlobals enabled
      */
-    public function testOptionHeadersUsingPopulate()
-    {
-        $_SERVER['HTTP_HOST']            = 'site1.com';
-        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
-        $_SERVER['HTTP_ACCEPT_ENCODING'] = 'gzip, deflate, br';
-
-        $options = [
-            'base_uri' => 'http://www.foo.com/api/v1/',
-        ];
-
-        $request = $this->getRequest($options);
-        $request->get('example');
-        // we fill the Accept-Language header from _SERVER when no headers are defined for the request
-        $this->assertSame('en-US', $request->header('Accept-Language')->getValue());
-        // but we skip Host header - since it would corrupt the request
-        $this->assertNull($request->header('Host'));
-        // and Accept-Encoding
-        $this->assertNull($request->header('Accept-Encoding'));
-    }
-
-    /**
-     * @backupGlobals enabled
-     */
-    public function testOptionHeadersNotUsingPopulate()
+    public function testOptionsHeadersNotUsingPopulate(): void
     {
         $_SERVER['HTTP_HOST']            = 'site1.com';
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US';
@@ -220,20 +203,64 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('', $request->header('Accept-Encoding')->getValue());
     }
 
-    public function testOptionsDelay()
+    public function testOptionsAreSharedBetweenRequests(): void
     {
+        $options = [
+            'form_params' => ['studio' => 1],
+            'user_agent'  => 'CodeIgniter Framework v4',
+        ];
+        $request = $this->getRequest($options);
+
+        $request->request('POST', 'https://realestate1.example.com');
+
+        $this->assertSame('https://realestate1.example.com', $request->curl_options[CURLOPT_URL]);
+        $this->assertSame('studio=1', $request->curl_options[CURLOPT_POSTFIELDS]);
+        $this->assertSame('CodeIgniter Framework v4', $request->curl_options[CURLOPT_USERAGENT]);
+
+        $request->request('POST', 'https://realestate2.example.com');
+
+        $this->assertSame('https://realestate2.example.com', $request->curl_options[CURLOPT_URL]);
+        $this->assertSame('studio=1', $request->curl_options[CURLOPT_POSTFIELDS]);
+        $this->assertSame('CodeIgniter Framework v4', $request->curl_options[CURLOPT_USERAGENT]);
+    }
+
+    /**
+     * @backupGlobals enabled
+     */
+    public function testHeaderContentLengthNotSharedBetweenClients(): void
+    {
+        $_SERVER['HTTP_CONTENT_LENGTH'] = '10';
+
+        $options = [
+            'base_uri' => 'http://www.foo.com/api/v1/',
+        ];
+        $request = $this->getRequest($options);
+        $request->post('example', [
+            'form_params' => [
+                'q' => 'keyword',
+            ],
+        ]);
+
+        $request = $this->getRequest($options);
+        $request->get('example');
+
+        $this->assertNull($request->header('Content-Length'));
+    }
+
+    public function testOptionsDelay(): void
+    {
+        $request = $this->getRequest();
+        $this->assertEqualsWithDelta(0.0, $request->getDelay(), PHP_FLOAT_EPSILON);
+
         $options = [
             'delay'   => 2000,
             'headers' => ['fruit' => 'apple'],
         ];
-        $request = $this->getRequest();
-        $this->assertSame(0.0, $request->getDelay());
-
         $request = $this->getRequest($options);
-        $this->assertSame(2.0, $request->getDelay());
+        $this->assertEqualsWithDelta(2.0, $request->getDelay(), PHP_FLOAT_EPSILON);
     }
 
-    public function testPatchSetsCorrectMethod()
+    public function testPatchSetsCorrectMethod(): void
     {
         $this->request->patch('http://example.com');
 
@@ -245,7 +272,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('PATCH', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testPostSetsCorrectMethod()
+    public function testPostSetsCorrectMethod(): void
     {
         $this->request->post('http://example.com');
 
@@ -257,7 +284,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('POST', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testPutSetsCorrectMethod()
+    public function testPutSetsCorrectMethod(): void
     {
         $this->request->put('http://example.com');
 
@@ -269,7 +296,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('PUT', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testCustomMethodSetsCorrectMethod()
+    public function testCustomMethodSetsCorrectMethod(): void
     {
         $this->request->request('custom', 'http://example.com');
 
@@ -281,7 +308,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('CUSTOM', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testRequestMethodGetsSanitized()
+    public function testRequestMethodGetsSanitized(): void
     {
         $this->request->request('<script>Custom</script>', 'http://example.com');
 
@@ -293,7 +320,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('CUSTOM', $options[CURLOPT_CUSTOMREQUEST]);
     }
 
-    public function testRequestSetsBasicCurlOptions()
+    public function testRequestSetsBasicCurlOptions(): void
     {
         $this->request->request('get', 'http://example.com');
 
@@ -312,13 +339,13 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertTrue($options[CURLOPT_FRESH_CONNECT]);
 
         $this->assertArrayHasKey(CURLOPT_TIMEOUT_MS, $options);
-        $this->assertSame(0.0, $options[CURLOPT_TIMEOUT_MS]);
+        $this->assertEqualsWithDelta(0.0, $options[CURLOPT_TIMEOUT_MS], PHP_FLOAT_EPSILON);
 
         $this->assertArrayHasKey(CURLOPT_CONNECTTIMEOUT_MS, $options);
-        $this->assertSame(150000.0, $options[CURLOPT_CONNECTTIMEOUT_MS]);
+        $this->assertEqualsWithDelta(150000.0, $options[CURLOPT_CONNECTTIMEOUT_MS], PHP_FLOAT_EPSILON);
     }
 
-    public function testAuthBasicOption()
+    public function testAuthBasicOption(): void
     {
         $this->request->request('get', 'http://example.com', [
             'auth' => [
@@ -336,7 +363,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
     }
 
-    public function testAuthBasicOptionExplicit()
+    public function testAuthBasicOptionExplicit(): void
     {
         $this->request->request('get', 'http://example.com', [
             'auth' => [
@@ -355,7 +382,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
     }
 
-    public function testAuthDigestOption()
+    public function testAuthDigestOption(): void
     {
         $output = "HTTP/1.1 401 Unauthorized
 		Server: ddos-guard
@@ -395,7 +422,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame(CURLAUTH_DIGEST, $options[CURLOPT_HTTPAUTH]);
     }
 
-    public function testSetAuthBasic()
+    public function testSetAuthBasic(): void
     {
         $this->request->setAuth('username', 'password')->get('http://example.com');
 
@@ -408,7 +435,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame(CURLAUTH_BASIC, $options[CURLOPT_HTTPAUTH]);
     }
 
-    public function testSetAuthDigest()
+    public function testSetAuthDigest(): void
     {
         $output = "HTTP/1.1 401 Unauthorized
 		Server: ddos-guard
@@ -442,7 +469,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame(CURLAUTH_DIGEST, $options[CURLOPT_HTTPAUTH]);
     }
 
-    public function testCertOption()
+    public function testCertOption(): void
     {
         $file = __FILE__;
 
@@ -456,7 +483,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame($file, $options[CURLOPT_SSLCERT]);
     }
 
-    public function testCertOptionWithPassword()
+    public function testCertOptionWithPassword(): void
     {
         $file = __FILE__;
 
@@ -476,7 +503,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('password', $options[CURLOPT_SSLCERTPASSWD]);
     }
 
-    public function testMissingCertOption()
+    public function testMissingCertOption(): void
     {
         $file = 'something_obviously_bogus';
         $this->expectException(HTTPException::class);
@@ -486,7 +513,7 @@ final class CURLRequestTest extends CIUnitTestCase
         ]);
     }
 
-    public function testSSLVerification()
+    public function testSSLVerification(): void
     {
         $file = __FILE__;
 
@@ -507,7 +534,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame(2, $options[CURLOPT_SSL_VERIFYHOST]);
     }
 
-    public function testSSLWithBadKey()
+    public function testSSLWithBadKey(): void
     {
         $file = 'something_obviously_bogus';
         $this->expectException(HTTPException::class);
@@ -518,7 +545,21 @@ final class CURLRequestTest extends CIUnitTestCase
         ]);
     }
 
-    public function testDebugOptionTrue()
+    public function testProxyuOption()
+    {
+        $this->request->request('get', 'http://example.com', [
+            'proxy' => 'http://localhost:3128',
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_PROXY, $options);
+        $this->assertSame('http://localhost:3128', $options[CURLOPT_PROXY]);
+        $this->assertArrayHasKey(CURLOPT_HTTPPROXYTUNNEL, $options);
+        $this->assertTrue($options[CURLOPT_HTTPPROXYTUNNEL]);
+    }
+
+    public function testDebugOptionTrue(): void
     {
         $this->request->request('get', 'http://example.com', [
             'debug' => true,
@@ -533,7 +574,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertIsResource($options[CURLOPT_STDERR]);
     }
 
-    public function testDebugOptionFalse()
+    public function testDebugOptionFalse(): void
     {
         $this->request->request('get', 'http://example.com', [
             'debug' => false,
@@ -545,7 +586,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertArrayNotHasKey(CURLOPT_STDERR, $options);
     }
 
-    public function testDebugOptionFile()
+    public function testDebugOptionFile(): void
     {
         $file = SUPPORTPATH . 'Files/baker/banana.php';
 
@@ -562,7 +603,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertIsResource($options[CURLOPT_STDERR]);
     }
 
-    public function testDecodeContent()
+    public function testDecodeContent(): void
     {
         $this->request->setHeader('Accept-Encoding', 'cobol');
         $this->request->request('get', 'http://example.com', [
@@ -575,7 +616,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('cobol', $options[CURLOPT_ENCODING]);
     }
 
-    public function testDecodeContentWithoutAccept()
+    public function testDecodeContentWithoutAccept(): void
     {
         //      $this->request->setHeader('Accept-Encoding', 'cobol');
         $this->request->request('get', 'http://example.com', [
@@ -590,7 +631,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('Accept-Encoding', $options[CURLOPT_HTTPHEADER]);
     }
 
-    public function testAllowRedirectsOptionFalse()
+    public function testAllowRedirectsOptionFalse(): void
     {
         $this->request->request('get', 'http://example.com', [
             'allow_redirects' => false,
@@ -605,7 +646,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertArrayNotHasKey(CURLOPT_REDIR_PROTOCOLS, $options);
     }
 
-    public function testAllowRedirectsOptionTrue()
+    public function testAllowRedirectsOptionTrue(): void
     {
         $this->request->request('get', 'http://example.com', [
             'allow_redirects' => true,
@@ -622,7 +663,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame(CURLPROTO_HTTP | CURLPROTO_HTTPS, $options[CURLOPT_REDIR_PROTOCOLS]);
     }
 
-    public function testAllowRedirectsOptionDefaults()
+    public function testAllowRedirectsOptionDefaults(): void
     {
         $this->request->request('get', 'http://example.com', [
             'allow_redirects' => true,
@@ -637,7 +678,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertArrayHasKey(CURLOPT_REDIR_PROTOCOLS, $options);
     }
 
-    public function testAllowRedirectsArray()
+    public function testAllowRedirectsArray(): void
     {
         $this->request->request('get', 'http://example.com', [
             'allow_redirects' => ['max' => 2],
@@ -652,7 +693,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame(2, $options[CURLOPT_MAXREDIRS]);
     }
 
-    public function testSendWithQuery()
+    public function testSendWithQuery(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
@@ -669,24 +710,24 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame('http://www.foo.com/api/v1/products?name=Henry&d.t=value', $options[CURLOPT_URL]);
     }
 
-    public function testSendWithDelay()
+    public function testSendWithDelay(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 1000,
+            'delay'    => 100,
         ]);
 
         $request->get('products');
 
         // we still need to check the code coverage to make sure this was done
-        $this->assertSame(1.0, $request->getDelay());
+        $this->assertEqualsWithDelta(0.1, $request->getDelay(), PHP_FLOAT_EPSILON);
     }
 
-    public function testSendContinued()
+    public function testSendContinued(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 1000,
+            'delay'    => 100,
         ]);
 
         $request->setOutput("HTTP/1.1 100 Continue\x0d\x0a\x0d\x0aHi there");
@@ -697,11 +738,11 @@ final class CURLRequestTest extends CIUnitTestCase
     /**
      * See: https://github.com/codeigniter4/CodeIgniter4/issues/3261
      */
-    public function testSendContinuedWithManyHeaders()
+    public function testSendContinuedWithManyHeaders(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 1000,
+            'delay'    => 100,
         ]);
 
         $output = "HTTP/1.1 100 Continue
@@ -718,14 +759,14 @@ Pragma: no-cache
 Set-Cookie: PHPSESSID=80pd3hlg38mvjnelpvokp9lad0; path=/
 Content-Type: application/xml; charset=utf-8
 Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>";
-
         $request->setOutput($output);
+
         $response = $request->get('answer');
 
         $this->assertSame('<title>Update success! config</title>', $response->getBody());
 
         $responseHeaderKeys = [
-            'Cache-control',
+            'Cache-Control',
             'Content-Type',
             'Server',
             'Connection',
@@ -741,11 +782,82 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame(200, $response->getStatusCode());
     }
 
-    public function testSplitResponse()
+    public function testSendProxied(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 1000,
+            'delay'    => 100,
+        ]);
+
+        $output = "HTTP/1.1 200 Connection established
+Proxy-Agent: Fortinet-Proxy/1.0\x0d\x0a\x0d\x0aHTTP/1.1 200 OK\x0d\x0a\x0d\x0aHi there";
+        $request->setOutput($output);
+
+        $response = $request->get('answer');
+        $this->assertSame('Hi there', $response->getBody());
+    }
+
+    /**
+     * See: https://github.com/codeigniter4/CodeIgniter4/issues/7394
+     */
+    public function testResponseHeadersWithMultipleRequests(): void
+    {
+        $request = $this->getRequest([
+            'base_uri' => 'http://www.foo.com/api/v1/',
+        ]);
+
+        $output = "HTTP/2.0 200 OK
+Server: ddos-guard
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Content-Type: application/xml; charset=utf-8
+Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello1</title>";
+        $request->setOutput($output);
+
+        $response = $request->get('answer1');
+
+        $this->assertSame('<title>Hello1</title>', $response->getBody());
+
+        $responseHeaderKeys = [
+            'Cache-Control',
+            'Content-Type',
+            'Server',
+            'Expires',
+            'Pragma',
+            'Transfer-Encoding',
+        ];
+        $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
+
+        $this->assertSame(200, $response->getStatusCode());
+
+        $output = "HTTP/2.0 200 OK
+Expires: Thu, 19 Nov 1982 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Content-Type: application/xml; charset=utf-8
+Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
+        $request->setOutput($output);
+
+        $response = $request->get('answer2');
+
+        $this->assertSame('<title>Hello2</title>', $response->getBody());
+
+        $responseHeaderKeys = [
+            'Cache-Control',
+            'Content-Type',
+            'Expires',
+            'Transfer-Encoding',
+        ];
+        $this->assertSame($responseHeaderKeys, array_keys($response->headers()));
+
+        $this->assertSame(200, $response->getStatusCode());
+    }
+
+    public function testSplitResponse(): void
+    {
+        $request = $this->getRequest([
+            'base_uri' => 'http://www.foo.com/api/v1/',
+            'delay'    => 100,
         ]);
 
         $request->setOutput("Accept: text/html\x0d\x0a\x0d\x0aHi there");
@@ -753,11 +865,11 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame('Hi there', $response->getBody());
     }
 
-    public function testApplyBody()
+    public function testApplyBody(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 1000,
+            'delay'    => 100,
         ]);
 
         $request->setBody('name=George');
@@ -768,11 +880,27 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame('name=George', $request->curl_options[CURLOPT_POSTFIELDS]);
     }
 
-    public function testResponseHeaders()
+    public function testApplyBodyByOptions(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 1000,
+            'delay'    => 100,
+        ]);
+
+        $request->setOutput('Hi there');
+        $response = $request->post('answer', [
+            'body' => 'name=George',
+        ]);
+
+        $this->assertSame('Hi there', $response->getBody());
+        $this->assertSame('name=George', $request->curl_options[CURLOPT_POSTFIELDS]);
+    }
+
+    public function testResponseHeaders(): void
+    {
+        $request = $this->getRequest([
+            'base_uri' => 'http://www.foo.com/api/v1/',
+            'delay'    => 100,
         ]);
 
         $request->setOutput("HTTP/2.0 234 Ohoh\x0d\x0aAccept: text/html\x0d\x0a\x0d\x0aHi there");
@@ -782,11 +910,11 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame(234, $response->getStatusCode());
     }
 
-    public function testResponseHeadersShortProtocol()
+    public function testResponseHeadersShortProtocol(): void
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 1000,
+            'delay'    => 100,
         ]);
 
         $request->setOutput("HTTP/2 235 Ohoh\x0d\x0aAccept: text/html\x0d\x0a\x0d\x0aHi there shortie");
@@ -796,7 +924,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame(235, $response->getStatusCode());
     }
 
-    public function testPostFormEncoded()
+    public function testPostFormEncoded(): void
     {
         $params = [
             'foo' => 'bar',
@@ -818,7 +946,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame($expected, $options[CURLOPT_POSTFIELDS]);
     }
 
-    public function testPostFormMultipart()
+    public function testPostFormMultipart(): void
     {
         $params = [
             'foo' => 'bar',
@@ -840,7 +968,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame($params, $options[CURLOPT_POSTFIELDS]);
     }
 
-    public function testSetForm()
+    public function testSetForm(): void
     {
         $params = [
             'foo' => 'bar',
@@ -867,7 +995,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         );
     }
 
-    public function testJSONData()
+    public function testJSONData(): void
     {
         $params = [
             'foo' => 'bar',
@@ -886,7 +1014,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame($expected, $this->request->getBody());
     }
 
-    public function testSetJSON()
+    public function testSetJSON(): void
     {
         $params = [
             'foo' => 'bar',
@@ -898,10 +1026,13 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->request->setJSON($params)->post('/post');
 
         $this->assertSame(json_encode($params), $this->request->getBody());
-        $this->assertSame('application/json', $this->request->getHeaderLine('Content-Type'));
+        $this->assertSame(
+            'Content-Type: application/json',
+            $this->request->curl_options[CURLOPT_HTTPHEADER][0]
+        );
     }
 
-    public function testHTTPv1()
+    public function testHTTPv1(): void
     {
         $this->request->request('POST', '/post', [
             'version' => 1.0,
@@ -913,7 +1044,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame(CURL_HTTP_VERSION_1_0, $options[CURLOPT_HTTP_VERSION]);
     }
 
-    public function testHTTPv11()
+    public function testHTTPv11(): void
     {
         $this->request->request('POST', '/post', [
             'version' => 1.1,
@@ -925,7 +1056,19 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame(CURL_HTTP_VERSION_1_1, $options[CURLOPT_HTTP_VERSION]);
     }
 
-    public function testCookieOption()
+    public function testHTTPv2(): void
+    {
+        $this->request->request('POST', '/post', [
+            'version' => 2.0,
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_HTTP_VERSION, $options);
+        $this->assertSame(CURL_HTTP_VERSION_2_0, $options[CURLOPT_HTTP_VERSION]);
+    }
+
+    public function testCookieOption(): void
     {
         $holder = SUPPORTPATH . 'HTTP/Files/CookiesHolder.txt';
         $this->request->request('POST', '/post', [
@@ -940,7 +1083,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame($holder, $options[CURLOPT_COOKIEFILE]);
     }
 
-    public function testUserAgentOption()
+    public function testUserAgentOption(): void
     {
         $agent = 'CodeIgniter Framework';
 

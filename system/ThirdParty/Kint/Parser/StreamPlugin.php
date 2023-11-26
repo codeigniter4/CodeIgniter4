@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,37 +27,40 @@
 
 namespace Kint\Parser;
 
-use Kint\Object\BasicObject;
-use Kint\Object\Representation\Representation;
-use Kint\Object\ResourceObject;
-use Kint\Object\StreamObject;
+use Kint\Zval\Representation\Representation;
+use Kint\Zval\ResourceValue;
+use Kint\Zval\StreamValue;
+use Kint\Zval\Value;
 
-class StreamPlugin extends Plugin
+class StreamPlugin extends AbstractPlugin
 {
-    public function getTypes()
+    public function getTypes(): array
     {
-        return array('resource');
+        return ['resource'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, BasicObject &$o, $trigger)
+    public function parse(&$var, Value &$o, int $trigger): void
     {
-        if (!$o instanceof ResourceObject || 'stream' !== $o->resource_type) {
+        if (!$o instanceof ResourceValue || 'stream' !== $o->resource_type) {
             return;
         }
 
-        if (!$meta = \stream_get_meta_data($var)) {
+        // Doublecheck that the resource is open before we get the metadata
+        if (!\is_resource($var)) {
             return;
         }
+
+        $meta = \stream_get_meta_data($var);
 
         $rep = new Representation('Stream');
         $rep->implicit_label = true;
 
-        $base_obj = new BasicObject();
+        $base_obj = new Value();
         $base_obj->depth = $o->depth;
 
         if ($o->access_path) {
@@ -71,7 +76,7 @@ class StreamPlugin extends Plugin
         $o->addRepresentation($rep, 0);
         $o->value = $rep;
 
-        $stream = new StreamObject($meta);
+        $stream = new StreamValue($meta);
         $stream->transplant($o);
         $o = $stream;
     }

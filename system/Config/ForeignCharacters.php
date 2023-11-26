@@ -17,7 +17,9 @@ namespace CodeIgniter\Config;
 class ForeignCharacters
 {
     /**
-     * Without further ado, the list of foreign characters.
+     * The list of foreign characters.
+     *
+     * @var array<string, string>
      */
     public $characterList = [
         '/ä|æ|ǽ/'                                                     => 'ae',

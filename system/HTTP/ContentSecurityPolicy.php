@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use Config\App;
 use Config\ContentSecurityPolicy as ContentSecurityPolicyConfig;
 
 /**
@@ -21,6 +22,7 @@ use Config\ContentSecurityPolicy as ContentSecurityPolicyConfig;
  * @see http://www.html5rocks.com/en/tutorials/security/content-security-policy/
  * @see http://content-security-policy.com/
  * @see https://www.owasp.org/index.php/Content_Security_Policy
+ * @see \CodeIgniter\HTTP\ContentSecurityPolicyTest
  */
 class ContentSecurityPolicy
 {
@@ -177,6 +179,41 @@ class ContentSecurityPolicy
     protected $nonces = [];
 
     /**
+     * Nonce for style
+     *
+     * @var string
+     */
+    protected $styleNonce;
+
+    /**
+     * Nonce for script
+     *
+     * @var string
+     */
+    protected $scriptNonce;
+
+    /**
+     * Nonce tag for style
+     *
+     * @var string
+     */
+    protected $styleNonceTag = '{csp-style-nonce}';
+
+    /**
+     * Nonce tag for script
+     *
+     * @var string
+     */
+    protected $scriptNonceTag = '{csp-script-nonce}';
+
+    /**
+     * Replace nonce tag automatically
+     *
+     * @var bool
+     */
+    protected $autoNonce = true;
+
+    /**
      * An array of header info since we have
      * to build ourself before passing to Response.
      *
@@ -193,27 +230,84 @@ class ContentSecurityPolicy
     protected $reportOnlyHeaders = [];
 
     /**
+     * Whether Content Security Policy is being enforced.
+     *
+     * @var bool
+     */
+    protected $CSPEnabled = false;
+
+    /**
      * Constructor.
      *
      * Stores our default values from the Config file.
      */
     public function __construct(ContentSecurityPolicyConfig $config)
     {
+        $appConfig        = config(App::class);
+        $this->CSPEnabled = $appConfig->CSPEnabled;
+
         foreach (get_object_vars($config) as $setting => $value) {
             if (property_exists($this, $setting)) {
                 $this->{$setting} = $value;
             }
         }
+
+        if (! is_array($this->styleSrc)) {
+            $this->styleSrc = [$this->styleSrc];
+        }
+
+        if (! is_array($this->scriptSrc)) {
+            $this->scriptSrc = [$this->scriptSrc];
+        }
+    }
+
+    /**
+     * Whether Content Security Policy is being enforced.
+     */
+    public function enabled(): bool
+    {
+        return $this->CSPEnabled;
+    }
+
+    /**
+     * Get the nonce for the style tag.
+     */
+    public function getStyleNonce(): string
+    {
+        if ($this->styleNonce === null) {
+            $this->styleNonce = bin2hex(random_bytes(12));
+            $this->styleSrc[] = 'nonce-' . $this->styleNonce;
+        }
+
+        return $this->styleNonce;
+    }
+
+    /**
+     * Get the nonce for the script tag.
+     */
+    public function getScriptNonce(): string
+    {
+        if ($this->scriptNonce === null) {
+            $this->scriptNonce = bin2hex(random_bytes(12));
+            $this->scriptSrc[] = 'nonce-' . $this->scriptNonce;
+        }
+
+        return $this->scriptNonce;
     }
 
     /**
      * Compiles and sets the appropriate headers in the request.
      *
      * Should be called just prior to sending the response to the user agent.
+     *
+     * @return void
      */
-    public function finalize(ResponseInterface &$response)
+    public function finalize(ResponseInterface $response)
     {
-        $this->generateNonces($response);
+        if ($this->autoNonce) {
+            $this->generateNonces($response);
+        }
+
         $this->buildHeaders($response);
     }
 
@@ -236,7 +330,7 @@ class ContentSecurityPolicy
     /**
      * Adds a new base_uri value. Can be either a URI class or a simple string.
      *
-     * base_uri restricts the URLs that can appear in a page’s <base> element.
+     * base_uri restricts the URLs that can appear in a page's <base> element.
      *
      * @see http://www.w3.org/TR/CSP/#directive-base-uri
      *
@@ -550,6 +644,8 @@ class ContentSecurityPolicy
      * DRY method to add an string or array to a class property.
      *
      * @param array|string $options
+     *
+     * @return void
      */
     protected function addOption($options, string $target, ?bool $explicitReporting = null)
     {
@@ -571,8 +667,10 @@ class ContentSecurityPolicy
      * Scans the body of the request message and replaces any nonce
      * placeholders with actual nonces, that we'll then add to our
      * headers.
+     *
+     * @return void
      */
-    protected function generateNonces(ResponseInterface &$response)
+    protected function generateNonces(ResponseInterface $response)
     {
         $body = $response->getBody();
 
@@ -580,28 +678,12 @@ class ContentSecurityPolicy
             return;
         }
 
-        if (! is_array($this->styleSrc)) {
-            $this->styleSrc = [$this->styleSrc];
-        }
+        // Replace style and script placeholders with nonces
+        $pattern = '/(' . preg_quote($this->styleNonceTag, '/')
+            . '|' . preg_quote($this->scriptNonceTag, '/') . ')/';
 
-        if (! is_array($this->scriptSrc)) {
-            $this->scriptSrc = [$this->scriptSrc];
-        }
-
-        // Replace style placeholders with nonces
-        $body = preg_replace_callback('/{csp-style-nonce}/', function () {
-            $nonce = bin2hex(random_bytes(12));
-
-            $this->styleSrc[] = 'nonce-' . $nonce;
-
-            return "nonce=\"{$nonce}\"";
-        }, $body);
-
-        // Replace script placeholders with nonces
-        $body = preg_replace_callback('/{csp-script-nonce}/', function () {
-            $nonce = bin2hex(random_bytes(12));
-
-            $this->scriptSrc[] = 'nonce-' . $nonce;
+        $body = preg_replace_callback($pattern, function ($match) {
+            $nonce = $match[0] === $this->styleNonceTag ? $this->getStyleNonce() : $this->getScriptNonce();
 
             return "nonce=\"{$nonce}\"";
         }, $body);
@@ -613,14 +695,12 @@ class ContentSecurityPolicy
      * Based on the current state of the elements, will add the appropriate
      * Content-Security-Policy and Content-Security-Policy-Report-Only headers
      * with their values to the response object.
+     *
+     * @return void
      */
-    protected function buildHeaders(ResponseInterface &$response)
+    protected function buildHeaders(ResponseInterface $response)
     {
-        /**
-         * Ensure both headers are available and arrays...
-         *
-         * @var Response $response
-         */
+        // Ensure both headers are available and arrays...
         $response->setHeader('Content-Security-Policy', []);
         $response->setHeader('Content-Security-Policy-Report-Only', []);
 
@@ -697,11 +777,13 @@ class ContentSecurityPolicy
      * reportOnly header, since it's viable to have both simultaneously.
      *
      * @param array|string|null $values
+     *
+     * @return void
      */
     protected function addToHeader(string $name, $values = null)
     {
         if (is_string($values)) {
-            $values = [$values => 0];
+            $values = [$values => $this->reportOnly];
         }
 
         $sources       = [];
@@ -710,13 +792,15 @@ class ContentSecurityPolicy
         foreach ($values as $value => $reportOnly) {
             if (is_numeric($value) && is_string($reportOnly) && ! empty($reportOnly)) {
                 $value      = $reportOnly;
-                $reportOnly = 0;
+                $reportOnly = $this->reportOnly;
+            }
+
+            if (strpos($value, 'nonce-') === 0) {
+                $value = "'{$value}'";
             }
 
             if ($reportOnly === true) {
                 $reportSources[] = in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
-            } elseif (strpos($value, 'nonce-') === 0) {
-                $sources[] = "'{$value}'";
             } else {
                 $sources[] = in_array($value, $this->validSources, true) ? "'{$value}'" : $value;
             }

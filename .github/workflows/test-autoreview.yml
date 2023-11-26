@@ -1,0 +1,108 @@
+name: AutoReview
+
+on:
+  pull_request:
+    paths:
+      - composer.json
+      - spark
+      - '**.php'
+      - .github/workflows/test-autoreview.yml
+  push:
+    paths:
+      - composer.json
+      - spark
+      - '**.php'
+      - .github/workflows/test-autoreview.yml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  auto-review-tests:
+    name: Automatic Code Review
+    uses: ./.github/workflows/reusable-serviceless-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
+    with:
+      job-name: PHP 8.1
+      php-version: '8.1'
+      job-id: auto-review-tests
+      group-name: AutoReview
+
+  composer-normalize-tests:
+    name: Check normalized composer.json
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: Install dependencies
+        run: composer update
+
+      - name: Run on root composer.json
+        id: normalize-root-composer
+        if: ${{ always() }}
+        run: |
+          echo "ROOT_COMPOSER_RESULT<<RCR" >> $GITHUB_OUTPUT
+          echo "$(composer normalize)" >> $GITHUB_OUTPUT
+          echo "RCR" >> $GITHUB_OUTPUT
+
+      - name: Run on framework composer.json
+        id: normalize-framework-composer
+        if: ${{ always() }}
+        working-directory: admin/framework
+        run: |
+          echo "FRAMEWORK_COMPOSER_RESULT<<FCR" >> $GITHUB_OUTPUT
+          echo "$(composer normalize)" >> $GITHUB_OUTPUT
+          echo "FCR" >> $GITHUB_OUTPUT
+
+      - name: Run on starter composer.json
+        id: normalize-starter-composer
+        if: ${{ always() }}
+        working-directory: admin/starter
+        run: |
+          echo "STARTER_COMPOSER_RESULT<<SCR" >> $GITHUB_OUTPUT
+          echo "$(composer normalize)" >> $GITHUB_OUTPUT
+          echo "SCR" >> $GITHUB_OUTPUT
+
+      - name: Analyse normalization results
+        run: |
+          if [[ '${{ steps.normalize-root-composer.conclusion }}' == 'failure' ]]; then
+            echo 'Normalization of root composer.json encountered a problem.';
+            echo 'Please run it locally: `composer normalize`';
+            exit 1;
+          fi
+
+          if [[ ${{ contains(steps.normalize-root-composer.outputs.ROOT_COMPOSER_RESULT, 'Successfully normalized') }} == true ]]; then
+            echo 'Root composer.json is not yet normalized.';
+            exit 1;
+          fi
+
+          if [[ '${{ steps.normalize-framework-composer.conclusion }}' == 'failure' ]]; then
+            echo 'Normalization of framework composer.json encountered a problem.';
+            echo 'Please run it locally: `composer normalize -d admin/framework`';
+            exit 1;
+          fi
+
+          if [[ ${{ contains(steps.normalize-framework-composer.outputs.FRAMEWORK_COMPOSER_RESULT, 'Successfully normalized') }} == true ]]; then
+            echo 'Framework composer.json is not yet normalized.';
+            exit 1;
+          fi
+
+          if [[ '${{ steps.normalize-starter-composer.conclusion }}' == 'failure' ]]; then
+            echo 'Normalization of starter composer.json encountered a problem.';
+            echo 'Please run it locally: `composer normalize -d admin/starter`';
+            exit 1;
+          fi
+
+          if [[ ${{ contains(steps.normalize-starter-composer.outputs.STARTER_COMPOSER_RESULT, 'Successfully normalized') }} == true ]]; then
+            echo 'Starter composer.json is not yet normalized.';
+            exit 1;
+          fi

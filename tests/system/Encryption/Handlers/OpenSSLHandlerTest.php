@@ -12,18 +12,18 @@
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Encryption;
+use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class OpenSSLHandlerTest extends CIUnitTestCase
 {
-    /**
-     * @var \CodeIgniter\Encryption\Encryption
-     */
-    protected $encryption;
+    private Encryption $encryption;
 
     protected function setUp(): void
     {
@@ -37,7 +37,7 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
     /**
      * Sanity test
      */
-    public function testSanity()
+    public function testSanity(): void
     {
         $params         = new EncryptionConfig();
         $params->driver = 'OpenSSL';
@@ -55,7 +55,7 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
      * Testing the three methods separately is not realistic as they are
      * designed to work together.
      */
-    public function testSimple()
+    public function testSimple(): void
     {
         $params         = new EncryptionConfig();
         $params->driver = 'OpenSSL';
@@ -77,16 +77,16 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
     /**
      * Starter key needed
      */
-    public function testWithoutKey()
+    public function testWithoutKey(): void
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         $encrypter = new OpenSSLHandler();
         $message1  = 'This is a plain-text message.';
         $encrypter->encrypt($message1, ['key' => '']);
     }
 
-    public function testWithKeyString()
+    public function testWithKeyString(): void
     {
         $key       = 'abracadabra';
         $encrypter = new OpenSSLHandler();
@@ -98,9 +98,9 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
     /**
      * Authentication will fail decrypting with the wrong key
      */
-    public function testWithWrongKeyString()
+    public function testWithWrongKeyString(): void
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         $key1      = 'abracadabra';
         $encrypter = new OpenSSLHandler();
@@ -111,7 +111,7 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
         $this->assertNotSame($message1, $encrypter->decrypt($encoded, $key2));
     }
 
-    public function testWithKeyArray()
+    public function testWithKeyArray(): void
     {
         $key       = 'abracadabra';
         $encrypter = new OpenSSLHandler();
@@ -123,9 +123,9 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
     /**
      * Authentication will fail decrypting with the wrong key
      */
-    public function testWithWrongKeyArray()
+    public function testWithWrongKeyArray(): void
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         $key1      = 'abracadabra';
         $encrypter = new OpenSSLHandler();

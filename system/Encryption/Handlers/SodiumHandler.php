@@ -17,6 +17,7 @@ use CodeIgniter\Encryption\Exceptions\EncryptionException;
  * SodiumHandler uses libsodium in encryption.
  *
  * @see https://github.com/jedisct1/libsodium/issues/392
+ * @see \CodeIgniter\Encryption\Handlers\SodiumHandlerTest
  */
 class SodiumHandler extends BaseHandler
 {
@@ -111,6 +112,8 @@ class SodiumHandler extends BaseHandler
      * Parse the $params before doing assignment.
      *
      * @param array|string|null $params
+     *
+     * @return void
      *
      * @throws EncryptionException If key is empty
      */

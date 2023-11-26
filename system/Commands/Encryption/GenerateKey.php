@@ -52,7 +52,7 @@ class GenerateKey extends BaseCommand
     /**
      * The command's options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [
         '--force'  => 'Force overwrite existing key in `.env` file.',
@@ -67,6 +67,7 @@ class GenerateKey extends BaseCommand
     public function run(array $params)
     {
         $prefix = $params['prefix'] ?? CLI::getOption('prefix');
+
         if (in_array($prefix, [null, true], true)) {
             $prefix = 'hex2bin';
         } elseif (! in_array($prefix, ['hex2bin', 'base64'], true)) {
@@ -74,6 +75,7 @@ class GenerateKey extends BaseCommand
         }
 
         $length = $params['length'] ?? CLI::getOption('length');
+
         if (in_array($length, [null, true], true)) {
             $length = 32;
         }
@@ -127,9 +129,7 @@ class GenerateKey extends BaseCommand
 
         if ($currentKey !== '' && ! $this->confirmOverwrite($params)) {
             // Not yet testable since it requires keyboard input
-            // @codeCoverageIgnoreStart
-            return false;
-            // @codeCoverageIgnoreEnd
+            return false; // @codeCoverageIgnore
         }
 
         return $this->writeNewEncryptionKeyToFile($currentKey, $key);
@@ -151,8 +151,8 @@ class GenerateKey extends BaseCommand
         $baseEnv = ROOTPATH . 'env';
         $envFile = ROOTPATH . '.env';
 
-        if (! file_exists($envFile)) {
-            if (! file_exists($baseEnv)) {
+        if (! is_file($envFile)) {
+            if (! is_file($baseEnv)) {
                 CLI::write('Both default shipped `env` file and custom `.env` are missing.', 'yellow');
                 CLI::write('Here\'s your new key instead: ' . CLI::color($newKey, 'yellow'));
                 CLI::newLine();
@@ -163,13 +163,24 @@ class GenerateKey extends BaseCommand
             copy($baseEnv, $envFile);
         }
 
-        $ret = file_put_contents($envFile, preg_replace(
-            $this->keyPattern($oldKey),
-            "\nencryption.key = {$newKey}",
-            file_get_contents($envFile)
-        ));
+        $oldFileContents = (string) file_get_contents($envFile);
+        $replacementKey  = "\nencryption.key = {$newKey}";
 
-        return $ret !== false;
+        if (strpos($oldFileContents, 'encryption.key') === false) {
+            return file_put_contents($envFile, $replacementKey, FILE_APPEND) !== false;
+        }
+
+        $newFileContents = preg_replace($this->keyPattern($oldKey), $replacementKey, $oldFileContents);
+
+        if ($newFileContents === $oldFileContents) {
+            $newFileContents = preg_replace(
+                '/^[#\s]*encryption.key[=\s]*(?:hex2bin\:[a-f0-9]{64}|base64\:(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?)$/m',
+                $replacementKey,
+                $oldFileContents
+            );
+        }
+
+        return file_put_contents($envFile, $newFileContents) !== false;
     }
 
     /**

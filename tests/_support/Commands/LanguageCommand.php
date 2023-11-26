@@ -27,11 +27,11 @@ class LanguageCommand extends BaseCommand
         '--sort' => 'Turn on/off the sortImports flag.',
     ];
 
-    public function run(array $params)
+    public function run(array $params): void
     {
         $this->setHasClassName(false);
-        $params[0]      = 'Foobar';
-        $params['lang'] = $params['lang'] ?? 'en';
+        $params[0] = 'Foobar';
+        $params['lang'] ??= 'en';
 
         $this->component = 'Language';
         $this->directory = 'Language\\' . $params['lang'];

@@ -13,23 +13,21 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 use Config\Services;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class InfoCacheTest extends CIUnitTestCase
 {
-    protected $streamFilter;
+    use StreamFilterTrait;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        CITestStreamFilter::$buffer = '';
-        $this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
 
         // Make sure we are testing with the correct handler (override injections)
         Services::injectMock('cache', CacheFactory::getHandler(config('Cache')));
@@ -37,18 +35,16 @@ final class InfoCacheTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->streamFilter);
-
         // restore default cache handler
         config('Cache')->handler = 'file';
     }
 
     protected function getBuffer()
     {
-        return CITestStreamFilter::$buffer;
+        return $this->getStreamFilterBuffer();
     }
 
-    public function testInfoCacheErrorsOnInvalidHandler()
+    public function testInfoCacheErrorsOnInvalidHandler(): void
     {
         config('Cache')->handler = 'redis';
         cache()->save('foo', 'bar');
@@ -57,7 +53,7 @@ final class InfoCacheTest extends CIUnitTestCase
         $this->assertStringContainsString('This command only supports the file cache handler.', $this->getBuffer());
     }
 
-    public function testInfoCacheCanSeeFoo()
+    public function testInfoCacheCanSeeFoo(): void
     {
         cache()->save('foo', 'bar');
         command('cache:info');
@@ -65,7 +61,7 @@ final class InfoCacheTest extends CIUnitTestCase
         $this->assertStringContainsString('foo', $this->getBuffer());
     }
 
-    public function testInfoCacheCanSeeTable()
+    public function testInfoCacheCanSeeTable(): void
     {
         command('cache:info');
 
@@ -75,7 +71,7 @@ final class InfoCacheTest extends CIUnitTestCase
         $this->assertStringContainsString('Date', $this->getBuffer());
     }
 
-    public function testInfoCacheCannotSeeFoo()
+    public function testInfoCacheCannotSeeFoo(): void
     {
         cache()->delete('foo');
         command('cache:info');

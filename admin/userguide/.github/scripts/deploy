@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+# Deploys the User Guide to the production
+# website. Triggered by updates to the GitHub
+# repo's master branch.
+
+REPO=/opt/userguide
+SITE=/home/public_html/userguides/userguide4
+
+cd "$REPO"
+git switch master
+git pull
+
+rm -rf "$SITE"
+cp -R "$REPO/docs" "$SITE"

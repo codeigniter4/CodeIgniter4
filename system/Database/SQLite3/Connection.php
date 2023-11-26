@@ -16,10 +16,13 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use ErrorException;
 use Exception;
 use SQLite3;
+use SQLite3Result;
 use stdClass;
 
 /**
  * Connection for SQLite3
+ *
+ * @extends BaseConnection<SQLite3, SQLite3Result>
  */
 class Connection extends BaseConnection
 {
@@ -38,11 +41,38 @@ class Connection extends BaseConnection
     public $escapeChar = '`';
 
     /**
+     * @var bool Enable Foreign Key constraint or not
+     */
+    protected $foreignKeys = false;
+
+    /**
+     * The milliseconds to sleep
+     *
+     * @var int|null milliseconds
+     *
+     * @see https://www.php.net/manual/en/sqlite3.busytimeout
+     */
+    protected $busyTimeout;
+
+    public function initialize()
+    {
+        parent::initialize();
+
+        if ($this->foreignKeys) {
+            $this->enableForeignKeyChecks();
+        }
+
+        if (is_int($this->busyTimeout)) {
+            $this->connID->busyTimeout($this->busyTimeout);
+        }
+    }
+
+    /**
      * Connect to the database.
      *
-     * @throws DatabaseException
+     * @return SQLite3
      *
-     * @return mixed
+     * @throws DatabaseException
      */
     public function connect(bool $persistent = false)
     {
@@ -106,7 +136,7 @@ class Connection extends BaseConnection
     /**
      * Execute the query
      *
-     * @return mixed \SQLite3Result object or bool
+     * @return false|SQLite3Result
      */
     protected function execute(string $sql)
     {
@@ -115,9 +145,10 @@ class Connection extends BaseConnection
                 ? $this->connID->exec($sql)
                 : $this->connID->query($sql);
         } catch (ErrorException $e) {
-            log_message('error', $e);
+            log_message('error', (string) $e);
+
             if ($this->DBDebug) {
-                throw $e;
+                throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
             }
         }
 
@@ -137,14 +168,26 @@ class Connection extends BaseConnection
      */
     protected function _escapeString(string $str): string
     {
+        if (! $this->connID instanceof SQLite3) {
+            $this->initialize();
+        }
+
         return $this->connID->escapeString($str);
     }
 
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
+     *
+     * @param string|null $tableName If $tableName is provided will return only this table if exists.
      */
-    protected function _listTables(bool $prefixLimit = false): string
+    protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
+        if ($tableName !== null) {
+            return 'SELECT "NAME" FROM "SQLITE_MASTER" WHERE "TYPE" = \'table\''
+                   . ' AND "NAME" NOT LIKE \'sqlite!_%\' ESCAPE \'!\''
+                   . ' AND "NAME" LIKE ' . $this->escape($tableName);
+        }
+
         return 'SELECT "NAME" FROM "SQLITE_MASTER" WHERE "TYPE" = \'table\''
                . ' AND "NAME" NOT LIKE \'sqlite!_%\' ESCAPE \'!\''
                . (($prefixLimit !== false && $this->DBPrefix !== '')
@@ -161,9 +204,9 @@ class Connection extends BaseConnection
     }
 
     /**
-     * @throws DatabaseException
-     *
      * @return array|false
+     *
+     * @throws DatabaseException
      */
     public function getFieldNames(string $table)
     {
@@ -172,7 +215,7 @@ class Connection extends BaseConnection
             return $this->dataCache['field_names'][$table];
         }
 
-        if (empty($this->connID)) {
+        if (! $this->connID instanceof SQLite3) {
             $this->initialize();
         }
 
@@ -205,9 +248,9 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with field data
      *
-     * @throws DatabaseException
-     *
      * @return stdClass[]
+     *
+     * @throws DatabaseException
      */
     protected function _fieldData(string $table): array
     {
@@ -240,40 +283,54 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with index data
      *
-     * @throws DatabaseException
-     *
      * @return stdClass[]
+     *
+     * @throws DatabaseException
      */
     protected function _indexData(string $table): array
     {
-        // Get indexes
-        // Don't use PRAGMA index_list, so we can preserve index order
-        $sql = "SELECT name FROM sqlite_master WHERE type='index' AND tbl_name=" . $this->escape(strtolower($table));
+        $sql = "SELECT 'PRIMARY' as indexname, l.name as fieldname, 'PRIMARY' as indextype
+                FROM pragma_table_info(" . $this->escape(strtolower($table)) . ") as l
+                WHERE l.pk <> 0
+                UNION ALL
+                SELECT sqlite_master.name as indexname, ii.name as fieldname,
+                CASE
+                WHEN ti.pk <> 0 AND sqlite_master.name LIKE 'sqlite_autoindex_%' THEN 'PRIMARY'
+                WHEN sqlite_master.name LIKE 'sqlite_autoindex_%' THEN 'UNIQUE'
+                WHEN sqlite_master.sql LIKE '% UNIQUE %' THEN 'UNIQUE'
+                ELSE 'INDEX'
+                END as indextype
+                FROM sqlite_master
+                INNER JOIN pragma_index_xinfo(sqlite_master.name) ii ON ii.name IS NOT NULL
+                LEFT JOIN pragma_table_info(" . $this->escape(strtolower($table)) . ") ti ON ti.name = ii.name
+                WHERE sqlite_master.type='index' AND sqlite_master.tbl_name = " . $this->escape(strtolower($table)) . ' COLLATE NOCASE';
+
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetIndexData'));
         }
         $query = $query->getResultObject();
 
-        $retVal = [];
+        $tempVal = [];
 
         foreach ($query as $row) {
-            $obj = new stdClass();
-
-            $obj->name = $row->name;
-
-            // Get fields for index
-            $obj->fields = [];
-
-            if (false === $fields = $this->query('PRAGMA index_info(' . $this->escape(strtolower($row->name)) . ')')) {
-                throw new DatabaseException(lang('Database.failGetIndexData'));
+            if ($row->indextype === 'PRIMARY') {
+                $tempVal['PRIMARY']['indextype']               = $row->indextype;
+                $tempVal['PRIMARY']['indexname']               = $row->indexname;
+                $tempVal['PRIMARY']['fields'][$row->fieldname] = $row->fieldname;
+            } else {
+                $tempVal[$row->indexname]['indextype']               = $row->indextype;
+                $tempVal[$row->indexname]['indexname']               = $row->indexname;
+                $tempVal[$row->indexname]['fields'][$row->fieldname] = $row->fieldname;
             }
+        }
 
-            $fields = $fields->getResultObject();
+        $retVal = [];
 
-            foreach ($fields as $field) {
-                $obj->fields[] = $field->name;
-            }
-
+        foreach ($tempVal as $val) {
+            $obj                = new stdClass();
+            $obj->name          = $val['indexname'];
+            $obj->fields        = array_values($val['fields']);
+            $obj->type          = $val['indextype'];
             $retVal[$obj->name] = $obj;
         }
 
@@ -291,29 +348,21 @@ class Connection extends BaseConnection
             return [];
         }
 
-        $tables = $this->listTables();
+        $query   = $this->query("PRAGMA foreign_key_list({$table})")->getResult();
+        $indexes = [];
 
-        if (empty($tables)) {
-            return [];
+        foreach ($query as $row) {
+            $indexes[$row->id]['constraint_name']       = null;
+            $indexes[$row->id]['table_name']            = $table;
+            $indexes[$row->id]['foreign_table_name']    = $row->table;
+            $indexes[$row->id]['column_name'][]         = $row->from;
+            $indexes[$row->id]['foreign_column_name'][] = $row->to;
+            $indexes[$row->id]['on_delete']             = $row->on_delete;
+            $indexes[$row->id]['on_update']             = $row->on_update;
+            $indexes[$row->id]['match']                 = $row->match;
         }
 
-        $retVal = [];
-
-        foreach ($tables as $table) {
-            $query = $this->query("PRAGMA foreign_key_list({$table})")->getResult();
-
-            foreach ($query as $row) {
-                $obj                     = new stdClass();
-                $obj->constraint_name    = $row->from . ' to ' . $row->table . '.' . $row->to;
-                $obj->table_name         = $table;
-                $obj->foreign_table_name = $row->table;
-                $obj->sequence           = $row->seq;
-
-                $retVal[] = $obj;
-            }
-        }
-
-        return $retVal;
+        return $this->foreignKeyDataToObjects($indexes);
     }
 
     /**

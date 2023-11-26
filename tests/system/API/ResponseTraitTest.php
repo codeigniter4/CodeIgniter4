@@ -11,28 +11,29 @@
 
 namespace CodeIgniter\API;
 
+use CodeIgniter\Config\Factories;
+use CodeIgniter\Format\FormatterInterface;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
+use Config\Cookie;
 use stdClass;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ResponseTraitTest extends CIUnitTestCase
 {
-    protected $request;
-    protected $response;
-
-    /**
-     * @var Response formatter
-     */
-    protected $formatter;
+    private ?MockIncomingRequest $request  = null;
+    private ?MockResponse $response        = null;
+    private ?FormatterInterface $formatter = null;
 
     protected function setUp(): void
     {
@@ -41,30 +42,38 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->formatter = new JSONFormatter();
     }
 
-    protected function makeController(array $userConfig = [], string $uri = 'http://example.com', array $userHeaders = [])
+    protected function makeController(array $userConfig = [], string $routePath = '', array $userHeaders = [])
     {
         $config = new App();
 
         foreach ([
-            'baseURL' => 'http://example.com/',
-            'uriProtocol' => 'REQUEST_URI',
-            'defaultLocale' => 'en',
-            'negotiateLocale' => false,
+            'baseURL'          => 'http://example.com/',
+            'uriProtocol'      => 'REQUEST_URI',
+            'defaultLocale'    => 'en',
+            'negotiateLocale'  => false,
             'supportedLocales' => ['en'],
-            'CSPEnabled' => false,
-            'cookiePrefix' => '',
-            'cookieDomain' => '',
-            'cookiePath' => '/',
-            'cookieSecure' => false,
-            'cookieHTTPOnly' => false,
-            'proxyIPs' => [],
-            'cookieSameSite' => 'Lax',
+            'CSPEnabled'       => false,
+            'proxyIPs'         => [],
         ] as $key => $value) {
             $config->{$key} = $value;
         }
 
+        $cookie = new Cookie();
+
+        foreach ([
+            'prefix'   => '',
+            'domain'   => '',
+            'path'     => '/',
+            'secure'   => false,
+            'httponly' => false,
+            'samesite' => 'Lax',
+        ] as $key => $value) {
+            $cookie->{$key} = $value;
+        }
+        Factories::injectMock('config', 'Cookie', $cookie);
+
         if ($this->request === null) {
-            $this->request  = new MockIncomingRequest($config, new URI($uri), null, new UserAgent());
+            $this->request  = new MockIncomingRequest($config, new SiteURI($config, $routePath), null, new UserAgent());
             $this->response = new MockResponse($config);
         }
 
@@ -82,7 +91,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         }
 
         // Create the controller class finally.
-        $controller = new class ($this->request, $this->response, $this->formatter) {
+        return new class ($this->request, $this->response, $this->formatter) {
             use ResponseTrait;
 
             protected $request;
@@ -96,20 +105,19 @@ final class ResponseTraitTest extends CIUnitTestCase
                 $this->formatter = $formatter;
             }
 
-            public function resetFormatter()
+            public function resetFormatter(): void
             {
                 $this->formatter = null;
             }
         };
-
-        return $controller;
     }
 
-    public function testNoFormatterJSON()
+    public function testNoFormatterJSON(): void
     {
         $this->formatter = null;
-        $controller      = $this->makeController([], 'http://codeigniter.com', ['Accept' => 'application/json']);
-        $controller->respondCreated(['id' => 3], 'A Custom Reason');
+        $controller      = $this->makeController([], '', ['Accept' => 'application/json']);
+
+        $this->invoke($controller, 'respondCreated', [['id' => 3], 'A Custom Reason']);
 
         $this->assertSame('A Custom Reason', $this->response->getReason());
         $this->assertSame(201, $this->response->getStatusCode());
@@ -122,30 +130,33 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($expected, $this->response->getBody());
     }
 
-    public function testNoFormatter()
+    public function testNoFormatter(): void
     {
         $this->formatter = null;
-        $controller      = $this->makeController([], 'http://codeigniter.com', ['Accept' => 'application/json']);
-        $controller->respondCreated('A Custom Reason');
+        $controller      = $this->makeController([], '', ['Accept' => 'application/json']);
+
+        $this->invoke($controller, 'respondCreated', ['A Custom Reason']);
 
         $this->assertSame('A Custom Reason', $this->response->getBody());
     }
 
-    public function testAssociativeArrayPayload()
+    public function testAssociativeArrayPayload(): void
     {
         $this->formatter = null;
         $controller      = $this->makeController();
         $payload         = ['answer' => 42];
-        $expected        = <<<'EOH'
+
+        $this->invoke($controller, 'respond', [$payload]);
+
+        $expected = <<<'EOH'
             {
                 "answer": 42
             }
             EOH;
-        $controller->respond($payload);
         $this->assertSame($expected, $this->response->getBody());
     }
 
-    public function testArrayPayload()
+    public function testArrayPayload(): void
     {
         $this->formatter = null;
         $controller      = $this->makeController();
@@ -154,6 +165,9 @@ final class ResponseTraitTest extends CIUnitTestCase
             2,
             3,
         ];
+
+        $this->invoke($controller, 'respond', [$payload]);
+
         $expected = <<<'EOH'
             [
                 1,
@@ -161,49 +175,53 @@ final class ResponseTraitTest extends CIUnitTestCase
                 3
             ]
             EOH;
-        $controller->respond($payload);
         $this->assertSame($expected, $this->response->getBody());
     }
 
-    public function testPHPtoArrayPayload()
+    public function testPHPtoArrayPayload(): void
     {
         $this->formatter = null;
         $controller      = $this->makeController();
         $payload         = new stdClass();
         $payload->name   = 'Tom';
         $payload->id     = 1;
-        $expected        = <<<'EOH'
+
+        $this->invoke($controller, 'respond', [(array) $payload]);
+
+        $expected = <<<'EOH'
             {
                 "name": "Tom",
                 "id": 1
             }
             EOH;
-        $controller->respond((array) $payload);
         $this->assertSame($expected, $this->response->getBody());
     }
 
-    public function testRespondSets404WithNoData()
+    public function testRespondSets404WithNoData(): void
     {
         $controller = $this->makeController();
-        $controller->respond(null, null);
+
+        $this->invoke($controller, 'respond', [null, null]);
 
         $this->assertSame(404, $this->response->getStatusCode());
         $this->assertNull($this->response->getBody());
     }
 
-    public function testRespondSetsStatusWithEmptyData()
+    public function testRespondSetsStatusWithEmptyData(): void
     {
         $controller = $this->makeController();
-        $controller->respond(null, 201);
+
+        $this->invoke($controller, 'respond', [null, 201]);
 
         $this->assertSame(201, $this->response->getStatusCode());
         $this->assertNull($this->response->getBody());
     }
 
-    public function testRespondSetsCorrectBodyAndStatus()
+    public function testRespondSetsCorrectBodyAndStatus(): void
     {
         $controller = $this->makeController();
-        $controller->respond('something', 201);
+
+        $this->invoke($controller, 'respond', ['something', 201]);
 
         $this->assertSame(201, $this->response->getStatusCode());
         $this->assertSame('something', $this->response->getBody());
@@ -211,20 +229,21 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame('Created', $this->response->getReason());
     }
 
-    public function testRespondWithCustomReason()
+    public function testRespondWithCustomReason(): void
     {
         $controller = $this->makeController();
-        $controller->respond('something', 201, 'A Custom Reason');
+
+        $this->invoke($controller, 'respond', ['something', 201, 'A Custom Reason']);
 
         $this->assertSame(201, $this->response->getStatusCode());
         $this->assertSame('A Custom Reason', $this->response->getReason());
     }
 
-    public function testFailSingleMessage()
+    public function testFailSingleMessage(): void
     {
         $controller = $this->makeController();
 
-        $controller->fail('Failure to Launch', 500, 'WHAT!', 'A Custom Reason');
+        $this->invoke($controller, 'fail', ['Failure to Launch', 500, 'WHAT!', 'A Custom Reason']);
 
         // Will use the JSON formatter by default
         $expected = [
@@ -234,46 +253,49 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'error' => 'Failure to Launch',
             ],
         ];
-
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
         $this->assertSame(500, $this->response->getStatusCode());
         $this->assertSame('A Custom Reason', $this->response->getReason());
     }
 
-    public function testCreated()
+    public function testCreated(): void
     {
         $controller = $this->makeController();
-        $controller->respondCreated(['id' => 3], 'A Custom Reason');
+
+        $this->invoke($controller, 'respondCreated', [['id' => 3], 'A Custom Reason']);
 
         $this->assertSame('A Custom Reason', $this->response->getReason());
         $this->assertSame(201, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format(['id' => 3]), $this->response->getBody());
     }
 
-    public function testDeleted()
+    public function testDeleted(): void
     {
         $controller = $this->makeController();
-        $controller->respondDeleted(['id' => 3], 'A Custom Reason');
+
+        $this->invoke($controller, 'respondDeleted', [['id' => 3], 'A Custom Reason']);
 
         $this->assertSame('A Custom Reason', $this->response->getReason());
         $this->assertSame(200, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format(['id' => 3]), $this->response->getBody());
     }
 
-    public function testUpdated()
+    public function testUpdated(): void
     {
         $controller = $this->makeController();
-        $controller->respondUpdated(['id' => 3], 'A Custom Reason');
+
+        $this->invoke($controller, 'respondUpdated', [['id' => 3], 'A Custom Reason']);
 
         $this->assertSame('A Custom Reason', $this->response->getReason());
         $this->assertSame(200, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format(['id' => 3]), $this->response->getBody());
     }
 
-    public function testUnauthorized()
+    public function testUnauthorized(): void
     {
         $controller = $this->makeController();
-        $controller->failUnauthorized('Nope', 'FAT CHANCE', 'A Custom Reason');
+
+        $this->invoke($controller, 'failUnauthorized', ['Nope', 'FAT CHANCE', 'A Custom Reason']);
 
         $expected = [
             'status'   => 401,
@@ -282,16 +304,16 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'error' => 'Nope',
             ],
         ];
-
         $this->assertSame('A Custom Reason', $this->response->getReason());
         $this->assertSame(401, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testForbidden()
+    public function testForbidden(): void
     {
         $controller = $this->makeController();
-        $controller->failForbidden('Nope', 'FAT CHANCE', 'A Custom Reason');
+
+        $this->invoke($controller, 'failForbidden', ['Nope', 'FAT CHANCE', 'A Custom Reason']);
 
         $expected = [
             'status'   => 403,
@@ -300,25 +322,27 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'error' => 'Nope',
             ],
         ];
-
         $this->assertSame('A Custom Reason', $this->response->getReason());
         $this->assertSame(403, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testNoContent()
+    public function testNoContent(): void
     {
         $controller = $this->makeController();
-        $controller->respondNoContent('');
 
+        $this->invoke($controller, 'respondNoContent', ['']);
+
+        $this->assertStringStartsWith('application/json', $this->response->getHeaderLine('Content-Type'));
         $this->assertSame('No Content', $this->response->getReason());
         $this->assertSame(204, $this->response->getStatusCode());
     }
 
-    public function testNotFound()
+    public function testNotFound(): void
     {
         $controller = $this->makeController();
-        $controller->failNotFound('Nope', 'FAT CHANCE', 'A Custom Reason');
+
+        $this->invoke($controller, 'failNotFound', ['Nope', 'FAT CHANCE', 'A Custom Reason']);
 
         $expected = [
             'status'   => 404,
@@ -327,16 +351,16 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'error' => 'Nope',
             ],
         ];
-
         $this->assertSame('A Custom Reason', $this->response->getReason());
         $this->assertSame(404, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testValidationError()
+    public function testValidationError(): void
     {
         $controller = $this->makeController();
-        $controller->failValidationError('Nope', 'FAT CHANCE', 'A Custom Reason');
+
+        $this->invoke($controller, 'failValidationError', ['Nope', 'FAT CHANCE', 'A Custom Reason']);
 
         $expected = [
             'status'   => 400,
@@ -345,16 +369,16 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'error' => 'Nope',
             ],
         ];
-
         $this->assertSame('A Custom Reason', $this->response->getReason());
         $this->assertSame(400, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testValidationErrors()
+    public function testValidationErrors(): void
     {
         $controller = $this->makeController();
-        $controller->failValidationErrors(['foo' => 'Nope', 'bar' => 'No way'], 'FAT CHANCE', 'A Custom Reason');
+
+        $this->invoke($controller, 'failValidationErrors', [['foo' => 'Nope', 'bar' => 'No way'], 'FAT CHANCE', 'A Custom Reason']);
 
         $expected = [
             'status'   => 400,
@@ -364,16 +388,16 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'bar' => 'No way',
             ],
         ];
-
         $this->assertSame('A Custom Reason', $this->response->getReason());
         $this->assertSame(400, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testResourceExists()
+    public function testResourceExists(): void
     {
         $controller = $this->makeController();
-        $controller->failResourceExists('Nope', 'FAT CHANCE', 'A Custom Reason');
+
+        $this->invoke($controller, 'failResourceExists', ['Nope', 'FAT CHANCE', 'A Custom Reason']);
 
         $expected = [
             'status'   => 409,
@@ -382,16 +406,16 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'error' => 'Nope',
             ],
         ];
-
         $this->assertSame('A Custom Reason', $this->response->getReason());
         $this->assertSame(409, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testResourceGone()
+    public function testResourceGone(): void
     {
         $controller = $this->makeController();
-        $controller->failResourceGone('Nope', 'FAT CHANCE', 'A Custom Reason');
+
+        $this->invoke($controller, 'failResourceGone', ['Nope', 'FAT CHANCE', 'A Custom Reason']);
 
         $expected = [
             'status'   => 410,
@@ -400,16 +424,16 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'error' => 'Nope',
             ],
         ];
-
         $this->assertSame('A Custom Reason', $this->response->getReason());
         $this->assertSame(410, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testTooManyRequests()
+    public function testTooManyRequests(): void
     {
         $controller = $this->makeController();
-        $controller->failTooManyRequests('Nope', 'FAT CHANCE', 'A Custom Reason');
+
+        $this->invoke($controller, 'failTooManyRequests', ['Nope', 'FAT CHANCE', 'A Custom Reason']);
 
         $expected = [
             'status'   => 429,
@@ -418,16 +442,16 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'error' => 'Nope',
             ],
         ];
-
         $this->assertSame('A Custom Reason', $this->response->getReason());
         $this->assertSame(429, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
 
-    public function testServerError()
+    public function testServerError(): void
     {
         $controller = $this->makeController();
-        $controller->failServerError('Nope.', 'FAT-CHANCE', 'A custom reason.');
+
+        $this->invoke($controller, 'failServerError', ['Nope.', 'FAT-CHANCE', 'A custom reason.']);
 
         $this->assertSame('A custom reason.', $this->response->getReason());
         $this->assertSame(500, $this->response->getStatusCode());
@@ -440,7 +464,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         ]), $this->response->getBody());
     }
 
-    public function testValidContentTypes()
+    public function testValidContentTypes(): void
     {
         $chars     = '; charset=UTF-8';
         $goodMimes = [
@@ -455,20 +479,21 @@ final class ResponseTraitTest extends CIUnitTestCase
         }
     }
 
-    private function tryValidContentType($mimeType, $contentType)
+    private function tryValidContentType($mimeType, $contentType): void
     {
         $original                = $_SERVER;
         $_SERVER['CONTENT_TYPE'] = $mimeType;
 
-        $this->makeController([], 'http://codeigniter.com', ['Accept' => $mimeType]);
+        $this->makeController([], '', ['Accept' => $mimeType]);
         $this->assertSame($mimeType, $this->request->getHeaderLine('Accept'), 'Request header...');
+
         $this->response->setContentType($contentType);
         $this->assertSame($contentType, $this->response->getHeaderLine('Content-Type'), 'Response header pre-response...');
 
         $_SERVER = $original;
     }
 
-    public function testValidResponses()
+    public function testValidResponses(): void
     {
         $chars     = '; charset=UTF-8';
         $goodMimes = [
@@ -483,14 +508,15 @@ final class ResponseTraitTest extends CIUnitTestCase
         }
     }
 
-    public function testXMLFormatter()
+    public function testXMLFormatter(): void
     {
         $this->formatter = new XMLFormatter();
         $controller      = $this->makeController();
 
-        $this->assertSame('CodeIgniter\Format\XMLFormatter', get_class($this->formatter));
+        $this->assertInstanceOf(XMLFormatter::class, $this->formatter);
 
-        $controller->respondCreated(['id' => 3], 'A Custom Reason');
+        $this->invoke($controller, 'respondCreated', [['id' => 3], 'A Custom Reason']);
+
         $expected = <<<'EOH'
             <?xml version="1.0"?>
             <response><id>3</id></response>
@@ -499,29 +525,37 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame($expected, $this->response->getBody());
     }
 
-    public function testFormatByRequestNegotiateIfFormatIsNotJsonOrXML()
+    public function testFormatByRequestNegotiateIfFormatIsNotJsonOrXML(): void
     {
         $config = new App();
 
         foreach ([
-            'baseURL' => 'http://example.com/',
-            'uriProtocol' => 'REQUEST_URI',
-            'defaultLocale' => 'en',
-            'negotiateLocale' => false,
+            'baseURL'          => 'http://example.com/',
+            'uriProtocol'      => 'REQUEST_URI',
+            'defaultLocale'    => 'en',
+            'negotiateLocale'  => false,
             'supportedLocales' => ['en'],
-            'CSPEnabled' => false,
-            'cookiePrefix' => '',
-            'cookieDomain' => '',
-            'cookiePath' => '/',
-            'cookieSecure' => false,
-            'cookieHTTPOnly' => false,
-            'proxyIPs' => [],
-            'cookieSameSite' => 'Lax',
+            'CSPEnabled'       => false,
+            'proxyIPs'         => [],
         ] as $key => $value) {
             $config->{$key} = $value;
         }
 
-        $request  = new MockIncomingRequest($config, new URI($config->baseURL), null, new UserAgent());
+        $cookie = new Cookie();
+
+        foreach ([
+            'prefix'   => '',
+            'domain'   => '',
+            'path'     => '/',
+            'secure'   => false,
+            'httponly' => false,
+            'samesite' => 'Lax',
+        ] as $key => $value) {
+            $cookie->{$key} = $value;
+        }
+        Factories::injectMock('config', 'Cookie', $cookie);
+
+        $request  = new MockIncomingRequest($config, new SiteURI($config), null, new UserAgent());
         $response = new MockResponse($config);
 
         $controller = new class ($request, $response) {
@@ -539,36 +573,45 @@ final class ResponseTraitTest extends CIUnitTestCase
             }
         };
 
-        $controller->respondCreated(['id' => 3], 'A Custom Reason');
+        $this->invoke($controller, 'respondCreated', [['id' => 3], 'A Custom Reason']);
+
         $this->assertStringStartsWith(config('Format')->supportedResponseFormats[0], $response->getHeaderLine('Content-Type'));
     }
 
-    public function testResponseFormat()
+    public function testResponseFormat(): void
     {
-        $data = ['foo' => 'something'];
-
+        $data       = ['foo' => 'something'];
         $controller = $this->makeController();
-        $controller->setResponseFormat('json');
-        $controller->respond($data, 201);
+
+        $this->invoke($controller, 'setResponseFormat', ['json']);
+        $this->invoke($controller, 'respond', [$data, 201]);
 
         $this->assertStringStartsWith('application/json', $this->response->getHeaderLine('Content-Type'));
         $this->assertSame($this->formatter->format($data), $this->response->getJSON());
 
-        $controller->setResponseFormat('xml');
-        $controller->respond($data, 201);
+        $this->invoke($controller, 'setResponseFormat', ['xml']);
+        $this->invoke($controller, 'respond', [$data, 201]);
 
         $this->assertStringStartsWith('application/xml', $this->response->getHeaderLine('Content-Type'));
     }
 
-    public function testXMLResponseFormat()
+    public function testXMLResponseFormat(): void
     {
         $data       = ['foo' => 'bar'];
         $controller = $this->makeController();
         $controller->resetFormatter();
-        $controller->setResponseFormat('xml');
-        $controller->respond($data, 201);
+
+        $this->invoke($controller, 'setResponseFormat', ['xml']);
+        $this->invoke($controller, 'respond', [$data, 201]);
 
         $xmlFormatter = new XMLFormatter();
         $this->assertSame($xmlFormatter->format($data), $this->response->getXML());
+    }
+
+    private function invoke(object $controller, string $method, array $args = [])
+    {
+        $method = $this->getPrivateMethodInvoker($controller, $method);
+
+        return $method(...$args);
     }
 }

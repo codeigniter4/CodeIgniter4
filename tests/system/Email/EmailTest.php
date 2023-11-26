@@ -14,22 +14,25 @@ namespace CodeIgniter\Email;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockEmail;
+use ErrorException;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class EmailTest extends CIUnitTestCase
 {
-    public function testEmailValidation()
+    public function testEmailValidation(): void
     {
         $config           = config('Email');
         $config->validate = true;
         $email            = new Email($config);
         $email->setTo('invalid');
-        $this->assertStringContainsString('Invalid email address: invalid', $email->printDebugger());
+        $this->assertStringContainsString('Invalid email address: "invalid"', $email->printDebugger());
     }
 
-    public function autoClearProvider()
+    public static function provideEmailSendWithClearance(): iterable
     {
         return [
             'autoclear'     => [true],
@@ -38,15 +41,14 @@ final class EmailTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider autoClearProvider
+     * @dataProvider provideEmailSendWithClearance
      *
      * @param mixed $autoClear
      */
-    public function testEmailSendWithClearance($autoClear)
+    public function testEmailSendWithClearance($autoClear): void
     {
-        $config           = config('Email');
-        $config->validate = true;
-        $email            = new MockEmail($config);
+        $email = $this->createMockEmail();
+
         $email->setTo('foo@foo.com');
 
         $this->assertTrue($email->send($autoClear));
@@ -56,11 +58,10 @@ final class EmailTest extends CIUnitTestCase
         }
     }
 
-    public function testEmailSendStoresArchive()
+    public function testEmailSendStoresArchive(): void
     {
-        $config           = config('Email');
-        $config->validate = true;
-        $email            = new MockEmail($config);
+        $email = $this->createMockEmail();
+
         $email->setTo('foo@foo.com');
         $email->setFrom('bar@foo.com');
         $email->setSubject('Archive Test');
@@ -73,11 +74,10 @@ final class EmailTest extends CIUnitTestCase
         $this->assertSame('Archive Test', $email->archive['subject']);
     }
 
-    public function testAutoClearLeavesArchive()
+    public function testAutoClearLeavesArchive(): void
     {
-        $config           = config('Email');
-        $config->validate = true;
-        $email            = new MockEmail($config);
+        $email = $this->createMockEmail();
+
         $email->setTo('foo@foo.com');
 
         $this->assertTrue($email->send(true));
@@ -85,10 +85,11 @@ final class EmailTest extends CIUnitTestCase
         $this->assertNotEmpty($email->archive);
     }
 
-    public function testEmailSendRepeatUpdatesArchive()
+    public function testEmailSendRepeatUpdatesArchive(): void
     {
         $config = config('Email');
         $email  = new MockEmail($config);
+
         $email->setTo('foo@foo.com');
         $email->setFrom('bar@foo.com');
 
@@ -102,16 +103,15 @@ final class EmailTest extends CIUnitTestCase
         $this->assertSame('Archive Test', $email->archive['subject']);
     }
 
-    public function testSuccessDoesTriggerEvent()
+    public function testSuccessDoesTriggerEvent(): void
     {
-        $config           = config('Email');
-        $config->validate = true;
-        $email            = new MockEmail($config);
+        $email = $this->createMockEmail();
+
         $email->setTo('foo@foo.com');
 
         $result = null;
 
-        Events::on('email', static function ($arg) use (&$result) {
+        Events::on('email', static function ($arg) use (&$result): void {
             $result = $arg;
         });
 
@@ -121,22 +121,45 @@ final class EmailTest extends CIUnitTestCase
         $this->assertSame(['foo@foo.com'], $result['recipients']);
     }
 
-    public function testFailureDoesNotTriggerEvent()
+    public function testFailureDoesNotTriggerEvent(): void
     {
-        $config           = config('Email');
-        $config->validate = true;
-        $email            = new MockEmail($config);
+        $email = $this->createMockEmail();
+
         $email->setTo('foo@foo.com');
         $email->returnValue = false;
 
         $result = null;
 
-        Events::on('email', static function ($arg) use (&$result) {
+        Events::on('email', static function ($arg) use (&$result): void {
             $result = $arg;
         });
 
         $this->assertFalse($email->send());
 
         $this->assertNull($result);
+    }
+
+    public function testDestructDoesNotThrowException(): void
+    {
+        $email = $this->getMockBuilder(Email::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['sendCommand'])
+            ->getMock();
+        $email->expects($this->once())->method('sendCommand')
+            ->willThrowException(new ErrorException('SMTP Error.'));
+
+        // Force resource to be injected into the property
+        $SMTPConnect = fopen(__FILE__, 'rb');
+        $this->setPrivateProperty($email, 'SMTPConnect', $SMTPConnect);
+
+        $email->__destruct();
+    }
+
+    private function createMockEmail(): MockEmail
+    {
+        $config           = config('Email');
+        $config->validate = true;
+
+        return new MockEmail($config);
     }
 }

@@ -17,6 +17,8 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ErrorlogHandlerTest extends CIUnitTestCase
 {
@@ -35,7 +37,7 @@ final class ErrorlogHandlerTest extends CIUnitTestCase
     }
 
     /**
-     * @return MockObject&ErrorlogHandler
+     * @return ErrorlogHandler&MockObject
      */
     private function getMockedHandler(array $config = [])
     {

@@ -1,44 +1,60 @@
 {
     "name": "codeigniter4/codeigniter4",
-    "type": "project",
     "description": "The CodeIgniter framework v4",
-    "homepage": "https://codeigniter.com",
     "license": "MIT",
+    "type": "project",
+    "homepage": "https://codeigniter.com",
+    "support": {
+        "forum": "https://forum.codeigniter.com/",
+        "source": "https://github.com/codeigniter4/CodeIgniter4",
+        "slack": "https://codeigniterchat.slack.com"
+    },
     "require": {
-        "php": "^7.3 || ^8.0",
-        "ext-curl": "*",
+        "php": "^7.4 || ^8.0",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "kint-php/kint": "^3.3",
         "laminas/laminas-escaper": "^2.9",
         "psr/log": "^1.1"
     },
     "require-dev": {
-        "codeigniter/coding-standard": "^1.1",
+        "codeigniter/coding-standard": "^1.5",
+        "codeigniter/phpstan-codeigniter": "^1.4",
+        "ergebnis/composer-normalize": "^2.28",
         "fakerphp/faker": "^1.9",
-        "friendsofphp/php-cs-fixer": "^3.1",
+        "kint-php/kint": "^5.0.4",
         "mikey179/vfsstream": "^1.6",
-        "nexusphp/cs-config": "^3.3",
+        "nexusphp/cs-config": "^3.6",
         "nexusphp/tachycardia": "^1.0",
-        "phpstan/phpstan": "^0.12.91",
+        "php-coveralls/php-coveralls": "^2.5",
+        "phpstan/extension-installer": "^1.3",
+        "phpstan/phpstan": "^1.10.2",
+        "phpstan/phpstan-strict-rules": "^1.5",
+        "phpunit/phpcov": "^8.2",
         "phpunit/phpunit": "^9.1",
-        "predis/predis": "^1.1",
-        "rector/rector": "0.11.59",
-        "symplify/package-builder": "^9.3"
+        "predis/predis": "^1.1 || ^2.0",
+        "rector/rector": "0.18.10",
+        "vimeo/psalm": "^5.0"
     },
     "suggest": {
-        "ext-fileinfo": "Improves mime type detection for files"
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-develop": "4.x-dev"
-        }
+        "ext-curl": "If you use CURLRequest class",
+        "ext-dom": "If you use TestResponse",
+        "ext-exif": "If you run Image class tests",
+        "ext-fileinfo": "Improves mime type detection for files",
+        "ext-gd": "If you use Image class GDHandler",
+        "ext-imagick": "If you use Image class ImageMagickHandler",
+        "ext-libxml": "If you use TestResponse",
+        "ext-memcache": "If you use Cache class MemcachedHandler with Memcache",
+        "ext-memcached": "If you use Cache class MemcachedHandler with Memcached",
+        "ext-mysqli": "If you use MySQL",
+        "ext-oci8": "If you use Oracle Database",
+        "ext-pgsql": "If you use PostgreSQL",
+        "ext-readline": "Improves CLI::input() usability",
+        "ext-redis": "If you use Cache class RedisHandler",
+        "ext-simplexml": "If you format XML",
+        "ext-sqlite3": "If you use SQLite3",
+        "ext-sqlsrv": "If you use SQL Server",
+        "ext-xdebug": "If you use CIUnitTestCase::assertHeaderEmitted()"
     },
     "autoload": {
         "psr-4": {
@@ -54,31 +70,50 @@
             "Utils\\": "utils/"
         }
     },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "phpstan/extension-installer": true
+        },
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-develop": "4.x-dev"
+        }
+    },
     "scripts": {
         "post-update-cmd": [
             "CodeIgniter\\ComposerScripts::postUpdate",
             "bash -c \"if [ -f admin/setup.sh ]; then bash admin/setup.sh; fi\""
         ],
-        "analyze": "phpstan analyse",
-        "test": "phpunit",
+        "analyze": [
+            "Composer\\Config::disableProcessTimeout",
+            "bash -c \"XDEBUG_MODE=off phpstan analyse\"",
+            "rector process --dry-run"
+        ],
         "cs": [
-            "php-cs-fixer fix --verbose --dry-run --diff --config=.no-header.php-cs-fixer.dist.php",
-            "php-cs-fixer fix --verbose --dry-run --diff"
+            "Composer\\Config::disableProcessTimeout",
+            "php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.user-guide.php",
+            "php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.no-header.php",
+            "php-cs-fixer fix --ansi --verbose --dry-run --diff"
         ],
         "cs-fix": [
-            "php-cs-fixer fix --verbose --diff --config=.no-header.php-cs-fixer.dist.php",
-            "php-cs-fixer fix --verbose --diff"
-        ]
+            "Composer\\Config::disableProcessTimeout",
+            "php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.user-guide.php",
+            "php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.no-header.php",
+            "php-cs-fixer fix --ansi --verbose --diff"
+        ],
+        "sa": "@analyze",
+        "style": "@cs-fix",
+        "test": "phpunit"
     },
     "scripts-descriptions": {
         "analyze": "Run static analysis",
-        "test": "Run unit tests",
         "cs": "Check the coding style",
-        "cs-fix": "Fix the coding style"
-    },
-    "support": {
-        "forum": "http://forum.codeigniter.com/",
-        "source": "https://github.com/codeigniter4/CodeIgniter4",
-        "slack": "https://codeigniterchat.slack.com"
+        "cs-fix": "Fix the coding style",
+        "test": "Run unit tests"
     }
 }

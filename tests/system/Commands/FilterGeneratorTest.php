@@ -12,41 +12,33 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FilterGeneratorTest extends CIUnitTestCase
 {
-    protected $streamFilter;
-
-    protected function setUp(): void
-    {
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-    }
+    use StreamFilterTrait;
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->streamFilter);
-
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
+        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
         if (is_file($file)) {
             unlink($file);
         }
     }
 
-    public function testGenerateFilter()
+    public function testGenerateFilter(): void
     {
         command('make:filter admin');
         $this->assertFileExists(APPPATH . 'Filters/Admin.php');
     }
 
-    public function testGenerateFilterWithOptionSuffix()
+    public function testGenerateFilterWithOptionSuffix(): void
     {
         command('make:filter admin -suffix');
         $this->assertFileExists(APPPATH . 'Filters/AdminFilter.php');

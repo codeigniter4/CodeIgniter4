@@ -11,10 +11,15 @@
 
 namespace CodeIgniter\Debug;
 
+use ArgumentCountError;
 use CodeIgniter\Test\CIUnitTestCase;
+use ErrorException;
+use RuntimeException;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class TimerTest extends CIUnitTestCase
 {
@@ -25,7 +30,7 @@ final class TimerTest extends CIUnitTestCase
      *
      * @timeLimit 1.5
      */
-    public function testStoresTimers()
+    public function testStoresTimers(): void
     {
         $timer = new Timer();
 
@@ -49,7 +54,7 @@ final class TimerTest extends CIUnitTestCase
     /**
      * @timeLimit 1.5
      */
-    public function testAutoCalcsTimerEnd()
+    public function testAutoCalcsTimerEnd(): void
     {
         $timer = new Timer();
 
@@ -65,7 +70,7 @@ final class TimerTest extends CIUnitTestCase
     /**
      * @timeLimit 1.5
      */
-    public function testElapsedTimeGivesSameResultAsTimersArray()
+    public function testElapsedTimeGivesSameResultAsTimersArray(): void
     {
         $timer = new Timer();
 
@@ -80,7 +85,7 @@ final class TimerTest extends CIUnitTestCase
         $this->assertSame($expected, $timer->getElapsedTime('test1'));
     }
 
-    public function testThrowsExceptionStoppingNonTimer()
+    public function testThrowsExceptionStoppingNonTimer(): void
     {
         $this->expectException('RunTimeException');
 
@@ -89,14 +94,18 @@ final class TimerTest extends CIUnitTestCase
         $timer->stop('test1');
     }
 
-    public function testLongExecutionTime()
+    /**
+     * This test might fail if your timezone has Daylight Saving Time.
+     * See https://github.com/codeigniter4/CodeIgniter4/issues/6823
+     */
+    public function testLongExecutionTime(): void
     {
         $timer = new Timer();
-        $timer->start('longjohn', strtotime('-11 minutes'));
-        $this->assertCloseEnough(11 * 60, $timer->getElapsedTime('longjohn'));
+        $timer->start('longjohn', strtotime('-110 minutes'));
+        $this->assertCloseEnough(110 * 60, $timer->getElapsedTime('longjohn'));
     }
 
-    public function testLongExecutionTimeThroughCommonFunc()
+    public function testLongExecutionTimeThroughCommonFunc(): void
     {
         $timer = new Timer();
         $timer->start('longjohn', strtotime('-11 minutes'));
@@ -106,7 +115,7 @@ final class TimerTest extends CIUnitTestCase
     /**
      * @timeLimit 1.5
      */
-    public function testCommonStartStop()
+    public function testCommonStartStop(): void
     {
         timer('test1');
         sleep(1);
@@ -115,10 +124,101 @@ final class TimerTest extends CIUnitTestCase
         $this->assertGreaterThanOrEqual(1.0, timer()->getElapsedTime('test1'));
     }
 
-    public function testReturnsNullGettingElapsedTimeOfNonTimer()
+    public function testReturnsNullGettingElapsedTimeOfNonTimer(): void
     {
         $timer = new Timer();
 
         $this->assertNull($timer->getElapsedTime('test1'));
+    }
+
+    public function testRecordFunctionNoReturn(): void
+    {
+        $timer       = new Timer();
+        $returnValue = $timer->record('longjohn', static function (): void { usleep(100000); });
+
+        $this->assertGreaterThanOrEqual(0.1, $timer->getElapsedTime('longjohn'));
+        $this->assertNull($returnValue);
+    }
+
+    public function testRecordFunctionWithReturn(): void
+    {
+        $timer       = new Timer();
+        $returnValue = $timer->record('longjohn', static function () {
+            usleep(100000);
+
+            return 'test';
+        });
+
+        $this->assertGreaterThanOrEqual(0.1, $timer->getElapsedTime('longjohn'));
+        $this->assertSame('test', $returnValue);
+    }
+
+    public function testRecordArrowFunction(): void
+    {
+        $timer       = new Timer();
+        $returnValue = $timer->record('longjohn', static fn () => strlen('CI4'));
+
+        $this->assertLessThan(0.1, $timer->getElapsedTime('longjohn'));
+        $this->assertSame(3, $returnValue);
+    }
+
+    public function testRecordThrowsException(): void
+    {
+        $this->expectException(RuntimeException::class);
+
+        $timer = new Timer();
+        $timer->record('ex', static function (): void { throw new RuntimeException(); });
+    }
+
+    public function testRecordThrowsErrorOnCallableWithParams(): void
+    {
+        if (PHP_VERSION_ID >= 80000) {
+            $this->expectException(ArgumentCountError::class);
+        } else {
+            $this->expectException(ErrorException::class);
+        }
+
+        $timer = new Timer();
+        $timer->record('error', 'strlen');
+    }
+
+    public function testCommonNoNameExpectTimer(): void
+    {
+        $returnValue = timer();
+
+        $this->assertInstanceOf(Timer::class, $returnValue);
+    }
+
+    public function testCommonWithNameExpectTimer(): void
+    {
+        $returnValue = timer('test');
+
+        $this->assertInstanceOf(Timer::class, $returnValue);
+        $this->assertTrue($returnValue->has('test'));
+    }
+
+    public function testCommonNoNameCallableExpectTimer(): void
+    {
+        $returnValue = timer(null, static fn () => strlen('CI4'));
+
+        $this->assertInstanceOf(Timer::class, $returnValue);
+    }
+
+    public function testCommonCallableExpectNoReturn(): void
+    {
+        $returnValue = timer('common', static function (): void { usleep(100000); });
+
+        $this->assertNotInstanceOf(Timer::class, $returnValue);
+        $this->assertNull($returnValue);
+        $this->assertGreaterThanOrEqual(0.1, timer()->getElapsedTime('common'));
+    }
+
+    public function testCommonCallableExpectWithReturn(): void
+    {
+        $returnValue = timer('common', static fn () => strlen('CI4'));
+
+        $this->assertNotInstanceOf(Timer::class, $returnValue);
+        $this->assertSame(3, $returnValue);
+        $this->assertLessThanOrEqual(0.1, timer()->getElapsedTime('common'));
     }
 }

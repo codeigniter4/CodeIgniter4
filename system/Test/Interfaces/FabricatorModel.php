@@ -45,9 +45,9 @@ interface FabricatorModel
      * @param array|object $data
      * @param bool         $returnID Whether insert ID should be returned or not.
      *
-     * @throws ReflectionException
-     *
      * @return bool|int|string
+     *
+     * @throws ReflectionException
      */
     public function insert($data = null, bool $returnID = true);
 
@@ -67,7 +67,7 @@ interface FabricatorModel
      * Sets $useSoftDeletes value so that we can temporarily override
      * the softdeletes settings. Can be used for all find* methods.
      *
-     * @param boolean $val
+     * @param bool $val
      *
      * @return Model
      */

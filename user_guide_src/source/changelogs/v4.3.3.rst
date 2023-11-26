@@ -1,0 +1,30 @@
+Version 4.3.3
+#################
+
+Release Date: March 26, 2023
+
+**4.3.3 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+SECURITY
+********
+
+- **Email:** Added missing TLS 1.3 support.
+- **Text Helper:** The :php:func:`random_string()` type **alpha**, **alnum**,
+  **numeric** and **nozero** are now cryptographically secure.
+
+Bugs Fixed
+**********
+
+- **Config:** Added missing ``Config\Encryption::$cipher``.
+- **UserGuide:** Fixed the sample code for :ref:`encryption-compatible-with-ci3`.
+- **UserGuide:** Added a missing breaking change in ``uri_string()`` in
+  :ref:`ChangeLog <v432-uri-string>` and
+  :ref:`Upgrading Guide <upgrade-432-uri-string>` v4.3.2.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

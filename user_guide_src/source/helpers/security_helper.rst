@@ -5,14 +5,15 @@ Security Helper
 The Security Helper file contains security related functions.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 Loading this Helper
 ===================
 
-This helper is loaded using the following code::
+This helper is loaded using the following code:
 
-    helper('security');
+.. literalinclude:: security_helper/001.php
 
 Available Functions
 ===================
@@ -27,7 +28,7 @@ The following functions are available:
 
     Provides protection against directory traversal.
 
-    This function is an alias for ``\CodeIgniter\Security::sanitize_filename()``.
+    This function is an alias for ``\CodeIgniter\Security::sanitizeFilename()``.
     For more info, please see the :doc:`Security Library <../libraries/security>`
     documentation.
 
@@ -40,9 +41,9 @@ The following functions are available:
     This is a security function that will strip image tags from a string.
     It leaves the image URL as plain text.
 
-    Example::
+    Example:
 
-        $string = strip_image_tags($string);
+    .. literalinclude:: security_helper/002.php
 
 .. php:function:: encode_php_tags($str)
 
@@ -52,6 +53,6 @@ The following functions are available:
 
     This is a security function that converts PHP tags to entities.
 
-    Example::
+    Example:
 
-        $string = encode_php_tags($string);
+    .. literalinclude:: security_helper/003.php

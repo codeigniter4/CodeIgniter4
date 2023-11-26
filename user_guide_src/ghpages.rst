@@ -8,7 +8,7 @@ in the meantime.
 
 The user guide takes advantage of GitHub pages, where the "gh-pages" branch of
 a repo, containing HTML only, is accessible through `github.io
-<https://bcit-ci.github.io/CodeIgniter4>`_.
+<https://codeigniter4.github.io/CodeIgniter4/>`_.
 
 Setup for Repo Maintainers
 ==========================

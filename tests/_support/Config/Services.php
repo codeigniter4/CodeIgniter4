@@ -11,7 +11,9 @@
 
 namespace Tests\Support\Config;
 
+use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\URI;
+use Config\App;
 use Config\Services as BaseServices;
 use RuntimeException;
 
@@ -26,7 +28,7 @@ class Services extends BaseServices
     /**
      * The URI class provides a way to model and manipulate URIs.
      *
-     * @param string $uri
+     * @param string|null $uri The URI string
      *
      * @return URI
      */
@@ -39,6 +41,13 @@ class Services extends BaseServices
 
         if ($getShared) {
             return static::getSharedInstance('uri', $uri);
+        }
+
+        if ($uri === null) {
+            $appConfig = config(App::class);
+            $factory   = new SiteURIFactory($appConfig, Services::superglobals());
+
+            return $factory->createFromGlobals();
         }
 
         return new URI($uri);

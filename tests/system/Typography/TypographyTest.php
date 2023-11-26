@@ -15,10 +15,12 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class TypographyTest extends CIUnitTestCase
 {
-    protected $typography;
+    private Typography $typography;
 
     protected function setUp(): void
     {
@@ -26,12 +28,12 @@ final class TypographyTest extends CIUnitTestCase
         $this->typography = new Typography();
     }
 
-    public function testAutoTypographyEmptyString()
+    public function testAutoTypographyEmptyString(): void
     {
         $this->assertSame('', $this->typography->autoTypography(''));
     }
 
-    public function testAutoTypographyNormalString()
+    public function testAutoTypographyNormalString(): void
     {
         $strs = [
             'this sentence has no punctuations' => '<p>this sentence has no punctuations</p>',
@@ -43,7 +45,7 @@ final class TypographyTest extends CIUnitTestCase
         }
     }
 
-    public function testAutoTypographyMultipleSpaces()
+    public function testAutoTypographyMultipleSpaces(): void
     {
         $strs = [
             'this sentence has  a double spacing'              => '<p>this sentence has  a double spacing</p>',
@@ -55,18 +57,18 @@ final class TypographyTest extends CIUnitTestCase
         }
     }
 
-    public function testAutoTypographyLineBreaks()
+    public function testAutoTypographyLineBreaks(): void
     {
         $strs = [
             "\n"                                   => "\n\n<p>&nbsp;</p>",
             "\n\n"                                 => "\n\n<p>&nbsp;</p>",
             "\n\n\n"                               => "\n\n<p>&nbsp;</p>",
             "Line One\n"                           => "<p>Line One</p>\n\n",
-            "Line One\nLine Two"                   => "<p>Line One<br />\nLine Two</p>",
+            "Line One\nLine Two"                   => "<p>Line One<br>\nLine Two</p>",
             "Line One\r\n"                         => "<p>Line One</p>\n\n",
-            "Line One\r\nLine Two"                 => "<p>Line One<br />\nLine Two</p>",
+            "Line One\r\nLine Two"                 => "<p>Line One<br>\nLine Two</p>",
             "Line One\r"                           => "<p>Line One</p>\n\n",
-            "Line One\rLine Two"                   => "<p>Line One<br />\nLine Two</p>",
+            "Line One\rLine Two"                   => "<p>Line One<br>\nLine Two</p>",
             "Line One\n\nLine Two\n\n\nLine Three" => "<p>Line One</p>\n\n<p>Line Two</p>\n\n<p>Line Three</p>",
         ];
 
@@ -75,19 +77,19 @@ final class TypographyTest extends CIUnitTestCase
         }
     }
 
-    public function testAutoTypographyReduceLineBreaks()
+    public function testAutoTypographyReduceLineBreaks(): void
     {
         $strs = [
             "\n"                                   => "\n\n",
             "\n\n"                                 => "\n\n",
             "\n\n\n"                               => "\n\n\n\n",
             "Line One\n"                           => "<p>Line One</p>\n\n",
-            "Line One\nLine Two"                   => "<p>Line One<br />\nLine Two</p>",
+            "Line One\nLine Two"                   => "<p>Line One<br>\nLine Two</p>",
             "Line One\r\n"                         => "<p>Line One</p>\n\n",
-            "Line One\r\nLine Two"                 => "<p>Line One<br />\nLine Two</p>",
+            "Line One\r\nLine Two"                 => "<p>Line One<br>\nLine Two</p>",
             "Line One\r"                           => "<p>Line One</p>\n\n",
-            "Line One\rLine Two"                   => "<p>Line One<br />\nLine Two</p>",
-            "Line One\n\nLine Two\n\n\nLine Three" => "<p>Line One</p>\n\n<p>Line Two</p>\n\n<p><br />\nLine Three</p>",
+            "Line One\rLine Two"                   => "<p>Line One<br>\nLine Two</p>",
+            "Line One\n\nLine Two\n\n\nLine Three" => "<p>Line One</p>\n\n<p>Line Two</p>\n\n<p><br>\nLine Three</p>",
         ];
 
         foreach ($strs as $str => $expect) {
@@ -95,7 +97,7 @@ final class TypographyTest extends CIUnitTestCase
         }
     }
 
-    public function testAutoTypographyHTMLComment()
+    public function testAutoTypographyHTMLComment(): void
     {
         $strs = [
             '<!-- this is an HTML comment -->'                       => '<!-- this is an HTML comment -->',
@@ -108,7 +110,7 @@ final class TypographyTest extends CIUnitTestCase
         }
     }
 
-    public function testAutoTypographyHTMLTags()
+    public function testAutoTypographyHTMLTags(): void
     {
         $strs = [
             '<b>Hello World !!</b>, How are you?'               => '<p><b>Hello World !!</b>, How are you?</p>',
@@ -123,7 +125,7 @@ final class TypographyTest extends CIUnitTestCase
         }
     }
 
-    public function testAutoTypographySpecialCharacters()
+    public function testAutoTypographySpecialCharacters(): void
     {
         $strs = [
             '\'Text in single quotes\''      => '<p>&#8216;Text in single quotes&#8217;</p>',
@@ -136,12 +138,12 @@ final class TypographyTest extends CIUnitTestCase
         }
     }
 
-    public function testNewlinesToHTMLLineBreaksExceptWithinPRE()
+    public function testNewlinesToHTMLLineBreaksExceptWithinPRE(): void
     {
         $strs = [
-            "Line One\nLine Two"            => "Line One<br />\nLine Two",
+            "Line One\nLine Two"            => "Line One<br>\nLine Two",
             "<pre>Line One\nLine Two</pre>" => "<pre>Line One\nLine Two</pre>",
-            "<div>Line One\nLine Two</div>" => "<div>Line One<br />\nLine Two</div>",
+            "<div>Line One\nLine Two</div>" => "<div>Line One<br>\nLine Two</div>",
         ];
 
         foreach ($strs as $str => $expect) {

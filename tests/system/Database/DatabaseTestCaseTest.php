@@ -13,7 +13,10 @@ namespace CodeIgniter\Database;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Config\Database;
 use Config\Services;
+use Tests\Support\Database\Seeds\AnotherSeeder;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @group DatabaseLive
@@ -23,8 +26,6 @@ use Config\Services;
 final class DatabaseTestCaseTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
-
-    protected static $loaded = false;
 
     /**
      * Should the db be refreshed before
@@ -41,8 +42,8 @@ final class DatabaseTestCaseTest extends CIUnitTestCase
      * @var array|string
      */
     protected $seed = [
-        'Tests\Support\Database\Seeds\CITestSeeder',
-        'Tests\Support\Database\Seeds\AnotherSeeder',
+        CITestSeeder::class,
+        AnotherSeeder::class,
     ];
 
     /**
@@ -60,20 +61,35 @@ final class DatabaseTestCaseTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        if (! self::$loaded) {
-            Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');
-            self::$loaded = true;
-        }
+        $forge = Database::forge();
+        $forge->dropTable('foo', true);
+
+        $this->setUpMethods[] = 'setUpAddNamespace';
 
         parent::setUp();
     }
 
-    public function testMultipleSeeders()
+    protected function setUpAddNamespace(): void
+    {
+        Services::autoloader()->addNamespace(
+            'Tests\Support\MigrationTestMigrations',
+            SUPPORTPATH . 'MigrationTestMigrations'
+        );
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->regressDatabase();
+    }
+
+    public function testMultipleSeeders(): void
     {
         $this->seeInDatabase('user', ['name' => 'Jerome Lohan']);
     }
 
-    public function testMultipleMigrationNamespaces()
+    public function testMultipleMigrationNamespaces(): void
     {
         $this->seeInDatabase('foo', ['key' => 'foobar']);
     }

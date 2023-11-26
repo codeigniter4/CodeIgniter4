@@ -19,10 +19,10 @@ class Publisher extends BasePublisher
      * result in a PublisherException. Files that do no fit the
      * pattern will cause copy/merge to fail.
      *
-     * @var array<string,string>
+     * @var array<string, string>
      */
     public $restrictions = [
         ROOTPATH => '*',
-        FCPATH   => '#\.(?css|js|map|htm?|xml|json|webmanifest|tff|eot|woff?|gif|jpe?g|tiff?|png|webp|bmp|ico|svg)$#i',
+        FCPATH   => '#\.(s?css|js|map|html?|xml|json|webmanifest|ttf|eot|woff2?|gif|jpe?g|tiff?|png|webp|bmp|ico|svg)$#i',
     ];
 }

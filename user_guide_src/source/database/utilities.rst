@@ -1,6 +1,6 @@
-########################
+#########
 Utilities
-########################
+#########
 
 The Database Utility Class contains methods that help you manage your database.
 
@@ -9,23 +9,15 @@ The Database Utility Class contains methods that help you manage your database.
     :depth: 2
 
 *******************
-Get XML FROM Result
+Get XML from Result
 *******************
 
-**getXMLFromResult()**
+getXMLFromResult()
+==================
 
-This method returns the xml result from database result. You can do like this::
+This method returns the xml result from database result. You can do like this:
 
-    $model = new class extends \CodeIgniter\Model {
-        protected $table      = 'foo';
-        protected $primaryKey = 'id';
-    };
-    $db = \Closure::bind(function ($model) {
-        return $model->db;
-    }, null, $model)($model);
-
-    $util = (new \CodeIgniter\Database\Database())->loadUtils($db);
-    echo $util->getXMLFromResult($model->get());
+.. literalinclude:: utilities/001.php
 
 and it will get the following xml result::
 

@@ -1,20 +1,15 @@
 # CodeIgniter 4 User Guide
 
-## What is CodeIgniter?
-
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure. 
+CodeIgniter 4 is a PHP web framework that is light, fast, flexible, and secure.
 More information can be found at the [official site](http://codeigniter.com).
 
-This repository holds a composer-installable pre-built user guide for the framework.
-It has been built from the 
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+**This is a read-only repository used to publish the user guide for the current release.**
+It is built automatically as part of the framework release workflow, and pull
+requests are not accepted here.
 
-More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
+Development is done in the [main repository](https://github.com/codeigniter4/codeigniter4).
+If you find problems with the user guide, please submit a correcting pull request there.
 
-## Installation & updates
-
-`composer require codeigniter4/userguide` will install a copy
-of the user guide inside your project, at
-`vendor/codeigniter4/userguide`. You can then `composer update` whenever
-there is a new release of the framework.
-
+If you feel that features are missing or unclear, please comment on our
+[forum](https://forum.codeigniter.com/index.php),
+in the appropriate CodeIgniter4 subforum.

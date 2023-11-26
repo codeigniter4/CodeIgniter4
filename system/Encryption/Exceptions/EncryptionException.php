@@ -45,8 +45,6 @@ class EncryptionException extends RuntimeException implements ExceptionInterface
     /**
      * Thrown when the handler requested is unknown.
      *
-     * @param string $driver
-     *
      * @return static
      */
     public static function forUnKnownHandler(?string $driver = null)

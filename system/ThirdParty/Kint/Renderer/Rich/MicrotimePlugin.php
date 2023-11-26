@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,19 +27,19 @@
 
 namespace Kint\Renderer\Rich;
 
-use Kint\Object\Representation\MicrotimeRepresentation;
-use Kint\Object\Representation\Representation;
 use Kint\Utils;
+use Kint\Zval\Representation\MicrotimeRepresentation;
+use Kint\Zval\Representation\Representation;
 
-class MicrotimePlugin extends Plugin implements TabPluginInterface
+class MicrotimePlugin extends AbstractPlugin implements TabPluginInterface
 {
-    public function renderTab(Representation $r)
+    public function renderTab(Representation $r): ?string
     {
-        if (!($r instanceof MicrotimeRepresentation)) {
-            return false;
+        if (!$r instanceof MicrotimeRepresentation || !($dt = $r->getDateTime())) {
+            return null;
         }
 
-        $out = $r->getDateTime()->format('Y-m-d H:i:s.u');
+        $out = $dt->format('Y-m-d H:i:s.u');
         if (null !== $r->lap) {
             $out .= '<br><b>SINCE LAST CALL:</b> <span class="kint-microtime-lap">'.\round($r->lap, 4).'</span>s.';
         }
@@ -61,8 +63,12 @@ class MicrotimePlugin extends Plugin implements TabPluginInterface
         return '<pre data-kint-microtime-group="'.$r->group.'">'.$out.'</pre>';
     }
 
-    public static function renderJs()
+    public static function renderJs(): string
     {
-        return \file_get_contents(KINT_DIR.'/resources/compiled/microtime.js');
+        if (\is_string($out = \file_get_contents(KINT_DIR.'/resources/compiled/microtime.js'))) {
+            return $out;
+        }
+
+        return '';
     }
 }

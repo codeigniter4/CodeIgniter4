@@ -12,41 +12,33 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ConfigGeneratorTest extends CIUnitTestCase
 {
-    protected $streamFilter;
-
-    protected function setUp(): void
-    {
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-    }
+    use StreamFilterTrait;
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->streamFilter);
-
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
+        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
         if (is_file($file)) {
             unlink($file);
         }
     }
 
-    public function testGenerateConfig()
+    public function testGenerateConfig(): void
     {
         command('make:config auth');
         $this->assertFileExists(APPPATH . 'Config/Auth.php');
     }
 
-    public function testGenerateConfigWithOptionSuffix()
+    public function testGenerateConfigWithOptionSuffix(): void
     {
         command('make:config auth -suffix');
         $this->assertFileExists(APPPATH . 'Config/AuthConfig.php');

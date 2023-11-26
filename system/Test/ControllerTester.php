@@ -13,7 +13,7 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
 use Config\App;
 use Config\Services;
@@ -58,7 +58,7 @@ trait ControllerTester
     /**
      * Response.
      *
-     * @var Response
+     * @var ResponseInterface
      */
     protected $response;
 
@@ -96,7 +96,7 @@ trait ControllerTester
     protected function setUpControllerTester(): void
     {
         if (empty($this->appConfig)) {
-            $this->appConfig = config('App');
+            $this->appConfig = config(App::class);
         }
 
         if (! $this->uri instanceof URI) {
@@ -108,7 +108,7 @@ trait ControllerTester
             $tempUri = Services::uri();
             Services::injectMock('uri', $this->uri);
 
-            $this->withRequest(Services::request($this->appConfig, false)->setBody($this->body));
+            $this->withRequest(Services::incomingrequest($this->appConfig, false)->setBody($this->body));
 
             // Restore the URI service
             Services::injectMock('uri', $tempUri);
@@ -145,9 +145,9 @@ trait ControllerTester
      *
      * @param array $params
      *
-     * @throws InvalidArgumentException
-     *
      * @return ControllerResponse
+     *
+     * @throws InvalidArgumentException
      */
     public function execute(string $method, ...$params)
     {
@@ -182,7 +182,7 @@ trait ControllerTester
             $output = ob_get_clean();
 
             // If the controller returned a response, use it
-            if (isset($response) && $response instanceof Response) {
+            if (isset($response) && $response instanceof ResponseInterface) {
                 $result->setResponse($response);
             }
 

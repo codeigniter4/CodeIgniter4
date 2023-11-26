@@ -13,15 +13,18 @@ namespace CodeIgniter;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\FeatureTestTrait;
+use CodeIgniter\Test\TestResponse;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class HomeTest extends CIUnitTestCase
 {
     use FeatureTestTrait;
 
-    public function testPageLoadsSuccessfully()
+    public function testPageLoadsSuccessfully(): void
     {
         $this->withRoutes([
             [
@@ -32,7 +35,7 @@ final class HomeTest extends CIUnitTestCase
         ]);
 
         $response = $this->get('home');
-        $this->assertInstanceOf('CodeIgniter\Test\TestResponse', $response);
+        $this->assertInstanceOf(TestResponse::class, $response);
         $this->assertTrue($response->isOK());
     }
 }

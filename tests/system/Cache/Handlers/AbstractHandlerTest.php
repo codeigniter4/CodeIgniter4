@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
@@ -18,20 +19,20 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 abstract class AbstractHandlerTest extends CIUnitTestCase
 {
-    protected $handler;
+    protected BaseHandler $handler;
     protected static $key1  = 'key1';
     protected static $key2  = 'key2';
     protected static $key3  = 'key3';
     protected static $dummy = 'dymmy';
 
-    public function testGetMetaDataMiss()
+    public function testGetMetaDataMiss(): void
     {
         $this->assertNull($this->handler->getMetaData(self::$dummy));
     }
 
-    public function testGetMetaData()
+    public function testGetMetaData(): void
     {
-        $time = time();
+        $time = Time::now()->getTimestamp();
         $this->handler->save(self::$key1, 'value');
 
         $actual = $this->handler->getMetaData(self::$key1);

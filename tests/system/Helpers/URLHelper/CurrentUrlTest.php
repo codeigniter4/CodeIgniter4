@@ -13,7 +13,11 @@ namespace CodeIgniter\Helpers\URLHelper;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Superglobals;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
@@ -25,20 +29,12 @@ use Config\App;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group Others
  */
 final class CurrentUrlTest extends CIUnitTestCase
 {
-    /**
-     * @var App
-     */
-    private $config;
-
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-
-        helper('url');
-    }
+    private App $config;
 
     protected function setUp(): void
     {
@@ -50,7 +46,6 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->config            = new App();
         $this->config->baseURL   = 'http://example.com/';
         $this->config->indexPage = 'index.php';
-        Factories::injectMock('config', 'App', $this->config);
 
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/';
@@ -64,18 +59,68 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER = [];
     }
 
-    public function testCurrentURLReturnsBasicURL()
+    public function testCurrentURLReturnsBasicURL(): void
     {
-        // Since we're on a CLI, we must provide our own URI
-        $this->config->baseURL = 'http://example.com/public';
+        $_SERVER['REQUEST_URI'] = '/public/';
+        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+
+        $this->config->baseURL = 'http://example.com/public/';
+
+        $this->createRequest($this->config);
 
         $this->assertSame('http://example.com/public/index.php/', current_url());
     }
 
-    public function testCurrentURLReturnsObject()
+    public function testCurrentURLReturnsAllowedHostname(): void
     {
-        // Since we're on a CLI, we must provide our own URI
-        $this->config->baseURL = 'http://example.com/public';
+        $_SERVER['HTTP_HOST']   = 'www.example.jp';
+        $_SERVER['REQUEST_URI'] = '/public/';
+        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+
+        $this->config->baseURL          = 'http://example.com/public/';
+        $this->config->allowedHostnames = ['www.example.jp'];
+
+        $this->createRequest($this->config);
+
+        $this->assertSame('http://www.example.jp/public/index.php/', current_url());
+    }
+
+    private function createRequest(?App $config = null, $body = null, ?string $path = null): void
+    {
+        $config ??= new App();
+
+        $factory = new SiteURIFactory($config, new Superglobals());
+        $uri     = $factory->createFromGlobals();
+
+        if ($path !== null) {
+            $uri->setPath($path);
+        }
+
+        $request = new IncomingRequest($config, $uri, $body, new UserAgent());
+        Services::injectMock('request', $request);
+
+        Factories::injectMock('config', 'App', $config);
+    }
+
+    public function testCurrentURLReturnsBaseURLIfNotAllowedHostname(): void
+    {
+        $_SERVER['HTTP_HOST']   = 'invalid.example.org';
+        $_SERVER['REQUEST_URI'] = '/public/';
+        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+
+        $this->config->baseURL          = 'http://example.com/public/';
+        $this->config->allowedHostnames = ['www.example.jp'];
+
+        $this->createRequest($this->config);
+
+        $this->assertSame('http://example.com/public/index.php/', current_url());
+    }
+
+    public function testCurrentURLReturnsObject(): void
+    {
+        $this->config->baseURL = 'http://example.com/public/';
+
+        $this->createRequest($this->config);
 
         $url = current_url(true);
 
@@ -83,172 +128,118 @@ final class CurrentUrlTest extends CIUnitTestCase
         $this->assertSame('http://example.com/public/index.php/', (string) $url);
     }
 
-    public function testCurrentURLEquivalence()
+    public function testCurrentURLEquivalence(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/public';
+        $_SERVER['REQUEST_URI'] = '/public/';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
 
-        // Since we're on a CLI, we must provide our own URI
-        Factories::injectMock('config', 'App', $this->config);
+        $this->config->indexPage = '';
 
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $this->createRequest($this->config);
 
         $this->assertSame(site_url(uri_string()), current_url());
     }
 
-    public function testCurrentURLInSubfolder()
+    public function testCurrentURLInSubfolder(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/foo/public/bar?baz=quip';
         $_SERVER['SCRIPT_NAME'] = '/foo/public/index.php';
 
-        // Since we're on a CLI, we must provide our own URI
-        $this->config->baseURL = 'http://example.com/foo/public';
-        Factories::injectMock('config', 'App', $this->config);
+        $this->config->baseURL = 'http://example.com/foo/public/';
 
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $this->createRequest($this->config);
 
         $this->assertSame('http://example.com/foo/public/index.php/bar', current_url());
         $this->assertSame('http://example.com/foo/public/index.php/bar?baz=quip', (string) current_url(true));
 
         $uri = current_url(true);
-        $this->assertSame('foo', $uri->getSegment(1));
+        $this->assertSame('bar', $uri->getSegment(1));
         $this->assertSame('example.com', $uri->getHost());
         $this->assertSame('http', $uri->getScheme());
     }
 
-    public function testCurrentURLWithPortInSubfolder()
+    public function testCurrentURLWithPortInSubfolder(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['SERVER_PORT'] = '8080';
         $_SERVER['REQUEST_URI'] = '/foo/public/bar?baz=quip';
         $_SERVER['SCRIPT_NAME'] = '/foo/public/index.php';
 
-        // Since we're on a CLI, we must provide our own URI
-        $this->config->baseURL = 'http://example.com:8080/foo/public';
-        Factories::injectMock('config', 'App', $this->config);
+        $this->config->baseURL = 'http://example.com:8080/foo/public/';
 
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $this->createRequest($this->config);
 
         $this->assertSame('http://example.com:8080/foo/public/index.php/bar', current_url());
         $this->assertSame('http://example.com:8080/foo/public/index.php/bar?baz=quip', (string) current_url(true));
 
         $uri = current_url(true);
-        $this->assertSame(['foo', 'public', 'index.php', 'bar'], $uri->getSegments());
-        $this->assertSame('foo', $uri->getSegment(1));
+        $this->assertSame(['bar'], $uri->getSegments());
+        $this->assertSame('bar', $uri->getSegment(1));
         $this->assertSame('example.com', $uri->getHost());
         $this->assertSame('http', $uri->getScheme());
         $this->assertSame(8080, $uri->getPort());
     }
 
-    public function testUriStringAbsolute()
+    public function testUriString(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
 
-        $request      = Services::request($this->config);
-        $request->uri = new URI('http://example.com/assets/image.jpg');
+        $this->config->indexPage = '';
 
-        Services::injectMock('request', $request);
+        $this->createRequest($this->config);
 
-        $this->assertSame('/assets/image.jpg', uri_string());
+        $this->assertSame('assets/image.jpg', uri_string());
     }
 
-    public function testUriStringRelative()
+    public function testUriStringNoTrailingSlash(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
 
-        $request      = Services::request($this->config);
-        $request->uri = new URI('http://example.com/assets/image.jpg');
+        $this->config->baseURL   = 'http://example.com/';
+        $this->config->indexPage = '';
 
-        Services::injectMock('request', $request);
+        $this->createRequest($this->config);
 
-        $this->assertSame('assets/image.jpg', uri_string(true));
+        $this->assertSame('assets/image.jpg', uri_string());
     }
 
-    public function testUriStringNoTrailingSlashAbsolute()
+    public function testUriStringEmpty(): void
     {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
+        $this->createRequest($this->config);
 
-        $this->config->baseURL = 'http://example.com';
-        $request               = Services::request($this->config);
-        $request->uri          = new URI('http://example.com/assets/image.jpg');
-
-        Services::injectMock('request', $request);
-
-        $this->assertSame('/assets/image.jpg', uri_string());
+        $this->assertSame('', uri_string());
     }
 
-    public function testUriStringNoTrailingSlashRelative()
-    {
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
-
-        $this->config->baseURL = 'http://example.com';
-        $request               = Services::request($this->config);
-        $request->uri          = new URI('http://example.com/assets/image.jpg');
-
-        Services::injectMock('request', $request);
-
-        $this->assertSame('assets/image.jpg', uri_string(true));
-    }
-
-    public function testUriStringEmptyAbsolute()
-    {
-        $request      = Services::request($this->config);
-        $request->uri = new URI('http://example.com/');
-
-        Services::injectMock('request', $request);
-
-        $this->assertSame('/', uri_string());
-    }
-
-    public function testUriStringEmptyRelative()
-    {
-        $request      = Services::request($this->config);
-        $request->uri = new URI('http://example.com/');
-
-        Services::injectMock('request', $request);
-
-        $this->assertSame('', uri_string(true));
-    }
-
-    public function testUriStringSubfolderAbsolute()
+    public function testUriStringSubfolderAbsolute(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/subfolder/assets/image.jpg';
 
         $this->config->baseURL = 'http://example.com/subfolder/';
-        $request               = Services::request($this->config);
-        $request->uri          = new URI('http://example.com/subfolder/assets/image.jpg');
 
-        Services::injectMock('request', $request);
+        $this->createRequest($this->config);
 
-        $this->assertSame('/subfolder/assets/image.jpg', uri_string());
+        $this->assertSame('subfolder/assets/image.jpg', uri_string());
     }
 
-    public function testUriStringSubfolderRelative()
+    public function testUriStringSubfolderRelative(): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/subfolder/assets/image.jpg';
         $_SERVER['SCRIPT_NAME'] = '/subfolder/index.php';
 
         $this->config->baseURL = 'http://example.com/subfolder/';
-        $request               = Services::request($this->config);
-        $request->uri          = new URI('http://example.com/subfolder/assets/image.jpg');
 
-        Services::injectMock('request', $request);
+        $this->createRequest($this->config);
 
-        $this->assertSame('assets/image.jpg', uri_string(true));
+        $this->assertSame('assets/image.jpg', uri_string());
     }
 
-    public function urlIsProvider()
+    public static function provideUrlIs(): iterable
     {
         return [
             [
@@ -290,49 +281,45 @@ final class CurrentUrlTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider urlIsProvider
+     * @dataProvider provideUrlIs
      */
-    public function testUrlIs(string $currentPath, string $testPath, bool $expected)
+    public function testUrlIs(string $currentPath, string $testPath, bool $expected): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/' . $currentPath;
 
-        $request      = Services::request();
-        $request->uri = new URI('http://example.com/' . $currentPath);
-        Services::injectMock('request', $request);
+        $this->createRequest($this->config);
 
         $this->assertSame($expected, url_is($testPath));
     }
 
     /**
-     * @dataProvider urlIsProvider
+     * @dataProvider provideUrlIs
      */
-    public function testUrlIsNoIndex(string $currentPath, string $testPath, bool $expected)
+    public function testUrlIsNoIndex(string $currentPath, string $testPath, bool $expected): void
     {
-        $_SERVER['HTTP_HOST']    = 'example.com';
-        $_SERVER['REQUEST_URI']  = '/' . $currentPath;
+        $_SERVER['HTTP_HOST']   = 'example.com';
+        $_SERVER['REQUEST_URI'] = '/' . $currentPath;
+
         $this->config->indexPage = '';
 
-        $request      = Services::request($this->config);
-        $request->uri = new URI('http://example.com/' . $currentPath);
-        Services::injectMock('request', $request);
+        $this->createRequest($this->config);
 
         $this->assertSame($expected, url_is($testPath));
     }
 
     /**
-     * @dataProvider urlIsProvider
+     * @dataProvider provideUrlIs
      */
-    public function testUrlIsWithSubfolder(string $currentPath, string $testPath, bool $expected)
+    public function testUrlIsWithSubfolder(string $currentPath, string $testPath, bool $expected): void
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/' . $currentPath;
         $_SERVER['SCRIPT_NAME'] = '/subfolder/index.php';
-        $this->config->baseURL  = 'http://example.com/subfolder/';
 
-        $request      = Services::request($this->config);
-        $request->uri = new URI('http://example.com/subfolder/' . $currentPath);
-        Services::injectMock('request', $request);
+        $this->config->baseURL = 'http://example.com/subfolder/';
+
+        $this->createRequest($this->config);
 
         $this->assertSame($expected, url_is($testPath));
     }

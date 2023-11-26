@@ -1,0 +1,376 @@
+Version 4.3.0
+#############
+
+Release Date: January 10, 2023
+
+**4.3.0 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+Highlights
+**********
+
+- Query Builder supports **upsert()**, **upsertBatch()**, **deleteBatch()** and
+  now ***batch()** methods can set data from a query
+  (*contributed by* `sclubricants <https://github.com/sclubricants>`_).
+  See `Query Builder`_.
+- Database Forge supports to **add indexes in the existing tables** and
+  **name indexes** (*contributed by* `sclubricants <https://github.com/sclubricants>`_).
+  See `Forge`_.
+- To make the default configuration more secure, the default Validation Rules
+  have been changed to **Strict Rules**.
+- When a database error occurs, the conditions that an exception is thrown and
+  the exception classes that can be thrown have been changed.
+  See :ref:`exceptions-when-database-errors-occur`.
+
+BREAKING
+********
+
+Behavior Changes
+================
+
+.. _exceptions-when-database-errors-occur:
+
+Exceptions when Database Errors Occur
+-------------------------------------
+
+- The exceptions thrown by the database connection classes have been changed to ``CodeIgniter\Database\Exceptions\DatabaseException``. Previously, different database drivers threw different exception classes, but these have been unified into ``DatabaseException``.
+- The exceptions thrown by the ``execute()`` method of Prepared Queries have been changed to ``DatabaseException``. Previously, different database drivers might throw different exception classes or did not throw exceptions, but these have been unified into ``DatabaseException``.
+- During transactions, exceptions are not thrown by default even if ``DBDebug`` is true.
+- ``DBDebug`` and ``CI_DEBUG`` Changes
+
+    - To be consistent in behavior regardless of environments, ``Config\Database::$default['DBDebug']``
+      and ``Config\Database::$tests['DBDebug']`` has been changed to ``true`` by default. With these
+      settings, an exception is always thrown when a database error occurs. Previously, it is ``false``
+      **only in the production environment**.
+    - Now ``DatabaseException`` thrown in ``BaseBuilder`` is thrown if ``$DBDebug`` is true.
+      Previously, it is thrown if ``CI_DEBUG`` is true.
+    - The default value of ``BaseConnection::$DBDebug`` has been changed to ``true``.
+    - With these changes, ``DBDebug`` **now means whether or not to throw an exception when an error occurs**.
+      Although unrelated to debugging, the name has not been changed.
+    - When running transactions with ``DBDebug`` is ``true``, even if a query error occurs, exceptions
+      are not thrown by default. Previously, if a query error occurs, all the queries
+      will be rolled backed, and an exception will be thrown, so :ref:`transactions-managing-errors` or
+      :ref:`transactions-manual-transactions` won't work.
+    - Now when you delete without WHERE clause in ``Model``, ``DatabaseException`` is thrown even if
+      ``CI_DEBUG`` is false. Previously, it is thrown if ``CI_DEBUG`` is true.
+
+HTTP Status Code and Exit Code when Exception Occurs
+----------------------------------------------------
+
+Previously, CodeIgniter's Exception Handler used the *Exception code* as the *HTTP status code* in some cases, and calculated the *Exit code* based on the Exception code. However there should be no logical connection with Exception code and HTTP Status Code or Exit code.
+
+- Now the Exception Handler sets HTTP status code to ``500`` and set Exit code to the constant ``EXIT_ERROR`` (= ``1``) by default.
+- You can change HTTP status code or Exit code to implement ``HTTPExceptionInterface`` or ``HasExitCodeInterface`` in your Exception class. See :ref:`error-specify-http-status-code` and :ref:`error-specify-exit-code`.
+
+For example, the Exit code has been changed like the following:
+
+- If an uncaught ``ConfigException`` occurs, the Exit code is ``EXIT_CONFIG`` (= ``3``) instead of ``12``.
+- If an uncaught ``CastException`` occurs, the Exit code is ``EXIT_CONFIG`` (= ``3``) instead of ``9``.
+- If an uncaught ``DatabaseException`` occurs, the Exit code is ``EXIT_DATABASE`` (= ``8``) instead of ``17``.
+
+.. _v430-time-fix:
+
+Time
+----
+
+The following methods of the :doc:`Time <../libraries/time>` class had bugs that changed the state of the current object. To fix these bugs, the Time class has been fixed:
+
+    - ``add()``
+    - ``modify()``
+    - ``setDate()``
+    - ``setISODate()``
+    - ``setTime()``
+    - ``sub()``
+
+- Now the ``Time`` class extends ``DateTimeImmutable`` and is completely immutable.
+- ``TimeLegacy`` class has been added for backward compatibility, which behaves the same as the unmodified ``Time`` class.
+
+Others
+------
+
+- **Helper:** :php:func:`script_tag()` and :php:func:`safe_mailto()` no longer output ``type="text/javascript"`` in ``<script>`` tag.
+- **CLI:** The ``spark`` file has been changed due to a change in the processing of Spark commands.
+- **CLI:** ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
+  is a ``CITestStreamFilter::registration()`` method for this. See :ref:`upgrade-430-stream-filter` for details.
+- **Database:** ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was false, the exception was suppressed.
+- **Database:** The data structure returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>` has been changed.
+- **Database:** ``CodeIgniter\Database\BasePreparedQuery`` class returns now a bool value for write-type queries instead of the ``Result`` class object.
+- **Model:** ``Model::update()`` method now raises a ``DatabaseException`` if it generates an SQL
+  statement without a WHERE clause; Model does not support operations that update all records.
+- **Routing:** ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
+
+.. _v430-interface-changes:
+
+Interface Changes
+=================
+
+.. note:: As long as you have not extended the relevant CodeIgniter core classes
+    or implemented these interfaces, all these changes are backward compatible
+    and require no intervention.
+
+OutgoingRequestInterface
+------------------------
+
+- Added new ``OutgoingRequestInterface`` that represents an outgoing request.
+- Added new ``OutgoingRequest`` class that implements ``OutgoingRequestInterface``.
+- Now ``RequestInterface`` extends ``OutgoingRequestInterface``.
+- Now ``CURLRequest`` extends ``OutgoingRequest``.
+- Now ``Request`` extends ``OutgoingRequest``.
+
+Others
+------
+
+- **HTTP:** Added missing ``getProtocolVersion()``, ``getBody()``, ``hasHeader()`` and ``getHeaderLine()`` method in ``MessageInterface``.
+- **HTTP:** Now ``ResponseInterface`` extends ``MessageInterface``.
+- **HTTP:** Added missing ``ResponseInterface::getCSP()`` (and ``Response::getCSP()``), ``ResponseInterface::getReasonPhrase()`` and ``ResponseInterface::getCookieStore()`` methods.
+- **Database:** Added missing ``CodeIgniter\Database\ResultInterface::getNumRows()`` method.
+- See also `Validation Changes`_.
+
+Method Signature Changes
+========================
+
+.. _v430-validation-changes:
+
+Validation Changes
+------------------
+
+ValidationInterface
+^^^^^^^^^^^^^^^^^^^
+
+``ValidationInterface`` has been changed to eliminate the mismatch between ``ValidationInterface`` and the ``Validation`` class.
+
+- The third parameter ``$dbGroup`` for ``ValidationInterface::run()`` has been added.
+- The following methods are added to the interface:
+
+    - ``ValidationInterface::setRule()``
+    - ``ValidationInterface::getRules()``
+    - ``ValidationInterface::getRuleGroup()``
+    - ``ValidationInterface::setRuleGroup()``
+    - ``ValidationInterface::loadRuleGroup()``
+    - ``ValidationInterface::hasError()``
+    - ``ValidationInterface::listErrors()``
+    - ``ValidationInterface::showError()``
+
+Validation
+^^^^^^^^^^
+
+The return value of  ``Validation::loadRuleGroup()`` has been changed from ``null`` to ``[]`` when the ``$group`` is empty.
+
+Database
+--------
+
+- The return types of ``CodeIgniter\Database\BasePreparedQuery::close()`` and ``CodeIgniter\Database\PreparedQueryInterface`` have been changed to ``bool`` (previously untyped).
+- The return type of ``CodeIgniter\Database\Database::loadForge()`` has been changed to ``Forge``.
+- The return type of ``CodeIgniter\Database\Database::loadUtils()`` has been changed to ``BaseUtils``.
+- Parameter name ``$column`` has changed in ``Table::dropForeignKey()`` to ``$foreignName``.
+- The second parameter ``$index`` of ``BaseBuilder::updateBatch()`` has changed to ``$constraints``. It now accepts types array, string, or ``RawSql``. Extending classes should likewise change types.
+- The ``$set`` parameter of ``BaseBuilder::insertBatch()`` and ``BaseBuilder::updateBatch()`` now accepts an object of a single row of data.
+- ``BaseBuilder::_updateBatch()``
+    - The second parameter ``$values`` has changed to ``$keys``.
+    - The third parameter ``$index`` has changed to ``$values``. The parameter type also has changed to ``array``.
+
+Database Forge
+--------------
+
+- The method signature of ``Forge::dropKey()`` has changed. An additional optional parameter ``$prefixKeyName`` has been added.
+- The method signature of ``Forge::addKey()`` has changed. An additional optional parameter ``$keyName`` has been added.
+- The method signature of ``Forge::addPrimaryKey()`` has changed. An additional optional parameter ``$keyName`` has been added.
+- The method signature of ``Forge::addUniqueKey()`` has changed. An additional optional parameter ``$keyName`` has been added.
+- The following method has an additional ``$asQuery`` parameter. When set to ``true`` the method returns a stand alone SQL query.
+
+    - ``CodeIgniter\Database\Forge::_processPrimaryKeys()``
+- In addition to the added ``$asQuery`` parameter above the following methods also now return an array.
+
+    - ``CodeIgniter\Database\Forge::_processIndexes()``
+    - ``CodeIgniter\Database\Forge::_processForeignKeys()``
+
+Others
+------
+
+- **API:** The return type of ``API\ResponseTrait::failServerError()`` has been changed to ``ResponseInterface``.
+- The following methods have been changed to accept ``ResponseInterface`` as a parameter instead of ``Response``.
+
+    - ``Debug\Exceptions::__construct()``
+    - ``Services::exceptions()``
+
+- **Request:** The ``$index`` parameter of ``IncomingRequest::getJsonVar()`` now accepts an ``array``, ``string`` or ``null`` value.
+
+Enhancements
+************
+
+Commands
+========
+
+- The call handler for Spark commands from the ``CodeIgniter\CodeIgniter`` class has been extracted. This will reduce the cost of console calls.
+- Added ``spark filter:check`` command to check the filters for a route. See :ref:`Controller Filters <spark-filter-check>` for the details.
+- Added ``spark make:cell`` command to create a new Cell file and its view. See :ref:`generating-cell-via-command` for the details.
+- Now ``spark routes`` command shows route names. See :ref:`URI Routing <routing-spark-routes>`.
+- Now ``spark routes`` command can sort the output by Handler.
+  See :ref:`routing-spark-routes-sort-by-handler`.
+
+- Help information for a spark command can now be accessed using the ``--help`` option (e.g. ``php spark serve --help``)
+- Added methods ``CLI::promptByMultipleKeys()`` to support multiple value in input, unlike ``promptByKey()``. See :ref:`prompt-by-multiple-keys` for details.
+- HTTP/3 is now considered a valid protocol.
+
+Testing
+=======
+
+- Added the ``StreamFilterTrait`` to make it easier to work with capturing data from STDOUT and STDERR streams. See :ref:`testing-cli-output`.
+- The CITestStreamFilter filter class now implements methods for adding a filter to streams. See :ref:`testing-cli-output`.
+- Added the ``PhpStreamWrapper`` to make it easier to work with setting data to ``php://stdin``. See :ref:`testing-cli-input`.
+- Added method :ref:`benchmark-timer-record` to measure performance in a callable. Also enhanced common function ``timer()`` to accept optional callable.
+- A boolean third parameter ``$useExactComparison`` is added to ``TestLogger::didLog()`` which sets whether log messages are checked verbatim. This defaults to ``true``.
+- Added method ``CIUnitTestCase::assertLogContains()`` which compares log messages by parts instead of the whole of the message.
+
+Database
+========
+
+Query Builder
+-------------
+
+- Added ``upsert()`` and ``upsertBatch()`` methods to QueryBuilder. See :ref:`upsert-data`.
+- Added ``deleteBatch()`` method to QueryBuilder. See :ref:`delete-batch`.
+- Added ``when()`` and ``whenNot()`` methods to conditionally add clauses to the query. See :ref:`BaseBuilder::when() <db-builder-when>` for details.
+- Improved the SQL structure for ``Builder::updateBatch()``. See :ref:`update-batch` for the details.
+- Added ``BaseBuilder::setQueryAsData()`` which allows ``insertBatch()``, ``updateBatch()``, ``upsertBatch()``, ``deleteBatch()`` from a query. See :ref:`insert-batch-data`.
+
+Forge
+-----
+
+- Added ``Forge::processIndexes()`` allowing the creation of indexes on an existing table. See :ref:`db-forge-adding-keys-to-a-table` for the details.
+- Added the ability to manually set index names. These methods include: ``Forge::addKey()``, ``Forge::addPrimaryKey()``, and ``Forge::addUniqueKey()``
+- The new method ``Forge::dropPrimaryKey()`` allows dropping the primary key on a table. See :ref:`dropping-a-primary-key`.
+- Fixed ``Forge::dropKey()`` to allow dropping unique indexes. This required the ``DROP CONSTRAINT`` SQL command.
+- :php:meth:`CodeIgniter\\Database\\Forge::addForeignKey()` now includes a name parameter to set foreign key names manually. This is not supported in SQLite3.
+- SQLSRV now automatically drops ``DEFAULT`` constraint when using :ref:`Forge::dropColumn() <db-forge-dropColumn>`.
+
+Others
+------
+
+- SQLite3 has a new Config item ``busyTimeout`` to set timeout when a table is locked.
+- ``BaseConnection::escape()`` now excludes the ``RawSql`` data type. This allows passing SQL strings into data.
+- Improved data returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>`. All DBMS returns the same structure.
+- SQLite :ref:`BaseConnection::getIndexData() <db-metadata-getindexdata>` now can return pseudo index named ``PRIMARY`` for `AUTOINCREMENT` column, and each returned index data has ``type`` property.
+- ``BasePreparedQuery::close()`` now deallocates the prepared statement in all DBMS. Previously, they were not deallocated in Postgre, SQLSRV and OCI8. See :ref:`database-queries-stmt-close`.
+- Added ``BaseConnection::transException()`` to throw exceptinons during transactions.
+  See :ref:`transactions-throwing-exceptions`
+
+Model
+=====
+
+- Added before and after events to ``BaseModel::insertBatch()`` and ``BaseModel::updateBatch()`` methods. See :ref:`model-events-callbacks`.
+- Added ``Model::allowEmptyInserts()`` method to insert empty data. See :ref:`Using CodeIgniter's Model <model-allow-empty-inserts>`
+- Added new :ref:`entities-property-casting` class ``IntBoolCast`` for Entity.
+
+Libraries
+=========
+
+- **Publisher:** Added methods ``replace()``, ``addLineAfter()`` and ``addLineBefore()`` to modify files in Publisher. See :ref:`Publisher <publisher-modifying-files>` for details.
+- **Encryption:** Now Encryption can decrypt data encrypted with CI3's Encryption. See :ref:`encryption-compatible-with-ci3`.
+- **CURLRequest:** Added option version HTTP2 in :ref:`CURLRequest <curlrequest-version>`.
+
+Helpers and Functions
+=====================
+
+- Now you can autoload helpers by **app/Config/Autoload.php**.
+- Added new Form helper function :php:func:`validation_errors()`, :php:func:`validation_list_errors()` and :php:func:`validation_show_error()` to display Validation Errors.
+- You can set the locale to :php:func:`route_to()` if you pass a locale value as the last parameter.
+- Added :php:func:`request()` and :php:func:`response()` functions.
+- Added :php:func:`decamelize()` function to convert camelCase to snake_case.
+- Added :php:func:`is_windows()` global function to detect Windows platforms.
+
+HTML5 Compatibility
+===================
+
+Creation of void HTML elements like ``<input>`` can be configured to exclude or not the solidus character
+(``/``) before the right angle bracket (``>``) by setting the ``$html5`` property in
+**app/Config/DocTypes.php**. If you set it to ``true``, HTML5 compatible tags without ``/`` like ``<br>``
+will be output.
+
+The following items are affected:
+
+- Typography class: Creation of ``br`` tag
+- View Parser: The ``nl2br`` filter
+- Honeypot: ``input`` tag
+- Form helper
+- HTML helper
+- Common Functions
+
+Error Handling
+==============
+
+- You can now log deprecation warnings instead of throwing exceptions. See :ref:`logging_deprecation_warnings` for details.
+- Logging of deprecations is turned on by default.
+- To *temporarily* enable throwing of deprecations, set the environment variable ``CODEIGNITER_SCREAM_DEPRECATIONS`` to a truthy value.
+- ``Config\Logger::$threshold`` is now, by default, environment-specific. For production environment, default threshold is still ``4`` but changed to ``9`` for other environments.
+
+.. _v430-multiple-domain-support:
+
+Multiple Domain Support
+=======================
+
+- Added ``Config\App::$allowedHostnames`` to set hostnames other than the hostname in the baseURL.
+- If you set ``Config\App::$allowedHostnames``, URL-related functions such as :php:func:`base_url()`, :php:func:`current_url()`, :php:func:`site_url()` will return the URL with the hostname set in ``Config\App::$allowedHostnames`` if the current URL matches.
+
+Others
+======
+
+- **Routing:** Added ``$routes->useSupportedLocalesOnly(true)`` so that the Router returns 404 Not Found if the locale in the URL is not supported in ``Config\App::$supportedLocales``. See :ref:`Localization <localization-in-routes>`
+- **Routing:** Added new ``$routes->view()`` method to return the view directly. See :ref:`View Routes <view-routes>`.
+- **View:** View Cells are now first-class citizens and can be located in the **app/Cells** directory. See :ref:`View Cells <app-cells>`.
+- **View:** Added ``Controlled Cells`` that provide more structure and flexibility to your View Cells. See :ref:`View Cells <controlled-cells>` for details.
+- **Validation:** Added Closure validation rule. See :ref:`validation-using-closure-rule` for details.
+- **Config:** Now you can specify Composer packages to auto-discover manually. See :ref:`Code Modules <modules-specify-composer-packages>`.
+- **Config:** Added ``Config\Session`` class to handle session configuration.
+- **Debug:** Kint has been updated to 5.0.2.
+- **Request:** Added new ``$request->getRawInputVar()`` method to return a specified variable from raw stream. See :ref:`Retrieving Raw data <incomingrequest-retrieving-raw-data>`.
+- **Request:** Added new ``$request->is()`` method to query the request type.
+  See :ref:`Determining Request Type <incomingrequest-is>`.
+
+Message Changes
+***************
+
+- Updated English language strings to be more consistent.
+- Added ``CLI.generator.className.cell`` and ``CLI.generator.viewName.cell``.
+- Added **en/Errors.php** file.
+
+Changes
+*******
+
+- Config
+    - All atomic type properties in ``Config`` classes have been typed.
+    - See :ref:`Upgrading <upgrade_430_config>` for information on changing the default values.
+- Changed the processing of Spark commands:
+    - The ``CodeIgniter\CodeIgniter`` no longer handles Spark commands.
+    - The ``CodeIgniter::isSparked()`` method has been removed.
+    - The ``CodeIgniter\CLI\CommandRunner`` class has been removed due to a change in Spark commands processing.
+    - The system route configuration file ``system/Config/Routes.php`` has been removed.
+    - The route configuration file ``app/Config/Routes.php`` has been changed. Removed include of system routes configuration file.
+
+Deprecations
+************
+
+- ``RouteCollection::localizeRoute()`` is deprecated.
+- ``RouteCollection::fillRouteParams()`` is deprecated. Use ``RouteCollection::buildReverseRoute()`` instead.
+- ``BaseBuilder::setUpdateBatch()`` and ``BaseBuilder::setInsertBatch()`` are deprecated. Use ``BaseBuilder::setData()`` instead.
+- The public property ``Response::$CSP`` is deprecated. It will be protected. Use ``Response::getCSP()`` instead.
+- ``CodeIgniter::$path`` and ``CodeIgniter::setPath()`` are deprecated. No longer used.
+- The public property ``IncomingRequest::$uri`` is deprecated. It will be protected. Use ``IncomingRequest::getUri()`` instead.
+- The public property ``IncomingRequest::$config`` is deprecated. It will be protected.
+- The method ``CLI::isWindows()`` is deprecated. Use ``is_windows()`` instead.
+- The ``Config\App`` session properties in favor of the new session config class ``Config\Session``.
+
+Bugs Fixed
+**********
+
+- Fixed a bug when all types of ``Prepared Queries`` were returning a ``Result`` object instead of a bool value for write-type queries.
+- Fixed a bug with variable filtering in JSON requests using with ``IncomingRequest::getVar()`` or ``IncomingRequest::getJsonVar()`` methods.
+- Fixed a bug when variable type may be changed when using a specified index with ``IncomingRequest::getVar()`` or ``IncomingRequest::getJsonVar()`` methods.
+- Fixed a bug that Honeypot field appears when CSP is enabled. See also :ref:`upgrade-430-honeypot-and-csp`.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

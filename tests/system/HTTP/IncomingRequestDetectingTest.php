@@ -18,13 +18,12 @@ use Config\App;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group Others
  */
 final class IncomingRequestDetectingTest extends CIUnitTestCase
 {
-    /**
-     * @var IncomingRequest
-     */
-    protected $request;
+    private IncomingRequest $request;
 
     protected function setUp(): void
     {
@@ -32,127 +31,157 @@ final class IncomingRequestDetectingTest extends CIUnitTestCase
 
         $_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
 
-        $origin = 'http://www.example.com/index.php/woot?code=good#pos';
-
-        $this->request = new IncomingRequest(new App(), new URI($origin), null, new UserAgent());
+        // The URI object is not used in detectPath().
+        $this->request = new IncomingRequest(new App(), new SiteURI(new App(), 'woot?code=good#pos'), null, new UserAgent());
     }
 
-    public function testPathDefault()
+    public function testPathDefault(): void
     {
-        $this->request->uri     = '/index.php/woot?code=good#pos';
+        // /index.php/woot?code=good#pos
         $_SERVER['REQUEST_URI'] = '/index.php/woot';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
-        $expected               = 'woot';
+
+        $expected = 'woot';
         $this->assertSame($expected, $this->request->detectPath());
     }
 
-    public function testPathEmpty()
+    public function testPathDefaultEmpty(): void
     {
-        $this->request->uri     = '/';
+        // /
         $_SERVER['REQUEST_URI'] = '/';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
-        $expected               = '/';
+
+        $expected = '/';
         $this->assertSame($expected, $this->request->detectPath());
     }
 
-    public function testPathRequestURI()
+    public function testPathRequestURI(): void
     {
-        $this->request->uri     = '/index.php/woot?code=good#pos';
+        // /index.php/woot?code=good#pos
         $_SERVER['REQUEST_URI'] = '/index.php/woot';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
-        $expected               = 'woot';
+
+        $expected = 'woot';
         $this->assertSame($expected, $this->request->detectPath('REQUEST_URI'));
     }
 
-    public function testPathRequestURINested()
+    public function testPathRequestURINested(): void
     {
-        $this->request->uri     = '/ci/index.php/woot?code=good#pos';
+        // I'm not sure but this is a case of Apache config making such SERVER
+        // values?
+        // The current implementation doesn't use the value of the URI object.
+        // So I removed the code to set URI. Therefore, it's exactly the same as
+        // the method above as a test.
+        // But it may be changed in the future to use the value of the URI object.
+        // So I don't remove this test case.
+
+        // /ci/index.php/woot?code=good#pos
         $_SERVER['REQUEST_URI'] = '/index.php/woot';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
-        $expected               = 'woot';
+
+        $expected = 'woot';
         $this->assertSame($expected, $this->request->detectPath('REQUEST_URI'));
     }
 
-    public function testPathRequestURISubfolder()
+    public function testPathRequestURISubfolder(): void
     {
-        $this->request->uri     = '/ci/index.php/popcorn/woot?code=good#pos';
+        // /ci/index.php/popcorn/woot?code=good#pos
         $_SERVER['REQUEST_URI'] = '/ci/index.php/popcorn/woot';
         $_SERVER['SCRIPT_NAME'] = '/ci/index.php';
-        $expected               = 'popcorn/woot';
+
+        $expected = 'popcorn/woot';
         $this->assertSame($expected, $this->request->detectPath('REQUEST_URI'));
     }
 
-    public function testPathRequestURINoIndex()
+    public function testPathRequestURINoIndex(): void
     {
-        $this->request->uri     = '/sub/example';
+        // /sub/example
         $_SERVER['REQUEST_URI'] = '/sub/example';
         $_SERVER['SCRIPT_NAME'] = '/sub/index.php';
-        $expected               = 'example';
+
+        $expected = 'example';
         $this->assertSame($expected, $this->request->detectPath('REQUEST_URI'));
     }
 
-    public function testPathRequestURINginx()
+    public function testPathRequestURINginx(): void
     {
-        $this->request->uri     = '/ci/index.php/woot?code=good#pos';
+        // /ci/index.php/woot?code=good#pos
         $_SERVER['REQUEST_URI'] = '/index.php/woot?code=good';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
-        $expected               = 'woot';
+
+        $expected = 'woot';
         $this->assertSame($expected, $this->request->detectPath('REQUEST_URI'));
     }
 
-    public function testPathRequestURINginxRedirecting()
+    public function testPathRequestURINginxRedirecting(): void
     {
-        $this->request->uri     = '/?/ci/index.php/woot';
+        // /?/ci/index.php/woot
         $_SERVER['REQUEST_URI'] = '/?/ci/woot';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
-        $expected               = 'ci/woot';
+
+        $expected = 'ci/woot';
         $this->assertSame($expected, $this->request->detectPath('REQUEST_URI'));
     }
 
-    public function testPathRequestURISuppressed()
+    public function testPathRequestURISuppressed(): void
     {
-        $this->request->uri     = '/woot?code=good#pos';
+        // /woot?code=good#pos
         $_SERVER['REQUEST_URI'] = '/woot';
         $_SERVER['SCRIPT_NAME'] = '/';
-        $expected               = 'woot';
+
+        $expected = 'woot';
         $this->assertSame($expected, $this->request->detectPath('REQUEST_URI'));
     }
 
-    public function testPathQueryString()
+    public function testPathQueryString(): void
     {
-        $this->request->uri      = '/?/ci/index.php/woot';
-        $_SERVER['REQUEST_URI']  = '/?/ci/woot';
+        // /index.php?/ci/woot
+        $_SERVER['REQUEST_URI']  = '/index.php?/ci/woot';
         $_SERVER['QUERY_STRING'] = '/ci/woot';
         $_SERVER['SCRIPT_NAME']  = '/index.php';
-        $expected                = 'ci/woot';
+
+        $expected = 'ci/woot';
         $this->assertSame($expected, $this->request->detectPath('QUERY_STRING'));
     }
 
-    public function testPathQueryStringEmpty()
+    public function testPathQueryStringWithQueryString(): void
     {
-        $this->request->uri      = '/?/ci/index.php/woot';
-        $_SERVER['REQUEST_URI']  = '/?/ci/woot';
+        // /index.php?/ci/woot?code=good#pos
+        $_SERVER['REQUEST_URI']  = '/index.php?/ci/woot?code=good';
+        $_SERVER['QUERY_STRING'] = '/ci/woot?code=good';
+        $_SERVER['SCRIPT_NAME']  = '/index.php';
+
+        $expected = 'ci/woot';
+        $this->assertSame($expected, $this->request->detectPath('QUERY_STRING'));
+    }
+
+    public function testPathQueryStringEmpty(): void
+    {
+        // /index.php?
+        $_SERVER['REQUEST_URI']  = '/index.php?';
         $_SERVER['QUERY_STRING'] = '';
         $_SERVER['SCRIPT_NAME']  = '/index.php';
-        $expected                = '';
+
+        $expected = '/';
         $this->assertSame($expected, $this->request->detectPath('QUERY_STRING'));
     }
 
-    public function testPathPathInfo()
+    public function testPathPathInfo(): void
     {
-        $this->request->uri = '/index.php/woot?code=good#pos';
+        // /index.php/woot?code=good#pos
         $this->request->setGlobal('server', [
             'PATH_INFO' => null,
         ]);
         $_SERVER['REQUEST_URI'] = '/index.php/woot';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
-        $expected               = 'woot';
+
+        $expected = 'woot';
         $this->assertSame($expected, $this->request->detectPath('PATH_INFO'));
     }
 
-    public function testPathPathInfoGlobal()
+    public function testPathPathInfoGlobal(): void
     {
-        $this->request->uri = '/index.php/woot?code=good#pos';
+        // /index.php/woot?code=good#pos
         $this->request->setGlobal('server', [
             'PATH_INFO' => 'silliness',
         ]);

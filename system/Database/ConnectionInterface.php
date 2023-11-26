@@ -12,28 +12,31 @@
 namespace CodeIgniter\Database;
 
 /**
- * Interface ConnectionInterface
+ * @template TConnection
+ * @template TResult
  */
 interface ConnectionInterface
 {
     /**
      * Initializes the database connection/settings.
      *
-     * @return mixed
+     * @return void
      */
     public function initialize();
 
     /**
      * Connect to the database.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return false|TConnection
      */
     public function connect(bool $persistent = false);
 
     /**
      * Create a persistent database connection.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return false|TConnection
      */
     public function persistentConnect();
 
@@ -41,7 +44,7 @@ interface ConnectionInterface
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
      *
-     * @return mixed
+     * @return void
      */
     public function reconnect();
 
@@ -51,14 +54,15 @@ interface ConnectionInterface
      * get that connection. If you pass either alias in and only a single
      * connection is present, it must return the sole connection.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return false|TConnection
      */
     public function getConnection(?string $alias = null);
 
     /**
      * Select a specific database table to use.
      *
-     * @return mixed
+     * @return bool
      */
     public function setDatabase(string $databaseName);
 
@@ -94,9 +98,10 @@ interface ConnectionInterface
      * Should automatically handle different connections for read/write
      * queries if needed.
      *
-     * @param mixed ...$binds
+     * @param array|string|null $binds
      *
      * @return BaseResult|bool|Query
+     * @phpstan-return BaseResult<TConnection, TResult>|bool|Query
      */
     public function query(string $sql, $binds = null);
 
@@ -105,7 +110,8 @@ interface ConnectionInterface
      * is performed, nor are transactions handled. Simply takes a raw
      * query string and returns the database-specific result id.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return false|TResult
      */
     public function simpleQuery(string $sql);
 
@@ -121,7 +127,7 @@ interface ConnectionInterface
     /**
      * Returns the last query's statement object.
      *
-     * @return mixed
+     * @return Query
      */
     public function getLastQuery();
 
@@ -131,9 +137,10 @@ interface ConnectionInterface
      * Escapes data based on type.
      * Sets boolean and null types.
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      *
-     * @return mixed
+     * @return array|float|int|string
+     * @phpstan-return ($str is array ? array : float|int|string)
      */
     public function escape($str);
 
@@ -143,7 +150,7 @@ interface ConnectionInterface
      *
      * @param array ...$params
      *
-     * @return mixed
+     * @return array|bool|float|int|object|resource|string|null
      */
     public function callFunction(string $functionName, ...$params);
 

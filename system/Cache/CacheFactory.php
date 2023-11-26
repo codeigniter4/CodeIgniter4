@@ -18,6 +18,8 @@ use Config\Cache;
 
 /**
  * A factory for loading the desired
+ *
+ * @see \CodeIgniter\Cache\CacheFactoryTest
  */
 class CacheFactory
 {
@@ -42,7 +44,7 @@ class CacheFactory
      */
     public static function getHandler(Cache $config, ?string $handler = null, ?string $backup = null)
     {
-        if (! isset($config->validHandlers) || ! is_array($config->validHandlers)) {
+        if (! isset($config->validHandlers) || $config->validHandlers === []) {
             throw CacheException::forInvalidHandlers();
         }
 
@@ -73,7 +75,7 @@ class CacheFactory
         try {
             $adapter->initialize();
         } catch (CriticalError $e) {
-            log_message('critical', $e->getMessage() . ' Resorting to using ' . $backup . ' handler.');
+            log_message('critical', $e . ' Resorting to using ' . $backup . ' handler.');
 
             // get the next best cache handler (or dummy if the $backup also fails)
             $adapter = self::getHandler($config, $backup, 'dummy');

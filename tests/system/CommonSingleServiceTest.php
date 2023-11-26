@@ -11,37 +11,53 @@
 
 namespace CodeIgniter;
 
+use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockSecurity;
-use Config\App;
+use Config\Security as SecurityConfig;
 use ReflectionClass;
 use ReflectionMethod;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CommonSingleServiceTest extends CIUnitTestCase
 {
     /**
-     * @dataProvider serviceNamesProvider
+     * @dataProvider provideServiceNames
      */
     public function testSingleServiceWithNoParamsSupplied(string $service): void
     {
-        Services::injectMock('security', new MockSecurity(new App()));
+        Services::injectMock('security', new MockSecurity(new SecurityConfig()));
 
         $service1 = single_service($service);
         $service2 = single_service($service);
 
-        $this->assertSame(get_class($service1), get_class($service2));
+        assert($service1 !== null);
+
+        $this->assertInstanceOf(get_class($service1), $service2);
         $this->assertNotSame($service1, $service2);
     }
 
     /**
-     * @dataProvider serviceNamesProvider
+     * @dataProvider provideServiceNames
      */
     public function testSingleServiceWithAtLeastOneParamSupplied(string $service): void
     {
+        if ($service === 'commands') {
+            $locator = $this->getMockBuilder(FileLocator::class)
+                ->setConstructorArgs([Services::autoloader()])
+                ->onlyMethods(['listFiles'])
+                ->getMock();
+
+            // `Commands::discoverCommand()` is an expensive operation
+            $locator->method('listFiles')->with('Commands/')->willReturn([]);
+            Services::injectMock('locator', $locator);
+        }
+
         $params = [];
         $method = new ReflectionMethod(Services::class, $service);
 
@@ -50,8 +66,14 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         $service1 = single_service($service, ...$params);
         $service2 = single_service($service, ...$params);
 
-        $this->assertSame(get_class($service1), get_class($service2));
+        assert($service1 !== null);
+
+        $this->assertInstanceOf(get_class($service1), $service2);
         $this->assertNotSame($service1, $service2);
+
+        if ($service === 'commands') {
+            $this->resetServices();
+        }
     }
 
     public function testSingleServiceWithAllParamsSupplied(): void
@@ -59,9 +81,12 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         $cache1 = single_service('cache', null, true);
         $cache2 = single_service('cache', null, true);
 
+        assert($cache1 !== null);
+        assert($cache2 !== null);
+
         // Assert that even passing true as last param this will
         // not create a shared instance.
-        $this->assertSame(get_class($cache1), get_class($cache2));
+        $this->assertInstanceOf(get_class($cache1), $cache2);
         $this->assertNotSame($cache1, $cache2);
     }
 
@@ -74,27 +99,36 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         $this->assertNull(single_service('timers'));
     }
 
-    public static function serviceNamesProvider(): iterable
+    public static function provideServiceNames(): iterable
     {
-        $methods = (new ReflectionClass(Services::class))->getMethods(ReflectionMethod::IS_PUBLIC);
+        static $services = [];
+        static $excl     = [
+            '__callStatic',
+            'createRequest',
+            'serviceExists',
+            'reset',
+            'resetSingle',
+            'injectMock',
+            'encrypter', // Encrypter needs a starter key
+            'session', // Headers already sent
+        ];
 
-        foreach ($methods as $method) {
-            $name = $method->getName();
-            $excl = [
-                '__callStatic',
-                'serviceExists',
-                'reset',
-                'resetSingle',
-                'injectMock',
-                'encrypter', // Encrypter needs a starter key
-                'session', // Headers already sent
-            ];
+        if ($services === []) {
+            $methods = (new ReflectionClass(Services::class))->getMethods(ReflectionMethod::IS_PUBLIC);
 
-            if (in_array($name, $excl, true)) {
-                continue;
+            foreach ($methods as $method) {
+                $name = $method->getName();
+
+                if (in_array($name, $excl, true)) {
+                    continue;
+                }
+
+                $services[$name] = [$name];
             }
 
-            yield $name => [$name];
+            ksort($services);
         }
+
+        yield from $services;
     }
 }

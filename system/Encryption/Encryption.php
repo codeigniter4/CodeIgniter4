@@ -20,6 +20,8 @@ use Config\Encryption as EncryptionConfig;
  * Provides two-way keyed encryption via PHP's Sodium and/or OpenSSL extensions.
  * This class determines the driver, cipher, and mode to use, and then
  * initializes the appropriate encryption handler.
+ *
+ * @see \CodeIgniter\Encryption\EncryptionTest
  */
 class Encryption
 {
@@ -71,7 +73,7 @@ class Encryption
     /**
      * Handlers that are to be installed
      *
-     * @var array<string, boolean>
+     * @var array<string, bool>
      */
     protected $handlers = [];
 
@@ -80,7 +82,7 @@ class Encryption
      */
     public function __construct(?EncryptionConfig $config = null)
     {
-        $config = $config ?? new EncryptionConfig();
+        $config ??= new EncryptionConfig();
 
         $this->key    = $config->key;
         $this->driver = $config->driver;
@@ -100,13 +102,13 @@ class Encryption
     /**
      * Initialize or re-initialize an encrypter
      *
-     * @throws EncryptionException
-     *
      * @return EncrypterInterface
+     *
+     * @throws EncryptionException
      */
     public function initialize(?EncryptionConfig $config = null)
     {
-        if ($config) {
+        if ($config instanceof EncryptionConfig) {
             $this->key    = $config->key;
             $this->driver = $config->driver;
             $this->digest = $config->digest ?? 'SHA512';
@@ -149,7 +151,7 @@ class Encryption
      *
      * @param string $key Property name
      *
-     * @return mixed
+     * @return array|string|null
      */
     public function __get($key)
     {

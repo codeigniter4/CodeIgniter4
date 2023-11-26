@@ -1,0 +1,54 @@
+#############
+Version 4.4.4
+#############
+
+Release Date: Unreleased
+
+**4.4.4 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+********
+BREAKING
+********
+
+Validation with Dot Array Syntax
+================================
+
+A validation rule with the wildcard ``*`` now validates only data in correct
+dimensions as "dot array syntax".
+See :ref:`Upgrading <upgrade-444-validation-with-dot-array-syntax>` for details.
+
+Validation rules matches and differs
+====================================
+
+Bugs have been fixed in the case where ``matches`` and ``differs`` in the Strict
+and Traditional rules validate data of non-string types.
+
+***************
+Message Changes
+***************
+
+- Added ``HTTP.invalidJSON`` error message.
+
+*******
+Changes
+*******
+
+************
+Deprecations
+************
+
+- **Request:** The :php:meth:`CodeIgniter\\HTTP\\Request::getEnv()` method is
+  deprecated. This method does not work from the beginning. Use :php:func:`env()`
+  instead.
+
+**********
+Bugs Fixed
+**********
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

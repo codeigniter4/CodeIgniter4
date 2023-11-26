@@ -1,0 +1,124 @@
+name: Bug report
+description: Create a report to help us improve CodeIgniter
+title: "Bug: "
+labels: ['bug']
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+
+        Before you begin, **please ensure that there are no existing issues,
+        whether still open or closed, related to your report**.
+        If there is, your report will be closed promptly.
+
+        For example, if you get the error "*Undefined property: Config\\Exceptions::$sensitiveDataInTrace*",
+        you can search the GitHub repository with the keyword "[$sensitiveDataInTrace](https://github.com/codeigniter4/CodeIgniter4/search?q=%24sensitiveDataInTrace&type=issues)".
+
+        ---
+
+  - type: dropdown
+    id: php-version
+    attributes:
+      label: PHP Version
+      description: Which PHP versions did you run your code?
+      multiple: true
+      options:
+        - '7.4'
+        - '8.0'
+        - '8.1'
+        - '8.2'
+    validations:
+      required: true
+
+  - type: input
+    id: codeigniter-version
+    attributes:
+      label: CodeIgniter4 Version
+      description: |
+        e.g. 4.1.5
+        If you are not using the [latest version](https://github.com/codeigniter4/CodeIgniter4/releases), please
+        check to see if the problem occurs with the latest version.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: codeigniter-installation
+    attributes:
+      label: CodeIgniter4 Installation Method
+      multiple: false
+      options:
+        - Composer (using `codeigniter4/appstarter`)
+        - Composer (as dependency to an existing project)
+        - Manual (zip or tar.gz)
+        - Git
+    validations:
+      required: true
+
+  - type: dropdown
+    id: operating-systems
+    attributes:
+      label: Which operating systems have you tested for this bug?
+      description: You may select more than one.
+      multiple: true
+      options:
+        - macOS
+        - Windows
+        - Linux
+    validations:
+      required: true
+
+  - type: dropdown
+    id: server
+    attributes:
+      label: Which server did you use?
+      options:
+        - apache
+        - cli
+        - cli-server (PHP built-in webserver)
+        - cgi-fcgi
+        - fpm-fcgi
+        - phpdbg
+    validations:
+      required: true
+
+  - type: input
+    id: database
+    attributes:
+      label: Database
+      description: e.g. MySQL 5.6, MariaDB 10.2, PostgreSQL 9.6
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Expected Output
+      description: What do you expect to happen instead of this filed bug?
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Anything else?
+      description: |
+        Links? References? Anything that will give us more context about the issue you are encountering!
+
+        Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+    validations:
+      required: false

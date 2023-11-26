@@ -15,7 +15,7 @@ use CodeIgniter\Database\Seeder;
 
 class CITestSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         // Job Data
         $data = [
@@ -150,7 +150,7 @@ class CITestSeeder extends Seeder
 
         if ($this->db->DBDriver === 'MySQLi') {
             $data['ci_sessions'][] = [
-                'id'         => '1f5o06b43phsnnf8if6bo33b635e4p2o',
+                'id'         => 'ci_session:1f5o06b43phsnnf8if6bo33b635e4p2o',
                 'ip_address' => '127.0.0.1',
                 'timestamp'  => '2021-06-25 21:54:14',
                 'data'       => '__ci_last_regenerate|i:1624650854;_ci_previous_url|s:40:\"http://localhost/index.php/home/index\";',
@@ -159,11 +159,21 @@ class CITestSeeder extends Seeder
 
         if ($this->db->DBDriver === 'Postgre') {
             $data['ci_sessions'][] = [
-                'id'         => '1f5o06b43phsnnf8if6bo33b635e4p2o',
+                'id'         => 'ci_session:1f5o06b43phsnnf8if6bo33b635e4p2o',
                 'ip_address' => '127.0.0.1',
                 'timestamp'  => '2021-06-25 21:54:14.991403+02',
                 'data'       => '\x' . bin2hex('__ci_last_regenerate|i:1624650854;_ci_previous_url|s:40:\"http://localhost/index.php/home/index\";'),
             ];
+        }
+
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->db->query('alter session set NLS_DATE_FORMAT=?', ['YYYY-MM-DD HH24:MI:SS']);
+            $data['type_test'][0]['type_time']      = '2020-07-18 15:22:00';
+            $data['type_test'][0]['type_date']      = '2020-01-11 22:11:00';
+            $data['type_test'][0]['type_time']      = '2020-07-18 15:22:00';
+            $data['type_test'][0]['type_datetime']  = '2020-06-18 05:12:24';
+            $data['type_test'][0]['type_timestamp'] = '2020-06-18 21:53:21';
+            unset($data['type_test'][0]['type_blob']);
         }
 
         foreach ($data as $table => $dummy_data) {

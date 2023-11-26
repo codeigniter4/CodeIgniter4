@@ -21,28 +21,15 @@ use stdClass;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ParserTest extends CIUnitTestCase
 {
-    /**
-     * @var FileLocator
-     */
-    private $loader;
-
-    /**
-     * @var string
-     */
-    private $viewsDir;
-
-    /**
-     * @var ViewConfig
-     */
-    private $config;
-
-    /**
-     * @var Parser
-     */
-    private $parser;
+    private FileLocator $loader;
+    private string $viewsDir;
+    private ViewConfig $config;
+    private Parser $parser;
 
     protected function setUp(): void
     {
@@ -54,7 +41,7 @@ final class ParserTest extends CIUnitTestCase
         $this->parser   = new Parser($this->config, $this->viewsDir, $this->loader);
     }
 
-    public function testSetDelimiters()
+    public function testSetDelimiters(): void
     {
         // Make sure default delimiters are there
         $this->assertSame('{', $this->parser->leftDelimiter);
@@ -75,13 +62,13 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('}', $this->parser->rightDelimiter);
     }
 
-    public function testParseSimple()
+    public function testParseSimple(): void
     {
         $this->parser->setVar('teststring', 'Hello World');
         $this->assertSame("<h1>Hello World</h1>\n", $this->parser->render('template1'));
     }
 
-    public function testParseString()
+    public function testParseString(): void
     {
         $data = [
             'title' => 'Page Title',
@@ -96,7 +83,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame($result, $this->parser->renderString($template));
     }
 
-    public function testParseStringMissingData()
+    public function testParseStringMissingData(): void
     {
         $data = [
             'title' => 'Page Title',
@@ -111,7 +98,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame($result, $this->parser->renderString($template));
     }
 
-    public function testParseStringUnusedData()
+    public function testParseStringUnusedData(): void
     {
         $data = [
             'title' => 'Page Title',
@@ -127,12 +114,12 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame($result, $this->parser->renderString($template));
     }
 
-    public function testParseNoTemplate()
+    public function testParseNoTemplate(): void
     {
         $this->assertSame('', $this->parser->renderString(''));
     }
 
-    public function testParseArraySingle()
+    public function testParseArraySingle(): void
     {
         $data = [
             'title'  => 'Super Heroes',
@@ -150,7 +137,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame("Super Heroes\nyes\nno", $this->parser->renderString($template));
     }
 
-    public function testParseArrayMulti()
+    public function testParseArrayMulti(): void
     {
         $data = [
             'powers' => [
@@ -167,7 +154,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame("yes\nno\nsecond: yes no", $this->parser->renderString($template));
     }
 
-    public function testParseArrayNested()
+    public function testParseArrayNested(): void
     {
         $data = [
             'title'  => 'Super Heroes',
@@ -191,7 +178,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame("Super Heroes\nyes\nplane broomstick", $this->parser->renderString($template));
     }
 
-    public function testParseArrayNestedObject()
+    public function testParseArrayNestedObject(): void
     {
         $eagle       = new stdClass();
         $eagle->name = 'Baldy';
@@ -218,7 +205,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('Owl and Class: stdClass work at Resource', $this->parser->renderString($template));
     }
 
-    public function testParseLoop()
+    public function testParseLoop(): void
     {
         $data = [
             'title'  => 'Super Heroes',
@@ -235,7 +222,27 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame("Super Heroes\nTom Dick Henry ", $this->parser->renderString($template));
     }
 
-    public function testParseLoopObjectProperties()
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5825
+     */
+    public function testParseLoopVariableWithParentheses(): void
+    {
+        $data = [
+            'title'  => 'Super Heroes',
+            'powers' => [
+                ['name' => 'Tom'],
+                ['name' => 'Dick'],
+                ['name' => 'Henry'],
+            ],
+        ];
+
+        $template = "{title}\n{powers}({name}) {/powers}";
+
+        $this->parser->setData($data);
+        $this->assertSame("Super Heroes\n(Tom) (Dick) (Henry) ", $this->parser->renderString($template));
+    }
+
+    public function testParseLoopObjectProperties(): void
     {
         $obj1 = new stdClass();
         $obj2 = new stdClass();
@@ -260,9 +267,74 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame("Super Heroes\nTom Dick Henry ", $this->parser->renderString($template));
     }
 
-    public function testParseLoopEntityProperties()
+    public function testParseIntegerPositive(): void
     {
-        $power             = new class () extends Entity {
+        $data = [
+            'title'  => 'Count:',
+            'amount' => 5,
+        ];
+
+        $template = '{title} {amount}';
+
+        $this->parser->setData($data, 'html');
+        $this->assertSame('Count: 5', $this->parser->renderString($template));
+    }
+
+    public function testParseIntegerNegative(): void
+    {
+        $data = [
+            'title'  => 'Count:',
+            'amount' => -5,
+        ];
+
+        $template = '{title} {amount}';
+
+        $this->parser->setData($data, 'html');
+        $this->assertSame('Count: -5', $this->parser->renderString($template));
+    }
+
+    public function testParseFloatPositive(): void
+    {
+        $data = [
+            'title'  => 'Rate:',
+            'amount' => 5.5,
+        ];
+
+        $template = '{title} {amount}';
+
+        $this->parser->setData($data, 'html');
+        $this->assertSame('Rate: 5.5', $this->parser->renderString($template));
+    }
+
+    public function testParseFloatNegative(): void
+    {
+        $data = [
+            'title'  => 'Rate:',
+            'amount' => -5.5,
+        ];
+
+        $template = '{title} {amount}';
+
+        $this->parser->setData($data, 'html');
+        $this->assertSame('Rate: -5.5', $this->parser->renderString($template));
+    }
+
+    public function testParseNull(): void
+    {
+        $data = [
+            'title'  => 'Ticks:',
+            'amount' => null,
+        ];
+
+        $template = '{title} {amount}';
+
+        $this->parser->setData($data, 'html');
+        $this->assertSame('Ticks: ', $this->parser->renderString($template));
+    }
+
+    public function testParseLoopEntityProperties(): void
+    {
+        $power = new class () extends Entity {
             public $foo    = 'bar';
             protected $bar = 'baz';
 
@@ -290,9 +362,9 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame("Super Heroes\n bar baz first second ", $this->parser->renderString($template));
     }
 
-    public function testParseLoopEntityObjectProperties()
+    public function testParseLoopEntityObjectProperties(): void
     {
-        $power                    = new class () extends Entity {
+        $power = new class () extends Entity {
             protected $attributes = [
                 'foo'     => 'bar',
                 'bar'     => 'baz',
@@ -327,7 +399,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame("Super Heroes\n bar baz first second ", $this->parser->renderString($template));
     }
 
-    public function testMismatchedVarPair()
+    public function testMismatchedVarPair(): void
     {
         $data = [
             'title'  => 'Super Heroes',
@@ -346,7 +418,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame($result, $this->parser->renderString($template));
     }
 
-    public function escValueTypes()
+    public static function provideEscHandling(): iterable
     {
         return [
             'scalar'     => [42],
@@ -401,12 +473,12 @@ final class ParserTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider escValueTypes
+     * @dataProvider provideEscHandling
      *
      * @param mixed      $value
      * @param mixed|null $expected
      */
-    public function testEscHandling($value, $expected = null)
+    public function testEscHandling($value, $expected = null): void
     {
         if ($expected === null) {
             $expected = $value;
@@ -417,7 +489,7 @@ final class ParserTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/3726
      */
-    public function testParseSimilarVariableNames()
+    public function testParseSimilarVariableNames(): void
     {
         $template = '{foo} {foo_bar}';
 
@@ -425,7 +497,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('bar foo-bar', $this->parser->renderString($template));
     }
 
-    public function testParsePairSimilarVariableNames()
+    public function testParsePairSimilarVariableNames(): void
     {
         $data = [
             'title'  => '<script>Heroes</script>',
@@ -445,7 +517,7 @@ final class ParserTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/788
      */
-    public function testEscapingRespectsSetDataRaw()
+    public function testEscapingRespectsSetDataRaw(): void
     {
         $template = '{ foo }';
 
@@ -453,7 +525,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('<script>', $this->parser->renderString($template));
     }
 
-    public function testEscapingSetDataWithOtherContext()
+    public function testEscapingSetDataWithOtherContext(): void
     {
         $template = '{ foo }';
 
@@ -461,7 +533,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('http%3A%2F%2Ffoo.com', $this->parser->renderString($template));
     }
 
-    public function testNoEscapingSetData()
+    public function testNoEscapingSetData(): void
     {
         $template = '{ foo | noescape}';
 
@@ -469,20 +541,20 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('http://foo.com', $this->parser->renderString($template));
     }
 
-    public function testAutoEscaping()
+    public function testAutoEscaping(): void
     {
         $this->parser->setData(['foo' => 'http://foo.com'], 'unknown');
 
         $this->assertSame('html', $this->parser->shouldAddEscaping('{ foo | this | that }'));
     }
 
-    public function testAutoEscapingNot()
+    public function testAutoEscapingNot(): void
     {
         $this->parser->setData(['foo' => 'http://foo.com'], 'unknown');
         $this->assertFalse($this->parser->shouldAddEscaping('{ foo | noescape }'));
     }
 
-    public function testFilterWithNoArgument()
+    public function testFilterWithNoArgument(): void
     {
         $data = [
             'that_thing' => '<script>alert("ci4")</script>',
@@ -494,7 +566,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('&lt;script&gt;alert(&quot;ci4&quot;)&lt;/script&gt;', $this->parser->renderString($template));
     }
 
-    public function testFilterWithArgument()
+    public function testFilterWithArgument(): void
     {
         $date = time();
 
@@ -508,7 +580,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame(date('Y-m-d', $date), $this->parser->renderString($template));
     }
 
-    public function testParserEscapesDataDefaultsToHTML()
+    public function testParserEscapesDataDefaultsToHTML(): void
     {
         $data = [
             'title'  => '<script>Heroes</script>',
@@ -522,18 +594,31 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('&lt;script&gt;Heroes&lt;/script&gt; &lt;a href=&#039;test&#039;&gt;Link&lt;/a&gt;', $this->parser->renderString($template));
     }
 
-    public function testParserNoEscape()
+    public function testParserNoEscape(): void
     {
         $data = [
             'title' => '<script>Heroes</script>',
         ];
 
-        $template = '{! title!}';
+        $template = '{! title !}';
         $this->parser->setData($data);
         $this->assertSame('<script>Heroes</script>', $this->parser->renderString($template));
     }
 
-    public function testIgnoresComments()
+    public function testParserNoEscapeAndDelimiterChange(): void
+    {
+        $this->parser->setDelimiters('{{', '}}');
+
+        $data = [
+            'title' => '<script>Heroes</script>',
+        ];
+        $this->parser->setData($data);
+
+        $template = '{{! title !}}';
+        $this->assertSame('<script>Heroes</script>', $this->parser->renderString($template));
+    }
+
+    public function testIgnoresComments(): void
     {
         $data = [
             'title'  => 'Super Heroes',
@@ -552,7 +637,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame($result, $this->parser->renderString($template));
     }
 
-    public function testNoParse()
+    public function testNoParse(): void
     {
         $data = [
             'title'  => 'Super Heroes',
@@ -571,7 +656,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame($result, $this->parser->renderString($template));
     }
 
-    public function testIfConditionalTrue()
+    public function testIfConditionalTrue(): void
     {
         $data = [
             'doit'     => true,
@@ -584,7 +669,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('HowdyWelcome', $this->parser->renderString($template));
     }
 
-    public function testElseConditionalFalse()
+    public function testElseConditionalFalse(): void
     {
         $data = [
             'doit' => true,
@@ -596,7 +681,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('Howdy', $this->parser->renderString($template));
     }
 
-    public function testElseConditionalTrue()
+    public function testElseConditionalTrue(): void
     {
         $data = [
             'doit' => false,
@@ -608,7 +693,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('Welcome', $this->parser->renderString($template));
     }
 
-    public function testElseifConditionalTrue()
+    public function testElseifConditionalTrue(): void
     {
         $data = [
             'doit'     => false,
@@ -621,7 +706,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('Welcome', $this->parser->renderString($template));
     }
 
-    public function testConditionalBadSyntax()
+    public function testConditionalBadSyntax(): void
     {
         $this->expectException(ViewException::class);
         $data = [
@@ -636,13 +721,13 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('HowdyWelcome', $this->parser->renderString($template));
     }
 
-    public function testWontParsePHP()
+    public function testWontParsePHP(): void
     {
         $template = "<?php echo 'Foo' ?> - <?= 'Bar' ?>";
         $this->assertSame('&lt;?php echo \'Foo\' ?&gt; - &lt;?= \'Bar\' ?&gt;', $this->parser->renderString($template));
     }
 
-    public function testParseHandlesSpaces()
+    public function testParseHandlesSpaces(): void
     {
         $data = [
             'title' => 'Page Title',
@@ -657,7 +742,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame($result, $this->parser->renderString($template));
     }
 
-    public function testParseRuns()
+    public function testParseRuns(): void
     {
         $data = [
             'title' => 'Page Title',
@@ -672,14 +757,9 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame($result, $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
-    public function testCanAddAndRemovePlugins()
+    public function testCanAddAndRemovePlugins(): void
     {
-        $this->parser->addPlugin('first', static function ($str) {
-            return $str;
-        });
+        $this->parser->addPlugin('first', static fn ($str) => $str);
 
         $setParsers = $this->getPrivateProperty($this->parser, 'plugins');
 
@@ -692,39 +772,26 @@ final class ParserTest extends CIUnitTestCase
         $this->assertArrayNotHasKey('first', $setParsers);
     }
 
-    /**
-     * @group parserplugins
-     */
-    public function testParserPluginNoMatches()
+    public function testParserPluginNoMatches(): void
     {
         $template = 'hit:it';
 
         $this->assertSame('hit:it', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
-    public function testParserPluginNoParams()
+    public function testParserPluginNoParams(): void
     {
-        $this->parser->addPlugin('hit:it', static function ($str) {
-            return str_replace('here', 'Hip to the Hop', $str);
-        }, true);
+        $this->parser->addPlugin('hit:it', static fn ($str) => str_replace('here', 'Hip to the Hop', $str), true);
 
         $template = '{+ hit:it +} stuff here {+ /hit:it +}';
 
         $this->assertSame(' stuff Hip to the Hop ', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
-    public function testParserPluginClosure()
+    public function testParserPluginClosure(): void
     {
         $config                   = $this->config;
-        $config->plugins['hello'] = static function (array $params = []) {
-            return 'Hello, ' . trim($params[0]);
-        };
+        $config->plugins['hello'] = static fn (array $params = []) => 'Hello, ' . trim($params[0]);
 
         $this->parser = new Parser($config, $this->viewsDir, $this->loader);
 
@@ -733,13 +800,10 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('Hello, world', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
-    public function testParserPluginParams()
+    public function testParserPluginParams(): void
     {
         $this->parser->addPlugin('growth', static function ($str, array $params) {
-            $step = $params['step'] ?? 1;
+            $step  = $params['step'] ?? 1;
             $count = $params['count'] ?? 2;
 
             $out = '';
@@ -756,52 +820,34 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame(' 2 4 6 8', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
-    public function testParserSingleTag()
+    public function testParserSingleTag(): void
     {
-        $this->parser->addPlugin('hit:it', static function () {
-            return 'Hip to the Hop';
-        }, false);
+        $this->parser->addPlugin('hit:it', static fn () => 'Hip to the Hop', false);
 
         $template = '{+ hit:it +}';
 
         $this->assertSame('Hip to the Hop', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
-    public function testParserSingleTagWithParams()
+    public function testParserSingleTagWithParams(): void
     {
-        $this->parser->addPlugin('hit:it', static function (array $params = []) {
-            return "{$params['first']} to the {$params['last']}";
-        }, false);
+        $this->parser->addPlugin('hit:it', static fn (array $params = []) => "{$params['first']} to the {$params['last']}", false);
 
         $template = '{+ hit:it first=foo last=bar +}';
 
         $this->assertSame('foo to the bar', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
-    public function testParserSingleTagWithSingleParams()
+    public function testParserSingleTagWithSingleParams(): void
     {
-        $this->parser->addPlugin('hit:it', static function (array $params = []) {
-            return "{$params[0]} to the {$params[1]}";
-        }, false);
+        $this->parser->addPlugin('hit:it', static fn (array $params = []) => "{$params[0]} to the {$params[1]}", false);
 
         $template = '{+ hit:it foo bar +}';
 
         $this->assertSame('foo to the bar', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
-    public function testParserSingleTagWithQuotedParams()
+    public function testParserSingleTagWithQuotedParams(): void
     {
         $this->parser->addPlugin('count', static function (array $params = []) {
             $out = '';
@@ -818,10 +864,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('0. foo bar 1. baz 2. foo bar ', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
-    public function testParserSingleTagWithNamedParams()
+    public function testParserSingleTagWithNamedParams(): void
     {
         $this->parser->addPlugin('read_params', static function (array $params = []) {
             $out = '';
@@ -841,7 +884,7 @@ final class ParserTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/705
      */
-    public function testParseLoopWithDollarSign()
+    public function testParseLoopWithDollarSign(): void
     {
         $data = [
             'books' => [
@@ -907,7 +950,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame($expected, $this->parser->renderString($template));
     }
 
-    public function testCachedRender()
+    public function testCachedRender(): void
     {
         $this->parser->setVar('teststring', 'Hello World');
 
@@ -917,22 +960,22 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame($expected, $this->parser->render('template1', ['cache' => 10, 'cache_name' => 'HelloWorld']));
     }
 
-    public function testRenderFindsView()
+    public function testRenderFindsView(): void
     {
         $this->parser->setData(['testString' => 'Hello World']);
         $this->assertSame("<h1>Hello World</h1>\n", $this->parser->render('Simpler'));
     }
 
-    public function testRenderCannotFindView()
+    public function testRenderCannotFindView(): void
     {
         $this->expectException(ViewException::class);
-        $this->expectExceptionMessageMatches('!\AInvalid file: (?:.+)View(?:/|\\\\)Views(?:/|\\\\)Simplest\.php\z!');
+        $this->expectExceptionMessageMatches('!\AInvalid file: \"(?:.+)View(?:/|\\\\)Views(?:/|\\\\)Simplest\.php\"\z!');
 
         $this->parser->setData(['testString' => 'Hello World']);
         $this->parser->render('Simplest');
     }
 
-    public function testRenderSavingData()
+    public function testRenderSavingData(): void
     {
         $expected = "<h1>Hello World</h1>\n";
 
@@ -945,7 +988,7 @@ final class ParserTest extends CIUnitTestCase
         $this->assertArrayHasKey('testString', $this->parser->getData());
     }
 
-    public function testRenderStringSavingData()
+    public function testRenderStringSavingData(): void
     {
         $expected = '<h1>Hello World</h1>';
         $pattern  = '<h1>{testString}</h1>';
@@ -959,10 +1002,59 @@ final class ParserTest extends CIUnitTestCase
         $this->assertArrayHasKey('testString', $this->parser->getData());
     }
 
-    public function testRenderFindsOtherView()
+    public function testRenderFindsOtherView(): void
     {
         $this->parser->setData(['testString' => 'Hello World']);
         $expected = '<h1>Hello World</h1>';
         $this->assertSame($expected, $this->parser->render('Simpler.html'));
+    }
+
+    public function testChangedConditionalDelimitersTrue(): void
+    {
+        $this->parser->setConditionalDelimiters('{%', '%}');
+
+        $data = [
+            'doit'     => true,
+            'dontdoit' => false,
+        ];
+        $this->parser->setData($data);
+
+        $template = '{% if $doit %}Howdy{% endif %}{% if $dontdoit === false %}Welcome{% endif %}';
+        $output   = $this->parser->renderString($template);
+
+        $this->assertSame('HowdyWelcome', $output);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5831
+     */
+    public function testChangeConditionalDelimitersWorkWithJavaScriptCode(): void
+    {
+        $this->parser->setConditionalDelimiters('{%', '%}');
+
+        $data = [
+            'message' => 'Warning!',
+        ];
+        $this->parser->setData($data);
+
+        $template = <<<'EOL'
+            <script type="text/javascript">
+             var f = function() {
+                 if (true) {
+                     alert('{message}');
+                 }
+             }
+            </script>
+            EOL;
+        $expected = <<<'EOL'
+            <script type="text/javascript">
+             var f = function() {
+                 if (true) {
+                     alert('Warning!');
+                 }
+             }
+            </script>
+            EOL;
+        $this->assertSame($expected, $this->parser->renderString($template));
     }
 }

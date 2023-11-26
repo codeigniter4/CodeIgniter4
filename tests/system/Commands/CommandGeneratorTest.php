@@ -12,28 +12,20 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CommandGeneratorTest extends CIUnitTestCase
 {
-    protected $streamFilter;
-
-    protected function setUp(): void
-    {
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-    }
+    use StreamFilterTrait;
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->streamFilter);
-
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
+        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
         $dir    = dirname($file);
 
@@ -47,24 +39,24 @@ final class CommandGeneratorTest extends CIUnitTestCase
 
     protected function getFileContents(string $filepath): string
     {
-        if (! file_exists($filepath)) {
+        if (! is_file($filepath)) {
             return '';
         }
 
         return file_get_contents($filepath) ?: '';
     }
 
-    public function testGenerateCommand()
+    public function testGenerateCommand(): void
     {
         command('make:command deliver');
         $file = APPPATH . 'Commands/Deliver.php';
         $this->assertFileExists($file);
         $contents = $this->getFileContents($file);
-        $this->assertStringContainsString('protected $group = \'CodeIgniter\';', $contents);
+        $this->assertStringContainsString('protected $group = \'App\';', $contents);
         $this->assertStringContainsString('protected $name = \'command:name\';', $contents);
     }
 
-    public function testGenerateCommandWithOptionCommand()
+    public function testGenerateCommandWithOptionCommand(): void
     {
         command('make:command deliver -command clear:sessions');
         $file = APPPATH . 'Commands/Deliver.php';
@@ -74,17 +66,17 @@ final class CommandGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('protected $usage = \'clear:sessions [arguments] [options]\';', $contents);
     }
 
-    public function testGenerateCommandWithOptionTypeBasic()
+    public function testGenerateCommandWithOptionTypeBasic(): void
     {
         command('make:command deliver -type basic');
         $file = APPPATH . 'Commands/Deliver.php';
         $this->assertFileExists($file);
         $contents = $this->getFileContents($file);
-        $this->assertStringContainsString('protected $group = \'CodeIgniter\';', $contents);
+        $this->assertStringContainsString('protected $group = \'App\';', $contents);
         $this->assertStringContainsString('protected $name = \'command:name\';', $contents);
     }
 
-    public function testGenerateCommandWithOptionTypeGenerator()
+    public function testGenerateCommandWithOptionTypeGenerator(): void
     {
         command('make:command deliver -type generator');
         $file = APPPATH . 'Commands/Deliver.php';
@@ -94,21 +86,21 @@ final class CommandGeneratorTest extends CIUnitTestCase
         $this->assertStringContainsString('protected $name = \'command:name\';', $contents);
     }
 
-    public function testGenerateCommandWithOptionGroup()
+    public function testGenerateCommandWithOptionGroup(): void
     {
         command('make:command deliver -group Deliverables');
         $file = APPPATH . 'Commands/Deliver.php';
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
 
         $contents = $this->getFileContents($file);
         $this->assertStringContainsString('protected $group = \'Deliverables\';', $contents);
     }
 
-    public function testGenerateCommandWithOptionSuffix()
+    public function testGenerateCommandWithOptionSuffix(): void
     {
         command('make:command publish -suffix');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Commands/PublishCommand.php';
         $this->assertFileExists($file);
     }
@@ -119,7 +111,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
     public function testGeneratorPreservesCase(): void
     {
         command('make:model TestModule');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Models/TestModule.php');
     }
 
@@ -129,7 +121,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
     public function testGeneratorPreservesCaseButChangesComponentName(): void
     {
         command('make:controller TestModulecontroller');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Controllers/TestModuleController.php');
     }
 

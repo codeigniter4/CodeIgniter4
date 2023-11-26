@@ -1,0 +1,62 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+
+if ($argc === 1) {
+    echo 'Usage: ' . $argv[0] . ' <html-dir>' . PHP_EOL;
+    echo '  e.g: ' . $argv[0] . ' user_guide_src/build/html/' . PHP_EOL;
+
+    exit(1);
+}
+
+$dir = realpath($argv[1]);
+
+if ($dir === false || ! is_dir($dir)) {
+    throw new RuntimeException('Cannot find directory: ' . $dir);
+}
+
+$iterator = new RecursiveIteratorIterator(
+    new RecursiveDirectoryIterator(
+        $dir,
+        FilesystemIterator::CURRENT_AS_FILEINFO |
+        FilesystemIterator::KEY_AS_PATHNAME |
+        FilesystemIterator::SKIP_DOTS
+    )
+);
+
+$files = new RegexIterator(
+    $iterator,
+    '/\A.+\.html\z/',
+    RecursiveRegexIterator::MATCH
+);
+
+foreach ($files as $filePath => $fileInfo) {
+    echo 'processing... ' . PHP_EOL;
+
+    $uriPath    = str_replace('.html', '.rst', str_replace($dir, '', $filePath));
+    $gitHubLink = '<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source'
+        . $uriPath . '">Edit this page</a>';
+
+    $content = file_get_contents($filePath);
+
+    $pattern = '!">Edit this page</a>!u';
+    if (preg_match($pattern, $content) === 1) {
+        // Move the cursor up 1 line
+        echo "\033[1A";
+        echo 'skip: ' . $filePath . PHP_EOL;
+
+        continue;
+    }
+
+    $pattern = '/<div class="rst-content">/u';
+    $content = preg_replace(
+        $pattern,
+        '<div class="rst-content">' . PHP_EOL . $gitHubLink . PHP_EOL,
+        $content
+    );
+
+    file_put_contents($filePath, $content, LOCK_EX);
+
+    // Move the cursor up 1 line
+    echo "\033[1A";
+    echo 'done: ' . $filePath . PHP_EOL;
+}

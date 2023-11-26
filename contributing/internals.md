@@ -17,11 +17,9 @@ other core packages, you can create that in the constructor using the
 override that:
 
 ```php
-    public function __construct(Foo $foo=null)
+    public function __construct(?Foo $foo = null)
     {
-        $this->foo = $foo instanceOf Foo
-            ? $foo
-            : \Config\Services::foo();
+        $this->foo = $foo ?? \Config\Services::foo();
     }
 ```
 
@@ -75,7 +73,7 @@ package itself will need its own sub-namespace that collects all related
 files into one grouping, like `CodeIgniter\HTTP`.
 
 Files MUST be named the same as the class they hold, and they must match
-the Style Guide &lt;./styleguide.md&gt;, meaning CamelCase class and
+the [Style Guide](styleguide.md), meaning CamelCase class and
 file names. They should be in their own directory that matches the
 sub-namespace under the **system** directory.
 
@@ -122,17 +120,9 @@ scans and keep performance high.
 
 ## Command-Line Support
 
-CodeIgniter has never been known for it's strong CLI support. However,
+CodeIgniter has never been known for its strong CLI support. However,
 if your package could benefit from it, create a new file under
-**system/Commands**. The class contained within is simply a controller
-that is intended for CLI usage only. The `index()` method should provide
-a list of available commands provided by that package.
-
-Routes must be added to **system/Config/Routes.php** using the `cli()`
-method to ensure it is not accessible through the browser, but is
-restricted to the CLI only.
-
-See the **MigrationsCommand** file for an example.
+**system/Commands**.
 
 ## Documentation
 

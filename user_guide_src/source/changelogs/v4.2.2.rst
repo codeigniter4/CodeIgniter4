@@ -1,0 +1,47 @@
+Version 4.2.2
+#############
+
+Release Date: August 6, 2022
+
+**4.2.2 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+BREAKING
+********
+
+- Now ``Services::request()`` returns ``IncomingRequest`` or ``CLIRequest``.
+- The method signature of ``CodeIgniter\Debug\Exceptions::__construct()`` has been changed. The ``IncomingRequest`` typehint on the ``$request`` parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.
+- The method signature of ``BaseBuilder.php::insert()`` and ``BaseBuilder.php::update()`` have been changed. The ``?array`` typehint on the ``$set`` parameter was removed.
+- A bug that caused pages to be cached before after filters were executed when using page caching has been fixed. Adding response headers or changing the response body in after filters now caches them correctly.
+- Due to a bug fix, now :php:func:`random_string()` with the first parameter ``'crypto'`` throws ``InvalidArgumentException`` if the second parameter ``$len`` is an odd number.
+
+Message Changes
+***************
+
+- Fixed ``invalidRoute`` message in ``Language/en/HTTP.php``.
+
+Changes
+*******
+
+- Fixed: ``BaseBuilder::increment()`` and ``BaseBuilder::decrement()`` do not reset the ``BaseBuilder`` state after a query.
+- Fixed: Validation of fields with a leading asterisk (wildcard).
+- Now ``CLIRequest::isCLI()`` always returns true.
+- Now ``IncommingRequest::isCLI()`` always returns false.
+- **Vagrantfile.dist** has been moved to `CodeIgniter DevKit <https://github.com/codeigniter4/devkit>`_.
+
+Deprecations
+************
+
+- The parameters of ``Services::request()`` are deprecated.
+- The first parameter ``$cacheConfig`` of ``CodeIgniter::gatherOutput()`` is deprecated.
+- The second parameter ``$ifNotExists`` of ``Forge::_createTable()`` is deprecated.
+
+Bugs Fixed
+**********
+
+See the repo's
+`CHANGELOG_4.2.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.2.md>`_
+for a complete list of bugs fixed.

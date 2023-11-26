@@ -1,0 +1,72 @@
+name: Psalm
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - '4.*'
+    paths:
+      - '**.php'
+      - 'composer.*'
+      - 'psalm*'
+      - '.github/workflows/test-psalm.yml'
+  push:
+    branches:
+      - develop
+      - '4.*'
+    paths:
+      - '**.php'
+      - 'composer.*'
+      - 'psalm*'
+      - '.github/workflows/test-psalm.yml'
+
+jobs:
+  build:
+    name: Psalm Analysis
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: phpstan, phpunit
+          extensions: intl, json, mbstring, xml, oci8
+          coverage: none
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get composer cache directory
+        run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Create Psalm cache directory
+        run: mkdir -p build/psalm
+
+      - name: Cache Psalm results
+        uses: actions/cache@v3
+        with:
+          path: build/psalm
+          key: ${{ runner.os }}-psalm-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-psalm-
+
+      - name: Install dependencies
+        run: |
+          if [ -f composer.lock ]; then
+            composer install --no-progress
+          else
+            composer update --no-progress
+          fi
+
+      - name: Run Psalm analysis
+        run: vendor/bin/psalm

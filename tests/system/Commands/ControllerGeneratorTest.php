@@ -12,28 +12,20 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ControllerGeneratorTest extends CIUnitTestCase
 {
-    protected $streamFilter;
-
-    protected function setUp(): void
-    {
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-    }
+    use StreamFilterTrait;
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->streamFilter);
-
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
+        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
         if (is_file($file)) {
             unlink($file);
@@ -42,53 +34,53 @@ final class ControllerGeneratorTest extends CIUnitTestCase
 
     protected function getFileContents(string $filepath): string
     {
-        if (! file_exists($filepath)) {
+        if (! is_file($filepath)) {
             return '';
         }
 
         return file_get_contents($filepath) ?: '';
     }
 
-    public function testGenerateController()
+    public function testGenerateController(): void
     {
         command('make:controller user');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Controllers/User.php';
         $this->assertFileExists($file);
         $this->assertStringContainsString('extends BaseController', $this->getFileContents($file));
     }
 
-    public function testGenerateControllerWithOptionBare()
+    public function testGenerateControllerWithOptionBare(): void
     {
         command('make:controller blog -bare');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Controllers/Blog.php';
         $this->assertFileExists($file);
         $this->assertStringContainsString('extends Controller', $this->getFileContents($file));
     }
 
-    public function testGenerateControllerWithOptionRestful()
+    public function testGenerateControllerWithOptionRestful(): void
     {
         command('make:controller order -restful');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Controllers/Order.php';
         $this->assertFileExists($file);
         $this->assertStringContainsString('extends ResourceController', $this->getFileContents($file));
     }
 
-    public function testGenerateControllerWithOptionRestfulPresenter()
+    public function testGenerateControllerWithOptionRestfulPresenter(): void
     {
         command('make:controller pay -restful presenter');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Controllers/Pay.php';
         $this->assertFileExists($file);
         $this->assertStringContainsString('extends ResourcePresenter', $this->getFileContents($file));
     }
 
-    public function testGenerateControllerWithOptionSuffix()
+    public function testGenerateControllerWithOptionSuffix(): void
     {
         command('make:controller dashboard -suffix');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Controllers/DashboardController.php');
     }
 }

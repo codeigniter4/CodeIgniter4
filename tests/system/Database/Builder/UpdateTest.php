@@ -12,12 +12,15 @@
 namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use CodeIgniter\Test\Mock\MockQuery;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class UpdateTest extends CIUnitTestCase
 {
@@ -33,11 +36,12 @@ final class UpdateTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testUpdate()
+    public function testUpdateArray(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $builder->testMode()->where('id', 1)->update(['name' => 'Programmer'], null, null);
+        $data = ['name' => 'Programmer'];
+        $builder->testMode()->where('id', 1)->update($data, null, null);
 
         $expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
         $expectedBinds = [
@@ -55,7 +59,30 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateInternalWhereAndLimit()
+    public function testUpdateObject(): void
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+
+        $data = (object) ['name' => 'Programmer'];
+        $builder->testMode()->where('id', 1)->update($data, null, null);
+
+        $expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
+        $expectedBinds = [
+            'id' => [
+                1,
+                true,
+            ],
+            'name' => [
+                'Programmer',
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testUpdateInternalWhereAndLimit(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -77,7 +104,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateWithSet()
+    public function testUpdateWithSet(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -99,7 +126,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateWithSetAsInt()
+    public function testUpdateWithSetAsInt(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -121,7 +148,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateWithSetAsBoolean()
+    public function testUpdateWithSetAsBoolean(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -143,7 +170,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateWithSetAsArray()
+    public function testUpdateWithSetAsArray(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -173,17 +200,17 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateThrowsExceptionWithNoData()
+    public function testUpdateThrowsExceptionWithNoData(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $this->expectException('CodeIgniter\Database\Exceptions\DatabaseException');
+        $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('You must use the "set" method to update an entry.');
 
         $builder->update(null, null, null);
     }
 
-    public function testUpdateBatch()
+    public function testUpdateBatch(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -206,36 +233,22 @@ final class UpdateTest extends CIUnitTestCase
         $query = $this->db->getLastQuery();
         $this->assertInstanceOf(MockQuery::class, $query);
 
-        $space = ' ';
-
-        $expected = <<<EOF
-            UPDATE "jobs" SET "name" = CASE{$space}
-            WHEN "id" = :id: THEN :name:
-            WHEN "id" = :id.1: THEN :name.1:
-            ELSE "name" END, "description" = CASE{$space}
-            WHEN "id" = :id: THEN :description:
-            WHEN "id" = :id.1: THEN :description.1:
-            ELSE "description" END
-            WHERE "id" IN(:id:,:id.1:)
-            EOF;
-
-        $this->assertSame($expected, $query->getOriginalQuery());
-
-        $expected = <<<EOF
-            UPDATE "jobs" SET "name" = CASE{$space}
-            WHEN "id" = 2 THEN 'Comedian'
-            WHEN "id" = 3 THEN 'Cab Driver'
-            ELSE "name" END, "description" = CASE{$space}
-            WHEN "id" = 2 THEN 'There''s something in your teeth'
-            WHEN "id" = 3 THEN 'I am yellow'
-            ELSE "description" END
-            WHERE "id" IN(2,3)
+        $expected = <<<'EOF'
+            UPDATE "jobs"
+            SET
+            "description" = _u."description",
+            "name" = _u."name"
+            FROM (
+            SELECT 'There''s something in your teeth' "description", 2 "id", 'Comedian' "name" UNION ALL
+            SELECT 'I am yellow' "description", 3 "id", 'Cab Driver' "name"
+            ) _u
+            WHERE "jobs"."id" = _u."id"
             EOF;
 
         $this->assertSame($expected, $query->getQuery());
     }
 
-    public function testSetUpdateBatchWithoutEscape()
+    public function testSetUpdateBatchWithoutEscape(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
         $escape  = false;
@@ -259,66 +272,65 @@ final class UpdateTest extends CIUnitTestCase
         $query = $this->db->getLastQuery();
         $this->assertInstanceOf(MockQuery::class, $query);
 
-        $space = ' ';
-
-        $expected = <<<EOF
-            UPDATE "jobs" SET "name" = CASE{$space}
-            WHEN "id" = :id: THEN :name:
-            WHEN "id" = :id.1: THEN :name.1:
-            ELSE "name" END, "description" = CASE{$space}
-            WHEN "id" = :id: THEN :description:
-            WHEN "id" = :id.1: THEN :description.1:
-            ELSE "description" END
-            WHERE "id" IN(:id:,:id.1:)
-            EOF;
-
-        $this->assertSame($expected, $query->getOriginalQuery());
-
-        $expected = <<<EOF
-            UPDATE "jobs" SET "name" = CASE{$space}
-            WHEN "id" = 2 THEN SUBSTRING(name, 1)
-            WHEN "id" = 3 THEN SUBSTRING(name, 2)
-            ELSE "name" END, "description" = CASE{$space}
-            WHEN "id" = 2 THEN SUBSTRING(description, 3)
-            WHEN "id" = 3 THEN SUBSTRING(description, 4)
-            ELSE "description" END
-            WHERE "id" IN(2,3)
+        $expected = <<<'EOF'
+            UPDATE "jobs"
+            SET
+            "description" = _u."description",
+            "name" = _u."name"
+            FROM (
+            SELECT SUBSTRING(description, 3) "description", 2 "id", SUBSTRING(name, 1) "name" UNION ALL
+            SELECT SUBSTRING(description, 4) "description", 3 "id", SUBSTRING(name, 2) "name"
+            ) _u
+            WHERE "jobs"."id" = _u."id"
             EOF;
 
         $this->assertSame($expected, $query->getQuery());
     }
 
-    public function testUpdateBatchThrowsExceptionWithNoData()
+    public function testUpdateBatchThrowsExceptionWithNoData(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
-        $this->expectExceptionMessage('You must use the "set" method to update an entry.');
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('updateBatch() has no data.');
 
         $builder->updateBatch(null, 'id');
     }
 
-    public function testUpdateBatchThrowsExceptionWithNoID()
+    public function testUpdateBatchThrowsExceptionWithNoID(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
-        $this->expectExceptionMessage('You must specify an index to match on for batch updates.');
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('You must specify a constraint to match on for batch updates.');
 
-        $builder->updateBatch([]);
+        $set = [
+            [
+                'id'          => 2,
+                'name'        => 'SUBSTRING(name, 1)',
+                'description' => 'SUBSTRING(description, 3)',
+            ],
+            [
+                'id'          => 3,
+                'name'        => 'SUBSTRING(name, 2)',
+                'description' => 'SUBSTRING(description, 4)',
+            ],
+        ];
+
+        $builder->updateBatch($set, null);
     }
 
-    public function testUpdateBatchThrowsExceptionWithEmptySetArray()
+    public function testUpdateBatchThrowsExceptionWithEmptySetArray(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
-        $this->expectExceptionMessage('updateBatch() called with no data');
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('updateBatch() has no data.');
 
         $builder->updateBatch([], 'id');
     }
 
-    public function testUpdateWithWhereSameColumn()
+    public function testUpdateWithWhereSameColumn(): void
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
@@ -340,7 +352,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateWithWhereSameColumn2()
+    public function testUpdateWithWhereSameColumn2(): void
     {
         // calling order: set() -> where()
         $builder = new BaseBuilder('jobs', $this->db);
@@ -366,7 +378,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testUpdateWithWhereSameColumn3()
+    public function testUpdateWithWhereSameColumn3(): void
     {
         // calling order: where() -> set() in update()
         $builder = new BaseBuilder('jobs', $this->db);
@@ -394,7 +406,7 @@ final class UpdateTest extends CIUnitTestCase
     /**
      * @see https://codeigniter4.github.io/CodeIgniter4/database/query_builder.html#updating-data
      */
-    public function testSetWithoutEscape()
+    public function testSetWithoutEscape(): void
     {
         $builder = new BaseBuilder('mytable', $this->db);
 
@@ -415,7 +427,7 @@ final class UpdateTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testSetWithAndWithoutEscape()
+    public function testSetWithAndWithoutEscape(): void
     {
         $builder = new BaseBuilder('mytable', $this->db);
 

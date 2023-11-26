@@ -13,12 +13,15 @@ namespace CodeIgniter\Files;
 
 use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use CodeIgniter\I18n\Time;
 use Config\Mimes;
 use ReturnTypeWillChange;
 use SplFileInfo;
 
 /**
  * Wrapper for PHP's built-in SplFileInfo, with goodies.
+ *
+ * @see \CodeIgniter\Files\FileTest
  */
 class File extends SplFileInfo
 {
@@ -89,7 +92,12 @@ class File extends SplFileInfo
      */
     public function guessExtension(): ?string
     {
-        return Mimes::guessExtensionFromType($this->getMimeType());
+        // naively get the path extension using pathinfo
+        $pathinfo = pathinfo($this->getRealPath() ?: $this->__toString()) + ['extension' => ''];
+
+        $proposedExtension = $pathinfo['extension'];
+
+        return Mimes::guessExtensionFromType($this->getMimeType(), $proposedExtension);
     }
 
     /**
@@ -121,7 +129,7 @@ class File extends SplFileInfo
         $extension = $this->getExtension();
         $extension = empty($extension) ? '' : '.' . $extension;
 
-        return time() . '_' . bin2hex(random_bytes(10)) . $extension;
+        return Time::now()->getTimestamp() . '_' . bin2hex(random_bytes(10)) . $extension;
     }
 
     /**
@@ -131,8 +139,8 @@ class File extends SplFileInfo
      */
     public function move(string $targetPath, ?string $name = null, bool $overwrite = false)
     {
-        $targetPath  = rtrim($targetPath, '/') . '/';
-        $name        = $name ?? $this->getBaseName();
+        $targetPath = rtrim($targetPath, '/') . '/';
+        $name ??= $this->getBaseName();
         $destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
         $oldName = $this->getRealPath() ?: $this->__toString();

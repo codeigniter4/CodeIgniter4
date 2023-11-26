@@ -12,12 +12,11 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Events\Events;
+use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\URI;
-use CodeIgniter\HTTP\UserAgent;
-use CodeIgniter\Router\Exceptions\RedirectException;
-use CodeIgniter\Router\RouteCollection;
 use Config\App;
 use Config\Services;
 use Exception;
@@ -40,7 +39,7 @@ trait FeatureTestTrait
      *    ['get', 'home', 'Home::index']
      * ]
      *
-     * @param array $routes
+     * @param array|null $routes Array to set routes
      *
      * @return $this
      */
@@ -48,11 +47,15 @@ trait FeatureTestTrait
     {
         $collection = Services::routes();
 
-        if ($routes) {
+        if ($routes !== null) {
             $collection->resetRoutes();
 
             foreach ($routes as $route) {
-                $collection->{$route[0]}($route[1], $route[2]);
+                if (isset($route[3])) {
+                    $collection->{$route[0]}($route[1], $route[2], $route[3]);
+                } else {
+                    $collection->{$route[0]}($route[1], $route[2]);
+                }
             }
         }
 
@@ -111,7 +114,7 @@ trait FeatureTestTrait
     /**
      * Set the raw body for the request
      *
-     * @param mixed $body
+     * @param string $body
      *
      * @return $this
      */
@@ -138,23 +141,12 @@ trait FeatureTestTrait
      * Calls a single URI, executes it, and returns a TestResponse
      * instance that can be used to run many assertions against.
      *
-     * @throws RedirectException
-     * @throws Exception
+     * @param string $method HTTP verb
      *
      * @return TestResponse
      */
     public function call(string $method, string $path, ?array $params = null)
     {
-        $buffer = \ob_get_level();
-
-        // Clean up any open output buffers
-        // not relevant to unit testing
-        // @codeCoverageIgnoreStart
-        if (\ob_get_level() > 0 && (! isset($this->clean) || $this->clean === true)) {
-            \ob_end_clean();
-        }
-        // @codeCoverageIgnoreEnd
-
         // Simulate having a blank session
         $_SESSION                  = [];
         $_SERVER['REQUEST_METHOD'] = $method;
@@ -162,16 +154,11 @@ trait FeatureTestTrait
         $request = $this->setupRequest($method, $path);
         $request = $this->setupHeaders($request);
         $request = $this->populateGlobals($method, $request, $params);
-        $request = $this->setRequestBody($request);
+        $request = $this->setRequestBody($request, $params);
 
         // Initialize the RouteCollection
         if (! $routes = $this->routes) {
-            require APPPATH . 'Config/Routes.php';
-
-            /**
-             * @var RouteCollection $routes
-             */
-            $routes->getRoutes('*');
+            $routes = Services::routes()->loadRoutes();
         }
 
         $routes->setHTTPVerb($method);
@@ -183,28 +170,16 @@ trait FeatureTestTrait
         // Make sure filters are reset between tests
         Services::injectMock('filters', Services::filters(null, false));
 
+        // Make sure validation is reset between tests
+        Services::injectMock('validation', Services::validation(null, false));
+
         $response = $this->app
+            ->setContext('web')
             ->setRequest($request)
             ->run($routes, true);
 
-        $output = \ob_get_contents();
-        if (empty($response->getBody()) && ! empty($output)) {
-            $response->setBody($output);
-        }
-
         // Reset directory if it has been set
         Services::router()->setDirectory(null);
-
-        // Ensure the output buffer is identical so no tests are risky
-        // @codeCoverageIgnoreStart
-        while (\ob_get_level() > $buffer) {
-            \ob_end_clean();
-        }
-
-        while (\ob_get_level() < $buffer) {
-            \ob_start();
-        }
-        // @codeCoverageIgnoreEnd
 
         return new TestResponse($response);
     }
@@ -212,10 +187,12 @@ trait FeatureTestTrait
     /**
      * Performs a GET request.
      *
-     * @throws RedirectException
-     * @throws Exception
+     * @param string $path URI path relative to baseURL. May include query.
      *
      * @return TestResponse
+     *
+     * @throws RedirectException
+     * @throws Exception
      */
     public function get(string $path, ?array $params = null)
     {
@@ -225,10 +202,10 @@ trait FeatureTestTrait
     /**
      * Performs a POST request.
      *
+     * @return TestResponse
+     *
      * @throws RedirectException
      * @throws Exception
-     *
-     * @return TestResponse
      */
     public function post(string $path, ?array $params = null)
     {
@@ -238,10 +215,10 @@ trait FeatureTestTrait
     /**
      * Performs a PUT request
      *
+     * @return TestResponse
+     *
      * @throws RedirectException
      * @throws Exception
-     *
-     * @return TestResponse
      */
     public function put(string $path, ?array $params = null)
     {
@@ -251,10 +228,10 @@ trait FeatureTestTrait
     /**
      * Performss a PATCH request
      *
+     * @return TestResponse
+     *
      * @throws RedirectException
      * @throws Exception
-     *
-     * @return TestResponse
      */
     public function patch(string $path, ?array $params = null)
     {
@@ -264,10 +241,10 @@ trait FeatureTestTrait
     /**
      * Performs a DELETE request.
      *
+     * @return TestResponse
+     *
      * @throws RedirectException
      * @throws Exception
-     *
-     * @return TestResponse
      */
     public function delete(string $path, ?array $params = null)
     {
@@ -277,10 +254,10 @@ trait FeatureTestTrait
     /**
      * Performs an OPTIONS request.
      *
+     * @return TestResponse
+     *
      * @throws RedirectException
      * @throws Exception
-     *
-     * @return TestResponse
      */
     public function options(string $path, ?array $params = null)
     {
@@ -290,23 +267,38 @@ trait FeatureTestTrait
     /**
      * Setup a Request object to use so that CodeIgniter
      * won't try to auto-populate some of the items.
+     *
+     * @param string $method HTTP verb
      */
     protected function setupRequest(string $method, ?string $path = null): IncomingRequest
     {
-        $path    = URI::removeDotSegments($path);
-        $config  = config(App::class);
-        $request = new IncomingRequest($config, new URI(), null, new UserAgent());
+        $config = config(App::class);
+        $uri    = new SiteURI($config);
 
         // $path may have a query in it
-        $parts                   = explode('?', $path);
-        $_SERVER['QUERY_STRING'] = $parts[1] ?? '';
+        $path  = URI::removeDotSegments($path);
+        $parts = explode('?', $path);
+        $path  = $parts[0];
+        $query = $parts[1] ?? '';
 
-        $request->setPath($parts[0]);
+        $superglobals = Services::superglobals();
+        $superglobals->setServer('QUERY_STRING', $query);
+
+        $uri->setPath($path);
+        $uri->setQuery($query);
+
+        Services::injectMock('uri', $uri);
+
+        $request = Services::incomingrequest($config, false);
+
         $request->setMethod($method);
         $request->setProtocolVersion('1.1');
 
         if ($config->forceGlobalSecureRequests) {
             $_SERVER['HTTPS'] = 'test';
+            $server           = $request->getServer();
+            $server['HTTPS']  = 'test';
+            $request->setGlobal('server', $server);
         }
 
         return $request;
@@ -334,24 +326,33 @@ trait FeatureTestTrait
      *
      * Always populate the GET vars based on the URI.
      *
-     * @throws ReflectionException
+     * @param string $method HTTP verb
      *
      * @return Request
+     *
+     * @throws ReflectionException
      */
     protected function populateGlobals(string $method, Request $request, ?array $params = null)
     {
         // $params should set the query vars if present,
         // otherwise set it from the URL.
-        $get = ! empty($params) && $method === 'get'
+        $get = (! empty($params) && $method === 'get')
             ? $params
-            : $this->getPrivateProperty($request->uri, 'query'); // @phpstan-ignore-line
+            : $this->getPrivateProperty($request->getUri(), 'query');
 
         $request->setGlobal('get', $get);
-        if ($method !== 'get') {
-            $request->setGlobal($method, $params);
+
+        if ($method === 'get') {
+            $request->setGlobal('request', $request->fetchGlobal('get'));
         }
 
-        $request->setGlobal('request', $params);
+        if ($method === 'post') {
+            $request->setGlobal($method, $params);
+            $request->setGlobal(
+                'request',
+                $request->fetchGlobal('post') + $request->fetchGlobal('get')
+            );
+        }
 
         $_SESSION = $this->session ?? [];
 
@@ -363,31 +364,30 @@ trait FeatureTestTrait
      * This allows the body to be formatted in a way that the controller is going to
      * expect as in the case of testing a JSON or XML API.
      *
-     * @param array|null $params The parameters to be formatted and put in the body. If this is empty, it will get the
-     *                           what has been loaded into the request global of the request class.
+     * @param array|null $params The parameters to be formatted and put in the body.
      */
     protected function setRequestBody(Request $request, ?array $params = null): Request
     {
-        if (isset($this->requestBody) && $this->requestBody !== '') {
+        if ($this->requestBody !== '') {
             $request->setBody($this->requestBody);
-
-            return $request;
         }
 
-        if (isset($this->bodyFormat) && $this->bodyFormat !== '') {
-            if (empty($params)) {
-                $params = $request->fetchGlobal('request');
-            }
+        if ($this->bodyFormat !== '') {
             $formatMime = '';
             if ($this->bodyFormat === 'json') {
                 $formatMime = 'application/json';
             } elseif ($this->bodyFormat === 'xml') {
                 $formatMime = 'application/xml';
             }
-            if (! empty($formatMime) && ! empty($params)) {
-                $formatted = Services::format()->getFormatter($formatMime)->format($params);
-                $request->setBody($formatted);
+
+            if ($formatMime !== '') {
                 $request->setHeader('Content-Type', $formatMime);
+            }
+
+            if ($params !== null && $formatMime !== '') {
+                $formatted = Services::format()->getFormatter($formatMime)->format($params);
+                // "withBodyFormat() and $params of call()" has higher priority than withBody().
+                $request->setBody($formatted);
             }
         }
 

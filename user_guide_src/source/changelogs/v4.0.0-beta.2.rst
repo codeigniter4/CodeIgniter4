@@ -3,7 +3,12 @@ Version 4.0.0-beta.2
 
 Release Date: April 4, 2019
 
-Highlights:
+.. contents::
+    :local:
+    :depth: 2
+
+Highlights
+----------
 
 - A number of fixes & improvements, importantly for the Model and testing classes
 - Models now require a primary key
@@ -11,16 +16,21 @@ Highlights:
 - Validation rules have been enhanced
 - .htaccess beefed up
 
-New messages:
+New messages
+------------
 
 - Database.noPrimaryKey, forFindColumnHaveMultipleColumns, Database.forEmptyInputGiven
 
-App changes:
+App Changes
+-----------
 
 - updated app/Config/Events
 - added app/Controllers/BaseController
 - added tests/ folder for unit testing
 - added phpunit.xml.dist for unit testing configuration
+
+Changed Files
+-------------
 
 The list of changed files follows, with PR numbers shown.
 
@@ -153,7 +163,6 @@ The list of changed files follows, with PR numbers shown.
         - ViewTest #1827, #1836
     - ControllerTest #1850
 
-
 - user_guide_src/
     - cli/
         - cli_commands #1777
@@ -188,8 +197,8 @@ The list of changed files follows, with PR numbers shown.
     - testing/
         - controllers #1848
 
-PRs merged:
------------
+PRs merged
+----------
 
 - #1913 More RouteCollection tests for overwriting. Closes #1692
 - #1912 Additional RouteCollectionTests
@@ -233,7 +242,7 @@ PRs merged:
 - #1839 Dont replace slashes with backslashes in the to route
 - #1836 Test: Improve View\View coverage
 - #1831 Fix some PHPDoc comments error
-- #1829 Improve: Models now require a primary key. This is partially to keep the code …
+- #1829 Improve: Models now require a primary key. This is partially to keep the code ...
 - #1828 Fix: Remove bootstrap styles from validation views.
 - #1827 Fix: Adding include method to View library to render view partials... views.
 - #1823 Docs: Remove legacy Bootstrap references in Pagination class

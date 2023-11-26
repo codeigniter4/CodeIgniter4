@@ -11,10 +11,10 @@
 
 namespace CodeIgniter\Test;
 
-use InvalidArgumentException;
-
 /**
  * @internal
+ *
+ * @group Others
  */
 final class DOMParserTest extends CIUnitTestCase
 {
@@ -27,7 +27,7 @@ final class DOMParserTest extends CIUnitTestCase
         }
     }
 
-    public function testCanRoundTripHTML()
+    public function testCanRoundTripHTML(): void
     {
         $dom = new DOMParser();
 
@@ -38,7 +38,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertSame($expected . "\n", $dom->withString($html)->getBody());
     }
 
-    public function testParseSelectorWithID()
+    public function testParseSelectorWithID(): void
     {
         $dom = new DOMParser();
 
@@ -48,7 +48,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertSame('row', $selector['id']);
     }
 
-    public function testParseSelectorWithClass()
+    public function testParseSelectorWithClass(): void
     {
         $dom = new DOMParser();
 
@@ -58,7 +58,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertSame('row', $selector['class']);
     }
 
-    public function testParseSelectorWithClassMultiple()
+    public function testParseSelectorWithClassMultiple(): void
     {
         $dom = new DOMParser();
 
@@ -69,7 +69,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertSame('row', $selector['class']);
     }
 
-    public function testParseSelectorWithAttribute()
+    public function testParseSelectorWithAttribute(): void
     {
         $dom = new DOMParser();
 
@@ -79,11 +79,12 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertSame(['href' => 'http://example.com'], $selector['attr']);
     }
 
-    public function provideText()
+    public static function provideText(): iterable
     {
         return [
-            ['Hello World'],
-            ['Hellö Wörld'],
+            'en' => ['Hello World'],
+            'sv' => ['Hej, världen'],
+            'ja' => ['こんにちは、世界'],
         ];
     }
 
@@ -92,7 +93,7 @@ final class DOMParserTest extends CIUnitTestCase
      *
      * @param mixed $text
      */
-    public function testSeeText($text)
+    public function testSeeText($text): void
     {
         $dom = new DOMParser();
 
@@ -102,7 +103,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->see($text));
     }
 
-    public function testSeeHTML()
+    public function testSeeHTML(): void
     {
         $dom = new DOMParser();
 
@@ -115,7 +116,7 @@ final class DOMParserTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/3984
      */
-    public function testSeeHTMLOutsideBodyTag()
+    public function testSeeHTMLOutsideBodyTag(): void
     {
         $dom = new DOMParser();
 
@@ -125,7 +126,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->see('My Title', 'title'));
     }
 
-    public function testSeeFail()
+    public function testSeeFail(): void
     {
         $dom = new DOMParser();
 
@@ -140,7 +141,7 @@ final class DOMParserTest extends CIUnitTestCase
      *
      * @param mixed $text
      */
-    public function testSeeElement($text)
+    public function testSeeElement($text): void
     {
         $dom = new DOMParser();
 
@@ -150,7 +151,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->see($text, 'h1'));
     }
 
-    public function testSeeElementPartialText()
+    public function testSeeElementPartialText(): void
     {
         $dom = new DOMParser();
 
@@ -160,7 +161,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->see('Hello World', 'h1'));
     }
 
-    public function testSeeElementID()
+    public function testSeeElementID(): void
     {
         $dom = new DOMParser();
 
@@ -170,7 +171,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->see('Hello World', '#heading'));
     }
 
-    public function testSeeElementIDFails()
+    public function testSeeElementIDFails(): void
     {
         $dom = new DOMParser();
 
@@ -180,7 +181,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertFalse($dom->see('Hello Worlds', '#heading'));
     }
 
-    public function testSeeElementIDWithTag()
+    public function testSeeElementIDWithTag(): void
     {
         $dom = new DOMParser();
 
@@ -190,7 +191,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->see('Hello World', 'h1#heading'));
     }
 
-    public function testSeeElementIDWithTagFails()
+    public function testSeeElementIDWithTagFails(): void
     {
         $dom = new DOMParser();
 
@@ -200,7 +201,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertFalse($dom->see('Hello World', 'h1#heading'));
     }
 
-    public function testSeeElementClass()
+    public function testSeeElementClass(): void
     {
         $dom = new DOMParser();
 
@@ -210,7 +211,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->see('Hello World', '.heading'));
     }
 
-    public function testSeeElementClassFail()
+    public function testSeeElementClassFail(): void
     {
         $dom = new DOMParser();
 
@@ -220,7 +221,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertFalse($dom->see('Hello World', '.heading'));
     }
 
-    public function testSeeElementClassWithTag()
+    public function testSeeElementClassWithTag(): void
     {
         $dom = new DOMParser();
 
@@ -230,7 +231,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->see('Hello World', 'h1.heading'));
     }
 
-    public function testSeeElementClassWithTagFail()
+    public function testSeeElementClassWithTagFail(): void
     {
         $dom = new DOMParser();
 
@@ -240,7 +241,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertFalse($dom->see('Hello World', 'h2.heading'));
     }
 
-    public function testSeeElementSuccess()
+    public function testSeeElementSuccess(): void
     {
         $dom = new DOMParser();
 
@@ -250,7 +251,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->seeElement('#heading'));
     }
 
-    public function testSeeElementFail()
+    public function testSeeElementFail(): void
     {
         $dom = new DOMParser();
 
@@ -260,7 +261,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertFalse($dom->seeElement('#headings'));
     }
 
-    public function testDontSeeElementSuccess()
+    public function testDontSeeElementSuccess(): void
     {
         $dom = new DOMParser();
 
@@ -270,7 +271,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->dontSeeElement('#head'));
     }
 
-    public function testDontSeeElementFail()
+    public function testDontSeeElementFail(): void
     {
         $dom = new DOMParser();
 
@@ -280,7 +281,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertFalse($dom->dontSeeElement('#heading'));
     }
 
-    public function testSeeLinkSuccess()
+    public function testSeeLinkSuccess(): void
     {
         $dom = new DOMParser();
 
@@ -290,7 +291,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->seeLink('Hello'));
     }
 
-    public function testSeeLinkFalse()
+    public function testSeeLinkFalse(): void
     {
         $dom = new DOMParser();
 
@@ -300,7 +301,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertFalse($dom->seeLink('Hello World!'));
     }
 
-    public function testSeeLinkClassSuccess()
+    public function testSeeLinkClassSuccess(): void
     {
         $dom = new DOMParser();
 
@@ -310,7 +311,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->seeLink('Hello', '.btn'));
     }
 
-    public function testSeeLinkClassFail()
+    public function testSeeLinkClassFail(): void
     {
         $dom = new DOMParser();
 
@@ -320,7 +321,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertFalse($dom->seeLink('Hello', '.btn'));
     }
 
-    public function testSeeInFieldSuccess()
+    public function testSeeInFieldSuccess(): void
     {
         $dom = new DOMParser();
 
@@ -330,7 +331,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->seeInField('user', 'Foobar'));
     }
 
-    public function testSeeInFieldFail()
+    public function testSeeInFieldFail(): void
     {
         $dom = new DOMParser();
 
@@ -340,7 +341,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertFalse($dom->seeInField('user', 'Foobars'));
     }
 
-    public function testSeeInFieldSuccessArray()
+    public function testSeeInFieldSuccessArray(): void
     {
         $dom = new DOMParser();
 
@@ -350,7 +351,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->seeInField('user[name]', 'Foobar'));
     }
 
-    public function testSeeCheckboxIsCheckedByIDTrue()
+    public function testSeeCheckboxIsCheckedByIDTrue(): void
     {
         $dom = new DOMParser();
 
@@ -360,7 +361,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->seeCheckboxIsChecked('#user'));
     }
 
-    public function testSeeCheckboxIsCheckedByIDFail()
+    public function testSeeCheckboxIsCheckedByIDFail(): void
     {
         $dom = new DOMParser();
 
@@ -370,7 +371,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertFalse($dom->seeCheckboxIsChecked('#user'));
     }
 
-    public function testSeeCheckboxIsCheckedByClassTrue()
+    public function testSeeCheckboxIsCheckedByClassTrue(): void
     {
         $dom = new DOMParser();
 
@@ -380,7 +381,7 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->seeCheckboxIsChecked('.btn'));
     }
 
-    public function testWithFile()
+    public function testWithFile(): void
     {
         $dom = new DOMParser();
 
@@ -390,17 +391,17 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->see('Directory access is forbidden.'));
     }
 
-    public function testWithNotFile()
+    public function testWithNotFile(): void
     {
         $dom = new DOMParser();
 
         $filename = APPPATH . 'bogus.html';
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $dom->withFile($filename);
     }
 
-    public function testSeeAttribute()
+    public function testSeeAttribute(): void
     {
         $dom = new DOMParser();
 

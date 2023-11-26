@@ -21,6 +21,7 @@ use Traversable;
  * The CookieStore object represents an immutable collection of `Cookie` value objects.
  *
  * @implements IteratorAggregate<string, Cookie>
+ * @see \CodeIgniter\Cookie\CookieStoreTest
  */
 class CookieStore implements Countable, IteratorAggregate
 {
@@ -36,9 +37,9 @@ class CookieStore implements Countable, IteratorAggregate
      *
      * @param string[] $headers
      *
-     * @throws CookieException
-     *
      * @return static
+     *
+     * @throws CookieException
      */
     public static function fromCookieHeaders(array $headers, bool $raw = false)
     {
@@ -49,7 +50,7 @@ class CookieStore implements Countable, IteratorAggregate
             try {
                 return Cookie::fromHeaderString($header, $raw);
             } catch (CookieException $e) {
-                log_message('error', $e->getMessage());
+                log_message('error', (string) $e);
 
                 return false;
             }
@@ -158,6 +159,8 @@ class CookieStore implements Countable, IteratorAggregate
 
     /**
      * Dispatches all cookies in store.
+     *
+     * @deprecated Response should dispatch cookies.
      */
     public function dispatch(): void
     {
@@ -232,6 +235,8 @@ class CookieStore implements Countable, IteratorAggregate
      * Extracted call to `setrawcookie()` in order to run unit tests on it.
      *
      * @codeCoverageIgnore
+     *
+     * @deprecated
      */
     protected function setRawCookie(string $name, string $value, array $options): void
     {
@@ -242,6 +247,8 @@ class CookieStore implements Countable, IteratorAggregate
      * Extracted call to `setcookie()` in order to run unit tests on it.
      *
      * @codeCoverageIgnore
+     *
+     * @deprecated
      */
     protected function setCookie(string $name, string $value, array $options): void
     {

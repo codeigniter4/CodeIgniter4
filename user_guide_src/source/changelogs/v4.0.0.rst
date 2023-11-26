@@ -5,7 +5,12 @@ Release Date: February 24, 2020
 
 **4.0 release of CodeIgniter4**
 
-Enhancements:
+.. contents::
+    :local:
+    :depth: 2
+
+Enhancements
+------------
 
 - Updated welcome view file
 - Debug Toolbar now supports dark mode
@@ -14,11 +19,12 @@ Enhancements:
 - Additional docs for getting started
 - CLI fixed to better handle complex arguments
 - Improvements to File class
-- New model() helper method for easy singleton Models.
+- New :php:func:`model()` helper method for easy singleton Models.
 - Tests completely reorganized to make app-level tests simpler out of the box.
 
-Repo changes:
+Repo Changes
+------------
 
 The devstarter repo has been deprecated.
 
-We now have an automated changelog generated in the CHANGELOG.md file in the main repo. See it for more details.
+We now have an automated changelog generated in the `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ file in the main repo. See it for more details.

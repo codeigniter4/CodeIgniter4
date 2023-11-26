@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @group DatabaseLive
@@ -24,16 +25,16 @@ final class EmptyTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed    = CITestSeeder::class;
 
-    public function testEmpty()
+    public function testEmpty(): void
     {
         $this->db->table('misc')->emptyTable();
 
         $this->assertSame(0, $this->db->table('misc')->countAll());
     }
 
-    public function testTruncate()
+    public function testTruncate(): void
     {
         $this->db->table('misc')->truncate();
 

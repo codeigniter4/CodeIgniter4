@@ -12,83 +12,92 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Database\SQLite3\Connection;
+use CodeIgniter\Database\Database as DatabaseFactory;
+use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
+use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 use Config\Database;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class CreateDatabaseTest extends CIUnitTestCase
 {
-    protected $streamFilter;
+    use StreamFilterTrait;
 
-    /**
-     * @var BaseConnection
-     */
-    protected $connection;
+    private BaseConnection $connection;
 
     protected function setUp(): void
     {
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-        $this->connection   = Database::connect();
+        $this->connection = Database::connect();
 
         parent::setUp();
+
+        $this->dropDatabase();
     }
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->streamFilter);
+        parent::tearDown();
 
-        if ($this->connection instanceof Connection) {
+        $this->dropDatabase();
+    }
+
+    private function dropDatabase(): void
+    {
+        if ($this->connection instanceof SQLite3Connection) {
             $file = WRITEPATH . 'foobar.db';
-
-            if (file_exists($file)) {
+            if (is_file($file)) {
                 unlink($file);
             }
         } else {
-            Database::forge()->dropDatabase('foobar');
-        }
+            $util = (new DatabaseFactory())->loadUtils($this->connection);
 
-        parent::tearDown();
+            if ($util->databaseExists('foobar')) {
+                Database::forge()->dropDatabase('foobar');
+            }
+        }
     }
 
     protected function getBuffer()
     {
-        return CITestStreamFilter::$buffer;
+        return $this->getStreamFilterBuffer();
     }
 
-    public function testCreateDatabase()
+    public function testCreateDatabase(): void
     {
+        if ($this->connection instanceof OCI8Connection) {
+            $this->markTestSkipped('Needs to run on non-OCI8 drivers.');
+        }
+
         command('db:create foobar');
         $this->assertStringContainsString('successfully created.', $this->getBuffer());
     }
 
-    public function testSqliteDatabaseDuplicated()
+    public function testSqliteDatabaseDuplicated(): void
     {
-        if (! $this->connection instanceof Connection) {
+        if (! $this->connection instanceof SQLite3Connection) {
             $this->markTestSkipped('Needs to run on SQLite3.');
         }
 
         command('db:create foobar');
-        CITestStreamFilter::$buffer = '';
+        $this->resetStreamFilterBuffer();
 
         command('db:create foobar --ext db');
         $this->assertStringContainsString('already exists.', $this->getBuffer());
     }
 
-    public function testOtherDriverDuplicatedDatabase()
+    public function testOtherDriverDuplicatedDatabase(): void
     {
-        if ($this->connection instanceof Connection) {
-            $this->markTestSkipped('Needs to run on non-SQLite3 drivers.');
+        if ($this->connection instanceof SQLite3Connection || $this->connection instanceof OCI8Connection) {
+            $this->markTestSkipped('Needs to run on non-SQLite3 and non-OCI8 drivers.');
         }
 
         command('db:create foobar');
-        CITestStreamFilter::$buffer = '';
+        $this->resetStreamFilterBuffer();
 
         command('db:create foobar');
         $this->assertStringContainsString('Unable to create the specified database.', $this->getBuffer());

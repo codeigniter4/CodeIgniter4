@@ -139,6 +139,10 @@ h2, h3 {
 	background: #252525;
 }
 
+.wy-side-nav-search {
+    background: #dd4814;
+}
+
 .wy-side-nav-search .logo {
 	width: 100% !important;
 }
@@ -237,6 +241,10 @@ html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(
 	margin-top: 2rem;
 }
 
+.highlight-console .highlight {
+    background-color: #fffff0;
+}
+
 /* Messages ----------------------------------------------------------------- */
 
 .rst-content .success {
@@ -261,6 +269,16 @@ html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(
 
 .rst-content .important .admonition-title {
 	background: #dd4814;
+}
+
+.versionadded {
+    background: #dff0d8;
+    padding: 0 5px;
+}
+
+.deprecated:not(.versionmodified) {
+    background: #f2dede;
+    padding: 0 5px;
 }
 
 /* Footer ------------------------------------------------------------------- */

@@ -14,47 +14,71 @@ Loading the Library
 *******************
 
 Like all services in CodeIgniter, it can be loaded via ``Config\Services``, though you usually will not need
-to load it manually::
+to load it manually:
 
-    $pager = \Config\Services::pager();
+.. literalinclude:: pagination/001.php
 
-***************************
-Paginating Database Results
-***************************
+.. _paginating-with-models:
+
+**********************
+Paginating with Models
+**********************
 
 In most cases, you will be using the Pager library in order to paginate results that you retrieve from the database.
 When using the :doc:`Model </models/model>` class, you can use its built-in ``paginate()`` method to automatically
 retrieve the current batch of results, as well as set up the Pager library so it's ready to use in your controllers.
 It even reads the current page it should display from the current URL via a ``page=X`` query variable.
 
-To provide a paginated list of users in your application, your controller's method would look something like::
+To provide a paginated list of users in your application, your controller's method would look something like:
 
-    <?php
+.. literalinclude:: pagination/002.php
 
-    namespace App\Controllers;
-
-    use CodeIgniter\Controller;
-
-    class UserController extends Controller
-    {
-        public function index()
-        {
-            $model = new \App\Models\UserModel();
-
-            $data = [
-                'users' => $model->paginate(10),
-                'pager' => $model->pager,
-            ];
-
-            echo view('users/index', $data);
-        }
-    }
-
-In this example, we first create a new instance of our UserModel. Then we populate the data to send to the view.
+In this example, we first create a new instance of our ``UserModel``. Then we populate the data to send to the view.
 The first element is the results from the database, **users**, which is retrieved for the correct page, returning
 10 users per page. The second item that must be sent to the view is the Pager instance itself. As a convenience,
-the Model will hold on to the instance it used and store it in the public class variable, **$pager**. So, we grab
-that and assign it to the $pager variable in the view.
+the Model will hold on to the instance it used and store it in the public property, ``$pager``. So, we grab
+that and assign it to the ``$pager`` variable in the view.
+
+Customizing Query for Pagination
+================================
+
+To customize a query for pagination in a model, you can add
+:doc:`Query Builder <../database/query_builder>` methods before ``paginate()``
+method.
+
+Adding WHERE
+------------
+
+If you want to add WHERE conditions, you can specify conditions directly:
+
+.. literalinclude:: pagination/003.php
+    :lines: 2-
+
+You can move the conditions to a separate method:
+
+.. literalinclude:: pagination/017.php
+
+.. literalinclude:: pagination/018.php
+    :lines: 2-
+
+Adding JOIN
+-----------
+
+You can join another table:
+
+.. literalinclude:: pagination/016.php
+
+.. important:: It is important to understand that the ``Model::paginate()`` method
+    uses the **Model** and the **Query Builder** instance in the Model.
+    Therefore, trying to use ``Model::paginate()`` with :ref:`db-query`
+    **will not work** because ``$db->query()`` executes the query immediately
+    and is not associated with the Query Builder.
+
+If you need a complicated SQL query that you cannot write with Query Builder,
+try using :ref:`db-query` and `Manual Pagination`_.
+
+Displaying Pager Links
+======================
 
 Within the view, we then need to tell it where to display the resulting links::
 
@@ -79,101 +103,71 @@ Paginating Multiple Results
 ===========================
 
 If you need to provide links from two different result sets, you can pass group names to most of the pagination
-methods to keep the data separate::
+methods to keep the data separate:
 
-    // In the Controller
-    public function index()
-    {
-        $userModel = new \App\Models\UserModel();
-        $pageModel = new \App\Models\PageModel();
-
-        $data = [
-            'users' => $userModel->paginate(10, 'group1'),
-            'pages' => $pageModel->paginate(15, 'group2'),
-            'pager' => $userModel->pager,
-        ];
-
-        echo view('users/index', $data);
-    }
-
-    // In the views:
-    <?= $pager->links('group1') ?>
-    <?= $pager->simpleLinks('group2') ?>
+.. literalinclude:: pagination/004.php
 
 Setting Page Manually
 =====================
 
 If you need to specify which page of results to return you can specify the page as the 3rd argument. This can be
-handy when you have a different manner than the default $_GET varibable to control which page to show.
+handy when you have a different manner than the default ``$_GET`` variable to control which page to show.
 
-::
-
-     $userModel = new \App\Models\UserModel();
-     $page = 3;
-
-     $users = $userModel->paginate(10, 'group1', $page);
+.. literalinclude:: pagination/005.php
 
 Specifying the URI Segment for Page
 ===================================
 
 It is also possible to use a URI segment for the page number, instead of the page query parameter. Simply specify the
 segment number to use as the fourth argument. URIs generated by the pager would then look
-like *https://domain.tld/model/[pageNumber]* instead of *https://domain.tld/model?page=[pageNumber]*.
+like **https://domain.tld/foo/bar/[pageNumber]** instead of **https://domain.tld/foo/bar?page=[pageNumber]**.
 
-::
-
-    $users = $userModel->paginate(10, 'group1', null, 3);
+.. literalinclude:: pagination/006.php
 
 Please note: ``$segment`` value cannot be greater than the number of URI segments plus 1.
 
+*****************
 Manual Pagination
-=================
+*****************
 
 You may find times where you just need to create pagination based on known data. You can create links manually
 with the ``makeLinks()`` method, which takes the current page, the number of results per page, and
-the total number of items as the first, second, and third parameters, respectively::
+the total number of items as the first, second, and third parameters, respectively:
 
-    <?= $pager->makeLinks($page, $perPage, $total) ?>
+.. literalinclude:: pagination/015.php
 
 This will, by default, display the links in the normal manner, as a series of links, but you can change the display
 template used by passing in the name of the template as the fourth parameter. More details can be found in the following
-sections.
+sections::
 
-::
-
-    <?= $pager->makeLinks($page, $perPage, $total, 'template_name') ?>
+    $pager->makeLinks($page, $perPage, $total, 'template_name');
 
 It is also possible to use a URI segment for the page number, instead of the page query parameter, as described in
-the previous section. Specify the segment number to use as the fifth parameter to ``makeLinks()``.
+the previous section. Specify the segment number to use as the fifth parameter to ``makeLinks()``::
 
-::
-
-    <?= $pager->makeLinks($page, $perPage, $total, 'template_name', $segment) ?>
+    $pager->makeLinks($page, $perPage, $total, 'template_name', $segment);
 
 Please note: ``$segment`` value cannot be greater than the number of URI segments plus 1.
 
-If you in need to show many pagers on one page then additional parameter which will define a group could be helpful::
+If you in need to show many pagers on one page then additional parameter which will define a group could be helpful:
 
-    $pager = service('pager');
-    $pager->setPath('path/for/my-group', 'my-group'); // Additionally you could define path for every group.
-    $pager->makeLinks($page, $perPage, $total, 'template_name', $segment, 'my-group');
+.. literalinclude:: pagination/007.php
 
-Pagination library uses *page* query parameter for HTTP queries by default (if no group or *default* group name given) or *page_[groupName]* for custom group names.
+Pagination library uses **page** query parameter for HTTP queries by default (if no group or ``default`` group name given) or ``page_[groupName]`` for custom group names.
 
+*************************************
 Paginating with Only Expected Queries
-=====================================
+*************************************
 
 By default, all GET queries are shown in the pagination links.
 
-For example, when accessing the URL *http://domain.tld?search=foo&order=asc&hello=i+am+here&page=2*, the page 3 link can be generated, along with the other links, as follows::
+For example, when accessing the URL **https://domain.tld?search=foo&order=asc&hello=i+am+here&page=2**, the page 3 link can be generated, along with the other links, as follows:
 
-    echo $pager->links();
-    // Page 3 link: http://domain.tld?search=foo&order=asc&hello=i+am+here&page=3
+.. literalinclude:: pagination/008.php
 
-The ``only()`` method allows you to limit this just to queries already expected::
+The ``only()`` method allows you to limit this just to queries already expected:
 
-    echo $pager->only(['search', 'order'])->links();
-    // Page 3 link: http://domain.tld?search=foo&order=asc&page=3
+.. literalinclude:: pagination/009.php
 
 The *page* query is enabled by default. And ``only()`` acts in all pagination links.
 
@@ -185,15 +179,12 @@ View Configuration
 ==================
 
 When the links are rendered out to the page, they use a view file to describe the HTML. You can easily change the view
-that is used by editing **app/Config/Pager.php**::
+that is used by editing **app/Config/Pager.php**:
 
-    public $templates = [
-        'default_full'   => 'CodeIgniter\Pager\Views\default_full',
-        'default_simple' => 'CodeIgniter\Pager\Views\default_simple',
-    ];
+.. literalinclude:: pagination/010.php
 
 This setting stores the alias and :doc:`namespaced view paths </outgoing/views>` for the view that
-should be used. The *default_full* and *default_simple* views are used for the ``links()`` and ``simpleLinks()``
+should be used. The ``default_full`` and ``default_simple`` views are used for the ``links()`` and ``simpleLinks()``
 methods, respectively. To change the way those are displayed application-wide, you could assign a new view here.
 
 For example, say you create a new view file that works with the Foundation CSS framework, and
@@ -201,23 +192,18 @@ you place that file at **app/Views/Pagers/foundation_full.php**. Since the **app
 namespaced as ``App``, and all directories underneath it map directly to segments of the namespace, you can locate
 the view file through it's namespace::
 
-    'default_full'   => 'App\Views\Pagers\foundation_full',
+    'default_full' => 'App\Views\Pagers\foundation_full'
 
 Since it is under the standard **app/Views** directory, though, you do not need to namespace it since the
 ``view()`` method can locate it by filename. In that case, you can simply give the sub-directory and file name::
 
-    'default_full'   => 'Pagers/foundation_full',
+    'default_full' => 'Pagers/foundation_full'
 
 Once you have created the view and set it in the configuration, it will automatically be used. You don't have to
 replace the existing templates. You can create as many additional templates as you need in the configuration
 file. A common situation would be needing different styles for the frontend and the backend of your application.
-::
 
-    public $templates = [
-        'default_full'   => 'CodeIgniter\Pager\Views\default_full',
-        'default_simple' => 'CodeIgniter\Pager\Views\default_simple',
-        'front_full'     => 'App\Views\Pagers\foundation_full',
-    ];
+.. literalinclude:: pagination/011.php
 
 Once configured, you can specify it as a the last parameter in the ``links()``, ``simpleLinks()``, and ``makeLinks()``
 methods::
@@ -231,151 +217,97 @@ Creating the View
 
 When you create a new view, you only need to create the code that is needed for creating the pagination links themselves.
 You should not create unnecessary wrapping divs since it might be used in multiple places and you only limit their
-usefulness. It is easiest to demonstrate creating a new view by showing you the existing default_full template::
+usefulness. It is easiest to demonstrate creating a new view by showing you the existing ``default_full`` template:
 
-    <?php $pager->setSurroundCount(2) ?>
+.. literalinclude:: pagination/012.php
 
-    <nav aria-label="Page navigation">
-        <ul class="pagination">
-        <?php if ($pager->hasPrevious()) : ?>
-            <li>
-                <a href="<?= $pager->getFirst() ?>" aria-label="<?= lang('Pager.first') ?>">
-                    <span aria-hidden="true"><?= lang('Pager.first') ?></span>
-                </a>
-            </li>
-            <li>
-                <a href="<?= $pager->getPrevious() ?>" aria-label="<?= lang('Pager.previous') ?>">
-                    <span aria-hidden="true"><?= lang('Pager.previous') ?></span>
-                </a>
-            </li>
-        <?php endif ?>
-
-        <?php foreach ($pager->links() as $link) : ?>
-            <li <?= $link['active'] ? 'class="active"' : '' ?>>
-                <a href="<?= $link['uri'] ?>">
-                    <?= $link['title'] ?>
-                </a>
-            </li>
-        <?php endforeach ?>
-
-        <?php if ($pager->hasNext()) : ?>
-            <li>
-                <a href="<?= $pager->getNext() ?>" aria-label="<?= lang('Pager.next') ?>">
-                    <span aria-hidden="true"><?= lang('Pager.next') ?></span>
-                </a>
-            </li>
-            <li>
-                <a href="<?= $pager->getLast() ?>" aria-label="<?= lang('Pager.last') ?>">
-                    <span aria-hidden="true"><?= lang('Pager.last') ?></span>
-                </a>
-            </li>
-        <?php endif ?>
-        </ul>
-    </nav>
-
-**setSurroundCount()**
+setSurroundCount()
+------------------
 
 In the first line, the ``setSurroundCount()`` method specifies than we want to show two links to either side of
 the current page link. The only parameter that it accepts is the number of links to show.
 
-**hasPrevious()** & **hasNext()**
+hasPrevious() & hasNext()
+-------------------------
 
 These methods return a boolean true if there are more links that can be displayed on either side of the current page,
-based on the value passed to ``setSurroundCount``. For example, let's say we have 20 pages of data. The current
+based on the value passed to ``setSurroundCount()``. For example, let's say we have 20 pages of data. The current
 page is page 3. If the surrounding count is 2, then the following links would show up in the list: 1, 2, 3, 4, and 5.
 Since the first link displayed is page one, ``hasPrevious()`` would return **false** since there is no page zero. However,
 ``hasNext()`` would return **true** since there are 15 additional pages of results after page five.
 
-**getPrevious()** & **getNext()**
+getPrevious() & getNext()
+-------------------------
 
-These methods return the URL for the previous or next pages of results on either side of the numbered links. See the
-previous paragraph for a full explanation.
+These methods return the URL for the previous or next pages of results on either side of the numbered links.
 
-**getFirst()** & **getLast()**
+For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this::
+
+    3  |  4  |  5  |  6  |  7
+
+``getPrevious()`` returns the URL for page 2. ``getNext()`` returns the URL for page 8.
+
+If you want to get page 4 and page 6, use ``getPreviousPage()`` and ``getNextPage()`` instead.
+
+getFirst() & getLast()
+----------------------
 
 Much like ``getPrevious()`` and ``getNext()``, these methods return links to the first and last pages in the
 result set.
 
-**links()**
+links()
+-------
 
 Returns an array of data about all of the numbered links. Each link's array contains the uri for the link, the
-title, which is just the number, and a boolean that tells whether the link is the current/active link or not::
+title, which is just the number, and a boolean that tells whether the link is the current/active link or not:
 
-    $link = [
-        'active' => false,
-        'uri'    => 'http://example.com/foo?page=2',
-        'title'  => 1,
-    ];
+.. literalinclude:: pagination/013.php
 
 In the code presented for the standard pagination structure, the methods ``getPrevious()`` and ``getNext()`` are used to obtain the links to the previous and next pagination groups respectively.
 
 If you want to use the pagination structure where prev and next will be links to the previous and next pages based on the current page, just replace the ``getPrevious()`` and ``getNext()`` methods with ``getPreviousPage()`` and ``getNextPage()``, and the methods ``hasPrevious()`` and ``hasNext()`` by ``hasPreviousPage()`` and ``hasNextPage()`` respectively.
 
-See following an example with these changes::
+See following an example with these changes:
 
-    <nav aria-label="<?= lang('Pager.pageNavigation') ?>">
-        <ul class="pagination">
-            <?php if ($pager->hasPreviousPage()) : ?>
-                <li>
-                    <a href="<?= $pager->getFirst() ?>" aria-label="<?= lang('Pager.first') ?>">
-                        <span aria-hidden="true"><?= lang('Pager.first') ?></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="<?= $pager->getPreviousPage() ?>" aria-label="<?= lang('Pager.previous') ?>">
-                        <span aria-hidden="true"><?= lang('Pager.previous') ?></span>
-                    </a>
-                </li>
-            <?php endif ?>
+.. literalinclude:: pagination/014.php
 
-            <?php foreach ($pager->links() as $link) : ?>
-                <li <?= $link['active'] ? 'class="active"' : '' ?>>
-                    <a href="<?= $link['uri'] ?>">
-                        <?= $link['title'] ?>
-                    </a>
-                </li>
-            <?php endforeach ?>
-
-            <?php if ($pager->hasNextPage()) : ?>
-                <li>
-                    <a href="<?= $pager->getNextPage() ?>" aria-label="<?= lang('Pager.next') ?>">
-                        <span aria-hidden="true"><?= lang('Pager.next') ?></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="<?= $pager->getLast() ?>" aria-label="<?= lang('Pager.last') ?>">
-                        <span aria-hidden="true"><?= lang('Pager.last') ?></span>
-                    </a>
-                </li>
-            <?php endif ?>
-        </ul>
-    </nav>
-
-**hasPreviousPage()** & **hasNextPage()**
+hasPreviousPage() & hasNextPage()
+---------------------------------
 
 This method returns a boolean true if there are links to a page before and after, respectively, the current page being displayed.
 
-Their difference to ``hasPrevious()`` and ``hasNext()`` is that they are based on the current page while ``hasPrevious()`` and ``hasNext()`` are based on the set of links to be displayed before and after the current page based on the value passed in ``setSurroundCount``.
+Their difference to ``hasPrevious()`` and ``hasNext()`` is that they are based on the current page while ``hasPrevious()`` and ``hasNext()`` are based on the set of links to be displayed before and after the current page based on the value passed in ``setSurroundCount()``.
 
-**getPreviousPage()** & **getNextPage()**
+getPreviousPage() & getNextPage()
+---------------------------------
 
 These methods return a URL for the previous and next pages in relation to the current page being displayed, unlike ``getPrevious()`` and ``getNext()`` that return the URL for the previous or next pages of results on either side of the numbered links. See the previous paragraph for a full explanation.
 
+For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this::
+
+    3  |  4  |  5  |  6  |  7
+
+``getPreviousPage()`` returns the URL for page 4. ``getNextPage()`` returns the URL for page 6.
+
 If you want page numbers instead of URLs, you can use the following methods:
 
-**getPreviousPageNumber()** & **getNextPageNumber()**
+getPreviousPageNumber() & getNextPageNumber()
+---------------------------------------------
 
 These methods return the page number for the previous or next pages in relation to the current page being displayed.
 
-**getFirstPageNumber()** & **getLastPageNumber()**
+getFirstPageNumber() & getLastPageNumber()
+------------------------------------------
 
 These methods return page numbers to the first and last pages in the
 result set.
 
-**getCurrentPageNumber()**
+getCurrentPageNumber()
+----------------------
 
 This method returns the page number of the current page.
 
-**getPageCount()**
+getPageCount()
+--------------
 
 This method returns total number of pages.

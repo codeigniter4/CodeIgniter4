@@ -18,6 +18,8 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class DropForeignKeyTest extends CIUnitTestCase
 {
@@ -29,7 +31,7 @@ final class DropForeignKeyTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testDropForeignKeyWithEmptyDropConstraintStrProperty()
+    public function testDropForeignKeyWithEmptyDropConstraintStrProperty(): void
     {
         $this->setPrivateProperty($this->db, 'DBDebug', true);
 

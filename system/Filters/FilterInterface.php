@@ -29,9 +29,9 @@ interface FilterInterface
      * sent back to the client, allowing for error pages,
      * redirects, etc.
      *
-     * @param null $arguments
+     * @param array|null $arguments
      *
-     * @return mixed
+     * @return RequestInterface|ResponseInterface|string|void
      */
     public function before(RequestInterface $request, $arguments = null);
 
@@ -41,9 +41,9 @@ interface FilterInterface
      * to stop execution of other after filters, short of
      * throwing an Exception or Error.
      *
-     * @param null $arguments
+     * @param array|null $arguments
      *
-     * @return mixed
+     * @return ResponseInterface|void
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null);
 }

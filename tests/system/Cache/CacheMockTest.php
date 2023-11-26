@@ -17,10 +17,12 @@ use CodeIgniter\Test\Mock\MockCache;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CacheMockTest extends CIUnitTestCase
 {
-    public function testMockReturnsMockCacheClass()
+    public function testMockReturnsMockCacheClass(): void
     {
         $this->assertInstanceOf(BaseHandler::class, service('cache'));
 
@@ -29,7 +31,7 @@ final class CacheMockTest extends CIUnitTestCase
         $this->assertInstanceOf(MockCache::class, service('cache'));
     }
 
-    public function testMockCaching()
+    public function testMockCaching(): void
     {
         $mock = mock(CacheFactory::class);
 

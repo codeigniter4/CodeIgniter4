@@ -13,8 +13,11 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class GetNumRowsTest extends CIUnitTestCase
@@ -22,7 +25,7 @@ final class GetNumRowsTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed    = CITestSeeder::class;
 
     /**
      * Added as instructed at https://codeigniter4.github.io/userguide/testing/database.html#the-test-class
@@ -49,7 +52,7 @@ final class GetNumRowsTest extends CIUnitTestCase
     /**
      * tests newly added ResultInterface::getNumRows with a live db
      */
-    public function testGetRowNum()
+    public function testGetRowNum(): void
     {
         $query = $this->db->table('job')->get();
         $this->assertSame(4, $query->getNumRows());

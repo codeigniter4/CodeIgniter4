@@ -15,6 +15,7 @@ use CodeIgniter\Database\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @group DatabaseLive
@@ -26,20 +27,9 @@ final class DbUtilsTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
-    protected static $origDebug;
+    protected $seed    = CITestSeeder::class;
 
-    /**
-     * This test must run first to store the inital debug value before we tinker with it below
-     */
-    public function testFirst()
-    {
-        $this::$origDebug = $this->getPrivateProperty($this->db, 'DBDebug');
-
-        $this->assertIsBool($this::$origDebug);
-    }
-
-    public function testUtilsBackup()
+    public function testUtilsBackup(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
@@ -49,7 +39,7 @@ final class DbUtilsTest extends CIUnitTestCase
         $util->backup();
     }
 
-    public function testUtilsBackupWithParamsArray()
+    public function testUtilsBackupWithParamsArray(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
@@ -62,7 +52,7 @@ final class DbUtilsTest extends CIUnitTestCase
         $util->backup($params);
     }
 
-    public function testUtilsBackupWithParamsString()
+    public function testUtilsBackupWithParamsString(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
@@ -72,14 +62,14 @@ final class DbUtilsTest extends CIUnitTestCase
         $util->backup('db_jobs');
     }
 
-    public function testUtilsListDatabases()
+    public function testUtilsListDatabases(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
-        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true)) {
+        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV', 'OCI8'], true)) {
             $databases = $util->listDatabases();
 
-            $this->assertTrue(in_array($this->db->getDatabase(), $databases, true));
+            $this->assertContains($this->db->getDatabase(), $databases);
         } elseif ($this->db->DBDriver === 'SQLite3') {
             $this->expectException(DatabaseException::class);
             $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
@@ -88,11 +78,11 @@ final class DbUtilsTest extends CIUnitTestCase
         }
     }
 
-    public function testUtilsDatabaseExist()
+    public function testUtilsDatabaseExist(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
-        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true)) {
+        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV', 'OCI8'], true)) {
             $exist = $util->databaseExists($this->db->getDatabase());
 
             $this->assertTrue($exist);
@@ -104,55 +94,66 @@ final class DbUtilsTest extends CIUnitTestCase
         }
     }
 
-    public function testUtilsOptimizeDatabase()
+    public function testUtilsOptimizeDatabase(): void
     {
         $util = (new Database())->loadUtils($this->db);
+
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->markTestSkipped(
+                'Unsupported feature of the oracle database platform.'
+            );
+        }
 
         $d = $util->optimizeDatabase();
 
         $this->assertTrue((bool) $d);
     }
 
-    public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugTrue()
+    public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugTrue(): void
     {
         $util = (new Database())->loadUtils($this->db);
         $this->setPrivateProperty($util, 'optimizeTable', false);
 
-        // set debug to true -- WARNING this change will persist!
-        $this->setPrivateProperty($this->db, 'DBDebug', true);
+        $this->enableDBDebug();
 
         $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+
         $util->optimizeDatabase();
 
         // this point in code execution will never be reached
     }
 
-    public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugFalse()
+    public function testUtilsOptimizeTableFalseOptimizeDatabaseDebugFalse(): void
     {
         $util = (new Database())->loadUtils($this->db);
         $this->setPrivateProperty($util, 'optimizeTable', false);
 
-        // set debug to false -- WARNING this change will persist!
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
 
         $result = $util->optimizeDatabase();
         $this->assertFalse($result);
 
-        // restore original value grabbed from testFirst -- WARNING this change will persist!
-        $this->setPrivateProperty($this->db, 'DBDebug', self::$origDebug);
+        $this->enableDBDebug();
     }
 
-    public function testUtilsOptimizeTable()
+    public function testUtilsOptimizeTable(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->markTestSkipped(
+                'Unsupported feature of the oracle database platform.'
+            );
+        }
+
         $d = $util->optimizeTable('db_job');
 
-        $this->assertTrue((bool) $d);
+        $this->assertTrue($d);
     }
 
-    public function testUtilsOptimizeTableFalseOptimizeTable()
+    public function testUtilsOptimizeTableFalseOptimizeTable(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
@@ -164,7 +165,7 @@ final class DbUtilsTest extends CIUnitTestCase
         $util->optimizeTable('db_job');
     }
 
-    public function testUtilsRepairTable()
+    public function testUtilsRepairTable(): void
     {
         $util = (new Database())->loadUtils($this->db);
 
@@ -174,7 +175,7 @@ final class DbUtilsTest extends CIUnitTestCase
         $util->repairTable('db_job');
     }
 
-    public function testUtilsCSVFromResult()
+    public function testUtilsCSVFromResult(): void
     {
         $data = $this->db->table('job')->get();
 
@@ -187,7 +188,7 @@ final class DbUtilsTest extends CIUnitTestCase
         $this->assertSame('"1","Developer","Awesome job, but sometimes makes you bored","","",""', $data[1]);
     }
 
-    public function testUtilsXMLFromResult()
+    public function testUtilsXMLFromResult(): void
     {
         $data = $this->db->table('job')->where('id', 4)->get();
 

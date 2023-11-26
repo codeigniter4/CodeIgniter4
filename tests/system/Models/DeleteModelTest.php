@@ -18,6 +18,8 @@ use Tests\Support\Models\StringifyPkeyModel;
 use Tests\Support\Models\UserModel;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class DeleteModelTest extends LiveModelTestCase
@@ -34,13 +36,19 @@ final class DeleteModelTest extends LiveModelTestCase
 
     public function testDeleteFail(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
+
         $this->createModel(JobModel::class);
+
         $this->seeInDatabase('job', ['name' => 'Developer']);
 
         $result = $this->model->where('name123', 'Developer')->delete();
+
         $this->assertFalse($result);
         $this->seeInDatabase('job', ['name' => 'Developer']);
+
+        $this->enableDBDebug();
     }
 
     public function testDeleteStringPrimaryKey(): void
@@ -59,18 +67,28 @@ final class DeleteModelTest extends LiveModelTestCase
 
         $result = $this->model->delete(1);
         $this->assertTrue($result);
+        $this->assertSame(1, $this->db->affectedRows());
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => null]);
+
+        $this->model->delete(1);
+        $this->assertSame(0, $this->db->affectedRows());
     }
 
     public function testDeleteWithSoftDeleteFail(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
+
         $this->createModel(UserModel::class);
+
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
         $result = $this->model->where('name123', 'Derek Jones')->delete();
+
         $this->assertFalse($result);
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+
+        $this->enableDBDebug();
     }
 
     public function testDeleteWithSoftDeletesPurge(): void
@@ -130,12 +148,13 @@ final class DeleteModelTest extends LiveModelTestCase
     }
 
     /**
-     * If where condition is set, beyond the value was empty (0,'', NULL, etc.),
-     * Exception should not be thrown because condition was explicity set
+     * Given an explicit empty value in the WHERE condition
+     * When executing a soft delete
+     * Then an exception should not be thrown
      *
      * @dataProvider emptyPkValues
      *
-     * @param mixed $emptyValue
+     * @param int|string|null $emptyValue
      */
     public function testDontThrowExceptionWhenSoftDeleteConditionIsSetWithEmptyValue($emptyValue): void
     {
@@ -149,7 +168,7 @@ final class DeleteModelTest extends LiveModelTestCase
     /**
      * @dataProvider emptyPkValues
      *
-     * @param mixed $emptyValue
+     * @param int|string|null $emptyValue
      */
     public function testThrowExceptionWhenSoftDeleteParamIsEmptyValue($emptyValue): void
     {
@@ -157,22 +176,25 @@ final class DeleteModelTest extends LiveModelTestCase
         $this->expectExceptionMessage('Deletes are not allowed unless they contain a "where" or "like" clause.');
 
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+
         $this->createModel(UserModel::class)->delete($emptyValue);
     }
 
     /**
      * @dataProvider emptyPkValues
      *
-     * @param mixed $emptyValue
+     * @param int|string|null $emptyValue
      */
     public function testDontDeleteRowsWhenSoftDeleteParamIsEmpty($emptyValue): void
     {
-        $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('Deletes are not allowed unless they contain a "where" or "like" clause.');
-
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
-        $this->createModel(UserModel::class)->delete($emptyValue);
+        try {
+            $this->createModel(UserModel::class)->delete($emptyValue);
+        } catch (DatabaseException $e) {
+            // Do nothing.
+        }
+
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
     }
 
@@ -188,7 +210,7 @@ final class DeleteModelTest extends LiveModelTestCase
     public function testThrowsWithNoDateFormat(): void
     {
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('`Tests\Support\Models\UserModel` model class does not have a valid dateFormat.');
+        $this->expectExceptionMessage('"Tests\Support\Models\UserModel" model class does not have a valid dateFormat.');
 
         $this->createModel(UserModel::class);
         $this->setPrivateProperty($this->model, 'dateFormat', '');
@@ -216,5 +238,43 @@ final class DeleteModelTest extends LiveModelTestCase
 
         $jobs = $this->model->findAll();
         $this->assertCount(4, $jobs);
+    }
+
+    /**
+     * @dataProvider emptyPkValues
+     *
+     * @param int|string|null $id
+     */
+    public function testDeleteThrowDatabaseExceptionWithoutWhereClause($id): void
+    {
+        // BaseBuilder throws Exception.
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage(
+            'Deletes are not allowed unless they contain a "where" or "like" clause.'
+        );
+
+        // $useSoftDeletes = false
+        $this->createModel(JobModel::class);
+
+        $this->model->delete($id);
+    }
+
+    /**
+     * @dataProvider emptyPkValues
+     *
+     * @param int|string|null $id
+     */
+    public function testDeleteWithSoftDeleteThrowDatabaseExceptionWithoutWhereClause($id): void
+    {
+        // Model throws Exception.
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage(
+            'Deletes are not allowed unless they contain a "where" or "like" clause.'
+        );
+
+        // $useSoftDeletes = true
+        $this->createModel(UserModel::class);
+
+        $this->model->delete($id);
     }
 }

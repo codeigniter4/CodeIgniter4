@@ -6,16 +6,15 @@ The XML Helper file contains functions that assist in working with XML
 data.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 Loading this Helper
 ===================
 
 This helper is loaded using the following code
 
-::
-
-    helper('xml');
+.. literalinclude:: xml_helper/001.php
 
 Available Functions
 ===================
@@ -38,11 +37,9 @@ The following functions are available:
       - Dashes: -
 
     This function ignores ampersands if they are part of existing numbered
-    character entities, e.g., &#123;. Example::
+    character entities, e.g., &#123;. Example:
 
-        $string = '<p>Here is a paragraph & an entity (&#123;).</p>';
-        $string = xml_convert($string);
-        echo $string;
+    .. literalinclude:: xml_helper/002.php
 
     outputs:
 

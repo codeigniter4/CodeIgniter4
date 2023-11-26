@@ -54,11 +54,10 @@ class MigrateRollback extends BaseCommand
     /**
      * the Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [
-        '-b' => 'Specify a batch to roll back to; e.g. "3" to return to batch #3 or "-2" to roll back twice',
-        '-g' => 'Set database group',
+        '-b' => 'Specify a batch to roll back to; e.g. "3" to return to batch #3',
         '-f' => 'Force command - this option allows you to bypass the confirmation question when running this command in a production environment',
     ];
 
@@ -79,11 +78,6 @@ class MigrateRollback extends BaseCommand
         }
 
         $runner = Services::migrations();
-        $group  = $params['g'] ?? CLI::getOption('g');
-
-        if (is_string($group)) {
-            $runner->setGroup($group);
-        }
 
         try {
             $batch = $params['b'] ?? CLI::getOption('b') ?? $runner->getLastBatch() - 1;

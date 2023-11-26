@@ -12,35 +12,29 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ClearLogsTest extends CIUnitTestCase
 {
-    protected $streamFilter;
-    protected $date;
+    use StreamFilterTrait;
+
+    private string $date;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        CITestStreamFilter::$buffer = '';
-        $this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
 
         // test runs on other tests may log errors since default threshold
         // is now 4, so set this to a safe distance
         $this->date = date('Y-m-d', strtotime('+1 year'));
     }
 
-    protected function tearDown(): void
-    {
-        stream_filter_remove($this->streamFilter);
-    }
-
-    protected function createDummyLogFiles()
+    protected function createDummyLogFiles(): void
     {
         $date = $this->date;
         $path = WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$date}.log";
@@ -55,7 +49,7 @@ final class ClearLogsTest extends CIUnitTestCase
         }
     }
 
-    public function testClearLogsWorks()
+    public function testClearLogsWorks(): void
     {
         // test clean logs dir
         $this->assertFileDoesNotExist(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
@@ -65,7 +59,7 @@ final class ClearLogsTest extends CIUnitTestCase
         $this->assertFileExists(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
 
         command('logs:clear -force');
-        $result = CITestStreamFilter::$buffer;
+        $result = $this->getStreamFilterBuffer();
 
         $this->assertFileDoesNotExist(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
         $this->assertFileExists(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . 'index.html');

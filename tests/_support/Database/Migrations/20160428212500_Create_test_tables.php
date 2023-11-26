@@ -15,7 +15,7 @@ use CodeIgniter\Database\Migration;
 
 class Migration_Create_test_tables extends Migration
 {
-    public function up()
+    public function up(): void
     {
         // User Table
         $this->forge->addField([
@@ -26,7 +26,7 @@ class Migration_Create_test_tables extends Migration
             'created_at' => ['type' => 'DATETIME', 'null' => true],
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
             'deleted_at' => ['type' => 'DATETIME', 'null' => true],
-        ])->addKey('id', true)->createTable('user', true);
+        ])->addKey('id', true)->addUniqueKey('email')->addKey('country')->createTable('user', true);
 
         // Job Table
         $this->forge->addField([
@@ -151,9 +151,16 @@ class Migration_Create_test_tables extends Migration
             $this->forge->addKey('id', true);
             $this->forge->createTable('ci_sessions', true);
         }
+
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->db->query('CREATE OR REPLACE PACKAGE calculator AS PROCEDURE plus(left IN NUMBER, right IN NUMBER, result OUT NUMBER); END;');
+            $this->db->query('CREATE OR REPLACE PACKAGE BODY calculator AS PROCEDURE plus(left IN NUMBER, right IN NUMBER, result OUT NUMBER) IS BEGIN result := left + right; END plus; END calculator;');
+            $this->db->query('CREATE OR REPLACE PROCEDURE plus(left IN NUMBER, right IN NUMBER, output OUT NUMBER) IS BEGIN output := left  + right; END;');
+            $this->db->query('CREATE OR REPLACE PROCEDURE one(cursor OUT SYS_REFCURSOR) IS BEGIN open cursor for select 1 AS ONE from DUAL; END;');
+        }
     }
 
-    public function down()
+    public function down(): void
     {
         $this->forge->dropTable('user', true);
         $this->forge->dropTable('job', true);
@@ -167,6 +174,12 @@ class Migration_Create_test_tables extends Migration
 
         if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre'], true)) {
             $this->forge->dropTable('ci_sessions', true);
+        }
+
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->db->query('DROP PROCEDURE one');
+            $this->db->query('DROP PROCEDURE plus');
+            $this->db->query('DROP PACKAGE BODY calculator');
         }
     }
 }

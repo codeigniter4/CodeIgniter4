@@ -12,6 +12,9 @@
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Filters as FilterConfig;
 
@@ -19,11 +22,17 @@ use Config\Filters as FilterConfig;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group Others
  */
 final class DebugToolbarTest extends CIUnitTestCase
 {
-    protected $request;
-    protected $response;
+    /**
+     * @var CLIRequest|IncomingRequest
+     */
+    private $request;
+
+    private Response $response;
 
     protected function setUp(): void
     {
@@ -33,7 +42,7 @@ final class DebugToolbarTest extends CIUnitTestCase
         $this->response = Services::response();
     }
 
-    public function testDebugToolbarFilter()
+    public function testDebugToolbarFilter(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 

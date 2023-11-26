@@ -12,11 +12,14 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
+use CodeIgniter\I18n\Time;
 use Config\Cache;
 use Throwable;
 
 /**
  * File system cache handler
+ *
+ * @see \CodeIgniter\Cache\Handlers\FileHandlerTest
  */
 class FileHandler extends BaseHandler
 {
@@ -43,6 +46,8 @@ class FileHandler extends BaseHandler
     protected $mode;
 
     /**
+     * Note: Use `CacheFactory::getHandler()` to instantiate.
+     *
      * @throws CacheException
      */
     public function __construct(Cache $config)
@@ -91,7 +96,7 @@ class FileHandler extends BaseHandler
         $key = static::validateKey($key, $this->prefix);
 
         $contents = [
-            'time' => time(),
+            'time' => Time::now()->getTimestamp(),
             'ttl'  => $ttl,
             'data' => $value,
         ];
@@ -102,7 +107,7 @@ class FileHandler extends BaseHandler
 
                 // @codeCoverageIgnoreStart
             } catch (Throwable $e) {
-                log_message('debug', 'Failed to set mode on cache file: ' . $e->getMessage());
+                log_message('debug', 'Failed to set mode on cache file: ' . $e);
                 // @codeCoverageIgnoreEnd
             }
 
@@ -124,6 +129,8 @@ class FileHandler extends BaseHandler
 
     /**
      * {@inheritDoc}
+     *
+     * @return int
      */
     public function deleteMatching(string $pattern)
     {
@@ -143,21 +150,22 @@ class FileHandler extends BaseHandler
      */
     public function increment(string $key, int $offset = 1)
     {
-        $key  = static::validateKey($key, $this->prefix);
-        $data = $this->getItem($key);
+        $key = static::validateKey($key, $this->prefix);
+        $tmp = $this->getItem($key);
 
-        if ($data === false) {
-            $data = [
-                'data' => 0,
-                'ttl'  => 60,
-            ];
-        } elseif (! is_int($data['data'])) {
+        if ($tmp === false) {
+            $tmp = ['data' => 0, 'ttl' => 60];
+        }
+
+        ['data' => $value, 'ttl' => $ttl] = $tmp;
+
+        if (! is_int($value)) {
             return false;
         }
 
-        $newValue = $data['data'] + $offset;
+        $value += $offset;
 
-        return $this->save($key, $newValue, $data['ttl']) ? $newValue : false;
+        return $this->save($key, $value, $ttl) ? $value : false;
     }
 
     /**
@@ -165,21 +173,7 @@ class FileHandler extends BaseHandler
      */
     public function decrement(string $key, int $offset = 1)
     {
-        $key  = static::validateKey($key, $this->prefix);
-        $data = $this->getItem($key);
-
-        if ($data === false) {
-            $data = [
-                'data' => 0,
-                'ttl'  => 60,
-            ];
-        } elseif (! is_int($data['data'])) {
-            return false;
-        }
-
-        $newValue = $data['data'] - $offset;
-
-        return $this->save($key, $newValue, $data['ttl']) ? $newValue : false;
+        return $this->increment($key, -$offset);
     }
 
     /**
@@ -228,7 +222,7 @@ class FileHandler extends BaseHandler
      * Does the heavy lifting of actually retrieving the file and
      * verifying it's age.
      *
-     * @return mixed
+     * @return array{data: mixed, ttl: int, time: int}|false
      */
     protected function getItem(string $filename)
     {
@@ -237,16 +231,21 @@ class FileHandler extends BaseHandler
         }
 
         $data = @unserialize(file_get_contents($this->path . $filename));
-        if (! is_array($data) || ! isset($data['ttl'])) {
+
+        if (! is_array($data)) {
             return false;
         }
 
-        // @phpstan-ignore-next-line
-        if ($data['ttl'] > 0 && time() > $data['time'] + $data['ttl']) {
-            // If the file is still there then try to remove it
-            if (is_file($this->path . $filename)) {
-                @unlink($this->path . $filename);
-            }
+        if (! isset($data['ttl']) || ! is_int($data['ttl'])) {
+            return false;
+        }
+
+        if (! isset($data['time']) || ! is_int($data['time'])) {
+            return false;
+        }
+
+        if ($data['ttl'] > 0 && Time::now()->getTimestamp() > $data['time'] + $data['ttl']) {
+            @unlink($this->path . $filename);
 
             return false;
         }
@@ -346,7 +345,7 @@ class FileHandler extends BaseHandler
             while (false !== ($file = readdir($fp))) {
                 if (is_dir($sourceDir . $file) && $file[0] !== '.' && $topLevelOnly === false) {
                     $this->getDirFileInfo($sourceDir . $file . DIRECTORY_SEPARATOR, $topLevelOnly, true);
-                } elseif ($file[0] !== '.') {
+                } elseif (! is_dir($sourceDir . $file) && $file[0] !== '.') {
                     $_filedata[$file]                  = $this->getFileInfo($sourceDir . $file);
                     $_filedata[$file]['relative_path'] = $relativePath;
                 }
@@ -366,8 +365,8 @@ class FileHandler extends BaseHandler
      * Options are: name, server_path, size, date, readable, writable, executable, fileperms
      * Returns FALSE if the file cannot be found.
      *
-     * @param string $file           Path to file
-     * @param mixed  $returnedValues Array or comma separated string of information returned
+     * @param string       $file           Path to file
+     * @param array|string $returnedValues Array or comma separated string of information returned
      *
      * @return array|false
      */

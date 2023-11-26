@@ -37,8 +37,8 @@ interface SessionInterface
      * If $data is an array, it is expected to be an array of key/value pairs
      * to be set as session properties.
      *
-     * @param array|string $data  Property name or associative array of properties
-     * @param mixed        $value Property value if single key provided
+     * @param array|string                            $data  Property name or associative array of properties
+     * @param array|bool|float|int|object|string|null $value Property value if single key provided
      */
     public function set($data, $value = null);
 
@@ -53,7 +53,7 @@ interface SessionInterface
      *
      * @param string $key Identifier of the session property to retrieve
      *
-     * @return mixed The property value(s)
+     * @return array|bool|float|int|object|string|null The property value(s)
      */
     public function get(?string $key = null);
 
@@ -135,9 +135,9 @@ interface SessionInterface
      * Sets new data into the session, and marks it as temporary data
      * with a set lifespan.
      *
-     * @param array|string $data  Session data key or associative array of items
-     * @param mixed        $value Value to store
-     * @param int          $ttl   Time-to-live in seconds
+     * @param array|string                            $data  Session data key or associative array of items
+     * @param array|bool|float|int|object|string|null $value Value to store
+     * @param int                                     $ttl   Time-to-live in seconds
      */
     public function setTempdata($data, $value = null, int $ttl = 300);
 
@@ -147,7 +147,7 @@ interface SessionInterface
      *
      * @param string $key Session data key
      *
-     * @return mixed Session data value or null if not found.
+     * @return array|bool|float|int|object|string|null Session data value or null if not found.
      */
     public function getTempdata(?string $key = null);
 

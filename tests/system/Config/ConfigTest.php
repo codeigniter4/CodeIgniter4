@@ -17,34 +17,36 @@ use stdClass;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class ConfigTest extends CIUnitTestCase
 {
-    public function testCreateSingleInstance()
+    public function testCreateSingleInstance(): void
     {
         $Config          = Config::get('DocTypes', false);
-        $NamespaceConfig = Config::get('Config\\DocTypes', false);
+        $NamespaceConfig = Config::get(DocTypes::class, false);
 
         $this->assertInstanceOf(DocTypes::class, $Config);
         $this->assertInstanceOf(DocTypes::class, $NamespaceConfig);
     }
 
-    public function testCreateInvalidInstance()
+    public function testCreateInvalidInstance(): void
     {
         $Config = Config::get('gfnusvjai', false);
 
         $this->assertNull($Config);
     }
 
-    public function testCreateSharedInstance()
+    public function testCreateSharedInstance(): void
     {
         $Config  = Config::get('DocTypes');
-        $Config2 = Config::get('Config\\DocTypes');
+        $Config2 = Config::get(DocTypes::class);
 
-        $this->assertTrue($Config === $Config2);
+        $this->assertSame($Config2, $Config);
     }
 
-    public function testCreateNonConfig()
+    public function testCreateNonConfig(): void
     {
         $Config = Config::get('Constants', false);
 
@@ -53,9 +55,9 @@ final class ConfigTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
-    public function testInjection()
+    public function testInjection(): void
     {
         Config::reset();
         Config::injectMock('Banana', new stdClass());

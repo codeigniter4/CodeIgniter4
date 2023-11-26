@@ -12,44 +12,59 @@
 namespace CodeIgniter;
 
 use CodeIgniter\Config\BaseService;
-use CodeIgniter\Config\Services;
+use CodeIgniter\Config\Factories;
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\Exceptions\RedirectException;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockSecurity;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
 use Config\App;
+use Config\Cookie;
+use Config\DocTypes;
 use Config\Logger;
 use Config\Modules;
-use InvalidArgumentException;
+use Config\Routing;
+use Config\Security as SecurityConfig;
+use Config\Services;
+use Config\Session as SessionConfig;
+use Exception;
+use Kint;
 use RuntimeException;
 use stdClass;
-use Tests\Support\Autoloader\FatalLocator;
 use Tests\Support\Models\JobModel;
 
 /**
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class CommonFunctionsTest extends CIUnitTestCase
 {
+    private ?App $config = null;
+    private IncomingRequest $request;
+
     protected function setUp(): void
     {
-        parent::setUp();
-        $renderer = Services::renderer();
-        $renderer->resetData();
         unset($_ENV['foo'], $_SERVER['foo']);
+        $this->resetServices();
+
+        parent::setUp();
     }
 
-    public function testStringifyAttributes()
+    public function testStringifyAttributes(): void
     {
         $this->assertSame(' class="foo" id="bar"', stringify_attributes(['class' => 'foo', 'id' => 'bar']));
 
@@ -66,7 +81,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame('', stringify_attributes([]));
     }
 
-    public function testStringifyJsAttributes()
+    public function testStringifyJsAttributes(): void
     {
         $this->assertSame('width=800,height=600', stringify_attributes(['width' => '800', 'height' => '600'], true));
 
@@ -76,26 +91,26 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame('width=800,height=600', stringify_attributes($atts, true));
     }
 
-    public function testEnvReturnsDefault()
+    public function testEnvReturnsDefault(): void
     {
         $this->assertSame('baz', env('foo', 'baz'));
     }
 
-    public function testEnvGetsFromSERVER()
+    public function testEnvGetsFromSERVER(): void
     {
         $_SERVER['foo'] = 'bar';
 
         $this->assertSame('bar', env('foo', 'baz'));
     }
 
-    public function testEnvGetsFromENV()
+    public function testEnvGetsFromENV(): void
     {
         $_ENV['foo'] = 'bar';
 
         $this->assertSame('bar', env('foo', 'baz'));
     }
 
-    public function testEnvBooleans()
+    public function testEnvBooleans(): void
     {
         $_ENV['p1'] = 'true';
         $_ENV['p2'] = 'false';
@@ -108,17 +123,20 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertNull(env('p4'));
     }
 
-    public function testRedirectReturnsRedirectResponse()
+    private function createRouteCollection(): RouteCollection
+    {
+        return new RouteCollection(Services::locator(), new Modules(), new Routing());
+    }
+
+    public function testRedirectReturnsRedirectResponse(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $response = $this->createMock(Response::class);
-        $routes   = new RouteCollection(
-            Services::locator(),
-            new Modules()
-        );
-        \CodeIgniter\Services::injectMock('response', $response);
-        \CodeIgniter\Services::injectMock('routes', $routes);
+        Services::injectMock('response', $response);
+
+        $routes = $this->createRouteCollection();
+        Services::injectMock('routes', $routes);
 
         $routes->add('home/base', 'Controller::index', ['as' => 'base']);
         $response->method('redirect')->willReturnArgument(0);
@@ -126,12 +144,64 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertInstanceOf(RedirectResponse::class, redirect('base'));
     }
 
-    public function testRedirectDefault()
+    public function testRedirectDefault(): void
     {
         $this->assertInstanceOf(RedirectResponse::class, redirect());
     }
 
-    public function testView()
+    public function testRequestIncomingRequest(): void
+    {
+        Services::createRequest(new App());
+
+        $request = request();
+
+        $this->assertInstanceOf(IncomingRequest::class, $request);
+    }
+
+    public function testRequestCLIRequest(): void
+    {
+        Services::createRequest(new App(), true);
+
+        $request = request();
+
+        $this->assertInstanceOf(CLIRequest::class, $request);
+    }
+
+    public function testResponse(): void
+    {
+        $response = response();
+
+        $this->assertInstanceOf(Response::class, $response);
+    }
+
+    public function testSolidusElement(): void
+    {
+        $this->assertSame('', _solidus());
+    }
+
+    public function testSolidusElementXHTML(): void
+    {
+        $this->disableHtml5();
+
+        $this->assertSame(' /', _solidus());
+
+        $this->enableHtml5();
+    }
+
+    private function disableHtml5()
+    {
+        $doctypes        = new DocTypes();
+        $doctypes->html5 = false;
+        _solidus($doctypes);
+    }
+
+    private function enableHtml5()
+    {
+        $doctypes = new DocTypes();
+        _solidus($doctypes);
+    }
+
+    public function testView(): void
     {
         $data = [
             'testString' => 'bar',
@@ -141,7 +211,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, view('\Tests\Support\View\Views\simple', $data));
     }
 
-    public function testViewSavedData()
+    public function testViewSavedData(): void
     {
         $data = [
             'testString' => 'bar',
@@ -152,30 +222,36 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, view('\Tests\Support\View\Views\simple'));
     }
 
-    public function testViewCell()
+    public function testViewCell(): void
     {
         $expected = 'Hello';
         $this->assertSame($expected, view_cell('\Tests\Support\View\SampleClass::hello'));
     }
 
-    public function testEscapeWithDifferentEncodings()
+    public function testEscapeWithDifferentEncodings(): void
     {
         $this->assertSame('&lt;x', esc('<x', 'html', 'utf-8'));
         $this->assertSame('&lt;x', esc('<x', 'html', 'iso-8859-1'));
         $this->assertSame('&lt;x', esc('<x', 'html', 'windows-1251'));
     }
 
-    public function testEscapeBadContext()
+    public function testEscapeBadContext(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         esc(['width' => '800', 'height' => '600'], 'bogus');
+    }
+
+    public function testEscapeBadContextZero(): void
+    {
+        $this->expectException('InvalidArgumentException');
+        esc('<script>', '0');
     }
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
-    public function testSessionInstance()
+    public function testSessionInstance(): void
     {
         $this->injectSessionMock();
 
@@ -184,9 +260,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
-    public function testSessionVariable()
+    public function testSessionVariable(): void
     {
         $this->injectSessionMock();
 
@@ -197,9 +273,9 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
-    public function testSessionVariableNotThere()
+    public function testSessionVariableNotThere(): void
     {
         $this->injectSessionMock();
 
@@ -207,82 +283,123 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertNull(session('notbogus'));
     }
 
-    public function testRouteTo()
+    public function testRouteTo(): void
     {
         // prime the pump
         $routes = service('routes');
+        // @TODO Do not put any placeholder after (:any).
+        //       Because the number of parameters passed to the controller method may change.
         $routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
         $this->assertSame('/path/string/to/13', route_to('myController::goto', 'string', 13));
     }
 
-    public function testInvisible()
+    public function testRouteToInCliWithoutLocaleInRoute(): void
+    {
+        Services::createRequest(new App(), true);
+        $routes = service('routes');
+        // @TODO Do not put any placeholder after (:any).
+        //       Because the number of parameters passed to the controller method may change.
+        $routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
+
+        $this->assertSame('/path/string/to/13', route_to('myController::goto', 'string', 13));
+    }
+
+    public function testRouteToInCliWithLocaleInRoute(): void
+    {
+        Services::createRequest(new App(), true);
+        $routes = service('routes');
+        // @TODO Do not put any placeholder after (:any).
+        //       Because the number of parameters passed to the controller method may change.
+        $routes->add('{locale}/path/(:any)/to/(:num)', 'myController::goto/$1/$2', ['as' => 'path-to']);
+
+        $this->assertSame(
+            '/en/path/string/to/13',
+            route_to('path-to', 'string', 13, 'en')
+        );
+    }
+
+    public function testRouteToWithUnsupportedLocale(): void
+    {
+        Services::createRequest(new App(), false);
+        $routes = service('routes');
+        // @TODO Do not put any placeholder after (:any).
+        //       Because the number of parameters passed to the controller method may change.
+        $routes->add('{locale}/path/(:any)/to/(:num)', 'myController::goto/$1/$2', ['as' => 'path-to']);
+
+        $this->assertSame(
+            '/en/path/string/to/13',
+            route_to('path-to', 'string', 13, 'invalid')
+        );
+    }
+
+    public function testInvisible(): void
     {
         $this->assertSame('Javascript', remove_invisible_characters("Java\0script"));
     }
 
-    public function testInvisibleEncoded()
+    public function testInvisibleEncoded(): void
     {
         $this->assertSame('Javascript', remove_invisible_characters('Java%0cscript'));
     }
 
-    public function testAppTimezone()
+    public function testAppTimezone(): void
     {
-        $this->assertSame('America/Chicago', app_timezone());
+        $this->assertSame('UTC', app_timezone());
     }
 
-    public function testCSRFToken()
+    public function testCSRFToken(): void
     {
-        Services::injectMock('security', new MockSecurity(new App()));
+        Services::injectMock('security', new MockSecurity(new SecurityConfig()));
 
         $this->assertSame('csrf_test_name', csrf_token());
     }
 
-    public function testCSRFHeader()
+    public function testCSRFHeader(): void
     {
         $this->assertSame('X-CSRF-TOKEN', csrf_header());
     }
 
-    public function testHash()
+    public function testHash(): void
     {
         $this->assertSame(32, strlen(csrf_hash()));
     }
 
-    public function testCSRFField()
+    public function testCSRFField(): void
     {
         $this->assertStringContainsString('<input type="hidden" ', csrf_field());
     }
 
-    public function testCSRFMeta()
+    public function testCSRFMeta(): void
     {
         $this->assertStringContainsString('<meta name="X-CSRF-TOKEN" ', csrf_meta());
     }
 
-    public function testModelNotExists()
+    public function testModelNotExists(): void
     {
         $this->assertNull(model(UnexsistenceClass::class));
     }
 
-    public function testModelExistsBasename()
+    public function testModelExistsBasename(): void
     {
         $this->assertInstanceOf(JobModel::class, model('JobModel'));
     }
 
-    public function testModelExistsClassname()
+    public function testModelExistsClassname(): void
     {
         $this->assertInstanceOf(JobModel::class, model(JobModel::class));
     }
 
-    public function testModelExistsAbsoluteClassname()
+    public function testModelExistsAbsoluteClassname(): void
     {
-        $this->assertInstanceOf(JobModel::class, model('\Tests\Support\Models\JobModel'));
+        $this->assertInstanceOf(JobModel::class, model(JobModel::class));
     }
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
-    public function testOldInput()
+    public function testOldInput(): void
     {
         $this->injectSessionMock();
         // setup from RedirectResponseTest...
@@ -291,10 +408,10 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
 
-        $this->routes = new RouteCollection(Services::locator(), new Modules());
+        $this->routes = $this->createRouteCollection();
         Services::injectMock('routes', $this->routes);
 
-        $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
+        $this->request = new MockIncomingRequest($this->config, new SiteURI($this->config), null, new UserAgent());
         Services::injectMock('request', $this->request);
 
         // setup & ask for a redirect...
@@ -302,7 +419,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $_GET     = ['foo' => 'bar'];
         $_POST    = [
             'bar'    => 'baz',
-            'zibble' => serialize('fritz'),
+            'zibble' => 'fritz',
         ];
 
         $response = new RedirectResponse(new App());
@@ -310,15 +427,14 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
         $this->assertSame('bar', old('foo')); // regular parameter
         $this->assertSame('doo', old('yabba dabba', 'doo')); // non-existing parameter
-        $this->assertSame('fritz', old('zibble')); // serialized parameter
+        $this->assertSame('fritz', old('zibble'));
     }
 
     /**
-     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
-    public function testOldInputArray()
+    public function testOldInputSerializeData(): void
     {
         $this->injectSessionMock();
         // setup from RedirectResponseTest...
@@ -327,10 +443,45 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->config          = new App();
         $this->config->baseURL = 'http://example.com/';
 
-        $this->routes = new RouteCollection(Services::locator(), new Modules());
+        $this->routes = $this->createRouteCollection();
         Services::injectMock('routes', $this->routes);
 
-        $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
+        $this->request = new MockIncomingRequest($this->config, new SiteURI($this->config), null, new UserAgent());
+        Services::injectMock('request', $this->request);
+
+        // setup & ask for a redirect...
+        $_SESSION = [];
+        $_GET     = [];
+        $_POST    = [
+            'zibble' => serialize('fritz'),
+        ];
+
+        $response = new RedirectResponse(new App());
+        $response->withInput();
+
+        // serialized parameters are only HTML-escaped.
+        $this->assertSame('s:5:&quot;fritz&quot;;', old('zibble'));
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
+     *
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
+    public function testOldInputArray(): void
+    {
+        $this->injectSessionMock();
+        // setup from RedirectResponseTest...
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $this->config          = new App();
+        $this->config->baseURL = 'http://example.com/';
+
+        $this->routes = $this->createRouteCollection();
+        Services::injectMock('routes', $this->routes);
+
+        $this->request = new MockIncomingRequest($this->config, new SiteURI($this->config), null, new UserAgent());
         Services::injectMock('request', $this->request);
 
         $locations = [
@@ -350,50 +501,73 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame($locations, old('location'));
     }
 
-    public function testReallyWritable()
+    public function testReallyWritable(): void
     {
         // cannot test fully on *nix
         $this->assertTrue(is_really_writable(WRITEPATH));
     }
 
-    public function testSlashItem()
+    public function testSlashItem(): void
     {
-        $this->assertSame('/', slash_item('cookiePath')); // slash already there
-        $this->assertSame('', slash_item('cookieDomain')); // empty, so untouched
-        $this->assertSame('en/', slash_item('defaultLocale')); // slash appended
+        $this->assertSame('en/', slash_item('defaultLocale')); // en
+        $this->assertSame('', slash_item('negotiateLocale')); // false
     }
 
-    protected function injectSessionMock()
+    public function testSlashItemOnInexistentItem(): void
     {
+        $this->assertNull(slash_item('foo'));
+        $this->assertNull(slash_item('bar'));
+        $this->assertNull(slash_item('cookieDomains'));
+        $this->assertNull(slash_item('indices'));
+    }
+
+    public function testSlashItemThrowsErrorOnNonStringableItem(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Cannot convert "Config\\App::$supportedLocales" of type "array" to type "string".');
+
+        slash_item('supportedLocales');
+    }
+
+    protected function injectSessionMock(): void
+    {
+        $sessionConfig = new SessionConfig();
+
         $defaults = [
-            'sessionDriver'            => 'CodeIgniter\Session\Handlers\FileHandler',
-            'sessionCookieName'        => 'ci_session',
-            'sessionExpiration'        => 7200,
-            'sessionSavePath'          => null,
-            'sessionMatchIP'           => false,
-            'sessionTimeToUpdate'      => 300,
-            'sessionRegenerateDestroy' => false,
-            'cookieDomain'             => '',
-            'cookiePrefix'             => '',
-            'cookiePath'               => '/',
-            'cookieSecure'             => false,
-            'cookieSameSite'           => 'Lax',
+            'driver'            => FileHandler::class,
+            'cookieName'        => 'ci_session',
+            'expiration'        => 7200,
+            'savePath'          => '',
+            'matchIP'           => false,
+            'timeToUpdate'      => 300,
+            'regenerateDestroy' => false,
         ];
 
-        $appConfig = new App();
-
         foreach ($defaults as $key => $config) {
-            $appConfig->{$key} = $config;
+            $sessionConfig->{$key} = $config;
         }
 
-        $session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);
+        $cookie = new Cookie();
+
+        foreach ([
+            'prefix'   => '',
+            'domain'   => '',
+            'path'     => '/',
+            'secure'   => false,
+            'samesite' => 'Lax',
+        ] as $key => $value) {
+            $cookie->{$key} = $value;
+        }
+        Factories::injectMock('config', 'Cookie', $cookie);
+
+        $session = new MockSession(new FileHandler($sessionConfig, '127.0.0.1'), $sessionConfig);
         $session->setLogger(new TestLogger(new Logger()));
         BaseService::injectMock('session', $session);
     }
 
     // Make sure cookies are set by RedirectResponse this way
     // See https://github.com/codeigniter4/CodeIgniter4/issues/1393
-    public function testRedirectResponseCookies1()
+    public function testRedirectResponseCookies1(): void
     {
         $loginTime = time();
 
@@ -408,7 +582,11 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertTrue($answer1->hasCookie('login_time'));
     }
 
-    public function testTrace()
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
+    public function testTrace(): void
     {
         ob_start();
         trace();
@@ -417,7 +595,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertStringContainsString('Debug Backtrace', $content);
     }
 
-    public function testViewNotSaveData()
+    public function testViewNotSaveData(): void
     {
         $data = [
             'testString' => 'bar',
@@ -429,29 +607,65 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
-    public function testForceHttpsNullRequestAndResponse()
+    public function testForceHttpsNullRequestAndResponse(): void
     {
         $this->assertNull(Services::response()->header('Location'));
 
-        force_https();
+        Services::response()->setCookie('force', 'cookie');
+        Services::response()->setHeader('Force', 'header');
+        Services::response()->setBody('default body');
 
-        $this->assertSame('https://example.com/', Services::response()->header('Location')->getValue());
+        try {
+            force_https();
+        } catch (Exception $e) {
+            $this->assertInstanceOf(RedirectException::class, $e);
+            $this->assertSame(
+                'https://example.com/index.php/',
+                $e->getResponse()->header('Location')->getValue()
+            );
+            $this->assertFalse($e->getResponse()->hasCookie('force'));
+            $this->assertSame('header', $e->getResponse()->getHeaderLine('Force'));
+            $this->assertSame('', $e->getResponse()->getBody());
+            $this->assertSame(307, $e->getResponse()->getStatusCode());
+        }
+
+        $this->expectException(RedirectException::class);
+        force_https();
+    }
+
+    public function testForceHttpsWithBaseUrlSubFolder(): void
+    {
+        $config          = config(App::class);
+        $config->baseURL = 'https://example.jp/codeIgniter/';
+        $uri             = new SiteURI($config, 'en/home?foo=bar');
+        $request         = new IncomingRequest($config, $uri, '', new UserAgent());
+        Services::injectMock('request', $request);
+
+        try {
+            force_https();
+        } catch (Exception $e) {
+            $this->assertInstanceOf(RedirectException::class, $e);
+            $this->assertSame(
+                'https://example.jp/codeIgniter/index.php/en/home?foo=bar',
+                $e->getResponse()->header('Location')->getValue()
+            );
+        }
     }
 
     /**
-     * @dataProvider dirtyPathsProvider
+     * @dataProvider provideCleanPathActuallyCleaningThePaths
      *
      * @param mixed $input
      * @param mixed $expected
      */
-    public function testCleanPathActuallyCleaningThePaths($input, $expected)
+    public function testCleanPathActuallyCleaningThePaths($input, $expected): void
     {
         $this->assertSame($expected, clean_path($input));
     }
 
-    public function dirtyPathsProvider()
+    public static function provideCleanPathActuallyCleaningThePaths(): iterable
     {
         $ds = DIRECTORY_SEPARATOR;
 
@@ -479,46 +693,101 @@ final class CommonFunctionsTest extends CIUnitTestCase
         ];
     }
 
-    public function testHelperWithFatalLocatorThrowsException()
-    {
-        // Replace the locator with one that will fail if it is called
-        $locator = new FatalLocator(Services::autoloader());
-        Services::injectMock('locator', $locator);
-
-        try {
-            helper('baguette');
-            $exception = false;
-        } catch (RuntimeException $e) {
-            $exception = true;
-        }
-
-        $this->assertTrue($exception);
-        Services::reset();
-    }
-
-    public function testHelperLoadsOnce()
-    {
-        // Load it the first time
-        helper('baguette');
-
-        // Replace the locator with one that will fail if it is called
-        $locator = new FatalLocator(Services::autoloader());
-        Services::injectMock('locator', $locator);
-
-        try {
-            helper('baguette');
-            $exception = false;
-        } catch (RuntimeException $e) {
-            $exception = true;
-        }
-
-        $this->assertFalse($exception);
-        Services::reset();
-    }
-
-    public function testIsCli()
+    public function testIsCli(): void
     {
         $this->assertIsBool(is_cli());
         $this->assertTrue(is_cli());
+    }
+
+    public function testDWithCSP(): void
+    {
+        $this->resetServices();
+
+        /** @var App $config */
+        $config             = config('App');
+        $config->CSPEnabled = true;
+
+        // Initialize Kint
+        $app = new MockCodeIgniter($config);
+        $app->initialize();
+
+        $cliDetection        = Kint::$cli_detection;
+        Kint::$cli_detection = false;
+
+        $this->expectOutputRegex('/<script class="kint-rich-script" nonce="[0-9a-z]{24}">/u');
+        d('string');
+
+        // Restore settings
+        Kint::$cli_detection = $cliDetection;
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
+    public function testTraceWithCSP(): void
+    {
+        $this->resetServices();
+
+        /** @var App $config */
+        $config             = config('App');
+        $config->CSPEnabled = true;
+
+        // Initialize Kint
+        $app = new MockCodeIgniter($config);
+        $app->initialize();
+
+        Kint::$cli_detection = false;
+
+        $this->expectOutputRegex('/<style class="kint-rich-style" nonce="[0-9a-z]{24}">/u');
+        trace();
+    }
+
+    public function testCspStyleNonce(): void
+    {
+        $config             = config('App');
+        $config->CSPEnabled = true;
+
+        $this->assertStringStartsWith('nonce="', csp_style_nonce());
+    }
+
+    public function testCspScriptNonce(): void
+    {
+        $config             = config('App');
+        $config->CSPEnabled = true;
+
+        $this->assertStringStartsWith('nonce="', csp_script_nonce());
+    }
+
+    public function testLangOnCLI(): void
+    {
+        Services::createRequest(new App(), true);
+
+        $message = lang('CLI.generator.fileCreate', ['TestController.php']);
+
+        $this->assertSame('File created: TestController.php', $message);
+
+        $this->resetServices();
+    }
+
+    public function testIsWindows(): void
+    {
+        $this->assertSame(strpos(php_uname(), 'Windows') !== false, is_windows());
+        $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), is_windows());
+    }
+
+    public function testIsWindowsUsingMock(): void
+    {
+        is_windows(true);
+        $this->assertTrue(is_windows());
+        $this->assertNotFalse(is_windows());
+
+        is_windows(false);
+        $this->assertFalse(is_windows());
+        $this->assertNotTrue(is_windows());
+
+        is_windows(null);
+        $this->assertSame(strpos(php_uname(), 'Windows') !== false, is_windows());
+        $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), is_windows());
     }
 }

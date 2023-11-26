@@ -15,12 +15,15 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
-use CodeIgniter\Validation\Validation;
+use CodeIgniter\Validation\ValidationInterface;
 use Config\Services;
+use Config\Validation;
 use Psr\Log\LoggerInterface;
 
 /**
  * Class Controller
+ *
+ * @see \CodeIgniter\ControllerTest
  */
 class Controller
 {
@@ -62,12 +65,14 @@ class Controller
     /**
      * Once validation has been run, will hold the Validation instance.
      *
-     * @var Validation
+     * @var ValidationInterface|null
      */
     protected $validator;
 
     /**
      * Constructor.
+     *
+     * @return void
      *
      * @throws HTTPException
      */
@@ -95,20 +100,25 @@ class Controller
      *                      considered secure for. Only with HSTS header.
      *                      Default value is 1 year.
      *
+     * @return void
+     *
      * @throws HTTPException
      */
-    protected function forceHTTPS(int $duration = 31536000)
+    protected function forceHTTPS(int $duration = 31_536_000)
     {
         force_https($duration, $this->request, $this->response);
     }
 
     /**
-     * Provides a simple way to tie into the main CodeIgniter class and
-     * tell it how long to cache the current page for.
+     * How long to cache the current page for.
+     *
+     * @params int $time time to live in seconds.
+     *
+     * @return void
      */
     protected function cachePage(int $time)
     {
-        CodeIgniter::cache($time);
+        Services::responsecache()->setTtl($time);
     }
 
     /**
@@ -117,6 +127,8 @@ class Controller
      * @deprecated Use `helper` function instead of using this method.
      *
      * @codeCoverageIgnore
+     *
+     * @return void
      */
     protected function loadHelpers()
     {
@@ -128,19 +140,43 @@ class Controller
     }
 
     /**
-     * A shortcut to performing validation on input data. If validation
-     * is not successful, a $errors property will be set on this class.
+     * A shortcut to performing validation on Request data.
      *
      * @param array|string $rules
      * @param array        $messages An array of custom error messages
      */
     protected function validate($rules, array $messages = []): bool
     {
+        $this->setValidator($rules, $messages);
+
+        return $this->validator->withRequest($this->request)->run();
+    }
+
+    /**
+     * A shortcut to performing validation on any input data.
+     *
+     * @param array        $data     The data to validate
+     * @param array|string $rules
+     * @param array        $messages An array of custom error messages
+     * @param string|null  $dbGroup  The database group to use
+     */
+    protected function validateData(array $data, $rules, array $messages = [], ?string $dbGroup = null): bool
+    {
+        $this->setValidator($rules, $messages);
+
+        return $this->validator->run($data, null, $dbGroup);
+    }
+
+    /**
+     * @param array|string $rules
+     */
+    private function setValidator($rules, array $messages): void
+    {
         $this->validator = Services::validation();
 
         // If you replace the $rules array with the name of the group
         if (is_string($rules)) {
-            $validation = config('Validation');
+            $validation = config(Validation::class);
 
             // If the rule wasn't found in the \Config\Validation, we
             // should throw an exception so the developer can find it.
@@ -157,6 +193,6 @@ class Controller
             $rules = $validation->{$rules};
         }
 
-        return $this->validator->withRequest($this->request)->setRules($rules, $messages)->run();
+        $this->validator->setRules($rules, $messages);
     }
 }

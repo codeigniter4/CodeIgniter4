@@ -5,14 +5,15 @@ Test Helper
 The Test Helper file contains functions that assist in testing your project.
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 Loading this Helper
 ===================
 
-This helper is loaded using the following code::
+This helper is loaded using the following code:
 
-    helper('test');
+.. literalinclude:: test_helper/001.php
 
 Available Functions
 ===================
@@ -28,11 +29,6 @@ The following functions are available:
 
     Uses ``CodeIgniter\Test\Fabricator`` to create a random item and add it to the database.
 
-    Usage example::
+    Usage example:
 
-        public function testUserAccess()
-        {
-            $user = fake('App\Models\UserModel');
-            
-            $this->assertTrue($this->userHasAccess($user));
-        }
+    .. literalinclude:: test_helper/002.php

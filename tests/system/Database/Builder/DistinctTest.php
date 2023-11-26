@@ -17,6 +17,8 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class DistinctTest extends CIUnitTestCase
 {
@@ -29,7 +31,7 @@ final class DistinctTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $builder = new BaseBuilder('user', $this->db);
 

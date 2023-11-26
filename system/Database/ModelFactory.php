@@ -19,6 +19,7 @@ use CodeIgniter\Config\Factories;
  * @deprecated Use CodeIgniter\Config\Factories::models()
  *
  * @codeCoverageIgnore
+ * @see \CodeIgniter\Database\ModelFactoryTest
  */
 class ModelFactory
 {

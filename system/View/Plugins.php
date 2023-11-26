@@ -32,7 +32,7 @@ class Plugins
     /**
      * Wrap helper function to use as view plugin.
      *
-     * @return mixed|string|URI
+     * @return string|URI
      */
     public static function previousURL()
     {
@@ -102,5 +102,21 @@ class Plugins
     public static function siteURL(array $params = []): string
     {
         return site_url(...$params);
+    }
+
+    /**
+     * Wrap csp_script_nonce() function to use as view plugin.
+     */
+    public static function cspScriptNonce(): string
+    {
+        return csp_script_nonce();
+    }
+
+    /**
+     * Wrap csp_style_nonce() function to use as view plugin.
+     */
+    public static function cspStyleNonce(): string
+    {
+        return csp_style_nonce();
     }
 }

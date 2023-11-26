@@ -3,50 +3,50 @@ Upgrade Validations
 
 .. contents::
     :local:
-    :depth: 1
-
+    :depth: 2
 
 Documentations of Library
 =========================
 
-- `Form Validation Documentation Codeigniter 3.X <http://codeigniter.com/userguide3/libraries/form_validation.html>`_
-- :doc:`Validation Documentation Codeigniter 4.X </libraries/validation>`
-
+- `Form Validation Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/form_validation.html>`_
+- :doc:`Validation Documentation CodeIgniter 4.X </libraries/validation>`
 
 What has been changed
 =====================
-- If you want to change validation error display, you have to set CI4 validation View templates.
+- If you want to change validation error display, you have to set CI4 :ref:`validation View templates <validation-customizing-error-display>`.
 - CI4 validation has no Callbacks nor Callable in CI3.
+  Use :ref:`Rule Classes <validation-using-rule-classes>` or
+  :ref:`Closure Rule <validation-using-closure-rule>`
+  instead.
+- In CI3, Callbacks/Callable rules were prioritized, but in CI4, Closure Rules are
+  not prioritized, and are checked in the order in which they are listed.
 - CI4 validation format rules do not permit empty string.
 - CI4 validation never changes your data.
+- Since v4.3.0, :php:func:`validation_errors()` has been introduced, but the API is different from CI3's.
 
 Upgrade Guide
 =============
 1. Within the view which contains the form you have to change:
 
-    - ``<?php echo validation_errors(); ?>`` to ``<?= $validation->listErrors() ?>``
+    - ``<?php echo validation_errors(); ?>`` to ``<?= validation_list_errors() ?>``
 
 2. Within the controller you have to change the following:
 
     - ``$this->load->helper(array('form', 'url'));`` to ``helper(['form', 'url']);``
     - remove the line ``$this->load->library('form_validation');``
     - ``if ($this->form_validation->run() == FALSE)`` to ``if (! $this->validate([]))``
-    - ``$this->load->view('myform');`` to ``echo view('myform', ['validation' => $this->validator,]);``
+    - ``$this->load->view('myform');`` to ``return view('myform', ['validation' => $this->validator,]);``
 
-3. You have to change the validation rules. The new syntax is to set the rules as array in the controller::
+3. You have to change the validation rules. The new syntax is to set the rules as array in the controller:
 
-    $isValid = $this->validate([
-        'name'  => 'required|min_length[3]',
-        'email' => 'required|valid_email',
-        'phone' => 'required|numeric|max_length[10]'
-    ]);
+   .. literalinclude:: upgrade_validations/001.php
 
 Code Example
 ============
 
-Codeigniter Version 3.11
+CodeIgniter Version 3.x
 ------------------------
-Path: ``application/views``::
+Path: **application/views**::
 
     <html>
     <head>
@@ -77,34 +77,13 @@ Path: ``application/views``::
     </body>
     </html>
 
-Path: ``application/controllers/``::
+Path: **application/controllers**:
 
-    <?php
+.. literalinclude:: upgrade_validations/ci3sample/002.php
 
-    class Form extends CI_Controller {
-
-        public function index()
-        {
-            $this->load->helper(array('form', 'url'));
-
-            $this->load->library('form_validation');
-
-            // Set validation rules
-
-            if ($this->form_validation->run() == FALSE)
-            {
-                    $this->load->view('myform');
-            }
-            else
-            {
-                    $this->load->view('formsuccess');
-            }
-        }
-    }
-
-Codeigniter Version 4.x
+CodeIgniter Version 4.x
 -----------------------
-Path: ``app/Views``::
+Path: **app/Views**::
 
     <html>
     <head>
@@ -112,7 +91,7 @@ Path: ``app/Views``::
     </head>
     <body>
 
-        <?= $validation->listErrors() ?>
+        <?= validation_list_errors() ?>
 
         <?= form_open('form') ?>
 
@@ -135,28 +114,6 @@ Path: ``app/Views``::
     </body>
     </html>
 
-Path: ``app/Controllers/``::
+Path: **app/Controllers**:
 
-    <?php
-
-    namespace App\Controllers;
-
-    use CodeIgniter\Controller;
-
-    class Form extends Controller
-    {
-        public function index()
-        {
-            helper(['form', 'url']);
-
-            if (! $this->validate([
-                // Validation rules
-            ])) {
-                echo view('myform', [
-                    'validation' => $this->validator,
-                ]);
-            } else {
-                echo view('formsuccess');
-            }
-        }
-    }
+.. literalinclude:: upgrade_validations/002.php

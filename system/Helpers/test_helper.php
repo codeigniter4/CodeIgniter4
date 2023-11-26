@@ -30,7 +30,7 @@ if (! function_exists('fake')) {
     {
         $fabricator = new Fabricator($model);
 
-        if ($overrides) {
+        if ($overrides !== null) {
             $fabricator->setOverrides($overrides);
         }
 
@@ -47,6 +47,8 @@ if (! function_exists('mock')) {
      * Used within our test suite to mock certain system tools.
      *
      * @param string $className Fully qualified class name
+     *
+     * @return object
      */
     function mock(string $className)
     {

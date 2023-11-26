@@ -10,14 +10,21 @@ on:
       - 'user_guide_src/**'
       - '.github/workflows/test-userguide.yml'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   syntax_check:
     name: Check User Guide syntax
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Detect usage of tabs in RST files
         run: php utils/check_tabs_in_rst.php
@@ -25,3 +32,4 @@ jobs:
       - uses: ammaraskar/sphinx-action@0.4
         with:
           docs-folder: user_guide_src
+          build-command: 'make html SPHINXOPTS="-W --keep-going -w /tmp/sphinx-log"'

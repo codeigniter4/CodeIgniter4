@@ -13,6 +13,9 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\Log\Logger;
 
+/**
+ * @see \CodeIgniter\Test\TestLoggerTest
+ */
 class TestLogger extends Logger
 {
     protected static $op_logs = [];
@@ -59,10 +62,24 @@ class TestLogger extends Logger
      *
      * @return bool
      */
-    public static function didLog(string $level, $message)
+    public static function didLog(string $level, $message, bool $useExactComparison = true)
     {
+        $lowerLevel = strtolower($level);
+
         foreach (self::$op_logs as $log) {
-            if (strtolower($log['level']) === strtolower($level) && $message === $log['message']) {
+            if (strtolower($log['level']) !== $lowerLevel) {
+                continue;
+            }
+
+            if ($useExactComparison) {
+                if ($log['message'] === $message) {
+                    return true;
+                }
+
+                continue;
+            }
+
+            if (strpos($log['message'], $message) !== false) {
                 return true;
             }
         }
@@ -70,9 +87,15 @@ class TestLogger extends Logger
         return false;
     }
 
-    // Expose cleanFileNames()
+    /**
+     * Expose filenames.
+     *
+     * @param string $file
+     *
+     * @deprecated No longer needed as underlying protected method is also deprecated.
+     */
     public function cleanup($file)
     {
-        return $this->cleanFileNames($file);
+        return clean_path($file);
     }
 }

@@ -17,10 +17,12 @@ use Faker\Generator;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class DatabaseSeederTest extends CIUnitTestCase
 {
-    public function testInstantiateNoSeedPath()
+    public function testInstantiateNoSeedPath(): void
     {
         $this->expectException('InvalidArgumentException');
 
@@ -29,7 +31,7 @@ final class DatabaseSeederTest extends CIUnitTestCase
         new Seeder($config);
     }
 
-    public function testInstantiateNotDirSeedPath()
+    public function testInstantiateNotDirSeedPath(): void
     {
         $this->expectException('InvalidArgumentException');
 
@@ -38,12 +40,15 @@ final class DatabaseSeederTest extends CIUnitTestCase
         new Seeder($config);
     }
 
-    public function testFakerGet()
+    /**
+     * @TODO remove this when Seeder::faker() is removed
+     */
+    public function testFakerGet(): void
     {
         $this->assertInstanceOf(Generator::class, Seeder::faker());
     }
 
-    public function testCallOnEmptySeeder()
+    public function testCallOnEmptySeeder(): void
     {
         $this->expectException('InvalidArgumentException');
 

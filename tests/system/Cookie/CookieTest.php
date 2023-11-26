@@ -16,18 +16,16 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cookie as CookieConfig;
 use DateTimeImmutable;
 use DateTimeZone;
-use InvalidArgumentException;
 use LogicException;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CookieTest extends CIUnitTestCase
 {
-    /**
-     * @var array
-     */
-    private $defaults;
+    private array $defaults;
 
     protected function setUp(): void
     {
@@ -60,9 +58,6 @@ final class CookieTest extends CIUnitTestCase
 
     public function testConfigInjectionForDefaults(): void
     {
-        /**
-         * @var CookieConfig $config
-         */
         $config = new CookieConfig();
 
         $old = Cookie::setDefaults($config);
@@ -81,6 +76,38 @@ final class CookieTest extends CIUnitTestCase
         $this->assertSame($config->raw, $cookie->isRaw());
 
         Cookie::setDefaults($old);
+    }
+
+    /**
+     * @dataProvider provideConfigPrefix
+     */
+    public function testConfigPrefix(string $configPrefix, string $optionPrefix, string $expected): void
+    {
+        $config         = new CookieConfig();
+        $config->prefix = $configPrefix;
+        Cookie::setDefaults($config);
+
+        $cookie = new Cookie(
+            'test',
+            'value',
+            [
+                'prefix' => $optionPrefix,
+            ]
+        );
+
+        $this->assertSame($expected, $cookie->getPrefixedName());
+    }
+
+    public static function provideConfigPrefix(): iterable
+    {
+        yield from [
+            ['prefix_', '', 'prefix_test'],
+            ['prefix_', '0', '0test'],
+            ['prefix_', 'new_', 'new_test'],
+            ['', '', 'test'],
+            ['', '0', '0test'],
+            ['', 'new_', 'new_test'],
+        ];
     }
 
     public function testValidationOfRawCookieName(): void
@@ -138,9 +165,9 @@ final class CookieTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider invalidExpiresProvider
+     * @dataProvider provideInvalidExpires
      *
-     * @param mixed $expires
+     * @param bool|float|string $expires
      */
     public function testInvalidExpires($expires): void
     {
@@ -148,7 +175,7 @@ final class CookieTest extends CIUnitTestCase
         new Cookie('test', 'value', ['expires' => $expires]);
     }
 
-    public static function invalidExpiresProvider(): iterable
+    public static function provideInvalidExpires(): iterable
     {
         $cases = [
             'non-numeric-string' => ['yes'],
@@ -162,7 +189,7 @@ final class CookieTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider setCookieHeaderProvider
+     * @dataProvider provideSetCookieHeaderCreation
      */
     public function testSetCookieHeaderCreation(string $header, array $changed): void
     {
@@ -171,7 +198,7 @@ final class CookieTest extends CIUnitTestCase
         $this->assertSame(array_merge($cookie, $changed), $cookie);
     }
 
-    public static function setCookieHeaderProvider(): iterable
+    public static function provideSetCookieHeaderCreation(): iterable
     {
         yield 'basic' => [
             'test=value',
@@ -268,16 +295,16 @@ final class CookieTest extends CIUnitTestCase
     {
         $cookie = new Cookie('cookie', 'monster');
 
-        $this->assertTrue(isset($cookie['expire']));
+        $this->assertArrayHasKey('expire', $cookie);
         $this->assertSame($cookie['expire'], $cookie->getExpiresTimestamp());
-        $this->assertTrue(isset($cookie['httponly']));
+        $this->assertArrayHasKey('httponly', $cookie);
         $this->assertSame($cookie['httponly'], $cookie->isHTTPOnly());
-        $this->assertTrue(isset($cookie['samesite']));
+        $this->assertArrayHasKey('samesite', $cookie);
         $this->assertSame($cookie['samesite'], $cookie->getSameSite());
-        $this->assertTrue(isset($cookie['path']));
+        $this->assertArrayHasKey('path', $cookie);
         $this->assertSame($cookie['path'], $cookie->getPath());
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $cookie['expiry'];
     }
 

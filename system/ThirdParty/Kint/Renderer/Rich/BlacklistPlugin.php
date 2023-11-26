@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,11 +27,11 @@
 
 namespace Kint\Renderer\Rich;
 
-use Kint\Object\BasicObject;
+use Kint\Zval\Value;
 
-class BlacklistPlugin extends Plugin implements ObjectPluginInterface
+class BlacklistPlugin extends AbstractPlugin implements ValuePluginInterface
 {
-    public function renderObject(BasicObject $o)
+    public function renderValue(Value $o): string
     {
         return '<dl>'.$this->renderLockedHeader($o, '<var>Blacklisted</var>').'</dl>';
     }

@@ -60,9 +60,9 @@ class Views extends BaseCollector
     protected $title = 'Views';
 
     /**
-     * Instance of the Renderer service
+     * Instance of the shared Renderer service
      *
-     * @var RendererInterface
+     * @var RendererInterface|null
      */
     protected $viewer;
 
@@ -73,12 +73,9 @@ class Views extends BaseCollector
      */
     protected $views = [];
 
-    /**
-     * Constructor.
-     */
-    public function __construct()
+    private function initViewer(): void
     {
-        $this->viewer = Services::renderer();
+        $this->viewer ??= Services::renderer();
     }
 
     /**
@@ -87,9 +84,11 @@ class Views extends BaseCollector
      */
     protected function formatTimelineData(): array
     {
+        $this->initViewer();
+
         $data = [];
 
-        $rows = $this->viewer->getPerformanceData(); // @phpstan-ignore-line
+        $rows = $this->viewer->getPerformanceData();
 
         foreach ($rows as $info) {
             $data[] = [
@@ -121,8 +120,9 @@ class Views extends BaseCollector
      */
     public function getVarData(): array
     {
+        $this->initViewer();
+
         return [
-            // @phpstan-ignore-next-line
             'View Data' => $this->viewer->getData(),
         ];
     }
@@ -132,7 +132,9 @@ class Views extends BaseCollector
      */
     public function getBadgeValue(): int
     {
-        return count($this->viewer->getPerformanceData()); // @phpstan-ignore-line
+        $this->initViewer();
+
+        return count($this->viewer->getPerformanceData());
     }
 
     /**

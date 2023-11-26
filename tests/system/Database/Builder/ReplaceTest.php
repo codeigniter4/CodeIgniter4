@@ -11,11 +11,14 @@
 
 namespace CodeIgniter\Database\Builder;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ReplaceTest extends CIUnitTestCase
 {
@@ -28,7 +31,7 @@ final class ReplaceTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testSimpleReplace()
+    public function testSimpleReplace(): void
     {
         $builder = $this->db->table('jobs');
 
@@ -43,11 +46,11 @@ final class ReplaceTest extends CIUnitTestCase
         $this->assertSame($expected, $builder->testMode()->replace($data));
     }
 
-    public function testReplaceThrowsExceptionWithNoData()
+    public function testReplaceThrowsExceptionWithNoData(): void
     {
         $builder = $this->db->table('jobs');
 
-        $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
+        $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('You must use the "set" method to update an entry.');
 
         $builder->replace();

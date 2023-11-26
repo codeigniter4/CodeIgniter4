@@ -12,23 +12,19 @@
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Encryption;
+use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class SodiumHandlerTest extends CIUnitTestCase
 {
-    /**
-     * @var \CodeIgniter\Encryption\Encryption
-     */
-    protected $encryption;
-
-    /**
-     * @var \Config\Encryption
-     */
-    protected $config;
+    private Encryption $encryption;
+    private EncryptionConfig $config;
 
     protected function setUp(): void
     {
@@ -44,7 +40,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $this->encryption     = new Encryption($this->config);
     }
 
-    public function testPropertiesGetter()
+    public function testPropertiesGetter(): void
     {
         $this->config->key       = sodium_crypto_secretbox_keygen();
         $this->config->blockSize = 256;
@@ -55,34 +51,34 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $this->assertNull($encrypter->driver);
     }
 
-    public function testEmptyKeyThrowsErrorOnInitialize()
+    public function testEmptyKeyThrowsErrorOnInitialize(): void
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         $this->config->key = '';
         $this->encryption->initialize($this->config);
     }
 
-    public function testEmptyKeyThrowsErrorOnEncrypt()
+    public function testEmptyKeyThrowsErrorOnEncrypt(): void
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         $encrypter = $this->encryption->initialize($this->config);
         $encrypter->encrypt('Some message to encrypt', '');
     }
 
-    public function testInvalidBlockSizeThrowsErrorOnEncrypt()
+    public function testInvalidBlockSizeThrowsErrorOnEncrypt(): void
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
         $this->config->blockSize = -1;
 
         $encrypter = $this->encryption->initialize($this->config);
         $encrypter->encrypt('Some message.');
     }
 
-    public function testEmptyKeyThrowsErrorOnDecrypt()
+    public function testEmptyKeyThrowsErrorOnDecrypt(): void
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         $encrypter  = $this->encryption->initialize($this->config);
         $ciphertext = $encrypter->encrypt('Some message to encrypt');
@@ -90,9 +86,9 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $encrypter->decrypt($ciphertext);
     }
 
-    public function testInvalidBlockSizeThrowsErrorOnDecrypt()
+    public function testInvalidBlockSizeThrowsErrorOnDecrypt(): void
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
         $key = $this->config->key;
 
         $encrypter  = $this->encryption->initialize($this->config);
@@ -101,9 +97,9 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $encrypter->decrypt($ciphertext, ['key' => $key, 'blockSize' => 0]);
     }
 
-    public function testTruncatedMessageThrowsErrorOnDecrypt()
+    public function testTruncatedMessageThrowsErrorOnDecrypt(): void
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         $encrypter  = $this->encryption->initialize($this->config);
         $ciphertext = $encrypter->encrypt('Some message to encrypt');
@@ -111,7 +107,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
         $encrypter->decrypt($truncated, ['blockSize' => 256, 'key' => sodium_crypto_secretbox_keygen()]);
     }
 
-    public function testDecryptingMessages()
+    public function testDecryptingMessages(): void
     {
         $key = sodium_crypto_secretbox_keygen();
         $msg = 'A plaintext message for you.';

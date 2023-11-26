@@ -12,13 +12,14 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Cookie\Cookie;
+use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
 use DateTime;
 use InvalidArgumentException;
 
 /**
- * Representation of an outgoing, getServer-side response.
+ * Representation of an outgoing, server-side response.
  * Most of these methods are supplied by ResponseTrait.
  *
  * Per the HTTP specification, this interface includes properties for
@@ -28,10 +29,8 @@ use InvalidArgumentException;
  * - Status code and reason phrase
  * - Headers
  * - Message body
- *
- * @mixin RedirectResponse
  */
-interface ResponseInterface
+interface ResponseInterface extends MessageInterface
 {
     /**
      * Constants for status codes.
@@ -107,12 +106,10 @@ interface ResponseInterface
     /**
      * Gets the response status code.
      *
-     * The status code is a 3-digit integer result code of the getServer's attempt
+     * The status code is a 3-digit integer result code of the server's attempt
      * to understand and satisfy the request.
      *
      * @return int Status code.
-     *
-     * @deprecated To be replaced by the PSR-7 version (compatible)
      */
     public function getStatusCode(): int;
 
@@ -130,29 +127,46 @@ interface ResponseInterface
      *                       provided status code; if none is provided, will
      *                       default to the IANA name.
      *
-     * @throws InvalidArgumentException For invalid status code arguments.
+     * @return $this
      *
-     * @return self
+     * @throws HTTPException For invalid status code arguments.
      */
     public function setStatusCode(int $code, string $reason = '');
 
     /**
-     * Gets the response response phrase associated with the status code.
+     * Gets the response phrase associated with the status code.
      *
      * @see http://tools.ietf.org/html/rfc7231#section-6
      * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+     *
      * @deprecated Use getReasonPhrase()
      */
     public function getReason(): string;
 
-    //--------------------------------------------------------------------
+    /**
+     * Gets the response reason phrase associated with the status code.
+     *
+     * Because a reason phrase is not a required element in a response
+     * status line, the reason phrase value MAY be null. Implementations MAY
+     * choose to return the default RFC 7231 recommended reason phrase (or those
+     * listed in the IANA HTTP Status Code Registry) for the response's
+     * status code.
+     *
+     * @see http://tools.ietf.org/html/rfc7231#section-6
+     * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+     *
+     * @return string Reason phrase; must return an empty string if none present.
+     */
+    public function getReasonPhrase();
+
+    // --------------------------------------------------------------------
     // Convenience Methods
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Sets the date header
      *
-     * @return ResponseInterface
+     * @return $this
      */
     public function setDate(DateTime $date);
 
@@ -163,6 +177,8 @@ interface ResponseInterface
      * preferably, an instance of DateTime.
      *
      * @param DateTime|string $date
+     *
+     * @return $this
      */
     public function setLastModified($date);
 
@@ -171,7 +187,7 @@ interface ResponseInterface
      *
      * @see http://tools.ietf.org/html/rfc5988
      *
-     * @return Response
+     * @return $this
      *
      * @todo Recommend moving to Pager
      */
@@ -181,13 +197,13 @@ interface ResponseInterface
      * Sets the Content Type header for this response with the mime type
      * and, optionally, the charset.
      *
-     * @return ResponseInterface
+     * @return $this
      */
     public function setContentType(string $mime, string $charset = 'UTF-8');
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Formatter Methods
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Converts the $body into JSON and sets the Content Type header.
@@ -201,9 +217,9 @@ interface ResponseInterface
     /**
      * Returns the current body, converted to JSON is it isn't already.
      *
-     * @throws InvalidArgumentException If the body property is not array.
+     * @return bool|string|null
      *
-     * @return mixed|string
+     * @throws InvalidArgumentException If the body property is not array.
      */
     public function getJSON();
 
@@ -219,21 +235,23 @@ interface ResponseInterface
     /**
      * Retrieves the current body into XML and returns it.
      *
-     * @throws InvalidArgumentException If the body property is not array.
+     * @return bool|string|null
      *
-     * @return mixed|string
+     * @throws InvalidArgumentException If the body property is not array.
      */
     public function getXML();
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Cache Control Methods
     //
     // http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Sets the appropriate headers to ensure this response
      * is not cached by the browsers.
+     *
+     * @return $this
      */
     public function noCache();
 
@@ -261,38 +279,38 @@ interface ResponseInterface
      *  - proxy-revalidate
      *  - no-transform
      *
-     * @return ResponseInterface
+     * @return $this
      */
     public function setCache(array $options = []);
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Output Methods
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Sends the output to the browser.
      *
-     * @return ResponseInterface
+     * @return $this
      */
     public function send();
 
     /**
      * Sends the headers of this HTTP request to the browser.
      *
-     * @return Response
+     * @return $this
      */
     public function sendHeaders();
 
     /**
      * Sends the Body of the message to the browser.
      *
-     * @return Response
+     * @return $this
      */
     public function sendBody();
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Cookie Methods
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Set a cookie
@@ -350,9 +368,16 @@ interface ResponseInterface
      */
     public function getCookies();
 
-    //--------------------------------------------------------------------
+    /**
+     * Returns the `CookieStore` instance.
+     *
+     * @return CookieStore
+     */
+    public function getCookieStore();
+
+    // --------------------------------------------------------------------
     // Response Methods
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Perform a redirect to a new URL, in two flavors: header or location.
@@ -360,9 +385,9 @@ interface ResponseInterface
      * @param string $uri  The URI to redirect to
      * @param int    $code The type of redirection, defaults to 302
      *
-     * @throws HTTPException For invalid status code.
-     *
      * @return $this
+     *
+     * @throws HTTPException For invalid status code.
      */
     public function redirect(string $uri, string $method = 'auto', ?int $code = null);
 
@@ -379,4 +404,13 @@ interface ResponseInterface
      * @return DownloadResponse|null
      */
     public function download(string $filename = '', $data = '', bool $setMime = false);
+
+    // --------------------------------------------------------------------
+    // CSP Methods
+    // --------------------------------------------------------------------
+
+    /**
+     * Get Content Security Policy handler.
+     */
+    public function getCSP(): ContentSecurityPolicy;
 }

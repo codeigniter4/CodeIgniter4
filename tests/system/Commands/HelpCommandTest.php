@@ -12,35 +12,23 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class HelpCommandTest extends CIUnitTestCase
 {
-    private $streamFilter;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        CITestStreamFilter::$buffer = '';
-        $this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
-    }
-
-    protected function tearDown(): void
-    {
-        stream_filter_remove($this->streamFilter);
-    }
+    use StreamFilterTrait;
 
     protected function getBuffer()
     {
-        return CITestStreamFilter::$buffer;
+        return $this->getStreamFilterBuffer();
     }
 
-    public function testHelpCommand()
+    public function testHelpCommand(): void
     {
         command('help');
 
@@ -49,25 +37,25 @@ final class HelpCommandTest extends CIUnitTestCase
         $this->assertStringContainsString('command_name', $this->getBuffer());
     }
 
-    public function testHelpCommandWithMissingUsage()
+    public function testHelpCommandWithMissingUsage(): void
     {
         command('help app:info');
         $this->assertStringContainsString('app:info [arguments]', $this->getBuffer());
     }
 
-    public function testHelpCommandOnSpecificCommand()
+    public function testHelpCommandOnSpecificCommand(): void
     {
         command('help cache:clear');
         $this->assertStringContainsString('Clears the current system caches.', $this->getBuffer());
     }
 
-    public function testHelpCommandOnInexistentCommand()
+    public function testHelpCommandOnInexistentCommand(): void
     {
         command('help fixme');
         $this->assertStringContainsString('Command "fixme" not found', $this->getBuffer());
     }
 
-    public function testHelpCommandOnInexistentCommandButWithAlternatives()
+    public function testHelpCommandOnInexistentCommandButWithAlternatives(): void
     {
         command('help clear');
         $this->assertStringContainsString('Command "clear" not found.', $this->getBuffer());

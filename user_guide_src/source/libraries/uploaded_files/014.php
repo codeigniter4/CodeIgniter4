@@ -1,0 +1,3 @@
+<?php
+
+$ext = $file->getClientExtension();

@@ -1,0 +1,24 @@
+name: Close Pull Request
+
+on:
+  pull_request_target:
+    types: [opened, reopened]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close PR with nice message
+        run: gh pr close ${{ env.ISSUE }} -c "${{ env.COMMENT }}"
+        working-directory: ${{ github.workspace }}
+        env:
+          COMMENT: >
+            Thank you for your pull request. However, you have submitted your PR on a read-only
+            split of <code>codeigniter4/CodeIgniter4</code>. This repository, unfortunately, does
+            not accept PRs. Please submit your PR at https://github.com/codeigniter4/CodeIgniter4
+            repository.<br/><br/>Thank you.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.pull_request.html_url }}
