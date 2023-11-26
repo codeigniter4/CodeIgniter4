@@ -25,14 +25,14 @@ use CodeIgniter\HTTP\URI;
 class PagerRenderer
 {
     /**
-     * First page number.
+     * First page number in the current pages being displayed.
      *
      * @var int
      */
     protected $first;
 
     /**
-     * Last page number.
+     * Last page number in the current pages being displayed.
      *
      * @var int
      */
@@ -85,8 +85,11 @@ class PagerRenderer
      */
     public function __construct(array $details)
     {
-        $this->first        = 1;
-        $this->last         = $details['pageCount'];
+        // `first` and `last` will be updated by `setSurroundCount()`.
+        // You must call `setSurroundCount()` after instantiation.
+        $this->first = 1;
+        $this->last  = $details['pageCount'];
+
         $this->current      = $details['currentPage'];
         $this->total        = $details['total'];
         $this->uri          = $details['uri'];
@@ -377,7 +380,7 @@ class PagerRenderer
     }
 
     /**
-     * Returns the page number of the first page.
+     * Returns the page number of the first page in the current pages being displayed.
      */
     public function getFirstPageNumber(): int
     {
@@ -393,7 +396,7 @@ class PagerRenderer
     }
 
     /**
-     * Returns the page number of the last page.
+     * Returns the page number of the last page in the current pages being displayed.
      */
     public function getLastPageNumber(): int
     {
