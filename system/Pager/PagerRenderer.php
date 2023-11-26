@@ -25,14 +25,14 @@ use CodeIgniter\HTTP\URI;
 class PagerRenderer
 {
     /**
-     * First page number in the current pages being displayed.
+     * First page number in the set of links to be displayed.
      *
      * @var int
      */
     protected $first;
 
     /**
-     * Last page number in the current pages being displayed.
+     * Last page number in the set of links to be displayed.
      *
      * @var int
      */
@@ -382,7 +382,7 @@ class PagerRenderer
     }
 
     /**
-     * Returns the page number of the first page in the current pages being displayed.
+     * Returns the page number of the first page in the set of links to be displayed.
      */
     public function getFirstPageNumber(): int
     {
@@ -398,7 +398,7 @@ class PagerRenderer
     }
 
     /**
-     * Returns the page number of the last page in the current pages being displayed.
+     * Returns the page number of the last page in the set of links to be displayed.
      */
     public function getLastPageNumber(): int
     {

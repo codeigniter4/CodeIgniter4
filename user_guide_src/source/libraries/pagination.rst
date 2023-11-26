@@ -320,11 +320,11 @@ These methods return the page number for the previous or next pages in relation 
 getFirstPageNumber() & getLastPageNumber()
 ------------------------------------------
 
-These methods return the page numbers to the first and last pages in the current pages
-being displayed.
+These methods return the page numbers to the first and last pages in the set of
+links to be displayed.
 
 .. note:: Unlike `getFirst() & getLast()`_, these methods return the numbers in
-    the current pages being displayed.
+    the set of links to be displayed.
 
 getCurrentPageNumber()
 ----------------------
