@@ -283,8 +283,6 @@ hasPreviousPage() & hasNextPage()
 
 This method returns a boolean ``true`` if there are links to a page before and after, respectively, the current page being displayed.
 
-Their difference to `hasPrevious() & hasNext()`_ is that they are based on the current page while `hasPrevious() & hasNext()`_ are based on the set of links to be displayed before and after the current page based on the value passed in `setSurroundCount()`_.
-
 For example, let's say we have 20 pages of data. The current
 page is page 3. If the surrounding count is 2, then the following links would show up like this::
 
@@ -293,16 +291,24 @@ page is page 3. If the surrounding count is 2, then the following links would sh
 ``hasPreviousPage()`` would return ``true`` since there is page 2. And,
 ``hasNextPage()`` would return ``true`` since there is page 4.
 
+.. note:: The difference to `hasPrevious() & hasNext()`_ is that they are based
+    on the current page while `hasPrevious() & hasNext()`_ are based on the set
+    of links to be displayed before and after the current page based on the value
+    passed in `setSurroundCount()`_.
+
 getPreviousPage() & getNextPage()
 ---------------------------------
 
-These methods return a **URL** for the previous and next pages in relation to the current page being displayed, unlike `getPrevious() & getNext()`_ that return the URL for the previous or next pages of results on either side of the numbered links. See the previous paragraph for a full explanation.
+These methods return a **URL** for the previous and next pages in relation to the current page being displayed.
 
 For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this::
 
     3  |  4  |  5  |  6  |  7
 
 ``getPreviousPage()`` returns the URL for page 4. ``getNextPage()`` returns the URL for page 6.
+
+.. note:: `getPrevious() & getNext()`_ returns the URL for the previous or next
+    pages of results on either side of the numbered links.
 
 If you want page numbers instead of URLs, you can use the following methods:
 
@@ -314,8 +320,11 @@ These methods return the page number for the previous or next pages in relation 
 getFirstPageNumber() & getLastPageNumber()
 ------------------------------------------
 
-These methods return page numbers to the first and last pages in the current pages
+These methods return the page numbers to the first and last pages in the current pages
 being displayed.
+
+.. note:: Unlike `getFirst() & getLast()`_, these methods return the numbers in
+    the current pages being displayed.
 
 getCurrentPageNumber()
 ----------------------
