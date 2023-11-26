@@ -239,7 +239,7 @@ Since the first link displayed is page one, ``hasPrevious()`` would return **fal
 getPrevious() & getNext()
 -------------------------
 
-These methods return the URL for the previous or next pages of results on either side of the numbered links.
+These methods return the **URL** for the previous or next pages of results on either side of the numbered links.
 
 For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this::
 
@@ -252,7 +252,7 @@ If you want to get page 4 and page 6, use ``getPreviousPage()`` and ``getNextPag
 getFirst() & getLast()
 ----------------------
 
-Much like ``getPrevious()`` and ``getNext()``, these methods return links to the first and last pages in the
+Much like ``getPrevious()`` and ``getNext()``, these methods return the **URL** to the first and last pages in the
 result set.
 
 links()
@@ -274,14 +274,14 @@ See following an example with these changes:
 hasPreviousPage() & hasNextPage()
 ---------------------------------
 
-This method returns a boolean true if there are links to a page before and after, respectively, the current page being displayed.
+This method returns a boolean ``true`` if there are links to a page before and after, respectively, the current page being displayed.
 
 Their difference to ``hasPrevious()`` and ``hasNext()`` is that they are based on the current page while ``hasPrevious()`` and ``hasNext()`` are based on the set of links to be displayed before and after the current page based on the value passed in ``setSurroundCount()``.
 
 getPreviousPage() & getNextPage()
 ---------------------------------
 
-These methods return a URL for the previous and next pages in relation to the current page being displayed, unlike ``getPrevious()`` and ``getNext()`` that return the URL for the previous or next pages of results on either side of the numbered links. See the previous paragraph for a full explanation.
+These methods return a **URL** for the previous and next pages in relation to the current page being displayed, unlike ``getPrevious()`` and ``getNext()`` that return the URL for the previous or next pages of results on either side of the numbered links. See the previous paragraph for a full explanation.
 
 For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this::
 
