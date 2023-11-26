@@ -529,6 +529,9 @@ final class CURLRequestTest extends CIUnitTestCase
 
         $this->assertArrayHasKey(CURLOPT_SSL_VERIFYPEER, $options);
         $this->assertSame(1, $options[CURLOPT_SSL_VERIFYPEER]);
+
+        $this->assertArrayHasKey(CURLOPT_SSL_VERIFYHOST, $options);
+        $this->assertSame(2, $options[CURLOPT_SSL_VERIFYHOST]);
     }
 
     public function testSSLWithBadKey(): void

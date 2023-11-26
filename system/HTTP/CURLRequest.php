@@ -559,6 +559,12 @@ class CURLRequest extends OutgoingRequest
                 $curlOptions[CURLOPT_SSL_VERIFYPEER] = 1;
             } elseif (is_bool($config['verify'])) {
                 $curlOptions[CURLOPT_SSL_VERIFYPEER] = $config['verify'];
+
+                if ($config['verify'] === false) {
+                    $curlOptions[CURLOPT_SSL_VERIFYHOST] = 0;
+                } else {
+                    $curlOptions[CURLOPT_SSL_VERIFYHOST] = 2;
+                }
             }
         }
 
