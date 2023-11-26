@@ -259,6 +259,8 @@ class PagerRenderer
      * is represented by another array containing of the URI the link
      * should go to, the title (number) of the link, and a boolean
      * value representing whether this link is active or not.
+     *
+     * @return list<array{uri:string, title:int, active:bool}>
      */
     public function links(): array
     {
