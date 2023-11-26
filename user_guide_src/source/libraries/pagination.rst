@@ -299,8 +299,8 @@ These methods return the page number for the previous or next pages in relation 
 getFirstPageNumber() & getLastPageNumber()
 ------------------------------------------
 
-These methods return page numbers to the first and last pages in the
-result set.
+These methods return page numbers to the first and last pages in the current pages
+being displayed.
 
 getCurrentPageNumber()
 ----------------------
