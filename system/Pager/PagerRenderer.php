@@ -122,8 +122,6 @@ class PagerRenderer
      * page before the current page, but is the page just before the
      * "first" page.
      *
-     * You MUST call hasPrevious() first, or this value may be invalid.
-     *
      * @return string|null
      */
     public function getPrevious()
@@ -161,8 +159,6 @@ class PagerRenderer
      * Returns a URL to the "next" page. The next page is NOT, the
      * page after the current page, but is the page that follows the
      * "last" page.
-     *
-     * You MUST call hasNext() first, or this value may be invalid.
      *
      * @return string|null
      */
