@@ -227,14 +227,21 @@ setSurroundCount()
 In the first line, the ``setSurroundCount()`` method specifies than we want to show two links to either side of
 the current page link. The only parameter that it accepts is the number of links to show.
 
+.. note:: You must call this method first to generate correct pagination links.
+
 hasPrevious() & hasNext()
 -------------------------
 
-These methods return a boolean true if there are more links that can be displayed on either side of the current page,
-based on the value passed to ``setSurroundCount()``. For example, let's say we have 20 pages of data. The current
-page is page 3. If the surrounding count is 2, then the following links would show up in the list: 1, 2, 3, 4, and 5.
-Since the first link displayed is page one, ``hasPrevious()`` would return **false** since there is no page zero. However,
-``hasNext()`` would return **true** since there are 15 additional pages of results after page five.
+These methods return a boolean ``true`` if there are more links that can be displayed on either side of the current page,
+based on the value passed to ``setSurroundCount()``.
+
+For example, let's say we have 20 pages of data. The current
+page is page 3. If the surrounding count is 2, then the following links would show up like this::
+
+    1  |  2  |  3  |  4  |  5
+
+Since the first link displayed is page one, ``hasPrevious()`` would return ``false`` since there is no page zero. However,
+``hasNext()`` would return ``true`` since there are 15 additional pages of results after page five.
 
 getPrevious() & getNext()
 -------------------------
@@ -277,6 +284,14 @@ hasPreviousPage() & hasNextPage()
 This method returns a boolean ``true`` if there are links to a page before and after, respectively, the current page being displayed.
 
 Their difference to ``hasPrevious()`` and ``hasNext()`` is that they are based on the current page while ``hasPrevious()`` and ``hasNext()`` are based on the set of links to be displayed before and after the current page based on the value passed in ``setSurroundCount()``.
+
+For example, let's say we have 20 pages of data. The current
+page is page 3. If the surrounding count is 2, then the following links would show up like this::
+
+    1  |  2  |  3  |  4  |  5
+
+``hasPreviousPage()`` would return ``true`` since there is page 2. And,
+``hasNextPage()`` would return ``true`` since there is page 4.
 
 getPreviousPage() & getNextPage()
 ---------------------------------
