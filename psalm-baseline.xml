@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
+<files psalm-version="5.16.0@2897ba636551a8cb61601cc26f6ccfbba6c36591">
   <file src="app/Config/View.php">
     <UndefinedDocblockClass>
       <code><![CDATA[array<string, ParserCallableString>]]></code>
@@ -80,21 +80,42 @@
     ];]]></code>
     </UndefinedDocblockClass>
   </file>
-  <file src="system/Database/BasePreparedQuery.php">
-    <InaccessibleProperty>
-      <code><![CDATA[$this->db->transStatus]]></code>
-    </InaccessibleProperty>
-  </file>
-  <file src="system/Database/DataConverter/Cast/ArrayCast.php">
+  <file src="system/DataConverter/Cast/ArrayCast.php">
     <MissingTemplateParam>
       <code>CastInterface</code>
     </MissingTemplateParam>
   </file>
-  <file src="system/Database/DataConverter/Cast/CastInterface.php">
+  <file src="system/DataConverter/Cast/CSVCast.php">
+    <NoValue>
+      <code>$value</code>
+      <code>$value</code>
+    </NoValue>
+  </file>
+  <file src="system/DataConverter/Cast/CastInterface.php">
     <UndefinedDocblockClass>
       <code>TDbColumn</code>
       <code>TPhpValue</code>
     </UndefinedDocblockClass>
+  </file>
+  <file src="system/DataConverter/Cast/DatetimeCast.php">
+    <NoValue>
+      <code>$value</code>
+    </NoValue>
+  </file>
+  <file src="system/DataConverter/Cast/JsonCast.php">
+    <NoValue>
+      <code>$value</code>
+    </NoValue>
+  </file>
+  <file src="system/DataConverter/Cast/URICast.php">
+    <NoValue>
+      <code>$value</code>
+    </NoValue>
+  </file>
+  <file src="system/Database/BasePreparedQuery.php">
+    <InaccessibleProperty>
+      <code><![CDATA[$this->db->transStatus]]></code>
+    </InaccessibleProperty>
   </file>
   <file src="system/Database/OCI8/Connection.php">
     <UndefinedConstant>
