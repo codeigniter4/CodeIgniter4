@@ -120,7 +120,7 @@ final class AutoRouter implements AutoRouterInterface
         }
 
         // Ensure routes registered via $routes->cli() are not accessible via web.
-        if ($this->httpVerb !== 'cli') {
+        if ($this->httpVerb !== 'CLI') {
             $controller = '\\' . $this->defaultNamespace;
 
             $controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';

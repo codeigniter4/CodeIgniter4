@@ -56,7 +56,7 @@ class FilterCheck extends BaseCommand
      * @var array<string, string>
      */
     protected $arguments = [
-        'method' => 'The HTTP method. get, post, put, etc.',
+        'method' => 'The HTTP method. GET, POST, PUT, etc.',
         'route'  => 'The route (URI path) to check filters.',
     ];
 
@@ -76,13 +76,13 @@ class FilterCheck extends BaseCommand
         if (! isset($params[0], $params[1])) {
             CLI::error('You must specify a HTTP verb and a route.');
             CLI::write('  Usage: ' . $this->usage);
-            CLI::write('Example: filter:check get /');
-            CLI::write('         filter:check put products/1');
+            CLI::write('Example: filter:check GET /');
+            CLI::write('         filter:check PUT products/1');
 
             return EXIT_ERROR;
         }
 
-        $method = strtolower($params[0]);
+        $method = $params[0];
         $route  = $params[1];
 
         // Load Routes

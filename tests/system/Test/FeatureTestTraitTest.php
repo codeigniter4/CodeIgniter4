@@ -14,6 +14,7 @@ namespace CodeIgniter\Test;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
@@ -524,7 +525,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             'string' => 'foo',
         ];
         $response = $this->withBodyFormat('json')
-            ->call('put', 'home', $data);
+            ->call(Method::PUT, 'home', $data);
 
         $response->assertOK();
         $response->assertJSONExact($data);
@@ -548,7 +549,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             'string' => 'foo',
         ];
         $response = $this->withBodyFormat('json')
-            ->call('put', 'home', $data);
+            ->call(Method::PUT, 'home', $data);
 
         $response->assertOK();
         $this->assertStringContainsString('[]', $response->getBody());
@@ -572,7 +573,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             'string' => 'foo',
         ];
         $response = $this->withBodyFormat('json')
-            ->call('post', 'home', $data);
+            ->call(Method::POST, 'home', $data);
 
         $response->assertOK();
         $response->assertJSONExact($data);

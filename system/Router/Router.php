@@ -14,6 +14,7 @@ namespace CodeIgniter\Router;
 use Closure;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
@@ -26,6 +27,22 @@ use Config\Feature;
  */
 class Router implements RouterInterface
 {
+    /**
+     * List of allowed HTTP methods (and CLI for command line use).
+     */
+    public const HTTP_METHODS = [
+        Method::GET,
+        Method::HEAD,
+        Method::POST,
+        Method::PATCH,
+        Method::PUT,
+        Method::DELETE,
+        Method::OPTIONS,
+        Method::TRACE,
+        Method::CONNECT,
+        'CLI',
+    ];
+
     /**
      * A RouteCollection instance.
      *
@@ -137,7 +154,7 @@ class Router implements RouterInterface
                 );
             } else {
                 $this->autoRouter = new AutoRouter(
-                    $this->collection->getRoutes('cli', false), // @phpstan-ignore-line
+                    $this->collection->getRoutes('CLI', false), // @phpstan-ignore-line
                     $this->collection->getDefaultNamespace(),
                     $this->collection->getDefaultController(),
                     $this->collection->getDefaultMethod(),

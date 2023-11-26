@@ -313,6 +313,8 @@ Changes
 - **Config:**
     - ``Config\Feature::$multipleFilters`` has been removed, because now
       :ref:`multiple-filters` are always enabled.
+- **RouteCollection:** The HTTP method keys in the protected property ``$routes``
+  has been fixed from lowercase to uppercase.
 
 Deprecations
 ************
@@ -321,14 +323,18 @@ Deprecations
   used.
 - **Response:** The constructor parameter ``$config`` has been deprecated. No
   longer used.
-- **Filters::** The feature that ``Filters`` accept the lowercase HTTP method keys
-  of ``Config\Filters::$methods`` has been deprecated. Use correct uppercase HTTP
-  method keys instead.
-- **RouteCollection:** The feature that the ``match()`` method accepts the lowercase
-  HTTP methods has been deprecated. Use correct uppercase HTTP methods instead.
-- **FeatureTestTrait:** The feature that the ``withRoutes()`` method accepts the
-  lowercase HTTP methods has been deprecated. Use correct uppercase HTTP methods
-  instead.
+- **Filters:**
+    - The feature that ``Filters`` accept the lowercase HTTP method keys
+      of ``Config\Filters::$methods`` has been deprecated. Use correct uppercase
+      HTTP method keys instead.
+    - The feature that the ``spark filter:check`` command accepts the lowercase
+      HTTP method has been deprecated. Use correct uppercase HTTP method instead.
+- **RouteCollection:** The feature that the ``match()`` and ``setHTTPVerb()``
+  methods accept the lowercase HTTP methods has been deprecated. Use correct
+  uppercase HTTP methods instead.
+- **FeatureTestTrait:** The feature that the ``call()`` and ``withRoutes()``
+  methods accept the lowercase HTTP methods has been deprecated. Use correct
+  uppercase HTTP methods instead.
 
 Bugs Fixed
 **********

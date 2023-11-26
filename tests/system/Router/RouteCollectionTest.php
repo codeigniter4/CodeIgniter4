@@ -56,7 +56,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routerConfig                   = new Routing();
         $routerConfig->defaultNamespace = '\\';
 
-        return (new RouteCollection($loader, $moduleConfig, $routerConfig))->setHTTPVerb('get');
+        return (new RouteCollection($loader, $moduleConfig, $routerConfig))->setHTTPVerb(Method::GET);
     }
 
     public function testBasicAdd(): void
@@ -550,7 +550,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testResourceScaffoldsCorrectly(): void
     {
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('get');
+        $routes->setHTTPVerb(Method::GET);
 
         $routes->resource('photos');
 
@@ -564,7 +564,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('post');
+        $routes->setHTTPVerb(Method::POST);
         $routes->resource('photos');
 
         $expected = [
@@ -574,7 +574,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('put');
+        $routes->setHTTPVerb(Method::PUT);
         $routes->resource('photos');
 
         $expected = [
@@ -584,7 +584,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('patch');
+        $routes->setHTTPVerb(Method::PATCH);
         $routes->resource('photos');
 
         $expected = [
@@ -594,7 +594,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('delete');
+        $routes->setHTTPVerb(Method::DELETE);
         $routes->resource('photos');
 
         $expected = [
@@ -609,7 +609,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testResourceAPIScaffoldsCorrectly(): void
     {
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('get');
+        $routes->setHTTPVerb(Method::GET);
 
         $routes->resource('api/photos', ['controller' => 'Photos']);
 
@@ -623,7 +623,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('post');
+        $routes->setHTTPVerb(Method::POST);
         $routes->resource('api/photos', ['controller' => 'Photos']);
 
         $expected = [
@@ -633,7 +633,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('put');
+        $routes->setHTTPVerb(Method::PUT);
         $routes->resource('api/photos', ['controller' => 'Photos']);
 
         $expected = [
@@ -643,7 +643,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('patch');
+        $routes->setHTTPVerb(Method::PATCH);
         $routes->resource('api/photos', ['controller' => 'Photos']);
 
         $expected = [
@@ -653,7 +653,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('delete');
+        $routes->setHTTPVerb(Method::DELETE);
         $routes->resource('api/photos', ['controller' => 'Photos']);
 
         $expected = [
@@ -666,7 +666,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testPresenterScaffoldsCorrectly(): void
     {
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('get');
+        $routes->setHTTPVerb(Method::GET);
 
         $routes->presenter('photos');
 
@@ -682,7 +682,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
 
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('post');
+        $routes->setHTTPVerb(Method::POST);
         $routes->presenter('photos');
 
         $expected = [
@@ -797,7 +797,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testResourcesWithWebsafe(): void
     {
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('post');
+        $routes->setHTTPVerb(Method::POST);
 
         $routes->resource('photos', ['websafe' => true]);
 
@@ -840,7 +840,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testPost(): void
     {
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('post');
+        $routes->setHTTPVerb(Method::POST);
 
         $expected = ['here' => '\there'];
 
@@ -851,7 +851,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testGetDoesntAllowOtherMethods(): void
     {
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('get');
+        $routes->setHTTPVerb(Method::GET);
 
         $expected = ['here' => '\there'];
 
@@ -863,7 +863,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testPut(): void
     {
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('put');
+        $routes->setHTTPVerb(Method::PUT);
 
         $expected = ['here' => '\there'];
 
@@ -874,7 +874,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testDelete(): void
     {
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('delete');
+        $routes->setHTTPVerb(Method::DELETE);
 
         $expected = ['here' => '\there'];
 
@@ -885,7 +885,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testHead(): void
     {
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('head');
+        $routes->setHTTPVerb(Method::HEAD);
 
         $expected = ['here' => '\there'];
 
@@ -896,7 +896,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testPatch(): void
     {
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('patch');
+        $routes->setHTTPVerb(Method::PATCH);
 
         $expected = ['here' => '\there'];
 
@@ -907,7 +907,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     public function testOptions(): void
     {
         $routes = $this->getCollector();
-        $routes->setHTTPVerb('options');
+        $routes->setHTTPVerb(Method::OPTIONS);
 
         $expected = ['here' => '\there'];
 
@@ -922,7 +922,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $expected = ['here' => '\there'];
 
         $routes->cli('here', 'there');
-        $this->assertSame($expected, $routes->getRoutes('cli'));
+        $this->assertSame($expected, $routes->getRoutes('CLI'));
     }
 
     public function testView(): void
@@ -931,7 +931,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes->view('here', 'hello');
 
-        $route = $routes->getRoutes('get')['here'];
+        $route = $routes->getRoutes(Method::GET)['here'];
         $this->assertIsCallable($route);
 
         // Test that the route is not available in any other verb
@@ -1424,11 +1424,11 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $this->assertSame($options, ['as' => 'admin1', 'foo' => 'baz1', 'bar' => 'baz']);
 
-        $options = $routes->setHTTPVerb('post')->getRoutesOptions('administrator');
+        $options = $routes->setHTTPVerb(Method::POST)->getRoutesOptions('administrator');
 
         $this->assertSame($options, ['as' => 'admin2', 'foo' => 'baz2', 'bar' => 'baz']);
 
-        $options = $routes->setHTTPVerb('get')->getRoutesOptions('administrator', 'post');
+        $options = $routes->setHTTPVerb(Method::GET)->getRoutesOptions('administrator', Method::POST);
 
         $this->assertSame($options, ['as' => 'admin2', 'foo' => 'baz2', 'bar' => 'baz']);
     }
@@ -1637,7 +1637,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->setDefaultNamespace('App\Controllers');
         $routes->setDefaultController('Home');
         $routes->setDefaultMethod('index');
-        $routes->setHTTPVerb('get');
+        $routes->setHTTPVerb(Method::GET);
 
         $routes->get('/', '\App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
         $routes->get('/', 'Home::index', ['subdomain' => 'dev']);
@@ -1848,14 +1848,14 @@ final class RouteCollectionTest extends CIUnitTestCase
         $collection->get('test', '\App\Controllers\Hello::get');
         $collection->post('test', '\App\Controllers\Hello::post');
 
-        $routes = $collection->getRegisteredControllers('get');
+        $routes = $collection->getRegisteredControllers(METHOD::GET);
 
         $expects = [
             '\App\Controllers\Hello',
         ];
         $this->assertSame($expects, $routes);
 
-        $routes = $collection->getRegisteredControllers('post');
+        $routes = $collection->getRegisteredControllers(METHOD::POST);
 
         $expects = [
             '\App\Controllers\Hello',
@@ -1869,7 +1869,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $collection->post('test', '\App\Controllers\Test::post');
         $collection->post('hello', '\App\Controllers\Hello::post');
 
-        $routes = $collection->getRegisteredControllers('post');
+        $routes = $collection->getRegisteredControllers(METHOD::POST);
 
         $expects = [
             '\App\Controllers\Test',
@@ -1884,7 +1884,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $collection->post('test', '\App\Controllers\Test::test');
         $collection->post('hello', '\App\Controllers\Test::hello');
 
-        $routes = $collection->getRegisteredControllers('post');
+        $routes = $collection->getRegisteredControllers(METHOD::POST);
 
         $expects = [
             '\App\Controllers\Test',
@@ -1915,7 +1915,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $collection->get('test', '\App\Controllers\Hello::get');
         $collection->add('hello', '\App\Controllers\Test::hello');
 
-        $routes = $collection->getRegisteredControllers('get');
+        $routes = $collection->getRegisteredControllers(METHOD::GET);
 
         $expects = [
             '\App\Controllers\Hello',

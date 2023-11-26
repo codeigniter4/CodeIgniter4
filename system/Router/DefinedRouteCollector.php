@@ -33,18 +33,7 @@ final class DefinedRouteCollector
      */
     public function collect(): Generator
     {
-        $methods = [
-            'get',
-            'head',
-            'post',
-            'patch',
-            'put',
-            'delete',
-            'options',
-            'trace',
-            'connect',
-            'cli',
-        ];
+        $methods = Router::HTTP_METHODS;
 
         foreach ($methods as $method) {
             $routes = $this->routeCollection->getRoutes($method);

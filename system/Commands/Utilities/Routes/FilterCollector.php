@@ -37,14 +37,28 @@ final class FilterCollector
     }
 
     /**
-     * @param string $method HTTP method
+     * @param string $method HTTP verb like `GET`,`POST` or `CLI`.
      * @param string $uri    URI path to find filters for
      *
      * @return array{before: list<string>, after: list<string>} array of filter alias or classname
      */
     public function get(string $method, string $uri): array
     {
-        if ($method === 'cli') {
+        if ($method === strtolower($method)) {
+            @trigger_error(
+                'Passing lowercase HTTP method "' . $method . '" is deprecated.'
+                . ' Use uppercase HTTP method like "' . strtoupper($method) . '".',
+                E_USER_DEPRECATED
+            );
+        }
+
+        /**
+         * @deprecated 4.5.0
+         * @TODO Remove this in the future.
+         */
+        $method = strtoupper($method);
+
+        if ($method === 'CLI') {
             return [
                 'before' => [],
                 'after'  => [],

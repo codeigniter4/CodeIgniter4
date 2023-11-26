@@ -18,6 +18,7 @@ use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\AutoRouteCollector 
 use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
 use CodeIgniter\Commands\Utilities\Routes\SampleURIGenerator;
 use CodeIgniter\Router\DefinedRouteCollector;
+use CodeIgniter\Router\Router;
 use Config\Feature;
 use Config\Routing;
 use Config\Services;
@@ -98,18 +99,7 @@ class Routes extends BaseCommand
             unset($_SERVER['HTTP_HOST']);
         }
 
-        $methods = [
-            'get',
-            'head',
-            'post',
-            'patch',
-            'put',
-            'delete',
-            'options',
-            'trace',
-            'connect',
-            'cli',
-        ];
+        $methods = Router::HTTP_METHODS;
 
         $tbody           = [];
         $uriGenerator    = new SampleURIGenerator();
@@ -172,8 +162,8 @@ class Routes extends BaseCommand
                 $autoRoutes = $autoRouteCollector->get();
 
                 foreach ($autoRoutes as &$routes) {
-                    // There is no `auto` method, but it is intentional not to get route filters.
-                    $filters = $filterCollector->get('auto', $uriGenerator->get($routes[1]));
+                    // There is no `AUTO` method, but it is intentional not to get route filters.
+                    $filters = $filterCollector->get('AUTO', $uriGenerator->get($routes[1]));
 
                     $routes[] = implode(' ', array_map('class_basename', $filters['before']));
                     $routes[] = implode(' ', array_map('class_basename', $filters['after']));
