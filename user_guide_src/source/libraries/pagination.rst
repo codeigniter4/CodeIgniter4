@@ -323,8 +323,9 @@ getFirstPageNumber() & getLastPageNumber()
 These methods return the page numbers to the first and last pages in the set of
 links to be displayed.
 
-.. note:: Unlike `getFirst() & getLast()`_, these methods return the numbers in
-    the set of links to be displayed.
+.. note:: If you want to get the page numbers to the first and last pages in the
+    result set, the first page number is always 1, and use `getPageCount()`_ to
+    get the last page number.
 
 getCurrentPageNumber()
 ----------------------
