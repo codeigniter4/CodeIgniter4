@@ -495,6 +495,10 @@ class CURLRequest extends Request
                 $curlOptions[CURLOPT_SSL_VERIFYPEER] = 1;
             } elseif (is_bool($config['verify'])) {
                 $curlOptions[CURLOPT_SSL_VERIFYPEER] = $config['verify'];
+
+                if ($config['verify'] === FALSE) {
+                    $curlOptions[CURLOPT_SSL_VERIFYHOST] = 0;
+                }
             }
         }
 
