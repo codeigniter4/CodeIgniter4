@@ -2582,11 +2582,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Model.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Return type \\(int\\|object\\|string\\|false\\) of method CodeIgniter\\\\Model\\:\\:insert\\(\\) should be covariant with return type \\(bool\\|int\\|string\\) of method CodeIgniter\\\\BaseModel\\:\\:insert\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Model.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Accessing offset mixed directly on \\$_GET is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Pager/Pager.php',

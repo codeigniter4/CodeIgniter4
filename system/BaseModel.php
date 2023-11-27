@@ -720,10 +720,12 @@ abstract class BaseModel
      * Inserts data into the database. If an object is provided,
      * it will attempt to convert it to an array.
      *
-     * @param array|object|null $data     Data
-     * @param bool              $returnID Whether insert ID should be returned or not.
+     * @param array|object|null $data Data
+     * @phpstan-param row_array|object|null $data
+     * @param bool $returnID Whether insert ID should be returned or not.
      *
      * @return bool|int|string insert ID or true on success. false on failure.
+     * @phpstan-return ($returnID is true ? int|string|false : bool)
      *
      * @throws ReflectionException
      */

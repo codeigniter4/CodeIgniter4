@@ -680,9 +680,11 @@ class Model extends BaseModel
      * it will attempt to convert it to an array.
      *
      * @param array|object|null $data
-     * @param bool              $returnID Whether insert ID should be returned or not.
+     * @phpstan-param row_array|object|null $data
+     * @param bool $returnID Whether insert ID should be returned or not.
      *
-     * @return BaseResult|false|int|object|string
+     * @return false|int|object|string
+     * @phpstan-return ($returnID is true ? int|string|false : bool)
      *
      * @throws ReflectionException
      */
