@@ -83,6 +83,8 @@ You can supply multiple verbs that a route should match by passing them in as an
 Specifying Route Handlers
 =========================
 
+.. _controllers-namespace:
+
 Controller's Namespace
 ----------------------
 
