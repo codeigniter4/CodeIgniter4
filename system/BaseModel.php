@@ -1672,17 +1672,29 @@ abstract class BaseModel
         $properties = $this->objectToRawArray($object, $onlyChanged, $recursive);
 
         // Convert any Time instances to appropriate $dateFormat
-        if ($properties !== []) {
-            $properties = array_map(function ($value) {
-                if ($value instanceof Time) {
-                    return $this->timeToDate($value);
-                }
+        return $this->timeToString($properties);
+    }
 
-                return $value;
-            }, $properties);
+    /**
+     * Convert any Time instances to appropriate $dateFormat.
+     *
+     * @param array<string, mixed> $properties
+     *
+     * @return array<string, mixed>
+     */
+    protected function timeToString(array $properties): array
+    {
+        if ($properties === []) {
+            return [];
         }
 
-        return $properties;
+        return array_map(function ($value) {
+            if ($value instanceof Time) {
+                return $this->timeToDate($value);
+            }
+
+            return $value;
+        }, $properties);
     }
 
     /**
