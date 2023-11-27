@@ -282,7 +282,7 @@
              
   <section id="using-entity-classes">
 <h1>Using Entity Classes<a class="headerlink" href="#using-entity-classes" title="Permalink to this headline"></a></h1>
-<p>CodeIgniter supports Entity classes as a first-class citizen in it’s database layer, while keeping
+<p>CodeIgniter supports Entity classes as a first-class citizen, while keeping
 them completely optional to use. They are commonly used as part of the Repository pattern, but can
 be used directly with the <a class="reference internal" href="model.html"><span class="doc">Model</span></a> if that fits your needs better.</p>
 <div class="contents local topic" id="contents">
@@ -315,9 +315,17 @@ be used directly with the <a class="reference internal" href="model.html"><span 
 <h2><a class="toc-backref" href="#id1">Entity Usage</a><a class="headerlink" href="#entity-usage" title="Permalink to this headline"></a></h2>
 <p>At its core, an Entity class is simply a class that represents a single database row. It has class properties
 to represent the database columns, and provides any additional methods to implement the business logic for
-that row. The core feature, though, is that it doesn’t know anything about how to persist itself. That’s the
+that row.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For ease of understanding, the explanation here is based on the case of
+using a database. However, Entity can also be used for data that does not come
+from a database.</p>
+</div>
+<p>The core feature, though, is that it doesn’t know anything about how to persist itself. That’s the
 responsibility of the model or the repository class. That way, if anything changes on how you need to save the
-object, you don’t have to change how that object is used throughout the application. This makes it possible to
+object, you don’t have to change how that object is used throughout the application.</p>
+<p>This makes it possible to
 use JSON or XML files to store the objects during a rapid prototyping stage, and then easily switch to a
 database when you’ve proven the concept works.</p>
 <p>Let’s walk through a very simple User Entity and how we’d work with it to help make things clear.</p>
@@ -411,7 +419,7 @@ well as providing the ability to check the properties with <code class="docutils
 of what columns have changed since the object was created or pulled from the database.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The Entity class stores the data in the property <code class="docutils literal notranslate"><span class="pre">$attributes</span></code>.</p>
+<p>The Entity class stores the data in the class property <code class="docutils literal notranslate"><span class="pre">$attributes</span></code> internally.</p>
 </div>
 <p>When the User is passed to the model’s <code class="docutils literal notranslate"><span class="pre">save()</span></code> method, it automatically takes care of reading the  properties
 and saving any changes to columns listed in the model’s <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> property. It also knows whether to create
