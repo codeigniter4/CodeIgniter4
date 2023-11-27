@@ -320,12 +320,16 @@ These methods return the page number for the previous or next pages in relation 
 getFirstPageNumber() & getLastPageNumber()
 ------------------------------------------
 
-These methods return the page numbers to the first and last pages in the set of
-links to be displayed.
+These methods return the page numbers of the first and last pages in the set of
+links to be displayed. For example, if the set of links to be displayed is something like this::
 
-.. note:: If you want to get the page numbers to the first and last pages in the
-    result set, the first page number is always 1, and use `getPageCount()`_ to
-    get the last page number.
+    3  |  4  |  5  |  6  |  7
+
+``getFirstPageNumber()`` will return 3 while ``getLastPageNumber()`` will return 7.    
+
+.. note:: To obtain the page numbers of the first and last pages in the entire
+    result set, you can use the following approach: The first page number is always 1, and `getPageCount()`_ can be used to
+    retrieve the last page number.
 
 getCurrentPageNumber()
 ----------------------
