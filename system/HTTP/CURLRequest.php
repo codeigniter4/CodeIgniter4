@@ -555,16 +555,17 @@ class CURLRequest extends OutgoingRequest
                     throw HTTPException::forInvalidSSLKey($config['ssl_key']);
                 }
 
-                $curlOptions[CURLOPT_CAINFO]         = $file;
-                $curlOptions[CURLOPT_SSL_VERIFYPEER] = 1;
+                $curlOptions[CURLOPT_CAINFO] = $file;
+                if ($config['verify'] === 'yes') {
+                    $curlOptions[CURLOPT_SSL_VERIFYPEER] = 1;
+                    $curlOptions[CURLOPT_SSL_VERIFYHOST] = 2;
+                } else {
+                    $curlOptions[CURLOPT_SSL_VERIFYPEER] = 0;
+                    $curlOptions[CURLOPT_SSL_VERIFYHOST] = 0;
+                }
             } elseif (is_bool($config['verify'])) {
                 $curlOptions[CURLOPT_SSL_VERIFYPEER] = $config['verify'];
-
-                if ($config['verify'] === false) {
-                    $curlOptions[CURLOPT_SSL_VERIFYHOST] = 0;
-                } else {
-                    $curlOptions[CURLOPT_SSL_VERIFYHOST] = 2;
-                }
+                $curlOptions[CURLOPT_SSL_VERIFYHOST] = $config['verify'] ? 2 : 0;
             }
         }
 
