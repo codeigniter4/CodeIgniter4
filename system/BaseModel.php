@@ -1659,7 +1659,7 @@ abstract class BaseModel
      * This method uses objectToRawArray() internally and does conversion
      * to string on all Time instances
      *
-     * @param object|null $data        Data
+     * @param object|null $object      Object
      * @param bool        $onlyChanged Only Changed Property
      * @param bool        $recursive   If true, inner entities will be cast as array as well
      *
@@ -1667,9 +1667,9 @@ abstract class BaseModel
      *
      * @throws ReflectionException
      */
-    protected function objectToArray($data, bool $onlyChanged = true, bool $recursive = false): array
+    protected function objectToArray($object, bool $onlyChanged = true, bool $recursive = false): array
     {
-        $properties = $this->objectToRawArray($data, $onlyChanged, $recursive);
+        $properties = $this->objectToRawArray($object, $onlyChanged, $recursive);
 
         assert(is_array($properties));
 
@@ -1691,7 +1691,7 @@ abstract class BaseModel
      * Takes a class and returns an array of its public and protected
      * properties as an array with raw values.
      *
-     * @param object|null $data        Data
+     * @param object|null $object      Object
      * @param bool        $onlyChanged Only Changed Property
      * @param bool        $recursive   If true, inner entities will be casted as array as well
      *
@@ -1699,12 +1699,12 @@ abstract class BaseModel
      *
      * @throws ReflectionException
      */
-    protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
+    protected function objectToRawArray($object, bool $onlyChanged = true, bool $recursive = false): array
     {
-        if (method_exists($data, 'toRawArray')) {
-            $properties = $data->toRawArray($onlyChanged, $recursive);
+        if (method_exists($object, 'toRawArray')) {
+            $properties = $object->toRawArray($onlyChanged, $recursive);
         } else {
-            $mirror = new ReflectionClass($data);
+            $mirror = new ReflectionClass($object);
             $props  = $mirror->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
 
             $properties = [];
@@ -1714,7 +1714,7 @@ abstract class BaseModel
             foreach ($props as $prop) {
                 // Must make protected values accessible.
                 $prop->setAccessible(true);
-                $properties[$prop->getName()] = $prop->getValue($data);
+                $properties[$prop->getName()] = $prop->getValue($object);
             }
         }
 

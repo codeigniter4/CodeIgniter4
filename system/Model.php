@@ -803,16 +803,16 @@ class Model extends BaseModel
      * Takes a class and returns an array of its public and protected
      * properties as an array with raw values.
      *
-     * @param object|null $data
+     * @param object|null $object    Object
      * @param bool        $recursive If true, inner entities will be cast as array as well
      *
      * @return array|null Array
      *
      * @throws ReflectionException
      */
-    protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
+    protected function objectToRawArray($object, bool $onlyChanged = true, bool $recursive = false): array
     {
-        return parent::objectToRawArray($data, $onlyChanged);
+        return parent::objectToRawArray($object, $onlyChanged);
     }
 
     /**
