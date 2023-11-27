@@ -1663,7 +1663,7 @@ abstract class BaseModel
      * @param bool   $onlyChanged Only Changed Property
      * @param bool   $recursive   If true, inner entities will be cast as array as well
      *
-     * @return array Array
+     * @return array<string, mixed>
      *
      * @throws ReflectionException
      */

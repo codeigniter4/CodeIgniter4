@@ -212,6 +212,7 @@ class Model extends BaseModel
      * @param string $columnName Column Name
      *
      * @return array|null The resulting row of data, or null if no data found.
+     * @phpstan-return list<row_array>|null
      */
     protected function doFindColumn(string $columnName)
     {
@@ -715,7 +716,7 @@ class Model extends BaseModel
      * @phpstan-param row_array|object|null $data
      * @param bool $returnID Whether insert ID should be returned or not.
      *
-     * @return false|int|object|string
+     * @return bool|int|string
      * @phpstan-return ($returnID is true ? int|string|false : bool)
      *
      * @throws ReflectionException
