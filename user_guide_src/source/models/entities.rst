@@ -78,7 +78,7 @@ access them as if they were public properties. The base class, ``CodeIgniter\Ent
 well as providing the ability to check the properties with ``isset()``, or ``unset()`` the property, and keep track
 of what columns have changed since the object was created or pulled from the database.
 
-.. note:: The Entity class stores the data in the property ``$attributes``.
+.. note:: The Entity class stores the data in the class property ``$attributes`` internally.
 
 When the User is passed to the model's ``save()`` method, it automatically takes care of reading the  properties
 and saving any changes to columns listed in the model's ``$allowedFields`` property. It also knows whether to create
