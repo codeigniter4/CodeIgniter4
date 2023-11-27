@@ -1659,9 +1659,9 @@ abstract class BaseModel
      * This method uses objectToRawArray() internally and does conversion
      * to string on all Time instances
      *
-     * @param object|null $object      Object
-     * @param bool        $onlyChanged Only Changed Property
-     * @param bool        $recursive   If true, inner entities will be cast as array as well
+     * @param object $object      Object
+     * @param bool   $onlyChanged Only Changed Property
+     * @param bool   $recursive   If true, inner entities will be cast as array as well
      *
      * @return array Array
      *
@@ -1691,16 +1691,17 @@ abstract class BaseModel
      * Takes a class and returns an array of its public and protected
      * properties as an array with raw values.
      *
-     * @param object|null $object      Object
-     * @param bool        $onlyChanged Only Changed Property
-     * @param bool        $recursive   If true, inner entities will be casted as array as well
+     * @param object $object      Object
+     * @param bool   $onlyChanged Only Changed Property
+     * @param bool   $recursive   If true, inner entities will be casted as array as well
      *
-     * @return array|null Array
+     * @return array<string, mixed>
      *
      * @throws ReflectionException
      */
     protected function objectToRawArray($object, bool $onlyChanged = true, bool $recursive = false): array
     {
+        // Entity::toRawArray() returns array.
         if (method_exists($object, 'toRawArray')) {
             $properties = $object->toRawArray($onlyChanged, $recursive);
         } else {

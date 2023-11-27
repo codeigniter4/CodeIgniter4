@@ -803,10 +803,10 @@ class Model extends BaseModel
      * Takes a class and returns an array of its public and protected
      * properties as an array with raw values.
      *
-     * @param object|null $object    Object
-     * @param bool        $recursive If true, inner entities will be cast as array as well
+     * @param object $object    Object
+     * @param bool   $recursive If true, inner entities will be cast as array as well
      *
-     * @return array|null Array
+     * @return array<string, mixed>
      *
      * @throws ReflectionException
      */
