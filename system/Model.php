@@ -778,6 +778,7 @@ class Model extends BaseModel
      *
      * @param array|int|string|null $id
      * @param array|object|null     $data
+     * @phpstan-param row_array|object|null $data
      *
      * @throws ReflectionException
      */
@@ -802,8 +803,8 @@ class Model extends BaseModel
      * Takes a class and returns an array of its public and protected
      * properties as an array with raw values.
      *
-     * @param object|string $data
-     * @param bool          $recursive If true, inner entities will be cast as array as well
+     * @param object|null $data
+     * @param bool        $recursive If true, inner entities will be cast as array as well
      *
      * @return array|null Array
      *

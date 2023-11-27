@@ -824,10 +824,11 @@ abstract class BaseModel
     /**
      * Compiles batch insert runs the queries, validating each row prior.
      *
-     * @param array|null $set       an associative array of insert values
-     * @param bool|null  $escape    Whether to escape values
-     * @param int        $batchSize The size of the batch to run
-     * @param bool       $testing   True means only number of records is returned, false will execute the query
+     * @param list<array|object>|null $set an associative array of insert values
+     * @phpstan-param list<row_array|object>|null $set
+     * @param bool|null $escape    Whether to escape values
+     * @param int       $batchSize The size of the batch to run
+     * @param bool      $testing   True means only number of records is returned, false will execute the query
      *
      * @return bool|int Number of rows inserted or FALSE on failure
      *
@@ -912,6 +913,7 @@ abstract class BaseModel
      *
      * @param array|int|string|null $id
      * @param array|object|null     $data
+     * @phpstan-param row_array|object|null $data
      *
      * @throws ReflectionException
      */
@@ -973,7 +975,8 @@ abstract class BaseModel
     /**
      * Compiles an update and runs the query.
      *
-     * @param array|null  $set       An associative array of update values
+     * @param list<array|object>|null $set an associative array of insert values
+     * @phpstan-param list<row_array|object>|null $set
      * @param string|null $index     The where key
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
@@ -1656,9 +1659,9 @@ abstract class BaseModel
      * This method uses objectToRawArray() internally and does conversion
      * to string on all Time instances
      *
-     * @param object|string $data        Data
-     * @param bool          $onlyChanged Only Changed Property
-     * @param bool          $recursive   If true, inner entities will be cast as array as well
+     * @param object|null $data        Data
+     * @param bool        $onlyChanged Only Changed Property
+     * @param bool        $recursive   If true, inner entities will be cast as array as well
      *
      * @return array Array
      *
@@ -1688,9 +1691,9 @@ abstract class BaseModel
      * Takes a class and returns an array of its public and protected
      * properties as an array with raw values.
      *
-     * @param object|string $data        Data
-     * @param bool          $onlyChanged Only Changed Property
-     * @param bool          $recursive   If true, inner entities will be casted as array as well
+     * @param object|null $data        Data
+     * @param bool        $onlyChanged Only Changed Property
+     * @param bool        $recursive   If true, inner entities will be casted as array as well
      *
      * @return array|null Array
      *
@@ -1722,7 +1725,8 @@ abstract class BaseModel
      * Transform data to array.
      *
      * @param array|object|null $data Data
-     * @param string            $type Type of data (insert|update)
+     * @phpstan-param row_array|object|null $data
+     * @param string $type Type of data (insert|update)
      *
      * @throws DataException
      * @throws InvalidArgumentException
