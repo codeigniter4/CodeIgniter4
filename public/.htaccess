@@ -16,6 +16,12 @@ Options -Indexes
 	# http://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritebase
 	# RewriteBase /
 
+    # Hotlink Protection
+    RewriteCond expr "-n %{HTTP_REFERER} && -n %{HTTP_HOST}"
+    RewriteCond expr "! %{HTTP_REFERER} -strmatch '*://%{HTTP_HOST}/*'"
+    RewriteCond %{REQUEST_URI} /static(.+)?$
+    RewriteRule ^ "-" [F]
+
 	# Redirect Trailing Slashes...
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_URI} (.+)/$
