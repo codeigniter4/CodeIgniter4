@@ -708,28 +708,36 @@ usefulness. It is easiest to demonstrate creating a new view by showing you the 
 <h4>setSurroundCount()<a class="headerlink" href="#setsurroundcount" title="Permalink to this headline"></a></h4>
 <p>In the first line, the <code class="docutils literal notranslate"><span class="pre">setSurroundCount()</span></code> method specifies than we want to show two links to either side of
 the current page link. The only parameter that it accepts is the number of links to show.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You must call this method first to generate correct pagination links.</p>
+</div>
 </section>
 <section id="hasprevious-hasnext">
 <h4>hasPrevious() &amp; hasNext()<a class="headerlink" href="#hasprevious-hasnext" title="Permalink to this headline"></a></h4>
-<p>These methods return a boolean true if there are more links that can be displayed on either side of the current page,
-based on the value passed to <code class="docutils literal notranslate"><span class="pre">setSurroundCount()</span></code>. For example, let’s say we have 20 pages of data. The current
-page is page 3. If the surrounding count is 2, then the following links would show up in the list: 1, 2, 3, 4, and 5.
-Since the first link displayed is page one, <code class="docutils literal notranslate"><span class="pre">hasPrevious()</span></code> would return <strong>false</strong> since there is no page zero. However,
-<code class="docutils literal notranslate"><span class="pre">hasNext()</span></code> would return <strong>true</strong> since there are 15 additional pages of results after page five.</p>
+<p>These methods return a boolean <code class="docutils literal notranslate"><span class="pre">true</span></code> if there are more links that can be displayed on either side of the current page,
+based on the value passed to <a class="reference internal" href="#setsurroundcount">setSurroundCount()</a>.</p>
+<p>For example, let’s say we have 20 pages of data. The current
+page is page 3. If the surrounding count is 2, then the following links would show up like this:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>  <span class="o">|</span>  <span class="mi">2</span>  <span class="o">|</span>  <span class="mi">3</span>  <span class="o">|</span>  <span class="mi">4</span>  <span class="o">|</span>  <span class="mi">5</span>
+</pre></div>
+</div>
+<p>Since the first link displayed is page one, <code class="docutils literal notranslate"><span class="pre">hasPrevious()</span></code> would return <code class="docutils literal notranslate"><span class="pre">false</span></code> since there is no page zero. However,
+<code class="docutils literal notranslate"><span class="pre">hasNext()</span></code> would return <code class="docutils literal notranslate"><span class="pre">true</span></code> since there are 15 additional pages of results after page five.</p>
 </section>
 <section id="getprevious-getnext">
 <h4>getPrevious() &amp; getNext()<a class="headerlink" href="#getprevious-getnext" title="Permalink to this headline"></a></h4>
-<p>These methods return the URL for the previous or next pages of results on either side of the numbered links.</p>
+<p>These methods return the <strong>URL</strong> for the previous or next pages of results on either side of the numbered links.</p>
 <p>For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>  <span class="o">|</span>  <span class="mi">4</span>  <span class="o">|</span>  <span class="mi">5</span>  <span class="o">|</span>  <span class="mi">6</span>  <span class="o">|</span>  <span class="mi">7</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">getPrevious()</span></code> returns the URL for page 2. <code class="docutils literal notranslate"><span class="pre">getNext()</span></code> returns the URL for page 8.</p>
-<p>If you want to get page 4 and page 6, use <code class="docutils literal notranslate"><span class="pre">getPreviousPage()</span></code> and <code class="docutils literal notranslate"><span class="pre">getNextPage()</span></code> instead.</p>
+<p>If you want to get page 4 and page 6, use <a class="reference internal" href="#getpreviouspage-getnextpage">getPreviousPage() &amp; getNextPage()</a> instead.</p>
 </section>
 <section id="getfirst-getlast">
 <h4>getFirst() &amp; getLast()<a class="headerlink" href="#getfirst-getlast" title="Permalink to this headline"></a></h4>
-<p>Much like <code class="docutils literal notranslate"><span class="pre">getPrevious()</span></code> and <code class="docutils literal notranslate"><span class="pre">getNext()</span></code>, these methods return links to the first and last pages in the
+<p>Much like <a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a>, these methods return the <strong>URL</strong> to the first and last pages in the
 result set.</p>
 </section>
 <section id="links">
@@ -745,8 +753,8 @@ title, which is just the number, and a boolean that tells whether the link is th
 <span class="p">];</span>
 </pre></div>
 </div>
-<p>In the code presented for the standard pagination structure, the methods <code class="docutils literal notranslate"><span class="pre">getPrevious()</span></code> and <code class="docutils literal notranslate"><span class="pre">getNext()</span></code> are used to obtain the links to the previous and next pagination groups respectively.</p>
-<p>If you want to use the pagination structure where prev and next will be links to the previous and next pages based on the current page, just replace the <code class="docutils literal notranslate"><span class="pre">getPrevious()</span></code> and <code class="docutils literal notranslate"><span class="pre">getNext()</span></code> methods with <code class="docutils literal notranslate"><span class="pre">getPreviousPage()</span></code> and <code class="docutils literal notranslate"><span class="pre">getNextPage()</span></code>, and the methods <code class="docutils literal notranslate"><span class="pre">hasPrevious()</span></code> and <code class="docutils literal notranslate"><span class="pre">hasNext()</span></code> by <code class="docutils literal notranslate"><span class="pre">hasPreviousPage()</span></code> and <code class="docutils literal notranslate"><span class="pre">hasNextPage()</span></code> respectively.</p>
+<p>In the code presented for the standard pagination structure, the methods <a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a> are used to obtain the links to the previous and next pagination groups respectively.</p>
+<p>If you want to use the pagination structure where prev and next will be links to the previous and next pages based on the current page, just replace the <a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a> methods with <a class="reference internal" href="#getpreviouspage-getnextpage">getPreviousPage() &amp; getNextPage()</a>, and the methods <a class="reference internal" href="#hasprevious-hasnext">hasPrevious() &amp; hasNext()</a> by <a class="reference internal" href="#haspreviouspage-hasnextpage">hasPreviousPage() &amp; hasNextPage()</a> respectively.</p>
 <p>See following an example with these changes:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">nav</span> <span class="nx">aria</span><span class="o">-</span><span class="nx">label</span><span class="o">=</span><span class="s2">&quot;&lt;?= lang(&#39;Pager.pageNavigation&#39;) ?&gt;&quot;</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;pagination&quot;</span><span class="o">&gt;</span>
@@ -790,17 +798,35 @@ title, which is just the number, and a boolean that tells whether the link is th
 </section>
 <section id="haspreviouspage-hasnextpage">
 <h4>hasPreviousPage() &amp; hasNextPage()<a class="headerlink" href="#haspreviouspage-hasnextpage" title="Permalink to this headline"></a></h4>
-<p>This method returns a boolean true if there are links to a page before and after, respectively, the current page being displayed.</p>
-<p>Their difference to <code class="docutils literal notranslate"><span class="pre">hasPrevious()</span></code> and <code class="docutils literal notranslate"><span class="pre">hasNext()</span></code> is that they are based on the current page while <code class="docutils literal notranslate"><span class="pre">hasPrevious()</span></code> and <code class="docutils literal notranslate"><span class="pre">hasNext()</span></code> are based on the set of links to be displayed before and after the current page based on the value passed in <code class="docutils literal notranslate"><span class="pre">setSurroundCount()</span></code>.</p>
+<p>This method returns a boolean <code class="docutils literal notranslate"><span class="pre">true</span></code> if there are links to a page before and after, respectively, the current page being displayed.</p>
+<p>For example, let’s say we have 20 pages of data. The current
+page is page 3. If the surrounding count is 2, then the following links would show up like this:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>  <span class="o">|</span>  <span class="mi">2</span>  <span class="o">|</span>  <span class="mi">3</span>  <span class="o">|</span>  <span class="mi">4</span>  <span class="o">|</span>  <span class="mi">5</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">hasPreviousPage()</span></code> would return <code class="docutils literal notranslate"><span class="pre">true</span></code> since there is page 2. And,
+<code class="docutils literal notranslate"><span class="pre">hasNextPage()</span></code> would return <code class="docutils literal notranslate"><span class="pre">true</span></code> since there is page 4.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The difference to <a class="reference internal" href="#hasprevious-hasnext">hasPrevious() &amp; hasNext()</a> is that they are based
+on the current page while <a class="reference internal" href="#hasprevious-hasnext">hasPrevious() &amp; hasNext()</a> are based on the set
+of links to be displayed before and after the current page based on the value
+passed in <a class="reference internal" href="#setsurroundcount">setSurroundCount()</a>.</p>
+</div>
 </section>
 <section id="getpreviouspage-getnextpage">
 <h4>getPreviousPage() &amp; getNextPage()<a class="headerlink" href="#getpreviouspage-getnextpage" title="Permalink to this headline"></a></h4>
-<p>These methods return a URL for the previous and next pages in relation to the current page being displayed, unlike <code class="docutils literal notranslate"><span class="pre">getPrevious()</span></code> and <code class="docutils literal notranslate"><span class="pre">getNext()</span></code> that return the URL for the previous or next pages of results on either side of the numbered links. See the previous paragraph for a full explanation.</p>
+<p>These methods return a <strong>URL</strong> for the previous and next pages in relation to the current page being displayed.</p>
 <p>For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>  <span class="o">|</span>  <span class="mi">4</span>  <span class="o">|</span>  <span class="mi">5</span>  <span class="o">|</span>  <span class="mi">6</span>  <span class="o">|</span>  <span class="mi">7</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">getPreviousPage()</span></code> returns the URL for page 4. <code class="docutils literal notranslate"><span class="pre">getNextPage()</span></code> returns the URL for page 6.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#getprevious-getnext">getPrevious() &amp; getNext()</a> returns the URL for the previous or next
+pages of results on either side of the numbered links.</p>
+</div>
 <p>If you want page numbers instead of URLs, you can use the following methods:</p>
 </section>
 <section id="getpreviouspagenumber-getnextpagenumber">
@@ -809,8 +835,18 @@ title, which is just the number, and a boolean that tells whether the link is th
 </section>
 <section id="getfirstpagenumber-getlastpagenumber">
 <h4>getFirstPageNumber() &amp; getLastPageNumber()<a class="headerlink" href="#getfirstpagenumber-getlastpagenumber" title="Permalink to this headline"></a></h4>
-<p>These methods return page numbers to the first and last pages in the
-result set.</p>
+<p>These methods return the page numbers of the first and last pages in the set of
+links to be displayed. For example, if the set of links to be displayed is something like this:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>  <span class="o">|</span>  <span class="mi">4</span>  <span class="o">|</span>  <span class="mi">5</span>  <span class="o">|</span>  <span class="mi">6</span>  <span class="o">|</span>  <span class="mi">7</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">getFirstPageNumber()</span></code> will return 3 while <code class="docutils literal notranslate"><span class="pre">getLastPageNumber()</span></code> will return 7.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To obtain the page numbers of the first and last pages in the entire
+result set, you can use the following approach: The first page number is always 1, and <a class="reference internal" href="#getpagecount">getPageCount()</a> can be used to
+retrieve the last page number.</p>
+</div>
 </section>
 <section id="getcurrentpagenumber">
 <h4>getCurrentPageNumber()<a class="headerlink" href="#getcurrentpagenumber" title="Permalink to this headline"></a></h4>
@@ -836,7 +872,7 @@ result set.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 27, 2023.
+      <span class="lastupdated">Last updated on Nov 28, 2023.
       </span></p>
   </div>
 
