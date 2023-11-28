@@ -366,9 +366,17 @@ abstract class BaseModel
      */
     protected function createDataConverter(): void
     {
-        if ($this->casts !== []) {
+        if ($this->useCasts()) {
             $this->converter = new DataConverter($this->casts);
         }
+    }
+
+    /**
+     * Are casts used?
+     */
+    protected function useCasts(): bool
+    {
+        return $this->casts !== [];
     }
 
     /**
@@ -1818,7 +1826,7 @@ abstract class BaseModel
             throw DataException::forEmptyDataset($type);
         }
 
-        if ($this->casts !== []) {
+        if ($this->useCasts()) {
             if ($row instanceof stdClass) {
                 $row = (array) $row;
             } elseif (is_object($row)) {

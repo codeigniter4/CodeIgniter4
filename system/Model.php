@@ -186,7 +186,7 @@ class Model extends BaseModel
     {
         $builder = $this->builder();
 
-        if ($this->casts !== []) {
+        if ($this->useCasts()) {
             $returnType = $this->tempReturnType;
             $this->asArray();
         }
@@ -207,7 +207,7 @@ class Model extends BaseModel
             $row = $builder->get()->getResult($this->tempReturnType);
         }
 
-        if ($this->casts !== []) {
+        if ($this->useCasts()) {
             $row = $this->convertToReturnType($row, $returnType);
 
             $this->tempReturnType = $returnType;
@@ -229,7 +229,7 @@ class Model extends BaseModel
     {
         $results = $this->select($columnName)->asArray()->find();
 
-        if ($this->casts !== []) {
+        if ($this->useCasts()) {
             foreach ($results as $i => $row) {
                 $results[$i] = $this->converter->fromDataSource($row);
             }
@@ -257,7 +257,7 @@ class Model extends BaseModel
 
         $builder = $this->builder();
 
-        if ($this->casts !== []) {
+        if ($this->useCasts()) {
             $returnType = $this->tempReturnType;
             $this->asArray();
         }
@@ -270,7 +270,7 @@ class Model extends BaseModel
             ->get()
             ->getResult($this->tempReturnType);
 
-        if ($this->casts !== []) {
+        if ($this->useCasts()) {
             foreach ($results as $i => $row) {
                 $results[$i] = $this->convertToReturnType($row, $returnType);
             }
@@ -293,7 +293,7 @@ class Model extends BaseModel
     {
         $builder = $this->builder();
 
-        if ($this->casts !== []) {
+        if ($this->useCasts()) {
             $returnType = $this->tempReturnType;
             $this->asArray();
         }
@@ -312,7 +312,7 @@ class Model extends BaseModel
 
         $row = $builder->limit(1, 0)->get()->getFirstRow($this->tempReturnType);
 
-        if ($this->casts !== []) {
+        if ($this->useCasts()) {
             $row = $this->convertToReturnType($row, $returnType);
 
             $this->tempReturnType = $returnType;
