@@ -31,8 +31,10 @@ final class DataConverter
      * @param array<string, string>       $types        [column => type]
      * @param array<string, class-string> $castHandlers Custom convert handlers
      */
-    public function __construct(array $types, array $castHandlers = [])
-    {
+    public function __construct(
+        private array $types,
+        array $castHandlers = []
+    ) {
         $this->dataCaster = new DataCaster($castHandlers, $types);
     }
 
