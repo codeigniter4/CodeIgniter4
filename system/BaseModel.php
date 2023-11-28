@@ -400,11 +400,12 @@ abstract class BaseModel
      * Inserts data into the current database.
      * This method works only with dbCalls.
      *
-     * @param array $data Data
+     * @param array $row Row data
+     * @phpstan-param row_array $row
      *
      * @return bool
      */
-    abstract protected function doInsert(array $data);
+    abstract protected function doInsert(array $row);
 
     /**
      * Compiles batch insert and runs the queries, validating each row prior.
@@ -423,10 +424,11 @@ abstract class BaseModel
      * Updates a single record in the database.
      * This method works only with dbCalls.
      *
-     * @param array|int|string|null $id   ID
-     * @param array|null            $data Data
+     * @param array|int|string|null $id  ID
+     * @param array|null            $row Row data
+     * @phpstan-param row_array|null $row
      */
-    abstract protected function doUpdate($id = null, $data = null): bool;
+    abstract protected function doUpdate($id = null, $row = null): bool;
 
     /**
      * Compiles an update and runs the query.
@@ -509,15 +511,16 @@ abstract class BaseModel
      * Public getter to return the id value using the idValue() method.
      * For example with SQL this will return $data->$this->primaryKey.
      *
-     * @param array|object $data
+     * @param array|object $row Row data
+     * @phpstan-param row_array|object $row
      *
      * @return array|int|string|null
      *
      * @todo: Make abstract in version 5.0
      */
-    public function getIdValue($data)
+    public function getIdValue($row)
     {
-        return $this->idValue($data);
+        return $this->idValue($row);
     }
 
     /**
@@ -693,20 +696,21 @@ abstract class BaseModel
      * you must ensure that the class will provide access to the class
      * variables, even if through a magic method.
      *
-     * @param array|object $data Data
+     * @param array|object $row Row data
+     * @phpstan-param row_array|object $row
      *
      * @throws ReflectionException
      */
-    public function save($data): bool
+    public function save($row): bool
     {
-        if (empty($data)) {
+        if (empty($row)) {
             return true;
         }
 
-        if ($this->shouldUpdate($data)) {
-            $response = $this->update($this->getIdValue($data), $data);
+        if ($this->shouldUpdate($row)) {
+            $response = $this->update($this->getIdValue($row), $row);
         } else {
-            $response = $this->insert($data, false);
+            $response = $this->insert($row, false);
 
             if ($response !== false) {
                 $response = true;
@@ -720,11 +724,12 @@ abstract class BaseModel
      * This method is called on save to determine if entry have to be updated.
      * If this method returns false insert operation will be executed
      *
-     * @param array|object $data Data
+     * @param array|object $row Row data
+     * @phpstan-param row_array|object $row
      */
-    protected function shouldUpdate($data): bool
+    protected function shouldUpdate($row): bool
     {
-        return ! empty($this->getIdValue($data));
+        return ! empty($this->getIdValue($row));
     }
 
     /**
@@ -776,7 +781,7 @@ abstract class BaseModel
         $row = $this->doProtectFieldsForInsert($row);
 
         // doProtectFields() can further remove elements from
-        // $data so we need to check for empty dataset again
+        // $row, so we need to check for empty dataset again
         if (! $this->allowEmptyInserts && empty($row)) {
             throw DataException::forEmptyDataset('insert');
         }
@@ -867,7 +872,7 @@ abstract class BaseModel
 
         if (is_array($set)) {
             foreach ($set as &$row) {
-                // If $data is using a custom class with public or protected
+                // If $row is using a custom class with public or protected
                 // properties representing the collection elements, we need to grab
                 // them as an array.
                 if (is_object($row) && ! $row instanceof stdClass) {
@@ -958,7 +963,7 @@ abstract class BaseModel
         $row = $this->doProtectFields($row);
 
         // doProtectFields() can further remove elements from
-        // $data, so we need to check for empty dataset again
+        // $row, so we need to check for empty dataset again
         if (empty($row)) {
             throw DataException::forEmptyDataset('update');
         }
@@ -1007,7 +1012,7 @@ abstract class BaseModel
     {
         if (is_array($set)) {
             foreach ($set as &$row) {
-                // If $data is using a custom class with public or protected
+                // If $row is using a custom class with public or protected
                 // properties representing the collection elements, we need to grab
                 // them as an array.
                 if (is_object($row) && ! $row instanceof stdClass) {
@@ -1269,46 +1274,48 @@ abstract class BaseModel
      * Ensures that only the fields that are allowed to be updated are
      * in the data array.
      *
-     * Used by update() and updateBatch() to protect against mass assignment
-     * vulnerabilities.
+     * @used-by update() to protect against mass assignment vulnerabilities.
+     * @used-by updateBatch() to protect against mass assignment vulnerabilities.
      *
-     * @param array $data Data
+     * @param array $row Row data
+     * @phpstan-param row_array $row
      *
      * @throws DataException
      */
-    protected function doProtectFields(array $data): array
+    protected function doProtectFields(array $row): array
     {
         if (! $this->protectFields) {
-            return $data;
+            return $row;
         }
 
         if (empty($this->allowedFields)) {
             throw DataException::forInvalidAllowedFields(static::class);
         }
 
-        foreach (array_keys($data) as $key) {
+        foreach (array_keys($row) as $key) {
             if (! in_array($key, $this->allowedFields, true)) {
-                unset($data[$key]);
+                unset($row[$key]);
             }
         }
 
-        return $data;
+        return $row;
     }
 
     /**
      * Ensures that only the fields that are allowed to be inserted are in
      * the data array.
      *
-     * Used by insert() and insertBatch() to protect against mass assignment
-     * vulnerabilities.
+     * @used-by insert() to protect against mass assignment vulnerabilities.
+     * @used-by insertBatch() to protect against mass assignment vulnerabilities.
      *
-     * @param array $data Data
+     * @param array $row Row data
+     * @phpstan-param row_array $row
      *
      * @throws DataException
      */
-    protected function doProtectFieldsForInsert(array $data): array
+    protected function doProtectFieldsForInsert(array $row): array
     {
-        return $this->doProtectFields($data);
+        return $this->doProtectFields($row);
     }
 
     /**
@@ -1493,25 +1500,26 @@ abstract class BaseModel
     }
 
     /**
-     * Validate the data against the validation rules (or the validation group)
+     * Validate the row data against the validation rules (or the validation group)
      * specified in the class property, $validationRules.
      *
-     * @param array|object $data Data
+     * @param array|object $row Row data
+     * @phpstan-param row_array|object $row
      */
-    public function validate($data): bool
+    public function validate($row): bool
     {
         $rules = $this->getValidationRules();
 
-        if ($this->skipValidation || empty($rules) || empty($data)) {
+        if ($this->skipValidation || empty($rules) || empty($row)) {
             return true;
         }
 
         // Validation requires array, so cast away.
-        if (is_object($data)) {
-            $data = (array) $data;
+        if (is_object($row)) {
+            $row = (array) $row;
         }
 
-        $rules = $this->cleanValidationRules ? $this->cleanValidationRules($rules, $data) : $rules;
+        $rules = $this->cleanValidationRules ? $this->cleanValidationRules($rules, $row) : $rules;
 
         // If no data existed that needs validation
         // our job is done here.
@@ -1521,7 +1529,7 @@ abstract class BaseModel
 
         $this->validation->reset()->setRules($rules, $this->validationMessages);
 
-        return $this->validation->run($data, null, $this->DBGroup);
+        return $this->validation->run($row, null, $this->DBGroup);
     }
 
     /**
@@ -1565,17 +1573,18 @@ abstract class BaseModel
      * currently so that rules don't block updating when only updating
      * a partial row.
      *
-     * @param array      $rules Array containing field name and rule
-     * @param array|null $data  Data
+     * @param array $rules Array containing field name and rule
+     * @param array $row   Row data (@TODO Remove null in param type)
+     * @phpstan-param row_array $row
      */
-    protected function cleanValidationRules(array $rules, ?array $data = null): array
+    protected function cleanValidationRules(array $rules, ?array $row = null): array
     {
-        if (empty($data)) {
+        if (empty($row)) {
             return [];
         }
 
         foreach (array_keys($rules) as $field) {
-            if (! array_key_exists($field, $data)) {
+            if (! array_key_exists($field, $row)) {
                 unset($rules[$field]);
             }
         }
@@ -1767,7 +1776,7 @@ abstract class BaseModel
             throw DataException::forEmptyDataset($type);
         }
 
-        // If $data is using a custom class with public or protected
+        // If $row is using a custom class with public or protected
         // properties representing the collection elements, we need to grab
         // them as an array.
         if (is_object($row) && ! $row instanceof stdClass) {
@@ -1785,7 +1794,7 @@ abstract class BaseModel
             $row = (array) $row;
         }
 
-        // If it's still empty here, means $data is no change or is empty object
+        // If it's still empty here, means $row is no change or is empty object
         if (! $this->allowEmptyInserts && empty($row)) {
             throw DataException::forEmptyDataset($type);
         }
