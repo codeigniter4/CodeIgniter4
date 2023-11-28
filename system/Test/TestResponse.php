@@ -150,7 +150,7 @@ class TestResponse
     {
         Assert::assertTrue(
             $this->isOK(),
-            "{$this->response->getStatusCode()} is not a successful status code, or the Response has an empty body."
+            "{$this->response->getStatusCode()} is not a successful status code, or Response has an empty body."
         );
     }
 
@@ -161,7 +161,7 @@ class TestResponse
     {
         Assert::assertFalse(
             $this->isOK(),
-            "{$this->response->getStatusCode()} is an unexpected successful status code, or the Response has body content."
+            "{$this->response->getStatusCode()} is an unexpected successful status code, or Response body has content."
         );
     }
 
@@ -184,7 +184,7 @@ class TestResponse
      */
     public function assertRedirect(): void
     {
-        Assert::assertTrue($this->isRedirect(), 'Response is not a redirect or RedirectResponse.');
+        Assert::assertTrue($this->isRedirect(), 'Response is not a redirect or instance of RedirectResponse.');
     }
 
     /**
@@ -202,7 +202,7 @@ class TestResponse
             || strtolower(site_url($uri)) === $redirectUri
             || $uri === site_url($redirectUri);
 
-        Assert::assertTrue($matches, "Redirect URL `{$uri}` does not match `{$redirectUri}`");
+        Assert::assertTrue($matches, "Redirect URL '{$uri}' does not match '{$redirectUri}'.");
     }
 
     /**
@@ -210,7 +210,7 @@ class TestResponse
      */
     public function assertNotRedirect(): void
     {
-        Assert::assertFalse($this->isRedirect(), 'Response is an unexpected redirect or RedirectResponse.');
+        Assert::assertFalse($this->isRedirect(), 'Response is an unexpected redirect or instance of RedirectResponse.');
     }
 
     /**
@@ -244,19 +244,19 @@ class TestResponse
      */
     public function assertSessionHas(string $key, $value = null): void
     {
-        Assert::assertArrayHasKey($key, $_SESSION, "'{$key}' is not in the current \$_SESSION");
+        Assert::assertArrayHasKey($key, $_SESSION, "Key '{$key}' is not in the current \$_SESSION");
 
         if ($value === null) {
             return;
         }
 
         if (is_scalar($value)) {
-            Assert::assertSame($value, $_SESSION[$key], "The value of '{$key}' ({$value}) does not match expected value.");
+            Assert::assertSame($value, $_SESSION[$key], "The value of key '{$key}' ({$value}) does not match expected value.");
 
             return;
         }
 
-        Assert::assertSame($value, $_SESSION[$key], "The value of '{$key}' does not match expected value.");
+        Assert::assertSame($value, $_SESSION[$key], "The value of key '{$key}' does not match expected value.");
     }
 
     /**
@@ -264,7 +264,7 @@ class TestResponse
      */
     public function assertSessionMissing(string $key): void
     {
-        Assert::assertArrayNotHasKey($key, $_SESSION, "'{$key}' should not be present in \$_SESSION.");
+        Assert::assertArrayNotHasKey($key, $_SESSION, "Key '{$key}' should not be present in \$_SESSION.");
     }
 
     // --------------------------------------------------------------------
@@ -278,7 +278,7 @@ class TestResponse
      */
     public function assertHeader(string $key, $value = null): void
     {
-        Assert::assertTrue($this->response->hasHeader($key), "'{$key}' is not a valid Response header.");
+        Assert::assertTrue($this->response->hasHeader($key), "Header '{$key}' is not a valid Response header.");
 
         if ($value !== null) {
             Assert::assertSame(
@@ -294,7 +294,7 @@ class TestResponse
      */
     public function assertHeaderMissing(string $key): void
     {
-        Assert::assertFalse($this->response->hasHeader($key), "'{$key}' should not be in the Response headers.");
+        Assert::assertFalse($this->response->hasHeader($key), "Header '{$key}' should not be in the Response headers.");
     }
 
     // --------------------------------------------------------------------
@@ -308,7 +308,7 @@ class TestResponse
      */
     public function assertCookie(string $key, $value = null, string $prefix = ''): void
     {
-        Assert::assertTrue($this->response->hasCookie($key, $value, $prefix), "No cookie found named '{$key}'.");
+        Assert::assertTrue($this->response->hasCookie($key, $value, $prefix), "Cookie named '{$key}' is not found.");
     }
 
     /**
@@ -358,7 +358,7 @@ class TestResponse
     public function assertJSONFragment(array $fragment, bool $strict = false): void
     {
         $json = json_decode($this->getJSON(), true);
-        Assert::assertIsArray($json, 'Response does not have valid json');
+        Assert::assertIsArray($json, 'Response is not a valid JSON.');
 
         $patched = array_replace_recursive($json, $fragment);
 
@@ -417,7 +417,7 @@ class TestResponse
     {
         Assert::assertTrue(
             $this->domParser->see($search, $element),
-            "Do not see '{$search}' in response."
+            "Text '{$search}' is not seen in response."
         );
     }
 
@@ -428,7 +428,7 @@ class TestResponse
     {
         Assert::assertTrue(
             $this->domParser->dontSee($search, $element),
-            "I should not see '{$search}' in response."
+            "Text '{$search}' is unexpectedly seen in response."
         );
     }
 
@@ -439,7 +439,7 @@ class TestResponse
     {
         Assert::assertTrue(
             $this->domParser->seeElement($search),
-            "Do not see element with selector '{$search} in response.'"
+            "Element with selector '{$search}' is not seen in response."
         );
     }
 
@@ -450,7 +450,7 @@ class TestResponse
     {
         Assert::assertTrue(
             $this->domParser->dontSeeElement($search),
-            "I should not see an element with selector '{$search}' in response.'"
+            "Element with selector '{$search}' is unexpectedly seen in response.'"
         );
     }
 
@@ -461,7 +461,7 @@ class TestResponse
     {
         Assert::assertTrue(
             $this->domParser->seeLink($text, $details),
-            "Do no see anchor tag with the text {$text} in response."
+            "Anchor tag with text '{$text}' is not seen in response."
         );
     }
 
@@ -472,7 +472,7 @@ class TestResponse
     {
         Assert::assertTrue(
             $this->domParser->seeInField($field, $value),
-            "Do no see input named {$field} with value {$value} in response."
+            "Input named '{$field}' with value '{$value}' is not seen in response."
         );
     }
 
