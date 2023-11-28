@@ -132,7 +132,7 @@ class TestResponse
         }
 
         // Empty bodies are not considered valid, unless in redirects
-        return ! ($status < 300 && empty($this->response->getBody()));
+        return ! ($status < 300 && (string) $this->response->getBody() === '');
     }
 
     /**
