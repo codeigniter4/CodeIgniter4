@@ -783,14 +783,8 @@ abstract class BaseModel
 
         // Set created_at and updated_at with same time
         $date = $this->setDate();
-
-        if ($this->useTimestamps && $this->createdField !== '' && ! array_key_exists($this->createdField, $data)) {
-            $data[$this->createdField] = $date;
-        }
-
-        if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, $data)) {
-            $data[$this->updatedField] = $date;
-        }
+        $data = $this->setCreatedField($data, $date);
+        $data = $this->setUpdatedField($data, $date);
 
         $eventData = ['data' => $data];
 
@@ -820,6 +814,36 @@ abstract class BaseModel
 
         // otherwise return the insertID, if requested.
         return $returnID ? $this->insertID : $result;
+    }
+
+    /**
+     * Set datetime to created field.
+     *
+     * @phpstan-param row_array $row
+     * @param int|string $date timestamp or datetime string
+     */
+    protected function setCreatedField(array $row, $date): array
+    {
+        if ($this->useTimestamps && $this->createdField !== '' && ! array_key_exists($this->createdField, $row)) {
+            $row[$this->createdField] = $date;
+        }
+
+        return $row;
+    }
+
+    /**
+     * Set datetime to updated field.
+     *
+     * @phpstan-param row_array $row
+     * @param int|string $date timestamp or datetime string
+     */
+    protected function setUpdatedField(array $row, $date): array
+    {
+        if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, $row)) {
+            $row[$this->updatedField] = $date;
+        }
+
+        return $row;
     }
 
     /**
@@ -871,14 +895,8 @@ abstract class BaseModel
 
                 // Set created_at and updated_at with same time
                 $date = $this->setDate();
-
-                if ($this->useTimestamps && $this->createdField !== '' && ! array_key_exists($this->createdField, $row)) {
-                    $row[$this->createdField] = $date;
-                }
-
-                if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, $row)) {
-                    $row[$this->updatedField] = $date;
-                }
+                $row  = $this->setCreatedField($row, $date);
+                $row  = $this->setUpdatedField($row, $date);
             }
         }
 
@@ -945,9 +963,7 @@ abstract class BaseModel
             throw DataException::forEmptyDataset('update');
         }
 
-        if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, $data)) {
-            $data[$this->updatedField] = $this->setDate();
-        }
+        $data = $this->setUpdatedField($data, $this->setDate());
 
         $eventData = [
             'id'   => $id,
@@ -1031,9 +1047,7 @@ abstract class BaseModel
                     $row[$index] = $updateIndex;
                 }
 
-                if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, $row)) {
-                    $row[$this->updatedField] = $this->setDate();
-                }
+                $row = $this->setUpdatedField($row, $this->setDate());
             }
         }
 
@@ -1165,9 +1179,7 @@ abstract class BaseModel
             return false;
         }
 
-        if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, (array) $data)) {
-            $data[$this->updatedField] = $this->setDate();
-        }
+        $data = $this->setUpdatedField((array) $data, $this->setDate());
 
         return $this->doReplace($data, $returnSQL);
     }
