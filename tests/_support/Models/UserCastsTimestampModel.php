@@ -23,6 +23,7 @@ class UserCastsTimestampModel extends Model
     ];
     protected $casts = [
         'id'         => 'int',
+        'email'      => 'json-array',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

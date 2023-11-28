@@ -1818,18 +1818,24 @@ abstract class BaseModel
             throw DataException::forEmptyDataset($type);
         }
 
+        if ($this->casts !== []) {
+            if ($row instanceof stdClass) {
+                $row = (array) $row;
+            } elseif (is_object($row)) {
+                $row = $this->extractAsArray($row);
+            }
+
+            $row = $this->converter->toDataSource($row);
+        }
         // If $row is using a custom class with public or protected
         // properties representing the collection elements, we need to grab
         // them as an array.
-        if (is_object($row) && ! $row instanceof stdClass) {
-            if ($type === 'update' && ! $this->updateOnlyChanged) {
-                $onlyChanged = false;
-            }
+        elseif (is_object($row) && ! $row instanceof stdClass) {
             // If it validates with entire rules, all fields are needed.
-            elseif ($this->skipValidation === false && $this->cleanValidationRules === false) {
+            if ($this->skipValidation === false && $this->cleanValidationRules === false) {
                 $onlyChanged = false;
             } else {
-                $onlyChanged = ($type === 'update');
+                $onlyChanged = ($type === 'update' && $this->updateOnlyChanged);
             }
 
             $row = $this->objectToArray($row, $onlyChanged, true);
@@ -1933,6 +1939,26 @@ abstract class BaseModel
         }
 
         return $classObj;
+    }
+
+    /**
+     * Takes an object and extract all properties as an array.
+     *
+     * @return array<string, mixed>
+     */
+    protected function extractAsArray(object $object): array
+    {
+        $array = (array) $object;
+
+        $output = [];
+
+        foreach ($array as $key => $value) {
+            $key = preg_replace('/\000.*\000/', '', $key);
+
+            $output[$key] = $value;
+        }
+
+        return $output;
     }
 
     /**

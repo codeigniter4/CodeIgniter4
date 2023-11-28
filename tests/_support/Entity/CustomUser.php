@@ -22,7 +22,7 @@ class CustomUser
     private function __construct(
         private readonly int $id,
         private string $name,
-        private string $email,
+        private array $email,
         private string $country,
         private readonly ?Time $created_at,
         private readonly ?Time $updated_at,
@@ -39,6 +39,11 @@ class CustomUser
             $data['created_at'],
             $data['updated_at'],
         );
+    }
+
+    public function addEmail(string $email): void
+    {
+        $this->email[] = $email;
     }
 
     public function __isset(string $name)

@@ -47,7 +47,7 @@ final class DataConverterModelTest extends LiveModelTestCase
 
         $data = [
             'name'    => 'John Smith',
-            'email'   => 'john@example.com',
+            'email'   => ['john@example.com'],
             'country' => 'US',
         ];
 
@@ -92,7 +92,7 @@ final class DataConverterModelTest extends LiveModelTestCase
 
         $data = [
             'name'    => 'Mike Smith',
-            'email'   => 'mike@example.com',
+            'email'   => ['mike@example.com'],
             'country' => 'CA',
         ];
         $this->model->insert($data);
@@ -160,5 +160,84 @@ final class DataConverterModelTest extends LiveModelTestCase
 
         $this->assertIsInt($user->id);
         $this->assertInstanceOf(Time::class, $user->created_at);
+    }
+
+    public function testInsertArray(): void
+    {
+        $this->prepareOneRecord();
+
+        $data = [
+            'name'    => 'Joe Smith',
+            'email'   => ['joe@example.com'],
+            'country' => 'GB',
+        ];
+        $id = $this->model->insert($data, true);
+
+        $user = $this->model->find($id);
+        $this->assertSame(['joe@example.com'], $user['email']);
+    }
+
+    public function testInsertObject(): void
+    {
+        $this->prepareOneRecord();
+
+        $data = (object) [
+            'name'    => 'Joe Smith',
+            'email'   => ['joe@example.com'],
+            'country' => 'GB',
+        ];
+        $id = $this->model->insert($data, true);
+
+        $user = $this->model->find($id);
+        $this->assertSame(['joe@example.com'], $user['email']);
+    }
+
+    public function testUpdateArray(): void
+    {
+        $id   = $this->prepareOneRecord();
+        $user = $this->model->find($id);
+
+        $user['email'][] = 'private@example.org';
+        $this->model->update($user['id'], $user);
+
+        $user = $this->model->find($id);
+
+        $this->assertSame([
+            'john@example.com',
+            'private@example.org',
+        ], $user['email']);
+    }
+
+    public function testUpdateObject(): void
+    {
+        $id   = $this->prepareOneRecord();
+        $user = $this->model->asObject()->find($id);
+
+        $user->email[] = 'private@example.org';
+        $this->model->update($user->id, $user);
+
+        $user = $this->model->find($id);
+
+        $this->assertSame([
+            'john@example.com',
+            'private@example.org',
+        ], $user['email']);
+    }
+
+    public function testUpdateCustomObject(): void
+    {
+        $id = $this->prepareOneRecord();
+        /** @var CustomUser $user */
+        $user = $this->model->asObject(CustomUser::class)->find($id);
+
+        $user->addEmail('private@example.org');
+        $this->model->update($user->id, $user);
+
+        $user = $this->model->asObject(CustomUser::class)->find($id);
+
+        $this->assertSame([
+            'john@example.com',
+            'private@example.org',
+        ], $user->email);
     }
 }
