@@ -1161,7 +1161,7 @@ abstract class BaseModel
     public function replace(?array $data = null, bool $returnSQL = false)
     {
         // Validate data before saving.
-        if ($data && ! $this->skipValidation && ! $this->validate($data)) {
+        if (($data !== null) && ! $this->skipValidation && ! $this->validate($data)) {
             return false;
         }
 
