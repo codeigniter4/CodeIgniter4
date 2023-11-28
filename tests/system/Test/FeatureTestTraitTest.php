@@ -288,7 +288,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             ],
         ]);
         $response = $this->get('home');
-        $response->assertEmpty($response->response()->getBody());
+        $this->assertEmpty($response->response()->getBody());
     }
 
     public function testEchoesWithParams(): void
