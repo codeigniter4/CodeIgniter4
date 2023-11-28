@@ -45,13 +45,13 @@ final class DataConverter
      */
     public function fromDataSource(array $data): array
     {
-        $output = [];
-
-        foreach ($data as $field => $value) {
-            $output[$field] = $this->dataCaster->castAs($value, $field, 'get');
+        foreach (array_keys($this->types) as $field) {
+            if (array_key_exists($field, $data)) {
+                $data[$field] = $this->dataCaster->castAs($data[$field], $field, 'get');
+            }
         }
 
-        return $output;
+        return $data;
     }
 
     /**
@@ -61,12 +61,12 @@ final class DataConverter
      */
     public function toDataSource(array $phpData): array
     {
-        $output = [];
-
-        foreach ($phpData as $field => $value) {
-            $output[$field] = $this->dataCaster->castAs($value, $field, 'set');
+        foreach (array_keys($this->types) as $field) {
+            if (array_key_exists($field, $phpData)) {
+                $phpData[$field] = $this->dataCaster->castAs($phpData[$field], $field, 'set');
+            }
         }
 
-        return $output;
+        return $phpData;
     }
 }
