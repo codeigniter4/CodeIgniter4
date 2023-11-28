@@ -240,4 +240,53 @@ final class DataConverterModelTest extends LiveModelTestCase
             'private@example.org',
         ], $user->email);
     }
+
+    public function testSaveArray(): void
+    {
+        $id   = $this->prepareOneRecord();
+        $user = $this->model->find($id);
+
+        $user['email'][] = 'private@example.org';
+        $this->model->save($user);
+
+        $user = $this->model->find($id);
+
+        $this->assertSame([
+            'john@example.com',
+            'private@example.org',
+        ], $user['email']);
+    }
+
+    public function testSaveObject(): void
+    {
+        $id   = $this->prepareOneRecord();
+        $user = $this->model->asObject()->find($id);
+
+        $user->email[] = 'private@example.org';
+        $this->model->save($user);
+
+        $user = $this->model->find($id);
+
+        $this->assertSame([
+            'john@example.com',
+            'private@example.org',
+        ], $user['email']);
+    }
+
+    public function testSaveCustomObject(): void
+    {
+        $id = $this->prepareOneRecord();
+        /** @var CustomUser $user */
+        $user = $this->model->asObject(CustomUser::class)->find($id);
+
+        $user->addEmail('private@example.org');
+        $this->model->save($user);
+
+        $user = $this->model->asObject(CustomUser::class)->find($id);
+
+        $this->assertSame([
+            'john@example.com',
+            'private@example.org',
+        ], $user->email);
+    }
 }
