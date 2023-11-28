@@ -227,19 +227,26 @@ setSurroundCount()
 In the first line, the ``setSurroundCount()`` method specifies than we want to show two links to either side of
 the current page link. The only parameter that it accepts is the number of links to show.
 
+.. note:: You must call this method first to generate correct pagination links.
+
 hasPrevious() & hasNext()
 -------------------------
 
-These methods return a boolean true if there are more links that can be displayed on either side of the current page,
-based on the value passed to ``setSurroundCount()``. For example, let's say we have 20 pages of data. The current
-page is page 3. If the surrounding count is 2, then the following links would show up in the list: 1, 2, 3, 4, and 5.
-Since the first link displayed is page one, ``hasPrevious()`` would return **false** since there is no page zero. However,
-``hasNext()`` would return **true** since there are 15 additional pages of results after page five.
+These methods return a boolean ``true`` if there are more links that can be displayed on either side of the current page,
+based on the value passed to `setSurroundCount()`_.
+
+For example, let's say we have 20 pages of data. The current
+page is page 3. If the surrounding count is 2, then the following links would show up like this::
+
+    1  |  2  |  3  |  4  |  5
+
+Since the first link displayed is page one, ``hasPrevious()`` would return ``false`` since there is no page zero. However,
+``hasNext()`` would return ``true`` since there are 15 additional pages of results after page five.
 
 getPrevious() & getNext()
 -------------------------
 
-These methods return the URL for the previous or next pages of results on either side of the numbered links.
+These methods return the **URL** for the previous or next pages of results on either side of the numbered links.
 
 For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this::
 
@@ -247,12 +254,12 @@ For example, you have the current page set at 5 and you want to have the links b
 
 ``getPrevious()`` returns the URL for page 2. ``getNext()`` returns the URL for page 8.
 
-If you want to get page 4 and page 6, use ``getPreviousPage()`` and ``getNextPage()`` instead.
+If you want to get page 4 and page 6, use `getPreviousPage() & getNextPage()`_ instead.
 
 getFirst() & getLast()
 ----------------------
 
-Much like ``getPrevious()`` and ``getNext()``, these methods return links to the first and last pages in the
+Much like `getPrevious() & getNext()`_, these methods return the **URL** to the first and last pages in the
 result set.
 
 links()
@@ -263,9 +270,9 @@ title, which is just the number, and a boolean that tells whether the link is th
 
 .. literalinclude:: pagination/013.php
 
-In the code presented for the standard pagination structure, the methods ``getPrevious()`` and ``getNext()`` are used to obtain the links to the previous and next pagination groups respectively.
+In the code presented for the standard pagination structure, the methods `getPrevious() & getNext()`_ are used to obtain the links to the previous and next pagination groups respectively.
 
-If you want to use the pagination structure where prev and next will be links to the previous and next pages based on the current page, just replace the ``getPrevious()`` and ``getNext()`` methods with ``getPreviousPage()`` and ``getNextPage()``, and the methods ``hasPrevious()`` and ``hasNext()`` by ``hasPreviousPage()`` and ``hasNextPage()`` respectively.
+If you want to use the pagination structure where prev and next will be links to the previous and next pages based on the current page, just replace the `getPrevious() & getNext()`_ methods with `getPreviousPage() & getNextPage()`_, and the methods `hasPrevious() & hasNext()`_ by `hasPreviousPage() & hasNextPage()`_ respectively.
 
 See following an example with these changes:
 
@@ -274,20 +281,34 @@ See following an example with these changes:
 hasPreviousPage() & hasNextPage()
 ---------------------------------
 
-This method returns a boolean true if there are links to a page before and after, respectively, the current page being displayed.
+This method returns a boolean ``true`` if there are links to a page before and after, respectively, the current page being displayed.
 
-Their difference to ``hasPrevious()`` and ``hasNext()`` is that they are based on the current page while ``hasPrevious()`` and ``hasNext()`` are based on the set of links to be displayed before and after the current page based on the value passed in ``setSurroundCount()``.
+For example, let's say we have 20 pages of data. The current
+page is page 3. If the surrounding count is 2, then the following links would show up like this::
+
+    1  |  2  |  3  |  4  |  5
+
+``hasPreviousPage()`` would return ``true`` since there is page 2. And,
+``hasNextPage()`` would return ``true`` since there is page 4.
+
+.. note:: The difference to `hasPrevious() & hasNext()`_ is that they are based
+    on the current page while `hasPrevious() & hasNext()`_ are based on the set
+    of links to be displayed before and after the current page based on the value
+    passed in `setSurroundCount()`_.
 
 getPreviousPage() & getNextPage()
 ---------------------------------
 
-These methods return a URL for the previous and next pages in relation to the current page being displayed, unlike ``getPrevious()`` and ``getNext()`` that return the URL for the previous or next pages of results on either side of the numbered links. See the previous paragraph for a full explanation.
+These methods return a **URL** for the previous and next pages in relation to the current page being displayed.
 
 For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this::
 
     3  |  4  |  5  |  6  |  7
 
 ``getPreviousPage()`` returns the URL for page 4. ``getNextPage()`` returns the URL for page 6.
+
+.. note:: `getPrevious() & getNext()`_ returns the URL for the previous or next
+    pages of results on either side of the numbered links.
 
 If you want page numbers instead of URLs, you can use the following methods:
 
@@ -299,8 +320,16 @@ These methods return the page number for the previous or next pages in relation 
 getFirstPageNumber() & getLastPageNumber()
 ------------------------------------------
 
-These methods return page numbers to the first and last pages in the
-result set.
+These methods return the page numbers of the first and last pages in the set of
+links to be displayed. For example, if the set of links to be displayed is something like this::
+
+    3  |  4  |  5  |  6  |  7
+
+``getFirstPageNumber()`` will return 3 while ``getLastPageNumber()`` will return 7.    
+
+.. note:: To obtain the page numbers of the first and last pages in the entire
+    result set, you can use the following approach: The first page number is always 1, and `getPageCount()`_ can be used to
+    retrieve the last page number.
 
 getCurrentPageNumber()
 ----------------------
