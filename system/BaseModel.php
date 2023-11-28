@@ -1815,6 +1815,9 @@ abstract class BaseModel
      * @throws DataException
      * @throws InvalidArgumentException
      * @throws ReflectionException
+     *
+     * @used-by insert()
+     * @used-by update()
      */
     protected function transformDataToArray($row, string $type): array
     {
