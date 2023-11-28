@@ -108,7 +108,7 @@
         ],
         "sa": "@analyze",
         "style": "@cs-fix",
-        "test": "phpunit"
+        "test": "phpunit --coverage-html build/coverage"
     },
     "scripts-descriptions": {
         "analyze": "Run static analysis",
