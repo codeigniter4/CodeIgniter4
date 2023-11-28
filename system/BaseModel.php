@@ -478,13 +478,13 @@ abstract class BaseModel
      * Compiles a replace and runs the query.
      * This method works only with dbCalls.
      *
-     * @param array|null $data Data
-     * @phpstan-param row_array|null $data
+     * @param array|null $row Row data
+     * @phpstan-param row_array|null $row
      * @param bool $returnSQL Set to true to return Query String
      *
      * @return BaseResult|false|Query|string
      */
-    abstract protected function doReplace(?array $data = null, bool $returnSQL = false);
+    abstract protected function doReplace(?array $row = null, bool $returnSQL = false);
 
     /**
      * Grabs the last error(s) that occurred from the Database connection.
@@ -741,8 +741,8 @@ abstract class BaseModel
      * Inserts data into the database. If an object is provided,
      * it will attempt to convert it to an array.
      *
-     * @param array|object|null $data Data
-     * @phpstan-param row_array|object|null $data
+     * @param array|object|null $row Row data
+     * @phpstan-param row_array|object|null $row
      * @param bool $returnID Whether insert ID should be returned or not.
      *
      * @return bool|int|string insert ID or true on success. false on failure.
@@ -750,7 +750,7 @@ abstract class BaseModel
      *
      * @throws ReflectionException
      */
-    public function insert($data = null, bool $returnID = true)
+    public function insert($row = null, bool $returnID = true)
     {
         $this->insertID = 0;
 
@@ -758,10 +758,10 @@ abstract class BaseModel
         $cleanValidationRules       = $this->cleanValidationRules;
         $this->cleanValidationRules = false;
 
-        $data = $this->transformDataToArray($data, 'insert');
+        $row = $this->transformDataToArray($row, 'insert');
 
         // Validate data before saving.
-        if (! $this->skipValidation && ! $this->validate($data)) {
+        if (! $this->skipValidation && ! $this->validate($row)) {
             // Restore $cleanValidationRules
             $this->cleanValidationRules = $cleanValidationRules;
 
@@ -773,20 +773,20 @@ abstract class BaseModel
 
         // Must be called first, so we don't
         // strip out created_at values.
-        $data = $this->doProtectFieldsForInsert($data);
+        $row = $this->doProtectFieldsForInsert($row);
 
         // doProtectFields() can further remove elements from
         // $data so we need to check for empty dataset again
-        if (! $this->allowEmptyInserts && empty($data)) {
+        if (! $this->allowEmptyInserts && empty($row)) {
             throw DataException::forEmptyDataset('insert');
         }
 
         // Set created_at and updated_at with same time
         $date = $this->setDate();
-        $data = $this->setCreatedField($data, $date);
-        $data = $this->setUpdatedField($data, $date);
+        $row  = $this->setCreatedField($row, $date);
+        $row  = $this->setUpdatedField($row, $date);
 
-        $eventData = ['data' => $data];
+        $eventData = ['data' => $row];
 
         if ($this->tempAllowCallbacks) {
             $eventData = $this->trigger('beforeInsert', $eventData);
@@ -931,12 +931,12 @@ abstract class BaseModel
      * it will attempt to convert it into an array.
      *
      * @param array|int|string|null $id
-     * @param array|object|null     $data
-     * @phpstan-param row_array|object|null $data
+     * @param array|object|null     $row Row data
+     * @phpstan-param row_array|object|null $row
      *
      * @throws ReflectionException
      */
-    public function update($id = null, $data = null): bool
+    public function update($id = null, $row = null): bool
     {
         if (is_bool($id)) {
             throw new InvalidArgumentException('update(): argument #1 ($id) should not be boolean.');
@@ -946,28 +946,28 @@ abstract class BaseModel
             $id = [$id];
         }
 
-        $data = $this->transformDataToArray($data, 'update');
+        $row = $this->transformDataToArray($row, 'update');
 
         // Validate data before saving.
-        if (! $this->skipValidation && ! $this->validate($data)) {
+        if (! $this->skipValidation && ! $this->validate($row)) {
             return false;
         }
 
         // Must be called first, so we don't
         // strip out updated_at values.
-        $data = $this->doProtectFields($data);
+        $row = $this->doProtectFields($row);
 
         // doProtectFields() can further remove elements from
         // $data, so we need to check for empty dataset again
-        if (empty($data)) {
+        if (empty($row)) {
             throw DataException::forEmptyDataset('update');
         }
 
-        $data = $this->setUpdatedField($data, $this->setDate());
+        $row = $this->setUpdatedField($row, $this->setDate());
 
         $eventData = [
             'id'   => $id,
-            'data' => $data,
+            'data' => $row,
         ];
 
         if ($this->tempAllowCallbacks) {
@@ -1166,22 +1166,22 @@ abstract class BaseModel
     /**
      * Compiles a replace and runs the query.
      *
-     * @param array|null $data Data
-     * @phpstan-param row_array|null $data
+     * @param array|null $row Row data
+     * @phpstan-param row_array|null $row
      * @param bool $returnSQL Set to true to return Query String
      *
      * @return BaseResult|false|Query|string
      */
-    public function replace(?array $data = null, bool $returnSQL = false)
+    public function replace(?array $row = null, bool $returnSQL = false)
     {
         // Validate data before saving.
-        if (($data !== null) && ! $this->skipValidation && ! $this->validate($data)) {
+        if (($row !== null) && ! $this->skipValidation && ! $this->validate($row)) {
             return false;
         }
 
-        $data = $this->setUpdatedField((array) $data, $this->setDate());
+        $row = $this->setUpdatedField((array) $row, $this->setDate());
 
-        return $this->doReplace($data, $returnSQL);
+        return $this->doReplace($row, $returnSQL);
     }
 
     /**
@@ -1749,48 +1749,48 @@ abstract class BaseModel
     /**
      * Transform data to array.
      *
-     * @param array|object|null $data Data
-     * @phpstan-param row_array|object|null $data
+     * @param array|object|null $row Row data
+     * @phpstan-param row_array|object|null $row
      * @param string $type Type of data (insert|update)
      *
      * @throws DataException
      * @throws InvalidArgumentException
      * @throws ReflectionException
      */
-    protected function transformDataToArray($data, string $type): array
+    protected function transformDataToArray($row, string $type): array
     {
         if (! in_array($type, ['insert', 'update'], true)) {
             throw new InvalidArgumentException(sprintf('Invalid type "%s" used upon transforming data to array.', $type));
         }
 
-        if (! $this->allowEmptyInserts && empty($data)) {
+        if (! $this->allowEmptyInserts && empty($row)) {
             throw DataException::forEmptyDataset($type);
         }
 
         // If $data is using a custom class with public or protected
         // properties representing the collection elements, we need to grab
         // them as an array.
-        if (is_object($data) && ! $data instanceof stdClass) {
+        if (is_object($row) && ! $row instanceof stdClass) {
             // If it validates with entire rules, all fields are needed.
             $onlyChanged = ($this->skipValidation === false && $this->cleanValidationRules === false)
                 ? false : ($type === 'update');
 
-            $data = $this->objectToArray($data, $onlyChanged, true);
+            $row = $this->objectToArray($row, $onlyChanged, true);
         }
 
         // If it's still a stdClass, go ahead and convert to
         // an array so doProtectFields and other model methods
         // don't have to do special checks.
-        if (is_object($data)) {
-            $data = (array) $data;
+        if (is_object($row)) {
+            $row = (array) $row;
         }
 
         // If it's still empty here, means $data is no change or is empty object
-        if (! $this->allowEmptyInserts && empty($data)) {
+        if (! $this->allowEmptyInserts && empty($row)) {
             throw DataException::forEmptyDataset($type);
         }
 
-        return $data;
+        return $row;
     }
 
     /**

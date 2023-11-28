@@ -481,15 +481,15 @@ class Model extends BaseModel
      * Compiles a replace into string and runs the query
      * This method works only with dbCalls.
      *
-     * @param array|null $data Data
-     * @phpstan-param row_array|null $data
+     * @param array|null $row Data
+     * @phpstan-param row_array|null $row
      * @param bool $returnSQL Set to true to return Query String
      *
      * @return BaseResult|false|Query|string
      */
-    protected function doReplace(?array $data = null, bool $returnSQL = false)
+    protected function doReplace(?array $row = null, bool $returnSQL = false)
     {
-        return $this->builder()->testMode($returnSQL)->replace($data);
+        return $this->builder()->testMode($returnSQL)->replace($row);
     }
 
     /**
@@ -713,8 +713,8 @@ class Model extends BaseModel
      * Inserts data into the database. If an object is provided,
      * it will attempt to convert it to an array.
      *
-     * @param array|object|null $data
-     * @phpstan-param row_array|object|null $data
+     * @param array|object|null $row
+     * @phpstan-param row_array|object|null $row
      * @param bool $returnID Whether insert ID should be returned or not.
      *
      * @return bool|int|string
@@ -722,21 +722,21 @@ class Model extends BaseModel
      *
      * @throws ReflectionException
      */
-    public function insert($data = null, bool $returnID = true)
+    public function insert($row = null, bool $returnID = true)
     {
         if (! empty($this->tempData['data'])) {
-            if (empty($data)) {
-                $data = $this->tempData['data'];
+            if (empty($row)) {
+                $row = $this->tempData['data'];
             } else {
-                $data = $this->transformDataToArray($data, 'insert');
-                $data = array_merge($this->tempData['data'], $data);
+                $row = $this->transformDataToArray($row, 'insert');
+                $row = array_merge($this->tempData['data'], $row);
             }
         }
 
         $this->escape   = $this->tempData['escape'] ?? [];
         $this->tempData = [];
 
-        return parent::insert($data, $returnID);
+        return parent::insert($row, $returnID);
     }
 
     /**
@@ -779,26 +779,26 @@ class Model extends BaseModel
      * it will attempt to convert it into an array.
      *
      * @param array|int|string|null $id
-     * @param array|object|null     $data
-     * @phpstan-param row_array|object|null $data
+     * @param array|object|null     $row
+     * @phpstan-param row_array|object|null $row
      *
      * @throws ReflectionException
      */
-    public function update($id = null, $data = null): bool
+    public function update($id = null, $row = null): bool
     {
         if (! empty($this->tempData['data'])) {
-            if (empty($data)) {
-                $data = $this->tempData['data'];
+            if (empty($row)) {
+                $row = $this->tempData['data'];
             } else {
-                $data = $this->transformDataToArray($data, 'update');
-                $data = array_merge($this->tempData['data'], $data);
+                $row = $this->transformDataToArray($row, 'update');
+                $row = array_merge($this->tempData['data'], $row);
             }
         }
 
         $this->escape   = $this->tempData['escape'] ?? [];
         $this->tempData = [];
 
-        return parent::update($id, $data);
+        return parent::update($id, $row);
     }
 
     /**
