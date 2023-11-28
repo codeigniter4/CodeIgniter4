@@ -3527,11 +3527,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/TestLogger.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:__call\\(\\) should return mixed but return statement is missing\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Throttle\\\\Throttler\\:\\:\\$testTime \\(int\\) on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Throttle/Throttler.php',

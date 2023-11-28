@@ -479,15 +479,14 @@ class TestResponse
     /**
      * Forward any unrecognized method calls to our DOMParser instance.
      *
-     * @param string $function Method name
-     * @param mixed  $params   Any method parameters
-     *
-     * @return mixed
+     * @param mixed[] $params
      */
-    public function __call($function, $params)
+    public function __call(string $function, array $params): mixed
     {
         if (method_exists($this->domParser, $function)) {
             return $this->domParser->{$function}(...$params);
         }
+
+        return null;
     }
 }
