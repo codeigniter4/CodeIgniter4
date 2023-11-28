@@ -230,6 +230,8 @@ Testing
 - **CLI:** The new ``InputOutput`` class was added and now you can write tests
   for commands more easily if you use ``MockInputOutput``.
   See :ref:`using-mock-input-output`.
+- **TestResponse:** TestResponse no longer extends ``PHPUnit\Framework\TestCase`` as it
+  is not a test. Assertions' return types are now natively typed ``void``.
 
 Database
 ========
