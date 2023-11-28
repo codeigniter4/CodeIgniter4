@@ -545,7 +545,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->assertSame($file, $options[CURLOPT_CAINFO]);
 
         $this->assertArrayHasKey(CURLOPT_SSL_VERIFYPEER, $options);
-        $this->assertSame(1, $options[CURLOPT_SSL_VERIFYPEER]);
+        $this->assertTrue($options[CURLOPT_SSL_VERIFYPEER]);
     }
 
     public function testSSLWithBadKey(): void

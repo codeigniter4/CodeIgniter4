@@ -557,10 +557,10 @@ class CURLRequest extends OutgoingRequest
 
                 $curlOptions[CURLOPT_CAINFO] = $file;
                 if ($config['verify'] === 'yes') {
-                    $curlOptions[CURLOPT_SSL_VERIFYPEER] = 1;
+                    $curlOptions[CURLOPT_SSL_VERIFYPEER] = true;
                     $curlOptions[CURLOPT_SSL_VERIFYHOST] = 2;
                 } else {
-                    $curlOptions[CURLOPT_SSL_VERIFYPEER] = 0;
+                    $curlOptions[CURLOPT_SSL_VERIFYPEER] = false;
                     $curlOptions[CURLOPT_SSL_VERIFYHOST] = 0;
                 }
             } elseif (is_bool($config['verify'])) {
