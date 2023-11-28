@@ -13,10 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\DataConverter;
 
+use Closure;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use InvalidArgumentException;
+use Tests\Support\Entity\CustomUser;
+use Tests\Support\Entity\User;
 use TypeError;
 
 /**
@@ -526,8 +529,170 @@ final class DataConverterTest extends CIUnitTestCase
         $converter->toDataSource($dbData);
     }
 
-    private function createDataConverter(array $types, array $handlers = []): DataConverter
+    private function createDataConverter(
+        array $types,
+        array $handlers = [],
+        Closure|string|null $reconstructor = 'reconstruct',
+        Closure|string|null $extractor = null
+    ): DataConverter {
+        return new DataConverter($types, $handlers, $reconstructor, $extractor);
+    }
+
+    public function testReconstructObjectWithReconstructMethod()
     {
-        return new DataConverter($types, $handlers);
+        $types = [
+            'id'         => 'int',
+            'email'      => 'json-array',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+        $converter = $this->createDataConverter($types);
+
+        $dbData = [
+            'id'         => '1',
+            'name'       => 'John Smith',
+            'email'      => '["john@example.com"]',
+            'country'    => 'US',
+            'created_at' => '2023-12-02 07:35:57',
+            'updated_at' => '2023-12-02 07:35:57',
+        ];
+        $obj = $converter->reconstruct(CustomUser::class, $dbData);
+
+        $this->assertIsInt($obj->id);
+        $this->assertIsArray($obj->email);
+        $this->assertInstanceOf(Time::class, $obj->created_at);
+        $this->assertInstanceOf(Time::class, $obj->updated_at);
+    }
+
+    public function testReconstructObjectWithClosure()
+    {
+        $types = [
+            'id'         => 'int',
+            'email'      => 'json-array',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+        $reconstructor = static function ($array) {
+            $user = new User();
+            $user->fill($array);
+
+            return $user;
+        };
+        $converter = $this->createDataConverter($types, [], $reconstructor);
+
+        $dbData = [
+            'id'         => '1',
+            'name'       => 'John Smith',
+            'email'      => '["john@example.com"]',
+            'country'    => 'US',
+            'created_at' => '2023-12-02 07:35:57',
+            'updated_at' => '2023-12-02 07:35:57',
+        ];
+        $obj = $converter->reconstruct(CustomUser::class, $dbData);
+
+        $this->assertIsInt($obj->id);
+        $this->assertIsArray($obj->email);
+        $this->assertInstanceOf(Time::class, $obj->created_at);
+        $this->assertInstanceOf(Time::class, $obj->updated_at);
+    }
+
+    public function testExtract()
+    {
+        $types = [
+            'id'         => 'int',
+            'email'      => 'json-array',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+        $converter = $this->createDataConverter($types);
+
+        $phpData = [
+            'id'         => 1,
+            'name'       => 'John Smith',
+            'email'      => ['john@example.com'],
+            'country'    => 'US',
+            'created_at' => Time::parse('2023-12-02 07:35:57'),
+            'updated_at' => Time::parse('2023-12-02 07:35:57'),
+        ];
+        $obj = CustomUser::reconstruct($phpData);
+
+        $array = $converter->extract($obj);
+
+        $this->assertSame([
+            'id'         => 1,
+            'name'       => 'John Smith',
+            'email'      => '["john@example.com"]',
+            'country'    => 'US',
+            'created_at' => '2023-12-02 07:35:57',
+            'updated_at' => '2023-12-02 07:35:57',
+        ], $array);
+    }
+
+    public function testExtractWithExtractMethod()
+    {
+        $types = [
+            'id'         => 'int',
+            'email'      => 'json-array',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+        $converter = $this->createDataConverter($types, [], null, 'toRawArray');
+
+        $phpData = [
+            'id'         => 1,
+            'name'       => 'John Smith',
+            'email'      => ['john@example.com'],
+            'country'    => 'US',
+            'created_at' => Time::parse('2023-12-02 07:35:57'),
+            'updated_at' => Time::parse('2023-12-02 07:35:57'),
+        ];
+        $obj = new User($phpData);
+
+        $array = $converter->extract($obj);
+
+        $this->assertSame([
+            'country'    => 'US',
+            'id'         => 1,
+            'name'       => 'John Smith',
+            'email'      => '["john@example.com"]',
+            'created_at' => '2023-12-02 07:35:57',
+            'updated_at' => '2023-12-02 07:35:57',
+        ], $array);
+    }
+
+    public function testExtractWithClosure()
+    {
+        $types = [
+            'id'         => 'int',
+            'email'      => 'json-array',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+        $extractor = static function ($obj) {
+            $array['id']         = $obj->id;
+            $array['name']       = $obj->name;
+            $array['created_at'] = $obj->created_at;
+
+            return $array;
+        };
+        $converter = $this->createDataConverter($types, [], null, $extractor);
+
+        $phpData = [
+            'id'         => 1,
+            'name'       => 'John Smith',
+            'email'      => ['john@example.com'],
+            'country'    => 'US',
+            'created_at' => Time::parse('2023-12-02 07:35:57'),
+            'updated_at' => Time::parse('2023-12-02 07:35:57'),
+        ];
+        $obj = CustomUser::reconstruct($phpData);
+
+        $array = $converter->extract($obj);
+
+        $this->assertSame([
+            'id'         => 1,
+            'name'       => 'John Smith',
+            'created_at' => '2023-12-02 07:35:57',
+        ], $array);
     }
 }
