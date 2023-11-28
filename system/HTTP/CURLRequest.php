@@ -479,10 +479,14 @@ class CURLRequest extends OutgoingRequest
     {
         foreach ($headers as $header) {
             if (($pos = strpos($header, ':')) !== false) {
-                $title = substr($header, 0, $pos);
-                $value = substr($header, $pos + 1);
+                $title = trim(substr($header, 0, $pos));
+                $value = trim(substr($header, $pos + 1));
 
-                $this->response->setHeader($title, $value);
+                if ($this->response instanceof Response) {
+                    $this->response->addHeader($title, $value);
+                } else {
+                    $this->response->setHeader($title, $value);
+                }
             } elseif (strpos($header, 'HTTP') === 0) {
                 preg_match('#^HTTP\/([12](?:\.[01])?) (\d+) (.+)#', $header, $matches);
 

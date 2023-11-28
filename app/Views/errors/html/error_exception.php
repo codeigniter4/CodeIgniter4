@@ -1,4 +1,5 @@
 <?php
+use CodeIgniter\HTTP\Header;
 use Config\Services;
 use CodeIgniter\CodeIgniter;
 
@@ -312,10 +313,20 @@ $errorId = uniqid('error', true);
                             </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($headers as $header) : ?>
+                        <?php foreach ($headers as $name => $value) : ?>
                             <tr>
-                                <td><?= esc($header->getName(), 'html') ?></td>
-                                <td><?= esc($header->getValueLine(), 'html') ?></td>
+                                <td><?= esc($name, 'html') ?></td>
+                                <td>
+                                <?php
+                                if ($value instanceof Header) {
+                                    echo esc($value->getValueLine(), 'html');
+                                } else {
+                                    foreach ($value as $i => $header) {
+                                        echo ' ('. $i+1 . ') ' . esc($header->getValueLine(), 'html');
+                                    }
+                                }
+                                ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
@@ -339,8 +350,6 @@ $errorId = uniqid('error', true);
 
                 <?php $headers = $response->headers(); ?>
                 <?php if (! empty($headers)) : ?>
-                    <?php natsort($headers) ?>
-
                     <h3>Headers</h3>
 
                     <table>
@@ -351,10 +360,20 @@ $errorId = uniqid('error', true);
                             </tr>
                         </thead>
                         <tbody>
-                        <?php foreach (array_keys($headers) as $name) : ?>
+                        <?php foreach ($headers as $name => $value) : ?>
                             <tr>
                                 <td><?= esc($name, 'html') ?></td>
-                                <td><?= esc($response->getHeaderLine($name), 'html') ?></td>
+                                <td>
+                                <?php
+                                if ($value instanceof Header) {
+                                    echo esc($response->getHeaderLine($name), 'html');
+                                } else {
+                                    foreach ($value as $i => $header) {
+                                        echo ' ('. $i+1 . ') ' . esc($header->getValueLine(), 'html');
+                                    }
+                                }
+                                ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>

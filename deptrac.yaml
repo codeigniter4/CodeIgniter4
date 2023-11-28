@@ -225,6 +225,7 @@ parameters:
     # Individual class exemptions
     CodeIgniter\Cache\ResponseCache:
       - CodeIgniter\HTTP\CLIRequest
+      - CodeIgniter\HTTP\Header
       - CodeIgniter\HTTP\IncomingRequest
       - CodeIgniter\HTTP\ResponseInterface
     CodeIgniter\Entity\Cast\URICast:

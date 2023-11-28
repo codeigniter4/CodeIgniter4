@@ -12,6 +12,7 @@
 namespace CodeIgniter\Cache;
 
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\Header;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Cache as CacheConfig;
@@ -99,8 +100,14 @@ final class ResponseCache
 
         $headers = [];
 
-        foreach ($response->headers() as $header) {
-            $headers[$header->getName()] = $header->getValueLine();
+        foreach ($response->headers() as $name => $value) {
+            if ($value instanceof Header) {
+                $headers[$name] = $value->getValueLine();
+            } else {
+                foreach ($value as $header) {
+                    $headers[$name][] = $header->getValueLine();
+                }
+            }
         }
 
         return $this->cache->save(

@@ -18,6 +18,7 @@ use CodeIgniter\Debug\Toolbar\Collectors\History;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;
 use CodeIgniter\HTTP\DownloadResponse;
+use CodeIgniter\HTTP\Header;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -140,8 +141,17 @@ class Toolbar
             $data['vars']['post'][esc($name)] = is_array($value) ? '<pre>' . esc(print_r($value, true)) . '</pre>' : esc($value);
         }
 
-        foreach ($request->headers() as $header) {
-            $data['vars']['headers'][esc($header->getName())] = esc($header->getValueLine());
+        foreach ($request->headers() as $name => $value) {
+            if ($value instanceof Header) {
+                $data['vars']['headers'][esc($name)] = esc($value->getValueLine());
+            } else {
+                foreach ($value as $i => $header) {
+                    $index = $i + 1;
+                    $data['vars']['headers'][esc($name)] ??= '';
+                    $data['vars']['headers'][esc($name)] .= ' (' . $index . ') '
+                        . esc($header->getValueLine());
+                }
+            }
         }
 
         foreach ($request->getCookie() as $name => $value) {
@@ -157,8 +167,17 @@ class Toolbar
             'headers'     => [],
         ];
 
-        foreach ($response->headers() as $header) {
-            $data['vars']['response']['headers'][esc($header->getName())] = esc($header->getValueLine());
+        foreach ($response->headers() as $name => $value) {
+            if ($value instanceof Header) {
+                $data['vars']['response']['headers'][esc($name)] = esc($value->getValueLine());
+            } else {
+                foreach ($value as $i => $header) {
+                    $index = $i + 1;
+                    $data['vars']['response']['headers'][esc($name)] ??= '';
+                    $data['vars']['response']['headers'][esc($name)] .= ' (' . $index . ') '
+                        . esc($header->getValueLine());
+                }
+            }
         }
 
         $data['config'] = Config::display();
