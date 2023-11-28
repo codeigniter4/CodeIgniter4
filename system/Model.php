@@ -481,8 +481,9 @@ class Model extends BaseModel
      * Compiles a replace into string and runs the query
      * This method works only with dbCalls.
      *
-     * @param array|null $data      Data
-     * @param bool       $returnSQL Set to true to return Query String
+     * @param array|null $data Data
+     * @phpstan-param row_array|null $data
+     * @param bool $returnSQL Set to true to return Query String
      *
      * @return BaseResult|false|Query|string
      */
