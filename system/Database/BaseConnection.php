@@ -1006,10 +1006,10 @@ abstract class BaseConnection implements ConnectionInterface
      * insert the table prefix (if it exists) in the proper position, and escape only
      * the correct identifiers.
      *
-     * @param array|string $item
-     * @param bool         $prefixSingle       Prefix a table name with no segments?
-     * @param bool         $protectIdentifiers Protect table or column names?
-     * @param bool         $fieldExists        Supplied $item contains a column name?
+     * @param array|int|string $item
+     * @param bool             $prefixSingle       Prefix a table name with no segments?
+     * @param bool             $protectIdentifiers Protect table or column names?
+     * @param bool             $fieldExists        Supplied $item contains a column name?
      *
      * @return array|string
      * @phpstan-return ($item is array ? array : string)
@@ -1029,6 +1029,9 @@ abstract class BaseConnection implements ConnectionInterface
 
             return $escapedArray;
         }
+
+        // If you pass `['column1', 'column2']`, `$item` will be int because the array keys are int.
+        $item = (string) $item;
 
         // This is basically a bug fix for queries that use MAX, MIN, etc.
         // If a parenthesis is found we know that we do not need to
