@@ -1829,14 +1829,23 @@ abstract class BaseModel
             throw DataException::forEmptyDataset($type);
         }
 
-        if ($this->useCasts()) {
-            if ($row instanceof stdClass) {
-                $row = (array) $row;
-            } elseif (is_object($row)) {
-                $row = $this->converter->extract($row);
-            }
+        // If it validates with entire rules, all fields are needed.
+        $onlyChanged = ($this->skipValidation === false && $this->cleanValidationRules === false)
+            ? false : ($type === 'update');
 
-            $row = $this->converter->toDataSource($row);
+        if ($this->useCasts()) {
+            if (is_array($row)) {
+                $row = $this->converter->toDataSource($row);
+            } elseif ($row instanceof stdClass) {
+                $row = (array) $row;
+                $row = $this->converter->toDataSource($row);
+            } elseif ($row instanceof Entity) {
+                $row = $this->converter->extract($row, $onlyChanged);
+                // Convert any Time instances to appropriate $dateFormat
+                $row = $this->timeToString($row);
+            } elseif (is_object($row)) {
+                $row = $this->converter->extract($row, $onlyChanged);
+            }
         }
         // If $row is using a custom class with public or protected
         // properties representing the collection elements, we need to grab

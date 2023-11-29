@@ -13,6 +13,7 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\I18n\Time;
 use Tests\Support\Entity\CustomUser;
+use Tests\Support\Entity\User;
 use Tests\Support\Models\UserCastsTimestampModel;
 
 /**
@@ -74,6 +75,16 @@ final class DataConverterModelTest extends LiveModelTestCase
         $this->assertInstanceOf(Time::class, $user->created_at);
     }
 
+    public function testFindAsEntity(): void
+    {
+        $id = $this->prepareOneRecord();
+
+        $user = $this->model->asObject(User::class)->find($id);
+
+        $this->assertIsInt($user->id);
+        $this->assertInstanceOf(Time::class, $user->created_at);
+    }
+
     public function testFindAllAsArray(): void
     {
         $this->prepareTwoRecords();
@@ -122,6 +133,18 @@ final class DataConverterModelTest extends LiveModelTestCase
         $this->assertInstanceOf(Time::class, $users[1]->created_at);
     }
 
+    public function testFindAllAsEntity(): void
+    {
+        $this->prepareTwoRecords();
+
+        $users = $this->model->asObject(User::class)->findAll();
+
+        $this->assertIsInt($users[0]->id);
+        $this->assertInstanceOf(Time::class, $users[0]->created_at);
+        $this->assertIsInt($users[1]->id);
+        $this->assertInstanceOf(Time::class, $users[1]->created_at);
+    }
+
     public function testFindColumn(): void
     {
         $this->prepareTwoRecords();
@@ -157,6 +180,16 @@ final class DataConverterModelTest extends LiveModelTestCase
         $this->prepareTwoRecords();
 
         $user = $this->model->asObject(CustomUser::class)->first();
+
+        $this->assertIsInt($user->id);
+        $this->assertInstanceOf(Time::class, $user->created_at);
+    }
+
+    public function testFirstAsEntity(): void
+    {
+        $this->prepareTwoRecords();
+
+        $user = $this->model->asObject(User::class)->first();
 
         $this->assertIsInt($user->id);
         $this->assertInstanceOf(Time::class, $user->created_at);
@@ -241,6 +274,25 @@ final class DataConverterModelTest extends LiveModelTestCase
         ], $user->email);
     }
 
+    public function testUpdateEntity(): void
+    {
+        $id = $this->prepareOneRecord();
+        /** @var User $user */
+        $user = $this->model->asObject(User::class)->find($id);
+
+        $email       = $user->email;
+        $email[]     = 'private@example.org';
+        $user->email = $email;
+        $this->model->update($user->id, $user);
+
+        $user = $this->model->asObject(User::class)->find($id);
+
+        $this->assertSame([
+            'john@example.com',
+            'private@example.org',
+        ], $user->email);
+    }
+
     public function testSaveArray(): void
     {
         $id   = $this->prepareOneRecord();
@@ -283,6 +335,25 @@ final class DataConverterModelTest extends LiveModelTestCase
         $this->model->save($user);
 
         $user = $this->model->asObject(CustomUser::class)->find($id);
+
+        $this->assertSame([
+            'john@example.com',
+            'private@example.org',
+        ], $user->email);
+    }
+
+    public function testSaveEntity(): void
+    {
+        $id = $this->prepareOneRecord();
+        /** @var User $user */
+        $user = $this->model->asObject(User::class)->find($id);
+
+        $email       = $user->email;
+        $email[]     = 'private@example.org';
+        $user->email = $email;
+        $this->model->save($user);
+
+        $user = $this->model->asObject(User::class)->find($id);
 
         $this->assertSame([
             'john@example.com',
