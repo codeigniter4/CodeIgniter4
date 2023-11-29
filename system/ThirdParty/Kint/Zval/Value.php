@@ -53,8 +53,8 @@ class Value
     public $reference = false;
     public $depth = 0;
     public $size;
-    public $value;
     public $hints = [];
+    public $value;
 
     protected $representations = [];
 
@@ -62,7 +62,7 @@ class Value
     {
     }
 
-    public function addRepresentation(Representation $rep, ?int $pos = null): bool
+    public function addRepresentation(Representation $rep, int $pos = null): bool
     {
         if (isset($this->representations[$rep->getName()])) {
             return false;
@@ -81,7 +81,7 @@ class Value
         return true;
     }
 
-    public function replaceRepresentation(Representation $rep, ?int $pos = null): void
+    public function replaceRepresentation(Representation $rep, int $pos = null): void
     {
         if (null === $pos) {
             $this->representations[$rep->getName()] = $rep;
@@ -234,7 +234,7 @@ class Value
     /**
      * Creates a new basic object with a name and access path.
      */
-    public static function blank(?string $name = null, ?string $access_path = null): self
+    public static function blank(string $name = null, string $access_path = null): self
     {
         $o = new self();
         $o->name = $name;
