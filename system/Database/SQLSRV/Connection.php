@@ -190,7 +190,7 @@ class Connection extends BaseConnection
      */
     public function insertID(): int
     {
-        return $this->query('SELECT SCOPE_IDENTITY() AS insert_id')->getRow()->insert_id ?? 0;
+        return (int) ($this->query('SELECT SCOPE_IDENTITY() AS insert_id')->getRow()->insert_id ?? 0);
     }
 
     /**
