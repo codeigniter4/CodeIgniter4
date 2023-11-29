@@ -367,7 +367,7 @@ abstract class BaseModel
     protected function createDataConverter(): void
     {
         if ($this->useCasts()) {
-            $this->converter = new DataConverter($this->casts);
+            $this->converter = new DataConverter($this->casts, [], 'reconstruct');
         }
     }
 
