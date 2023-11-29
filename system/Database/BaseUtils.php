@@ -212,7 +212,11 @@ abstract class BaseUtils
             $line = [];
 
             foreach ($row as $item) {
-                $line[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, (string) $item) . $enclosure;
+                $line[] = $enclosure . str_replace(
+                    $enclosure,
+                    $enclosure . $enclosure,
+                    (string) $item
+                ) . $enclosure;
             }
 
             $out .= implode($delim, $line) . $newline;
