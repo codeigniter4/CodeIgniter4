@@ -119,7 +119,7 @@ The HTML files can be viewed by opening **build/coverage/html/index.html** in yo
 Alternatively you can use the following command:
 
 ```console
-./phpunit --colors --coverage-text=tests/coverage.txt --coverage-html=tests/coverage/ -d memory_limit=1024m
+./phpunit --colors --coverage-text=build/coverage/text/coverage.txt --coverage-html=build/coverage/html/ -d memory_limit=1024m
 ```
 
 This runs all of the tests again collecting information about how many lines,
@@ -127,8 +127,6 @@ functions, and files are tested. It also reports the percentage of the code that
 It is collected in two formats: a simple text file that provides an overview as well
 as a comprehensive collection of HTML files that show the status of every line of code in the project.
 
-For the example above, the text file can be found at **tests/coverage.txt** and
-the HTML files can be viewed by opening **tests/coverage/index.html**.
 
 ## PHPUnit XML Configuration
 
