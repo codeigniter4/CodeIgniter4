@@ -1698,6 +1698,7 @@ abstract class BaseModel
      */
     protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
     {
+        // @TODO Should add an interface for this?
         if (method_exists($data, 'toRawArray')) {
             $properties = $data->toRawArray($onlyChanged, $recursive);
         } else {

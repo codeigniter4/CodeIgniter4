@@ -798,7 +798,11 @@ class Model extends BaseModel
     {
         $properties = parent::objectToRawArray($data, $onlyChanged);
 
-        $primaryKey = null;
+        if ($onlyChanged === false) {
+            return $properties;
+        }
+
+        $primaryKey = $data->{$this->primaryKey} ?? null;
 
         if ($data instanceof Entity) {
             $cast = $data->cast();
@@ -814,12 +818,11 @@ class Model extends BaseModel
 
         // Always grab the primary key otherwise updates will fail.
         if (
-            // @TODO Should use `$data instanceof Entity`.
+            // @TODO Should add an interface for this?
             method_exists($data, 'toRawArray')
             && (
                 ! empty($properties)
                 && ! empty($this->primaryKey)
-                && ! in_array($this->primaryKey, $properties, true)
                 && ! empty($primaryKey)
             )
         ) {
