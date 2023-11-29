@@ -35,7 +35,8 @@
 
         <report>
             <clover outputFile="build/logs/clover.xml"/>
-            <html outputDirectory="build/coverage/html" highLowerBound="80"/>
+            <html outputDirectory="tests/coverage" highLowerBound="80"/>
+            <text outputFile="tests/coverage.txt"/>
         </report>
     </coverage>
 
