@@ -249,6 +249,8 @@ parameters:
       - CodeIgniter\Entity\Exceptions\CastException
     CodeIgniter\DataCaster\Exceptions\CastException:
       - CodeIgniter\Entity\Exceptions\CastException
+    CodeIgniter\DataConverter\DataConverter:
+      - CodeIgniter\Entity\Entity
     CodeIgniter\Entity\Cast\URICast:
       - CodeIgniter\HTTP\URI
     CodeIgniter\Log\Handlers\ChromeLoggerHandler:
