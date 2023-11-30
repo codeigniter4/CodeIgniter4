@@ -28,7 +28,7 @@ Bugs have been fixed in the case where ``matches`` and ``differs`` in the Strict
 and Traditional rules validate data of non-string types.
 
 CURLRequest option 'ssl_key' eliminated
-====================================
+=======================================
 
 CURLRequest option 'ssl_key' was eliminated.
 Please use CURLRequest option 'verify' to indicate the path to a CA bundle.
