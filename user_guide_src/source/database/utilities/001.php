@@ -1,13 +1,15 @@
 <?php
 
-class MyModel extends \CodeIgniter\Model
-{
-    protected $table      = 'foo';
-    protected $primaryKey = 'id';
-}
+$db     = db_connect();
+$dbutil = \CodeIgniter\Database\Config::utils();
 
-$model = new MyModel();
+$query = $db->query('SELECT * FROM mytable');
 
-$util = \CodeIgniter\Database\Config::utils();
+$config = [
+    'root'    => 'root',
+    'element' => 'element',
+    'newline' => "\n",
+    'tab'     => "\t",
+];
 
-echo $util->getXMLFromResult($model->get());
+echo $dbutil->getXMLFromResult($query, $config);
