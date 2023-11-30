@@ -317,6 +317,7 @@ Changes
       :ref:`multiple-filters` are always enabled.
 - **RouteCollection:** The HTTP method keys in the protected property ``$routes``
   has been fixed from lowercase to uppercase.
+- ``declare(strict_types=1)`` has been added to most framework codebase.
 
 Deprecations
 ************
