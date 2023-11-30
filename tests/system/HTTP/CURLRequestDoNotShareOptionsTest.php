@@ -535,8 +535,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $file = __FILE__;
 
         $this->request->request('get', 'http://example.com', [
-            'verify'  => 'yes',
-            'ssl_key' => $file,
+            'verify' => $file,
         ]);
 
         $options = $this->request->curl_options;
@@ -546,6 +545,9 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
 
         $this->assertArrayHasKey(CURLOPT_SSL_VERIFYPEER, $options);
         $this->assertTrue($options[CURLOPT_SSL_VERIFYPEER]);
+
+        $this->assertArrayHasKey(CURLOPT_SSL_VERIFYHOST, $options);
+        $this->assertSame(2, $options[CURLOPT_SSL_VERIFYHOST]);
     }
 
     public function testSSLWithBadKey(): void
@@ -554,8 +556,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
         $this->expectException(HTTPException::class);
 
         $this->request->request('get', 'http://example.com', [
-            'verify'  => 'yes',
-            'ssl_key' => $file,
+            'verify' => $file,
         ]);
     }
 

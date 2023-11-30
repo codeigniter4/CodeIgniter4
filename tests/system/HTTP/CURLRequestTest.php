@@ -518,8 +518,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $file = __FILE__;
 
         $this->request->request('get', 'http://example.com', [
-            'verify'  => 'yes',
-            'ssl_key' => $file,
+            'verify' => $file,
         ]);
 
         $options = $this->request->curl_options;
@@ -555,8 +554,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->expectException(HTTPException::class);
 
         $this->request->request('get', 'http://example.com', [
-            'verify'  => 'yes',
-            'ssl_key' => $file,
+            'verify' => $file,
         ]);
     }
 
