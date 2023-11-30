@@ -1,3 +1,3 @@
 <?php
 
-$dbutil = \CodeIgniter\Database\Config::utils('group_name');
+$dbutil = \Config\Database::utils('group_name');
