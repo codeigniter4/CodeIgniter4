@@ -14,6 +14,7 @@ Documentations
 What has been changed
 =====================
 - Only small things like the method names and the loading of the library have changed.
+- The definition of the session table in Database Driver has changed.
 
 Upgrade Guide
 =============
@@ -24,6 +25,7 @@ Upgrade Guide
     - To set data use ``$session->set($array);`` instead of ``$this->session->set_userdata($array);``.
     - To remove data use ``unset($_SESSION['some_name']);`` or ``$session->remove('some_name');`` instead of ``$this->session->unset_userdata('some_name');``.
     - To mark session data as flashdata, which will only be available for the next request, use ``$session->markAsFlashdata('item');`` instead of ``$this->session->mark_as_flash('item');```
+3. If you use Database Driver, you need to recreate the session table. See :ref:`sessions-databasehandler-driver`.
 
 Code Example
 ============
