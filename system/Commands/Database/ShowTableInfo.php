@@ -292,9 +292,12 @@ class ShowTableInfo extends BaseCommand
         CLI::table($this->tbody, $thead);
     }
 
-    private function setYesOrNo(bool $fieldValue): string
+    /**
+     * @param bool|int|string|null $fieldValue
+     */
+    private function setYesOrNo($fieldValue): string
     {
-        if ($fieldValue) {
+        if ((bool) $fieldValue) {
             return CLI::color('Yes', 'green');
         }
 

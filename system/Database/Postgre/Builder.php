@@ -355,11 +355,11 @@ class Builder extends BaseBuilder
             // autoincrement identity field must use DEFAULT and not NULL
             // this could be removed in favour of leaving to developer but does make things easier and function like other DBMS
             foreach ($constraints as $constraint) {
-                $key = array_search(trim($constraint, '"'), $fieldNames, true);
+                $key = array_search(trim((string) $constraint, '"'), $fieldNames, true);
 
                 if ($key !== false) {
                     foreach ($values as $arrayKey => $value) {
-                        if (strtoupper($value[$key]) === 'NULL') {
+                        if (strtoupper((string) $value[$key]) === 'NULL') {
                             $values[$arrayKey][$key] = 'DEFAULT';
                         }
                     }
