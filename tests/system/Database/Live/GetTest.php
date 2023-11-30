@@ -50,6 +50,13 @@ final class GetTest extends CIUnitTestCase
         $this->assertSame('Musician', $jobs[1]->name);
     }
 
+    public function testGetWithLimitZero(): void
+    {
+        $jobs = $this->db->table('job')->limit(0)->get()->getResult();
+
+        $this->assertCount(0, $jobs);
+    }
+
     public function testGetWhereArray(): void
     {
         $jobs = $this->db->table('job')
