@@ -590,7 +590,7 @@ class Builder extends BaseBuilder
             . $this->compileOrderBy(); // ORDER BY
 
         // LIMIT
-        if ($this->QBLimit) {
+        if ($this->QBLimit !== false || $this->QBOffset) {
             $sql = $this->_limit($sql . "\n");
         }
 

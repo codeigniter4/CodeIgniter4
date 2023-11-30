@@ -2498,7 +2498,7 @@ class BaseBuilder
         return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . implode(', ', $valStr)
             . $this->compileWhereHaving('QBWhere')
             . $this->compileOrderBy()
-            . ($this->QBLimit ? $this->_limit(' ', true) : '');
+            . ($this->QBLimit !== false ? $this->_limit(' ', true) : '');
     }
 
     /**
@@ -3030,7 +3030,7 @@ class BaseBuilder
             . $this->compileWhereHaving('QBHaving')
             . $this->compileOrderBy();
 
-        if ($this->QBLimit) {
+        if ($this->QBLimit !== false || $this->QBOffset) {
             $sql = $this->_limit($sql . "\n");
         }
 
