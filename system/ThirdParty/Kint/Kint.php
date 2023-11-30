@@ -133,7 +133,7 @@ class Kint implements FacadeInterface
     public static $aliases = [
         ['Kint\\Kint', 'dump'],
         ['Kint\\Kint', 'trace'],
-        ['Kint\\Kint', 'dumpArray'],
+        ['Kint\\Kint', 'dumpAll'],
     ];
 
     /**
@@ -537,7 +537,7 @@ class Kint implements FacadeInterface
      *
      * Functionally equivalent to Kint::dump(1) or Kint::dump(debug_backtrace())
      *
-     * @param mixed ...$args
+     * @psalm-param array ...$args
      *
      * @return int|string
      */
@@ -599,6 +599,7 @@ class Kint implements FacadeInterface
         $match = '/';
 
         foreach (static::$app_root_dirs as $path => $alias) {
+            /** @psalm-var string $path */
             if (empty($path)) {
                 continue;
             }

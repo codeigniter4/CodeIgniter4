@@ -30,6 +30,12 @@ namespace Kint\Parser;
 use Kint\Zval\Representation\Representation;
 use Kint\Zval\Value;
 
+// Note: Interaction with ArrayLimitPlugin:
+// Any array limited children will be shown in tables identically to
+// non-array-limited children since the table only shows that it is an array
+// and it's size anyway. Because ArrayLimitPlugin halts the parse on finding
+// a limit all other plugins including this one are stopped, so you cannot get
+// a tabular representation of an array that is longer than the limit.
 class TablePlugin extends AbstractPlugin
 {
     public function getTypes(): array

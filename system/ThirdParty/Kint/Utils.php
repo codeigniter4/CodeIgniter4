@@ -255,8 +255,6 @@ final class Utils
 
     /**
      * @psalm-param Encoding $encoding
-     *
-     * @param mixed $encoding
      */
     public static function truncateString(string $input, int $length = PHP_INT_MAX, string $end = '...', $encoding = false): string
     {

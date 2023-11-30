@@ -44,7 +44,7 @@ class MicrotimeRepresentation extends Representation
     public $mem_peak_real = 0;
     public $hints = ['microtime'];
 
-    public function __construct(int $seconds, int $microseconds, int $group, ?float $lap = null, ?float $total = null, int $i = 0)
+    public function __construct(int $seconds, int $microseconds, int $group, float $lap = null, float $total = null, int $i = 0)
     {
         parent::__construct('Microtime');
 

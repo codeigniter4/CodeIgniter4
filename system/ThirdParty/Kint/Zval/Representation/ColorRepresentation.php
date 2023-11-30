@@ -211,7 +211,7 @@ class ColorRepresentation extends Representation
         $this->setValues($value);
     }
 
-    public function getColor(?int $variant = null): ?string
+    public function getColor(int $variant = null): ?string
     {
         if (!$variant) {
             $variant = $this->variant;
@@ -275,7 +275,7 @@ class ColorRepresentation extends Representation
         return null;
     }
 
-    public function hasAlpha(?int $variant = null): bool
+    public function hasAlpha(int $variant = null): bool
     {
         if (null === $variant) {
             $variant = $this->variant;

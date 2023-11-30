@@ -57,7 +57,7 @@ class SourceRepresentation extends Representation
      * @param int      $start_line The first line to display (1 based)
      * @param null|int $length     Amount of lines to show
      */
-    public static function getSource(string $filename, int $start_line = 1, ?int $length = null): ?array
+    public static function getSource(string $filename, int $start_line = 1, int $length = null): ?array
     {
         if (!$filename || !\file_exists($filename) || !\is_readable($filename)) {
             return null;
