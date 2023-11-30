@@ -548,21 +548,19 @@ class CURLRequest extends OutgoingRequest
 
         // SSL Verification
         if (isset($config['verify'])) {
-            $configVerify = $config['verify'];
-
-            if (is_string($configVerify)) {
-                $file = realpath($configVerify) ?: $configVerify;
+            if (is_string($config['verify'])) {
+                $file = realpath($config['verify']) ?: $config['verify'];
 
                 if (! is_file($file)) {
-                    throw HTTPException::forInvalidSSLKey($configVerify);
+                    throw HTTPException::forInvalidSSLKey($config['verify']);
                 }
 
                 $curlOptions[CURLOPT_CAINFO]         = $file;
                 $curlOptions[CURLOPT_SSL_VERIFYPEER] = true;
                 $curlOptions[CURLOPT_SSL_VERIFYHOST] = 2;
-            } elseif (is_bool($configVerify)) {
-                $curlOptions[CURLOPT_SSL_VERIFYPEER] = $configVerify;
-                $curlOptions[CURLOPT_SSL_VERIFYHOST] = $configVerify ? 2 : 0;
+            } elseif (is_bool($config['verify'])) {
+                $curlOptions[CURLOPT_SSL_VERIFYPEER] = $config['verify'];
+                $curlOptions[CURLOPT_SSL_VERIFYHOST] = $config['verify'] ? 2 : 0;
             }
         }
 
