@@ -384,7 +384,7 @@ abstract class BaseModel
      *
      * @return array
      */
-    abstract protected function doFindAll(int $limit = 0, int $offset = 0);
+    abstract protected function doFindAll(?int $limit = null, int $offset = 0);
 
     /**
      * Returns the first row of the result set.
@@ -600,7 +600,7 @@ abstract class BaseModel
      *
      * @return array
      */
-    public function findAll(int $limit = 0, int $offset = 0)
+    public function findAll(?int $limit = null, int $offset = 0)
     {
         if ($this->tempAllowCallbacks) {
             // Call the before event and check for a return

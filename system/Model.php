@@ -229,7 +229,7 @@ class Model extends BaseModel
      * @return array
      * @phpstan-return list<row_array|object>
      */
-    protected function doFindAll(int $limit = 0, int $offset = 0)
+    protected function doFindAll(?int $limit = null, int $offset = 0)
     {
         $builder = $this->builder();
 
