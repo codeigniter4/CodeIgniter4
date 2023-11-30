@@ -42,7 +42,7 @@ abstract class AbstractPlugin implements PluginInterface
         $this->renderer = $r;
     }
 
-    public function renderLockedHeader(Value $o, ?string $content = null): string
+    public function renderLockedHeader(Value $o, string $content = null): string
     {
         $out = '';
 

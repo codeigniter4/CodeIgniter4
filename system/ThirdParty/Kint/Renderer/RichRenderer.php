@@ -140,6 +140,13 @@ class RichRenderer extends AbstractRenderer
      */
     public static $sort = self::SORT_NONE;
 
+    /**
+     * Timestamp to print in footer in date() format.
+     *
+     * @var ?string
+     */
+    public static $timestamp = null;
+
     public static $needs_pre_render = true;
     public static $needs_folder_render = true;
 
@@ -465,29 +472,7 @@ class RichRenderer extends AbstractRenderer
             $output .= '<nav></nav>';
         }
 
-        if (isset($this->call_info['callee']['file'])) {
-            $output .= 'Called from '.$this->ideLink(
-                $this->call_info['callee']['file'],
-                $this->call_info['callee']['line']
-            );
-        }
-
-        if (
-            isset($this->call_info['callee']['function']) &&
-            (
-                !empty($this->call_info['callee']['class']) ||
-                !\in_array(
-                    $this->call_info['callee']['function'],
-                    ['include', 'include_once', 'require', 'require_once'],
-                    true
-                )
-            )
-        ) {
-            $output .= ' [';
-            $output .= $this->call_info['callee']['class'] ?? '';
-            $output .= $this->call_info['callee']['type'] ?? '';
-            $output .= $this->call_info['callee']['function'].'()]';
-        }
+        $output .= $this->calledFrom();
 
         if (!empty($this->call_info['trace']) && \count($this->call_info['trace']) > 1) {
             $output .= '<ol>';
@@ -497,8 +482,8 @@ class RichRenderer extends AbstractRenderer
                 }
 
                 $output .= '<li>'.$this->ideLink($step['file'], $step['line']); // closing tag not required
-                if (isset($step['function'])
-                    && !\in_array($step['function'], ['include', 'include_once', 'require', 'require_once'], true)
+                if (isset($step['function']) &&
+                    !\in_array($step['function'], ['include', 'include_once', 'require', 'require_once'], true)
                 ) {
                     $output .= ' [';
                     $output .= $step['class'] ?? '';
@@ -516,8 +501,6 @@ class RichRenderer extends AbstractRenderer
 
     /**
      * @psalm-param Encoding $encoding
-     *
-     * @param mixed $encoding
      */
     public function escape(string $string, $encoding = false): string
     {
@@ -557,6 +540,45 @@ class RichRenderer extends AbstractRenderer
         }
 
         return '<a '.$class.'href="'.$this->escape($ideLink).'">'.$path.'</a>';
+    }
+
+    protected function calledFrom(): string
+    {
+        $output = '';
+
+        if (isset($this->call_info['callee']['file'])) {
+            $output .= ' '.$this->ideLink(
+                $this->call_info['callee']['file'],
+                $this->call_info['callee']['line']
+            );
+        }
+
+        if (
+            isset($this->call_info['callee']['function']) &&
+            (
+                !empty($this->call_info['callee']['class']) ||
+                !\in_array(
+                    $this->call_info['callee']['function'],
+                    ['include', 'include_once', 'require', 'require_once'],
+                    true
+                )
+            )
+        ) {
+            $output .= ' [';
+            $output .= $this->call_info['callee']['class'] ?? '';
+            $output .= $this->call_info['callee']['type'] ?? '';
+            $output .= $this->call_info['callee']['function'].'()]';
+        }
+
+        if ('' !== $output) {
+            $output = 'Called from'.$output;
+        }
+
+        if (null !== self::$timestamp) {
+            $output .= ' '.\date(self::$timestamp);
+        }
+
+        return $output;
     }
 
     protected function renderTab(Value $o, Representation $rep): string
