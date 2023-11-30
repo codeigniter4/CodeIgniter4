@@ -49,8 +49,8 @@ final class GetTest extends CIUnitTestCase
         $builder = $this->db->table('users');
         $builder->testMode()->where('username', 'bogus');
 
-        $expectedSQL           = 'SELECT * FROM "users" WHERE "username" = \'bogus\'';
-        $expectedSQLafterreset = 'SELECT * FROM "users"';
+        $expectedSQL           = 'SELECT * FROM "users" WHERE "username" = \'bogus\'  LIMIT 50, 0';
+        $expectedSQLafterreset = 'SELECT * FROM "users"  LIMIT 50, 0';
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->get(0, 50, false)));
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->get(0, 50, true)));
