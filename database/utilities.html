@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Utilities &mdash; CodeIgniter 4.4.3 documentation</title>
+  <title>Database Utility Class &mdash; CodeIgniter 4.4.3 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
@@ -271,7 +271,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Working with Databases</a></li>
-      <li class="breadcrumb-item active">Utilities</li>
+      <li class="breadcrumb-item active">Database Utility Class</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -280,39 +280,166 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="utilities">
-<h1>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline"></a></h1>
+  <section id="database-utility-class">
+<h1>Database Utility Class<a class="headerlink" href="#database-utility-class" title="Permalink to this headline"></a></h1>
 <p>The Database Utility Class contains methods that help you manage your database.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#get-xml-from-result" id="id1">Get XML from Result</a></p>
+<li><p><a class="reference internal" href="#initializing-the-utility-class" id="id1">Initializing the Utility Class</a></p></li>
+<li><p><a class="reference internal" href="#using-the-database-utilities" id="id2">Using the Database Utilities</a></p>
 <ul>
-<li><p><a class="reference internal" href="#getxmlfromresult" id="id2">getXMLFromResult()</a></p></li>
+<li><p><a class="reference internal" href="#retrieve-list-of-database-names" id="id3">Retrieve List of Database Names</a></p></li>
+<li><p><a class="reference internal" href="#determine-if-a-database-exists" id="id4">Determine If a Database Exists</a></p></li>
+<li><p><a class="reference internal" href="#optimize-a-table" id="id5">Optimize a Table</a></p></li>
+<li><p><a class="reference internal" href="#optimize-a-database" id="id6">Optimize a Database</a></p></li>
+<li><p><a class="reference internal" href="#export-a-query-result-as-a-csv-file" id="id7">Export a Query Result as a CSV File</a></p></li>
+<li><p><a class="reference internal" href="#export-a-query-result-as-an-xml-document" id="id8">Export a Query Result as an XML Document</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
-<section id="get-xml-from-result">
-<h2><a class="toc-backref" href="#id1">Get XML from Result</a><a class="headerlink" href="#get-xml-from-result" title="Permalink to this headline"></a></h2>
-<section id="getxmlfromresult">
-<h3><a class="toc-backref" href="#id2">getXMLFromResult()</a><a class="headerlink" href="#getxmlfromresult" title="Permalink to this headline"></a></h3>
-<p>This method returns the xml result from database result. You can do like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">class</span> <span class="nc">MyModel</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Model</span>
-<span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$table</span>      <span class="o">=</span> <span class="s1">&#39;foo&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$primaryKey</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyModel</span><span class="p">();</span>
-
-<span class="nv">$util</span> <span class="o">=</span> <span class="nx">\CodeIgniter\Database\Config</span><span class="o">::</span><span class="na">utils</span><span class="p">();</span>
-
-<span class="k">echo</span> <span class="nv">$util</span><span class="o">-&gt;</span><span class="na">getXMLFromResult</span><span class="p">(</span><span class="nv">$model</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">());</span>
+<section id="initializing-the-utility-class">
+<h2><a class="toc-backref" href="#id1">Initializing the Utility Class</a><a class="headerlink" href="#initializing-the-utility-class" title="Permalink to this headline"></a></h2>
+<p>Load the Utility Class as follows:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$dbutil</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">utils</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>and it will get the following xml result:</p>
+<p>You can also pass another database group to the DB Utility loader, in case
+the database you want to manage isn’t the default one:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$dbutil</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">utils</span><span class="p">(</span><span class="s1">&#39;group_name&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In the above example, we’re passing a database group name as the first
+parameter.</p>
+</section>
+<section id="using-the-database-utilities">
+<h2><a class="toc-backref" href="#id2">Using the Database Utilities</a><a class="headerlink" href="#using-the-database-utilities" title="Permalink to this headline"></a></h2>
+<section id="retrieve-list-of-database-names">
+<h3><a class="toc-backref" href="#id3">Retrieve List of Database Names</a><a class="headerlink" href="#retrieve-list-of-database-names" title="Permalink to this headline"></a></h3>
+<p>Returns an array of database names:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$dbutil</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">utils</span><span class="p">();</span>
+
+<span class="nv">$dbs</span> <span class="o">=</span> <span class="nv">$dbutil</span><span class="o">-&gt;</span><span class="na">listDatabases</span><span class="p">();</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$dbs</span> <span class="k">as</span> <span class="nv">$db</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$db</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="determine-if-a-database-exists">
+<h3><a class="toc-backref" href="#id4">Determine If a Database Exists</a><a class="headerlink" href="#determine-if-a-database-exists" title="Permalink to this headline"></a></h3>
+<p>Sometimes it’s helpful to know whether a particular database exists.
+Returns a boolean <code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code>. Usage example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$dbutil</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">utils</span><span class="p">();</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$dbutil</span><span class="o">-&gt;</span><span class="na">databaseExists</span><span class="p">(</span><span class="s1">&#39;database_name&#39;</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// some code...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">database_name</span></code> with the name of the database you are
+looking for. This method is case sensitive.</p>
+</div>
+</section>
+<section id="optimize-a-table">
+<h3><a class="toc-backref" href="#id5">Optimize a Table</a><a class="headerlink" href="#optimize-a-table" title="Permalink to this headline"></a></h3>
+<p>Permits you to optimize a table using the table name specified in the
+first parameter. Returns <code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code> based on success or failure:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$dbutil</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">utils</span><span class="p">();</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$dbutil</span><span class="o">-&gt;</span><span class="na">optimizeTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s1">&#39;Success!&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not all database platforms support table optimization. It is
+mostly for use with MySQL.</p>
+</div>
+</section>
+<section id="optimize-a-database">
+<h3><a class="toc-backref" href="#id6">Optimize a Database</a><a class="headerlink" href="#optimize-a-database" title="Permalink to this headline"></a></h3>
+<p>Permits you to optimize the database your DB class is currently
+connected to. Returns an array containing the DB status messages or
+<code class="docutils literal notranslate"><span class="pre">false</span></code> on failure:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$dbutil</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">utils</span><span class="p">();</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$dbutil</span><span class="o">-&gt;</span><span class="na">optimizeDatabase</span><span class="p">();</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$result</span> <span class="o">!==</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">print_r</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not all database platforms support database optimization. It
+it is mostly for use with MySQL.</p>
+</div>
+</section>
+<section id="export-a-query-result-as-a-csv-file">
+<h3><a class="toc-backref" href="#id7">Export a Query Result as a CSV File</a><a class="headerlink" href="#export-a-query-result-as-a-csv-file" title="Permalink to this headline"></a></h3>
+<p>Permits you to generate a CSV file from a query result. The first
+parameter of the method must contain the result object from your
+query. Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span>     <span class="o">=</span> <span class="nx">db_connect</span><span class="p">();</span>
+<span class="nv">$dbutil</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">utils</span><span class="p">();</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM mytable&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$dbutil</span><span class="o">-&gt;</span><span class="na">getCSVFromResult</span><span class="p">(</span><span class="nv">$query</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The second, third, and fourth parameters allow you to set the delimiter
+newline, and enclosure characters respectively. By default commas are
+used as the delimiter, <code class="docutils literal notranslate"><span class="pre">&quot;\n&quot;</span></code> is used as a new line, and a double-quote
+is used as the enclosure. Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span>     <span class="o">=</span> <span class="nx">db_connect</span><span class="p">();</span>
+<span class="nv">$dbutil</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">utils</span><span class="p">();</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM mytable&#39;</span><span class="p">);</span>
+
+<span class="nv">$delimiter</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="p">;</span>
+<span class="nv">$newline</span>   <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="nv">$enclosure</span> <span class="o">=</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">;</span>
+
+<span class="k">echo</span> <span class="nv">$dbutil</span><span class="o">-&gt;</span><span class="na">getCSVFromResult</span><span class="p">(</span><span class="nv">$query</span><span class="p">,</span> <span class="nv">$delimiter</span><span class="p">,</span> <span class="nv">$newline</span><span class="p">,</span> <span class="nv">$enclosure</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This method will NOT write the CSV file for you. It
+simply creates the CSV layout. If you need to write the file
+use the <a class="reference internal" href="../helpers/filesystem_helper.html#write_file" title="write_file"><code class="xref php php-func docutils literal notranslate"><span class="pre">write_file()</span></code></a> helper.</p>
+</div>
+</section>
+<section id="export-a-query-result-as-an-xml-document">
+<h3><a class="toc-backref" href="#id8">Export a Query Result as an XML Document</a><a class="headerlink" href="#export-a-query-result-as-an-xml-document" title="Permalink to this headline"></a></h3>
+<p>Permits you to generate an XML file from a query result. The first
+parameter expects a query result object, the second may contain an
+optional array of config parameters. Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$db</span>     <span class="o">=</span> <span class="nx">db_connect</span><span class="p">();</span>
+<span class="nv">$dbutil</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">utils</span><span class="p">();</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM mytable&#39;</span><span class="p">);</span>
+
+<span class="nv">$config</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;root&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;element&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;element&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;newline&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;tab&#39;</span>     <span class="o">=&gt;</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="k">echo</span> <span class="nv">$dbutil</span><span class="o">-&gt;</span><span class="na">getXMLFromResult</span><span class="p">(</span><span class="nv">$query</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>and it will get the following xml result when the <code class="docutils literal notranslate"><span class="pre">mytable</span></code> has columns <code class="docutils literal notranslate"><span class="pre">id</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">root</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="nx">element</span><span class="o">&gt;</span>
         <span class="o">&lt;</span><span class="nx">id</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="nx">id</span><span class="o">&gt;</span>
@@ -320,6 +447,12 @@
     <span class="o">&lt;/</span><span class="nx">element</span><span class="o">&gt;</span>
 <span class="o">&lt;/</span><span class="nx">root</span><span class="o">&gt;</span>
 </pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This method will NOT write the XML file for you. It
+simply creates the XML layout. If you need to write the file
+use the <a class="reference internal" href="../helpers/filesystem_helper.html#write_file" title="write_file"><code class="xref php php-func docutils literal notranslate"><span class="pre">write_file()</span></code></a> helper.</p>
 </div>
 </section>
 </section>
