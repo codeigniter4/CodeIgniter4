@@ -1,7 +1,7 @@
 <?php
 
 $db     = db_connect();
-$dbutil = \CodeIgniter\Database\Config::utils();
+$dbutil = \Config\Database::utils();
 
 $query = $db->query('SELECT * FROM mytable');
 

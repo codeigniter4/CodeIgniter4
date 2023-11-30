@@ -1,6 +1,6 @@
 <?php
 
-$dbutil = \CodeIgniter\Database\Config::utils();
+$dbutil = \Config\Database::utils();
 
 if ($dbutil->optimizeTable('table_name')) {
     echo 'Success!';
