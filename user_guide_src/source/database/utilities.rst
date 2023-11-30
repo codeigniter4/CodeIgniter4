@@ -62,17 +62,6 @@ first parameter. Returns ``true``/``false`` based on success or failure:
 .. note:: Not all database platforms support table optimization. It is
     mostly for use with MySQL.
 
-Repair a Table
-==============
-
-Permits you to repair a table using the table name specified in the
-first parameter. Returns ``true``/``false`` based on success or failure:
-
-.. literalinclude:: utilities/007.php
-    :lines: 2-
-
-.. note:: Not all database platforms support table repairs.
-
 Optimize a Database
 ===================
 
