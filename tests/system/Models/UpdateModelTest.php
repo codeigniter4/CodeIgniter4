@@ -384,6 +384,7 @@ final class UpdateModelTest extends LiveModelTestCase
             $this->db->DBDriver === 'OCI8'
             || $this->db->DBDriver === 'Postgre'
             || $this->db->DBDriver === 'SQLSRV'
+            || $this->db->DBDriver === 'SQLite3'
         ) {
             $this->markTestSkipped($this->db->DBDriver . ' does not work with binary data as string data.');
         }
@@ -407,6 +408,51 @@ final class UpdateModelTest extends LiveModelTestCase
         $entity = $this->model->find($id);
 
         $this->assertSame('id', $entity->value);
+    }
+
+    public function testUpdateBatchEntityWithPrimaryKeyCast(): void
+    {
+        if (
+            $this->db->DBDriver === 'OCI8'
+            || $this->db->DBDriver === 'Postgre'
+            || $this->db->DBDriver === 'SQLSRV'
+            || $this->db->DBDriver === 'SQLite3'
+        ) {
+            $this->markTestSkipped($this->db->DBDriver . ' does not work with binary data as string data.');
+        }
+
+        $this->createUuidTable();
+
+        $this->createModel(UUIDPkeyModel::class);
+
+        $entity1        = new UUID();
+        $entity1->id    = '550e8400-e29b-41d4-a716-446655440000';
+        $entity1->value = 'test1';
+        $id1            = $this->model->insert($entity1);
+
+        $entity2        = new UUID();
+        $entity2->id    = 'bd59cff1-7a24-dde5-ac10-7b929db6da8c';
+        $entity2->value = 'test2';
+        $id2            = $this->model->insert($entity2);
+
+        $entity1 = $this->model->find($id1);
+        $entity2 = $this->model->find($id2);
+
+        $entity1->value = 'update1';
+        $entity2->value = 'update2';
+
+        $data = [
+            $entity1,
+            $entity2,
+        ];
+        $this->model->updateBatch($data, 'id');
+
+        $this->seeInDatabase('uuid', [
+            'value' => 'update1',
+        ]);
+        $this->seeInDatabase('uuid', [
+            'value' => 'update2',
+        ]);
     }
 
     private function createUuidTable(): void
