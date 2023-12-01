@@ -50,6 +50,15 @@ changed (fixed).
 Note that Traditional Rules should not be used to validate data that is not a
 string.
 
+The use of the `ssl_key` option in CURLRequest was removed
+==========================================================
+
+CURLRequest option `ssl_key` it's not recognized anymore.
+If in use, option `ssl_key` must be replaced with option `verify` in order to define the path
+to a CA bundle for CURLRequest.
+
+CURLRequest option `verify` can also take *boolean* values as usual.
+
 *********************
 Breaking Enhancements
 *********************
