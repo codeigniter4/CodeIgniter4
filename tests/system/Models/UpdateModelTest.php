@@ -14,12 +14,15 @@ namespace CodeIgniter\Models;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity\Entity;
+use Config\Database;
 use InvalidArgumentException;
 use stdClass;
+use Tests\Support\Entity\UUID;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
 use Tests\Support\Models\UserModel;
+use Tests\Support\Models\UUIDPkeyModel;
 use Tests\Support\Models\ValidModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
@@ -373,6 +376,39 @@ final class UpdateModelTest extends LiveModelTestCase
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('There is no data to update.');
         $this->model->update($id, $entity);
+    }
+
+    public function testUpdateEntityWithPrimaryKeyCast(): void
+    {
+        $this->createUuidTable();
+
+        $this->createModel(UUIDPkeyModel::class);
+
+        $entity        = new UUID();
+        $entity->id    = '550e8400-e29b-41d4-a716-446655440000';
+        $entity->value = 'test1';
+
+        $id     = $this->model->insert($entity);
+        $entity = $this->model->find($id);
+
+        $entity->value = 'id';
+        $result        = $this->model->save($entity);
+
+        $this->assertTrue($result);
+
+        $entity = $this->model->find($id);
+
+        $this->assertSame('id', $entity->value);
+    }
+
+    private function createUuidTable(): void
+    {
+        $forge = Database::forge($this->DBGroup);
+        $forge->dropTable('uuid', true);
+        $forge->addField([
+            'id'    => ['type' => 'BINARY', 'constraint' => 16],
+            'value' => ['type' => 'VARCHAR', 'constraint' => 400, 'null' => true],
+        ])->addKey('id', true)->createTable('uuid', true);
     }
 
     public function testUseAutoIncrementSetToFalseUpdate(): void
