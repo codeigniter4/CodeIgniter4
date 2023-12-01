@@ -380,6 +380,14 @@ final class UpdateModelTest extends LiveModelTestCase
 
     public function testUpdateEntityWithPrimaryKeyCast(): void
     {
+        if (
+            $this->db->DBDriver === 'OCI8'
+            || $this->db->DBDriver === 'Postgre'
+            || $this->db->DBDriver === 'SQLSRV'
+        ) {
+            $this->markTestSkipped($this->db->DBDriver . ' does not work with binary data as string data.');
+        }
+
         $this->createUuidTable();
 
         $this->createModel(UUIDPkeyModel::class);
