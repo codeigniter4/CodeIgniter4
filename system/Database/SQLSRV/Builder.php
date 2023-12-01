@@ -308,6 +308,14 @@ class Builder extends BaseBuilder
      */
     protected function _limit(string $sql, bool $offsetIgnore = false): string
     {
+        // SQL Server cannot handle `LIMIT 0`.
+        // DatabaseException:
+        //   [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The number of
+        //   rows provided for a FETCH clause must be greater then zero.
+        if ($this->QBLimit === 0) {
+            return "SELECT * \nFROM " . $this->_fromTables() . ' WHERE 1=0 ';
+        }
+
         if (empty($this->QBOrderBy)) {
             $sql .= ' ORDER BY (SELECT NULL) ';
         }
