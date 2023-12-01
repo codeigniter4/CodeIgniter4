@@ -1,12 +1,5 @@
 # Changelog
 
-## [v4.4.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.4) (Unreleased)
-[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.3...v4.4.4)
-
-### Fixed Bugs
-
-* fix: [CURLRequest] skip hostname checks if options 'verify' false by @NicolaeIotu in https://github.com/codeigniter4/CodeIgniter4/pull/8258
-
 ## [v4.4.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.3) (2023-10-26)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.2...v4.4.3)
 
