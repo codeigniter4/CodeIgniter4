@@ -26,6 +26,7 @@ use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Database;
+use Config\Feature;
 use ReflectionException;
 
 /**
@@ -231,6 +232,10 @@ class Model extends BaseModel
      */
     protected function doFindAll(?int $limit = null, int $offset = 0)
     {
+        if (config(Feature::class)->limitZeroAsAll) {
+            $limit ??= 0;
+        }
+
         $builder = $this->builder();
 
         if ($this->tempUseSoftDeletes) {

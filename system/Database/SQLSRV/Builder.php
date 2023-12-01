@@ -18,6 +18,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\ResultInterface;
+use Config\Feature;
 
 /**
  * Builder for SQLSRV
@@ -312,7 +313,7 @@ class Builder extends BaseBuilder
         // DatabaseException:
         //   [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The number of
         //   rows provided for a FETCH clause must be greater then zero.
-        if ($this->QBLimit === 0) {
+        if (! config(Feature::class)->limitZeroAsAll && $this->QBLimit === 0) {
             return "SELECT * \nFROM " . $this->_fromTables() . ' WHERE 1=0 ';
         }
 
@@ -598,7 +599,11 @@ class Builder extends BaseBuilder
             . $this->compileOrderBy(); // ORDER BY
 
         // LIMIT
-        if ($this->QBLimit !== false || $this->QBOffset) {
+        if (config(Feature::class)->limitZeroAsAll) {
+            if ($this->QBLimit) {
+                $sql = $this->_limit($sql . "\n");
+            }
+        } elseif ($this->QBLimit !== false || $this->QBOffset) {
             $sql = $this->_limit($sql . "\n");
         }
 

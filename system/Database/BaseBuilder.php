@@ -17,6 +17,7 @@ use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Traits\ConditionalTrait;
+use Config\Feature;
 use InvalidArgumentException;
 
 /**
@@ -1605,6 +1606,10 @@ class BaseBuilder
      */
     public function get(?int $limit = null, int $offset = 0, bool $reset = true)
     {
+        if (config(Feature::class)->limitZeroAsAll) {
+            $limit ??= 0;
+        }
+
         if ($limit !== null) {
             $this->limit($limit, $offset);
         }
@@ -2495,6 +2500,13 @@ class BaseBuilder
             $valStr[] = $key . ' = ' . $val;
         }
 
+        if (config(Feature::class)->limitZeroAsAll) {
+            return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . implode(', ', $valStr)
+                . $this->compileWhereHaving('QBWhere')
+                . $this->compileOrderBy()
+                . ($this->QBLimit ? $this->_limit(' ', true) : '');
+        }
+
         return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . implode(', ', $valStr)
             . $this->compileWhereHaving('QBWhere')
             . $this->compileOrderBy()
@@ -3030,7 +3042,11 @@ class BaseBuilder
             . $this->compileWhereHaving('QBHaving')
             . $this->compileOrderBy();
 
-        if ($this->QBLimit !== false || $this->QBOffset) {
+        if (config(Feature::class)->limitZeroAsAll) {
+            if ($this->QBLimit) {
+                $sql = $this->_limit($sql . "\n");
+            }
+        } elseif ($this->QBLimit !== false || $this->QBOffset) {
             $sql = $this->_limit($sql . "\n");
         }
 

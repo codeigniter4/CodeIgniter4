@@ -18,4 +18,12 @@ class Feature extends BaseConfig
      * Use filter execution order in 4.4 or before.
      */
     public bool $oldFilterOrder = false;
+
+    /**
+     * Keep the behavior of `limit(0)` in Query Builder in 4.4 or before.
+     *
+     * If true, `limit(0)` returns all records. (the behavior in 4.4 or before)
+     * If false, `limit(0)` returns no records.
+     */
+    public bool $limitZeroAsAll = false;
 }

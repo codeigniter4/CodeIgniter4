@@ -23,6 +23,7 @@ use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Validation\ValidationInterface;
+use Config\Feature;
 use Config\Services;
 use InvalidArgumentException;
 use ReflectionClass;
@@ -602,6 +603,10 @@ abstract class BaseModel
      */
     public function findAll(?int $limit = null, int $offset = 0)
     {
+        if (config(Feature::class)->limitZeroAsAll) {
+            $limit ??= 0;
+        }
+
         if ($this->tempAllowCallbacks) {
             // Call the before event and check for a return
             $eventData = $this->trigger('beforeFind', [
