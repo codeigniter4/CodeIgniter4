@@ -27,11 +27,11 @@ Validation rules matches and differs
 Bugs have been fixed in the case where ``matches`` and ``differs`` in the Strict
 and Traditional rules validate data of non-string types.
 
-CURLRequest option 'ssl_key' eliminated
-=======================================
+The use of the `ssl_key` option in CURLRequest was removed
+==========================================================
 
-CURLRequest option 'ssl_key' was eliminated.
-Please use CURLRequest option 'verify' to indicate the path to a CA bundle.
+Due to a bug, we were using the undocumented `ssl_key` config option to define the CA bundle in CURLRequest.
+This was fixed and is now working according to documentation. You can define your CA bundle via the `verify` option.
 
 ***************
 Message Changes
