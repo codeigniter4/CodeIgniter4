@@ -55,6 +55,8 @@ Deprecations
 Bugs Fixed
 **********
 
+- **CURLRequest:** Fixed a bug where the hostname was checked even if options 'verify' was set to *false*.
+
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
 for a complete list of bugs fixed.
