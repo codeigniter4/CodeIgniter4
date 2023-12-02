@@ -27,6 +27,12 @@ Validation rules matches and differs
 Bugs have been fixed in the case where ``matches`` and ``differs`` in the Strict
 and Traditional rules validate data of non-string types.
 
+The use of the `ssl_key` option in CURLRequest was removed
+==========================================================
+
+Due to a bug, we were using the undocumented `ssl_key` config option to define the CA bundle in CURLRequest.
+This was fixed and is now working according to documentation. You can define your CA bundle via the `verify` option.
+
 ***************
 Message Changes
 ***************
@@ -48,6 +54,8 @@ Deprecations
 **********
 Bugs Fixed
 **********
+
+- **CURLRequest:** Fixed a bug where the hostname was checked even if options 'verify' was set to *false*.
 
 See the repo's
 `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
