@@ -1830,7 +1830,7 @@ abstract class BaseModel
             if ($row instanceof stdClass) {
                 $row = (array) $row;
             } elseif (is_object($row)) {
-                $row = $this->extractAsArray($row);
+                $row = $this->converter->extract($row);
             }
 
             $row = $this->converter->toDataSource($row);
@@ -1922,54 +1922,6 @@ abstract class BaseModel
     }
 
     /**
-     * Takes database data array and creates a return type object.
-     *
-     * @param class-string         $classname
-     * @param array<string, mixed> $row       Raw data from database
-     */
-    protected function reconstructObject(string $classname, array $row): object
-    {
-        $phpData = $this->converter->fromDataSource($row);
-
-        // "reconstruct" is a reserved method name.
-        if (method_exists($classname, 'reconstruct')) {
-            return $classname::reconstruct($phpData);
-        }
-
-        $classObj = new $classname();
-
-        $classSet = Closure::bind(function ($key, $value) {
-            $this->{$key} = $value;
-        }, $classObj, $classname);
-
-        foreach ($phpData as $key => $value) {
-            $classSet($key, $value);
-        }
-
-        return $classObj;
-    }
-
-    /**
-     * Takes an object and extract all properties as an array.
-     *
-     * @return array<string, mixed>
-     */
-    protected function extractAsArray(object $object): array
-    {
-        $array = (array) $object;
-
-        $output = [];
-
-        foreach ($array as $key => $value) {
-            $key = preg_replace('/\000.*\000/', '', $key);
-
-            $output[$key] = $value;
-        }
-
-        return $output;
-    }
-
-    /**
      * Converts database data array to return type value.
      *
      * @param array<string, mixed>          $row        Raw data from database
@@ -1985,6 +1937,6 @@ abstract class BaseModel
             return (object) $this->converter->fromDataSource($row);
         }
 
-        return $this->reconstructObject($returnType, $row);
+        return $this->converter->reconstruct($returnType, $row);
     }
 }
