@@ -518,8 +518,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $file = __FILE__;
 
         $this->request->request('get', 'http://example.com', [
-            'verify'  => 'yes',
-            'ssl_key' => $file,
+            'verify' => $file,
         ]);
 
         $options = $this->request->curl_options;
@@ -528,7 +527,25 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->assertSame($file, $options[CURLOPT_CAINFO]);
 
         $this->assertArrayHasKey(CURLOPT_SSL_VERIFYPEER, $options);
-        $this->assertSame(1, $options[CURLOPT_SSL_VERIFYPEER]);
+        $this->assertTrue($options[CURLOPT_SSL_VERIFYPEER]);
+
+        $this->assertArrayHasKey(CURLOPT_SSL_VERIFYHOST, $options);
+        $this->assertSame(2, $options[CURLOPT_SSL_VERIFYHOST]);
+    }
+
+    public function testNoSSL(): void
+    {
+        $this->request->request('get', 'http://example.com', [
+            'verify' => false,
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_SSL_VERIFYPEER, $options);
+        $this->assertFalse($options[CURLOPT_SSL_VERIFYPEER]);
+
+        $this->assertArrayHasKey(CURLOPT_SSL_VERIFYHOST, $options);
+        $this->assertSame(0, $options[CURLOPT_SSL_VERIFYHOST]);
     }
 
     public function testSSLWithBadKey(): void
@@ -537,8 +554,7 @@ final class CURLRequestTest extends CIUnitTestCase
         $this->expectException(HTTPException::class);
 
         $this->request->request('get', 'http://example.com', [
-            'verify'  => 'yes',
-            'ssl_key' => $file,
+            'verify' => $file,
         ]);
     }
 
