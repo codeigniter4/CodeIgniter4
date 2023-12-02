@@ -13,6 +13,7 @@ namespace CodeIgniter\Commands\Utilities\Routes;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Filters;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Router;
 use Config\Filters as FiltersConfig;
@@ -37,6 +38,8 @@ final class FilterCollector
     }
 
     /**
+     * Returns filters for the URI
+     *
      * @param string $method HTTP verb like `GET`,`POST` or `CLI`.
      * @param string $uri    URI path to find filters for
      *
@@ -74,6 +77,24 @@ final class FilterCollector
         $finder = new FilterFinder($router, $filters);
 
         return $finder->find($uri);
+    }
+
+    /**
+     * Returns Required Filters
+     *
+     * @return array{before: list<string>, after: list<string>} array of filter alias or classname
+     */
+    public function getRequiredFilters(): array
+    {
+        $request = Services::incomingrequest(null, false);
+        $request->setMethod(Method::GET);
+
+        $router  = $this->createRouter($request);
+        $filters = $this->createFilters($request);
+
+        $finder = new FilterFinder($router, $filters);
+
+        return $finder->getRequiredFilters();
     }
 
     private function createRouter(Request $request): Router

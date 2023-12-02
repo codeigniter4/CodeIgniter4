@@ -262,37 +262,15 @@ class Filters
      */
     public function runRequired(string $position = 'before')
     {
-        // For backward compatibility. For users who do not update Config\Filters.
-        if (! isset($this->config->required[$position])) {
-            $baseConfig = config(BaseFiltersConfig::class); // @phpstan-ignore-line
-            $filters    = $baseConfig->required[$position];
-            $aliases    = $baseConfig->aliases;
-        } else {
-            $filters = $this->config->required[$position];
-            $aliases = $this->config->aliases;
-        }
+        [$filters, $aliases] = $this->getRequiredFilters($position);
 
         if ($filters === []) {
             return $position === 'before' ? $this->request : $this->response;
         }
 
-        if ($position === 'after') {
-            if (in_array('toolbar', $this->filters['after'], true)) {
-                // It was already run in globals filters. So remove it.
-                $filters = $this->setToolbarToLast($filters, true);
-            } else {
-                // Set the toolbar filter to the last position to be executed
-                $filters = $this->setToolbarToLast($filters);
-            }
-        }
-
         $filterClasses = [];
 
         foreach ($filters as $alias) {
-            if (! array_key_exists($alias, $aliases)) {
-                throw FilterException::forNoAlias($alias);
-            }
-
             if (is_array($aliases[$alias])) {
                 $filterClasses[$position] = array_merge($filterClasses[$position], $aliases[$alias]);
             } else {
@@ -306,6 +284,48 @@ class Filters
 
         // After
         return $this->runAfter($filterClasses[$position]);
+    }
+
+    /**
+     * Returns required filters for the specified position.
+     *
+     * @phpstan-param 'before'|'after' $position
+     *
+     * @internal
+     */
+    public function getRequiredFilters(string $position = 'before'): array
+    {
+        // For backward compatibility. For users who do not update Config\Filters.
+        if (! isset($this->config->required[$position])) {
+            $baseConfig = config(BaseFiltersConfig::class); // @phpstan-ignore-line
+            $filters    = $baseConfig->required[$position];
+            $aliases    = $baseConfig->aliases;
+        } else {
+            $filters = $this->config->required[$position];
+            $aliases = $this->config->aliases;
+        }
+
+        if ($filters === []) {
+            return [[], $aliases];
+        }
+
+        if ($position === 'after') {
+            if (in_array('toolbar', $this->filters['after'], true)) {
+                // It was already run in globals filters. So remove it.
+                $filters = $this->setToolbarToLast($filters, true);
+            } else {
+                // Set the toolbar filter to the last position to be executed
+                $filters = $this->setToolbarToLast($filters);
+            }
+        }
+
+        foreach ($filters as $alias) {
+            if (! array_key_exists($alias, $aliases)) {
+                throw FilterException::forNoAlias($alias);
+            }
+        }
+
+        return [$filters, $aliases];
     }
 
     /**

@@ -106,6 +106,8 @@ class FilterCheck extends BaseCommand
             return EXIT_ERROR;
         }
 
+        $filters = $this->addRequiredFilters($filterCollector, $filters);
+
         $tbody[] = [
             strtoupper($method),
             $route,
@@ -123,5 +125,30 @@ class FilterCheck extends BaseCommand
         CLI::table($tbody, $thead);
 
         return EXIT_SUCCESS;
+    }
+
+    private function addRequiredFilters(FilterCollector $filterCollector, array $filters): array
+    {
+        $output = [];
+
+        $required = $filterCollector->getRequiredFilters();
+
+        $colored = [];
+
+        foreach ($required['before'] as $filter) {
+            $filter    = CLI::color($filter, 'yellow');
+            $colored[] = $filter;
+        }
+        $output['before'] = array_merge($colored, $filters['before']);
+
+        $colored = [];
+
+        foreach ($required['after'] as $filter) {
+            $filter    = CLI::color($filter, 'yellow');
+            $colored[] = $filter;
+        }
+        $output['after'] = array_merge($filters['after'], $colored);
+
+        return $output;
     }
 }
