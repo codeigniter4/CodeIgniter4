@@ -25,5 +25,5 @@ class Feature extends BaseConfig
      * If true, `limit(0)` returns all records. (the behavior in 4.4 or before)
      * If false, `limit(0)` returns no records.
      */
-    public bool $limitZeroAsAll = false;
+    public bool $limitZeroAsAll = true;
 }
