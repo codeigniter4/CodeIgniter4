@@ -13,7 +13,7 @@ namespace Tests\Support\Entity\Cast;
 
 use CodeIgniter\Entity\Cast\BaseCast;
 
-class CastUUID extends BaseCast
+class CastBinaryUUID extends BaseCast
 {
     /**
      * Get

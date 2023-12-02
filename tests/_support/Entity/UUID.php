@@ -12,7 +12,7 @@
 namespace Tests\Support\Entity;
 
 use CodeIgniter\Entity\Entity;
-use Tests\Support\Entity\Cast\CastUUID;
+use Tests\Support\Entity\Cast\CastBinaryUUID;
 
 class UUID extends Entity
 {
@@ -20,6 +20,6 @@ class UUID extends Entity
         'id' => 'uuid',
     ];
     protected $castHandlers = [
-        'uuid' => CastUUID::class,
+        'uuid' => CastBinaryUUID::class,
     ];
 }
