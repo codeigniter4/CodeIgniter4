@@ -262,6 +262,8 @@ Others
     - The default value of ``DBCollat`` in ``$default`` has been change to ``utf8mb4_general_ci``.
     - The default value of ``DBCollat`` in ``$tests`` has been change to ``''``.
 - app/Config/Feature.php
+    - ``Config\Feature::$limitZeroAsAll`` has been added. See
+      :ref:`v450-query-builder-limit-0-behavior`.
     - ``Config\Feature::$multipleFilters`` has been removed, because now
       :ref:`multiple-filters` are always enabled.
 - app/Config/Kint.php

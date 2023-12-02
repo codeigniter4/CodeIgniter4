@@ -681,6 +681,14 @@ Lets you limit the number of rows you would like returned by the query:
 
 .. literalinclude:: query_builder/070.php
 
+.. note:: If ``LIMIT 0`` is specified in a SQL statement, 0 records are returned.
+  However, there is a bug in the Query Builder, and if ``limit(0)`` is specified,
+  the generated SQL statement will have no ``LIMIT`` clause and all records will
+  be returned. To fix the incorrect behavior, a setting was added in v4.5.0. See
+  :ref:`v450-query-builder-limit-0-behavior` for details. The incorrect behavior
+  will be fixed in a future version, so it is recommended that you change the
+  default setting.
+
 The second parameter lets you set a result offset.
 
 .. literalinclude:: query_builder/071.php

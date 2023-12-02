@@ -251,6 +251,20 @@ Database
 Query Builder
 -------------
 
+.. _v450-query-builder-limit-0-behavior:
+
+limit(0) Behavior
+^^^^^^^^^^^^^^^^^
+
+- Added a feature flag ``Feature::$limitZeroAsAll`` to fix the incorrect behavior
+  of ``limit(0)``.
+- If ``LIMIT 0`` is specified in a SQL statement, 0 records are returned. However,
+  there is a bug in the Query Builder, and if ``limit(0)`` is specified, the
+  generated SQL statement will have no ``LIMIT`` clause and all records will be
+  returned.
+- It is recommended that ``$limitZeroAsAll`` in **app/Config/Feature.php** be set
+  to ``false`` as this incorrect behavior will be fixed in a future version.
+
 Forge
 -----
 
