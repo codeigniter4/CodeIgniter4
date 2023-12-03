@@ -26,6 +26,13 @@ class TranslationTwo
         $translationError6 = lang('TranslationTwo...');
         $translationError7 = lang('..invalid_nested_key..');
 
+        $copyTranslationError1 = lang('TranslationTwo');
+        $copyTranslationError2 = lang(' ');
+        $copyTranslationError3 = lang('');
+        $copyTranslationError4 = lang('.invalid_key');
+        $copyTranslationError5 = lang('TranslationTwo.');
+        $copyTranslationError6 = lang('TranslationTwo...');
+        $copyTranslationError7 = lang('..invalid_nested_key..');
         // Empty in comments lang('') lang(' ')
     }
 }
