@@ -47,6 +47,9 @@ final class GetTest extends CIUnitTestCase
      */
     public function testGetWithReset(): void
     {
+        $config                 = config(Feature::class);
+        $config->limitZeroAsAll = false;
+
         $builder = $this->db->table('users');
         $builder->testMode()->where('username', 'bogus');
 

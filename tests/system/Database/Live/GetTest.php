@@ -53,6 +53,9 @@ final class GetTest extends CIUnitTestCase
 
     public function testGetWithLimitZero(): void
     {
+        $config                 = config(Feature::class);
+        $config->limitZeroAsAll = false;
+
         $jobs = $this->db->table('job')->limit(0)->get()->getResult();
 
         $this->assertCount(0, $jobs);
