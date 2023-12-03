@@ -239,7 +239,7 @@ abstract class BaseExceptionHandler
             exit(1);
         }
 
-        echo(function () use ($exception, $statusCode, $viewFile): string {
+        echo (function () use ($exception, $statusCode, $viewFile): string {
             $vars = $this->collectVars($exception, $statusCode);
             extract($vars, EXTR_SKIP);
 
