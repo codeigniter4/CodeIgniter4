@@ -1489,6 +1489,10 @@ class BaseBuilder
      */
     public function limit(?int $value = null, ?int $offset = 0)
     {
+        if (config(Feature::class)->limitZeroAsAll && $value === 0) {
+            $value = null;
+        }
+
         if ($value !== null) {
             $this->QBLimit = $value;
         }
@@ -1606,8 +1610,8 @@ class BaseBuilder
      */
     public function get(?int $limit = null, int $offset = 0, bool $reset = true)
     {
-        if (config(Feature::class)->limitZeroAsAll) {
-            $limit ??= 0;
+        if (config(Feature::class)->limitZeroAsAll && $limit === 0) {
+            $limit = null;
         }
 
         if ($limit !== null) {

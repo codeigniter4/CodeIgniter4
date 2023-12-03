@@ -618,6 +618,10 @@ class Builder extends BaseBuilder
      */
     public function get(?int $limit = null, int $offset = 0, bool $reset = true)
     {
+        if (config(Feature::class)->limitZeroAsAll && $limit === 0) {
+            $limit = null;
+        }
+
         if ($limit !== null) {
             $this->limit($limit, $offset);
         }
