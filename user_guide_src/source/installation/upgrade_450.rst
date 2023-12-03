@@ -255,6 +255,8 @@ The  ``'toolbar'`` in the ``$global['after']`` was removed.
 Others
 ^^^^^^
 
+- app/Config/Boot/production.php
+    - The default error level to ``error_reporting()`` has been changed to ``E_ALL & ~E_DEPRECATED``.
 - app/Config/Database.php
     - The default value of ``charset`` in ``$default`` has been change to ``utf8mb4``.
     - The default value of ``DBCollat`` in ``$default`` has been change to ``utf8mb4_general_ci``.
