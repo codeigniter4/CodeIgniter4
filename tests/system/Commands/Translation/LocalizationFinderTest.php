@@ -205,15 +205,20 @@ final class LocalizationFinderTest extends CIUnitTestCase
     private function getActualTableWithBadKeys(): string
     {
         return <<<'TEXT_WRAP'
-            +---+------------------------+
-            | № | Bad key                |
-            +---+------------------------+
-            | 0 | TranslationTwo         |
-            | 1 | .invalid_key           |
-            | 2 | TranslationTwo.        |
-            | 3 | TranslationTwo...      |
-            | 4 | ..invalid_nested_key.. |
-            +---+------------------------+
+            +------------------------+--------------------------------------------------------+
+            | Bad Key                | Filepath                                               |
+            +------------------------+--------------------------------------------------------+
+            | ..invalid_nested_key.. | tests/_support/Services/Translation/TranslationTwo.php |
+            | ..invalid_nested_key.. | tests/_support/Services/Translation/TranslationTwo.php |
+            | .invalid_key           | tests/_support/Services/Translation/TranslationTwo.php |
+            | .invalid_key           | tests/_support/Services/Translation/TranslationTwo.php |
+            | TranslationTwo         | tests/_support/Services/Translation/TranslationTwo.php |
+            | TranslationTwo         | tests/_support/Services/Translation/TranslationTwo.php |
+            | TranslationTwo.        | tests/_support/Services/Translation/TranslationTwo.php |
+            | TranslationTwo.        | tests/_support/Services/Translation/TranslationTwo.php |
+            | TranslationTwo...      | tests/_support/Services/Translation/TranslationTwo.php |
+            | TranslationTwo...      | tests/_support/Services/Translation/TranslationTwo.php |
+            +------------------------+--------------------------------------------------------+
             TEXT_WRAP;
     }
 
