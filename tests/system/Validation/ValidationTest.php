@@ -809,6 +809,25 @@ class ValidationTest extends CIUnitTestCase
             ->run();
     }
 
+    public function testJsonInputNotKeyValue(): void
+    {
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('The provided JSON format is not supported.');
+
+        $config  = new App();
+        $json    = '4';
+        $request = new IncomingRequest($config, new SiteURI($config), $json, new UserAgent());
+        $request->setHeader('Content-Type', 'application/json');
+
+        $rules = [
+            'role' => 'if_exist|max_length[5]',
+        ];
+        $this->validation
+            ->withRequest($request->withMethod('POST'))
+            ->setRules($rules)
+            ->run();
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/6466
      */
