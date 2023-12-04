@@ -187,10 +187,11 @@ Response
 Security
 --------
 
+- ``SecurityInterface::isExpired()``
+- ``Security::isExpired()``
 - ``Security::CSRFVerify()``
 - ``Security::getCSRFHash()``
 - ``Security::getCSRFTokenName()``
-- ``Security::isExpired()``
 - ``Security::sendCookie()``
 - ``Security::doSendCookie()``
 

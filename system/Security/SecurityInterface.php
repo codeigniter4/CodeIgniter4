@@ -49,13 +49,6 @@ interface SecurityInterface
     public function getCookieName(): string;
 
     /**
-     * Check if CSRF cookie is expired.
-     *
-     * @deprecated
-     */
-    public function isExpired(): bool;
-
-    /**
      * Check if request should be redirect on failure.
      */
     public function shouldRedirect(): bool;
