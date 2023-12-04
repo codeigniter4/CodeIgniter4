@@ -69,7 +69,7 @@ class Config extends BaseConfig
             assert(is_string($group));
 
             if (! isset($dbConfig->{$group})) {
-                throw new InvalidArgumentException($group . ' is not a valid database connection group.');
+                throw new InvalidArgumentException('"' . $group . '" is not a valid database connection group.');
             }
 
             $config = $dbConfig->{$group};
