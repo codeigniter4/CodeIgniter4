@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -39,10 +41,6 @@ class Honeypot
     public function __construct(HoneypotConfig $config)
     {
         $this->config = $config;
-
-        if (! $this->config->hidden) {
-            throw HoneypotException::forNoHiddenValue();
-        }
 
         if (empty($this->config->container) || strpos($this->config->container, '{template}') === false) {
             $this->config->container = '<div style="display:none">{template}</div>';

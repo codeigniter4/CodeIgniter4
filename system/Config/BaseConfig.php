@@ -164,6 +164,9 @@ class BaseConfig
                 $value = (float) $value;
             }
 
+            // If the default value of the property is `null` and the type is not
+            // `string`, TypeError will happen.
+            // So cannot set `declare(strict_types=1)` in this file.
             $property = $value;
         }
     }

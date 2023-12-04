@@ -919,6 +919,8 @@ class CodeIgniter
         // This is a Web request or PHP CLI request
         $params = $this->router->params();
 
+        // The controller method param types may not be string.
+        // So cannot set `declare(strict_types=1)` in this file.
         $output = method_exists($class, '_remap')
             ? $class->_remap($this->method, ...$params)
             : $class->{$this->method}(...$params);

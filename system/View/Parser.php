@@ -616,6 +616,7 @@ class Parser extends View
             }
 
             // Filter it....
+            // We can't know correct param types, so can't set `declare(strict_types=1)`.
             $replace = $this->config->filters[$filter]($replace, ...$param);
         }
 

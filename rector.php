@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -43,6 +45,7 @@ use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
@@ -106,6 +109,19 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/system/Session/Handlers',
         ],
 
+        DeclareStrictTypesRector::class => [
+            __DIR__ . '/app',
+            __DIR__ . '/system/CodeIgniter.php',
+            __DIR__ . '/system/Config/BaseConfig.php',
+            __DIR__ . '/system/Commands/Generators/Views',
+            __DIR__ . '/system/Pager/Views',
+            __DIR__ . '/system/Test/ControllerTestTrait.php',
+            __DIR__ . '/system/Validation/Views',
+            __DIR__ . '/system/View/Parser.php',
+            __DIR__ . '/tests/system/Debug/ExceptionsTest.php',
+            __DIR__ . '/tests/system/View/Views',
+        ],
+
         // use mt_rand instead of random_int on purpose on non-cryptographically random
         RandomFunctionRector::class,
 
@@ -116,6 +132,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->importNames();
     $rectorConfig->removeUnusedImports();
 
+    $rectorConfig->rule(DeclareStrictTypesRector::class);
     $rectorConfig->rule(UnderscoreToCamelCaseVariableNameRector::class);
     $rectorConfig->rule(SimplifyUselessVariableRector::class);
     $rectorConfig->rule(RemoveAlwaysElseRector::class);
