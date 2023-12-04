@@ -127,13 +127,13 @@ class ShowTableInfo extends BaseCommand
             CLI::error('Database has no tables!', 'light_gray', 'red');
             CLI::newLine();
 
-            return;
+            return EXIT_ERROR;
         }
 
         if (array_key_exists('show', $params)) {
             $this->showAllTables($tables);
 
-            return;
+            return EXIT_ERROR;
         }
 
         $tableName       = $params[0] ?? null;
@@ -154,10 +154,12 @@ class ShowTableInfo extends BaseCommand
         if (array_key_exists('metadata', $params)) {
             $this->showFieldMetaData($tableName);
 
-            return;
+            return EXIT_SUCCESS;
         }
 
         $this->showDataOfTable($tableName, $limitRows, $limitFieldValue);
+
+        return EXIT_SUCCESS;
     }
 
     private function showDBConfig(): void
