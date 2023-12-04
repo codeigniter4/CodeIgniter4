@@ -38,6 +38,7 @@ Message Changes
 ***************
 
 - Added ``HTTP.invalidJSON`` error message.
+- Added ``HTTP.unsupportedJSONFormat`` error message.
 
 *******
 Changes
