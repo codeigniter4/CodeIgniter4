@@ -15,6 +15,7 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\Response;
 use Config\App;
+use Tests\Support\Test\TestForReflectionHelper;
 
 /**
  * @internal
@@ -35,7 +36,7 @@ final class TestCaseTest extends CIUnitTestCase
 
     public function testGetPrivatePropertyWithObject(): void
     {
-        $obj    = new __TestForReflectionHelper();
+        $obj    = new TestForReflectionHelper();
         $actual = $this->getPrivateProperty($obj, 'private');
         $this->assertSame('secret', $actual);
     }
