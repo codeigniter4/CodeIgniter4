@@ -122,24 +122,6 @@ class Controller
     }
 
     /**
-     * Handles "auto-loading" helper files.
-     *
-     * @deprecated Use `helper` function instead of using this method.
-     *
-     * @codeCoverageIgnore
-     *
-     * @return void
-     */
-    protected function loadHelpers()
-    {
-        if (empty($this->helpers)) {
-            return;
-        }
-
-        helper($this->helpers);
-    }
-
-    /**
      * A shortcut to performing validation on Request data.
      *
      * @param array|string $rules
