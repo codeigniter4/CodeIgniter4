@@ -54,6 +54,8 @@ final class TestCaseTest extends CIUnitTestCase
 
     public function testEventTriggering(): void
     {
+        $result = '';
+
         Events::on('foo', static function ($arg) use (&$result): void {
             $result = $arg;
         });
@@ -61,6 +63,7 @@ final class TestCaseTest extends CIUnitTestCase
         Events::trigger('foo', 'bar');
 
         $this->assertEventTriggered('foo');
+        $this->assertSame('bar', $result);
     }
 
     public function testStreamFilter(): void
