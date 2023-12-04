@@ -17,6 +17,7 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Database\BaseConnection;
 use Config\Database;
+use InvalidArgumentException;
 
 /**
  * Get table data if it exists in the database.
@@ -83,6 +84,7 @@ class ShowTableInfo extends BaseCommand
         '--desc'              => 'Sorts the table rows in DESC order.',
         '--limit-rows'        => 'Limits the number of rows. Default: 10.',
         '--limit-field-value' => 'Limits the length of field values. Default: 15.',
+        '--dbgroup'           => 'Database group to show.',
     ];
 
     /**
@@ -90,7 +92,7 @@ class ShowTableInfo extends BaseCommand
      */
     private array $tbody;
 
-    private BaseConnection $db;
+    private ?BaseConnection $db = null;
 
     /**
      * @var bool Sort the table rows in DESC order or not.
@@ -101,7 +103,16 @@ class ShowTableInfo extends BaseCommand
 
     public function run(array $params)
     {
-        $this->db       = Database::connect();
+        $dbGroup = $params['dbgroup'] ?? CLI::getOption('dbgroup');
+
+        try {
+            $this->db = Database::connect($dbGroup);
+        } catch (InvalidArgumentException $e) {
+            CLI::error($e->getMessage());
+
+            return EXIT_ERROR;
+        }
+
         $this->DBPrefix = $this->db->getPrefix();
 
         $this->showDBConfig();

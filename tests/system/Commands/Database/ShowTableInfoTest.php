@@ -66,6 +66,16 @@ final class ShowTableInfoTest extends CIUnitTestCase
         $this->assertMatchesRegularExpression($expectedPattern, $result);
     }
 
+    public function testDbTableShowsWithInvalidDBGroup(): void
+    {
+        command('db:table --show --dbgroup invalid');
+
+        $result = $this->getNormalizedResult();
+
+        $expected = '"invalid" is not a valid database connection group.';
+        $this->assertStringContainsString($expected, $result);
+    }
+
     public function testDbTableShowsDBConfig(): void
     {
         command('db:table --show');
