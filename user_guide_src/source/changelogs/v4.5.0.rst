@@ -184,6 +184,16 @@ Response
     - ``ResponseTrait::$cookieSameSite``
     - ``ResponseTrait::$cookies``
 
+Security
+--------
+
+- ``Security::CSRFVerify()``
+- ``Security::getCSRFHash()``
+- ``Security::getCSRFTokenName()``
+- ``Security::isExpired()``
+- ``Security::sendCookie()``
+- ``Security::doSendCookie()``
+
 CodeIgniter
 -----------
 
