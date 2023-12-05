@@ -45,8 +45,7 @@ Loading a helper file is quite simple using the following method:
 
 .. literalinclude:: helpers/001.php
 
-Where ``name`` is the file name of the helper, without the "**.php**" file
-extension or the "**_helper**" part.
+The above code loads the **name_helper.php** file.
 
 .. important:: CodeIgniter helper file names are all lowercase.
     Therefore, ``helper('Name')`` will not work on case-sensitive file systems
