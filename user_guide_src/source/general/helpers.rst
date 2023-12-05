@@ -10,11 +10,13 @@ Helper Functions
 What are Helpers?
 *****************
 
-Helpers, as the name suggests, help you with tasks. Each helper file is
-simply a collection of functions in a particular category. There are **URL
-Helpers**, that assist in creating links, there are **Form Helpers** that help
-you create form elements, **Text Helpers** perform various text formatting
-routines, **Cookie Helpers** set and read cookies, **File Helpers** help you
+Helpers, as the name suggests, help you with tasks. Each helper file is simply a
+collection of functions in a particular category. There are
+:doc:`URL Helpers <../helpers/url_helper>`,
+that assist in creating links, there are :doc:`Form Helpers <../helpers/form_helper>`
+that help you create form elements, :doc:`Test Helpers <../helpers/text_helper>`
+perform various text formatting routines,  :doc:`Cookie Helpers <../helpers/cookie_helper>`
+set and read cookies, :doc:`Filesystem Helpers <../helpers/filesystem_helper>` help you
 deal with files, etc.
 
 Unlike most other systems in CodeIgniter, Helpers are not written in an
@@ -50,7 +52,7 @@ extension or the "**_helper**" part.
     Therefore, ``helper('Name')`` will not work on case-sensitive file systems
     such as Linux.
 
-For example, to load the **Cookie Helper** file, which is named
+For example, to load the :doc:`../helpers/cookie_helper` file, which is named
 **cookie_helper.php**, you would do this:
 
 .. literalinclude:: helpers/002.php
