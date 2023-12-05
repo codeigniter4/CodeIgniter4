@@ -222,7 +222,7 @@ Traditional Rules
 -----------------
 
 .. important:: Traditional Rules exist only for backward compatibility. Do not
-    use them in new projects. Even if you are already using them, we recommend 
+    use them in new projects. Even if you are already using them, we recommend
     switching to Strict Rules.
 
 .. warning:: When validating data that contains non-string values, such as JSON data, it is recommended to use **Strict Rules**.
