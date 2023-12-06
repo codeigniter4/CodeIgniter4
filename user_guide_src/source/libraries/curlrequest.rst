@@ -83,6 +83,10 @@ a Response instance to you. This takes the HTTP method, the url and an array of 
 
 .. literalinclude:: curlrequest/005.php
 
+.. important:: By default, CURLRequest will throw ``HTTPException`` if the HTTP
+    code returned is greater than or equal to 400. If you want to get the response,
+    see the `http_errors`_ option.
+
 .. note:: When ``$shareOptions`` is false, the options passed to the method will be used for the request. After sending the request, they will be cleared. If you want to use the options to all requests, pass the options in the constructor.
 
 Since the response is an instance of ``CodeIgniter\HTTP\Response`` you have all of the normal information
@@ -112,12 +116,12 @@ examples of how the combinations are resolved.
     =====================   ================   ========================
     baseURI                 URI                Result
     =====================   ================   ========================
-    `http://foo.com`        /bar               `http://foo.com/bar`
-    `http://foo.com/foo`    /bar               `http://foo.com/bar`
-    `http://foo.com/foo`    bar                `http://foo.com/bar`
-    `http://foo.com/foo/`   bar                `http://foo.com/foo/bar`
-    `http://foo.com`        `http://baz.com`   `http://baz.com`
-    `http://foo.com/?bar`   bar                `http://foo.com/bar`
+    \http://foo.com         /bar               \http://foo.com/bar
+    \http://foo.com/foo     /bar               \http://foo.com/bar
+    \http://foo.com/foo     bar                \http://foo.com/bar
+    \http://foo.com/foo/    bar                \http://foo.com/foo/bar
+    \http://foo.com         \http://baz.com    \http://baz.com
+    \http://foo.com/?bar    bar                \http://foo.com/bar
     =====================   ================   ========================
 
 Using Responses
