@@ -192,7 +192,7 @@ is as follows:
 
 1. app/Helpers - Files loaded here are always loaded first.
 2. {namespace}/Helpers - All namespaces are looped through in the order they are defined.
-3. system/Helpers - The base file is loaded last
+3. system/Helpers - The base file is loaded last.
 
 *********
 Now What?
