@@ -323,4 +323,4 @@
 * refactor: remove Workaround for Faker deprecation errors in PHP 8.2 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6987
 * refactor: to fix psalm error by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6999
 
-See [CHANGELOG_4.2.md](./changelogs/CHANGELOG_4.2.md)
+See [CHANGELOG_4.2.md](./CHANGELOG_4.2.md)
