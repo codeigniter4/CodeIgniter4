@@ -76,6 +76,19 @@ for details.
 Or you can :ref:`specify a namespace <helpers-loading-from-specified-namespace>`
 for a helper that you want to load.
 
+Load Order
+----------
+
+The :php:func:`helper()` function will scan through all defined namespaces and
+load in ALL matching helpers of the same name. This allows any module's helpers
+to be loaded, as well as any helpers you've created specifically for this application.
+
+The load order is as follows:
+
+1. app/Helpers - Files loaded here are always loaded first.
+2. {namespace}/Helpers - All namespaces are looped through in the order they are defined.
+3. system/Helpers - The base file is loaded last.
+
 Loading Multiple Helpers
 ========================
 
@@ -186,15 +199,7 @@ functions:
 
 .. important:: Do not specify the namespace ``App\Helpers``.
 
-The :php:func:`helper()` function will scan through all PSR-4 namespaces defined in **app/Config/Autoload.php**
-and load in ALL matching helpers of the same name. This allows any module's helpers
-to be loaded, as well as any helpers you've created specifically for this application.
-
-The load order is as follows:
-
-1. app/Helpers - Files loaded here are always loaded first.
-2. {namespace}/Helpers - All namespaces are looped through in the order they are defined.
-3. system/Helpers - The base file is loaded last.
+See `Load Order`_ for the order in which helper files are loaded.
 
 *********
 Now What?
