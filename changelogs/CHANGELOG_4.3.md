@@ -230,7 +230,7 @@
 * fix: ResponseInterface (1) by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6556
 * Improve BaseConnection::getForeignKeyData() and Forge::addForeignKey() by @sclubricants in https://github.com/codeigniter4/CodeIgniter4/pull/6468
 * Refactor BaseBuilder *Batch() Methods by @sclubricants in https://github.com/codeigniter4/CodeIgniter4/pull/6536
-* refactor: remove `type="text/javascript"` in <script> tag by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6606
+* refactor: remove `type="text/javascript"` in `<script>` tag by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6606
 * fix: ResponseInterface (2) by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6569
 * Add ability to set index names by @sclubricants in https://github.com/codeigniter4/CodeIgniter4/pull/6552
 * fix: MessageInterface inheritance by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/6695
