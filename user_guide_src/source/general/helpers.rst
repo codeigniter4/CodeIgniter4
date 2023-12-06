@@ -36,7 +36,7 @@ Helpers are typically stored in your **system/Helpers**, or
 Loading Helpers
 ***************
 
-.. note:: The URL helper is always loaded so you do not need to load it yourself.
+.. note:: The :doc:`../helpers/url_helper` is always loaded so you do not need to load it yourself.
 
 Loading a Helper
 ================
