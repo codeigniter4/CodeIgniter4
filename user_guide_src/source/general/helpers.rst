@@ -117,12 +117,13 @@ property in Controller instead. See :ref:`Controllers <controllers-helpers>`.
 Loading from Specified Namespace
 ================================
 
-Helpers can be loaded from directories outside of **app/Helpers** and
-**system/Helpers**, as long as that path can be found in defined namespaces.
+By default, CodeIgniter will search for the helper files in all defined namespaces
+and load all found files.
 
-You would prefix the name of the Helper with the namespace that it can be located
-in. Within that namespaced directory, the loader expects it to live within a
-sub-directory named **Helpers**. An example will help understand this.
+If you want to load only a helper in a specific namespace, prefix the name of the
+helper with the namespace that it can be located in. Within that namespaced directory,
+the loader expects it to live within a sub-directory named **Helpers**. An example
+will help understand this.
 
 For this example, assume that we have grouped together all of our Blog-related
 code into its own namespace, ``Example\Blog``. The files exist on our server at
