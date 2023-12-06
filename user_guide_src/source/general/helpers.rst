@@ -154,9 +154,15 @@ your view files you would do this:
 Where ``Click Here`` is the name of the link, and ``blog/comments`` is the
 URI to the controller/method you wish to link to.
 
-*******************
+****************
+Creating Helpers
+****************
+
+The helper filename is the **helper name** and **_helper.php**.
+For example, to create Email Helper, you’ll create a file named **app/Helpers/email_helper.php**.
+
 "Extending" Helpers
-*******************
+===================
 
 To "extend" Helpers, create a file in your **app/Helpers/** folder
 with an identical name to the existing Helper.
