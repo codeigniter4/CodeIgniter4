@@ -15,6 +15,7 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\Response;
 use Config\App;
+use Tests\Support\Test\TestForReflectionHelper;
 
 /**
  * @internal
@@ -35,7 +36,7 @@ final class TestCaseTest extends CIUnitTestCase
 
     public function testGetPrivatePropertyWithObject(): void
     {
-        $obj    = new __TestForReflectionHelper();
+        $obj    = new TestForReflectionHelper();
         $actual = $this->getPrivateProperty($obj, 'private');
         $this->assertSame('secret', $actual);
     }
@@ -54,6 +55,8 @@ final class TestCaseTest extends CIUnitTestCase
 
     public function testEventTriggering(): void
     {
+        $result = '';
+
         Events::on('foo', static function ($arg) use (&$result): void {
             $result = $arg;
         });
@@ -61,6 +64,7 @@ final class TestCaseTest extends CIUnitTestCase
         Events::trigger('foo', 'bar');
 
         $this->assertEventTriggered('foo');
+        $this->assertSame('bar', $result);
     }
 
     public function testStreamFilter(): void
