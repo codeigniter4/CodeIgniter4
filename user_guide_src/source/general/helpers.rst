@@ -159,7 +159,8 @@ Creating Helpers
 ****************
 
 The helper filename is the **helper name** and **_helper.php**.
-For example, to create Email Helper, you’ll create a file named **app/Helpers/email_helper.php**.
+For example, to create Email Helper, you’ll create a file named
+**app/Helpers/email_helper.php**.
 
 "Extending" Helpers
 ===================
