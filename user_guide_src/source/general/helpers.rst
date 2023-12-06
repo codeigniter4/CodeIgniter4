@@ -56,7 +56,7 @@ For example, to load the :doc:`../helpers/cookie_helper` file, which is named
 
 .. literalinclude:: helpers/002.php
 
-.. note:: The Helper loading method above does not return a value, so
+.. note:: The :php:func:`helper()` function does not return a value, so
     don't try to assign it to a variable. Just use it as shown.
 
 Auto-Discovery and Composer Packages
