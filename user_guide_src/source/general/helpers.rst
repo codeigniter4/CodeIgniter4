@@ -187,8 +187,9 @@ functions:
 
 The :php:func:`helper()` function will scan through all PSR-4 namespaces defined in **app/Config/Autoload.php**
 and load in ALL matching helpers of the same name. This allows any module's helpers
-to be loaded, as well as any helpers you've created specifically for this application. The load order
-is as follows:
+to be loaded, as well as any helpers you've created specifically for this application.
+
+The load order is as follows:
 
 1. app/Helpers - Files loaded here are always loaded first.
 2. {namespace}/Helpers - All namespaces are looped through in the order they are defined.
