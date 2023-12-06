@@ -427,6 +427,12 @@ a Response instance to you. This takes the HTTP method, the url and an array of 
 <span class="p">]);</span>
 </pre></div>
 </div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>By default, CURLRequest will throw <code class="docutils literal notranslate"><span class="pre">HTTPException</span></code> if the HTTP
+code returned is greater than or equal to 400. If you want to get the response,
+see the <a class="reference internal" href="#http-errors">http_errors</a> option.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When <code class="docutils literal notranslate"><span class="pre">$shareOptions</span></code> is false, the options passed to the method will be used for the request. After sending the request, they will be cleared. If you want to use the options to all requests, pass the options in the constructor.</p>
@@ -490,29 +496,29 @@ examples of how the combinations are resolved.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><cite>http://foo.com</cite></p></td>
+<tr class="row-even"><td><p>http://foo.com</p></td>
 <td><p>/bar</p></td>
-<td><p><cite>http://foo.com/bar</cite></p></td>
+<td><p>http://foo.com/bar</p></td>
 </tr>
-<tr class="row-odd"><td><p><cite>http://foo.com/foo</cite></p></td>
+<tr class="row-odd"><td><p>http://foo.com/foo</p></td>
 <td><p>/bar</p></td>
-<td><p><cite>http://foo.com/bar</cite></p></td>
+<td><p>http://foo.com/bar</p></td>
 </tr>
-<tr class="row-even"><td><p><cite>http://foo.com/foo</cite></p></td>
+<tr class="row-even"><td><p>http://foo.com/foo</p></td>
 <td><p>bar</p></td>
-<td><p><cite>http://foo.com/bar</cite></p></td>
+<td><p>http://foo.com/bar</p></td>
 </tr>
-<tr class="row-odd"><td><p><cite>http://foo.com/foo/</cite></p></td>
+<tr class="row-odd"><td><p>http://foo.com/foo/</p></td>
 <td><p>bar</p></td>
-<td><p><cite>http://foo.com/foo/bar</cite></p></td>
+<td><p>http://foo.com/foo/bar</p></td>
 </tr>
-<tr class="row-even"><td><p><cite>http://foo.com</cite></p></td>
-<td><p><cite>http://baz.com</cite></p></td>
-<td><p><cite>http://baz.com</cite></p></td>
+<tr class="row-even"><td><p>http://foo.com</p></td>
+<td><p>http://baz.com</p></td>
+<td><p>http://baz.com</p></td>
 </tr>
-<tr class="row-odd"><td><p><cite>http://foo.com/?bar</cite></p></td>
+<tr class="row-odd"><td><p>http://foo.com/?bar</p></td>
 <td><p>bar</p></td>
-<td><p><cite>http://foo.com/bar</cite></p></td>
+<td><p>http://foo.com/bar</p></td>
 </tr>
 </tbody>
 </table>
@@ -879,7 +885,7 @@ or <code class="docutils literal notranslate"><span class="pre">1.1</span></code
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 02, 2023.
+      <span class="lastupdated">Last updated on Dec 06, 2023.
       </span></p>
   </div>
 
