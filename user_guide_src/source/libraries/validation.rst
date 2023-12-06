@@ -222,7 +222,7 @@ Traditional Rules
 -----------------
 
 .. important:: Traditional Rules exist only for backward compatibility. Do not
-    use them in new projects. Even if you are already using them, we recommend 
+    use them in new projects. Even if you are already using them, we recommend
     switching to Strict Rules.
 
 .. warning:: When validating data that contains non-string values, such as JSON data, it is recommended to use **Strict Rules**.
@@ -525,7 +525,7 @@ replaced by the **value** of the matched incoming field. An example should clari
    :lines: 2-
 
 .. note:: Since v4.3.5, you must set the validation rules for the placeholder
-    field (``id``).
+    field (the ``id`` field in the sample code above) for security.
 
 In this set of rules, it states that the email address should be unique in the database, except for the row
 that has an id matching the placeholder's value. Assuming that the form POST data had the following:
