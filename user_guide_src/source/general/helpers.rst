@@ -164,7 +164,7 @@ For example, to create Email Helper, you’ll create a file named **app/Helpers/
 "Extending" Helpers
 ===================
 
-To "extend" Helpers, create a file in your **app/Helpers/** folder
+To "extend" Helpers, create a file in your **app/Helpers** folder
 with an identical name to the existing Helper.
 
 If all you need to do is add some functionality to an existing helper -
