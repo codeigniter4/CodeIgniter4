@@ -396,6 +396,35 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame([], get_filenames(SUPPORTPATH . 'Files/shaker/'));
     }
 
+    public function testGetFilenamesWithSymlinks(): void
+    {
+        $targetDir = APPPATH . 'Language';
+        $linkDir   = APPPATH . 'Controllers/Language';
+        if (file_exists($linkDir)) {
+            unlink($linkDir);
+        }
+        symlink($targetDir, $linkDir);
+
+        $targetFile = APPPATH . 'Common.php';
+        $linkFile   = APPPATH . 'Controllers/Common.php';
+        if (file_exists($linkFile)) {
+            unlink($linkFile);
+        }
+        symlink($targetFile, $linkFile);
+
+        $this->assertSame([
+            0 => 'BaseController.php',
+            1 => 'Common.php',
+            2 => 'Home.php',
+            3 => 'Language',
+            4 => 'Validation.php',
+            5 => 'en',
+        ], get_filenames(APPPATH . 'Controllers'));
+
+        unlink($linkDir);
+        unlink($linkFile);
+    }
+
     public function testGetDirFileInfo(): void
     {
         $file = SUPPORTPATH . 'Files/baker/banana.php';
