@@ -88,7 +88,7 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
     public function testIsUniqueWithInvalidDBGroup(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('invalidGroup is not a valid database connection group');
+        $this->expectExceptionMessage('"invalidGroup" is not a valid database connection group');
 
         $this->validation->setRules(['email' => 'is_unique[user.email]']);
         $data = ['email' => 'derek@world.co.uk'];
