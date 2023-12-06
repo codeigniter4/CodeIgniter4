@@ -172,9 +172,17 @@ URI to the controller/method you wish to link to.
 Creating Helpers
 ****************
 
+Creating Custom Helpers
+=======================
+
 The helper filename is the **helper name** and **_helper.php**.
-For example, to create Email Helper, you’ll create a file named
-**app/Helpers/email_helper.php**.
+
+For example, to create info helper, you’ll create a file named
+**app/Helpers/info_helper.php**, and add a function to the file:
+
+.. literalinclude:: helpers/008.php
+
+You can add as many functions as you like to a single helper file.
 
 "Extending" Helpers
 ===================
