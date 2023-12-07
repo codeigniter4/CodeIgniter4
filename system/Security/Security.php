@@ -236,46 +236,6 @@ class Security implements SecurityInterface
     /**
      * CSRF Verify
      *
-     * @return $this|false
-     *
-     * @throws SecurityException
-     *
-     * @deprecated Use `CodeIgniter\Security\Security::verify()` instead of using this method.
-     *
-     * @codeCoverageIgnore
-     */
-    public function CSRFVerify(RequestInterface $request)
-    {
-        return $this->verify($request);
-    }
-
-    /**
-     * Returns the CSRF Token.
-     *
-     * @deprecated Use `CodeIgniter\Security\Security::getHash()` instead of using this method.
-     *
-     * @codeCoverageIgnore
-     */
-    public function getCSRFHash(): ?string
-    {
-        return $this->getHash();
-    }
-
-    /**
-     * Returns the CSRF Token Name.
-     *
-     * @deprecated Use `CodeIgniter\Security\Security::getTokenName()` instead of using this method.
-     *
-     * @codeCoverageIgnore
-     */
-    public function getCSRFTokenName(): string
-    {
-        return $this->getTokenName();
-    }
-
-    /**
-     * CSRF Verify
-     *
      * @return $this
      *
      * @throws SecurityException
@@ -447,18 +407,6 @@ class Security implements SecurityInterface
     }
 
     /**
-     * Check if CSRF cookie is expired.
-     *
-     * @deprecated
-     *
-     * @codeCoverageIgnore
-     */
-    public function isExpired(): bool
-    {
-        return $this->cookie->isExpired();
-    }
-
-    /**
      * Check if request should be redirect on failure.
      */
     public function shouldRedirect(): bool
@@ -588,40 +536,6 @@ class Security implements SecurityInterface
 
         $response = Services::response();
         $response->setCookie($this->cookie);
-    }
-
-    /**
-     * CSRF Send Cookie
-     *
-     * @return false|Security
-     *
-     * @deprecated Set cookies to Response object instead.
-     */
-    protected function sendCookie(RequestInterface $request)
-    {
-        assert($request instanceof IncomingRequest);
-
-        if ($this->cookie->isSecure() && ! $request->isSecure()) {
-            return false;
-        }
-
-        $this->doSendCookie();
-        log_message('info', 'CSRF cookie sent.');
-
-        return $this;
-    }
-
-    /**
-     * Actual dispatching of cookies.
-     * Extracted for this to be unit tested.
-     *
-     * @codeCoverageIgnore
-     *
-     * @deprecated Set cookies to Response object instead.
-     */
-    protected function doSendCookie(): void
-    {
-        cookies([$this->cookie], false)->dispatch();
     }
 
     private function saveHashInSession(): void
