@@ -228,4 +228,15 @@ class HTTPException extends FrameworkException
     {
         return new static(lang('Security.invalidSameSiteSetting', [$samesite]));
     }
+
+    /**
+     * Thrown when the JSON format is not supported.
+     * This is specifically for cases where data validation is expected to work with key-value structures.
+     *
+     * @return HTTPException
+     */
+    public static function forUnsupportedJSONFormat()
+    {
+        return new static(lang('HTTP.unsupportedJSONFormat'));
+    }
 }
