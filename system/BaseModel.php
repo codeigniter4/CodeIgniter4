@@ -398,11 +398,12 @@ abstract class BaseModel
      * Inserts data into the current database.
      * This method works only with dbCalls.
      *
-     * @param array $data Data
+     * @param array $row Row data
+     * @phpstan-param row_array $row
      *
      * @return bool
      */
-    abstract protected function doInsert(array $data);
+    abstract protected function doInsert(array $row);
 
     /**
      * Compiles batch insert and runs the queries, validating each row prior.
@@ -421,10 +422,11 @@ abstract class BaseModel
      * Updates a single record in the database.
      * This method works only with dbCalls.
      *
-     * @param array|int|string|null $id   ID
-     * @param array|null            $data Data
+     * @param array|int|string|null $id  ID
+     * @param array|null            $row Row data
+     * @phpstan-param row_array|null $row
      */
-    abstract protected function doUpdate($id = null, $data = null): bool;
+    abstract protected function doUpdate($id = null, $row = null): bool;
 
     /**
      * Compiles an update and runs the query.
@@ -476,12 +478,13 @@ abstract class BaseModel
      * Compiles a replace and runs the query.
      * This method works only with dbCalls.
      *
-     * @param array|null $data      Data
-     * @param bool       $returnSQL Set to true to return Query String
+     * @param array|null $row Row data
+     * @phpstan-param row_array|null $row
+     * @param bool $returnSQL Set to true to return Query String
      *
      * @return BaseResult|false|Query|string
      */
-    abstract protected function doReplace(?array $data = null, bool $returnSQL = false);
+    abstract protected function doReplace(?array $row = null, bool $returnSQL = false);
 
     /**
      * Grabs the last error(s) that occurred from the Database connection.
@@ -495,11 +498,12 @@ abstract class BaseModel
      * Public getter to return the id value using the idValue() method.
      * For example with SQL this will return $data->$this->primaryKey.
      *
-     * @param array|object $data
+     * @param array|object $row Row data
+     * @phpstan-param row_array|object $row
      *
      * @return array|int|string|null
      */
-    abstract public function getIdValue($data);
+    abstract public function getIdValue($row);
 
     /**
      * Override countAllResults to account for soft deleted accounts.
@@ -674,20 +678,21 @@ abstract class BaseModel
      * you must ensure that the class will provide access to the class
      * variables, even if through a magic method.
      *
-     * @param array|object $data Data
+     * @param array|object $row Row data
+     * @phpstan-param row_array|object $row
      *
      * @throws ReflectionException
      */
-    public function save($data): bool
+    public function save($row): bool
     {
-        if (empty($data)) {
+        if (empty($row)) {
             return true;
         }
 
-        if ($this->shouldUpdate($data)) {
-            $response = $this->update($this->getIdValue($data), $data);
+        if ($this->shouldUpdate($row)) {
+            $response = $this->update($this->getIdValue($row), $row);
         } else {
-            $response = $this->insert($data, false);
+            $response = $this->insert($row, false);
 
             if ($response !== false) {
                 $response = true;
@@ -701,11 +706,12 @@ abstract class BaseModel
      * This method is called on save to determine if entry have to be updated.
      * If this method returns false insert operation will be executed
      *
-     * @param array|object $data Data
+     * @param array|object $row Row data
+     * @phpstan-param row_array|object $row
      */
-    protected function shouldUpdate($data): bool
+    protected function shouldUpdate($row): bool
     {
-        return ! empty($this->getIdValue($data));
+        return ! empty($this->getIdValue($row));
     }
 
     /**
@@ -722,8 +728,8 @@ abstract class BaseModel
      * Inserts data into the database. If an object is provided,
      * it will attempt to convert it to an array.
      *
-     * @param array|object|null $data Data
-     * @phpstan-param row_array|object|null $data
+     * @param array|object|null $row Row data
+     * @phpstan-param row_array|object|null $row
      * @param bool $returnID Whether insert ID should be returned or not.
      *
      * @return bool|int|string insert ID or true on success. false on failure.
@@ -731,7 +737,7 @@ abstract class BaseModel
      *
      * @throws ReflectionException
      */
-    public function insert($data = null, bool $returnID = true)
+    public function insert($row = null, bool $returnID = true)
     {
         $this->insertID = 0;
 
@@ -739,10 +745,10 @@ abstract class BaseModel
         $cleanValidationRules       = $this->cleanValidationRules;
         $this->cleanValidationRules = false;
 
-        $data = $this->transformDataToArray($data, 'insert');
+        $row = $this->transformDataToArray($row, 'insert');
 
         // Validate data before saving.
-        if (! $this->skipValidation && ! $this->validate($data)) {
+        if (! $this->skipValidation && ! $this->validate($row)) {
             // Restore $cleanValidationRules
             $this->cleanValidationRules = $cleanValidationRules;
 
@@ -754,26 +760,20 @@ abstract class BaseModel
 
         // Must be called first, so we don't
         // strip out created_at values.
-        $data = $this->doProtectFieldsForInsert($data);
+        $row = $this->doProtectFieldsForInsert($row);
 
         // doProtectFields() can further remove elements from
-        // $data so we need to check for empty dataset again
-        if (! $this->allowEmptyInserts && empty($data)) {
+        // $row, so we need to check for empty dataset again
+        if (! $this->allowEmptyInserts && empty($row)) {
             throw DataException::forEmptyDataset('insert');
         }
 
         // Set created_at and updated_at with same time
         $date = $this->setDate();
+        $row  = $this->setCreatedField($row, $date);
+        $row  = $this->setUpdatedField($row, $date);
 
-        if ($this->useTimestamps && $this->createdField !== '' && ! array_key_exists($this->createdField, $data)) {
-            $data[$this->createdField] = $date;
-        }
-
-        if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, $data)) {
-            $data[$this->updatedField] = $date;
-        }
-
-        $eventData = ['data' => $data];
+        $eventData = ['data' => $row];
 
         if ($this->tempAllowCallbacks) {
             $eventData = $this->trigger('beforeInsert', $eventData);
@@ -804,12 +804,43 @@ abstract class BaseModel
     }
 
     /**
+     * Set datetime to created field.
+     *
+     * @phpstan-param row_array $row
+     * @param int|string $date timestamp or datetime string
+     */
+    protected function setCreatedField(array $row, $date): array
+    {
+        if ($this->useTimestamps && $this->createdField !== '' && ! array_key_exists($this->createdField, $row)) {
+            $row[$this->createdField] = $date;
+        }
+
+        return $row;
+    }
+
+    /**
+     * Set datetime to updated field.
+     *
+     * @phpstan-param row_array $row
+     * @param int|string $date timestamp or datetime string
+     */
+    protected function setUpdatedField(array $row, $date): array
+    {
+        if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, $row)) {
+            $row[$this->updatedField] = $date;
+        }
+
+        return $row;
+    }
+
+    /**
      * Compiles batch insert runs the queries, validating each row prior.
      *
-     * @param array|null $set       an associative array of insert values
-     * @param bool|null  $escape    Whether to escape values
-     * @param int        $batchSize The size of the batch to run
-     * @param bool       $testing   True means only number of records is returned, false will execute the query
+     * @param list<array|object>|null $set an associative array of insert values
+     * @phpstan-param list<row_array|object>|null $set
+     * @param bool|null $escape    Whether to escape values
+     * @param int       $batchSize The size of the batch to run
+     * @param bool      $testing   True means only number of records is returned, false will execute the query
      *
      * @return bool|int Number of rows inserted or FALSE on failure
      *
@@ -823,7 +854,7 @@ abstract class BaseModel
 
         if (is_array($set)) {
             foreach ($set as &$row) {
-                // If $data is using a custom class with public or protected
+                // If $row is using a custom class with public or protected
                 // properties representing the collection elements, we need to grab
                 // them as an array.
                 if (is_object($row) && ! $row instanceof stdClass) {
@@ -851,14 +882,8 @@ abstract class BaseModel
 
                 // Set created_at and updated_at with same time
                 $date = $this->setDate();
-
-                if ($this->useTimestamps && $this->createdField !== '' && ! array_key_exists($this->createdField, $row)) {
-                    $row[$this->createdField] = $date;
-                }
-
-                if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, $row)) {
-                    $row[$this->updatedField] = $date;
-                }
+                $row  = $this->setCreatedField($row, $date);
+                $row  = $this->setUpdatedField($row, $date);
             }
         }
 
@@ -893,11 +918,12 @@ abstract class BaseModel
      * it will attempt to convert it into an array.
      *
      * @param array|int|string|null $id
-     * @param array|object|null     $data
+     * @param array|object|null     $row Row data
+     * @phpstan-param row_array|object|null $row
      *
      * @throws ReflectionException
      */
-    public function update($id = null, $data = null): bool
+    public function update($id = null, $row = null): bool
     {
         if (is_bool($id)) {
             throw new InvalidArgumentException('update(): argument #1 ($id) should not be boolean.');
@@ -907,30 +933,28 @@ abstract class BaseModel
             $id = [$id];
         }
 
-        $data = $this->transformDataToArray($data, 'update');
+        $row = $this->transformDataToArray($row, 'update');
 
         // Validate data before saving.
-        if (! $this->skipValidation && ! $this->validate($data)) {
+        if (! $this->skipValidation && ! $this->validate($row)) {
             return false;
         }
 
         // Must be called first, so we don't
         // strip out updated_at values.
-        $data = $this->doProtectFields($data);
+        $row = $this->doProtectFields($row);
 
         // doProtectFields() can further remove elements from
-        // $data, so we need to check for empty dataset again
-        if (empty($data)) {
+        // $row, so we need to check for empty dataset again
+        if (empty($row)) {
             throw DataException::forEmptyDataset('update');
         }
 
-        if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, $data)) {
-            $data[$this->updatedField] = $this->setDate();
-        }
+        $row = $this->setUpdatedField($row, $this->setDate());
 
         $eventData = [
             'id'   => $id,
-            'data' => $data,
+            'data' => $row,
         ];
 
         if ($this->tempAllowCallbacks) {
@@ -955,7 +979,8 @@ abstract class BaseModel
     /**
      * Compiles an update and runs the query.
      *
-     * @param array|null  $set       An associative array of update values
+     * @param list<array|object>|null $set an associative array of insert values
+     * @phpstan-param list<row_array|object>|null $set
      * @param string|null $index     The where key
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
@@ -969,7 +994,7 @@ abstract class BaseModel
     {
         if (is_array($set)) {
             foreach ($set as &$row) {
-                // If $data is using a custom class with public or protected
+                // If $row is using a custom class with public or protected
                 // properties representing the collection elements, we need to grab
                 // them as an array.
                 if (is_object($row) && ! $row instanceof stdClass) {
@@ -1009,9 +1034,7 @@ abstract class BaseModel
                     $row[$index] = $updateIndex;
                 }
 
-                if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, $row)) {
-                    $row[$this->updatedField] = $this->setDate();
-                }
+                $row = $this->setUpdatedField($row, $this->setDate());
             }
         }
 
@@ -1130,23 +1153,22 @@ abstract class BaseModel
     /**
      * Compiles a replace and runs the query.
      *
-     * @param array|null $data      Data
-     * @param bool       $returnSQL Set to true to return Query String
+     * @param array|null $row Row data
+     * @phpstan-param row_array|null $row
+     * @param bool $returnSQL Set to true to return Query String
      *
      * @return BaseResult|false|Query|string
      */
-    public function replace(?array $data = null, bool $returnSQL = false)
+    public function replace(?array $row = null, bool $returnSQL = false)
     {
         // Validate data before saving.
-        if ($data && ! $this->skipValidation && ! $this->validate($data)) {
+        if (($row !== null) && ! $this->skipValidation && ! $this->validate($row)) {
             return false;
         }
 
-        if ($this->useTimestamps && $this->updatedField !== '' && ! array_key_exists($this->updatedField, (array) $data)) {
-            $data[$this->updatedField] = $this->setDate();
-        }
+        $row = $this->setUpdatedField((array) $row, $this->setDate());
 
-        return $this->doReplace($data, $returnSQL);
+        return $this->doReplace($row, $returnSQL);
     }
 
     /**
@@ -1238,46 +1260,48 @@ abstract class BaseModel
      * Ensures that only the fields that are allowed to be updated are
      * in the data array.
      *
-     * Used by update() and updateBatch() to protect against mass assignment
-     * vulnerabilities.
+     * @used-by update() to protect against mass assignment vulnerabilities.
+     * @used-by updateBatch() to protect against mass assignment vulnerabilities.
      *
-     * @param array $data Data
+     * @param array $row Row data
+     * @phpstan-param row_array $row
      *
      * @throws DataException
      */
-    protected function doProtectFields(array $data): array
+    protected function doProtectFields(array $row): array
     {
         if (! $this->protectFields) {
-            return $data;
+            return $row;
         }
 
         if (empty($this->allowedFields)) {
             throw DataException::forInvalidAllowedFields(static::class);
         }
 
-        foreach (array_keys($data) as $key) {
+        foreach (array_keys($row) as $key) {
             if (! in_array($key, $this->allowedFields, true)) {
-                unset($data[$key]);
+                unset($row[$key]);
             }
         }
 
-        return $data;
+        return $row;
     }
 
     /**
      * Ensures that only the fields that are allowed to be inserted are in
      * the data array.
      *
-     * Used by insert() and insertBatch() to protect against mass assignment
-     * vulnerabilities.
+     * @used-by insert() to protect against mass assignment vulnerabilities.
+     * @used-by insertBatch() to protect against mass assignment vulnerabilities.
      *
-     * @param array $data Data
+     * @param array $row Row data
+     * @phpstan-param row_array $row
      *
      * @throws DataException
      */
-    protected function doProtectFieldsForInsert(array $data): array
+    protected function doProtectFieldsForInsert(array $row): array
     {
-        return $this->doProtectFields($data);
+        return $this->doProtectFields($row);
     }
 
     /**
@@ -1464,14 +1488,15 @@ abstract class BaseModel
     }
 
     /**
-     * Validate the data against the validation rules (or the validation group)
+     * Validate the row data against the validation rules (or the validation group)
      * specified in the class property, $validationRules.
      *
-     * @param array|object $data Data
+     * @param array|object $row Row data
+     * @phpstan-param row_array|object $row
      */
-    public function validate($data): bool
+    public function validate($row): bool
     {
-        if ($this->skipValidation || empty($data)) {
+        if ($this->skipValidation || empty($row)) {
             return true;
         }
 
@@ -1482,11 +1507,11 @@ abstract class BaseModel
         }
 
         // Validation requires array, so cast away.
-        if (is_object($data)) {
-            $data = (array) $data;
+        if (is_object($row)) {
+            $row = (array) $row;
         }
 
-        $rules = $this->cleanValidationRules ? $this->cleanValidationRules($rules, $data) : $rules;
+        $rules = $this->cleanValidationRules ? $this->cleanValidationRules($rules, $row) : $rules;
 
         // If no data existed that needs validation
         // our job is done here.
@@ -1498,7 +1523,7 @@ abstract class BaseModel
 
         $this->validation->reset()->setRules($rules, $this->validationMessages);
 
-        return $this->validation->run($data, null, $this->DBGroup);
+        return $this->validation->run($row, null, $this->DBGroup);
     }
 
     /**
@@ -1551,17 +1576,18 @@ abstract class BaseModel
      * currently so that rules don't block updating when only updating
      * a partial row.
      *
-     * @param array      $rules Array containing field name and rule
-     * @param array|null $data  Data
+     * @param array $rules Array containing field name and rule
+     * @param array $row   Row data (@TODO Remove null in param type)
+     * @phpstan-param row_array $row
      */
-    protected function cleanValidationRules(array $rules, ?array $data = null): array
+    protected function cleanValidationRules(array $rules, ?array $row = null): array
     {
-        if (empty($data)) {
+        if (empty($row)) {
             return [];
         }
 
         foreach (array_keys($rules) as $field) {
-            if (! array_key_exists($field, $data)) {
+            if (! array_key_exists($field, $row)) {
                 unset($rules[$field]);
             }
         }
@@ -1659,51 +1685,63 @@ abstract class BaseModel
      * This method uses objectToRawArray() internally and does conversion
      * to string on all Time instances
      *
-     * @param object|string $data        Data
-     * @param bool          $onlyChanged Only Changed Property
-     * @param bool          $recursive   If true, inner entities will be cast as array as well
+     * @param object $object      Object
+     * @param bool   $onlyChanged Only Changed Property
+     * @param bool   $recursive   If true, inner entities will be cast as array as well
      *
-     * @return array Array
+     * @return array<string, mixed>
      *
      * @throws ReflectionException
      */
-    protected function objectToArray($data, bool $onlyChanged = true, bool $recursive = false): array
+    protected function objectToArray($object, bool $onlyChanged = true, bool $recursive = false): array
     {
-        $properties = $this->objectToRawArray($data, $onlyChanged, $recursive);
+        $properties = $this->objectToRawArray($object, $onlyChanged, $recursive);
 
         // Convert any Time instances to appropriate $dateFormat
-        if ($properties !== []) {
-            $properties = array_map(function ($value) {
-                if ($value instanceof Time) {
-                    return $this->timeToDate($value);
-                }
+        return $this->timeToString($properties);
+    }
 
-                return $value;
-            }, $properties);
+    /**
+     * Convert any Time instances to appropriate $dateFormat.
+     *
+     * @param array<string, mixed> $properties
+     *
+     * @return array<string, mixed>
+     */
+    protected function timeToString(array $properties): array
+    {
+        if ($properties === []) {
+            return [];
         }
 
-        return $properties;
+        return array_map(function ($value) {
+            if ($value instanceof Time) {
+                return $this->timeToDate($value);
+            }
+
+            return $value;
+        }, $properties);
     }
 
     /**
      * Takes a class and returns an array of its public and protected
      * properties as an array with raw values.
      *
-     * @param object|string $data        Data
-     * @param bool          $onlyChanged Only Changed Property
-     * @param bool          $recursive   If true, inner entities will be casted as array as well
+     * @param object $object      Object
+     * @param bool   $onlyChanged Only Changed Property
+     * @param bool   $recursive   If true, inner entities will be casted as array as well
      *
-     * @return array Array with raw values.
+     * @return array<string, mixed> Array with raw values.
      *
      * @throws ReflectionException
      */
-    protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): array
+    protected function objectToRawArray($object, bool $onlyChanged = true, bool $recursive = false): array
     {
-        // @TODO Should define Interface or Class. Entity has toRawArray() now.
-        if (method_exists($data, 'toRawArray')) {
-            $properties = $data->toRawArray($onlyChanged, $recursive);
+        // Entity::toRawArray() returns array.
+        if (method_exists($object, 'toRawArray')) {
+            $properties = $object->toRawArray($onlyChanged, $recursive);
         } else {
-            $mirror = new ReflectionClass($data);
+            $mirror = new ReflectionClass($object);
             $props  = $mirror->getProperties(ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED);
 
             $properties = [];
@@ -1713,7 +1751,7 @@ abstract class BaseModel
             foreach ($props as $prop) {
                 // Must make protected values accessible.
                 $prop->setAccessible(true);
-                $properties[$prop->getName()] = $prop->getValue($data);
+                $properties[$prop->getName()] = $prop->getValue($object);
             }
         }
 
@@ -1723,47 +1761,48 @@ abstract class BaseModel
     /**
      * Transform data to array.
      *
-     * @param array|object|null $data Data
-     * @param string            $type Type of data (insert|update)
+     * @param array|object|null $row Row data
+     * @phpstan-param row_array|object|null $row
+     * @param string $type Type of data (insert|update)
      *
      * @throws DataException
      * @throws InvalidArgumentException
      * @throws ReflectionException
      */
-    protected function transformDataToArray($data, string $type): array
+    protected function transformDataToArray($row, string $type): array
     {
         if (! in_array($type, ['insert', 'update'], true)) {
             throw new InvalidArgumentException(sprintf('Invalid type "%s" used upon transforming data to array.', $type));
         }
 
-        if (! $this->allowEmptyInserts && empty($data)) {
+        if (! $this->allowEmptyInserts && empty($row)) {
             throw DataException::forEmptyDataset($type);
         }
 
-        // If $data is using a custom class with public or protected
+        // If $row is using a custom class with public or protected
         // properties representing the collection elements, we need to grab
         // them as an array.
-        if (is_object($data) && ! $data instanceof stdClass) {
+        if (is_object($row) && ! $row instanceof stdClass) {
             // If it validates with entire rules, all fields are needed.
             $onlyChanged = ($this->skipValidation === false && $this->cleanValidationRules === false)
                 ? false : ($type === 'update');
 
-            $data = $this->objectToArray($data, $onlyChanged, true);
+            $row = $this->objectToArray($row, $onlyChanged, true);
         }
 
         // If it's still a stdClass, go ahead and convert to
         // an array so doProtectFields and other model methods
         // don't have to do special checks.
-        if (is_object($data)) {
-            $data = (array) $data;
+        if (is_object($row)) {
+            $row = (array) $row;
         }
 
-        // If it's still empty here, means $data is no change or is empty object
-        if (! $this->allowEmptyInserts && empty($data)) {
+        // If it's still empty here, means $row is no change or is empty object
+        if (! $this->allowEmptyInserts && empty($row)) {
             throw DataException::forEmptyDataset($type);
         }
 
-        return $data;
+        return $row;
     }
 
     /**

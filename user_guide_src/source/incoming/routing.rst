@@ -709,7 +709,7 @@ and execute the corresponding controller methods.
 Enable Auto Routing
 ===================
 
-To use it, you need to change the setting ``$autoRoute`` option to true in **app/Config/Routing.php**::
+To use it, you need to change the setting ``$autoRoute`` option to ``true`` in **app/Config/Routing.php**::
 
     public bool $autoRoute = true;
 
@@ -840,9 +840,13 @@ Enable Auto Routing (Legacy)
 
 Since v4.2.0, the auto-routing is disabled by default.
 
-To use it, you need to change the setting ``$autoRoute`` option to true in **app/Config/Routing.php**::
+To use it, you need to change the setting ``$autoRoute`` option to ``true`` in **app/Config/Routing.php**::
 
-    $routes->setAutoRoute(true);
+    public bool $autoRoute = true;
+
+And set the property ``$autoRoutesImproved`` to ``false`` in **app/Config/Feature.php**::
+
+    public bool $autoRoutesImproved = false;
 
 URI Segments (Legacy)
 =====================
