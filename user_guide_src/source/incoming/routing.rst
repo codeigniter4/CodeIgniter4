@@ -693,7 +693,7 @@ and execute the corresponding controller methods.
 Enable Auto Routing
 ===================
 
-To use it, you need to change the setting ``$autoRoute`` option to true in **app/Config/Routing.php**::
+To use it, you need to change the setting ``$autoRoute`` option to ``true`` in **app/Config/Routing.php**::
 
     public bool $autoRoute = true;
 
