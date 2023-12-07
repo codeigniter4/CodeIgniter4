@@ -24,10 +24,7 @@ use Tests\Support\Models\UserObjModel;
  */
 final class GetCompiledModelTest extends CIUnitTestCase
 {
-    /**
-     * @var Model
-     */
-    private $model;
+    private ?object $model = null;
 
     /**
      * Create an instance of Model for use in testing.
@@ -50,7 +47,7 @@ final class GetCompiledModelTest extends CIUnitTestCase
 
         $this->createModel(UserObjModel::class);
 
-        $sql = $this->model
+        $this->model
             ->set('name', 'Mark')
             ->set('email', 'mark@example.com')
             ->getCompiledInsert();
@@ -66,7 +63,7 @@ final class GetCompiledModelTest extends CIUnitTestCase
 
         $this->createModel(UserObjModel::class);
 
-        $sql = $this->model
+        $this->model
             ->set('name', 'Mark')
             ->set('email', 'mark@example.com')
             ->getCompiledUpdate();
