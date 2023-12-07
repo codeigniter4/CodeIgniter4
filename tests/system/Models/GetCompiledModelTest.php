@@ -44,7 +44,7 @@ final class GetCompiledModelTest extends CIUnitTestCase
     public function testGetCompiledInsert(): void
     {
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('You cannot use `getCompiledInsert()` in `Tests\Support\Models\UserObjModel`.');
+        $this->expectExceptionMessage('You cannot use "getCompiledInsert()" in "Tests\Support\Models\UserObjModel".');
 
         $this->createModel(UserObjModel::class);
 
@@ -60,7 +60,7 @@ final class GetCompiledModelTest extends CIUnitTestCase
     public function testGetCompiledUpdate(): void
     {
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('You cannot use `getCompiledUpdate()` in `Tests\Support\Models\UserObjModel`.');
+        $this->expectExceptionMessage('You cannot use "getCompiledUpdate()" in "Tests\Support\Models\UserObjModel".');
 
         $this->createModel(UserObjModel::class);
 
