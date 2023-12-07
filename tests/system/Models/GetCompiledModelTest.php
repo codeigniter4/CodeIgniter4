@@ -19,6 +19,8 @@ use Tests\Support\Models\UserObjModel;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class GetCompiledModelTest extends CIUnitTestCase
 {
