@@ -817,11 +817,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/Services.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Controller.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Controller.php',
