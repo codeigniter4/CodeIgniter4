@@ -212,6 +212,7 @@ class Model extends BaseModel
      * @param string $columnName Column Name
      *
      * @return array|null The resulting row of data, or null if no data found.
+     * @phpstan-return list<row_array>|null
      */
     protected function doFindColumn(string $columnName)
     {
@@ -273,29 +274,30 @@ class Model extends BaseModel
      * Inserts data into the current table.
      * This method works only with dbCalls.
      *
-     * @param array $data Data
+     * @param array $row Row data
+     * @phpstan-param row_array $row
      *
      * @return bool
      */
-    protected function doInsert(array $data)
+    protected function doInsert(array $row)
     {
         $escape       = $this->escape;
         $this->escape = [];
 
         // Require non-empty primaryKey when
         // not using auto-increment feature
-        if (! $this->useAutoIncrement && empty($data[$this->primaryKey])) {
+        if (! $this->useAutoIncrement && empty($row[$this->primaryKey])) {
             throw DataException::forEmptyPrimaryKey('insert');
         }
 
         $builder = $this->builder();
 
         // Must use the set() method to ensure to set the correct escape flag
-        foreach ($data as $key => $val) {
+        foreach ($row as $key => $val) {
             $builder->set($key, $val, $escape[$key] ?? null);
         }
 
-        if ($this->allowEmptyInserts && empty($data)) {
+        if ($this->allowEmptyInserts && empty($row)) {
             $table = $this->db->protectIdentifiers($this->table, true, null, false);
             if ($this->db->getPlatform() === 'MySQLi') {
                 $sql = 'INSERT INTO ' . $table . ' VALUES ()';
@@ -326,7 +328,7 @@ class Model extends BaseModel
 
         // If insertion succeeded then save the insert ID
         if ($result) {
-            $this->insertID = ! $this->useAutoIncrement ? $data[$this->primaryKey] : $this->db->insertID();
+            $this->insertID = ! $this->useAutoIncrement ? $row[$this->primaryKey] : $this->db->insertID();
         }
 
         return $result;
@@ -363,9 +365,10 @@ class Model extends BaseModel
      * This method works only with dbCalls.
      *
      * @param array|int|string|null $id
-     * @param array|null            $data
+     * @param array|null            $row Row data
+     * @phpstan-param row_array|null $row
      */
-    protected function doUpdate($id = null, $data = null): bool
+    protected function doUpdate($id = null, $row = null): bool
     {
         $escape       = $this->escape;
         $this->escape = [];
@@ -377,7 +380,7 @@ class Model extends BaseModel
         }
 
         // Must use the set() method to ensure to set the correct escape flag
-        foreach ($data as $key => $val) {
+        foreach ($row as $key => $val) {
             $builder->set($key, $val, $escape[$key] ?? null);
         }
 
@@ -480,14 +483,15 @@ class Model extends BaseModel
      * Compiles a replace into string and runs the query
      * This method works only with dbCalls.
      *
-     * @param array|null $data      Data
-     * @param bool       $returnSQL Set to true to return Query String
+     * @param array|null $row Data
+     * @phpstan-param row_array|null $row
+     * @param bool $returnSQL Set to true to return Query String
      *
      * @return BaseResult|false|Query|string
      */
-    protected function doReplace(?array $data = null, bool $returnSQL = false)
+    protected function doReplace(?array $row = null, bool $returnSQL = false)
     {
-        return $this->builder()->testMode($returnSQL)->replace($data);
+        return $this->builder()->testMode($returnSQL)->replace($row);
     }
 
     /**
@@ -527,33 +531,34 @@ class Model extends BaseModel
     /**
      * Returns the id value for the data array or object
      *
-     * @param array|object $data Data
+     * @param array|object $row Row data
+     * @phpstan-param row_array|object $row
      *
      * @return array|int|string|null
      */
-    public function getIdValue($data)
+    public function getIdValue($row)
     {
-        if (is_object($data) && isset($data->{$this->primaryKey})) {
+        if (is_object($row) && isset($row->{$this->primaryKey})) {
             // Get the raw primary key value of the Entity.
-            if ($data instanceof Entity) {
-                $cast = $data->cast();
+            if ($row instanceof Entity) {
+                $cast = $row->cast();
 
                 // Disable Entity casting, because raw primary key value is needed for database.
-                $data->cast(false);
+                $row->cast(false);
 
-                $primaryKey = $data->{$this->primaryKey};
+                $primaryKey = $row->{$this->primaryKey};
 
                 // Restore Entity casting setting.
-                $data->cast($cast);
+                $row->cast($cast);
 
                 return $primaryKey;
             }
 
-            return $data->{$this->primaryKey};
+            return $row->{$this->primaryKey};
         }
 
-        if (is_array($data) && ! empty($data[$this->primaryKey])) {
-            return $data[$this->primaryKey];
+        if (is_array($row) && ! empty($row[$this->primaryKey])) {
+            return $row[$this->primaryKey];
         }
 
         return null;
@@ -690,11 +695,11 @@ class Model extends BaseModel
      * This method is called on save to determine if entry have to be updated
      * If this method return false insert operation will be executed
      *
-     * @param array|object $data Data
+     * @param array|object $row Data
      */
-    protected function shouldUpdate($data): bool
+    protected function shouldUpdate($row): bool
     {
-        if (parent::shouldUpdate($data) === false) {
+        if (parent::shouldUpdate($row) === false) {
             return false;
         }
 
@@ -704,72 +709,73 @@ class Model extends BaseModel
 
         // When useAutoIncrement feature is disabled, check
         // in the database if given record already exists
-        return $this->where($this->primaryKey, $this->getIdValue($data))->countAllResults() === 1;
+        return $this->where($this->primaryKey, $this->getIdValue($row))->countAllResults() === 1;
     }
 
     /**
      * Inserts data into the database. If an object is provided,
      * it will attempt to convert it to an array.
      *
-     * @param array|object|null $data
-     * @phpstan-param row_array|object|null $data
+     * @param array|object|null $row
+     * @phpstan-param row_array|object|null $row
      * @param bool $returnID Whether insert ID should be returned or not.
      *
-     * @return false|int|object|string
+     * @return bool|int|string
      * @phpstan-return ($returnID is true ? int|string|false : bool)
      *
      * @throws ReflectionException
      */
-    public function insert($data = null, bool $returnID = true)
+    public function insert($row = null, bool $returnID = true)
     {
         if (! empty($this->tempData['data'])) {
-            if (empty($data)) {
-                $data = $this->tempData['data'];
+            if (empty($row)) {
+                $row = $this->tempData['data'];
             } else {
-                $data = $this->transformDataToArray($data, 'insert');
-                $data = array_merge($this->tempData['data'], $data);
+                $row = $this->transformDataToArray($row, 'insert');
+                $row = array_merge($this->tempData['data'], $row);
             }
         }
 
         $this->escape   = $this->tempData['escape'] ?? [];
         $this->tempData = [];
 
-        return parent::insert($data, $returnID);
+        return parent::insert($row, $returnID);
     }
 
     /**
      * Ensures that only the fields that are allowed to be inserted are in
      * the data array.
      *
-     * Used by insert() and insertBatch() to protect against mass assignment
-     * vulnerabilities.
+     * @used-by insert() to protect against mass assignment vulnerabilities.
+     * @used-by insertBatch() to protect against mass assignment vulnerabilities.
      *
-     * @param array $data Data
+     * @param array $row Row data
+     * @phpstan-param row_array $row
      *
      * @throws DataException
      */
-    protected function doProtectFieldsForInsert(array $data): array
+    protected function doProtectFieldsForInsert(array $row): array
     {
         if (! $this->protectFields) {
-            return $data;
+            return $row;
         }
 
         if (empty($this->allowedFields)) {
             throw DataException::forInvalidAllowedFields(static::class);
         }
 
-        foreach (array_keys($data) as $key) {
+        foreach (array_keys($row) as $key) {
             // Do not remove the non-auto-incrementing primary key data.
             if ($this->useAutoIncrement === false && $key === $this->primaryKey) {
                 continue;
             }
 
             if (! in_array($key, $this->allowedFields, true)) {
-                unset($data[$key]);
+                unset($row[$key]);
             }
         }
 
-        return $data;
+        return $row;
     }
 
     /**
@@ -777,41 +783,42 @@ class Model extends BaseModel
      * it will attempt to convert it into an array.
      *
      * @param array|int|string|null $id
-     * @param array|object|null     $data
+     * @param array|object|null     $row
+     * @phpstan-param row_array|object|null $row
      *
      * @throws ReflectionException
      */
-    public function update($id = null, $data = null): bool
+    public function update($id = null, $row = null): bool
     {
         if (! empty($this->tempData['data'])) {
-            if (empty($data)) {
-                $data = $this->tempData['data'];
+            if (empty($row)) {
+                $row = $this->tempData['data'];
             } else {
-                $data = $this->transformDataToArray($data, 'update');
-                $data = array_merge($this->tempData['data'], $data);
+                $row = $this->transformDataToArray($row, 'update');
+                $row = array_merge($this->tempData['data'], $row);
             }
         }
 
         $this->escape   = $this->tempData['escape'] ?? [];
         $this->tempData = [];
 
-        return parent::update($id, $data);
+        return parent::update($id, $row);
     }
 
     /**
      * Takes a class and returns an array of its public and protected
      * properties as an array with raw values.
      *
-     * @param object|string $data
-     * @param bool          $recursive If true, inner entities will be cast as array as well
+     * @param object $object    Object
+     * @param bool   $recursive If true, inner entities will be cast as array as well
      *
-     * @return array|null Array
+     * @return array<string, mixed>
      *
      * @throws ReflectionException
      */
-    protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
+    protected function objectToRawArray($object, bool $onlyChanged = true, bool $recursive = false): array
     {
-        return parent::objectToRawArray($data, $onlyChanged);
+        return parent::objectToRawArray($object, $onlyChanged);
     }
 
     /**
