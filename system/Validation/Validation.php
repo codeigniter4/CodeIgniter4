@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Validation;
 
 use Closure;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\RequestInterface;
@@ -506,6 +507,10 @@ class Validation implements ValidationInterface
         /** @var IncomingRequest $request */
         if (strpos($request->getHeaderLine('Content-Type'), 'application/json') !== false) {
             $this->data = $request->getJSON(true);
+
+            if (! is_array($this->data)) {
+                throw HTTPException::forUnsupportedJSONFormat();
+            }
 
             return $this;
         }

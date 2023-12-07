@@ -519,6 +519,21 @@ class Model extends BaseModel
     public function getIdValue($data)
     {
         if (is_object($data) && isset($data->{$this->primaryKey})) {
+            // Get the raw primary key value of the Entity.
+            if ($data instanceof Entity) {
+                $cast = $data->cast();
+
+                // Disable Entity casting, because raw primary key value is needed for database.
+                $data->cast(false);
+
+                $primaryKey = $data->{$this->primaryKey};
+
+                // Restore Entity casting setting.
+                $data->cast($cast);
+
+                return $primaryKey;
+            }
+
             return $data->{$this->primaryKey};
         }
 
@@ -781,37 +796,7 @@ class Model extends BaseModel
      */
     protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): array
     {
-        $properties = parent::objectToRawArray($data, $onlyChanged);
-
-        $primaryKey = null;
-
-        if ($data instanceof Entity) {
-            $cast = $data->cast();
-
-            // Disable Entity casting, because raw primary key data is needed for database.
-            $data->cast(false);
-
-            $primaryKey = $data->{$this->primaryKey};
-
-            // Restore Entity casting setting.
-            $data->cast($cast);
-        }
-
-        // Always grab the primary key otherwise updates will fail.
-        if (
-            // @TODO Should use `$data instanceof Entity`.
-            method_exists($data, 'toRawArray')
-            && (
-                ! empty($properties)
-                && ! empty($this->primaryKey)
-                && ! in_array($this->primaryKey, $properties, true)
-                && ! empty($primaryKey)
-            )
-        ) {
-            $properties[$this->primaryKey] = $primaryKey;
-        }
-
-        return $properties;
+        return parent::objectToRawArray($data, $onlyChanged);
     }
 
     /**
