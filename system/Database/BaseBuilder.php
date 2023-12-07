@@ -2270,7 +2270,7 @@ class BaseBuilder
      *
      * @param array|object|null $set
      *
-     * @return bool|BaseResult|Query
+     * @return BaseResult|bool|Query
      *
      * @throws DatabaseException
      */
