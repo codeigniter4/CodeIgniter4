@@ -21,13 +21,12 @@ use Tests\Support\Models\UserObjModel;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class GetCompiledModelTest extends CIUnitTestCase
 {
-    /**
-     * @var Model
-     */
-    private $model;
+    private ?object $model = null;
 
     /**
      * Create an instance of Model for use in testing.
@@ -46,11 +45,11 @@ final class GetCompiledModelTest extends CIUnitTestCase
     public function testGetCompiledInsert(): void
     {
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('You cannot use `getCompiledInsert()` in `Tests\Support\Models\UserObjModel`.');
+        $this->expectExceptionMessage('You cannot use "getCompiledInsert()" in "Tests\Support\Models\UserObjModel".');
 
         $this->createModel(UserObjModel::class);
 
-        $sql = $this->model
+        $this->model
             ->set('name', 'Mark')
             ->set('email', 'mark@example.com')
             ->getCompiledInsert();
@@ -62,11 +61,11 @@ final class GetCompiledModelTest extends CIUnitTestCase
     public function testGetCompiledUpdate(): void
     {
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('You cannot use `getCompiledUpdate()` in `Tests\Support\Models\UserObjModel`.');
+        $this->expectExceptionMessage('You cannot use "getCompiledUpdate()" in "Tests\Support\Models\UserObjModel".');
 
         $this->createModel(UserObjModel::class);
 
-        $sql = $this->model
+        $this->model
             ->set('name', 'Mark')
             ->set('email', 'mark@example.com')
             ->getCompiledUpdate();
