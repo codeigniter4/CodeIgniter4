@@ -13,10 +13,11 @@ declare(strict_types=1);
 
 namespace Tests\Support\Filters;
 
+use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class Customfilter implements \CodeIgniter\Filters\FilterInterface
+class Customfilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {

@@ -107,7 +107,7 @@ class CITestSeeder extends Seeder
                     'type_time'       => '2020-07-18T15:22:00.000+02:00',
                     'type_datetime'   => '2020-06-18T05:12:24.000+02:00',
                     'type_timestamp'  => '2019-07-18T21:53:21.000+02:00',
-                    'type_bigint'     => 2342342,
+                    'type_bigint'     => 2_342_342,
                     'type_boolean'    => 1,
                 ],
             ],
@@ -178,11 +178,11 @@ class CITestSeeder extends Seeder
             unset($data['type_test'][0]['type_blob']);
         }
 
-        foreach ($data as $table => $dummy_data) {
+        foreach ($data as $table => $dummyData) {
             $this->db->table($table)->truncate();
 
-            foreach ($dummy_data as $single_dummy_data) {
-                $this->db->table($table)->insert($single_dummy_data);
+            foreach ($dummyData as $singleDummyData) {
+                $this->db->table($table)->insert($singleDummyData);
             }
         }
     }
