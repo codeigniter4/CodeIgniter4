@@ -139,7 +139,7 @@ Preference          Default Value       Options                      Description
 **newline**         \\n                 ``\r\n`` or ``\n`` or ``\r`` Newline character. (Use ``\r\n`` to comply with RFC 822).
 **BCCBatchMode**    false               ``true``/``false`` (boolean) Enable BCC Batch Mode.
 **BCCBatchSize**    200                 None                         Number of emails in each BCC batch.
-**DSN**             false               ``true``/``false`` (boolean) Enable notify message from server
+**DSN**             false               ``true``/``false`` (boolean) Enable notify message from server.
 =================== =================== ============================ =======================================================================
 
 Overriding Word Wrapping
