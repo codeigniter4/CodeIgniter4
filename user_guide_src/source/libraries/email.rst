@@ -124,7 +124,7 @@ Preference          Default Value       Options                      Description
 **SMTPKeepAlive**   false               ``true``/``false`` (boolean) Enable persistent SMTP connections.
 **SMTPCrypto**      tls                 ``tls``, ``ssl``, or         SMTP Encryption. Setting this to ``ssl`` will create a secure
                                         empty string (``''``)        channel to the server using SSL, and ``tls`` will issue a
-                                                                     ``STARTTLS`` command to the server. Connection on port 465 should
+                                                                     ``STARTTLS`` command to the server. Connection on port ``465`` should
                                                                      set this to an empty string (``''``). See also
                                                                      :ref:`email-ssl-tls-for-smtp`.
 **wordWrap**        true                ``true``/``false`` (boolean) Enable word-wrap.
