@@ -284,6 +284,27 @@ Before updating, it is possible to preview the translations found by the command
 
     php spark lang:find --verbose --show-new
 
+The detailed output of ``--verbose`` also shows a list of invalid keys. For example:
+
+.. code-block:: console
+
+    ...
+
+    Files found: 10
+    New translates found: 30
+    Bad translates found: 5
+    +------------------------+---------------------------------+
+    | Bad Key                | Filepath                        |
+    +------------------------+---------------------------------+
+    | ..invalid_nested_key.. | app/Controllers/Translation.php |
+    | .invalid_key           | app/Controllers/Translation.php |
+    | TranslationBad         | app/Controllers/Translation.php |
+    | TranslationBad.        | app/Controllers/Translation.php |
+    | TranslationBad...      | app/Controllers/Translation.php |
+    +------------------------+---------------------------------+
+
+    All operations done!
+
 For a more accurate search, specify the desired locale or directory to scan.
 
 .. code-block:: console

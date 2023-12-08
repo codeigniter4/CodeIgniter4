@@ -105,6 +105,15 @@ final class LocalizationFinderTest extends CIUnitTestCase
         $this->assertStringContainsString($this->getActualTableWithNewKeys(), $this->getStreamFilterBuffer());
     }
 
+    public function testShowBadTranslation(): void
+    {
+        $this->makeLocaleDirectory();
+
+        command('lang:find --dir Translation --verbose');
+
+        $this->assertStringContainsString($this->getActualTableWithBadKeys(), $this->getStreamFilterBuffer());
+    }
+
     private function getActualTranslationOneKeys(): array
     {
         return [
@@ -192,6 +201,26 @@ final class LocalizationFinderTest extends CIUnitTestCase
             | TranslationThree | TranslationThree.formFields.new.name               |
             | TranslationThree | TranslationThree.formFields.new.short_tag          |
             +------------------+----------------------------------------------------+
+            TEXT_WRAP;
+    }
+
+    private function getActualTableWithBadKeys(): string
+    {
+        return <<<'TEXT_WRAP'
+            +------------------------+--------------------------------------------------------+
+            | Bad Key                | Filepath                                               |
+            +------------------------+--------------------------------------------------------+
+            | ..invalid_nested_key.. | tests/_support/Services/Translation/TranslationTwo.php |
+            | ..invalid_nested_key.. | tests/_support/Services/Translation/TranslationTwo.php |
+            | .invalid_key           | tests/_support/Services/Translation/TranslationTwo.php |
+            | .invalid_key           | tests/_support/Services/Translation/TranslationTwo.php |
+            | TranslationTwo         | tests/_support/Services/Translation/TranslationTwo.php |
+            | TranslationTwo         | tests/_support/Services/Translation/TranslationTwo.php |
+            | TranslationTwo.        | tests/_support/Services/Translation/TranslationTwo.php |
+            | TranslationTwo.        | tests/_support/Services/Translation/TranslationTwo.php |
+            | TranslationTwo...      | tests/_support/Services/Translation/TranslationTwo.php |
+            | TranslationTwo...      | tests/_support/Services/Translation/TranslationTwo.php |
+            +------------------------+--------------------------------------------------------+
             TEXT_WRAP;
     }
 

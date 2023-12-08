@@ -21,7 +21,9 @@ use InvalidArgumentException;
  * If there are any methods that should be provided, make them
  * public APIs via helper functions.
  *
+ * @see \CodeIgniter\Helpers\Array\ArrayHelperDotKeyExistsTest
  * @see \CodeIgniter\Helpers\Array\ArrayHelperRecursiveDiffTest
+ * @see \CodeIgniter\Helpers\Array\ArrayHelperSortValuesByNaturalTest
  */
 final class ArrayHelper
 {
@@ -298,5 +300,22 @@ final class ArrayHelper
         }
 
         return $counter;
+    }
+
+    /**
+     * Sorts array values in natural order
+     * If the value is an array, you need to specify the $sortByIndex of the key to sort
+     *
+     * @param int|string|null $sortByIndex
+     */
+    public static function sortValuesByNatural(array &$array, $sortByIndex = null): bool
+    {
+        return usort($array, static function ($currentValue, $nextValue) use ($sortByIndex) {
+            if ($sortByIndex !== null) {
+                return strnatcmp($currentValue[$sortByIndex], $nextValue[$sortByIndex]);
+            }
+
+            return strnatcmp($currentValue, $nextValue);
+        });
     }
 }
