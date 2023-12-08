@@ -51,7 +51,7 @@ class Migration_Create_test_tables extends Migration
         // missing types :
         // TINYINT,MEDIUMINT,BIT,YEAR,BINARY , VARBINARY, TINYTEXT,LONGTEXT,YEAR,JSON,Spatial data types
         // id must be interger else SQLite3 error on not null for autoinc field
-        $data_type_fields = [
+        $dataTypeFields = [
             'id'              => ['type' => 'INTEGER', 'constraint' => 20, 'auto_increment' => true],
             'type_varchar'    => ['type' => 'VARCHAR', 'constraint' => 40, 'null' => true],
             'type_char'       => ['type' => 'CHAR', 'constraint' => 10, 'null' => true],
@@ -77,26 +77,26 @@ class Migration_Create_test_tables extends Migration
 
         if ($this->db->DBDriver === 'Postgre') {
             unset(
-                $data_type_fields['type_real'],
-                $data_type_fields['type_decimal']
+                $dataTypeFields['type_real'],
+                $dataTypeFields['type_decimal']
             );
         }
 
         if ($this->db->DBDriver === 'SQLSRV') {
-            unset($data_type_fields['type_timestamp']);
+            unset($dataTypeFields['type_timestamp']);
         }
 
         if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLSRV') {
             unset(
-                $data_type_fields['type_enum'],
-                $data_type_fields['type_set'],
-                $data_type_fields['type_mediumtext'],
-                $data_type_fields['type_double'],
-                $data_type_fields['type_blob']
+                $dataTypeFields['type_enum'],
+                $dataTypeFields['type_set'],
+                $dataTypeFields['type_mediumtext'],
+                $dataTypeFields['type_double'],
+                $dataTypeFields['type_blob']
             );
         }
 
-        $this->forge->addField($data_type_fields)->addKey('id', true)->createTable('type_test', true);
+        $this->forge->addField($dataTypeFields)->addKey('id', true)->createTable('type_test', true);
 
         // Empty Table
         $this->forge->addField([

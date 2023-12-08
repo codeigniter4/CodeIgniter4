@@ -17,16 +17,16 @@ class TranslationFour
 {
     public function list()
     {
-        $translationOne1 = lang('TranslationOne.title');
-        $translationOne5 = lang('TranslationOne.last_operation_success');
+        lang('TranslationOne.title');
+        lang('TranslationOne.last_operation_success');
 
-        $translationThree1 = lang('TranslationThree.alerts.created');
-        $translationThree2 = lang('TranslationThree.alerts.failed_insert');
+        lang('TranslationThree.alerts.created');
+        lang('TranslationThree.alerts.failed_insert');
 
-        $translationThree5 = lang('TranslationThree.formFields.new.name');
-        $translationThree7 = lang('TranslationThree.formFields.new.short_tag');
+        lang('TranslationThree.formFields.new.name');
+        lang('TranslationThree.formFields.new.short_tag');
 
-        $translationFour1 = lang('Translation-Four.dashed.key-with-dash');
-        $translationFour2 = lang('Translation-Four.dashed.key-with-dash-two');
+        lang('Translation-Four.dashed.key-with-dash');
+        lang('Translation-Four.dashed.key-with-dash-two');
     }
 }

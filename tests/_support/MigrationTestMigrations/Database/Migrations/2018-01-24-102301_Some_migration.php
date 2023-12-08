@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace Tests\Support\MigrationTestMigrations\Database\Migrations;
 
-class Migration_some_migration extends \CodeIgniter\Database\Migration
+use CodeIgniter\Database\Migration;
+
+class Migration_some_migration extends Migration
 {
     public function up(): void
     {

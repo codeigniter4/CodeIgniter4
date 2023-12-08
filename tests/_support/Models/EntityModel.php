@@ -18,7 +18,7 @@ use CodeIgniter\Model;
 class EntityModel extends Model
 {
     protected $table          = 'job';
-    protected $returnType     = '\Tests\Support\Models\SimpleEntity';
+    protected $returnType     = '\\' . SimpleEntity::class;
     protected $useSoftDeletes = false;
     protected $dateFormat     = 'int';
     protected $deletedField   = 'deleted_at';

@@ -13,8 +13,11 @@ declare(strict_types=1);
 
 namespace Tests\Support\Config\Filters;
 
+use Tests\Support\Filters\Customfilter;
+use Tests\Support\Filters\RedirectFilter;
+
 /**
  * @psalm-suppress UndefinedGlobalVariable
  */
-$filters->aliases['test-customfilter']   = \Tests\Support\Filters\Customfilter::class;
-$filters->aliases['test-redirectfilter'] = \Tests\Support\Filters\RedirectFilter::class;
+$filters->aliases['test-customfilter']   = Customfilter::class;
+$filters->aliases['test-redirectfilter'] = RedirectFilter::class;

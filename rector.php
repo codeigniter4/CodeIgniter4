@@ -80,13 +80,16 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/system/ThirdParty',
         __DIR__ . '/tests/system/Config/fixtures',
         __DIR__ . '/tests/system/Filters/fixtures',
-        __DIR__ . '/tests/_support',
+        __DIR__ . '/tests/_support/Commands/Foobar.php',
+        __DIR__ . '/tests/_support/View',
+
         JsonThrowOnErrorRector::class,
         YieldDataProviderRector::class,
 
         RemoveUnusedPrivateMethodRector::class => [
             // private method called via getPrivateMethodInvoker
             __DIR__ . '/tests/system/Test/ReflectionHelperTest.php',
+            __DIR__ . '/tests/_support/Test/TestForReflectionHelper.php',
         ],
 
         RemoveUnusedConstructorParamRector::class => [

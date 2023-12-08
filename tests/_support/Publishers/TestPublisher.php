@@ -19,10 +19,8 @@ final class TestPublisher extends Publisher
 {
     /**
      * Return value for publish()
-     *
-     * @var bool
      */
-    private static $result = true;
+    private static bool $result = true;
 
     /**
      * Base path to use for the source.
