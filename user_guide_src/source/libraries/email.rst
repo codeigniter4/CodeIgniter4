@@ -108,38 +108,39 @@ Email Preferences
 The following is a list of all the preferences that can be set when
 sending email.
 
-=================== ====================== ============================ =======================================================================
-Preference          Default Value          Options                      Description
-=================== ====================== ============================ =======================================================================
-**userAgent**       CodeIgniter            None                         The "user agent".
-**protocol**        mail                   mail, sendmail, or smtp      The mail sending protocol.
-**mailPath**        /usr/sbin/sendmail     None                         The server path to Sendmail.
-**SMTPHost**        No Default             None                         SMTP Server Address.
-**SMTPUser**        No Default             None                         SMTP Username.
-**SMTPPass**        No Default             None                         SMTP Password.
-**SMTPPort**        25                     None                         SMTP Port. (If set to ``465``, TLS will be used for the connection
-                                                                        regardless of ``SMTPCrypto`` setting.)
-**SMTPTimeout**     5                      None                         SMTP Timeout (in seconds).
-**SMTPKeepAlive**   false                  true or false (boolean)      Enable persistent SMTP connections.
-**SMTPCrypto**      tls                    tls, ssl, or empty string    SMTP Encryption. Setting this to ``ssl`` will create a secure
-                                                                        channel to the server using SSL, and ``tls`` will issue a
-                                                                        ``STARTTLS`` command to the server. Connection on port 465 should
-                                                                        set this to an empty string (``''``). See also
-                                                                        :ref:`email-ssl-tls-for-smtp`.
-**wordWrap**        true                   true or false (boolean)      Enable word-wrap.
-**wrapChars**       76                                                  Character count to wrap at.
-**mailType**        text                   text or html                 Type of mail. If you send HTML email you must send it as a complete web
-                                                                        page. Make sure you don't have any relative links or relative image
-                                                                        paths otherwise they will not work.
-**charset**         utf-8                                               Character set (utf-8, iso-8859-1, etc.).
-**validate**        true                   true or false (boolean)      Whether to validate the email address.
-**priority**        3                      1, 2, 3, 4, 5                Email Priority. 1 = highest. 5 = lowest. 3 = normal.
-**CRLF**            \\n                    "\\r\\n" or "\\n" or "\\r"   Newline character. (Use "\\r\\n" to comply with RFC 822).
-**newline**         \\n                    "\\r\\n" or "\\n" or "\\r"   Newline character. (Use "\\r\\n" to comply with RFC 822).
-**BCCBatchMode**    false                  true or false (boolean)      Enable BCC Batch Mode.
-**BCCBatchSize**    200                    None                         Number of emails in each BCC batch.
-**DSN**             false                  true or false (boolean)      Enable notify message from server
-=================== ====================== ============================ =======================================================================
+=================== =================== ============================ =======================================================================
+Preference          Default Value       Options                      Description
+=================== =================== ============================ =======================================================================
+**userAgent**       CodeIgniter         None                         The "user agent".
+**protocol**        mail                ``mail``, ``sendmail``,      The mail sending protocol.
+                                        or ``smtp``
+**mailPath**        /usr/sbin/sendmail  None                         The server path to Sendmail.
+**SMTPHost**        No Default          None                         SMTP Server Address.
+**SMTPUser**        No Default          None                         SMTP Username.
+**SMTPPass**        No Default          None                         SMTP Password.
+**SMTPPort**        25                  None                         SMTP Port. (If set to ``465``, TLS will be used for the connection
+                                                                     regardless of ``SMTPCrypto`` setting.)
+**SMTPTimeout**     5                   None                         SMTP Timeout (in seconds).
+**SMTPKeepAlive**   false               ``true``/``false`` (boolean) Enable persistent SMTP connections.
+**SMTPCrypto**      tls                 ``tls``, ``ssl``, or         SMTP Encryption. Setting this to ``ssl`` will create a secure
+                                        empty string (``''``)        channel to the server using SSL, and ``tls`` will issue a
+                                                                     ``STARTTLS`` command to the server. Connection on port 465 should
+                                                                     set this to an empty string (``''``). See also
+                                                                     :ref:`email-ssl-tls-for-smtp`.
+**wordWrap**        true                ``true``/``false`` (boolean) Enable word-wrap.
+**wrapChars**       76                                               Character count to wrap at.
+**mailType**        text                ``text`` or ``html``         Type of mail. If you send HTML email you must send it as a complete web
+                                                                     page. Make sure you don't have any relative links or relative image
+                                                                     paths otherwise they will not work.
+**charset**         utf-8                                            Character set (``utf-8``, ``iso-8859-1``, etc.).
+**validate**        true                ``true``/``false`` (boolean) Whether to validate the email address.
+**priority**        3                   1, 2, 3, 4, 5                Email Priority. ``1`` = highest. ``5`` = lowest. ``3`` = normal.
+**CRLF**            \\n                 ``\r\n`` or ``\n`` or ``\r`` Newline character. (Use ``\r\n`` to comply with RFC 822).
+**newline**         \\n                 ``\r\n`` or ``\n`` or ``\r`` Newline character. (Use ``\r\n`` to comply with RFC 822).
+**BCCBatchMode**    false               ``true``/``false`` (boolean) Enable BCC Batch Mode.
+**BCCBatchSize**    200                 None                         Number of emails in each BCC batch.
+**DSN**             false               ``true``/``false`` (boolean) Enable notify message from server
+=================== =================== ============================ =======================================================================
 
 Overriding Word Wrapping
 ========================
