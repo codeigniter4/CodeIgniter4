@@ -42,7 +42,7 @@ Setting Email Preferences
 There are 21 different preferences available to tailor how your email
 messages are sent. You can either set them manually as described here,
 or automatically via preferences stored in your config file, described
-below:
+in `Email Preferences`_.
 
 Setting Email Preferences by Passing an Array
 ---------------------------------------------
