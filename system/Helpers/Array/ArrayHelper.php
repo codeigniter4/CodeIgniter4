@@ -306,16 +306,17 @@ final class ArrayHelper
      * Sorts array values in natural order
      * If the value is an array, you need to specify the $sortByIndex of the key to sort
      *
-     * @param int|string|null $sortByIndex
+     * @param list<int|list<int|string>|string> $array
+     * @param int|string|null                   $sortByIndex
      */
     public static function sortValuesByNatural(array &$array, $sortByIndex = null): bool
     {
         return usort($array, static function ($currentValue, $nextValue) use ($sortByIndex) {
             if ($sortByIndex !== null) {
-                return strnatcmp($currentValue[$sortByIndex], $nextValue[$sortByIndex]);
+                return strnatcmp((string) $currentValue[$sortByIndex], (string) $nextValue[$sortByIndex]);
             }
 
-            return strnatcmp($currentValue, $nextValue);
+            return strnatcmp((string) $currentValue, (string) $nextValue);
         });
     }
 }
