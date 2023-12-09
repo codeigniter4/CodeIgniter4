@@ -1202,11 +1202,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/MySQLi/PreparedQuery.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Return type \\(CodeIgniter\\\\Database\\\\MySQLi\\\\PreparedQuery\\) of method CodeIgniter\\\\Database\\\\MySQLi\\\\PreparedQuery\\:\\:_prepare\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\Database\\\\BasePreparedQuery\\<TConnection, TStatement, TResult\\>\\)\\) of method CodeIgniter\\\\Database\\\\BasePreparedQuery\\<mysqli,mysqli_stmt,mysqli_result\\>\\:\\:_prepare\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/MySQLi/PreparedQuery.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Return type \\(mysqli_result\\|false\\) of method CodeIgniter\\\\Database\\\\MySQLi\\\\PreparedQuery\\:\\:_getResult\\(\\) should be covariant with return type \\(object\\|resource\\|null\\) of method CodeIgniter\\\\Database\\\\BasePreparedQuery\\<mysqli,mysqli_stmt,mysqli_result\\>\\:\\:_getResult\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/MySQLi/PreparedQuery.php',
@@ -1318,11 +1313,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^PHPDoc type CodeIgniter\\\\Database\\\\OCI8\\\\Connection of property CodeIgniter\\\\Database\\\\OCI8\\\\PreparedQuery\\:\\:\\$db is not the same as PHPDoc type CodeIgniter\\\\Database\\\\BaseConnection\\<resource, resource\\> of overridden property CodeIgniter\\\\Database\\\\BasePreparedQuery\\<resource,resource,resource\\>\\:\\:\\$db\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/OCI8/PreparedQuery.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Return type \\(CodeIgniter\\\\Database\\\\OCI8\\\\PreparedQuery\\) of method CodeIgniter\\\\Database\\\\OCI8\\\\PreparedQuery\\:\\:_prepare\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\Database\\\\BasePreparedQuery\\<TConnection, TStatement, TResult\\>\\)\\) of method CodeIgniter\\\\Database\\\\BasePreparedQuery\\<resource,resource,resource\\>\\:\\:_prepare\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/OCI8/PreparedQuery.php',
 ];
@@ -1450,11 +1440,6 @@ $ignoreErrors[] = [
 	'message' => '#^Return type \\(array\\|bool\\|string\\) of method CodeIgniter\\\\Database\\\\Postgre\\\\Forge\\:\\:_alterTable\\(\\) should be covariant with return type \\(array\\<string\\>\\|string\\|false\\) of method CodeIgniter\\\\Database\\\\Forge\\:\\:_alterTable\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Postgre/Forge.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Return type \\(CodeIgniter\\\\Database\\\\Postgre\\\\PreparedQuery\\) of method CodeIgniter\\\\Database\\\\Postgre\\\\PreparedQuery\\:\\:_prepare\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\Database\\\\BasePreparedQuery\\<TConnection, TStatement, TResult\\>\\)\\) of method CodeIgniter\\\\Database\\\\BasePreparedQuery\\<PgSql\\\\Connection,PgSql\\\\Result,PgSql\\\\Result\\>\\:\\:_prepare\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Postgre/PreparedQuery.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -1592,11 +1577,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/SQLSRV/PreparedQuery.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Return type \\(CodeIgniter\\\\Database\\\\SQLSRV\\\\PreparedQuery\\) of method CodeIgniter\\\\Database\\\\SQLSRV\\\\PreparedQuery\\:\\:_prepare\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\Database\\\\BasePreparedQuery\\<TConnection, TStatement, TResult\\>\\)\\) of method CodeIgniter\\\\Database\\\\BasePreparedQuery\\<resource,resource,resource\\>\\:\\:_prepare\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/SQLSRV/PreparedQuery.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/SQLSRV/Result.php',
@@ -1665,11 +1645,6 @@ $ignoreErrors[] = [
 	'message' => '#^Return type \\(array\\|string\\|null\\) of method CodeIgniter\\\\Database\\\\SQLite3\\\\Forge\\:\\:_alterTable\\(\\) should be covariant with return type \\(array\\<string\\>\\|string\\|false\\) of method CodeIgniter\\\\Database\\\\Forge\\:\\:_alterTable\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/SQLite3/Forge.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Return type \\(CodeIgniter\\\\Database\\\\SQLite3\\\\PreparedQuery\\) of method CodeIgniter\\\\Database\\\\SQLite3\\\\PreparedQuery\\:\\:_prepare\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\Database\\\\BasePreparedQuery\\<TConnection, TStatement, TResult\\>\\)\\) of method CodeIgniter\\\\Database\\\\BasePreparedQuery\\<SQLite3,SQLite3Stmt,SQLite3Result\\>\\:\\:_prepare\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/SQLite3/PreparedQuery.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Return type \\(SQLite3Result\\|false\\) of method CodeIgniter\\\\Database\\\\SQLite3\\\\PreparedQuery\\:\\:_getResult\\(\\) should be covariant with return type \\(object\\|resource\\|null\\) of method CodeIgniter\\\\Database\\\\BasePreparedQuery\\<SQLite3,SQLite3Stmt,SQLite3Result\\>\\:\\:_getResult\\(\\)$#',
@@ -1953,16 +1928,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Return type \\(CodeIgniter\\\\HTTP\\\\DownloadResponse\\) of method CodeIgniter\\\\HTTP\\\\DownloadResponse\\:\\:noCache\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\HTTP\\\\Response\\)\\) of method CodeIgniter\\\\HTTP\\\\Response\\:\\:noCache\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Return type \\(CodeIgniter\\\\HTTP\\\\DownloadResponse\\) of method CodeIgniter\\\\HTTP\\\\DownloadResponse\\:\\:noCache\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\HTTP\\\\ResponseInterface\\)\\) of method CodeIgniter\\\\HTTP\\\\ResponseInterface\\:\\:noCache\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
 ];
