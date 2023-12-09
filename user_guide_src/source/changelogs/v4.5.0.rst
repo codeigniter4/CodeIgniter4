@@ -263,7 +263,8 @@ limit(0) Behavior
   generated SQL statement will have no ``LIMIT`` clause and all records will be
   returned.
 - It is recommended that ``$limitZeroAsAll`` in **app/Config/Feature.php** be set
-  to ``false`` as this incorrect behavior will be fixed in a future version.
+  to ``false`` as this incorrect behavior will be fixed in a future version. See
+  also :ref:`v450-model-findall-limit-0-behavior`.
 
 Forge
 -----
@@ -273,6 +274,17 @@ Others
 
 Model
 =====
+
+.. _v450-model-findall-limit-0-behavior:
+
+findAll(0) Behavior
+-------------------
+
+- Added a feature flag ``Feature::$limitZeroAsAll`` to fix the incorrect behavior
+  of ``limit(0)`` for Query Builder. See :ref:`v450-query-builder-limit-0-behavior`
+  for details.
+- If you disable this flag, you need to change code like ``findAll(0, $offset)``
+  to ``findAll(null, $offset)``.
 
 Libraries
 =========
