@@ -69,6 +69,15 @@ final class HoneypotTest extends CIUnitTestCase
         $this->assertStringNotContainsString($this->config->name, $this->response->getBody());
     }
 
+    public function testAttachHoneypotBodyNull(): void
+    {
+        $this->response->setBody(null);
+
+        $this->honeypot->attachHoneypot($this->response);
+
+        $this->assertNull($this->response->getBody());
+    }
+
     public function testAttachHoneypotAndContainer(): void
     {
         $this->response->setBody('<form></form>');

@@ -14,6 +14,7 @@ Documentations
 What has been changed
 =====================
 - Only small things like the method names and the loading of the library have changed.
+- The behavior when using the SMTP protocol has been slightly changed. You may not be able to communicate with your SMTP server properly if you use the CI3 settings. See :ref:`email-ssl-tls-for-smtp` and :ref:`email-preferences`.
 
 Upgrade Guide
 =============
