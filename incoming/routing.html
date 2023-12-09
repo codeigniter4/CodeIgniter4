@@ -459,7 +459,7 @@ and the <code class="docutils literal notranslate"><span class="pre">productLook
 </div>
 </section>
 <section id="http-verb-routes">
-<h3><a class="toc-backref" href="#id16">HTTP verb Routes</a><a class="headerlink" href="#http-verb-routes" title="Permalink to this headline"></a></h3>
+<span id="routing-http-verb-routes"></span><h3><a class="toc-backref" href="#id16">HTTP verb Routes</a><a class="headerlink" href="#http-verb-routes" title="Permalink to this headline"></a></h3>
 <p>You can use any standard HTTP verb (GET, POST, PUT, DELETE, OPTIONS, etc):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -621,13 +621,17 @@ used for readability.</p>
 <p><code class="docutils literal notranslate"><span class="pre">{locale}</span></code> cannot be used as a placeholder or other part of the route, as it is reserved for use
 in <a class="reference internal" href="../outgoing/localization.html"><span class="doc">localization</span></a>.</p>
 </div>
-<p>Note that a single <code class="docutils literal notranslate"><span class="pre">(:any)</span></code> will match multiple segments in the URL if present. For example the route:</p>
+<section id="the-behavior-of-any">
+<span id="routing-placeholder-any"></span><h5>The Behavior of (:any)<a class="headerlink" href="#the-behavior-of-any" title="Permalink to this headline"></a></h5>
+<p>Note that a single <code class="docutils literal notranslate"><span class="pre">(:any)</span></code> will match multiple segments in the URL if present.</p>
+<p>For example the route:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>will match <strong>product/123</strong>, <strong>product/123/456</strong>, <strong>product/123/456/789</strong> and so on. The implementation in the
+<p>will match <strong>product/123</strong>, <strong>product/123/456</strong>, <strong>product/123/456/789</strong> and so on.</p>
+<p>The implementation in the
 Controller should take into account the maximum parameters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -657,6 +661,7 @@ routes. With the examples URLs from above:</p>
 </pre></div>
 </div>
 <p>will only match <strong>product/123</strong> and generate 404 errors for other example.</p>
+</section>
 </section>
 <section id="custom-placeholders">
 <h4><a class="toc-backref" href="#id23">Custom Placeholders</a><a class="headerlink" href="#custom-placeholders" title="Permalink to this headline"></a></h4>
