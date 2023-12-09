@@ -102,6 +102,8 @@ The settings used for the last successful send are available from the
 instance property ``$archive``. This is helpful for testing and debugging
 to determine that actual values at the time of the ``send()`` call.
 
+.. _email-preferences:
+
 Email Preferences
 =================
 
