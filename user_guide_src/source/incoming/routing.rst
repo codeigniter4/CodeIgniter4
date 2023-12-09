@@ -69,6 +69,8 @@ and the ``productLookupByID()`` method passing in the match as a variable to the
 
 .. literalinclude:: routing/009.php
 
+.. _routing-http-verb-routes:
+
 HTTP verb Routes
 ================
 
@@ -185,11 +187,20 @@ Placeholders Description
 .. note:: ``{locale}`` cannot be used as a placeholder or other part of the route, as it is reserved for use
     in :doc:`localization </outgoing/localization>`.
 
-Note that a single ``(:any)`` will match multiple segments in the URL if present. For example the route:
+.. _routing-placeholder-any:
+
+The Behavior of (:any)
+^^^^^^^^^^^^^^^^^^^^^^
+
+Note that a single ``(:any)`` will match multiple segments in the URL if present.
+
+For example the route:
 
 .. literalinclude:: routing/010.php
 
-will match **product/123**, **product/123/456**, **product/123/456/789** and so on. The implementation in the
+will match **product/123**, **product/123/456**, **product/123/456/789** and so on.
+
+The implementation in the
 Controller should take into account the maximum parameters:
 
 .. literalinclude:: routing/011.php
