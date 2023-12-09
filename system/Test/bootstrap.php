@@ -78,7 +78,7 @@ Services::autoloader()->initialize(new Autoload(), new Modules())->register();
 Services::autoloader()->loadHelpers();
 
 // Now load Composer's if it's available
-if (is_file(COMPOSER_PATH)) {
+if (COMPOSER_PATH !== false && is_file(COMPOSER_PATH)) {
     require_once COMPOSER_PATH;
 }
 
