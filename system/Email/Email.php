@@ -71,7 +71,7 @@ class Email
     public $protocol = 'mail';
 
     /**
-     * STMP Server host
+     * STMP Server Hostname
      *
      * @var string
      */
