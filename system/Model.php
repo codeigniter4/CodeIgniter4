@@ -224,8 +224,8 @@ class Model extends BaseModel
      * all results, while optionally limiting them.
      * This method works only with dbCalls.
      *
-     * @param int $limit  Limit
-     * @param int $offset Offset
+     * @param int|null $limit  Limit
+     * @param int      $offset Offset
      *
      * @return array
      * @phpstan-return list<row_array|object>
