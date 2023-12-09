@@ -117,7 +117,7 @@ Preference          Default Value       Options                      Description
 **protocol**        mail                ``mail``, ``sendmail``,      The mail sending protocol.
                                         or ``smtp``
 **mailPath**        /usr/sbin/sendmail  None                         The server path to Sendmail.
-**SMTPHost**        No Default          None                         SMTP Server Address.
+**SMTPHost**        No Default          None                         SMTP Server Hostname.
 **SMTPUser**        No Default          None                         SMTP Username.
 **SMTPPass**        No Default          None                         SMTP Password.
 **SMTPPort**        25                  None                         SMTP Port. (If set to ``465``, TLS will be used for the connection
