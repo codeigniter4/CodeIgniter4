@@ -78,6 +78,10 @@ class Honeypot
      */
     public function attachHoneypot(ResponseInterface $response)
     {
+        if ($response->getBody() === null) {
+            return;
+        }
+
         if ($response->getCSP()->enabled()) {
             // Add id attribute to the container tag.
             $this->config->container = str_ireplace(
