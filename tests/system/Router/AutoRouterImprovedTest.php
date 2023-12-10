@@ -511,6 +511,24 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
                 1,
                 null,
             ],
+            'subfolder-controller-and-method-wz-dash' => [
+                'subfolder/sub/blog-controller/some-method',
+                'Subfolder/Sub/',
+                '\CodeIgniter\Router\Controllers\Subfolder\Sub\BlogController',
+                'getSomeMethod',
+                2,
+                3,
+                null,
+            ],
+            'subfolder-wz-dash-controller-and-method-wz-dash' => [
+                'sub-dir/blog-controller/some-method',
+                'SubDir/',
+                '\CodeIgniter\Router\Controllers\SubDir\BlogController',
+                'getSomeMethod',
+                1,
+                2,
+                null,
+            ],
         ];
     }
 
