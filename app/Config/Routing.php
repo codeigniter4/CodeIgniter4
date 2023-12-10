@@ -117,4 +117,13 @@ class Routing extends BaseRouting
      * @var array [ uri_segment => namespace ]
      */
     public array $moduleRoutes = [];
+
+    /**
+     * For Auto Routing (Improved).
+     * Whether to translate dashes in URIs for controller/method to CamelCase.
+     * E.g., blog-controller -> BlogController
+     *
+     * Default: false
+     */
+    public bool $translateUriToCamelCase = false;
 }
