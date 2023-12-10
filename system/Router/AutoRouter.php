@@ -81,6 +81,8 @@ final class AutoRouter implements AutoRouterInterface
      * Attempts to match a URI path against Controllers and directories
      * found in APPPATH/Controllers, to find a matching route.
      *
+     * @param string $httpVerb HTTP verb like `GET`,`POST`
+     *
      * @return array [directory_name, controller_name, controller_method, params]
      */
     public function getRoute(string $uri, string $httpVerb): array

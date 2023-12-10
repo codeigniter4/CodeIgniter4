@@ -243,6 +243,8 @@ final class AutoRouterImproved implements AutoRouterInterface
     /**
      * Finds controller, method and params from the URI.
      *
+     * @param string $httpVerb HTTP verb like `GET`,`POST`
+     *
      * @return array [directory_name, controller_name, controller_method, params]
      */
     public function getRoute(string $uri, string $httpVerb): array
