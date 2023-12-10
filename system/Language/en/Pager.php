@@ -20,4 +20,5 @@ return [
     'newer'                  => 'Newer',
     'invalidTemplate'        => '"{0}" is not a valid Pager template.',
     'invalidPaginationGroup' => '"{0}" is not a valid Pagination group.',
+    'all'                    => 'Total: {0} items.',
 ];
