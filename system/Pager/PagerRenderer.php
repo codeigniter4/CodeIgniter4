@@ -428,4 +428,12 @@ class PagerRenderer
     {
         return ($this->current === $this->pageCount) ? null : $this->current + 1;
     }
+
+    /**
+     * Returns the number of all items
+     */
+    public function getTotal(): int
+    {
+        return $this->total;
+    }
 }
