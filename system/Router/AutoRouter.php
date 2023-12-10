@@ -51,11 +51,6 @@ final class AutoRouter implements AutoRouterInterface
     private bool $translateURIDashes;
 
     /**
-     * HTTP verb for the request.
-     */
-    private string $httpVerb;
-
-    /**
      * Default namespace for controllers.
      */
     private string $defaultNamespace;
@@ -65,13 +60,11 @@ final class AutoRouter implements AutoRouterInterface
         string $defaultNamespace,
         string $defaultController,
         string $defaultMethod,
-        bool $translateURIDashes,
-        string $httpVerb
+        bool $translateURIDashes
     ) {
         $this->cliRoutes          = $cliRoutes;
         $this->defaultNamespace   = $defaultNamespace;
         $this->translateURIDashes = $translateURIDashes;
-        $this->httpVerb           = $httpVerb;
 
         $this->controller = $defaultController;
         $this->method     = $defaultMethod;

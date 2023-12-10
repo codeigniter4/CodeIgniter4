@@ -42,15 +42,14 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->collection      = new RouteCollection(Services::locator(), $moduleConfig, new Routing());
     }
 
-    private function createNewAutoRouter(string $httpVerb = 'GET', $namespace = 'CodeIgniter\Router\Controllers'): AutoRouterImproved
+    private function createNewAutoRouter($namespace = 'CodeIgniter\Router\Controllers'): AutoRouterImproved
     {
         return new AutoRouterImproved(
             [],
             $namespace,
             $this->collection->getDefaultController(),
             $this->collection->getDefaultMethod(),
-            true,
-            $httpVerb
+            true
         );
     }
 
@@ -84,7 +83,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $this->collection->setDefaultController('Index');
 
-        $router = $this->createNewAutoRouter('GET', 'App/Controllers');
+        $router = $this->createNewAutoRouter('App/Controllers');
 
         [$directory, $controller, $method, $params]
             = $router->getRoute('test', 'GET');
@@ -99,7 +98,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
     {
         $this->collection->setDefaultController('Index');
 
-        $router = $this->createNewAutoRouter('post');
+        $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
             = $router->getRoute('/', 'POST');

@@ -104,16 +104,13 @@ final class AutoRouterImproved implements AutoRouterInterface
     /**
      * @param class-string[] $protectedControllers
      * @param string         $defaultController    Short classname
-     *
-     * @deprecated $httpVerb is deprecated. No longer used.
      */
-    public function __construct(// @phpstan-ignore-line
+    public function __construct(
         array $protectedControllers,
         string $namespace,
         string $defaultController,
         string $defaultMethod,
-        bool $translateURIDashes,
-        string $httpVerb
+        bool $translateURIDashes
     ) {
         $this->protectedControllers = $protectedControllers;
         $this->namespace            = rtrim($namespace, '\\');
