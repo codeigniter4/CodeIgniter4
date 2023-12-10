@@ -115,6 +115,11 @@ final class AutoRouterImproved implements AutoRouterInterface
     private ?int $paramPos = null;
 
     /**
+     * The current URI
+     */
+    private ?string $uri = null;
+
+    /**
      * @param class-string[] $protectedControllers
      * @param string         $defaultController    Short classname
      */
@@ -261,7 +266,8 @@ final class AutoRouterImproved implements AutoRouterInterface
      */
     public function getRoute(string $uri, string $httpVerb): array
     {
-        $httpVerb = strtolower($httpVerb);
+        $this->uri = $uri;
+        $httpVerb  = strtolower($httpVerb);
 
         // Reset Controller method params.
         $this->params = [];
@@ -354,11 +360,11 @@ final class AutoRouterImproved implements AutoRouterInterface
 
         // Ensure the URI segments for the controller and method do not contain
         // underscores when $translateURIDashes is true.
-        $this->checkUnderscore($uri);
+        $this->checkUnderscore();
 
         // Check parameter count
         try {
-            $this->checkParameters($uri);
+            $this->checkParameters();
         } catch (MethodNotFoundException $e) {
             throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
         }
@@ -422,7 +428,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         }
     }
 
-    private function checkParameters(string $uri): void
+    private function checkParameters(): void
     {
         try {
             $refClass = new ReflectionClass($this->controller);
@@ -445,7 +451,7 @@ final class AutoRouterImproved implements AutoRouterInterface
             throw new PageNotFoundException(
                 'The param count in the URI are greater than the controller method params.'
                 . ' Handler:' . $this->controller . '::' . $this->method
-                . ', URI:' . $uri
+                . ', URI:' . $this->uri
             );
         }
     }
@@ -465,7 +471,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         }
     }
 
-    private function checkUnderscore(string $uri): void
+    private function checkUnderscore(): void
     {
         if ($this->translateURIDashes === false) {
             return;
@@ -481,7 +487,7 @@ final class AutoRouterImproved implements AutoRouterInterface
                     . ' when $translateURIDashes is enabled.'
                     . ' Please use the dash.'
                     . ' Handler:' . $this->controller . '::' . $this->method
-                    . ', URI:' . $uri
+                    . ', URI:' . $this->uri
                 );
             }
         }
