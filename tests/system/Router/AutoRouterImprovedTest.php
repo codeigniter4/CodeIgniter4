@@ -16,6 +16,7 @@ namespace CodeIgniter\Router;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\Router\Controllers\Dash_folder\Dash_controller;
 use CodeIgniter\Router\Controllers\Dash_folder\Home;
 use CodeIgniter\Router\Controllers\Index;
@@ -60,7 +61,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('/', 'GET');
+            = $router->getRoute('/', Method::GET);
 
         $this->assertNull($directory);
         $this->assertSame('\\' . Index::class, $controller);
@@ -86,7 +87,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter('App/Controllers');
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('test', 'GET');
+            = $router->getRoute('test', Method::GET);
 
         $this->assertNull($directory);
         $this->assertSame('\\' . Index::class, $controller);
@@ -101,7 +102,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('/', 'POST');
+            = $router->getRoute('/', Method::POST);
 
         $this->assertNull($directory);
         $this->assertSame('\\' . Index::class, $controller);
@@ -114,7 +115,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('mycontroller/somemethod', 'GET');
+            = $router->getRoute('mycontroller/somemethod', Method::GET);
 
         $this->assertNull($directory);
         $this->assertSame('\\' . Mycontroller::class, $controller);
@@ -132,7 +133,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('mycontroller/somemethod/a', 'GET');
+            = $router->getRoute('mycontroller/somemethod/a', Method::GET);
 
         $this->assertNull($directory);
         $this->assertSame('\\' . Mycontroller::class, $controller);
@@ -154,7 +155,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $router = $this->createNewAutoRouter();
 
-        $router->getRoute('mycontroller/somemethod/a/b', 'GET');
+        $router->getRoute('mycontroller/somemethod/a/b', Method::GET);
     }
 
     public function testAutoRouteFindsControllerWithFile(): void
@@ -162,7 +163,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('mycontroller', 'GET');
+            = $router->getRoute('mycontroller', Method::GET);
 
         $this->assertNull($directory);
         $this->assertSame('\\' . Mycontroller::class, $controller);
@@ -175,7 +176,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('subfolder/mycontroller/somemethod', 'GET');
+            = $router->getRoute('subfolder/mycontroller/somemethod', Method::GET);
 
         $this->assertSame('Subfolder/', $directory);
         $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Mycontroller::class, $controller);
@@ -193,7 +194,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('subfolder/sub/mycontroller/somemethod', 'GET');
+            = $router->getRoute('subfolder/sub/mycontroller/somemethod', Method::GET);
 
         $this->assertSame('Subfolder/Sub/', $directory);
         $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Sub\Mycontroller::class, $controller);
@@ -206,7 +207,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('dash-folder/mycontroller/somemethod', 'GET');
+            = $router->getRoute('dash-folder/mycontroller/somemethod', Method::GET);
 
         $this->assertSame('Dash_folder/', $directory);
         $this->assertSame(
@@ -222,7 +223,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('dash-folder/dash-controller/somemethod', 'GET');
+            = $router->getRoute('dash-folder/dash-controller/somemethod', Method::GET);
 
         $this->assertSame('Dash_folder/', $directory);
         $this->assertSame('\\' . Dash_controller::class, $controller);
@@ -235,7 +236,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('dash-folder/dash-controller/dash-method', 'GET');
+            = $router->getRoute('dash-folder/dash-controller/dash-method', Method::GET);
 
         $this->assertSame('Dash_folder/', $directory);
         $this->assertSame('\\' . Dash_controller::class, $controller);
@@ -248,7 +249,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('dash-folder', 'GET');
+            = $router->getRoute('dash-folder', Method::GET);
 
         $this->assertSame('Dash_folder/', $directory);
         $this->assertSame('\\' . Home::class, $controller);
@@ -261,7 +262,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('index/15', 'GET');
+            = $router->getRoute('index/15', Method::GET);
 
         $this->assertNull($directory);
         $this->assertSame('\\' . Index::class, $controller);
@@ -279,7 +280,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('subfolder/15', 'GET');
+            = $router->getRoute('subfolder/15', Method::GET);
 
         $this->assertSame('Subfolder/', $directory);
         $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Home::class, $controller);
@@ -297,7 +298,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('subfolder/15/20', 'GET');
+            = $router->getRoute('subfolder/15/20', Method::GET);
 
         $this->assertSame('Subfolder/', $directory);
         $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Home::class, $controller);
@@ -315,7 +316,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('subfolder', 'GET');
+            = $router->getRoute('subfolder', Method::GET);
 
         $this->assertSame('Subfolder/', $directory);
         $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Home::class, $controller);
@@ -334,7 +335,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $router = $this->createNewAutoRouter();
 
-        $router->getRoute('.', 'GET');
+        $router->getRoute('.', Method::GET);
     }
 
     public function testAutoRouteRejectsDoubleDot(): void
@@ -343,7 +344,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $router = $this->createNewAutoRouter();
 
-        $router->getRoute('..', 'GET');
+        $router->getRoute('..', Method::GET);
     }
 
     public function testAutoRouteRejectsMidDot(): void
@@ -352,7 +353,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $router = $this->createNewAutoRouter();
 
-        $router->getRoute('foo.bar', 'GET');
+        $router->getRoute('foo.bar', Method::GET);
     }
 
     public function testRejectsDefaultControllerPath(): void
@@ -361,7 +362,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $router = $this->createNewAutoRouter();
 
-        $router->getRoute('home', 'GET');
+        $router->getRoute('home', Method::GET);
     }
 
     public function testRejectsDefaultControllerAndDefaultMethodPath(): void
@@ -370,7 +371,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $router = $this->createNewAutoRouter();
 
-        $router->getRoute('home/index', 'GET');
+        $router->getRoute('home/index', Method::GET);
     }
 
     public function testRejectsDefaultMethodPath(): void
@@ -379,7 +380,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $router = $this->createNewAutoRouter();
 
-        $router->getRoute('mycontroller/index', 'GET');
+        $router->getRoute('mycontroller/index', Method::GET);
     }
 
     public function testRejectsControllerWithRemapMethod(): void
@@ -391,7 +392,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $router = $this->createNewAutoRouter();
 
-        $router->getRoute('remap/test', 'GET');
+        $router->getRoute('remap/test', Method::GET);
     }
 
     public function testRejectsURIWithUnderscoreFolder()
@@ -403,7 +404,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $router = $this->createNewAutoRouter();
 
-        $router->getRoute('dash_folder', 'GET');
+        $router->getRoute('dash_folder', Method::GET);
     }
 
     public function testRejectsURIWithUnderscoreController()
@@ -415,7 +416,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $router = $this->createNewAutoRouter();
 
-        $router->getRoute('dash-folder/dash_controller/dash-method', 'GET');
+        $router->getRoute('dash-folder/dash_controller/dash-method', Method::GET);
     }
 
     public function testRejectsURIWithUnderscoreMethod()
@@ -427,7 +428,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $router = $this->createNewAutoRouter();
 
-        $router->getRoute('dash-folder/dash-controller/dash_method', 'GET');
+        $router->getRoute('dash-folder/dash-controller/dash_method', Method::GET);
     }
 
     public function testPermitsURIWithUnderscoreParam()
@@ -435,7 +436,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('mycontroller/somemethod/a_b', 'GET');
+            = $router->getRoute('mycontroller/somemethod/a_b', Method::GET);
 
         $this->assertNull($directory);
         $this->assertSame('\\' . Mycontroller::class, $controller);
@@ -448,7 +449,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $router = $this->createNewAutoRouter();
 
         [$directory, $controller, $method, $params]
-            = $router->getRoute('mycontroller/somemethod/a-b', 'GET');
+            = $router->getRoute('mycontroller/somemethod/a-b', Method::GET);
 
         $this->assertNull($directory);
         $this->assertSame('\\' . Mycontroller::class, $controller);
