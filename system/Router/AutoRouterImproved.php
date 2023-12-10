@@ -77,6 +77,19 @@ final class AutoRouterImproved implements AutoRouterInterface
     private string $defaultMethod;
 
     /**
+     * Map of URI segments and namespaces.
+     *
+     * The key is the first URI segment. The value is the controller namespace.
+     * E.g.,
+     *   [
+     *       'blog' => 'Acme\Blog\Controllers',
+     *   ]
+     *
+     * @var array [ uri_segment => namespace ]
+     */
+    private array $moduleRoutes;
+
+    /**
      * The URI segments.
      *
      * @var list<string>
@@ -118,6 +131,8 @@ final class AutoRouterImproved implements AutoRouterInterface
         $this->defaultController    = $defaultController;
         $this->defaultMethod        = $defaultMethod;
 
+        $routingConfig                 = config(Routing::class);
+        $this->moduleRoutes            = $routingConfig->moduleRoutes;
         // Set the default values
         $this->controller = $this->defaultController;
     }
@@ -259,11 +274,10 @@ final class AutoRouterImproved implements AutoRouterInterface
         // Check for Module Routes.
         if (
             $this->segments !== []
-            && ($routingConfig = config(Routing::class))
-            && array_key_exists($this->segments[0], $routingConfig->moduleRoutes)
+            && array_key_exists($this->segments[0], $this->moduleRoutes)
         ) {
             $uriSegment      = array_shift($this->segments);
-            $this->namespace = rtrim($routingConfig->moduleRoutes[$uriSegment], '\\');
+            $this->namespace = rtrim($this->moduleRoutes[$uriSegment], '\\');
         }
 
         if ($this->searchFirstController()) {
