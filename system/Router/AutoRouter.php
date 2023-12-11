@@ -51,11 +51,6 @@ final class AutoRouter implements AutoRouterInterface
     private bool $translateURIDashes;
 
     /**
-     * HTTP verb for the request.
-     */
-    private string $httpVerb;
-
-    /**
      * Default namespace for controllers.
      */
     private string $defaultNamespace;
@@ -65,13 +60,11 @@ final class AutoRouter implements AutoRouterInterface
         string $defaultNamespace,
         string $defaultController,
         string $defaultMethod,
-        bool $translateURIDashes,
-        string $httpVerb
+        bool $translateURIDashes
     ) {
         $this->cliRoutes          = $cliRoutes;
         $this->defaultNamespace   = $defaultNamespace;
         $this->translateURIDashes = $translateURIDashes;
-        $this->httpVerb           = $httpVerb;
 
         $this->controller = $defaultController;
         $this->method     = $defaultMethod;
@@ -80,6 +73,8 @@ final class AutoRouter implements AutoRouterInterface
     /**
      * Attempts to match a URI path against Controllers and directories
      * found in APPPATH/Controllers, to find a matching route.
+     *
+     * @param string $httpVerb HTTP verb like `GET`,`POST`
      *
      * @return array [directory_name, controller_name, controller_method, params]
      */
@@ -122,7 +117,7 @@ final class AutoRouter implements AutoRouterInterface
         }
 
         // Ensure routes registered via $routes->cli() are not accessible via web.
-        if ($this->httpVerb !== 'CLI') {
+        if ($httpVerb !== 'CLI') {
             $controller = '\\' . $this->defaultNamespace;
 
             $controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';

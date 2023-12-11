@@ -151,8 +151,7 @@ class Router implements RouterInterface
                     $this->collection->getDefaultNamespace(),
                     $this->collection->getDefaultController(),
                     $this->collection->getDefaultMethod(),
-                    $this->translateURIDashes,
-                    $this->collection->getHTTPVerb()
+                    $this->translateURIDashes
                 );
             } else {
                 $this->autoRouter = new AutoRouter(
@@ -160,8 +159,7 @@ class Router implements RouterInterface
                     $this->collection->getDefaultNamespace(),
                     $this->collection->getDefaultController(),
                     $this->collection->getDefaultMethod(),
-                    $this->translateURIDashes,
-                    $this->collection->getHTTPVerb()
+                    $this->translateURIDashes
                 );
             }
         }
