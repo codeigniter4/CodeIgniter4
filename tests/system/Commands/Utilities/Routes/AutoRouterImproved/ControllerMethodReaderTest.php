@@ -13,8 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved;
 
+use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\Dash_folder\Dash_controller;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\Home;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\Routing;
 use Tests\Support\Controllers\Newautorouting;
 use Tests\Support\Controllers\Remap;
 
@@ -61,6 +64,43 @@ final class ControllerMethodReaderTest extends CIUnitTestCase
                     'a' => true,
                     'b' => true,
                     'c' => false,
+                ],
+            ],
+        ];
+
+        $this->assertSame($expected, $routes);
+    }
+
+    public function testReadTranslateURIDashes(): void
+    {
+        $config                     = config(Routing::class);
+        $config->translateURIDashes = true;
+        Factories::injectMock('config', Routing::class, $config);
+
+        $reader = $this->createControllerMethodReader(
+            'CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers'
+        );
+
+        $routes = $reader->read(Dash_controller::class);
+
+        $expected = [
+            0 => [
+                'method'       => 'get',
+                'route'        => 'dash-folder/dash-controller/somemethod',
+                'route_params' => '[/..]',
+                'handler'      => '\CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\Dash_folder\Dash_controller::getSomemethod',
+                'params'       => [
+                    'p1' => false,
+                ],
+            ],
+            [
+                'method'       => 'get',
+                'route'        => 'dash-folder/dash-controller/dash-method',
+                'route_params' => '/..[/..]',
+                'handler'      => '\CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\Controllers\Dash_folder\Dash_controller::getDash_method',
+                'params'       => [
+                    'p1' => true,
+                    'p2' => false,
                 ],
             ],
         ];

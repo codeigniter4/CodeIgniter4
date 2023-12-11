@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved;
 
+use Config\Routing;
 use ReflectionClass;
 use ReflectionMethod;
 
@@ -33,6 +34,8 @@ final class ControllerMethodReader
      */
     private array $httpMethods;
 
+    private bool $translateURIDashes;
+
     /**
      * @param string $namespace the default namespace
      */
@@ -40,6 +43,9 @@ final class ControllerMethodReader
     {
         $this->namespace   = $namespace;
         $this->httpMethods = $httpMethods;
+
+        $config                   = config(Routing::class);
+        $this->translateURIDashes = $config->translateURIDashes;
     }
 
     /**
@@ -69,7 +75,7 @@ final class ControllerMethodReader
             foreach ($this->httpMethods as $httpVerb) {
                 if (strpos($methodName, strtolower($httpVerb)) === 0) {
                     // Remove HTTP verb prefix.
-                    $methodInUri = lcfirst(substr($methodName, strlen($httpVerb)));
+                    $methodInUri = $this->getUriByMethod($httpVerb, $methodName);
 
                     // Check if it is the default method.
                     if ($methodInUri === $defaultMethod) {
@@ -173,7 +179,27 @@ final class ControllerMethodReader
             $classPath .= lcfirst($part) . '/';
         }
 
-        return rtrim($classPath, '/');
+        $classUri = rtrim($classPath, '/');
+
+        if ($this->translateURIDashes) {
+            $classUri = str_replace('_', '-', $classUri);
+        }
+
+        return $classUri;
+    }
+
+    /**
+     * @return string URI path part from the method
+     */
+    private function getUriByMethod(string $httpVerb, string $methodName): string
+    {
+        $methodUri = lcfirst(substr($methodName, strlen($httpVerb)));
+
+        if ($this->translateURIDashes) {
+            $methodUri = str_replace('_', '-', $methodUri);
+        }
+
+        return $methodUri;
     }
 
     /**
