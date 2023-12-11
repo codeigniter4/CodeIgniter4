@@ -297,45 +297,38 @@ class RedisHandler extends BaseHandler
         // so we need to check here if the lock key is for the
         // correct session ID.
         if ($this->lockKey === $lockKey) {
+            // If there is the lock, make the ttl longer.
             return $this->redis->expire($this->lockKey, 300);
         }
 
         $attempt = 0;
 
         do {
-            $ttl = $this->redis->ttl($lockKey);
-            assert(is_int($ttl));
+            $result = $this->redis->set(
+                $lockKey,
+                (string) Time::now()->getTimestamp(),
+                // NX -- Only set the key if it does not already exist.
+                // EX seconds -- Set the specified expire time, in seconds.
+                ['nx', 'ex' => 300]
+            );
 
-            if ($ttl > 0) {
-                sleep(1);
+            if (! $result) {
+                usleep(100000);
 
                 continue;
             }
 
-            if (! $this->redis->setex($lockKey, 300, (string) Time::now()->getTimestamp())) {
-                $this->logger->error(
-                    'Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID
-                );
-
-                return false;
-            }
-
             $this->lockKey = $lockKey;
             break;
-        } while (++$attempt < 30);
+        } while (++$attempt < 300);
 
-        if ($attempt === 30) {
+        if ($attempt === 300) {
             $this->logger->error(
-                'Session: Unable to obtain lock for ' . $this->keyPrefix . $sessionID . ' after 30 attempts, aborting.'
+                'Session: Unable to obtain lock for ' . $this->keyPrefix . $sessionID
+                . ' after 300 attempts, aborting.'
             );
 
             return false;
-        }
-
-        if ($ttl === -1) {
-            $this->logger->debug(
-                'Session: Lock for ' . $this->keyPrefix . $sessionID . ' had no TTL, overriding.'
-            );
         }
 
         $this->lock = true;
