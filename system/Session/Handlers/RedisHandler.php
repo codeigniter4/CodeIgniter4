@@ -325,8 +325,7 @@ class RedisHandler extends BaseHandler
         } while (++$attempt < 30);
 
         if ($attempt === 30) {
-            log_message(
-                'error',
+            $this->logger->error(
                 'Session: Unable to obtain lock for ' . $this->keyPrefix . $sessionID . ' after 30 attempts, aborting.'
             );
 
@@ -334,8 +333,7 @@ class RedisHandler extends BaseHandler
         }
 
         if ($ttl === -1) {
-            log_message(
-                'debug',
+            $this->logger->debug(
                 'Session: Lock for ' . $this->keyPrefix . $sessionID . ' had no TTL, overriding.'
             );
         }
