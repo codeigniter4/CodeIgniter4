@@ -124,12 +124,20 @@ class RedisHandler extends BaseHandler
 
         $redis = new Redis();
 
-        if (! $redis->connect($this->savePath['protocol'] . '://' . $this->savePath['host'], ($this->savePath['host'][0] === '/' ? 0 : $this->savePath['port']), $this->savePath['timeout'])) {
+        if (
+            ! $redis->connect(
+                $this->savePath['protocol'] . '://' . $this->savePath['host'],
+                ($this->savePath['host'][0] === '/' ? 0 : $this->savePath['port']),
+                $this->savePath['timeout']
+            )
+        ) {
             $this->logger->error('Session: Unable to connect to Redis with the configured settings.');
         } elseif (isset($this->savePath['password']) && ! $redis->auth($this->savePath['password'])) {
             $this->logger->error('Session: Unable to authenticate to Redis instance.');
         } elseif (isset($this->savePath['database']) && ! $redis->select($this->savePath['database'])) {
-            $this->logger->error('Session: Unable to select Redis database with index ' . $this->savePath['database']);
+            $this->logger->error(
+                'Session: Unable to select Redis database with index ' . $this->savePath['database']
+            );
         } else {
             $this->redis = $redis;
 
@@ -251,7 +259,9 @@ class RedisHandler extends BaseHandler
     {
         if (isset($this->redis, $this->lockKey)) {
             if (($result = $this->redis->del($this->keyPrefix . $id)) !== 1) {
-                $this->logger->debug('Session: Redis::del() expected to return 1, got ' . var_export($result, true) . ' instead.');
+                $this->logger->debug(
+                    'Session: Redis::del() expected to return 1, got ' . var_export($result, true) . ' instead.'
+                );
             }
 
             return $this->destroyCookie();
@@ -303,7 +313,9 @@ class RedisHandler extends BaseHandler
             }
 
             if (! $this->redis->setex($lockKey, 300, (string) Time::now()->getTimestamp())) {
-                $this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
+                $this->logger->error(
+                    'Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID
+                );
 
                 return false;
             }
@@ -313,13 +325,19 @@ class RedisHandler extends BaseHandler
         } while (++$attempt < 30);
 
         if ($attempt === 30) {
-            log_message('error', 'Session: Unable to obtain lock for ' . $this->keyPrefix . $sessionID . ' after 30 attempts, aborting.');
+            log_message(
+                'error',
+                'Session: Unable to obtain lock for ' . $this->keyPrefix . $sessionID . ' after 30 attempts, aborting.'
+            );
 
             return false;
         }
 
         if ($ttl === -1) {
-            log_message('debug', 'Session: Lock for ' . $this->keyPrefix . $sessionID . ' had no TTL, overriding.');
+            log_message(
+                'debug',
+                'Session: Lock for ' . $this->keyPrefix . $sessionID . ' had no TTL, overriding.'
+            );
         }
 
         $this->lock = true;
