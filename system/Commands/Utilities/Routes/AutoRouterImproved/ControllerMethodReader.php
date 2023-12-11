@@ -35,6 +35,7 @@ final class ControllerMethodReader
     private array $httpMethods;
 
     private bool $translateURIDashes;
+    private bool $translateUriToCamelCase;
 
     /**
      * @param string $namespace the default namespace
@@ -44,8 +45,9 @@ final class ControllerMethodReader
         $this->namespace   = $namespace;
         $this->httpMethods = $httpMethods;
 
-        $config                   = config(Routing::class);
-        $this->translateURIDashes = $config->translateURIDashes;
+        $config                        = config(Routing::class);
+        $this->translateURIDashes      = $config->translateURIDashes;
+        $this->translateUriToCamelCase = $config->translateUriToCamelCase;
     }
 
     /**
@@ -181,11 +183,7 @@ final class ControllerMethodReader
 
         $classUri = rtrim($classPath, '/');
 
-        if ($this->translateURIDashes) {
-            $classUri = str_replace('_', '-', $classUri);
-        }
-
-        return $classUri;
+        return $this->translateToUri($classUri);
     }
 
     /**
@@ -195,11 +193,23 @@ final class ControllerMethodReader
     {
         $methodUri = lcfirst(substr($methodName, strlen($httpVerb)));
 
-        if ($this->translateURIDashes) {
-            $methodUri = str_replace('_', '-', $methodUri);
+        return $this->translateToUri($methodUri);
+    }
+
+    /**
+     * @param string $string classname or method name
+     */
+    private function translateToUri(string $string): string
+    {
+        if ($this->translateUriToCamelCase) {
+            $string = strtolower(
+                preg_replace('/([a-z\d])([A-Z])/', '$1-$2', $string)
+            );
+        } elseif ($this->translateURIDashes) {
+            $string = str_replace('_', '-', $string);
         }
 
-        return $methodUri;
+        return $string;
     }
 
     /**
