@@ -60,6 +60,12 @@ trait GeneratorTrait
     protected $classNameLang = '';
 
     /**
+     * Namespace to use for class.
+     * Leave null to use the default namespace.
+     */
+    protected ?string $namespace = null;
+
+    /**
      * Whether to require class name.
      *
      * @internal
@@ -302,20 +308,15 @@ trait GeneratorTrait
         );
 
         // Gets the namespace from input. Don't forget the ending backslash!
-        $namespace = trim(
-            str_replace(
-                '/',
-                '\\',
-                $this->getOption('namespace') ?? APP_NAMESPACE
-            ),
-            '\\'
-        ) . '\\';
+        $namespace = $this->getNamespace() . '\\';
 
         if (strncmp($class, $namespace, strlen($namespace)) === 0) {
             return $class; // @codeCoverageIgnore
         }
 
-        return $namespace . $this->directory . '\\' . str_replace('/', '\\', $class);
+        $directoryString = ! empty($this->directory) ? $this->directory . '\\' : '';
+
+        return $namespace . $directoryString . str_replace('/', '\\', $class);
     }
 
     /**
@@ -403,14 +404,7 @@ trait GeneratorTrait
      */
     protected function buildPath(string $class): string
     {
-        $namespace = trim(
-            str_replace(
-                '/',
-                '\\',
-                $this->getOption('namespace') ?? APP_NAMESPACE
-            ),
-            '\\'
-        );
+        $namespace = $this->getNamespace();
 
         // Check if the namespace is actually defined and we are not just typing gibberish.
         $base = Services::autoloader()->getNamespace($namespace);
@@ -442,6 +436,25 @@ trait GeneratorTrait
                 -1
             )
         ) . DIRECTORY_SEPARATOR . $this->basename($file);
+    }
+
+    /**
+     * Gets the namespace from the command-line option,
+     * or the default namespace if the option is not set.
+     * Can be overridden by directly setting $this->namespace.
+     */
+    protected function getNamespace(): string
+    {
+        return ! empty($this->namespace)
+            ? $this->namespace
+            : trim(
+                str_replace(
+                    '/',
+                    '\\',
+                    $this->getOption('namespace') ?? APP_NAMESPACE
+                ),
+                '\\'
+            );
     }
 
     /**
