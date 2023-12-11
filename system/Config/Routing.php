@@ -123,6 +123,8 @@ class Routing extends BaseConfig
      * Whether to translate dashes in URIs for controller/method to CamelCase.
      * E.g., blog-controller -> BlogController
      *
+     * If you enable this, $translateURIDashes is ignored.
+     *
      * Default: false
      */
     public bool $translateUriToCamelCase = false;
