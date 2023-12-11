@@ -69,7 +69,7 @@ final class ControllerMethodReader
         $classShortname = $reflection->getShortName();
 
         $output     = [];
-        $classInUri = $this->getUriByClass($classname);
+        $classInUri = $this->convertClassnameToUri($classname);
 
         foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
             $methodName = $method->getName();
@@ -77,7 +77,7 @@ final class ControllerMethodReader
             foreach ($this->httpMethods as $httpVerb) {
                 if (strpos($methodName, strtolower($httpVerb)) === 0) {
                     // Remove HTTP verb prefix.
-                    $methodInUri = $this->getUriByMethod($httpVerb, $methodName);
+                    $methodInUri = $this->convertMethodNameToUri($httpVerb, $methodName);
 
                     // Check if it is the default method.
                     if ($methodInUri === $defaultMethod) {
@@ -166,7 +166,7 @@ final class ControllerMethodReader
      *
      * @return string URI path part from the folder(s) and controller
      */
-    private function getUriByClass(string $classname): string
+    private function convertClassnameToUri(string $classname): string
     {
         // remove the namespace
         $pattern = '/' . preg_quote($this->namespace, '/') . '/';
@@ -189,7 +189,7 @@ final class ControllerMethodReader
     /**
      * @return string URI path part from the method
      */
-    private function getUriByMethod(string $httpVerb, string $methodName): string
+    private function convertMethodNameToUri(string $httpVerb, string $methodName): string
     {
         $methodUri = lcfirst(substr($methodName, strlen($httpVerb)));
 
