@@ -305,6 +305,9 @@ The benchmark points have been changed:
 Others
 ======
 
+- **AutoRouting Improved:** The ``$translateUriToCamelCase`` option has been added
+  that allows using CamelCase controller and method names. See
+  :ref:`controller-translate-uri-to-camelcase`.
 - **Autoloader:**
     - Autoloading performance when using Composer has been improved.
       Adding the ``App`` namespace in the ``autoload.psr4`` setting in **composer.json**
