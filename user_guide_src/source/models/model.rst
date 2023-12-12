@@ -798,9 +798,9 @@ beforeFind        The name of the calling **method**, whether a **singleton** wa
 - ``findAll()``   **limit** = the number of rows to find.
                   **offset** = the number of rows to skip during the search.
 afterFind         Same as **beforeFind** but including the resulting row(s) of data, or null if no result found.
-beforeDelete      **id** = primary key of row being deleted.
+beforeDelete      **id** = primary key of row being passed to the ``delete()`` method.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
-afterDelete       **id** = primary key of row being deleted.
+afterDelete       **id** = primary key of row being passed to the ``delete()`` method.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
                   **result** = the result of the ``delete()`` call on the Query Builder.
                   **data** = unused.
