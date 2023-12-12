@@ -69,7 +69,7 @@ final class ControllerMethodReader
         $classShortname = $reflection->getShortName();
 
         $output     = [];
-        $classInUri = $this->convertClassnameToUri($classname);
+        $classInUri = $this->convertClassNameToUri($classname);
 
         foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
             $methodName = $method->getName();
@@ -166,7 +166,7 @@ final class ControllerMethodReader
      *
      * @return string URI path part from the folder(s) and controller
      */
-    private function convertClassnameToUri(string $classname): string
+    private function convertClassNameToUri(string $classname): string
     {
         // remove the namespace
         $pattern = '/' . preg_quote($this->namespace, '/') . '/';
