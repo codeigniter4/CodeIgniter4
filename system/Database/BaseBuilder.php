@@ -1747,7 +1747,11 @@ class BaseBuilder
             $this->where($where);
         }
 
-        if (! empty($limit)) {
+        if (config(Feature::class)->limitZeroAsAll && $limit === 0) {
+            $limit = null;
+        }
+
+        if ($limit !== null) {
             $this->limit($limit, $offset);
         }
 
@@ -2463,7 +2467,11 @@ class BaseBuilder
             $this->where($where);
         }
 
-        if (! empty($limit)) {
+        if (config(Feature::class)->limitZeroAsAll && $limit === 0) {
+            $limit = null;
+        }
+
+        if ($limit !== null) {
             if (! $this->canLimitWhereUpdates) {
                 throw new DatabaseException('This driver does not allow LIMITs on UPDATE queries using WHERE.');
             }
@@ -2780,7 +2788,11 @@ class BaseBuilder
 
         $sql = $this->_delete($this->removeAlias($table));
 
-        if (! empty($limit)) {
+        if (config(Feature::class)->limitZeroAsAll && $limit === 0) {
+            $limit = null;
+        }
+
+        if ($limit !== null) {
             $this->QBLimit = $limit;
         }
 
