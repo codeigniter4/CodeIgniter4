@@ -738,12 +738,20 @@ points in the model's execution can be affected, each through a class property:
 Defining Callbacks
 ==================
 
-You specify the callbacks by first creating a new class method in your model to use. This class method will always
-receive a ``$data`` array as its only parameter. The exact contents of the ``$data`` array will vary between events, but
-will always contain a key named **data** that contains the primary data passed to the original method. In the case
-of the insert* or update* methods, that will be the key/value pairs that are being inserted into the database. The
-main array will also contain the other values passed to the method, and be detailed later. The callback method
-must return the original $data array so other callbacks have the full information.
+You specify the callbacks by first creating a new class method in your model to use.
+
+This class method will always
+receive a ``$data`` array as its only parameter.
+
+The exact contents of the ``$data`` array will vary between events, but
+will always contain a key named ``data`` that contains the primary data passed to the original method.
+In the case
+of the **insert*()** or **update*()** methods, that will be the key/value pairs that are being inserted into the database.
+The
+main ``$data`` array will also contain the other values passed to the method, and be detailed in `Event Parameters`_.
+
+The callback method
+must return the original ``$data`` array so other callbacks have the full information.
 
 .. literalinclude:: model/050.php
 
