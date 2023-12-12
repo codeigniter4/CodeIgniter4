@@ -782,36 +782,36 @@ passed to each event:
 Event             $data contents
 ================= =========================================================================================================
 beforeInsert      **data** = the key/value pairs that are being inserted. If an object or Entity class is passed to the
-                  insert method, it is first converted to an array.
+                  ``insert()`` method, it is first converted to an array.
 afterInsert       **id** = the primary key of the new row, or 0 on failure.
                   **data** = the key/value pairs being inserted.
-                  **result** = the results of the insert() method used through the Query Builder.
+                  **result** = the results of the ``insert()`` method used through the Query Builder.
 beforeUpdate      **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs that are being updated. If an object or Entity class is passed to the
-                  update method, it is first converted to an array.
+                  ``update()`` method, it is first converted to an array.
 afterUpdate       **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs being updated.
-                  **result** = the results of the update() method used through the Query Builder.
+                  **result** = the results of the ``update()`` method used through the Query Builder.
 beforeFind        The name of the calling **method**, whether a **singleton** was requested, and these additional fields:
-- first()         No additional fields
-- find()          **id** = the primary key of the row being searched for.
-- findAll()       **limit** = the number of rows to find.
+- ``first()``     No additional fields
+- ``find()``      **id** = the primary key of the row being searched for.
+- ``findAll()``   **limit** = the number of rows to find.
                   **offset** = the number of rows to skip during the search.
 afterFind         Same as **beforeFind** but including the resulting row(s) of data, or null if no result found.
 beforeDelete      **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
 afterDelete       **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
-                  **result** = the result of the delete() call on the Query Builder.
+                  **result** = the result of the ``delete()`` call on the Query Builder.
                   **data** = unused.
 beforeInsertBatch **data** = associative array of values that are being inserted. If an object or Entity class is passed to the
-                  insertBatch method, it is first converted to an array.
+                  ``insertBatch()`` method, it is first converted to an array.
 afterInsertBatch  **data** = the associative array of values being inserted.
-                  **result** = the results of the insertbatch() method used through the Query Builder.
+                  **result** = the results of the ``insertbatch()`` method used through the Query Builder.
 beforeUpdateBatch **data** = associative array of values that are being updated. If an object or Entity class is passed to the
-                  updateBatch method, it is first converted to an array.
+                  ``updateBatch()`` method, it is first converted to an array.
 afterUpdateBatch  **data** = the key/value pairs being updated.
-                  **result** = the results of the updateBatch() method used through the Query Builder.
+                  **result** = the results of the ``updateBatch()`` method used through the Query Builder.
 ================= =========================================================================================================
 
 Modifying Find* Data
