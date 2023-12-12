@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseResult;
-use CodeIgniter\Entity\Entity;
+use CodeIgniter\Entity\EntityInterface;
 use PgSql\Connection as PgSqlConnection;
 use PgSql\Result as PgSqlResult;
 use stdClass;
@@ -115,7 +115,7 @@ class Result extends BaseResult
      */
     protected function fetchObject(string $className = 'stdClass')
     {
-        if (is_subclass_of($className, Entity::class)) {
+        if (is_subclass_of($className, EntityInterface::class)) {
             return empty($data = $this->fetchAssoc()) ? false : (new $className())->injectRawData($data);
         }
 

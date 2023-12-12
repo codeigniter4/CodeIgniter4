@@ -16,7 +16,7 @@ namespace CodeIgniter\Database\SQLite3;
 use Closure;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Entity\Entity;
+use CodeIgniter\Entity\EntityInterface;
 use SQLite3;
 use SQLite3Result;
 use stdClass;
@@ -143,7 +143,7 @@ class Result extends BaseResult
 
         $classObj = new $className();
 
-        if (is_subclass_of($className, Entity::class)) {
+        if (is_subclass_of($className, EntityInterface::class)) {
             return $classObj->injectRawData($row);
         }
 
