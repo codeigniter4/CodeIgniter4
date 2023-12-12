@@ -30,7 +30,6 @@ use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use DateTime;
 use Exception;
-use JsonSerializable;
 use ReturnTypeWillChange;
 
 /**
@@ -38,7 +37,7 @@ use ReturnTypeWillChange;
  *
  * @see \CodeIgniter\Entity\EntityTest
  */
-class Entity implements JsonSerializable
+class Entity implements EntityInterface
 {
     /**
      * Maps names used in sets and gets against unique
