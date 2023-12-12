@@ -798,8 +798,7 @@ beforeFind        The name of the calling **method**, whether a **singleton** wa
 - findAll()       **limit** = the number of rows to find.
                   **offset** = the number of rows to skip during the search.
 afterFind         Same as **beforeFind** but including the resulting row(s) of data, or null if no result found.
-beforeDelete      Varies by delete* method. See the following:
-- delete()        **id** = primary key of row being deleted.
+beforeDelete      **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
 afterDelete       **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
