@@ -43,6 +43,8 @@ If you do not include the full namespace for the class, it will assume in can be
 
 .. literalinclude:: view_cells/002.php
 
+Please note that if you don't use the full namespace, we will use Factories to load your class. This means that any subsequent use of the same cell will return a shared instance rather than a new class.
+
 Passing Parameters as Key/Value String
 ======================================
 
