@@ -2607,11 +2607,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Router/AutoRouter.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, Config\\\\Routing given on the right side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Router/AutoRouterImproved.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^PHPDoc type int of property CodeIgniter\\\\Router\\\\Exceptions\\\\RedirectException\\:\\:\\$code is not the same as PHPDoc type mixed of overridden property Exception\\:\\:\\$code\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/Exceptions/RedirectException.php',

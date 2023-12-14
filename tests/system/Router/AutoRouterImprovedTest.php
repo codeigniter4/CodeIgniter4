@@ -17,6 +17,7 @@ use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Method;
+use CodeIgniter\Router\Controllers\BlogController;
 use CodeIgniter\Router\Controllers\Dash_folder\Dash_controller;
 use CodeIgniter\Router\Controllers\Dash_folder\Home;
 use CodeIgniter\Router\Controllers\Index;
@@ -455,5 +456,128 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame('\\' . Mycontroller::class, $controller);
         $this->assertSame('getSomemethod', $method);
         $this->assertSame(['a-b'], $params);
+    }
+
+    /**
+     * @dataProvider provideTranslateUriToCamelCase
+     */
+    public function testTranslateUriToCamelCase(
+        string $uri,
+        ?string $expDirectory,
+        string $expController,
+        string $expMethod,
+        int $controllerPos,
+        ?int $methodPos,
+        ?int $paramPos
+    ) {
+        $config                          = config(Routing::class);
+        $config->translateUriToCamelCase = true;
+        Factories::injectMock('config', Routing::class, $config);
+
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute($uri, Method::GET);
+
+        $this->assertSame($expDirectory, $directory);
+        $this->assertSame($expController, $controller);
+        $this->assertSame($expMethod, $method);
+        $this->assertSame([], $params);
+        $this->assertSame([
+            'controller' => $controllerPos,
+            'method'     => $methodPos,
+            'params'     => $paramPos,
+        ], $router->getPos());
+    }
+
+    public static function provideTranslateUriToCamelCase(): iterable
+    {
+        yield from [
+            'controller-wz-dash' => [
+                'blog-controller',
+                null,
+                '\\' . BlogController::class,
+                'getIndex',
+                0,
+                null,
+                null,
+            ],
+            'controller-and-method-wz-dash' => [
+                'blog-controller/some-method',
+                null,
+                '\\' . BlogController::class,
+                'getSomeMethod',
+                0,
+                1,
+                null,
+            ],
+            'subfolder-controller-and-method-wz-dash' => [
+                'subfolder/sub/blog-controller/some-method',
+                'Subfolder/Sub/',
+                '\\' . \CodeIgniter\Router\Controllers\Subfolder\Sub\BlogController::class,
+                'getSomeMethod',
+                2,
+                3,
+                null,
+            ],
+            'subfolder-wz-dash-controller-and-method-wz-dash' => [
+                'sub-dir/blog-controller/some-method',
+                'SubDir/',
+                '\\' . \CodeIgniter\Router\Controllers\SubDir\BlogController::class,
+                'getSomeMethod',
+                1,
+                2,
+                null,
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider provideRejectTranslateUriToCamelCase
+     */
+    public function testRejectTranslateUriToCamelCase(string $uri, string $expMsg)
+    {
+        $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage(
+            $expMsg
+        );
+
+        $config                          = config(Routing::class);
+        $config->translateUriToCamelCase = true;
+        Factories::injectMock('config', Routing::class, $config);
+
+        $router = $this->createNewAutoRouter();
+
+        $router->getRoute($uri, Method::GET);
+    }
+
+    public static function provideRejectTranslateUriToCamelCase(): iterable
+    {
+        yield from [
+            'controller-wo-dash' => [
+                'blogcontroller',
+                '"\CodeIgniter\Router\Controllers\Blogcontroller" is not found.',
+            ],
+            'controller-wz-double-dash' => [
+                'blog--controller',
+                'AutoRouterImproved prohibits access to the URI containing double dash ("blog--controller") when $translateUriToCamelCase is enabled. Please use the single dash. URI:blog--controller',
+            ],
+            'controller-wz-uppercase' => [
+                'blogController',
+                'AutoRouterImproved prohibits access to the URI containing uppercase letters ("blogController") when $translateUriToCamelCase is enabled. Please use the dash. URI:blogController',
+            ],
+            'method-wo-dash' => [
+                'blog-controller/somemethod',
+                '"\CodeIgniter\Router\Controllers\BlogController::getSomemethod()" is not found.',
+            ],
+            'method-wz-uppercase' => [
+                'blog-controller/someMethod',
+                'AutoRouterImproved prohibits access to the URI containing uppercase letters ("someMethod") when $translateUriToCamelCase is enabled. Please use the dash. URI:blog-controller/someMethod',
+            ],
+            'method-wz-double-dash' => [
+                'blog-controller/some--method',
+                'AutoRouterImproved prohibits access to the URI containing double dash ("some--method") when $translateUriToCamelCase is enabled. Please use the single dash. URI:blog-controller/some--method',
+            ],
+        ];
     }
 }

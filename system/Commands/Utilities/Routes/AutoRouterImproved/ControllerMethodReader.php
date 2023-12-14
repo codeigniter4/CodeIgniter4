@@ -35,6 +35,7 @@ final class ControllerMethodReader
     private array $httpMethods;
 
     private bool $translateURIDashes;
+    private bool $translateUriToCamelCase;
 
     /**
      * @param string $namespace the default namespace
@@ -44,8 +45,9 @@ final class ControllerMethodReader
         $this->namespace   = $namespace;
         $this->httpMethods = $httpMethods;
 
-        $config                   = config(Routing::class);
-        $this->translateURIDashes = $config->translateURIDashes;
+        $config                        = config(Routing::class);
+        $this->translateURIDashes      = $config->translateURIDashes;
+        $this->translateUriToCamelCase = $config->translateUriToCamelCase;
     }
 
     /**
@@ -67,7 +69,7 @@ final class ControllerMethodReader
         $classShortname = $reflection->getShortName();
 
         $output     = [];
-        $classInUri = $this->getUriByClass($classname);
+        $classInUri = $this->convertClassNameToUri($classname);
 
         foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
             $methodName = $method->getName();
@@ -75,7 +77,7 @@ final class ControllerMethodReader
             foreach ($this->httpMethods as $httpVerb) {
                 if (strpos($methodName, strtolower($httpVerb)) === 0) {
                     // Remove HTTP verb prefix.
-                    $methodInUri = $this->getUriByMethod($httpVerb, $methodName);
+                    $methodInUri = $this->convertMethodNameToUri($httpVerb, $methodName);
 
                     // Check if it is the default method.
                     if ($methodInUri === $defaultMethod) {
@@ -164,7 +166,7 @@ final class ControllerMethodReader
      *
      * @return string URI path part from the folder(s) and controller
      */
-    private function getUriByClass(string $classname): string
+    private function convertClassNameToUri(string $classname): string
     {
         // remove the namespace
         $pattern = '/' . preg_quote($this->namespace, '/') . '/';
@@ -181,25 +183,33 @@ final class ControllerMethodReader
 
         $classUri = rtrim($classPath, '/');
 
-        if ($this->translateURIDashes) {
-            $classUri = str_replace('_', '-', $classUri);
-        }
-
-        return $classUri;
+        return $this->translateToUri($classUri);
     }
 
     /**
      * @return string URI path part from the method
      */
-    private function getUriByMethod(string $httpVerb, string $methodName): string
+    private function convertMethodNameToUri(string $httpVerb, string $methodName): string
     {
         $methodUri = lcfirst(substr($methodName, strlen($httpVerb)));
 
-        if ($this->translateURIDashes) {
-            $methodUri = str_replace('_', '-', $methodUri);
+        return $this->translateToUri($methodUri);
+    }
+
+    /**
+     * @param string $string classname or method name
+     */
+    private function translateToUri(string $string): string
+    {
+        if ($this->translateUriToCamelCase) {
+            $string = strtolower(
+                preg_replace('/([a-z\d])([A-Z])/', '$1-$2', $string)
+            );
+        } elseif ($this->translateURIDashes) {
+            $string = str_replace('_', '-', $string);
         }
 
-        return $methodUri;
+        return $string;
     }
 
     /**
