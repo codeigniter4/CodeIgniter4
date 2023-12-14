@@ -740,7 +740,7 @@ See :ref:`Auto Routing in Controllers <controller-auto-routing-improved>` for mo
 Configuration Options
 =====================
 
-These options are available at the top of **app/Config/Routing.php**.
+These options are available in the **app/Config/Routing.php** file.
 
 Default Controller
 ------------------
@@ -869,7 +869,7 @@ See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>`
 Configuration Options (Legacy)
 ==============================
 
-These options are available at the top of **app/Config/Routing.php**.
+These options are available in the **app/Config/Routing.php** file.
 
 Default Controller (Legacy)
 ---------------------------
