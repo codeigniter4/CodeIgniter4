@@ -19,11 +19,6 @@ namespace CodeIgniter\Entity;
 interface EntityInterface
 {
     /**
-     * Allows filling in Entity parameters during construction.
-     */
-    public function __construct(?array $data = null);
-
-    /**
      * Returns the raw values of the current attributes.
      *
      * @param bool $onlyChanged If true, only return values that have changed since object creation
