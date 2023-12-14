@@ -1097,11 +1097,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Migration.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Database\\\\Migration\\:\\:\\$DBGroup \\(string\\) on left side of \\?\\? is not nullable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Migration.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 8,
 	'path' => __DIR__ . '/system/Database/MigrationRunner.php',

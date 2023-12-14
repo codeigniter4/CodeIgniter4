@@ -137,16 +137,12 @@ class MigrationRunner
         $this->enabled = $config->enabled ?? false;
         $this->table   = $config->table ?? 'migrations';
 
-        // Default name space is the app namespace
         $this->namespace = APP_NAMESPACE;
 
-        // get default database group
-        $config      = config(Database::class);
-        $this->group = $config->defaultGroup;
-        unset($config);
+        // Even if a DB connection is passed, since it is a test,
+        // it is assumed to use the default group name
+        $this->group = is_string($db) ? $db : config(Database::class)->defaultGroup;
 
-        // If no db connection passed in, use
-        // default database group.
         $this->db = db_connect($db);
     }
 
@@ -838,8 +834,9 @@ class MigrationRunner
             throw new RuntimeException($message);
         }
 
-        $instance = new $class();
-        $group    = $instance->getDBGroup() ?? config(Database::class)->defaultGroup;
+        /** @var Migration $instance */
+        $instance = new $class(Database::forge($this->db));
+        $group    = $instance->getDBGroup() ?? $this->group;
 
         if (ENVIRONMENT !== 'testing' && $group === 'tests' && $this->groupFilter !== 'tests') {
             // @codeCoverageIgnoreStart
@@ -854,8 +851,6 @@ class MigrationRunner
 
             return true;
         }
-
-        $this->setGroup($group);
 
         if (! is_callable([$instance, $direction])) {
             $message = sprintf(lang('Migrations.missingMethod'), $direction);

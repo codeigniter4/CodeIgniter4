@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\Migrations;
 
 use CodeIgniter\Database\BaseConnection;
-use CodeIgniter\Database\Config;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\ConfigException;
@@ -456,11 +455,34 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertSame('2018-01-24-102302', $runner->getBatchEnd(1));
     }
 
-    protected function resetTables(): void
+    public function testMigrationUsesSameConnectionAsMigrationRunner(): void
     {
-        $forge = Config::forge();
+        $config = ['database' => WRITEPATH . 'runner.sqlite', 'DBDriver' => 'SQLite3', 'DBDebug' => true];
 
-        foreach (db_connect()->listTables() as $table) {
+        $database = Database::connect($config, false);
+        $this->resetTables($database);
+
+        $runner = new MigrationRunner(config(Migrations::class), $database);
+        $runner->clearCliMessages();
+        $runner->clearHistory();
+        $runner->setNamespace('Tests\Support\MigrationTestMigrations');
+        $runner->latest();
+
+        $tables = $database->listTables();
+        $this->assertCount(2, $tables);
+        $this->assertSame('migrations', $tables[0]);
+        $this->assertSame('foo', $tables[1]);
+    }
+
+    protected function resetTables($db = null): void
+    {
+        $forge = Database::forge($db);
+
+        /** @var BaseConnection $conn */
+        $conn = $forge->getConnection();
+        $conn->resetDataCache();
+
+        foreach (db_connect($db)->listTables() as $table) {
             $table = str_replace('db_', '', $table);
             $forge->dropTable($table, true);
         }

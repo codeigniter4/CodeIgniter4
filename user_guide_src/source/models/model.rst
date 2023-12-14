@@ -738,12 +738,19 @@ points in the model's execution can be affected, each through a class property:
 Defining Callbacks
 ==================
 
-You specify the callbacks by first creating a new class method in your model to use. This class will always
-receive a ``$data`` array as its only parameter. The exact contents of the ``$data`` array will vary between events, but
-will always contain a key named **data** that contains the primary data passed to the original method. In the case
-of the insert* or update* methods, that will be the key/value pairs that are being inserted into the database. The
-main array will also contain the other values passed to the method, and be detailed later. The callback method
-must return the original $data array so other callbacks have the full information.
+You specify the callbacks by first creating a new class method in your model to use.
+
+This class method will always receive a ``$data`` array as its only parameter.
+
+The exact contents of the ``$data`` array will vary between events, but will always
+contain a key named ``data`` that contains the primary data passed to the original
+method. In the case of the **insert*()** or **update*()** methods, that will be
+the key/value pairs that are being inserted into the database. The main ``$data``
+array will also contain the other values passed to the method, and be detailed
+in `Event Parameters`_.
+
+The callback method must return the original ``$data`` array so other callbacks
+have the full information.
 
 .. literalinclude:: model/050.php
 
@@ -774,37 +781,36 @@ passed to each event:
 Event             $data contents
 ================= =========================================================================================================
 beforeInsert      **data** = the key/value pairs that are being inserted. If an object or Entity class is passed to the
-                  insert method, it is first converted to an array.
+                  ``insert()`` method, it is first converted to an array.
 afterInsert       **id** = the primary key of the new row, or 0 on failure.
                   **data** = the key/value pairs being inserted.
-                  **result** = the results of the insert() method used through the Query Builder.
+                  **result** = the results of the ``insert()`` method used through the Query Builder.
 beforeUpdate      **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs that are being updated. If an object or Entity class is passed to the
-                  update method, it is first converted to an array.
+                  ``update()`` method, it is first converted to an array.
 afterUpdate       **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs being updated.
-                  **result** = the results of the update() method used through the Query Builder.
+                  **result** = the results of the ``update()`` method used through the Query Builder.
 beforeFind        The name of the calling **method**, whether a **singleton** was requested, and these additional fields:
-- first()         No additional fields
-- find()          **id** = the primary key of the row being searched for.
-- findAll()       **limit** = the number of rows to find.
+- ``first()``     No additional fields
+- ``find()``      **id** = the primary key of the row being searched for.
+- ``findAll()``   **limit** = the number of rows to find.
                   **offset** = the number of rows to skip during the search.
 afterFind         Same as **beforeFind** but including the resulting row(s) of data, or null if no result found.
-beforeDelete      Varies by delete* method. See the following:
-- delete()        **id** = primary key of row being deleted.
+beforeDelete      **id** = primary key of row being passed to the ``delete()`` method.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
-afterDelete       **id** = primary key of row being deleted.
+afterDelete       **id** = primary key of row being passed to the ``delete()`` method.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
-                  **result** = the result of the delete() call on the Query Builder.
+                  **result** = the result of the ``delete()`` call on the Query Builder.
                   **data** = unused.
 beforeInsertBatch **data** = associative array of values that are being inserted. If an object or Entity class is passed to the
-                  insertBatch method, it is first converted to an array.
+                  ``insertBatch()`` method, it is first converted to an array.
 afterInsertBatch  **data** = the associative array of values being inserted.
-                  **result** = the results of the insertbatch() method used through the Query Builder.
+                  **result** = the results of the ``insertbatch()`` method used through the Query Builder.
 beforeUpdateBatch **data** = associative array of values that are being updated. If an object or Entity class is passed to the
-                  updateBatch method, it is first converted to an array.
+                  ``updateBatch()`` method, it is first converted to an array.
 afterUpdateBatch  **data** = the key/value pairs being updated.
-                  **result** = the results of the updateBatch() method used through the Query Builder.
+                  **result** = the results of the ``updateBatch()`` method used through the Query Builder.
 ================= =========================================================================================================
 
 Modifying Find* Data
