@@ -1392,19 +1392,17 @@ and executes <code class="docutils literal notranslate"><span class="pre">getHel
 </section>
 <section id="configuration-options">
 <span id="routing-auto-routing-improved-configuration-options"></span><h3><a class="toc-backref" href="#id58">Configuration Options</a><a class="headerlink" href="#configuration-options" title="Permalink to this headline"></a></h3>
-<p>These options are available at the top of <strong>app/Config/Routes.php</strong>.</p>
+<p>These options are available in the <strong>app/Config/Routing.php</strong> file.</p>
 <section id="default-controller">
 <h4><a class="toc-backref" href="#id59">Default Controller</a><a class="headerlink" href="#default-controller" title="Permalink to this headline"></a></h4>
 <section id="for-site-root-uri">
 <h5>For Site Root URI<a class="headerlink" href="#for-site-root-uri" title="Permalink to this headline"></a></h5>
-<p>When a user visits the root of your site (i.e., <strong>example.com</strong>) the controller to use is determined by the value set by
-the <code class="docutils literal notranslate"><span class="pre">setDefaultController()</span></code> method, unless a route exists for it explicitly.</p>
-<p>The default value for this is <code class="docutils literal notranslate"><span class="pre">Home</span></code>
-which matches the controller at <strong>app/Controllers/Home.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="c1">// example.com routes to app/Controllers/Home.php</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Home&#39;</span><span class="p">);</span>
+<p>When a user visits the root of your site (i.e., <strong>example.com</strong>) the controller
+to use is determined by the value set to the <code class="docutils literal notranslate"><span class="pre">$defaultController</span></code> property,
+unless a route exists for it explicitly.</p>
+<p>The default value for this is <code class="docutils literal notranslate"><span class="pre">Home</span></code> which matches the controller at
+<strong>app/Controllers/Home.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultController</span> <span class="o">=</span> <span class="s1">&#39;Home&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>
@@ -1426,11 +1424,9 @@ When the default controller is <code class="docutils literal notranslate"><span 
 <p>This works similar to the default controller setting, but is used to determine the default method that is used
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
 <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
-<p>In this example, if the user were to visit <strong>example.com/products</strong>, and a <code class="docutils literal notranslate"><span class="pre">Products</span></code> controller existed, the
-<code class="docutils literal notranslate"><span class="pre">Products::getListAll()</span></code> method would be executed:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultMethod</span><span class="p">(</span><span class="s1">&#39;listAll&#39;</span><span class="p">);</span>
+<p>In this example, if the user were to visit <strong>example.com/products</strong>, and a <code class="docutils literal notranslate"><span class="pre">Products</span></code>
+controller existed, the <code class="docutils literal notranslate"><span class="pre">Products::getListAll()</span></code> method would be executed:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultMethod</span> <span class="o">=</span> <span class="s1">&#39;listAll&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -1521,18 +1517,17 @@ and executes <code class="docutils literal notranslate"><span class="pre">index(
 </section>
 <section id="configuration-options-legacy">
 <span id="routing-auto-routing-legacy-configuration-options"></span><h3><a class="toc-backref" href="#id65">Configuration Options (Legacy)</a><a class="headerlink" href="#configuration-options-legacy" title="Permalink to this headline"></a></h3>
-<p>These options are available at the top of <strong>app/Config/Routes.php</strong>.</p>
+<p>These options are available in the <strong>app/Config/Routing.php</strong> file.</p>
 <section id="default-controller-legacy">
 <h4><a class="toc-backref" href="#id66">Default Controller (Legacy)</a><a class="headerlink" href="#default-controller-legacy" title="Permalink to this headline"></a></h4>
 <section id="for-site-root-uri-legacy">
 <h5>For Site Root URI (Legacy)<a class="headerlink" href="#for-site-root-uri-legacy" title="Permalink to this headline"></a></h5>
-<p>When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
-the <code class="docutils literal notranslate"><span class="pre">setDefaultController()</span></code> method, unless a route exists for it explicitly. The default value for this is <code class="docutils literal notranslate"><span class="pre">Home</span></code>
-which matches the controller at <strong>app/Controllers/Home.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="c1">// example.com routes to app/Controllers/Home.php</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Home&#39;</span><span class="p">);</span>
+<p>When a user visits the root of your site (i.e., <strong>example.com</strong>) the controller
+to use is determined by the value set to the <code class="docutils literal notranslate"><span class="pre">$defaultController</span></code> property,
+unless a route exists for it explicitly.</p>
+<p>The default value for this is <code class="docutils literal notranslate"><span class="pre">Home</span></code> which matches the controller at
+<strong>app/Controllers/Home.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultController</span> <span class="o">=</span> <span class="s1">&#39;Home&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>
@@ -1549,11 +1544,9 @@ in the controllers directory. For example, if the user visits <strong>example.co
 <p>This works similar to the default controller setting, but is used to determine the default method that is used
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
 <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
-<p>In this example, if the user were to visit <strong>example.com/products</strong>, and a <code class="docutils literal notranslate"><span class="pre">Products</span></code> controller existed, the
-<code class="docutils literal notranslate"><span class="pre">Products::listAll()</span></code> method would be executed:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultMethod</span><span class="p">(</span><span class="s1">&#39;listAll&#39;</span><span class="p">);</span>
+<p>In this example, if the user were to visit <strong>example.com/products</strong>, and a <code class="docutils literal notranslate"><span class="pre">Products</span></code>
+controller existed, the <code class="docutils literal notranslate"><span class="pre">Products::listAll()</span></code> method would be executed:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultMethod</span> <span class="o">=</span> <span class="s1">&#39;listAll&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>
