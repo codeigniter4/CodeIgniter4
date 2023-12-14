@@ -147,13 +147,13 @@ To try your form, visit your site using a URL similar to this one::
     example.com/index.php/form/
 
 If you submit the form you should simply see the form reload. That's
-because you haven't set up any validation rules in ``$this->validate()`` yet.
+because you haven't set up any validation rules in :ref:`controller-validatedata` yet.
 
-The ``validate()`` method is a method in the Controller. It uses
-the **Validation class** inside. See :ref:`controllers-validating-data`.
+The ``validateData()`` method is a method in the Controller. It uses
+the **Validation class** inside. See :ref:`controller-validatedata`.
 
-.. note:: Since you haven't told the ``validate()`` method to validate anything
-    yet, it **returns false** (boolean false) **by default**. The ``validate()``
+.. note:: Since you haven't told the ``validateData()`` method to validate anything
+    yet, it **returns false** (boolean false) **by default**. The ``validateData()``
     method only returns true if it has successfully applied your rules without
     any of them failing.
 
@@ -189,7 +189,7 @@ It loads the form helper used by your view files.
 
 The controller has one method: ``index()``. This method returns
 the **signup** view to show the form when a non-POST request comes. Otherwise, it
-uses the Controller-provided ``validate()`` method. It also runs the validation routine.
+uses the Controller-provided :ref:`controller-validatedata` method. It also runs the validation routine.
 Based on whether the validation was successful it either presents the
 form or the success page.
 
