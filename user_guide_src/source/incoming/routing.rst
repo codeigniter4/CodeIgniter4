@@ -740,7 +740,7 @@ See :ref:`Auto Routing in Controllers <controller-auto-routing-improved>` for mo
 Configuration Options
 =====================
 
-These options are available at the top of **app/Config/Routes.php**.
+These options are available at the top of **app/Config/Routing.php**.
 
 Default Controller
 ------------------
@@ -748,13 +748,14 @@ Default Controller
 For Site Root URI
 ^^^^^^^^^^^^^^^^^
 
-When a user visits the root of your site (i.e., **example.com**) the controller to use is determined by the value set by
-the ``setDefaultController()`` method, unless a route exists for it explicitly.
+When a user visits the root of your site (i.e., **example.com**) the controller
+to use is determined by the value set to the ``$defaultController`` property,
+unless a route exists for it explicitly.
 
-The default value for this is ``Home``
-which matches the controller at **app/Controllers/Home.php**:
+The default value for this is ``Home`` which matches the controller at
+**app/Controllers/Home.php**::
 
-.. literalinclude:: routing/047.php
+    public string $defaultController = 'Home';
 
 For Directory URI
 ^^^^^^^^^^^^^^^^^
@@ -775,10 +776,10 @@ This works similar to the default controller setting, but is used to determine t
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
 ``index``.
 
-In this example, if the user were to visit **example.com/products**, and a ``Products`` controller existed, the
-``Products::getListAll()`` method would be executed:
+In this example, if the user were to visit **example.com/products**, and a ``Products``
+controller existed, the ``Products::getListAll()`` method would be executed::
 
-.. literalinclude:: routing/048.php
+    public string $defaultMethod = 'listAll';
 
 .. important:: You cannot access the controller with the URI of the default method name.
     In the example above, you can access **example.com/products**, but if you access **example.com/products/listall**, it will be not found.
@@ -868,7 +869,7 @@ See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>`
 Configuration Options (Legacy)
 ==============================
 
-These options are available at the top of **app/Config/Routes.php**.
+These options are available at the top of **app/Config/Routing.php**.
 
 Default Controller (Legacy)
 ---------------------------
@@ -876,11 +877,14 @@ Default Controller (Legacy)
 For Site Root URI (Legacy)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
-the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
-which matches the controller at **app/Controllers/Home.php**:
+When a user visits the root of your site (i.e., **example.com**) the controller
+to use is determined by the value set to the ``$defaultController`` property,
+unless a route exists for it explicitly.
 
-.. literalinclude:: routing/047.php
+The default value for this is ``Home`` which matches the controller at
+**app/Controllers/Home.php**::
+
+    public string $defaultController = 'Home';
 
 For Directory URI (Legacy)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -898,10 +902,10 @@ This works similar to the default controller setting, but is used to determine t
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
 ``index``.
 
-In this example, if the user were to visit **example.com/products**, and a ``Products`` controller existed, the
-``Products::listAll()`` method would be executed:
+In this example, if the user were to visit **example.com/products**, and a ``Products``
+controller existed, the ``Products::listAll()`` method would be executed::
 
-.. literalinclude:: routing/048.php
+    public string $defaultMethod = 'listAll';
 
 Confirming Routes
 *****************
