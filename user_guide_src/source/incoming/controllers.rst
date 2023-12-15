@@ -333,8 +333,8 @@ see the "Hello World" message.
     precedence over Auto Routing, and controllers defined in the defined routes
     are denied access by Auto Routing (Improved) for security reasons.
 
-For more information, please refer to the :ref:`routes-configuration-options` section of the
-:ref:`URI Routing <routing-auto-routing-improved-configuration-options>` documentation.
+For more information, please refer to the
+:ref:`routing-auto-routing-improved-configuration-options` documentation.
 
 .. _controller-default-method-fallback:
 
@@ -564,8 +564,8 @@ see the "Hello World" message.
 
 .. note:: The line ``$routes->get('/', 'Home::index');`` is an optimization that you will want to use in a "real-world" app. But for demonstration purposes we don't want to use that feature. ``$routes->get()`` is explained in :doc:`URI Routing <routing>`
 
-For more information, please refer to the :ref:`routes-configuration-options` section of the
-:ref:`URI Routing <routing-auto-routing-legacy-configuration-options>` documentation.
+For more information, please refer to the the
+:ref:`routing-auto-routing-legacy-configuration-options` documentation.
 
 Organizing Your Controllers into Sub-directories (Legacy)
 =========================================================
