@@ -273,7 +273,7 @@ trait GeneratorTrait
 
         if ($class === null && $this->hasClassName) {
             // @codeCoverageIgnoreStart
-            $nameLang = $this->classNameLang ?: 'CLI.generator.className.default';
+            $nameLang = ($this->classNameLang !== '') ? $this->classNameLang : 'CLI.generator.className.default';
             $class    = CLI::prompt(lang($nameLang), null, 'required');
             CLI::newLine();
             // @codeCoverageIgnoreEnd
@@ -424,7 +424,9 @@ trait GeneratorTrait
             return '';
         }
 
-        $base = realpath($base) ?: $base;
+        $realpath = realpath($base);
+        $base     = ($realpath !== false) ? $realpath : $base;
+
         $file = $base . DIRECTORY_SEPARATOR
             . str_replace(
                 '\\',
