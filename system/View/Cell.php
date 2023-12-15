@@ -181,8 +181,7 @@ class Cell
         }
 
         // locate and return an instance of the cell
-        // @TODO extend Factories to be able to load classes with the same short name.
-        $object = class_exists($class) ? new $class() : Factories::cells($class);
+        $object = Factories::cells($class, ['getShared' => false]);
 
         if (! is_object($object)) {
             throw ViewException::forInvalidCellClass($class);
