@@ -451,16 +451,14 @@ trait GeneratorTrait
      */
     protected function getNamespace(): string
     {
-        return ($this->namespace !== null)
-            ? $this->namespace
-            : trim(
-                str_replace(
-                    '/',
-                    '\\',
-                    $this->getOption('namespace') ?? APP_NAMESPACE
-                ),
-                '\\'
-            );
+        return $this->namespace ?? trim(
+            str_replace(
+                '/',
+                '\\',
+                $this->getOption('namespace') ?? APP_NAMESPACE
+            ),
+            '\\'
+        );
     }
 
     /**
