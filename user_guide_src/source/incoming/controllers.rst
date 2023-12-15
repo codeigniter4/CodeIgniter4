@@ -313,16 +313,17 @@ Defining a Default Controller
 
 Let's try it with the ``Helloworld`` controller.
 
-To specify a default controller open your **app/Config/Routes.php**
-file and set this variable:
+To specify a default controller open your **app/Config/Routing.php**
+file and set this property::
 
-.. literalinclude:: controllers/015.php
+    public string $defaultController = 'Helloworld';
 
 Where ``Helloworld`` is the name of the controller class you want to be used.
 
-A few lines further down **Routes.php** in the "Route Definitions" section, comment out the line:
+And comment out the line in **app/Config/Routes.php**:
 
 .. literalinclude:: controllers/016.php
+    :lines: 2-
 
 If you now browse to your site without specifying any URI segments you'll
 see the "Hello World" message.
@@ -547,15 +548,16 @@ Defining a Default Controller (Legacy)
 Let's try it with the ``Helloworld`` controller.
 
 To specify a default controller open your **app/Config/Routes.php**
-file and set this variable:
+file and set this property::
 
-.. literalinclude:: controllers/015.php
+    public string $defaultController = 'Helloworld';
 
 Where ``Helloworld`` is the name of the controller class you want to be used.
 
-A few lines further down **Routes.php** in the "Route Definitions" section, comment out the line:
+And comment out the line in **app/Config/Routes.php**:
 
 .. literalinclude:: controllers/016.php
+    :lines: 2-
 
 If you now browse to your site without specifying any URI segments you'll
 see the "Hello World" message.
