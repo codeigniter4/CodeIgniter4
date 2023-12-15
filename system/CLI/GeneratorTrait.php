@@ -127,7 +127,7 @@ trait GeneratorTrait
         $target = $this->buildPath($class);
 
         // Check if path is empty.
-        if (empty($target)) {
+        if ($target === '') {
             return;
         }
 
@@ -148,7 +148,7 @@ trait GeneratorTrait
         $target = $this->buildPath($view);
 
         // Check if path is empty.
-        if (empty($target)) {
+        if ($target === '') {
             return;
         }
 
@@ -318,7 +318,7 @@ trait GeneratorTrait
             return $class; // @codeCoverageIgnore
         }
 
-        $directoryString = ! empty($this->directory) ? $this->directory . '\\' : '';
+        $directoryString = ($this->directory !== null) ? $this->directory . '\\' : '';
 
         return $namespace . $directoryString . str_replace('/', '\\', $class);
     }
@@ -449,7 +449,7 @@ trait GeneratorTrait
      */
     protected function getNamespace(): string
     {
-        return ! empty($this->namespace)
+        return ($this->namespace !== null)
             ? $this->namespace
             : trim(
                 str_replace(
