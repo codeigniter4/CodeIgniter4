@@ -416,7 +416,7 @@ To call the above controller your URI will look something like this::
 Each of your sub-directories may contain a default controller which will be
 called if the URL contains *only* the sub-directory. Simply put a controller
 in there that matches the name of your default controller as specified in
-your **app/Config/Routes.php** file.
+your **app/Config/Routing.php** file.
 
 CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Routing <defined-route-routing>`..
 
@@ -547,7 +547,7 @@ Defining a Default Controller (Legacy)
 
 Let's try it with the ``Helloworld`` controller.
 
-To specify a default controller open your **app/Config/Routes.php**
+To specify a default controller open your **app/Config/Routing.php**
 file and set this property::
 
     public string $defaultController = 'Helloworld';
@@ -595,7 +595,7 @@ To call the above controller your URI will look something like this::
 Each of your sub-directories may contain a default controller which will be
 called if the URL contains *only* the sub-directory. Simply put a controller
 in there that matches the name of your default controller as specified in
-your **app/Config/Routes.php** file.
+your **app/Config/Routing.php** file.
 
 CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Routing <defined-route-routing>`..
 
