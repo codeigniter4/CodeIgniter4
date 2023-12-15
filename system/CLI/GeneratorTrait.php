@@ -113,6 +113,8 @@ trait GeneratorTrait
 
     /**
      * Generates a class file from an existing template.
+     *
+     * @return void
      */
     protected function generateClass(array $params)
     {
@@ -136,6 +138,8 @@ trait GeneratorTrait
      * Generate a view file from an existing template.
      *
      * @param string $view namespaced view name that is generated
+     *
+     * @return void
      */
     protected function generateView(string $view, array $params)
     {
