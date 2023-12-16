@@ -1,5 +1,7 @@
 <?php
 
+use CodeIgniter\I18n\Time;
+
 $time  = Time::parse('May 10, 2017', 'America/Chicago');
 $time2 = $time->setTimestamp(strtotime('April 1, 2017'));
 
