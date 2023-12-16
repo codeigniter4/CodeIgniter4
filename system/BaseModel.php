@@ -23,6 +23,7 @@ use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Validation\ValidationInterface;
+use Config\Feature;
 use Config\Services;
 use InvalidArgumentException;
 use ReflectionClass;
@@ -379,12 +380,12 @@ abstract class BaseModel
      * Fetches all results, while optionally limiting them.
      * This method works only with dbCalls.
      *
-     * @param int $limit  Limit
-     * @param int $offset Offset
+     * @param int|null $limit  Limit
+     * @param int      $offset Offset
      *
      * @return array
      */
-    abstract protected function doFindAll(int $limit = 0, int $offset = 0);
+    abstract protected function doFindAll(?int $limit = null, int $offset = 0);
 
     /**
      * Returns the first row of the result set.
@@ -600,8 +601,12 @@ abstract class BaseModel
      *
      * @return array
      */
-    public function findAll(int $limit = 0, int $offset = 0)
+    public function findAll(?int $limit = null, int $offset = 0)
     {
+        if (config(Feature::class)->limitZeroAsAll) {
+            $limit ??= 0;
+        }
+
         if ($this->tempAllowCallbacks) {
             // Call the before event and check for a return
             $eventData = $this->trigger('beforeFind', [

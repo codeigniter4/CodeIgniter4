@@ -18,6 +18,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\ResultInterface;
+use Config\Feature;
 
 /**
  * Builder for SQLSRV
@@ -308,6 +309,14 @@ class Builder extends BaseBuilder
      */
     protected function _limit(string $sql, bool $offsetIgnore = false): string
     {
+        // SQL Server cannot handle `LIMIT 0`.
+        // DatabaseException:
+        //   [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The number of
+        //   rows provided for a FETCH clause must be greater then zero.
+        if (! config(Feature::class)->limitZeroAsAll && $this->QBLimit === 0) {
+            return "SELECT * \nFROM " . $this->_fromTables() . ' WHERE 1=0 ';
+        }
+
         if (empty($this->QBOrderBy)) {
             $sql .= ' ORDER BY (SELECT NULL) ';
         }
@@ -590,7 +599,11 @@ class Builder extends BaseBuilder
             . $this->compileOrderBy(); // ORDER BY
 
         // LIMIT
-        if ($this->QBLimit) {
+        if (config(Feature::class)->limitZeroAsAll) {
+            if ($this->QBLimit) {
+                $sql = $this->_limit($sql . "\n");
+            }
+        } elseif ($this->QBLimit !== false || $this->QBOffset) {
             $sql = $this->_limit($sql . "\n");
         }
 
@@ -605,6 +618,10 @@ class Builder extends BaseBuilder
      */
     public function get(?int $limit = null, int $offset = 0, bool $reset = true)
     {
+        if (config(Feature::class)->limitZeroAsAll && $limit === 0) {
+            $limit = null;
+        }
+
         if ($limit !== null) {
             $this->limit($limit, $offset);
         }

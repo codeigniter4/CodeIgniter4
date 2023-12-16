@@ -26,6 +26,7 @@ use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Database;
+use Config\Feature;
 use ReflectionException;
 
 /**
@@ -223,14 +224,18 @@ class Model extends BaseModel
      * all results, while optionally limiting them.
      * This method works only with dbCalls.
      *
-     * @param int $limit  Limit
-     * @param int $offset Offset
+     * @param int|null $limit  Limit
+     * @param int      $offset Offset
      *
      * @return array
      * @phpstan-return list<row_array|object>
      */
-    protected function doFindAll(int $limit = 0, int $offset = 0)
+    protected function doFindAll(?int $limit = null, int $offset = 0)
     {
+        if (config(Feature::class)->limitZeroAsAll) {
+            $limit ??= 0;
+        }
+
         $builder = $this->builder();
 
         if ($this->tempUseSoftDeletes) {

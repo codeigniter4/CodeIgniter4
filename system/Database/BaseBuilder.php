@@ -17,6 +17,7 @@ use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Traits\ConditionalTrait;
+use Config\Feature;
 use InvalidArgumentException;
 
 /**
@@ -1488,6 +1489,10 @@ class BaseBuilder
      */
     public function limit(?int $value = null, ?int $offset = 0)
     {
+        if (config(Feature::class)->limitZeroAsAll && $value === 0) {
+            $value = null;
+        }
+
         if ($value !== null) {
             $this->QBLimit = $value;
         }
@@ -1605,6 +1610,10 @@ class BaseBuilder
      */
     public function get(?int $limit = null, int $offset = 0, bool $reset = true)
     {
+        if (config(Feature::class)->limitZeroAsAll && $limit === 0) {
+            $limit = null;
+        }
+
         if ($limit !== null) {
             $this->limit($limit, $offset);
         }
@@ -1738,7 +1747,11 @@ class BaseBuilder
             $this->where($where);
         }
 
-        if (! empty($limit)) {
+        if (config(Feature::class)->limitZeroAsAll && $limit === 0) {
+            $limit = null;
+        }
+
+        if ($limit !== null) {
             $this->limit($limit, $offset);
         }
 
@@ -2454,7 +2467,11 @@ class BaseBuilder
             $this->where($where);
         }
 
-        if (! empty($limit)) {
+        if (config(Feature::class)->limitZeroAsAll && $limit === 0) {
+            $limit = null;
+        }
+
+        if ($limit !== null) {
             if (! $this->canLimitWhereUpdates) {
                 throw new DatabaseException('This driver does not allow LIMITs on UPDATE queries using WHERE.');
             }
@@ -2495,10 +2512,17 @@ class BaseBuilder
             $valStr[] = $key . ' = ' . $val;
         }
 
+        if (config(Feature::class)->limitZeroAsAll) {
+            return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . implode(', ', $valStr)
+                . $this->compileWhereHaving('QBWhere')
+                . $this->compileOrderBy()
+                . ($this->QBLimit ? $this->_limit(' ', true) : '');
+        }
+
         return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . implode(', ', $valStr)
             . $this->compileWhereHaving('QBWhere')
             . $this->compileOrderBy()
-            . ($this->QBLimit ? $this->_limit(' ', true) : '');
+            . ($this->QBLimit !== false ? $this->_limit(' ', true) : '');
     }
 
     /**
@@ -2764,7 +2788,11 @@ class BaseBuilder
 
         $sql = $this->_delete($this->removeAlias($table));
 
-        if (! empty($limit)) {
+        if (config(Feature::class)->limitZeroAsAll && $limit === 0) {
+            $limit = null;
+        }
+
+        if ($limit !== null) {
             $this->QBLimit = $limit;
         }
 
@@ -3030,7 +3058,11 @@ class BaseBuilder
             . $this->compileWhereHaving('QBHaving')
             . $this->compileOrderBy();
 
-        if ($this->QBLimit) {
+        if (config(Feature::class)->limitZeroAsAll) {
+            if ($this->QBLimit) {
+                $sql = $this->_limit($sql . "\n");
+            }
+        } elseif ($this->QBLimit !== false || $this->QBOffset) {
             $sql = $this->_limit($sql . "\n");
         }
 
