@@ -1182,6 +1182,8 @@ trait TimeTrait
         $timezone = $this->timezone;
 
         $this->timezone = new DateTimeZone($timezone);
+
+        // @phpstan-ignore-next-line `$this->date` is a special property for PHP internal use.
         parent::__construct($this->date, $this->timezone);
     }
 }
