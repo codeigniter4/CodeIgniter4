@@ -25,6 +25,7 @@ use DateTimeImmutable;
  * @property string $dayOfYear   read-only
  * @property bool   $dst         read-only
  * @property string $hour        read-only
+ * @property bool   $local       read-only
  * @property string $minute      read-only
  * @property string $month       read-only
  * @property string $quarter     read-only
