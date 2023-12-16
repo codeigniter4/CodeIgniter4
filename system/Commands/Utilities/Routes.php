@@ -194,5 +194,30 @@ class Routes extends BaseCommand
         }
 
         CLI::table($tbody, $thead);
+
+        $this->showRequiredFilters();
+    }
+
+    private function showRequiredFilters(): void
+    {
+        $filterCollector = new FilterCollector();
+
+        $required = $filterCollector->getRequiredFilters();
+
+        $filters = [];
+
+        foreach ($required['before'] as $filter) {
+            $filters[] = CLI::color($filter, 'yellow');
+        }
+
+        CLI::write('Required Before Filters: ' . implode(', ', $filters));
+
+        $filters = [];
+
+        foreach ($required['after'] as $filter) {
+            $filters[] = CLI::color($filter, 'yellow');
+        }
+
+        CLI::write(' Required After Filters: ' . implode(', ', $filters));
     }
 }
