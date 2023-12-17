@@ -121,7 +121,7 @@ class Toolbar
             $data['vars']['varData'][esc($heading)] = $varData;
         }
 
-        if ($_SESSION !== []) {
+        if (isset($_SESSION)) {
             foreach ($_SESSION as $key => $value) {
                 // Replace the binary data with string to avoid json_encode failure.
                 if (is_string($value) && preg_match('~[^\x20-\x7E\t\r\n]~', $value)) {
