@@ -45,6 +45,7 @@ use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
+use Rector\TypeDeclaration\Rector\Empty_\EmptyOnNullableObjectToInstanceOfRector;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
@@ -141,6 +142,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(SimplifyEmptyArrayCheckRector::class);
     $rectorConfig->rule(SimplifyEmptyCheckOnEmptyArrayRector::class);
     $rectorConfig->rule(TernaryEmptyArrayArrayDimFetchToCoalesceRector::class);
+    $rectorConfig->rule(EmptyOnNullableObjectToInstanceOfRector::class);
     $rectorConfig->rule(StringClassNameToClassConstantRector::class);
     $rectorConfig->rule(PrivatizeFinalClassPropertyRector::class);
     $rectorConfig->rule(CompleteDynamicPropertiesRector::class);
