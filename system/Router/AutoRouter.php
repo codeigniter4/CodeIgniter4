@@ -90,7 +90,7 @@ final class AutoRouter implements AutoRouterInterface
 
         // If we don't have any segments left - use the default controller;
         // If not empty, then the first segment should be the controller
-        if (! empty($segments)) {
+        if ($segments !== []) {
             $this->controller = ucfirst(array_shift($segments));
         }
 
@@ -103,7 +103,7 @@ final class AutoRouter implements AutoRouterInterface
         // Use the method name if it exists.
         // If it doesn't, no biggie - the default method name
         // has already been set.
-        if (! empty($segments)) {
+        if ($segments !== []) {
             $this->method = array_shift($segments) ?: $this->method;
         }
 
@@ -115,7 +115,7 @@ final class AutoRouter implements AutoRouterInterface
         /** @var array $params An array of params to the controller method. */
         $params = [];
 
-        if (! empty($segments)) {
+        if ($segments !== []) {
             $params = $segments;
         }
 

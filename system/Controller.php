@@ -132,7 +132,7 @@ class Controller
      */
     protected function loadHelpers()
     {
-        if (empty($this->helpers)) {
+        if ($this->helpers === []) {
             return;
         }
 

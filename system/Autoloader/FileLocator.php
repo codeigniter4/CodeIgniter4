@@ -196,7 +196,7 @@ class FileLocator
             }
         }
 
-        if (! $prioritizeApp && ! empty($appPaths)) {
+        if (! $prioritizeApp && $appPaths !== []) {
             $foundPaths = [...$foundPaths, ...$appPaths];
         }
 
@@ -322,7 +322,7 @@ class FileLocator
 
             $tempFiles = get_filenames($fullPath, true, false, false);
 
-            if (! empty($tempFiles)) {
+            if ($tempFiles !== []) {
                 $files = array_merge($files, $tempFiles);
             }
         }
@@ -356,7 +356,7 @@ class FileLocator
 
             $tempFiles = get_filenames($fullPath, true, false, false);
 
-            if (! empty($tempFiles)) {
+            if ($tempFiles !== []) {
                 $files = array_merge($files, $tempFiles);
             }
         }

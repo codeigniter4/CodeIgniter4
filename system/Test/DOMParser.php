@@ -213,7 +213,7 @@ class DOMParser
 
         // $paths might contain a number of different
         // ready to go xpath portions to tack on.
-        if (! empty($paths) && is_array($paths)) {
+        if ($paths !== [] && is_array($paths)) {
             foreach ($paths as $extra) {
                 $path .= $extra;
             }

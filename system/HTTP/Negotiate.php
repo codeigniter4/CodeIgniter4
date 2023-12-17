@@ -154,7 +154,7 @@ class Negotiate
         bool $strictMatch = false,
         bool $matchLocales = false
     ): string {
-        if (empty($supported)) {
+        if ($supported === []) {
             throw HTTPException::forEmptySupportedNegotiations();
         }
 

@@ -147,7 +147,7 @@ class CLIRequest extends Request
      */
     public function getOptionString(bool $useLongOpts = false): string
     {
-        if (empty($this->options)) {
+        if ($this->options === []) {
             return '';
         }
 

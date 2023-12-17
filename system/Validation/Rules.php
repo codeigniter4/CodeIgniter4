@@ -256,7 +256,7 @@ class Rules
      */
     public function required_with($str = null, ?string $fields = null, array $data = []): bool
     {
-        if ($fields === null || empty($data)) {
+        if ($fields === null || $data === []) {
             throw new InvalidArgumentException('You must supply the parameters: fields, data.');
         }
 
@@ -283,7 +283,7 @@ class Rules
             }
         }
 
-        return empty($requiredFields);
+        return $requiredFields === [];
     }
 
     /**
@@ -305,7 +305,7 @@ class Rules
         ?string $error = null,
         ?string $field = null
     ): bool {
-        if ($otherFields === null || empty($data)) {
+        if ($otherFields === null || $data === []) {
             throw new InvalidArgumentException('You must supply the parameters: otherFields, data.');
         }
 

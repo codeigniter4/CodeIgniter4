@@ -143,7 +143,7 @@ abstract class BaseCommand
         } else {
             $usage = $this->name;
 
-            if (! empty($this->arguments)) {
+            if ($this->arguments !== []) {
                 $usage .= ' [arguments]';
             }
         }
@@ -156,7 +156,7 @@ abstract class BaseCommand
             CLI::write($this->setPad($this->description, 0, 0, 2));
         }
 
-        if (! empty($this->arguments)) {
+        if ($this->arguments !== []) {
             CLI::newLine();
             CLI::write(lang('CLI.helpArguments'), 'yellow');
             $length = max(array_map('strlen', array_keys($this->arguments)));
@@ -166,7 +166,7 @@ abstract class BaseCommand
             }
         }
 
-        if (! empty($this->options)) {
+        if ($this->options !== []) {
             CLI::newLine();
             CLI::write(lang('CLI.helpOptions'), 'yellow');
             $length = max(array_map('strlen', array_keys($this->options)));

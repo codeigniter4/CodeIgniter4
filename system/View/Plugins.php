@@ -79,7 +79,7 @@ class Plugins
     public static function ValidationErrors(array $params = []): string
     {
         $validator = Services::validation();
-        if (empty($params)) {
+        if ($params === []) {
             return $validator->listErrors();
         }
 
