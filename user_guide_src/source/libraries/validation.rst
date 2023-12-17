@@ -554,7 +554,9 @@ The Validation library provides several methods to help you set error messages, 
 custom error messages, and retrieve one or more errors to display.
 
 By default, error messages are derived from language strings in **system/Language/en/Validation.php**, where
-each rule has an entry.
+each rule has an entry. In case you want to change a message default, create a file
+**app/Language/en/Validation.php** (and/or corresponding folder of locale you use in place of/besides ``en``)
+and place in it keys and values of those error messages for which you want different defaults.
 
 .. _validation-custom-errors:
 
