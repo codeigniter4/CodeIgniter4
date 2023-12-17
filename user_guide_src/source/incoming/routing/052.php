@@ -8,6 +8,7 @@ class Routing extends BaseRouting
     // ...
 }
 
+// In app/Config/Routes.php
 // to enable
 $routes->setPrioritize();
 
