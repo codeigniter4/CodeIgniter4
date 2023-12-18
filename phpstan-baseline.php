@@ -862,11 +862,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Cookie/Cookie.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Call to function is_string\\(\\) with non\\-falsy\\-string will always evaluate to true\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 30,
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
