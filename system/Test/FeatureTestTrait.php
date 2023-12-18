@@ -326,7 +326,8 @@ trait FeatureTestTrait
      *
      * Always populate the GET vars based on the URI.
      *
-     * @param string $method HTTP verb
+     * @param string               $method HTTP verb
+     * @param non-empty-array|null $params
      *
      * @return Request
      *

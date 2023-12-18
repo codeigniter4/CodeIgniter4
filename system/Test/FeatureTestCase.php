@@ -186,7 +186,7 @@ class FeatureTestCase extends CIUnitTestCase
             ->run($routes, true);
 
         $output = \ob_get_contents();
-        if (empty($response->getBody()) && ! ($output === '' || $output === '0' || $output === false)) {
+        if (empty($response->getBody()) && ! ($output === '' || $output === false)) {
             $response->setBody($output);
         }
 
@@ -335,7 +335,7 @@ class FeatureTestCase extends CIUnitTestCase
     {
         // $params should set the query vars if present,
         // otherwise set it from the URL.
-        $get = $params !== null && $params !== [] && $method === 'get'
+        $get = ($params !== null && $params !== [] && $method === 'get')
             ? $params
             : $this->getPrivateProperty($request->getUri(), 'query');
 

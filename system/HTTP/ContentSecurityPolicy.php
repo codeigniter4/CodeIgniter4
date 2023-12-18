@@ -790,7 +790,7 @@ class ContentSecurityPolicy
         $reportSources = [];
 
         foreach ($values as $value => $reportOnly) {
-            if (is_numeric($value) && is_string($reportOnly) && ($reportOnly !== '' && $reportOnly !== '0')) {
+            if (is_numeric($value) && is_string($reportOnly) && ($reportOnly !== '')) {
                 $value      = $reportOnly;
                 $reportOnly = $this->reportOnly;
             }

@@ -849,7 +849,7 @@ class CLI
      */
     public static function wrap(?string $string = null, int $max = 0, int $padLeft = 0): string
     {
-        if ($string === null || $string === '' || $string === '0') {
+        if ($string === null || $string === '') {
             return '';
         }
 

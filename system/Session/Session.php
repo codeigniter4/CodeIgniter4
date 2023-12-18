@@ -299,7 +299,7 @@ class Session implements SessionInterface
             ini_set('session.gc_maxlifetime', (string) $this->config->expiration);
         }
 
-        if ($this->config->savePath !== '' && $this->config->savePath !== '0') {
+        if ($this->config->savePath !== '') {
             ini_set('session.save_path', $this->config->savePath);
         }
 
@@ -486,13 +486,13 @@ class Session implements SessionInterface
      *
      * Replaces the legacy method $session->userdata();
      *
-     * @param string|null $key Identifier of the session property to retrieve
+     * @param non-empty-string|null $key Identifier of the session property to retrieve
      *
      * @return array|bool|float|int|object|string|null The property value(s)
      */
     public function get(?string $key = null)
     {
-        if ($key !== null && $key !== '' && $key !== '0' && (null !== ($value = $_SESSION[$key] ?? null) || null !== ($value = dot_array_search($key, $_SESSION ?? [])))) {
+        if ($key !== null && $key !== '' && (null !== ($value = $_SESSION[$key] ?? null) || null !== ($value = dot_array_search($key, $_SESSION ?? [])))) {
             return $value;
         }
 
@@ -500,7 +500,7 @@ class Session implements SessionInterface
             return $key === null ? [] : null;
         }
 
-        if ($key !== null && $key !== '' && $key !== '0') {
+        if ($key !== null && $key !== '') {
             return null;
         }
 

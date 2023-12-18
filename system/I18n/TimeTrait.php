@@ -212,14 +212,22 @@ trait TimeTrait
      *
      * @throws Exception
      */
-    public static function create(?int $year = null, ?int $month = null, ?int $day = null, ?int $hour = null, ?int $minutes = null, ?int $seconds = null, $timezone = null, ?string $locale = null)
-    {
+    public static function create(
+        ?int $year = null,
+        ?int $month = null,
+        ?int $day = null,
+        ?int $hour = null,
+        ?int $minutes = null,
+        ?int $seconds = null,
+        $timezone = null,
+        ?string $locale = null
+    ) {
         $year ??= date('Y');
         $month ??= date('m');
         $day ??= date('d');
-        $hour    = $hour === null    || $hour === 0 ? 0 : $hour;
-        $minutes = $minutes === null || $minutes === 0 ? 0 : $minutes;
-        $seconds = $seconds === null || $seconds === 0 ? 0 : $seconds;
+        $hour ??= 0;
+        $minutes ??= 0;
+        $seconds ??= 0;
 
         return new self(date('Y-m-d H:i:s', strtotime("{$year}-{$month}-{$day} {$hour}:{$minutes}:{$seconds}")), $timezone, $locale);
     }

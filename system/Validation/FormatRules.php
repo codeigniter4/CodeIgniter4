@@ -252,7 +252,7 @@ class FormatRules
      */
     public function valid_ip(?string $ip = null, ?string $which = null): bool
     {
-        if ($ip === null || $ip === '' || $ip === '0') {
+        if ($ip === null || $ip === '') {
             return false;
         }
 
@@ -281,7 +281,7 @@ class FormatRules
      */
     public function valid_url(?string $str = null): bool
     {
-        if ($str === null || $str === '' || $str === '0') {
+        if ($str === null || $str === '') {
             return false;
         }
 
@@ -322,6 +322,8 @@ class FormatRules
 
     /**
      * Checks for a valid date and matches a given date format
+     *
+     * @param non-empty-string|null $format
      */
     public function valid_date(?string $str = null, ?string $format = null): bool
     {
@@ -329,7 +331,7 @@ class FormatRules
             return false;
         }
 
-        if ($format === null || $format === '' || $format === '0') {
+        if ($format === null || $format === '') {
             return strtotime($str) !== false;
         }
 

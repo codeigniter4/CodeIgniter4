@@ -104,7 +104,7 @@ class Database
             'database' => isset($dsn['path']) ? rawurldecode(substr($dsn['path'], 1)) : '',
         ];
 
-        if (isset($dsn['query']) && ($dsn['query'] !== '' && $dsn['query'] !== '0')) {
+        if (isset($dsn['query']) && ($dsn['query'] !== '')) {
             parse_str($dsn['query'], $extra);
 
             foreach ($extra as $key => $val) {

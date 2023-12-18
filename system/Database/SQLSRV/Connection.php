@@ -444,7 +444,7 @@ class Connection extends BaseConnection
      */
     public function setDatabase(?string $databaseName = null)
     {
-        if ($databaseName === null || $databaseName === '' || $databaseName === '0') {
+        if ($databaseName === null || $databaseName === '') {
             $databaseName = $this->database;
         }
 

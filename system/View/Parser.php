@@ -185,12 +185,12 @@ class Parser extends View
      * so that the variable is correctly handled within the
      * parsing itself, and contexts (including raw) are respected.
      *
-     * @param string|null $context The context to escape it for: html, css, js, url, raw
-     *                             If 'raw', no escaping will happen
+     * @param non-empty-string|null $context The context to escape it for: html, css, js, url, raw
+     *                                       If 'raw', no escaping will happen
      */
     public function setData(array $data = [], ?string $context = null): RendererInterface
     {
-        if ($context !== null && $context !== '' && $context !== '0') {
+        if ($context !== null && $context !== '') {
             foreach ($data as $key => &$value) {
                 if (is_array($value)) {
                     foreach ($value as &$obj) {
@@ -592,7 +592,7 @@ class Parser extends View
             $param = ! empty($param) ? trim($param[0], '() ') : null;
 
             // Params can be separated by commas to allow multiple parameters for the filter
-            if ($param !== null && $param !== '' && $param !== '0') {
+            if ($param !== null && $param !== '') {
                 $param = explode(',', $param);
 
                 // Clean it up

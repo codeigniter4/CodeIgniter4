@@ -35,14 +35,14 @@ class FileLocator
      * Attempts to locate a file by examining the name for a namespace
      * and looking through the PSR-4 namespaced files that we know about.
      *
-     * @param string      $file   The relative file path or namespaced file to
-     *                            locate. If not namespaced, search in the app
-     *                            folder.
-     * @param string|null $folder The folder within the namespace that we should
-     *                            look for the file. If $file does not contain
-     *                            this value, it will be appended to the namespace
-     *                            folder.
-     * @param string      $ext    The file extension the file should have.
+     * @param string                $file   The relative file path or namespaced file to
+     *                                      locate. If not namespaced, search in the app
+     *                                      folder.
+     * @param non-empty-string|null $folder The folder within the namespace that we should
+     *                                      look for the file. If $file does not contain
+     *                                      this value, it will be appended to the namespace
+     *                                      folder.
+     * @param string                $ext    The file extension the file should have.
      *
      * @return false|string The path to the file, or false if not found.
      */
@@ -51,7 +51,7 @@ class FileLocator
         $file = $this->ensureExt($file, $ext);
 
         // Clears the folder name if it is at the beginning of the filename
-        if ($folder !== null && $folder !== '' && $folder !== '0' && strpos($file, $folder) === 0) {
+        if ($folder !== null && strpos($file, $folder) === 0) {
             $file = substr($file, strlen($folder . '/'));
         }
 
@@ -101,7 +101,7 @@ class FileLocator
             // If we have a folder name, then the calling function
             // expects this file to be within that folder, like 'Views',
             // or 'libraries'.
-            if ($folder !== null && $folder !== '' && $folder !== '0' && strpos($path . $filename, '/' . $folder . '/') === false) {
+            if ($folder !== null && strpos($path . $filename, '/' . $folder . '/') === false) {
                 $path .= trim($folder, '/') . '/';
             }
 
@@ -154,7 +154,7 @@ class FileLocator
             }
         }
 
-        if ($className === '' || $className === '0') {
+        if ($className === '') {
             return '';
         }
 
@@ -305,7 +305,7 @@ class FileLocator
      */
     public function listFiles(string $path): array
     {
-        if ($path === '' || $path === '0') {
+        if ($path === '') {
             return [];
         }
 
@@ -338,7 +338,7 @@ class FileLocator
      */
     public function listNamespaceFiles(string $prefix, string $path): array
     {
-        if ($path === '' || $path === '0' || ($prefix === '' || $prefix === '0')) {
+        if ($path === '' || ($prefix === '')) {
             return [];
         }
 
@@ -368,11 +368,13 @@ class FileLocator
      * Checks the app folder to see if the file can be found.
      * Only for use with filenames that DO NOT include namespacing.
      *
+     * @param non-empty-string|null $folder
+     *
      * @return false|string The path to the file, or false if not found.
      */
     protected function legacyLocate(string $file, ?string $folder = null)
     {
-        $path = APPPATH . ($folder === null || $folder === '' || $folder === '0' ? $file : $folder . '/' . $file);
+        $path = APPPATH . ($folder === null ? $file : $folder . '/' . $file);
         $path = realpath($path) ?: $path;
 
         if (is_file($path)) {

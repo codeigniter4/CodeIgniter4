@@ -51,7 +51,7 @@ interface SessionInterface
      *
      * Replaces the legacy method $session->userdata();
      *
-     * @param string $key Identifier of the session property to retrieve
+     * @param non-empty-string|null $key Identifier of the session property to retrieve
      *
      * @return array|bool|float|int|object|string|null The property value(s)
      */

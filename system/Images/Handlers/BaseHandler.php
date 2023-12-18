@@ -691,6 +691,8 @@ abstract class BaseHandler implements ImageHandlerInterface
      *    $image->resize(100, 200, true)
      *          ->save($target);
      *
+     * @param non-empty-string|null $target
+     *
      * @return bool
      */
     abstract public function save(?string $target = null, int $quality = 90);

@@ -920,6 +920,7 @@ class BaseBuilder
      * @used-by whereNotIn()
      * @used-by orWhereNotIn()
      *
+     * @param non-empty-string|null          $key
      * @param array|BaseBuilder|Closure|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
@@ -928,7 +929,7 @@ class BaseBuilder
      */
     protected function _whereIn(?string $key = null, $values = null, bool $not = false, string $type = 'AND ', ?bool $escape = null, string $clause = 'QBWhere')
     {
-        if ($key === null || $key === '' || $key === '0' || ! is_string($key)) {
+        if ($key === null || $key === '') {
             throw new InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
         }
 
@@ -1434,7 +1435,7 @@ class BaseBuilder
     public function orderBy(string $orderBy, string $direction = '', ?bool $escape = null)
     {
         $qbOrderBy = [];
-        if ($orderBy === '' || $orderBy === '0') {
+        if ($orderBy === '') {
             return $this;
         }
 
@@ -1505,7 +1506,7 @@ class BaseBuilder
     public function offset(int $offset)
     {
         if ($offset !== 0) {
-            $this->QBOffset = (int) $offset;
+            $this->QBOffset = $offset;
         }
 
         return $this;
@@ -3265,10 +3266,10 @@ class BaseBuilder
     {
         $str = trim($str);
 
-        if ($str === '' || $str === '0'
-                        || ctype_digit($str)
-                        || (string) (float) $str === $str
-                        || in_array(strtoupper($str), ['TRUE', 'FALSE'], true)
+        if ($str === ''
+            || ctype_digit($str)
+            || (string) (float) $str === $str
+            || in_array(strtoupper($str), ['TRUE', 'FALSE'], true)
         ) {
             return true;
         }
