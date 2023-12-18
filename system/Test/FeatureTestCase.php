@@ -374,13 +374,16 @@ class FeatureTestCase extends CIUnitTestCase
             if ($params === null || $params === []) {
                 $params = $request->fetchGlobal('request');
             }
+
             $formatMime = '';
+
             if ($this->bodyFormat === 'json') {
                 $formatMime = 'application/json';
             } elseif ($this->bodyFormat === 'xml') {
                 $formatMime = 'application/xml';
             }
-            if ($formatMime !== '' && $formatMime !== '0' && ! empty($params)) {
+
+            if ($formatMime !== '' && ! empty($params)) {
                 $formatted = Services::format()->getFormatter($formatMime)->format($params);
                 $request->setBody($formatted);
                 $request->setHeader('Content-Type', $formatMime);
