@@ -848,11 +848,10 @@ class CodeIgniter
      */
     protected function determinePath()
     {
-        if (isset($this->path)) {
-            return $this->path;
-        }
-
-        return method_exists($this->request, 'getPath') ? $this->request->getPath() : $this->request->getUri()->getPath();
+        return $this->path ??
+            (method_exists($this->request, 'getPath')
+                ? $this->request->getPath()
+                : $this->request->getUri()->getPath());
     }
 
     /**
