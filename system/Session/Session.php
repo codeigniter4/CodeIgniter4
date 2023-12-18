@@ -299,7 +299,7 @@ class Session implements SessionInterface
             ini_set('session.gc_maxlifetime', (string) $this->config->expiration);
         }
 
-        if (! empty($this->config->savePath)) {
+        if ($this->config->savePath !== '' && $this->config->savePath !== '0') {
             ini_set('session.save_path', $this->config->savePath);
         }
 
@@ -492,7 +492,7 @@ class Session implements SessionInterface
      */
     public function get(?string $key = null)
     {
-        if (! empty($key) && (null !== ($value = $_SESSION[$key] ?? null) || null !== ($value = dot_array_search($key, $_SESSION ?? [])))) {
+        if ($key !== null && $key !== '' && $key !== '0' && (null !== ($value = $_SESSION[$key] ?? null) || null !== ($value = dot_array_search($key, $_SESSION ?? [])))) {
             return $value;
         }
 
@@ -500,7 +500,7 @@ class Session implements SessionInterface
             return $key === null ? [] : null;
         }
 
-        if (! empty($key)) {
+        if ($key !== null && $key !== '' && $key !== '0') {
             return null;
         }
 

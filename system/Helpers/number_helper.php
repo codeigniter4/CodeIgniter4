@@ -32,7 +32,7 @@ if (! function_exists('number_to_size')) {
 
         // ignore sub part
         $generalLocale = $locale;
-        if (! empty($locale) && ($underscorePos = strpos($locale, '_'))) {
+        if ($locale !== null && $locale !== '' && $locale !== '0' && ($underscorePos = strpos($locale, '_'))) {
             $generalLocale = substr($locale, 0, $underscorePos);
         }
 
@@ -88,7 +88,7 @@ if (! function_exists('number_to_amount')) {
 
         // ignore sub part
         $generalLocale = $locale;
-        if (! empty($locale) && ($underscorePos = strpos($locale, '_'))) {
+        if ($locale !== null && $locale !== '' && $locale !== '0' && ($underscorePos = strpos($locale, '_'))) {
             $generalLocale = substr($locale, 0, $underscorePos);
         }
 

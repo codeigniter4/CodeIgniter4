@@ -564,7 +564,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function getRoutes(?string $verb = null, bool $includeWildcard = true): array
     {
-        if (empty($verb)) {
+        if ($verb === null || $verb === '' || $verb === '0') {
             $verb = $this->getHTTPVerb();
         }
 
@@ -995,7 +995,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function match(array $verbs = [], string $from = '', $to = '', ?array $options = null): RouteCollectionInterface
     {
-        if (empty($from) || empty($to)) {
+        if ($from === '' || $from === '0' || empty($to)) {
             throw new InvalidArgumentException('You must supply the parameters: from, to.');
         }
 

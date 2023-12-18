@@ -24,7 +24,7 @@ if (! function_exists('now')) {
      */
     function now(?string $timezone = null): int
     {
-        $timezone = empty($timezone) ? app_timezone() : $timezone;
+        $timezone = $timezone === null || $timezone === '' || $timezone === '0' ? app_timezone() : $timezone;
 
         if ($timezone === 'local' || $timezone === date_default_timezone_get()) {
             return Time::now()->getTimestamp();

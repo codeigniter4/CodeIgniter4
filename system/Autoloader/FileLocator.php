@@ -51,7 +51,7 @@ class FileLocator
         $file = $this->ensureExt($file, $ext);
 
         // Clears the folder name if it is at the beginning of the filename
-        if (! empty($folder) && strpos($file, $folder) === 0) {
+        if ($folder !== null && $folder !== '' && $folder !== '0' && strpos($file, $folder) === 0) {
             $file = substr($file, strlen($folder . '/'));
         }
 
@@ -101,7 +101,7 @@ class FileLocator
             // If we have a folder name, then the calling function
             // expects this file to be within that folder, like 'Views',
             // or 'libraries'.
-            if (! empty($folder) && strpos($path . $filename, '/' . $folder . '/') === false) {
+            if ($folder !== null && $folder !== '' && $folder !== '0' && strpos($path . $filename, '/' . $folder . '/') === false) {
                 $path .= trim($folder, '/') . '/';
             }
 
@@ -154,7 +154,7 @@ class FileLocator
             }
         }
 
-        if (empty($className)) {
+        if ($className === '' || $className === '0') {
             return '';
         }
 
@@ -305,7 +305,7 @@ class FileLocator
      */
     public function listFiles(string $path): array
     {
-        if (empty($path)) {
+        if ($path === '' || $path === '0') {
             return [];
         }
 
@@ -338,7 +338,7 @@ class FileLocator
      */
     public function listNamespaceFiles(string $prefix, string $path): array
     {
-        if (empty($path) || empty($prefix)) {
+        if ($path === '' || $path === '0' || ($prefix === '' || $prefix === '0')) {
             return [];
         }
 
@@ -372,7 +372,7 @@ class FileLocator
      */
     protected function legacyLocate(string $file, ?string $folder = null)
     {
-        $path = APPPATH . (empty($folder) ? $file : $folder . '/' . $file);
+        $path = APPPATH . ($folder === null || $folder === '' || $folder === '0' ? $file : $folder . '/' . $file);
         $path = realpath($path) ?: $path;
 
         if (is_file($path)) {

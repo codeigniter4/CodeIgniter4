@@ -522,7 +522,7 @@ class Builder extends BaseBuilder
             return false; // @codeCoverageIgnore
         }
 
-        if (! empty($limit)) {
+        if ($limit !== null && $limit !== 0) {
             $this->QBLimit = $limit;
         }
 

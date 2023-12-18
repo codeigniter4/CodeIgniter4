@@ -589,7 +589,7 @@ class Router implements RouterInterface
      */
     public function setDirectory(?string $dir = null, bool $append = false, bool $validate = true)
     {
-        if (empty($dir)) {
+        if ($dir === null || $dir === '' || $dir === '0') {
             $this->directory = null;
         }
 

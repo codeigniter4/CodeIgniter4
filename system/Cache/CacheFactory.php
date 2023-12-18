@@ -52,8 +52,8 @@ class CacheFactory
             throw CacheException::forNoBackup();
         }
 
-        $handler = ! empty($handler) ? $handler : $config->handler;
-        $backup  = ! empty($backup) ? $backup : $config->backupHandler;
+        $handler = $handler !== null && $handler !== '' && $handler !== '0' ? $handler : $config->handler;
+        $backup  = $backup !== null && $backup !== '' && $backup !== '0' ? $backup : $config->backupHandler;
 
         if (! array_key_exists($handler, $config->validHandlers) || ! array_key_exists($backup, $config->validHandlers)) {
             throw CacheException::forHandlerNotFound();

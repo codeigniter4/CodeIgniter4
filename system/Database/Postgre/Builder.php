@@ -229,7 +229,7 @@ class Builder extends BaseBuilder
      */
     public function delete($where = '', ?int $limit = null, bool $resetData = true)
     {
-        if (! empty($limit) || ! empty($this->QBLimit)) {
+        if ($limit !== null && $limit !== 0 || ! empty($this->QBLimit)) {
             throw new DatabaseException('PostgreSQL does not allow LIMITs on DELETE queries.');
         }
 

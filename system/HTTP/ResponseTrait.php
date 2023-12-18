@@ -156,13 +156,13 @@ trait ResponseTrait
         }
 
         // Unknown and no message?
-        if (! array_key_exists($code, static::$statusCodes) && empty($reason)) {
+        if (! array_key_exists($code, static::$statusCodes) && ($reason === '' || $reason === '0')) {
             throw HTTPException::forUnkownStatusCode($code);
         }
 
         $this->statusCode = $code;
 
-        $this->reason = ! empty($reason) ? $reason : static::$statusCodes[$code];
+        $this->reason = $reason !== '' && $reason !== '0' ? $reason : static::$statusCodes[$code];
 
         return $this;
     }
@@ -226,7 +226,7 @@ trait ResponseTrait
     public function setContentType(string $mime, string $charset = 'UTF-8')
     {
         // add charset attribute if not already there and provided as parm
-        if ((strpos($mime, 'charset=') < 1) && ! empty($charset)) {
+        if ((strpos($mime, 'charset=') < 1) && ($charset !== '' && $charset !== '0')) {
             $mime .= '; charset=' . $charset;
         }
 

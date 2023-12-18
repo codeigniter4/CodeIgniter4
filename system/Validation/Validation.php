@@ -730,7 +730,7 @@ class Validation implements ValidationInterface
      */
     public function loadRuleGroup(?string $group = null)
     {
-        if (empty($group)) {
+        if ($group === null || $group === '' || $group === '0') {
             return [];
         }
 
@@ -912,7 +912,7 @@ class Validation implements ValidationInterface
             $message = lang('Validation.' . $rule);
         }
 
-        $message = str_replace('{field}', empty($label) ? $field : lang($label), $message);
+        $message = str_replace('{field}', $label === null || $label === '' || $label === '0' ? $field : lang($label), $message);
         $message = str_replace(
             '{param}',
             empty($this->rules[$param]['label']) ? $param : lang($this->rules[$param]['label']),

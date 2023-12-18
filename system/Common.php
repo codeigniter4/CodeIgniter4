@@ -291,7 +291,7 @@ if (! function_exists('csrf_field')) {
      */
     function csrf_field(?string $id = null): string
     {
-        return '<input type="hidden"' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '"' . _solidus() . '>';
+        return '<input type="hidden"' . ($id !== null && $id !== '' && $id !== '0' ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '"' . _solidus() . '>';
     }
 }
 
@@ -301,7 +301,7 @@ if (! function_exists('csrf_meta')) {
      */
     function csrf_meta(?string $id = null): string
     {
-        return '<meta' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_header() . '" content="' . csrf_hash() . '"' . _solidus() . '>';
+        return '<meta' . ($id !== null && $id !== '' && $id !== '0' ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_header() . '" content="' . csrf_hash() . '"' . _solidus() . '>';
     }
 }
 
@@ -856,7 +856,7 @@ if (! function_exists('redirect')) {
     {
         $response = Services::redirectresponse(null, true);
 
-        if (! empty($route)) {
+        if ($route !== null && $route !== '' && $route !== '0') {
             return $response->route($route);
         }
 
@@ -1129,7 +1129,7 @@ if (! function_exists('timer')) {
     {
         $timer = Services::timer();
 
-        if (empty($name)) {
+        if ($name === null || $name === '' || $name === '0') {
             return $timer;
         }
 

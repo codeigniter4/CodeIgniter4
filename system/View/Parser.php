@@ -190,7 +190,7 @@ class Parser extends View
      */
     public function setData(array $data = [], ?string $context = null): RendererInterface
     {
-        if (! empty($context)) {
+        if ($context !== null && $context !== '' && $context !== '0') {
             foreach ($data as $key => &$value) {
                 if (is_array($value)) {
                     foreach ($value as &$obj) {
@@ -592,7 +592,7 @@ class Parser extends View
             $param = ! empty($param) ? trim($param[0], '() ') : null;
 
             // Params can be separated by commas to allow multiple parameters for the filter
-            if (! empty($param)) {
+            if ($param !== null && $param !== '' && $param !== '0') {
                 $param = explode(',', $param);
 
                 // Clean it up

@@ -227,7 +227,7 @@ class ImageMagickHandler extends BaseHandler
     public function save(?string $target = null, int $quality = 90): bool
     {
         $original = $target;
-        $target   = empty($target) ? $this->image()->getPathname() : $target;
+        $target   = $target === null || $target === '' || $target === '0' ? $this->image()->getPathname() : $target;
 
         // If no new resource has been created, then we're
         // simply copy the existing one.

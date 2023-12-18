@@ -336,7 +336,7 @@ trait FeatureTestTrait
     {
         // $params should set the query vars if present,
         // otherwise set it from the URL.
-        $get = (! empty($params) && $method === 'get')
+        $get = ($params !== null && $params !== [] && $method === 'get')
             ? $params
             : $this->getPrivateProperty($request->getUri(), 'query');
 

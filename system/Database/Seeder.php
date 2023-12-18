@@ -78,7 +78,7 @@ class Seeder
     {
         $this->seedPath = $config->filesPath ?? APPPATH . 'Database/';
 
-        if (empty($this->seedPath)) {
+        if ($this->seedPath === '' || $this->seedPath === '0') {
             throw new InvalidArgumentException('Invalid filesPath set in the Config\Database.');
         }
 

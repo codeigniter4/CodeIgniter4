@@ -256,7 +256,7 @@ class IncomingRequest extends Request
      */
     public function detectPath(string $protocol = ''): string
     {
-        if (empty($protocol)) {
+        if ($protocol === '' || $protocol === '0') {
             $protocol = 'REQUEST_URI';
         }
 

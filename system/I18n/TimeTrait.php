@@ -217,9 +217,9 @@ trait TimeTrait
         $year ??= date('Y');
         $month ??= date('m');
         $day ??= date('d');
-        $hour    = empty($hour) ? 0 : $hour;
-        $minutes = empty($minutes) ? 0 : $minutes;
-        $seconds = empty($seconds) ? 0 : $seconds;
+        $hour    = $hour === null    || $hour === 0 ? 0 : $hour;
+        $minutes = $minutes === null || $minutes === 0 ? 0 : $minutes;
+        $seconds = $seconds === null || $seconds === 0 ? 0 : $seconds;
 
         return new self(date('Y-m-d H:i:s', strtotime("{$year}-{$month}-{$day} {$hour}:{$minutes}:{$seconds}")), $timezone, $locale);
     }
