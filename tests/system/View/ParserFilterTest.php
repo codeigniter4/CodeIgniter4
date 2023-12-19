@@ -109,15 +109,20 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
         $data = [
-            'value1' => null,
-            'value2' => 0,
-            'value3' => 'test',
+            'value1' => '',
+            'value2' => null,
+            'value3' => 0,
+            'value4' => 'test',
         ];
 
-        $template = '{ value1|default(foo) } { value2|default(bar) } { value3|default(baz) }';
+        $template = '{ value1|default(foo) } { value2|default(bar) } { value3|default(baz) }'
+                    . ' { value4|default(boo) } { undef|default(far) }';
 
         $parser->setData($data);
-        $this->assertSame('foo bar test', $parser->renderString($template));
+        $this->assertSame(
+            'foo bar baz test { undef|default(far) }',
+            $parser->renderString($template)
+        );
     }
 
     public function testEsc(): void
