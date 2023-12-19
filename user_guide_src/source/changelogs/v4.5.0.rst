@@ -79,7 +79,7 @@ Interface Changes
 - **ResponseInterface:** The default value of the third parameter ``$expire`` of
   the ``ResponseInterface::setCookie()`` has been fixed from ``''`` to ``0``.
 - **Logger:** The `psr/log <https://packagist.org/packages/psr/log>`_ package has
-  been upgraded to v2.0.0.
+  been upgraded to v3.0.0.
 
 .. _v450-method-signature-changes:
 
