@@ -1126,7 +1126,9 @@ keys passed in don’t conflict with your form data.</p>
 <p>The Validation library provides several methods to help you set error messages, provide
 custom error messages, and retrieve one or more errors to display.</p>
 <p>By default, error messages are derived from language strings in <strong>system/Language/en/Validation.php</strong>, where
-each rule has an entry.</p>
+each rule has an entry. In case you want to change a message default, create a file
+<strong>app/Language/en/Validation.php</strong> (and/or corresponding folder of locale you use in place of/besides <code class="docutils literal notranslate"><span class="pre">en</span></code>)
+and place in it keys and values of those error messages for which you want different defaults.</p>
 <section id="setting-custom-error-messages">
 <span id="validation-custom-errors"></span><h3><a class="toc-backref" href="#id29">Setting Custom Error Messages</a><a class="headerlink" href="#setting-custom-error-messages" title="Permalink to this headline"></a></h3>
 <p>Both the <code class="docutils literal notranslate"><span class="pre">setRule()</span></code> and <code class="docutils literal notranslate"><span class="pre">setRules()</span></code> methods can accept an array of custom messages
