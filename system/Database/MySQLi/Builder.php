@@ -49,7 +49,7 @@ class Builder extends BaseBuilder
      */
     protected function _fromTables(): string
     {
-        if (! empty($this->QBJoin) && count($this->QBFrom) > 1) {
+        if ($this->QBJoin !== [] && count($this->QBFrom) > 1) {
             return '(' . implode(', ', $this->QBFrom) . ')';
         }
 

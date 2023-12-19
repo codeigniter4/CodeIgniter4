@@ -128,7 +128,7 @@ class History extends BaseCollector
      */
     public function isEmpty(): bool
     {
-        return empty($this->files);
+        return $this->files === [];
     }
 
     /**

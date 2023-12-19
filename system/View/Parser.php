@@ -322,7 +322,7 @@ class Parser extends View
                     if (is_array($val)) {
                         $pair = $this->parsePair($key, $val, $match[1]);
 
-                        if (! empty($pair)) {
+                        if ($pair !== []) {
                             $pairs[array_keys($pair)[0]] = true;
 
                             $temp = array_merge($temp, $pair);
@@ -536,7 +536,7 @@ class Parser extends View
         // so we need to break them apart so we can apply them all.
         $filters = ! empty($matches[1]) ? explode('|', $matches[1]) : [];
 
-        if ($escape && empty($filters) && ($context = $this->shouldAddEscaping($orig))) {
+        if ($escape && $filters === [] && ($context = $this->shouldAddEscaping($orig))) {
             $filters[] = "esc({$context})";
         }
 
@@ -604,7 +604,7 @@ class Parser extends View
             }
 
             // Get our filter name
-            $filter = ! empty($param) ? trim(strtolower(substr($filter, 0, strpos($filter, '(')))) : trim($filter);
+            $filter = $param !== [] ? trim(strtolower(substr($filter, 0, strpos($filter, '(')))) : trim($filter);
 
             if (! array_key_exists($filter, $this->config->filters)) {
                 continue;

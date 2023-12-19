@@ -93,7 +93,7 @@ class Iterator
      */
     public function getReport(): string
     {
-        if (empty($this->results)) {
+        if ($this->results === []) {
             return 'No results to display.';
         }
 

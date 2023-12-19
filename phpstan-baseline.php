@@ -18,7 +18,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 13,
+	'count' => 10,
 	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
 ];
 $ignoreErrors[] = [
@@ -33,7 +33,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 16,
+	'count' => 10,
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
 $ignoreErrors[] = [
@@ -63,7 +63,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 5,
+	'count' => 2,
 	'path' => __DIR__ . '/system/CLI/BaseCommand.php',
 ];
 $ignoreErrors[] = [
@@ -83,7 +83,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 6,
+	'count' => 1,
 	'path' => __DIR__ . '/system/CLI/CLI.php',
 ];
 $ignoreErrors[] = [
@@ -857,11 +857,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/Services.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Controller.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Controller.php',
@@ -1033,7 +1028,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 10,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Database/BaseResult.php',
 ];
 $ignoreErrors[] = [
@@ -1148,7 +1143,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 8,
+	'count' => 6,
 	'path' => __DIR__ . '/system/Database/MigrationRunner.php',
 ];
 $ignoreErrors[] = [
@@ -1205,11 +1200,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\ModelFactory\\:\\:reset\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/ModelFactory.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/MySQLi/Builder.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -1543,7 +1533,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 15,
+	'count' => 10,
 	'path' => __DIR__ . '/system/Database/SQLSRV/Builder.php',
 ];
 $ignoreErrors[] = [
@@ -1593,7 +1583,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 6,
+	'count' => 5,
 	'path' => __DIR__ . '/system/Database/SQLSRV/Forge.php',
 ];
 $ignoreErrors[] = [
@@ -1713,7 +1703,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Database/SQLite3/Table.php',
 ];
 $ignoreErrors[] = [
@@ -1763,33 +1753,18 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Iterator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 5,
 	'path' => __DIR__ . '/system/Debug/Timer.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 5,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Debug/Toolbar.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Database.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Database.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/History.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -1888,7 +1863,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
+	'count' => 3,
 	'path' => __DIR__ . '/system/Entity/Entity.php',
 ];
 $ignoreErrors[] = [
@@ -1958,7 +1933,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
+	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/CLIRequest.php',
 ];
 $ignoreErrors[] = [
@@ -1978,7 +1953,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 9,
+	'count' => 7,
 	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
 ];
 $ignoreErrors[] = [
@@ -2028,11 +2003,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Call to function is_array\\(\\) with array will always evaluate to true\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
 ];
@@ -2133,7 +2103,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
+	'count' => 2,
 	'path' => __DIR__ . '/system/HTTP/Negotiate.php',
 ];
 $ignoreErrors[] = [
@@ -2188,7 +2158,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 6,
+	'count' => 5,
 	'path' => __DIR__ . '/system/HTTP/Response.php',
 ];
 $ignoreErrors[] = [
@@ -2265,11 +2235,6 @@ $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in &&, array\\<string, string\\> given on the right side\\.$#',
 	'count' => 4,
 	'path' => __DIR__ . '/system/HTTP/UserAgent.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
-	'path' => __DIR__ . '/system/Helpers/array_helper.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -2358,7 +2323,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
+	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/form_helper.php',
 ];
 $ignoreErrors[] = [
@@ -2378,7 +2343,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 6,
+	'count' => 5,
 	'path' => __DIR__ . '/system/Helpers/html_helper.php',
 ];
 $ignoreErrors[] = [
@@ -2398,7 +2363,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
+	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/text_helper.php',
 ];
 $ignoreErrors[] = [
@@ -2408,7 +2373,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
+	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/url_helper.php',
 ];
 $ignoreErrors[] = [
@@ -2552,18 +2517,13 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Log/Handlers/FileHandler.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Log/Logger.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$level \\(string\\) of method CodeIgniter\\\\Log\\\\Logger\\:\\:log\\(\\) should be contravariant with parameter \\$level \\(mixed\\) of method Psr\\\\Log\\\\LoggerInterface\\:\\:log\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Log/Logger.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 18,
+	'count' => 16,
 	'path' => __DIR__ . '/system/Model.php',
 ];
 $ignoreErrors[] = [
@@ -2648,7 +2608,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 6,
+	'count' => 3,
 	'path' => __DIR__ . '/system/Router/AutoRouter.php',
 ];
 $ignoreErrors[] = [
@@ -2838,7 +2798,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 5,
+	'count' => 4,
 	'path' => __DIR__ . '/system/Router/Router.php',
 ];
 $ignoreErrors[] = [
@@ -2963,7 +2923,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Session/Handlers/MemcachedHandler.php',
 ];
 $ignoreErrors[] = [
@@ -2988,7 +2948,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 13,
+	'count' => 12,
 	'path' => __DIR__ . '/system/Session/Session.php',
 ];
 $ignoreErrors[] = [
@@ -3273,7 +3233,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 7,
+	'count' => 6,
 	'path' => __DIR__ . '/system/Test/DOMParser.php',
 ];
 $ignoreErrors[] = [
@@ -3852,11 +3812,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Validation/CreditCardRules.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/DotArrayFilter.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a negated boolean, array\\|null given\\.$#',
 	'count' => 6,
 	'path' => __DIR__ . '/system/Validation/FileRules.php',
@@ -3868,7 +3823,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 11,
+	'count' => 8,
 	'path' => __DIR__ . '/system/Validation/Rules.php',
 ];
 $ignoreErrors[] = [
@@ -3908,7 +3863,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 9,
+	'count' => 6,
 	'path' => __DIR__ . '/system/View/Parser.php',
 ];
 $ignoreErrors[] = [
@@ -3918,12 +3873,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Plugins.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 9,
+	'count' => 7,
 	'path' => __DIR__ . '/system/View/Table.php',
 ];
 $ignoreErrors[] = [

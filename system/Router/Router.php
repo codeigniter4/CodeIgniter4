@@ -623,7 +623,7 @@ class Router implements RouterInterface
     protected function setRequest(array $segments = [])
     {
         // If we don't have any segments - use the default controller;
-        if (empty($segments)) {
+        if ($segments === []) {
             return;
         }
 
