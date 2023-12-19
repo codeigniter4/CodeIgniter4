@@ -631,19 +631,38 @@ in <a class="reference internal" href="../outgoing/localization.html"><span clas
 </pre></div>
 </div>
 <p>will match <strong>product/123</strong>, <strong>product/123/456</strong>, <strong>product/123/456/789</strong> and so on.</p>
+<p>In the above example, if the <code class="docutils literal notranslate"><span class="pre">$1</span></code> placeholder contains a slash
+(<code class="docutils literal notranslate"><span class="pre">/</span></code>), it will still be split into multiple parameters when passed to
+<code class="docutils literal notranslate"><span class="pre">Catalog::productLookup()</span></code>.</p>
 <p>The implementation in the
 Controller should take into account the maximum parameters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">ProductController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="k">class</span> <span class="nc">Catalog</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">productLookup</span><span class="p">(</span><span class="nv">$seg1</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nv">$seg2</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nv">$seg3</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">echo</span> <span class="nv">$seg1</span><span class="p">;</span> <span class="c1">// Will be 123 in all examples</span>
         <span class="k">echo</span> <span class="nv">$seg2</span><span class="p">;</span> <span class="c1">// false in first, 456 in second and third example</span>
         <span class="k">echo</span> <span class="nv">$seg3</span><span class="p">;</span> <span class="c1">// false in first and second, 789 in third</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Or you can use <a class="reference external" href="https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list">variable-length argument lists</a>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Catalog</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">productLookup</span><span class="p">(</span><span class="o">...</span><span class="nv">$params</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="nv">$params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">??</span> <span class="k">null</span><span class="p">;</span> <span class="c1">// Will be 123 in all examples</span>
+        <span class="k">echo</span> <span class="nv">$params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">??</span> <span class="k">null</span><span class="p">;</span> <span class="c1">// null in first, 456 in second and third example</span>
+        <span class="k">echo</span> <span class="nv">$params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">??</span> <span class="k">null</span><span class="p">;</span> <span class="c1">// null in first and second, 789 in third</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -702,6 +721,9 @@ redirect them back to the same page after they log in, you may find this example
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;login/(.+)&#39;</span><span class="p">,</span> <span class="s1">&#39;Auth::login/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>In the above example, if the <code class="docutils literal notranslate"><span class="pre">$1</span></code> placeholder contains a slash
+(<code class="docutils literal notranslate"><span class="pre">/</span></code>), it will still be split into multiple parameters when passed to
+<code class="docutils literal notranslate"><span class="pre">Auth::login()</span></code>.</p>
 <p>For those of you who don’t know regular expressions and want to learn more about them,
 <a class="reference external" href="https://www.regular-expressions.info/">regular-expressions.info</a> might be a good starting point.</p>
 <div class="admonition note">
@@ -1207,6 +1229,7 @@ controller:</p>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
+<span class="c1">// In app/Config/Routes.php</span>
 <span class="c1">// Controller is \Users</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;Users::index&#39;</span><span class="p">);</span>
 
@@ -1218,7 +1241,7 @@ controller:</p>
 then you can change this value to save typing:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// This can be overridden in the Routes file</span>
+<span class="c1">// This can be overridden in app/Config/Routes.php</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultNamespace</span><span class="p">(</span><span class="s1">&#39;App&#39;</span><span class="p">);</span>
 
 <span class="c1">// Controller is \App\Users</span>
@@ -1243,7 +1266,7 @@ URI segments when used in Auto Routing, thus saving you additional route entries
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
-<span class="c1">// This can be overridden in the Routes file</span>
+<span class="c1">// This can be overridden in app/Config/Routes.php</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setTranslateURIDashes</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -1273,7 +1296,7 @@ to only those defined by you, by setting the <code class="docutils literal notra
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
-<span class="c1">// This can be overridden in the Routes file</span>
+<span class="c1">// This can be overridden in app/Config/Routes.php</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setAutoRoute</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -1298,6 +1321,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
+<span class="c1">// In app/Config/Routes.php</span>
 <span class="c1">// Would execute the show404 method of the App\Errors class</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">set404Override</span><span class="p">(</span><span class="s1">&#39;App\Errors::show404&#39;</span><span class="p">);</span>
 
@@ -1323,6 +1347,15 @@ Disabled by default. This functionality affects all routes.
 For an example use of lowering the priority see <a class="reference internal" href="#routing-priority"><span class="std std-ref">Route Priority</span></a>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="c1">// In app/Config/Routing.php</span>
+<span class="k">class</span> <span class="nc">Routing</span> <span class="k">extends</span> <span class="nx">BaseRouting</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="k">public</span> <span class="nx">bool</span> <span class="nv">$prioritize</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="c1">// In app/Config/Routes.php</span>
 <span class="c1">// to enable</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setPrioritize</span><span class="p">();</span>
 
@@ -1670,7 +1703,7 @@ due to a bug.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 16, 2023.
+      <span class="lastupdated">Last updated on Dec 19, 2023.
       </span></p>
   </div>
 
