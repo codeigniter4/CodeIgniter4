@@ -8,6 +8,7 @@ class Routing extends BaseRouting
     // ...
 }
 
+// In app/Config/Routes.php
 // Controller is \Users
 $routes->get('users', 'Users::index');
 
