@@ -321,7 +321,7 @@ class Entity implements JsonSerializable
      */
     protected function mapProperty(string $key)
     {
-        if (empty($this->datamap)) {
+        if ($this->datamap === []) {
             return $key;
         }
 

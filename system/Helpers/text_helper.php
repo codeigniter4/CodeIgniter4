@@ -100,7 +100,7 @@ if (! function_exists('ascii_to_entities')) {
 
                 $out .= $str[$i];
             } else {
-                if (empty($temp)) {
+                if ($temp === []) {
                     $count = ($ordinal < 224) ? 2 : 3;
                 }
 
@@ -174,7 +174,7 @@ if (! function_exists('word_censor')) {
      */
     function word_censor(string $str, array $censored, string $replacement = ''): string
     {
-        if (empty($censored)) {
+        if ($censored === []) {
             return $str;
         }
 

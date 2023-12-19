@@ -176,7 +176,7 @@ abstract class BaseResult implements ResultInterface
      */
     public function getResultArray(): array
     {
-        if (! empty($this->resultArray)) {
+        if ($this->resultArray !== []) {
             return $this->resultArray;
         }
 
@@ -216,7 +216,7 @@ abstract class BaseResult implements ResultInterface
      */
     public function getResultObject(): array
     {
-        if (! empty($this->resultObject)) {
+        if ($this->resultObject !== []) {
             return $this->resultObject;
         }
 
@@ -325,7 +325,7 @@ abstract class BaseResult implements ResultInterface
     public function getRowArray(int $n = 0)
     {
         $result = $this->getResultArray();
-        if (empty($result)) {
+        if ($result === []) {
             return null;
         }
 
@@ -346,7 +346,7 @@ abstract class BaseResult implements ResultInterface
     public function getRowObject(int $n = 0)
     {
         $result = $this->getResultObject();
-        if (empty($result)) {
+        if ($result === []) {
             return null;
         }
 
@@ -394,7 +394,7 @@ abstract class BaseResult implements ResultInterface
     {
         $result = $this->getResult($type);
 
-        return (empty($result)) ? null : $result[0];
+        return ($result === []) ? null : $result[0];
     }
 
     /**
@@ -406,7 +406,7 @@ abstract class BaseResult implements ResultInterface
     {
         $result = $this->getResult($type);
 
-        return (empty($result)) ? null : $result[count($result) - 1];
+        return ($result === []) ? null : $result[count($result) - 1];
     }
 
     /**
@@ -417,7 +417,7 @@ abstract class BaseResult implements ResultInterface
     public function getNextRow(string $type = 'object')
     {
         $result = $this->getResult($type);
-        if (empty($result)) {
+        if ($result === []) {
             return null;
         }
 
@@ -432,7 +432,7 @@ abstract class BaseResult implements ResultInterface
     public function getPreviousRow(string $type = 'object')
     {
         $result = $this->getResult($type);
-        if (empty($result)) {
+        if ($result === []) {
             return null;
         }
 

@@ -1,6 +1,6 @@
 <?php
 
-// This can be overridden in the Routes file
+// This can be overridden in app/Config/Routes.php
 $routes->setDefaultNamespace('App');
 
 // Controller is \App\Users

@@ -305,7 +305,7 @@ trait ResponseTrait
      */
     public function setCache(array $options = [])
     {
-        if (empty($options)) {
+        if ($options === []) {
             return $this;
         }
 

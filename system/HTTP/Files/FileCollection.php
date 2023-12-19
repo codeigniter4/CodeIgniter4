@@ -150,7 +150,7 @@ class FileCollection
 
         $this->files = [];
 
-        if (empty($_FILES)) {
+        if ($_FILES === []) {
             return;
         }
 

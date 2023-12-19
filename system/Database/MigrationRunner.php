@@ -169,7 +169,7 @@ class MigrationRunner
 
         $migrations = $this->findMigrations();
 
-        if (empty($migrations)) {
+        if ($migrations === []) {
             return true;
         }
 
@@ -237,7 +237,7 @@ class MigrationRunner
             $targetBatch = $batches[count($batches) - 1 + $targetBatch] ?? 0;
         }
 
-        if (empty($batches) && $targetBatch === 0) {
+        if ($batches === [] && $targetBatch === 0) {
             return true;
         }
 

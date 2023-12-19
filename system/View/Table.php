@@ -314,7 +314,7 @@ class Table
         }
 
         // Is there anything to display? No? Smite them!
-        if (empty($this->heading) && empty($this->rows)) {
+        if (empty($this->heading) && $this->rows === []) {
             return 'Undefined table data';
         }
 
@@ -360,7 +360,7 @@ class Table
         }
 
         // Build the table rows
-        if (! empty($this->rows)) {
+        if ($this->rows !== []) {
             $out .= $this->template['tbody_open'] . $this->newline;
 
             $i = 1;

@@ -200,10 +200,18 @@ For example the route:
 
 will match **product/123**, **product/123/456**, **product/123/456/789** and so on.
 
+In the above example, if the ``$1`` placeholder contains a slash
+(``/``), it will still be split into multiple parameters when passed to
+``Catalog::productLookup()``.
+
 The implementation in the
 Controller should take into account the maximum parameters:
 
 .. literalinclude:: routing/011.php
+
+Or you can use `variable-length argument lists <https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list>`_:
+
+.. literalinclude:: routing/068.php
 
 .. important:: Do not put any placeholder after ``(:any)``. Because the number of
     parameters passed to the controller method may change.
@@ -248,6 +256,10 @@ For example, if a user accesses a password protected area of your web applicatio
 redirect them back to the same page after they log in, you may find this example useful:
 
 .. literalinclude:: routing/019.php
+
+In the above example, if the ``$1`` placeholder contains a slash
+(``/``), it will still be split into multiple parameters when passed to
+``Auth::login()``.
 
 For those of you who don't know regular expressions and want to learn more about them,
 `regular-expressions.info <https://www.regular-expressions.info/>`_ might be a good starting point.

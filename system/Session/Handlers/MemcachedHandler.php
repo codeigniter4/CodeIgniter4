@@ -127,7 +127,7 @@ class MemcachedHandler extends BaseHandler
             }
         }
 
-        if (empty($serverList)) {
+        if ($serverList === []) {
             $this->logger->error('Session: Memcached server pool is empty.');
 
             return false;

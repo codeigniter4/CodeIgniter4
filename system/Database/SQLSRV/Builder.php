@@ -343,7 +343,7 @@ class Builder extends BaseBuilder
             $this->set($set);
         }
 
-        if (empty($this->QBSet)) {
+        if ($this->QBSet === []) {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('You must use the "set" method to update an entry.');
             }
@@ -525,7 +525,7 @@ class Builder extends BaseBuilder
             $this->where($where);
         }
 
-        if (empty($this->QBWhere)) {
+        if ($this->QBWhere === []) {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('Deletes are not allowed unless they contain a "where" or "like" clause.');
             }
@@ -562,7 +562,7 @@ class Builder extends BaseBuilder
             $sql = (! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
 
             // SQL Server can't work with select * if group by is specified
-            if (empty($this->QBSelect) && ! empty($this->QBGroupBy) && is_array($this->QBGroupBy)) {
+            if (empty($this->QBSelect) && $this->QBGroupBy !== [] && is_array($this->QBGroupBy)) {
                 foreach ($this->QBGroupBy as $field) {
                     $this->QBSelect[] = is_array($field) ? $field['field'] : $field;
                 }
@@ -584,7 +584,7 @@ class Builder extends BaseBuilder
         }
 
         // Write the "FROM" portion of the query
-        if (! empty($this->QBFrom)) {
+        if ($this->QBFrom !== []) {
             $sql .= "\nFROM " . $this->_fromTables();
         }
 
@@ -679,7 +679,7 @@ class Builder extends BaseBuilder
                 });
 
                 // if no primary found then look for unique - since indexes have no order
-                if (empty($uniqueIndexes)) {
+                if ($uniqueIndexes === []) {
                     $uniqueIndexes = array_filter($tableIndexes, static function ($index) use ($fieldNames) {
                         $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
 

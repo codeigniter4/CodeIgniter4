@@ -81,7 +81,7 @@ if (! function_exists('array_sort_by_multiple_keys')) {
     function array_sort_by_multiple_keys(array &$array, array $sortColumns): bool
     {
         // Check if there really are columns to sort after
-        if (empty($sortColumns) || empty($array)) {
+        if ($sortColumns === [] || $array === []) {
             return false;
         }
 

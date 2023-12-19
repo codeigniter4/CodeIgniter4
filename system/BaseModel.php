@@ -769,7 +769,7 @@ abstract class BaseModel
 
         // doProtectFields() can further remove elements from
         // $row, so we need to check for empty dataset again
-        if (! $this->allowEmptyInserts && empty($row)) {
+        if (! $this->allowEmptyInserts && $row === []) {
             throw DataException::forEmptyDataset('insert');
         }
 
@@ -951,7 +951,7 @@ abstract class BaseModel
 
         // doProtectFields() can further remove elements from
         // $row, so we need to check for empty dataset again
-        if (empty($row)) {
+        if ($row === []) {
             throw DataException::forEmptyDataset('update');
         }
 
@@ -1279,7 +1279,7 @@ abstract class BaseModel
             return $row;
         }
 
-        if (empty($this->allowedFields)) {
+        if ($this->allowedFields === []) {
             throw DataException::forInvalidAllowedFields(static::class);
         }
 
@@ -1520,7 +1520,7 @@ abstract class BaseModel
 
         // If no data existed that needs validation
         // our job is done here.
-        if (empty($rules)) {
+        if ($rules === []) {
             return true;
         }
 

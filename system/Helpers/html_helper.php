@@ -471,7 +471,7 @@ if (! function_exists('object')) {
         $object = '<object data="' . $data . '" '
                 . $attributes . '>';
 
-        if (! empty($params)) {
+        if ($params !== []) {
             $object .= "\n";
         }
 

@@ -301,7 +301,7 @@ class Model extends BaseModel
             $builder->set($key, $val, $escape[$key] ?? null);
         }
 
-        if ($this->allowEmptyInserts && empty($row)) {
+        if ($this->allowEmptyInserts && $row === []) {
             $table = $this->db->protectIdentifiers($this->table, true, null, false);
             if ($this->db->getPlatform() === 'MySQLi') {
                 $sql = 'INSERT INTO ' . $table . ' VALUES ()';
@@ -750,7 +750,7 @@ class Model extends BaseModel
             return $row;
         }
 
-        if (empty($this->allowedFields)) {
+        if ($this->allowedFields === []) {
             throw DataException::forInvalidAllowedFields(static::class);
         }
 

@@ -813,11 +813,11 @@ class ContentSecurityPolicy
             }
         }
 
-        if (! empty($sources)) {
+        if ($sources !== []) {
             $this->tempHeaders[$name] = implode(' ', $sources);
         }
 
-        if (! empty($reportSources)) {
+        if ($reportSources !== []) {
             $this->reportOnlyHeaders[$name] = implode(' ', $reportSources);
         }
     }

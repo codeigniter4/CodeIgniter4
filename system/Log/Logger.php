@@ -140,7 +140,7 @@ class Logger implements LoggerInterface
 
         $this->dateFormat = $config->dateFormat ?? $this->dateFormat;
 
-        if (! is_array($config->handlers) || empty($config->handlers)) {
+        if (! is_array($config->handlers) || $config->handlers === []) {
             throw LogException::forNoHandlers('LoggerConfig');
         }
 

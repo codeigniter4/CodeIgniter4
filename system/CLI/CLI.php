@@ -245,7 +245,7 @@ class CLI
 
             unset($opts[0]);
 
-            if (empty($opts)) {
+            if ($opts === []) {
                 $extraOutput = $extraOutputDefault;
             } else {
                 $extraOutput  = '[' . $extraOutputDefault . ', ' . implode(', ', $opts) . ']';
@@ -315,7 +315,7 @@ class CLI
         $opts               = $options;
         unset($opts[0]);
 
-        if (empty($opts)) {
+        if ($opts === []) {
             $extraOutput = $extraOutputDefault;
         } else {
             $optsKey = [];
@@ -982,7 +982,7 @@ class CLI
      */
     public static function getOptionString(bool $useLongOpts = false, bool $trim = false): string
     {
-        if (empty(static::$options)) {
+        if (static::$options === []) {
             return '';
         }
 
@@ -1023,7 +1023,7 @@ class CLI
         $tableRows = [];
 
         // We need only indexes and not keys
-        if (! empty($thead)) {
+        if ($thead !== []) {
             $tableRows[] = array_values($thead);
         }
 
@@ -1097,7 +1097,7 @@ class CLI
             $table .= '| ' . implode(' | ', $tableRows[$row]) . ' |' . PHP_EOL;
 
             // Set the thead and table borders-bottom
-            if (($row === 0 && ! empty($thead)) || ($row + 1 === $totalRows)) {
+            if (($row === 0 && $thead !== []) || ($row + 1 === $totalRows)) {
                 $table .= $cols . PHP_EOL;
             }
         }
