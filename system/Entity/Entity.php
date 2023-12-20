@@ -81,29 +81,6 @@ class Entity implements JsonSerializable
     protected $castHandlers = [];
 
     /**
-     * Default convert handlers
-     *
-     * @var array<string, string>
-     */
-    private array $defaultCastHandlers = [
-        'array'     => ArrayCast::class,
-        'bool'      => BooleanCast::class,
-        'boolean'   => BooleanCast::class,
-        'csv'       => CSVCast::class,
-        'datetime'  => DatetimeCast::class,
-        'double'    => FloatCast::class,
-        'float'     => FloatCast::class,
-        'int'       => IntegerCast::class,
-        'integer'   => IntegerCast::class,
-        'int-bool'  => IntBoolCast::class,
-        'json'      => JsonCast::class,
-        'object'    => ObjectCast::class,
-        'string'    => StringCast::class,
-        'timestamp' => TimestampCast::class,
-        'uri'       => URICast::class,
-    ];
-
-    /**
      * Holds the current values of all class vars.
      *
      * @var array
@@ -120,6 +97,11 @@ class Entity implements JsonSerializable
     protected $original = [];
 
     /**
+     * The data caster class.
+     */
+    protected DataCaster $dataCaster;
+
+    /**
      * Holds info whenever properties have to be casted
      */
     private bool $_cast = true;
@@ -129,6 +111,8 @@ class Entity implements JsonSerializable
      */
     public function __construct(?array $data = null)
     {
+        $this->dataCaster = new DataCaster($this->castHandlers);
+
         $this->syncOriginal();
 
         $this->fill($data);
@@ -362,58 +346,9 @@ class Entity implements JsonSerializable
      */
     protected function castAs($value, string $attribute, string $method = 'get')
     {
-        if (empty($this->casts[$attribute])) {
-            return $value;
-        }
-
-        $type = $this->casts[$attribute];
-
-        $isNullable = false;
-
-        if (strpos($type, '?') === 0) {
-            $isNullable = true;
-
-            if ($value === null) {
-                return null;
-            }
-
-            $type = substr($type, 1);
-        }
-
-        // In order not to create a separate handler for the
-        // json-array type, we transform the required one.
-        $type = $type === 'json-array' ? 'json[array]' : $type;
-
-        if (! in_array($method, ['get', 'set'], true)) {
-            throw CastException::forInvalidMethod($method);
-        }
-
-        $params = [];
-
-        // Attempt to retrieve additional parameters if specified
-        // type[param, param2,param3]
-        if (preg_match('/^(.+)\[(.+)\]$/', $type, $matches)) {
-            $type   = $matches[1];
-            $params = array_map('trim', explode(',', $matches[2]));
-        }
-
-        if ($isNullable) {
-            $params[] = 'nullable';
-        }
-
-        $type = trim($type, '[]');
-
-        $handlers = array_merge($this->defaultCastHandlers, $this->castHandlers);
-
-        if (empty($handlers[$type])) {
-            return $value;
-        }
-
-        if (! is_subclass_of($handlers[$type], CastInterface::class)) {
-            throw CastException::forInvalidInterface($handlers[$type]);
-        }
-
-        return $handlers[$type]::$method($value, $params);
+        return $this->dataCaster
+            ->setCasts($this->casts)
+            ->castAs($value, $attribute, $method);
     }
 
     /**
