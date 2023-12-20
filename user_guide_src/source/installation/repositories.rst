@@ -32,6 +32,8 @@ There are several development repositories, of interest to potential contributor
 +------------------+--------------+-----------------------------------------------------------------+
 | cache_           | developers   | PSR-6 and PSR-16 Cache Adapters for CodeIgniter 4               |
 +------------------+--------------+-----------------------------------------------------------------+
+| queue_           | developers   | Job Queue for CodeIgniter 4                                     |
++------------------+--------------+-----------------------------------------------------------------+
 
 .. _CodeIgniter4: https://github.com/codeigniter4/CodeIgniter4
 .. _translations: https://github.com/codeigniter4/translations
@@ -41,6 +43,7 @@ There are several development repositories, of interest to potential contributor
 .. _shield: https://codeigniter4.github.io/shield
 .. _tasks: https://github.com/codeigniter4/tasks
 .. _cache: https://github.com/codeigniter4/cache
+.. _queue: https://github.com/codeigniter4/queue
 
 There are also several deployment repositories, referenced in the installation directions.
 The deployment repositories are built automatically when a new version is released, and they
