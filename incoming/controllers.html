@@ -797,18 +797,14 @@ site root URL is requested.</p>
 <section id="defining-a-default-controller">
 <h4>Defining a Default Controller<a class="headerlink" href="#defining-a-default-controller" title="Permalink to this headline"></a></h4>
 <p>Let’s try it with the <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> controller.</p>
-<p>To specify a default controller open your <strong>app/Config/Routes.php</strong>
-file and set this variable:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Helloworld&#39;</span><span class="p">);</span>
+<p>To specify a default controller open your <strong>app/Config/Routing.php</strong>
+file and set this property:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultController</span> <span class="o">=</span> <span class="s1">&#39;Helloworld&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Where <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> is the name of the controller class you want to be used.</p>
-<p>A few lines further down <strong>Routes.php</strong> in the “Route Definitions” section, comment out the line:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
+<p>And comment out the line in <strong>app/Config/Routes.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you now browse to your site without specifying any URI segments you’ll
@@ -820,8 +816,8 @@ see the “Hello World” message.</p>
 precedence over Auto Routing, and controllers defined in the defined routes
 are denied access by Auto Routing (Improved) for security reasons.</p>
 </div>
-<p>For more information, please refer to the <a class="reference internal" href="routing.html#routes-configuration-options"><span class="std std-ref">Routes Configuration Options</span></a> section of the
-<a class="reference internal" href="routing.html#routing-auto-routing-improved-configuration-options"><span class="std std-ref">URI Routing</span></a> documentation.</p>
+<p>For more information, please refer to the
+<a class="reference internal" href="routing.html#routing-auto-routing-improved-configuration-options"><span class="std std-ref">Configuration Options</span></a> documentation.</p>
 </section>
 </section>
 <section id="default-method-fallback">
@@ -929,7 +925,7 @@ it will not be routed to CodeIgniter.</p>
 <p>Each of your sub-directories may contain a default controller which will be
 called if the URL contains <em>only</em> the sub-directory. Simply put a controller
 in there that matches the name of your default controller as specified in
-your <strong>app/Config/Routes.php</strong> file.</p>
+your <strong>app/Config/Routing.php</strong> file.</p>
 <p>CodeIgniter also permits you to map your URIs using its <a class="reference internal" href="routing.html#defined-route-routing"><span class="std std-ref">Defined Route Routing</span></a>..</p>
 </section>
 </section>
@@ -1118,18 +1114,14 @@ site root URL is requested.</p>
 <section id="defining-a-default-controller-legacy">
 <h4>Defining a Default Controller (Legacy)<a class="headerlink" href="#defining-a-default-controller-legacy" title="Permalink to this headline"></a></h4>
 <p>Let’s try it with the <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> controller.</p>
-<p>To specify a default controller open your <strong>app/Config/Routes.php</strong>
-file and set this variable:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Helloworld&#39;</span><span class="p">);</span>
+<p>To specify a default controller open your <strong>app/Config/Routing.php</strong>
+file and set this property:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultController</span> <span class="o">=</span> <span class="s1">&#39;Helloworld&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Where <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> is the name of the controller class you want to be used.</p>
-<p>A few lines further down <strong>Routes.php</strong> in the “Route Definitions” section, comment out the line:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
+<p>And comment out the line in <strong>app/Config/Routes.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you now browse to your site without specifying any URI segments you’ll
@@ -1138,8 +1130,8 @@ see the “Hello World” message.</p>
 <p class="admonition-title">Note</p>
 <p>The line <code class="docutils literal notranslate"><span class="pre">$routes-&gt;get('/',</span> <span class="pre">'Home::index');</span></code> is an optimization that you will want to use in a “real-world” app. But for demonstration purposes we don’t want to use that feature. <code class="docutils literal notranslate"><span class="pre">$routes-&gt;get()</span></code> is explained in <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a></p>
 </div>
-<p>For more information, please refer to the <a class="reference internal" href="routing.html#routes-configuration-options"><span class="std std-ref">Routes Configuration Options</span></a> section of the
-<a class="reference internal" href="routing.html#routing-auto-routing-legacy-configuration-options"><span class="std std-ref">URI Routing</span></a> documentation.</p>
+<p>For more information, please refer to the the
+<a class="reference internal" href="routing.html#routing-auto-routing-legacy-configuration-options"><span class="std std-ref">Configuration Options (Legacy)</span></a> documentation.</p>
 </section>
 </section>
 <section id="organizing-your-controllers-into-sub-directories-legacy">
@@ -1171,7 +1163,7 @@ it will not be routed to CodeIgniter.</p>
 <p>Each of your sub-directories may contain a default controller which will be
 called if the URL contains <em>only</em> the sub-directory. Simply put a controller
 in there that matches the name of your default controller as specified in
-your <strong>app/Config/Routes.php</strong> file.</p>
+your <strong>app/Config/Routing.php</strong> file.</p>
 <p>CodeIgniter also permits you to map your URIs using its <a class="reference internal" href="routing.html#defined-route-routing"><span class="std std-ref">Defined Route Routing</span></a>..</p>
 </section>
 </section>
@@ -1268,7 +1260,7 @@ to emulate CodeIgniter’s default behavior.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 19, 2023.
+      <span class="lastupdated">Last updated on Dec 20, 2023.
       </span></p>
   </div>
 
