@@ -764,7 +764,7 @@ By default, the system will look within **system/Language/en/Validation.php** fo
 errors. To provide default error messages for your custom rules, you may place them in **app/Language/en/Validation.php**
 (and/or corresponding folder of locale you use in place of ``en``). Also, in case you want to use some other language
 string file in place of the default **Validation.php**, you may provide error messages by accepting an ``&$error``
-variable by reference in the second (or, in case your rule needs to work with parameters, as cescribed below – the
+variable by reference in the second (or, in case your rule needs to work with parameters, as described below – the
 fourth) parameter:
 
 .. literalinclude:: validation/035.php
