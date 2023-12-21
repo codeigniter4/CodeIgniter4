@@ -617,6 +617,8 @@ class Model extends BaseModel
     /**
      * Provides a shared instance of the Query Builder.
      *
+     * @param non-empty-string|null $table
+     *
      * @return BaseBuilder
      *
      * @throws ModelException
@@ -640,7 +642,7 @@ class Model extends BaseModel
             throw ModelException::forNoPrimaryKey(static::class);
         }
 
-        $table = empty($table) ? $this->table : $table;
+        $table = ($table === null || $table === '') ? $this->table : $table;
 
         // Ensure we have a good db connection
         if (! $this->db instanceof BaseConnection) {

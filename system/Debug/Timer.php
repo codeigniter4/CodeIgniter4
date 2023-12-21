@@ -138,7 +138,7 @@ class Timer
      * @param string            $name     The name of the timer
      * @param callable(): mixed $callable callable to be executed
      *
-     * @return array|bool|float|int|object|resource|string|null
+     * @return mixed
      */
     public function record(string $name, callable $callable)
     {

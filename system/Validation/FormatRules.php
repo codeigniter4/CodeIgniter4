@@ -394,7 +394,7 @@ class FormatRules
      */
     public function valid_url($str = null): bool
     {
-        if (empty($str)) {
+        if ($str === null || $str === '') {
             return false;
         }
 
@@ -423,7 +423,7 @@ class FormatRules
      */
     public function valid_url_strict($str = null, ?string $validSchemes = null): bool
     {
-        if (empty($str)) {
+        if ($str === null || $str === '' || $str === '0') {
             return false;
         }
 
@@ -445,7 +445,8 @@ class FormatRules
     /**
      * Checks for a valid date and matches a given date format
      *
-     * @param string|null $str
+     * @param string|null           $str
+     * @param non-empty-string|null $format
      */
     public function valid_date($str = null, ?string $format = null): bool
     {
@@ -457,7 +458,7 @@ class FormatRules
             return false;
         }
 
-        if (empty($format)) {
+        if ($format === null || $format === '') {
             return strtotime($str) !== false;
         }
 

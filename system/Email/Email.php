@@ -1238,13 +1238,13 @@ class Email
                     . $this->prepQuotedPrintable($this->body) . $this->newline . $this->newline
                     . '--' . $altBoundary . '--' . $this->newline . $this->newline;
 
-                if (! empty($relBoundary)) {
+                if (isset($relBoundary)) {
                     $body .= $this->newline . $this->newline;
                     $this->appendAttachments($body, $relBoundary, 'related');
                 }
 
                 // multipart/mixed attachments
-                if (! empty($atcBoundary)) {
+                if (isset($atcBoundary)) {
                     $body .= $this->newline . $this->newline;
                     $this->appendAttachments($body, $atcBoundary, 'mixed');
                 }

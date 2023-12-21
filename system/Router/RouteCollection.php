@@ -555,12 +555,12 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Returns the raw array of available routes.
      *
-     * @param string|null $verb            HTTP verb like `GET`,`POST` or `*` or `CLI`.
-     * @param bool        $includeWildcard Whether to include '*' routes.
+     * @param non-empty-string|null $verb            HTTP verb like `GET`,`POST` or `*` or `CLI`.
+     * @param bool                  $includeWildcard Whether to include '*' routes.
      */
     public function getRoutes(?string $verb = null, bool $includeWildcard = true): array
     {
-        if (empty($verb)) {
+        if ($verb === null || $verb === '') {
             $verb = $this->getHTTPVerb();
         }
 
@@ -1017,7 +1017,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function match(array $verbs = [], string $from = '', $to = '', ?array $options = null): RouteCollectionInterface
     {
-        if (empty($from) || empty($to)) {
+        if ($from === '' || empty($to)) {
             throw new InvalidArgumentException('You must supply the parameters: from, to.');
         }
 

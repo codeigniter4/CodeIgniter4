@@ -312,7 +312,7 @@ class Pager implements PagerInterface
         $curr = $this->getCurrentPage($group);
         $page = null;
 
-        if (! empty($last) && ! empty($curr) && $last === $curr) {
+        if (! empty($last) && $curr !== 0 && $last === $curr) {
             return null;
         }
 
@@ -336,7 +336,7 @@ class Pager implements PagerInterface
         $curr  = $this->getCurrentPage($group);
         $page  = null;
 
-        if (! empty($first) && ! empty($curr) && $first === $curr) {
+        if ($first !== 0 && $curr !== 0 && $first === $curr) {
             return null;
         }
 

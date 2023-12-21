@@ -1587,7 +1587,7 @@ abstract class BaseModel
      */
     protected function cleanValidationRules(array $rules, ?array $row = null): array
     {
-        if (empty($row)) {
+        if ($row === null || $row === []) {
             return [];
         }
 
@@ -1803,7 +1803,7 @@ abstract class BaseModel
         }
 
         // If it's still empty here, means $row is no change or is empty object
-        if (! $this->allowEmptyInserts && empty($row)) {
+        if (! $this->allowEmptyInserts && ($row === null || $row === [])) {
             throw DataException::forEmptyDataset($type);
         }
 

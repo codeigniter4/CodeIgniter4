@@ -259,7 +259,7 @@ final class AutoRouter implements AutoRouterInterface
      */
     public function setDirectory(?string $dir = null, bool $append = false, bool $validate = true)
     {
-        if (empty($dir)) {
+        if ($dir === null || $dir === '') {
             $this->directory = null;
 
             return;
@@ -275,7 +275,7 @@ final class AutoRouter implements AutoRouterInterface
             }
         }
 
-        if ($append !== true || empty($this->directory)) {
+        if ($append !== true || ($this->directory === null || $this->directory === '')) {
             $this->directory = trim($dir, '/') . '/';
         } else {
             $this->directory .= trim($dir, '/') . '/';
@@ -290,7 +290,7 @@ final class AutoRouter implements AutoRouterInterface
      */
     public function directory(): string
     {
-        return ! empty($this->directory) ? $this->directory : '';
+        return ($this->directory !== null && $this->directory !== '') ? $this->directory : '';
     }
 
     private function controllerName(): string

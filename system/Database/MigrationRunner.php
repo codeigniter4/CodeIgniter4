@@ -641,7 +641,7 @@ class MigrationRunner
         $builder = $this->db->table($this->table);
 
         // If group was specified then use it
-        if (! empty($group)) {
+        if ($group !== '') {
             $builder->where('group', $group);
         }
 

@@ -97,7 +97,7 @@ class CLIRequest extends Request
     {
         $path = implode('/', $this->segments);
 
-        return empty($path) ? '' : $path;
+        return ($path === '') ? '' : $path;
     }
 
     /**
