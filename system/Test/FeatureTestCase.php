@@ -383,7 +383,7 @@ class FeatureTestCase extends CIUnitTestCase
                 $formatMime = 'application/xml';
             }
 
-            if ($formatMime !== '' && ! empty($params)) {
+            if ($formatMime !== '' && ! ($params === null || $params === [])) {
                 $formatted = Services::format()->getFormatter($formatMime)->format($params);
                 $request->setBody($formatted);
                 $request->setHeader('Content-Type', $formatMime);
