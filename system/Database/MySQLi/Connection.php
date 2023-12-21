@@ -150,7 +150,7 @@ class Connection extends BaseConnection
                 $ssl['cipher'] = $this->encrypt['ssl_cipher'];
             }
 
-            if (! empty($ssl)) {
+            if ($ssl !== []) {
                 if (isset($this->encrypt['ssl_verify'])) {
                     if ($this->encrypt['ssl_verify']) {
                         if (defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT')) {

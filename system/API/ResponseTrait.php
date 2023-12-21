@@ -94,7 +94,7 @@ trait ResponseTrait
             $output = null;
             $this->format($data);
         } else {
-            $status = empty($status) ? 200 : $status;
+            $status ??= 200;
             $output = $this->format($data);
         }
 

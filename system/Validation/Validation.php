@@ -724,13 +724,15 @@ class Validation implements ValidationInterface
      * same format used with setRules(). Additionally, check
      * for {group}_errors for an array of custom error messages.
      *
+     * @param non-empty-string|null $group
+     *
      * @return array<int, array> [rules, customErrors]
      *
      * @throws ValidationException
      */
     public function loadRuleGroup(?string $group = null)
     {
-        if (empty($group)) {
+        if ($group === null || $group === '') {
             return [];
         }
 
@@ -888,7 +890,8 @@ class Validation implements ValidationInterface
     /**
      * Attempts to find the appropriate error message
      *
-     * @param string|null $value The value that caused the validation to fail.
+     * @param non-empty-string|null $label
+     * @param string|null           $value The value that caused the validation to fail.
      */
     protected function getErrorMessage(
         string $rule,
@@ -912,7 +915,7 @@ class Validation implements ValidationInterface
             $message = lang('Validation.' . $rule);
         }
 
-        $message = str_replace('{field}', empty($label) ? $field : lang($label), $message);
+        $message = str_replace('{field}', ($label === null || $label === '') ? $field : lang($label), $message);
         $message = str_replace(
             '{param}',
             empty($this->rules[$param]['label']) ? $param : lang($this->rules[$param]['label']),

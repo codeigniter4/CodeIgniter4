@@ -318,7 +318,7 @@ class BaseBuilder
 
         $this->from($tableName);
 
-        if (! empty($options)) {
+        if ($options !== null && $options !== []) {
             foreach ($options as $key => $value) {
                 if (property_exists($this, $key)) {
                     $this->{$key} = $value;
@@ -920,6 +920,7 @@ class BaseBuilder
      * @used-by whereNotIn()
      * @used-by orWhereNotIn()
      *
+     * @param non-empty-string|null          $key
      * @param array|BaseBuilder|Closure|null $values The values searched on, or anonymous function with subquery
      *
      * @return $this
@@ -928,7 +929,7 @@ class BaseBuilder
      */
     protected function _whereIn(?string $key = null, $values = null, bool $not = false, string $type = 'AND ', ?bool $escape = null, string $clause = 'QBWhere')
     {
-        if (empty($key) || ! is_string($key)) {
+        if ($key === null || $key === '') {
             throw new InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
         }
 
@@ -1434,7 +1435,7 @@ class BaseBuilder
     public function orderBy(string $orderBy, string $direction = '', ?bool $escape = null)
     {
         $qbOrderBy = [];
-        if (empty($orderBy)) {
+        if ($orderBy === '') {
             return $this;
         }
 
@@ -1490,7 +1491,7 @@ class BaseBuilder
             $this->QBLimit = $value;
         }
 
-        if (! empty($offset)) {
+        if ($offset !== null && $offset !== 0) {
             $this->QBOffset = $offset;
         }
 
@@ -1504,8 +1505,8 @@ class BaseBuilder
      */
     public function offset(int $offset)
     {
-        if (! empty($offset)) {
-            $this->QBOffset = (int) $offset;
+        if ($offset !== 0) {
+            $this->QBOffset = $offset;
         }
 
         return $this;
@@ -1736,7 +1737,7 @@ class BaseBuilder
             $this->where($where);
         }
 
-        if (! empty($limit)) {
+        if ($limit !== null && $limit !== 0) {
             $this->limit($limit, $offset);
         }
 
@@ -2452,7 +2453,7 @@ class BaseBuilder
             $this->where($where);
         }
 
-        if (! empty($limit)) {
+        if ($limit !== null && $limit !== 0) {
             if (! $this->canLimitWhereUpdates) {
                 throw new DatabaseException('This driver does not allow LIMITs on UPDATE queries using WHERE.');
             }
@@ -2762,7 +2763,7 @@ class BaseBuilder
 
         $sql = $this->_delete($this->removeAlias($table));
 
-        if (! empty($limit)) {
+        if ($limit !== null && $limit !== 0) {
             $this->QBLimit = $limit;
         }
 
@@ -3172,7 +3173,7 @@ class BaseBuilder
      */
     protected function compileOrderBy(): string
     {
-        if (is_array($this->QBOrderBy) && ! empty($this->QBOrderBy)) {
+        if (is_array($this->QBOrderBy) && $this->QBOrderBy !== []) {
             foreach ($this->QBOrderBy as &$orderBy) {
                 if ($orderBy['escape'] !== false && ! $this->isLiteral($orderBy['field'])) {
                     $orderBy['field'] = $this->db->protectIdentifiers($orderBy['field']);
@@ -3265,7 +3266,7 @@ class BaseBuilder
     {
         $str = trim($str);
 
-        if (empty($str)
+        if ($str === ''
             || ctype_digit($str)
             || (string) (float) $str === $str
             || in_array(strtoupper($str), ['TRUE', 'FALSE'], true)

@@ -152,7 +152,7 @@ class IncomingRequest extends Request
      */
     public function __construct($config, ?URI $uri = null, $body = 'php://input', ?UserAgent $userAgent = null)
     {
-        if (empty($uri) || empty($userAgent)) {
+        if (! $uri instanceof URI || ! $userAgent instanceof UserAgent) {
             throw new InvalidArgumentException('You must supply the parameters: uri, userAgent.');
         }
 
@@ -256,7 +256,7 @@ class IncomingRequest extends Request
      */
     public function detectPath(string $protocol = ''): string
     {
-        if (empty($protocol)) {
+        if ($protocol === '') {
             $protocol = 'REQUEST_URI';
         }
 
