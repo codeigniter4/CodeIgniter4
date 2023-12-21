@@ -1129,6 +1129,7 @@ if (! function_exists('timer')) {
      * @param (callable(): mixed)|null $callable
      *
      * @return mixed|Timer
+     * @phpstan-return ($callable is (callable(): mixed) ? mixed : Timer)
      */
     function timer(?string $name = null, ?callable $callable = null)
     {
