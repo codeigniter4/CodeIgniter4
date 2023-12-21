@@ -3218,7 +3218,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 6,
+	'count' => 5,
 	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
 ];
 $ignoreErrors[] = [
