@@ -171,6 +171,16 @@ final class DOMParserTest extends CIUnitTestCase
         $this->assertTrue($dom->see('Hello World', '#heading'));
     }
 
+    public function testSeeElementIDZero(): void
+    {
+        $dom = new DOMParser();
+
+        $html = '<html><body><h1 id="0">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
+
+        $this->assertTrue($dom->see('Hello World', '#0'));
+    }
+
     public function testSeeElementIDFails(): void
     {
         $dom = new DOMParser();
