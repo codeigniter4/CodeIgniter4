@@ -170,7 +170,7 @@ Error Handling
 
 - The behavior in CI4 has been slightly changed.
 
-  - In CI3 the behavior was set in the **index.php** file:
+  - In CI3 the behavior is set in the **index.php** file:
 
       - errors with the error level set by ``error_reporting()`` are logged (but
         depending on the ``log_threshold`` setting, they may not be written to
