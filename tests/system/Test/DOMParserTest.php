@@ -91,7 +91,7 @@ final class DOMParserTest extends CIUnitTestCase
     /**
      * @dataProvider provideText
      *
-     * @param mixed $text
+     * @param string $text
      */
     public function testSeeText($text): void
     {
@@ -139,7 +139,7 @@ final class DOMParserTest extends CIUnitTestCase
     /**
      * @dataProvider provideText
      *
-     * @param mixed $text
+     * @param string $text
      */
     public function testSeeElement($text): void
     {
