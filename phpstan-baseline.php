@@ -3172,11 +3172,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/DOMParser.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 6,
-	'path' => __DIR__ . '/system/Test/DOMParser.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Access to an undefined property object\\:\\:\\$createdField\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Fabricator.php',
