@@ -2442,11 +2442,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Log/Logger.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 15,
-	'path' => __DIR__ . '/system/Model.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Model\\:\\:chunk\\(\\) has parameter \\$userFunc with no signature specified for Closure\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Model.php',
@@ -2854,11 +2849,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Accessing offset \'HTTP_X_REQUESTED_WITH\' directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 2,
-	'path' => __DIR__ . '/system/Session/Session.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 9,
 	'path' => __DIR__ . '/system/Session/Session.php',
 ];
 $ignoreErrors[] = [
