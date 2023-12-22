@@ -186,7 +186,7 @@ class FeatureTestCase extends CIUnitTestCase
             ->run($routes, true);
 
         $output = \ob_get_contents();
-        if (empty($response->getBody()) && ! ($output === '' || $output === false)) {
+        if (($response->getBody() === null) && ! ($output === '' || $output === false)) {
             $response->setBody($output);
         }
 
