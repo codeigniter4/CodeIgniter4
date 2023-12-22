@@ -3137,26 +3137,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/DOMParser.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Access to an undefined property object\\:\\:\\$createdField\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Fabricator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Access to an undefined property object\\:\\:\\$deletedField\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Fabricator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Access to an undefined property object\\:\\:\\$updatedField\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Fabricator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 5,
-	'path' => __DIR__ . '/system/Test/Fabricator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Fabricator\\:\\:resetCounts\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Fabricator.php',
@@ -3173,11 +3153,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning string directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
 ];
@@ -3307,11 +3282,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/Mock/MockCURLRequest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
-	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockCache\\:\\:assertHas\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
@@ -3344,11 +3314,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Cannot access property \\$insert_id on object\\|resource\\|false\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
 ];
 $ignoreErrors[] = [
