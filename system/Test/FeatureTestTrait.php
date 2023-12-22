@@ -359,7 +359,6 @@ trait FeatureTestTrait
      * Always populate the GET vars based on the URI.
      *
      * @param string               $name   Superglobal name (lowercase)
-     * @param string               $method HTTP verb
      * @param non-empty-array|null $params
      *
      * @return Request
@@ -370,7 +369,7 @@ trait FeatureTestTrait
     {
         // $params should set the query vars if present,
         // otherwise set it from the URL.
-        $get = ($params !== null && $params !== [] && $method === 'get')
+        $get = ($params !== null && $params !== [] && $name === 'get')
             ? $params
             : $this->getPrivateProperty($request->getUri(), 'query');
 
