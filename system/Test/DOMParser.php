@@ -231,7 +231,7 @@ class DOMParser
     /**
      * Look for the a selector  in the passed text.
      *
-     * @return array
+     * @return array{tag: string, id: string|null, class: string|null, attr: array<string, string>|null}
      */
     public function parseSelector(string $selector)
     {
