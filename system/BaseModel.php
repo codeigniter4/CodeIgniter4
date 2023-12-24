@@ -21,6 +21,7 @@ use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Validation\ValidationInterface;
+use CodeIgniter\Validation\StrictRules\Rules;
 use Config\Services;
 use InvalidArgumentException;
 use ReflectionClass;
@@ -725,15 +726,15 @@ abstract class BaseModel
      * It checks if the ID is not empty and does not already exist in the table.
      * If this method returns false, an insert operation will be executed.
      *
-     * @param array|object $data Data
+     * @param array|object $row Data
      * @phpstan-param row_array|object $row
      * @return bool
      */
-    protected function shouldUpdate($data): bool
+    protected function shouldUpdate($row): bool
     {
         $shouldUpdate = false;
     
-        $id = $this->getIdValue($data);
+        $id = $this->getIdValue($row);
         if (!empty($id)) {
             $ci_rules = new Rules;
             if (!$ci_rules->is_unique($id, "`{$this->table}`.`{$this->primaryKey}`", [])) {
