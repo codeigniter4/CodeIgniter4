@@ -721,15 +721,27 @@ abstract class BaseModel
     }
 
     /**
-     * This method is called on save to determine if entry have to be updated.
-     * If this method returns false insert operation will be executed
+     * This method is called on save to determine if the entry needs to be updated.
+     * It checks if the ID is not empty and does not already exist in the table.
+     * If this method returns false, an insert operation will be executed.
      *
-     * @param array|object $row Row data
+     * @param array|object $data Data
      * @phpstan-param row_array|object $row
+     * @return bool
      */
-    protected function shouldUpdate($row): bool
+    protected function shouldUpdate($data): bool
     {
-        return ! empty($this->getIdValue($row));
+        $shouldUpdate = false;
+    
+        $id = $this->getIdValue($data);
+        if (!empty($id)) {
+            $ci_rules = new Rules;
+            if (!$ci_rules->is_unique($id, "`{$this->table}`.`{$this->primaryKey}`", [])) {
+                $shouldUpdate = true;
+            }
+        }
+    
+        return $shouldUpdate;
     }
 
     /**
