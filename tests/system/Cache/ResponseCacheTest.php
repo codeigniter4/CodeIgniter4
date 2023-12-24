@@ -169,6 +169,26 @@ final class ResponseCacheTest extends CIUnitTestCase
         $this->assertNull($cachedResponse);
     }
 
+    public function testCachePageIncomingRequestWithHttpMethods()
+    {
+        $pageCache = $this->createResponseCache();
+
+        $request = $this->createIncomingRequest('foo/bar');
+
+        $response = new Response($this->appConfig);
+        $response->setBody('The response body.');
+
+        $return = $pageCache->make($request, $response);
+
+        $this->assertTrue($return);
+
+        // Check cache with a request with the same URI path and different HTTP method
+        $request        = $this->createIncomingRequest('foo/bar')->withMethod('POST');
+        $cachedResponse = $pageCache->get($request, new Response($this->appConfig));
+
+        $this->assertNull($cachedResponse);
+    }
+
     public function testCachePageCLIRequest()
     {
         $pageCache = $this->createResponseCache();
