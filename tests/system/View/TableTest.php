@@ -173,7 +173,24 @@ final class TableTest extends CIUnitTestCase
         );
     }
 
-    // Uility Methods
+    public function testAddRowAndRowWithAttributes(): void
+    {
+        $cell = ['data' => 'Blue', 'class' => 'highlight', 'colspan' => 2];
+        $this->table->addRow($cell, 'Red', 'Green');
+        // If there is only one column `$this->table->addRow($cell)`,
+        // this test will fail.
+        // See https://github.com/codeigniter4/CodeIgniter4/issues/8361
+
+        $expected = '<table border="0" cellpadding="4" cellspacing="0">
+<tbody>
+<tr>
+<td colspan="2" class="highlight">Blue</td><td>Red</td><td>Green</td></tr>
+</tbody>
+</table>';
+        $this->assertSame($expected, $this->table->generate());
+    }
+
+    // Utility Methods
 
     public function testPrepArgs(): void
     {
