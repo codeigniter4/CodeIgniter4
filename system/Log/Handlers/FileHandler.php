@@ -17,7 +17,7 @@ use Exception;
 /**
  * Log error messages to file system
  *
- * @see \CodeIgniter\Log\Handlers\FileHandlerTest
+ * @see FileHandlerTest
  */
 class FileHandler extends BaseHandler
 {

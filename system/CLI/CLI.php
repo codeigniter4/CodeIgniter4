@@ -34,7 +34,7 @@ use Throwable;
  * an argument of "0".
  * These have been flagged to ignore for code coverage purposes.
  *
- * @see \CodeIgniter\CLI\CLITest
+ * @see CLITest
  */
 class CLI
 {

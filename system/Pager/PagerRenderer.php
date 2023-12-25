@@ -20,7 +20,7 @@ use CodeIgniter\HTTP\URI;
  * and is used to get the link information and provide utility
  * methods needed to work with pagination.
  *
- * @see \CodeIgniter\Pager\PagerRendererTest
+ * @see PagerRendererTest
  */
 class PagerRenderer
 {

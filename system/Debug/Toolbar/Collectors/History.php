@@ -16,7 +16,7 @@ use DateTime;
 /**
  * History collector
  *
- * @see \CodeIgniter\Debug\Toolbar\Collectors\HistoryTest
+ * @see HistoryTest
  */
 class History extends BaseCollector
 {

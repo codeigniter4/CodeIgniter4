@@ -47,7 +47,7 @@ use Throwable;
  * request, route it to a controller, and send back the response.
  * Of course, there are variations to that flow, but this is the brains.
  *
- * @see \CodeIgniter\CodeIgniterTest
+ * @see CodeIgniterTest
  */
 class CodeIgniter
 {

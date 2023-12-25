@@ -14,7 +14,7 @@ namespace CodeIgniter\HTTP;
 /**
  * Representation of an outgoing, client-side request.
  *
- * @see \CodeIgniter\HTTP\OutgoingRequestTest
+ * @see OutgoingRequestTest
  */
 class OutgoingRequest extends Message implements OutgoingRequestInterface
 {

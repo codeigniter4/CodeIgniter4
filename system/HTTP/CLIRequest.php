@@ -26,7 +26,7 @@ use RuntimeException;
  *
  * http://fuelphp.com
  *
- * @see \CodeIgniter\HTTP\CLIRequestTest
+ * @see CLIRequestTest
  */
 class CLIRequest extends Request
 {

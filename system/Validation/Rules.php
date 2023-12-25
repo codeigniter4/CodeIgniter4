@@ -17,7 +17,7 @@ use InvalidArgumentException;
 /**
  * Validation Rules.
  *
- * @see \CodeIgniter\Validation\RulesTest
+ * @see RulesTest
  */
 class Rules
 {

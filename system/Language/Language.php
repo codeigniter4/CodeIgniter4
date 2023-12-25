@@ -20,7 +20,7 @@ use MessageFormatter;
  *
  * Locale-based, built on top of PHP internationalization.
  *
- * @see \CodeIgniter\Language\LanguageTest
+ * @see LanguageTest
  */
 class Language
 {

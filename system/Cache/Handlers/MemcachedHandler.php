@@ -21,7 +21,7 @@ use Memcached;
 /**
  * Mamcached cache handler
  *
- * @see \CodeIgniter\Cache\Handlers\MemcachedHandlerTest
+ * @see MemcachedHandlerTest
  */
 class MemcachedHandler extends BaseHandler
 {

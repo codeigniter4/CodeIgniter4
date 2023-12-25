@@ -24,7 +24,7 @@ use Config\Services;
  * This filter is not intended to be used from the command line.
  *
  * @codeCoverageIgnore
- * @see \CodeIgniter\Filters\CSRFTest
+ * @see CSRFTest
  */
 class CSRF implements FilterInterface
 {

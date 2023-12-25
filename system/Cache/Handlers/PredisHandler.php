@@ -21,7 +21,7 @@ use Predis\Collection\Iterator\Keyspace;
 /**
  * Predis cache handler
  *
- * @see \CodeIgniter\Cache\Handlers\PredisHandlerTest
+ * @see PredisHandlerTest
  */
 class PredisHandler extends BaseHandler
 {

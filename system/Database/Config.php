@@ -18,7 +18,7 @@ use InvalidArgumentException;
 /**
  * Class Config
  *
- * @see \CodeIgniter\Database\ConfigTest
+ * @see ConfigTest
  */
 class Config extends BaseConfig
 {

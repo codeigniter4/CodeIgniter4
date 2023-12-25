@@ -17,7 +17,7 @@ use Config\Format;
 /**
  * JSON data formatter
  *
- * @see \CodeIgniter\Format\JSONFormatterTest
+ * @see JSONFormatterTest
  */
 class JSONFormatter implements FormatterInterface
 {

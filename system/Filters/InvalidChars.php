@@ -24,7 +24,7 @@ use CodeIgniter\Security\Exceptions\SecurityException;
  *   - invalid UTF-8 characters
  *   - control characters except line break and tab code
  *
- * @see \CodeIgniter\Filters\InvalidCharsTest
+ * @see InvalidCharsTest
  */
 class InvalidChars implements FilterInterface
 {

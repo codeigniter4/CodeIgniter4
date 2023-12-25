@@ -16,7 +16,7 @@ use CodeIgniter\Session\Handlers\DatabaseHandler;
 /**
  * Session handler for MySQLi
  *
- * @see \CodeIgniter\Session\Handlers\Database\MySQLiHandlerTest
+ * @see MySQLiHandlerTest
  */
 class MySQLiHandler extends DatabaseHandler
 {

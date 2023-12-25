@@ -31,7 +31,7 @@ use PHPUnit\Framework\TestCase;
  * @internal
  *
  * @mixin DOMParser
- * @see \CodeIgniter\Test\TestResponseTest
+ * @see TestResponseTest
  */
 class TestResponse extends TestCase
 {

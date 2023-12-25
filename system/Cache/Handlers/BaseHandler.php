@@ -20,7 +20,7 @@ use InvalidArgumentException;
 /**
  * Base class for cache handling
  *
- * @see \CodeIgniter\Cache\Handlers\BaseHandlerTest
+ * @see BaseHandlerTest
  */
 abstract class BaseHandler implements CacheInterface
 {

@@ -25,7 +25,7 @@ use Config\Pager as PagerConfig;
  * to determine the current page. This class can support multiple
  * paginations on a single page.
  *
- * @see \CodeIgniter\Pager\PagerTest
+ * @see PagerTest
  */
 class Pager implements PagerInterface
 {

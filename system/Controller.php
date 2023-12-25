@@ -23,7 +23,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Class Controller
  *
- * @see \CodeIgniter\ControllerTest
+ * @see ControllerTest
  */
 class Controller
 {

@@ -21,7 +21,7 @@ use InvalidArgumentException;
 /**
  * File validation rules
  *
- * @see \CodeIgniter\Validation\FileRulesTest
+ * @see FileRulesTest
  */
 class FileRules
 {

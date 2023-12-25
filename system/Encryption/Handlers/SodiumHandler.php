@@ -17,7 +17,7 @@ use CodeIgniter\Encryption\Exceptions\EncryptionException;
  * SodiumHandler uses libsodium in encryption.
  *
  * @see https://github.com/jedisct1/libsodium/issues/392
- * @see \CodeIgniter\Encryption\Handlers\SodiumHandlerTest
+ * @see SodiumHandlerTest
  */
 class SodiumHandler extends BaseHandler
 {

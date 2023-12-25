@@ -16,7 +16,7 @@ use CodeIgniter\Encryption\Exceptions\EncryptionException;
 /**
  * Encryption handling for OpenSSL library
  *
- * @see \CodeIgniter\Encryption\Handlers\OpenSSLHandlerTest
+ * @see OpenSSLHandlerTest
  */
 class OpenSSLHandler extends BaseHandler
 {

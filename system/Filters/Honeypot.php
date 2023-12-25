@@ -20,7 +20,7 @@ use Config\Services;
 /**
  * Honeypot filter
  *
- * @see \CodeIgniter\Filters\HoneypotTest
+ * @see HoneypotTest
  */
 class Honeypot implements FilterInterface
 {

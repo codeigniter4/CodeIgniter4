@@ -29,7 +29,7 @@ use Config\Services;
  * - Headers
  * - Message body
  *
- * @see \CodeIgniter\HTTP\ResponseTest
+ * @see ResponseTest
  */
 class Response extends Message implements ResponseInterface
 {

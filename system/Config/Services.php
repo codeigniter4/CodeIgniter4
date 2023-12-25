@@ -104,7 +104,7 @@ use Locale;
  *
  * @see http://blog.ircmaxell.com/2015/11/simple-easy-risk-and-change.html
  * @see http://www.infoq.com/presentations/Simple-Made-Easy
- * @see \CodeIgniter\Config\ServicesTest
+ * @see ServicesTest
  */
 class Services extends BaseService
 {

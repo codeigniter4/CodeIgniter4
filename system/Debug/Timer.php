@@ -19,7 +19,7 @@ use RuntimeException;
  * Provides a simple way to measure the amount of time
  * that elapses between two points.
  *
- * @see \CodeIgniter\Debug\TimerTest
+ * @see TimerTest
  */
 class Timer
 {

@@ -39,7 +39,7 @@ use ReturnTypeWillChange;
  * ```
  *
  * @template-implements ArrayAccess<string, bool|int|string>
- * @see \CodeIgniter\Cookie\CookieTest
+ * @see CookieTest
  */
 class Cookie implements ArrayAccess, CloneableCookieInterface
 {

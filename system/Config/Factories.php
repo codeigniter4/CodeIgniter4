@@ -26,7 +26,7 @@ use InvalidArgumentException;
  *
  * @method static BaseConfig|null config(...$arguments)
  * @method static Model|null      models(string $alias, array $options = [], ?ConnectionInterface &$conn = null)
- * @see \CodeIgniter\Config\FactoriesTest
+ * @see FactoriesTest
  */
 class Factories
 {

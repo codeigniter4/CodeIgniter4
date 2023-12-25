@@ -54,7 +54,7 @@ use RuntimeException;
  *      $loader->register();
  * ```
  *
- * @see \CodeIgniter\Autoloader\AutoloaderTest
+ * @see AutoloaderTest
  */
 class Autoloader
 {

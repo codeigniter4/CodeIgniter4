@@ -21,7 +21,7 @@ use ErrorException;
  *
  * Permits email to be sent using Mail, Sendmail, or SMTP.
  *
- * @see \CodeIgniter\Email\EmailTest
+ * @see EmailTest
  */
 class Email
 {

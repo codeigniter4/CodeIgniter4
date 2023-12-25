@@ -20,7 +20,7 @@ use Config\Filters as FiltersConfig;
 /**
  * Collects filters for a route.
  *
- * @see \CodeIgniter\Commands\Utilities\Routes\FilterCollectorTest
+ * @see FilterCollectorTest
  */
 final class FilterCollector
 {

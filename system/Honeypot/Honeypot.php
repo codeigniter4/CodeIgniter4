@@ -20,7 +20,7 @@ use Config\Honeypot as HoneypotConfig;
 /**
  * class Honeypot
  *
- * @see \CodeIgniter\Honeypot\HoneypotTest
+ * @see HoneypotTest
  */
 class Honeypot
 {

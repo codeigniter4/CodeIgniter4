@@ -18,7 +18,7 @@ use Config\Services;
 /**
  * Debug toolbar filter
  *
- * @see \CodeIgniter\Filters\DebugToolbarTest
+ * @see DebugToolbarTest
  */
 class DebugToolbar implements FilterInterface
 {

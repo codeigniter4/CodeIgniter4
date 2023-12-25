@@ -17,7 +17,7 @@ namespace CodeIgniter\Validation;
  * Provides validation methods for common credit-card inputs.
  *
  * @see http://en.wikipedia.org/wiki/Credit_card_number
- * @see \CodeIgniter\Validation\CreditCardRulesTest
+ * @see CreditCardRulesTest
  */
 class CreditCardRules
 {

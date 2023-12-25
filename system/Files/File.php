@@ -21,7 +21,7 @@ use SplFileInfo;
 /**
  * Wrapper for PHP's built-in SplFileInfo, with goodies.
  *
- * @see \CodeIgniter\Files\FileTest
+ * @see FileTest
  */
 class File extends SplFileInfo
 {

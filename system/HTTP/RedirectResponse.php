@@ -18,7 +18,7 @@ use Config\Services;
 /**
  * Handle a redirect response
  *
- * @see \CodeIgniter\HTTP\RedirectResponseTest
+ * @see RedirectResponseTest
  */
 class RedirectResponse extends Response
 {

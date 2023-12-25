@@ -21,7 +21,7 @@ use Config\Services;
  * full server path. Helps you to verify that you have
  * the namespaces setup correctly.
  *
- * @see \CodeIgniter\Commands\Utilities\NamespacesTest
+ * @see NamespacesTest
  */
 class Namespaces extends BaseCommand
 {

@@ -22,7 +22,7 @@ use Config\Feature;
 /**
  * Request router.
  *
- * @see \CodeIgniter\Router\RouterTest
+ * @see RouterTest
  */
 class Router implements RouterInterface
 {

@@ -14,7 +14,7 @@ namespace CodeIgniter\Commands\Utilities\Routes;
 /**
  * Collects data for auto route listing.
  *
- * @see \CodeIgniter\Commands\Utilities\Routes\AutoRouteCollectorTest
+ * @see AutoRouteCollectorTest
  */
 final class AutoRouteCollector
 {

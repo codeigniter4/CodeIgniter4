@@ -18,7 +18,7 @@ use Config\App;
 /**
  * Generate a sample URI path from route key regex.
  *
- * @see \CodeIgniter\Commands\Utilities\Routes\SampleURIGeneratorTest
+ * @see SampleURIGeneratorTest
  */
 final class SampleURIGenerator
 {

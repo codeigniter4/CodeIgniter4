@@ -19,7 +19,7 @@ use Config\Cache;
 /**
  * A factory for loading the desired
  *
- * @see \CodeIgniter\Cache\CacheFactoryTest
+ * @see CacheFactoryTest
  */
 class CacheFactory
 {

@@ -22,7 +22,7 @@ use Config\Services;
 /**
  * Filters
  *
- * @see \CodeIgniter\Filters\FiltersTest
+ * @see FiltersTest
  */
 class Filters
 {

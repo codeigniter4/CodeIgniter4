@@ -26,7 +26,7 @@ use TypeError;
 /**
  * Validator
  *
- * @see \CodeIgniter\Validation\ValidationTest
+ * @see ValidationTest
  */
 class Validation implements ValidationInterface
 {

@@ -14,7 +14,7 @@ namespace CodeIgniter\Test;
 use CodeIgniter\Log\Logger;
 
 /**
- * @see \CodeIgniter\Test\TestLoggerTest
+ * @see TestLoggerTest
  */
 class TestLogger extends Logger
 {

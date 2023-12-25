@@ -18,7 +18,7 @@ use CodeIgniter\Validation\FormatRules as NonStrictFormatRules;
 /**
  * Format validation Rules.
  *
- * @see \CodeIgniter\Validation\StrictRules\FormatRulesTest
+ * @see FormatRulesTest
  */
 class FormatRules
 {

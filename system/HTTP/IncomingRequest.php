@@ -43,7 +43,7 @@ use stdClass;
  * - Upload files, if any (as represented by $_FILES)
  * - Deserialized body binds (generally from $_POST)
  *
- * @see \CodeIgniter\HTTP\IncomingRequestTest
+ * @see IncomingRequestTest
  */
 class IncomingRequest extends Request
 {

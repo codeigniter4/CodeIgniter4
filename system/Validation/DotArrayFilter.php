@@ -12,7 +12,7 @@
 namespace CodeIgniter\Validation;
 
 /**
- * @see \CodeIgniter\Validation\DotArrayFilterTest
+ * @see DotArrayFilterTest
  */
 final class DotArrayFilter
 {

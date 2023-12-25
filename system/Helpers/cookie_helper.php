@@ -36,7 +36,7 @@ if (! function_exists('set_cookie')) {
      *
      * @return void
      *
-     * @see \CodeIgniter\HTTP\Response::setCookie()
+     * @see CodeIgniter\HTTP\Response::setCookie()
      */
     function set_cookie(
         $name,
@@ -65,7 +65,7 @@ if (! function_exists('get_cookie')) {
      *
      * @return array|string|null
      *
-     * @see \CodeIgniter\HTTP\IncomingRequest::getCookie()
+     * @see CodeIgniter\HTTP\IncomingRequest::getCookie()
      */
     function get_cookie($index, bool $xssClean = false, ?string $prefix = '')
     {
@@ -93,7 +93,7 @@ if (! function_exists('delete_cookie')) {
      *
      * @return void
      *
-     * @see \CodeIgniter\HTTP\Response::deleteCookie()
+     * @see CodeIgniter\HTTP\Response::deleteCookie()
      */
     function delete_cookie($name, string $domain = '', string $path = '/', string $prefix = '')
     {

@@ -44,7 +44,7 @@ use ReflectionMethod;
  *             function method(array $params=null)
  *         }
  *
- * @see \CodeIgniter\View\CellTest
+ * @see CellTest
  */
 class Cell
 {

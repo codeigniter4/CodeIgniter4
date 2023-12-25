@@ -19,7 +19,7 @@ use InvalidArgumentException;
 /**
  * Abstraction for a uniform resource identifier (URI).
  *
- * @see \CodeIgniter\HTTP\URITest
+ * @see URITest
  */
 class URI
 {

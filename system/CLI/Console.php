@@ -19,7 +19,7 @@ use Exception;
 /**
  * Console
  *
- * @see \CodeIgniter\CLI\ConsoleTest
+ * @see ConsoleTest
  */
 class Console
 {

@@ -25,7 +25,7 @@ use IteratorAggregate;
  * filtering, and ordering them.
  *
  * @template-implements IteratorAggregate<int, File>
- * @see \CodeIgniter\Files\FileCollectionTest
+ * @see FileCollectionTest
  */
 class FileCollection implements Countable, IteratorAggregate
 {

@@ -20,7 +20,7 @@ use Exception;
 /**
  * Web Page Caching
  *
- * @see \CodeIgniter\Cache\ResponseCacheTest
+ * @see ResponseCacheTest
  */
 final class ResponseCache
 {

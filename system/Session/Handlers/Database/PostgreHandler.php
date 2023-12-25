@@ -18,7 +18,7 @@ use ReturnTypeWillChange;
 /**
  * Session handler for Postgre
  *
- * @see \CodeIgniter\Session\Handlers\Database\PostgreHandlerTest
+ * @see PostgreHandlerTest
  */
 class PostgreHandler extends DatabaseHandler
 {

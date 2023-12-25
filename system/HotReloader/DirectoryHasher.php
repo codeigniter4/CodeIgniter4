@@ -19,7 +19,7 @@ use RecursiveIteratorIterator;
 
 /**
  * @internal
- * @see \CodeIgniter\HotReloader\DirectoryHasherTest
+ * @see DirectoryHasherTest
  */
 final class DirectoryHasher
 {

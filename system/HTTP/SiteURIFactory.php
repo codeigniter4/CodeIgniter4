@@ -20,7 +20,7 @@ use Config\App;
  *
  * This class also updates superglobal $_SERVER and $_GET.
  *
- * @see \CodeIgniter\HTTP\SiteURIFactoryTest
+ * @see SiteURIFactoryTest
  */
 final class SiteURIFactory
 {

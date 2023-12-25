@@ -21,7 +21,7 @@ use Config\Paths;
 use Throwable;
 
 /**
- * @see \CodeIgniter\Debug\ExceptionHandlerTest
+ * @see ExceptionHandlerTest
  */
 final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHandlerInterface
 {

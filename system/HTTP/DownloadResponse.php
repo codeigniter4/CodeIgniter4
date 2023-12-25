@@ -19,7 +19,7 @@ use Config\Mimes;
 /**
  * HTTP response when a download is requested.
  *
- * @see \CodeIgniter\HTTP\DownloadResponseTest
+ * @see DownloadResponseTest
  */
 class DownloadResponse extends Response
 {

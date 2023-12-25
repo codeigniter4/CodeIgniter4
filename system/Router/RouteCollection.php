@@ -22,7 +22,7 @@ use InvalidArgumentException;
 
 /**
  * @todo Implement nested resource routing (See CakePHP)
- * @see \CodeIgniter\Router\RouteCollectionTest
+ * @see RouteCollectionTest
  */
 class RouteCollection implements RouteCollectionInterface
 {

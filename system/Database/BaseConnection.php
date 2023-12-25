@@ -50,7 +50,7 @@ use Throwable;
  * @template TResult
  *
  * @implements ConnectionInterface<TConnection, TResult>
- * @see \CodeIgniter\Database\BaseConnectionTest
+ * @see BaseConnectionTest
  */
 abstract class BaseConnection implements ConnectionInterface
 {

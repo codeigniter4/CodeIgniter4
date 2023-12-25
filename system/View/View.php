@@ -24,7 +24,7 @@ use RuntimeException;
 /**
  * Class View
  *
- * @see \CodeIgniter\View\ViewTest
+ * @see ViewTest
  */
 class View implements RendererInterface
 {

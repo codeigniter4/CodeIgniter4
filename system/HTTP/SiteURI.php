@@ -19,7 +19,7 @@ use Config\App;
 /**
  * URI for the application site
  *
- * @see \CodeIgniter\HTTP\SiteURITest
+ * @see SiteURITest
  */
 class SiteURI extends URI
 {

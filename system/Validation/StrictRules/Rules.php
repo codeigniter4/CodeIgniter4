@@ -19,7 +19,7 @@ use Config\Database;
 /**
  * Validation Rules.
  *
- * @see \CodeIgniter\Validation\StrictRules\RulesTest
+ * @see RulesTest
  */
 class Rules
 {

@@ -20,7 +20,7 @@ use ReflectionException;
 /**
  * New Secure Router for Auto-Routing
  *
- * @see \CodeIgniter\Router\AutoRouterImprovedTest
+ * @see AutoRouterImprovedTest
  */
 final class AutoRouterImproved implements AutoRouterInterface
 {

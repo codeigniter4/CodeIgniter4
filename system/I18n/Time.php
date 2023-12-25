@@ -36,7 +36,7 @@ use DateTimeImmutable;
  * @property string $weekOfYear  read-only
  * @property string $year        read-only
  *
- * @see \CodeIgniter\I18n\TimeTest
+ * @see TimeTest
  */
 class Time extends DateTimeImmutable
 {

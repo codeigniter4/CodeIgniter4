@@ -38,7 +38,7 @@ use DateTime;
  * @property string $year        read-only
  *
  * @deprecated Use Time instead.
- * @see \CodeIgniter\I18n\TimeLegacyTest
+ * @see TimeLegacyTest
  */
 class TimeLegacy extends DateTime
 {

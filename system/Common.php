@@ -537,7 +537,7 @@ if (! function_exists('function_usable')) {
      * that version is yet to be released. This function will therefore
      * be just temporary, but would probably be kept for a few years.
      *
-     * @see   http://www.hardened-php.net/suhosin/
+     * @see http://www.hardened-php.net/suhosin/
      *
      * @param string $functionName Function to check for
      *

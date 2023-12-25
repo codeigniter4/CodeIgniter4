@@ -31,7 +31,7 @@ use LogicException;
  * Provides methods that help protect your site against
  * Cross-Site Request Forgery attacks.
  *
- * @see \CodeIgniter\Security\SecurityTest
+ * @see SecurityTest
  */
 class Security implements SecurityInterface
 {

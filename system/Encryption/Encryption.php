@@ -21,7 +21,7 @@ use Config\Encryption as EncryptionConfig;
  * This class determines the driver, cipher, and mode to use, and then
  * initializes the appropriate encryption handler.
  *
- * @see \CodeIgniter\Encryption\EncryptionTest
+ * @see EncryptionTest
  */
 class Encryption
 {

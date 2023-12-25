@@ -16,7 +16,7 @@ use Config\DocTypes;
 /**
  * Typography Class
  *
- * @see \CodeIgniter\Typography\TypographyTest
+ * @see TypographyTest
  */
 class Typography
 {
