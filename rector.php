@@ -166,9 +166,14 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(TernaryEmptyArrayArrayDimFetchToCoalesceRector::class);
     $rectorConfig->rule(EmptyOnNullableObjectToInstanceOfRector::class);
     $rectorConfig->rule(DisallowedEmptyRuleFixerRector::class);
-    $rectorConfig->rule(StringClassNameToClassConstantRector::class);
     $rectorConfig->rule(PrivatizeFinalClassPropertyRector::class);
     $rectorConfig->rule(CompleteDynamicPropertiesRector::class);
     $rectorConfig->rule(BooleanInIfConditionRuleFixerRector::class);
     $rectorConfig->rule(SingleInArrayToCompareRector::class);
+
+    $rectorConfig
+        ->ruleWithConfiguration(StringClassNameToClassConstantRector::class, [
+            // keep '\\' prefix string on string '\Foo\Bar'
+            StringClassNameToClassConstantRector::SHOULD_KEEP_PRE_SLASH => true,
+        ]);
 };
