@@ -346,6 +346,9 @@ Others
   existing CSP directives. See :ref:`csp-clear-directives`.
 - **HTTP:** Added ``Message::addHeader()`` method to add another header with
   the same name. See :php:meth:`CodeIgniter\\HTTP\\Message::addHeader()`.
+- **Web Page Caching:** ``ResponseCache`` has been improved to include the request
+  HTTP method in the cache key. This means that the same URI will be cached separately
+  if the HTTP method is different.
 
 Message Changes
 ***************
