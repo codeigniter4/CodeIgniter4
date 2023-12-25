@@ -20,7 +20,7 @@
     "require-dev": {
         "codeigniter/coding-standard": "^1.5",
         "fakerphp/faker": "^1.9",
-        "friendsofphp/php-cs-fixer": "3.13.0",
+        "friendsofphp/php-cs-fixer": "~3.41.0",
         "kint-php/kint": "^5.0.4",
         "mikey179/vfsstream": "^1.6",
         "nexusphp/cs-config": "^3.6",
