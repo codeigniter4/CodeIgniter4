@@ -90,6 +90,8 @@ Work off direct clones of the repos so the release branches persist for a time.
       and `release = '4.x.x'`
     * Update **user_guide_src/source/changelogs/{version}.rst**
       * Set the date to format `Release Date: January 31, 2021`
+    * Update **phpdoc.dist.xml** with the new `<title>CodeIgniter v4.x API</title>`
+      and `<version number="4.x.x">`
     * Commit the changes with `Prep for 4.x.x release`
 * [ ] Create a new PR from `release-4.x.x` to `develop`:
   * Title: `Prep for 4.x.x release`

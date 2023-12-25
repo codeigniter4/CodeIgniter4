@@ -48,6 +48,18 @@ replace_file_content(
     "release = '{$version}'"
 );
 
+// Updates version number in "phpdoc.dist.xml".
+replace_file_content(
+    './phpdoc.dist.xml',
+    '!<title>CodeIgniter v.*? API</title>!mu',
+    "<title>CodeIgniter v{$minor} API</title>"
+);
+replace_file_content(
+    './phpdoc.dist.xml',
+    '/<version number=".*?">/mu',
+    "<version number=\"{$version}\">"
+);
+
 // Updates release date in changelogs.
 $date = date('F j, Y');
 replace_file_content(
