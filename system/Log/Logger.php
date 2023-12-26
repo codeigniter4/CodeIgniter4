@@ -93,7 +93,8 @@ class Logger implements LoggerInterface
      * value is an associative array of configuration
      * items.
      *
-     * @var array<class-string, array<string, int|list<string>|string>>
+     * @var array
+     * @phpstan-var array<class-string, array<string, list<string>|string|int>>
      */
     protected $handlerConfig = [];
 
@@ -137,7 +138,7 @@ class Logger implements LoggerInterface
 
         $this->dateFormat = $config->dateFormat ?? $this->dateFormat;
 
-        if (! is_array($config->handlers) || $config->handlers === []) {
+        if (! is_array($config->handlers) || empty($config->handlers)) {
             throw LogException::forNoHandlers('LoggerConfig');
         }
 
@@ -156,9 +157,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function emergency($message, array $context = []): bool
+    public function emergency(string|\Stringable $message, array $context = []): void
     {
-        return $this->log('emergency', $message, $context);
+        $this->log('emergency', $message, $context);
     }
 
     /**
@@ -169,9 +170,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function alert($message, array $context = []): bool
+    public function alert(string|\Stringable $message, array $context = []): void
     {
-        return $this->log('alert', $message, $context);
+        $this->log('alert', $message, $context);
     }
 
     /**
@@ -181,9 +182,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function critical($message, array $context = []): bool
+    public function critical(string|\Stringable $message, array $context = []): void
     {
-        return $this->log('critical', $message, $context);
+        $this->log('critical', $message, $context);
     }
 
     /**
@@ -192,9 +193,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function error($message, array $context = []): bool
+    public function error(string|\Stringable $message, array $context = []): void
     {
-        return $this->log('error', $message, $context);
+        $this->log('error', $message, $context);
     }
 
     /**
@@ -205,9 +206,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function warning($message, array $context = []): bool
+    public function warning(string|\Stringable $message, array $context = []): void
     {
-        return $this->log('warning', $message, $context);
+        $this->log('warning', $message, $context);
     }
 
     /**
@@ -215,9 +216,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function notice($message, array $context = []): bool
+    public function notice(string|\Stringable $message, array $context = []): void
     {
-        return $this->log('notice', $message, $context);
+        $this->log('notice', $message, $context);
     }
 
     /**
@@ -227,9 +228,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function info($message, array $context = []): bool
+    public function info(string|\Stringable $message, array $context = []): void
     {
-        return $this->log('info', $message, $context);
+        $this->log('info', $message, $context);
     }
 
     /**
@@ -237,9 +238,9 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      */
-    public function debug($message, array $context = []): bool
+    public function debug(string|\Stringable $message, array $context = []): void
     {
-        return $this->log('debug', $message, $context);
+        $this->log('debug', $message, $context);
     }
 
     /**
@@ -248,7 +249,7 @@ class Logger implements LoggerInterface
      * @param string $level
      * @param string $message
      */
-    public function log($level, $message, array $context = []): bool
+    public function log($level, string|\Stringable $message, array $context = []): void
     {
         if (is_numeric($level)) {
             $level = array_search((int) $level, $this->logLevels, true);
@@ -261,41 +262,43 @@ class Logger implements LoggerInterface
 
         // Does the app want to log this right now?
         if (! in_array($level, $this->loggableLevels, true)) {
-            return false;
+            // return false;
+        }else{
+
+            // Parse our placeholders
+            $message = $this->interpolate($message, $context);
+    
+            if ($this->cacheLogs) {
+                $this->logCache[] = [
+                    'level' => $level,
+                    'msg'   => $message,
+                ];
+            }
+    
+            foreach ($this->handlerConfig as $className => $config) {
+                if (! array_key_exists($className, $this->handlers)) {
+                    $this->handlers[$className] = new $className($config);
+                }
+    
+                /**
+                 * @var HandlerInterface $handler
+                 */
+                $handler = $this->handlers[$className];
+    
+                if (! $handler->canHandle($level)) {
+                    continue;
+                }
+    
+                // If the handler returns false, then we
+                // don't execute any other handlers.
+                if (! $handler->setDateFormat($this->dateFormat)->handle($level, $message)) {
+                    break;
+                }
+            }
         }
 
-        // Parse our placeholders
-        $message = $this->interpolate($message, $context);
 
-        if ($this->cacheLogs) {
-            $this->logCache[] = [
-                'level' => $level,
-                'msg'   => $message,
-            ];
-        }
-
-        foreach ($this->handlerConfig as $className => $config) {
-            if (! array_key_exists($className, $this->handlers)) {
-                $this->handlers[$className] = new $className($config);
-            }
-
-            /**
-             * @var HandlerInterface $handler
-             */
-            $handler = $this->handlers[$className];
-
-            if (! $handler->canHandle($level)) {
-                continue;
-            }
-
-            // If the handler returns false, then we
-            // don't execute any other handlers.
-            if (! $handler->setDateFormat($this->dateFormat)->handle($level, $message)) {
-                break;
-            }
-        }
-
-        return true;
+        // return true;
     }
 
     /**
