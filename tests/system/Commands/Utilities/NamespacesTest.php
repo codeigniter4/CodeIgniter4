@@ -59,6 +59,7 @@ final class NamespacesTest extends CIUnitTestCase
             +---------------+-------------------------+--------+
             | CodeIgniter   | ROOTPATH/system         | Yes    |
             | Config        | APPPATH/Config          | Yes    |
+            | Tests         | ROOTPATH/tests          | Yes    |
             | App           | ROOTPATH/app            | Yes    |
             | Tests\Support | ROOTPATH/tests/_support | Yes    |
             +---------------+-------------------------+--------+

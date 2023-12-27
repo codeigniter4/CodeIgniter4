@@ -93,6 +93,7 @@ class AutoloadConfig
     protected $corePsr4 = [
         'CodeIgniter' => SYSTEMPATH,
         'Config'      => APPPATH . 'Config',
+        'Tests'       => ROOTPATH . 'tests',
     ];
 
     /**

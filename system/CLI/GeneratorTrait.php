@@ -60,6 +60,12 @@ trait GeneratorTrait
     protected $classNameLang = '';
 
     /**
+     * Namespace to use for class.
+     * Leave null to use the default namespace.
+     */
+    protected ?string $namespace = null;
+
+    /**
      * Whether to require class name.
      *
      * @internal
@@ -108,7 +114,7 @@ trait GeneratorTrait
     /**
      * Generates a class file from an existing template.
      */
-    protected function generateClass(array $params)
+    protected function generateClass(array $params): void
     {
         $this->params = $params;
 
@@ -119,7 +125,7 @@ trait GeneratorTrait
         $target = $this->buildPath($class);
 
         // Check if path is empty.
-        if (empty($target)) {
+        if ($target === '') {
             return;
         }
 
@@ -131,14 +137,14 @@ trait GeneratorTrait
      *
      * @param string $view namespaced view name that is generated
      */
-    protected function generateView(string $view, array $params)
+    protected function generateView(string $view, array $params): void
     {
         $this->params = $params;
 
         $target = $this->buildPath($view);
 
         // Check if path is empty.
-        if (empty($target)) {
+        if ($target === '') {
             return;
         }
 
@@ -263,8 +269,10 @@ trait GeneratorTrait
 
         if ($class === null && $this->hasClassName) {
             // @codeCoverageIgnoreStart
-            $nameLang = $this->classNameLang ?: 'CLI.generator.className.default';
-            $class    = CLI::prompt(lang($nameLang), null, 'required');
+            $nameLang = $this->classNameLang !== ''
+                ? $this->classNameLang
+                : 'CLI.generator.className.default';
+            $class = CLI::prompt(lang($nameLang), null, 'required');
             CLI::newLine();
             // @codeCoverageIgnoreEnd
         }
@@ -302,20 +310,15 @@ trait GeneratorTrait
         );
 
         // Gets the namespace from input. Don't forget the ending backslash!
-        $namespace = trim(
-            str_replace(
-                '/',
-                '\\',
-                $this->getOption('namespace') ?? APP_NAMESPACE
-            ),
-            '\\'
-        ) . '\\';
+        $namespace = $this->getNamespace() . '\\';
 
         if (strncmp($class, $namespace, strlen($namespace)) === 0) {
             return $class; // @codeCoverageIgnore
         }
 
-        return $namespace . $this->directory . '\\' . str_replace('/', '\\', $class);
+        $directoryString = ($this->directory !== null) ? $this->directory . '\\' : '';
+
+        return $namespace . $directoryString . str_replace('/', '\\', $class);
     }
 
     /**
@@ -403,14 +406,7 @@ trait GeneratorTrait
      */
     protected function buildPath(string $class): string
     {
-        $namespace = trim(
-            str_replace(
-                '/',
-                '\\',
-                $this->getOption('namespace') ?? APP_NAMESPACE
-            ),
-            '\\'
-        );
+        $namespace = $this->getNamespace();
 
         // Check if the namespace is actually defined and we are not just typing gibberish.
         $base = Services::autoloader()->getNamespace($namespace);
@@ -426,7 +422,9 @@ trait GeneratorTrait
             return '';
         }
 
-        $base = realpath($base) ?: $base;
+        $realpath = realpath($base);
+        $base     = ($realpath !== false) ? $realpath : $base;
+
         $file = $base . DIRECTORY_SEPARATOR
             . str_replace(
                 '\\',
@@ -442,6 +440,23 @@ trait GeneratorTrait
                 -1
             )
         ) . DIRECTORY_SEPARATOR . $this->basename($file);
+    }
+
+    /**
+     * Gets the namespace from the command-line option,
+     * or the default namespace if the option is not set.
+     * Can be overridden by directly setting $this->namespace.
+     */
+    protected function getNamespace(): string
+    {
+        return $this->namespace ?? trim(
+            str_replace(
+                '/',
+                '\\',
+                $this->getOption('namespace') ?? APP_NAMESPACE
+            ),
+            '\\'
+        );
     }
 
     /**
@@ -483,10 +498,8 @@ trait GeneratorTrait
     /**
      * Gets a single command-line option. Returns TRUE if the option exists,
      * but doesn't have a value, and is simply acting as a flag.
-     *
-     * @return mixed
      */
-    protected function getOption(string $name)
+    protected function getOption(string $name): string|bool|null
     {
         if (! array_key_exists($name, $this->params)) {
             return CLI::getOption($name);
