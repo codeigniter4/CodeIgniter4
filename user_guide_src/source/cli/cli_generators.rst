@@ -226,6 +226,31 @@ Options:
 * ``--suffix``: Append the component suffix to the generated class name.
 * ``--force``: Set this flag to overwrite existing files on destination.
 
+
+.. _cli-generators-make-test:
+
+make:test
+-----------
+
+.. versionadded:: 4.5.0
+
+Creates a new test file.
+
+Usage:
+======
+::
+
+    make:test <name> [options]
+
+Argument:
+=========
+* ``name``: The name of the test class. **[REQUIRED]**
+
+Options:
+========
+* ``--namespace``: Set the root namespace. Defaults to value of ``\Tests``.
+* ``--force``: Set this flag to overwrite existing files on destination.
+
 make:migration
 --------------
 

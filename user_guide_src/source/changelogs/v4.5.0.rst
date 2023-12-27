@@ -230,6 +230,8 @@ Enhancements
 Commands
 ========
 
+- Added ``spark make:test`` command to generate a skeleton test file. See
+  :ref:`cli-generators-make-test` for the details.
 - Added ``spark config:check`` command to check Config values. See
   :ref:`confirming-config-values` for the details.
 - Added ``spark lang:find`` command to update translations keys. See :ref:`generating-translation-files-via-command` for the details.
@@ -350,6 +352,7 @@ Others
 Message Changes
 ***************
 
+- Added ``CLI.generator.className.test`` message.
 - Added ``Validation.field_exists`` error message.
 
 Changes
