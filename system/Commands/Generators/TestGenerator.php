@@ -57,7 +57,7 @@ class TestGenerator extends BaseCommand
      * @var array<string, string>
      */
     protected $arguments = [
-        'name' => 'The command class name.',
+        'name' => 'The test class name.',
     ];
 
     /**
@@ -66,8 +66,7 @@ class TestGenerator extends BaseCommand
      * @var array<string, string>
      */
     protected $options = [
-        '--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',
-        '--force'     => 'Force overwrite existing file.',
+        '--force' => 'Force overwrite existing file.',
     ];
 
     /**
