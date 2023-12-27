@@ -66,8 +66,7 @@ class TestGenerator extends BaseCommand
      * @var array<string, string>
      */
     protected $options = [
-        '--namespace' => 'Set root namespace. Default: "\Tests".',
-        '--force'     => 'Force overwrite existing file.',
+        '--force' => 'Force overwrite existing file.',
     ];
 
     /**
