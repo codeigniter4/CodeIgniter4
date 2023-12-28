@@ -190,7 +190,7 @@ class CodeIgniter
         $this->bootstrapEnvironment();
 
         // Setup Exception Handling
-        Services::exceptions()->initialize();
+        Services::exceptions()->register();
 
         // Run this check for manual installations
         if (! is_file(COMPOSER_PATH)) {

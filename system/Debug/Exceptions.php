@@ -104,13 +104,33 @@ class Exceptions
      *
      * @codeCoverageIgnore
      *
+     * @deprecated 4.5.0 Use `register()` instead
+     *
      * @return void
      */
     public function initialize()
     {
+        $this->register();
+    }
+
+    /**
+     * Responsible for registering the error handler, exception handler,
+     * and shutdown handler.
+     */
+    public function register(): void
+    {
         set_exception_handler([$this, 'exceptionHandler']);
         set_error_handler([$this, 'errorHandler']);
         register_shutdown_function([$this, 'shutdownHandler']);
+    }
+
+    /**
+     * Unregisters the exception handler and error handler.
+     */
+    public function unregister(): void
+    {
+        restore_exception_handler();
+        restore_error_handler();
     }
 
     /**

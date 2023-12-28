@@ -20,6 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Exceptions as ExceptionsConfig;
 use ErrorException;
+use PHPUnit\Framework\Exception;
 use RuntimeException;
 
 /**
@@ -65,7 +66,7 @@ final class ExceptionsTest extends CIUnitTestCase
         $config->deprecationLogLevel = 'error';
 
         $this->exception = new Exceptions($config);
-        $this->exception->initialize();
+        $this->exception->register();
 
         // this is only needed for IDEs not to complain that strlen does not accept explicit null
         $maybeNull = PHP_VERSION_ID >= 80100 ? null : 'random string';
@@ -74,11 +75,10 @@ final class ExceptionsTest extends CIUnitTestCase
             // We test DEPRECATED error, so cannot set `declare(strict_types=1)` in this file.
             strlen($maybeNull);
             $this->assertLogContains('error', '[DEPRECATED] strlen(): ');
-        } catch (ErrorException $e) {
+        } catch (ErrorException) {
             $this->fail('The catch block should not be reached.');
         } finally {
-            restore_error_handler();
-            restore_exception_handler();
+            $this->exception->unregister();
         }
     }
 
@@ -90,13 +90,12 @@ final class ExceptionsTest extends CIUnitTestCase
         $config->deprecationLogLevel = 'error';
 
         $this->exception = new Exceptions($config);
-        $this->exception->initialize();
+        $this->exception->register();
 
         @trigger_error('Hello! I am a deprecation!', E_USER_DEPRECATED);
         $this->assertLogContains('error', '[DEPRECATED] Hello! I am a deprecation!');
 
-        restore_error_handler();
-        restore_exception_handler();
+        $this->exception->unregister();
     }
 
     public function testDetermineViews(): void
@@ -228,5 +227,16 @@ final class ExceptionsTest extends CIUnitTestCase
         $newTrace = $maskSensitiveData($trace, $keysToMask, $path);
 
         $this->assertSame('/var/www/CodeIgniter4/app/Controllers/Home.php', $newTrace[0]['file']);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testUnregisteringUsesPhpUnitsOwnHandler(): void
+    {
+        $this->exception->unregister();
+
+        $this->expectException(Exception::class); // PHPUnit\Framework\Exception
+        @trigger_error('Hello', E_USER_ERROR);
     }
 }
