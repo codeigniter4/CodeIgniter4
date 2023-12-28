@@ -17,7 +17,7 @@ additional functionality that not every site will need or want.
 Shield
 ******
 
-`CodeIgniter Shield <https://codeigniter4.github.io/shield/>`_ is an authentication
+`CodeIgniter Shield <https://shield.codeigniter.com/>`_ is an authentication
 and authorization framework for CodeIgniter 4. It is designed to be secure, flexible,
 and easily extendable to meet the needs of many different types of websites.
 Among the many features, it includes:
@@ -33,12 +33,27 @@ Among the many features, it includes:
 Settings
 ********
 
-`CodeIgniter Settings <https://github.com/codeigniter4/settings>`_ is a wrapper around
+`CodeIgniter Settings <https://settings.codeigniter.com>`_ is a wrapper around
 the configuration files that allows any configuration setting to saved to the database,
 while defaulting to the config files when not custom value has been stored. This allows
 an application to ship with the default config values, but adapt as the project grows
 or moves servers, without having to touch the code.
 
+************
+Tasks (BETA)
+************
+
+`CodeIgniter Tasks <https://tasks.codeigniter.com>`_ is a simple task scheduler
+for CodeIgniter 4. It allows you to schedule tasks to run at specific times, or
+on a recurring basis. It is designed to be simple to use, but flexible enough to
+handle most use cases.
+
+************
+Queue (BETA)
+************
+
+`CodeIgniter Queue <https://queue.codeigniter.com>`_ is a simple queue system
+for CodeIgniter 4. It allows you to queue up tasks to be run later.
 
 *****
 Cache
