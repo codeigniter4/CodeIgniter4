@@ -41,6 +41,6 @@ final class TestGeneratorTest extends CIUnitTestCase
     public function testGenerateTest(): void
     {
         command('make:test Foo/Bar');
-        $this->assertFileExists(ROOTPATH . 'tests/Foo/Bar.php');
+        $this->assertFileExists(ROOTPATH . 'tests/app/Foo/Bar.php');
     }
 }
