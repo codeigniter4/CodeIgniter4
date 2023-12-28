@@ -175,6 +175,8 @@ class FileLocator implements FileLocatorInterface
      *      'app/Modules/foo/Config/Routes.php',
      *      'app/Modules/bar/Config/Routes.php',
      *  ]
+     *
+     * @return list<string>
      */
     public function search(string $path, string $ext = 'php', bool $prioritizeApp = true): array
     {
@@ -203,7 +205,7 @@ class FileLocator implements FileLocatorInterface
         }
 
         // Remove any duplicates
-        return array_unique($foundPaths);
+        return array_values(array_unique($foundPaths));
     }
 
     /**
