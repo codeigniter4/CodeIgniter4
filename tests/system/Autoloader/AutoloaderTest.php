@@ -97,13 +97,13 @@ final class AutoloaderTest extends CIUnitTestCase
         $loader->initialize(new Autoload(), new Modules());
 
         $ns = $loader->getNamespace();
-        $this->assertCount(1, $ns['App']);
+        $this->assertCount(2, $ns['App']);
         $this->assertSame('ROOTPATH/app', clean_path($ns['App'][0]));
 
         $loader->initialize(new Autoload(), new Modules());
 
         $ns = $loader->getNamespace();
-        $this->assertCount(1, $ns['App']);
+        $this->assertCount(2, $ns['App']);
         $this->assertSame('ROOTPATH/app', clean_path($ns['App'][0]));
     }
 
