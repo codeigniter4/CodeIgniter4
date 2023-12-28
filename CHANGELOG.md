@@ -1,5 +1,59 @@
 # Changelog
 
+## [v4.4.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.4) (2023-12-28)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.3...v4.4.4)
+
+### Breaking Changes
+
+* fix: Validation rule with `*` gets incorrect values as dot array syntax by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8129
+* fix: validation rule `matches` and `differs` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8122
+* fix: [CURLRequest] skip hostname checks if options 'verify' false by @NicolaeIotu in https://github.com/codeigniter4/CodeIgniter4/pull/8258
+* fix: get_filenames() does not follow symlinks by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8298
+
+### Fixed Bugs
+
+* fix: change make:command default $group to `App` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8109
+* fix: typo in help message in `spark filter:check` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8118
+* fix: Hot reloading when session is enabled by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/8112
+* fix: make:cell help message by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8133
+* fix: [DebugBar] dark mode timeline "Controller" by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8125
+* fix: PHPDoc types in controller.tpl.php by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8144
+* fix: `@return` in filter.tpl.php by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8145
+* fix: when request body is `0`, $body will be null by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8161
+* fix: `spark routes` outputs `<unknown>` only when {locale} with `useSupportedLocalesOnly(true)` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8167
+* fix: Undefined array key error in `spark db:table` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8173
+* fix: force_https() redirects to wrong URL when baseURL has subfolder by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8191
+* fix: Validation raises TypeError when invalid JSON comes by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8153
+* fix: FilterTestTrait Undefined variable $filterClasses by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8195
+* fix: Image::save() causes error with webp by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8210
+* fix issue where running FileLocator::getClassname() on a directory would cause a PHP error by @colethorsen in https://github.com/codeigniter4/CodeIgniter4/pull/8216
+* fix: make Request::getEnv() deprecated by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8234
+* fix: ExceptionHandler displays incorrect Exception classname by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8239
+* fix: [Cache] Double prefix for increment in FileHandler by @il-coder in https://github.com/codeigniter4/CodeIgniter4/pull/8255
+* docs: fix Database Utility Class `getXMLFromResult()` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8276
+* fix: autoload helpers in test bootstrap by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8275
+* fix: Model handling of Entity $primaryKey casting  by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8282
+* fix: Handle non-array JSON in validation by @woodongwong in https://github.com/codeigniter4/CodeIgniter4/pull/8288
+* fix: DEPRECATED error in Honeypot by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8316
+* fix: [Auto Routing Improved] `spark routes` shows incorrect routes when translateURIDashes is enabled by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8320
+* fix: migrations not using custom DB connection of migration runner by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/8221
+* Always return a new instance of a Cell by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/8330
+* fix: DOMParser cannot see element with `id="0"` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8360
+
+### Refactoring
+
+* [Rector] Apply SingleInArrayToCompareRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/8102
+* refactor: RedisHandler ttl() calls by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8155
+* [Testing] Use assertEqualsWithDelta() when possible by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/8158
+* refactor: replace non-boolean if conditions in Model by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8193
+* refactor: View classes to fix PHPStan errors by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8208
+* refactor: Model by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8260
+* replace -1 with E_ALL in error_reporting calls by @ThomasMeschke in https://github.com/codeigniter4/CodeIgniter4/pull/8212
+* refactor: apply SimplifyEmptyCheckOnEmptyArrayRector by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8341
+* refactor: apply DisallowedEmptyRuleFixerRector by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8344
+* refactor: rely on $config property in ViewDecoratorTrait by @mostafakhudair in https://github.com/codeigniter4/CodeIgniter4/pull/8021
+* refactor: replace empty() Part 1 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8345
+
 ## [v4.4.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.3) (2023-10-26)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.2...v4.4.3)
 
@@ -58,8 +112,6 @@
 * refactor: replace deprecated `Services::request(config, false)` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7998
 * refactor: delete duplicate code for Composer loading by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8004
 * [Rector] Apply BooleanInIfConditionRuleFixerRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/7951
-
-**Full Changelog**: https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.1...v4.4.2
 
 ## [v4.4.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.1) (2023-09-05)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.0...v4.4.1)
