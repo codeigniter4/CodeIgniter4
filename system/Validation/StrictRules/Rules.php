@@ -157,7 +157,8 @@ class Rules
             ->limit(1);
 
         if (
-            ! empty($whereField) && ! empty($whereValue)
+            $whereField !== null && $whereField !== ''
+            && $whereValue !== null && $whereValue !== ''
             && ! preg_match('/^\{(\w+)\}$/', $whereValue)
         ) {
             $row = $row->where($whereField, $whereValue);
@@ -216,7 +217,8 @@ class Rules
             ->limit(1);
 
         if (
-            ! empty($ignoreField) && ! empty($ignoreValue)
+            $ignoreField !== null && $ignoreField !== ''
+            && $ignoreValue !== null && $ignoreValue !== ''
             && ! preg_match('/^\{(\w+)\}$/', $ignoreValue)
         ) {
             $row = $row->where("{$ignoreField} !=", $ignoreValue);

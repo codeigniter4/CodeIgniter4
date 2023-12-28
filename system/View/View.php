@@ -178,7 +178,7 @@ class View implements RendererInterface
 
         $fileExt = pathinfo($view, PATHINFO_EXTENSION);
         // allow Views as .html, .tpl, etc (from CI3)
-        $this->renderVars['view'] = empty($fileExt) ? $view . '.php' : $view;
+        $this->renderVars['view'] = ($fileExt === '') ? $view . '.php' : $view;
 
         $this->renderVars['options'] = $options ?? [];
 
@@ -207,12 +207,12 @@ class View implements RendererInterface
             $this->renderVars['file'] = $this->loader->locateFile(
                 $this->renderVars['view'],
                 'Views',
-                empty($fileExt) ? 'php' : $fileExt
+                ($fileExt === '') ? 'php' : $fileExt
             );
         }
 
-        // locateFile will return an empty string if the file cannot be found.
-        if (empty($this->renderVars['file'])) {
+        // locateFile() will return false if the file cannot be found.
+        if ($this->renderVars['file'] === false) {
             throw ViewException::forInvalidFile($this->renderVars['view']);
         }
 

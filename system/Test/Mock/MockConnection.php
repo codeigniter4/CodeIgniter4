@@ -62,7 +62,7 @@ class MockConnection extends BaseConnection
 
         $query->setQuery($sql, $binds, $setEscapeFlags);
 
-        if (! empty($this->swapPre) && ! empty($this->DBPrefix)) {
+        if ($this->swapPre !== '' && $this->DBPrefix !== '') {
             $query->swapPrefix($this->DBPrefix, $this->swapPre);
         }
 

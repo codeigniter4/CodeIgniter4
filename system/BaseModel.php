@@ -567,7 +567,7 @@ abstract class BaseModel
                 'singleton' => $singleton,
             ]);
 
-            if (! empty($eventData['returnData'])) {
+            if (isset($eventData['returnData']) && $eventData['returnData'] === true) {
                 return $eventData['data'];
             }
         }
@@ -629,7 +629,7 @@ abstract class BaseModel
                 'singleton' => false,
             ]);
 
-            if (! empty($eventData['returnData'])) {
+            if (isset($eventData['returnData']) && $eventData['returnData'] === true) {
                 return $eventData['data'];
             }
         }
@@ -667,7 +667,7 @@ abstract class BaseModel
                 'singleton' => true,
             ]);
 
-            if (! empty($eventData['returnData'])) {
+            if (isset($eventData['returnData']) && $eventData['returnData'] === true) {
                 return $eventData['data'];
             }
         }
@@ -703,7 +703,7 @@ abstract class BaseModel
      */
     public function save($row): bool
     {
-        if (empty($row)) {
+        if ((array) $row === []) {
             return true;
         }
 
@@ -729,7 +729,9 @@ abstract class BaseModel
      */
     protected function shouldUpdate($row): bool
     {
-        return ! empty($this->getIdValue($row));
+        $id = $this->getIdValue($row);
+
+        return ! ($id === null || $id === []);
     }
 
     /**
@@ -1510,13 +1512,13 @@ abstract class BaseModel
     {
         $rules = $this->getValidationRules();
 
-        if ($this->skipValidation || $rules === [] || empty($row)) {
-            return true;
-        }
-
         // Validation requires array, so cast away.
         if (is_object($row)) {
             $row = (array) $row;
+        }
+
+        if ($this->skipValidation || $rules === [] || $row === []) {
+            return true;
         }
 
         $rules = $this->cleanValidationRules ? $this->cleanValidationRules($rules, $row) : $rules;
@@ -1632,7 +1634,7 @@ abstract class BaseModel
     protected function trigger(string $event, array $eventData)
     {
         // Ensure it's a valid event
-        if (! isset($this->{$event}) || empty($this->{$event})) {
+        if (! isset($this->{$event}) || $this->{$event} === []) {
             return $eventData;
         }
 
@@ -1772,7 +1774,7 @@ abstract class BaseModel
             throw new InvalidArgumentException(sprintf('Invalid type "%s" used upon transforming data to array.', $type));
         }
 
-        if (! $this->allowEmptyInserts && empty($row)) {
+        if (! $this->allowEmptyInserts && ($row === null || (array) $row === [])) {
             throw DataException::forEmptyDataset($type);
         }
 
