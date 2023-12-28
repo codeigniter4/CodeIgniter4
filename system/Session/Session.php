@@ -243,7 +243,7 @@ class Session implements SessionInterface
         $this->startSession();
 
         // Is session ID auto-regeneration configured? (ignoring ajax requests)
-        if ((empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest')
+        if ((! isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest')
             && ($regenerateTime = $this->config->timeToUpdate) > 0
         ) {
             if (! isset($_SESSION['__ci_last_regenerate'])) {
@@ -370,7 +370,7 @@ class Session implements SessionInterface
      */
     protected function initVars()
     {
-        if (empty($_SESSION['__ci_vars'])) {
+        if (! isset($_SESSION['__ci_vars'])) {
             return;
         }
 
@@ -386,7 +386,7 @@ class Session implements SessionInterface
             }
         }
 
-        if (empty($_SESSION['__ci_vars'])) {
+        if ($_SESSION['__ci_vars'] === []) {
             unset($_SESSION['__ci_vars']);
         }
     }
@@ -648,7 +648,7 @@ class Session implements SessionInterface
 
         $flashdata = [];
 
-        if (! empty($_SESSION['__ci_vars'])) {
+        if (isset($_SESSION['__ci_vars'])) {
             foreach ($_SESSION['__ci_vars'] as $key => &$value) {
                 if (! is_int($value)) {
                     $flashdata[$key] = $_SESSION[$key];
@@ -708,7 +708,7 @@ class Session implements SessionInterface
      */
     public function unmarkFlashdata($key)
     {
-        if (empty($_SESSION['__ci_vars'])) {
+        if (! isset($_SESSION['__ci_vars'])) {
             return;
         }
 
@@ -722,7 +722,7 @@ class Session implements SessionInterface
             }
         }
 
-        if (empty($_SESSION['__ci_vars'])) {
+        if ($_SESSION['__ci_vars'] === []) {
             unset($_SESSION['__ci_vars']);
         }
     }
@@ -780,7 +780,7 @@ class Session implements SessionInterface
 
         $tempdata = [];
 
-        if (! empty($_SESSION['__ci_vars'])) {
+        if (isset($_SESSION['__ci_vars'])) {
             foreach ($_SESSION['__ci_vars'] as $key => &$value) {
                 if (is_int($value)) {
                     $tempdata[$key] = $_SESSION[$key];
@@ -858,7 +858,7 @@ class Session implements SessionInterface
      */
     public function unmarkTempdata($key)
     {
-        if (empty($_SESSION['__ci_vars'])) {
+        if (! isset($_SESSION['__ci_vars'])) {
             return;
         }
 
@@ -872,7 +872,7 @@ class Session implements SessionInterface
             }
         }
 
-        if (empty($_SESSION['__ci_vars'])) {
+        if ($_SESSION['__ci_vars'] === []) {
             unset($_SESSION['__ci_vars']);
         }
     }

@@ -151,7 +151,7 @@ class Validation implements ValidationInterface
 
         // If no rules exist, we return false to ensure
         // the developer didn't forget to set the rules.
-        if (empty($this->rules)) {
+        if ($this->rules === []) {
             return false;
         }
 
@@ -718,7 +718,7 @@ class Validation implements ValidationInterface
      */
     protected function loadRuleSets()
     {
-        if (empty($this->ruleSetFiles)) {
+        if ($this->ruleSetFiles === [] || $this->ruleSetFiles === null) {
             throw ValidationException::forNoRuleSets();
         }
 
@@ -929,7 +929,7 @@ class Validation implements ValidationInterface
         $message = str_replace('{field}', ($label === null || $label === '') ? $field : lang($label), $message);
         $message = str_replace(
             '{param}',
-            empty($this->rules[$param]['label']) ? $param : lang($this->rules[$param]['label']),
+            (! isset($this->rules[$param]['label'])) ? $param : lang($this->rules[$param]['label']),
             $message
         );
 

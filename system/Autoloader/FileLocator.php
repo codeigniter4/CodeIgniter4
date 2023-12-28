@@ -69,7 +69,7 @@ class FileLocator implements FileLocatorInterface
         $segments = explode('\\', $file);
 
         // The first segment will be empty if a slash started the filename.
-        if (empty($segments[0])) {
+        if ($segments[0] === '') {
             unset($segments[0]);
         }
 
@@ -91,7 +91,7 @@ class FileLocator implements FileLocatorInterface
         }
 
         // if no namespaces matched then quit
-        if (empty($paths)) {
+        if ($paths === []) {
             return false;
         }
 
@@ -274,7 +274,7 @@ class FileLocator implements FileLocatorInterface
         foreach ($this->getNamespaces() as $namespace) {
             $namespace['path'] = realpath($namespace['path']) ?: $namespace['path'];
 
-            if (empty($namespace['path'])) {
+            if ($namespace['path'] === '') {
                 continue;
             }
 

@@ -130,7 +130,7 @@ class Fabricator
 
         // Determine eligible date fields
         foreach (['createdField', 'updatedField', 'deletedField'] as $field) {
-            if (! empty($this->model->{$field})) {
+            if (isset($this->model->{$field})) {
                 $this->dateFields[] = $this->model->{$field};
             }
         }
@@ -154,7 +154,7 @@ class Fabricator
      */
     public static function getCount(string $table): int
     {
-        return empty(self::$tableCounts[$table]) ? 0 : self::$tableCounts[$table];
+        return ! isset(self::$tableCounts[$table]) ? 0 : self::$tableCounts[$table];
     }
 
     /**
@@ -284,7 +284,7 @@ class Fabricator
     {
         $this->formatters = [];
 
-        if (! empty($this->model->allowedFields)) {
+        if (isset($this->model->allowedFields)) {
             foreach ($this->model->allowedFields as $field) {
                 $this->formatters[$field] = $this->guessFormatter($field);
             }
@@ -515,12 +515,12 @@ class Fabricator
         // Determine which fields we will need
         $fields = [];
 
-        if (! empty($this->model->useTimestamps)) {
+        if ($this->model->useTimestamps) {
             $fields[$this->model->createdField] = $datetime;
             $fields[$this->model->updatedField] = $datetime;
         }
 
-        if (! empty($this->model->useSoftDeletes)) {
+        if ($this->model->useSoftDeletes) {
             $fields[$this->model->deletedField] = null;
         }
 

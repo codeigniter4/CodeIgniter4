@@ -56,4 +56,5 @@ jobs:
             --exclude system/Database/Postgre/Builder.php
             --exclude system/Debug/Exceptions.php
             --exclude system/HTTP/SiteURI.php
+            --exclude system/Validation/Rules.php
             -- app/ public/ system/

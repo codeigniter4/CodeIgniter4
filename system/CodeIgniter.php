@@ -56,7 +56,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.4.3';
+    public const CI_VERSION = '4.4.4';
 
     /**
      * App startup time.
@@ -110,7 +110,7 @@ class CodeIgniter
     /**
      * Controller to use.
      *
-     * @var (Closure(mixed...): ResponseInterface|string)|string
+     * @var (Closure(mixed...): ResponseInterface|string)|string|null
      */
     protected $controller;
 
@@ -285,7 +285,7 @@ class CodeIgniter
         Kint::$display_called_from = $config->displayCalledFrom;
         Kint::$expanded            = $config->expanded;
 
-        if (! empty($config->plugins) && is_array($config->plugins)) {
+        if (isset($config->plugins) && is_array($config->plugins)) {
             Kint::$plugins = $config->plugins;
         }
 
@@ -298,10 +298,10 @@ class CodeIgniter
         RichRenderer::$theme  = $config->richTheme;
         RichRenderer::$folder = $config->richFolder;
         RichRenderer::$sort   = $config->richSort;
-        if (! empty($config->richObjectPlugins) && is_array($config->richObjectPlugins)) {
+        if (isset($config->richObjectPlugins) && is_array($config->richObjectPlugins)) {
             RichRenderer::$value_plugins = $config->richObjectPlugins;
         }
-        if (! empty($config->richTabPlugins) && is_array($config->richTabPlugins)) {
+        if (isset($config->richTabPlugins) && is_array($config->richTabPlugins)) {
             RichRenderer::$tab_plugins = $config->richTabPlugins;
         }
 
@@ -874,7 +874,7 @@ class CodeIgniter
         }
 
         // No controller specified - we don't know what to do now.
-        if (empty($this->controller)) {
+        if (! isset($this->controller)) {
             throw PageNotFoundException::forEmptyController();
         }
 
@@ -1075,7 +1075,7 @@ class CodeIgniter
 
         $method = $this->request->getPost('_method');
 
-        if (empty($method)) {
+        if ($method === null) {
             return;
         }
 

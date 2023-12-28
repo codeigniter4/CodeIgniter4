@@ -138,7 +138,8 @@ class Rules
             ->limit(1);
 
         if (
-            ! empty($whereField) && ! empty($whereValue)
+            $whereField !== null && $whereField !== ''
+            && $whereValue !== null && $whereValue !== ''
             && ! preg_match('/^\{(\w+)\}$/', $whereValue)
         ) {
             $row = $row->where($whereField, $whereValue);
@@ -195,7 +196,8 @@ class Rules
             ->limit(1);
 
         if (
-            ! empty($ignoreField) && ! empty($ignoreValue)
+            $ignoreField !== null && $ignoreField !== ''
+            && $ignoreValue !== null && $ignoreValue !== ''
             && ! preg_match('/^\{(\w+)\}$/', $ignoreValue)
         ) {
             $row = $row->where("{$ignoreField} !=", $ignoreValue);
@@ -357,8 +359,10 @@ class Rules
 
         foreach (explode(',', $fields) as $field) {
             if (
-                (array_key_exists($field, $data) && ! empty($data[$field]))
-                || (strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))
+                (array_key_exists($field, $data)
+                    && ! empty($data[$field]))  // @phpstan-ignore-line Use empty()
+                || (strpos($field, '.') !== false
+                    && ! empty(dot_array_search($field, $data)))  // @phpstan-ignore-line Use empty()
             ) {
                 $requiredFields[] = $field;
             }
@@ -404,7 +408,8 @@ class Rules
         foreach (explode(',', $otherFields) as $otherField) {
             if (
                 (strpos($otherField, '.') === false)
-                && (! array_key_exists($otherField, $data) || empty($data[$otherField]))
+                && (! array_key_exists($otherField, $data)
+                    || empty($data[$otherField])) // @phpstan-ignore-line Use empty()
             ) {
                 return false;
             }
@@ -419,7 +424,7 @@ class Rules
                 $fieldKey        = $fieldSplitArray[1];
 
                 if (is_array($fieldData)) {
-                    return ! empty(dot_array_search($otherField, $data)[$fieldKey]);
+                    return ! empty(dot_array_search($otherField, $data)[$fieldKey]);  // @phpstan-ignore-line Use empty()
                 }
                 $nowField      = str_replace('*', $fieldKey, $otherField);
                 $nowFieldVaule = dot_array_search($nowField, $data);

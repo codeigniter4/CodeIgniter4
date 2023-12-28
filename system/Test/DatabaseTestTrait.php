@@ -122,7 +122,7 @@ trait DatabaseTestTrait
         }
 
         // If no namespace was specified then rollback all
-        if (empty($this->namespace)) {
+        if ($this->namespace === null) {
             $this->migrations->setNamespace(null);
             $this->migrations->regress(0, 'tests');
         }
@@ -148,7 +148,7 @@ trait DatabaseTestTrait
         }
 
         // If no namespace was specified then migrate all
-        if (empty($this->namespace)) {
+        if ($this->namespace === null) {
             $this->migrations->setNamespace(null);
             $this->migrations->latest('tests');
             self::$doneMigration = true;
@@ -184,8 +184,8 @@ trait DatabaseTestTrait
      */
     protected function runSeeds()
     {
-        if (! empty($this->seed)) {
-            if (! empty($this->basePath)) {
+        if ($this->seed !== '') {
+            if ($this->basePath !== '') {
                 $this->seeder->setPath(rtrim($this->basePath, '/') . '/Seeds');
             }
 

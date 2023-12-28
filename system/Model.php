@@ -261,13 +261,13 @@ class Model extends BaseModel
 
         if ($this->tempUseSoftDeletes) {
             $builder->where($this->table . '.' . $this->deletedField, null);
-        } elseif ($this->useSoftDeletes && empty($builder->QBGroupBy) && $this->primaryKey) {
+        } elseif ($this->useSoftDeletes && ($builder->QBGroupBy === []) && $this->primaryKey) {
             $builder->groupBy($this->table . '.' . $this->primaryKey);
         }
 
         // Some databases, like PostgreSQL, need order
         // information to consistently return correct results.
-        if ($builder->QBGroupBy && empty($builder->QBOrderBy) && $this->primaryKey) {
+        if ($builder->QBGroupBy && ($builder->QBOrderBy === []) && $this->primaryKey) {
             $builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
         }
 
@@ -290,7 +290,7 @@ class Model extends BaseModel
 
         // Require non-empty primaryKey when
         // not using auto-increment feature
-        if (! $this->useAutoIncrement && empty($row[$this->primaryKey])) {
+        if (! $this->useAutoIncrement && ! isset($row[$this->primaryKey])) {
             throw DataException::forEmptyPrimaryKey('insert');
         }
 
@@ -355,7 +355,7 @@ class Model extends BaseModel
             foreach ($set as $row) {
                 // Require non-empty primaryKey when
                 // not using auto-increment feature
-                if (! $this->useAutoIncrement && empty($row[$this->primaryKey])) {
+                if (! $this->useAutoIncrement && ! isset($row[$this->primaryKey])) {
                     throw DataException::forEmptyPrimaryKey('insertBatch');
                 }
             }
@@ -437,7 +437,7 @@ class Model extends BaseModel
         }
 
         if ($this->useSoftDeletes && ! $purge) {
-            if (empty($builder->getCompiledQBWhere())) {
+            if ($builder->getCompiledQBWhere() === []) {
                 throw new DatabaseException(
                     'Deletes are not allowed unless they contain a "where" or "like" clause.'
                 );
@@ -547,7 +547,7 @@ class Model extends BaseModel
             return $row->{$this->primaryKey};
         }
 
-        if (is_array($row) && ! empty($row[$this->primaryKey])) {
+        if (is_array($row) && isset($row[$this->primaryKey])) {
             return $row[$this->primaryKey];
         }
 
@@ -581,7 +581,7 @@ class Model extends BaseModel
 
             $offset += $size;
 
-            if (empty($rows)) {
+            if ($rows === []) {
                 continue;
             }
 
@@ -638,7 +638,7 @@ class Model extends BaseModel
         // We're going to force a primary key to exist
         // so we don't have overly convoluted code,
         // and future features are likely to require them.
-        if (empty($this->primaryKey)) {
+        if ($this->primaryKey === '') {
             throw ModelException::forNoPrimaryKey(static::class);
         }
 
@@ -719,8 +719,8 @@ class Model extends BaseModel
      */
     public function insert($row = null, bool $returnID = true)
     {
-        if (! empty($this->tempData['data'])) {
-            if (empty($row)) {
+        if (isset($this->tempData['data'])) {
+            if ($row === null) {
                 $row = $this->tempData['data'];
             } else {
                 $row = $this->transformDataToArray($row, 'insert');
@@ -782,8 +782,8 @@ class Model extends BaseModel
      */
     public function update($id = null, $row = null): bool
     {
-        if (! empty($this->tempData['data'])) {
-            if (empty($row)) {
+        if (isset($this->tempData['data'])) {
+            if ($row === null) {
                 $row = $this->tempData['data'];
             } else {
                 $row = $this->transformDataToArray($row, 'update');

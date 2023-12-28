@@ -26,7 +26,7 @@ class Kint
     */
 
     /**
-     * @var list<class-string<ConstructablePluginInterface>|ConstructablePluginInterface>
+     * @var list<class-string<ConstructablePluginInterface>|ConstructablePluginInterface>|null
      */
     public $plugins;
 
@@ -44,12 +44,12 @@ class Kint
     public int $richSort     = AbstractRenderer::SORT_FULL;
 
     /**
-     * @var array<string, class-string<ValuePluginInterface>>
+     * @var array<string, class-string<ValuePluginInterface>>|null
      */
     public $richObjectPlugins;
 
     /**
-     * @var array<string, class-string<TabPluginInterface>>
+     * @var array<string, class-string<TabPluginInterface>>|null
      */
     public $richTabPlugins;
 
