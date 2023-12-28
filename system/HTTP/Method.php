@@ -19,57 +19,81 @@ namespace CodeIgniter\HTTP;
 class Method
 {
     /**
+     * Safe: No
+     * Idempotent: No
+     * Cacheable: No
+     *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT
      */
     public const CONNECT = 'CONNECT';
 
     /**
-     * Idempotent
+     * Safe: No
+     * Idempotent: Yes
+     * Cacheable: No
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE
      */
     public const DELETE = 'DELETE';
 
     /**
-     * Safe, Idempotent, Cacheable
+     * Safe: Yes
+     * Idempotent: Yes
+     * Cacheable: Yes
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET
      */
     public const GET = 'GET';
 
     /**
-     * Safe, Idempotent, Cacheable
+     * Safe: Yes
+     * Idempotent: Yes
+     * Cacheable: Yes
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/HEAD
      */
     public const HEAD = 'HEAD';
 
     /**
-     * Safe, Idempotent
+     * Safe: Yes
+     * Idempotent: Yes
+     * Cacheable: No
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS
      */
     public const OPTIONS = 'OPTIONS';
 
     /**
+     * Safe: No
+     * Idempotent: No
+     * Cacheable: Only if freshness information is included
+     *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH
      */
     public const PATCH = 'PATCH';
 
     /**
+     * Safe: No
+     * Idempotent: No
+     * Cacheable: Only if freshness information is included
+     *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST
      */
     public const POST = 'POST';
 
     /**
-     * Idempotent
+     * Safe: No
+     * Idempotent: Yes
+     * Cacheable: No
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT
      */
     public const PUT = 'PUT';
 
     /**
-     * Safe, Idempotent
+     * Safe: Yes
+     * Idempotent: Yes
+     * Cacheable: No
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/TRACE
      */

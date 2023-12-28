@@ -20,11 +20,17 @@ How Does Caching Work?
 ======================
 
 Caching can be enabled on a per-page basis, and you can set the length
-of time that a page should remain cached before being refreshed. When a
-page is loaded for the first time, the page will be cached using the
+of time that a page should remain cached before being refreshed.
+
+.. note:: Per-page means per URI. Since v4.5.0, the HTTP method of the
+    request is also taken into account. This means that the same URI will be
+    cached separately if the HTTP method is different.
+
+When a page is loaded for the first time, the page will be cached using the
 currently configured cache engine. On subsequent page loads, the cache
-will be retrieved and sent to the requesting user's browser. If it has
-expired, it will be deleted and refreshed before being sent to the
+will be retrieved and sent to the requesting user's browser.
+
+If it has expired, it will be deleted and refreshed before being sent to the
 browser.
 
 .. note:: The Benchmark tag is not cached so you can still view your page
