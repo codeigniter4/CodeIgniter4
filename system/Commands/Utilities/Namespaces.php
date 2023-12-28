@@ -57,14 +57,14 @@ class Namespaces extends BaseCommand
     /**
      * the Command's Arguments
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [];
 
     /**
      * the Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [
         '-c' => 'Show only CodeIgniter config namespaces.',

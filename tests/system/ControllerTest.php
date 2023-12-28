@@ -16,7 +16,7 @@ use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
@@ -58,7 +58,7 @@ final class ControllerTest extends CIUnitTestCase
         parent::setUp();
 
         $this->config   = new App();
-        $this->request  = new IncomingRequest($this->config, new URI('https://somwhere.com'), null, new UserAgent());
+        $this->request  = new IncomingRequest($this->config, new SiteURI($this->config), null, new UserAgent());
         $this->response = new Response($this->config);
         $this->logger   = Services::logger();
     }

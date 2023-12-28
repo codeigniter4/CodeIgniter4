@@ -80,7 +80,7 @@ final class BaseConfigTest extends CIUnitTestCase
         $dotenv->load();
         $config = new SimpleConfig();
 
-        $this->assertSame(0.0, $config->float);
+        $this->assertEqualsWithDelta(0.0, $config->float, PHP_FLOAT_EPSILON);
         $this->assertSame(999, $config->int);
     }
 

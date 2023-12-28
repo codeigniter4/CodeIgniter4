@@ -147,13 +147,13 @@ To try your form, visit your site using a URL similar to this one::
     example.com/index.php/form/
 
 If you submit the form you should simply see the form reload. That's
-because you haven't set up any validation rules in ``$this->validate()`` yet.
+because you haven't set up any validation rules in :ref:`controller-validatedata` yet.
 
-The ``validate()`` method is a method in the Controller. It uses
-the **Validation class** inside. See :ref:`controllers-validating-data`.
+The ``validateData()`` method is a method in the Controller. It uses
+the **Validation class** inside. See :ref:`controller-validatedata`.
 
-.. note:: Since you haven't told the ``validate()`` method to validate anything
-    yet, it **returns false** (boolean false) **by default**. The ``validate()``
+.. note:: Since you haven't told the ``validateData()`` method to validate anything
+    yet, it **returns false** (boolean false) **by default**. The ``validateData()``
     method only returns true if it has successfully applied your rules without
     any of them failing.
 
@@ -189,7 +189,7 @@ It loads the form helper used by your view files.
 
 The controller has one method: ``index()``. This method returns
 the **signup** view to show the form when a non-POST request comes. Otherwise, it
-uses the Controller-provided ``validate()`` method. It also runs the validation routine.
+uses the Controller-provided :ref:`controller-validatedata` method. It also runs the validation routine.
 Based on whether the validation was successful it either presents the
 form or the success page.
 
@@ -220,6 +220,10 @@ and the new classes (**Strict Rules**) have ``CodeIgniter\Validation\StrictRules
 
 Traditional Rules
 -----------------
+
+.. important:: Traditional Rules exist only for backward compatibility. Do not
+    use them in new projects. Even if you are already using them, we recommend
+    switching to Strict Rules.
 
 .. warning:: When validating data that contains non-string values, such as JSON data, it is recommended to use **Strict Rules**.
 
@@ -309,10 +313,10 @@ To give a labeled error message you can set up as:
 .. literalinclude:: validation/007.php
    :lines: 2-
 
-.. _validation-withrequest:
-
 .. note:: ``setRules()`` will overwrite any rules that were set previously. To add more than one
     rule to an existing set of rules, use ``setRule()`` multiple times.
+
+.. _validation-dot-array-syntax:
 
 Setting Rules for Array Data
 ============================
@@ -328,14 +332,31 @@ You can use the ``*`` wildcard symbol to match any one level of the array:
 .. literalinclude:: validation/010.php
    :lines: 2-
 
+.. note:: Prior to v4.4.4, due to a bug, the wildcard ``*`` validated data in incorrect
+    dimensions. See :ref:`Upgrading <upgrade-444-validation-with-dot-array-syntax>`
+    for details.
+
 "dot array syntax" can also be useful when you have single dimension array data.
 For example, data returned by multi select dropdown:
 
 .. literalinclude:: validation/011.php
    :lines: 2-
 
+.. _validation-withrequest:
+
 withRequest()
 =============
+
+.. important:: This method exists only for backward compatibility. Do not use it
+    in new projects. Even if you are already using it, we recommend that you use
+    another, more appropriate method.
+
+.. warning:: If you want to validate POST data only, don't use ``withRequest()``.
+    This method uses :ref:`$request->getVar() <incomingrequest-getting-data>`
+    which returns ``$_GET``, ``$_POST`` or ``$_COOKIE`` data in that order
+    (depending on php.ini `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_).
+    Newer values override older values. POST values may be overridden by the
+    cookies if they have the same name.
 
 One of the most common times you will use the validation library is when validating
 data that was input from an HTTP Request. If desired, you can pass an instance of the
@@ -504,7 +525,7 @@ replaced by the **value** of the matched incoming field. An example should clari
    :lines: 2-
 
 .. note:: Since v4.3.5, you must set the validation rules for the placeholder
-    field (``id``).
+    field (the ``id`` field in the sample code above) for security.
 
 In this set of rules, it states that the email address should be unique in the database, except for the row
 that has an id matching the placeholder's value. Assuming that the form POST data had the following:
@@ -533,7 +554,9 @@ The Validation library provides several methods to help you set error messages, 
 custom error messages, and retrieve one or more errors to display.
 
 By default, error messages are derived from language strings in **system/Language/en/Validation.php**, where
-each rule has an entry.
+each rule has an entry. In case you want to change a message default, create a file
+**app/Language/en/Validation.php** (and/or corresponding folder of locale you use in place of/besides ``en``)
+and place in it keys and values of those error messages for which you want different defaults.
 
 .. _validation-custom-errors:
 
@@ -565,7 +588,7 @@ or the value that was validated you can add the ``{field}``, ``{param}`` and ``{
 On a field with the human name Username and a rule of ``min_length[6]`` with a value of "Pizza", an error would display: "Supplied value (Pizza) for Username must have
 at least 6 characters."
 
-.. warning:: If you get the error messages with ``getErrors()`` or ``getError()``, the messages are not HTML escaped. If you use user input data like ``({value})`` to make the error message, it might contain HTML tags. If you don't escape the messages before displying them, XSS attacks are possible.
+.. warning:: If you get the error messages with ``getErrors()`` or ``getError()``, the messages are not HTML escaped. If you use user input data like ``({value})`` to make the error message, it might contain HTML tags. If you don't escape the messages before displaying them, XSS attacks are possible.
 
 .. note:: When using label-style error messages, if you pass the second parameter to ``setRules()``, it will be overwritten with the value of the first parameter.
 
@@ -591,7 +614,7 @@ If you need to retrieve all error messages for failed fields, you can use the ``
 
 If no errors exist, an empty array will be returned.
 
-When using a wildcard, the error will point to a specific field, replacing the asterisk with the appropriate key/keys::
+When using a wildcard (``*``), the error will point to a specific field, replacing the asterisk with the appropriate key/keys::
 
     // for data
     'contacts' => [
@@ -606,10 +629,10 @@ When using a wildcard, the error will point to a specific field, replacing the a
     ]
 
     // rule
-    'contacts.*.name' => 'required'
+    'contacts.friends.*.name' => 'required'
 
     // error will be
-    'contacts.friends.1.name' => 'The contacts.*.name field is required.'
+    'contacts.friends.1.name' => 'The contacts.friends.*.name field is required.'
 
 Getting a Single Error
 ======================
@@ -739,9 +762,12 @@ a boolean true or false value signifying true if it passed the test or false if 
 
 .. literalinclude:: validation/034.php
 
-By default, the system will look within **system/Language/en/Validation.php** for the language strings used
-within errors. In custom rules, you may provide error messages by accepting a ``&$error`` variable by reference in the
-second parameter:
+By default, the system will look within **system/Language/en/Validation.php** for the language strings used within
+errors. To provide default error messages for your custom rules, you may place them in **app/Language/en/Validation.php**
+(and/or corresponding folder of locale you use in place of ``en``). Also, in case you want to use some other language
+string file in place of the default **Validation.php**, you may provide error messages by accepting an ``&$error``
+variable by reference in the second (or, in case your rule needs to work with parameters, as described below – the
+fourth) parameter:
 
 .. literalinclude:: validation/035.php
 
@@ -816,21 +842,22 @@ The following is a list of all the native rules that are available to use:
 Rule                    Parameter  Description                                   Example
 ======================= ========== ============================================= ===================================================
 alpha                   No         Fails if field has anything other than
-                                   alphabetic characters.
+                                   alphabetic characters in ASCII.
 alpha_space             No         Fails if field contains anything other than
-                                   alphabetic characters or spaces.
+                                   alphabetic characters or spaces in ASCII.
 alpha_dash              No         Fails if field contains anything other than
                                    alphanumeric characters, underscores or
-                                   dashes.
+                                   dashes in ASCII.
 alpha_numeric           No         Fails if field contains anything other than
-                                   alphanumeric characters.
+                                   alphanumeric characters in ASCII.
 alpha_numeric_space     No         Fails if field contains anything other than
-                                   alphanumeric or space characters.
+                                   alphanumeric or space characters in ASCII.
 alpha_numeric_punct     No         Fails if field contains anything other than
                                    alphanumeric, space, or this limited set of
                                    punctuation characters: ``~`` (tilde),
                                    ``!`` (exclamation), ``#`` (number),
-                                   ``$`` (dollar), ``% (percent), & (ampersand),
+                                   ``$`` (dollar), ``%`` (percent),
+                                   ``&`` (ampersand),
                                    ``*`` (asterisk), ``-`` (dash),
                                    ``_`` (underscore), ``+`` (plus),
                                    ``=`` (equals), ``|`` (vertical bar),
@@ -956,7 +983,13 @@ valid_cc_number         Yes        Verifies that the credit card number matches 
 Rules for File Uploads
 ======================
 
-These validation rules enable you to do the basic checks you might need to verify that uploaded files meet your business needs.
+When you validate uploaded files, you must use the rules specifically created for
+file validation.
+
+.. important:: Only rules that listed in the table below can be used to validate
+    files. Therefore, adding any general rules, like ``permit_empty``, to file
+    validation rules array or string, the file validation will not work correctly.
+
 Since the value of a file upload HTML field doesn't exist, and is stored in the ``$_FILES`` global, the name of the input field will
 need to be used twice. Once to specify the field name as you would for any other rule, but again as the first parameter of all
 file upload related rules::
@@ -998,7 +1031,3 @@ is_image                Yes         Fails if the file cannot be determined to be
 ======================= ========== ============================================= ===================================================
 
 The file validation rules apply for both single and multiple file uploads.
-
-.. note:: Only rules specifically created for file validation (like the ones listed in the table above) can be used to validate files.
-    Therefore, adding any general rules, like ``permit_empty``, to file validation rules array or string, the file validation will not
-    work correctly.

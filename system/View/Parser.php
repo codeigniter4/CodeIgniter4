@@ -20,8 +20,8 @@ use Psr\Log\LoggerInterface;
 /**
  * Class for parsing pseudo-vars
  *
- * @phpstan-type ParserCallable (callable(mixed): mixed)
- * @phpstan-type ParserCallableString (callable(mixed): mixed)&string
+ * @phpstan-type parser_callable (callable(mixed): mixed)
+ * @phpstan-type parser_callable_string (callable(mixed): mixed)&string
  *
  * @see \CodeIgniter\View\ParserTest
  */
@@ -64,7 +64,7 @@ class Parser extends View
      * Stores any plugins registered at run-time.
      *
      * @var array<string, array<string>|callable|string>
-     * @phpstan-var array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>
+     * @phpstan-var array<string, array<parser_callable_string>|parser_callable_string|parser_callable>
      */
     protected $plugins = [];
 
@@ -103,7 +103,7 @@ class Parser extends View
         }
 
         $fileExt = pathinfo($view, PATHINFO_EXTENSION);
-        $view    = empty($fileExt) ? $view . '.php' : $view; // allow Views as .html, .tpl, etc (from CI3)
+        $view    = ($fileExt === '') ? $view . '.php' : $view; // allow Views as .html, .tpl, etc (from CI3)
 
         $cacheName = $options['cache_name'] ?? str_replace('.php', '', $view);
 
@@ -120,8 +120,8 @@ class Parser extends View
             $fileOrig = $file;
             $file     = $this->loader->locateFile($view, 'Views');
 
-            // locateFile will return an empty string if the file cannot be found.
-            if (empty($file)) {
+            // locateFile() will return false if the file cannot be found.
+            if ($file === false) {
                 throw ViewException::forInvalidFile($fileOrig);
             }
         }
@@ -185,12 +185,12 @@ class Parser extends View
      * so that the variable is correctly handled within the
      * parsing itself, and contexts (including raw) are respected.
      *
-     * @param string|null $context The context to escape it for: html, css, js, url, raw
-     *                             If 'raw', no escaping will happen
+     * @param non-empty-string|null $context The context to escape it for: html, css, js, url, raw
+     *                                       If 'raw', no escaping will happen
      */
     public function setData(array $data = [], ?string $context = null): RendererInterface
     {
-        if (! empty($context)) {
+        if ($context !== null && $context !== '') {
             foreach ($data as $key => &$value) {
                 if (is_array($value)) {
                     foreach ($value as &$obj) {
@@ -322,7 +322,7 @@ class Parser extends View
                     if (is_array($val)) {
                         $pair = $this->parsePair($key, $val, $match[1]);
 
-                        if (! empty($pair)) {
+                        if ($pair !== []) {
                             $pairs[array_keys($pair)[0]] = true;
 
                             $temp = array_merge($temp, $pair);
@@ -534,9 +534,9 @@ class Parser extends View
 
         // Our regex earlier will leave all chained values on a single line
         // so we need to break them apart so we can apply them all.
-        $filters = ! empty($matches[1]) ? explode('|', $matches[1]) : [];
+        $filters = (isset($matches[1]) && $matches[1] !== '') ? explode('|', $matches[1]) : [];
 
-        if ($escape && empty($filters) && ($context = $this->shouldAddEscaping($orig))) {
+        if ($escape && $filters === [] && ($context = $this->shouldAddEscaping($orig))) {
             $filters[] = "esc({$context})";
         }
 
@@ -589,10 +589,10 @@ class Parser extends View
             preg_match('/\([\w<>=\/\\\,:.\-\s\+]+\)/u', $filter, $param);
 
             // Remove the () and spaces to we have just the parameter left
-            $param = ! empty($param) ? trim($param[0], '() ') : null;
+            $param = ($param !== []) ? trim($param[0], '() ') : null;
 
             // Params can be separated by commas to allow multiple parameters for the filter
-            if (! empty($param)) {
+            if ($param !== null && $param !== '') {
                 $param = explode(',', $param);
 
                 // Clean it up
@@ -604,7 +604,7 @@ class Parser extends View
             }
 
             // Get our filter name
-            $filter = ! empty($param) ? trim(strtolower(substr($filter, 0, strpos($filter, '(')))) : trim($filter);
+            $filter = $param !== [] ? trim(strtolower(substr($filter, 0, strpos($filter, '(')))) : trim($filter);
 
             if (! array_key_exists($filter, $this->config->filters)) {
                 continue;

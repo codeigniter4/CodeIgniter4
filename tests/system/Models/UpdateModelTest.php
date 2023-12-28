@@ -14,12 +14,15 @@ namespace CodeIgniter\Models;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity\Entity;
+use Config\Database;
 use InvalidArgumentException;
 use stdClass;
+use Tests\Support\Entity\UUID;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
 use Tests\Support\Models\UserModel;
+use Tests\Support\Models\UUIDPkeyModel;
 use Tests\Support\Models\ValidModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
@@ -373,6 +376,98 @@ final class UpdateModelTest extends LiveModelTestCase
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('There is no data to update.');
         $this->model->update($id, $entity);
+    }
+
+    public function testUpdateEntityWithPrimaryKeyCast(): void
+    {
+        if (
+            $this->db->DBDriver === 'OCI8'
+            || $this->db->DBDriver === 'Postgre'
+            || $this->db->DBDriver === 'SQLSRV'
+            || $this->db->DBDriver === 'SQLite3'
+        ) {
+            $this->markTestSkipped($this->db->DBDriver . ' does not work with binary data as string data.');
+        }
+
+        $this->createUuidTable();
+
+        $this->createModel(UUIDPkeyModel::class);
+
+        $entity        = new UUID();
+        $entity->id    = '550e8400-e29b-41d4-a716-446655440000';
+        $entity->value = 'test1';
+
+        $id     = $this->model->insert($entity);
+        $entity = $this->model->find($id);
+
+        $entity->value = 'id';
+        $result        = $this->model->save($entity);
+
+        $this->assertTrue($result);
+
+        $entity = $this->model->find($id);
+
+        $this->assertSame('id', $entity->value);
+    }
+
+    public function testUpdateBatchEntityWithPrimaryKeyCast(): void
+    {
+        if (
+            $this->db->DBDriver === 'OCI8'
+            || $this->db->DBDriver === 'Postgre'
+            || $this->db->DBDriver === 'SQLSRV'
+            || $this->db->DBDriver === 'SQLite3'
+        ) {
+            $this->markTestSkipped($this->db->DBDriver . ' does not work with binary data as string data.');
+        }
+
+        // See https://github.com/codeigniter4/CodeIgniter4/pull/8282#issuecomment-1836974182
+        $this->markTestSkipped(
+            'batchUpdate() is currently not working due to data type issues in the generated SQL statement.'
+        );
+
+        $this->createUuidTable();
+
+        $this->createModel(UUIDPkeyModel::class);
+
+        $entity1        = new UUID();
+        $entity1->id    = '550e8400-e29b-41d4-a716-446655440000';
+        $entity1->value = 'test1';
+        $id1            = $this->model->insert($entity1);
+
+        $entity2        = new UUID();
+        $entity2->id    = 'bd59cff1-7a24-dde5-ac10-7b929db6da8c';
+        $entity2->value = 'test2';
+        $id2            = $this->model->insert($entity2);
+
+        $entity1 = $this->model->find($id1);
+        $entity2 = $this->model->find($id2);
+
+        $entity1->value = 'update1';
+        $entity2->value = 'update2';
+
+        $data = [
+            $entity1,
+            $entity2,
+        ];
+        $this->model->updateBatch($data, 'id');
+
+        $this->seeInDatabase('uuid', [
+            'value' => 'update1',
+        ]);
+        $this->seeInDatabase('uuid', [
+            'value' => 'update2',
+        ]);
+    }
+
+    private function createUuidTable(): void
+    {
+        $forge = Database::forge($this->DBGroup);
+        $forge->dropTable('uuid', true);
+        $forge->addField([
+            'id'    => ['type' => 'BINARY', 'constraint' => 16],
+            'value' => ['type' => 'VARCHAR', 'constraint' => 400, 'null' => true],
+        ])->addKey('id', true)->createTable('uuid', true);
     }
 
     public function testUseAutoIncrementSetToFalseUpdate(): void

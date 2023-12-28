@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved;
 
+use Config\Routing;
 use ReflectionClass;
 use ReflectionMethod;
 
@@ -27,10 +28,11 @@ final class ControllerMethodReader
     private string $namespace;
 
     /**
-     * @var array<int, string>
-     * @phpstan-var list<string>
+     * @var list<string>
      */
     private array $httpMethods;
+
+    private bool $translateURIDashes;
 
     /**
      * @param string $namespace the default namespace
@@ -39,15 +41,17 @@ final class ControllerMethodReader
     {
         $this->namespace   = $namespace;
         $this->httpMethods = $httpMethods;
+
+        $config                   = config(Routing::class);
+        $this->translateURIDashes = $config->translateURIDashes;
     }
 
     /**
      * Returns found route info in the controller.
      *
-     * @phpstan-param class-string $class
+     * @param class-string $class
      *
-     * @return array<int, array<string, array|string>>
-     * @phpstan-return list<array<string, string|array>>
+     * @return list<array<string, array|string>>
      */
     public function read(string $class, string $defaultController = 'Home', string $defaultMethod = 'index'): array
     {
@@ -69,7 +73,7 @@ final class ControllerMethodReader
             foreach ($this->httpMethods as $httpVerb) {
                 if (strpos($methodName, $httpVerb) === 0) {
                     // Remove HTTP verb prefix.
-                    $methodInUri = lcfirst(substr($methodName, strlen($httpVerb)));
+                    $methodInUri = $this->getUriByMethod($httpVerb, $methodName);
 
                     // Check if it is the default method.
                     if ($methodInUri === $defaultMethod) {
@@ -154,7 +158,7 @@ final class ControllerMethodReader
     }
 
     /**
-     * @phpstan-param class-string $classname
+     * @param class-string $classname
      *
      * @return string URI path part from the folder(s) and controller
      */
@@ -173,13 +177,33 @@ final class ControllerMethodReader
             $classPath .= lcfirst($part) . '/';
         }
 
-        return rtrim($classPath, '/');
+        $classUri = rtrim($classPath, '/');
+
+        if ($this->translateURIDashes) {
+            $classUri = str_replace('_', '-', $classUri);
+        }
+
+        return $classUri;
+    }
+
+    /**
+     * @return string URI path part from the method
+     */
+    private function getUriByMethod(string $httpVerb, string $methodName): string
+    {
+        $methodUri = lcfirst(substr($methodName, strlen($httpVerb)));
+
+        if ($this->translateURIDashes) {
+            $methodUri = str_replace('_', '-', $methodUri);
+        }
+
+        return $methodUri;
     }
 
     /**
      * Gets a route for the default controller.
      *
-     * @phpstan-return list<array>
+     * @return list<array>
      */
     private function getRouteForDefaultController(
         string $classShortname,

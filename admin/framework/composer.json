@@ -20,7 +20,7 @@
     "require-dev": {
         "codeigniter/coding-standard": "^1.5",
         "fakerphp/faker": "^1.9",
-        "friendsofphp/php-cs-fixer": "3.13.0",
+        "friendsofphp/php-cs-fixer": "~3.41.0",
         "kint-php/kint": "^5.0.4",
         "mikey179/vfsstream": "^1.6",
         "nexusphp/cs-config": "^3.6",
@@ -43,6 +43,7 @@
         "ext-readline": "Improves CLI::input() usability",
         "ext-redis": "If you use Cache class RedisHandler",
         "ext-simplexml": "If you format XML",
+        "ext-sodium": "If you use Encryption SodiumHandler",
         "ext-sqlite3": "If you use SQLite3",
         "ext-sqlsrv": "If you use SQL Server",
         "ext-xdebug": "If you use CIUnitTestCase::assertHeaderEmitted()"

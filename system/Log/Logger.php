@@ -93,8 +93,7 @@ class Logger implements LoggerInterface
      * value is an associative array of configuration
      * items.
      *
-     * @var array
-     * @phpstan-var array<class-string, array<string, list<string>|string|int>>
+     * @var array<class-string, array<string, int|list<string>|string>>
      */
     protected $handlerConfig = [];
 
@@ -138,7 +137,7 @@ class Logger implements LoggerInterface
 
         $this->dateFormat = $config->dateFormat ?? $this->dateFormat;
 
-        if (! is_array($config->handlers) || empty($config->handlers)) {
+        if (! is_array($config->handlers) || $config->handlers === []) {
             throw LogException::forNoHandlers('LoggerConfig');
         }
 

@@ -44,7 +44,7 @@ class Honeypot
             throw HoneypotException::forNoHiddenValue();
         }
 
-        if (empty($this->config->container) || strpos($this->config->container, '{template}') === false) {
+        if ($this->config->container === '' || strpos($this->config->container, '{template}') === false) {
             $this->config->container = '<div style="display:none">{template}</div>';
         }
 
@@ -78,6 +78,10 @@ class Honeypot
      */
     public function attachHoneypot(ResponseInterface $response)
     {
+        if ($response->getBody() === null) {
+            return;
+        }
+
         if ($response->getCSP()->enabled()) {
             // Add id attribute to the container tag.
             $this->config->container = str_ireplace(

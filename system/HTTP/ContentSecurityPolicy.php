@@ -790,7 +790,7 @@ class ContentSecurityPolicy
         $reportSources = [];
 
         foreach ($values as $value => $reportOnly) {
-            if (is_numeric($value) && is_string($reportOnly) && ! empty($reportOnly)) {
+            if (is_numeric($value) && is_string($reportOnly) && ($reportOnly !== '')) {
                 $value      = $reportOnly;
                 $reportOnly = $this->reportOnly;
             }
@@ -806,11 +806,11 @@ class ContentSecurityPolicy
             }
         }
 
-        if (! empty($sources)) {
+        if ($sources !== []) {
             $this->tempHeaders[$name] = implode(' ', $sources);
         }
 
-        if (! empty($reportSources)) {
+        if ($reportSources !== []) {
             $this->reportOnlyHeaders[$name] = implode(' ', $reportSources);
         }
     }

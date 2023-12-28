@@ -36,7 +36,7 @@ class Representation
 
     protected $name;
 
-    public function __construct(string $label, ?string $name = null)
+    public function __construct(string $label, string $name = null)
     {
         $this->label = $label;
 

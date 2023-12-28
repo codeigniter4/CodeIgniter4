@@ -142,7 +142,12 @@ Helpers
 - In CI4, ``redirect()`` is completely changed from CI3's.
     - `redirect() Documentation CodeIgniter 3.X <https://codeigniter.com/userguide3/helpers/url_helper.html#redirect>`_
     - `redirect() Documentation CodeIgniter 4.X <../general/common_functions.html#redirect>`_
-    - In CI4, ``redirect()`` returns a ``RedirectResponse`` instance instead of redirecting and terminating script execution. You must return it.
+    - In CI4, :php:func:`redirect()` returns a ``RedirectResponse`` instance instead of
+      redirecting and terminating script execution. You must return it from Controllers
+      or Controller Filters.
+    - Cookies and Headers you set before calling ``redirect()`` are not automatically
+      carried over to a ``RedirectResponse``. You need to call ``withCookies()``
+      or ``withHeaders()`` manually if you want to send them.
     - You need to change CI3's ``redirect('login/form')`` to ``return redirect()->to('login/form')``.
 
 Hooks
@@ -159,6 +164,28 @@ Hooks
   Because the base methods have been removed.
 - The hook point ``post_system`` has moved just before sending the final rendered
   page.
+
+Error Handling
+==============
+
+- The behavior in CI4 has been slightly changed.
+
+  - In CI3 the behavior is set in the **index.php** file:
+
+      - errors with the error level set by ``error_reporting()`` are logged (but
+        depending on the ``log_threshold`` setting, they may not be written to
+        the log file).
+      - errors with an error level of
+        ``E_ERROR | E_PARSE | E_COMPILE_ERROR | E_CORE_ERROR | E_USER_ERROR``
+        stopped framework processing, regardless of the error level set in
+        ``error_reporting()``.
+  - In CI4, the behavior is set in the **app/Config/Boot/{environment}.php** file:
+
+      - errors with the error level set by ``error_reporting()`` are logged (but
+        depending on the ``Config\Logger::$threshold`` setting, they may not be
+        written to the log file).
+      - all errors that are not ignored by ``error_reporting()`` will stop the
+        framework processing.
 
 Extending the Framework
 =======================

@@ -215,7 +215,7 @@ trait ControllerTestTrait
     /**
      * Set controller's config, with method chaining.
      *
-     * @param mixed $appConfig
+     * @param App $appConfig
      *
      * @return $this
      */
@@ -229,7 +229,7 @@ trait ControllerTestTrait
     /**
      * Set controller's request, with method chaining.
      *
-     * @param mixed $request
+     * @param IncomingRequest $request
      *
      * @return $this
      */
@@ -260,7 +260,7 @@ trait ControllerTestTrait
     /**
      * Set controller's logger, with method chaining.
      *
-     * @param mixed $logger
+     * @param LoggerInterface $logger
      *
      * @return $this
      */

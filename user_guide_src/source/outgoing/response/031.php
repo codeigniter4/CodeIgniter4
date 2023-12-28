@@ -8,9 +8,3 @@ return redirect()->back()->withInput();
 
 // Set a flash message.
 return redirect()->back()->with('foo', 'message');
-
-// Copies all cookies from global response instance.
-return redirect()->back()->withCookies();
-
-// Copies all headers from the global response instance.
-return redirect()->back()->withHeaders();

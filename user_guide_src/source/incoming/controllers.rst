@@ -11,7 +11,9 @@ Controllers are the heart of your application, as they determine how HTTP reques
 What is a Controller?
 *********************
 
-A Controller is simply a class file that handles a HTTP request. :doc:`URI Routing <routing>` associates a URI with a controller.
+A Controller is simply a class file that handles a HTTP request.
+:doc:`URI Routing <routing>` associates a URI with a controller. It returns a
+view string or ``Response`` object.
 
 Every controller you create should extend ``BaseController`` class.
 This class provides several features that are available to all of your controllers.
@@ -87,15 +89,48 @@ modify this by passing the duration (in seconds) as the first parameter:
 Validating Data
 ***************
 
+.. _controller-validatedata:
+
+$this->validateData()
+=====================
+
+.. versionadded:: 4.2.0
+
+To simplify data checking, the controller also provides the convenience method
+``validateData()``.
+
+The method accepts (1) an array of data to validate, (2) an array of rules,
+(3) an optional array of custom error messages to display if the items are not valid,
+(4) an optional database group to use.
+
+The :doc:`Validation Library docs </libraries/validation>` have details on
+rule and message array formats, as well as available rules:
+
+.. literalinclude:: controllers/006.php
+
 .. _controller-validate:
 
 $this->validate()
 =================
 
-To simplify data checking, the controller also provides the convenience method ``validate()``.
+.. important:: This method exists only for backward compatibility. Do not use it
+    in new projects. Even if you are already using it, we recommend that you use
+    the ``validateData()`` method instead.
+
+The controller also provides the convenience method ``validate()``.
+
+.. warning:: Instead of ``validate()``, use ``validateData()`` to validate POST
+    data only. ``validate()`` uses ``$request->getVar()`` which returns
+    ``$_GET``, ``$_POST`` or ``$_COOKIE`` data in that order (depending on php.ini
+    `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_).
+    Newer values override older values. POST values may be overridden by the
+    cookies if they have the same name.
+
 The method accepts an array of rules in the first parameter,
 and in the optional second parameter, an array of custom error messages to display
-if the items are not valid. Internally, this uses the controller's
+if the items are not valid.
+
+Internally, this uses the controller's
 ``$this->request`` instance to get the data to be validated.
 
 The :doc:`Validation Library docs </libraries/validation>` have details on
@@ -122,19 +157,6 @@ the ``$rules`` array with the name of the group as defined in **app/Config/Valid
 .. literalinclude:: controllers/005.php
 
 .. note:: Validation can also be handled automatically in the model, but sometimes it's easier to do it in the controller. Where is up to you.
-
-.. _controller-validatedata:
-
-$this->validateData()
-=====================
-
-.. versionadded:: 4.2.0
-
-Sometimes you may want to check the controller method parameters or other custom data.
-In that case, you can use the ``$this->validateData()`` method.
-The method accepts an array of data to validate in the first parameter:
-
-.. literalinclude:: controllers/006.php
 
 Protecting Methods
 ******************
@@ -291,16 +313,17 @@ Defining a Default Controller
 
 Let's try it with the ``Helloworld`` controller.
 
-To specify a default controller open your **app/Config/Routes.php**
-file and set this variable:
+To specify a default controller open your **app/Config/Routing.php**
+file and set this property::
 
-.. literalinclude:: controllers/015.php
+    public string $defaultController = 'Helloworld';
 
 Where ``Helloworld`` is the name of the controller class you want to be used.
 
-A few lines further down **Routes.php** in the "Route Definitions" section, comment out the line:
+And comment out the line in **app/Config/Routes.php**:
 
 .. literalinclude:: controllers/016.php
+    :lines: 2-
 
 If you now browse to your site without specifying any URI segments you'll
 see the "Hello World" message.
@@ -310,8 +333,8 @@ see the "Hello World" message.
     precedence over Auto Routing, and controllers defined in the defined routes
     are denied access by Auto Routing (Improved) for security reasons.
 
-For more information, please refer to the :ref:`routes-configuration-options` section of the
-:ref:`URI Routing <routing-auto-routing-improved-configuration-options>` documentation.
+For more information, please refer to the
+:ref:`routing-auto-routing-improved-configuration-options` documentation.
 
 .. _controller-default-method-fallback:
 
@@ -393,7 +416,7 @@ To call the above controller your URI will look something like this::
 Each of your sub-directories may contain a default controller which will be
 called if the URL contains *only* the sub-directory. Simply put a controller
 in there that matches the name of your default controller as specified in
-your **app/Config/Routes.php** file.
+your **app/Config/Routing.php** file.
 
 CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Routing <defined-route-routing>`..
 
@@ -401,6 +424,10 @@ CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Rout
 
 Auto Routing (Legacy)
 *********************
+
+.. important:: This feature exists only for backward compatibility. Do not use it
+    in new projects. Even if you are already using it, we recommend that you use
+    the :ref:`auto-routing-improved` instead.
 
 This section describes the functionality of Auto Routing (Legacy) that is a routing system from CodeIgniter 3.
 It automatically routes an HTTP request, and executes the corresponding controller method
@@ -520,24 +547,25 @@ Defining a Default Controller (Legacy)
 
 Let's try it with the ``Helloworld`` controller.
 
-To specify a default controller open your **app/Config/Routes.php**
-file and set this variable:
+To specify a default controller open your **app/Config/Routing.php**
+file and set this property::
 
-.. literalinclude:: controllers/015.php
+    public string $defaultController = 'Helloworld';
 
 Where ``Helloworld`` is the name of the controller class you want to be used.
 
-A few lines further down **Routes.php** in the "Route Definitions" section, comment out the line:
+And comment out the line in **app/Config/Routes.php**:
 
 .. literalinclude:: controllers/016.php
+    :lines: 2-
 
 If you now browse to your site without specifying any URI segments you'll
 see the "Hello World" message.
 
 .. note:: The line ``$routes->get('/', 'Home::index');`` is an optimization that you will want to use in a "real-world" app. But for demonstration purposes we don't want to use that feature. ``$routes->get()`` is explained in :doc:`URI Routing <routing>`
 
-For more information, please refer to the :ref:`routes-configuration-options` section of the
-:ref:`URI Routing <routing-auto-routing-legacy-configuration-options>` documentation.
+For more information, please refer to the the
+:ref:`routing-auto-routing-legacy-configuration-options` documentation.
 
 Organizing Your Controllers into Sub-directories (Legacy)
 =========================================================
@@ -567,7 +595,7 @@ To call the above controller your URI will look something like this::
 Each of your sub-directories may contain a default controller which will be
 called if the URL contains *only* the sub-directory. Simply put a controller
 in there that matches the name of your default controller as specified in
-your **app/Config/Routes.php** file.
+your **app/Config/Routing.php** file.
 
 CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Routing <defined-route-routing>`..
 

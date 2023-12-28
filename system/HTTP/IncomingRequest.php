@@ -152,7 +152,7 @@ class IncomingRequest extends Request
      */
     public function __construct($config, ?URI $uri = null, $body = 'php://input', ?UserAgent $userAgent = null)
     {
-        if (empty($uri) || empty($userAgent)) {
+        if (! $uri instanceof URI || ! $userAgent instanceof UserAgent) {
             throw new InvalidArgumentException('You must supply the parameters: uri, userAgent.');
         }
 
@@ -169,9 +169,14 @@ class IncomingRequest extends Request
             $body = file_get_contents('php://input');
         }
 
+        // If file_get_contents() returns false or empty string, set null.
+        if ($body === false || $body === '') {
+            $body = null;
+        }
+
         $this->config       = $config;
         $this->uri          = $uri;
-        $this->body         = ! empty($body) ? $body : null;
+        $this->body         = $body;
         $this->userAgent    = $userAgent;
         $this->validLocales = $config->supportedLocales;
 
@@ -251,7 +256,7 @@ class IncomingRequest extends Request
      */
     public function detectPath(string $protocol = ''): string
     {
-        if (empty($protocol)) {
+        if ($protocol === '') {
             $protocol = 'REQUEST_URI';
         }
 
@@ -568,10 +573,22 @@ class IncomingRequest extends Request
      * @see http://php.net/manual/en/function.json-decode.php
      *
      * @return array|bool|float|int|stdClass|null
+     *
+     * @throws HTTPException When the body is invalid as JSON.
      */
     public function getJSON(bool $assoc = false, int $depth = 512, int $options = 0)
     {
-        return json_decode($this->body ?? '', $assoc, $depth, $options);
+        if ($this->body === null) {
+            return null;
+        }
+
+        $result = json_decode($this->body, $assoc, $depth, $options);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw HTTPException::forInvalidJSON(json_last_error_msg());
+        }
+
+        return $result;
     }
 
     /**

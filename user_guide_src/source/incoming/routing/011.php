@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class ProductController extends BaseController
+class Catalog extends BaseController
 {
     public function productLookup($seg1 = false, $seg2 = false, $seg3 = false)
     {

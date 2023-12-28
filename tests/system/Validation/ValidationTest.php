@@ -11,8 +11,9 @@
 
 namespace CodeIgniter\Validation;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
@@ -748,7 +749,7 @@ class ValidationTest extends CIUnitTestCase
         $rawstring       = 'username=admin001&role=administrator&usepass=0';
         $config          = new App();
         $config->baseURL = 'http://example.com/';
-        $request         = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
+        $request         = new IncomingRequest($config, new SiteURI($config), $rawstring, new UserAgent());
 
         $rules = [
             'role' => 'required|min_length[5]',
@@ -772,7 +773,7 @@ class ValidationTest extends CIUnitTestCase
         $json            = json_encode($data);
         $config          = new App();
         $config->baseURL = 'http://example.com/';
-        $request         = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request         = new IncomingRequest($config, new SiteURI($config), $json, new UserAgent());
 
         $rules = [
             'role' => 'required|min_length[5]',
@@ -787,6 +788,44 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame(['role' => 'administrator'], $this->validation->getValidated());
 
         unset($_SERVER['CONTENT_TYPE']);
+    }
+
+    public function testJsonInputInvalid(): void
+    {
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('Failed to parse JSON string. Error: Syntax error');
+
+        $config  = new App();
+        $json    = 'invalid';
+        $request = new IncomingRequest($config, new SiteURI($config), $json, new UserAgent());
+        $request->setHeader('Content-Type', 'application/json');
+
+        $rules = [
+            'role' => 'if_exist|max_length[5]',
+        ];
+        $this->validation
+            ->withRequest($request->withMethod('POST'))
+            ->setRules($rules)
+            ->run();
+    }
+
+    public function testJsonInputNotKeyValue(): void
+    {
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('The provided JSON format is not supported.');
+
+        $config  = new App();
+        $json    = '4';
+        $request = new IncomingRequest($config, new SiteURI($config), $json, new UserAgent());
+        $request->setHeader('Content-Type', 'application/json');
+
+        $rules = [
+            'role' => 'if_exist|max_length[5]',
+        ];
+        $this->validation
+            ->withRequest($request->withMethod('POST'))
+            ->setRules($rules)
+            ->run();
     }
 
     /**
@@ -809,7 +848,7 @@ class ValidationTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request = new IncomingRequest($config, new SiteURI($config), $json, new UserAgent());
 
         $rules = [
             'p' => 'required|array_count[2]',
@@ -995,7 +1034,7 @@ class ValidationTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), http_build_query($body), new UserAgent());
+        $request = new IncomingRequest($config, new SiteURI($config), http_build_query($body), new UserAgent());
 
         $this->validation->setRules($rules);
         $this->validation->withRequest($request->withMethod('post'))->run($body);
@@ -1074,7 +1113,7 @@ class ValidationTest extends CIUnitTestCase
             ],
         ];
 
-        $request = new IncomingRequest($config, new URI(), 'php://input', new UserAgent());
+        $request = new IncomingRequest($config, new SiteURI($config), 'php://input', new UserAgent());
 
         $this->validation->setRules([
             'id_user.*'   => 'numeric',
@@ -1108,12 +1147,12 @@ class ValidationTest extends CIUnitTestCase
             ],
         ];
 
-        $request = new IncomingRequest($config, new URI(), 'php://input', new UserAgent());
+        $request = new IncomingRequest($config, new SiteURI($config), 'php://input', new UserAgent());
 
         $this->validation->setRules([
-            'id_user.*'       => 'numeric',
-            'name_user.*'     => 'alpha',
-            'contacts.*.name' => 'required',
+            'id_user.*'               => 'numeric',
+            'name_user.*'             => 'alpha',
+            'contacts.friends.*.name' => 'required',
         ]);
 
         $this->validation->withRequest($request->withMethod('post'))->run();
@@ -1121,7 +1160,7 @@ class ValidationTest extends CIUnitTestCase
             'id_user.0'               => 'The id_user.* field must contain only numbers.',
             'name_user.0'             => 'The name_user.* field may only contain alphabetical characters.',
             'name_user.2'             => 'The name_user.* field may only contain alphabetical characters.',
-            'contacts.friends.0.name' => 'The contacts.*.name field is required.',
+            'contacts.friends.0.name' => 'The contacts.friends.*.name field is required.',
         ], $this->validation->getErrors());
 
         $this->assertSame(
@@ -1130,8 +1169,8 @@ class ValidationTest extends CIUnitTestCase
             $this->validation->getError('name_user.*')
         );
         $this->assertSame(
-            'The contacts.*.name field is required.',
-            $this->validation->getError('contacts.*.name')
+            'The contacts.friends.*.name field is required.',
+            $this->validation->getError('contacts.friends.*.name')
         );
     }
 
@@ -1144,7 +1183,7 @@ class ValidationTest extends CIUnitTestCase
             'id_user' => 'gh',
         ];
 
-        $request = new IncomingRequest($config, new URI(), 'php://input', new UserAgent());
+        $request = new IncomingRequest($config, new SiteURI($config), 'php://input', new UserAgent());
 
         $this->validation->setRules([
             'id_user' => 'numeric',
@@ -1228,17 +1267,17 @@ class ValidationTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider provideDotNotationOnIfExistRule
+     * @dataProvider provideIfExistRuleWithAsterisk
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/4521
      */
-    public function testDotNotationOnIfExistRule(bool $expected, array $rules, array $data): void
+    public function testIfExistRuleWithAsterisk(bool $expected, array $rules, array $data): void
     {
         $actual = $this->validation->setRules($rules)->run($data);
         $this->assertSame($expected, $actual);
     }
 
-    public static function provideDotNotationOnIfExistRule(): iterable
+    public static function provideIfExistRuleWithAsterisk(): iterable
     {
         yield 'dot-on-end-fail' => [
             false,
@@ -1613,7 +1652,7 @@ class ValidationTest extends CIUnitTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5942
      */
-    public function testRequireWithoutWithWildCard(): void
+    public function testRequireWithoutWithAsterisk(): void
     {
         $data = [
             'a' => [
@@ -1629,6 +1668,52 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame(
             'The a.*.c field is required when a.*.b is not present.',
             $this->validation->getError('a.1.c')
+        );
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/8128
+     */
+    public function testRuleWithAsteriskToMultiDimensionalArray(): void
+    {
+        $data = [
+            'contacts' => [
+                'name' => 'Joe Smith',
+                'just' => [
+                    'friends' => [
+                        [
+                            'name' => 'Fred Flinstone',
+                        ],
+                        [
+                            'name' => 'Wilma',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->validation->setRules(
+            ['contacts.just.friends.*.name' => 'required|max_length[1]']
+        );
+        $this->assertFalse($this->validation->run($data));
+        $this->assertSame(
+            [
+                'contacts.just.friends.0.name' => 'The contacts.just.friends.*.name field cannot exceed 1 characters in length.',
+                'contacts.just.friends.1.name' => 'The contacts.just.friends.*.name field cannot exceed 1 characters in length.',
+            ],
+            $this->validation->getErrors()
+        );
+
+        $this->validation->reset();
+        $this->validation->setRules(
+            ['contacts.*.name' => 'required|max_length[1]']
+        );
+        $this->assertFalse($this->validation->run($data));
+        $this->assertSame(
+            // The data for `contacts.*.name` does not exist. So it is interpreted
+            // as `null`, and this error message returns.
+            ['contacts.*.name' => 'The contacts.*.name field is required.'],
+            $this->validation->getErrors()
         );
     }
 }

@@ -84,11 +84,9 @@ class Cell
         $params = $this->prepareParams($params);
 
         // Is the output cached?
-        $cacheName = ! empty($cacheName)
-            ? $cacheName
-            : str_replace(['\\', '/'], '', $class) . $method . md5(serialize($params));
+        $cacheName ??= str_replace(['\\', '/'], '', $class) . $method . md5(serialize($params));
 
-        if (! empty($this->cache) && $output = $this->cache->get($cacheName)) {
+        if ($output = $this->cache->get($cacheName)) {
             return $output;
         }
 
@@ -105,7 +103,7 @@ class Cell
             : $this->renderSimpleClass($instance, $method, $params, $class);
 
         // Can we cache it?
-        if (! empty($this->cache) && $ttl !== 0) {
+        if ($ttl !== 0) {
             $this->cache->save($cacheName, $output, $ttl);
         }
 
@@ -119,11 +117,14 @@ class Cell
      *
      * @param array|string|null $params
      *
-     * @return array|null
+     * @return array
      */
     public function prepareParams($params)
     {
-        if (empty($params) || (! is_string($params) && ! is_array($params))) {
+        if (
+            ($params === null || $params === '' || $params === [])
+            || (! is_string($params) && ! is_array($params))
+        ) {
             return [];
         }
 
@@ -139,7 +140,7 @@ class Cell
             unset($separator);
 
             foreach ($params as $p) {
-                if (! empty($p)) {
+                if ($p !== '') {
                     [$key, $val] = explode('=', $p);
 
                     $newParams[trim($key)] = trim($val, ', ');
@@ -175,19 +176,18 @@ class Cell
 
         [$class, $method] = explode(':', $library);
 
-        if (empty($class)) {
+        if ($class === '') {
             throw ViewException::forNoCellClass();
         }
 
         // locate and return an instance of the cell
-        // @TODO extend Factories to be able to load classes with the same short name.
-        $object = class_exists($class) ? new $class() : Factories::cells($class);
+        $object = Factories::cells($class, ['getShared' => false]);
 
         if (! is_object($object)) {
             throw ViewException::forInvalidCellClass($class);
         }
 
-        if (empty($method)) {
+        if ($method === '') {
             $method = 'index';
         }
 
@@ -274,7 +274,7 @@ class Cell
         $refParams  = $refMethod->getParameters();
 
         if ($paramCount === 0) {
-            if (! empty($params)) {
+            if ($params !== []) {
                 throw ViewException::forMissingCellParameters($class, $method);
             }
 

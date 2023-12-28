@@ -62,8 +62,7 @@ class Factories
      *
      * [component => [alias => FQCN]]
      *
-     * @var array<string, array<string, string>>
-     * @phpstan-var array<string, array<string, class-string>>
+     * @var array<string, array<string, class-string>>
      */
     protected static $aliases = [];
 
@@ -76,8 +75,7 @@ class Factories
      *
      * [component => [FQCN => instance]]
      *
-     * @var array<string, array<string, object>>
-     * @phpstan-var  array<string, array<class-string, object>>
+     * @var array<string, array<class-string, object>>
      */
     protected static $instances = [];
 
@@ -93,10 +91,9 @@ class Factories
     /**
      * Define the class to load. You can *override* the concrete class.
      *
-     * @param string $component Lowercase, plural component name
-     * @param string $alias     Class alias. See the $aliases property.
-     * @param string $classname FQCN to be loaded
-     * @phpstan-param class-string $classname FQCN to be loaded
+     * @param string       $component Lowercase, plural component name
+     * @param string       $alias     Class alias. See the $aliases property.
+     * @param class-string $classname FQCN to be loaded
      */
     public static function define(string $component, string $alias, string $classname): void
     {

@@ -93,7 +93,7 @@ final class RedisHandlerTest extends CIUnitTestCase
 
         $savePath = $this->getPrivateProperty($handler, 'savePath');
 
-        $this->assertSame(2.5, $savePath['timeout']);
+        $this->assertEqualsWithDelta(2.5, $savePath['timeout'], PHP_FLOAT_EPSILON);
     }
 
     public function testSavePathTimeoutInt(): void
@@ -104,7 +104,7 @@ final class RedisHandlerTest extends CIUnitTestCase
 
         $savePath = $this->getPrivateProperty($handler, 'savePath');
 
-        $this->assertSame(10.0, $savePath['timeout']);
+        $this->assertEqualsWithDelta(10.0, $savePath['timeout'], PHP_FLOAT_EPSILON);
     }
 
     public function testOpen(): void

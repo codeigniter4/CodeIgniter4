@@ -53,7 +53,7 @@ class ModelGenerator extends BaseCommand
     /**
      * The Command's Arguments
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [
         'name' => 'The model class name.',
@@ -62,7 +62,7 @@ class ModelGenerator extends BaseCommand
     /**
      * The Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [
         '--table'     => 'Supply a table name. Default: "the lowercased plural of the class name".',

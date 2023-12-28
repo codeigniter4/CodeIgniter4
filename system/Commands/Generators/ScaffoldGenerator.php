@@ -53,7 +53,7 @@ class ScaffoldGenerator extends BaseCommand
     /**
      * The Command's Arguments
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [
         'name' => 'The class name',
@@ -62,7 +62,7 @@ class ScaffoldGenerator extends BaseCommand
     /**
      * The Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [
         '--bare'      => 'Add the "--bare" option to controller component.',

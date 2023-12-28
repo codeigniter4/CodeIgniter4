@@ -21,6 +21,7 @@ use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Namespace_;
+use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
 use Rector\Core\Php\ReservedKeywordAnalyzer;
 use Rector\Core\PhpParser\Node\CustomNode\FileWithoutNamespace;
 use Rector\Core\Rector\AbstractRector;
@@ -39,12 +40,15 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
     private const PARAM_NAME_REGEX = '#(?<paramPrefix>@param\s.*\s+\$)(?<paramName>%s)#ms';
 
     private ReservedKeywordAnalyzer $reservedKeywordAnalyzer;
+    private PhpDocInfoFactory $phpDocInfoFactory;
     private bool $hasChanged = false;
 
     public function __construct(
-        ReservedKeywordAnalyzer $reservedKeywordAnalyzer
+        ReservedKeywordAnalyzer $reservedKeywordAnalyzer,
+        PhpDocInfoFactory $phpDocInfoFactory
     ) {
         $this->reservedKeywordAnalyzer = $reservedKeywordAnalyzer;
+        $this->phpDocInfoFactory       = $phpDocInfoFactory;
     }
 
     public function getRuleDefinition(): RuleDefinition

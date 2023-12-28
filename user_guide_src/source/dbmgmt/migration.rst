@@ -66,7 +66,7 @@ Database Groups
 ===============
 
 A migration will only be run against a single database group. If you have multiple groups defined in
-**app/Config/Database.php**, then it will run against the ``$defaultGroup`` as specified
+**app/Config/Database.php**, then by default it will run against the ``$defaultGroup`` as specified
 in that same configuration file.
 
 There may be times when you need different schemas for different
@@ -78,6 +78,9 @@ against the proper group by setting the ``$DBGroup`` property on your migration.
 match the name of the database group exactly:
 
 .. literalinclude:: migration/003.php
+
+.. note:: The **migrations** table that tracks which migrations have already been
+    run will be always created in the default database group.
 
 Namespaces
 ==========

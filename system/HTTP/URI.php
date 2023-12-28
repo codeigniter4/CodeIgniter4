@@ -163,11 +163,11 @@ class URI
         ?string $fragment = null
     ): string {
         $uri = '';
-        if (! empty($scheme)) {
+        if ($scheme !== null && $scheme !== '') {
             $uri .= $scheme . '://';
         }
 
-        if (! empty($authority)) {
+        if ($authority !== null && $authority !== '') {
             $uri .= $authority;
         }
 
@@ -886,7 +886,7 @@ class URI
         }
 
         // Can't have leading ?
-        if (! empty($query) && strpos($query, '?') === 0) {
+        if ($query !== '' && strpos($query, '?') === 0) {
             $query = substr($query, 1);
         }
 
@@ -1097,7 +1097,7 @@ class URI
         $transformed = clone $relative;
 
         // 5.2.2 Transform References in a non-strict method (no scheme)
-        if (! empty($relative->getAuthority())) {
+        if ($relative->getAuthority() !== '') {
             $transformed
                 ->setAuthority($relative->getAuthority())
                 ->setPath($relative->getPath())
@@ -1139,7 +1139,7 @@ class URI
      */
     protected function mergePaths(self $base, self $reference): string
     {
-        if (! empty($base->getAuthority()) && $base->getPath() === '') {
+        if ($base->getAuthority() !== '' && $base->getPath() === '') {
             return '/' . ltrim($reference->getPath(), '/ ');
         }
 

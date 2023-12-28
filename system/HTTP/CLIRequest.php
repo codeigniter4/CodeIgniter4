@@ -95,7 +95,7 @@ class CLIRequest extends Request
     {
         $path = implode('/', $this->segments);
 
-        return empty($path) ? '' : $path;
+        return ($path === '') ? '' : $path;
     }
 
     /**
@@ -147,7 +147,7 @@ class CLIRequest extends Request
      */
     public function getOptionString(bool $useLongOpts = false): string
     {
-        if (empty($this->options)) {
+        if ($this->options === []) {
             return '';
         }
 

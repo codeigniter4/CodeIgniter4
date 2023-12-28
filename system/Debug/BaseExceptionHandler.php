@@ -67,7 +67,14 @@ abstract class BaseExceptionHandler
      */
     protected function collectVars(Throwable $exception, int $statusCode): array
     {
-        $trace = $exception->getTrace();
+        // Get the first exception.
+        $firstException = $exception;
+
+        while ($prevException = $firstException->getPrevious()) {
+            $firstException = $prevException;
+        }
+
+        $trace = $firstException->getTrace();
 
         if ($this->config->sensitiveDataInTrace !== []) {
             $trace = $this->maskSensitiveData($trace, $this->config->sensitiveDataInTrace);
@@ -154,7 +161,7 @@ abstract class BaseExceptionHandler
      */
     protected static function highlightFile(string $file, int $lineNumber, int $lines = 15)
     {
-        if (empty($file) || ! is_readable($file)) {
+        if ($file === '' || ! is_readable($file)) {
             return false;
         }
 
@@ -232,7 +239,7 @@ abstract class BaseExceptionHandler
             exit(1);
         }
 
-        echo(function () use ($exception, $statusCode, $viewFile): string {
+        echo (function () use ($exception, $statusCode, $viewFile): string {
             $vars = $this->collectVars($exception, $statusCode);
             extract($vars, EXTR_SKIP);
 

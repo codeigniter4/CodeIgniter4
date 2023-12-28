@@ -13,7 +13,7 @@ namespace CodeIgniter\Filters;
 
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -53,7 +53,7 @@ final class InvalidCharsTest extends CIUnitTestCase
     private function createRequest(): IncomingRequest
     {
         $config    = new MockAppConfig();
-        $uri       = new URI();
+        $uri       = new SiteURI($config);
         $userAgent = new UserAgent();
         $request   = $this->getMockBuilder(IncomingRequest::class)
             ->setConstructorArgs([$config, $uri, null, $userAgent])

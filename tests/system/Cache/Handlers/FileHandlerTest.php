@@ -67,6 +67,10 @@ final class FileHandlerTest extends AbstractHandlerTest
                     chmod($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $key, 0777);
                     unlink($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $key);
                 }
+                if (is_file($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $this->config->prefix . $key)) {
+                    chmod($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $this->config->prefix . $key, 0777);
+                    unlink($this->config->file['storePath'] . DIRECTORY_SEPARATOR . $this->config->prefix . $key);
+                }
             }
 
             rmdir($this->config->file['storePath']);
@@ -233,6 +237,22 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->assertSame(10, $this->handler->increment(self::$key3, 10));
     }
 
+    public function testIncrementWithDefaultPrefix(): void
+    {
+        $this->config->prefix = 'test_';
+        $this->handler        = new FileHandler($this->config);
+        $this->handler->initialize();
+
+        $this->handler->save(self::$key1, 1);
+        $this->handler->save(self::$key2, 'value');
+
+        $this->assertSame(11, $this->handler->increment(self::$key1, 10));
+        $this->assertSame($this->handler->increment(self::$key1, 10), $this->handler->get(self::$key1));
+        $this->assertFalse($this->handler->increment(self::$key2, 10));
+        $this->assertSame(10, $this->handler->increment(self::$key3, 10));
+        $this->assertSame($this->handler->increment(self::$key3, 10), $this->handler->get(self::$key3));
+    }
+
     public function testDecrement(): void
     {
         $this->handler->save(self::$key1, 10);
@@ -244,6 +264,21 @@ final class FileHandlerTest extends AbstractHandlerTest
         $this->assertSame(9, $this->handler->decrement(self::$key1, 1));
         $this->assertFalse($this->handler->decrement(self::$key2, 1));
         $this->assertSame(-1, $this->handler->decrement(self::$key3, 1));
+    }
+
+    public function testDecrementWithDefaultPrefix(): void
+    {
+        $this->handler->save(self::$key1, 10);
+        $this->handler->save(self::$key2, 'value');
+
+        // Line following commented out to force the cache to add a zero entry for key3
+        // $this->fileHandler->save(self::$key3, 0);
+
+        $this->assertSame(9, $this->handler->decrement(self::$key1, 1));
+        $this->assertSame($this->handler->decrement(self::$key1, 1), $this->handler->get(self::$key1));
+        $this->assertFalse($this->handler->decrement(self::$key2, 1));
+        $this->assertSame(-1, $this->handler->decrement(self::$key3, 1));
+        $this->assertSame($this->handler->decrement(self::$key3, 1), $this->handler->get(self::$key3));
     }
 
     public function testClean(): void

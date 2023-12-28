@@ -40,7 +40,7 @@ class CellGenerator extends BaseCommand
      *
      * @var string
      */
-    protected $description = 'Generates a new Cell file and its view.';
+    protected $description = 'Generates a new Controlled Cell file and its view.';
 
     /**
      * The Command's Usage
@@ -52,16 +52,16 @@ class CellGenerator extends BaseCommand
     /**
      * The Command's Arguments
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [
-        'name' => 'The cell class name.',
+        'name' => 'The Controlled Cell class name.',
     ];
 
     /**
      * The Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [
         '--namespace' => 'Set root namespace. Default: "APP_NAMESPACE".',

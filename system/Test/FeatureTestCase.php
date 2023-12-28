@@ -186,7 +186,7 @@ class FeatureTestCase extends CIUnitTestCase
             ->run($routes, true);
 
         $output = \ob_get_contents();
-        if (empty($response->getBody()) && ! empty($output)) {
+        if (($response->getBody() === null) && ! ($output === '' || $output === false)) {
             $response->setBody($output);
         }
 
@@ -335,7 +335,7 @@ class FeatureTestCase extends CIUnitTestCase
     {
         // $params should set the query vars if present,
         // otherwise set it from the URL.
-        $get = ! empty($params) && $method === 'get'
+        $get = ($params !== null && $params !== [] && $method === 'get')
             ? $params
             : $this->getPrivateProperty($request->getUri(), 'query');
 
@@ -371,16 +371,19 @@ class FeatureTestCase extends CIUnitTestCase
         }
 
         if (isset($this->bodyFormat) && $this->bodyFormat !== '') {
-            if (empty($params)) {
+            if ($params === null || $params === []) {
                 $params = $request->fetchGlobal('request');
             }
+
             $formatMime = '';
+
             if ($this->bodyFormat === 'json') {
                 $formatMime = 'application/json';
             } elseif ($this->bodyFormat === 'xml') {
                 $formatMime = 'application/xml';
             }
-            if (! empty($formatMime) && ! empty($params)) {
+
+            if ($formatMime !== '' && ! ($params === null || $params === [])) {
                 $formatted = Services::format()->getFormatter($formatMime)->format($params);
                 $request->setBody($formatted);
                 $request->setHeader('Content-Type', $formatMime);

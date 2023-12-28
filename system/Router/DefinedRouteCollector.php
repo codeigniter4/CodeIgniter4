@@ -29,7 +29,7 @@ final class DefinedRouteCollector
     }
 
     /**
-     * @phpstan-return Generator<array{method: string, route: string, name: string, handler: string}>
+     * @return Generator<array{method: string, route: string, name: string, handler: string}>
      */
     public function collect(): Generator
     {

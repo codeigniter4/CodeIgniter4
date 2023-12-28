@@ -29,6 +29,7 @@ namespace Kint\Parser;
 
 use Kint\Zval\InstanceValue;
 use Kint\Zval\Value;
+use Psr\Container\ContainerInterface;
 
 class BlacklistPlugin extends AbstractPlugin
 {
@@ -44,7 +45,7 @@ class BlacklistPlugin extends AbstractPlugin
      *
      * @var array
      */
-    public static $shallow_blacklist = ['Psr\\Container\\ContainerInterface'];
+    public static $shallow_blacklist = [ContainerInterface::class];
 
     public function getTypes(): array
     {

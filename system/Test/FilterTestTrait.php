@@ -125,6 +125,10 @@ trait FilterTestTrait
             throw new InvalidArgumentException('Invalid filter position passed: ' . $position);
         }
 
+        if ($filter instanceof FilterInterface) {
+            $filterInstances = [$filter];
+        }
+
         if (is_string($filter)) {
             // Check for an alias (no namespace)
             if (strpos($filter, '\\') === false) {
@@ -132,28 +136,31 @@ trait FilterTestTrait
                     throw new RuntimeException("No filter found with alias '{$filter}'");
                 }
 
-                $filterClasses = $this->filtersConfig->aliases[$filter];
+                $filterClasses = (array) $this->filtersConfig->aliases[$filter];
+            } else {
+                // FQCN
+                $filterClasses = [$filter];
             }
 
-            $filterClasses = (array) $filterClasses;
-        }
+            $filterInstances = [];
 
-        foreach ($filterClasses as $class) {
-            // Get an instance
-            $filter = new $class();
+            foreach ($filterClasses as $class) {
+                // Get an instance
+                $filter = new $class();
 
-            if (! $filter instanceof FilterInterface) {
-                throw FilterException::forIncorrectInterface(get_class($filter));
+                if (! $filter instanceof FilterInterface) {
+                    throw FilterException::forIncorrectInterface(get_class($filter));
+                }
+
+                $filterInstances[] = $filter;
             }
         }
 
         $request = clone $this->request;
 
         if ($position === 'before') {
-            return static function (?array $params = null) use ($filterClasses, $request) {
-                foreach ($filterClasses as $class) {
-                    $filter = new $class();
-
+            return static function (?array $params = null) use ($filterInstances, $request) {
+                foreach ($filterInstances as $filter) {
                     $result = $filter->before($request, $params);
 
                     // @TODO The following logic is in Filters class.
@@ -177,10 +184,8 @@ trait FilterTestTrait
 
         $response = clone $this->response;
 
-        return static function (?array $params = null) use ($filterClasses, $request, $response) {
-            foreach ($filterClasses as $class) {
-                $filter = new $class();
-
+        return static function (?array $params = null) use ($filterInstances, $request, $response) {
+            foreach ($filterInstances as $filter) {
                 $result = $filter->after($request, $response, $params);
 
                 // @TODO The following logic is in Filters class.

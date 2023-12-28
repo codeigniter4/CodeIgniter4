@@ -67,7 +67,7 @@ class ClosurePlugin extends AbstractPlugin
         }
 
         $p = new Representation('Parameters');
-        $p->contents = &$o->parameters;
+        $p->contents = $o->parameters;
         $o->addRepresentation($p, 0);
 
         $statics = [];

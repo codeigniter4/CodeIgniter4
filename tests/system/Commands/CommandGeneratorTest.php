@@ -52,7 +52,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
         $file = APPPATH . 'Commands/Deliver.php';
         $this->assertFileExists($file);
         $contents = $this->getFileContents($file);
-        $this->assertStringContainsString('protected $group = \'CodeIgniter\';', $contents);
+        $this->assertStringContainsString('protected $group = \'App\';', $contents);
         $this->assertStringContainsString('protected $name = \'command:name\';', $contents);
     }
 
@@ -72,7 +72,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
         $file = APPPATH . 'Commands/Deliver.php';
         $this->assertFileExists($file);
         $contents = $this->getFileContents($file);
-        $this->assertStringContainsString('protected $group = \'CodeIgniter\';', $contents);
+        $this->assertStringContainsString('protected $group = \'App\';', $contents);
         $this->assertStringContainsString('protected $name = \'command:name\';', $contents);
     }
 

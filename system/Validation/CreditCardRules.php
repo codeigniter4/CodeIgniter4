@@ -185,7 +185,7 @@ class CreditCardRules
         }
 
         // If empty, it's not a card type we recognize, or invalid type.
-        if (empty($info)) {
+        if ($info === null) {
             return false;
         }
 

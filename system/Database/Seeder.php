@@ -25,8 +25,7 @@ class Seeder
     /**
      * The name of the database group to use.
      *
-     * @var string
-     * @phpstan-var non-empty-string
+     * @var non-empty-string
      */
     protected $DBGroup;
 
@@ -79,7 +78,7 @@ class Seeder
     {
         $this->seedPath = $config->filesPath ?? APPPATH . 'Database/';
 
-        if (empty($this->seedPath)) {
+        if ($this->seedPath === '') {
             throw new InvalidArgumentException('Invalid filesPath set in the Config\Database.');
         }
 

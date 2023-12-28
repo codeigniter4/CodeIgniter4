@@ -140,4 +140,4 @@
 # CURLRequest
 #--------------------------------------------------------------------
 
-# curlrequest.shareOptions = true
+# curlrequest.shareOptions = false

@@ -37,7 +37,7 @@ class Modules
     /**
      * Auto-Discover Rules Handler
      *
-     * @var array
+     * @var list<string>
      */
     public $aliases = [];
 

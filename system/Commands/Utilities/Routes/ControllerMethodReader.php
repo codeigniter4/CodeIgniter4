@@ -35,10 +35,9 @@ final class ControllerMethodReader
     }
 
     /**
-     * @phpstan-param class-string $class
+     * @param class-string $class
      *
-     * @return array<int, array{route: string, handler: string}>
-     * @phpstan-return list<array{route: string, handler: string}>
+     * @return list<array{route: string, handler: string}>
      */
     public function read(string $class, string $defaultController = 'Home', string $defaultMethod = 'index'): array
     {
@@ -128,7 +127,7 @@ final class ControllerMethodReader
     }
 
     /**
-     * @phpstan-param class-string $classname
+     * @param class-string $classname
      *
      * @return string URI path part from the folder(s) and controller
      */

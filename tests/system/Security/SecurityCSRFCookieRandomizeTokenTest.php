@@ -14,7 +14,7 @@ namespace CodeIgniter\Security;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
@@ -74,7 +74,8 @@ final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
         $_POST['foo']              = 'bar';
         $_POST['csrf_test_name']   = $this->randomizedToken;
 
-        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+        $config  = new MockAppConfig();
+        $request = new IncomingRequest($config, new SiteURI($config), null, new UserAgent());
 
         $security = new Security($this->config);
 

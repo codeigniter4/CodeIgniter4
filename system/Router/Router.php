@@ -589,7 +589,7 @@ class Router implements RouterInterface
      */
     public function setDirectory(?string $dir = null, bool $append = false, bool $validate = true)
     {
-        if (empty($dir)) {
+        if ($dir === null || $dir === '') {
             $this->directory = null;
         }
 
@@ -623,7 +623,7 @@ class Router implements RouterInterface
     protected function setRequest(array $segments = [])
     {
         // If we don't have any segments - use the default controller;
-        if (empty($segments)) {
+        if ($segments === []) {
             return;
         }
 

@@ -444,7 +444,7 @@ class Connection extends BaseConnection
      */
     public function setDatabase(?string $databaseName = null)
     {
-        if (empty($databaseName)) {
+        if ($databaseName === null || $databaseName === '') {
             $databaseName = $this->database;
         }
 
@@ -538,7 +538,7 @@ class Connection extends BaseConnection
             return $this->dataCache['version'];
         }
 
-        if (! $this->connID || empty($info = sqlsrv_server_info($this->connID))) {
+        if (! $this->connID || ($info = sqlsrv_server_info($this->connID)) === []) {
             $this->initialize();
         }
 

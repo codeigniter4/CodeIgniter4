@@ -56,7 +56,7 @@ class ControllerGenerator extends BaseCommand
     /**
      * The Command's Arguments
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [
         'name' => 'The controller class name.',
@@ -65,7 +65,7 @@ class ControllerGenerator extends BaseCommand
     /**
      * The Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [
         '--bare'      => 'Extends from CodeIgniter\Controller instead of BaseController.',

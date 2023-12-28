@@ -40,7 +40,7 @@ final class GroupTest extends CIUnitTestCase
 
     public function testHavingBy(): void
     {
-        $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
+        $isANSISQL = $this->db->DBDriver === 'OCI8';
 
         if ($isANSISQL) {
             $result = $this->db->table('job')
@@ -63,7 +63,7 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrHavingBy(): void
     {
-        $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
+        $isANSISQL = $this->db->DBDriver === 'OCI8';
 
         if ($isANSISQL) {
             $result = $this->db->table('user')
@@ -134,7 +134,7 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrHavingNotIn(): void
     {
-        $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
+        $isANSISQL = $this->db->DBDriver === 'OCI8';
 
         if ($isANSISQL) {
             $result = $this->db->table('job')
@@ -207,7 +207,7 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrNotHavingLike(): void
     {
-        $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
+        $isANSISQL = $this->db->DBDriver === 'OCI8';
 
         if ($isANSISQL) {
             $result = $this->db->table('job')
@@ -237,7 +237,7 @@ final class GroupTest extends CIUnitTestCase
 
     public function testAndHavingGroupStart(): void
     {
-        $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
+        $isANSISQL = $this->db->DBDriver === 'OCI8';
 
         if ($isANSISQL) {
             $result = $this->db->table('job')
@@ -271,7 +271,7 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrHavingGroupStart(): void
     {
-        $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
+        $isANSISQL = $this->db->DBDriver === 'OCI8';
 
         if ($isANSISQL) {
             $result = $this->db->table('job')
@@ -306,7 +306,7 @@ final class GroupTest extends CIUnitTestCase
 
     public function testNotHavingGroupStart(): void
     {
-        $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
+        $isANSISQL = $this->db->DBDriver === 'OCI8';
 
         if ($isANSISQL) {
             $result = $this->db->table('job')
@@ -340,7 +340,7 @@ final class GroupTest extends CIUnitTestCase
 
     public function testOrNotHavingGroupStart(): void
     {
-        $isANSISQL = in_array($this->db->DBDriver, ['OCI8'], true);
+        $isANSISQL = $this->db->DBDriver === 'OCI8';
 
         if ($isANSISQL) {
             $result = $this->db->table('job')

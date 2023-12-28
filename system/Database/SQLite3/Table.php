@@ -28,8 +28,7 @@ class Table
     /**
      * All of the fields this table represents.
      *
-     * @var array
-     * @phpstan-var array<string, array<string, bool|int|string|null>>
+     * @var array<string, array<string, bool|int|string|null>>
      */
     protected $fields = [];
 
@@ -114,7 +113,7 @@ class Table
         // if primary key index exists twice then remove psuedo index name 'primary'.
         $primaryIndexes = array_filter($this->keys, static fn ($index) => $index['type'] === 'primary');
 
-        if (! empty($primaryIndexes) && count($primaryIndexes) > 1 && array_key_exists('primary', $this->keys)) {
+        if ($primaryIndexes !== [] && count($primaryIndexes) > 1 && array_key_exists('primary', $this->keys)) {
             unset($this->keys['primary']);
         }
 

@@ -18,6 +18,7 @@ use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use InvalidArgumentException;
+use JsonException;
 use TypeError;
 
 /**
@@ -223,7 +224,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $config->defaultLocale    = 'es';
         $config->baseURL          = 'http://example.com/';
 
-        $request = new IncomingRequest($config, new URI(), null, new UserAgent());
+        $request = new IncomingRequest($config, new SiteURI($config), null, new UserAgent());
 
         $request->setValidLocales(['ja']);
         $request->setLocale('ja');
@@ -348,7 +349,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame('buzz', $jsonVar->fizz);
         $this->assertSame('buzz', $request->getJsonVar('baz.fizz'));
         $this->assertSame(123, $request->getJsonVar('int'));
-        $this->assertSame(3.14, $request->getJsonVar('float'));
+        $this->assertEqualsWithDelta(3.14, $request->getJsonVar('float'), PHP_FLOAT_EPSILON);
         $this->assertTrue($request->getJsonVar('true'));
         $this->assertFalse($request->getJsonVar('false'));
         $this->assertNull($request->getJsonVar('null'));
@@ -379,7 +380,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame('buzz', $jsonVar['fizz']);
         $this->assertSame('bar', $jsonVar['foo']);
         $this->assertSame(123, $jsonVar['int']);
-        $this->assertSame(3.14, $jsonVar['float']);
+        $this->assertEqualsWithDelta(3.14, $jsonVar['float'], PHP_FLOAT_EPSILON);
         $this->assertTrue($jsonVar['true']);
         $this->assertFalse($jsonVar['false']);
         $this->assertNull($jsonVar['null']);
@@ -518,7 +519,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertNull($request->getJsonVar('myKey'));
     }
 
-    public function testgetJSONReturnsNullFromNullBody(): void
+    public function testGetJSONReturnsNullFromNullBody(): void
     {
         $config          = new App();
         $config->baseURL = 'http://example.com/';
@@ -526,6 +527,32 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request         = $this->createRequest($config, $json);
 
         $this->assertNull($request->getJSON());
+    }
+
+    public function testGetJSONWithInvalidJSONString(): void
+    {
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('Failed to parse JSON string. Error: Syntax error');
+
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+        $json            = 'Invalid JSON string';
+        $request         = $this->createRequest($config, $json);
+
+        $request->getJSON();
+    }
+
+    public function testGetJSONWithJsonThrowOnErrorAndInvalidJSONString(): void
+    {
+        $this->expectException(JsonException::class);
+        $this->expectExceptionMessage('Syntax error');
+
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+        $json            = 'Invalid JSON string';
+        $request         = $this->createRequest($config, $json);
+
+        $request->getJSON(false, 512, JSON_THROW_ON_ERROR);
     }
 
     public function testCanGrabGetRawInput(): void
@@ -847,13 +874,20 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame(array_merge($_POST, $_GET), $this->request->getGetPost());
     }
 
-    public function testWithFalseBody(): void
+    public function testGetBodyWithFalseBody(): void
     {
         // Use `false` here to simulate file_get_contents returning a false value
         $request = $this->createRequest(null, false);
 
         $this->assertNotFalse($request->getBody());
         $this->assertNull($request->getBody());
+    }
+
+    public function testGetBodyWithZero(): void
+    {
+        $request = $this->createRequest(null, '0');
+
+        $this->assertSame('0', $request->getBody());
     }
 
     /**
@@ -894,7 +928,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         $_SERVER['REQUEST_URI'] = $path;
         $_SERVER['SCRIPT_NAME'] = $path;
-        $request                = new IncomingRequest($config, new URI($path), null, new UserAgent());
+        $request                = new IncomingRequest($config, new SiteURI($config, $path), null, new UserAgent());
         $this->assertSame($detectPath, $request->detectPath());
     }
 
@@ -907,7 +941,8 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testSetPath(): void
     {
-        $request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
+        $config  = new App();
+        $request = new IncomingRequest($config, new SiteURI($config), null, new UserAgent());
         $this->assertSame('', $request->getPath());
 
         $request->setPath('foobar');

@@ -2,5 +2,5 @@
 
 // Fred Flintsone & Wilma
 $validation->setRules([
-    'contacts.*.name' => 'required|max_length[60]',
+    'contacts.friends.*.name' => 'required|max_length[60]',
 ]);

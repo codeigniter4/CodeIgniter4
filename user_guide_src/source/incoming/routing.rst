@@ -69,6 +69,8 @@ and the ``productLookupByID()`` method passing in the match as a variable to the
 
 .. literalinclude:: routing/009.php
 
+.. _routing-http-verb-routes:
+
 HTTP verb Routes
 ================
 
@@ -82,6 +84,8 @@ You can supply multiple verbs that a route should match by passing them in as an
 
 Specifying Route Handlers
 =========================
+
+.. _controllers-namespace:
 
 Controller's Namespace
 ----------------------
@@ -183,14 +187,31 @@ Placeholders Description
 .. note:: ``{locale}`` cannot be used as a placeholder or other part of the route, as it is reserved for use
     in :doc:`localization </outgoing/localization>`.
 
-Note that a single ``(:any)`` will match multiple segments in the URL if present. For example the route:
+.. _routing-placeholder-any:
+
+The Behavior of (:any)
+^^^^^^^^^^^^^^^^^^^^^^
+
+Note that a single ``(:any)`` will match multiple segments in the URL if present.
+
+For example the route:
 
 .. literalinclude:: routing/010.php
 
-will match **product/123**, **product/123/456**, **product/123/456/789** and so on. The implementation in the
+will match **product/123**, **product/123/456**, **product/123/456/789** and so on.
+
+In the above example, if the ``$1`` placeholder contains a slash
+(``/``), it will still be split into multiple parameters when passed to
+``Catalog::productLookup()``.
+
+The implementation in the
 Controller should take into account the maximum parameters:
 
 .. literalinclude:: routing/011.php
+
+Or you can use `variable-length argument lists <https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list>`_:
+
+.. literalinclude:: routing/068.php
 
 .. important:: Do not put any placeholder after ``(:any)``. Because the number of
     parameters passed to the controller method may change.
@@ -235,6 +256,10 @@ For example, if a user accesses a password protected area of your web applicatio
 redirect them back to the same page after they log in, you may find this example useful:
 
 .. literalinclude:: routing/019.php
+
+In the above example, if the ``$1`` placeholder contains a slash
+(``/``), it will still be split into multiple parameters when passed to
+``Auth::login()``.
 
 For those of you who don't know regular expressions and want to learn more about them,
 `regular-expressions.info <https://www.regular-expressions.info/>`_ might be a good starting point.
@@ -290,6 +315,10 @@ routes defined within this closure are only accessible from the given environmen
 Routes with any HTTP verbs
 ==========================
 
+.. important:: This method exists only for backward compatibility. Do not use it
+    in new projects. Even if you are already using it, we recommend that you use
+    another, more appropriate method.
+
 .. warning:: While the ``add()`` method seems to be convenient, it is recommended to always use the HTTP-verb-based
     routes, described above, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
     requests. If the URI specified in the ``add()`` method is accessible by the GET method, the CSRF protection
@@ -306,6 +335,10 @@ You can use the ``add()`` method:
 
 Mapping Multiple Routes
 =======================
+
+.. important:: This method exists only for backward compatibility. Do not use it
+    in new projects. Even if you are already using it, we recommend that you use
+    another, more appropriate method.
 
 .. warning:: The ``map()`` method is not recommended as well as ``add()``
     because it calls ``add()`` internally.
@@ -683,7 +716,7 @@ and execute the corresponding controller methods.
 Enable Auto Routing
 ===================
 
-To use it, you need to change the setting ``$autoRoute`` option to true in **app/Config/Routing.php**::
+To use it, you need to change the setting ``$autoRoute`` option to ``true`` in **app/Config/Routing.php**::
 
     public bool $autoRoute = true;
 
@@ -719,7 +752,7 @@ See :ref:`Auto Routing in Controllers <controller-auto-routing-improved>` for mo
 Configuration Options
 =====================
 
-These options are available at the top of **app/Config/Routes.php**.
+These options are available in the **app/Config/Routing.php** file.
 
 Default Controller
 ------------------
@@ -727,13 +760,14 @@ Default Controller
 For Site Root URI
 ^^^^^^^^^^^^^^^^^
 
-When a user visits the root of your site (i.e., **example.com**) the controller to use is determined by the value set by
-the ``setDefaultController()`` method, unless a route exists for it explicitly.
+When a user visits the root of your site (i.e., **example.com**) the controller
+to use is determined by the value set to the ``$defaultController`` property,
+unless a route exists for it explicitly.
 
-The default value for this is ``Home``
-which matches the controller at **app/Controllers/Home.php**:
+The default value for this is ``Home`` which matches the controller at
+**app/Controllers/Home.php**::
 
-.. literalinclude:: routing/047.php
+    public string $defaultController = 'Home';
 
 For Directory URI
 ^^^^^^^^^^^^^^^^^
@@ -754,10 +788,10 @@ This works similar to the default controller setting, but is used to determine t
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
 ``index``.
 
-In this example, if the user were to visit **example.com/products**, and a ``Products`` controller existed, the
-``Products::listAll()`` method would be executed:
+In this example, if the user were to visit **example.com/products**, and a ``Products``
+controller existed, the ``Products::getListAll()`` method would be executed::
 
-.. literalinclude:: routing/048.php
+    public string $defaultMethod = 'listAll';
 
 .. important:: You cannot access the controller with the URI of the default method name.
     In the example above, you can access **example.com/products**, but if you access **example.com/products/listall**, it will be not found.
@@ -793,6 +827,10 @@ will be routed to ``Acme\Blog\Controllers\Foo::getBar()``.
 Auto Routing (Legacy)
 *********************
 
+.. important:: This feature exists only for backward compatibility. Do not use it
+    in new projects. Even if you are already using it, we recommend that you use
+    the :ref:`auto-routing-improved` instead.
+
 Auto Routing (Legacy) is a routing system from CodeIgniter 3.
 It can automatically route HTTP requests based on conventions and execute the corresponding controller methods.
 
@@ -810,9 +848,13 @@ Enable Auto Routing (Legacy)
 
 Since v4.2.0, the auto-routing is disabled by default.
 
-To use it, you need to change the setting ``$autoRoute`` option to true in **app/Config/Routing.php**::
+To use it, you need to change the setting ``$autoRoute`` option to ``true`` in **app/Config/Routing.php**::
 
-    $routes->setAutoRoute(true);
+    public bool $autoRoute = true;
+
+And set the property ``$autoRoutesImproved`` to ``false`` in **app/Config/Feature.php**::
+
+    public bool $autoRoutesImproved = false;
 
 URI Segments (Legacy)
 =====================
@@ -839,7 +881,7 @@ See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>`
 Configuration Options (Legacy)
 ==============================
 
-These options are available at the top of **app/Config/Routes.php**.
+These options are available in the **app/Config/Routing.php** file.
 
 Default Controller (Legacy)
 ---------------------------
@@ -847,11 +889,14 @@ Default Controller (Legacy)
 For Site Root URI (Legacy)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
-the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
-which matches the controller at **app/Controllers/Home.php**:
+When a user visits the root of your site (i.e., **example.com**) the controller
+to use is determined by the value set to the ``$defaultController`` property,
+unless a route exists for it explicitly.
 
-.. literalinclude:: routing/047.php
+The default value for this is ``Home`` which matches the controller at
+**app/Controllers/Home.php**::
+
+    public string $defaultController = 'Home';
 
 For Directory URI (Legacy)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -869,10 +914,10 @@ This works similar to the default controller setting, but is used to determine t
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
 ``index``.
 
-In this example, if the user were to visit **example.com/products**, and a ``Products`` controller existed, the
-``Products::listAll()`` method would be executed:
+In this example, if the user were to visit **example.com/products**, and a ``Products``
+controller existed, the ``Products::listAll()`` method would be executed::
 
-.. literalinclude:: routing/048.php
+    public string $defaultMethod = 'listAll';
 
 Confirming Routes
 *****************
@@ -907,7 +952,13 @@ The *Route* column shows the route path to match. The route of a defined route i
 
 Since v4.3.0, the *Name* column shows the route name. ``»`` indicates the name is the same as the route path.
 
-.. important:: The system is not perfect. If you use Custom Placeholders, *Filters* might not be correct. If you want to check filters for a route, you can use :ref:`spark filter:check <spark-filter-check>` command.
+.. important:: The system is not perfect.
+    For routes containing regular expression patterns like ``([^/]+)`` or ``{locale}``,
+    the *Filters* displayed might not be correct (if you set complicated URI pattern
+    for the filters in **app/Config/Filters.php**), or it is displayed as ``<unknown>``.
+
+    The :ref:`spark filter:check <spark-filter-check>` command can be used to check
+    for 100% accurate filters.
 
 Auto Routing (Improved)
 -----------------------

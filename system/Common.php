@@ -25,9 +25,7 @@ use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\HTTP\URI;
 use CodeIgniter\Model;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Test\TestLogger;
@@ -290,20 +288,24 @@ if (! function_exists('csrf_hash')) {
 if (! function_exists('csrf_field')) {
     /**
      * Generates a hidden input field for use within manually generated forms.
+     *
+     * @param non-empty-string|null $id
      */
     function csrf_field(?string $id = null): string
     {
-        return '<input type="hidden"' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '"' . _solidus() . '>';
+        return '<input type="hidden"' . ($id !== null ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '"' . _solidus() . '>';
     }
 }
 
 if (! function_exists('csrf_meta')) {
     /**
      * Generates a meta tag for use within javascript calls.
+     *
+     * @param non-empty-string|null $id
      */
     function csrf_meta(?string $id = null): string
     {
-        return '<meta' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_header() . '" content="' . csrf_hash() . '"' . _solidus() . '>';
+        return '<meta' . ($id !== null ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_header() . '" content="' . csrf_hash() . '"' . _solidus() . '>';
     }
 }
 
@@ -502,27 +504,11 @@ if (! function_exists('force_https')) {
             Services::session()->regenerate(); // @codeCoverageIgnore
         }
 
-        $baseURL = config(App::class)->baseURL;
-
-        if (strpos($baseURL, 'https://') === 0) {
-            $authority = substr($baseURL, strlen('https://'));
-        } elseif (strpos($baseURL, 'http://') === 0) {
-            $authority = substr($baseURL, strlen('http://'));
-        } else {
-            $authority = $baseURL;
-        }
-
-        $uri = URI::createURIString(
-            'https',
-            $authority,
-            $request->getUri()->getPath(), // Absolute URIs should use a "/" for an empty path
-            $request->getUri()->getQuery(),
-            $request->getUri()->getFragment()
-        );
+        $uri = $request->getUri()->withScheme('https');
 
         // Set an HSTS header
         $response->setHeader('Strict-Transport-Security', 'max-age=' . $duration)
-            ->redirect($uri)
+            ->redirect((string) $uri)
             ->setStatusCode(307)
             ->setBody('')
             ->getCookieStore()
@@ -755,7 +741,7 @@ if (! function_exists('lang')) {
      * A convenience method to translate a string or array of them and format
      * the result with the intl extension's MessageFormatter.
      *
-     * @return string
+     * @return list<string>|string
      */
     function lang(string $line, array $args = [], ?string $locale = null)
     {
@@ -868,13 +854,13 @@ if (! function_exists('redirect')) {
      *
      * If more control is needed, you must use $response->redirect explicitly.
      *
-     * @param string|null $route Route name or Controller::method
+     * @param non-empty-string|null $route Route name or Controller::method
      */
     function redirect(?string $route = null): RedirectResponse
     {
         $response = Services::redirectresponse(null, true);
 
-        if (! empty($route)) {
+        if ($route !== null) {
             return $response->route($route);
         }
 
@@ -1139,15 +1125,17 @@ if (! function_exists('timer')) {
      * returns its return value if any.
      * Otherwise will start or stop the timer intelligently.
      *
-     * @phpstan-param (callable(): mixed)|null $callable
+     * @param non-empty-string|null    $name
+     * @param (callable(): mixed)|null $callable
      *
-     * @return Timer
+     * @return mixed|Timer
+     * @phpstan-return ($name is null ? Timer : ($callable is (callable(): mixed) ? mixed : Timer))
      */
     function timer(?string $name = null, ?callable $callable = null)
     {
         $timer = Services::timer();
 
-        if (empty($name)) {
+        if ($name === null) {
             return $timer;
         }
 

@@ -61,7 +61,7 @@ class Routes extends BaseCommand
     /**
      * the Command's Arguments
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [];
 

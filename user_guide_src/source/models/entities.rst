@@ -2,7 +2,7 @@
 Using Entity Classes
 #####################
 
-CodeIgniter supports Entity classes as a first-class citizen in it's database layer, while keeping
+CodeIgniter supports Entity classes as a first-class citizen, while keeping
 them completely optional to use. They are commonly used as part of the Repository pattern, but can
 be used directly with the :doc:`Model </models/model>` if that fits your needs better.
 
@@ -16,9 +16,17 @@ Entity Usage
 
 At its core, an Entity class is simply a class that represents a single database row. It has class properties
 to represent the database columns, and provides any additional methods to implement the business logic for
-that row. The core feature, though, is that it doesn't know anything about how to persist itself. That's the
+that row.
+
+.. note:: For ease of understanding, the explanation here is based on the case of
+    using a database. However, Entity can also be used for data that does not come
+    from a database.
+
+The core feature, though, is that it doesn't know anything about how to persist itself. That's the
 responsibility of the model or the repository class. That way, if anything changes on how you need to save the
-object, you don't have to change how that object is used throughout the application. This makes it possible to
+object, you don't have to change how that object is used throughout the application.
+
+This makes it possible to
 use JSON or XML files to store the objects during a rapid prototyping stage, and then easily switch to a
 database when you've proven the concept works.
 
@@ -70,7 +78,7 @@ access them as if they were public properties. The base class, ``CodeIgniter\Ent
 well as providing the ability to check the properties with ``isset()``, or ``unset()`` the property, and keep track
 of what columns have changed since the object was created or pulled from the database.
 
-.. note:: The Entity class stores the data in the property ``$attributes``.
+.. note:: The Entity class stores the data in the class property ``$attributes`` internally.
 
 When the User is passed to the model's ``save()`` method, it automatically takes care of reading the  properties
 and saving any changes to columns listed in the model's ``$allowedFields`` property. It also knows whether to create

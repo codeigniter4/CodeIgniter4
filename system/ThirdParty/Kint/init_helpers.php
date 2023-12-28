@@ -32,7 +32,7 @@ if (!\function_exists('d')) {
     /**
      * Alias of Kint::dump().
      *
-     * @param mixed ...$args
+     * @psalm-param mixed ...$args
      *
      * @return int|string
      */
@@ -53,7 +53,7 @@ if (!\function_exists('s')) {
      *
      * If run in CLI colors are disabled
      *
-     * @param mixed ...$args
+     * @psalm-param mixed ...$args
      *
      * @return int|string
      */

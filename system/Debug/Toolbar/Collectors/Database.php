@@ -80,7 +80,6 @@ class Database extends BaseCollector
      * @internal
      *
      * @return void
-     * @phpstan-return never|void
      */
     public static function collect(Query $query)
     {
@@ -236,7 +235,7 @@ class Database extends BaseCollector
      */
     public function isEmpty(): bool
     {
-        return empty(static::$queries);
+        return static::$queries === [];
     }
 
     /**

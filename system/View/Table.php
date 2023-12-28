@@ -217,7 +217,7 @@ class Table
     {
         $tmpRow = $this->_prepArgs(func_get_args());
 
-        if ($this->syncRowsWithHeading && ! empty($this->heading)) {
+        if ($this->syncRowsWithHeading && $this->heading !== []) {
             // each key has an index
             $keyIndex = array_flip(array_keys($this->heading));
 
@@ -303,7 +303,7 @@ class Table
     {
         // The table data can optionally be passed to this function
         // either as a database result object or an array
-        if (! empty($tableData)) {
+        if ($tableData !== null && $tableData !== []) {
             if ($tableData instanceof BaseResult) {
                 $this->_setFromDBResult($tableData);
             } elseif (is_array($tableData)) {
@@ -312,7 +312,7 @@ class Table
         }
 
         // Is there anything to display? No? Smite them!
-        if (empty($this->heading) && empty($this->rows)) {
+        if ($this->heading === [] && $this->rows === []) {
             return 'Undefined table data';
         }
 
@@ -333,7 +333,7 @@ class Table
         }
 
         // Is there a table heading to display?
-        if (! empty($this->heading)) {
+        if ($this->heading !== []) {
             $headerTag = null;
 
             if (preg_match('/(<)(td|th)(?=\h|>)/i', $this->template['heading_cell_start'], $matches) === 1) {
@@ -358,7 +358,7 @@ class Table
         }
 
         // Build the table rows
-        if (! empty($this->rows)) {
+        if ($this->rows !== []) {
             $out .= $this->template['tbody_open'] . $this->newline;
 
             $i = 1;
@@ -399,7 +399,7 @@ class Table
         }
 
         // Any table footing to display?
-        if (! empty($this->footing)) {
+        if ($this->footing !== []) {
             $footerTag = null;
 
             if (preg_match('/(<)(td|th)(?=\h|>)/i', $this->template['footing_cell_start'], $matches)) {
@@ -458,7 +458,7 @@ class Table
     protected function _setFromDBResult($object)
     {
         // First generate the headings from the table column names
-        if ($this->autoHeading && empty($this->heading)) {
+        if ($this->autoHeading && $this->heading === []) {
             $this->heading = $this->_prepArgs($object->getFieldNames());
         }
 
@@ -476,7 +476,7 @@ class Table
      */
     protected function _setFromArray($data)
     {
-        if ($this->autoHeading && empty($this->heading)) {
+        if ($this->autoHeading && $this->heading === []) {
             $this->heading = $this->_prepArgs(array_shift($data));
         }
 

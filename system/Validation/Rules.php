@@ -24,9 +24,10 @@ class Rules
     /**
      * The value does not match another field in $data.
      *
-     * @param array $data Other field/value pairs
+     * @param string|null $str
+     * @param array       $data Other field/value pairs
      */
-    public function differs(?string $str, string $field, array $data): bool
+    public function differs($str, string $field, array $data): bool
     {
         if (strpos($field, '.') !== false) {
             return $str !== dot_array_search($field, $data);
@@ -104,7 +105,8 @@ class Rules
             ->limit(1);
 
         if (
-            ! empty($whereField) && ! empty($whereValue)
+            $whereField !== null && $whereField !== ''
+            && $whereValue !== null && $whereValue !== ''
             && ! preg_match('/^\{(\w+)\}$/', $whereValue)
         ) {
             $row = $row->where($whereField, $whereValue);
@@ -149,7 +151,8 @@ class Rules
             ->limit(1);
 
         if (
-            ! empty($ignoreField) && ! empty($ignoreValue)
+            $ignoreField !== null && $ignoreField !== ''
+            && $ignoreValue !== null && $ignoreValue !== ''
             && ! preg_match('/^\{(\w+)\}$/', $ignoreValue)
         ) {
             $row = $row->where("{$ignoreField} !=", $ignoreValue);
@@ -177,15 +180,16 @@ class Rules
     /**
      * Matches the value of another field in $data.
      *
-     * @param array $data Other field/value pairs
+     * @param string|null $str
+     * @param array       $data Other field/value pairs
      */
-    public function matches(?string $str, string $field, array $data): bool
+    public function matches($str, string $field, array $data): bool
     {
         if (strpos($field, '.') !== false) {
             return $str === dot_array_search($field, $data);
         }
 
-        return array_key_exists($field, $data) && $str === $data[$field];
+        return isset($data[$field]) && $str === $data[$field];
     }
 
     /**
@@ -254,7 +258,7 @@ class Rules
      */
     public function required_with($str = null, ?string $fields = null, array $data = []): bool
     {
-        if ($fields === null || empty($data)) {
+        if ($fields === null || $data === []) {
             throw new InvalidArgumentException('You must supply the parameters: fields, data.');
         }
 
@@ -274,14 +278,16 @@ class Rules
 
         foreach (explode(',', $fields) as $field) {
             if (
-                (array_key_exists($field, $data) && ! empty($data[$field]))
-                || (strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))
+                (array_key_exists($field, $data)
+                    && ! empty($data[$field]))  // @phpstan-ignore-line Use empty()
+                || (strpos($field, '.') !== false
+                    && ! empty(dot_array_search($field, $data)))  // @phpstan-ignore-line Use empty()
             ) {
                 $requiredFields[] = $field;
             }
         }
 
-        return empty($requiredFields);
+        return $requiredFields === [];
     }
 
     /**
@@ -303,7 +309,7 @@ class Rules
         ?string $error = null,
         ?string $field = null
     ): bool {
-        if ($otherFields === null || empty($data)) {
+        if ($otherFields === null || $data === []) {
             throw new InvalidArgumentException('You must supply the parameters: otherFields, data.');
         }
 
@@ -321,7 +327,8 @@ class Rules
         foreach (explode(',', $otherFields) as $otherField) {
             if (
                 (strpos($otherField, '.') === false)
-                && (! array_key_exists($otherField, $data) || empty($data[$otherField]))
+                && (! array_key_exists($otherField, $data)
+                    || empty($data[$otherField])) // @phpstan-ignore-line Use empty()
             ) {
                 return false;
             }
@@ -336,7 +343,7 @@ class Rules
                 $fieldKey        = $fieldSplitArray[1];
 
                 if (is_array($fieldData)) {
-                    return ! empty(dot_array_search($otherField, $data)[$fieldKey]);
+                    return ! empty(dot_array_search($otherField, $data)[$fieldKey]);  // @phpstan-ignore-line Use empty()
                 }
                 $nowField      = str_replace('*', $fieldKey, $otherField);
                 $nowFieldVaule = dot_array_search($nowField, $data);

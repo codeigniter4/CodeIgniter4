@@ -12,9 +12,13 @@ class Form extends BaseController
             return view('signup');
         }
 
-        $rules = [];
+        $rules = [
+            // @TODO
+        ];
 
-        if (! $this->validate($rules)) {
+        $data = $this->request->getPost(array_keys($rules));
+
+        if (! $this->validateData($data, $rules)) {
             return view('signup');
         }
 

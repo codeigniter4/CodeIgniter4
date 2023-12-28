@@ -2,11 +2,6 @@
 
 $ignoreErrors = [];
 $ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string\\> of property Config\\\\Modules\\:\\:\\$aliases is not the same as PHPDoc type array of overridden property CodeIgniter\\\\Modules\\\\Modules\\:\\:\\$aliases\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Modules.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^PHPDoc type CodeIgniter\\\\HTTP\\\\CLIRequest\\|CodeIgniter\\\\HTTP\\\\IncomingRequest of property App\\\\Controllers\\\\BaseController\\:\\:\\$request is not the same as PHPDoc type CodeIgniter\\\\HTTP\\\\RequestInterface of overridden property CodeIgniter\\\\Controller\\:\\:\\$request\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/app/Controllers/BaseController.php',
@@ -17,9 +12,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 13,
-	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
+	'message' => '#^Property Config\\\\Autoload\\:\\:\\$helpers \\(array\\<int, string\\>\\) in isset\\(\\) is not nullable\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Autoloader/Autoloader.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\|string given\\.$#',
@@ -30,11 +25,6 @@ $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 6,
 	'path' => __DIR__ . '/system/Autoloader/FileLocator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 16,
-	'path' => __DIR__ . '/system/BaseModel.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\BaseModel\\:\\:chunk\\(\\) has parameter \\$userFunc with no signature specified for Closure\\.$#',
@@ -52,16 +42,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, array\\|null given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, string given on the right side\\.$#',
-	'count' => 7,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a ternary operator condition, array\\|null given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
@@ -73,7 +53,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 5,
+	'count' => 2,
 	'path' => __DIR__ . '/system/CLI/BaseCommand.php',
 ];
 $ignoreErrors[] = [
@@ -89,11 +69,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Accessing offset \'argv\' directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/CLI/CLI.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 6,
 	'path' => __DIR__ . '/system/CLI/CLI.php',
 ];
 $ignoreErrors[] = [
@@ -147,11 +122,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/CLI/CLI.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Cache/CacheFactory.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in &&, string given on the left side\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Cache/Handlers/BaseHandler.php',
@@ -183,26 +153,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 6,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\CodeIgniter\\:\\:\\$controller type has no signature specified for Closure\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/CodeIgniter.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/CreateDatabase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Database\\\\CreateDatabase\\:\\:\\$arguments is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$arguments\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/CreateDatabase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Database\\\\CreateDatabase\\:\\:\\$options is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$options\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Database/CreateDatabase.php',
 ];
@@ -217,11 +167,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Database/MigrateStatus.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Database\\\\MigrateStatus\\:\\:\\$options is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$options\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/MigrateStatus.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$params \\(array\\<string, mixed\\>\\) of method CodeIgniter\\\\Commands\\\\Database\\\\MigrateStatus\\:\\:run\\(\\) should be contravariant with parameter \\$params \\(array\\<int\\|string, string\\|null\\>\\) of method CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:run\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Database/MigrateStatus.php',
@@ -232,27 +177,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Database/Seed.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Database\\\\Seed\\:\\:\\$arguments is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$arguments\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/Seed.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfo\\:\\:showAllTables\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Database/ShowTableInfo.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfo\\:\\:showDataOfTable\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/ShowTableInfo.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfo\\:\\:\\$arguments is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$arguments\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Database/ShowTableInfo.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Database\\\\ShowTableInfo\\:\\:\\$options is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$options\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Database/ShowTableInfo.php',
 ];
@@ -737,44 +667,14 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Commands/Server/Serve.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Accessing offset \'DOCUMENT_ROOT\' directly on \\$_SERVER is discouraged\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Commands/Server/rewrite.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Accessing offset \'REQUEST_URI\' directly on \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Server/rewrite.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Assigning \'/index\\.php\' directly on offset \'SCRIPT_NAME\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Server/rewrite.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Accessing offset \'CI_ENVIRONMENT\' directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 3,
 	'path' => __DIR__ . '/system/Commands/Utilities/Environment.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Utilities\\\\Environment\\:\\:\\$arguments is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$arguments\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/Environment.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Utilities\\\\FilterCheck\\:\\:\\$arguments is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$arguments\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/FilterCheck.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Utilities/Namespaces.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Utilities\\\\Publish\\:\\:\\$arguments is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$arguments\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/Publish.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Accessing offset \'HTTP_HOST\' directly on \\$_SERVER is discouraged\\.$#',
@@ -794,11 +694,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in an if condition, string\\|null given\\.$#',
 	'count' => 3,
-	'path' => __DIR__ . '/system/Commands/Utilities/Routes.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type array\\<string, string\\> of property CodeIgniter\\\\Commands\\\\Utilities\\\\Routes\\:\\:\\$options is not the same as PHPDoc type array of overridden property CodeIgniter\\\\CLI\\\\BaseCommand\\:\\:\\$options\\.$#',
-	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes.php',
 ];
 $ignoreErrors[] = [
@@ -843,7 +738,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 8,
+	'count' => 4,
 	'path' => __DIR__ . '/system/Common.php',
 ];
 $ignoreErrors[] = [
@@ -937,11 +832,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/Services.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Controller.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Controller.php',
@@ -957,13 +847,8 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Cookie/Cookie.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Call to function is_string\\(\\) with non\\-falsy\\-string will always evaluate to true\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 40,
+	'count' => 30,
 	'path' => __DIR__ . '/system/Database/BaseBuilder.php',
 ];
 $ignoreErrors[] = [
@@ -1113,7 +998,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 10,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Database/BaseResult.php',
 ];
 $ignoreErrors[] = [
@@ -1153,7 +1038,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Database/Database.php',
 ];
 $ignoreErrors[] = [
@@ -1227,13 +1112,8 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Migration.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Database\\\\Migration\\:\\:\\$DBGroup \\(string\\) on left side of \\?\\? is not nullable\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Migration.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 8,
+	'count' => 5,
 	'path' => __DIR__ . '/system/Database/MigrationRunner.php',
 ];
 $ignoreErrors[] = [
@@ -1293,12 +1173,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/MySQLi/Builder.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 12,
+	'count' => 11,
 	'path' => __DIR__ . '/system/Database/MySQLi/Connection.php',
 ];
 $ignoreErrors[] = [
@@ -1342,11 +1217,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/MySQLi/PreparedQuery.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Return type \\(CodeIgniter\\\\Database\\\\MySQLi\\\\PreparedQuery\\) of method CodeIgniter\\\\Database\\\\MySQLi\\\\PreparedQuery\\:\\:_prepare\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\Database\\\\BasePreparedQuery\\<TConnection, TStatement, TResult\\>\\)\\) of method CodeIgniter\\\\Database\\\\BasePreparedQuery\\<mysqli,mysqli_stmt,mysqli_result\\>\\:\\:_prepare\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/MySQLi/PreparedQuery.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Return type \\(mysqli_result\\|false\\) of method CodeIgniter\\\\Database\\\\MySQLi\\\\PreparedQuery\\:\\:_getResult\\(\\) should be covariant with return type \\(object\\|resource\\|null\\) of method CodeIgniter\\\\Database\\\\BasePreparedQuery\\<mysqli,mysqli_stmt,mysqli_result\\>\\:\\:_getResult\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/MySQLi/PreparedQuery.php',
@@ -1368,7 +1238,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
+	'count' => 3,
 	'path' => __DIR__ . '/system/Database/OCI8/Builder.php',
 ];
 $ignoreErrors[] = [
@@ -1462,18 +1332,13 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/OCI8/PreparedQuery.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Return type \\(CodeIgniter\\\\Database\\\\OCI8\\\\PreparedQuery\\) of method CodeIgniter\\\\Database\\\\OCI8\\\\PreparedQuery\\:\\:_prepare\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\Database\\\\BasePreparedQuery\\<TConnection, TStatement, TResult\\>\\)\\) of method CodeIgniter\\\\Database\\\\BasePreparedQuery\\<resource,resource,resource\\>\\:\\:_prepare\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/OCI8/PreparedQuery.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^PHPDoc type string of property CodeIgniter\\\\Database\\\\OCI8\\\\Utils\\:\\:\\$listDatabases is not the same as PHPDoc type bool\\|string of overridden property CodeIgniter\\\\Database\\\\BaseUtils\\:\\:\\$listDatabases\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/OCI8/Utils.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 8,
+	'count' => 7,
 	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
 ];
 $ignoreErrors[] = [
@@ -1592,11 +1457,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Postgre/Forge.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Return type \\(CodeIgniter\\\\Database\\\\Postgre\\\\PreparedQuery\\) of method CodeIgniter\\\\Database\\\\Postgre\\\\PreparedQuery\\:\\:_prepare\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\Database\\\\BasePreparedQuery\\<TConnection, TStatement, TResult\\>\\)\\) of method CodeIgniter\\\\Database\\\\BasePreparedQuery\\<PgSql\\\\Connection,PgSql\\\\Result,PgSql\\\\Result\\>\\:\\:_prepare\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Postgre/PreparedQuery.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Postgre/Result.php',
@@ -1643,7 +1503,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 15,
+	'count' => 9,
 	'path' => __DIR__ . '/system/Database/SQLSRV/Builder.php',
 ];
 $ignoreErrors[] = [
@@ -1668,7 +1528,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 8,
+	'count' => 6,
 	'path' => __DIR__ . '/system/Database/SQLSRV/Connection.php',
 ];
 $ignoreErrors[] = [
@@ -1693,7 +1553,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 6,
+	'count' => 5,
 	'path' => __DIR__ . '/system/Database/SQLSRV/Forge.php',
 ];
 $ignoreErrors[] = [
@@ -1728,11 +1588,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^PHPDoc type CodeIgniter\\\\Database\\\\SQLSRV\\\\Connection of property CodeIgniter\\\\Database\\\\SQLSRV\\\\PreparedQuery\\:\\:\\$db is not the same as PHPDoc type CodeIgniter\\\\Database\\\\BaseConnection\\<resource, resource\\> of overridden property CodeIgniter\\\\Database\\\\BasePreparedQuery\\<resource,resource,resource\\>\\:\\:\\$db\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/SQLSRV/PreparedQuery.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Return type \\(CodeIgniter\\\\Database\\\\SQLSRV\\\\PreparedQuery\\) of method CodeIgniter\\\\Database\\\\SQLSRV\\\\PreparedQuery\\:\\:_prepare\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\Database\\\\BasePreparedQuery\\<TConnection, TStatement, TResult\\>\\)\\) of method CodeIgniter\\\\Database\\\\BasePreparedQuery\\<resource,resource,resource\\>\\:\\:_prepare\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/SQLSRV/PreparedQuery.php',
 ];
@@ -1807,11 +1662,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/SQLite3/Forge.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Return type \\(CodeIgniter\\\\Database\\\\SQLite3\\\\PreparedQuery\\) of method CodeIgniter\\\\Database\\\\SQLite3\\\\PreparedQuery\\:\\:_prepare\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\Database\\\\BasePreparedQuery\\<TConnection, TStatement, TResult\\>\\)\\) of method CodeIgniter\\\\Database\\\\BasePreparedQuery\\<SQLite3,SQLite3Stmt,SQLite3Result\\>\\:\\:_prepare\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/SQLite3/PreparedQuery.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Return type \\(SQLite3Result\\|false\\) of method CodeIgniter\\\\Database\\\\SQLite3\\\\PreparedQuery\\:\\:_getResult\\(\\) should be covariant with return type \\(object\\|resource\\|null\\) of method CodeIgniter\\\\Database\\\\BasePreparedQuery\\<SQLite3,SQLite3Stmt,SQLite3Result\\>\\:\\:_getResult\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/SQLite3/PreparedQuery.php',
@@ -1823,7 +1673,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Database/SQLite3/Table.php',
 ];
 $ignoreErrors[] = [
@@ -1842,11 +1692,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/SQLite3/Utils.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Seeder.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Database\\\\Seeder\\:\\:call\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Seeder.php',
@@ -1858,23 +1703,8 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Debug/BaseExceptionHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Debug/ExceptionHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
-	'path' => __DIR__ . '/system/Debug/Exceptions.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Iterator.php',
+	'path' => __DIR__ . '/system/Debug/BaseExceptionHandler.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -1883,23 +1713,13 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 5,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Debug/Toolbar.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Database.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/Database.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Debug/Toolbar/Collectors/History.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -1933,7 +1753,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 14,
+	'count' => 12,
 	'path' => __DIR__ . '/system/Email/Email.php',
 ];
 $ignoreErrors[] = [
@@ -1998,7 +1818,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
+	'count' => 3,
 	'path' => __DIR__ . '/system/Entity/Entity.php',
 ];
 $ignoreErrors[] = [
@@ -2068,11 +1888,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/HTTP/CLIRequest.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 10,
 	'path' => __DIR__ . '/system/HTTP/CURLRequest.php',
 ];
@@ -2088,7 +1903,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 9,
+	'count' => 6,
 	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
 ];
 $ignoreErrors[] = [
@@ -2098,16 +1913,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in an if condition, string given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Return type \\(CodeIgniter\\\\HTTP\\\\DownloadResponse\\) of method CodeIgniter\\\\HTTP\\\\DownloadResponse\\:\\:noCache\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\HTTP\\\\Response\\)\\) of method CodeIgniter\\\\HTTP\\\\Response\\:\\:noCache\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Return type \\(CodeIgniter\\\\HTTP\\\\DownloadResponse\\) of method CodeIgniter\\\\HTTP\\\\DownloadResponse\\:\\:noCache\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\HTTP\\\\ResponseInterface\\)\\) of method CodeIgniter\\\\HTTP\\\\ResponseInterface\\:\\:noCache\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/DownloadResponse.php',
 ];
@@ -2148,11 +1953,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Call to function is_array\\(\\) with array will always evaluate to true\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/Files/FileCollection.php',
 ];
@@ -2218,7 +2018,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 6,
+	'count' => 2,
 	'path' => __DIR__ . '/system/HTTP/IncomingRequest.php',
 ];
 $ignoreErrors[] = [
@@ -2249,11 +2049,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Call to function is_array\\(\\) with array will always evaluate to true\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Negotiate.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
 	'path' => __DIR__ . '/system/HTTP/Negotiate.php',
 ];
 $ignoreErrors[] = [
@@ -2308,7 +2103,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 6,
+	'count' => 2,
 	'path' => __DIR__ . '/system/HTTP/Response.php',
 ];
 $ignoreErrors[] = [
@@ -2343,7 +2138,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 15,
+	'count' => 10,
 	'path' => __DIR__ . '/system/HTTP/URI.php',
 ];
 $ignoreErrors[] = [
@@ -2378,23 +2173,13 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
+	'count' => 2,
 	'path' => __DIR__ . '/system/HTTP/UserAgent.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in &&, array\\<string, string\\> given on the right side\\.$#',
 	'count' => 4,
 	'path' => __DIR__ . '/system/HTTP/UserAgent.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
-	'path' => __DIR__ . '/system/Helpers/array_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/date_helper.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a ternary operator condition, int\\<0, 1024\\> given\\.$#',
@@ -2478,7 +2263,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
+	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/form_helper.php',
 ];
 $ignoreErrors[] = [
@@ -2497,19 +2282,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Helpers/form_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 6,
-	'path' => __DIR__ . '/system/Helpers/html_helper.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a ternary operator condition, string given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/html_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Helpers/number_helper.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -2518,7 +2293,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
+	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/text_helper.php',
 ];
 $ignoreErrors[] = [
@@ -2528,7 +2303,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
+	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/url_helper.php',
 ];
 $ignoreErrors[] = [
@@ -2548,18 +2323,13 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
+	'count' => 1,
 	'path' => __DIR__ . '/system/Honeypot/Honeypot.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in \\|\\|, int given on the right side\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HotReloader/HotReloader.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
-	'path' => __DIR__ . '/system/I18n/Time.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Return type \\(CodeIgniter\\\\I18n\\\\Time\\) of method CodeIgniter\\\\I18n\\\\Time\\:\\:setTimestamp\\(\\) should be covariant with return type \\(static\\(DateTimeImmutable\\)\\) of method DateTimeImmutable\\:\\:setTimestamp\\(\\)$#',
@@ -2575,11 +2345,6 @@ $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 4,
 	'path' => __DIR__ . '/system/I18n/Time.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
-	'path' => __DIR__ . '/system/I18n/TimeLegacy.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Return type \\(CodeIgniter\\\\I18n\\\\TimeLegacy\\) of method CodeIgniter\\\\I18n\\\\TimeLegacy\\:\\:setTimestamp\\(\\) should be covariant with return type \\(static\\(DateTime\\)\\) of method DateTime\\:\\:setTimestamp\\(\\)$#',
@@ -2628,7 +2393,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 10,
+	'count' => 9,
 	'path' => __DIR__ . '/system/Images/Handlers/ImageMagickHandler.php',
 ];
 $ignoreErrors[] = [
@@ -2672,19 +2437,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Log/Handlers/FileHandler.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Log/Logger.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$level \\(string\\) of method CodeIgniter\\\\Log\\\\Logger\\:\\:log\\(\\) should be contravariant with parameter \\$level \\(mixed\\) of method Psr\\\\Log\\\\LoggerInterface\\:\\:log\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Log/Logger.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 21,
-	'path' => __DIR__ . '/system/Model.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Model\\:\\:chunk\\(\\) has parameter \\$userFunc with no signature specified for Closure\\.$#',
@@ -2698,7 +2453,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in &&, string given on the right side\\.$#',
-	'count' => 3,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Model.php',
 ];
 $ignoreErrors[] = [
@@ -2717,18 +2472,13 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Model.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Return type \\(int\\|object\\|string\\|false\\) of method CodeIgniter\\\\Model\\:\\:insert\\(\\) should be covariant with return type \\(bool\\|int\\|string\\) of method CodeIgniter\\\\BaseModel\\:\\:insert\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Model.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Accessing offset mixed directly on \\$_GET is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Pager/Pager.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
+	'count' => 1,
 	'path' => __DIR__ . '/system/Pager/Pager.php',
 ];
 $ignoreErrors[] = [
@@ -2767,16 +2517,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/RESTful/BaseResource.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/RESTful/ResourceController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 6,
-	'path' => __DIR__ . '/system/Router/AutoRouter.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a ternary operator condition, string\\|null given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Router/AutoRouter.php',
@@ -2803,7 +2543,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 8,
+	'count' => 6,
 	'path' => __DIR__ . '/system/Router/RouteCollection.php',
 ];
 $ignoreErrors[] = [
@@ -2963,7 +2703,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 5,
+	'count' => 3,
 	'path' => __DIR__ . '/system/Router/Router.php',
 ];
 $ignoreErrors[] = [
@@ -3088,7 +2828,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
+	'count' => 1,
 	'path' => __DIR__ . '/system/Session/Handlers/MemcachedHandler.php',
 ];
 $ignoreErrors[] = [
@@ -3098,7 +2838,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 5,
+	'count' => 4,
 	'path' => __DIR__ . '/system/Session/Handlers/RedisHandler.php',
 ];
 $ignoreErrors[] = [
@@ -3107,18 +2847,8 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Session/Handlers/RedisHandler.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, int given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Session/Handlers/RedisHandler.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Accessing offset \'HTTP_X_REQUESTED_WITH\' directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 2,
-	'path' => __DIR__ . '/system/Session/Session.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 13,
 	'path' => __DIR__ . '/system/Session/Session.php',
 ];
 $ignoreErrors[] = [
@@ -3272,11 +3002,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Session/SessionInterface.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
@@ -3402,31 +3127,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/DOMParser.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 7,
-	'path' => __DIR__ . '/system/Test/DOMParser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Access to an undefined property object\\:\\:\\$createdField\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Fabricator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Access to an undefined property object\\:\\:\\$deletedField\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Fabricator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Access to an undefined property object\\:\\:\\$updatedField\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Fabricator.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 5,
-	'path' => __DIR__ . '/system/Test/Fabricator.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Fabricator\\:\\:resetCounts\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Fabricator.php',
@@ -3444,11 +3144,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Assigning string directly on offset \'REQUEST_METHOD\' of \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 10,
 	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
 ];
 $ignoreErrors[] = [
@@ -3577,11 +3272,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/Mock/MockCURLRequest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
-	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockCache\\:\\:assertHas\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
@@ -3614,11 +3304,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Cannot access property \\$insert_id on object\\|resource\\|false\\.$#',
 	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
 	'path' => __DIR__ . '/system/Test/Mock/MockConnection.php',
 ];
 $ignoreErrors[] = [
@@ -3730,11 +3415,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockResourceController\\:\\:getModelName\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Mock/MockResourceController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Test/Mock/MockResourcePresenter.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockResourcePresenter\\:\\:getFormat\\(\\) has no return type specified\\.$#',
@@ -3857,11 +3537,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/TestLogger.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestResponse.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\TestResponse\\:\\:__call\\(\\) should return mixed but return statement is missing\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/TestResponse.php',
@@ -3972,59 +3647,14 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/TestResponse.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Accessing offset \'app\\.baseURL\' directly on \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/bootstrap.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Assigning \'http\\://example\\.com/\' directly on offset \'app\\.baseURL\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/bootstrap.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Assigning \'testing\' directly on offset \'CI_ENVIRONMENT\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/bootstrap.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Throttle\\\\Throttler\\:\\:\\$testTime \\(int\\) on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Throttle/Throttler.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/CreditCardRules.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/DotArrayFilter.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a negated boolean, array\\|null given\\.$#',
 	'count' => 6,
 	'path' => __DIR__ . '/system/Validation/FileRules.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
-	'path' => __DIR__ . '/system/Validation/FormatRules.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 11,
-	'path' => __DIR__ . '/system/Validation/Rules.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
-	'path' => __DIR__ . '/system/Validation/StrictRules/Rules.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 5,
-	'path' => __DIR__ . '/system/Validation/Validation.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Validation\\\\Validation\\:\\:isClosure\\(\\) has parameter \\$rule with no signature specified for Closure\\.$#',
@@ -4037,49 +3667,14 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Validation/Validation.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Validation/Views/list.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Call to an undefined static method CodeIgniter\\\\Config\\\\Factories\\:\\:cells\\(\\)\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/Cell.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 8,
-	'path' => __DIR__ . '/system/View/Cell.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\View\\\\Cell\\:\\:\\$cache \\(CodeIgniter\\\\Cache\\\\CacheInterface\\) in empty\\(\\) is not falsy\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/View/Cell.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Filters.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 9,
-	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\View\\\\Parser\\:\\:addPlugin\\(\\) has parameter \\$callback with no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/Parser.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/Plugins.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 9,
-	'path' => __DIR__ . '/system/View/Table.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in a ternary operator condition, float given\\.$#',
@@ -4095,21 +3690,6 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\View\\\\Table\\:\\:\\$function type has no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/View/Table.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 3,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#2 \\$context \\(\'attr\'\\|\'css\'\\|\'html\'\\|\'js\'\\|\'raw\'\\|\'url\'\\|null\\) of method CodeIgniter\\\\View\\\\View\\:\\:setData\\(\\) should be contravariant with parameter \\$context \\(string\\|null\\) of method CodeIgniter\\\\View\\\\RendererInterface\\:\\:setData\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#3 \\$context \\(\'attr\'\\|\'css\'\\|\'html\'\\|\'js\'\\|\'raw\'\\|\'url\'\\|null\\) of method CodeIgniter\\\\View\\\\View\\:\\:setVar\\(\\) should be contravariant with parameter \\$context \\(string\\|null\\) of method CodeIgniter\\\\View\\\\RendererInterface\\:\\:setVar\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/View/View.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',

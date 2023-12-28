@@ -22,6 +22,7 @@
         "codeigniter/phpstan-codeigniter": "^1.4",
         "ergebnis/composer-normalize": "^2.28",
         "fakerphp/faker": "^1.9",
+        "friendsofphp/php-cs-fixer": "~3.41.0",
         "kint-php/kint": "^5.0.4",
         "mikey179/vfsstream": "^1.6",
         "nexusphp/cs-config": "^3.6",
@@ -33,8 +34,11 @@
         "phpunit/phpcov": "^8.2",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1 || ^2.0",
-        "rector/rector": "0.18.6",
+        "rector/rector": "0.18.13",
         "vimeo/psalm": "^5.0"
+    },
+    "replace": {
+        "codeigniter4/framework": "self.version"
     },
     "suggest": {
         "ext-curl": "If you use CURLRequest class",
@@ -52,6 +56,7 @@
         "ext-readline": "Improves CLI::input() usability",
         "ext-redis": "If you use Cache class RedisHandler",
         "ext-simplexml": "If you format XML",
+        "ext-sodium": "If you use Encryption SodiumHandler",
         "ext-sqlite3": "If you use SQLite3",
         "ext-sqlsrv": "If you use SQL Server",
         "ext-xdebug": "If you use CIUnitTestCase::assertHeaderEmitted()"

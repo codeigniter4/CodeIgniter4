@@ -560,11 +560,12 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Returns the raw array of available routes.
      *
-     * @param bool $includeWildcard Whether to include '*' routes.
+     * @param non-empty-string|null $verb
+     * @param bool                  $includeWildcard Whether to include '*' routes.
      */
     public function getRoutes(?string $verb = null, bool $includeWildcard = true): array
     {
-        if (empty($verb)) {
+        if ($verb === null || $verb === '') {
             $verb = $this->getHTTPVerb();
         }
 
@@ -995,7 +996,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function match(array $verbs = [], string $from = '', $to = '', ?array $options = null): RouteCollectionInterface
     {
-        if (empty($from) || empty($to)) {
+        if ($from === '' || empty($to)) {
             throw new InvalidArgumentException('You must supply the parameters: from, to.');
         }
 
@@ -1267,8 +1268,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param string $search routeKey
      *
-     * @return array<int, string> filter_name or filter_name:arguments like 'role:admin,manager'
-     * @phpstan-return list<string>
+     * @return list<string> filter_name or filter_name:arguments like 'role:admin,manager'
      */
     public function getFiltersForRoute(string $search, ?string $verb = null): array
     {
@@ -1305,8 +1305,7 @@ class RouteCollection implements RouteCollectionInterface
          * Build our resulting string, inserting the $params in
          * the appropriate places.
          *
-         * @var array<int, string> $patterns
-         * @phpstan-var list<string> $patterns
+         * @var list<string> $patterns
          */
         $patterns = $matches[0];
 
@@ -1357,8 +1356,7 @@ class RouteCollection implements RouteCollectionInterface
          * Build our resulting string, inserting the $params in
          * the appropriate places.
          *
-         * @var array<int, string> $placeholders
-         * @phpstan-var list<string> $placeholders
+         * @var list<string> $placeholders
          */
         $placeholders = $matches[0];
 
@@ -1691,8 +1689,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Load routes options based on verb
      *
-     * @return array<string, array<string, array|int|string>> [routeKey(or from) => [key => value]]
-     * @phpstan-return array<
+     * @return array<
      *     string,
      *     array{
      *         filter?: string|list<string>, namespace?: string, hostname?: string,
@@ -1740,8 +1737,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @param string|null $verb HTTP verb. `'*'` returns all controllers in any verb.
      *
-     * @return array<int, string> controller name list
-     * @phpstan-return list<string>
+     * @return list<string> controller name list
      */
     public function getRegisteredControllers(?string $verb = '*'): array
     {

@@ -18,6 +18,10 @@ final class HotReloader
 {
     public function run(): void
     {
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_write_close();
+        }
+
         ini_set('zlib.output_compression', 'Off');
 
         header('Cache-Control: no-store');

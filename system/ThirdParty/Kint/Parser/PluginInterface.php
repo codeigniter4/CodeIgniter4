@@ -38,7 +38,7 @@ interface PluginInterface
     public function getTriggers(): int;
 
     /**
-     * @param mixed &$var
+     * @psalm-param mixed &$var
      */
     public function parse(&$var, Value &$o, int $trigger): void;
 }

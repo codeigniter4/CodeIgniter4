@@ -13,6 +13,7 @@ namespace CodeIgniter\Pager;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Pager\Exceptions\PagerException;
@@ -53,7 +54,7 @@ final class PagerTest extends CIUnitTestCase
 
         $request = new IncomingRequest(
             $config,
-            new URI($config->baseURL . ltrim($requestUri, '/')),
+            new SiteURI($config, ltrim($requestUri, '/')),
             'php://input',
             new UserAgent()
         );
@@ -70,7 +71,7 @@ final class PagerTest extends CIUnitTestCase
 
         $details = $this->pager->getDetails();
 
-        $this->assertSame('foo/bar', $details['uri']->getPath());
+        $this->assertSame('foo/bar', $details['uri']->getRoutePath());
     }
 
     public function testGetDetailsRecognizesPageQueryVar(): void
@@ -474,7 +475,7 @@ final class PagerTest extends CIUnitTestCase
 
         $request = new IncomingRequest(
             $config,
-            new URI(),
+            new SiteURI($config, 'x/y'),
             'php://input',
             new UserAgent()
         );

@@ -88,7 +88,7 @@ class Language
      * Parses the language string for a file, loads the file, if necessary,
      * getting the line.
      *
-     * @return string|string[]
+     * @return list<string>|string
      */
     public function getLine(string $line, array $args = [])
     {

@@ -32,8 +32,7 @@ final class IncomingRequestDetectingTest extends CIUnitTestCase
         $_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
 
         // The URI object is not used in detectPath().
-        $origin        = 'http://www.example.com/index.php/woot?code=good#pos';
-        $this->request = new IncomingRequest(new App(), new URI($origin), null, new UserAgent());
+        $this->request = new IncomingRequest(new App(), new SiteURI(new App(), 'woot?code=good#pos'), null, new UserAgent());
     }
 
     public function testPathDefault(): void

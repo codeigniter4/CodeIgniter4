@@ -373,12 +373,12 @@ final class EntityTest extends CIUnitTestCase
         $entity->second = 3;
 
         $this->assertIsFloat($entity->second);
-        $this->assertSame(3.0, $entity->second);
+        $this->assertEqualsWithDelta(3.0, $entity->second, PHP_FLOAT_EPSILON);
 
         $entity->second = '3.6';
 
         $this->assertIsFloat($entity->second);
-        $this->assertSame(3.6, $entity->second);
+        $this->assertEqualsWithDelta(3.6, $entity->second, PHP_FLOAT_EPSILON);
     }
 
     public function testCastDouble(): void
@@ -388,12 +388,12 @@ final class EntityTest extends CIUnitTestCase
         $entity->third = 3;
 
         $this->assertIsFloat($entity->third);
-        $this->assertSame(3.0, $entity->third);
+        $this->assertEqualsWithDelta(3.0, $entity->third, PHP_FLOAT_EPSILON);
 
         $entity->third = '3.6';
 
         $this->assertIsFloat($entity->third);
-        $this->assertSame(3.6, $entity->third);
+        $this->assertEqualsWithDelta(3.6, $entity->third, PHP_FLOAT_EPSILON);
     }
 
     public function testCastString(): void

@@ -312,4 +312,12 @@ final class FileLocatorTest extends CIUnitTestCase
             $this->locator->getClassname(SYSTEMPATH . 'bootstrap.php')
         );
     }
+
+    public function testGetClassNameFromDirectory(): void
+    {
+        $this->assertSame(
+            '',
+            $this->locator->getClassname(SYSTEMPATH)
+        );
+    }
 }

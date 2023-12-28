@@ -11,16 +11,19 @@
 
 use Rector\CodeQuality\Rector\BooleanAnd\SimplifyEmptyArrayCheckRector;
 use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
+use Rector\CodeQuality\Rector\Empty_\SimplifyEmptyCheckOnEmptyArrayRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
 use Rector\CodeQuality\Rector\FuncCall\ChangeArrayPushToArrayAssignRector;
 use Rector\CodeQuality\Rector\FuncCall\SimplifyRegexPatternRector;
 use Rector\CodeQuality\Rector\FuncCall\SimplifyStrposLowerRector;
+use Rector\CodeQuality\Rector\FuncCall\SingleInArrayToCompareRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
+use Rector\CodeQuality\Rector\Ternary\TernaryEmptyArrayArrayDimFetchToCoalesceRector;
 use Rector\CodeQuality\Rector\Ternary\UnnecessaryTernaryExpressionRector;
 use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
@@ -41,10 +44,11 @@ use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
+use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
+use Rector\TypeDeclaration\Rector\Empty_\EmptyOnNullableObjectToInstanceOfRector;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
-use Utils\Rector\RemoveVarTagFromClassConstantRector;
 use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -133,13 +137,22 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(ChangeArrayPushToArrayAssignRector::class);
     $rectorConfig->rule(UnnecessaryTernaryExpressionRector::class);
     $rectorConfig->rule(RemoveErrorSuppressInTryCatchStmtsRector::class);
-    $rectorConfig->rule(RemoveVarTagFromClassConstantRector::class);
     $rectorConfig->rule(SimplifyRegexPatternRector::class);
     $rectorConfig->rule(FuncGetArgsToVariadicParamRector::class);
     $rectorConfig->rule(MakeInheritedMethodVisibilitySameAsParentRector::class);
     $rectorConfig->rule(SimplifyEmptyArrayCheckRector::class);
-    $rectorConfig->rule(StringClassNameToClassConstantRector::class);
+    $rectorConfig->rule(SimplifyEmptyCheckOnEmptyArrayRector::class);
+    $rectorConfig->rule(TernaryEmptyArrayArrayDimFetchToCoalesceRector::class);
+    $rectorConfig->rule(EmptyOnNullableObjectToInstanceOfRector::class);
+    $rectorConfig->rule(DisallowedEmptyRuleFixerRector::class);
     $rectorConfig->rule(PrivatizeFinalClassPropertyRector::class);
     $rectorConfig->rule(CompleteDynamicPropertiesRector::class);
     $rectorConfig->rule(BooleanInIfConditionRuleFixerRector::class);
+    $rectorConfig->rule(SingleInArrayToCompareRector::class);
+
+    $rectorConfig
+        ->ruleWithConfiguration(StringClassNameToClassConstantRector::class, [
+            // keep '\\' prefix string on string '\Foo\Bar'
+            StringClassNameToClassConstantRector::SHOULD_KEEP_PRE_SLASH => true,
+        ]);
 };

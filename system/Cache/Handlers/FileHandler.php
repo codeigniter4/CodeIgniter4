@@ -150,8 +150,8 @@ class FileHandler extends BaseHandler
      */
     public function increment(string $key, int $offset = 1)
     {
-        $key = static::validateKey($key, $this->prefix);
-        $tmp = $this->getItem($key);
+        $prefixedKey = static::validateKey($key, $this->prefix);
+        $tmp         = $this->getItem($prefixedKey);
 
         if ($tmp === false) {
             $tmp = ['data' => 0, 'ttl' => 60];
@@ -222,8 +222,7 @@ class FileHandler extends BaseHandler
      * Does the heavy lifting of actually retrieving the file and
      * verifying it's age.
      *
-     * @return array<string, mixed>|false
-     * @phpstan-return array{data: mixed, ttl: int, time: int}|false
+     * @return array{data: mixed, ttl: int, time: int}|false
      */
     protected function getItem(string $filename)
     {

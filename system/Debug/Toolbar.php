@@ -121,7 +121,7 @@ class Toolbar
             $data['vars']['varData'][esc($heading)] = $varData;
         }
 
-        if (! empty($_SESSION)) {
+        if (isset($_SESSION)) {
             foreach ($_SESSION as $key => $value) {
                 // Replace the binary data with string to avoid json_encode failure.
                 if (is_string($value) && preg_match('~[^\x20-\x7E\t\r\n]~', $value)) {
@@ -292,7 +292,7 @@ class Toolbar
         $element = array_shift($elements);
 
         // If we have children behind us, collect and attach them to us
-        while (! empty($elements) && $elements[array_key_first($elements)]['end'] <= $element['end']) {
+        while ($elements !== [] && $elements[array_key_first($elements)]['end'] <= $element['end']) {
             $element['children'][] = array_shift($elements);
         }
 
@@ -302,7 +302,7 @@ class Toolbar
         }
 
         // If we have no younger siblings, we can return
-        if (empty($elements)) {
+        if ($elements === []) {
             return [$element];
         }
 
@@ -435,7 +435,6 @@ class Toolbar
      * @codeCoverageIgnore
      *
      * @return void
-     * @phpstan-return never|void
      */
     public function respond()
     {

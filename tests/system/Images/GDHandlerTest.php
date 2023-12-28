@@ -412,6 +412,15 @@ final class GDHandlerTest extends CIUnitTestCase
         $this->assertSame(exif_imagetype($this->start . 'work/ci-logo.png'), IMAGETYPE_PNG);
     }
 
+    public function testImageConvertPngToWebp(): void
+    {
+        $this->handler->withFile($this->origin . 'rocket.png');
+        $this->handler->convert(IMAGETYPE_WEBP);
+        $saved = $this->start . 'work/rocket.webp';
+        $this->handler->save($saved);
+        $this->assertSame(exif_imagetype($saved), IMAGETYPE_WEBP);
+    }
+
     public function testImageReorientLandscape(): void
     {
         for ($i = 0; $i <= 8; $i++) {

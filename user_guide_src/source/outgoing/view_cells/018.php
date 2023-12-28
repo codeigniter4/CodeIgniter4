@@ -8,7 +8,7 @@ class RecentPostsCell extends Cell
 {
     protected $posts;
 
-    public function mount()
+    public function mount(): void
     {
         $this->posts = model('PostModel')->orderBy('created_at', 'DESC')->findAll(10);
     }

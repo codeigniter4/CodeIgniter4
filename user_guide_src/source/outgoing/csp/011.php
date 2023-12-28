@@ -6,7 +6,7 @@ use CodeIgniter\Config\BaseConfig;
 
 class App extends BaseConfig
 {
-    public bool $CSPEnabled = true;
-
     // ...
+
+    public bool $CSPEnabled = true;
 }

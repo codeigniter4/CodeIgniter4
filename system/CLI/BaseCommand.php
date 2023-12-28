@@ -19,14 +19,14 @@ use Throwable;
 /**
  * BaseCommand is the base class used in creating CLI commands.
  *
- * @property array           $arguments
- * @property Commands        $commands
- * @property string          $description
- * @property string          $group
- * @property LoggerInterface $logger
- * @property string          $name
- * @property array           $options
- * @property string          $usage
+ * @property array<string, string> $arguments
+ * @property Commands              $commands
+ * @property string                $description
+ * @property string                $group
+ * @property LoggerInterface       $logger
+ * @property string                $name
+ * @property array<string, string> $options
+ * @property string                $usage
  */
 abstract class BaseCommand
 {
@@ -62,14 +62,14 @@ abstract class BaseCommand
     /**
      * the Command's options description
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [];
 
     /**
      * the Command's Arguments description
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [];
 
@@ -143,7 +143,7 @@ abstract class BaseCommand
         } else {
             $usage = $this->name;
 
-            if (! empty($this->arguments)) {
+            if ($this->arguments !== []) {
                 $usage .= ' [arguments]';
             }
         }
@@ -156,7 +156,7 @@ abstract class BaseCommand
             CLI::write($this->setPad($this->description, 0, 0, 2));
         }
 
-        if (! empty($this->arguments)) {
+        if ($this->arguments !== []) {
             CLI::newLine();
             CLI::write(lang('CLI.helpArguments'), 'yellow');
             $length = max(array_map('strlen', array_keys($this->arguments)));
@@ -166,7 +166,7 @@ abstract class BaseCommand
             }
         }
 
-        if (! empty($this->options)) {
+        if ($this->options !== []) {
             CLI::newLine();
             CLI::write(lang('CLI.helpOptions'), 'yellow');
             $length = max(array_map('strlen', array_keys($this->options)));

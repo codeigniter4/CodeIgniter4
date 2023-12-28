@@ -86,7 +86,7 @@ Argument:
 Options:
 ========
 * ``--command``: The command name to run in spark. Defaults to ``command:name``.
-* ``--group``: The group/namespace of the command. Defaults to ``CodeIgniter`` for basic commands, and ``Generators`` for generator commands.
+* ``--group``: The group/namespace of the command. Defaults to ``App`` for basic commands, and ``Generators`` for generator commands.
 * ``--type``: The type of command, whether a ``basic`` command or a ``generator`` command. Defaults to ``basic``.
 * ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
 * ``--suffix``: Append the component suffix to the generated class name.

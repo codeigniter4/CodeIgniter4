@@ -77,7 +77,7 @@ class FileCollection
     /**
      * Verify if a file exist in the collection of uploaded files and is have been uploaded with multiple option.
      *
-     * @return array|null
+     * @return list<UploadedFile>|null
      */
     public function getFileMultiple(string $name)
     {
@@ -148,7 +148,7 @@ class FileCollection
 
         $this->files = [];
 
-        if (empty($_FILES)) {
+        if ($_FILES === []) {
             return;
         }
 
@@ -245,7 +245,7 @@ class FileCollection
      * @param array $index The index sequence we are navigating down
      * @param array $value The portion of the array to process
      *
-     * @return UploadedFile|null
+     * @return list<UploadedFile>|UploadedFile|null
      */
     protected function getValueDotNotationSyntax(array $index, array $value)
     {

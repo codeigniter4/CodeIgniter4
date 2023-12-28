@@ -32,7 +32,7 @@ class Plugins
     /**
      * Wrap helper function to use as view plugin.
      *
-     * @return mixed|string|URI
+     * @return string|URI
      */
     public static function previousURL()
     {
@@ -79,7 +79,7 @@ class Plugins
     public static function ValidationErrors(array $params = []): string
     {
         $validator = Services::validation();
-        if (empty($params)) {
+        if ($params === []) {
             return $validator->listErrors();
         }
 

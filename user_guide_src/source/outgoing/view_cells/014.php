@@ -12,7 +12,7 @@ class AlertMessageCell extends Cell
     protected $message;
     private $computed;
 
-    public function mount()
+    public function mount(): void
     {
         $this->computed = sprintf('%s - %s', $this->type, $this->message);
     }

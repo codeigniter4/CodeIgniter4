@@ -59,7 +59,7 @@ class SessionMigrationGenerator extends BaseCommand
     /**
      * The Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [
         '-t' => 'Supply a table name.',

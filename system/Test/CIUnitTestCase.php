@@ -123,7 +123,7 @@ abstract class CIUnitTestCase extends TestCase
 
     /**
      * The namespace(s) to help us find the migration classes.
-     * Empty is equivalent to running `spark migrate --all`.
+     * `null` is equivalent to running `spark migrate --all`.
      * Note that running "all" runs migrations in date order,
      * but specifying namespaces runs them in namespace order (then date)
      *
@@ -135,8 +135,7 @@ abstract class CIUnitTestCase extends TestCase
      * The name of the database group to connect to.
      * If not present, will use the defaultGroup.
      *
-     * @var string
-     * @phpstan-var non-empty-string
+     * @var non-empty-string
      */
     protected $DBGroup = 'tests';
 

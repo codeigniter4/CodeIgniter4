@@ -10,7 +10,7 @@ class RecentPostsCell extends Cell
 {
     protected $posts;
 
-    public function mount(?int $categoryId)
+    public function mount(?int $categoryId): void
     {
         $this->posts = model('PostModel')
             ->when(

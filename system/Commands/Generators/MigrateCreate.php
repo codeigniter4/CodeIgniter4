@@ -55,7 +55,7 @@ class MigrateCreate extends BaseCommand
     /**
      * The Command's arguments.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [
         'name' => 'The migration file name.',
@@ -64,7 +64,7 @@ class MigrateCreate extends BaseCommand
     /**
      * The Command's options.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [
         '--namespace' => 'Set root namespace. Defaults to APP_NAMESPACE',

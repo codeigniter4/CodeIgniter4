@@ -72,7 +72,7 @@ class Parser
      * @param int     $depth_limit Maximum depth to parse data
      * @param ?string $caller      Caller class name
      */
-    public function __construct(int $depth_limit = 0, ?string $caller = null)
+    public function __construct(int $depth_limit = 0, string $caller = null)
     {
         $this->marker = "kint\0".\random_bytes(16);
 
@@ -83,7 +83,7 @@ class Parser
     /**
      * Set the caller class.
      */
-    public function setCallerClass(?string $caller = null): void
+    public function setCallerClass(string $caller = null): void
     {
         $this->noRecurseCall();
 

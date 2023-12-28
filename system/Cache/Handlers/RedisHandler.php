@@ -245,6 +245,7 @@ class RedisHandler extends BaseHandler
         if ($value !== null) {
             $time = Time::now()->getTimestamp();
             $ttl  = $this->redis->ttl(static::validateKey($key, $this->prefix));
+            assert(is_int($ttl));
 
             return [
                 'expire' => $ttl > 0 ? $time + $ttl : null,

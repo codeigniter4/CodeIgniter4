@@ -4,11 +4,19 @@ View Cells
 
 Many applications have small view fragments that can be repeated from page to page, or in different places on the pages. These are often help boxes, navigation controls, ads, login forms, etc. CodeIgniter lets you encapsulate the logic for these presentation blocks within View Cells. They are basically mini-views that can be included in other views. They can have logic built in to handle any cell-specific display logic. They can be used to make your views more readable and maintainable by separating the logic for each cell into its own class.
 
-CodeIgniter supports two types of View Cells: simple and controlled. Simple View Cells can be generated from any class and method of your choice and does not have to follow any rules, except that it must return a string. Controlled View Cells must be generated from a class that extends ``Codeigniter\View\Cells\Cell`` class which provides additional capability making your View Cells more flexible and faster to use.
-
 .. contents::
     :local:
     :depth: 2
+
+***************************
+Simple and Controlled Cells
+***************************
+
+CodeIgniter supports two types of View Cells: simple and controlled.
+
+**Simple View Cells** can be generated from any class and method of your choice and does not have to follow any rules, except that it must return a string.
+
+**Controlled View Cells** must be generated from a class that extends ``Codeigniter\View\Cells\Cell`` class which provides additional capability making your View Cells more flexible and faster to use.
 
 .. _app-cells:
 
@@ -18,11 +26,13 @@ Calling a View Cell
 
 No matter which type of View Cell you are using, you can call it from any view by using the ``view_cell()`` helper function.
 
-The first parameter is the name of the class and method to call, and the second parameter is an array of parameters to pass to the method:
+The first parameter is (1) *the name of the class and method* (Simple Cell) or (2) *the name of the class and optional method* (Controlled Cell) to call,
+and the second parameter is an array or string of parameters to pass to the method:
 
 .. literalinclude:: view_cells/001.php
 
-The Cell method must return a string, which will be inserted into the view where the ``view_cell()`` function was called.
+The string that the Cell returns will be inserted into the view where the
+``view_cell()`` function was called.
 
 Namespace Omission
 ==================
@@ -67,8 +77,10 @@ Controlled Cells
 
 .. versionadded:: 4.3.0
 
-Controlled cells have two primary goals: to make it as fast as possible to build the cell, and provide additional logic and
-flexibility to your views, if they need it. The class must extend ``CodeIgniter\View\Cells\Cell``. They should have a view file
+Controlled cells have two primary goals: (1) to make it as fast as possible to build the cell, and (2) provide additional logic and
+flexibility to your views, if they need it.
+
+The class must extend ``CodeIgniter\View\Cells\Cell``. They should have a view file
 in the same folder. By convention, the class name should be in PascalCase suffixed with ``Cell`` and the view should be
 the snake_cased version of the class name, without the suffix. For example, if you have a ``MyCell`` class, the view file
 should be ``my.php``.
@@ -79,7 +91,9 @@ should be ``my.php``.
 Creating a Controlled Cell
 ==========================
 
-At the most basic level, all you need to implement within the class are public properties. These properties will be made available to the view file automatically. Implementing the AlertMessage from above as a Controlled Cell would look like this:
+At the most basic level, all you need to implement within the class are public properties. These properties will be made available to the view file automatically.
+
+Implementing the AlertMessage from above as a Controlled Cell would look like this:
 
 .. literalinclude:: view_cells/008.php
 
@@ -108,7 +122,9 @@ You can specify a custom view name by setting the ``view`` property in the class
 Customize the Rendering
 =======================
 
-If you need more control over the rendering of the HTML, you can implement a ``render()`` method. This method allows you to perform additional logic and pass extra data the view, if needed. The ``render()`` method must return a string. To take advantage of the full features of controlled Cells, you should use ``$this->view()`` instead of the normal ``view()`` helper function:
+If you need more control over the rendering of the HTML, you can implement a ``render()`` method. This method allows you to perform additional logic and pass extra data the view, if needed. The ``render()`` method must return a string.
+
+To take advantage of the full features of controlled Cells, you should use ``$this->view()`` instead of the normal ``view()`` helper function:
 
 .. literalinclude:: view_cells/012.php
 

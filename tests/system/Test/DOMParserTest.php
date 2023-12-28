@@ -91,7 +91,7 @@ final class DOMParserTest extends CIUnitTestCase
     /**
      * @dataProvider provideText
      *
-     * @param mixed $text
+     * @param string $text
      */
     public function testSeeText($text): void
     {
@@ -139,7 +139,7 @@ final class DOMParserTest extends CIUnitTestCase
     /**
      * @dataProvider provideText
      *
-     * @param mixed $text
+     * @param string $text
      */
     public function testSeeElement($text): void
     {
@@ -169,6 +169,16 @@ final class DOMParserTest extends CIUnitTestCase
         $dom->withString($html);
 
         $this->assertTrue($dom->see('Hello World', '#heading'));
+    }
+
+    public function testSeeElementIDZero(): void
+    {
+        $dom = new DOMParser();
+
+        $html = '<html><body><h1 id="0">Hello World Wide Web</h1></body></html>';
+        $dom->withString($html);
+
+        $this->assertTrue($dom->see('Hello World', '#0'));
     }
 
     public function testSeeElementIDFails(): void

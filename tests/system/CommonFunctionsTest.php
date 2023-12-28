@@ -18,7 +18,7 @@ use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Session\Handlers\FileHandler;
@@ -411,7 +411,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->routes = $this->createRouteCollection();
         Services::injectMock('routes', $this->routes);
 
-        $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
+        $this->request = new MockIncomingRequest($this->config, new SiteURI($this->config), null, new UserAgent());
         Services::injectMock('request', $this->request);
 
         // setup & ask for a redirect...
@@ -446,7 +446,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->routes = $this->createRouteCollection();
         Services::injectMock('routes', $this->routes);
 
-        $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
+        $this->request = new MockIncomingRequest($this->config, new SiteURI($this->config), null, new UserAgent());
         Services::injectMock('request', $this->request);
 
         // setup & ask for a redirect...
@@ -481,7 +481,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->routes = $this->createRouteCollection();
         Services::injectMock('routes', $this->routes);
 
-        $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
+        $this->request = new MockIncomingRequest($this->config, new SiteURI($this->config), null, new UserAgent());
         Services::injectMock('request', $this->request);
 
         $locations = [
@@ -612,6 +612,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
     public function testForceHttpsNullRequestAndResponse(): void
     {
         $this->assertNull(Services::response()->header('Location'));
+
         Services::response()->setCookie('force', 'cookie');
         Services::response()->setHeader('Force', 'header');
         Services::response()->setBody('default body');
@@ -632,6 +633,25 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
         $this->expectException(RedirectException::class);
         force_https();
+    }
+
+    public function testForceHttpsWithBaseUrlSubFolder(): void
+    {
+        $config          = config(App::class);
+        $config->baseURL = 'https://example.jp/codeIgniter/';
+        $uri             = new SiteURI($config, 'en/home?foo=bar');
+        $request         = new IncomingRequest($config, $uri, '', new UserAgent());
+        Services::injectMock('request', $request);
+
+        try {
+            force_https();
+        } catch (Exception $e) {
+            $this->assertInstanceOf(RedirectException::class, $e);
+            $this->assertSame(
+                'https://example.jp/codeIgniter/index.php/en/home?foo=bar',
+                $e->getResponse()->header('Location')->getValue()
+            );
+        }
     }
 
     /**

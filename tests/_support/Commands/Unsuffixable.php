@@ -49,7 +49,7 @@ class Unsuffixable extends BaseCommand
     /**
      * The Command's Arguments
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $arguments = [
         'name' => 'Class name',
@@ -58,7 +58,7 @@ class Unsuffixable extends BaseCommand
     /**
      * The Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $options = [];
 
