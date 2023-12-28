@@ -126,6 +126,13 @@ final class ConfigCheckTest extends CIUnitTestCase
                 true
             )
         ) {
+            // Xdebug force adds colors on xdebug.cli_color=2
+            $output = preg_replace(
+                '/(\033\[[0-9;]+m)|(\035\[[0-9;]+m)/u',
+                '',
+                $output
+            );
+
             // Xdebug overloads var_dump().
             $this->assertStringContainsString(
                 'class Config\App#',
