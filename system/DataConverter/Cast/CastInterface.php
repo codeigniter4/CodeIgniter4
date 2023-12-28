@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\DataConverter\Cast;
 
 /**
- * @template TPhpValue PHP data type
+ * @template TPhpValue PHP native value type
  * @template TToDb     Data type to pass to database driver
  * @template TDbColumn Data type from database driver
  */
@@ -26,14 +26,14 @@ interface CastInterface
      * @param TDbColumn    $value  Data from database driver
      * @param list<string> $params Additional param
      *
-     * @return TPhpValue
+     * @return TPhpValue PHP native value
      */
     public static function fromDataSource(mixed $value, array $params = []): mixed;
 
     /**
      * Takes the PHP value, returns its value for DataSource.
      *
-     * @param TPhpValue    $value  PHP data
+     * @param TPhpValue    $value  PHP native value
      * @param list<string> $params Additional param
      *
      * @return TToDb Data to pass to database driver
