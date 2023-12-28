@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upgrading from 4.4.3 to 4.4.4 &mdash; CodeIgniter 4.4.3 documentation</title>
+  <title>Upgrading from 4.4.3 to 4.4.4 &mdash; CodeIgniter 4.4.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
@@ -303,11 +303,9 @@
 <li><p><a class="reference internal" href="#the-use-of-the-ssl-key-option-in-curlrequest-was-removed" id="id6">The use of the <cite>ssl_key</cite> option in CURLRequest was removed</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#breaking-enhancements" id="id7">Breaking Enhancements</a></p></li>
-<li><p><a class="reference internal" href="#project-files" id="id8">Project Files</a></p>
+<li><p><a class="reference internal" href="#project-files" id="id7">Project Files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#content-changes" id="id9">Content Changes</a></p></li>
-<li><p><a class="reference internal" href="#all-changes" id="id10">All Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id8">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
@@ -390,32 +388,33 @@ to a CA bundle for CURLRequest.</p>
 <p>CURLRequest option <cite>verify</cite> can also take <em>boolean</em> values as usual.</p>
 </section>
 </section>
-<section id="breaking-enhancements">
-<h2><a class="toc-backref" href="#id7">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
-</section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id8">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
 <p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
 these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
 <p>There are some third-party CodeIgniter modules available to assist with merging changes to
 the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
-<section id="content-changes">
-<h3><a class="toc-backref" href="#id9">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
-<p>The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:</p>
-<section id="config">
-<h4>Config<a class="headerlink" href="#config" title="Permalink to this headline"></a></h4>
-<ul class="simple">
-<li><p>&#64;TODO</p></li>
-</ul>
-</section>
-</section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id10">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>&#64;TODO</p></li>
+<li><p>app/Config/App.php</p></li>
+<li><p>app/Config/Autoload.php</p></li>
+<li><p>app/Config/Boot/development.php</p></li>
+<li><p>app/Config/Boot/testing.php</p></li>
+<li><p>app/Config/Cache.php</p></li>
+<li><p>app/Config/Email.php</p></li>
+<li><p>app/Config/Filters.php</p></li>
+<li><p>app/Config/Kint.php</p></li>
+<li><p>app/Config/Modules.php</p></li>
+<li><p>app/Config/Publisher.php</p></li>
+<li><p>app/Config/Session.php</p></li>
+<li><p>app/Views/errors/cli/error_exception.php</p></li>
+<li><p>app/Views/errors/html/error_exception.php</p></li>
+<li><p>composer.json</p></li>
+<li><p>env</p></li>
+<li><p>spark</p></li>
 </ul>
 </section>
 </section>
