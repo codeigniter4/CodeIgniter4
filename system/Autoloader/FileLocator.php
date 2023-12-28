@@ -237,7 +237,7 @@ class FileLocator implements FileLocatorInterface
         foreach ($this->autoloader->getNamespace() as $prefix => $paths) {
             foreach ($paths as $path) {
                 if ($prefix === 'CodeIgniter') {
-                    $system = [
+                    $system[] = [
                         'prefix' => $prefix,
                         'path'   => rtrim($path, '\\/') . DIRECTORY_SEPARATOR,
                     ];
@@ -252,9 +252,7 @@ class FileLocator implements FileLocatorInterface
             }
         }
 
-        $namespaces[] = $system;
-
-        return $namespaces;
+        return array_merge($namespaces, $system);
     }
 
     /**
