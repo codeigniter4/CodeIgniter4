@@ -62,7 +62,7 @@ final class ComposerJsonTest extends TestCase
                 $dependency,
                 $expectedVersion,
                 $fwRequireDev[$dependency],
-                clean_path(dirname(__DIR__, 2) . '/admin/framework/composer.json')
+                clean_path(dirname(__DIR__, 3) . '/admin/framework/composer.json')
             ));
         }
     }
