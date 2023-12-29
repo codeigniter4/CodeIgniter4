@@ -18,7 +18,7 @@
         "psr/log": "^1.1"
     },
     "require-dev": {
-        "codeigniter/coding-standard": "^1.5",
+        "codeigniter/coding-standard": "^1.7",
         "fakerphp/faker": "^1.9",
         "friendsofphp/php-cs-fixer": "^3.43",
         "kint-php/kint": "^5.0.4",
