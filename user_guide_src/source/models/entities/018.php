@@ -13,7 +13,7 @@ class MyEntity extends Entity
 
     // Bind the type to the handler
     protected $castHandlers = [
-        'base64' => \App\Entities\Cast\CastBase64::class,
+        'base64' => Cast\CastBase64::class,
     ];
 }
 
