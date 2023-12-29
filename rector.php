@@ -116,9 +116,10 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/system/Autoloader/Autoloader.php',
         ],
 
-        // session handlers have the gc() method with underscored parameter `$max_lifetime`
         UnderscoreToCamelCaseVariableNameRector::class => [
+            // session handlers have the gc() method with underscored parameter `$max_lifetime`
             __DIR__ . '/system/Session/Handlers',
+            __DIR__ . '/tests/_support/Entity/CustomUser.php',
         ],
 
         DeclareStrictTypesRector::class => [
