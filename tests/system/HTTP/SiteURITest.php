@@ -60,9 +60,9 @@ final class SiteURITest extends CIUnitTestCase
         $this->assertSame($expectedTotalSegments, $uri->getTotalSegments());
     }
 
-    public function provideConstructor(): iterable
+    public static function provideConstructor(): iterable
     {
-        return array_merge($this->provideSetPath(), $this->provideRelativePathWithQueryOrFragment());
+        return array_merge(self::provideSetPath(), self::provideRelativePathWithQueryOrFragment());
     }
 
     public static function provideSetPath(): iterable
@@ -214,7 +214,7 @@ final class SiteURITest extends CIUnitTestCase
         ];
     }
 
-    public function provideRelativePathWithQueryOrFragment()
+    public static function provideRelativePathWithQueryOrFragment(): iterable
     {
         return [
             'one/two?foo=1&bar=2' => [
