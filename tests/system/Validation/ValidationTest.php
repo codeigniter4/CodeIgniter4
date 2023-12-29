@@ -23,6 +23,7 @@ use Config\App;
 use Config\Services;
 use PHPUnit\Framework\ExpectationFailedException;
 use Tests\Support\Validation\TestRules;
+use Throwable;
 use TypeError;
 
 /**
@@ -35,7 +36,7 @@ use TypeError;
 class ValidationTest extends CIUnitTestCase
 {
     protected Validation $validation;
-    protected array $config = [
+    protected static array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
@@ -77,7 +78,7 @@ class ValidationTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->validation = new Validation((object) $this->config, Services::renderer());
+        $this->validation = new Validation((object) static::$config, Services::renderer());
         $this->validation->reset();
     }
 
@@ -204,7 +205,7 @@ class ValidationTest extends CIUnitTestCase
         $this->addToAssertionCount(1);
     }
 
-    public function provideSetRuleRulesFormat(): iterable
+    public static function provideSetRuleRulesFormat(): iterable
     {
         yield 'fail-simple-object' => [
             false,
@@ -223,7 +224,7 @@ class ValidationTest extends CIUnitTestCase
 
         yield 'fail-deep-object' => [
             false,
-            new Validation((object) $this->config, Services::renderer()),
+            new Validation((object) static::$config, Services::renderer()),
         ];
 
         yield 'pass-multiple-string' => [
@@ -997,12 +998,20 @@ class ValidationTest extends CIUnitTestCase
 
     public function testNoRuleSetsSetup(): void
     {
-        $this->expectException(ValidationException::class);
+        try {
+            $rulesets = static::$config['ruleSets'];
 
-        $this->config['ruleSets'] = null;
-        $this->validation         = new Validation((object) $this->config, Services::renderer());
-        $this->validation->reset();
-        $this->validation->run(['foo' => '']);
+            static::$config['ruleSets'] = null;
+            (new Validation((object) static::$config, Services::renderer()))
+                ->reset()
+                ->run(['foo' => '']);
+
+            $this->fail(sprintf('%s should throw %s.', __METHOD__, ValidationException::class));
+        } catch (Throwable $e) {
+            $this->assertInstanceOf(ValidationException::class, $e);
+        } finally {
+            static::$config['ruleSets'] = $rulesets;
+        }
     }
 
     public function testNotCustomRuleGroup(): void

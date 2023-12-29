@@ -23,7 +23,7 @@ use Tests\Support\Validation\TestRules;
  */
 final class ValidationTest extends TraditionalValidationTest
 {
-    protected array $config = [
+    protected static array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
