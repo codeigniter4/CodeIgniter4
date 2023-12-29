@@ -67,6 +67,31 @@ $overrides = [
             'use',
         ],
     ],
+    'fully_qualified_strict_types' => [
+        'import_symbols'                        => false,
+        'leading_backslash_in_global_namespace' => false,
+        'phpdoc_tags'                           => [
+            'param',
+            'phpstan-param',
+            'phpstan-property',
+            'phpstan-property-read',
+            'phpstan-property-write',
+            'phpstan-return',
+            'phpstan-var',
+            'property',
+            'property-read',
+            'property-write',
+            'psalm-param',
+            'psalm-property',
+            'psalm-property-read',
+            'psalm-property-write',
+            'psalm-return',
+            'psalm-var',
+            'return',
+            'throws',
+            'var',
+        ],
+    ],
 ];
 
 $options = [

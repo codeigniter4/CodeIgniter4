@@ -180,7 +180,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('subfolder/mycontroller/somemethod', Method::GET);
 
         $this->assertSame('Subfolder/', $directory);
-        $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Mycontroller::class, $controller);
+        $this->assertSame('\\' . Controllers\Subfolder\Mycontroller::class, $controller);
         $this->assertSame('getSomemethod', $method);
         $this->assertSame([], $params);
         $this->assertSame([
@@ -198,7 +198,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('subfolder/sub/mycontroller/somemethod', Method::GET);
 
         $this->assertSame('Subfolder/Sub/', $directory);
-        $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Sub\Mycontroller::class, $controller);
+        $this->assertSame('\\' . Controllers\Subfolder\Sub\Mycontroller::class, $controller);
         $this->assertSame('getSomemethod', $method);
         $this->assertSame([], $params);
     }
@@ -212,7 +212,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $this->assertSame('Dash_folder/', $directory);
         $this->assertSame(
-            '\\' . \CodeIgniter\Router\Controllers\Dash_folder\Mycontroller::class,
+            '\\' . Controllers\Dash_folder\Mycontroller::class,
             $controller
         );
         $this->assertSame('getSomemethod', $method);
@@ -284,7 +284,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('subfolder/15', Method::GET);
 
         $this->assertSame('Subfolder/', $directory);
-        $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Home::class, $controller);
+        $this->assertSame('\\' . Controllers\Subfolder\Home::class, $controller);
         $this->assertSame('getIndex', $method);
         $this->assertSame(['15'], $params);
         $this->assertSame([
@@ -302,7 +302,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('subfolder/15/20', Method::GET);
 
         $this->assertSame('Subfolder/', $directory);
-        $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Home::class, $controller);
+        $this->assertSame('\\' . Controllers\Subfolder\Home::class, $controller);
         $this->assertSame('getIndex', $method);
         $this->assertSame(['15', '20'], $params);
         $this->assertSame([
@@ -320,7 +320,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('subfolder', Method::GET);
 
         $this->assertSame('Subfolder/', $directory);
-        $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Home::class, $controller);
+        $this->assertSame('\\' . Controllers\Subfolder\Home::class, $controller);
         $this->assertSame('getIndex', $method);
         $this->assertSame([], $params);
         $this->assertSame([
@@ -514,7 +514,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             'subfolder-controller-and-method-wz-dash' => [
                 'subfolder/sub/blog-controller/some-method',
                 'Subfolder/Sub/',
-                '\\' . \CodeIgniter\Router\Controllers\Subfolder\Sub\BlogController::class,
+                '\\' . Controllers\Subfolder\Sub\BlogController::class,
                 'getSomeMethod',
                 2,
                 3,
@@ -523,7 +523,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             'subfolder-wz-dash-controller-and-method-wz-dash' => [
                 'sub-dir/blog-controller/some-method',
                 'SubDir/',
-                '\\' . \CodeIgniter\Router\Controllers\SubDir\BlogController::class,
+                '\\' . Controllers\SubDir\BlogController::class,
                 'getSomeMethod',
                 1,
                 2,
