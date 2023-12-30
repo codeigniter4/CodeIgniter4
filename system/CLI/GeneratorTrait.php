@@ -264,6 +264,25 @@ trait GeneratorTrait
      */
     protected function qualifyClassName(): string
     {
+        $class = $this->normalizeInputClassName();
+
+        // Gets the namespace from input. Don't forget the ending backslash!
+        $namespace = $this->getNamespace() . '\\';
+
+        if (strncmp($class, $namespace, strlen($namespace)) === 0) {
+            return $class; // @codeCoverageIgnore
+        }
+
+        $directoryString = ($this->directory !== null) ? $this->directory . '\\' : '';
+
+        return $namespace . $directoryString . str_replace('/', '\\', $class);
+    }
+
+    /**
+     * Normalize input classname.
+     */
+    private function normalizeInputClassName(): string
+    {
         // Gets the class name from input.
         $class = $this->params[0] ?? CLI::getSegment(2);
 
@@ -298,7 +317,7 @@ trait GeneratorTrait
         }
 
         // Trims input, normalize separators, and ensure that all paths are in Pascalcase.
-        $class = ltrim(
+        return ltrim(
             implode(
                 '\\',
                 array_map(
@@ -308,17 +327,6 @@ trait GeneratorTrait
             ),
             '\\/'
         );
-
-        // Gets the namespace from input. Don't forget the ending backslash!
-        $namespace = $this->getNamespace() . '\\';
-
-        if (strncmp($class, $namespace, strlen($namespace)) === 0) {
-            return $class; // @codeCoverageIgnore
-        }
-
-        $directoryString = ($this->directory !== null) ? $this->directory . '\\' : '';
-
-        return $namespace . $directoryString . str_replace('/', '\\', $class);
     }
 
     /**
