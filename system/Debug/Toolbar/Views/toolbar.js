@@ -650,7 +650,9 @@ var ciDebugBar = {
     },
 
     hotReloadConnect: function () {
-        const eventSource = new EventSource(ciSiteURL + "/__hot-reload");
+
+        const ciSiteLocale = `/${window.location.pathname.split('/')[1]}` || false;
+        const eventSource  = new EventSource(ciSiteURL + ciSiteLocale + "/__hot-reload");
 
         eventSource.addEventListener("reload", function (e) {
             console.log("reload", e);
