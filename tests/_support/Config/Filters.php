@@ -13,8 +13,13 @@ declare(strict_types=1);
 
 namespace Tests\Support\Config\Filters;
 
+use CodeIgniter\Debug\Exceptions;
 use Tests\Support\Filters\Customfilter;
 use Tests\Support\Filters\RedirectFilter;
+
+if (Exceptions::isUsingPhpUnitErrorHandlingInSeparateProcess()) {
+    return;
+}
 
 /**
  * @psalm-suppress UndefinedGlobalVariable

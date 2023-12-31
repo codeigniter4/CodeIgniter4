@@ -1,6 +1,11 @@
 <?php
 
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Debug\Exceptions;
+
+if (Exceptions::isUsingPhpUnitErrorHandlingInSeparateProcess()) {
+    return;
+}
 
 // The main Exception
 CLI::write('[' . get_class($exception) . ']', 'light_gray', 'red');

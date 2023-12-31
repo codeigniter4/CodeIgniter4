@@ -614,6 +614,27 @@ class Exceptions
         return '<pre><code>' . $out . '</code></pre>';
     }
 
+    /**
+     * When PHPUnit 9.x is running on a separate process, it registers its
+     * simple error handler through the function '__phpunit_error_handler'.
+     *
+     * This checks whether the test is running in a separate process without
+     * creating a direct dependency on PHPUnit.
+     *
+     * @todo Check if the same function is used on PHPUnit 10.x
+     *
+     * @internal
+     */
+    public static function isUsingPhpUnitErrorHandlingInSeparateProcess(): bool
+    {
+        try {
+            // @phpstan-ignore-next-line
+            return set_error_handler(null) === '__phpunit_error_handler';
+        } finally {
+            restore_error_handler();
+        }
+    }
+
     private static function renderBacktrace(array $backtrace): string
     {
         $backtraces = [];
