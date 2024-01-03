@@ -1,6 +1,6 @@
 <?php
 
-$result = array_group_by($employees, ['gender', 'hr.department']);
+$result = array_group_by($employees, ['gender', 'hr.department'], true);
 
 $result = [
     '' => [
