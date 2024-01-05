@@ -237,4 +237,29 @@ final class ExceptionHandlerTest extends CIUnitTestCase
 
         $this->assertSame('/var/www/CodeIgniter4/app/Controllers/Home.php', $newTrace[0]['file']);
     }
+
+    public function testHighlightFile(): void
+    {
+        $highlightFile = $this->getPrivateMethodInvoker($this->handler, 'highlightFile');
+
+        $output = $highlightFile(APPPATH . 'Controllers/Home.php', 9, 3);
+
+        if (PHP_VERSION_ID >= 80300) {
+            $expect = <<< 'HTML'
+                <pre><code><span class="line"><span class="number"> 8</span>     </span><span style="color: #f1ce61;">{
+                <span class='line highlight'><span class='number'> 9</span>         return view('welcome_message');
+                </span></span><span style="color: #c7c7c7"></span><span style="color: #f1ce61;"></span><span style="color: #869d6a"></span><span style="color: #f1ce61;"><span class="line"><span class="number">10</span>     }
+                </span></code></pre>
+                HTML;
+        } else {
+            $expect = <<< 'HTML'
+                <pre><code><span class="line"><span class="number"> 8</span> &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #f1ce61;">{
+                <span class='line highlight'><span class='number'> 9</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;view('welcome_message');
+                </span></span><span style="color: #c7c7c7"></span><span style="color: #f1ce61;"></span><span style="color: #869d6a"></span><span style="color: #f1ce61;"><span class="line"><span class="number">10</span> &nbsp;&nbsp;&nbsp;&nbsp;}
+                </span></code></pre>
+                HTML;
+        }
+
+        $this->assertSame($expect, $output);
+    }
 }
