@@ -2,5 +2,5 @@
 
 $data = $this->request->getPost();
 
-$user = new \App\Entities\User($data);
+$user = new App\Entities\User($data);
 $userModel->save($user);

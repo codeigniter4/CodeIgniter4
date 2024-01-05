@@ -1,6 +1,6 @@
 <?php
 
-$table = new \CodeIgniter\View\Table();
+$table = new CodeIgniter\View\Table();
 
 $table->setCaption('Preferences')
     ->setHeading('Name', 'Color', 'Size')

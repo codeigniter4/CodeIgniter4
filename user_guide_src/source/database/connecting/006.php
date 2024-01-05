@@ -19,4 +19,4 @@ $custom = [
     'failover' => [],
     'port'     => 3306,
 ];
-$db = \Config\Database::connect($custom);
+$db = Config\Database::connect($custom);

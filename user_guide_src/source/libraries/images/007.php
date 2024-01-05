@@ -1,6 +1,6 @@
 <?php
 
-$image = \Config\Services::image();
+$image = Config\Services::image();
 
 try {
     $image->withFile('/path/to/image/mypic.jpg')

@@ -1,3 +1,3 @@
 <?php
 
-$request = \Config\Services::request();
+$request = Config\Services::request();

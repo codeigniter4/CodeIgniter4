@@ -1,3 +1,3 @@
 <?php
 
-$lib = new \Acme\Blog\Libraries\BlogLib();
+$lib = new Acme\Blog\Libraries\BlogLib();

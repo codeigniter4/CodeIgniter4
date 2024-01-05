@@ -1,3 +1,3 @@
 <?php
 
-$db = \Config\Database::connect('group_name');
+$db = Config\Database::connect('group_name');

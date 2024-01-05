@@ -1,3 +1,3 @@
 <?php
 
-$timer = \Config\Services::timer();
+$timer = Config\Services::timer();

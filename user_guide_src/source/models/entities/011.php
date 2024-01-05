@@ -1,6 +1,6 @@
 <?php
 
-$user = new \App\Entities\User();
+$user = new App\Entities\User();
 
 // Converted to Time instance
 $user->created_at = 'April 15, 2017 10:30:00';

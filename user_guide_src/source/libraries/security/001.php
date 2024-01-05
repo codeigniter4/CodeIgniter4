@@ -1,3 +1,3 @@
 <?php
 
-$security = \Config\Services::security();
+$security = Config\Services::security();

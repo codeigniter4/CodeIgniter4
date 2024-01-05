@@ -4,7 +4,7 @@ $db->resultMode = MYSQLI_USE_RESULT; // for unbuffered results
 
 $query = $db->query('YOUR QUERY');
 
-$file = new \CodeIgniter\Files\File(WRITEPATH . 'data.csv');
+$file = new CodeIgniter\Files\File(WRITEPATH . 'data.csv');
 
 $csv = $file->openFile('w');
 

@@ -1,3 +1,3 @@
 <?php
 
-throw new \CodeIgniter\Database\Exceptions\DatabaseException();
+throw new CodeIgniter\Database\Exceptions\DatabaseException();

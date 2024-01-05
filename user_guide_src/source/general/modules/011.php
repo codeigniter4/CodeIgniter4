@@ -1,3 +1,3 @@
 <?php
 
-$model = new \Acme\Blog\Models\PostModel();
+$model = new Acme\Blog\Models\PostModel();

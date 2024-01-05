@@ -1,3 +1,3 @@
 <?php
 
-$this->controller(\App\Controllers\ForumController::class);
+$this->controller(App\Controllers\ForumController::class);

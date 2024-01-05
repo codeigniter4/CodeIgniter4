@@ -1,3 +1,3 @@
 <?php
 
-$parser = \Config\Services::parser();
+$parser = Config\Services::parser();

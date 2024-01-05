@@ -1,3 +1,3 @@
 <?php
 
-$typography = \Config\Services::typography(false);
+$typography = Config\Services::typography(false);

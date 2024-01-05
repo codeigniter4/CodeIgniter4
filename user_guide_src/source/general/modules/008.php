@@ -1,3 +1,3 @@
 <?php
 
-$config = new \Acme\Blog\Config\Blog();
+$config = new Acme\Blog\Config\Blog();

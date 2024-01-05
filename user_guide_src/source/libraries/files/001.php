@@ -1,3 +1,3 @@
 <?php
 
-$file = new \CodeIgniter\Files\File($path);
+$file = new CodeIgniter\Files\File($path);

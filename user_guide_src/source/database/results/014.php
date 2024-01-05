@@ -2,7 +2,7 @@
 
 $query = $db->query('YOUR QUERY');
 
-$rows = $query->getCustomResultObject(\App\Entities\User::class);
+$rows = $query->getCustomResultObject(App\Entities\User::class);
 
 foreach ($rows as $row) {
     echo $row->id;

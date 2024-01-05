@@ -1,3 +1,3 @@
 <?php
 
-$row = $query->getCustomRowObject(0, \App\Entities\User::class);
+$row = $query->getCustomRowObject(0, App\Entities\User::class);

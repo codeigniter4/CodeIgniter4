@@ -1,6 +1,6 @@
 <?php
 
-$mock = mock(\CodeIgniter\Cache\CacheFactory::class);
+$mock = mock(CodeIgniter\Cache\CacheFactory::class);
 
 // Assert that a cached item named $key exists
 $mock->assertHas($key);

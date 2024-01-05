@@ -1,7 +1,7 @@
 <?php
 
 // Create a new class manually.
-$userModel = new \App\Models\UserModel();
+$userModel = new App\Models\UserModel();
 
 // Create a shared instance of the model.
 $userModel = model('UserModel');
