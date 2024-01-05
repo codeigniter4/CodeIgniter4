@@ -14,6 +14,7 @@ namespace CodeIgniter\Debug;
 use App\Controllers\Home;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\IniTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Services;
@@ -27,6 +28,7 @@ use RuntimeException;
 final class ExceptionHandlerTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
+    use IniTestTrait;
 
     private ExceptionHandler $handler;
 
@@ -240,14 +242,20 @@ final class ExceptionHandlerTest extends CIUnitTestCase
 
     public function testHighlightFile(): void
     {
+        $this->backupIniValues([
+            'highlight.comment', 'highlight.default', 'highlight.html', 'highlight.keyword', 'highlight.string',
+        ]);
+
         $highlightFile = $this->getPrivateMethodInvoker($this->handler, 'highlightFile');
         $result        = $highlightFile(SUPPORTPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Hello.php', 16);
-        $resultFile    = version_compare(PHP_VERSION, '8.3.0', '<') ?
-            'highlightFile_pre_8_3_0.html' :
+        $resultFile    = PHP_VERSION_ID < 80300 ?
+            'highlightFile_pre_80300.html' :
             'highlightFile.html';
 
         $expected = file_get_contents(SUPPORTPATH . 'Debug' . DIRECTORY_SEPARATOR . $resultFile);
 
         $this->assertSame($expected, $result);
+
+        $this->restoreIniValues();
     }
 }
