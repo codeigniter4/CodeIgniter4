@@ -180,17 +180,17 @@ abstract class BaseExceptionHandler
             return false;
         }
 
-        if (version_compare(PHP_VERSION, '8.3.0', '<')) {
-            $source = str_replace(["\r\n", "\r"], "\n", $source);
-            $source = explode("\n", highlight_string($source, true));
+        $source = str_replace(["\r\n", "\r"], "\n", $source);
+        $source = explode("\n", highlight_string($source, true));
+
+        if (PHP_VERSION_ID < 80300) {
             $source = str_replace('<br />', "\n", $source[1]);
+            $source = explode("\n", str_replace("\r\n", "\n", $source));
         } else {
-            $source = highlight_string($source, true);
             // We have to remove these tags since we're preparing the result
             // ourselves and these tags are added manually at the end.
             $source = str_replace(['<pre><code>', '</code></pre>'], '', $source);
         }
-        $source = explode("\n", str_replace("\r\n", "\n", $source));
 
         // Get just the part to show
         $start = max($lineNumber - (int) round($lines / 2), 0);
