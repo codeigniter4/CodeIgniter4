@@ -15,6 +15,8 @@ use ReflectionException;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class IniTestTraitTest extends CIUnitTestCase
 {
