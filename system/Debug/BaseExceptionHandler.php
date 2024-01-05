@@ -182,8 +182,11 @@ abstract class BaseExceptionHandler
 
         $source = str_replace(["\r\n", "\r"], "\n", $source);
         $source = explode("\n", highlight_string($source, true));
-        $source = str_replace('<br />', "\n", $source[1]);
-        $source = explode("\n", str_replace("\r\n", "\n", $source));
+
+        if (PHP_VERSION_ID < 80300) {
+            $source = str_replace('<br />', "\n", $source[1]);
+            $source = explode("\n", str_replace("\r\n", "\n", $source));
+        }
 
         // Get just the part to show
         $start = max($lineNumber - (int) round($lines / 2), 0);
