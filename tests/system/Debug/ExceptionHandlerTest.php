@@ -237,4 +237,17 @@ final class ExceptionHandlerTest extends CIUnitTestCase
 
         $this->assertSame('/var/www/CodeIgniter4/app/Controllers/Home.php', $newTrace[0]['file']);
     }
+
+    public function testHighlightFile(): void
+    {
+        $highlightFile = $this->getPrivateMethodInvoker($this->handler, 'highlightFile');
+        $result        = $highlightFile(SUPPORTPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Hello.php', 16);
+        $resultFile    = version_compare(PHP_VERSION, '8.3.0', '<') ?
+            'highlightFile_pre_8_3_0.html' :
+            'highlightFile.html';
+
+        $expected = file_get_contents(SUPPORTPATH . 'Debug' . DIRECTORY_SEPARATOR . $resultFile);
+
+        $this->assertSame($expected, $result);
+    }
 }
