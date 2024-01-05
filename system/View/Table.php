@@ -381,7 +381,7 @@ class Table
                     $cell = $cell['data'] ?? '';
                     $out .= $temp;
 
-                    if ($cell === '' || $cell === null) {
+                    if ($cell === '') {
                         $out .= $this->emptyCells;
                     } elseif (isset($this->function)) {
                         $out .= ($this->function)($cell);
