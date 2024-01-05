@@ -25,7 +25,7 @@ class Table
     /**
      * Data for table rows
      *
-     * @var array
+     * @var list<array>|list<list<array>>
      */
     public $rows = [];
 
@@ -258,7 +258,7 @@ class Table
      *
      * Ensures a standard associative array format for all cell data
      *
-     * @return array
+     * @return array<string, array>|list<array>
      */
     protected function _prepArgs(array $args)
     {
