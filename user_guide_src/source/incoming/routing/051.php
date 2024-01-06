@@ -4,7 +4,7 @@
 class Routing extends \BaseRouting
 {
     // ...
-    public $override404 = 'App\Errors::show404';
+    public ?string $override404 = 'App\Errors::show404';
     // ...
 }
 
