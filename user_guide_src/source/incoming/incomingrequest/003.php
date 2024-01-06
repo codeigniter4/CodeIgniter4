@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Libraries;
+
 use CodeIgniter\HTTP\RequestInterface;
 
 class SomeClass
@@ -12,4 +14,4 @@ class SomeClass
     }
 }
 
-$someClass = new \SomeClass(\Config\Services::request());
+$someClass = new SomeClass(\Config\Services::request());
