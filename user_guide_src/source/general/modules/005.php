@@ -1,3 +1,3 @@
 <?php
 
-$filters->aliases['menus'] = \MenusFilter::class;
+$filters->aliases['menus'] = \App\Filters\MenusFilter::class;
