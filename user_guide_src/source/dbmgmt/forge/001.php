@@ -1,3 +1,3 @@
 <?php
 
-$forge = Config\Database::forge();
+$forge = \Config\Database::forge();

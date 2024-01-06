@@ -7,6 +7,6 @@ class Myclass
     public $date    = 'My Date';
 }
 
-$object = new Myclass();
+$object = new \Myclass();
 $builder->set($object);
 $builder->insert();

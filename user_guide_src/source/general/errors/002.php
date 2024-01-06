@@ -2,6 +2,6 @@
 
 try {
     $user = $userModel->find($id);
-} catch (Exception $e) {
+} catch (\Exception $e) {
     exit($e->getMessage());
 }

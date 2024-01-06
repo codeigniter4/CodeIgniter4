@@ -7,4 +7,4 @@ $formatters = [
     'avatar' => 'imageUrl',
 ];
 
-$fabricator = new Fabricator(UserModel::class, $formatters);
+$fabricator = new \Fabricator(\UserModel::class, $formatters);

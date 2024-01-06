@@ -1,3 +1,3 @@
 <?php
 
-$parser = new CodeIgniter\View\Parser();
+$parser = new \CodeIgniter\View\Parser();

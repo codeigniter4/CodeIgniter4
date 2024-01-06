@@ -1,3 +1,3 @@
 <?php
 
-CLI::write('File created.', 'green');
+\CLI::write('File created.', 'green');

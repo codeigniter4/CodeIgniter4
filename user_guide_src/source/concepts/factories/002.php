@@ -1,5 +1,5 @@
 <?php
 
-$users = Factories::models('Blog\Models\UserModel');
+$users = \Factories::models('Blog\Models\UserModel');
 // Or
-$users = Factories::models(Blog\Models\UserModel::class);
+$users = \Factories::models(\Blog\Models\UserModel::class);

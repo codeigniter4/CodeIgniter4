@@ -1,3 +1,3 @@
 <?php
 
-$image = Config\Services::image();
+$image = \Config\Services::image();

@@ -1,6 +1,6 @@
 <?php
 
-$dbutil = Config\Database::utils();
+$dbutil = \Config\Database::utils();
 
 $result = $dbutil->optimizeDatabase();
 

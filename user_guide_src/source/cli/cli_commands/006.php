@@ -2,6 +2,6 @@
 
 try {
     // ...
-} catch (Exception $e) {
+} catch (\Exception $e) {
     $this->showError($e);
 }

@@ -7,7 +7,7 @@ class Myclass
     public $date    = 'My Date';
 }
 
-$object = new Myclass();
+$object = new \Myclass();
 $builder->where('id', $id);
 $builder->update($object);
 /*

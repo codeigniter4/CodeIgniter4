@@ -16,7 +16,7 @@ $data = [
     ],
 ];
 
-$table = new CodeIgniter\View\Table();
+$table = new \CodeIgniter\View\Table();
 
 $table->setHeading(['name' => 'Name', 'color' => 'Color', 'size' => 'Size'])
     ->setSyncRowsWithHeading(true);

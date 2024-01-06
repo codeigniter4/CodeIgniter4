@@ -1,3 +1,3 @@
 <?php
 
-$prefixedKey = BaseHandler::validateKey($key, $prefix);
+$prefixedKey = \BaseHandler::validateKey($key, $prefix);

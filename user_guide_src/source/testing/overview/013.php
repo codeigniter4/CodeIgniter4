@@ -1,7 +1,7 @@
 <?php
 
 // Create an instance of the class to test
-$obj = new Foo();
+$obj = new \Foo();
 
 // Get the invoker for the 'privateMethod' method.
 $method = $this->getPrivateMethodInvoker($obj, 'privateMethod');

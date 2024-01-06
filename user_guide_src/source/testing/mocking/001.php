@@ -1,3 +1,3 @@
 <?php
 
-$mock = mock(CodeIgniter\Cache\CacheFactory::class);
+$mock = mock(\CodeIgniter\Cache\CacheFactory::class);

@@ -1,3 +1,3 @@
 <?php
 
-$routes->get('/', [App\Controllers\Home::class, 'index']);
+$routes->get('/', [\App\Controllers\Home::class, 'index']);

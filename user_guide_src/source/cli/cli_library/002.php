@@ -1,3 +1,3 @@
 <?php
 
-$color = CLI::prompt('What is your favorite color?');
+$color = \CLI::prompt('What is your favorite color?');

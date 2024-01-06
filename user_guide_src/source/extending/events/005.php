@@ -1,3 +1,3 @@
 <?php
 
-CodeIgniter\Events\Events::trigger('some_event');
+\CodeIgniter\Events\Events::trigger('some_event');

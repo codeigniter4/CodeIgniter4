@@ -1,5 +1,5 @@
 <?php
 
-$model = new UserModel($testDbConnection);
+$model = new \UserModel($testDbConnection);
 
-$fabricator = new Fabricator($model);
+$fabricator = new \Fabricator($model);

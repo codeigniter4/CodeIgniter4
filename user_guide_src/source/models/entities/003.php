@@ -16,7 +16,7 @@ if (! isset($user->username)) {
 $userModel->save($user);
 
 // Create
-$user           = new App\Entities\User();
+$user           = new \App\Entities\User();
 $user->username = 'foo';
 $user->email    = 'foo@example.com';
 $userModel->save($user);

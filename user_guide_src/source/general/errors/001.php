@@ -1,3 +1,3 @@
 <?php
 
-throw new Exception('Some message goes here');
+throw new \Exception('Some message goes here');

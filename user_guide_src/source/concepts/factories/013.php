@@ -1,3 +1,3 @@
 <?php
 
-$lib = Factories::libraries('Sub/SubLib');
+$lib = \Factories::libraries('Sub/SubLib');

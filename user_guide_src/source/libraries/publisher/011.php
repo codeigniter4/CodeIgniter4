@@ -1,6 +1,6 @@
 <?php
 
-$publisher = new Publisher('/home/source', '/home/destination');
+$publisher = new \Publisher('/home/source', '/home/destination');
 $publisher->addPaths([
     'pencil/lead.png',
     'metal/lead.png',

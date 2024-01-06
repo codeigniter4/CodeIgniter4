@@ -1,3 +1,3 @@
 <?php
 
-$timer = new CodeIgniter\Debug\Timer();
+$timer = new \CodeIgniter\Debug\Timer();

@@ -7,5 +7,5 @@ class Myclass
     public $country = 'Iran';
 }
 
-$object = new Myclass();
+$object = new \Myclass();
 $builder->upsert($object);

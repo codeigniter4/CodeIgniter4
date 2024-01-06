@@ -6,4 +6,4 @@ $tbody = [
     [8, 'Another great item title', '2017-11-16 13:46:54', 0],
 ];
 
-CLI::table($tbody, $thead);
+\CLI::table($tbody, $thead);

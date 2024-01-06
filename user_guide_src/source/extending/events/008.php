@@ -1,3 +1,3 @@
 <?php
 
-Events::simulate(false);
+\Events::simulate(false);

@@ -1,3 +1,3 @@
 <?php
 
-$publisher = new CodeIgniter\Publisher\Publisher();
+$publisher = new \CodeIgniter\Publisher\Publisher();

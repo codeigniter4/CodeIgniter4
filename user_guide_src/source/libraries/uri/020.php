@@ -1,6 +1,6 @@
 <?php
 
-$uri = new CodeIgniter\HTTP\URI('http://www.example.com?foo=bar&bar=baz&baz=foz');
+$uri = new \CodeIgniter\HTTP\URI('http://www.example.com?foo=bar&bar=baz&baz=foz');
 
 // Returns 'foo=bar'
 echo $uri->getQuery(['only' => ['foo']]);

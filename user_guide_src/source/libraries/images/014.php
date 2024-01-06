@@ -1,6 +1,6 @@
 <?php
 
-Config\Services::image('imagick')
+\Config\Services::image('imagick')
     ->withFile('/path/to/image/mypic.jpg')
     ->text('Copyright 2017 My Photo Co', [
         'color'      => '#fff',

@@ -1,3 +1,3 @@
 <?php
 
-$client = Config\Services::curlrequest();
+$client = \Config\Services::curlrequest();

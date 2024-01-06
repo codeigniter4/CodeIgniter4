@@ -1,6 +1,6 @@
 <?php
 
-$model = new App\Models\UserModel();
+$model = new \App\Models\UserModel();
 
 $data = [
     'users' => $model->paginate(10),

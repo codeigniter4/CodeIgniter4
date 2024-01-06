@@ -1,6 +1,6 @@
 <?php
 
-$files = new FileCollection([
+$files = new \FileCollection([
     FCPATH . 'index.php',
     ROOTPATH . 'spark',
 ]);

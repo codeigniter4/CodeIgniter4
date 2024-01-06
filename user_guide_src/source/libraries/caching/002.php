@@ -1,5 +1,5 @@
 <?php
 
-$cache = Config\Services::cache();
+$cache = \Config\Services::cache();
 
 $foo = $cache->get('foo');

@@ -1,3 +1,3 @@
 <?php
 
-CLI::clearScreen();
+\CLI::clearScreen();

@@ -1,7 +1,7 @@
 <?php
 
 // In app/Config/Routing.php
-class Routing extends BaseRouting
+class Routing extends \BaseRouting
 {
     // ...
     public string $defaultNamespace = '';

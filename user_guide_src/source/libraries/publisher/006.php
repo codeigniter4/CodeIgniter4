@@ -1,3 +1,3 @@
 <?php
 
-$memePublishers = Publisher::discover('CatGIFs');
+$memePublishers = \Publisher::discover('CatGIFs');

@@ -1,4 +1,4 @@
 <?php
 
-$result = new CodeIgniter\Test\TestResponse($response);
+$result = new \CodeIgniter\Test\TestResponse($response);
 $result->assertOK();

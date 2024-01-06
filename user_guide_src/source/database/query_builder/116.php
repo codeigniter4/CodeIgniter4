@@ -5,7 +5,7 @@ $query = $this->db->table('user2')
     ->join('user', 'user.email = user2.email', 'inner')
     ->where('user2.country', 'US');
 
-$additionalUpdateField = ['updated_at' => new RawSql('CURRENT_TIMESTAMP')];
+$additionalUpdateField = ['updated_at' => new \RawSql('CURRENT_TIMESTAMP')];
 
 $sql = $builder->table('user')
     ->setQueryAsData($query, null, 'u')

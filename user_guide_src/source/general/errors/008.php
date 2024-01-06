@@ -1,3 +1,3 @@
 <?php
 
-throw new CodeIgniter\Exceptions\ConfigException();
+throw new \CodeIgniter\Exceptions\ConfigException();

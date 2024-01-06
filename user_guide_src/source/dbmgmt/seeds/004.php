@@ -1,4 +1,4 @@
 <?php
 
-$seeder = Config\Database::seeder();
+$seeder = \Config\Database::seeder();
 $seeder->call('TestSeeder');

@@ -1,7 +1,7 @@
 <?php
 
 $routes->get('feed', static function () {
-    $rss = new RSSFeeder();
+    $rss = new \RSSFeeder();
 
     return $rss->feed('general');
 });

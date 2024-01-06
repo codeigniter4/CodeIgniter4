@@ -1,3 +1,3 @@
 <?php
 
-$view = new CodeIgniter\View\View();
+$view = new \CodeIgniter\View\View();
