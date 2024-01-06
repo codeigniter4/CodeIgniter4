@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 
