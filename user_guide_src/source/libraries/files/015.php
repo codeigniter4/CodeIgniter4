@@ -1,6 +1,8 @@
 <?php
 
-$files = new \FileCollection();
+use CodeIgniter\Files\FileCollection;
+
+$files = new FileCollection();
 $files->add(APPPATH . 'Config', true); // Adds all Config files and directories
 
 $files->removePattern('*tion.php'); // Would remove Encryption.php, Validation.php, and boot/production.php

@@ -1,6 +1,8 @@
 <?php
 
-$fruit = \CLI::promptByKey('These are your choices:', ['The red apple', 'The plump orange', 'The ripe banana']);
+use CodeIgniter\CLI\CLI;
+
+$fruit = CLI::promptByKey('These are your choices:', ['The red apple', 'The plump orange', 'The ripe banana']);
 /*
  * These are your choices:
  *   [0]  The red apple

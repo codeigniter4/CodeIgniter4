@@ -1,11 +1,13 @@
 <?php
 
+use CodeIgniter\Database\RawSql;
+
 $query = $this->db->table('user2')
     ->select('user2.name, user2.email, user2.country')
     ->join('user', 'user.email = user2.email', 'left')
     ->where('user.email IS NULL');
 
-$additionalUpdateField = ['updated_at' => new \RawSql('CURRENT_TIMESTAMP')];
+$additionalUpdateField = ['updated_at' => new RawSql('CURRENT_TIMESTAMP')];
 
 $sql = $builder->setQueryAsData($query)
     ->onConstraint('email')

@@ -1,7 +1,10 @@
 <?php
 
 // In app/Config/Routing.php
-class Routing extends \BaseRouting
+use CodeIgniter\Config\Routing as BaseRouting;
+
+// ...
+class Routing extends BaseRouting
 {
     // ...
     public bool $translateURIDashes = true;

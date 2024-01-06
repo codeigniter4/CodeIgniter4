@@ -1,5 +1,7 @@
 <?php
 
-$users = \Factories::models('Blog\Models\UserModel');
+use CodeIgniter\Config\Factories;
+
+$users = Factories::models('Blog\Models\UserModel');
 // Or
-$users = \Factories::models(\Blog\Models\UserModel::class);
+$users = Factories::models(\Blog\Models\UserModel::class);

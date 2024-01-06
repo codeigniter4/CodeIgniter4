@@ -1,3 +1,5 @@
 <?php
 
-$lib = \Factories::libraries('Sub/SubLib');
+use CodeIgniter\Config\Factories;
+
+$lib = Factories::libraries('Sub/SubLib');

@@ -1,5 +1,7 @@
 <?php
 
+use CodeIgniter\Test\Fabricator;
+
 $formatters = [
     'first'  => 'firstName',
     'email'  => 'email',
@@ -7,4 +9,4 @@ $formatters = [
     'avatar' => 'imageUrl',
 ];
 
-$fabricator = new \Fabricator(\UserModel::class, $formatters);
+$fabricator = new Fabricator(\UserModel::class, $formatters);

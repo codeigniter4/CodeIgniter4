@@ -1,3 +1,5 @@
 <?php
 
-$prefixedKey = \BaseHandler::validateKey($key, $prefix);
+use CodeIgniter\Cache\Handlers\BaseHandler;
+
+$prefixedKey = BaseHandler::validateKey($key, $prefix);

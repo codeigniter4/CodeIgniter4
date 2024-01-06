@@ -1,3 +1,5 @@
 <?php
 
-$overwrite = \CLI::prompt('File exists. Overwrite?', ['y', 'n']);
+use CodeIgniter\CLI\CLI;
+
+$overwrite = CLI::prompt('File exists. Overwrite?', ['y', 'n']);

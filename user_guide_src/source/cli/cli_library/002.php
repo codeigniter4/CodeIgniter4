@@ -1,3 +1,5 @@
 <?php
 
-$color = \CLI::prompt('What is your favorite color?');
+use CodeIgniter\CLI\CLI;
+
+$color = CLI::prompt('What is your favorite color?');

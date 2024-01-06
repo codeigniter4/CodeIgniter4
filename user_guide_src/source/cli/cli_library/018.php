@@ -1,3 +1,5 @@
 <?php
 
-\CLI::newLine();
+use CodeIgniter\CLI\CLI;
+
+CLI::newLine();

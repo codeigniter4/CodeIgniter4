@@ -1,3 +1,5 @@
 <?php
 
-\Events::simulate(false);
+use CodeIgniter\Events\Events;
+
+Events::simulate(false);

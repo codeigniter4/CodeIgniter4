@@ -1,6 +1,9 @@
 <?php
 
-\Factories::setOptions('filters', [
-    'instanceOf' => \FilterInterface::class,
+use CodeIgniter\Config\Factories;
+use CodeIgniter\Filters\FilterInterface;
+
+Factories::setOptions('filters', [
+    'instanceOf' => FilterInterface::class,
     'prefersApp' => false,
 ]);

@@ -1,3 +1,5 @@
 <?php
 
-$fabricator = new \Fabricator(\UserModel::class, null, 'fr_FR');
+use CodeIgniter\Test\Fabricator;
+
+$fabricator = new Fabricator(\UserModel::class, null, 'fr_FR');

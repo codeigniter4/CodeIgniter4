@@ -1,6 +1,8 @@
 <?php
 
-$publisher = new \Publisher('/home/source', '/home/destination');
+use CodeIgniter\Publisher\Publisher;
+
+$publisher = new Publisher('/home/source', '/home/destination');
 $publisher->addPaths([
     'pencil/lead.png',
     'metal/lead.png',

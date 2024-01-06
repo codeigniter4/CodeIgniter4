@@ -1,5 +1,7 @@
 <?php
 
+use CodeIgniter\CLI\CLI;
+
 $titles = [
     'task1a',
     'task1abc',
@@ -14,7 +16,7 @@ $descriptions = [
 $maxlen = max(array_map('strlen', $titles));
 
 for ($i = 0; $i < count($titles); $i++) {
-    \CLI::write(
+    CLI::write(
         // Display the title on the left of the row
         substr(
             $titles[$i] . str_repeat(' ', $maxlen + 3),
@@ -24,6 +26,6 @@ for ($i = 0; $i < count($titles); $i++) {
         // Wrap the descriptions in a right-hand column
         // with its left side 3 characters wider than
         // the longest item on the left.
-        \CLI::wrap($descriptions[$i], 40, $maxlen + 3)
+        CLI::wrap($descriptions[$i], 40, $maxlen + 3)
     );
 }

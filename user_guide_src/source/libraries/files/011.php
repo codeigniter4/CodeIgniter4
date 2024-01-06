@@ -1,6 +1,8 @@
 <?php
 
-$files = new \FileCollection([
+use CodeIgniter\Files\FileCollection;
+
+$files = new FileCollection([
     FCPATH . 'index.php',
     ROOTPATH . 'spark',
 ]);

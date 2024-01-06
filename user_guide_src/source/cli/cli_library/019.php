@@ -1,3 +1,5 @@
 <?php
 
-\CLI::clearScreen();
+use CodeIgniter\CLI\CLI;
+
+CLI::clearScreen();

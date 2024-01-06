@@ -1,3 +1,5 @@
 <?php
 
-$memePublishers = \Publisher::discover('CatGIFs');
+use CodeIgniter\Publisher\Publisher;
+
+$memePublishers = Publisher::discover('CatGIFs');
