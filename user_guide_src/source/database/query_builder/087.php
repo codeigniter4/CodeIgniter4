@@ -1,12 +1,7 @@
 <?php
 
-class Myclass
-{
-    public $title   = 'My Title';
-    public $content = 'My Content';
-    public $date    = 'My Date';
-}
+use App\Libraries\MyClass;
 
-$object = new \Myclass();
+$object = new MyClass();
 $builder->set($object);
 $builder->insert();

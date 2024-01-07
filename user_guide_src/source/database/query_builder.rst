@@ -924,6 +924,8 @@ The first parameter is an associative array of values.
 
 Here is an example using an object:
 
+.. literalinclude:: query_builder/122.php
+
 .. literalinclude:: query_builder/113.php
 
 The first parameter is an object.
@@ -1058,6 +1060,8 @@ You can also pass an associative array to this method:
 
 Or an object:
 
+.. literalinclude:: query_builder/077.php
+
 .. literalinclude:: query_builder/087.php
 
 $builder->update()
@@ -1070,6 +1074,8 @@ is an example using an array:
 .. literalinclude:: query_builder/088.php
 
 Or you can supply an object:
+
+.. literalinclude:: query_builder/077.php
 
 .. literalinclude:: query_builder/089.php
 
