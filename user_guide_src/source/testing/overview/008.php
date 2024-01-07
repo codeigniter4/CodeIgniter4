@@ -1,5 +1,7 @@
 <?php
 
+use CodeIgniter\Events\Events;
+
 Events::on('foo', static function ($arg) use (&$result) {
     $result = $arg;
 });

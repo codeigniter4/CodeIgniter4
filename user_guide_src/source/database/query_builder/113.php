@@ -1,11 +1,6 @@
 <?php
 
-class Myclass
-{
-    public $email   = 'ahmadinejad@example.com';
-    public $name    = 'Ahmadinejad';
-    public $country = 'Iran';
-}
+use App\Libraries\MyClass;
 
-$object = new Myclass();
+$object = new MyClass();
 $builder->upsert($object);

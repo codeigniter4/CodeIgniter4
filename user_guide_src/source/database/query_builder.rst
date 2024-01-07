@@ -829,15 +829,17 @@ method. Here is an example using an array:
 
 The first parameter is an associative array of values.
 
+.. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
+
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+
 Here is an example using an object:
 
 .. literalinclude:: query_builder/077.php
 
+.. literalinclude:: query_builder/121.php
+
 The first parameter is an object.
-
-.. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
-
-.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
 
 $builder->ignore()
 ------------------
@@ -921,6 +923,8 @@ constraint by default. Here is an example using an array:
 The first parameter is an associative array of values.
 
 Here is an example using an object:
+
+.. literalinclude:: query_builder/122.php
 
 .. literalinclude:: query_builder/113.php
 
@@ -1056,6 +1060,8 @@ You can also pass an associative array to this method:
 
 Or an object:
 
+.. literalinclude:: query_builder/077.php
+
 .. literalinclude:: query_builder/087.php
 
 $builder->update()
@@ -1068,6 +1074,8 @@ is an example using an array:
 .. literalinclude:: query_builder/088.php
 
 Or you can supply an object:
+
+.. literalinclude:: query_builder/077.php
 
 .. literalinclude:: query_builder/089.php
 

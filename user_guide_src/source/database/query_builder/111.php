@@ -1,5 +1,7 @@
 <?php
 
+use CodeIgniter\Database\RawSql;
+
 $data = [
     [
         'id'      => 2,

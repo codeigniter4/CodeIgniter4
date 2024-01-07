@@ -2,6 +2,6 @@
 
 try {
     directory_mirror($uploadedImages, FCPATH . 'images/');
-} catch (Throwable $e) {
+} catch (\Throwable $e) {
     echo 'Failed to export uploads!';
 }

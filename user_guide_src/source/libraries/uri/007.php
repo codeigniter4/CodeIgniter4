@@ -1,5 +1,7 @@
 <?php
 
+use CodeIgniter\HTTP\URI;
+
 $uriString = URI::createURIString($scheme, $authority, $path, $query, $fragment);
 
 // Creates: http://exmample.com/some/path?foo=bar#first-heading
