@@ -27,19 +27,40 @@ final class EncryptionTest extends CIUnitTestCase
 {
     private Encryption $encryption;
 
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        if (is_file(ROOTPATH . '.env')) {
+            rename(ROOTPATH . '.env', ROOTPATH . '.env.bak');
+
+            putenv('encryption.key');
+            unset($_ENV['encryption.key'], $_SERVER['encryption.key']);
+        }
+    }
+
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->encryption = new Encryption();
     }
 
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
+
+        if (is_file(ROOTPATH . '.env.bak')) {
+            rename(ROOTPATH . '.env.bak', ROOTPATH . '.env');
+        }
+    }
+
     /**
-     * __construct test
-     *
      * Covers behavior with config encryption key set or not
      */
     public function testConstructor(): void
     {
-        // Assume no configuration from set_up()
+        // Assume no configuration from setUp()
         $this->assertEmpty($this->encryption->key);
 
         // Try with an empty value
