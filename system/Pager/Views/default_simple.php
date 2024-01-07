@@ -15,7 +15,7 @@ $pager->setSurroundCount(0);
 			</a>
 		</li>
 		<li <?= $pager->hasNext() ? '' : 'class="disabled"' ?>>
-			<a href="<?= $pager->getnext() ?? '#' ?>" aria-label="<?= lang('Pager.next') ?>">
+			<a href="<?= $pager->getNext() ?? '#' ?>" aria-label="<?= lang('Pager.next') ?>">
 				<span aria-hidden="true"><?= lang('Pager.older') ?></span>
 			</a>
 		</li>

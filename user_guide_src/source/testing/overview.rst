@@ -124,6 +124,8 @@ logged in user:
 
 .. literalinclude:: overview/006.php
 
+.. literalinclude:: overview/022.php
+
 Additional Assertions
 ---------------------
 

@@ -31,10 +31,14 @@ $finder = Finder::create()
     ]);
 
 $overrides = [
-    'echo_tag_syntax'             => false,
-    'php_unit_internal_class'     => false,
-    'no_unused_imports'           => false,
-    'class_attributes_separation' => false,
+    'echo_tag_syntax'              => false,
+    'php_unit_internal_class'      => false,
+    'no_unused_imports'            => false,
+    'class_attributes_separation'  => false,
+    'fully_qualified_strict_types' => [
+        'import_symbols'                        => false,
+        'leading_backslash_in_global_namespace' => true,
+    ],
 ];
 
 $options = [

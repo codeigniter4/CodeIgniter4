@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Traits;
+
 trait AuthTrait
 {
     protected function setUpAuthTrait()
@@ -7,15 +9,6 @@ trait AuthTrait
         $user = $this->createFakeUser();
         $this->logInUser($user);
     }
-
-    // ...
-}
-
-use CodeIgniter\Test\CIUnitTestCase;
-
-final class AuthenticationFeatureTest extends CIUnitTestCase
-{
-    use AuthTrait;
 
     // ...
 }

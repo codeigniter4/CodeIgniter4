@@ -116,7 +116,7 @@ jobs:
 
       - name: Upload coverage results as artifact
         if: ${{ inputs.enable-artifact-upload }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: build/cov/coverage-${{ env.ARTIFACT_NAME }}.cov

@@ -11,7 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-class RegistrarConfig extends \CodeIgniter\Config\BaseConfig
+class RegistrarConfig extends CodeIgniter\Config\BaseConfig
 {
     public $foo = 'bar';
     public $bar = [

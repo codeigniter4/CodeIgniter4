@@ -1,5 +1,7 @@
 <?php
 
+use CodeIgniter\CLI\CLI;
+
 $hobbies = CLI::promptByMultipleKeys('Select your hobbies:', ['Playing game', 'Sleep', 'Badminton']);
 /*
  * Select your hobbies:

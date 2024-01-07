@@ -1,5 +1,7 @@
 <?php
 
+use CodeIgniter\CLI\CLI;
+
 $titles = [
     'task1a',
     'task1abc',
