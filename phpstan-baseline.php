@@ -2492,11 +2492,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Pager/Pager.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Call to method CodeIgniter\\\\Pager\\\\PagerRenderer\\:\\:getNext\\(\\) with incorrect case\\: getnext$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Pager/Views/default_simple.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Argument \\#1 \\$name \\(class\\-string\\) passed to function model does not extend CodeIgniter\\\\\\\\Model\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/RESTful/BaseResource.php',
