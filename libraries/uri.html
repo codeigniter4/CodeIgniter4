@@ -362,6 +362,8 @@ the URI as a string:</p>
 using the URI class’ static <code class="docutils literal notranslate"><span class="pre">createURIString()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\URI</span><span class="p">;</span>
+
 <span class="nv">$uriString</span> <span class="o">=</span> <span class="nx">URI</span><span class="o">::</span><span class="na">createURIString</span><span class="p">(</span><span class="nv">$scheme</span><span class="p">,</span> <span class="nv">$authority</span><span class="p">,</span> <span class="nv">$path</span><span class="p">,</span> <span class="nv">$query</span><span class="p">,</span> <span class="nv">$fragment</span><span class="p">);</span>
 
 <span class="c1">// Creates: http://exmample.com/some/path?foo=bar#first-heading</span>

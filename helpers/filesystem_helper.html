@@ -398,7 +398,7 @@ into the target directory, i.e. “mirror” its contents.</p>
 
 <span class="k">try</span> <span class="p">{</span>
     <span class="nx">directory_mirror</span><span class="p">(</span><span class="nv">$uploadedImages</span><span class="p">,</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;images/&#39;</span><span class="p">);</span>
-<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">Throwable</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\Throwable</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="s1">&#39;Failed to export uploads!&#39;</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>

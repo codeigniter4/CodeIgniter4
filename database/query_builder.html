@@ -1642,22 +1642,6 @@ method. Here is an example using an array:</p>
 </pre></div>
 </div>
 <p>The first parameter is an associative array of values.</p>
-<p>Here is an example using an object:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">class</span> <span class="nc">Myclass</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="nv">$title</span>   <span class="o">=</span> <span class="s1">&#39;My Title&#39;</span><span class="p">;</span>
-    <span class="k">public</span> <span class="nv">$content</span> <span class="o">=</span> <span class="s1">&#39;My Content&#39;</span><span class="p">;</span>
-    <span class="k">public</span> <span class="nv">$date</span>    <span class="o">=</span> <span class="s1">&#39;My Date&#39;</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Myclass</span><span class="p">();</span>
-<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$object</span><span class="p">);</span>
-<span class="c1">// Produces: INSERT INTO mytable (title, content, date) VALUES (&#39;My Title&#39;, &#39;My Content&#39;, &#39;My Date&#39;)</span>
-</pre></div>
-</div>
-<p>The first parameter is an object.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>All values except <code class="docutils literal notranslate"><span class="pre">RawSql</span></code> are escaped automatically producing safer queries.</p>
@@ -1666,6 +1650,29 @@ method. Here is an example using an array:</p>
 <p class="admonition-title">Warning</p>
 <p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the data manually. Failure to do so could result in SQL injections.</p>
 </div>
+<p>Here is an example using an object:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Libraries</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$title</span>   <span class="o">=</span> <span class="s1">&#39;My Title&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$content</span> <span class="o">=</span> <span class="s1">&#39;My Content&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$date</span>    <span class="o">=</span> <span class="s1">&#39;My Date&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">App\Libraries\MyClass</span><span class="p">;</span>
+
+<span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$object</span><span class="p">);</span>
+<span class="c1">// Produces: INSERT INTO mytable (title, content, date) VALUES (&#39;My Title&#39;, &#39;My Content&#39;, &#39;My Date&#39;)</span>
+</pre></div>
+</div>
+<p>The first parameter is an object.</p>
 </section>
 <section id="builder-ignore">
 <h4>$builder-&gt;ignore()<a class="headerlink" href="#builder-ignore" title="Permalink to this headline"></a></h4>
@@ -1830,14 +1837,21 @@ constraint by default. Here is an example using an array:</p>
 <p>Here is an example using an object:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">class</span> <span class="nc">Myclass</span>
+<span class="k">namespace</span> <span class="nx">App\Libraries</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$email</span>   <span class="o">=</span> <span class="s1">&#39;ahmadinejad@example.com&#39;</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$name</span>    <span class="o">=</span> <span class="s1">&#39;Ahmadinejad&#39;</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$country</span> <span class="o">=</span> <span class="s1">&#39;Iran&#39;</span><span class="p">;</span>
 <span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Myclass</span><span class="p">();</span>
+<span class="k">use</span> <span class="nx">App\Libraries\MyClass</span><span class="p">;</span>
+
+<span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">upsert</span><span class="p">(</span><span class="nv">$object</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -1925,6 +1939,8 @@ constraint by default. Here is an example using an array:</p>
 </div>
 <p>You can also upsert from a query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\RawSql</span><span class="p">;</span>
 
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;user2&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;user2.name, user2.email, user2.country&#39;</span><span class="p">)</span>
@@ -2025,6 +2041,8 @@ not work with MySQL because MySQL checks all constraints by default.</p>
 specify an extra column to be updated that isn’t included in the dataset.
 This can be done by setting the second parameter to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\RawSql</span><span class="p">;</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">[</span>
@@ -2145,14 +2163,21 @@ parameter.</p>
 <p>Or an object:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">class</span> <span class="nc">Myclass</span>
+<span class="k">namespace</span> <span class="nx">App\Libraries</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$title</span>   <span class="o">=</span> <span class="s1">&#39;My Title&#39;</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$content</span> <span class="o">=</span> <span class="s1">&#39;My Content&#39;</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$date</span>    <span class="o">=</span> <span class="s1">&#39;My Date&#39;</span><span class="p">;</span>
 <span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Myclass</span><span class="p">();</span>
+<span class="k">use</span> <span class="nx">App\Libraries\MyClass</span><span class="p">;</span>
+
+<span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$object</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">();</span>
 </pre></div>
@@ -2184,20 +2209,27 @@ is an example using an array:</p>
 <p>Or you can supply an object:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">class</span> <span class="nc">Myclass</span>
+<span class="k">namespace</span> <span class="nx">App\Libraries</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$title</span>   <span class="o">=</span> <span class="s1">&#39;My Title&#39;</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$content</span> <span class="o">=</span> <span class="s1">&#39;My Content&#39;</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$date</span>    <span class="o">=</span> <span class="s1">&#39;My Date&#39;</span><span class="p">;</span>
 <span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Myclass</span><span class="p">();</span>
+<span class="k">use</span> <span class="nx">App\Libraries\MyClass</span><span class="p">;</span>
+
+<span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$object</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Produces:</span>
 <span class="cm"> * UPDATE `mytable`</span>
-<span class="cm"> * SET `title` = &#39;{$title}&#39;, `name` = &#39;{$name}&#39;, `date` = &#39;{$date}&#39;</span>
+<span class="cm"> * SET `title` = &#39;{$title}&#39;, `content` = &#39;{$content}&#39;, `date` = &#39;{$date}&#39;</span>
 <span class="cm"> * WHERE id = `$id`</span>
 <span class="cm"> */</span>
 </pre></div>
@@ -2333,6 +2365,8 @@ returns the number of rows affected.</p>
 </div>
 <p>You can also update from a query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\RawSql</span><span class="p">;</span>
 
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;user2&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;user2.name, user2.email, user2.country&#39;</span><span class="p">)</span>

@@ -402,6 +402,8 @@ the powerful <code class="docutils literal notranslate"><span class="pre">Autolo
 different directory and it will return any child classes found:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="k">use</span> <span class="nx">CodeIgniter\Publisher\Publisher</span><span class="p">;</span>
+
 <span class="nv">$memePublishers</span> <span class="o">=</span> <span class="nx">Publisher</span><span class="o">::</span><span class="na">discover</span><span class="p">(</span><span class="s1">&#39;CatGIFs&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -692,6 +694,8 @@ and <code class="docutils literal notranslate"><span class="pre">getErrors()</sp
 Be mindful of duplicate basename collisions, for example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="k">use</span> <span class="nx">CodeIgniter\Publisher\Publisher</span><span class="p">;</span>
+
 <span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="s1">&#39;/home/source&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/destination&#39;</span><span class="p">);</span>
 <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addPaths</span><span class="p">([</span>
     <span class="s1">&#39;pencil/lead.png&#39;</span><span class="p">,</span>
@@ -713,6 +717,8 @@ affect other files in the destination. Returns success or failure, use <code cla
 <code class="docutils literal notranslate"><span class="pre">getErrors()</span></code> to troubleshoot failures.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Publisher\Publisher</span><span class="p">;</span>
 
 <span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="s1">&#39;/home/source&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/destination&#39;</span><span class="p">);</span>
 <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addPaths</span><span class="p">([</span>

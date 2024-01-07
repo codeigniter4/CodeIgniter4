@@ -558,6 +558,8 @@ executed when the user visits that URI. This is handy for quickly executing smal
 a simple view:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="k">use</span> <span class="nx">App\Libraries\RSSFeeder</span><span class="p">;</span>
+
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;feed&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nv">$rss</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RSSFeeder</span><span class="p">();</span>
 
@@ -1222,6 +1224,9 @@ controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// In app/Config/Routing.php</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\Routing</span> <span class="k">as</span> <span class="nx">BaseRouting</span><span class="p">;</span>
+
+<span class="c1">// ...</span>
 <span class="k">class</span> <span class="nc">Routing</span> <span class="k">extends</span> <span class="nx">BaseRouting</span>
 <span class="p">{</span>
     <span class="c1">// ...</span>
@@ -1259,6 +1264,9 @@ URI segments when used in Auto Routing, thus saving you additional route entries
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// In app/Config/Routing.php</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\Routing</span> <span class="k">as</span> <span class="nx">BaseRouting</span><span class="p">;</span>
+
+<span class="c1">// ...</span>
 <span class="k">class</span> <span class="nc">Routing</span> <span class="k">extends</span> <span class="nx">BaseRouting</span>
 <span class="p">{</span>
     <span class="c1">// ...</span>
@@ -1289,6 +1297,9 @@ to only those defined by you, by setting the <code class="docutils literal notra
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// In app/Config/Routing.php</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\Routing</span> <span class="k">as</span> <span class="nx">BaseRouting</span><span class="p">;</span>
+
+<span class="c1">// ...</span>
 <span class="k">class</span> <span class="nc">Routing</span> <span class="k">extends</span> <span class="nx">BaseRouting</span>
 <span class="p">{</span>
     <span class="c1">// ...</span>
@@ -1314,10 +1325,13 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// In app/Config/Routing.php</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\Routing</span> <span class="k">as</span> <span class="nx">BaseRouting</span><span class="p">;</span>
+
+<span class="c1">// ...</span>
 <span class="k">class</span> <span class="nc">Routing</span> <span class="k">extends</span> <span class="nx">BaseRouting</span>
 <span class="p">{</span>
     <span class="c1">// ...</span>
-    <span class="k">public</span> <span class="nv">$override404</span> <span class="o">=</span> <span class="s1">&#39;App\Errors::show404&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="o">?</span><span class="nx">string</span> <span class="nv">$override404</span> <span class="o">=</span> <span class="s1">&#39;App\Errors::show404&#39;</span><span class="p">;</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
@@ -1348,6 +1362,9 @@ For an example use of lowering the priority see <a class="reference internal" hr
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// In app/Config/Routing.php</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\Routing</span> <span class="k">as</span> <span class="nx">BaseRouting</span><span class="p">;</span>
+
+<span class="c1">// ...</span>
 <span class="k">class</span> <span class="nc">Routing</span> <span class="k">extends</span> <span class="nx">BaseRouting</span>
 <span class="p">{</span>
     <span class="c1">// ...</span>

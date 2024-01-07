@@ -565,7 +565,7 @@ It will cause errors if you attempt to redefine that class.</p>
 <p>In the module’s <strong>Config/Filters.php</strong> file, you need to define the aliases of the filters you use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$filters</span><span class="o">-&gt;</span><span class="na">aliases</span><span class="p">[</span><span class="s1">&#39;menus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">MenusFilter</span><span class="o">::</span><span class="na">class</span><span class="p">;</span>
+<span class="nv">$filters</span><span class="o">-&gt;</span><span class="na">aliases</span><span class="p">[</span><span class="s1">&#39;menus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">\App\Filters\MenusFilter</span><span class="o">::</span><span class="na">class</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>

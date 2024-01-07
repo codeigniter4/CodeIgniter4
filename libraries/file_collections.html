@@ -322,6 +322,8 @@ locating and working with groups of files across the filesystem.</p>
 of files you set or build:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="k">use</span> <span class="nx">CodeIgniter\Files\FileCollection</span><span class="p">;</span>
+
 <span class="nv">$files</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileCollection</span><span class="p">([</span>
     <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;index.php&#39;</span><span class="p">,</span>
     <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;spark&#39;</span><span class="p">,</span>
@@ -425,6 +427,8 @@ If a <code class="docutils literal notranslate"><span class="pre">$scope</span><
 outside of <code class="docutils literal notranslate"><span class="pre">$scope</span></code> are always retained). When no scope is provided then all files are subject.</p>
 <p>Examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Files\FileCollection</span><span class="p">;</span>
 
 <span class="nv">$files</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileCollection</span><span class="p">();</span>
 <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// Adds all Config files and directories</span>
