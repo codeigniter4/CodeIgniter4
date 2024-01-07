@@ -33,6 +33,14 @@ This folder contains tools or docs useful for project maintainers.
     It is community-maintained, and accepts issues and pull requests.  
     It could be downloaded, forked or composer-installed.
 
+## Contributor Scripts
+
+-   **setup.sh** installs a git pre-commit hook into a contributor's
+    local clone of their fork of the `CodeIgniter4` repository.
+-   **pre-commit** runs PHP Lint and PHP CodeSniffer on any files
+    to be added as part of a git commit, ensuring that they conform to the
+    framework coding style standards, and automatically fixing what can be.
+
 ## Maintainer Scripts
 
 -   **release-config** holds variables used for the maintainer & release building
