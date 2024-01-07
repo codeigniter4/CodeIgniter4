@@ -6,7 +6,7 @@ use CodeIgniter\Events\Events;
 Events::on('pre_system', 'some_function');
 
 // Call on an instance method
-$user = new \User();
+$user = new \App\Libraries\User();
 Events::on('pre_system', [$user, 'someMethod']);
 
 // Call on a static method
