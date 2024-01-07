@@ -829,15 +829,17 @@ method. Here is an example using an array:
 
 The first parameter is an associative array of values.
 
+.. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
+
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+
 Here is an example using an object:
 
 .. literalinclude:: query_builder/077.php
 
+.. literalinclude:: query_builder/121.php
+
 The first parameter is an object.
-
-.. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
-
-.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
 
 $builder->ignore()
 ------------------
