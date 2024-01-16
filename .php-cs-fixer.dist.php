@@ -43,7 +43,17 @@ $finder = Finder::create()
         __DIR__ . '/spark',
     ]);
 
-$overrides = [];
+$overrides = [
+    'binary_operator_spaces'                   => [
+                'default'   => 'single_space',
+                'operators' => [
+                    '='  => 'align_single_space_minimal',
+                    '=>' => 'align_single_space_minimal_by_scope',
+                    '||' => 'align_single_space_minimal',
+                    '.=' => 'align_single_space_minimal',
+                ],
+     ],
+];
 
 $options = [
     'cacheFile' => 'build/.php-cs-fixer.cache',
