@@ -47,7 +47,7 @@ jobs:
     steps:
       - id: coverage-php-version
         run: |
-          echo "version=8.1" >> $GITHUB_OUTPUT
+          echo "version=8.2" >> $GITHUB_OUTPUT
 
   sanity-tests:
     name: Others
