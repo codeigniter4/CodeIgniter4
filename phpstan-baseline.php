@@ -1667,11 +1667,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/SQLite3/PreparedQuery.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Class stdClass referenced with incorrect case\\: stdclass\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Database/SQLite3/Table.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Database/SQLite3/Table.php',
