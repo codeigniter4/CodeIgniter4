@@ -252,10 +252,6 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         $result        = $highlightFile(SUPPORTPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Hello.php', 16);
 
         switch (true) {
-            case PHP_VERSION_ID < 80000:
-                $resultFile = 'highlightFile_pre_80000.html';
-                break;
-
             case PHP_VERSION_ID < 80300:
                 $resultFile = 'highlightFile_pre_80300.html';
                 break;
