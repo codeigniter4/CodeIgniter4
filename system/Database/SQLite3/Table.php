@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\Exceptions\DataException;
-use stdclass;
+use stdClass;
 
 /**
  * Class Table

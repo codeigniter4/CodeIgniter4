@@ -31,7 +31,7 @@ final class ExceptionsTest extends CIUnitTestCase
 {
     use ReflectionHelper;
 
-    private \CodeIgniter\Debug\Exceptions $exception;
+    private Exceptions $exception;
 
     public static function setUpBeforeClass(): void
     {
