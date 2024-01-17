@@ -313,6 +313,99 @@ class Builder extends BaseBuilder
     }
 
     /**
+     * Generates a platform-specific batch update string from the supplied data
+     *
+     * @used-by batchExecute
+     *
+     * @param string                 $table  Protected table name
+     * @param list<string>           $keys   QBKeys
+     * @param list<list<int|string>> $values QBSet
+     */
+    protected function _updateBatch(string $table, array $keys, array $values): string
+    {
+        $sql = $this->QBOptions['sql'] ?? '';
+
+        // if this is the first iteration of batch then we need to build skeleton sql
+        if ($sql === '') {
+            $constraints = $this->QBOptions['constraints'] ?? [];
+
+            if ($constraints === []) {
+                if ($this->db->DBDebug) {
+                    throw new DatabaseException('You must specify a constraint to match on for batch updates.'); // @codeCoverageIgnore
+                }
+
+                return ''; // @codeCoverageIgnore
+            }
+
+            $updateFields = $this->QBOptions['updateFields'] ??
+                $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ??
+                [];
+
+            $alias = $this->QBOptions['alias'] ?? '_u';
+
+            $sql = 'UPDATE ' . $this->compileIgnore('update') . $table . "\n";
+
+            $sql .= "SET\n";
+
+            $sql .= implode(
+                ",\n",
+                array_map(
+                    static fn ($key, $value) => $key . ($value instanceof RawSql ?
+                            ' = ' . $value :
+                            ' = ' . $alias . '.' . $value),
+                    array_keys($updateFields),
+                    $updateFields
+                )
+            ) . "\n";
+
+            $sql .= "FROM (\n{:_table_:}";
+
+            $sql .= ') ' . $alias . "\n";
+
+            $sql .= 'WHERE ' . implode(
+                ' AND ',
+                array_map(
+                    static fn ($key, $value) => (
+                        ($value instanceof RawSql && is_string($key))
+                        ?
+                        $table . '.' . $key . ' = ' . $value
+                        :
+                        (
+                            $value instanceof RawSql
+                            ?
+                            $value
+                            :
+                            $table . '.' . $value . ' = ' . $alias . '.' . $value
+                        )
+                    ),
+                    array_keys($constraints),
+                    $constraints
+                )
+            );
+
+            $this->QBOptions['sql'] = $sql;
+        }
+
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $data = $this->QBOptions['setQueryAsData'];
+        } else {
+            $data = implode(
+                " UNION ALL\n",
+                array_map(
+                    static fn ($value) => 'SELECT ' . implode(', ', array_map(
+                        static fn ($key, $index) => $index . ' ' . $key,
+                        $keys,
+                        $value
+                    )),
+                    $values
+                )
+            ) . "\n";
+        }
+
+        return str_replace('{:_table_:}', $data, $sql);
+    }
+
+    /**
      * Generates a platform-specific upsertBatch string from the supplied data
      *
      * @throws DatabaseException
