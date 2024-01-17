@@ -14,6 +14,7 @@ namespace CodeIgniter\Database\Postgre;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
+use CodeIgniter\Database\SqlValue;
 use InvalidArgumentException;
 
 /**
@@ -317,9 +318,9 @@ class Builder extends BaseBuilder
      *
      * @used-by batchExecute
      *
-     * @param string                 $table  Protected table name
-     * @param list<string>           $keys   QBKeys
-     * @param list<list<int|string>> $values QBSet
+     * @param string                          $table  Protected table name
+     * @param list<string>                    $keys   QBKeys
+     * @param list<list<int|SqlValue|string>> $values QBSet
      */
     protected function _updateBatch(string $table, array $keys, array $values): string
     {
@@ -393,7 +394,13 @@ class Builder extends BaseBuilder
                 " UNION ALL\n",
                 array_map(
                     static fn ($value) => 'SELECT ' . implode(', ', array_map(
-                        static fn ($key, $index) => $index . ' ' . $key,
+                        static function ($key, $index) {
+                            if ($index instanceof SqlValue) {
+                                return $index->getValue() . '::' . $index->getType() . ' ' . $key;
+                            }
+
+                            return $index . ' ' . $key;
+                        },
                         $keys,
                         $value
                     )),

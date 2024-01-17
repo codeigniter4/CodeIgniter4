@@ -130,7 +130,7 @@ class BaseBuilder
     /**
      * QB data sets
      *
-     * @var array<string, string>|list<list<int|string>>
+     * @var array<string, string>|list<list<int|SqlValue|string>>
      */
     protected $QBSet = [];
 
@@ -1852,8 +1852,16 @@ class BaseBuilder
 
             $clean = [];
 
-            foreach ($row as $rowValue) {
-                $clean[] = $escape ? $this->db->escape($rowValue) : $rowValue;
+            foreach ($row as $key => $rowValue) {
+                [$keyName, $keyType] = $this->parseKey($key);
+
+                $escapedValue = $escape ? $this->db->escape($rowValue) : $rowValue;
+
+                if ($keyType !== null) {
+                    $clean[] = new SqlValue($escapedValue, $keyType);
+                } else {
+                    $clean[] = $escapedValue;
+                }
             }
 
             $row = $clean;
@@ -1862,14 +1870,30 @@ class BaseBuilder
         }
 
         foreach ($keys as $k) {
-            $k = $this->db->protectIdentifiers($k, false);
+            [$keyName] = $this->parseKey($k);
 
-            if (! in_array($k, $this->QBKeys, true)) {
-                $this->QBKeys[] = $k;
+            $keyName = $this->db->protectIdentifiers($keyName, false);
+
+            if (! in_array($keyName, $this->QBKeys, true)) {
+                $this->QBKeys[] = $keyName;
             }
         }
 
         return $this;
+    }
+
+    /**
+     * Parses column name (with type) and returns name and type
+     * Key examples:
+     *   - 'updated_at::TIMESTAMP'
+     */
+    private function parseKey(string $key): array
+    {
+        $keyInfo = explode('::', $key, 2);
+        $keyName = $keyInfo[0];
+        $keyType = $keyInfo[1] ?? null;
+
+        return [$keyName, $keyType];
     }
 
     /**
@@ -2560,9 +2584,9 @@ class BaseBuilder
      *
      * @used-by batchExecute
      *
-     * @param string                 $table  Protected table name
-     * @param list<string>           $keys   QBKeys
-     * @param list<list<int|string>> $values QBSet
+     * @param string                          $table  Protected table name
+     * @param list<string>                    $keys   QBKeys
+     * @param list<list<int|SqlValue|string>> $values QBSet
      */
     protected function _updateBatch(string $table, array $keys, array $values): string
     {

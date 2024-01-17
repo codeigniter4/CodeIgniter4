@@ -115,24 +115,44 @@ final class UpdateTest extends CIUnitTestCase
     {
         $data = [
             [
-                'name'    => 'Derek Jones',
-                'country' => 'Greece',
+                'name'       => 'Derek Jones',
+                'country'    => 'Greece',
+                'updated_at' => '2023-12-02 18:47:52',
             ],
             [
-                'name'    => 'Ahmadinejad',
-                'country' => 'Greece',
+                'name'       => 'Ahmadinejad',
+                'country'    => 'Greece',
+                'updated_at' => '2023-12-02 18:47:52',
             ],
         ];
+
+        if ($this->db->DBDriver === 'Postgre') {
+            // PostgreSQL needs column type.
+            $data = [
+                [
+                    'name'                  => 'Derek Jones',
+                    'country'               => 'Greece',
+                    'updated_at::TIMESTAMP' => '2023-12-02 18:47:52',
+                ],
+                [
+                    'name'                  => 'Ahmadinejad',
+                    'country'               => 'Greece',
+                    'updated_at::TIMESTAMP' => '2023-12-02 18:47:52',
+                ],
+            ];
+        }
 
         $this->db->table('user')->updateBatch($data, 'name');
 
         $this->seeInDatabase('user', [
-            'name'    => 'Derek Jones',
-            'country' => 'Greece',
+            'name'       => 'Derek Jones',
+            'country'    => 'Greece',
+            'updated_at' => '2023-12-02 18:47:52',
         ]);
         $this->seeInDatabase('user', [
-            'name'    => 'Ahmadinejad',
-            'country' => 'Greece',
+            'name'       => 'Ahmadinejad',
+            'country'    => 'Greece',
+            'updated_at' => '2023-12-02 18:47:52',
         ]);
     }
 
