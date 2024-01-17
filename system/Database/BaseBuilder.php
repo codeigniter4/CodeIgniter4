@@ -1857,11 +1857,7 @@ class BaseBuilder
 
                 $escapedValue = $escape ? $this->db->escape($rowValue) : $rowValue;
 
-                if ($keyType !== null) {
-                    $clean[] = new SqlValue($escapedValue, $keyType);
-                } else {
-                    $clean[] = $escapedValue;
-                }
+                $clean[] = ($keyType !== null) ? new SqlValue($escapedValue, $keyType) : $escapedValue;
             }
 
             $row = $clean;
