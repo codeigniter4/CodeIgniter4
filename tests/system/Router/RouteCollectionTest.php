@@ -1850,14 +1850,14 @@ final class RouteCollectionTest extends CIUnitTestCase
         $collection->get('test', '\App\Controllers\Hello::get');
         $collection->post('test', '\App\Controllers\Hello::post');
 
-        $routes = $collection->getRegisteredControllers(METHOD::GET);
+        $routes = $collection->getRegisteredControllers(Method::GET);
 
         $expects = [
             '\App\Controllers\Hello',
         ];
         $this->assertSame($expects, $routes);
 
-        $routes = $collection->getRegisteredControllers(METHOD::POST);
+        $routes = $collection->getRegisteredControllers(Method::POST);
 
         $expects = [
             '\App\Controllers\Hello',
@@ -1871,7 +1871,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $collection->post('test', '\App\Controllers\Test::post');
         $collection->post('hello', '\App\Controllers\Hello::post');
 
-        $routes = $collection->getRegisteredControllers(METHOD::POST);
+        $routes = $collection->getRegisteredControllers(Method::POST);
 
         $expects = [
             '\App\Controllers\Test',
@@ -1886,7 +1886,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $collection->post('test', '\App\Controllers\Test::test');
         $collection->post('hello', '\App\Controllers\Test::hello');
 
-        $routes = $collection->getRegisteredControllers(METHOD::POST);
+        $routes = $collection->getRegisteredControllers(Method::POST);
 
         $expects = [
             '\App\Controllers\Test',
@@ -1917,7 +1917,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $collection->get('test', '\App\Controllers\Hello::get');
         $collection->add('hello', '\App\Controllers\Test::hello');
 
-        $routes = $collection->getRegisteredControllers(METHOD::GET);
+        $routes = $collection->getRegisteredControllers(Method::GET);
 
         $expects = [
             '\App\Controllers\Hello',
