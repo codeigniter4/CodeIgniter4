@@ -22,7 +22,7 @@
         "codeigniter/phpstan-codeigniter": "^1.4",
         "ergebnis/composer-normalize": "^2.28",
         "fakerphp/faker": "^1.9",
-        "friendsofphp/php-cs-fixer": "~3.46.0",
+        "friendsofphp/php-cs-fixer": "^3.47.1",
         "kint-php/kint": "^5.0.4",
         "mikey179/vfsstream": "^1.6",
         "nexusphp/cs-config": "^3.6",
