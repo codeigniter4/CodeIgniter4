@@ -1125,7 +1125,7 @@ The first parameter is an associative array of values, the second parameter is t
     As a result, PostgreSQL may generate SQL errors if the column type is not
     specified. In that case, specify the column name and its type as
     ``<column_name>::<type>`` (e.g., ``updated_at::TIMESTAMP``). This feature
-    can be used since v4.4.5.
+    can be used since v4.4.5 and only for ``updateBatch()`` on PostgreSQL.
 
     .. literalinclude:: query_builder/123.php
 
