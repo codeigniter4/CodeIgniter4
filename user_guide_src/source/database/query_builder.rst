@@ -1120,6 +1120,13 @@ The first parameter is an associative array of values, the second parameter is t
 
 .. note:: Since v4.3.0, the generated SQL structure has been Improved.
 
+    As a result, PostgreSQL may generate SQL errors if the column type is not
+    specified. In that case, specify the column name and its type as
+    ``<column_name>::<type>`` (e.g., ``updated_at::TIMESTAMP``). This feature
+    can be used since v4.4.5.
+
+    .. literalinclude:: query_builder/123.php
+
 Since v4.3.0, you can also use the ``onConstraint()`` and ``updateFields()`` methods:
 
 .. literalinclude:: query_builder/120.php
