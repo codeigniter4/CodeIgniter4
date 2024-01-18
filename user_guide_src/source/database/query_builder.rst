@@ -1107,6 +1107,8 @@ $builder->updateBatch()
 .. note:: Since v4.3.0, the second parameter ``$index`` of ``updateBatch()`` has
     changed to ``$constraints``. It now accepts types array, string, or ``RawSql``.
 
+.. _update-from-data:
+
 Update from Data
 ^^^^^^^^^^^^^^^^
 
