@@ -32,7 +32,7 @@ class Forge
     /**
      * List of fields.
      *
-     * @var array
+     * @var array<string, array|string> [name => attributes]
      */
     protected $fields = [];
 
@@ -351,7 +351,7 @@ class Forge
     /**
      * Add Field
      *
-     * @param array|string $field
+     * @param array<string, array|string>|string $field
      *
      * @return Forge
      */
@@ -716,7 +716,7 @@ class Forge
     }
 
     /**
-     * @param array|string $field
+     * @param array<string, array|string>|string $field
      *
      * @throws DatabaseException
      */
@@ -772,7 +772,7 @@ class Forge
     }
 
     /**
-     * @param array|string $field
+     * @param array<string, array|string>|string $field
      *
      * @throws DatabaseException
      */
