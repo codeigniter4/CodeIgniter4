@@ -380,15 +380,15 @@ class Forge
         }
 
         if (is_array($field)) {
-            foreach ($field as $idx => $f) {
-                if (is_string($f)) {
-                    $this->addField($f);
+            foreach ($field as $name => $attributes) {
+                if (is_string($attributes)) {
+                    $this->addField($attributes);
 
                     continue;
                 }
 
-                if (is_array($f)) {
-                    $this->fields = array_merge($this->fields, [$idx => $f]);
+                if (is_array($attributes)) {
+                    $this->fields = array_merge($this->fields, [$name => $attributes]);
                 }
             }
         }
@@ -727,8 +727,8 @@ class Forge
             $field = [$field];
         }
 
-        foreach (array_keys($field) as $k) {
-            $this->addField([$k => $field[$k]]);
+        foreach (array_keys($field) as $name) {
+            $this->addField([$name => $field[$name]]);
         }
 
         $sqls = $this->_alterTable('ADD', $this->db->DBPrefix . $table, $this->_processFields());
@@ -783,8 +783,8 @@ class Forge
             $field = [$field];
         }
 
-        foreach (array_keys($field) as $k) {
-            $this->addField([$k => $field[$k]]);
+        foreach (array_keys($field) as $name) {
+            $this->addField([$name => $field[$name]]);
         }
 
         if ($this->fields === []) {
@@ -852,7 +852,7 @@ class Forge
     {
         $fields = [];
 
-        foreach ($this->fields as $key => $attributes) {
+        foreach ($this->fields as $name => $attributes) {
             if (! is_array($attributes)) {
                 $fields[] = ['_literal' => $attributes];
 
@@ -870,7 +870,7 @@ class Forge
             }
 
             $field = [
-                'name'           => $key,
+                'name'           => $name,
                 'new_name'       => $attributes['NAME'] ?? null,
                 'type'           => $attributes['TYPE'] ?? null,
                 'length'         => '',
@@ -1163,10 +1163,10 @@ class Forge
     {
         $errorNames = [];
 
-        foreach ($this->foreignKeys as $name) {
-            foreach ($name['field'] as $f) {
-                if (! isset($this->fields[$f])) {
-                    $errorNames[] = $f;
+        foreach ($this->foreignKeys as $fkeyInfo) {
+            foreach ($fkeyInfo['field'] as $fieldName) {
+                if (! isset($this->fields[$fieldName])) {
+                    $errorNames[] = $fieldName;
                 }
             }
         }
