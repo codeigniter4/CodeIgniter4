@@ -46,7 +46,7 @@ final class DotArrayFilter
                 $segments
             );
 
-            $result = array_merge_recursive($result, self::filter($segments, $array));
+            $result = array_replace_recursive($result, self::filter($segments, $array));
         }
 
         return $result;

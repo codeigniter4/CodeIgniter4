@@ -182,4 +182,19 @@ final class DotArrayFilterTest extends CIUnitTestCase
         ];
         $this->assertSame($expected, $result);
     }
+
+    public function testRunReturnOrderedIndices()
+    {
+        $data = [
+            'foo' => [
+                2 => 'bar',
+                0 => 'baz',
+                1 => 'biz',
+            ],
+        ];
+
+        $result = DotArrayFilter::run(['foo.2', 'foo.0', 'foo.1'], $data);
+
+        $this->assertSame($data, $result);
+    }
 }

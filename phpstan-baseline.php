@@ -1362,11 +1362,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Exceptions/PageNotFoundException.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Call to method SplFileInfo\\:\\:getBasename\\(\\) with incorrect case\\: getBaseName$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Files/File.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Files/File.php',
