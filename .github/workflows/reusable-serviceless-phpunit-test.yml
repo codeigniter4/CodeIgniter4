@@ -79,7 +79,7 @@ jobs:
           echo "ARTIFACT_NAME=${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}" >> $GITHUB_ENV
 
       - name: Cache Composer dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
           key: ${{ inputs.job-id || github.job }}-php-${{ inputs.php-version }}-${{ hashFiles('**/composer.*') }}
@@ -89,7 +89,7 @@ jobs:
 
       - name: Cache PHPUnit's static analysis cache
         if: ${{ inputs.enable-artifact-upload }}
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: build/.phpunit.cache/code-coverage
           key: phpunit-code-coverage-${{ hashFiles('**/phpunit.*') }}

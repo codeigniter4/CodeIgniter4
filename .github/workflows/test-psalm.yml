@@ -44,7 +44,7 @@ jobs:
         run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
 
       - name: Cache composer dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ hashFiles('**/composer.lock') }}
@@ -54,7 +54,7 @@ jobs:
         run: mkdir -p build/psalm
 
       - name: Cache Psalm results
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: build/psalm
           key: ${{ runner.os }}-psalm-${{ github.sha }}
