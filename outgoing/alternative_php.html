@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Alternate PHP Syntax for View Files &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,7 +285,7 @@
            <div itemprop="articleBody">
              
   <section id="alternate-php-syntax-for-view-files">
-<h1>Alternate PHP Syntax for View Files<a class="headerlink" href="#alternate-php-syntax-for-view-files" title="Permalink to this headline"></a></h1>
+<h1>Alternate PHP Syntax for View Files<a class="headerlink" href="#alternate-php-syntax-for-view-files" title="Permalink to this heading"></a></h1>
 <p>If you do not utilize a templating engine to simplify output,
 you’ll be using pure PHP in your
 View files. To minimize the PHP code in these files, and to make it
@@ -290,7 +294,7 @@ alternative syntax for control structures and short tag echo statements.
 If you are not familiar with this syntax, it allows you to eliminate the
 braces from your code, and eliminate “echo” statements.</p>
 <section id="alternative-echos">
-<h2>Alternative Echos<a class="headerlink" href="#alternative-echos" title="Permalink to this headline"></a></h2>
+<h2>Alternative Echos<a class="headerlink" href="#alternative-echos" title="Permalink to this heading"></a></h2>
 <p>Normally to echo, or print out a variable you would do this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nv">$variable</span><span class="p">;</span> <span class="cp">?&gt;</span>
 </pre></div>
@@ -301,7 +305,7 @@ braces from your code, and eliminate “echo” statements.</p>
 </div>
 </section>
 <section id="alternative-control-structures">
-<h2>Alternative Control Structures<a class="headerlink" href="#alternative-control-structures" title="Permalink to this headline"></a></h2>
+<h2>Alternative Control Structures<a class="headerlink" href="#alternative-control-structures" title="Permalink to this heading"></a></h2>
 <p>Controls structures, like if, for, foreach, and while can be written in
 a simplified format as well. Here is an example using <code class="docutils literal notranslate"><span class="pre">foreach</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
@@ -351,7 +355,7 @@ closing syntax: <code class="docutils literal notranslate"><span class="pre">end
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

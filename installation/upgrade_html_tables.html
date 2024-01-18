@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Upgrade HTML Tables &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -283,8 +287,8 @@
            <div itemprop="articleBody">
              
   <section id="upgrade-html-tables">
-<h1>Upgrade HTML Tables<a class="headerlink" href="#upgrade-html-tables" title="Permalink to this headline"></a></h1>
-<div class="contents local topic" id="contents">
+<h1>Upgrade HTML Tables<a class="headerlink" href="#upgrade-html-tables" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#documentations" id="id1">Documentations</a></p></li>
 <li><p><a class="reference internal" href="#what-has-been-changed" id="id2">What has been changed</a></p></li>
@@ -296,22 +300,22 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="documentations">
-<h2><a class="toc-backref" href="#id1">Documentations</a><a class="headerlink" href="#documentations" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Documentations</a><a class="headerlink" href="#documentations" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="http://codeigniter.com/userguide3/libraries/table.html">HTML Table Documentation CodeIgniter 3.X</a></p></li>
 <li><p><a class="reference internal" href="../outgoing/table.html"><span class="doc">HTML Table Documentation CodeIgniter 4.X</span></a></p></li>
 </ul>
 </section>
 <section id="what-has-been-changed">
-<h2><a class="toc-backref" href="#id2">What has been changed</a><a class="headerlink" href="#what-has-been-changed" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">What has been changed</a><a class="headerlink" href="#what-has-been-changed" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Only small things like the method names and the loading of the library have changed.</p></li>
 </ul>
 </section>
 <section id="upgrade-guide">
-<h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>Within your class change the <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('table');</span></code> to <code class="docutils literal notranslate"><span class="pre">$table</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">\CodeIgniter\View\Table();</span></code>.</p></li>
 <li><p>From that on you have to replace every line starting with <code class="docutils literal notranslate"><span class="pre">$this-&gt;table</span></code> to <code class="docutils literal notranslate"><span class="pre">$table</span></code>. For example: <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$this-&gt;table-&gt;generate($query);</span></code> will become <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$table-&gt;generate($query);</span></code></p></li>
@@ -319,9 +323,9 @@
 </ol>
 </section>
 <section id="code-example">
-<h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this heading"></a></h2>
 <section id="codeigniter-version-3-x">
-<h3><a class="toc-backref" href="#id5">CodeIgniter Version 3.x</a><a class="headerlink" href="#codeigniter-version-3-x" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">CodeIgniter Version 3.x</a><a class="headerlink" href="#codeigniter-version-3-x" title="Permalink to this heading"></a></h3>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">);</span>
@@ -337,7 +341,7 @@
 </div>
 </section>
 <section id="codeigniter-version-4-x">
-<h3><a class="toc-backref" href="#id6">CodeIgniter Version 4.x</a><a class="headerlink" href="#codeigniter-version-4-x" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">CodeIgniter Version 4.x</a><a class="headerlink" href="#codeigniter-version-4-x" title="Permalink to this heading"></a></h3>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
@@ -367,7 +371,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

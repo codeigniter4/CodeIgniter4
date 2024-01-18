@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Upgrading from 4.3.8 to 4.4.0 &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -282,14 +286,14 @@
            <div itemprop="articleBody">
              
   <section id="upgrading-from-4-3-8-to-4-4-0">
-<h1>Upgrading from 4.3.8 to 4.4.0<a class="headerlink" href="#upgrading-from-4-3-8-to-4-4-0" title="Permalink to this headline"></a></h1>
+<h1>Upgrading from 4.3.8 to 4.4.0<a class="headerlink" href="#upgrading-from-4-3-8-to-4-4-0" title="Permalink to this heading"></a></h1>
 <p>Please refer to the upgrade instructions corresponding to your installation method.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="installing_composer.html#app-starter-upgrading"><span class="std std-ref">Composer Installation App Starter Upgrading</span></a></p></li>
 <li><p><a class="reference internal" href="installing_composer.html#adding-codeigniter4-upgrading"><span class="std std-ref">Composer Installation Adding CodeIgniter4 to an Existing Project Upgrading</span></a></p></li>
 <li><p><a class="reference internal" href="installing_manual.html#installing-manual-upgrading"><span class="std std-ref">Manual Installation Upgrading</span></a></p></li>
 </ul>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#security" id="id1">SECURITY</a></p>
 <ul>
@@ -322,11 +326,11 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="security">
-<h2><a class="toc-backref" href="#id1">SECURITY</a><a class="headerlink" href="#security" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">SECURITY</a><a class="headerlink" href="#security" title="Permalink to this heading"></a></h2>
 <section id="when-using-this-validate">
-<h3><a class="toc-backref" href="#id2">When Using $this-&gt;validate()</a><a class="headerlink" href="#when-using-this-validate" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">When Using $this-&gt;validate()</a><a class="headerlink" href="#when-using-this-validate" title="Permalink to this heading"></a></h3>
 <p>There was a known potential vulnerability in <a class="reference internal" href="../incoming/controllers.html#controller-validate"><span class="std std-ref">$this-&gt;validate()</span></a> in the Controller to bypass validation.
 The attack could allow developers to misinterpret unvalidated empty data as
 validated and proceed with processing.</p>
@@ -355,9 +359,9 @@ use the new <code class="docutils literal notranslate"><span class="pre">Validat
 </section>
 </section>
 <section id="breaking-changes">
-<h2><a class="toc-backref" href="#id3">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this heading"></a></h2>
 <section id="uri-setsegment-change">
-<span id="upgrade-440-uri-setsegment"></span><h3><a class="toc-backref" href="#id4">URI::setSegment() Change</a><a class="headerlink" href="#uri-setsegment-change" title="Permalink to this headline"></a></h3>
+<span id="upgrade-440-uri-setsegment"></span><h3><a class="toc-backref" href="#id4" role="doc-backlink">URI::setSegment() Change</a><a class="headerlink" href="#uri-setsegment-change" title="Permalink to this heading"></a></h3>
 <p>Dut to a bug, in previous versions an exception was not thrown if the last segment
 <code class="docutils literal notranslate"><span class="pre">+2</span></code> was specified. This bug has been fixed.</p>
 <p>If your code depends on this bug, fix the segment number.</p>
@@ -375,7 +379,7 @@ use the new <code class="docutils literal notranslate"><span class="pre">Validat
 </div>
 </section>
 <section id="site-uri-changes">
-<h3><a class="toc-backref" href="#id5">Site URI Changes</a><a class="headerlink" href="#site-uri-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Site URI Changes</a><a class="headerlink" href="#site-uri-changes" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Because of the rework for the current URI determination, the framework may return
 site URIs or the URI paths slightly differently than in previous versions. It may
@@ -387,7 +391,7 @@ the current URI by the <code class="docutils literal notranslate"><span class="p
 <p>See <a class="reference internal" href="../changelogs/v4.4.0.html#v440-site-uri-changes"><span class="std std-ref">Site URI Changes</span></a> for details.</p>
 </section>
 <section id="when-you-extend-exceptions">
-<h3><a class="toc-backref" href="#id6">When You Extend Exceptions</a><a class="headerlink" href="#when-you-extend-exceptions" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">When You Extend Exceptions</a><a class="headerlink" href="#when-you-extend-exceptions" title="Permalink to this heading"></a></h3>
 <p>If you are extending <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Debug\Exceptions</span></code> and have not overridden
 the <code class="docutils literal notranslate"><span class="pre">exceptionHandler()</span></code> method, defining the new <code class="docutils literal notranslate"><span class="pre">Config\Exceptions::handler()</span></code>
 method in your <strong>app/Config/Exceptions.php</strong> will cause the specified Exception
@@ -397,7 +401,7 @@ by defining your own exception handler.</p>
 <p>See <a class="reference internal" href="../general/errors.html#custom-exception-handlers"><span class="std std-ref">Custom Exception Handlers</span></a> for the detail.</p>
 </section>
 <section id="auto-routing-improved-and-translateuridashes">
-<h3><a class="toc-backref" href="#id7">Auto Routing (Improved) and translateURIDashes</a><a class="headerlink" href="#auto-routing-improved-and-translateuridashes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Auto Routing (Improved) and translateURIDashes</a><a class="headerlink" href="#auto-routing-improved-and-translateuridashes" title="Permalink to this heading"></a></h3>
 <p>When using Auto Routing (Improved) and <code class="docutils literal notranslate"><span class="pre">$translateURIDashes</span></code> is true
 (<code class="docutils literal notranslate"><span class="pre">$routes-&gt;setTranslateURIDashes(true)</span></code>), in previous versions due to a bug
 two URIs correspond to a single controller method, one URI for dashes
@@ -407,7 +411,7 @@ two URIs correspond to a single controller method, one URI for dashes
 for dashes (<strong>foo-bar</strong>).</p>
 </section>
 <section id="when-passing-classname-with-namespace-to-factories">
-<h3><a class="toc-backref" href="#id8">When Passing Classname with Namespace to Factories</a><a class="headerlink" href="#when-passing-classname-with-namespace-to-factories" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">When Passing Classname with Namespace to Factories</a><a class="headerlink" href="#when-passing-classname-with-namespace-to-factories" title="Permalink to this heading"></a></h3>
 <p>The behavior of passing a classname with a namespace to Factories has been changed.
 See <a class="reference internal" href="../changelogs/v4.4.0.html#v440-factories"><span class="std std-ref">ChangeLog</span></a> for details.</p>
 <p>If you have code like <code class="docutils literal notranslate"><span class="pre">model(\Myth\Auth\Models\UserModel::class)</span></code> or
@@ -420,12 +424,12 @@ classname to be loaded before the first loading of that class:</p>
 <p>See <a class="reference internal" href="../concepts/factories.html#factories-defining-classname-to-be-loaded"><span class="std std-ref">Defining Classname to be Loaded</span></a> for details.</p>
 </section>
 <section id="interface-changes">
-<h3><a class="toc-backref" href="#id9">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this heading"></a></h3>
 <p>Some interface changes have been made. Classes that implement them should update
 their APIs to reflect the changes. See <a class="reference internal" href="../changelogs/v4.4.0.html#v440-interface-changes"><span class="std std-ref">Interface Changes</span></a> for details.</p>
 </section>
 <section id="method-signature-changes">
-<h3><a class="toc-backref" href="#id10">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this heading"></a></h3>
 <p>Some method signature changes have been made. Classes that extend them should
 update their APIs to reflect the changes. See <a class="reference internal" href="../changelogs/v4.4.0.html#v440-method-signature-changes"><span class="std std-ref">Method Signature Changes</span></a>
 for details.</p>
@@ -434,7 +438,7 @@ If you call them with the parameters, change the parameter values.
 See <a class="reference internal" href="../changelogs/v4.4.0.html#v440-parameter-type-changes"><span class="std std-ref">Parameter Type Changes</span></a> for details.</p>
 </section>
 <section id="routecollection-routes">
-<h3><a class="toc-backref" href="#id11">RouteCollection::$routes</a><a class="headerlink" href="#routecollection-routes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">RouteCollection::$routes</a><a class="headerlink" href="#routecollection-routes" title="Permalink to this heading"></a></h3>
 <p>The array structure of the protected property <code class="docutils literal notranslate"><span class="pre">$routes</span></code> has been modified for
 performance.</p>
 <p>If you extend <code class="docutils literal notranslate"><span class="pre">RouteCollection</span></code> and use the <code class="docutils literal notranslate"><span class="pre">$routes</span></code>, update your code to
@@ -442,9 +446,9 @@ match the new array structure.</p>
 </section>
 </section>
 <section id="mandatory-file-changes">
-<h2><a class="toc-backref" href="#id12">Mandatory File Changes</a><a class="headerlink" href="#mandatory-file-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Mandatory File Changes</a><a class="headerlink" href="#mandatory-file-changes" title="Permalink to this heading"></a></h2>
 <section id="index-php-and-spark">
-<h3><a class="toc-backref" href="#id13">index.php and spark</a><a class="headerlink" href="#index-php-and-spark" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">index.php and spark</a><a class="headerlink" href="#index-php-and-spark" title="Permalink to this heading"></a></h3>
 <p>The following files received significant changes and
 <strong>you must merge the updated versions</strong> with your application:</p>
 <ul class="simple">
@@ -464,14 +468,14 @@ properly after running <code class="docutils literal notranslate"><span class="p
 </div>
 </section>
 <section id="config-files">
-<h3><a class="toc-backref" href="#id14">Config Files</a><a class="headerlink" href="#config-files" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Config Files</a><a class="headerlink" href="#config-files" title="Permalink to this heading"></a></h3>
 <section id="app-config-app-php">
-<h4>app/Config/App.php<a class="headerlink" href="#app-config-app-php" title="Permalink to this headline"></a></h4>
+<h4>app/Config/App.php<a class="headerlink" href="#app-config-app-php" title="Permalink to this heading"></a></h4>
 <p>The property <code class="docutils literal notranslate"><span class="pre">$proxyIPs</span></code> must be an array. If you don’t use proxy servers,
 it must be <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">array</span> <span class="pre">$proxyIPs</span> <span class="pre">=</span> <span class="pre">[];</span></code>.</p>
 </section>
 <section id="app-config-routing-php">
-<span id="upgrade-440-config-routing"></span><h4>app/Config/Routing.php<a class="headerlink" href="#app-config-routing-php" title="Permalink to this headline"></a></h4>
+<span id="upgrade-440-config-routing"></span><h4>app/Config/Routing.php<a class="headerlink" href="#app-config-routing-php" title="Permalink to this heading"></a></h4>
 <p>To clean up the routing system, the following changes were made:</p>
 <ul class="simple">
 <li><p>New <strong>app/Config/Routing.php</strong> file that holds the settings that used to be in the Routes file.</p></li>
@@ -487,7 +491,7 @@ directory, and configure it.</p></li>
 </ol>
 </section>
 <section id="app-config-toolbar-php">
-<h4>app/Config/Toolbar.php<a class="headerlink" href="#app-config-toolbar-php" title="Permalink to this headline"></a></h4>
+<h4>app/Config/Toolbar.php<a class="headerlink" href="#app-config-toolbar-php" title="Permalink to this heading"></a></h4>
 <p>You need to add the new properties <code class="docutils literal notranslate"><span class="pre">$watchedDirectories</span></code> and <code class="docutils literal notranslate"><span class="pre">$watchedExtensions</span></code>
 for <a class="reference internal" href="../testing/debugging.html#debug-toolbar-hot-reload"><span class="std std-ref">Hot Reloading</span></a>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="nx">a</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">Config</span><span class="o">/</span><span class="nx">Toolbar</span><span class="o">.</span><span class="nx">php</span>
@@ -528,7 +532,7 @@ for <a class="reference internal" href="../testing/debugging.html#debug-toolbar-
 </div>
 </section>
 <section id="app-config-events-php">
-<h4>app/Config/Events.php<a class="headerlink" href="#app-config-events-php" title="Permalink to this headline"></a></h4>
+<h4>app/Config/Events.php<a class="headerlink" href="#app-config-events-php" title="Permalink to this heading"></a></h4>
 <p>You need to add the code to add a route for <a class="reference internal" href="../testing/debugging.html#debug-toolbar-hot-reload"><span class="std std-ref">Hot Reloading</span></a>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="nx">a</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">Config</span><span class="o">/</span><span class="nx">Events</span><span class="o">.</span><span class="nx">php</span>
 <span class="o">+++</span> <span class="nx">b</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">Config</span><span class="o">/</span><span class="nx">Events</span><span class="o">.</span><span class="nx">php</span>
@@ -556,7 +560,7 @@ for <a class="reference internal" href="../testing/debugging.html#debug-toolbar-
 </div>
 </section>
 <section id="app-config-cookie-php">
-<h4>app/Config/Cookie.php<a class="headerlink" href="#app-config-cookie-php" title="Permalink to this headline"></a></h4>
+<h4>app/Config/Cookie.php<a class="headerlink" href="#app-config-cookie-php" title="Permalink to this heading"></a></h4>
 <p>The Cookie config items in <strong>app/Config/App.php</strong> are no longer used.</p>
 <ol class="arabic simple">
 <li><p>Copy <strong>app/Config/Cookie.php</strong> from the new framework to your <strong>app/Config</strong>
@@ -566,7 +570,7 @@ directory, and configure it.</p></li>
 </ol>
 </section>
 <section id="app-config-security-php">
-<h4>app/Config/Security.php<a class="headerlink" href="#app-config-security-php" title="Permalink to this headline"></a></h4>
+<h4>app/Config/Security.php<a class="headerlink" href="#app-config-security-php" title="Permalink to this heading"></a></h4>
 <p>The CSRF config items in <strong>app/Config/App.php</strong> are no longer used.</p>
 <ol class="arabic simple">
 <li><p>Copy <strong>app/Config/Security.php</strong> from the new framework to your <strong>app/Config</strong>
@@ -576,7 +580,7 @@ directory, and configure it.</p></li>
 </ol>
 </section>
 <section id="app-config-session-php">
-<h4>app/Config/Session.php<a class="headerlink" href="#app-config-session-php" title="Permalink to this headline"></a></h4>
+<h4>app/Config/Session.php<a class="headerlink" href="#app-config-session-php" title="Permalink to this heading"></a></h4>
 <p>The Session config items in <strong>app/Config/App.php</strong> are no longer used.</p>
 <ol class="arabic simple">
 <li><p>Copy <strong>app/Config/Session.php</strong> from the new framework to your <strong>app/Config</strong>
@@ -588,7 +592,7 @@ directory, and configure it.</p></li>
 </section>
 </section>
 <section id="breaking-enhancements">
-<h2><a class="toc-backref" href="#id15">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Routing:</strong> The method signature of <code class="docutils literal notranslate"><span class="pre">RouteCollection::__construct()</span></code> has been changed.
 The third parameter <code class="docutils literal notranslate"><span class="pre">Routing</span> <span class="pre">$routing</span></code> has been added. Extending classes
@@ -599,17 +603,17 @@ should likewise remove the typehint so as not to break LSP.</p></li>
 </ul>
 </section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id16">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this heading"></a></h2>
 <p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
 these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
 <p>There are some third-party CodeIgniter modules available to assist with merging changes to
 the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 <section id="content-changes">
-<h3><a class="toc-backref" href="#id17">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this heading"></a></h3>
 <p>The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:</p>
 <section id="config">
-<h4>Config<a class="headerlink" href="#config" title="Permalink to this headline"></a></h4>
+<h4>Config<a class="headerlink" href="#config" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><dl class="simple">
 <dt>app/Config/CURLRequest.php</dt><dd><ul>
@@ -630,7 +634,7 @@ See <a class="reference internal" href="../general/errors.html#custom-exception-
 </section>
 </section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id18">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this heading"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
@@ -663,7 +667,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

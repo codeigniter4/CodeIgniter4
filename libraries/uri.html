@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Working with URIs &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,11 +285,11 @@
            <div itemprop="articleBody">
              
   <section id="working-with-uris">
-<h1>Working with URIs<a class="headerlink" href="#working-with-uris" title="Permalink to this headline"></a></h1>
+<h1>Working with URIs<a class="headerlink" href="#working-with-uris" title="Permalink to this heading"></a></h1>
 <p>CodeIgniter provides an object oriented solution for working with URI’s in your application. Using this makes it
 simple to ensure that the structure is always correct, no matter how complex the URI might be, as well as adding
 relative URI to an existing one and have it resolved safely and correctly.</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#creating-uri-instances" id="id1">Creating URI instances</a></p>
 <ul>
@@ -308,9 +312,9 @@ relative URI to an existing one and have it resolved safely and correctly.</p>
 <li><p><a class="reference internal" href="#uri-segments" id="id13">URI Segments</a></p></li>
 <li><p><a class="reference internal" href="#disable-throwing-exceptions" id="id14">Disable Throwing Exceptions</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="creating-uri-instances">
-<h2><a class="toc-backref" href="#id1">Creating URI instances</a><a class="headerlink" href="#creating-uri-instances" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Creating URI instances</a><a class="headerlink" href="#creating-uri-instances" title="Permalink to this heading"></a></h2>
 <p>Creating a URI instance is as simple as creating a new class instance.</p>
 <p>When you create the new instance, you can pass a full or partial URL in the constructor and it will be parsed
 into its appropriate sections:</p>
@@ -332,7 +336,7 @@ class. The <code class="docutils literal notranslate"><span class="pre">URI</spa
 for your site URIs.</p>
 </div>
 <section id="the-current-uri">
-<h3><a class="toc-backref" href="#id2">The Current URI</a><a class="headerlink" href="#the-current-uri" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">The Current URI</a><a class="headerlink" href="#the-current-uri" title="Permalink to this heading"></a></h3>
 <p>Many times, all you really want is an object representing the current URL of this request.
 You can use the <a class="reference internal" href="../helpers/url_helper.html#current_url" title="current_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">current_url()</span></code></a> function available in the <a class="reference internal" href="../helpers/url_helper.html"><span class="doc">URL Helper</span></a>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
@@ -349,7 +353,7 @@ can also get the current SiteURI instance:</p>
 </section>
 </section>
 <section id="uri-strings">
-<h2><a class="toc-backref" href="#id3">URI Strings</a><a class="headerlink" href="#uri-strings" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">URI Strings</a><a class="headerlink" href="#uri-strings" title="Permalink to this heading"></a></h2>
 <p>Many times, all you really want is to get a string representation of a URI. This is easy to do by simply casting
 the URI as a string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -378,11 +382,11 @@ then use <code class="docutils literal notranslate"><span class="pre">URI::creat
 </div>
 </section>
 <section id="the-uri-parts">
-<h2><a class="toc-backref" href="#id4">The URI Parts</a><a class="headerlink" href="#the-uri-parts" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">The URI Parts</a><a class="headerlink" href="#the-uri-parts" title="Permalink to this heading"></a></h2>
 <p>Once you have a URI instance, you can set or retrieve any of the various parts of the URI. This section will provide
 details on what those parts are, and how to work with them.</p>
 <section id="scheme">
-<h3><a class="toc-backref" href="#id5">Scheme</a><a class="headerlink" href="#scheme" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Scheme</a><a class="headerlink" href="#scheme" title="Permalink to this heading"></a></h3>
 <p>The scheme is frequently ‘http’ or ‘https’, but any scheme is supported, including ‘file’, ‘mailto’, etc.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -394,7 +398,7 @@ details on what those parts are, and how to work with them.</p>
 </div>
 </section>
 <section id="authority">
-<h3><a class="toc-backref" href="#id6">Authority</a><a class="headerlink" href="#authority" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Authority</a><a class="headerlink" href="#authority" title="Permalink to this heading"></a></h3>
 <p>Many URIs contain several elements that are collectively known as the ‘authority’. This includes any user info,
 the host and the port number. You can retrieve all of these pieces as one single string with the <code class="docutils literal notranslate"><span class="pre">getAuthority()</span></code>
 method, or you can manipulate the individual parts.</p>
@@ -429,7 +433,7 @@ until you turn it off again, so always make sure that you turn it off as soon as
 </div>
 </section>
 <section id="userinfo">
-<h3><a class="toc-backref" href="#id7">UserInfo</a><a class="headerlink" href="#userinfo" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">UserInfo</a><a class="headerlink" href="#userinfo" title="Permalink to this heading"></a></h3>
 <p>The userinfo section is simply the username and password that you might see with an FTP URI. While you can get
 this as part of the Authority, you can also retrieve it yourself:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -446,7 +450,7 @@ this as part of the Authority, you can also retrieve it yourself:</p>
 </div>
 </section>
 <section id="host">
-<h3><a class="toc-backref" href="#id8">Host</a><a class="headerlink" href="#host" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Host</a><a class="headerlink" href="#host" title="Permalink to this heading"></a></h3>
 <p>The host portion of the URI is typically the domain name of the URL. This can be easily set and retrieved with the
 <code class="docutils literal notranslate"><span class="pre">getHost()</span></code> and <code class="docutils literal notranslate"><span class="pre">setHost()</span></code> methods:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -459,7 +463,7 @@ this as part of the Authority, you can also retrieve it yourself:</p>
 </div>
 </section>
 <section id="port">
-<h3><a class="toc-backref" href="#id9">Port</a><a class="headerlink" href="#port" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Port</a><a class="headerlink" href="#port" title="Permalink to this heading"></a></h3>
 <p>The port is an integer number between 0 and 65535. Each scheme has a default value associated with it.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -472,7 +476,7 @@ this as part of the Authority, you can also retrieve it yourself:</p>
 <p>When using the <code class="docutils literal notranslate"><span class="pre">setPort()</span></code> method, the port will be checked that it is within the valid range and assigned.</p>
 </section>
 <section id="path">
-<h3><a class="toc-backref" href="#id10">Path</a><a class="headerlink" href="#path" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Path</a><a class="headerlink" href="#path" title="Permalink to this heading"></a></h3>
 <p>The path are all of the segments within the site itself. As expected, the <code class="docutils literal notranslate"><span class="pre">getPath()</span></code> and <code class="docutils literal notranslate"><span class="pre">setPath()</span></code> methods
 can be used to manipulate it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -496,10 +500,10 @@ method always returns the full URI path with leading <code class="docutils liter
 </div>
 </section>
 <section id="query">
-<h3><a class="toc-backref" href="#id11">Query</a><a class="headerlink" href="#query" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Query</a><a class="headerlink" href="#query" title="Permalink to this heading"></a></h3>
 <p>The query data can be manipulated through the class using simple string representations.</p>
 <section id="getting-setting-query">
-<h4>Getting/Setting Query<a class="headerlink" href="#getting-setting-query" title="Permalink to this headline"></a></h4>
+<h4>Getting/Setting Query<a class="headerlink" href="#getting-setting-query" title="Permalink to this heading"></a></h4>
 <p>Query values can only
 be set as a string currently.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -517,7 +521,7 @@ be set as a string currently.</p>
 </div>
 </section>
 <section id="setting-query-from-array">
-<h4>Setting Query from Array<a class="headerlink" href="#setting-query-from-array" title="Permalink to this headline"></a></h4>
+<h4>Setting Query from Array<a class="headerlink" href="#setting-query-from-array" title="Permalink to this heading"></a></h4>
 <p>You can set query values using an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -527,7 +531,7 @@ be set as a string currently.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">setQueryArray()</span></code> method overwrite any existing query variables.</p>
 </section>
 <section id="adding-query-value">
-<h4>Adding Query Value<a class="headerlink" href="#adding-query-value" title="Permalink to this headline"></a></h4>
+<h4>Adding Query Value<a class="headerlink" href="#adding-query-value" title="Permalink to this heading"></a></h4>
 <p>You can add a value to the
 query variables collection without destroying the existing query variables with the <code class="docutils literal notranslate"><span class="pre">addQuery()</span></code> method. The first
 parameter is the name of the variable, and the second parameter is the value:</p>
@@ -538,7 +542,7 @@ parameter is the name of the variable, and the second parameter is the value:</p
 </div>
 </section>
 <section id="filtering-query-values">
-<h4>Filtering Query Values<a class="headerlink" href="#filtering-query-values" title="Permalink to this headline"></a></h4>
+<h4>Filtering Query Values<a class="headerlink" href="#filtering-query-values" title="Permalink to this heading"></a></h4>
 <p>You can filter the query values returned by passing an options array to the <code class="docutils literal notranslate"><span class="pre">getQuery()</span></code> method, with either an
 <em>only</em> or an <em>except</em> key:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -555,7 +559,7 @@ parameter is the name of the variable, and the second parameter is the value:</p
 <p>This only changes the values returned during this one call. If you need to modify the URI’s query values more permanently,</p>
 </section>
 <section id="changing-query-values">
-<h4>Changing Query Values<a class="headerlink" href="#changing-query-values" title="Permalink to this headline"></a></h4>
+<h4>Changing Query Values<a class="headerlink" href="#changing-query-values" title="Permalink to this heading"></a></h4>
 <p>you can use the <code class="docutils literal notranslate"><span class="pre">stripQuery()</span></code> and <code class="docutils literal notranslate"><span class="pre">keepQuery()</span></code> methods to change the actual object’s query variable collection:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -577,7 +581,7 @@ If you want to use more liberal rules (which allow key names to contain dots), y
 </section>
 </section>
 <section id="fragment">
-<h3><a class="toc-backref" href="#id12">Fragment</a><a class="headerlink" href="#fragment" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Fragment</a><a class="headerlink" href="#fragment" title="Permalink to this heading"></a></h3>
 <p>Fragments are the portion at the end of the URL, preceded by the pound-sign (<code class="docutils literal notranslate"><span class="pre">#</span></code>). In HTML URLs these are links
 to an on-page anchor. Media URI’s can make use of them in various other ways.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -591,7 +595,7 @@ to an on-page anchor. Media URI’s can make use of them in various other ways.<
 </section>
 </section>
 <section id="uri-segments">
-<h2><a class="toc-backref" href="#id13">URI Segments</a><a class="headerlink" href="#uri-segments" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">URI Segments</a><a class="headerlink" href="#uri-segments" title="Permalink to this heading"></a></h2>
 <p>Each section of the path between the slashes is a single segment.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -657,7 +661,7 @@ throwing exceptions with the <code class="docutils literal notranslate"><span cl
 </div>
 </section>
 <section id="disable-throwing-exceptions">
-<h2><a class="toc-backref" href="#id14">Disable Throwing Exceptions</a><a class="headerlink" href="#disable-throwing-exceptions" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">Disable Throwing Exceptions</a><a class="headerlink" href="#disable-throwing-exceptions" title="Permalink to this heading"></a></h2>
 <p>By default, some methods of this class may throw an exception. If you want to disable it, you can set a special flag
 that will prevent throwing exceptions.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -684,7 +688,7 @@ that will prevent throwing exceptions.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

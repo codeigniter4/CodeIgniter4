@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Services &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,8 +285,8 @@
            <div itemprop="articleBody">
              
   <section id="services">
-<h1>Services<a class="headerlink" href="#services" title="Permalink to this headline"></a></h1>
-<div class="contents local topic" id="contents">
+<h1>Services<a class="headerlink" href="#services" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#introduction" id="id1">Introduction</a></p>
 <ul>
@@ -304,11 +308,11 @@
 </li>
 <li><p><a class="reference internal" href="#service-discovery" id="id10">Service Discovery</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="introduction">
-<h2><a class="toc-backref" href="#id1">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
 <section id="what-are-services">
-<h3><a class="toc-backref" href="#id2">What are Services?</a><a class="headerlink" href="#what-are-services" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">What are Services?</a><a class="headerlink" href="#what-are-services" title="Permalink to this heading"></a></h3>
 <p>The <strong>Services</strong> in CodeIgniter 4 provide the functionality to create and share new class instances.
 It is implemented as the <code class="docutils literal notranslate"><span class="pre">Config\Services</span></code> class.</p>
 <p>All of the core classes within CodeIgniter are provided as “services”. This simply means that, instead
@@ -316,7 +320,7 @@ of hard-coding a class name to load, the classes to call are defined within a ve
 configuration file. This file acts as a type of factory to create new instances of the required class.</p>
 </section>
 <section id="why-use-services">
-<h3><a class="toc-backref" href="#id3">Why use Services?</a><a class="headerlink" href="#why-use-services" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Why use Services?</a><a class="headerlink" href="#why-use-services" title="Permalink to this heading"></a></h3>
 <p>A quick example will probably make things clearer, so imagine that you need to pull in an instance
 of the Timer class. The simplest method would simply be to create a new instance of that class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -350,7 +354,7 @@ error-resistant.</p>
 </section>
 </section>
 <section id="how-to-get-a-service">
-<h2><a class="toc-backref" href="#id4">How to Get a Service</a><a class="headerlink" href="#how-to-get-a-service" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">How to Get a Service</a><a class="headerlink" href="#how-to-get-a-service" title="Permalink to this heading"></a></h2>
 <p>As many CodeIgniter classes are provided as services, you can get them like the following:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -378,7 +382,7 @@ error-resistant.</p>
 </div>
 <p>Therefore, the parameter <code class="docutils literal notranslate"><span class="pre">$options2</span></code> for the <code class="docutils literal notranslate"><span class="pre">$client2</span></code> does not work. It is just ignored.</p>
 <section id="getting-a-new-instance">
-<h3><a class="toc-backref" href="#id5">Getting a New Instance</a><a class="headerlink" href="#getting-a-new-instance" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Getting a New Instance</a><a class="headerlink" href="#getting-a-new-instance" title="Permalink to this heading"></a></h3>
 <p>If you want to get a new instance of the Typography class, you need to pass <code class="docutils literal notranslate"><span class="pre">false</span></code> to the argument <code class="docutils literal notranslate"><span class="pre">$getShared</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -387,10 +391,10 @@ error-resistant.</p>
 </div>
 </section>
 <section id="convenience-functions">
-<h3><a class="toc-backref" href="#id6">Convenience Functions</a><a class="headerlink" href="#convenience-functions" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Convenience Functions</a><a class="headerlink" href="#convenience-functions" title="Permalink to this heading"></a></h3>
 <p>Two functions have been provided for getting a service. These functions are always available.</p>
 <section id="service">
-<h4>service()<a class="headerlink" href="#service" title="Permalink to this headline"></a></h4>
+<h4>service()<a class="headerlink" href="#service" title="Permalink to this heading"></a></h4>
 <p>The first is <code class="docutils literal notranslate"><span class="pre">service()</span></code> which returns a new instance of the requested service. The only
 required parameter is the service name. This is the same as the method name within the Services
 file always returns a SHARED instance of the class, so calling the function multiple times should
@@ -414,7 +418,7 @@ always return the same instance:</p>
 </div>
 </section>
 <section id="single-service">
-<h4>single_service()<a class="headerlink" href="#single-service" title="Permalink to this headline"></a></h4>
+<h4>single_service()<a class="headerlink" href="#single-service" title="Permalink to this heading"></a></h4>
 <p>The second function, <code class="docutils literal notranslate"><span class="pre">single_service()</span></code> works just like <code class="docutils literal notranslate"><span class="pre">service()</span></code> but returns a new instance of
 the class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -429,7 +433,7 @@ the class:</p>
 </section>
 </section>
 <section id="defining-services">
-<h2><a class="toc-backref" href="#id7">Defining Services</a><a class="headerlink" href="#defining-services" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Defining Services</a><a class="headerlink" href="#defining-services" title="Permalink to this heading"></a></h2>
 <p>To make services work well, you have to be able to rely on each class having a constant API, or
 <a class="reference external" href="https://www.php.net/manual/en/language.oop5.interfaces.php">interface</a>, to use. Almost all of
 CodeIgniter’s classes provide an interface that they adhere to. When you want to extend or replace
@@ -470,7 +474,7 @@ instead of <code class="docutils literal notranslate"><span class="pre">CodeIgni
 </pre></div>
 </div>
 <section id="allowing-parameters">
-<h3><a class="toc-backref" href="#id8">Allowing Parameters</a><a class="headerlink" href="#allowing-parameters" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Allowing Parameters</a><a class="headerlink" href="#allowing-parameters" title="Permalink to this heading"></a></h3>
 <p>In some instances, you will want the option to pass a setting to the class during instantiation.
 Since the services file is a very simple class, it is easy to make this work.</p>
 <p>A good example is the <code class="docutils literal notranslate"><span class="pre">renderer</span></code> service. By default, we want this class to be able
@@ -503,7 +507,7 @@ the path it uses:</p>
 </div>
 </section>
 <section id="shared-classes">
-<h3><a class="toc-backref" href="#id9">Shared Classes</a><a class="headerlink" href="#shared-classes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Shared Classes</a><a class="headerlink" href="#shared-classes" title="Permalink to this heading"></a></h3>
 <p>There are occasions where you need to require that only a single instance of a service
 is created. This is easily handled with the <code class="docutils literal notranslate"><span class="pre">getSharedInstance()</span></code> method that is called from within the
 factory method. This handles checking if an instance has been created and saved
@@ -533,7 +537,7 @@ within the class, and, if not, creates a new one. All of the factory methods pro
 </section>
 </section>
 <section id="service-discovery">
-<h2><a class="toc-backref" href="#id10">Service Discovery</a><a class="headerlink" href="#service-discovery" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Service Discovery</a><a class="headerlink" href="#service-discovery" title="Permalink to this heading"></a></h2>
 <p>CodeIgniter can automatically discover any <strong>Config/Services.php</strong> files you may have created within any defined namespaces.
 This allows simple use of any module Services files. In order for custom Services files to be discovered, they must
 meet these requirements:</p>
@@ -587,7 +591,7 @@ would simply use the framework’s <code class="docutils literal notranslate"><s
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

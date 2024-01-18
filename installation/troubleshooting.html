@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Troubleshooting &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,9 +285,9 @@
            <div itemprop="articleBody">
              
   <section id="troubleshooting">
-<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline"></a></h1>
+<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h1>
 <p>Here are some common installation problems, and suggested workarounds.</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#how-do-i-know-if-my-install-is-working" id="id1">How do I know if my install is working?</a></p></li>
 <li><p><a class="reference internal" href="#i-have-to-include-index-php-in-my-url" id="id2">I have to include index.php in my URL</a></p></li>
@@ -294,9 +298,9 @@
 <li><p><a class="reference internal" href="#what-s-with-an-unhelpful-whoops-page" id="id7">What’s with an unhelpful “Whoops!” page?</a></p></li>
 <li><p><a class="reference internal" href="#codeigniter-error-logs" id="id8">CodeIgniter Error Logs</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="how-do-i-know-if-my-install-is-working">
-<h2><a class="toc-backref" href="#id1">How do I know if my install is working?</a><a class="headerlink" href="#how-do-i-know-if-my-install-is-working" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">How do I know if my install is working?</a><a class="headerlink" href="#how-do-i-know-if-my-install-is-working" title="Permalink to this heading"></a></h2>
 <p>From the command line, at your project root:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark serve</span>
 </pre></div>
@@ -306,7 +310,7 @@ welcome page:</p>
 <p><img alt="CodeIgniter4 Welcome" src="../_images/welcome.png" /></p>
 </section>
 <section id="i-have-to-include-index-php-in-my-url">
-<h2><a class="toc-backref" href="#id2">I have to include index.php in my URL</a><a class="headerlink" href="#i-have-to-include-index-php-in-my-url" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">I have to include index.php in my URL</a><a class="headerlink" href="#i-have-to-include-index-php-in-my-url" title="Permalink to this heading"></a></h2>
 <p>If a URL like <code class="docutils literal notranslate"><span class="pre">/mypage/find/apple</span></code> doesn’t work, but the similar
 URL <code class="docutils literal notranslate"><span class="pre">/index.php/mypage/find/apple</span></code> does, that sounds like your <strong>.htaccess</strong> rules
 (for Apache) are not set up properly, or the <code class="docutils literal notranslate"><span class="pre">mod_rewrite</span></code> extension
@@ -314,7 +318,7 @@ in Apache’s <strong>httpd.conf</strong> is commented out.
 See <a class="reference internal" href="../general/urls.html#urls-remove-index-php"><span class="std std-ref">Removing the index.php file</span></a>.</p>
 </section>
 <section id="only-the-default-page-loads">
-<h2><a class="toc-backref" href="#id3">Only the default page loads</a><a class="headerlink" href="#only-the-default-page-loads" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Only the default page loads</a><a class="headerlink" href="#only-the-default-page-loads" title="Permalink to this heading"></a></h2>
 <p>If you find that no matter what you put in your URL only your default
 page is loading, it might be that your server does not support the
 REQUEST_URI variable needed to serve search-engine friendly URLs. As a
@@ -358,14 +362,14 @@ do this open your <strong>app/Config/App.php</strong> file and change this:</p>
 </div>
 </section>
 <section id="no-input-file-specified">
-<h2><a class="toc-backref" href="#id4">No input file specified</a><a class="headerlink" href="#no-input-file-specified" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">No input file specified</a><a class="headerlink" href="#no-input-file-specified" title="Permalink to this heading"></a></h2>
 <p>If you see “No input file specified”, try to change the rewrite rule like the following (to add <code class="docutils literal notranslate"><span class="pre">?</span></code> after <code class="docutils literal notranslate"><span class="pre">index.php</span></code>):</p>
 <div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">RewriteRule</span><span class="w"> </span>^([\s\S]*)$<span class="w"> </span>index.php?/$1<span class="w"> </span>[L,NC,QSA]
 </pre></div>
 </div>
 </section>
 <section id="my-app-works-fine-locally-but-not-on-the-production-server">
-<h2><a class="toc-backref" href="#id5">My app works fine locally but not on the production server</a><a class="headerlink" href="#my-app-works-fine-locally-but-not-on-the-production-server" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">My app works fine locally but not on the production server</a><a class="headerlink" href="#my-app-works-fine-locally-but-not-on-the-production-server" title="Permalink to this heading"></a></h2>
 <p>Make sure that the case of the folder and file names matches the code.</p>
 <p>Many developers develop on case-insensitive file systems on Windows or macOS.
 However, most server environments use case-sensitive file systems.</p>
@@ -374,7 +378,7 @@ However, most server environments use case-sensitive file systems.</p>
 <p>If the file name case is incorrect, the file is not found on the server.</p>
 </section>
 <section id="the-tutorial-gives-404-errors-everywhere">
-<h2><a class="toc-backref" href="#id6">The tutorial gives 404 errors everywhere :(</a><a class="headerlink" href="#the-tutorial-gives-404-errors-everywhere" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">The tutorial gives 404 errors everywhere :(</a><a class="headerlink" href="#the-tutorial-gives-404-errors-everywhere" title="Permalink to this heading"></a></h2>
 <p>You can’t follow the tutorial using PHP’s built-in web server.
 It doesn’t process the <strong>.htaccess</strong> file needed to route
 requests properly.</p>
@@ -382,7 +386,7 @@ requests properly.</p>
 CodeIgniter equivalent, <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">serve</span></code> from your project root.</p>
 </section>
 <section id="what-s-with-an-unhelpful-whoops-page">
-<h2><a class="toc-backref" href="#id7">What’s with an unhelpful “Whoops!” page?</a><a class="headerlink" href="#what-s-with-an-unhelpful-whoops-page" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">What’s with an unhelpful “Whoops!” page?</a><a class="headerlink" href="#what-s-with-an-unhelpful-whoops-page" title="Permalink to this heading"></a></h2>
 <p>You find that your app is displaying a page with “Whoops!” and
 then the text line “We seem to have hit a snag. Please try again later…”.</p>
 <p>That is a sign that you are in production mode and have hit an
@@ -394,7 +398,7 @@ the webapp, for better security.</p>
 After that, reload the page. You will see the error and the back trace.</p>
 </section>
 <section id="codeigniter-error-logs">
-<h2><a class="toc-backref" href="#id8">CodeIgniter Error Logs</a><a class="headerlink" href="#codeigniter-error-logs" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">CodeIgniter Error Logs</a><a class="headerlink" href="#codeigniter-error-logs" title="Permalink to this heading"></a></h2>
 <p>CodeIgniter logs error messages, according to the settings in <strong>app/Config/Logger.php</strong>.</p>
 <p>You can adjust the error threshold to see more or fewer messages. See <a class="reference internal" href="../general/logging.html#logging-configuration"><span class="std std-ref">Logging</span></a> for details.</p>
 <p>The default configuration has daily log files stored in <strong>writable/logs</strong>.
@@ -414,7 +418,7 @@ It would be a good idea to check them if things aren’t working the way you exp
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

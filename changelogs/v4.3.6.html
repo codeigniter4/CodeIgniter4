@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Version 4.3.6 &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -282,10 +286,10 @@
            <div itemprop="articleBody">
              
   <section id="version-4-3-6">
-<h1>Version 4.3.6<a class="headerlink" href="#version-4-3-6" title="Permalink to this headline"></a></h1>
+<h1>Version 4.3.6<a class="headerlink" href="#version-4-3-6" title="Permalink to this heading"></a></h1>
 <p>Release Date: June 18, 2023</p>
 <p><strong>4.3.6 release of CodeIgniter4</strong></p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p>
 <ul>
@@ -305,11 +309,11 @@
 <li><p><a class="reference internal" href="#deprecations" id="id7">Deprecations</a></p></li>
 <li><p><a class="reference internal" href="#bugs-fixed" id="id8">Bugs Fixed</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="breaking">
-<h2><a class="toc-backref" href="#id1">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this heading"></a></h2>
 <section id="interface-changes">
-<h3><a class="toc-backref" href="#id2">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this heading"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>As long as you have not extended the relevant CodeIgniter core classes
@@ -317,11 +321,11 @@ or implemented these interfaces, all these changes are backward compatible
 and require no intervention.</p>
 </div>
 <section id="autorouterinterface">
-<h4><a class="toc-backref" href="#id3">AutoRouterInterface</a><a class="headerlink" href="#autorouterinterface" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id3" role="doc-backlink">AutoRouterInterface</a><a class="headerlink" href="#autorouterinterface" title="Permalink to this heading"></a></h4>
 <p>Now <code class="docutils literal notranslate"><span class="pre">AutoRouterInterface::getRoute()</span></code> has the new second parameter <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">$httpVerb</span></code>.</p>
 </section>
 <section id="validationinterface-check">
-<h4><a class="toc-backref" href="#id4">ValidationInterface::check()</a><a class="headerlink" href="#validationinterface-check" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id4" role="doc-backlink">ValidationInterface::check()</a><a class="headerlink" href="#validationinterface-check" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p>The second parameter has changed from <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">$rule</span></code> to <code class="docutils literal notranslate"><span class="pre">$rules</span></code>.</p></li>
 <li><p>The optional fourth parameter <code class="docutils literal notranslate"><span class="pre">$dbGroup</span> <span class="pre">=</span> <span class="pre">null</span></code> has been added.</p></li>
@@ -329,9 +333,9 @@ and require no intervention.</p>
 </section>
 </section>
 <section id="method-signature-changes">
-<h3><a class="toc-backref" href="#id5">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Method Signature Changes</a><a class="headerlink" href="#method-signature-changes" title="Permalink to this heading"></a></h3>
 <section id="validation-check">
-<h4><a class="toc-backref" href="#id6">Validation::check()</a><a class="headerlink" href="#validation-check" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id6" role="doc-backlink">Validation::check()</a><a class="headerlink" href="#validation-check" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p>The second parameter has changed from <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">$rule</span></code> to <code class="docutils literal notranslate"><span class="pre">$rules</span></code>.</p></li>
 <li><p>The optional fourth parameter <code class="docutils literal notranslate"><span class="pre">$dbGroup</span> <span class="pre">=</span> <span class="pre">null</span></code> has been added.</p></li>
@@ -340,14 +344,14 @@ and require no intervention.</p>
 </section>
 </section>
 <section id="deprecations">
-<h2><a class="toc-backref" href="#id7">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>AutoRouterImproved:</strong> The constructor parameter <code class="docutils literal notranslate"><span class="pre">$httpVerb</span></code> is deprecated.
 No longer used.</p></li>
 </ul>
 </section>
 <section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id8">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Validation:</strong> Fixed a bug that <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code> is ignored when checking
 the value of a placeholder.</p></li>
@@ -375,7 +379,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

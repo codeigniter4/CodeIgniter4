@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Spark Commands &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,9 +285,9 @@
            <div itemprop="articleBody">
              
   <section id="spark-commands">
-<h1>Spark Commands<a class="headerlink" href="#spark-commands" title="Permalink to this headline"></a></h1>
+<h1>Spark Commands<a class="headerlink" href="#spark-commands" title="Permalink to this heading"></a></h1>
 <p>CodeIgniter ships with the official command <strong>spark</strong> and built-in commands.</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#running-commands" id="id1">Running Commands</a></p>
 <ul>
@@ -299,15 +303,15 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="running-commands">
-<h2><a class="toc-backref" href="#id1">Running Commands</a><a class="headerlink" href="#running-commands" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Running Commands</a><a class="headerlink" href="#running-commands" title="Permalink to this heading"></a></h2>
 <section id="running-via-cli">
-<h3><a class="toc-backref" href="#id2">Running via CLI</a><a class="headerlink" href="#running-via-cli" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Running via CLI</a><a class="headerlink" href="#running-via-cli" title="Permalink to this heading"></a></h3>
 <p>The commands are run from the command line, in the project root directory.
 The command file <strong>spark</strong> has been provided that is used to run any of the CLI commands.</p>
 <section id="showing-list-of-commands">
-<h4><a class="toc-backref" href="#id3">Showing List of Commands</a><a class="headerlink" href="#showing-list-of-commands" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id3" role="doc-backlink">Showing List of Commands</a><a class="headerlink" href="#showing-list-of-commands" title="Permalink to this heading"></a></h4>
 <p>When called <strong>spark</strong> without specifying a command, a simple help page is displayed
 that also provides a list of available commands and their descriptions, sorted by
 categories:</p>
@@ -315,7 +319,7 @@ categories:</p>
 </pre></div>
 </div>
 <section id="spark-list">
-<h5>spark list<a class="headerlink" href="#spark-list" title="Permalink to this headline"></a></h5>
+<h5>spark list<a class="headerlink" href="#spark-list" title="Permalink to this heading"></a></h5>
 <p><code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span></code> is the exactly same as the <code class="docutils literal notranslate"><span class="pre">list</span></code> command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark list</span>
 </pre></div>
@@ -328,7 +332,7 @@ sorted alphabetically:</p>
 </section>
 </section>
 <section id="showing-help">
-<h4><a class="toc-backref" href="#id4">Showing Help</a><a class="headerlink" href="#showing-help" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id4" role="doc-backlink">Showing Help</a><a class="headerlink" href="#showing-help" title="Permalink to this heading"></a></h4>
 <p>You can get help about any CLI command using the <code class="docutils literal notranslate"><span class="pre">help</span></code> command as follows:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark help db:seed</span>
 </pre></div>
@@ -339,7 +343,7 @@ sorted alphabetically:</p>
 </div>
 </section>
 <section id="running-a-command">
-<h4><a class="toc-backref" href="#id5">Running a Command</a><a class="headerlink" href="#running-a-command" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id5" role="doc-backlink">Running a Command</a><a class="headerlink" href="#running-a-command" title="Permalink to this heading"></a></h4>
 <p>You should pass the name of the command as the first argument to run that command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark migrate</span>
 </pre></div>
@@ -357,7 +361,7 @@ for the information it needs to run correctly:</p>
 </div>
 </section>
 <section id="suppressing-header-output">
-<h4><a class="toc-backref" href="#id6">Suppressing Header Output</a><a class="headerlink" href="#suppressing-header-output" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id6" role="doc-backlink">Suppressing Header Output</a><a class="headerlink" href="#suppressing-header-output" title="Permalink to this heading"></a></h4>
 <p>When you run a command, the header with CodeIgniter version and the current time
 is output:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark env</span>
@@ -376,7 +380,7 @@ is output:</p>
 </section>
 </section>
 <section id="calling-commands">
-<h3><a class="toc-backref" href="#id7">Calling Commands</a><a class="headerlink" href="#calling-commands" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Calling Commands</a><a class="headerlink" href="#calling-commands" title="Permalink to this heading"></a></h3>
 <p>Commands can also be ran from within your own code. This is most often done within a controller for cronjob tasks,
 but they can be used at any time. You do this by using the <code class="docutils literal notranslate"><span class="pre">command()</span></code> function. This function is always available.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -404,7 +408,7 @@ so that you can choose to display it or not.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

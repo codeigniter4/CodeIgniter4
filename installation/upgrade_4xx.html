@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Upgrading from 3.x to 4.x &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -282,7 +286,7 @@
            <div itemprop="articleBody">
              
   <section id="upgrading-from-3-x-to-4-x">
-<h1>Upgrading from 3.x to 4.x<a class="headerlink" href="#upgrading-from-3-x-to-4-x" title="Permalink to this headline"></a></h1>
+<h1>Upgrading from 3.x to 4.x<a class="headerlink" href="#upgrading-from-3-x-to-4-x" title="Permalink to this heading"></a></h1>
 <p>CodeIgniter 4 is a rewrite of the framework and is not backwards compatible.
 It is more appropriate to think of converting your app, rather than upgrading it.
 Once you have done that, upgrading from one version of CodeIgniter 4 to the next
@@ -301,7 +305,7 @@ CodeIgniter is built up and contain some of the most important functions.
 These libraries operate separately from each other, so you have to look at
 them one by one.</p>
 <p><strong>Do read the user guide</strong> before embarking on a project conversion!</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#general-adjustments" id="id2">General Adjustments</a></p>
 <ul>
@@ -320,25 +324,25 @@ them one by one.</p>
 </li>
 <li><p><a class="reference internal" href="#upgrading-libraries" id="id14">Upgrading Libraries</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="general-adjustments">
-<h2><a class="toc-backref" href="#id2">General Adjustments</a><a class="headerlink" href="#general-adjustments" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">General Adjustments</a><a class="headerlink" href="#general-adjustments" title="Permalink to this heading"></a></h2>
 <section id="downloads">
-<h3><a class="toc-backref" href="#id3">Downloads</a><a class="headerlink" href="#downloads" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Downloads</a><a class="headerlink" href="#downloads" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>CI4 is still available as a <a class="reference internal" href="installing_manual.html"><span class="doc">ready-to-run zip or tarball</span></a>.</p></li>
 <li><p>It can also be installed using <a class="reference internal" href="installing_composer.html"><span class="doc">Composer</span></a>.</p></li>
 </ul>
 </section>
 <section id="namespaces">
-<h3><a class="toc-backref" href="#id4">Namespaces</a><a class="headerlink" href="#namespaces" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Namespaces</a><a class="headerlink" href="#namespaces" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>CI4 is built for PHP 7.4+, and everything in the framework is namespaced,
 except for the helper and lang files.</p></li>
 </ul>
 </section>
 <section id="application-structure">
-<h3><a class="toc-backref" href="#id5">Application Structure</a><a class="headerlink" href="#application-structure" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Application Structure</a><a class="headerlink" href="#application-structure" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>The <strong>application</strong> folder is renamed as <strong>app</strong> and the framework still has <strong>system</strong> folders,
 with the same interpretation as before.</p></li>
@@ -354,7 +358,7 @@ a different mechanism for extending framework components (see below).</p></li>
 </ul>
 </section>
 <section id="routing">
-<h3><a class="toc-backref" href="#id6">Routing</a><a class="headerlink" href="#routing" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Routing</a><a class="headerlink" href="#routing" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>The Auto Routing is disabled by default. You need to <a class="reference internal" href="../incoming/routing.html#defined-route-routing"><span class="std std-ref">define all routes</span></a> by default.</p></li>
 <li><p>If you want to use the Auto Routing in the same way as CI3, you need to enable
@@ -363,7 +367,7 @@ a different mechanism for extending framework components (see below).</p></li>
 </ul>
 </section>
 <section id="model-view-and-controller">
-<h3><a class="toc-backref" href="#id7">Model, View and Controller</a><a class="headerlink" href="#model-view-and-controller" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Model, View and Controller</a><a class="headerlink" href="#model-view-and-controller" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>CodeIgniter is based on the MVC concept. Thus, the changes on the Model, View and Controller
 are one of the most important things you have to handle.</p></li>
@@ -388,7 +392,7 @@ you some step-by-step instructions to convert the MVC classes in CodeIgniter4:</
 </div>
 </section>
 <section id="class-loading">
-<h3><a class="toc-backref" href="#id8">Class Loading</a><a class="headerlink" href="#class-loading" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Class Loading</a><a class="headerlink" href="#class-loading" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>There is no longer a CodeIgniter “superobject”, with framework component
 references magically injected as properties of your controller.</p></li>
@@ -404,7 +408,7 @@ instance like <code class="docutils literal notranslate"><span class="pre">$this
 </ul>
 </section>
 <section id="libraries">
-<h3><a class="toc-backref" href="#id9">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Your app classes can still go inside <strong>app/Libraries</strong>, but they don’t have to.</p></li>
 <li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('x');</span></code> you can now use
@@ -414,7 +418,7 @@ your component. Alternatively, you can use <a class="reference internal" href=".
 </ul>
 </section>
 <section id="helpers">
-<h3><a class="toc-backref" href="#id10">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="../general/helpers.html"><span class="doc">Helpers</span></a> are pretty much the same as before, though some have been simplified.</p></li>
 <li><p>Since v4.3.0, you can autoload helpers by <strong>app/Config/Autoload.php</strong> as well as CI3.</p></li>
@@ -454,7 +458,7 @@ or <code class="docutils literal notranslate"><span class="pre">withHeaders()</s
 </ul>
 </section>
 <section id="hooks">
-<h3><a class="toc-backref" href="#id11">Hooks</a><a class="headerlink" href="#hooks" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Hooks</a><a class="headerlink" href="#hooks" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.codeigniter.com/userguide3/general/hooks.html">Hooks</a> have been
 replaced by <a class="reference internal" href="../extending/events.html"><span class="doc">Events</span></a>.</p></li>
@@ -470,7 +474,7 @@ page.</p></li>
 </ul>
 </section>
 <section id="error-handling">
-<h3><a class="toc-backref" href="#id12">Error Handling</a><a class="headerlink" href="#error-handling" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Error Handling</a><a class="headerlink" href="#error-handling" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p>The behavior in CI4 has been slightly changed.</p>
 <ul>
@@ -503,7 +507,7 @@ framework processing.</p></li>
 </ul>
 </section>
 <section id="extending-the-framework">
-<h3><a class="toc-backref" href="#id13">Extending the Framework</a><a class="headerlink" href="#extending-the-framework" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Extending the Framework</a><a class="headerlink" href="#extending-the-framework" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>You don’t need a <strong>core</strong> folder to hold <code class="docutils literal notranslate"><span class="pre">MY_...</span></code> framework
 component extensions or replacements.</p></li>
@@ -517,7 +521,7 @@ your components instead of the default ones.</p></li>
 </section>
 </section>
 <section id="upgrading-libraries">
-<h2><a class="toc-backref" href="#id14">Upgrading Libraries</a><a class="headerlink" href="#upgrading-libraries" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">Upgrading Libraries</a><a class="headerlink" href="#upgrading-libraries" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Your app classes can still go inside <strong>app/Libraries</strong>, but they don’t have to.</p></li>
 <li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('x');</span></code> you can now use
@@ -573,7 +577,7 @@ steps and examples to adjust your code.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

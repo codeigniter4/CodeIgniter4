@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Query Helper Methods &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,8 +285,8 @@
            <div itemprop="articleBody">
              
   <section id="query-helper-methods">
-<h1>Query Helper Methods<a class="headerlink" href="#query-helper-methods" title="Permalink to this headline"></a></h1>
-<div class="contents local topic" id="contents">
+<h1>Query Helper Methods<a class="headerlink" href="#query-helper-methods" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#information-from-executing-a-query" id="id1">Information From Executing a Query</a></p>
 <ul>
@@ -300,11 +304,11 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="information-from-executing-a-query">
-<h2><a class="toc-backref" href="#id1">Information From Executing a Query</a><a class="headerlink" href="#information-from-executing-a-query" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Information From Executing a Query</a><a class="headerlink" href="#information-from-executing-a-query" title="Permalink to this heading"></a></h2>
 <section id="db-insertid">
-<h3><a class="toc-backref" href="#id2">$db-&gt;insertID()</a><a class="headerlink" href="#db-insertid" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">$db-&gt;insertID()</a><a class="headerlink" href="#db-insertid" title="Permalink to this heading"></a></h3>
 <p>The insert ID number when performing database inserts.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -314,7 +318,7 @@ appropriate sequence to check for the insert id.</p>
 </div>
 </section>
 <section id="db-affectedrows">
-<h3><a class="toc-backref" href="#id3">$db-&gt;affectedRows()</a><a class="headerlink" href="#db-affectedrows" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">$db-&gt;affectedRows()</a><a class="headerlink" href="#db-affectedrows" title="Permalink to this heading"></a></h3>
 <p>Displays the number of affected rows, when doing “write” type queries
 (insert, update, etc.).</p>
 <div class="admonition note">
@@ -326,14 +330,14 @@ in the database driver file.</p>
 </div>
 </section>
 <section id="db-getlastquery">
-<h3><a class="toc-backref" href="#id4">$db-&gt;getLastQuery()</a><a class="headerlink" href="#db-getlastquery" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">$db-&gt;getLastQuery()</a><a class="headerlink" href="#db-getlastquery" title="Permalink to this heading"></a></h3>
 <p>Returns a Query object that represents the last query that was run (the query string, not the result).</p>
 </section>
 </section>
 <section id="information-about-your-database">
-<h2><a class="toc-backref" href="#id5">Information About Your Database</a><a class="headerlink" href="#information-about-your-database" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Information About Your Database</a><a class="headerlink" href="#information-about-your-database" title="Permalink to this heading"></a></h2>
 <section id="db-countall">
-<h3><a class="toc-backref" href="#id6">$db-&gt;countAll()</a><a class="headerlink" href="#db-countall" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">$db-&gt;countAll()</a><a class="headerlink" href="#db-countall" title="Permalink to this heading"></a></h3>
 <p>Permits you to determine the number of rows in a particular table.
 Submit the table name in the first parameter. This is part of Query Builder.
 Example:</p>
@@ -345,7 +349,7 @@ Example:</p>
 </div>
 </section>
 <section id="db-countallresults">
-<h3><a class="toc-backref" href="#id7">$db-&gt;countAllResults()</a><a class="headerlink" href="#db-countallresults" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">$db-&gt;countAllResults()</a><a class="headerlink" href="#db-countallresults" title="Permalink to this heading"></a></h3>
 <p>Permits you to determine the number of rows in a particular result set.
 Submit the table name in the first parameter. This is part of Query Builder.
 Example:</p>
@@ -357,7 +361,7 @@ Example:</p>
 </div>
 </section>
 <section id="db-getplatform">
-<h3><a class="toc-backref" href="#id8">$db-&gt;getPlatform()</a><a class="headerlink" href="#db-getplatform" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">$db-&gt;getPlatform()</a><a class="headerlink" href="#db-getplatform" title="Permalink to this heading"></a></h3>
 <p>Outputs the database platform (DBDriver) you are running (MySQLi, SQLSRV, Postgre,
 etc…):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -367,7 +371,7 @@ etc…):</p>
 </div>
 </section>
 <section id="db-getversion">
-<h3><a class="toc-backref" href="#id9">$db-&gt;getVersion()</a><a class="headerlink" href="#db-getversion" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">$db-&gt;getVersion()</a><a class="headerlink" href="#db-getversion" title="Permalink to this heading"></a></h3>
 <p>Outputs the database version you are running:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -390,7 +394,7 @@ etc…):</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

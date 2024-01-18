@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Testing Your Database &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,8 +285,8 @@
            <div itemprop="articleBody">
              
   <section id="testing-your-database">
-<h1>Testing Your Database<a class="headerlink" href="#testing-your-database" title="Permalink to this headline"></a></h1>
-<div class="contents local topic" id="contents">
+<h1>Testing Your Database<a class="headerlink" href="#testing-your-database" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#the-test-class" id="id1">The Test Class</a></p></li>
 <li><p><a class="reference internal" href="#setting-up-a-test-database" id="id2">Setting Up a Test Database</a></p>
@@ -298,9 +302,9 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="the-test-class">
-<h2><a class="toc-backref" href="#id1">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this heading"></a></h2>
 <p>In order to take advantage of the built-in database tools that CodeIgniter provides for testing, your
 tests must extend <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> and use the <code class="docutils literal notranslate"><span class="pre">DatabaseTestTrait</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -350,7 +354,7 @@ of the functionality described here:</p>
 </div>
 </section>
 <section id="setting-up-a-test-database">
-<h2><a class="toc-backref" href="#id2">Setting Up a Test Database</a><a class="headerlink" href="#setting-up-a-test-database" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Setting Up a Test Database</a><a class="headerlink" href="#setting-up-a-test-database" title="Permalink to this heading"></a></h2>
 <p>When running database tests, you need to provide a database that can be used during testing. Instead of
 using the PHPUnit built-in database features, the framework provides tools specific to CodeIgniter. The first
 step is to ensure that you have set up a <code class="docutils literal notranslate"><span class="pre">tests</span></code> database group in <strong>app/Config/Database.php</strong>.
@@ -368,7 +372,7 @@ correct information:</p>
 </pre></div>
 </div>
 <section id="migrations-and-seeds">
-<h3><a class="toc-backref" href="#id3">Migrations and Seeds</a><a class="headerlink" href="#migrations-and-seeds" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Migrations and Seeds</a><a class="headerlink" href="#migrations-and-seeds" title="Permalink to this heading"></a></h3>
 <p>When running tests, you need to ensure that your database has the correct schema set up and that
 it is in a known state for every test. You can use migrations and seeds to set up your database,
 by adding a couple of class properties to your test.</p>
@@ -399,26 +403,26 @@ by adding a couple of class properties to your test.</p>
 </pre></div>
 </div>
 <section id="migrations">
-<h4>Migrations<a class="headerlink" href="#migrations" title="Permalink to this headline"></a></h4>
+<h4>Migrations<a class="headerlink" href="#migrations" title="Permalink to this heading"></a></h4>
 <section id="migrate">
-<h5>$migrate<a class="headerlink" href="#migrate" title="Permalink to this headline"></a></h5>
+<h5>$migrate<a class="headerlink" href="#migrate" title="Permalink to this heading"></a></h5>
 <p>This boolean value determines whether the database migration runs before test.
 By default, the database is always migrated to the latest available state as defined by <code class="docutils literal notranslate"><span class="pre">$namespace</span></code>.
 If <code class="docutils literal notranslate"><span class="pre">false</span></code>, migration never runs. If you want to disable migration, set <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 </section>
 <section id="migrateonce">
-<h5>$migrateOnce<a class="headerlink" href="#migrateonce" title="Permalink to this headline"></a></h5>
+<h5>$migrateOnce<a class="headerlink" href="#migrateonce" title="Permalink to this heading"></a></h5>
 <p>This boolean value determines whether the database migration runs only once. If you want
 to run migration once before the first test, set <code class="docutils literal notranslate"><span class="pre">true</span></code>. If not present or <code class="docutils literal notranslate"><span class="pre">false</span></code>, migration
 runs before each test.</p>
 </section>
 <section id="refresh">
-<h5>$refresh<a class="headerlink" href="#refresh" title="Permalink to this headline"></a></h5>
+<h5>$refresh<a class="headerlink" href="#refresh" title="Permalink to this heading"></a></h5>
 <p>This boolean value determines whether the database is completely refreshed before test. If <code class="docutils literal notranslate"><span class="pre">true</span></code>,
 all migrations are rolled back to version 0.</p>
 </section>
 <section id="namespace">
-<h5>$namespace<a class="headerlink" href="#namespace" title="Permalink to this headline"></a></h5>
+<h5>$namespace<a class="headerlink" href="#namespace" title="Permalink to this heading"></a></h5>
 <p>By default, CodeIgniter will look in <strong>tests/_support/Database/Migrations</strong> to locate the migrations
 that it should run during testing. You can change this location by specifying a new namespace in the <code class="docutils literal notranslate"><span class="pre">$namespace</span></code> properties.
 This should not include the <strong>Database\Migrations</strong> sub-namespace but just the base namespace.</p>
@@ -429,20 +433,20 @@ This should not include the <strong>Database\Migrations</strong> sub-namespace b
 </section>
 </section>
 <section id="seeds">
-<h4>Seeds<a class="headerlink" href="#seeds" title="Permalink to this headline"></a></h4>
+<h4>Seeds<a class="headerlink" href="#seeds" title="Permalink to this heading"></a></h4>
 <section id="seed">
-<h5>$seed<a class="headerlink" href="#seed" title="Permalink to this headline"></a></h5>
+<h5>$seed<a class="headerlink" href="#seed" title="Permalink to this heading"></a></h5>
 <p>If present and not empty, this specifies the name of a Seed file that is used to populate the database with
 test data prior to test running.</p>
 </section>
 <section id="seedonce">
-<h5>$seedOnce<a class="headerlink" href="#seedonce" title="Permalink to this headline"></a></h5>
+<h5>$seedOnce<a class="headerlink" href="#seedonce" title="Permalink to this heading"></a></h5>
 <p>This boolean value determines whether the database seeding runs only once. If you want
 to run database seeding once before the first test, set <code class="docutils literal notranslate"><span class="pre">true</span></code>. If not present or <code class="docutils literal notranslate"><span class="pre">false</span></code>, database seeding
 runs before each test.</p>
 </section>
 <section id="basepath">
-<h5>$basePath<a class="headerlink" href="#basepath" title="Permalink to this headline"></a></h5>
+<h5>$basePath<a class="headerlink" href="#basepath" title="Permalink to this heading"></a></h5>
 <p>By default, CodeIgniter will look in <strong>tests/_support/Database/Seeds</strong> to locate the seeds that it should run during testing.
 You can change this directory by specifying the <code class="docutils literal notranslate"><span class="pre">$basePath</span></code> property. This should not include the <strong>Seeds</strong> directory,
 but the path to the single directory that holds the sub-directory.</p>
@@ -451,25 +455,25 @@ but the path to the single directory that holds the sub-directory.</p>
 </section>
 </section>
 <section id="helper-methods">
-<h2><a class="toc-backref" href="#id4">Helper Methods</a><a class="headerlink" href="#helper-methods" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Helper Methods</a><a class="headerlink" href="#helper-methods" title="Permalink to this heading"></a></h2>
 <p>The <strong>DatabaseTestTrait</strong> class provides several helper methods to aid in testing your database.</p>
 <section id="changing-database-state">
-<h3><a class="toc-backref" href="#id5">Changing Database State</a><a class="headerlink" href="#changing-database-state" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Changing Database State</a><a class="headerlink" href="#changing-database-state" title="Permalink to this heading"></a></h3>
 <section id="regressdatabase">
-<h4>regressDatabase()<a class="headerlink" href="#regressdatabase" title="Permalink to this headline"></a></h4>
+<h4>regressDatabase()<a class="headerlink" href="#regressdatabase" title="Permalink to this heading"></a></h4>
 <p>Called during <code class="docutils literal notranslate"><span class="pre">$refresh</span></code> described above, this method is available if you need to reset the database manually.</p>
 </section>
 <section id="migratedatabase">
-<h4>migrateDatabase()<a class="headerlink" href="#migratedatabase" title="Permalink to this headline"></a></h4>
+<h4>migrateDatabase()<a class="headerlink" href="#migratedatabase" title="Permalink to this heading"></a></h4>
 <p>Called during <code class="docutils literal notranslate"><span class="pre">setUp()</span></code>, this method is available if you need to run migrations manually.</p>
 </section>
 <section id="seed-name">
-<h4>seed($name)<a class="headerlink" href="#seed-name" title="Permalink to this headline"></a></h4>
+<h4>seed($name)<a class="headerlink" href="#seed-name" title="Permalink to this heading"></a></h4>
 <p>Allows you to manually load a Seed into the database. The only parameter is the name of the seed to run. The seed
 must be present within the path specified in <code class="docutils literal notranslate"><span class="pre">$basePath</span></code>.</p>
 </section>
 <section id="hasindatabase-table-data">
-<h4>hasInDatabase($table, $data)<a class="headerlink" href="#hasindatabase-table-data" title="Permalink to this headline"></a></h4>
+<h4>hasInDatabase($table, $data)<a class="headerlink" href="#hasindatabase-table-data" title="Permalink to this heading"></a></h4>
 <p>Inserts a new row into the database. This row is removed after the current test runs. <code class="docutils literal notranslate"><span class="pre">$data</span></code> is an associative
 array with the data to insert into the table.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -484,9 +488,9 @@ array with the data to insert into the table.</p>
 </section>
 </section>
 <section id="getting-data-from-database">
-<h3><a class="toc-backref" href="#id6">Getting Data from Database</a><a class="headerlink" href="#getting-data-from-database" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Getting Data from Database</a><a class="headerlink" href="#getting-data-from-database" title="Permalink to this heading"></a></h3>
 <section id="grabfromdatabase-table-column-criteria">
-<h4>grabFromDatabase($table, $column, $criteria)<a class="headerlink" href="#grabfromdatabase-table-column-criteria" title="Permalink to this headline"></a></h4>
+<h4>grabFromDatabase($table, $column, $criteria)<a class="headerlink" href="#grabfromdatabase-table-column-criteria" title="Permalink to this heading"></a></h4>
 <p>Returns the value of <code class="docutils literal notranslate"><span class="pre">$column</span></code> from the specified table where the row matches <code class="docutils literal notranslate"><span class="pre">$criteria</span></code>. If more than one
 row is found, it will only return the first one.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -497,9 +501,9 @@ row is found, it will only return the first one.</p>
 </section>
 </section>
 <section id="assertions">
-<h3><a class="toc-backref" href="#id7">Assertions</a><a class="headerlink" href="#assertions" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Assertions</a><a class="headerlink" href="#assertions" title="Permalink to this heading"></a></h3>
 <section id="dontseeindatabase-table-criteria">
-<h4>dontSeeInDatabase($table, $criteria)<a class="headerlink" href="#dontseeindatabase-table-criteria" title="Permalink to this headline"></a></h4>
+<h4>dontSeeInDatabase($table, $criteria)<a class="headerlink" href="#dontseeindatabase-table-criteria" title="Permalink to this heading"></a></h4>
 <p>Asserts that a row with criteria matching the key/value pairs in <code class="docutils literal notranslate"><span class="pre">$criteria</span></code> DOES NOT exist in the database.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -512,7 +516,7 @@ row is found, it will only return the first one.</p>
 </div>
 </section>
 <section id="seeindatabase-table-criteria">
-<h4>seeInDatabase($table, $criteria)<a class="headerlink" href="#seeindatabase-table-criteria" title="Permalink to this headline"></a></h4>
+<h4>seeInDatabase($table, $criteria)<a class="headerlink" href="#seeindatabase-table-criteria" title="Permalink to this heading"></a></h4>
 <p>Asserts that a row with criteria matching the key/value pairs in <code class="docutils literal notranslate"><span class="pre">$criteria</span></code> DOES exist in the database.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -525,7 +529,7 @@ row is found, it will only return the first one.</p>
 </div>
 </section>
 <section id="seenumrecords-expected-table-criteria">
-<h4>seeNumRecords($expected, $table, $criteria)<a class="headerlink" href="#seenumrecords-expected-table-criteria" title="Permalink to this headline"></a></h4>
+<h4>seeNumRecords($expected, $table, $criteria)<a class="headerlink" href="#seenumrecords-expected-table-criteria" title="Permalink to this heading"></a></h4>
 <p>Asserts that a number of matching rows are found in the database that match <code class="docutils literal notranslate"><span class="pre">$criteria</span></code>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -552,7 +556,7 @@ row is found, it will only return the first one.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

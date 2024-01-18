@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Database Quick Start: Example Code &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,7 +285,7 @@
            <div itemprop="articleBody">
              
   <section id="database-quick-start-example-code">
-<h1>Database Quick Start: Example Code<a class="headerlink" href="#database-quick-start-example-code" title="Permalink to this headline"></a></h1>
+<h1>Database Quick Start: Example Code<a class="headerlink" href="#database-quick-start-example-code" title="Permalink to this heading"></a></h1>
 <p>The following page contains example code showing how the database class
 is used. For complete details please read the individual pages
 describing each function.</p>
@@ -289,7 +293,7 @@ describing each function.</p>
 <p class="admonition-title">Note</p>
 <p>CodeIgniter doesn’t support dots (<code class="docutils literal notranslate"><span class="pre">.</span></code>) in the database, table, and column names.</p>
 </div>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#initializing-the-database-class" id="id1">Initializing the Database Class</a></p></li>
 <li><p><a class="reference internal" href="#standard-query-with-multiple-results-object-version" id="id2">Standard Query With Multiple Results (Object Version)</a></p></li>
@@ -300,9 +304,9 @@ describing each function.</p>
 <li><p><a class="reference internal" href="#query-builder-query" id="id7">Query Builder Query</a></p></li>
 <li><p><a class="reference internal" href="#query-builder-insert" id="id8">Query Builder Insert</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="initializing-the-database-class">
-<h2><a class="toc-backref" href="#id1">Initializing the Database Class</a><a class="headerlink" href="#initializing-the-database-class" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Initializing the Database Class</a><a class="headerlink" href="#initializing-the-database-class" title="Permalink to this heading"></a></h2>
 <p>The following code loads and initializes the database class based on
 your <a class="reference internal" href="configuration.html"><span class="doc">configuration</span></a> settings:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -318,7 +322,7 @@ automatically. See the <a class="reference internal" href="connecting.html"><spa
 </div>
 </section>
 <section id="standard-query-with-multiple-results-object-version">
-<h2><a class="toc-backref" href="#id2">Standard Query With Multiple Results (Object Version)</a><a class="headerlink" href="#standard-query-with-multiple-results-object-version" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Standard Query With Multiple Results (Object Version)</a><a class="headerlink" href="#standard-query-with-multiple-results-object-version" title="Permalink to this heading"></a></h2>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$query</span>   <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT name, title, email FROM my_table&#39;</span><span class="p">);</span>
@@ -339,7 +343,7 @@ automatically. See the <a class="reference internal" href="connecting.html"><spa
 </div>
 </section>
 <section id="standard-query-with-multiple-results-array-version">
-<h2><a class="toc-backref" href="#id3">Standard Query With Multiple Results (Array Version)</a><a class="headerlink" href="#standard-query-with-multiple-results-array-version" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Standard Query With Multiple Results (Array Version)</a><a class="headerlink" href="#standard-query-with-multiple-results-array-version" title="Permalink to this heading"></a></h2>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$query</span>   <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT name, title, email FROM my_table&#39;</span><span class="p">);</span>
@@ -359,7 +363,7 @@ indexes.</div>
 </div>
 </section>
 <section id="standard-query-with-single-result">
-<h2><a class="toc-backref" href="#id4">Standard Query With Single Result</a><a class="headerlink" href="#standard-query-with-single-result" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Standard Query With Single Result</a><a class="headerlink" href="#standard-query-with-single-result" title="Permalink to this heading"></a></h2>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT name FROM my_table LIMIT 1&#39;</span><span class="p">);</span>
@@ -370,7 +374,7 @@ indexes.</div>
 <p>The above <code class="docutils literal notranslate"><span class="pre">getRow()</span></code> function returns an <strong>object</strong>. Example: <code class="docutils literal notranslate"><span class="pre">$row-&gt;name</span></code></p>
 </section>
 <section id="standard-query-with-single-result-array-version">
-<h2><a class="toc-backref" href="#id5">Standard Query With Single Result (Array version)</a><a class="headerlink" href="#standard-query-with-single-result-array-version" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Standard Query With Single Result (Array version)</a><a class="headerlink" href="#standard-query-with-single-result-array-version" title="Permalink to this heading"></a></h2>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT name FROM my_table LIMIT 1&#39;</span><span class="p">);</span>
@@ -382,7 +386,7 @@ indexes.</div>
 <code class="docutils literal notranslate"><span class="pre">$row['name']</span></code>.</p>
 </section>
 <section id="standard-insert">
-<h2><a class="toc-backref" href="#id6">Standard Insert</a><a class="headerlink" href="#standard-insert" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Standard Insert</a><a class="headerlink" href="#standard-insert" title="Permalink to this heading"></a></h2>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$sql</span> <span class="o">=</span> <span class="s1">&#39;INSERT INTO mytable (title, name) VALUES (&#39;</span> <span class="o">.</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;, &#39;</span> <span class="o">.</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;)&#39;</span><span class="p">;</span>
@@ -392,7 +396,7 @@ indexes.</div>
 </div>
 </section>
 <section id="query-builder-query">
-<h2><a class="toc-backref" href="#id7">Query Builder Query</a><a class="headerlink" href="#query-builder-query" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Query Builder Query</a><a class="headerlink" href="#query-builder-query" title="Permalink to this heading"></a></h2>
 <p>The <a class="reference internal" href="query_builder.html"><span class="doc">Query Builder Pattern</span></a> gives you a simplified
 means of retrieving data:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -409,7 +413,7 @@ table. The <a class="reference internal" href="query_builder.html"><span class="
 complement of functions for working with data.</p>
 </section>
 <section id="query-builder-insert">
-<h2><a class="toc-backref" href="#id8">Query Builder Insert</a><a class="headerlink" href="#query-builder-insert" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Query Builder Insert</a><a class="headerlink" href="#query-builder-insert" title="Permalink to this heading"></a></h2>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
@@ -437,7 +441,7 @@ complement of functions for working with data.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

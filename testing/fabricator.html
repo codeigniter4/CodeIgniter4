@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Generating Test Data &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,11 +285,11 @@
            <div itemprop="articleBody">
              
   <section id="generating-test-data">
-<h1>Generating Test Data<a class="headerlink" href="#generating-test-data" title="Permalink to this headline"></a></h1>
+<h1>Generating Test Data<a class="headerlink" href="#generating-test-data" title="Permalink to this heading"></a></h1>
 <p>Often you will need sample data for your application to run its tests. The <code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> class
 uses fzaninotto’s <a class="reference external" href="https://github.com/FakerPHP/Faker">Faker</a> to turn models into generators
 of random data. Use fabricators in your seeds or test cases to stage fake data for your unit tests.</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#supported-models" id="id1">Supported Models</a></p></li>
 <li><p><a class="reference internal" href="#loading-fabricators" id="id2">Loading Fabricators</a></p></li>
@@ -304,9 +308,9 @@ of random data. Use fabricators in your seeds or test cases to stage fake data f
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="supported-models">
-<h2><a class="toc-backref" href="#id1">Supported Models</a><a class="headerlink" href="#supported-models" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Supported Models</a><a class="headerlink" href="#supported-models" title="Permalink to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> supports any model that extends the framework’s core model, <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Model</span></code>.
 You may use your own custom models by ensuring they implement <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\Interfaces\FabricatorModel</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -327,7 +331,7 @@ You may use your own custom models by ensuring they implement <code class="docut
 </div>
 </section>
 <section id="loading-fabricators">
-<h2><a class="toc-backref" href="#id2">Loading Fabricators</a><a class="headerlink" href="#loading-fabricators" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Loading Fabricators</a><a class="headerlink" href="#loading-fabricators" title="Permalink to this heading"></a></h2>
 <p>At its most basic a fabricator takes the model to act on:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -350,7 +354,7 @@ You may use your own custom models by ensuring they implement <code class="docut
 </div>
 </section>
 <section id="defining-formatters">
-<h2><a class="toc-backref" href="#id3">Defining Formatters</a><a class="headerlink" href="#defining-formatters" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Defining Formatters</a><a class="headerlink" href="#defining-formatters" title="Permalink to this heading"></a></h2>
 <p>Faker generates data by requesting it from a formatter. With no formatters defined, <code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> will
 attempt to guess at the most appropriate fit based on the field name and properties of the model it
 represents, falling back on <code class="docutils literal notranslate"><span class="pre">$fabricator-&gt;defaultFormatter</span></code>. This may be fine if your field names
@@ -373,7 +377,7 @@ of the time you will want to specify the formatters to use as the second paramet
 </div>
 <p>You can also change the formatters after a fabricator is initialized by using the <code class="docutils literal notranslate"><span class="pre">setFormatters()</span></code> method.</p>
 <section id="advanced-formatting">
-<h3><a class="toc-backref" href="#id4">Advanced Formatting</a><a class="headerlink" href="#advanced-formatting" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Advanced Formatting</a><a class="headerlink" href="#advanced-formatting" title="Permalink to this heading"></a></h3>
 <p>Sometimes the default return of a formatter is not enough. Faker providers allow parameters to most formatters
 to further limit the scope of random data. A fabricator will check its representative model for the <code class="docutils literal notranslate"><span class="pre">fake()</span></code>
 method where you can define exactly what the faked data should look like:</p>
@@ -434,7 +438,7 @@ a child class in your test support folder:</p>
 </section>
 </section>
 <section id="localization">
-<h2><a class="toc-backref" href="#id5">Localization</a><a class="headerlink" href="#localization" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Localization</a><a class="headerlink" href="#localization" title="Permalink to this heading"></a></h2>
 <p>Faker supports a lot of different locales. Check their documentation to determine which providers
 support your locale. Specify a locale in the third parameter while initiating a fabricator:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -449,7 +453,7 @@ support your locale. Specify a locale in the third parameter while initiating a 
 You can check the locale of an existing fabricator using its <code class="docutils literal notranslate"><span class="pre">getLocale()</span></code> method.</p>
 </section>
 <section id="faking-the-data">
-<h2><a class="toc-backref" href="#id6">Faking the Data</a><a class="headerlink" href="#faking-the-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Faking the Data</a><a class="headerlink" href="#faking-the-data" title="Permalink to this heading"></a></h2>
 <p>Once you have a properly-initialized fabricator it is easy to generate test data with the <code class="docutils literal notranslate"><span class="pre">make()</span></code> command:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -524,7 +528,7 @@ the object with extra database fields above without actually touching the databa
 </div>
 </section>
 <section id="specifying-test-data">
-<h2><a class="toc-backref" href="#id7">Specifying Test Data</a><a class="headerlink" href="#specifying-test-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Specifying Test Data</a><a class="headerlink" href="#specifying-test-data" title="Permalink to this heading"></a></h2>
 <p>Generated data is great, but sometimes you may want to supply a specific field for a test without
 compromising your formatters configuration. Rather then creating a new fabricator for each variant
 you can use <code class="docutils literal notranslate"><span class="pre">setOverrides()</span></code> to specify the value for any fields:</p>
@@ -586,7 +590,7 @@ override or only for a single action:</p>
 <p>If no second parameter is supplied then passed values will persist by default.</p>
 </section>
 <section id="test-helper">
-<h2><a class="toc-backref" href="#id8">Test Helper</a><a class="headerlink" href="#test-helper" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Test Helper</a><a class="headerlink" href="#test-helper" title="Permalink to this heading"></a></h2>
 <p>Often all you will need is a one-and-done fake object for testing. The Test Helper provides
 the <code class="docutils literal notranslate"><span class="pre">fake($model,</span> <span class="pre">$overrides,</span> <span class="pre">$persist</span> <span class="pre">=</span> <span class="pre">true)</span></code> function to do just this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -608,7 +612,7 @@ the <code class="docutils literal notranslate"><span class="pre">fake($model,</s
 <p>If you just need a fake object without saving it to the database you can pass false into the persist parameter.</p>
 </section>
 <section id="table-counts">
-<h2><a class="toc-backref" href="#id9">Table Counts</a><a class="headerlink" href="#table-counts" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Table Counts</a><a class="headerlink" href="#table-counts" title="Permalink to this heading"></a></h2>
 <p>Frequently your faked data will depend on other faked data. <code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> provides a static
 count of the number of faked items you have created for each table. Consider the following
 example:</p>
@@ -637,30 +641,30 @@ Your model’s fake method could look like this:</p>
 </div>
 <p>Now creating a new user will ensure it is a part of a valid group: <code class="docutils literal notranslate"><span class="pre">$user</span> <span class="pre">=</span> <span class="pre">fake(UserModel::class);</span></code></p>
 <section id="methods">
-<h3><a class="toc-backref" href="#id10">Methods</a><a class="headerlink" href="#methods" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Methods</a><a class="headerlink" href="#methods" title="Permalink to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> handles the counts internally but you can also access these static methods
 to assist with using them:</p>
 <section id="getcount-string-table-int">
-<h4>getCount(string $table): int<a class="headerlink" href="#getcount-string-table-int" title="Permalink to this headline"></a></h4>
+<h4>getCount(string $table): int<a class="headerlink" href="#getcount-string-table-int" title="Permalink to this heading"></a></h4>
 <p>Return the current value for a specific table (default: 0).</p>
 </section>
 <section id="setcount-string-table-int-count-int">
-<h4>setCount(string $table, int $count): int<a class="headerlink" href="#setcount-string-table-int-count-int" title="Permalink to this headline"></a></h4>
+<h4>setCount(string $table, int $count): int<a class="headerlink" href="#setcount-string-table-int-count-int" title="Permalink to this heading"></a></h4>
 <p>Set the value for a specific table manually, for example if you create some test items
 without using a fabricator that you still wanted factored into the final counts.</p>
 </section>
 <section id="upcount-string-table-int">
-<h4>upCount(string $table): int<a class="headerlink" href="#upcount-string-table-int" title="Permalink to this headline"></a></h4>
+<h4>upCount(string $table): int<a class="headerlink" href="#upcount-string-table-int" title="Permalink to this heading"></a></h4>
 <p>Increment the value for a specific table by one and return the new value. (This is what is
 used internally with <code class="docutils literal notranslate"><span class="pre">Fabricator::create()</span></code>).</p>
 </section>
 <section id="downcount-string-table-int">
-<h4>downCount(string $table): int<a class="headerlink" href="#downcount-string-table-int" title="Permalink to this headline"></a></h4>
+<h4>downCount(string $table): int<a class="headerlink" href="#downcount-string-table-int" title="Permalink to this heading"></a></h4>
 <p>Decrement the value for a specific table by one and return the new value, for example if
 you deleted a fake item but wanted to track the change.</p>
 </section>
 <section id="resetcounts">
-<h4>resetCounts()<a class="headerlink" href="#resetcounts" title="Permalink to this headline"></a></h4>
+<h4>resetCounts()<a class="headerlink" href="#resetcounts" title="Permalink to this heading"></a></h4>
 <p>Resets all counts. Good idea to call this between test cases (though using
 <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase::$refresh</span> <span class="pre">=</span> <span class="pre">true</span></code> does it automatically).</p>
 </section>
@@ -680,7 +684,7 @@ you deleted a fake item but wanted to track the change.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

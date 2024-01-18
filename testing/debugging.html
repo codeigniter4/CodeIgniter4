@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Debugging Your Application &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,8 +285,8 @@
            <div itemprop="articleBody">
              
   <section id="debugging-your-application">
-<h1>Debugging Your Application<a class="headerlink" href="#debugging-your-application" title="Permalink to this headline"></a></h1>
-<div class="contents local topic" id="contents">
+<h1>Debugging Your Application<a class="headerlink" href="#debugging-your-application" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#replace-var-dump" id="id2">Replace var_dump</a></p>
 <ul>
@@ -299,24 +303,24 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="replace-var-dump">
-<h2><a class="toc-backref" href="#id2">Replace var_dump</a><a class="headerlink" href="#replace-var-dump" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Replace var_dump</a><a class="headerlink" href="#replace-var-dump" title="Permalink to this heading"></a></h2>
 <p>While using XDebug and a good IDE can be indispensable to debug your application, sometimes a quick <code class="docutils literal notranslate"><span class="pre">var_dump()</span></code> is
 all you need. CodeIgniter makes that even better by bundling in the excellent <a class="reference external" href="https://kint-php.github.io/kint/">Kint</a>
 debugging tool for PHP. This goes way beyond your usual tool, providing many alternate pieces of data, like formatting
 timestamps into recognizable dates, showing you hexcodes as colors, display array data like a table for easy reading,
 and much, much more.</p>
 <section id="enabling-kint">
-<h3><a class="toc-backref" href="#id3">Enabling Kint</a><a class="headerlink" href="#enabling-kint" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Enabling Kint</a><a class="headerlink" href="#enabling-kint" title="Permalink to this heading"></a></h3>
 <p>By default, Kint is enabled in <strong>development</strong> and <strong>testing</strong> <a class="reference internal" href="../general/environments.html"><span class="doc">environments</span></a> only.
 It will be enabled whenever the constant <code class="docutils literal notranslate"><span class="pre">CI_DEBUG</span></code> is defined and its value is truthy.
 This is defined in the boot files (e.g. <strong>app/Config/Boot/development.php</strong>).</p>
 </section>
 <section id="using-kint">
-<h3><a class="toc-backref" href="#id4">Using Kint</a><a class="headerlink" href="#using-kint" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Using Kint</a><a class="headerlink" href="#using-kint" title="Permalink to this heading"></a></h3>
 <section id="d">
-<h4>d()<a class="headerlink" href="#d" title="Permalink to this headline"></a></h4>
+<h4>d()<a class="headerlink" href="#d" title="Permalink to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">d()</span></code> method dumps all of the data it knows about the contents passed as the only parameter to the screen, and
 allows the script to continue executing:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -326,11 +330,11 @@ allows the script to continue executing:</p>
 </div>
 </section>
 <section id="dd">
-<h4>dd()<a class="headerlink" href="#dd" title="Permalink to this headline"></a></h4>
+<h4>dd()<a class="headerlink" href="#dd" title="Permalink to this heading"></a></h4>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">d()</span></code>, except that it also <code class="docutils literal notranslate"><span class="pre">die()</span></code> and no further code is executed this request.</p>
 </section>
 <section id="trace">
-<h4>trace()<a class="headerlink" href="#trace" title="Permalink to this headline"></a></h4>
+<h4>trace()<a class="headerlink" href="#trace" title="Permalink to this heading"></a></h4>
 <p>This provides a backtrace to the current execution point, with Kint’s own unique spin:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -342,7 +346,7 @@ allows the script to continue executing:</p>
 </section>
 </section>
 <section id="the-debug-toolbar">
-<span id="id1"></span><h2><a class="toc-backref" href="#id5">The Debug Toolbar</a><a class="headerlink" href="#the-debug-toolbar" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">The Debug Toolbar</a><a class="headerlink" href="#the-debug-toolbar" title="Permalink to this heading"></a></h2>
 <p>The Debug Toolbar provides at-a-glance information about the current page request, including benchmark results,
 queries you have run, request and response data, and more. This can all prove very useful during development
 to help you debug and optimize.</p>
@@ -351,7 +355,7 @@ to help you debug and optimize.</p>
 <p>The Debug Toolbar is still under construction with several planned features not yet implemented.</p>
 </div>
 <section id="enabling-the-toolbar">
-<h3><a class="toc-backref" href="#id6">Enabling the Toolbar</a><a class="headerlink" href="#enabling-the-toolbar" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Enabling the Toolbar</a><a class="headerlink" href="#enabling-the-toolbar" title="Permalink to this heading"></a></h3>
 <p>The toolbar is enabled by default in any <a class="reference internal" href="../general/environments.html"><span class="doc">environment</span></a> <em>except</em> <strong>production</strong>. It will be shown whenever the
 constant <code class="docutils literal notranslate"><span class="pre">CI_DEBUG</span></code> is defined and its value is truthy. This is defined in the boot files (e.g.
 <strong>app/Config/Boot/development.php</strong>) and can be modified there to determine what environment to show.</p>
@@ -362,7 +366,7 @@ constant <code class="docutils literal notranslate"><span class="pre">CI_DEBUG</
 <p>The toolbar itself is displayed as an <a class="reference internal" href="../incoming/filters.html"><span class="doc">After Filter</span></a>. You can stop it from ever
 running by removing it from the <code class="docutils literal notranslate"><span class="pre">$globals</span></code> property of <strong>app/Config/Filters.php</strong>.</p>
 <section id="choosing-what-to-show">
-<h4>Choosing What to Show<a class="headerlink" href="#choosing-what-to-show" title="Permalink to this headline"></a></h4>
+<h4>Choosing What to Show<a class="headerlink" href="#choosing-what-to-show" title="Permalink to this heading"></a></h4>
 <p>CodeIgniter ships with several Collectors that, as the name implies, collect data to display on the toolbar. You
 can easily make your own to customize the toolbar. To determine which collectors are shown, again head over to
 the <strong>app/Config/Toolbar.php</strong> configuration file:</p>
@@ -410,12 +414,12 @@ are removed to help out on smaller displays.</p>
 </section>
 </section>
 <section id="setting-benchmark-points">
-<h3><a class="toc-backref" href="#id7">Setting Benchmark Points</a><a class="headerlink" href="#setting-benchmark-points" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Setting Benchmark Points</a><a class="headerlink" href="#setting-benchmark-points" title="Permalink to this heading"></a></h3>
 <p>In order for the Profiler to compile and display your benchmark data you must name your mark points using specific syntax.</p>
 <p>Please read the information on setting Benchmark points in the <a class="reference internal" href="benchmark.html"><span class="doc">Benchmark Library</span></a> page.</p>
 </section>
 <section id="creating-custom-collectors">
-<h3><a class="toc-backref" href="#id8">Creating Custom Collectors</a><a class="headerlink" href="#creating-custom-collectors" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Creating Custom Collectors</a><a class="headerlink" href="#creating-custom-collectors" title="Permalink to this heading"></a></h3>
 <p>Creating custom collectors is a straightforward task. You create a new class, fully-namespaced so that the autoloader
 can locate it, that extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Debug\Toolbar\Collectors\BaseCollector</span></code>. This provides a number of methods
 that you can override, and has four required class properties that you must correctly set depending on how you want
@@ -449,7 +453,7 @@ to the right of the tab content’s title.</p>
 is true, you will need to implement the <code class="docutils literal notranslate"><span class="pre">getVarData()</span></code> method.</p>
 <p><strong>$title</strong> is displayed on open tabs.</p>
 <section id="displaying-a-toolbar-tab">
-<h4>Displaying a Toolbar Tab<a class="headerlink" href="#displaying-a-toolbar-tab" title="Permalink to this headline"></a></h4>
+<h4>Displaying a Toolbar Tab<a class="headerlink" href="#displaying-a-toolbar-tab" title="Permalink to this heading"></a></h4>
 <p>To display a toolbar tab you must:</p>
 <ol class="arabic simple">
 <li><p>Fill in <code class="docutils literal notranslate"><span class="pre">$title</span></code> with the text displayed as both the toolbar title and the tab header.</p></li>
@@ -464,7 +468,7 @@ it can be used to provide additional overview information. For example, the Data
 number of queries across all connections, while the Files tab displays the total number of files.</p>
 </section>
 <section id="providing-timeline-data">
-<h4>Providing Timeline Data<a class="headerlink" href="#providing-timeline-data" title="Permalink to this headline"></a></h4>
+<h4>Providing Timeline Data<a class="headerlink" href="#providing-timeline-data" title="Permalink to this heading"></a></h4>
 <p>To provide information to be displayed in the Timeline you must:</p>
 <ol class="arabic simple">
 <li><p>Set <code class="docutils literal notranslate"><span class="pre">$hasTimeline</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p></li>
@@ -484,7 +488,7 @@ it to sort it correctly and display the correct information. The inner arrays mu
 </div>
 </section>
 <section id="providing-vars">
-<h4>Providing Vars<a class="headerlink" href="#providing-vars" title="Permalink to this headline"></a></h4>
+<h4>Providing Vars<a class="headerlink" href="#providing-vars" title="Permalink to this heading"></a></h4>
 <p>To add data to the Vars tab you must:</p>
 <ol class="arabic simple">
 <li><p>Set <code class="docutils literal notranslate"><span class="pre">$hasVarData</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code></p></li>
@@ -509,7 +513,7 @@ outer array’s key is the name of the section on the Vars tab:</p>
 </section>
 </section>
 <section id="hot-reloading">
-<span id="debug-toolbar-hot-reload"></span><h3><a class="toc-backref" href="#id9">Hot Reloading</a><a class="headerlink" href="#hot-reloading" title="Permalink to this headline"></a></h3>
+<span id="debug-toolbar-hot-reload"></span><h3><a class="toc-backref" href="#id9" role="doc-backlink">Hot Reloading</a><a class="headerlink" href="#hot-reloading" title="Permalink to this heading"></a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.4.0.</span></p>
 </div>
@@ -533,7 +537,7 @@ outer array’s key is the name of the section on the Vars tab:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

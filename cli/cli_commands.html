@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Creating Spark Commands &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,13 +285,13 @@
            <div itemprop="articleBody">
              
   <section id="creating-spark-commands">
-<h1>Creating Spark Commands<a class="headerlink" href="#creating-spark-commands" title="Permalink to this headline"></a></h1>
+<h1>Creating Spark Commands<a class="headerlink" href="#creating-spark-commands" title="Permalink to this heading"></a></h1>
 <p>While the ability to use Controllers via CLI like any other route is convenient, you might find times where you
 need a little something different. That’s where Spark commands come in. They are simple classes that do not
 need to have routes defined for, making them perfect for building tools that developers can use to make
 their jobs simpler, whether by handling migrations or database seeding, checking cronjob status, or even
 building out custom code generators for your company.</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#creating-new-commands" id="id1">Creating New Commands</a></p>
 <ul>
@@ -297,9 +301,9 @@ building out custom code generators for your company.</p>
 </li>
 <li><p><a class="reference internal" href="#basecommand" id="id4">BaseCommand</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="creating-new-commands">
-<h2><a class="toc-backref" href="#id1">Creating New Commands</a><a class="headerlink" href="#creating-new-commands" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Creating New Commands</a><a class="headerlink" href="#creating-new-commands" title="Permalink to this heading"></a></h2>
 <p>You can very easily create new commands to use in your own development. Each class must be in its own file,
 and must extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\CLI\BaseCommand</span></code>, and implement the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method.</p>
 <p>The following properties should be used in order to get listed in CLI commands and to add help functionality to your command:</p>
@@ -313,7 +317,7 @@ and must extend <code class="docutils literal notranslate"><span class="pre">Cod
 </ul>
 <p><strong>Help description will be automatically generated according to the above parameters.</strong></p>
 <section id="file-location">
-<h3><a class="toc-backref" href="#id2">File Location</a><a class="headerlink" href="#file-location" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">File Location</a><a class="headerlink" href="#file-location" title="Permalink to this heading"></a></h3>
 <p>Commands must be stored within a directory named <strong>Commands</strong>. However, that directory has to be located in the PSR-4 namespaces
 so that the <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader</span></a> can locate it. This could be in <strong>app/Commands</strong>, or
 a directory that you keep commands in to use in all of your project development, like <strong>Acme/Commands</strong>.</p>
@@ -324,7 +328,7 @@ possible to get environment information, path information, and to use any of the
 </div>
 </section>
 <section id="an-example-command">
-<h3><a class="toc-backref" href="#id3">An Example Command</a><a class="headerlink" href="#an-example-command" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">An Example Command</a><a class="headerlink" href="#an-example-command" title="Permalink to this heading"></a></h3>
 <p>Let’s step through an example command whose only function is to report basic information about the application
 itself, for demonstration purposes. Start by creating a new file at <strong>app/Commands/AppInfo.php</strong>. It
 should contain the following code:</p>
@@ -358,7 +362,7 @@ multiple commands from having naming collisions.</p>
 <p>The final property, <code class="docutils literal notranslate"><span class="pre">$description</span></code> is a short string that is displayed in the <strong>list</strong> command and should describe
 what the command does.</p>
 <section id="run">
-<h4>run()<a class="headerlink" href="#run" title="Permalink to this headline"></a></h4>
+<h4>run()<a class="headerlink" href="#run" title="Permalink to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">run()</span></code> method is the method that is called when the command is being run. The <code class="docutils literal notranslate"><span class="pre">$params</span></code> array is a list of
 any CLI arguments after the command name for your use. If the CLI string was:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">php spark foo bar baz</span>
@@ -399,7 +403,7 @@ from the string. These parameters can be used to customize how your scripts beha
 <p>See the <a class="reference internal" href="cli_library.html"><span class="doc">CLI Library</span></a> page for detailed information.</p>
 </section>
 <section id="command-termination">
-<h4>Command Termination<a class="headerlink" href="#command-termination" title="Permalink to this headline"></a></h4>
+<h4>Command Termination<a class="headerlink" href="#command-termination" title="Permalink to this heading"></a></h4>
 <p>By default, the command exits with a success code of <code class="docutils literal notranslate"><span class="pre">0</span></code>. If an error is encountered while executing a command,
 you can terminate the command by using the <code class="docutils literal notranslate"><span class="pre">return</span></code> language construct with an exit code in the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method.</p>
 <p>For example, <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">EXIT_ERROR;</span></code></p>
@@ -409,7 +413,7 @@ you can terminate the command by using the <code class="docutils literal notrans
 </section>
 </section>
 <section id="basecommand">
-<h2><a class="toc-backref" href="#id4">BaseCommand</a><a class="headerlink" href="#basecommand" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">BaseCommand</a><a class="headerlink" href="#basecommand" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">BaseCommand</span></code> class that all commands must extend have a couple of helpful utility methods that you should
 be familiar with when creating your own commands. It also has a <a class="reference internal" href="../general/logging.html"><span class="doc">Logger</span></a> available at
 <code class="docutils literal notranslate"><span class="pre">$this-&gt;logger</span></code>.</p>
@@ -420,7 +424,7 @@ be familiar with when creating your own commands. It also has a <a class="refere
 <dt class="sig sig-object php" id="CodeIgniter\CLI\BaseCommand::call">
 <span class="sig-name descname"><span class="pre">call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$command</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">array</span> <span class="pre">$params</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\BaseCommand::call" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$command</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of another command to call.</p></li>
 <li><p><strong>$params</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Additional CLI arguments to make available to that command.</p></li>
@@ -440,7 +444,7 @@ be familiar with when creating your own commands. It also has a <a class="refere
 <dt class="sig sig-object php" id="CodeIgniter\CLI\BaseCommand::showError">
 <span class="sig-name descname"><span class="pre">showError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">Throwable</span> <span class="pre">$e</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\CLI\BaseCommand::showError" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$e</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">Throwable</span></code></span>) – The exception to use for error reporting.</p></li>
 </ul>
@@ -468,7 +472,7 @@ be familiar with when creating your own commands. It also has a <a class="refere
 <dt class="sig sig-object php" id="CodeIgniter\CLI\BaseCommand::setPad">
 <span class="sig-name descname"><span class="pre">setPad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$item</span></em>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$max</span></em>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$extra</span> <span class="pre">=</span> <span class="pre">2</span></em>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$indent</span> <span class="pre">=</span> <span class="pre">0</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\CLI\BaseCommand::setPad" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$item</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The string item.</p></li>
 <li><p><strong>$max</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">integer</span></code></span>) – The max size.</p></li>
@@ -503,7 +507,7 @@ up descriptions:</p>
 <p><span class="versionmodified deprecated">Deprecated since version 4.0.5: </span>Use <a class="reference internal" href="#CodeIgniter\CLI\BaseCommand::setPad" title="CodeIgniter\CLI\BaseCommand::setPad"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\CLI\BaseCommand::setPad()</span></code></a> instead.</p>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$array</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – The  $key =&gt; $value array.</p></li>
 <li><p><strong>$pad</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">integer</span></code></span>) – The pad spaces.</p></li>
@@ -530,7 +534,7 @@ up descriptions:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

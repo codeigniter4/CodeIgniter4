@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Backward Compatibility Notes &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -282,13 +286,13 @@
            <div itemprop="articleBody">
              
   <section id="backward-compatibility-notes">
-<h1>Backward Compatibility Notes<a class="headerlink" href="#backward-compatibility-notes" title="Permalink to this headline"></a></h1>
+<h1>Backward Compatibility Notes<a class="headerlink" href="#backward-compatibility-notes" title="Permalink to this heading"></a></h1>
 <p>We try to develop our products to be as backward compatible (BC) as possible.</p>
 <p>Only major releases (such as 4.0, 5.0 etc.) are allowed to break backward compatibility.
 Minor releases (such as 4.2, 4.3 etc.) may introduce new features, but must do so without breaking the existing API.</p>
 <p>However, the code is not mature and bug fixes may break compatibility in minor releases, or even in patch releases (such as 4.2.5). In that case, all the breaking changes are described in the <a class="reference internal" href="../changelogs/index.html"><span class="doc">Change Logs</span></a>.</p>
 <section id="what-are-not-breaking-changes">
-<h2>What are not Breaking Changes<a class="headerlink" href="#what-are-not-breaking-changes" title="Permalink to this headline"></a></h2>
+<h2>What are not Breaking Changes<a class="headerlink" href="#what-are-not-breaking-changes" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>The deprecated items are not covered by backwards compatibility (BC) promise. It may be removed in the next next
 <strong>minor</strong> version or later. For example, if an item has been deprecated since 4.3.x,
@@ -311,7 +315,7 @@ it may be removed in 4.5.0.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

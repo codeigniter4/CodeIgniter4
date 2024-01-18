@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>File Collections &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,10 +285,10 @@
            <div itemprop="articleBody">
              
   <section id="file-collections">
-<h1>File Collections<a class="headerlink" href="#file-collections" title="Permalink to this headline"></a></h1>
+<h1>File Collections<a class="headerlink" href="#file-collections" title="Permalink to this heading"></a></h1>
 <p>Working with groups of files can be cumbersome, so the framework supplies the <code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> class to facilitate
 locating and working with groups of files across the filesystem.</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#basic-usage" id="id1">Basic Usage</a></p></li>
 <li><p><a class="reference internal" href="#starting-a-collection" id="id2">Starting a Collection</a></p>
@@ -315,9 +319,9 @@ locating and working with groups of files across the filesystem.</p>
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="basic-usage">
-<h2><a class="toc-backref" href="#id1">Basic Usage</a><a class="headerlink" href="#basic-usage" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Basic Usage</a><a class="headerlink" href="#basic-usage" title="Permalink to this heading"></a></h2>
 <p>At its most basic, <code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> is an index
 of files you set or build:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -357,14 +361,14 @@ or retain files matching a certain regex or glob-style pattern:</p>
 <p>Below are the specific methods for working with a <code class="docutils literal notranslate"><span class="pre">FileCollection</span></code>.</p>
 </section>
 <section id="starting-a-collection">
-<h2><a class="toc-backref" href="#id2">Starting a Collection</a><a class="headerlink" href="#starting-a-collection" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Starting a Collection</a><a class="headerlink" href="#starting-a-collection" title="Permalink to this heading"></a></h2>
 <section id="construct-string-files">
-<h3><a class="toc-backref" href="#id3">__construct(string[] $files = [])</a><a class="headerlink" href="#construct-string-files" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">__construct(string[] $files = [])</a><a class="headerlink" href="#construct-string-files" title="Permalink to this heading"></a></h3>
 <p>The constructor accepts an optional array of file paths to use as the initial collection. These are passed to
 <code class="docutils literal notranslate"><span class="pre">add()</span></code> so any files supplied by child classes in the <code class="docutils literal notranslate"><span class="pre">$files</span></code> will remain.</p>
 </section>
 <section id="define">
-<h3><a class="toc-backref" href="#id4">define()</a><a class="headerlink" href="#define" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">define()</a><a class="headerlink" href="#define" title="Permalink to this heading"></a></h3>
 <p>Allows child classes to define their own initial files. This method is called by the constructor and allows
 predefined collections without having to use their methods. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -384,42 +388,42 @@ predefined collections without having to use their methods. Example:</p>
 having to re-call the collection methods every time.</p>
 </section>
 <section id="set-array-files">
-<h3><a class="toc-backref" href="#id5">set(array $files)</a><a class="headerlink" href="#set-array-files" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">set(array $files)</a><a class="headerlink" href="#set-array-files" title="Permalink to this heading"></a></h3>
 <p>Sets the list of input files to the provided string array of file paths. This will remove any existing
 files from the collection, so <code class="docutils literal notranslate"><span class="pre">$collection-&gt;set([])</span></code> is essentially a hard reset.</p>
 </section>
 </section>
 <section id="inputting-files">
-<h2><a class="toc-backref" href="#id6">Inputting Files</a><a class="headerlink" href="#inputting-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Inputting Files</a><a class="headerlink" href="#inputting-files" title="Permalink to this heading"></a></h2>
 <section id="add-string-string-paths-bool-recursive-true">
-<h3><a class="toc-backref" href="#id7">add(string[]|string $paths, bool $recursive = true)</a><a class="headerlink" href="#add-string-string-paths-bool-recursive-true" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">add(string[]|string $paths, bool $recursive = true)</a><a class="headerlink" href="#add-string-string-paths-bool-recursive-true" title="Permalink to this heading"></a></h3>
 <p>Adds all files indicated by the path or array of paths. If the path resolves to a directory then <code class="docutils literal notranslate"><span class="pre">$recursive</span></code>
 will include sub-directories.</p>
 </section>
 <section id="addfile-string-file-addfiles-array-files">
-<h3><a class="toc-backref" href="#id8">addFile(string $file) / addFiles(array $files)</a><a class="headerlink" href="#addfile-string-file-addfiles-array-files" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">addFile(string $file) / addFiles(array $files)</a><a class="headerlink" href="#addfile-string-file-addfiles-array-files" title="Permalink to this heading"></a></h3>
 <p>Adds the file or files to the current list of input files. Files are absolute paths to actual files.</p>
 </section>
 <section id="removefile-string-file-removefiles-array-files">
-<h3><a class="toc-backref" href="#id9">removeFile(string $file) / removeFiles(array $files)</a><a class="headerlink" href="#removefile-string-file-removefiles-array-files" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">removeFile(string $file) / removeFiles(array $files)</a><a class="headerlink" href="#removefile-string-file-removefiles-array-files" title="Permalink to this heading"></a></h3>
 <p>Removes the file or files from the current list of input files.</p>
 </section>
 <section id="adddirectory-string-directory-bool-recursive-false">
-<h3><a class="toc-backref" href="#id10">addDirectory(string $directory, bool $recursive = false)</a><a class="headerlink" href="#adddirectory-string-directory-bool-recursive-false" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">addDirectory(string $directory, bool $recursive = false)</a><a class="headerlink" href="#adddirectory-string-directory-bool-recursive-false" title="Permalink to this heading"></a></h3>
 </section>
 <section id="adddirectories-array-directories-bool-recursive-false">
-<h3><a class="toc-backref" href="#id11">addDirectories(array $directories, bool $recursive = false)</a><a class="headerlink" href="#adddirectories-array-directories-bool-recursive-false" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">addDirectories(array $directories, bool $recursive = false)</a><a class="headerlink" href="#adddirectories-array-directories-bool-recursive-false" title="Permalink to this heading"></a></h3>
 <p>Adds all files from the directory or directories, optionally recursing into sub-directories. Directories are
 absolute paths to actual directories.</p>
 </section>
 </section>
 <section id="filtering-files">
-<h2><a class="toc-backref" href="#id12">Filtering Files</a><a class="headerlink" href="#filtering-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Filtering Files</a><a class="headerlink" href="#filtering-files" title="Permalink to this heading"></a></h2>
 <section id="removepattern-string-pattern-string-scope-null">
-<h3><a class="toc-backref" href="#id13">removePattern(string $pattern, string $scope = null)</a><a class="headerlink" href="#removepattern-string-pattern-string-scope-null" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">removePattern(string $pattern, string $scope = null)</a><a class="headerlink" href="#removepattern-string-pattern-string-scope-null" title="Permalink to this heading"></a></h3>
 </section>
 <section id="retainpattern-string-pattern-string-scope-null">
-<h3><a class="toc-backref" href="#id14">retainPattern(string $pattern, string $scope = null)</a><a class="headerlink" href="#retainpattern-string-pattern-string-scope-null" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">retainPattern(string $pattern, string $scope = null)</a><a class="headerlink" href="#retainpattern-string-pattern-string-scope-null" title="Permalink to this heading"></a></h3>
 <p>Filters the current file list through the pattern (and optional scope), removing or retaining matched
 files. <code class="docutils literal notranslate"><span class="pre">$pattern</span></code> may be a complete regex (like <code class="docutils literal notranslate"><span class="pre">'#[A-Za-z]+\.php#'</span></code>) or a pseudo-regex similar
 to <code class="docutils literal notranslate"><span class="pre">glob()</span></code> (like <code class="docutils literal notranslate"><span class="pre">*.css</span></code>).
@@ -443,9 +447,9 @@ outside of <code class="docutils literal notranslate"><span class="pre">$scope</
 </section>
 </section>
 <section id="retrieving-files">
-<h2><a class="toc-backref" href="#id15">Retrieving Files</a><a class="headerlink" href="#retrieving-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">Retrieving Files</a><a class="headerlink" href="#retrieving-files" title="Permalink to this heading"></a></h2>
 <section id="get-string">
-<h3><a class="toc-backref" href="#id16">get(): string[]</a><a class="headerlink" href="#get-string" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">get(): string[]</a><a class="headerlink" href="#get-string" title="Permalink to this heading"></a></h3>
 <p>Returns an array of all the loaded input files.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -467,7 +471,7 @@ outside of <code class="docutils literal notranslate"><span class="pre">$scope</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

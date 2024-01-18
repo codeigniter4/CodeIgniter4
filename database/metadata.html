@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Database Metadata &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,8 +285,8 @@
            <div itemprop="articleBody">
              
   <section id="database-metadata">
-<h1>Database Metadata<a class="headerlink" href="#database-metadata" title="Permalink to this headline"></a></h1>
-<div class="contents local topic" id="contents">
+<h1>Database Metadata<a class="headerlink" href="#database-metadata" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#table-metadata" id="id1">Table MetaData</a></p>
 <ul>
@@ -299,14 +303,14 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="table-metadata">
-<h2><a class="toc-backref" href="#id1">Table MetaData</a><a class="headerlink" href="#table-metadata" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Table MetaData</a><a class="headerlink" href="#table-metadata" title="Permalink to this heading"></a></h2>
 <p>These functions let you fetch table information.</p>
 <section id="list-the-tables-in-your-database">
-<h3><a class="toc-backref" href="#id2">List the Tables in Your Database</a><a class="headerlink" href="#list-the-tables-in-your-database" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">List the Tables in Your Database</a><a class="headerlink" href="#list-the-tables-in-your-database" title="Permalink to this heading"></a></h3>
 <section id="db-listtables">
-<h4>$db-&gt;listTables()<a class="headerlink" href="#db-listtables" title="Permalink to this headline"></a></h4>
+<h4>$db-&gt;listTables()<a class="headerlink" href="#db-listtables" title="Permalink to this heading"></a></h4>
 <p>Returns an array containing the names of all the tables in the database
 you are currently connected to. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -327,9 +331,9 @@ you are currently connected to. Example:</p>
 </section>
 </section>
 <section id="determine-if-a-table-exists">
-<h3><a class="toc-backref" href="#id3">Determine If a Table Exists</a><a class="headerlink" href="#determine-if-a-table-exists" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Determine If a Table Exists</a><a class="headerlink" href="#determine-if-a-table-exists" title="Permalink to this heading"></a></h3>
 <section id="db-tableexists">
-<h4>$db-&gt;tableExists()<a class="headerlink" href="#db-tableexists" title="Permalink to this headline"></a></h4>
+<h4>$db-&gt;tableExists()<a class="headerlink" href="#db-tableexists" title="Permalink to this heading"></a></h4>
 <p>Sometimes it’s helpful to know whether a particular table exists before
 running an operation on it. Returns a boolean true/false. Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -349,11 +353,11 @@ running an operation on it. Returns a boolean true/false. Usage example:</p>
 </section>
 </section>
 <section id="field-metadata">
-<h2><a class="toc-backref" href="#id4">Field MetaData</a><a class="headerlink" href="#field-metadata" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Field MetaData</a><a class="headerlink" href="#field-metadata" title="Permalink to this heading"></a></h2>
 <section id="list-the-fields-in-a-table">
-<h3><a class="toc-backref" href="#id5">List the Fields in a Table</a><a class="headerlink" href="#list-the-fields-in-a-table" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">List the Fields in a Table</a><a class="headerlink" href="#list-the-fields-in-a-table" title="Permalink to this heading"></a></h3>
 <section id="db-getfieldnames">
-<h4>$db-&gt;getFieldNames()<a class="headerlink" href="#db-getfieldnames" title="Permalink to this headline"></a></h4>
+<h4>$db-&gt;getFieldNames()<a class="headerlink" href="#db-getfieldnames" title="Permalink to this heading"></a></h4>
 <p>Returns an array containing the field names. This query can be called
 two ways:</p>
 <ol class="arabic">
@@ -387,9 +391,9 @@ calling the function from your query result object:</p>
 </section>
 </section>
 <section id="determine-if-a-field-is-present-in-a-table">
-<h3><a class="toc-backref" href="#id6">Determine If a Field is Present in a Table</a><a class="headerlink" href="#determine-if-a-field-is-present-in-a-table" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Determine If a Field is Present in a Table</a><a class="headerlink" href="#determine-if-a-field-is-present-in-a-table" title="Permalink to this heading"></a></h3>
 <section id="db-fieldexists">
-<h4>$db-&gt;fieldExists()<a class="headerlink" href="#db-fieldexists" title="Permalink to this headline"></a></h4>
+<h4>$db-&gt;fieldExists()<a class="headerlink" href="#db-fieldexists" title="Permalink to this heading"></a></h4>
 <p>Sometimes it’s helpful to know whether a particular field exists before
 performing an action. Returns a boolean true/false. Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -410,9 +414,9 @@ looking for.</p>
 </section>
 </section>
 <section id="retrieve-field-metadata">
-<h3><a class="toc-backref" href="#id7">Retrieve Field Metadata</a><a class="headerlink" href="#retrieve-field-metadata" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Retrieve Field Metadata</a><a class="headerlink" href="#retrieve-field-metadata" title="Permalink to this heading"></a></h3>
 <section id="db-getfielddata">
-<span id="db-metadata-getfielddata"></span><h4>$db-&gt;getFieldData()<a class="headerlink" href="#db-getfielddata" title="Permalink to this headline"></a></h4>
+<span id="db-metadata-getfielddata"></span><h4>$db-&gt;getFieldData()<a class="headerlink" href="#db-getfielddata" title="Permalink to this heading"></a></h4>
 <p>Returns an array of objects containing field information.</p>
 <p>Sometimes it’s helpful to gather the field names or other metadata, like
 the column type, max length, etc.</p>
@@ -462,9 +466,9 @@ database:</p>
 </section>
 </section>
 <section id="list-the-indexes-in-a-table">
-<h3><a class="toc-backref" href="#id8">List the Indexes in a Table</a><a class="headerlink" href="#list-the-indexes-in-a-table" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">List the Indexes in a Table</a><a class="headerlink" href="#list-the-indexes-in-a-table" title="Permalink to this heading"></a></h3>
 <section id="db-getindexdata">
-<span id="db-metadata-getindexdata"></span><h4>$db-&gt;getIndexData()<a class="headerlink" href="#db-getindexdata" title="Permalink to this headline"></a></h4>
+<span id="db-metadata-getindexdata"></span><h4>$db-&gt;getIndexData()<a class="headerlink" href="#db-getindexdata" title="Permalink to this heading"></a></h4>
 <p>Returns an array of objects containing index information.</p>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -486,7 +490,7 @@ for each key associated with a table.</p>
 <p>SQLite3 returns a pseudo index named <code class="docutils literal notranslate"><span class="pre">PRIMARY</span></code>. But it is a special index, and you can’t use it in your SQL commands.</p>
 </section>
 <section id="db-getforeignkeydata">
-<span id="metadata-getforeignkeydata"></span><h4>$db-&gt;getForeignKeyData()<a class="headerlink" href="#db-getforeignkeydata" title="Permalink to this headline"></a></h4>
+<span id="metadata-getforeignkeydata"></span><h4>$db-&gt;getForeignKeyData()<a class="headerlink" href="#db-getforeignkeydata" title="Permalink to this heading"></a></h4>
 <p>Returns an array of objects containing foreign key information.</p>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -526,7 +530,7 @@ for each key associated with a table.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Throttler &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,8 +285,8 @@
            <div itemprop="articleBody">
              
   <section id="throttler">
-<h1>Throttler<a class="headerlink" href="#throttler" title="Permalink to this headline"></a></h1>
-<div class="contents local topic" id="contents">
+<h1>Throttler<a class="headerlink" href="#throttler" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
 <li><p><a class="reference internal" href="#rate-limiting" id="id2">Rate Limiting</a></p>
@@ -293,13 +297,13 @@
 </li>
 <li><p><a class="reference internal" href="#class-reference" id="id5">Class Reference</a></p></li>
 </ul>
-</div>
+</nav>
 <p>The Throttler class provides a very simple way to limit an activity to be performed to a certain number of attempts
 within a set period of time. This is most often used for performing rate limiting on APIs, or restricting the number
 of attempts a user can make against a form to help prevent brute force attacks. The class itself can be used
 for anything that you need to throttle based on actions within a set time interval.</p>
 <section id="overview">
-<h2><a class="toc-backref" href="#id1">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
 <p>The Throttler implements a simplified version of the <a class="reference external" href="https://en.wikipedia.org/wiki/Token_bucket">Token Bucket</a>
 algorithm. This basically treats each action that you want as a bucket. When you call the <code class="docutils literal notranslate"><span class="pre">check()</span></code> method,
 you tell it how large the bucket is, and how many tokens it can hold and the time interval. Each <code class="docutils literal notranslate"><span class="pre">check()</span></code> call uses
@@ -325,13 +329,13 @@ For best performance, an in-memory cache, like Redis or Memcached, is recommende
 </div>
 </section>
 <section id="rate-limiting">
-<h2><a class="toc-backref" href="#id2">Rate Limiting</a><a class="headerlink" href="#rate-limiting" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Rate Limiting</a><a class="headerlink" href="#rate-limiting" title="Permalink to this heading"></a></h2>
 <p>The Throttler class does not do any rate limiting or request throttling on its own,  but is the key to making
 one work. An example <a class="reference internal" href="../incoming/filters.html"><span class="doc">Filter</span></a> is provided that implements a very simple rate limiting at
 one request per second per IP address. Here we will run through how it works, and how you could set it up and
 start using it in your application.</p>
 <section id="the-code">
-<h3><a class="toc-backref" href="#id3">The Code</a><a class="headerlink" href="#the-code" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">The Code</a><a class="headerlink" href="#the-code" title="Permalink to this heading"></a></h3>
 <p>You could make your own Throttler filter, at <strong>app/Filters/Throttle.php</strong>,
 along the lines of:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -385,7 +389,7 @@ before it ever hits the controller. This example will throttle based on a single
 made to the site, not per page.</p>
 </section>
 <section id="applying-the-filter">
-<h3><a class="toc-backref" href="#id4">Applying the Filter</a><a class="headerlink" href="#applying-the-filter" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Applying the Filter</a><a class="headerlink" href="#applying-the-filter" title="Permalink to this heading"></a></h3>
 <p>We don’t necessarily need to throttle every page on the site. For many web applications, this makes the most sense
 to apply only to POST requests, though API’s might want to limit every request made by a user. In order to apply
 this to incoming requests, you need to edit <strong>app/Config/Filters.php</strong> and first add an alias to the
@@ -434,12 +438,12 @@ Accessing the controller with a method you don’t expect could bypass the filte
 </section>
 </section>
 <section id="class-reference">
-<h2><a class="toc-backref" href="#id5">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this heading"></a></h2>
 <dl class="php method">
 <dt class="sig sig-object php" id="check">
 <span class="sig-name descname"><span class="pre">check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$key</span></em>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$capacity</span></em>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$seconds</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$cost</span> <span class="pre">=</span> <span class="pre">1</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#check" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the bucket</p></li>
 <li><p><strong>$capacity</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The number of tokens the bucket holds</p></li>
@@ -447,10 +451,10 @@ Accessing the controller with a method you don’t expect could bypass the filte
 <li><p><strong>$cost</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The number of tokens that are spent on this action</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>true if action can be performed, false if not</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
@@ -463,10 +467,10 @@ are reduced by $cost if successful.</p>
 <dt class="sig sig-object php" id="getTokentime">
 <span class="sig-name descname"><span class="pre">getTokentime</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getTokentime" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The number of seconds until another token should be available.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">integer</span></code></span></p>
 </dd>
 </dl>
@@ -479,15 +483,15 @@ tried again. In this case, the minimum enforced wait time is one second.</p>
 <dt class="sig sig-object php" id="remove">
 <span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$key</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">self</span></span></span><a class="headerlink" href="#remove" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the bucket</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>$this</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">self</span></code></span></p>
 </dd>
 </dl>
@@ -510,7 +514,7 @@ Won’t fail if the bucket doesn’t exist.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

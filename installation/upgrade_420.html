@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Upgrading from 4.1.9 to 4.2.0 &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -282,14 +286,14 @@
            <div itemprop="articleBody">
              
   <section id="upgrading-from-4-1-9-to-4-2-0">
-<h1>Upgrading from 4.1.9 to 4.2.0<a class="headerlink" href="#upgrading-from-4-1-9-to-4-2-0" title="Permalink to this headline"></a></h1>
+<h1>Upgrading from 4.1.9 to 4.2.0<a class="headerlink" href="#upgrading-from-4-1-9-to-4-2-0" title="Permalink to this heading"></a></h1>
 <p>Please refer to the upgrade instructions corresponding to your installation method.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="installing_composer.html#app-starter-upgrading"><span class="std std-ref">Composer Installation App Starter Upgrading</span></a></p></li>
 <li><p><a class="reference internal" href="installing_composer.html#adding-codeigniter4-upgrading"><span class="std std-ref">Composer Installation Adding CodeIgniter4 to an Existing Project Upgrading</span></a></p></li>
 <li><p><a class="reference internal" href="installing_manual.html#installing-manual-upgrading"><span class="std std-ref">Manual Installation Upgrading</span></a></p></li>
 </ul>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#mandatory-file-changes" id="id1">Mandatory File Changes</a></p>
 <ul>
@@ -307,11 +311,11 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="mandatory-file-changes">
-<h2><a class="toc-backref" href="#id1">Mandatory File Changes</a><a class="headerlink" href="#mandatory-file-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Mandatory File Changes</a><a class="headerlink" href="#mandatory-file-changes" title="Permalink to this heading"></a></h2>
 <section id="index-php-and-spark">
-<h3><a class="toc-backref" href="#id2">index.php and spark</a><a class="headerlink" href="#index-php-and-spark" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">index.php and spark</a><a class="headerlink" href="#index-php-and-spark" title="Permalink to this heading"></a></h3>
 <p>The following files received significant changes and
 <strong>you must merge the updated versions</strong> with your application:</p>
 <ul class="simple">
@@ -331,11 +335,11 @@ after running <code class="docutils literal notranslate"><span class="pre">compo
 </div>
 </section>
 <section id="config-constants-php">
-<h3><a class="toc-backref" href="#id3">Config/Constants.php</a><a class="headerlink" href="#config-constants-php" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Config/Constants.php</a><a class="headerlink" href="#config-constants-php" title="Permalink to this heading"></a></h3>
 <p>The constants <code class="docutils literal notranslate"><span class="pre">EVENT_PRIORITY_LOW</span></code>, <code class="docutils literal notranslate"><span class="pre">EVENT_PRIORITY_NORMAL</span></code> and <code class="docutils literal notranslate"><span class="pre">EVENT_PRIORITY_HIGH</span></code> are deprecated, and the definitions are moved to <code class="docutils literal notranslate"><span class="pre">app/Config/Constants.php</span></code>. If you use these constants, define them in <code class="docutils literal notranslate"><span class="pre">app/Config/Constants.php</span></code>. Or use new class constants <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Events\Events::PRIORITY_LOW</span></code>, <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Events\Events::PRIORITY_NORMAL</span></code> and <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Events\Events::PRIORITY_HIGH</span></code>.</p>
 </section>
 <section id="composer-json">
-<h3><a class="toc-backref" href="#id4">composer.json</a><a class="headerlink" href="#composer-json" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">composer.json</a><a class="headerlink" href="#composer-json" title="Permalink to this heading"></a></h3>
 <p>If you use Composer, when you installed CodeIgniter v4.1.9 or before, and
 if there are <code class="docutils literal notranslate"><span class="pre">App\\</span></code> and <code class="docutils literal notranslate"><span class="pre">Config\\</span></code> namespaces in your <code class="docutils literal notranslate"><span class="pre">/composer.json</span></code>’s <code class="docutils literal notranslate"><span class="pre">autoload.psr-4</span></code>
 like the following, you need to remove these lines, and run <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">dump-autoload</span></code>.</p>
@@ -354,20 +358,20 @@ like the following, you need to remove these lines, and run <code class="docutil
 </section>
 </section>
 <section id="breaking-changes">
-<h2><a class="toc-backref" href="#id5">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">system/bootstrap.php</span></code> file no longer returns a <code class="docutils literal notranslate"><span class="pre">CodeIgniter</span></code> instance, and does not load the <code class="docutils literal notranslate"><span class="pre">.env</span></code> file (now handled in <code class="docutils literal notranslate"><span class="pre">index.php</span></code> and <code class="docutils literal notranslate"><span class="pre">spark</span></code>). If you have code that expects these behaviors it will no longer work and must be modified. This has been changed to make <a class="reference external" href="https://www.php.net/manual/en/opcache.preloading.php">Preloading</a> easier to implement.</p></li>
 </ul>
 </section>
 <section id="breaking-enhancements">
-<h2><a class="toc-backref" href="#id6">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">Validation::setRule()</span></code> has been changed. The <code class="docutils literal notranslate"><span class="pre">string</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$rules</span></code> parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.</p></li>
 <li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\BaseBuilder::join()</span></code> and <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\*\Builder::join()</span></code> have been changed. The <code class="docutils literal notranslate"><span class="pre">string</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$cond</span></code> parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.</p></li>
 </ul>
 </section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id7">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this heading"></a></h2>
 <p>Numerous files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
 these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.
 There are some third-party CodeIgniter modules available to assist with merging changes to
@@ -379,7 +383,7 @@ will break your application. All changes noted here are optional until the next 
 and any mandatory changes will be covered in the sections above.</p>
 </div>
 <section id="content-changes">
-<h3><a class="toc-backref" href="#id8">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this heading"></a></h3>
 <p>The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:</p>
 <ul class="simple">
@@ -393,7 +397,7 @@ and it is recommended that you merge the updated versions with your application:
 </ul>
 </section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id9">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this heading"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
@@ -440,7 +444,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

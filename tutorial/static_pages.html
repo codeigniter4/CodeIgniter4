@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Static Pages &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,8 +285,8 @@
            <div itemprop="articleBody">
              
   <section id="static-pages">
-<h1>Static Pages<a class="headerlink" href="#static-pages" title="Permalink to this headline"></a></h1>
-<div class="contents local topic" id="contents">
+<h1>Static Pages<a class="headerlink" href="#static-pages" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#setting-routing-rules" id="id1">Setting Routing Rules</a></p></li>
 <li><p><a class="reference internal" href="#let-s-make-our-first-controller" id="id2">Let’s Make our First Controller</a></p>
@@ -299,7 +303,7 @@
 </li>
 <li><p><a class="reference internal" href="#running-the-app" id="id8">Running the App</a></p></li>
 </ul>
-</div>
+</nav>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This tutorial assumes you’ve downloaded CodeIgniter and
@@ -308,7 +312,7 @@ development environment.</p>
 </div>
 <p>The first thing you’re going to do is set up routing rules to handle static pages.</p>
 <section id="setting-routing-rules">
-<h2><a class="toc-backref" href="#id1">Setting Routing Rules</a><a class="headerlink" href="#setting-routing-rules" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Setting Routing Rules</a><a class="headerlink" href="#setting-routing-rules" title="Permalink to this heading"></a></h2>
 <p>Routing associates a URI with a controller’s method. A controller is simply a
 class that helps delegate work. We will create a controller later.</p>
 <p>Let’s set up routing rules. Open the routes file located at <strong>app/Config/Routes.php</strong>.</p>
@@ -346,12 +350,12 @@ using the placeholder <code class="docutils literal notranslate"><span class="pr
 <code class="docutils literal notranslate"><span class="pre">view()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">Pages</span></code> class.</p>
 </section>
 <section id="let-s-make-our-first-controller">
-<h2><a class="toc-backref" href="#id2">Let’s Make our First Controller</a><a class="headerlink" href="#let-s-make-our-first-controller" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Let’s Make our First Controller</a><a class="headerlink" href="#let-s-make-our-first-controller" title="Permalink to this heading"></a></h2>
 <p>The next thing you’re going to do is set up a <strong>controller</strong> to handle
 static pages. A controller is simply a class that helps delegate work.
 It is the glue of your web application.</p>
 <section id="create-pages-controller">
-<h3><a class="toc-backref" href="#id3">Create Pages Controller</a><a class="headerlink" href="#create-pages-controller" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Create Pages Controller</a><a class="headerlink" href="#create-pages-controller" title="Permalink to this heading"></a></h3>
 <p>Create a file at <strong>app/Controllers/Pages.php</strong> with the following
 code.</p>
 <div class="admonition important">
@@ -401,7 +405,7 @@ your web application. Like any PHP class, you refer to
 it within your controllers as <code class="docutils literal notranslate"><span class="pre">$this</span></code>.</p>
 </section>
 <section id="create-views">
-<h3><a class="toc-backref" href="#id4">Create Views</a><a class="headerlink" href="#create-views" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Create Views</a><a class="headerlink" href="#create-views" title="Permalink to this heading"></a></h3>
 <p>Now that you’ve created your first method, it’s time to make some basic page
 templates. We will be creating two “views” (page templates) that act as
 our page footer and header.</p>
@@ -436,9 +440,9 @@ XSS attacks. You can read more about it in <a class="reference internal" href=".
 </section>
 </section>
 <section id="adding-logic-to-the-controller">
-<h2><a class="toc-backref" href="#id5">Adding Logic to the Controller</a><a class="headerlink" href="#adding-logic-to-the-controller" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Adding Logic to the Controller</a><a class="headerlink" href="#adding-logic-to-the-controller" title="Permalink to this heading"></a></h2>
 <section id="create-home-php-and-about-php">
-<h3><a class="toc-backref" href="#id6">Create home.php and about.php</a><a class="headerlink" href="#create-home-php-and-about-php" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Create home.php and about.php</a><a class="headerlink" href="#create-home-php-and-about-php" title="Permalink to this heading"></a></h3>
 <p>Earlier you set up a controller with a <code class="docutils literal notranslate"><span class="pre">view()</span></code> method. The method
 accepts one parameter, which is the name of the page to be loaded.</p>
 <p>The static page bodies will be located in the <strong>app/Views/pages</strong> directory.</p>
@@ -447,7 +451,7 @@ Within those files, type some text - anything you’d like - and save them.
 If you like to be particularly un-original, try “Hello World!”.</p>
 </section>
 <section id="complete-pages-view-method">
-<h3><a class="toc-backref" href="#id7">Complete Pages::view() Method</a><a class="headerlink" href="#complete-pages-view-method" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Complete Pages::view() Method</a><a class="headerlink" href="#complete-pages-view-method" title="Permalink to this heading"></a></h3>
 <p>In order to load those pages, you’ll have to check whether the requested
 page actually exists. This will be the body of the <code class="docutils literal notranslate"><span class="pre">view()</span></code> method
 in the <code class="docutils literal notranslate"><span class="pre">Pages</span></code> controller created above:</p>
@@ -512,7 +516,7 @@ throw errors on case-sensitive platforms. You can read more about it in
 </section>
 </section>
 <section id="running-the-app">
-<h2><a class="toc-backref" href="#id8">Running the App</a><a class="headerlink" href="#running-the-app" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Running the App</a><a class="headerlink" href="#running-the-app" title="Permalink to this heading"></a></h2>
 <p>Ready to test? You cannot run the app using PHP’s built-in server,
 since it will not properly process the <strong>.htaccess</strong> rules that are provided in
 <strong>public</strong>, and which eliminate the need to specify “<strong>index.php/</strong>”
@@ -529,10 +533,10 @@ method in the <code class="docutils literal notranslate"><span class="pre">Pages
 <img alt="../_images/tutorial1.png" class="align-center" src="../_images/tutorial1.png" />
 <p>You can now try several URLs in the browser location field, to see what the <code class="docutils literal notranslate"><span class="pre">Pages</span></code>
 controller you made above produces…</p>
-<table class="colwidths-given docutils align-default">
+<table class="docutils align-default">
 <colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>URL</p></th>
@@ -578,7 +582,7 @@ asked for it.</p></td>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

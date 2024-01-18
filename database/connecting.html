@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Connecting to your Database &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,8 +285,8 @@
            <div itemprop="articleBody">
              
   <section id="connecting-to-your-database">
-<h1>Connecting to your Database<a class="headerlink" href="#connecting-to-your-database" title="Permalink to this headline"></a></h1>
-<div class="contents local topic" id="contents">
+<h1>Connecting to your Database<a class="headerlink" href="#connecting-to-your-database" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#connecting-to-a-database" id="id1">Connecting to a Database</a></p>
 <ul>
@@ -297,11 +301,11 @@
 <li><p><a class="reference internal" href="#reconnecting-keeping-the-connection-alive" id="id8">Reconnecting / Keeping the Connection Alive</a></p></li>
 <li><p><a class="reference internal" href="#manually-closing-the-connection" id="id9">Manually Closing the Connection</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="connecting-to-a-database">
-<h2><a class="toc-backref" href="#id1">Connecting to a Database</a><a class="headerlink" href="#connecting-to-a-database" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Connecting to a Database</a><a class="headerlink" href="#connecting-to-a-database" title="Permalink to this heading"></a></h2>
 <section id="connecting-to-the-default-group">
-<h3><a class="toc-backref" href="#id2">Connecting to the Default Group</a><a class="headerlink" href="#connecting-to-the-default-group" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Connecting to the Default Group</a><a class="headerlink" href="#connecting-to-the-default-group" title="Permalink to this heading"></a></h3>
 <p>You can connect to your database by adding this line of code in any
 function where it is needed, or in your class constructor to make the
 database available globally in that class.</p>
@@ -318,7 +322,7 @@ and is provided for your convenience:</p>
 </div>
 </section>
 <section id="available-parameters">
-<h3><a class="toc-backref" href="#id3">Available Parameters</a><a class="headerlink" href="#available-parameters" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Available Parameters</a><a class="headerlink" href="#available-parameters" title="Permalink to this heading"></a></h3>
 <p><strong>\Config\Database::connect($group = null, bool $getShared = true): BaseConnection</strong></p>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$group</span></code>: The database group name, a string that must match the config class’ property name. Default value is <code class="docutils literal notranslate"><span class="pre">Config\Database::$defaultGroup</span></code>.</p></li>
@@ -327,7 +331,7 @@ Connecting to Multiple Databases below).</p></li>
 </ol>
 </section>
 <section id="connecting-to-specific-group">
-<h3><a class="toc-backref" href="#id4">Connecting to Specific Group</a><a class="headerlink" href="#connecting-to-specific-group" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Connecting to Specific Group</a><a class="headerlink" href="#connecting-to-specific-group" title="Permalink to this heading"></a></h3>
 <p>The first parameter of this function can <strong>optionally</strong> be used to
 specify a particular database group from your config file. Examples:</p>
 <p>To choose a specific group from your config file you can do this:</p>
@@ -338,7 +342,7 @@ specify a particular database group from your config file. Examples:</p>
 file.</p>
 </section>
 <section id="multiple-connections-to-same-database">
-<h3><a class="toc-backref" href="#id5">Multiple Connections to Same Database</a><a class="headerlink" href="#multiple-connections-to-same-database" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Multiple Connections to Same Database</a><a class="headerlink" href="#multiple-connections-to-same-database" title="Permalink to this heading"></a></h3>
 <p>By default, the <code class="docutils literal notranslate"><span class="pre">connect()</span></code> method will return the same instance of the
 database connection every time. If you need to have a separate connection
 to the same database, send <code class="docutils literal notranslate"><span class="pre">false</span></code> as the second parameter:</p>
@@ -348,7 +352,7 @@ to the same database, send <code class="docutils literal notranslate"><span clas
 </section>
 </section>
 <section id="connecting-to-multiple-databases">
-<h2><a class="toc-backref" href="#id6">Connecting to Multiple Databases</a><a class="headerlink" href="#connecting-to-multiple-databases" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Connecting to Multiple Databases</a><a class="headerlink" href="#connecting-to-multiple-databases" title="Permalink to this heading"></a></h2>
 <p>If you need to connect to more than one database simultaneously you can
 do so as follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db1</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">(</span><span class="s1">&#39;group_one&#39;</span><span class="p">);</span>
@@ -366,7 +370,7 @@ can switch to a different database when you need to, like this:
 </div>
 </section>
 <section id="connecting-with-custom-settings">
-<h2><a class="toc-backref" href="#id7">Connecting with Custom Settings</a><a class="headerlink" href="#connecting-with-custom-settings" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Connecting with Custom Settings</a><a class="headerlink" href="#connecting-with-custom-settings" title="Permalink to this heading"></a></h2>
 <p>You can pass in an array of database settings instead of a group name to get
 a connection that uses your custom settings. The array passed in must be
 the same format as the groups are defined in the configuration file:</p>
@@ -394,7 +398,7 @@ the same format as the groups are defined in the configuration file:</p>
 </div>
 </section>
 <section id="reconnecting-keeping-the-connection-alive">
-<h2><a class="toc-backref" href="#id8">Reconnecting / Keeping the Connection Alive</a><a class="headerlink" href="#reconnecting-keeping-the-connection-alive" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Reconnecting / Keeping the Connection Alive</a><a class="headerlink" href="#reconnecting-keeping-the-connection-alive" title="Permalink to this heading"></a></h2>
 <p>If the database server’s idle timeout is exceeded while you’re doing
 some heavy PHP lifting (processing an image, for instance), you should
 consider pinging the server by using the <code class="docutils literal notranslate"><span class="pre">reconnect()</span></code> method before
@@ -410,7 +414,7 @@ does not ping the server but it closes the connection then connects again.</p>
 </div>
 </section>
 <section id="manually-closing-the-connection">
-<h2><a class="toc-backref" href="#id9">Manually Closing the Connection</a><a class="headerlink" href="#manually-closing-the-connection" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Manually Closing the Connection</a><a class="headerlink" href="#manually-closing-the-connection" title="Permalink to this heading"></a></h2>
 <p>While CodeIgniter intelligently takes care of closing your database
 connections, you can explicitly close the connection.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">close</span><span class="p">();</span>
@@ -431,7 +435,7 @@ connections, you can explicitly close the connection.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

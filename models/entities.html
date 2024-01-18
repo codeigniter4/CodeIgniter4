@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Using Entity Classes &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,11 +285,11 @@
            <div itemprop="articleBody">
              
   <section id="using-entity-classes">
-<h1>Using Entity Classes<a class="headerlink" href="#using-entity-classes" title="Permalink to this headline"></a></h1>
+<h1>Using Entity Classes<a class="headerlink" href="#using-entity-classes" title="Permalink to this heading"></a></h1>
 <p>CodeIgniter supports Entity classes as a first-class citizen, while keeping
 them completely optional to use. They are commonly used as part of the Repository pattern, but can
 be used directly with the <a class="reference internal" href="model.html"><span class="doc">Model</span></a> if that fits your needs better.</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#entity-usage" id="id1">Entity Usage</a></p>
 <ul>
@@ -310,9 +314,9 @@ be used directly with the <a class="reference internal" href="model.html"><span 
 </li>
 <li><p><a class="reference internal" href="#checking-for-changed-attributes" id="id13">Checking for Changed Attributes</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="entity-usage">
-<h2><a class="toc-backref" href="#id1">Entity Usage</a><a class="headerlink" href="#entity-usage" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Entity Usage</a><a class="headerlink" href="#entity-usage" title="Permalink to this heading"></a></h2>
 <p>At its core, an Entity class is simply a class that represents a single database row. It has class properties
 to represent the database columns, and provides any additional methods to implement the business logic for
 that row.</p>
@@ -342,7 +346,7 @@ database when you’ve proven the concept works.</p>
 <p><code class="docutils literal notranslate"><span class="pre">attributes</span></code> is a reserved word for internal use. If you use it as a column name, the Entity does not work correctly.</p>
 </div>
 <section id="create-the-entity-class">
-<h3><a class="toc-backref" href="#id2">Create the Entity Class</a><a class="headerlink" href="#create-the-entity-class" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Create the Entity Class</a><a class="headerlink" href="#create-the-entity-class" title="Permalink to this heading"></a></h3>
 <p>Now create a new Entity class. Since there’s no default location to store these classes, and it doesn’t fit
 in with the existing directory structure, create a new directory at <strong>app/Entities</strong>. Create the
 Entity itself at <strong>app/Entities/User.php</strong>.</p>
@@ -361,7 +365,7 @@ Entity itself at <strong>app/Entities/User.php</strong>.</p>
 <p>At its simplest, this is all you need to do, though we’ll make it more useful in a minute.</p>
 </section>
 <section id="create-the-model">
-<h3><a class="toc-backref" href="#id3">Create the Model</a><a class="headerlink" href="#create-the-model" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Create the Model</a><a class="headerlink" href="#create-the-model" title="Permalink to this heading"></a></h3>
 <p>Create the model first at <strong>app/Models/UserModel.php</strong> so that we can interact with it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -387,7 +391,7 @@ class as the <code class="docutils literal notranslate"><span class="pre">$retur
 instances of our User Entity class instead of an object or array like normal.</p>
 </section>
 <section id="working-with-the-entity-class">
-<h3><a class="toc-backref" href="#id4">Working with the Entity Class</a><a class="headerlink" href="#working-with-the-entity-class" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Working with the Entity Class</a><a class="headerlink" href="#working-with-the-entity-class" title="Permalink to this heading"></a></h3>
 <p>Now that all of the pieces are in place, you would work with the Entity class as you would any other class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -431,7 +435,7 @@ call the <code class="docutils literal notranslate"><span class="pre">update()</
 </div>
 </section>
 <section id="filling-properties-quickly">
-<h3><a class="toc-backref" href="#id5">Filling Properties Quickly</a><a class="headerlink" href="#filling-properties-quickly" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Filling Properties Quickly</a><a class="headerlink" href="#filling-properties-quickly" title="Permalink to this heading"></a></h3>
 <p>The Entity class also provides a method, <code class="docutils literal notranslate"><span class="pre">fill()</span></code> that allows you to shove an array of key/value pairs into the class
 and populate the class properties. Any property in the array will be set on the Entity. However, when saving through
 the model, only the fields in <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> will actually be saved to the database, so you can store additional data
@@ -456,7 +460,7 @@ on your entities without worrying much about stray fields getting saved incorrec
 </div>
 </section>
 <section id="bulk-accessing-properties">
-<h3><a class="toc-backref" href="#id6">Bulk Accessing Properties</a><a class="headerlink" href="#bulk-accessing-properties" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Bulk Accessing Properties</a><a class="headerlink" href="#bulk-accessing-properties" title="Permalink to this heading"></a></h3>
 <p>The Entity class has two methods to extract all available properties into an array: <code class="docutils literal notranslate"><span class="pre">toArray()</span></code> and <code class="docutils literal notranslate"><span class="pre">toRawArray()</span></code>.
 Using the raw version will bypass magic “getter” methods and casts. Both methods can take a boolean first parameter
 to specify whether returned values should be filtered by those that have changed, and a boolean final parameter to
@@ -464,7 +468,7 @@ make the method recursive, in case of nested Entities.</p>
 </section>
 </section>
 <section id="handling-business-logic">
-<h2><a class="toc-backref" href="#id7">Handling Business Logic</a><a class="headerlink" href="#handling-business-logic" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Handling Business Logic</a><a class="headerlink" href="#handling-business-logic" title="Permalink to this heading"></a></h2>
 <p>While the examples above are convenient, they don’t help enforce any business logic. The base Entity class implements
 some smart <code class="docutils literal notranslate"><span class="pre">__get()</span></code> and <code class="docutils literal notranslate"><span class="pre">__set()</span></code> methods that will check for special methods and use those instead of using
 the attributes directly, allowing you to enforce any business logic or data conversion that you need.</p>
@@ -530,7 +534,7 @@ business logic and create objects that are pleasant to use.</p>
 </pre></div>
 </div>
 <section id="special-getter-setter">
-<span id="entities-special-getter-setter"></span><h3><a class="toc-backref" href="#id8">Special Getter/Setter</a><a class="headerlink" href="#special-getter-setter" title="Permalink to this headline"></a></h3>
+<span id="entities-special-getter-setter"></span><h3><a class="toc-backref" href="#id8" role="doc-backlink">Special Getter/Setter</a><a class="headerlink" href="#special-getter-setter" title="Permalink to this heading"></a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.4.0.</span></p>
 </div>
@@ -546,7 +550,7 @@ will be used when you set <code class="docutils literal notranslate"><span class
 </section>
 </section>
 <section id="data-mapping">
-<h2><a class="toc-backref" href="#id9">Data Mapping</a><a class="headerlink" href="#data-mapping" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Data Mapping</a><a class="headerlink" href="#data-mapping" title="Permalink to this heading"></a></h2>
 <p>At many points in your career, you will run into situations where the use of an application has changed and the
 original column names in the database no longer make sense. Or you find that your coding style prefers camelCase
 class properties, but your database schema required snake_case names. These situations can be easily handled
@@ -618,9 +622,9 @@ for the database column name. In this example, you must define <code class="docu
 </div>
 </section>
 <section id="mutators">
-<h2><a class="toc-backref" href="#id10">Mutators</a><a class="headerlink" href="#mutators" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Mutators</a><a class="headerlink" href="#mutators" title="Permalink to this heading"></a></h2>
 <section id="date-mutators">
-<h3><a class="toc-backref" href="#id11">Date Mutators</a><a class="headerlink" href="#date-mutators" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Date Mutators</a><a class="headerlink" href="#date-mutators" title="Permalink to this heading"></a></h3>
 <p>By default, the Entity class will convert fields named <cite>created_at</cite>, <cite>updated_at</cite>, or <cite>deleted_at</cite> into
 <a class="reference internal" href="../libraries/time.html"><span class="doc">Time</span></a> instances whenever they are set or retrieved. The Time class provides a large number
 of helpful methods in an immutable, localized way.</p>
@@ -653,14 +657,14 @@ current timezone, as set in <strong>app/Config/App.php</strong>:</p>
 </div>
 </section>
 <section id="property-casting">
-<span id="entities-property-casting"></span><h3><a class="toc-backref" href="#id12">Property Casting</a><a class="headerlink" href="#property-casting" title="Permalink to this headline"></a></h3>
+<span id="entities-property-casting"></span><h3><a class="toc-backref" href="#id12" role="doc-backlink">Property Casting</a><a class="headerlink" href="#property-casting" title="Permalink to this heading"></a></h3>
 <p>You can specify that properties in your Entity should be converted to common data types with the <code class="docutils literal notranslate"><span class="pre">$casts</span></code> property.
 This option should be an array where the key is the name of the class property, and the value is the data type it
 should be cast to.</p>
 <p>Property casting affects both read (get) and write (set), but some types affect
 only read (get).</p>
 <section id="scalar-type-casting">
-<h4>Scalar Type Casting<a class="headerlink" href="#scalar-type-casting" title="Permalink to this headline"></a></h4>
+<h4>Scalar Type Casting<a class="headerlink" href="#scalar-type-casting" title="Permalink to this heading"></a></h4>
 <p>Properties can be cast to any of the following data types:
 <strong>integer</strong>, <strong>float</strong>, <strong>double</strong>, <strong>string</strong>, <strong>boolean</strong>, <strong>object</strong>, <strong>array</strong>, <strong>datetime</strong>, <strong>timestamp</strong>, <strong>uri</strong> and <strong>int-bool</strong>.
 Add a question mark at the beginning of type to mark property as nullable, i.e., <strong>?string</strong>, <strong>?integer</strong>.</p>
@@ -686,7 +690,7 @@ Add a question mark at the beginning of type to mark property as nullable, i.e.,
 </div>
 </section>
 <section id="array-json-casting">
-<h4>Array/Json Casting<a class="headerlink" href="#array-json-casting" title="Permalink to this headline"></a></h4>
+<h4>Array/Json Casting<a class="headerlink" href="#array-json-casting" title="Permalink to this heading"></a></h4>
 <p>Array/Json casting is especially useful with fields that store serialized arrays or json in them. When cast as:</p>
 <ul class="simple">
 <li><p>an <strong>array</strong>, they will automatically be unserialized,</p></li>
@@ -729,7 +733,7 @@ Unlike the rest of the data types that you can cast properties into, the:</p>
 </div>
 </section>
 <section id="csv-casting">
-<h4>CSV Casting<a class="headerlink" href="#csv-casting" title="Permalink to this headline"></a></h4>
+<h4>CSV Casting<a class="headerlink" href="#csv-casting" title="Permalink to this heading"></a></h4>
 <p>If you know you have a flat array of simple values, encoding them as a serialized or JSON string
 may be more complex than the original structure. Casting as Comma-Separated Values (CSV) is
 a simpler alternative will result in a string that uses less space and is more easily read
@@ -760,7 +764,7 @@ by humans:</p>
 </div>
 </section>
 <section id="custom-casting">
-<h4>Custom Casting<a class="headerlink" href="#custom-casting" title="Permalink to this headline"></a></h4>
+<h4>Custom Casting<a class="headerlink" href="#custom-casting" title="Permalink to this heading"></a></h4>
 <p>You can define your own conversion types for getting and setting data.</p>
 <p>At first you need to create a handler class for your type.
 Let’s say the class will be located in the <strong>app/Entities/Cast</strong> directory:</p>
@@ -829,7 +833,7 @@ Let’s say the class will be located in the <strong>app/Entities/Cast</strong> 
 </div>
 </section>
 <section id="parameters">
-<h4>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline"></a></h4>
+<h4>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h4>
 <p>In some cases, one type is not enough. In this situation, you can use additional parameters.
 Additional parameters are indicated in square brackets and listed with a comma
 like <code class="docutils literal notranslate"><span class="pre">type[param1,</span> <span class="pre">param2]</span></code>.</p>
@@ -889,7 +893,7 @@ If casting type has predefined parameters, then <code class="docutils literal no
 </section>
 </section>
 <section id="checking-for-changed-attributes">
-<h2><a class="toc-backref" href="#id13">Checking for Changed Attributes</a><a class="headerlink" href="#checking-for-changed-attributes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">Checking for Changed Attributes</a><a class="headerlink" href="#checking-for-changed-attributes" title="Permalink to this heading"></a></h2>
 <p>You can check if an Entity attribute has changed since it was created. The only parameter is the name of the
 attribute to check:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -922,7 +926,7 @@ attribute to check:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

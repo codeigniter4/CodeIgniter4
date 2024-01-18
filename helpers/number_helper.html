@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Number Helper &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,18 +285,18 @@
            <div itemprop="articleBody">
              
   <section id="number-helper">
-<h1>Number Helper<a class="headerlink" href="#number-helper" title="Permalink to this headline"></a></h1>
+<h1>Number Helper<a class="headerlink" href="#number-helper" title="Permalink to this heading"></a></h1>
 <p>The Number Helper file contains functions that help you work with
 numeric data in a locale-aware manner.</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></p></li>
 <li><p><a class="reference internal" href="#when-things-go-wrong" id="id2">When Things Go Wrong</a></p></li>
 <li><p><a class="reference internal" href="#available-functions" id="id3">Available Functions</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="loading-this-helper">
-<h2><a class="toc-backref" href="#id1">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this heading"></a></h2>
 <p>This helper is loaded using the following code:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -301,28 +305,28 @@ numeric data in a locale-aware manner.</p>
 </div>
 </section>
 <section id="when-things-go-wrong">
-<h2><a class="toc-backref" href="#id2">When Things Go Wrong</a><a class="headerlink" href="#when-things-go-wrong" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">When Things Go Wrong</a><a class="headerlink" href="#when-things-go-wrong" title="Permalink to this heading"></a></h2>
 <p>If PHP’s internationalization and localization logic cannot handle
 a value provided, for the given locale and options, then a
 <code class="docutils literal notranslate"><span class="pre">BadFunctionCallException()</span></code> will be thrown.</p>
 </section>
 <section id="available-functions">
-<h2><a class="toc-backref" href="#id3">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this heading"></a></h2>
 <p>The following functions are available:</p>
 <dl class="php function">
 <dt class="sig sig-object php" id="number_to_size">
 <span class="sig-name descname"><span class="pre">number_to_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$num</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$precision</span> <span class="pre">=</span> <span class="pre">1</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$locale</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#number_to_size" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$num</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Number of bytes</p></li>
 <li><p><strong>$precision</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Floating point precision</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Formatted data size string, or false if the provided value is not numeric</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
@@ -368,17 +372,17 @@ language file: <em>language/&lt;your_lang&gt;/Number.php</em></p>
 <dt class="sig sig-object php" id="number_to_amount">
 <span class="sig-name descname"><span class="pre">number_to_amount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$num[,</span> <span class="pre">$precision</span> <span class="pre">=</span> <span class="pre">1[,</span> <span class="pre">$locale</span> <span class="pre">=</span> <span class="pre">null]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#number_to_amount" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$num</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Number to format</p></li>
 <li><p><strong>$precision</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Floating point precision</p></li>
 <li><p><strong>$locale</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The locale to use for formatting</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A human-readable version of the string, or false if the provided value is not numeric</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
@@ -410,7 +414,7 @@ for numbers up to the quadrillions. Examples:</p>
 <dt class="sig sig-object php" id="number_to_currency">
 <span class="sig-name descname"><span class="pre">number_to_currency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$num</span></em>, <em class="sig-param"><span class="pre">$currency</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$locale</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$fraction</span> <span class="pre">=</span> <span class="pre">0</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#number_to_currency" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$num</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">float</span></code></span>) – Number to format</p></li>
 <li><p><strong>$currency</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The currency type, i.e., USD, EUR, etc</p></li>
@@ -418,10 +422,10 @@ for numbers up to the quadrillions. Examples:</p>
 <li><p><strong>$fraction</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">integer</span></code></span>) – Number of fraction digits after decimal point</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The number as the appropriate currency for the locale</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
@@ -441,15 +445,15 @@ for numbers up to the quadrillions. Examples:</p>
 <dt class="sig sig-object php" id="number_to_roman">
 <span class="sig-name descname"><span class="pre">number_to_roman</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$num</span></em><span class="sig-paren">)</span><a class="headerlink" href="#number_to_roman" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$num</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|string</span></code></span>) – The number want to convert</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The roman number converted from given parameter</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span></p>
 </dd>
 </dl>
@@ -480,7 +484,7 @@ It will return <code class="docutils literal notranslate"><span class="pre">null
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

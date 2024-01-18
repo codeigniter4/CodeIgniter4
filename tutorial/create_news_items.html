@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Create News Items &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,8 +285,8 @@
            <div itemprop="articleBody">
              
   <section id="create-news-items">
-<h1>Create News Items<a class="headerlink" href="#create-news-items" title="Permalink to this headline"></a></h1>
-<div class="contents local topic" id="contents">
+<h1>Create News Items<a class="headerlink" href="#create-news-items" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#enable-csrf-filter" id="id1">Enable CSRF Filter</a></p></li>
 <li><p><a class="reference internal" href="#adding-routing-rules" id="id2">Adding Routing Rules</a></p></li>
@@ -301,13 +305,13 @@
 <li><p><a class="reference internal" href="#create-a-news-item" id="id9">Create a News Item</a></p></li>
 <li><p><a class="reference internal" href="#congratulations" id="id10">Congratulations</a></p></li>
 </ul>
-</div>
+</nav>
 <p>You now know how you can read data from a database using CodeIgniter, but
 you haven’t written any information to the database yet. In this section,
 you’ll expand your news controller and model created earlier to include
 this functionality.</p>
 <section id="enable-csrf-filter">
-<h2><a class="toc-backref" href="#id1">Enable CSRF Filter</a><a class="headerlink" href="#enable-csrf-filter" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Enable CSRF Filter</a><a class="headerlink" href="#enable-csrf-filter" title="Permalink to this heading"></a></h2>
 <p>Before creating a form, let’s enable the CSRF protection.</p>
 <p>Open the <strong>app/Config/Filters.php</strong> file and update the <code class="docutils literal notranslate"><span class="pre">$methods</span></code> property like the following:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -338,7 +342,7 @@ Accessing the controller with a method you don’t expect could bypass the filte
 </div>
 </section>
 <section id="adding-routing-rules">
-<h2><a class="toc-backref" href="#id2">Adding Routing Rules</a><a class="headerlink" href="#adding-routing-rules" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Adding Routing Rules</a><a class="headerlink" href="#adding-routing-rules" title="Permalink to this heading"></a></h2>
 <p>Before you can start adding news items into your CodeIgniter application
 you have to add an extra rule to <strong>app/Config/Routes.php</strong> file. Make sure your
 file contains the following:</p>
@@ -365,9 +369,9 @@ the <code class="docutils literal notranslate"><span class="pre">News</span></co
 <p>You can read more about different routing types in <a class="reference internal" href="../incoming/routing.html#defined-route-routing"><span class="std std-ref">Setting Routing Rules</span></a>.</p>
 </section>
 <section id="create-a-form">
-<h2><a class="toc-backref" href="#id3">Create a Form</a><a class="headerlink" href="#create-a-form" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Create a Form</a><a class="headerlink" href="#create-a-form" title="Permalink to this heading"></a></h2>
 <section id="create-news-create-view-file">
-<h3><a class="toc-backref" href="#id4">Create news/create View File</a><a class="headerlink" href="#create-news-create-view-file" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Create news/create View File</a><a class="headerlink" href="#create-news-create-view-file" title="Permalink to this heading"></a></h3>
 <p>To input data into the database, you need to create a form where you can
 input the information to be stored. This means you’ll be needing a form
 with two fields, one for the title and one for the text. You’ll derive
@@ -405,10 +409,10 @@ is used to report errors related to form validation.</p>
 old input data when errors occur.</p>
 </section>
 <section id="news-controller">
-<h3><a class="toc-backref" href="#id5">News Controller</a><a class="headerlink" href="#news-controller" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">News Controller</a><a class="headerlink" href="#news-controller" title="Permalink to this heading"></a></h3>
 <p>Go back to your <code class="docutils literal notranslate"><span class="pre">News</span></code> controller.</p>
 <section id="add-news-new-to-display-the-form">
-<h4><a class="toc-backref" href="#id6">Add News::new() to Display the Form</a><a class="headerlink" href="#add-news-new-to-display-the-form" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id6" role="doc-backlink">Add News::new() to Display the Form</a><a class="headerlink" href="#add-news-new-to-display-the-form" title="Permalink to this heading"></a></h4>
 <p>First, create a method to display the HTML form you have created.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -438,7 +442,7 @@ loaded before use.</p>
 <p>Then it returns the created form view.</p>
 </section>
 <section id="add-news-create-to-create-a-news-item">
-<h4><a class="toc-backref" href="#id7">Add News::create() to Create a News Item</a><a class="headerlink" href="#add-news-create-to-create-a-news-item" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id7" role="doc-backlink">Add News::create() to Create a News Item</a><a class="headerlink" href="#add-news-create-to-create-a-news-item" title="Permalink to this heading"></a></h4>
 <p>Next, create a method to create a news item from the submitted data.</p>
 <p>You’re going to do three things here:</p>
 <ol class="arabic simple">
@@ -492,14 +496,14 @@ loaded before use.</p>
 </div>
 <p>The code above adds a lot of functionality.</p>
 <section id="retrieve-the-data">
-<h5>Retrieve the Data<a class="headerlink" href="#retrieve-the-data" title="Permalink to this headline"></a></h5>
+<h5>Retrieve the Data<a class="headerlink" href="#retrieve-the-data" title="Permalink to this heading"></a></h5>
 <p>First, we use the <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest</span></a>
 object <code class="docutils literal notranslate"><span class="pre">$this-&gt;request</span></code>, which is set in the controller by the framework.</p>
 <p>We get the necessary items from the <strong>POST</strong> data by the user and set them in the
 <code class="docutils literal notranslate"><span class="pre">$data</span></code> variable.</p>
 </section>
 <section id="validate-the-data">
-<h5>Validate the Data<a class="headerlink" href="#validate-the-data" title="Permalink to this headline"></a></h5>
+<h5>Validate the Data<a class="headerlink" href="#validate-the-data" title="Permalink to this heading"></a></h5>
 <p>Next, you’ll use the Controller-provided helper function
 <a class="reference internal" href="../incoming/controllers.html#controller-validatedata"><span class="std std-ref">validateData()</span></a> to validate the submitted data.
 In this case, the title and body fields are required and in the specific length.</p>
@@ -509,7 +513,7 @@ above. You can read more about the <a class="reference internal" href="../librar
 the HTML form.</p>
 </section>
 <section id="save-the-news-item">
-<h5>Save the News Item<a class="headerlink" href="#save-the-news-item" title="Permalink to this headline"></a></h5>
+<h5>Save the News Item<a class="headerlink" href="#save-the-news-item" title="Permalink to this heading"></a></h5>
 <p>If the validation passed all the rules, we get the validated data by
 <a class="reference internal" href="../libraries/validation.html#validation-getting-validated-data"><span class="std std-ref">$this-&gt;validator-&gt;getValidated()</span></a> and
 set them in the <code class="docutils literal notranslate"><span class="pre">$post</span></code> variable.</p>
@@ -524,7 +528,7 @@ sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.</p>
 </section>
 <section id="return-success-page">
-<h5>Return Success Page<a class="headerlink" href="#return-success-page" title="Permalink to this headline"></a></h5>
+<h5>Return Success Page<a class="headerlink" href="#return-success-page" title="Permalink to this heading"></a></h5>
 <p>After this, view files are loaded and returned to display a success message.
 Create a view at <strong>app/Views/news/success.php</strong> and write a success message.</p>
 <p>This could be as simple as:</p>
@@ -536,7 +540,7 @@ Create a view at <strong>app/Views/news/success.php</strong> and write a success
 </section>
 </section>
 <section id="newsmodel-updating">
-<h2><a class="toc-backref" href="#id8">NewsModel Updating</a><a class="headerlink" href="#newsmodel-updating" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">NewsModel Updating</a><a class="headerlink" href="#newsmodel-updating" title="Permalink to this heading"></a></h2>
 <p>The only thing that remains is ensuring that your model is set up
 to allow data to be saved properly. The <code class="docutils literal notranslate"><span class="pre">save()</span></code> method that was
 used will determine whether the information should be inserted
@@ -568,7 +572,7 @@ This helps protect against Mass Assignment Vulnerabilities. If your model is
 handling your timestamps, you would also leave those out.</p>
 </section>
 <section id="create-a-news-item">
-<h2><a class="toc-backref" href="#id9">Create a News Item</a><a class="headerlink" href="#create-a-news-item" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Create a News Item</a><a class="headerlink" href="#create-a-news-item" title="Permalink to this heading"></a></h2>
 <p>Now point your browser to your local development environment where you
 installed CodeIgniter and add <strong>/news/new</strong> to the URL.
 Add some news and check out the different pages you made.</p>
@@ -576,7 +580,7 @@ Add some news and check out the different pages you made.</p>
 <a class="reference internal image-reference" href="../_images/tutorial4.png"><img alt="../_images/tutorial4.png" class="align-center" src="../_images/tutorial4.png" style="width: 45%; height: 415px;" /></a>
 </section>
 <section id="congratulations">
-<h2><a class="toc-backref" href="#id10">Congratulations</a><a class="headerlink" href="#congratulations" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Congratulations</a><a class="headerlink" href="#congratulations" title="Permalink to this heading"></a></h2>
 <p>You just completed your first CodeIgniter4 application!</p>
 <p>The diagram underneath shows your project’s <strong>app</strong> folder, with all of the
 files that you created or modified.</p>
@@ -618,7 +622,7 @@ files that you created or modified.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

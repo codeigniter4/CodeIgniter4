@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Upgrading from 4.1.1 to 4.1.2 &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -282,14 +286,14 @@
            <div itemprop="articleBody">
              
   <section id="upgrading-from-4-1-1-to-4-1-2">
-<h1>Upgrading from 4.1.1 to 4.1.2<a class="headerlink" href="#upgrading-from-4-1-1-to-4-1-2" title="Permalink to this headline"></a></h1>
+<h1>Upgrading from 4.1.1 to 4.1.2<a class="headerlink" href="#upgrading-from-4-1-1-to-4-1-2" title="Permalink to this heading"></a></h1>
 <p>Please refer to the upgrade instructions corresponding to your installation method.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="installing_composer.html#app-starter-upgrading"><span class="std std-ref">Composer Installation App Starter Upgrading</span></a></p></li>
 <li><p><a class="reference internal" href="installing_composer.html#adding-codeigniter4-upgrading"><span class="std std-ref">Composer Installation Adding CodeIgniter4 to an Existing Project Upgrading</span></a></p></li>
 <li><p><a class="reference internal" href="installing_manual.html#installing-manual-upgrading"><span class="std std-ref">Manual Installation Upgrading</span></a></p></li>
 </ul>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#breaking-changes" id="id1">Breaking Changes</a></p>
 <ul>
@@ -312,11 +316,11 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="breaking-changes">
-<h2><a class="toc-backref" href="#id1">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this heading"></a></h2>
 <section id="current-url-and-indexpage">
-<h3><a class="toc-backref" href="#id2">current_url() and indexPage</a><a class="headerlink" href="#current-url-and-indexpage" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">current_url() and indexPage</a><a class="headerlink" href="#current-url-and-indexpage" title="Permalink to this heading"></a></h3>
 <p>Due to <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/issues/4116">a bug</a> in <code class="docutils literal notranslate"><span class="pre">current_url()</span></code>,
 the resulting URIs could be incorrect for a project’s configuration, most importantly: <code class="docutils literal notranslate"><span class="pre">indexPage</span></code>
 would <em>not</em> be included. Projects using <code class="docutils literal notranslate"><span class="pre">App::$indexPage</span></code> should expect altered values from
@@ -324,7 +328,7 @@ would <em>not</em> be included. Projects using <code class="docutils literal not
 and View Parser). Update your projects accordingly.</p>
 </section>
 <section id="cache-keys">
-<h3><a class="toc-backref" href="#id3">Cache Keys</a><a class="headerlink" href="#cache-keys" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Cache Keys</a><a class="headerlink" href="#cache-keys" title="Permalink to this heading"></a></h3>
 <p>Cache handlers had wildly different compatibility for keys. The updated cache drivers now pass
 all keys through validation, roughly matching PSR-6’s recommendations:</p>
 <blockquote>
@@ -339,7 +343,7 @@ implementing libraries: <code class="docutils literal notranslate"><span class="
 <p>Update your projects to remove any invalid cache keys.</p>
 </section>
 <section id="baseconnection-query-return-values">
-<h3><a class="toc-backref" href="#id4">BaseConnection::query() Return Values</a><a class="headerlink" href="#baseconnection-query-return-values" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">BaseConnection::query() Return Values</a><a class="headerlink" href="#baseconnection-query-return-values" title="Permalink to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">BaseConnection::query()</span></code> method in prior versions was incorrectly returning BaseResult objects
 even if the query failed. This method will now return <code class="docutils literal notranslate"><span class="pre">false</span></code> for failed queries (or throw an
 Exception if <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>) and will return booleans for write-type queries. Review any use
@@ -349,15 +353,15 @@ and any DBMS-specific override <code class="docutils literal notranslate"><span 
 </section>
 </section>
 <section id="breaking-enhancements">
-<h2><a class="toc-backref" href="#id5">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this heading"></a></h2>
 <section id="connectioninterface-iswritetype-declaration-added">
-<h3><a class="toc-backref" href="#id6">ConnectionInterface::isWriteType() Declaration Added</a><a class="headerlink" href="#connectioninterface-iswritetype-declaration-added" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">ConnectionInterface::isWriteType() Declaration Added</a><a class="headerlink" href="#connectioninterface-iswritetype-declaration-added" title="Permalink to this heading"></a></h3>
 <p>If you have written any classes that implement ConnectionInterface, these must now implement the
 <code class="docutils literal notranslate"><span class="pre">isWriteType()</span></code> method, declared as <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">function</span> <span class="pre">isWriteType($sql):</span> <span class="pre">bool</span></code>. If your class extends BaseConnection, then that class will provide a basic <code class="docutils literal notranslate"><span class="pre">isWriteType()</span></code>
 method which you might want to override.</p>
 </section>
 <section id="test-traits">
-<h3><a class="toc-backref" href="#id7">Test Traits</a><a class="headerlink" href="#test-traits" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Test Traits</a><a class="headerlink" href="#test-traits" title="Permalink to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test</span></code> namespace has had significant improvements to help developers with their
 own test cases. Most notably test extensions have moved to Traits to make them easier to
 pick-and-choose across various test case needs. The <code class="docutils literal notranslate"><span class="pre">CIDatabaseTestCase</span></code> and <code class="docutils literal notranslate"><span class="pre">FeatureTestCase</span></code>
@@ -398,7 +402,7 @@ and use any traits you need. For example:</p>
 approach and take advantage of the updated response testing (below).</p>
 </section>
 <section id="test-responses">
-<h3><a class="toc-backref" href="#id8">Test Responses</a><a class="headerlink" href="#test-responses" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Test Responses</a><a class="headerlink" href="#test-responses" title="Permalink to this heading"></a></h3>
 <p>The tools for testing responses have been consolidated and improved. A new
 <code class="docutils literal notranslate"><span class="pre">TestResponse</span></code> replaces <code class="docutils literal notranslate"><span class="pre">ControllerResponse</span></code> and <code class="docutils literal notranslate"><span class="pre">FeatureResponse</span></code> with a complete
 set of methods and properties expected from both those classes. In most cases these changes
@@ -411,7 +415,7 @@ changes to be aware of:</p>
 </section>
 </section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id9">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this heading"></a></h2>
 <p>Numerous files in the project space (root, app, public, writable) received updates. Due to
 these files being outside of the system scope they will not be changed without your intervention.
 There are some third-party CodeIgniter modules available to assist with merging changes to
@@ -423,7 +427,7 @@ will break your application. All changes noted here are optional until the next 
 and any mandatory changes will be covered in the sections above.</p>
 </div>
 <section id="content-changes">
-<h3><a class="toc-backref" href="#id10">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this heading"></a></h3>
 <p>The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:</p>
 <ul class="simple">
@@ -439,7 +443,7 @@ and it is recommended that you merge the updated versions with your application:
 </ul>
 </section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id11">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this heading"></a></h3>
 <p>This is a list of all files in the project space that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
@@ -484,7 +488,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

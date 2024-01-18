@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Working with HTTP Requests &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,13 +285,13 @@
            <div itemprop="articleBody">
              
   <section id="working-with-http-requests">
-<h1>Working with HTTP Requests<a class="headerlink" href="#working-with-http-requests" title="Permalink to this headline"></a></h1>
+<h1>Working with HTTP Requests<a class="headerlink" href="#working-with-http-requests" title="Permalink to this heading"></a></h1>
 <p>In order to get the most out of CodeIgniter, you need to have a basic understanding of how HTTP requests
 and responses work. Since this is what you work with while developing web applications, understanding the
 concepts behind HTTP is a <strong>must</strong> for all developers that want to be successful.</p>
 <p>The first part of this chapter gives an overview. After the concepts are out of the way, we will discuss
 how to work with the requests and responses within CodeIgniter.</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#what-is-http" id="id1">What is HTTP?</a></p>
 <ul>
@@ -297,9 +301,9 @@ how to work with the requests and responses within CodeIgniter.</p>
 </li>
 <li><p><a class="reference internal" href="#working-with-requests-and-responses" id="id4">Working with Requests and Responses</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="what-is-http">
-<h2><a class="toc-backref" href="#id1">What is HTTP?</a><a class="headerlink" href="#what-is-http" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">What is HTTP?</a><a class="headerlink" href="#what-is-http" title="Permalink to this heading"></a></h2>
 <p>HTTP is simply a text-based convention that allows two machines to talk to each other. When a browser
 requests a page, it asks the server if it can get the page. The server then prepares the page and sends
 a response back to the browser that asked for it. That’s pretty much it. Obviously, there are some complexities
@@ -308,7 +312,7 @@ that you can use, but the basics are really pretty simple.</p>
 you develop web applications is to always understand what the browser is requesting, and be able to
 respond appropriately.</p>
 <section id="the-request">
-<h3><a class="toc-backref" href="#id2">The Request</a><a class="headerlink" href="#the-request" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">The Request</a><a class="headerlink" href="#the-request" title="Permalink to this heading"></a></h3>
 <p>Whenever a client (a web browser, smartphone app, etc) makes a request, it sends a small text message
 to the server and waits for a response.</p>
 <p>The request would look something like this:</p>
@@ -325,7 +329,7 @@ information such as what languages the client wants the content displayed as, th
 client accepts, and much more. Wikipedia has an article that lists <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_HTTP_header_fields">all header fields</a> if you want to look it over.</p>
 </section>
 <section id="the-response">
-<h3><a class="toc-backref" href="#id3">The Response</a><a class="headerlink" href="#the-response" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">The Response</a><a class="headerlink" href="#the-response" title="Permalink to this heading"></a></h3>
 <p>Once the server receives the request, your application will take that information and generate some output.
 The server will bundle your output as part of its response to the client. This is also represented as
 a simple text message that looks something like this:</p>
@@ -346,7 +350,7 @@ wasn’t found (404). Head over to IANA for a <a class="reference external" href
 </section>
 </section>
 <section id="working-with-requests-and-responses">
-<h2><a class="toc-backref" href="#id4">Working with Requests and Responses</a><a class="headerlink" href="#working-with-requests-and-responses" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Working with Requests and Responses</a><a class="headerlink" href="#working-with-requests-and-responses" title="Permalink to this heading"></a></h2>
 <p>While PHP provides ways to interact with the request and response headers, CodeIgniter, like most frameworks,
 abstracts them so that you have a consistent, simple interface to them. The <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest class</span></a>
 is an object-oriented representation of the HTTP request. It provides everything you need:</p>
@@ -422,7 +426,7 @@ of the HTTP response. This gives you an easy and powerful way to construct your 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

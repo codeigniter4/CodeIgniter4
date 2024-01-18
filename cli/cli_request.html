@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CLIRequest Class &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,14 +285,14 @@
            <div itemprop="articleBody">
              
   <section id="clirequest-class">
-<h1>CLIRequest Class<a class="headerlink" href="#clirequest-class" title="Permalink to this headline"></a></h1>
+<h1>CLIRequest Class<a class="headerlink" href="#clirequest-class" title="Permalink to this heading"></a></h1>
 <p>If a request comes from a command line invocation, the request object is actually a
 <code class="docutils literal notranslate"><span class="pre">CLIRequest</span></code>. It behaves the same as a <a class="reference internal" href="../incoming/request.html"><span class="doc">conventional request</span></a>
 but adds some accessor methods for convenience.</p>
 <section id="additional-accessors">
-<h2>Additional Accessors<a class="headerlink" href="#additional-accessors" title="Permalink to this headline"></a></h2>
+<h2>Additional Accessors<a class="headerlink" href="#additional-accessors" title="Permalink to this heading"></a></h2>
 <section id="getsegments">
-<h3>getSegments()<a class="headerlink" href="#getsegments" title="Permalink to this headline"></a></h3>
+<h3>getSegments()<a class="headerlink" href="#getsegments" title="Permalink to this heading"></a></h3>
 <p>Returns an array of the command line arguments deemed to be part of a path:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -298,7 +302,7 @@ but adds some accessor methods for convenience.</p>
 </div>
 </section>
 <section id="getpath">
-<h3>getPath()<a class="headerlink" href="#getpath" title="Permalink to this headline"></a></h3>
+<h3>getPath()<a class="headerlink" href="#getpath" title="Permalink to this heading"></a></h3>
 <p>Returns the reconstructed path as a string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -308,7 +312,7 @@ but adds some accessor methods for convenience.</p>
 </div>
 </section>
 <section id="getoptions">
-<h3>getOptions()<a class="headerlink" href="#getoptions" title="Permalink to this headline"></a></h3>
+<h3>getOptions()<a class="headerlink" href="#getoptions" title="Permalink to this heading"></a></h3>
 <p>Returns an array of the command line arguments deemed to be options:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -318,7 +322,7 @@ but adds some accessor methods for convenience.</p>
 </div>
 </section>
 <section id="getoption-which">
-<h3>getOption($which)<a class="headerlink" href="#getoption-which" title="Permalink to this headline"></a></h3>
+<h3>getOption($which)<a class="headerlink" href="#getoption-which" title="Permalink to this heading"></a></h3>
 <p>Returns the value of a specific command line argument deemed to be an option:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -329,7 +333,7 @@ but adds some accessor methods for convenience.</p>
 </div>
 </section>
 <section id="getoptionstring">
-<h3>getOptionString()<a class="headerlink" href="#getoptionstring" title="Permalink to this headline"></a></h3>
+<h3>getOptionString()<a class="headerlink" href="#getoptionstring" title="Permalink to this heading"></a></h3>
 <p>Returns the reconstructed command line string for the options:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -361,7 +365,7 @@ but adds some accessor methods for convenience.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

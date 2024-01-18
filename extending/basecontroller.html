@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Extending the Controller &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,7 +285,7 @@
            <div itemprop="articleBody">
              
   <section id="extending-the-controller">
-<h1>Extending the Controller<a class="headerlink" href="#extending-the-controller" title="Permalink to this headline"></a></h1>
+<h1>Extending the Controller<a class="headerlink" href="#extending-the-controller" title="Permalink to this heading"></a></h1>
 <p>CodeIgniter’s core Controller should not be changed, but a default class extension is provided for you at
 <strong>app/Controllers/BaseController.php</strong>. Any new controllers you make should extend <code class="docutils literal notranslate"><span class="pre">BaseController</span></code> to take
 advantage of preloaded components and any additional functionality you provide:</p>
@@ -295,15 +299,15 @@ advantage of preloaded components and any additional functionality you provide:<
 <span class="p">}</span>
 </pre></div>
 </div>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#preloading-components" id="id1">Preloading Components</a></p></li>
 <li><p><a class="reference internal" href="#additional-methods" id="id2">Additional Methods</a></p></li>
 <li><p><a class="reference internal" href="#other-options" id="id3">Other Options</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="preloading-components">
-<h2><a class="toc-backref" href="#id1">Preloading Components</a><a class="headerlink" href="#preloading-components" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Preloading Components</a><a class="headerlink" href="#preloading-components" title="Permalink to this heading"></a></h2>
 <p>The base controller is a great place to load any helpers, models, libraries, services, etc. that you intend to
 use every time your project runs. Helpers should be added to the pre-defined <code class="docutils literal notranslate"><span class="pre">$helpers</span></code> array. For example, if
 you want the HTML and Text helpers universally available:</p>
@@ -352,13 +356,13 @@ example, if your project uses the Session Library heavily you may want to initia
 </div>
 </section>
 <section id="additional-methods">
-<h2><a class="toc-backref" href="#id2">Additional Methods</a><a class="headerlink" href="#additional-methods" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Additional Methods</a><a class="headerlink" href="#additional-methods" title="Permalink to this heading"></a></h2>
 <p>The base controller is not routable. As an added security
 measure <strong>all</strong> new methods you create should be declared as <code class="docutils literal notranslate"><span class="pre">protected</span></code> or <code class="docutils literal notranslate"><span class="pre">private</span></code> and only be accessed through the
 controllers you create that extend <code class="docutils literal notranslate"><span class="pre">BaseController</span></code>.</p>
 </section>
 <section id="other-options">
-<h2><a class="toc-backref" href="#id3">Other Options</a><a class="headerlink" href="#other-options" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Other Options</a><a class="headerlink" href="#other-options" title="Permalink to this heading"></a></h2>
 <p>You may find that you need more than one base controller. You can create new base controllers as long as any other controllers that you make extend the correct base. For example, if your project
 has an involved public interface and a simple administrative portal you may want to extend <code class="docutils literal notranslate"><span class="pre">BaseController</span></code> to
 the public controllers and make <code class="docutils literal notranslate"><span class="pre">AdminController</span></code> for any administrative controllers.</p>
@@ -391,7 +395,7 @@ Controller instead:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

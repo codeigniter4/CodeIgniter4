@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Upgrading from 4.2.12 to 4.3.0 &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -282,14 +286,14 @@
            <div itemprop="articleBody">
              
   <section id="upgrading-from-4-2-12-to-4-3-0">
-<h1>Upgrading from 4.2.12 to 4.3.0<a class="headerlink" href="#upgrading-from-4-2-12-to-4-3-0" title="Permalink to this headline"></a></h1>
+<h1>Upgrading from 4.2.12 to 4.3.0<a class="headerlink" href="#upgrading-from-4-2-12-to-4-3-0" title="Permalink to this heading"></a></h1>
 <p>Please refer to the upgrade instructions corresponding to your installation method.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="installing_composer.html#app-starter-upgrading"><span class="std std-ref">Composer Installation App Starter Upgrading</span></a></p></li>
 <li><p><a class="reference internal" href="installing_composer.html#adding-codeigniter4-upgrading"><span class="std std-ref">Composer Installation Adding CodeIgniter4 to an Existing Project Upgrading</span></a></p></li>
 <li><p><a class="reference internal" href="installing_manual.html#installing-manual-upgrading"><span class="std std-ref">Manual Installation Upgrading</span></a></p></li>
 </ul>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#composer-version" id="id1">Composer Version</a></p></li>
 <li><p><a class="reference internal" href="#mandatory-file-changes" id="id2">Mandatory File Changes</a></p>
@@ -326,9 +330,9 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="composer-version">
-<h2><a class="toc-backref" href="#id1">Composer Version</a><a class="headerlink" href="#composer-version" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Composer Version</a><a class="headerlink" href="#composer-version" title="Permalink to this heading"></a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>If you use Composer, CodeIgniter v4.3.0 requires
@@ -344,9 +348,9 @@ and delete the <strong>vendor/</strong> directory, and run <code class="docutils
 </div>
 </section>
 <section id="mandatory-file-changes">
-<h2><a class="toc-backref" href="#id2">Mandatory File Changes</a><a class="headerlink" href="#mandatory-file-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Mandatory File Changes</a><a class="headerlink" href="#mandatory-file-changes" title="Permalink to this heading"></a></h2>
 <section id="spark">
-<h3><a class="toc-backref" href="#id3">spark</a><a class="headerlink" href="#spark" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">spark</a><a class="headerlink" href="#spark" title="Permalink to this heading"></a></h3>
 <p>The following files received significant changes and
 <strong>you must merge the updated versions</strong> with your application:</p>
 <ul class="simple">
@@ -363,9 +367,9 @@ and delete the <strong>vendor/</strong> directory, and run <code class="docutils
 </div>
 </section>
 <section id="config-files">
-<h3><a class="toc-backref" href="#id4">Config Files</a><a class="headerlink" href="#config-files" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Config Files</a><a class="headerlink" href="#config-files" title="Permalink to this heading"></a></h3>
 <section id="app-config-kint-php">
-<h4>app/Config/Kint.php<a class="headerlink" href="#app-config-kint-php" title="Permalink to this headline"></a></h4>
+<h4>app/Config/Kint.php<a class="headerlink" href="#app-config-kint-php" title="Permalink to this heading"></a></h4>
 <ul>
 <li><p><strong>app/Config/Kint.php</strong> has been updated for Kint 5.0.</p></li>
 <li><p>You need to replace:</p>
@@ -379,13 +383,13 @@ and delete the <strong>vendor/</strong> directory, and run <code class="docutils
 </ul>
 </section>
 <section id="app-config-exceptions-php">
-<h4>app/Config/Exceptions.php<a class="headerlink" href="#app-config-exceptions-php" title="Permalink to this headline"></a></h4>
+<h4>app/Config/Exceptions.php<a class="headerlink" href="#app-config-exceptions-php" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p>If you are using PHP 8.2, you need to add new properties <code class="docutils literal notranslate"><span class="pre">$logDeprecations</span></code> and <code class="docutils literal notranslate"><span class="pre">$deprecationLogLevel</span></code>.</p></li>
 </ul>
 </section>
 <section id="mock-config-classes">
-<h4>Mock Config Classes<a class="headerlink" href="#mock-config-classes" title="Permalink to this headline"></a></h4>
+<h4>Mock Config Classes<a class="headerlink" href="#mock-config-classes" title="Permalink to this heading"></a></h4>
 <ul>
 <li><p>If you are using the following Mock Config classes in testing, you need to update the corresponding Config files in <strong>app/Config</strong>:</p>
 <blockquote>
@@ -401,7 +405,7 @@ and delete the <strong>vendor/</strong> directory, and run <code class="docutils
 </section>
 </section>
 <section id="composer-json">
-<h3><a class="toc-backref" href="#id5">composer.json</a><a class="headerlink" href="#composer-json" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">composer.json</a><a class="headerlink" href="#composer-json" title="Permalink to this heading"></a></h3>
 <p>If you installed CodeIgnter manually, and are using Composer,
 you need to remove the following lines, and run <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span></code>.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>{
@@ -425,9 +429,9 @@ you need to remove the following lines, and run <code class="docutils literal no
 </section>
 </section>
 <section id="breaking-changes">
-<h2><a class="toc-backref" href="#id6">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this heading"></a></h2>
 <section id="database-exception-changes">
-<h3><a class="toc-backref" href="#id7">Database Exception Changes</a><a class="headerlink" href="#database-exception-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Database Exception Changes</a><a class="headerlink" href="#database-exception-changes" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>The exception classes may be changed when database errors occur. If you catch the exceptions,
 you must confirm that your code can catch the exceptions.</p></li>
@@ -439,7 +443,7 @@ See <a class="reference internal" href="../database/transactions.html#transactio
 </ul>
 </section>
 <section id="http-status-code-and-exit-code-of-uncaught-exceptions">
-<h3><a class="toc-backref" href="#id8">HTTP Status Code and Exit Code of Uncaught Exceptions</a><a class="headerlink" href="#http-status-code-and-exit-code-of-uncaught-exceptions" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">HTTP Status Code and Exit Code of Uncaught Exceptions</a><a class="headerlink" href="#http-status-code-and-exit-code-of-uncaught-exceptions" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>If you expect <em>Exception code</em> as <em>HTTP status code</em>, the HTTP status code will be changed.
 In that case, you need to implement <code class="docutils literal notranslate"><span class="pre">HTTPExceptionInterface</span></code> in the Exception. See <a class="reference internal" href="../general/errors.html#error-specify-http-status-code"><span class="std std-ref">Specify HTTP Status Code in Your Exception</span></a>.</p></li>
@@ -448,7 +452,7 @@ In that case, you need to implement <code class="docutils literal notranslate"><
 </ul>
 </section>
 <section id="redirect-withinput-and-validation-errors">
-<h3><a class="toc-backref" href="#id9">redirect()-&gt;withInput() and Validation Errors</a><a class="headerlink" href="#redirect-withinput-and-validation-errors" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">redirect()-&gt;withInput() and Validation Errors</a><a class="headerlink" href="#redirect-withinput-and-validation-errors" title="Permalink to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">redirect()-&gt;withInput()</span></code> and Validation errors had an undocumented behavior.
 If you redirect with <code class="docutils literal notranslate"><span class="pre">withInput()</span></code>, CodeIgniter stores the validation errors
 in the session, and you can get the errors in the redirected page from
@@ -468,14 +472,14 @@ Use new Form helpers, <a class="reference internal" href="../helpers/form_helper
 instead of the Validation object.</p>
 </section>
 <section id="validation-changes">
-<h3><a class="toc-backref" href="#id10">Validation Changes</a><a class="headerlink" href="#validation-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Validation Changes</a><a class="headerlink" href="#validation-changes" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">ValidationInterface</span></code> has been changed. Implemented classes should likewise add the methods and the parameters so as not to break LSP. See <a class="reference internal" href="../changelogs/v4.3.0.html#v430-validation-changes"><span class="std std-ref">Validation Changes</span></a> for details.</p></li>
 <li><p>The return value of  <code class="docutils literal notranslate"><span class="pre">Validation::loadRuleGroup()</span></code> has been changed <code class="docutils literal notranslate"><span class="pre">null</span></code> to <code class="docutils literal notranslate"><span class="pre">[]</span></code> when the <code class="docutils literal notranslate"><span class="pre">$group</span></code> is empty. Update the code if you depend on the behavior.</p></li>
 </ul>
 </section>
 <section id="time-fixes">
-<h3><a class="toc-backref" href="#id11">Time Fixes</a><a class="headerlink" href="#time-fixes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Time Fixes</a><a class="headerlink" href="#time-fixes" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Due to bug fixes, some methods in <a class="reference internal" href="../libraries/time.html"><span class="doc">Time</span></a> have changed from mutable behavior to immutable; <code class="docutils literal notranslate"><span class="pre">Time</span></code> now extends <code class="docutils literal notranslate"><span class="pre">DateTimeImmutable</span></code>. See <a class="reference internal" href="../changelogs/v4.3.0.html#v430-time-fix"><span class="std std-ref">ChangeLog</span></a> for details.</p></li>
 <li><p>If you need the behavior of <code class="docutils literal notranslate"><span class="pre">Time</span></code> before the modification, a compatible <code class="docutils literal notranslate"><span class="pre">TimeLegacy</span></code> class has been added. Please replace all <code class="docutils literal notranslate"><span class="pre">Time</span></code> with <code class="docutils literal notranslate"><span class="pre">TimeLegacy</span></code> in your application code.</p></li>
@@ -512,7 +516,7 @@ instead of the Validation object.</p>
 </div>
 </section>
 <section id="capturing-stderr-and-stdout-streams-in-tests">
-<span id="upgrade-430-stream-filter"></span><h3><a class="toc-backref" href="#id12">Capturing STDERR and STDOUT streams in Tests</a><a class="headerlink" href="#capturing-stderr-and-stdout-streams-in-tests" title="Permalink to this headline"></a></h3>
+<span id="upgrade-430-stream-filter"></span><h3><a class="toc-backref" href="#id12" role="doc-backlink">Capturing STDERR and STDOUT streams in Tests</a><a class="headerlink" href="#capturing-stderr-and-stdout-streams-in-tests" title="Permalink to this heading"></a></h3>
 <p>The way error and output streams are captured has changed. Now instead of:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Test\Filters\CITestStreamFilter</span><span class="p">;</span>
 
@@ -549,11 +553,11 @@ instead of the Validation object.</p>
 <p>Or use the trait <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\StreamFilterTrait</span></code>. See <a class="reference internal" href="../testing/overview.html#testing-cli-output"><span class="std std-ref">Testing CLI Output</span></a>.</p>
 </section>
 <section id="interface-changes">
-<h3><a class="toc-backref" href="#id13">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Interface Changes</a><a class="headerlink" href="#interface-changes" title="Permalink to this heading"></a></h3>
 <p>Some interfaces has been fixed. See <a class="reference internal" href="../changelogs/v4.3.0.html#v430-interface-changes"><span class="std std-ref">Interface Changes</span></a> for details.</p>
 </section>
 <section id="foreign-key-data">
-<h3><a class="toc-backref" href="#id14">Foreign Key Data</a><a class="headerlink" href="#foreign-key-data" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Foreign Key Data</a><a class="headerlink" href="#foreign-key-data" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>The data structure returned by <code class="docutils literal notranslate"><span class="pre">BaseConnection::getForeignKeyData()</span></code> has been changed.
 You will need to adjust any code depending on this method to use the new structure.</p></li>
@@ -580,15 +584,15 @@ You will need to adjust any code depending on this method to use the new structu
 </section>
 </section>
 <section id="breaking-enhancements">
-<h2><a class="toc-backref" href="#id15">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this heading"></a></h2>
 <section id="multiple-domain-support">
-<h3><a class="toc-backref" href="#id16">Multiple Domain Support</a><a class="headerlink" href="#multiple-domain-support" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">Multiple Domain Support</a><a class="headerlink" href="#multiple-domain-support" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>If you set <code class="docutils literal notranslate"><span class="pre">Config\App::$allowedHostnames</span></code>, URL-related functions such as <a class="reference internal" href="../helpers/url_helper.html#base_url" title="base_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">base_url()</span></code></a>, <a class="reference internal" href="../helpers/url_helper.html#current_url" title="current_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">current_url()</span></code></a>, <a class="reference internal" href="../helpers/url_helper.html#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a> will return the URL with the hostname set in <code class="docutils literal notranslate"><span class="pre">Config\App::$allowedHostnames</span></code> if the current URL matches.</p></li>
 </ul>
 </section>
 <section id="database">
-<h3><a class="toc-backref" href="#id17">Database</a><a class="headerlink" href="#database" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Database</a><a class="headerlink" href="#database" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>The return type of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\Database::loadForge()</span></code> has been changed to <code class="docutils literal notranslate"><span class="pre">Forge</span></code>. Extending classes should likewise change the type.</p></li>
 <li><p>The return type of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\Database::loadUtils()</span></code> has been changed to <code class="docutils literal notranslate"><span class="pre">BaseUtils</span></code>. Extending classes should likewise change the type.</p></li>
@@ -600,14 +604,14 @@ statement without a WHERE clause. If you need to update all records in a table, 
 </ul>
 </section>
 <section id="honeypot-and-csp">
-<span id="upgrade-430-honeypot-and-csp"></span><h3><a class="toc-backref" href="#id18">Honeypot and CSP</a><a class="headerlink" href="#honeypot-and-csp" title="Permalink to this headline"></a></h3>
+<span id="upgrade-430-honeypot-and-csp"></span><h3><a class="toc-backref" href="#id18" role="doc-backlink">Honeypot and CSP</a><a class="headerlink" href="#honeypot-and-csp" title="Permalink to this heading"></a></h3>
 <p>When CSP is enabled, id attribute <code class="docutils literal notranslate"><span class="pre">id=&quot;hpc&quot;</span></code> will be injected into the container tag
 for the Honeypot field to hide the field. If the id is already used in your views, you need to change it
 with <code class="docutils literal notranslate"><span class="pre">Config\Honeypot::$containerId</span></code>.
 And you can remove <code class="docutils literal notranslate"><span class="pre">style=&quot;display:none&quot;</span></code> in <code class="docutils literal notranslate"><span class="pre">Config\Honeypot::$container</span></code>.</p>
 </section>
 <section id="others">
-<h3><a class="toc-backref" href="#id19">Others</a><a class="headerlink" href="#others" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">Others</a><a class="headerlink" href="#others" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Helper:</strong> Since void HTML elements (e.g. <code class="docutils literal notranslate"><span class="pre">&lt;input&gt;</span></code>) in <code class="docutils literal notranslate"><span class="pre">html_helper</span></code>, <code class="docutils literal notranslate"><span class="pre">form_helper</span></code> or common functions have been changed to be HTML5-compatible by default and you need to be compatible with XHTML, you must set the <code class="docutils literal notranslate"><span class="pre">$html5</span></code> property in <strong>app/Config/DocTypes.php</strong> to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
 <li><p><strong>CLI:</strong> Since the launch of Spark Commands was extracted from <code class="docutils literal notranslate"><span class="pre">CodeIgniter\CodeIgniter</span></code>, there may be problems running these commands if the <code class="docutils literal notranslate"><span class="pre">Services::codeigniter()</span></code> service has been overridden.</p></li>
@@ -615,17 +619,17 @@ And you can remove <code class="docutils literal notranslate"><span class="pre">
 </section>
 </section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id20">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id20" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this heading"></a></h2>
 <p>Numerous files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
 these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.
 There are some third-party CodeIgniter modules available to assist with merging changes to
 the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
 <section id="content-changes">
-<h3><a class="toc-backref" href="#id21">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this heading"></a></h3>
 <p>The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:</p>
 <section id="config">
-<span id="upgrade-430-config"></span><h4>Config<a class="headerlink" href="#config" title="Permalink to this headline"></a></h4>
+<span id="upgrade-430-config"></span><h4>Config<a class="headerlink" href="#config" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><dl class="simple">
 <dt>app/Config/App.php</dt><dd><ul>
@@ -734,7 +738,7 @@ check fails. This is to make it easier to recognize that it is a CSRF error.</p>
 </ul>
 </section>
 <section id="view-files">
-<h4>View Files<a class="headerlink" href="#view-files" title="Permalink to this headline"></a></h4>
+<h4>View Files<a class="headerlink" href="#view-files" title="Permalink to this heading"></a></h4>
 <p>The following view files have been changed to HTML5 compatible tags.
 Also, error messages are now defined in the <strong>Errors</strong> language file.</p>
 <ul class="simple">
@@ -746,7 +750,7 @@ Also, error messages are now defined in the <strong>Errors</strong> language fil
 </section>
 </section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id22">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this heading"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime.
 All atomic type properties in <code class="docutils literal notranslate"><span class="pre">Config</span></code> classes have been typed:</p>
@@ -806,7 +810,7 @@ All atomic type properties in <code class="docutils literal notranslate"><span c
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

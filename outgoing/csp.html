@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Security Policy &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,17 +285,17 @@
            <div itemprop="articleBody">
              
   <section id="content-security-policy">
-<span id="id1"></span><h1>Content Security Policy<a class="headerlink" href="#content-security-policy" title="Permalink to this headline"></a></h1>
-<div class="contents local topic" id="contents">
+<span id="id1"></span><h1>Content Security Policy<a class="headerlink" href="#content-security-policy" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#what-is-content-security-policy" id="id2">What is Content Security Policy?</a></p></li>
 <li><p><a class="reference internal" href="#turning-csp-on" id="id3">Turning CSP On</a></p></li>
 <li><p><a class="reference internal" href="#runtime-configuration" id="id4">Runtime Configuration</a></p></li>
 <li><p><a class="reference internal" href="#inline-content" id="id5">Inline Content</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="what-is-content-security-policy">
-<h2><a class="toc-backref" href="#id2">What is Content Security Policy?</a><a class="headerlink" href="#what-is-content-security-policy" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">What is Content Security Policy?</a><a class="headerlink" href="#what-is-content-security-policy" title="Permalink to this heading"></a></h2>
 <p>One of the best protections you have against XSS attacks is to implement a Content
 Security Policy (CSP) on the site. This requires you to specify and authorize each
 source of content that is included in your site’s HTML, including images,
@@ -311,7 +315,7 @@ visit the following sites:</p>
 </ul>
 </section>
 <section id="turning-csp-on">
-<h2><a class="toc-backref" href="#id3">Turning CSP On</a><a class="headerlink" href="#turning-csp-on" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Turning CSP On</a><a class="headerlink" href="#turning-csp-on" title="Permalink to this heading"></a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>The <a class="reference internal" href="../testing/debugging.html#the-debug-toolbar"><span class="std std-ref">Debug Toolbar</span></a> may use Kint, which
@@ -351,7 +355,7 @@ to the CSP header appropriate for blocking or preventing. That can be overridden
 call basis, by providing an optional second parameter to the adding method call.</p>
 </section>
 <section id="runtime-configuration">
-<h2><a class="toc-backref" href="#id4">Runtime Configuration</a><a class="headerlink" href="#runtime-configuration" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Runtime Configuration</a><a class="headerlink" href="#runtime-configuration" title="Permalink to this heading"></a></h2>
 <p>If your application needs to make changes at run-time, you can access the instance at <code class="docutils literal notranslate"><span class="pre">$this-&gt;response-&gt;getCSP()</span></code> in your controllers. The
 class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
 Examples are shown below, with different combinations of parameters, though all accept either a directive
@@ -409,7 +413,7 @@ that youtube.com was allowed, and then provide several allowed but reported sour
 </div>
 </section>
 <section id="inline-content">
-<h2><a class="toc-backref" href="#id5">Inline Content</a><a class="headerlink" href="#inline-content" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Inline Content</a><a class="headerlink" href="#inline-content" title="Permalink to this heading"></a></h2>
 <p>It is possible to set a website to not protect even inline scripts and styles on its own pages, since this might have
 been the result of user-generated content. To protect against this, CSP allows you to specify a nonce within the
 <code class="docutils literal notranslate"><span class="pre">&lt;style&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code> tags, and to add those values to the response’s header. This is a pain to handle in real
@@ -468,7 +472,7 @@ life, and is most secure when generated on the fly. To make this simple, you can
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

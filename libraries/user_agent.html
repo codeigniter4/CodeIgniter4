@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User Agent Class &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,10 +285,10 @@
            <div itemprop="articleBody">
              
   <section id="user-agent-class">
-<h1>User Agent Class<a class="headerlink" href="#user-agent-class" title="Permalink to this headline"></a></h1>
+<h1>User Agent Class<a class="headerlink" href="#user-agent-class" title="Permalink to this heading"></a></h1>
 <p>The User Agent Class provides functions that help identify information
 about the browser, mobile device, or robot visiting your site.</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#using-the-user-agent-class" id="id1">Using the User Agent Class</a></p>
 <ul>
@@ -295,11 +299,11 @@ about the browser, mobile device, or robot visiting your site.</p>
 </li>
 <li><p><a class="reference internal" href="#namespace-CodeIgniter\HTTP" id="id5">Class Reference</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="using-the-user-agent-class">
-<h2><a class="toc-backref" href="#id1">Using the User Agent Class</a><a class="headerlink" href="#using-the-user-agent-class" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Using the User Agent Class</a><a class="headerlink" href="#using-the-user-agent-class" title="Permalink to this heading"></a></h2>
 <section id="initializing-the-class">
-<h3><a class="toc-backref" href="#id2">Initializing the Class</a><a class="headerlink" href="#initializing-the-class" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Initializing the Class</a><a class="headerlink" href="#initializing-the-class" title="Permalink to this heading"></a></h3>
 <p>The User Agent class is always available directly from the current <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest</span></a> instance.
 By default, you will have a request instance in your controller that you can retrieve the
 User Agent class from:</p>
@@ -310,13 +314,13 @@ User Agent class from:</p>
 </div>
 </section>
 <section id="user-agent-definitions">
-<h3><a class="toc-backref" href="#id3">User Agent Definitions</a><a class="headerlink" href="#user-agent-definitions" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">User Agent Definitions</a><a class="headerlink" href="#user-agent-definitions" title="Permalink to this heading"></a></h3>
 <p>The user agent name definitions are located in a config file located at:
 <strong>app/Config/UserAgents.php</strong>. You may add items to the various
 user agent arrays if needed.</p>
 </section>
 <section id="example">
-<h3><a class="toc-backref" href="#id4">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Example</a><a class="headerlink" href="#example" title="Permalink to this heading"></a></h3>
 <p>When the User Agent class is initialized it will attempt to determine
 whether the user agent browsing your site is a web browser, a mobile
 device, or a robot. It will also gather the platform information if it
@@ -343,7 +347,7 @@ is available:</p>
 </section>
 </section>
 <section id="namespace-CodeIgniter\HTTP">
-<span id="class-reference"></span><h2><a class="toc-backref" href="#id5">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\HTTP" title="Permalink to this headline"></a></h2>
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\HTTP" title="Permalink to this heading"></a></h2>
 <dl class="php class">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\UserAgent">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\HTTP\</span></span><span class="sig-name descname"><span class="pre">UserAgent</span></span><a class="headerlink" href="#CodeIgniter\HTTP\UserAgent" title="Permalink to this definition"></a></dt>
@@ -351,15 +355,15 @@ is available:</p>
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\UserAgent::isBrowser">
 <span class="sig-name descname"><span class="pre">isBrowser</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\UserAgent::isBrowser" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Optional browser name</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>true if the user agent is a (specified) browser, false if not</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
@@ -385,15 +389,15 @@ browsers or change the strings.</p>
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\UserAgent::isMobile">
 <span class="sig-name descname"><span class="pre">isMobile</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\UserAgent::isMobile" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Optional mobile device name</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>true if the user agent is a (specified) mobile device, false if not</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
@@ -415,15 +419,15 @@ browsers or change the strings.</p>
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\UserAgent::isRobot">
 <span class="sig-name descname"><span class="pre">isRobot</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\UserAgent::isRobot" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Optional robot name</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>true if the user agent is a (specified) robot, false if not</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
@@ -441,10 +445,10 @@ that commonly visit your site are missing from the list you can add them to your
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\UserAgent::isReferral">
 <span class="sig-name descname"><span class="pre">isReferral</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\UserAgent::isReferral" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>true if the user agent is a referral, false if not</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
@@ -455,10 +459,10 @@ that commonly visit your site are missing from the list you can add them to your
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\UserAgent::getBrowser">
 <span class="sig-name descname"><span class="pre">getBrowser</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\UserAgent::getBrowser" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Detected browser or an empty string</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
@@ -469,10 +473,10 @@ that commonly visit your site are missing from the list you can add them to your
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\UserAgent::getVersion">
 <span class="sig-name descname"><span class="pre">getVersion</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\UserAgent::getVersion" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Detected browser version or an empty string</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
@@ -483,10 +487,10 @@ that commonly visit your site are missing from the list you can add them to your
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\UserAgent::getMobile">
 <span class="sig-name descname"><span class="pre">getMobile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\UserAgent::getMobile" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Detected mobile device brand or an empty string</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
@@ -497,10 +501,10 @@ that commonly visit your site are missing from the list you can add them to your
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\UserAgent::getRobot">
 <span class="sig-name descname"><span class="pre">getRobot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\UserAgent::getRobot" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Detected robot name or an empty string</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
@@ -511,10 +515,10 @@ that commonly visit your site are missing from the list you can add them to your
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\UserAgent::getPlatform">
 <span class="sig-name descname"><span class="pre">getPlatform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\UserAgent::getPlatform" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Detected operating system or an empty string</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
@@ -525,10 +529,10 @@ that commonly visit your site are missing from the list you can add them to your
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\UserAgent::getReferrer">
 <span class="sig-name descname"><span class="pre">getReferrer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\UserAgent::getReferrer" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Detected referrer or an empty string</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
@@ -546,10 +550,10 @@ that commonly visit your site are missing from the list you can add them to your
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\UserAgent::getAgentString">
 <span class="sig-name descname"><span class="pre">getAgentString</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\UserAgent::getAgentString" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Full user agent string or an empty string</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
@@ -563,12 +567,12 @@ that commonly visit your site are missing from the list you can add them to your
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\UserAgent::parse">
 <span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$string</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\UserAgent::parse" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$string</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom user-agent string</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">void</span></code></span></p>
 </dd>
 </dl>
@@ -592,7 +596,7 @@ that commonly visit your site are missing from the list you can add them to your
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

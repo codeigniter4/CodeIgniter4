@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>News Section &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,8 +285,8 @@
            <div itemprop="articleBody">
              
   <section id="news-section">
-<h1>News Section<a class="headerlink" href="#news-section" title="Permalink to this headline"></a></h1>
-<div class="contents local topic" id="contents">
+<h1>News Section<a class="headerlink" href="#news-section" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#create-a-database-to-work-with" id="id1">Create a Database to Work with</a></p></li>
 <li><p><a class="reference internal" href="#connect-to-your-database" id="id2">Connect to Your Database</a></p></li>
@@ -303,13 +307,13 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <p>In the last section, we went over some basic concepts of the framework
 by writing a class that references static pages. We cleaned up the URI by
 adding custom routing rules. Now it’s time to introduce dynamic content
 and start using a database.</p>
 <section id="create-a-database-to-work-with">
-<h2><a class="toc-backref" href="#id1">Create a Database to Work with</a><a class="headerlink" href="#create-a-database-to-work-with" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Create a Database to Work with</a><a class="headerlink" href="#create-a-database-to-work-with" title="Permalink to this heading"></a></h2>
 <p>The CodeIgniter installation assumes that you have set up an appropriate
 database, as outlined in the <a class="reference internal" href="../intro/requirements.html#requirements-supported-databases"><span class="std std-ref">requirements</span></a>.
 In this tutorial, we provide SQL code for a MySQL database, and
@@ -343,7 +347,7 @@ user- and SEO-friendly short text used in a URL to identify and describe a resou
 </div>
 </section>
 <section id="connect-to-your-database">
-<h2><a class="toc-backref" href="#id2">Connect to Your Database</a><a class="headerlink" href="#connect-to-your-database" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Connect to Your Database</a><a class="headerlink" href="#connect-to-your-database" title="Permalink to this heading"></a></h2>
 <p>The local configuration file, <strong>.env</strong>, that you created when you installed
 CodeIgniter, should have the database property settings uncommented and
 set appropriately for the database you want to use. Make sure you’ve configured
@@ -357,14 +361,14 @@ your database properly as described in <a class="reference internal" href="../da
 </div>
 </section>
 <section id="setting-up-your-model">
-<h2><a class="toc-backref" href="#id3">Setting up Your Model</a><a class="headerlink" href="#setting-up-your-model" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Setting up Your Model</a><a class="headerlink" href="#setting-up-your-model" title="Permalink to this heading"></a></h2>
 <p>Instead of writing database operations right in the controller, queries
 should be placed in a model, so they can easily be reused later. Models
 are the place where you retrieve, insert, and update information in your
 database or other data stores. They provide access to your data.
 You can read more about it in <a class="reference internal" href="../models/model.html"><span class="doc">Using CodeIgniter’s Model</span></a>.</p>
 <section id="create-newsmodel">
-<h3><a class="toc-backref" href="#id4">Create NewsModel</a><a class="headerlink" href="#create-newsmodel" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Create NewsModel</a><a class="headerlink" href="#create-newsmodel" title="Permalink to this heading"></a></h3>
 <p>Open up the <strong>app/Models</strong> directory and create a new file called
 <strong>NewsModel.php</strong> and add the following code.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -385,7 +389,7 @@ library. This will make the database class available through the
 <code class="docutils literal notranslate"><span class="pre">$this-&gt;db</span></code> object.</p>
 </section>
 <section id="add-newsmodel-getnews-method">
-<h3><a class="toc-backref" href="#id5">Add NewsModel::getNews() Method</a><a class="headerlink" href="#add-newsmodel-getnews-method" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Add NewsModel::getNews() Method</a><a class="headerlink" href="#add-newsmodel-getnews-method" title="Permalink to this heading"></a></h3>
 <p>Now that the database and a model have been set up, you’ll need a method
 to get all of our posts from our database. To do this, the database
 abstraction layer that is included with CodeIgniter -
@@ -418,13 +422,13 @@ returning an array of results in the format of your choice. In this example,
 </section>
 </section>
 <section id="display-the-news">
-<h2><a class="toc-backref" href="#id6">Display the News</a><a class="headerlink" href="#display-the-news" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Display the News</a><a class="headerlink" href="#display-the-news" title="Permalink to this heading"></a></h2>
 <p>Now that the queries are written, the model should be tied to the views
 that are going to display the news items to the user. This could be done
 in our <code class="docutils literal notranslate"><span class="pre">Pages</span></code> controller created earlier, but for the sake of clarity,
 a new <code class="docutils literal notranslate"><span class="pre">News</span></code> controller is defined.</p>
 <section id="adding-routing-rules">
-<h3><a class="toc-backref" href="#id7">Adding Routing Rules</a><a class="headerlink" href="#adding-routing-rules" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Adding Routing Rules</a><a class="headerlink" href="#adding-routing-rules" title="Permalink to this heading"></a></h3>
 <p>Modify your <strong>app/Config/Routes.php</strong> file, so it looks as follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -445,7 +449,7 @@ going directly to the <code class="docutils literal notranslate"><span class="pr
 routes URI’s with a slug to the <code class="docutils literal notranslate"><span class="pre">show()</span></code> method in the <code class="docutils literal notranslate"><span class="pre">News</span></code> controller.</p>
 </section>
 <section id="create-news-controller">
-<h3><a class="toc-backref" href="#id8">Create News Controller</a><a class="headerlink" href="#create-news-controller" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Create News Controller</a><a class="headerlink" href="#create-news-controller" title="Permalink to this heading"></a></h3>
 <p>Create the new controller at <strong>app/Controllers/News.php</strong>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -486,7 +490,7 @@ method in the second method. The model is using this slug to identify the
 news item to be returned.</p>
 </section>
 <section id="complete-news-index-method">
-<h3><a class="toc-backref" href="#id9">Complete News::index() Method</a><a class="headerlink" href="#complete-news-index-method" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Complete News::index() Method</a><a class="headerlink" href="#complete-news-index-method" title="Permalink to this heading"></a></h3>
 <p>Now the data is retrieved by the controller through our model, but
 nothing is displayed yet. The next thing to do is, passing this data to
 the views. Modify the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method to look like this:</p>
@@ -522,7 +526,7 @@ element and all data is passed to the views. You now need to create a
 view to render the news items.</p>
 </section>
 <section id="create-news-index-view-file">
-<h3><a class="toc-backref" href="#id10">Create news/index View File</a><a class="headerlink" href="#create-news-index-view-file" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Create news/index View File</a><a class="headerlink" href="#create-news-index-view-file" title="Permalink to this heading"></a></h3>
 <p>Create <strong>app/Views/news/index.php</strong> and add the next piece of code.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
@@ -561,7 +565,7 @@ language, you can use CodeIgniter’s <a class="reference internal" href="../out
 Parser</span></a> or a third party parser.</p>
 </section>
 <section id="complete-news-show-method">
-<h3><a class="toc-backref" href="#id11">Complete News::show() Method</a><a class="headerlink" href="#complete-news-show-method" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Complete News::show() Method</a><a class="headerlink" href="#complete-news-show-method" title="Permalink to this heading"></a></h3>
 <p>The news overview page is now done, but a page to display individual
 news items is still absent. The model created earlier is made in such
 a way that it can easily be used for this functionality. You only need to
@@ -603,7 +607,7 @@ the <code class="docutils literal notranslate"><span class="pre">PageNotFoundExc
 <code class="docutils literal notranslate"><span class="pre">$slug</span></code> variable is passed, so it will return the specific news item.</p>
 </section>
 <section id="create-news-view-view-file">
-<h3><a class="toc-backref" href="#id12">Create news/view View File</a><a class="headerlink" href="#create-news-view-view-file" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Create news/view View File</a><a class="headerlink" href="#create-news-view-view-file" title="Permalink to this heading"></a></h3>
 <p>The only thing left to do is create the corresponding view at
 <strong>app/Views/news/view.php</strong>. Put the following code in this file.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$news</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">])</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
@@ -630,7 +634,7 @@ to display just the one article.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

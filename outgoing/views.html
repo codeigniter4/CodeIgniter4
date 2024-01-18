@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Views &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,8 +285,8 @@
            <div itemprop="articleBody">
              
   <section id="views">
-<h1>Views<a class="headerlink" href="#views" title="Permalink to this headline"></a></h1>
-<div class="contents local topic" id="contents">
+<h1>Views<a class="headerlink" href="#views" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#creating-a-view" id="id2">Creating a View</a></p></li>
 <li><p><a class="reference internal" href="#displaying-a-view" id="id3">Displaying a View</a></p></li>
@@ -297,7 +301,7 @@
 </li>
 <li><p><a class="reference internal" href="#creating-loops" id="id10">Creating Loops</a></p></li>
 </ul>
-</div>
+</nav>
 <p>A view is simply a web page, or a page fragment, like a header, footer, sidebar, etc. In fact,
 views can flexibly be embedded within other views (within other views, etc.) if you need
 this type of hierarchy.</p>
@@ -307,7 +311,7 @@ the Controller acts as the traffic cop, so it is responsible for fetching a part
 not read the <a class="reference internal" href="../incoming/controllers.html"><span class="doc">Controllers</span></a> page, you should do so before continuing.</p>
 <p>Using the example controller you created in the controller page, let’s add a view to it.</p>
 <section id="creating-a-view">
-<h2><a class="toc-backref" href="#id2">Creating a View</a><a class="headerlink" href="#creating-a-view" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Creating a View</a><a class="headerlink" href="#creating-a-view" title="Permalink to this heading"></a></h2>
 <p>Using your text editor, create a file called <strong>blog_view.php</strong> and put this in it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
@@ -322,7 +326,7 @@ not read the <a class="reference internal" href="../incoming/controllers.html"><
 <p>Then save the file in your <strong>app/Views</strong> directory.</p>
 </section>
 <section id="displaying-a-view">
-<h2><a class="toc-backref" href="#id3">Displaying a View</a><a class="headerlink" href="#displaying-a-view" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Displaying a View</a><a class="headerlink" href="#displaying-a-view" title="Permalink to this heading"></a></h2>
 <p>To load and display a particular view file you will use the following code in your controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
 </pre></div>
@@ -360,7 +364,7 @@ Add the following code:</p>
 </div>
 </section>
 <section id="loading-multiple-views">
-<h2><a class="toc-backref" href="#id4">Loading Multiple Views</a><a class="headerlink" href="#loading-multiple-views" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Loading Multiple Views</a><a class="headerlink" href="#loading-multiple-views" title="Permalink to this heading"></a></h2>
 <p>CodeIgniter will intelligently handle multiple calls to <code class="docutils literal notranslate"><span class="pre">view()</span></code> from within a controller. If more than one
 call happens they will be appended together. For example, you may wish to have a header view, a menu view, a
 content view, and a footer view. That might look something like this:</p>
@@ -389,7 +393,7 @@ content view, and a footer view. That might look something like this:</p>
 <p>In the example above, we are using “dynamically added data”, which you will see below.</p>
 </section>
 <section id="storing-views-within-sub-directories">
-<h2><a class="toc-backref" href="#id5">Storing Views within Sub-directories</a><a class="headerlink" href="#storing-views-within-sub-directories" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Storing Views within Sub-directories</a><a class="headerlink" href="#storing-views-within-sub-directories" title="Permalink to this heading"></a></h2>
 <p>Your view files can also be stored within sub-directories if you prefer that type of organization.
 When doing so you will need to include the directory name loading the view. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;directory_name/file_name&#39;</span><span class="p">);</span>
@@ -397,7 +401,7 @@ When doing so you will need to include the directory name loading the view. Exam
 </div>
 </section>
 <section id="namespaced-views">
-<h2><a class="toc-backref" href="#id6">Namespaced Views</a><a class="headerlink" href="#namespaced-views" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Namespaced Views</a><a class="headerlink" href="#namespaced-views" title="Permalink to this heading"></a></h2>
 <p>You can store views under a <strong>View</strong> directory that is namespaced, and load that view as if it was namespaced. While
 PHP does not support loading non-class files from a namespace, CodeIgniter provides this feature to make it possible
 to package your views together in a module-like fashion for easy re-use or distribution.</p>
@@ -412,7 +416,7 @@ example, you could load the <strong>blog_view.php</strong> file from <strong>exa
 </div>
 </section>
 <section id="caching-views">
-<span id="id1"></span><h2><a class="toc-backref" href="#id7">Caching Views</a><a class="headerlink" href="#caching-views" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Caching Views</a><a class="headerlink" href="#caching-views" title="Permalink to this heading"></a></h2>
 <p>You can cache a view with the <code class="docutils literal notranslate"><span class="pre">view()</span></code> function by passing a <code class="docutils literal notranslate"><span class="pre">cache</span></code> option with the number of seconds to cache
 the view for, in the third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Cache the view for 60 seconds</span>
@@ -427,7 +431,7 @@ along <code class="docutils literal notranslate"><span class="pre">cache_name</s
 </div>
 </section>
 <section id="adding-dynamic-data-to-the-view">
-<h2><a class="toc-backref" href="#id8">Adding Dynamic Data to the View</a><a class="headerlink" href="#adding-dynamic-data-to-the-view" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Adding Dynamic Data to the View</a><a class="headerlink" href="#adding-dynamic-data-to-the-view" title="Permalink to this heading"></a></h2>
 <p>Data is passed from the controller to the view by way of an array in the second parameter of the <code class="docutils literal notranslate"><span class="pre">view()</span></code> function.
 Here’s an example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
@@ -469,7 +473,7 @@ Here’s an example:</p>
 </div>
 <p>Then load the page at the URL you’ve been using and you should see the variables replaced.</p>
 <section id="the-savedata-option">
-<h3><a class="toc-backref" href="#id9">The saveData Option</a><a class="headerlink" href="#the-savedata-option" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">The saveData Option</a><a class="headerlink" href="#the-savedata-option" title="Permalink to this heading"></a></h3>
 <p>The data passed in is retained for subsequent calls to <code class="docutils literal notranslate"><span class="pre">view()</span></code>. If you call the function multiple times
 in a single request, you will not have to pass the desired data to each <code class="docutils literal notranslate"><span class="pre">view()</span></code>.</p>
 <p>But this might not keep any data from “bleeding” into
@@ -489,7 +493,7 @@ between calls, you can set <code class="docutils literal notranslate"><span clas
 </section>
 </section>
 <section id="creating-loops">
-<h2><a class="toc-backref" href="#id10">Creating Loops</a><a class="headerlink" href="#creating-loops" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Creating Loops</a><a class="headerlink" href="#creating-loops" title="Permalink to this heading"></a></h2>
 <p>The data array you pass to your view files is not limited to simple variables. You can pass multi dimensional
 arrays, which can be looped to generate multiple rows. For example, if you pull data from your database it will
 typically be in the form of a multi-dimensional array.</p>
@@ -550,7 +554,7 @@ typically be in the form of a multi-dimensional array.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Controllers &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,9 +285,9 @@
            <div itemprop="articleBody">
              
   <section id="controllers">
-<h1>Controllers<a class="headerlink" href="#controllers" title="Permalink to this headline"></a></h1>
+<h1>Controllers<a class="headerlink" href="#controllers" title="Permalink to this heading"></a></h1>
 <p>Controllers are the heart of your application, as they determine how HTTP requests should be handled.</p>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#what-is-a-controller" id="id1">What is a Controller?</a></p></li>
 <li><p><a class="reference internal" href="#constructor" id="id2">Constructor</a></p></li>
@@ -326,9 +330,9 @@
 <li><p><a class="reference internal" href="#extending-the-controller" id="id27">Extending the Controller</a></p></li>
 <li><p><a class="reference internal" href="#that-s-it" id="id28">That’s it!</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="what-is-a-controller">
-<h2><a class="toc-backref" href="#id1">What is a Controller?</a><a class="headerlink" href="#what-is-a-controller" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">What is a Controller?</a><a class="headerlink" href="#what-is-a-controller" title="Permalink to this heading"></a></h2>
 <p>A Controller is simply a class file that handles a HTTP request.
 <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a> associates a URI with a controller. It returns a
 view string or <code class="docutils literal notranslate"><span class="pre">Response</span></code> object.</p>
@@ -336,7 +340,7 @@ view string or <code class="docutils literal notranslate"><span class="pre">Resp
 This class provides several features that are available to all of your controllers.</p>
 </section>
 <section id="constructor">
-<span id="controller-constructor"></span><h2><a class="toc-backref" href="#id2">Constructor</a><a class="headerlink" href="#constructor" title="Permalink to this headline"></a></h2>
+<span id="controller-constructor"></span><h2><a class="toc-backref" href="#id2" role="doc-backlink">Constructor</a><a class="headerlink" href="#constructor" title="Permalink to this heading"></a></h2>
 <p>The CodeIgniter’s Controller has a special constructor <code class="docutils literal notranslate"><span class="pre">initController()</span></code>.
 It will be called by the framework after PHP’s constructor <code class="docutils literal notranslate"><span class="pre">__construct()</span></code> execution.</p>
 <p>If you want to override the <code class="docutils literal notranslate"><span class="pre">initController()</span></code>, don’t forget to add <code class="docutils literal notranslate"><span class="pre">parent::initController($request,</span> <span class="pre">$response,</span> <span class="pre">$logger);</span></code> in the method:</p>
@@ -371,25 +375,25 @@ It will be called by the framework after PHP’s constructor <code class="docuti
 <p>The <code class="docutils literal notranslate"><span class="pre">initController()</span></code> method sets the following three properties.</p>
 </section>
 <section id="included-properties">
-<h2><a class="toc-backref" href="#id3">Included Properties</a><a class="headerlink" href="#included-properties" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Included Properties</a><a class="headerlink" href="#included-properties" title="Permalink to this heading"></a></h2>
 <p>The CodeIgniter’s Controller provides these properties.</p>
 <section id="request-object">
-<h3><a class="toc-backref" href="#id4">Request Object</a><a class="headerlink" href="#request-object" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Request Object</a><a class="headerlink" href="#request-object" title="Permalink to this heading"></a></h3>
 <p>The application’s main <a class="reference internal" href="incomingrequest.html"><span class="doc">Request Instance</span></a> is always available
 as a class property, <code class="docutils literal notranslate"><span class="pre">$this-&gt;request</span></code>.</p>
 </section>
 <section id="response-object">
-<h3><a class="toc-backref" href="#id5">Response Object</a><a class="headerlink" href="#response-object" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Response Object</a><a class="headerlink" href="#response-object" title="Permalink to this heading"></a></h3>
 <p>The application’s main <a class="reference internal" href="../outgoing/response.html"><span class="doc">Response Instance</span></a> is always available
 as a class property, <code class="docutils literal notranslate"><span class="pre">$this-&gt;response</span></code>.</p>
 </section>
 <section id="logger-object">
-<h3><a class="toc-backref" href="#id6">Logger Object</a><a class="headerlink" href="#logger-object" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Logger Object</a><a class="headerlink" href="#logger-object" title="Permalink to this heading"></a></h3>
 <p>An instance of the <a class="reference internal" href="../general/logging.html"><span class="doc">Logger</span></a> class is available as a class property,
 <code class="docutils literal notranslate"><span class="pre">$this-&gt;logger</span></code>.</p>
 </section>
 <section id="helpers">
-<span id="controllers-helpers"></span><h3><a class="toc-backref" href="#id7">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this headline"></a></h3>
+<span id="controllers-helpers"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this heading"></a></h3>
 <p>You can define an array of helper files as a class property. Whenever the controller is loaded
 these helper files will be automatically loaded into memory so that you can use their methods anywhere
 inside the controller:</p>
@@ -406,7 +410,7 @@ inside the controller:</p>
 </section>
 </section>
 <section id="forcehttps">
-<h2><a class="toc-backref" href="#id8">forceHTTPS</a><a class="headerlink" href="#forcehttps" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">forceHTTPS</a><a class="headerlink" href="#forcehttps" title="Permalink to this heading"></a></h2>
 <p>A convenience method for forcing a method to be accessed via HTTPS is available within all
 controllers:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -432,9 +436,9 @@ modify this by passing the duration (in seconds) as the first parameter:</p>
 </div>
 </section>
 <section id="validating-data">
-<span id="controllers-validating-data"></span><h2><a class="toc-backref" href="#id9">Validating Data</a><a class="headerlink" href="#validating-data" title="Permalink to this headline"></a></h2>
+<span id="controllers-validating-data"></span><h2><a class="toc-backref" href="#id9" role="doc-backlink">Validating Data</a><a class="headerlink" href="#validating-data" title="Permalink to this heading"></a></h2>
 <section id="this-validatedata">
-<span id="controller-validatedata"></span><h3><a class="toc-backref" href="#id10">$this-&gt;validateData()</a><a class="headerlink" href="#this-validatedata" title="Permalink to this headline"></a></h3>
+<span id="controller-validatedata"></span><h3><a class="toc-backref" href="#id10" role="doc-backlink">$this-&gt;validateData()</a><a class="headerlink" href="#this-validatedata" title="Permalink to this heading"></a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.2.0.</span></p>
 </div>
@@ -476,7 +480,7 @@ rule and message array formats, as well as available rules:</p>
 </div>
 </section>
 <section id="this-validate">
-<span id="controller-validate"></span><h3><a class="toc-backref" href="#id11">$this-&gt;validate()</a><a class="headerlink" href="#this-validate" title="Permalink to this headline"></a></h3>
+<span id="controller-validate"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">$this-&gt;validate()</a><a class="headerlink" href="#this-validate" title="Permalink to this heading"></a></h3>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>This method exists only for backward compatibility. Do not use it
@@ -579,7 +583,7 @@ the <code class="docutils literal notranslate"><span class="pre">$rules</span></
 </section>
 </section>
 <section id="protecting-methods">
-<h2><a class="toc-backref" href="#id12">Protecting Methods</a><a class="headerlink" href="#protecting-methods" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Protecting Methods</a><a class="headerlink" href="#protecting-methods" title="Permalink to this heading"></a></h2>
 <p>In some cases, you may want certain methods hidden from public access.
 To achieve this, simply declare the method as <code class="docutils literal notranslate"><span class="pre">private</span></code> or <code class="docutils literal notranslate"><span class="pre">protected</span></code>.
 That will prevent it from being served by a URL request.</p>
@@ -604,7 +608,7 @@ That will prevent it from being served by a URL request.</p>
 <p>Auto-routing also will not work.</p>
 </section>
 <section id="auto-routing-improved">
-<span id="controller-auto-routing-improved"></span><h2><a class="toc-backref" href="#id13">Auto Routing (Improved)</a><a class="headerlink" href="#auto-routing-improved" title="Permalink to this headline"></a></h2>
+<span id="controller-auto-routing-improved"></span><h2><a class="toc-backref" href="#id13" role="doc-backlink">Auto Routing (Improved)</a><a class="headerlink" href="#auto-routing-improved" title="Permalink to this heading"></a></h2>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.2.0.</span></p>
 </div>
@@ -629,7 +633,7 @@ without route definitions.</p>
 <p>When a controller’s short name matches the first segment of a URI, it will be loaded.</p>
 </div>
 <section id="let-s-try-it-hello-world">
-<h3><a class="toc-backref" href="#id14">Let’s try it: Hello World!</a><a class="headerlink" href="#let-s-try-it-hello-world" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Let’s try it: Hello World!</a><a class="headerlink" href="#let-s-try-it-hello-world" title="Permalink to this heading"></a></h3>
 <p>Let’s create a simple controller so you can see it in action. Using your text editor, create a file called <strong>Helloworld.php</strong>,
 and put the following code in it. You will notice that the <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> Controller is extending the <code class="docutils literal notranslate"><span class="pre">BaseController</span></code>. you can
 also extend the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> if you do not need the functionality of the BaseController.</p>
@@ -721,9 +725,9 @@ Here is an example based on PSR-4 Autoloader:</p>
 </div>
 </section>
 <section id="methods">
-<h3><a class="toc-backref" href="#id15">Methods</a><a class="headerlink" href="#methods" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">Methods</a><a class="headerlink" href="#methods" title="Permalink to this heading"></a></h3>
 <section id="method-visibility">
-<h4>Method Visibility<a class="headerlink" href="#method-visibility" title="Permalink to this headline"></a></h4>
+<h4>Method Visibility<a class="headerlink" href="#method-visibility" title="Permalink to this heading"></a></h4>
 <p>When you define a method that is executable via HTTP request, the method must be
 declared as <code class="docutils literal notranslate"><span class="pre">public</span></code>.</p>
 <div class="admonition warning">
@@ -732,12 +736,12 @@ declared as <code class="docutils literal notranslate"><span class="pre">public<
 </div>
 </section>
 <section id="default-method">
-<h4>Default Method<a class="headerlink" href="#default-method" title="Permalink to this headline"></a></h4>
+<h4>Default Method<a class="headerlink" href="#default-method" title="Permalink to this heading"></a></h4>
 <p>In the above example, the method name is <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>.
 The method (HTTP verb + <code class="docutils literal notranslate"><span class="pre">Index()</span></code>) is called the <strong>default method</strong>, and is loaded if the <strong>second segment</strong> of the URI is empty.</p>
 </section>
 <section id="normal-methods">
-<h4>Normal Methods<a class="headerlink" href="#normal-methods" title="Permalink to this headline"></a></h4>
+<h4>Normal Methods<a class="headerlink" href="#normal-methods" title="Permalink to this heading"></a></h4>
 <p>The second segment of the URI determines which method in the
 controller gets called.</p>
 <p>Let’s try it. Add a new method to your controller:</p>
@@ -767,7 +771,7 @@ controller gets called.</p>
 </section>
 </section>
 <section id="passing-uri-segments-to-your-methods">
-<h3><a class="toc-backref" href="#id16">Passing URI Segments to Your Methods</a><a class="headerlink" href="#passing-uri-segments-to-your-methods" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">Passing URI Segments to Your Methods</a><a class="headerlink" href="#passing-uri-segments-to-your-methods" title="Permalink to this heading"></a></h3>
 <p>If your URI contains more than two segments they will be passed to your
 method as parameters.</p>
 <p>For example, let’s say you have a URI like this:</p>
@@ -790,12 +794,12 @@ method as parameters.</p>
 </div>
 </section>
 <section id="default-controller">
-<h3><a class="toc-backref" href="#id17">Default Controller</a><a class="headerlink" href="#default-controller" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Default Controller</a><a class="headerlink" href="#default-controller" title="Permalink to this heading"></a></h3>
 <p>The Default Controller is a special controller that is used when a URI ends with
 a directory name or when a URI is not present, as will be the case when only your
 site root URL is requested.</p>
 <section id="defining-a-default-controller">
-<h4>Defining a Default Controller<a class="headerlink" href="#defining-a-default-controller" title="Permalink to this headline"></a></h4>
+<h4>Defining a Default Controller<a class="headerlink" href="#defining-a-default-controller" title="Permalink to this heading"></a></h4>
 <p>Let’s try it with the <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> controller.</p>
 <p>To specify a default controller open your <strong>app/Config/Routing.php</strong>
 file and set this property:</p>
@@ -821,7 +825,7 @@ are denied access by Auto Routing (Improved) for security reasons.</p>
 </section>
 </section>
 <section id="default-method-fallback">
-<span id="controller-default-method-fallback"></span><h3><a class="toc-backref" href="#id18">Default Method Fallback</a><a class="headerlink" href="#default-method-fallback" title="Permalink to this headline"></a></h3>
+<span id="controller-default-method-fallback"></span><h3><a class="toc-backref" href="#id18" role="doc-backlink">Default Method Fallback</a><a class="headerlink" href="#default-method-fallback" title="Permalink to this heading"></a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.4.0.</span></p>
 </div>
@@ -853,7 +857,7 @@ Auto Routing (Improved) does not execute the method, and it results in 404
 Not Found.</p>
 </div>
 <section id="fallback-to-default-controller">
-<h4>Fallback to Default Controller<a class="headerlink" href="#fallback-to-default-controller" title="Permalink to this headline"></a></h4>
+<h4>Fallback to Default Controller<a class="headerlink" href="#fallback-to-default-controller" title="Permalink to this heading"></a></h4>
 <p>If the controller corresponding to the URI segment of the controller name
 does not exist, and if the default controller (<code class="docutils literal notranslate"><span class="pre">Home</span></code> by default) exists in
 the directory, the remaining URI segments are passed to the default controller’s
@@ -896,7 +900,7 @@ Not Found.</p>
 </section>
 </section>
 <section id="organizing-your-controllers-into-sub-directories">
-<h3><a class="toc-backref" href="#id19">Organizing Your Controllers into Sub-directories</a><a class="headerlink" href="#organizing-your-controllers-into-sub-directories" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">Organizing Your Controllers into Sub-directories</a><a class="headerlink" href="#organizing-your-controllers-into-sub-directories" title="Permalink to this heading"></a></h3>
 <p>If you are building a large application you might want to hierarchically
 organize or structure your controllers into sub-directories. CodeIgniter
 permits you to do this.</p>
@@ -930,7 +934,7 @@ your <strong>app/Config/Routing.php</strong> file.</p>
 </section>
 </section>
 <section id="auto-routing-legacy">
-<span id="controller-auto-routing-legacy"></span><h2><a class="toc-backref" href="#id20">Auto Routing (Legacy)</a><a class="headerlink" href="#auto-routing-legacy" title="Permalink to this headline"></a></h2>
+<span id="controller-auto-routing-legacy"></span><h2><a class="toc-backref" href="#id20" role="doc-backlink">Auto Routing (Legacy)</a><a class="headerlink" href="#auto-routing-legacy" title="Permalink to this heading"></a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>This feature exists only for backward compatibility. Do not use it
@@ -960,7 +964,7 @@ or CSRF protection are bypassed.</p>
 <p>When a controller’s short name matches the first segment of a URI, it will be loaded.</p>
 </div>
 <section id="let-s-try-it-hello-world-legacy">
-<h3><a class="toc-backref" href="#id21">Let’s try it: Hello World! (Legacy)</a><a class="headerlink" href="#let-s-try-it-hello-world-legacy" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">Let’s try it: Hello World! (Legacy)</a><a class="headerlink" href="#let-s-try-it-hello-world-legacy" title="Permalink to this heading"></a></h3>
 <p>Let’s create a simple controller so you can see it in action. Using your text editor, create a file called <strong>Helloworld.php</strong>,
 and put the following code in it. You will notice that the <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> Controller is extending the <code class="docutils literal notranslate"><span class="pre">BaseController</span></code>. you can
 also extend the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> if you do not need the functionality of the BaseController.</p>
@@ -1049,7 +1053,7 @@ Here is an example based on PSR-4 Autoloader:</p>
 </div>
 </section>
 <section id="methods-legacy">
-<h3><a class="toc-backref" href="#id22">Methods (Legacy)</a><a class="headerlink" href="#methods-legacy" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">Methods (Legacy)</a><a class="headerlink" href="#methods-legacy" title="Permalink to this heading"></a></h3>
 <p>In the above example, the method name is <code class="docutils literal notranslate"><span class="pre">index()</span></code>. The <code class="docutils literal notranslate"><span class="pre">index()</span></code> method
 is always loaded by default if the <strong>second segment</strong> of the URI is
 empty. Another way to show your “Hello World” message would be this:</p>
@@ -1084,7 +1088,7 @@ controller gets called.</strong></p>
 <p>You should see your new message.</p>
 </section>
 <section id="passing-uri-segments-to-your-methods-legacy">
-<h3><a class="toc-backref" href="#id23">Passing URI Segments to Your Methods (Legacy)</a><a class="headerlink" href="#passing-uri-segments-to-your-methods-legacy" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">Passing URI Segments to Your Methods (Legacy)</a><a class="headerlink" href="#passing-uri-segments-to-your-methods-legacy" title="Permalink to this heading"></a></h3>
 <p>If your URI contains more than two segments they will be passed to your
 method as parameters.</p>
 <p>For example, let’s say you have a URI like this:</p>
@@ -1107,12 +1111,12 @@ method as parameters.</p>
 </div>
 </section>
 <section id="default-controller-legacy">
-<h3><a class="toc-backref" href="#id24">Default Controller (Legacy)</a><a class="headerlink" href="#default-controller-legacy" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id24" role="doc-backlink">Default Controller (Legacy)</a><a class="headerlink" href="#default-controller-legacy" title="Permalink to this heading"></a></h3>
 <p>The Default Controller is a special controller that is used when a URI end with
 a directory name or when a URI is not present, as will be the case when only your
 site root URL is requested.</p>
 <section id="defining-a-default-controller-legacy">
-<h4>Defining a Default Controller (Legacy)<a class="headerlink" href="#defining-a-default-controller-legacy" title="Permalink to this headline"></a></h4>
+<h4>Defining a Default Controller (Legacy)<a class="headerlink" href="#defining-a-default-controller-legacy" title="Permalink to this heading"></a></h4>
 <p>Let’s try it with the <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> controller.</p>
 <p>To specify a default controller open your <strong>app/Config/Routing.php</strong>
 file and set this property:</p>
@@ -1135,7 +1139,7 @@ see the “Hello World” message.</p>
 </section>
 </section>
 <section id="organizing-your-controllers-into-sub-directories-legacy">
-<h3><a class="toc-backref" href="#id25">Organizing Your Controllers into Sub-directories (Legacy)</a><a class="headerlink" href="#organizing-your-controllers-into-sub-directories-legacy" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">Organizing Your Controllers into Sub-directories (Legacy)</a><a class="headerlink" href="#organizing-your-controllers-into-sub-directories-legacy" title="Permalink to this heading"></a></h3>
 <p>If you are building a large application you might want to hierarchically
 organize or structure your controllers into sub-directories. CodeIgniter
 permits you to do this.</p>
@@ -1168,7 +1172,7 @@ your <strong>app/Config/Routing.php</strong> file.</p>
 </section>
 </section>
 <section id="remapping-method-calls">
-<h2><a class="toc-backref" href="#id26">Remapping Method Calls</a><a class="headerlink" href="#remapping-method-calls" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id26" role="doc-backlink">Remapping Method Calls</a><a class="headerlink" href="#remapping-method-calls" title="Permalink to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><strong>Auto Routing (Improved)</strong> does not support this feature intentionally.</p>
@@ -1239,11 +1243,11 @@ to emulate CodeIgniter’s default behavior.</p>
 </div>
 </section>
 <section id="extending-the-controller">
-<h2><a class="toc-backref" href="#id27">Extending the Controller</a><a class="headerlink" href="#extending-the-controller" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id27" role="doc-backlink">Extending the Controller</a><a class="headerlink" href="#extending-the-controller" title="Permalink to this heading"></a></h2>
 <p>If you want to extend the controller, see <a class="reference internal" href="../extending/basecontroller.html"><span class="doc">Extending the Controller</span></a>.</p>
 </section>
 <section id="that-s-it">
-<h2><a class="toc-backref" href="#id28">That’s it!</a><a class="headerlink" href="#that-s-it" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id28" role="doc-backlink">That’s it!</a><a class="headerlink" href="#that-s-it" title="Permalink to this heading"></a></h2>
 <p>That, in a nutshell, is all there is to know about controllers.</p>
 </section>
 </section>
@@ -1260,7 +1264,7 @@ to emulate CodeIgniter’s default behavior.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

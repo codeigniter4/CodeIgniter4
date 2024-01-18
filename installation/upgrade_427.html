@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Upgrading from 4.2.6 to 4.2.7 &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -282,14 +286,14 @@
            <div itemprop="articleBody">
              
   <section id="upgrading-from-4-2-6-to-4-2-7">
-<h1>Upgrading from 4.2.6 to 4.2.7<a class="headerlink" href="#upgrading-from-4-2-6-to-4-2-7" title="Permalink to this headline"></a></h1>
+<h1>Upgrading from 4.2.6 to 4.2.7<a class="headerlink" href="#upgrading-from-4-2-6-to-4-2-7" title="Permalink to this heading"></a></h1>
 <p>Please refer to the upgrade instructions corresponding to your installation method.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="installing_composer.html#app-starter-upgrading"><span class="std std-ref">Composer Installation App Starter Upgrading</span></a></p></li>
 <li><p><a class="reference internal" href="installing_composer.html#adding-codeigniter4-upgrading"><span class="std std-ref">Composer Installation Adding CodeIgniter4 to an Existing Project Upgrading</span></a></p></li>
 <li><p><a class="reference internal" href="installing_manual.html#installing-manual-upgrading"><span class="std std-ref">Manual Installation Upgrading</span></a></p></li>
 </ul>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#breaking-changes" id="id1">Breaking Changes</a></p>
 <ul>
@@ -303,11 +307,11 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="breaking-changes">
-<h2><a class="toc-backref" href="#id1">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this heading"></a></h2>
 <section id="set-cookie">
-<h3><a class="toc-backref" href="#id2">set_cookie()</a><a class="headerlink" href="#set-cookie" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">set_cookie()</a><a class="headerlink" href="#set-cookie" title="Permalink to this heading"></a></h3>
 <p>Due to a bug, <a class="reference internal" href="../helpers/cookie_helper.html#set_cookie" title="set_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_cookie()</span></code></a> and <a class="reference internal" href="../outgoing/response.html#CodeIgniter\HTTP\Response::setCookie" title="CodeIgniter\HTTP\Response::setCookie"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response::setCookie()</span></code></a>
 in the previous versions did not use the <code class="docutils literal notranslate"><span class="pre">$secure</span></code> and <code class="docutils literal notranslate"><span class="pre">$httponly</span></code> values in <code class="docutils literal notranslate"><span class="pre">Config\Cookie</span></code>.
 The following code did not issue a cookie with the secure flag even if you set <code class="docutils literal notranslate"><span class="pre">$secure</span> <span class="pre">=</span> <span class="pre">true</span></code>
@@ -340,7 +344,7 @@ in <code class="docutils literal notranslate"><span class="pre">Config\Cookie</s
 </div>
 </section>
 <section id="others">
-<h3><a class="toc-backref" href="#id3">Others</a><a class="headerlink" href="#others" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Others</a><a class="headerlink" href="#others" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Time::__toString()</span></code> is now locale-independent. It returns database-compatible strings like ‘2022-09-07 12:00:00’ in any locale. Most locales are not affected by this change. But in a few locales like <cite>ar</cite>, <cite>fa</cite>, <code class="docutils literal notranslate"><span class="pre">Time::__toString()</span></code> (or <code class="docutils literal notranslate"><span class="pre">(string)</span> <span class="pre">$time</span></code> or implicit casting to a string) no longer returns a localized datetime string. if you want to get a localized datetime string, use <a class="reference internal" href="../libraries/time.html#time-todatetimestring"><span class="std std-ref">Time::toDateTimeString()</span></a> instead.</p></li>
 <li><p>The logic of Validation rule <code class="docutils literal notranslate"><span class="pre">required_without</span></code> has been changed to validate each array item separately when validating fields with asterisk (<code class="docutils literal notranslate"><span class="pre">*</span></code>), and the method signature of the rule method has also been changed. Extending classes should likewise update the parameters so as not to break LSP.</p></li>
@@ -348,10 +352,10 @@ in <code class="docutils literal notranslate"><span class="pre">Config\Cookie</s
 </section>
 </section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id4">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this heading"></a></h2>
 <p>Version 4.2.7 did not alter any executable code in project files.</p>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id5">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this heading"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
@@ -373,7 +377,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 

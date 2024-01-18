@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RESTful Resource Handling &mdash; CodeIgniter 4.4.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/citheme_dark.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,7 +18,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -281,8 +285,8 @@
            <div itemprop="articleBody">
              
   <section id="restful-resource-handling">
-<h1>RESTful Resource Handling<a class="headerlink" href="#restful-resource-handling" title="Permalink to this headline"></a></h1>
-<div class="contents local topic" id="contents">
+<h1>RESTful Resource Handling<a class="headerlink" href="#restful-resource-handling" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#resource-routes" id="id4">Resource Routes</a></p>
 <ul>
@@ -302,7 +306,7 @@
 <li><p><a class="reference internal" href="#resourcepresenter" id="id13">ResourcePresenter</a></p></li>
 <li><p><a class="reference internal" href="#presenter-controller-comparison" id="id14">Presenter/Controller Comparison</a></p></li>
 </ul>
-</div>
+</nav>
 <p>Representational State Transfer (REST) is an architectural style for
 distributed applications, first described by Roy Fielding in his
 2000 PhD dissertation, <a class="reference external" href="https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">Architectural Styles and
@@ -317,7 +321,7 @@ most “RESTful” your application would be considered.</p>
 <p>CodeIgniter makes it easy to create RESTful APIs for your resources,
 with its resource routes and <cite>ResourceController</cite>.</p>
 <section id="resource-routes">
-<h2><a class="toc-backref" href="#id4">Resource Routes</a><a class="headerlink" href="#resource-routes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Resource Routes</a><a class="headerlink" href="#resource-routes" title="Permalink to this heading"></a></h2>
 <p>You can quickly create a handful of RESTful routes for a single resource with the <code class="docutils literal notranslate"><span class="pre">resource()</span></code> method. This
 creates the five most common routes needed for full CRUD of a resource: create a new resource, update an existing one,
 list all of that resource, show a single resource, and delete a single resource. The first parameter is the resource
@@ -358,7 +362,7 @@ generate update and delete methods that work with HTML forms:</p>
 </pre></div>
 </div>
 <section id="change-the-controller-used">
-<h3><a class="toc-backref" href="#id5">Change the Controller Used</a><a class="headerlink" href="#change-the-controller-used" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Change the Controller Used</a><a class="headerlink" href="#change-the-controller-used" title="Permalink to this heading"></a></h3>
 <p>You can specify the controller that should be used by passing in the <code class="docutils literal notranslate"><span class="pre">controller</span></code> option with the name of
 the controller that should be used:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -387,7 +391,7 @@ the controller that should be used:</p>
 <p>See also <a class="reference internal" href="routing.html#controllers-namespace"><span class="std std-ref">Controller’s Namespace</span></a>.</p>
 </section>
 <section id="change-the-placeholder-used">
-<h3><a class="toc-backref" href="#id6">Change the Placeholder Used</a><a class="headerlink" href="#change-the-placeholder-used" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Change the Placeholder Used</a><a class="headerlink" href="#change-the-placeholder-used" title="Permalink to this heading"></a></h3>
 <p>By default, the <code class="docutils literal notranslate"><span class="pre">(:segment)</span></code> placeholder is used when a resource ID is needed. You can change this by passing
 in the <code class="docutils literal notranslate"><span class="pre">placeholder</span></code> option with the new string to use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -400,7 +404,7 @@ in the <code class="docutils literal notranslate"><span class="pre">placeholder<
 </div>
 </section>
 <section id="limit-the-routes-made">
-<h3><a class="toc-backref" href="#id7">Limit the Routes Made</a><a class="headerlink" href="#limit-the-routes-made" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Limit the Routes Made</a><a class="headerlink" href="#limit-the-routes-made" title="Permalink to this heading"></a></h3>
 <p>You can restrict the routes generated with the <code class="docutils literal notranslate"><span class="pre">only</span></code> option. This should be <strong>an array</strong> or <strong>comma separated list</strong> of method names that should
 be created. Only routes that match one of these methods will be created. The rest will be ignored:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -418,7 +422,7 @@ be created. Only routes that match one of these methods will be created. The res
 </section>
 </section>
 <section id="resourcecontroller">
-<h2><a class="toc-backref" href="#id8">ResourceController</a><a class="headerlink" href="#resourcecontroller" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">ResourceController</a><a class="headerlink" href="#resourcecontroller" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">ResourceController</span></code> provides a convenient starting point for your RESTful API,
 with methods that correspond to the resource routes above.</p>
 <p>Extend it, over-riding the <code class="docutils literal notranslate"><span class="pre">modelName</span></code> and <code class="docutils literal notranslate"><span class="pre">format</span></code> properties, and then
@@ -451,7 +455,7 @@ implement those methods that you want handled:</p>
 </div>
 </section>
 <section id="presenter-routes">
-<h2><a class="toc-backref" href="#id9">Presenter Routes</a><a class="headerlink" href="#presenter-routes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Presenter Routes</a><a class="headerlink" href="#presenter-routes" title="Permalink to this heading"></a></h2>
 <p>You can quickly create a presentation controller which aligns
 with a resource controller, using the <code class="docutils literal notranslate"><span class="pre">presenter()</span></code> method. This
 creates routes for the controller methods that would return views
@@ -490,7 +494,7 @@ controller. You need to distinguish them, for instance:</p>
 </div>
 <p>The second parameter accepts an array of options that can be used to modify the routes that are generated.</p>
 <section id="id1">
-<h3><a class="toc-backref" href="#id10">Change the Controller Used</a><a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Change the Controller Used</a><a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
 <p>You can specify the controller that should be used by passing in the <code class="docutils literal notranslate"><span class="pre">controller</span></code> option with the name of
 the controller that should be used:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -519,7 +523,7 @@ the controller that should be used:</p>
 <p>See also <a class="reference internal" href="routing.html#controllers-namespace"><span class="std std-ref">Controller’s Namespace</span></a>.</p>
 </section>
 <section id="id2">
-<h3><a class="toc-backref" href="#id11">Change the Placeholder Used</a><a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Change the Placeholder Used</a><a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
 <p>By default, the <code class="docutils literal notranslate"><span class="pre">(:segment)</span></code> placeholder is used when a resource ID is needed. You can change this by passing
 in the <code class="docutils literal notranslate"><span class="pre">placeholder</span></code> option with the new string to use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -532,7 +536,7 @@ in the <code class="docutils literal notranslate"><span class="pre">placeholder<
 </div>
 </section>
 <section id="id3">
-<h3><a class="toc-backref" href="#id12">Limit the Routes Made</a><a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Limit the Routes Made</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
 <p>You can restrict the routes generated with the <code class="docutils literal notranslate"><span class="pre">only</span></code> option. This should be <strong>an array</strong> or <strong>comma separated list</strong> of method names that should
 be created. Only routes that match one of these methods will be created. The rest will be ignored:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -550,7 +554,7 @@ be created. Only routes that match one of these methods will be created. The res
 </section>
 </section>
 <section id="resourcepresenter">
-<h2><a class="toc-backref" href="#id13">ResourcePresenter</a><a class="headerlink" href="#resourcepresenter" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">ResourcePresenter</a><a class="headerlink" href="#resourcepresenter" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">ResourcePresenter</span></code> provides a convenient starting point for presenting views
 of your resource, and processing data from forms in those views,
 with methods that align to the resource routes above.</p>
@@ -583,18 +587,10 @@ implement those methods that you want handled:</p>
 </div>
 </section>
 <section id="presenter-controller-comparison">
-<h2><a class="toc-backref" href="#id14">Presenter/Controller Comparison</a><a class="headerlink" href="#presenter-controller-comparison" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">Presenter/Controller Comparison</a><a class="headerlink" href="#presenter-controller-comparison" title="Permalink to this heading"></a></h2>
 <p>This table presents a comparison of the default routes created by <cite>resource()</cite>
 and <cite>presenter()</cite> with their corresponding Controller functions.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 8%" />
-<col style="width: 19%" />
-<col style="width: 21%" />
-<col style="width: 19%" />
-<col style="width: 19%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Operation</p></th>
 <th class="head"><p>Method</p></th>
@@ -706,7 +702,7 @@ and <cite>presenter()</cite> with their corresponding Controller functions.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 07, 2024.
+      <span class="lastupdated">Last updated on Jan 18, 2024.
       </span></p>
   </div>
 
