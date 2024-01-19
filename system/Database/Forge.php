@@ -518,7 +518,9 @@ class Forge
     }
 
     /**
-     * @return mixed
+     * @param array $attributes Table attributes
+     *
+     * @return bool
      *
      * @throws DatabaseException
      */
@@ -562,6 +564,8 @@ class Forge
     }
 
     /**
+     * @param array $attributes Table attributes
+     *
      * @return string SQL string
      *
      * @deprecated $ifNotExists is no longer used, and will be removed.
