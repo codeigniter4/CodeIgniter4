@@ -109,32 +109,34 @@ class Forge extends BaseForge
     }
 
     /**
-     * @param array|string $field
+     * @param array|string $processedFields Processed column definitions
+     *                                      or column names to DROP
      *
      * @return array|string|null
+     * @return list<string>|string|null SQL string or null
      */
-    protected function _alterTable(string $alterType, string $table, $field)
+    protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         switch ($alterType) {
             case 'DROP':
                 $sqlTable = new Table($this->db, $this);
 
                 $sqlTable->fromTable($table)
-                    ->dropColumn($field)
+                    ->dropColumn($processedFields)
                     ->run();
 
-                return '';
+                return ''; // Why empty string?
 
             case 'CHANGE':
                 (new Table($this->db, $this))
                     ->fromTable($table)
-                    ->modifyColumn($field)
+                    ->modifyColumn($processedFields)
                     ->run();
 
-                return null;
+                return null; // Why null?
 
             default:
-                return parent::_alterTable($alterType, $table, $field);
+                return parent::_alterTable($alterType, $table, $processedFields);
         }
     }
 

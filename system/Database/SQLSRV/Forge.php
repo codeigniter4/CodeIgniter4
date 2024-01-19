@@ -126,11 +126,13 @@ class Forge extends BaseForge
     }
 
     /**
-     * @param array|string $field
+     * @param array|string $processedFields Processed column definitions
+     *                                      or column names to DROP
      *
-     * @return false|string|string[]
+     * @return list<string>|string SQL string
+     * @phpstan-return ($alterType is 'DROP' ? string : list<string>)
      */
-    protected function _alterTable(string $alterType, string $table, $field)
+    protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         // Handle DROP here
         if ($alterType === 'DROP') {
@@ -138,11 +140,11 @@ class Forge extends BaseForge
             $indexData = $this->db->getIndexData($table);
 
             foreach ($indexData as $index) {
-                if (is_string($field)) {
-                    $field = explode(',', $field);
+                if (is_string($processedFields)) {
+                    $processedFields = explode(',', $processedFields);
                 }
 
-                $fld = array_intersect($field, $index->fields);
+                $fld = array_intersect($processedFields, $index->fields);
 
                 // Drop index if field is part of an index
                 if ($fld !== []) {
@@ -153,7 +155,7 @@ class Forge extends BaseForge
             $fullTable = $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table);
 
             // Drop default constraints
-            $fields = implode(',', $this->db->escape((array) $field));
+            $fields = implode(',', $this->db->escape((array) $processedFields));
 
             $sql = <<<SQL
                 SELECT name
@@ -170,7 +172,7 @@ class Forge extends BaseForge
 
             $sql = 'ALTER TABLE ' . $fullTable . ' DROP ';
 
-            $fields = array_map(static fn ($item) => 'COLUMN [' . trim($item) . ']', (array) $field);
+            $fields = array_map(static fn ($item) => 'COLUMN [' . trim($item) . ']', (array) $processedFields);
 
             return $sql . implode(',', $fields);
         }
@@ -181,14 +183,14 @@ class Forge extends BaseForge
         $sqls = [];
 
         if ($alterType === 'ADD') {
-            foreach ($field as $data) {
+            foreach ($processedFields as $data) {
                 $sqls[] = $sql . ($data['_literal'] !== false ? $data['_literal'] : $this->_processColumn($data));
             }
 
             return $sqls;
         }
 
-        foreach ($field as $data) {
+        foreach ($processedFields as $data) {
             if ($data['_literal'] !== false) {
                 return false;
             }

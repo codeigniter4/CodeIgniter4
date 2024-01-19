@@ -128,35 +128,37 @@ class Forge extends BaseForge
     /**
      * ALTER TABLE
      *
-     * @param string       $alterType ALTER type
-     * @param string       $table     Table name
-     * @param array|string $field     Column definition
+     * @param string       $alterType       ALTER type
+     * @param string       $table           Table name
+     * @param array|string $processedFields Processed column definitions
+     *                                      or column names to DROP
      *
-     * @return string|string[]
+     * @return list<string>|string SQL string
+     * @phpstan-return ($alterType is 'DROP' ? string : list<string>)
      */
-    protected function _alterTable(string $alterType, string $table, $field)
+    protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         if ($alterType === 'DROP') {
-            return parent::_alterTable($alterType, $table, $field);
+            return parent::_alterTable($alterType, $table, $processedFields);
         }
 
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
 
-        foreach ($field as $i => $data) {
+        foreach ($processedFields as $i => $data) {
             if ($data['_literal'] !== false) {
-                $field[$i] = ($alterType === 'ADD') ? "\n\tADD " . $data['_literal'] : "\n\tMODIFY " . $data['_literal'];
+                $processedFields[$i] = ($alterType === 'ADD') ? "\n\tADD " . $data['_literal'] : "\n\tMODIFY " . $data['_literal'];
             } else {
                 if ($alterType === 'ADD') {
-                    $field[$i]['_literal'] = "\n\tADD ";
+                    $processedFields[$i]['_literal'] = "\n\tADD ";
                 } else {
-                    $field[$i]['_literal'] = empty($data['new_name']) ? "\n\tMODIFY " : "\n\tCHANGE ";
+                    $processedFields[$i]['_literal'] = empty($data['new_name']) ? "\n\tMODIFY " : "\n\tCHANGE ";
                 }
 
-                $field[$i] = $field[$i]['_literal'] . $this->_processColumn($field[$i]);
+                $processedFields[$i] = $processedFields[$i]['_literal'] . $this->_processColumn($processedFields[$i]);
             }
         }
 
-        return [$sql . implode(',', $field)];
+        return [$sql . implode(',', $processedFields)];
     }
 
     /**

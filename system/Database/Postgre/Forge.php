@@ -81,20 +81,22 @@ class Forge extends BaseForge
     }
 
     /**
-     * @param array|string $field
+     * @param array|string $processedFields Processed column definitions
+     *                                      or column names to DROP
      *
-     * @return array|bool|string
+     * @return false|list<string>|string SQL string or false
+     * @phpstan-return ($alterType is 'DROP' ? string : list<string>|false)
      */
-    protected function _alterTable(string $alterType, string $table, $field)
+    protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         if (in_array($alterType, ['DROP', 'ADD'], true)) {
-            return parent::_alterTable($alterType, $table, $field);
+            return parent::_alterTable($alterType, $table, $processedFields);
         }
 
         $sql  = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
         $sqls = [];
 
-        foreach ($field as $data) {
+        foreach ($processedFields as $data) {
             if ($data['_literal'] !== false) {
                 return false;
             }
