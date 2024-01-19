@@ -351,14 +351,14 @@ class Forge
     /**
      * Add Field
      *
-     * @param array<string, array|string>|string $field
+     * @param array<string, array|string>|string $fields Field array or Field string
      *
      * @return Forge
      */
-    public function addField($field)
+    public function addField($fields)
     {
-        if (is_string($field)) {
-            if ($field === 'id') {
+        if (is_string($fields)) {
+            if ($fields === 'id') {
                 $this->addField([
                     'id' => [
                         'type'           => 'INT',
@@ -368,19 +368,19 @@ class Forge
                 ]);
                 $this->addKey('id', true);
             } else {
-                if (strpos($field, ' ') === false) {
+                if (strpos($fields, ' ') === false) {
                     throw new InvalidArgumentException('Field information is required for that operation.');
                 }
 
-                $fieldName = explode(' ', $field, 2)[0];
+                $fieldName = explode(' ', $fields, 2)[0];
                 $fieldName = trim($fieldName, '`\'"');
 
-                $this->fields[$fieldName] = $field;
+                $this->fields[$fieldName] = $fields;
             }
         }
 
-        if (is_array($field)) {
-            foreach ($field as $name => $attributes) {
+        if (is_array($fields)) {
+            foreach ($fields as $name => $attributes) {
                 if (is_string($attributes)) {
                     $this->addField($attributes);
 
@@ -720,19 +720,19 @@ class Forge
     }
 
     /**
-     * @param array<string, array|string>|string $field
+     * @param array<string, array|string>|string $fields Field array or Field string
      *
      * @throws DatabaseException
      */
-    public function addColumn(string $table, $field): bool
+    public function addColumn(string $table, $fields): bool
     {
         // Work-around for literal column definitions
         if (! is_array($field)) {
-            $field = [$field];
+            $fields = [$fields];
         }
 
-        foreach (array_keys($field) as $name) {
-            $this->addField([$name => $field[$name]]);
+        foreach (array_keys($fields) as $name) {
+            $this->addField([$name => $fields[$name]]);
         }
 
         $sqls = $this->_alterTable('ADD', $this->db->DBPrefix . $table, $this->_processFields());
@@ -777,19 +777,19 @@ class Forge
     }
 
     /**
-     * @param array<string, array|string>|string $field
+     * @param array<string, array|string>|string $fields Field array or Field string
      *
      * @throws DatabaseException
      */
-    public function modifyColumn(string $table, $field): bool
+    public function modifyColumn(string $table, $fields): bool
     {
         // Work-around for literal column definitions
         if (! is_array($field)) {
-            $field = [$field];
+            $fields = [$fields];
         }
 
-        foreach (array_keys($field) as $name) {
-            $this->addField([$name => $field[$name]]);
+        foreach (array_keys($fields) as $name) {
+            $this->addField([$name => $fields[$name]]);
         }
 
         if ($this->fields === []) {
