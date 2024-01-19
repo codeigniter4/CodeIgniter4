@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Live\SQLite;
+namespace CodeIgniter\Database\Live\SQLite3;
 
 use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Database\SQLite3\Forge;
