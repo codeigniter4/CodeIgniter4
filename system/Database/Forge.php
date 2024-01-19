@@ -501,7 +501,7 @@ class Forge
     }
 
     /**
-     * @return BaseResult|bool|false|mixed|Query
+     * @return bool
      *
      * @throws DatabaseException
      */
@@ -621,7 +621,7 @@ class Forge
     }
 
     /**
-     * @return mixed
+     * @return bool
      *
      * @throws DatabaseException
      */
@@ -687,7 +687,7 @@ class Forge
     }
 
     /**
-     * @return mixed
+     * @return bool
      *
      * @throws DatabaseException
      */
