@@ -28,7 +28,7 @@ class Table
     /**
      * All of the fields this table represents.
      *
-     * @var array<string, array<string, bool|int|string|null>>
+     * @var array<string, array<string, bool|int|string|null>> [name => attributes]
      */
     protected $fields = [];
 
@@ -156,7 +156,7 @@ class Table
     /**
      * Drops columns from the table.
      *
-     * @param array|string $columns
+     * @param list<string>|string $columns Column names to drop.
      *
      * @return Table
      */
@@ -179,6 +179,8 @@ class Table
     /**
      * Modifies a field, including changing data type,
      * renaming, etc.
+     *
+     * @param array<string, array<string, bool|int|string|null>> $fields [name => attributes]
      *
      * @return Table
      */
