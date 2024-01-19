@@ -434,8 +434,9 @@ class Forge
      */
     public function dropKey(string $table, string $keyName, bool $prefixKeyName = true): bool
     {
-        $keyName             = $this->db->escapeIdentifiers(($prefixKeyName === true ? $this->db->DBPrefix : '') . $keyName);
-        $table               = $this->db->escapeIdentifiers($this->db->DBPrefix . $table);
+        $keyName = $this->db->escapeIdentifiers(($prefixKeyName === true ? $this->db->DBPrefix : '') . $keyName);
+        $table   = $this->db->escapeIdentifiers($this->db->DBPrefix . $table);
+
         $dropKeyAsConstraint = $this->dropKeyAsConstraint($table, $keyName);
 
         if ($dropKeyAsConstraint === true) {
@@ -743,6 +744,7 @@ class Forge
 
         $sqls = $this->_alterTable('ADD', $this->db->DBPrefix . $table, $this->_processFields());
         $this->reset();
+
         if ($sqls === false) {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('This feature is not available for the database you are using.');
@@ -804,6 +806,7 @@ class Forge
 
         $sqls = $this->_alterTable('CHANGE', $this->db->DBPrefix . $table, $this->_processFields());
         $this->reset();
+
         if ($sqls === false) {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('This feature is not available for the database you are using.');
