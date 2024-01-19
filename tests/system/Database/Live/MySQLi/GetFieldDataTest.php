@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,10 +13,7 @@
 
 namespace CodeIgniter\Database\Live\MySQLi;
 
-use CodeIgniter\Database\MySQLi\Connection;
-use CodeIgniter\Database\MySQLi\Forge;
-use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Database\Live\AbstractGetFieldDataTest;
 use Config\Database;
 
 /**
@@ -22,23 +21,10 @@ use Config\Database;
  *
  * @internal
  */
-final class GetFieldDataTest extends CIUnitTestCase
+final class GetFieldDataTest extends AbstractGetFieldDataTest
 {
-    use DatabaseTestTrait;
-
-    protected $migrate = false;
-
-    /**
-     * @var Connection
-     */
-    protected $db;
-
-    private Forge $forge;
-
-    protected function setUp(): void
+    protected function createForge(): void
     {
-        parent::setUp();
-
         if ($this->db->DBDriver !== 'MySQLi') {
             $this->markTestSkipped('This test is only for MySQLi.');
         }
@@ -48,45 +34,6 @@ final class GetFieldDataTest extends CIUnitTestCase
 
     public function testGetFieldData(): void
     {
-        $this->forge->dropTable('test1', true);
-
-        $this->forge->addField([
-            'id' => [
-                'type'           => 'INT',
-                'auto_increment' => true,
-            ],
-            'text_not_null' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 64,
-            ],
-            'text_null' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 64,
-                'null'       => true,
-            ],
-            'int_default_0' => [
-                'type'    => 'INT',
-                'default' => 0,
-            ],
-            'text_default_null' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 64,
-                'default'    => null,
-            ],
-            'text_default_text_null' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 64,
-                'default'    => 'null',
-            ],
-            'text_default_abc' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 64,
-                'default'    => 'abc',
-            ],
-        ]);
-        $this->forge->addKey('id', true);
-        $this->forge->createTable('test1');
-
         $fields = $this->db->getFieldData('test1');
 
         $this->assertJsonStringEqualsJsonString(
@@ -150,7 +97,5 @@ final class GetFieldDataTest extends CIUnitTestCase
             ]),
             json_encode($fields)
         );
-
-        $this->forge->dropTable('test1', true);
     }
 }

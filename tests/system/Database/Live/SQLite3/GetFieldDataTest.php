@@ -11,9 +11,7 @@
 
 namespace CodeIgniter\Database\Live\SQLite3;
 
-use CodeIgniter\Database\SQLite3\Connection;
-use CodeIgniter\Database\SQLite3\Forge;
-use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Database\Live\AbstractGetFieldDataTest;
 use Config\Database;
 
 /**
@@ -21,20 +19,10 @@ use Config\Database;
  *
  * @internal
  */
-final class GetFieldDataTest extends CIUnitTestCase
+final class GetFieldDataTest extends AbstractGetFieldDataTest
 {
-    /**
-     * @var Connection
-     */
-    protected $db;
-
-    private Forge $forge;
-
-    protected function setUp(): void
+    protected function createForge(): void
     {
-        parent::setUp();
-
-        $this->db = Database::connect($this->DBGroup);
         if ($this->db->DBDriver !== 'SQLite3') {
             $this->markTestSkipped('This test is only for SQLite3.');
         }
@@ -50,40 +38,6 @@ final class GetFieldDataTest extends CIUnitTestCase
 
     public function testGetFieldData(): void
     {
-        $this->forge->dropTable('test1', true);
-
-        $this->forge->addField([
-            'id' => [
-                'type'           => 'INT',
-                'auto_increment' => true,
-            ],
-            'text_not_null' => [
-                'type' => 'VARCHAR',
-            ],
-            'text_null' => [
-                'type' => 'VARCHAR',
-                'null' => true,
-            ],
-            'int_default_0' => [
-                'type'    => 'INT',
-                'default' => 0,
-            ],
-            'text_default_null' => [
-                'type'    => 'VARCHAR',
-                'default' => null,
-            ],
-            'text_default_text_null' => [
-                'type'    => 'VARCHAR',
-                'default' => 'null',
-            ],
-            'text_default_abc' => [
-                'type'    => 'VARCHAR',
-                'default' => 'abc',
-            ],
-        ]);
-        $this->forge->addKey('id', true);
-        $this->forge->createTable('test1');
-
         $fields = $this->db->getFieldData('test1');
 
         $this->assertJsonStringEqualsJsonString(
@@ -147,7 +101,5 @@ final class GetFieldDataTest extends CIUnitTestCase
             ]),
             json_encode($fields)
         );
-
-        $this->forge->dropTable('test1', true);
     }
 }
