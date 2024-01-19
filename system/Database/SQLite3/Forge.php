@@ -130,7 +130,7 @@ class Forge extends BaseForge
             case 'CHANGE':
                 (new Table($this->db, $this))
                     ->fromTable($table)
-                    ->modifyColumn($processedFields)
+                    ->modifyColumn($processedFields) // @TODO Bug: should be NOT processed fields
                     ->run();
 
                 return null; // Why null?
