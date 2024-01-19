@@ -465,7 +465,7 @@ class Forge
     }
 
     /**
-     * Checks if if key needs to be dropped as a constraint.
+     * Checks if key needs to be dropped as a constraint.
      */
     protected function dropKeyAsConstraint(string $table, string $constraintName): bool
     {
