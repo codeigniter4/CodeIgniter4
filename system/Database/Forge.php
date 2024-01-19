@@ -755,15 +755,16 @@ class Forge
     }
 
     /**
-     * @param array|string $columnName
+     * @param array|string $columnNames column names to DROP
      *
-     * @return mixed
+     * @return bool
      *
      * @throws DatabaseException
      */
-    public function dropColumn(string $table, $columnName)
+    public function dropColumn(string $table, $columnNames)
     {
-        $sql = $this->_alterTable('DROP', $this->db->DBPrefix . $table, $columnName);
+        $sql = $this->_alterTable('DROP', $this->db->DBPrefix . $table, $columnNames);
+
         if ($sql === false) {
             if ($this->db->DBDebug) {
                 throw new DatabaseException('This feature is not available for the database you are using.');
@@ -819,8 +820,10 @@ class Forge
     /**
      * @param 'ADD'|'CHANGE'|'DROP' $alterType
      * @param array|string          $processedFields Processed column definitions
+     *                                               or column names to DROP
      *
-     * @return false|string|string[]
+     * @return list<string>|string SQL string
+     * @phpstan-return ($alterType is 'DROP' ? string : list<string>)
      */
     protected function _alterTable(string $alterType, string $table, $processedFields)
     {
@@ -828,13 +831,15 @@ class Forge
 
         // DROP has everything it needs now.
         if ($alterType === 'DROP') {
-            if (is_string($processedFields)) {
-                $processedFields = explode(',', $processedFields);
+            $columnNamesToDrop = $processedFields;
+
+            if (is_string($columnNamesToDrop)) {
+                $columnNamesToDrop = explode(',', $columnNamesToDrop);
             }
 
-            $processedFields = array_map(fn ($field) => 'DROP COLUMN ' . $this->db->escapeIdentifiers(trim($field)), $processedFields);
+            $columnNamesToDrop = array_map(fn ($field) => 'DROP COLUMN ' . $this->db->escapeIdentifiers(trim($field)), $columnNamesToDrop);
 
-            return $sql . implode(', ', $processedFields);
+            return $sql . implode(', ', $columnNamesToDrop);
         }
 
         $sql .= ($alterType === 'ADD') ? 'ADD ' : $alterType . ' COLUMN ';
