@@ -147,5 +147,7 @@ final class GetFieldDataTest extends CIUnitTestCase
             ]),
             json_encode($fields)
         );
+
+        $this->forge->dropTable('test1', true);
     }
 }
