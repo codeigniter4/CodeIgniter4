@@ -106,7 +106,10 @@ class Forge extends BaseForge
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
 
         if ($alterType === 'DROP') {
-            $fields = array_map(fn ($field) => $this->db->escapeIdentifiers(trim($processedFields)), is_string($processedFields) ? explode(',', $processedFields) : $processedFields);
+            $fields = array_map(
+                fn ($field) => $this->db->escapeIdentifiers(trim($processedFields)),
+                is_string($processedFields) ? explode(',', $processedFields) : $processedFields
+            );
 
             return $sql . ' DROP (' . implode(',', $fields) . ') CASCADE CONSTRAINT INVALIDATE';
         }
