@@ -177,16 +177,15 @@ class Table
     }
 
     /**
-     * Modifies a field, including changing data type,
-     * renaming, etc.
+     * Modifies a field, including changing data type, renaming, etc.
      *
-     * @param array<string, array<string, bool|int|string|null>> $fields [name => attributes]
+     * @param list<array<string, bool|int|string|null>> $fieldsToModify
      *
      * @return Table
      */
-    public function modifyColumn(array $fields)
+    public function modifyColumn(array $fieldsToModify)
     {
-        foreach ($fields as $field) {
+        foreach ($fieldsToModify as $field) {
             $oldName = $field['name'];
             unset($field['name']);
 
