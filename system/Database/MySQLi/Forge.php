@@ -144,14 +144,14 @@ class Forge extends BaseForge
 
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
 
-        foreach ($processedFields as $i => $data) {
-            if ($data['_literal'] !== false) {
-                $processedFields[$i] = ($alterType === 'ADD') ? "\n\tADD " . $data['_literal'] : "\n\tMODIFY " . $data['_literal'];
+        foreach ($processedFields as $i => $field) {
+            if ($field['_literal'] !== false) {
+                $processedFields[$i] = ($alterType === 'ADD') ? "\n\tADD " . $field['_literal'] : "\n\tMODIFY " . $field['_literal'];
             } else {
                 if ($alterType === 'ADD') {
                     $processedFields[$i]['_literal'] = "\n\tADD ";
                 } else {
-                    $processedFields[$i]['_literal'] = empty($data['new_name']) ? "\n\tMODIFY " : "\n\tCHANGE ";
+                    $processedFields[$i]['_literal'] = empty($field['new_name']) ? "\n\tMODIFY " : "\n\tCHANGE ";
                 }
 
                 $processedFields[$i] = $processedFields[$i]['_literal'] . $this->_processColumn($processedFields[$i]);

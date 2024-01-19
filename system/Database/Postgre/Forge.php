@@ -96,37 +96,37 @@ class Forge extends BaseForge
         $sql  = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
         $sqls = [];
 
-        foreach ($processedFields as $data) {
-            if ($data['_literal'] !== false) {
+        foreach ($processedFields as $field) {
+            if ($field['_literal'] !== false) {
                 return false;
             }
 
-            if (version_compare($this->db->getVersion(), '8', '>=') && isset($data['type'])) {
-                $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                    . " TYPE {$data['type']}{$data['length']}";
+            if (version_compare($this->db->getVersion(), '8', '>=') && isset($field['type'])) {
+                $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field['name'])
+                    . " TYPE {$field['type']}{$field['length']}";
             }
 
-            if (! empty($data['default'])) {
-                $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                    . " SET DEFAULT {$data['default']}";
+            if (! empty($field['default'])) {
+                $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field['name'])
+                    . " SET DEFAULT {$field['default']}";
             }
 
             $nullable = true; // Nullable by default.
-            if (isset($data['null']) && ($data['null'] === false || $data['null'] === ' NOT ' . $this->null)) {
+            if (isset($field['null']) && ($field['null'] === false || $field['null'] === ' NOT ' . $this->null)) {
                 $nullable = false;
             }
-            $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
+            $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field['name'])
                 . ($nullable === true ? ' DROP' : ' SET') . ' NOT NULL';
 
-            if (! empty($data['new_name'])) {
-                $sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                    . ' TO ' . $this->db->escapeIdentifiers($data['new_name']);
+            if (! empty($field['new_name'])) {
+                $sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($field['name'])
+                    . ' TO ' . $this->db->escapeIdentifiers($field['new_name']);
             }
 
-            if (! empty($data['comment'])) {
+            if (! empty($field['comment'])) {
                 $sqls[] = 'COMMENT ON COLUMN' . $this->db->escapeIdentifiers($table)
-                    . '.' . $this->db->escapeIdentifiers($data['name'])
-                    . " IS {$data['comment']}";
+                    . '.' . $this->db->escapeIdentifiers($field['name'])
+                    . " IS {$field['comment']}";
             }
         }
 

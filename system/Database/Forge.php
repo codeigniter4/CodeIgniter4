@@ -846,10 +846,10 @@ class Forge
 
         $sqls = [];
 
-        foreach ($processedFields as $data) {
-            $sqls[] = $sql . ($data['_literal'] !== false
-                ? $data['_literal']
-                : $this->_processColumn($data));
+        foreach ($processedFields as $field) {
+            $sqls[] = $sql . ($field['_literal'] !== false
+                ? $field['_literal']
+                : $this->_processColumn($field));
         }
 
         return $sqls;

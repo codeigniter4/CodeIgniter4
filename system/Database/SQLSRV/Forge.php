@@ -183,45 +183,45 @@ class Forge extends BaseForge
         $sqls = [];
 
         if ($alterType === 'ADD') {
-            foreach ($processedFields as $data) {
-                $sqls[] = $sql . ($data['_literal'] !== false ? $data['_literal'] : $this->_processColumn($data));
+            foreach ($processedFields as $field) {
+                $sqls[] = $sql . ($field['_literal'] !== false ? $field['_literal'] : $this->_processColumn($field));
             }
 
             return $sqls;
         }
 
-        foreach ($processedFields as $data) {
-            if ($data['_literal'] !== false) {
+        foreach ($processedFields as $field) {
+            if ($field['_literal'] !== false) {
                 return false;
             }
 
-            if (isset($data['type'])) {
-                $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                    . " {$data['type']}{$data['length']}";
+            if (isset($field['type'])) {
+                $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field['name'])
+                    . " {$field['type']}{$field['length']}";
             }
 
-            if (! empty($data['default'])) {
-                $sqls[] = $sql . ' ALTER COLUMN ADD CONSTRAINT ' . $this->db->escapeIdentifiers($data['name']) . '_def'
-                    . " DEFAULT {$data['default']} FOR " . $this->db->escapeIdentifiers($data['name']);
+            if (! empty($field['default'])) {
+                $sqls[] = $sql . ' ALTER COLUMN ADD CONSTRAINT ' . $this->db->escapeIdentifiers($field['name']) . '_def'
+                    . " DEFAULT {$field['default']} FOR " . $this->db->escapeIdentifiers($field['name']);
             }
 
             $nullable = true; // Nullable by default.
-            if (isset($data['null']) && ($data['null'] === false || $data['null'] === ' NOT ' . $this->null)) {
+            if (isset($field['null']) && ($field['null'] === false || $field['null'] === ' NOT ' . $this->null)) {
                 $nullable = false;
             }
-            $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                . " {$data['type']}{$data['length']} " . ($nullable === true ? '' : 'NOT') . ' NULL';
+            $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field['name'])
+                . " {$field['type']}{$field['length']} " . ($nullable === true ? '' : 'NOT') . ' NULL';
 
-            if (! empty($data['comment'])) {
+            if (! empty($field['comment'])) {
                 $sqls[] = 'EXEC sys.sp_addextendedproperty '
-                    . "@name=N'Caption', @value=N'" . $data['comment'] . "' , "
+                    . "@name=N'Caption', @value=N'" . $field['comment'] . "' , "
                     . "@level0type=N'SCHEMA',@level0name=N'" . $this->db->schema . "', "
                     . "@level1type=N'TABLE',@level1name=N'" . $this->db->escapeIdentifiers($table) . "', "
-                    . "@level2type=N'COLUMN',@level2name=N'" . $this->db->escapeIdentifiers($data['name']) . "'";
+                    . "@level2type=N'COLUMN',@level2name=N'" . $this->db->escapeIdentifiers($field['name']) . "'";
             }
 
-            if (! empty($data['new_name'])) {
-                $sqls[] = "EXEC sp_rename  '[" . $this->db->schema . '].[' . $table . '].[' . $data['name'] . "]' , '" . $data['new_name'] . "', 'COLUMN';";
+            if (! empty($field['new_name'])) {
+                $sqls[] = "EXEC sp_rename  '[" . $this->db->schema . '].[' . $table . '].[' . $field['name'] . "]' , '" . $field['new_name'] . "', 'COLUMN';";
             }
         }
 
