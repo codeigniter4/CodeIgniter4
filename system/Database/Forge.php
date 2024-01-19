@@ -404,8 +404,14 @@ class Forge
      *
      * @throws DatabaseException
      */
-    public function addForeignKey($fieldName = '', string $tableName = '', $tableField = '', string $onUpdate = '', string $onDelete = '', string $fkName = ''): Forge
-    {
+    public function addForeignKey(
+        $fieldName = '',
+        string $tableName = '',
+        $tableField = '',
+        string $onUpdate = '',
+        string $onDelete = '',
+        string $fkName = ''
+    ): Forge {
         $fieldName  = (array) $fieldName;
         $tableField = (array) $tableField;
 
