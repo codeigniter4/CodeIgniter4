@@ -572,22 +572,22 @@ class Forge
      */
     protected function _createTable(string $table, bool $ifNotExists, array $attributes)
     {
-        $columns = $this->_processFields(true);
+        $processedFields = $this->_processFields(true);
 
-        for ($i = 0, $c = count($columns); $i < $c; $i++) {
-            $columns[$i] = ($columns[$i]['_literal'] !== false) ? "\n\t" . $columns[$i]['_literal']
-                : "\n\t" . $this->_processColumn($columns[$i]);
+        for ($i = 0, $c = count($processedFields); $i < $c; $i++) {
+            $processedFields[$i] = ($processedFields[$i]['_literal'] !== false) ? "\n\t" . $processedFields[$i]['_literal']
+                : "\n\t" . $this->_processColumn($processedFields[$i]);
         }
 
-        $columns = implode(',', $columns);
+        $processedFields = implode(',', $processedFields);
 
-        $columns .= $this->_processPrimaryKeys($table);
-        $columns .= current($this->_processForeignKeys($table));
+        $processedFields .= $this->_processPrimaryKeys($table);
+        $processedFields .= current($this->_processForeignKeys($table));
 
         if ($this->createTableKeys === true) {
             $indexes = current($this->_processIndexes($table));
             if (is_string($indexes)) {
-                $columns .= $indexes;
+                $processedFields .= $indexes;
             }
         }
 
@@ -595,7 +595,7 @@ class Forge
             $this->createTableStr . '%s',
             'CREATE TABLE',
             $this->db->escapeIdentifiers($table),
-            $columns,
+            $processedFields,
             $this->_createTableAttributes($attributes)
         );
     }
@@ -817,30 +817,31 @@ class Forge
     }
 
     /**
-     * @param array|string $fields
+     * @param 'ADD'|'CHANGE'|'DROP' $alterType
+     * @param array|string          $processedFields Processed column definitions
      *
      * @return false|string|string[]
      */
-    protected function _alterTable(string $alterType, string $table, $fields)
+    protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . ' ';
 
         // DROP has everything it needs now.
         if ($alterType === 'DROP') {
-            if (is_string($fields)) {
-                $fields = explode(',', $fields);
+            if (is_string($processedFields)) {
+                $processedFields = explode(',', $processedFields);
             }
 
-            $fields = array_map(fn ($field) => 'DROP COLUMN ' . $this->db->escapeIdentifiers(trim($field)), $fields);
+            $processedFields = array_map(fn ($field) => 'DROP COLUMN ' . $this->db->escapeIdentifiers(trim($field)), $processedFields);
 
-            return $sql . implode(', ', $fields);
+            return $sql . implode(', ', $processedFields);
         }
 
         $sql .= ($alterType === 'ADD') ? 'ADD ' : $alterType . ' COLUMN ';
 
         $sqls = [];
 
-        foreach ($fields as $data) {
+        foreach ($processedFields as $data) {
             $sqls[] = $sql . ($data['_literal'] !== false
                 ? $data['_literal']
                 : $this->_processColumn($data));
@@ -850,15 +851,15 @@ class Forge
     }
 
     /**
-     * Process fields
+     * Returns $processedFields array from $this->fields data.
      */
     protected function _processFields(bool $createTable = false): array
     {
-        $fields = [];
+        $processedFields = [];
 
         foreach ($this->fields as $name => $attributes) {
             if (! is_array($attributes)) {
-                $fields[] = ['_literal' => $attributes];
+                $processedFields[] = ['_literal' => $attributes];
 
                 continue;
             }
@@ -932,24 +933,24 @@ class Forge
                 $field['length'] = '(' . $attributes['CONSTRAINT'] . ')';
             }
 
-            $fields[] = $field;
+            $processedFields[] = $field;
         }
 
-        return $fields;
+        return $processedFields;
     }
 
     /**
-     * Process column
+     * Converts $processedField array to field definition string.
      */
-    protected function _processColumn(array $field): string
+    protected function _processColumn(array $processedField): string
     {
-        return $this->db->escapeIdentifiers($field['name'])
-            . ' ' . $field['type'] . $field['length']
-            . $field['unsigned']
-            . $field['default']
-            . $field['null']
-            . $field['auto_increment']
-            . $field['unique'];
+        return $this->db->escapeIdentifiers($processedField['name'])
+            . ' ' . $processedField['type'] . $processedField['length']
+            . $processedField['unsigned']
+            . $processedField['default']
+            . $processedField['null']
+            . $processedField['auto_increment']
+            . $processedField['unique'];
     }
 
     /**

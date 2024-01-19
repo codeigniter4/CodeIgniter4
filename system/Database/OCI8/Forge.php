@@ -184,26 +184,26 @@ class Forge extends BaseForge
     /**
      * Process column
      */
-    protected function _processColumn(array $field): string
+    protected function _processColumn(array $processedField): string
     {
         $constraint = '';
         // @todo: can't cover multi pattern when set type.
-        if ($field['type'] === 'VARCHAR2' && strpos($field['length'], "('") === 0) {
-            $constraint = ' CHECK(' . $this->db->escapeIdentifiers($field['name'])
-                . ' IN ' . $field['length'] . ')';
+        if ($processedField['type'] === 'VARCHAR2' && strpos($processedField['length'], "('") === 0) {
+            $constraint = ' CHECK(' . $this->db->escapeIdentifiers($processedField['name'])
+                . ' IN ' . $processedField['length'] . ')';
 
-            $field['length'] = '(' . max(array_map('mb_strlen', explode("','", mb_substr($field['length'], 2, -2)))) . ')' . $constraint;
-        } elseif (isset($this->primaryKeys['fields']) && count($this->primaryKeys['fields']) === 1 && $field['name'] === $this->primaryKeys['fields'][0]) {
-            $field['unique'] = '';
+            $processedField['length'] = '(' . max(array_map('mb_strlen', explode("','", mb_substr($processedField['length'], 2, -2)))) . ')' . $constraint;
+        } elseif (isset($this->primaryKeys['fields']) && count($this->primaryKeys['fields']) === 1 && $processedField['name'] === $this->primaryKeys['fields'][0]) {
+            $processedField['unique'] = '';
         }
 
-        return $this->db->escapeIdentifiers($field['name'])
-           . ' ' . $field['type'] . $field['length']
-           . $field['unsigned']
-           . $field['default']
-           . $field['auto_increment']
-           . $field['null']
-           . $field['unique'];
+        return $this->db->escapeIdentifiers($processedField['name'])
+           . ' ' . $processedField['type'] . $processedField['length']
+           . $processedField['unsigned']
+           . $processedField['default']
+           . $processedField['auto_increment']
+           . $processedField['null']
+           . $processedField['unique'];
     }
 
     /**

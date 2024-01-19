@@ -141,19 +141,19 @@ class Forge extends BaseForge
     /**
      * Process column
      */
-    protected function _processColumn(array $field): string
+    protected function _processColumn(array $processedField): string
     {
-        if ($field['type'] === 'TEXT' && strpos($field['length'], "('") === 0) {
-            $field['type'] .= ' CHECK(' . $this->db->escapeIdentifiers($field['name'])
-                . ' IN ' . $field['length'] . ')';
+        if ($processedField['type'] === 'TEXT' && strpos($processedField['length'], "('") === 0) {
+            $processedField['type'] .= ' CHECK(' . $this->db->escapeIdentifiers($processedField['name'])
+                . ' IN ' . $processedField['length'] . ')';
         }
 
-        return $this->db->escapeIdentifiers($field['name'])
-            . ' ' . $field['type']
-            . $field['auto_increment']
-            . $field['null']
-            . $field['unique']
-            . $field['default'];
+        return $this->db->escapeIdentifiers($processedField['name'])
+            . ' ' . $processedField['type']
+            . $processedField['auto_increment']
+            . $processedField['null']
+            . $processedField['unique']
+            . $processedField['default'];
     }
 
     /**

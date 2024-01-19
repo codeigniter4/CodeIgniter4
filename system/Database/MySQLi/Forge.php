@@ -162,23 +162,23 @@ class Forge extends BaseForge
     /**
      * Process column
      */
-    protected function _processColumn(array $field): string
+    protected function _processColumn(array $processedField): string
     {
-        $extraClause = isset($field['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($field['after']) : '';
+        $extraClause = isset($processedField['after']) ? ' AFTER ' . $this->db->escapeIdentifiers($processedField['after']) : '';
 
-        if (empty($extraClause) && isset($field['first']) && $field['first'] === true) {
+        if (empty($extraClause) && isset($processedField['first']) && $processedField['first'] === true) {
             $extraClause = ' FIRST';
         }
 
-        return $this->db->escapeIdentifiers($field['name'])
-                . (empty($field['new_name']) ? '' : ' ' . $this->db->escapeIdentifiers($field['new_name']))
-                . ' ' . $field['type'] . $field['length']
-                . $field['unsigned']
-                . $field['null']
-                . $field['default']
-                . $field['auto_increment']
-                . $field['unique']
-                . (empty($field['comment']) ? '' : ' COMMENT ' . $field['comment'])
+        return $this->db->escapeIdentifiers($processedField['name'])
+                . (empty($processedField['new_name']) ? '' : ' ' . $this->db->escapeIdentifiers($processedField['new_name']))
+                . ' ' . $processedField['type'] . $processedField['length']
+                . $processedField['unsigned']
+                . $processedField['null']
+                . $processedField['default']
+                . $processedField['auto_increment']
+                . $processedField['unique']
+                . (empty($processedField['comment']) ? '' : ' COMMENT ' . $processedField['comment'])
                 . $extraClause;
     }
 
