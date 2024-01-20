@@ -9,12 +9,11 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Live\SQLite;
+namespace CodeIgniter\Database\Live\SQLite3;
 
 use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Database\SQLite3\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 use stdClass;
 
@@ -25,15 +24,6 @@ use stdClass;
  */
 final class GetIndexDataTest extends CIUnitTestCase
 {
-    use DatabaseTestTrait;
-
-    /**
-     * In setUp() db connection is changed. So migration doesn't work
-     *
-     * @var bool
-     */
-    protected $migrate = false;
-
     /**
      * @var Connection
      */
@@ -45,12 +35,16 @@ final class GetIndexDataTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        $this->db = Database::connect($this->DBGroup);
+        if ($this->db->DBDriver !== 'SQLite3') {
+            $this->markTestSkipped('This test is only for SQLite3.');
+        }
+
         $config = [
             'DBDriver' => 'SQLite3',
             'database' => 'database.db',
             'DBDebug'  => true,
         ];
-
         $this->db    = db_connect($config);
         $this->forge = Database::forge($config);
     }
