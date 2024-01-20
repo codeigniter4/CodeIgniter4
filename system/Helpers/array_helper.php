@@ -15,6 +15,21 @@ use CodeIgniter\Helpers\Array\ArrayHelper;
 
 // CodeIgniter Array Helpers
 
+if (! function_exists('array_duplicate_by')) {
+    /**
+     * Duplicate array check by column.
+     *
+     * @param array|string $column Unique Column
+     * @param array        $data   Array Data
+     *
+     * @return array
+     */
+    function array_duplicate_by($column, array $data = [])
+    {
+        return ArrayHelper::arrayDuplicatesBy($column, $data);
+    }
+}
+
 if (! function_exists('dot_array_search')) {
     /**
      * Searches an array through dot syntax. Supports

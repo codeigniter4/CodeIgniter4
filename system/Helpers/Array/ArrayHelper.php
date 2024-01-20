@@ -319,4 +319,44 @@ final class ArrayHelper
             return strnatcmp((string) $currentValue, (string) $nextValue);
         });
     }
+
+    /**
+     * Duplicate Array Check by Column
+     *
+     * @param array|string $column Unique Column
+     * @param array        $data   Array Data
+     */
+    public static function arrayDuplicatesBy($column, array $data = []): array
+    {
+        if ($data === []) {
+            return [];
+        }
+
+        $duplicateData = [];
+        $dataUnique    = [];
+
+        foreach ($data as $lineIndex => $searchData) {
+            if (is_array($column)) {
+                foreach ($column as $rawColumn) {
+                    if (in_array($searchData[$rawColumn], $dataUnique[$rawColumn] ?? [], true)) {
+                        $duplicateData[$lineIndex][$rawColumn] = $searchData[$rawColumn];
+                    } else {
+                        $dataUnique[$rawColumn][] = $searchData[$rawColumn];
+                    }
+                }
+            }
+
+            if (is_string($column)) {
+                if (in_array($searchData[$column], $dataUnique[$column] ?? [], true)) {
+                    $duplicateData[$lineIndex][$column] = $searchData[$column];
+                } else {
+                    $dataUnique[$column][] = $searchData[$column];
+                }
+            }
+        }
+
+        unset($dataUnique);
+
+        return $duplicateData;
+    }
 }

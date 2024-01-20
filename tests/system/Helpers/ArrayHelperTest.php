@@ -1287,4 +1287,79 @@ final class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
     }
+
+    /**
+     * @dataProvider provideArrayDuplicate
+     *
+     * @param mixed $column
+     */
+    public function testArrayDuplicate($column, array $data, array $expected): void
+    {
+        $this->assertSame($expected, array_duplicate_by($column, $data));
+    }
+
+    public static function provideArrayDuplicate(): iterable
+    {
+        yield 'single and multiple' => [
+            'name', // Single
+            [
+                [
+                    'name' => 'Fred Flinstone',
+                    'age'  => 20,
+                ],
+                [
+                    'name' => 'Brad Pierce',
+                    'age'  => 30,
+                ],
+                [
+                    'name' => 'Fred Flinstone',
+                    'age'  => 70,
+                ],
+                [
+                    'name' => 'Michelle Stone',
+                    'age'  => 30,
+                ],
+                [
+                    'name' => 'Michael Bram',
+                    'age'  => 40,
+                ],
+            ],
+            [
+                2 => [
+                    'name' => 'Fred Flinstone',
+                ],
+            ],
+            ['name', 'age'], // Multiple
+            [
+                [
+                    'name' => 'Fred Flinstone',
+                    'age'  => 20,
+                ],
+                [
+                    'name' => 'Brad Pierce',
+                    'age'  => 30,
+                ],
+                [
+                    'name' => 'Fred Flinstone',
+                    'age'  => 70,
+                ],
+                [
+                    'name' => 'Michelle Stone',
+                    'age'  => 30,
+                ],
+                [
+                    'name' => 'Michael Bram',
+                    'age'  => 40,
+                ],
+            ],
+            [
+                2 => [
+                    'name' => 'Fred Flinstone',
+                ],
+                3 => [
+                    'age' => 30,
+                ],
+            ],
+        ];
+    }
 }
