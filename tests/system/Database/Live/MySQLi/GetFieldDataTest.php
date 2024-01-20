@@ -32,6 +32,20 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
         $this->forge = Database::forge($this->db);
     }
 
+    /**
+     * As of MySQL 8.0.17, the display width attribute for integer data types
+     * is deprecated and is not reported back anymore.
+     *
+     * @see https://dev.mysql.com/doc/refman/8.0/en/numeric-type-attributes.html
+     */
+    private function isOldMySQL(): bool
+    {
+        return ! (
+            version_compare($this->db->getVersion(), '8.0.17', '>=')
+            && strpos($this->db->getVersion(), 'MariaDB') === false
+        );
+    }
+
     public function testGetFieldData(): void
     {
         $fields = $this->db->getFieldData('test1');
@@ -41,7 +55,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
                 (object) [
                     'name'        => 'id',
                     'type'        => 'int',
-                    'max_length'  => null,
+                    'max_length'  => $this->isOldMySQL() ? 11 : null,
                     'default'     => null, // The default value is not defined.
                     'primary_key' => 1,
                     'nullable'    => false,
@@ -65,7 +79,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
                 (object) [
                     'name'        => 'int_default_0',
                     'type'        => 'int',
-                    'max_length'  => null,
+                    'max_length'  => $this->isOldMySQL() ? 11 : null,
                     'default'     => '0', // int 0
                     'primary_key' => 0,
                     'nullable'    => false,
