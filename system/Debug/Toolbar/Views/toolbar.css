@@ -832,30 +832,30 @@
   margin-left: 4px;
 }
 
-.level-0 {
+.debug-bar-level-0 {
   --level: 0;
 }
 
-.level-1 {
+.debug-bar-level-1 {
   --level: 1;
 }
 
-.level-2 {
+.debug-bar-level-2 {
   --level: 2;
 }
 
-.level-3 {
+.debug-bar-level-3 {
   --level: 3;
 }
 
-.level-4 {
+.debug-bar-level-4 {
   --level: 4;
 }
 
-.level-5 {
+.debug-bar-level-5 {
   --level: 5;
 }
 
-.level-6 {
+.debug-bar-level-6 {
   --level: 6;
 }

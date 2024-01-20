@@ -202,7 +202,7 @@ class Toolbar
                 $output .= '<tr>';
             }
 
-            $output .= '<td class="' . ($isChild ? 'debug-bar-width30' : '') . ' level-' . $level . '" >' . ($hasChildren || $isQuery ? '<nav></nav>' : '') . $row['name'] . '</td>';
+            $output .= '<td class="' . ($isChild ? 'debug-bar-width30' : '') . ' debug-bar-level-' . $level . '" >' . ($hasChildren || $isQuery ? '<nav></nav>' : '') . $row['name'] . '</td>';
             $output .= '<td class="' . ($isChild ? 'debug-bar-width10' : '') . '">' . $row['component'] . '</td>';
             $output .= '<td class="' . ($isChild ? 'debug-bar-width10 ' : '') . 'debug-bar-alignRight">' . number_format($row['duration'] * 1000, 2) . ' ms</td>';
             $output .= "<td class='debug-bar-noverflow' colspan='{$segmentCount}'>";
@@ -228,7 +228,7 @@ class Toolbar
                 if ($isQuery) {
                     // Output query string if query
                     $output .= '<tr>';
-                    $output .= '<td class="query-container level-' . ($level + 1) . '" >' . $row['query'] . '</td>';
+                    $output .= '<td class="query-container debug-bar-level-' . ($level + 1) . '" >' . $row['query'] . '</td>';
                     $output .= '</tr>';
                 } else {
                     // Recursively render children

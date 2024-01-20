@@ -49,7 +49,7 @@ var ciDebugBar = {
         var tab = ciDebugBar.readCookie("debug-bar-tab");
         if (document.getElementById(tab)) {
             var el = document.getElementById(tab);
-            ciDebugBar.switchClass(el,"debug-bar-ndisplay","debug-bar-dblock");
+            ciDebugBar.switchClass(el, "debug-bar-ndisplay", "debug-bar-dblock");
             ciDebugBar.addClass(el, "active");
             tab = document.querySelector("[data-tab=" + tab + "]");
             if (tab) {
@@ -71,21 +71,21 @@ var ciDebugBar = {
         var links = this.toolbar.querySelectorAll("[data-toggle]");
         for (var i = 0; i < links.length; i++) {
             let toggleData = links[i].getAttribute("data-toggle");
-            if(toggleData=="datatable"){
+            if (toggleData === "datatable") {
 
                 let datatable = links[i].getAttribute("data-table");
-                links[i].addEventListener("click", function(){
+                links[i].addEventListener("click", function() {
                     ciDebugBar.toggleDataTable(datatable)
                 }, true);
                
-            }else if(toggleData=="childrows"){
+            } else if (toggleData === "childrows") {
 
                 let child = links[i].getAttribute("data-child");
-                links[i].addEventListener("click", function(){
+                links[i].addEventListener("click", function() {
                     ciDebugBar.toggleChildRows(child)
                 }, true);
                 
-            }else{
+            } else {
                 links[i].addEventListener("click", ciDebugBar.toggleRows, true);
             }
         }
@@ -110,7 +110,7 @@ var ciDebugBar = {
         var tabs = document.querySelectorAll("#debug-bar .tab");
 
         for (var i = 0; i < tabs.length; i++) {
-            ciDebugBar.switchClass(tabs[i],"debug-bar-dblock","debug-bar-ndisplay");
+            ciDebugBar.switchClass(tabs[i], "debug-bar-dblock", "debug-bar-ndisplay");
         }
 
         // Mark all labels as inactive
@@ -122,7 +122,7 @@ var ciDebugBar = {
 
         // Show/hide the selected tab
         if (! state) {
-            ciDebugBar.switchClass(tab,"debug-bar-ndisplay","debug-bar-dblock");
+            ciDebugBar.switchClass(tab, "debug-bar-ndisplay", "debug-bar-dblock");
             ciDebugBar.addClass(this.parentNode, "active");
             // Create debug-bar-tab cookie to persistent state
             ciDebugBar.createCookie(
@@ -155,9 +155,9 @@ var ciDebugBar = {
         }
     },
 
-    switchClass  : function(el,classFrom,classTo){
-        ciDebugBar.removeClass(el,classFrom);
-        ciDebugBar.addClass(el,classTo);
+    switchClass  : function(el, classFrom, classTo) {
+        ciDebugBar.removeClass(el, classFrom);
+        ciDebugBar.addClass(el, classTo);
     },
 
     /**
@@ -173,10 +173,10 @@ var ciDebugBar = {
                 row.getAttribute("data-toggle")
             );
 
-            if(target.classList.contains("debug-bar-ndisplay")) {
-                ciDebugBar.switchClass(target,"debug-bar-ndisplay","debug-bar-dtableRow");   
-            }else{
-                ciDebugBar.switchClass(target,"debug-bar-dtableRow","debug-bar-ndisplay");
+            if (target.classList.contains("debug-bar-ndisplay")) {
+                ciDebugBar.switchClass(target, "debug-bar-ndisplay", "debug-bar-dtableRow");   
+            } else {
+                ciDebugBar.switchClass(target, "debug-bar-dtableRow", "debug-bar-ndisplay");
             } 
         }
     },
@@ -192,10 +192,10 @@ var ciDebugBar = {
         }
 
         if (obj) {
-            if(obj.classList.contains("debug-bar-ndisplay")){
-                ciDebugBar.switchClass(obj,"debug-bar-ndisplay","debug-bar-dblock");
-            }else{
-                ciDebugBar.switchClass(obj,"debug-bar-dblock","debug-bar-ndisplay");
+            if (obj.classList.contains("debug-bar-ndisplay")) {
+                ciDebugBar.switchClass(obj, "debug-bar-ndisplay", "debug-bar-dblock");
+            } else {
+                ciDebugBar.switchClass(obj, "debug-bar-dblock", "debug-bar-ndisplay");
             }
         }
     },
@@ -213,10 +213,10 @@ var ciDebugBar = {
 
         if (par && obj) {
 
-            if(obj.classList.contains("debug-bar-ndisplay")){
-                ciDebugBar.removeClass(obj,"debug-bar-ndisplay");
-            }else{
-                ciDebugBar.addClass(obj,"debug-bar-ndisplay");
+            if (obj.classList.contains("debug-bar-ndisplay")) {
+                ciDebugBar.removeClass(obj, "debug-bar-ndisplay");
+            } else {
+                ciDebugBar.addClass(obj, "debug-bar-ndisplay");
             }
 
             par.classList.toggle("timeline-parent-open");
@@ -231,12 +231,12 @@ var ciDebugBar = {
     toggleToolbar: function () {
         var open = ! ciDebugBar.toolbar.classList.contains("debug-bar-ndisplay");
 
-        if(open){
-            ciDebugBar.switchClass(ciDebugBar.icon,"debug-bar-ndisplay","debug-bar-dinlineBlock");
-            ciDebugBar.switchClass(ciDebugBar.toolbar,"debug-bar-dinlineBlock","debug-bar-ndisplay");
-        }else{
-            ciDebugBar.switchClass(ciDebugBar.icon,"debug-bar-dinlineBlock","debug-bar-ndisplay");
-            ciDebugBar.switchClass(ciDebugBar.toolbar,"debug-bar-ndisplay","debug-bar-dinlineBlock");
+        if (open) {
+            ciDebugBar.switchClass(ciDebugBar.icon, "debug-bar-ndisplay", "debug-bar-dinlineBlock");
+            ciDebugBar.switchClass(ciDebugBar.toolbar, "debug-bar-dinlineBlock", "debug-bar-ndisplay");
+        } else {
+            ciDebugBar.switchClass(ciDebugBar.icon, "debug-bar-dinlineBlock", "debug-bar-ndisplay");
+            ciDebugBar.switchClass(ciDebugBar.toolbar, "debug-bar-ndisplay", "debug-bar-dinlineBlock");
         }
 
         // Remember it for other page loads on this site
@@ -255,12 +255,12 @@ var ciDebugBar = {
     setToolbarState: function () {
         var open = ciDebugBar.readCookie("debug-bar-state");
 
-        if(open !="open"){
-            ciDebugBar.switchClass(ciDebugBar.icon,"debug-bar-ndisplay","debug-bar-dinlineBlock");
-            ciDebugBar.switchClass(ciDebugBar.toolbar,"debug-bar-dinlineBlock","debug-bar-ndisplay");
-        }else{
-            ciDebugBar.switchClass(ciDebugBar.icon,"debug-bar-dinlineBlock","debug-bar-ndisplay");
-            ciDebugBar.switchClass(ciDebugBar.toolbar,"debug-bar-ndisplay","debug-bar-dinlineBlock");
+        if (open != "open") {
+            ciDebugBar.switchClass(ciDebugBar.icon, "debug-bar-ndisplay", "debug-bar-dinlineBlock");
+            ciDebugBar.switchClass(ciDebugBar.toolbar, "debug-bar-dinlineBlock", "debug-bar-ndisplay");
+        } else {
+            ciDebugBar.switchClass(ciDebugBar.icon, "debug-bar-dinlineBlock", "debug-bar-ndisplay");
+            ciDebugBar.switchClass(ciDebugBar.toolbar, "debug-bar-ndisplay", "debug-bar-dinlineBlock");
         } 
     },
 
