@@ -81,50 +81,52 @@ class Forge extends BaseForge
     }
 
     /**
-     * @param array|string $field
+     * @param array|string $processedFields Processed column definitions
+     *                                      or column names to DROP
      *
-     * @return array|bool|string
+     * @return false|list<string>|string SQL string or false
+     * @phpstan-return ($alterType is 'DROP' ? string : list<string>|false)
      */
-    protected function _alterTable(string $alterType, string $table, $field)
+    protected function _alterTable(string $alterType, string $table, $processedFields)
     {
         if (in_array($alterType, ['DROP', 'ADD'], true)) {
-            return parent::_alterTable($alterType, $table, $field);
+            return parent::_alterTable($alterType, $table, $processedFields);
         }
 
         $sql  = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
         $sqls = [];
 
-        foreach ($field as $data) {
-            if ($data['_literal'] !== false) {
+        foreach ($processedFields as $field) {
+            if ($field['_literal'] !== false) {
                 return false;
             }
 
-            if (version_compare($this->db->getVersion(), '8', '>=') && isset($data['type'])) {
-                $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                    . " TYPE {$data['type']}{$data['length']}";
+            if (version_compare($this->db->getVersion(), '8', '>=') && isset($field['type'])) {
+                $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field['name'])
+                    . " TYPE {$field['type']}{$field['length']}";
             }
 
-            if (! empty($data['default'])) {
-                $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                    . " SET DEFAULT {$data['default']}";
+            if (! empty($field['default'])) {
+                $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field['name'])
+                    . " SET DEFAULT {$field['default']}";
             }
 
             $nullable = true; // Nullable by default.
-            if (isset($data['null']) && ($data['null'] === false || $data['null'] === ' NOT ' . $this->null)) {
+            if (isset($field['null']) && ($field['null'] === false || $field['null'] === ' NOT ' . $this->null)) {
                 $nullable = false;
             }
-            $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($data['name'])
+            $sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field['name'])
                 . ($nullable === true ? ' DROP' : ' SET') . ' NOT NULL';
 
-            if (! empty($data['new_name'])) {
-                $sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($data['name'])
-                    . ' TO ' . $this->db->escapeIdentifiers($data['new_name']);
+            if (! empty($field['new_name'])) {
+                $sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($field['name'])
+                    . ' TO ' . $this->db->escapeIdentifiers($field['new_name']);
             }
 
-            if (! empty($data['comment'])) {
+            if (! empty($field['comment'])) {
                 $sqls[] = 'COMMENT ON COLUMN' . $this->db->escapeIdentifiers($table)
-                    . '.' . $this->db->escapeIdentifiers($data['name'])
-                    . " IS {$data['comment']}";
+                    . '.' . $this->db->escapeIdentifiers($field['name'])
+                    . " IS {$field['comment']}";
             }
         }
 
@@ -134,14 +136,14 @@ class Forge extends BaseForge
     /**
      * Process column
      */
-    protected function _processColumn(array $field): string
+    protected function _processColumn(array $processedField): string
     {
-        return $this->db->escapeIdentifiers($field['name'])
-            . ' ' . $field['type'] . ($field['type'] === 'text' ? '' : $field['length'])
-            . $field['default']
-            . $field['null']
-            . $field['auto_increment']
-            . $field['unique'];
+        return $this->db->escapeIdentifiers($processedField['name'])
+            . ' ' . $processedField['type'] . ($processedField['type'] === 'text' ? '' : $processedField['length'])
+            . $processedField['default']
+            . $processedField['null']
+            . $processedField['auto_increment']
+            . $processedField['unique'];
     }
 
     /**

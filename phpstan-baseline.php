@@ -1452,11 +1452,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Postgre/Forge.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Return type \\(array\\|bool\\|string\\) of method CodeIgniter\\\\Database\\\\Postgre\\\\Forge\\:\\:_alterTable\\(\\) should be covariant with return type \\(array\\<string\\>\\|string\\|false\\) of method CodeIgniter\\\\Database\\\\Forge\\:\\:_alterTable\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Postgre/Forge.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Postgre/Result.php',
@@ -1653,11 +1648,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^PHPDoc type CodeIgniter\\\\Database\\\\SQLite3\\\\Connection of property CodeIgniter\\\\Database\\\\SQLite3\\\\Forge\\:\\:\\$db is not the same as PHPDoc type CodeIgniter\\\\Database\\\\BaseConnection of overridden property CodeIgniter\\\\Database\\\\Forge\\:\\:\\$db\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/SQLite3/Forge.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Return type \\(array\\|string\\|null\\) of method CodeIgniter\\\\Database\\\\SQLite3\\\\Forge\\:\\:_alterTable\\(\\) should be covariant with return type \\(array\\<string\\>\\|string\\|false\\) of method CodeIgniter\\\\Database\\\\Forge\\:\\:_alterTable\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/SQLite3/Forge.php',
 ];
