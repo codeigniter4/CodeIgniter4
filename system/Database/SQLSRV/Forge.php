@@ -136,15 +136,17 @@ class Forge extends BaseForge
     {
         // Handle DROP here
         if ($alterType === 'DROP') {
+            $columnNamesToDrop = $processedFields;
+
             // check if fields are part of any indexes
             $indexData = $this->db->getIndexData($table);
 
             foreach ($indexData as $index) {
-                if (is_string($processedFields)) {
-                    $processedFields = explode(',', $processedFields);
+                if (is_string($columnNamesToDrop)) {
+                    $columnNamesToDrop = explode(',', $columnNamesToDrop);
                 }
 
-                $fld = array_intersect($processedFields, $index->fields);
+                $fld = array_intersect($columnNamesToDrop, $index->fields);
 
                 // Drop index if field is part of an index
                 if ($fld !== []) {
@@ -155,7 +157,7 @@ class Forge extends BaseForge
             $fullTable = $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table);
 
             // Drop default constraints
-            $fields = implode(',', $this->db->escape((array) $processedFields));
+            $fields = implode(',', $this->db->escape((array) $columnNamesToDrop));
 
             $sql = <<<SQL
                 SELECT name
@@ -172,7 +174,7 @@ class Forge extends BaseForge
 
             $sql = 'ALTER TABLE ' . $fullTable . ' DROP ';
 
-            $fields = array_map(static fn ($item) => 'COLUMN [' . trim($item) . ']', (array) $processedFields);
+            $fields = array_map(static fn ($item) => 'COLUMN [' . trim($item) . ']', (array) $columnNamesToDrop);
 
             return $sql . implode(',', $fields);
         }

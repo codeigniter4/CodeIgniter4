@@ -120,10 +120,12 @@ class Forge extends BaseForge
     {
         switch ($alterType) {
             case 'DROP':
+                $columnNamesToDrop = $processedFields;
+
                 $sqlTable = new Table($this->db, $this);
 
                 $sqlTable->fromTable($table)
-                    ->dropColumn($processedFields)
+                    ->dropColumn($columnNamesToDrop)
                     ->run();
 
                 return ''; // Why empty string?
