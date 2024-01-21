@@ -759,7 +759,7 @@ var ciDebugBar = {
         for (var i = 0; i < rowGet.length; i++) {
             row = rowGet[i];
             if (!/\/\(.+?\)/.test(rowGet[i].innerText)) {
-                ciDebugBar.addClass(row,"debug-bar-pointer");
+                ciDebugBar.addClass(row, "debug-bar-pointer");
                 row.setAttribute(
                     "title",
                     location.origin + "/" + ciDebugBar.trimSlash(row.innerText)
