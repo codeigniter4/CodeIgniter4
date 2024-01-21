@@ -113,26 +113,58 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateBatch(): void
     {
+        $table = 'type_test';
+
+        // Prepares test data.
+        $builder = $this->db->table($table);
+        $builder->truncate();
+
+        for ($i = 0; $i < 3; $i++) {
+            $builder->insert([
+                'type_varchar'  => 'test' . $i,
+                'type_char'     => 'char',
+                'type_text'     => 'text',
+                'type_smallint' => 32767,
+                'type_integer'  => 2147483647,
+                'type_bigint'   => 9223372036854775807,
+                'type_float'    => 10.1,
+                'type_numeric'  => 123.23,
+                'type_date'     => '2023-12-21',
+                'type_datetime' => '2023-12-21 12:00:00',
+            ]);
+        }
+
         $data = [
             [
-                'name'    => 'Derek Jones',
-                'country' => 'Greece',
+                'type_varchar'  => 'test1',
+                'type_text'     => 'updated',
+                'type_bigint'   => 9999999,
+                'type_date'     => '2024-01-01',
+                'type_datetime' => '2024-01-01 09:00:00',
             ],
             [
-                'name'    => 'Ahmadinejad',
-                'country' => 'Greece',
+                'type_varchar'  => 'test2',
+                'type_text'     => 'updated',
+                'type_bigint'   => 9999999,
+                'type_date'     => '2024-01-01',
+                'type_datetime' => '2024-01-01 09:00:00',
             ],
         ];
+        $this->db->table($table)->updateBatch($data, 'type_varchar');
 
-        $this->db->table('user')->updateBatch($data, 'name');
-
-        $this->seeInDatabase('user', [
-            'name'    => 'Derek Jones',
-            'country' => 'Greece',
+        $this->seeInDatabase($table, [
+            'type_varchar'  => 'test1',
+            'type_text'     => 'updated',
+            'type_bigint'   => 9999999,
+            'type_date'     => '2024-01-01',
+            'type_datetime' => '2024-01-01 09:00:00',
         ]);
-        $this->seeInDatabase('user', [
-            'name'    => 'Ahmadinejad',
-            'country' => 'Greece',
+        $this->seeInDatabase($table, [
+            'type_varchar'  => 'test2',
+            'type_text'     => 'updated',
+            'type_bigint'   => 9999999,
+            'type_date'     => '2024-01-01',
+            'type_datetime' => '2024-01-01 09:00:00',
         ]);
     }
 
