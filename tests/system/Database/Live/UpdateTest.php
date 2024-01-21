@@ -152,20 +152,41 @@ final class UpdateTest extends CIUnitTestCase
         ];
         $this->db->table($table)->updateBatch($data, 'type_varchar');
 
-        $this->seeInDatabase($table, [
-            'type_varchar'  => 'test1',
-            'type_text'     => 'updated',
-            'type_bigint'   => 9_999_999,
-            'type_date'     => '2024-01-01',
-            'type_datetime' => '2024-01-01 09:00:00',
-        ]);
-        $this->seeInDatabase($table, [
-            'type_varchar'  => 'test2',
-            'type_text'     => 'updated',
-            'type_bigint'   => 9_999_999,
-            'type_date'     => '2024-01-01',
-            'type_datetime' => '2024-01-01 09:00:00',
-        ]);
+        if ($this->db->DBDriver === 'SQLSRV') {
+            // We cannot compare `text` and `varchar` with `=`. It causes the error:
+            // [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The data types text and varchar are incompatible in the equal to operator.
+            // And data type `text`, `ntext`, `image` are deprecated in SQL Server 2016
+            // See https://github.com/codeigniter4/CodeIgniter4/pull/8439#issuecomment-1902535909
+            $this->seeInDatabase($table, [
+                'type_varchar' => 'test1',
+                // 'type_text'     => 'updated',
+                'type_bigint'   => 9_999_999,
+                'type_date'     => '2024-01-01',
+                'type_datetime' => '2024-01-01 09:00:00',
+            ]);
+            $this->seeInDatabase($table, [
+                'type_varchar' => 'test2',
+                // 'type_text'     => 'updated',
+                'type_bigint'   => 9_999_999,
+                'type_date'     => '2024-01-01',
+                'type_datetime' => '2024-01-01 09:00:00',
+            ]);
+        } else {
+            $this->seeInDatabase($table, [
+                'type_varchar'  => 'test1',
+                'type_text'     => 'updated',
+                'type_bigint'   => 9_999_999,
+                'type_date'     => '2024-01-01',
+                'type_datetime' => '2024-01-01 09:00:00',
+            ]);
+            $this->seeInDatabase($table, [
+                'type_varchar'  => 'test2',
+                'type_text'     => 'updated',
+                'type_bigint'   => 9_999_999,
+                'type_date'     => '2024-01-01',
+                'type_datetime' => '2024-01-01 09:00:00',
+            ]);
+        }
     }
 
     public function testUpdateWithWhereSameColumn(): void
