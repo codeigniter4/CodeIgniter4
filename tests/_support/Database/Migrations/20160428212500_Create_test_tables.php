@@ -46,9 +46,10 @@ class Migration_Create_test_tables extends Migration
         ])->addKey('id', true)->createTable('misc', true);
 
         // Database Type test table
-        // missing types :
-        // TINYINT,MEDIUMINT,BIT,YEAR,BINARY , VARBINARY, TINYTEXT,LONGTEXT,YEAR,JSON,Spatial data types
-        // id must be interger else SQLite3 error on not null for autoinc field
+        // missing types:
+        //     TINYINT,MEDIUMINT,BIT,YEAR,BINARY,VARBINARY,TINYTEXT,LONGTEXT,
+        //     JSON,Spatial data types
+        // `id` must be INTEGER else SQLite3 error on not null for autoincrement field.
         $data_type_fields = [
             'id'              => ['type' => 'INTEGER', 'constraint' => 20, 'auto_increment' => true],
             'type_varchar'    => ['type' => 'VARCHAR', 'constraint' => 40, 'null' => true],
