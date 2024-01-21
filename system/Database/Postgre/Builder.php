@@ -347,12 +347,19 @@ class Builder extends BaseBuilder
 
             $sql .= "SET\n";
 
+            $fieldTypes = $this->getFieldTypes($table);
+
             $sql .= implode(
                 ",\n",
                 array_map(
-                    static fn ($key, $value) => $key . ($value instanceof RawSql ?
-                            ' = ' . $value :
-                            ' = ' . $alias . '.' . $value),
+                    static function ($key, $value) use ($alias, $fieldTypes) {
+                        $type = $fieldTypes[trim($key, '"')] ?? null;
+                        $cast = ($type === null) ? '' : '::' . $type;
+
+                        return $key . ($value instanceof RawSql ?
+                                ' = ' . $value :
+                                ' = ' . $alias . '.' . $value . $cast);
+                    },
                     array_keys($updateFields),
                     $updateFields
                 )
@@ -403,6 +410,20 @@ class Builder extends BaseBuilder
         }
 
         return str_replace('{:_table_:}', $data, $sql);
+    }
+
+    /**
+     * @return array<string, string> [name => type]
+     */
+    private function getFieldTypes(string $table): array
+    {
+        $types = [];
+
+        foreach ($this->db->getFieldData($table) as $field) {
+            $types[$field->name] = $field->type;
+        }
+
+        return $types;
     }
 
     /**
