@@ -306,11 +306,11 @@ change the name, you can add a "name" key into the field defining array.
     a table, if ``null`` is not specified, the column will be ``NULL``, not
     ``NOT NULL``.
 
-.. note:: Due to a bug, prior v4.3.3, SQLite3 may not set ``NOT NULL`` even if you
+.. note:: Due to a bug, prior v4.3.4, SQLite3 may not set ``NOT NULL`` even if you
     specify ``'null' => false``.
 
-.. note:: Due to a bug, prior v4.3.3, Postgres and SQLSRV set ``NOT NULL`` even
-    if you specify ``'null' => false``.
+.. note:: Due to a bug, prior v4.3.4, Postgres and SQLSRV set ``NOT NULL`` even
+    if you specify ``'null' => true``.
 
 .. _db-forge-adding-keys-to-a-table:
 
