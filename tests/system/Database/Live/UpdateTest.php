@@ -136,16 +136,24 @@ final class UpdateTest extends CIUnitTestCase
 
         $data = [
             [
-                'type_varchar'  => 'test1',
+                'type_varchar'  => 'test1', // Key
                 'type_text'     => 'updated',
+                'type_smallint' => 9999,
+                'type_integer'  => 9_999_999,
                 'type_bigint'   => 9_999_999,
+                'type_float'    => 999999.9,
+                'type_numeric'  => 999999.99,
                 'type_date'     => '2024-01-01',
                 'type_datetime' => '2024-01-01 09:00:00',
             ],
             [
-                'type_varchar'  => 'test2',
+                'type_varchar'  => 'test2', // Key
                 'type_text'     => 'updated',
+                'type_smallint' => 9999,
+                'type_integer'  => 9_999_999,
                 'type_bigint'   => 9_999_999,
+                'type_float'    => 999999.9,
+                'type_numeric'  => 999999.99,
                 'type_date'     => '2024-01-01',
                 'type_datetime' => '2024-01-01 09:00:00',
             ],
@@ -160,14 +168,22 @@ final class UpdateTest extends CIUnitTestCase
             $this->seeInDatabase($table, [
                 'type_varchar' => 'test1',
                 // 'type_text'     => 'updated',
+                'type_smallint' => 9999,
+                'type_integer'  => 9_999_999,
                 'type_bigint'   => 9_999_999,
+                'type_float'    => 999999.9,
+                'type_numeric'  => 999999.99,
                 'type_date'     => '2024-01-01',
                 'type_datetime' => '2024-01-01 09:00:00',
             ]);
             $this->seeInDatabase($table, [
                 'type_varchar' => 'test2',
                 // 'type_text'     => 'updated',
+                'type_smallint' => 9999,
+                'type_integer'  => 9_999_999,
                 'type_bigint'   => 9_999_999,
+                'type_float'    => 999999.9,
+                'type_numeric'  => 999999.99,
                 'type_date'     => '2024-01-01',
                 'type_datetime' => '2024-01-01 09:00:00',
             ]);
@@ -175,14 +191,22 @@ final class UpdateTest extends CIUnitTestCase
             $this->seeInDatabase($table, [
                 'type_varchar'  => 'test1',
                 'type_text'     => 'updated',
+                'type_smallint' => 9999,
+                'type_integer'  => 9_999_999,
                 'type_bigint'   => 9_999_999,
+                'type_float'    => 999999.9,
+                'type_numeric'  => 999999.99,
                 'type_date'     => '2024-01-01',
                 'type_datetime' => '2024-01-01 09:00:00',
             ]);
             $this->seeInDatabase($table, [
                 'type_varchar'  => 'test2',
                 'type_text'     => 'updated',
+                'type_smallint' => 9999,
+                'type_integer'  => 9_999_999,
                 'type_bigint'   => 9_999_999,
+                'type_float'    => 999999.9,
+                'type_numeric'  => 999999.99,
                 'type_date'     => '2024-01-01',
                 'type_datetime' => '2024-01-01 09:00:00',
             ]);
