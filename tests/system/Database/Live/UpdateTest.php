@@ -238,6 +238,33 @@ final class UpdateTest extends CIUnitTestCase
                     ],
                 ],
             ],
+            'int as string' => [
+                'type_varchar',
+                [
+                    [
+                        'type_varchar' => 'test1', // Key
+                        'type_integer' => '9999999', // PHP string
+                        'type_bigint'  => '2448114396435166946', // PHP string
+                    ],
+                    [
+                        'type_varchar' => 'test2', // Key
+                        'type_integer' => '9999999', // PHP string
+                        'type_bigint'  => '2448114396435166946', // PHP string
+                    ],
+                ],
+                [
+                    [
+                        'type_varchar' => 'test1',
+                        'type_integer' => 9_999_999,
+                        'type_bigint'  => 2_448_114_396_435_166_946,
+                    ],
+                    [
+                        'type_varchar' => 'test2',
+                        'type_integer' => 9_999_999,
+                        'type_bigint'  => 2_448_114_396_435_166_946,
+                    ],
+                ],
+            ],
         ];
     }
 
