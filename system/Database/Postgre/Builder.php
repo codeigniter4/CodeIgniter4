@@ -428,7 +428,7 @@ class Builder extends BaseBuilder
 
         $type = $this->QBOptions['fieldTypes'][$fieldName] ?? null;
 
-        return ($type === null) ? $value : $value . '::' . $type;
+        return ($type === null) ? $value : $value . '::' . strtoupper($type);
     }
 
     /**
