@@ -372,19 +372,20 @@ class Builder extends BaseBuilder
             $sql .= 'WHERE ' . implode(
                 ' AND ',
                 array_map(
-                    static fn ($key, $value) => (
-                        ($value instanceof RawSql && is_string($key))
-                        ?
-                        $table . '.' . $key . ' = ' . $value
-                        :
-                        (
-                            $value instanceof RawSql
-                            ?
-                            $value
-                            :
-                            $table . '.' . $value . ' = ' . $alias . '.' . $value
-                        )
-                    ),
+                    static function ($key, $value) use ($table, $alias, $fieldTypes) {
+                        if ($value instanceof RawSql && is_string($key)) {
+                            return $table . '.' . $key . ' = ' . $value;
+                        }
+
+                        if ($value instanceof RawSql) {
+                            return $value;
+                        }
+
+                        $type = $fieldTypes[trim($value, '"')] ?? null;
+                        $cast = ($type === null) ? '' : '::' . $type;
+
+                        return $table . '.' . $value . ' = ' . $alias . '.' . $value . $cast;
+                    },
                     array_keys($constraints),
                     $constraints
                 )
