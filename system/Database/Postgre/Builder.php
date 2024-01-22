@@ -15,6 +15,7 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
 use InvalidArgumentException;
+use LogicException;
 
 /**
  * Builder for Postgre
@@ -347,18 +348,18 @@ class Builder extends BaseBuilder
 
             $sql .= "SET\n";
 
-            $fieldTypes = $this->getFieldTypes($table);
+            $this->getFieldTypes($table);
 
+            $that = $this;
             $sql .= implode(
                 ",\n",
                 array_map(
-                    static function ($key, $value) use ($alias, $fieldTypes) {
-                        $type = $fieldTypes[trim($key, '"')] ?? null;
-                        $cast = ($type === null) ? '' : '::' . $type;
+                    static function ($key, $value) use ($alias, $that) {
+                        $fieldName = trim($key, '"');
 
                         return $key . ($value instanceof RawSql ?
                                 ' = ' . $value :
-                                ' = ' . $alias . '.' . $value . $cast);
+                                ' = ' . $alias . '.' . $that->castValue($fieldName, $value));
                     },
                     array_keys($updateFields),
                     $updateFields
@@ -372,7 +373,7 @@ class Builder extends BaseBuilder
             $sql .= 'WHERE ' . implode(
                 ' AND ',
                 array_map(
-                    static function ($key, $value) use ($table, $alias, $fieldTypes) {
+                    static function ($key, $value) use ($table, $alias, $that) {
                         if ($value instanceof RawSql && is_string($key)) {
                             return $table . '.' . $key . ' = ' . $value;
                         }
@@ -381,10 +382,9 @@ class Builder extends BaseBuilder
                             return $value;
                         }
 
-                        $type = $fieldTypes[trim($value, '"')] ?? null;
-                        $cast = ($type === null) ? '' : '::' . $type;
+                        $fieldName = trim($value, '"');
 
-                        return $table . '.' . $value . ' = ' . $alias . '.' . $value . $cast;
+                        return $table . '.' . $value . ' = ' . $alias . '.' . $that->castValue($fieldName, $value);
                     },
                     array_keys($constraints),
                     $constraints
@@ -414,9 +414,27 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * @return array<string, string> [name => type]
+     * Returns cast value.
+     *
+     * @param float|int|string $value Escaped value
      */
-    private function getFieldTypes(string $table): array
+    private function castValue(string $fieldName, $value): string
+    {
+        if (! isset($this->QBOptions['fieldTypes'])) {
+            throw new LogicException(
+                'You must call getFieldTypes() before calling castValue().'
+            );
+        }
+
+        $type = $this->QBOptions['fieldTypes'][$fieldName] ?? null;
+
+        return ($type === null) ? $value : $value . '::' . $type;
+    }
+
+    /**
+     * Gets filed types from database meta data.
+     */
+    private function getFieldTypes(string $table): void
     {
         $types = [];
 
@@ -424,7 +442,7 @@ class Builder extends BaseBuilder
             $types[$field->name] = $field->type;
         }
 
-        return $types;
+        $this->QBOptions['fieldTypes'] = $types;
     }
 
     /**

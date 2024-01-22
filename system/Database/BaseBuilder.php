@@ -169,7 +169,8 @@ class BaseBuilder
      *   constraints?: array,
      *   setQueryAsData?: string,
      *   sql?: string,
-     *   alias?: string
+     *   alias?: string,
+     *   fieldTypes?: array<string, string>
      * }
      */
     protected $QBOptions;
