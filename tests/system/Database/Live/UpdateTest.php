@@ -111,7 +111,7 @@ final class UpdateTest extends CIUnitTestCase
         }
     }
 
-    public function testUpdateBatch(): void
+    public function testUpdateBatchConstraintsVarchar(): void
     {
         $table = 'type_test';
 
@@ -184,6 +184,82 @@ final class UpdateTest extends CIUnitTestCase
                 'type_text'     => 'updated',
                 'type_bigint'   => 9_999_999,
                 'type_date'     => '2024-01-01',
+                'type_datetime' => '2024-01-01 09:00:00',
+            ]);
+        }
+    }
+
+    public function testUpdateBatchConstraintsDate(): void
+    {
+        $table = 'type_test';
+
+        // Prepares test data.
+        $builder = $this->db->table($table);
+        $builder->truncate();
+
+        for ($i = 1; $i < 4; $i++) {
+            $builder->insert([
+                'type_varchar'  => 'test' . $i,
+                'type_char'     => 'char',
+                'type_text'     => 'text',
+                'type_smallint' => 32767,
+                'type_integer'  => 2_147_483_647,
+                'type_bigint'   => 9_223_372_036_854_775_807,
+                'type_float'    => 10.1,
+                'type_numeric'  => 123.23,
+                'type_date'     => '2023-12-0' . $i,
+                'type_datetime' => '2023-12-21 12:00:00',
+            ]);
+        }
+
+        $data = [
+            [
+                'type_text'     => 'updated',
+                'type_bigint'   => 9_999_999,
+                'type_date'     => '2023-12-01', // Key
+                'type_datetime' => '2024-01-01 09:00:00',
+            ],
+            [
+                'type_text'     => 'updated',
+                'type_bigint'   => 9_999_999,
+                'type_date'     => '2023-12-02', // Key
+                'type_datetime' => '2024-01-01 09:00:00',
+            ],
+        ];
+        $this->db->table($table)->updateBatch($data, 'type_date');
+
+        if ($this->db->DBDriver === 'SQLSRV') {
+            // We cannot compare `text` and `varchar` with `=`. It causes the error:
+            // [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The data types text and varchar are incompatible in the equal to operator.
+            // And data type `text`, `ntext`, `image` are deprecated in SQL Server 2016
+            // See https://github.com/codeigniter4/CodeIgniter4/pull/8439#issuecomment-1902535909
+            $this->seeInDatabase($table, [
+                'type_varchar' => 'test1',
+                // 'type_text'     => 'updated',
+                'type_bigint'   => 9_999_999,
+                'type_date'     => '2023-12-01',
+                'type_datetime' => '2024-01-01 09:00:00',
+            ]);
+            $this->seeInDatabase($table, [
+                'type_varchar' => 'test2',
+                // 'type_text'     => 'updated',
+                'type_bigint'   => 9_999_999,
+                'type_date'     => '2023-12-02',
+                'type_datetime' => '2024-01-01 09:00:00',
+            ]);
+        } else {
+            $this->seeInDatabase($table, [
+                'type_varchar'  => 'test1',
+                'type_text'     => 'updated',
+                'type_bigint'   => 9_999_999,
+                'type_date'     => '2023-12-01',
+                'type_datetime' => '2024-01-01 09:00:00',
+            ]);
+            $this->seeInDatabase($table, [
+                'type_varchar'  => 'test2',
+                'type_text'     => 'updated',
+                'type_bigint'   => 9_999_999,
+                'type_date'     => '2023-12-02',
                 'type_datetime' => '2024-01-01 09:00:00',
             ]);
         }
