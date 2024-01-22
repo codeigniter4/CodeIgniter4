@@ -321,37 +321,36 @@ final class ArrayHelper
     }
 
     /**
-     * Duplicate Array Check by Column
+     * Returns duplicate elements from an array by key(s).
      *
-     * @param array|string $column Unique Column
-     * @param array        $data   Array Data
+     * @param array|string $key   Key(s) to check
+     * @param array        $array Array Data
      */
-    public static function arrayDuplicatesBy($column, array $data = []): array
+    public static function duplicatesBy($key, array $array = []): array
     {
-        if ($data === []) {
+        if ($array === []) {
             return [];
         }
 
         $duplicateData = [];
         $dataUnique    = [];
 
-        foreach ($data as $lineIndex => $searchData) {
-            if (is_array($column)) {
-                foreach ($column as $rawColumn) {
-                    if (in_array($searchData[$rawColumn], $dataUnique[$rawColumn] ?? [], true)) {
-                        $duplicateData[$lineIndex][$rawColumn] = $searchData[$rawColumn];
-                    } else {
-                        $dataUnique[$rawColumn][] = $searchData[$rawColumn];
-                    }
-                }
-            }
+        foreach ($array as $lineIndex => $searchData) {
+            // If the specified column is an array, generate a unique key using implode
+            // to concatenate values of specified columns and create a unique identifier
+            $keyColumns = is_array($key) ? implode('-', array_intersect_key($searchData, array_flip($key))) : $searchData[$key];
 
-            if (is_string($column)) {
-                if (in_array($searchData[$column], $dataUnique[$column] ?? [], true)) {
-                    $duplicateData[$lineIndex][$column] = $searchData[$column];
+            // Check for duplicates based on the generated key
+            if (isset($dataUnique[$keyColumns])) {
+                if (is_array($key)) {
+                    foreach ($key as $rawColumn) {
+                        $duplicateData[$lineIndex][$rawColumn] = $searchData[$rawColumn];
+                    }
                 } else {
-                    $dataUnique[$column][] = $searchData[$column];
+                    $duplicateData[$lineIndex][$key] = $searchData[$key];
                 }
+            } else {
+                $dataUnique[$keyColumns] = true;
             }
         }
 

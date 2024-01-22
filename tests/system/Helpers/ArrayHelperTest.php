@@ -1291,73 +1291,119 @@ final class ArrayHelperTest extends CIUnitTestCase
     /**
      * @dataProvider provideArrayDuplicate
      *
-     * @param mixed $column
+     * @param array|string $key Key(s) to Check
      */
-    public function testArrayDuplicate($column, array $data, array $expected): void
+    public function testArrayDuplicate($key, array $data, array $expected): void
     {
-        $this->assertSame($expected, array_duplicate_by($column, $data));
+        $this->assertSame($expected, array_duplicate_by($key, $data));
     }
 
     public static function provideArrayDuplicate(): iterable
     {
-        yield 'single and multiple' => [
-            'name', // Single
-            [
+        yield from [
+            'single' => [
+                'provider_name', // Single
                 [
-                    'name' => 'Fred Flinstone',
-                    'age'  => 20,
+                    [
+                        'provider_name'    => 'Rumah Sakit Siloam',
+                        'provider_email'   => 'xxxxx@example.com',
+                        'provider_website' => 'example.com',
+                        'provider_region'  => '31.71',
+                        'provider_address' => 'wwaasawdasa',
+                    ],
+                    [
+                        'provider_name'    => 'Rumah Sakit Silorm',
+                        'provider_email'   => 'xxxxx@example.com',
+                        'provider_website' => 'example.com',
+                        'provider_region'  => '31.72',
+                        'provider_address' => 'wwaasawdasa',
+                    ],
+                    [
+                        'provider_name'    => 'Rumah Sakit Siloam',
+                        'provider_email'   => 'xxxxx@example.com',
+                        'provider_website' => 'example.com',
+                        'provider_region'  => '31.71',
+                        'provider_address' => 'wwaasawdasa',
+                    ],
+                    [
+                        'provider_name'    => 'Rumah Sakit Siloum',
+                        'provider_email'   => 'xxxxx@example.com',
+                        'provider_website' => 'example.com',
+                        'provider_region'  => '31.74',
+                        'provider_address' => 'wwaasawdasa',
+                    ],
+                    [
+                        'provider_name'    => 'Rumah Sakit Siloem',
+                        'provider_email'   => 'xxxxx@example.com',
+                        'provider_website' => 'example.com',
+                        'provider_region'  => '31.75',
+                        'provider_address' => 'wwaasawdasa',
+                    ],
+                    [
+                        'provider_name'    => 'Rumah Sakit Silosm',
+                        'provider_email'   => 'xxxxx@example.com',
+                        'provider_website' => 'example.com',
+                        'provider_region'  => '31.76',
+                        'provider_address' => 'wwaasawdasa',
+                    ],
                 ],
                 [
-                    'name' => 'Brad Pierce',
-                    'age'  => 30,
-                ],
-                [
-                    'name' => 'Fred Flinstone',
-                    'age'  => 70,
-                ],
-                [
-                    'name' => 'Michelle Stone',
-                    'age'  => 30,
-                ],
-                [
-                    'name' => 'Michael Bram',
-                    'age'  => 40,
+                    2 => [
+                        'provider_name' => 'Rumah Sakit Siloam',
+                    ],
                 ],
             ],
-            [
-                2 => [
-                    'name' => 'Fred Flinstone',
-                ],
-            ],
-            ['name', 'age'], // Multiple
-            [
+            'multiple' => [
+                ['provider_name', 'provider_region'], // Multiple
                 [
-                    'name' => 'Fred Flinstone',
-                    'age'  => 20,
+                    [
+                        'provider_name'    => 'Rumah Sakit Siloam',
+                        'provider_email'   => 'xxxx@example.com',
+                        'provider_website' => 'example.com',
+                        'provider_region'  => '31.71',
+                        'provider_address' => 'wwaasawdasa',
+                    ],
+                    [
+                        'provider_name'    => 'Rumah Sakit Silorm',
+                        'provider_email'   => 'xxxx@example.com',
+                        'provider_website' => 'example.com',
+                        'provider_region'  => '31.72',
+                        'provider_address' => 'wwaasawdasa',
+                    ],
+                    [
+                        'provider_name'    => 'Rumah Sakit Siloam',
+                        'provider_email'   => 'xxxx@example.com',
+                        'provider_website' => 'example.com',
+                        'provider_region'  => '31.71',
+                        'provider_address' => 'wwaasawdasa',
+                    ],
+                    [
+                        'provider_name'    => 'Rumah Sakit Siloum',
+                        'provider_email'   => 'xxxx@example.com',
+                        'provider_website' => 'example.com',
+                        'provider_region'  => '31.74',
+                        'provider_address' => 'wwaasawdasa',
+                    ],
+                    [
+                        'provider_name'    => 'Rumah Sakit Siloem',
+                        'provider_email'   => 'xxxx@example.com',
+                        'provider_website' => 'example.com',
+                        'provider_region'  => '31.75',
+                        'provider_address' => 'wwaasawdasa',
+                    ],
+                    [
+                        'provider_name'    => 'Rumah Sakit Silosm',
+                        'provider_email'   => 'xxxx@example.com',
+                        'provider_website' => 'example.com',
+                        'provider_region'  => '31.76',
+                        'provider_address' => 'wwaasawdasa',
+                    ],
                 ],
                 [
-                    'name' => 'Brad Pierce',
-                    'age'  => 30,
-                ],
-                [
-                    'name' => 'Fred Flinstone',
-                    'age'  => 70,
-                ],
-                [
-                    'name' => 'Michelle Stone',
-                    'age'  => 30,
-                ],
-                [
-                    'name' => 'Michael Bram',
-                    'age'  => 40,
-                ],
-            ],
-            [
-                2 => [
-                    'name' => 'Fred Flinstone',
-                ],
-                3 => [
-                    'age' => 30,
+                    2 => [
+                        'provider_name'   => 'Rumah Sakit Siloam',
+                        'provider_region' => '31.71',
+                    ],
                 ],
             ],
         ];

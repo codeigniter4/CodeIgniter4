@@ -17,16 +17,16 @@ use CodeIgniter\Helpers\Array\ArrayHelper;
 
 if (! function_exists('array_duplicate_by')) {
     /**
-     * Duplicate array check by column.
+     * Returns duplicate elements from an array by key(s).
      *
-     * @param array|string $column Unique Column
-     * @param array        $data   Array Data
+     * @param array|string $key   Key(s) to check
+     * @param array        $array Array Data
      *
      * @return array
      */
-    function array_duplicate_by($column, array $data = [])
+    function array_duplicate_by($key, array $array = [])
     {
-        return ArrayHelper::arrayDuplicatesBy($column, $data);
+        return ArrayHelper::duplicatesBy($key, $array);
     }
 }
 
