@@ -19,7 +19,7 @@ namespace CodeIgniter\Entity\Cast;
 interface CastInterface
 {
     /**
-     * Get
+     * Takes a value from Database, returns its value for PHP.
      *
      * @param array|bool|float|int|object|string|null $value  Data
      * @param array                                   $params Additional param
@@ -29,7 +29,7 @@ interface CastInterface
     public static function get($value, array $params = []);
 
     /**
-     * Set
+     * Takes a PHP value, returns its value for Database.
      *
      * @param array|bool|float|int|object|string|null $value  Data
      * @param array                                   $params Additional param
