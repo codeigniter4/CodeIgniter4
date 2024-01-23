@@ -353,7 +353,7 @@ class Builder extends BaseBuilder
                 array_map(
                     static fn ($key, $value) => $key . ($value instanceof RawSql ?
                             ' = ' . $value :
-                            ' = ' . $alias . '.' . $that->cast($value, $that->getFieldType($table, $key))),
+                            ' = ' . $that->cast($alias . '.' . $value, $that->getFieldType($table, $key))),
                     array_keys($updateFields),
                     $updateFields
                 )
@@ -375,7 +375,8 @@ class Builder extends BaseBuilder
                             return $value;
                         }
 
-                        return $table . '.' . $value . ' = ' . $alias . '.' . $that->cast($value, $that->getFieldType($table, $value));
+                        return $table . '.' . $value . ' = '
+                            . $that->cast($alias . '.' . $value, $that->getFieldType($table, $value));
                     },
                     array_keys($constraints),
                     $constraints
@@ -413,7 +414,7 @@ class Builder extends BaseBuilder
      */
     private function cast($expression, ?string $type): string
     {
-        return ($type === null) ? $expression : $expression . '::' . strtoupper($type);
+        return ($type === null) ? $expression : 'CAST(' . $expression . ' AS ' . strtoupper($type) . ')';
     }
 
     /**
