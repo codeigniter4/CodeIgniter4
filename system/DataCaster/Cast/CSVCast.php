@@ -11,35 +11,33 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\DataConverter\Cast;
-
-use CodeIgniter\HTTP\URI;
+namespace CodeIgniter\DataCaster\Cast;
 
 /**
- * Class URICast
+ * Class CSVCast
  *
- * (PHP) [URI --> string] --> (DB driver) --> (DB column) string
- *       [    <-- string] <-- (DB driver) <-- (DB column) string
+ * (PHP) [array --> string] --> (DB driver) --> (DB column) string
+ *       [      <-- string] <-- (DB driver) <-- (DB column) string
  *
- * @extends BaseCast<URI, string, mixed>
+ * @extends BaseCast<array, string, mixed>
  */
-class URICast extends BaseCast
+class CSVCast extends BaseCast
 {
-    public static function get(mixed $value, array $params = []): URI
+    public static function get(mixed $value, array $params = []): array
     {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
         }
 
-        return new URI($value);
+        return explode(',', $value);
     }
 
     public static function set(mixed $value, array $params = []): string
     {
-        if (! $value instanceof URI) {
+        if (! is_array($value)) {
             self::invalidTypeValueError($value);
         }
 
-        return (string) $value;
+        return implode(',', $value);
     }
 }

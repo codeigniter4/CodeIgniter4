@@ -472,7 +472,7 @@ final class DataConverterTest extends CIUnitTestCase
     {
         $this->expectException(TypeError::class);
         $this->expectExceptionMessage(
-            '[CodeIgniter\DataConverter\Cast\JsonCast] Invalid value type: bool, and its value: true'
+            '[CodeIgniter\DataCaster\Cast\JsonCast] Invalid value type: bool, and its value: true'
         );
 
         $types = [

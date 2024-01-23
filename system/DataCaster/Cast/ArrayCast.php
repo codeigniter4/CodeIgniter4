@@ -11,17 +11,17 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\DataConverter\Cast;
+namespace CodeIgniter\DataCaster\Cast;
 
 /**
- * Class CSVCast
+ * Class ArrayCast
  *
  * (PHP) [array --> string] --> (DB driver) --> (DB column) string
  *       [      <-- string] <-- (DB driver) <-- (DB column) string
  *
- * @extends BaseCast<array, string, mixed>
+ * @extends BaseCast<mixed[], string, mixed>
  */
-class CSVCast extends BaseCast
+class ArrayCast extends BaseCast implements CastInterface
 {
     public static function get(mixed $value, array $params = []): array
     {
@@ -29,15 +29,15 @@ class CSVCast extends BaseCast
             self::invalidTypeValueError($value);
         }
 
-        return explode(',', $value);
+        if ((strpos($value, 'a:') === 0 || strpos($value, 's:') === 0)) {
+            $value = unserialize($value, ['allowed_classes' => false]);
+        }
+
+        return (array) $value;
     }
 
     public static function set(mixed $value, array $params = []): string
     {
-        if (! is_array($value)) {
-            self::invalidTypeValueError($value);
-        }
-
-        return implode(',', $value);
+        return serialize($value);
     }
 }

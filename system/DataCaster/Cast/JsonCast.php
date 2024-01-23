@@ -11,9 +11,9 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\DataConverter\Cast;
+namespace CodeIgniter\DataCaster\Cast;
 
-use CodeIgniter\DataConverter\Exceptions\CastException;
+use CodeIgniter\DataCaster\Exceptions\CastException;
 use JsonException;
 use stdClass;
 

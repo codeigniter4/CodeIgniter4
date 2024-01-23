@@ -13,17 +13,17 @@ declare(strict_types=1);
 
 namespace CodeIgniter\DataConverter;
 
-use CodeIgniter\DataConverter\Cast\ArrayCast;
-use CodeIgniter\DataConverter\Cast\BooleanCast;
-use CodeIgniter\DataConverter\Cast\CastInterface;
-use CodeIgniter\DataConverter\Cast\CSVCast;
-use CodeIgniter\DataConverter\Cast\DatetimeCast;
-use CodeIgniter\DataConverter\Cast\FloatCast;
-use CodeIgniter\DataConverter\Cast\IntBoolCast;
-use CodeIgniter\DataConverter\Cast\IntegerCast;
-use CodeIgniter\DataConverter\Cast\JsonCast;
-use CodeIgniter\DataConverter\Cast\TimestampCast;
-use CodeIgniter\DataConverter\Cast\URICast;
+use CodeIgniter\DataCaster\Cast\ArrayCast;
+use CodeIgniter\DataCaster\Cast\BooleanCast;
+use CodeIgniter\DataCaster\Cast\CastInterface;
+use CodeIgniter\DataCaster\Cast\CSVCast;
+use CodeIgniter\DataCaster\Cast\DatetimeCast;
+use CodeIgniter\DataCaster\Cast\FloatCast;
+use CodeIgniter\DataCaster\Cast\IntBoolCast;
+use CodeIgniter\DataCaster\Cast\IntegerCast;
+use CodeIgniter\DataCaster\Cast\JsonCast;
+use CodeIgniter\DataCaster\Cast\TimestampCast;
+use CodeIgniter\DataCaster\Cast\URICast;
 use InvalidArgumentException;
 use TypeError;
 
