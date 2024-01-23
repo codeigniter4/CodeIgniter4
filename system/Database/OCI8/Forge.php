@@ -254,7 +254,6 @@ class Forge extends BaseForge
                 $attributes['TYPE']       = 'NUMBER';
                 $attributes['CONSTRAINT'] = 1;
                 $attributes['UNSIGNED']   = true;
-                $attributes['NULL']       = false;
 
                 return;
 
