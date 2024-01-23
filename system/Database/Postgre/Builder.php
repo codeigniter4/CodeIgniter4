@@ -352,11 +352,9 @@ class Builder extends BaseBuilder
                 ",\n",
                 array_map(
                     static function ($key, $value) use ($table, $alias, $that) {
-                        $fieldName = trim($key, '"');
-
                         return $key . ($value instanceof RawSql ?
                                 ' = ' . $value :
-                                ' = ' . $alias . '.' . $that->castValue($table, $key, $value));
+                                ' = ' . $alias . '.' . $that->cast($value, $that->getFieldType($table, $key)));
                     },
                     array_keys($updateFields),
                     $updateFields
@@ -379,7 +377,7 @@ class Builder extends BaseBuilder
                             return $value;
                         }
 
-                        return $table . '.' . $value . ' = ' . $alias . '.' . $that->castValue($table, $value, $value);
+                        return $table . '.' . $value . ' = ' . $alias . '.' . $that->cast($value, $that->getFieldType($table, $value));
                     },
                     array_keys($constraints),
                     $constraints
@@ -409,39 +407,36 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Returns cast value.
+     * Returns cast expression.
      *
-     * @param string           $table     Protected Table name.
-     * @param string           $fieldName Field name. May be protected.
-     * @param float|int|string $value     Escaped value
+     * @TODO move this to BaseBuilder in 4.5.0
+     *
+     * @param float|int|string $expression
      */
-    private function castValue(string $table, string $fieldName, $value): string
+    private function cast($expression, ?string $type): string
+    {
+        return ($type === null) ? $expression : $expression . '::' . strtoupper($type);
+    }
+
+    /**
+     * Returns the filed type from database meta data.
+     *
+     * @param string $table     Protected table name.
+     * @param string $fieldName Field name. May be protected.
+     */
+    private function getFieldType(string $table, string $fieldName): ?string
     {
         $fieldName = trim($fieldName, $this->db->escapeChar);
 
         if (! isset($this->QBOptions['fieldTypes'][$table])) {
-            $this->getFieldTypes($table);
+            $this->QBOptions['fieldTypes'][$table] = [];
+
+            foreach ($this->db->getFieldData($table) as $field) {
+                $this->QBOptions['fieldTypes'][$table][$field->name] = $field->type;
+            }
         }
 
-        $type = $this->QBOptions['fieldTypes'][$table][$fieldName] ?? null;
-
-        return ($type === null) ? $value : $value . '::' . strtoupper($type);
-    }
-
-    /**
-     * Gets filed types from database meta data.
-     *
-     * @param string $table Protected Table name.
-     */
-    private function getFieldTypes(string $table): void
-    {
-        $types = [];
-
-        foreach ($this->db->getFieldData($table) as $field) {
-            $types[$field->name] = $field->type;
-        }
-
-        $this->QBOptions['fieldTypes'][$table] = $types;
+        return $this->QBOptions['fieldTypes'][$table][$fieldName] ?? null;
     }
 
     /**
