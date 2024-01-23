@@ -20,8 +20,6 @@ use CodeIgniter\HTTP\URI;
  *
  * (PHP) [URI --> string] --> (DB driver) --> (DB column) string
  *       [    <-- string] <-- (DB driver) <-- (DB column) string
- *
- * @extends BaseCast<URI, string, mixed>
  */
 class URICast extends BaseCast
 {

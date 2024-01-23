@@ -15,13 +15,6 @@ namespace CodeIgniter\DataCaster\Cast;
 
 use TypeError;
 
-/**
- * @template TPhpValue PHP data type
- * @template TToDb     Data type to pass to database driver
- * @template TDbColumn Data type from database driver
- *
- * @implements CastInterface<TPhpValue, TToDb, TDbColumn>
- */
 abstract class BaseCast implements CastInterface
 {
     public static function get(mixed $value, array $params = []): mixed

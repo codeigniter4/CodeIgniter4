@@ -18,8 +18,6 @@ namespace CodeIgniter\DataCaster\Cast;
  *
  * (PHP) [array --> string] --> (DB driver) --> (DB column) string
  *       [      <-- string] <-- (DB driver) <-- (DB column) string
- *
- * @extends BaseCast<array, string, mixed>
  */
 class CSVCast extends BaseCast
 {

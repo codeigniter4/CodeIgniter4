@@ -22,8 +22,6 @@ use stdClass;
  *
  * (PHP) [array|stdClass --> string] --> (DB driver) --> (DB column) string
  *       [               <-- string] <-- (DB driver) <-- (DB column) string
- *
- * @extends BaseCast<array|stdClass, string, mixed>
  */
 class JsonCast extends BaseCast
 {

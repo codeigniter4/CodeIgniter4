@@ -18,8 +18,6 @@ namespace CodeIgniter\DataCaster\Cast;
  *
  * (PHP) [array --> string] --> (DB driver) --> (DB column) string
  *       [      <-- string] <-- (DB driver) <-- (DB column) string
- *
- * @extends BaseCast<mixed[], string, mixed>
  */
 class ArrayCast extends BaseCast implements CastInterface
 {

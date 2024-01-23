@@ -18,8 +18,6 @@ namespace CodeIgniter\DataCaster\Cast;
  *
  * (PHP) [int --> int       ] --> (DB driver) --> (DB column) int
  *       [    <-- int|string] <-- (DB driver) <-- (DB column) int
- *
- * @extends BaseCast<int, int, mixed>
  */
 class IntegerCast extends BaseCast
 {

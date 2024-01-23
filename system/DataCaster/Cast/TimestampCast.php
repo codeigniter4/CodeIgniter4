@@ -20,8 +20,6 @@ use CodeIgniter\I18n\Time;
  *
  * (PHP) [Time --> int       ] --> (DB driver) --> (DB column) int
  *       [     <-- int|string] <-- (DB driver) <-- (DB column) int
- *
- * @extends BaseCast<Time, int, mixed>
  */
 class TimestampCast extends BaseCast
 {

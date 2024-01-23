@@ -18,8 +18,6 @@ namespace CodeIgniter\DataCaster\Cast;
  *
  * (PHP) [float --> float       ] --> (DB driver) --> (DB column) float
  *       [      <-- float|string] <-- (DB driver) <-- (DB column) float
- *
- * @extends BaseCast<float, float, mixed>
  */
 class FloatCast extends BaseCast
 {
