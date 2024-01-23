@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.16.0@2897ba636551a8cb61601cc26f6ccfbba6c36591">
+<files psalm-version="5.20.0@3f284e96c9d9be6fe6b15c79416e1d1903dcfef4">
   <file src="app/Config/View.php">
     <UndefinedDocblockClass>
       <code><![CDATA[array<string, ParserCallableString>]]></code>
@@ -80,51 +80,10 @@
     ];]]></code>
     </UndefinedDocblockClass>
   </file>
-  <file src="system/DataConverter/Cast/ArrayCast.php">
-    <MissingTemplateParam>
-      <code>CastInterface</code>
-    </MissingTemplateParam>
-  </file>
-  <file src="system/DataConverter/Cast/CSVCast.php">
-    <NoValue>
-      <code>$value</code>
-      <code>$value</code>
-    </NoValue>
-  </file>
-  <file src="system/DataConverter/Cast/CastInterface.php">
-    <UndefinedDocblockClass>
-      <code>TDbColumn</code>
-      <code>TPhpValue</code>
-    </UndefinedDocblockClass>
-  </file>
-  <file src="system/DataConverter/Cast/DatetimeCast.php">
-    <NoValue>
-      <code>$value</code>
-    </NoValue>
-  </file>
-  <file src="system/DataConverter/Cast/JsonCast.php">
-    <NoValue>
-      <code>$value</code>
-    </NoValue>
-  </file>
-  <file src="system/DataConverter/Cast/URICast.php">
-    <NoValue>
-      <code>$value</code>
-    </NoValue>
-  </file>
   <file src="system/Database/BasePreparedQuery.php">
     <InaccessibleProperty>
       <code><![CDATA[$this->db->transStatus]]></code>
     </InaccessibleProperty>
-  </file>
-  <file src="system/Database/OCI8/Connection.php">
-    <UndefinedConstant>
-      <code>OCI_COMMIT_ON_SUCCESS</code>
-      <code>OCI_COMMIT_ON_SUCCESS</code>
-      <code>OCI_COMMIT_ON_SUCCESS</code>
-      <code>OCI_NO_AUTO_COMMIT</code>
-      <code>SQLT_CHR</code>
-    </UndefinedConstant>
   </file>
   <file src="system/Debug/Toolbar/Views/toolbar.tpl.php">
     <InaccessibleMethod>
@@ -196,13 +155,6 @@
       <code><![CDATA['App\Models\UserModel']]></code>
       <code><![CDATA['Config\TestRegistrar']]></code>
     </UndefinedClass>
-  </file>
-  <file src="tests/system/Database/Live/OCI8/CallStoredProcedureTest.php">
-    <UndefinedConstant>
-      <code>OCI_ASSOC</code>
-      <code>OCI_B_CURSOR</code>
-      <code>OCI_RETURN_NULLS</code>
-    </UndefinedConstant>
   </file>
   <file src="tests/system/Entity/EntityTest.php">
     <EmptyArrayAccess>
