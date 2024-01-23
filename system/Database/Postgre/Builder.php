@@ -15,7 +15,6 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
 use InvalidArgumentException;
-use LogicException;
 
 /**
  * Builder for Postgre
@@ -348,18 +347,16 @@ class Builder extends BaseBuilder
 
             $sql .= "SET\n";
 
-            $this->getFieldTypes($table);
-
             $that = $this;
             $sql .= implode(
                 ",\n",
                 array_map(
-                    static function ($key, $value) use ($alias, $that) {
+                    static function ($key, $value) use ($table, $alias, $that) {
                         $fieldName = trim($key, '"');
 
                         return $key . ($value instanceof RawSql ?
                                 ' = ' . $value :
-                                ' = ' . $alias . '.' . $that->castValue($fieldName, $value));
+                                ' = ' . $alias . '.' . $that->castValue($table, $key, $value));
                     },
                     array_keys($updateFields),
                     $updateFields
@@ -382,9 +379,7 @@ class Builder extends BaseBuilder
                             return $value;
                         }
 
-                        $fieldName = trim($value, '"');
-
-                        return $table . '.' . $value . ' = ' . $alias . '.' . $that->castValue($fieldName, $value);
+                        return $table . '.' . $value . ' = ' . $alias . '.' . $that->castValue($table, $value, $value);
                     },
                     array_keys($constraints),
                     $constraints
@@ -416,23 +411,27 @@ class Builder extends BaseBuilder
     /**
      * Returns cast value.
      *
-     * @param float|int|string $value Escaped value
+     * @param string           $table     Protected Table name.
+     * @param string           $fieldName Field name. May be protected.
+     * @param float|int|string $value     Escaped value
      */
-    private function castValue(string $fieldName, $value): string
+    private function castValue(string $table, string $fieldName, $value): string
     {
-        if (! isset($this->QBOptions['fieldTypes'])) {
-            throw new LogicException(
-                'You must call getFieldTypes() before calling castValue().'
-            );
+        $fieldName = trim($fieldName, $this->db->escapeChar);
+
+        if (! isset($this->QBOptions['fieldTypes'][$table])) {
+            $this->getFieldTypes($table);
         }
 
-        $type = $this->QBOptions['fieldTypes'][$fieldName] ?? null;
+        $type = $this->QBOptions['fieldTypes'][$table][$fieldName] ?? null;
 
         return ($type === null) ? $value : $value . '::' . strtoupper($type);
     }
 
     /**
      * Gets filed types from database meta data.
+     *
+     * @param string $table Protected Table name.
      */
     private function getFieldTypes(string $table): void
     {
@@ -442,7 +441,7 @@ class Builder extends BaseBuilder
             $types[$field->name] = $field->type;
         }
 
-        $this->QBOptions['fieldTypes'] = $types;
+        $this->QBOptions['fieldTypes'][$table] = $types;
     }
 
     /**
