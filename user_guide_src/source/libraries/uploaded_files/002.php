@@ -27,7 +27,10 @@ class Upload extends BaseController
                 ],
             ],
         ];
-        if (! $this->validate($validationRule)) {
+
+        $postData = ['userfile' => $this->request->getPost('userfile')];
+        
+        if (! $this->validateData($postData, $validationRule)) {
             $data = ['errors' => $this->validator->getErrors()];
 
             return view('upload_form', $data);
