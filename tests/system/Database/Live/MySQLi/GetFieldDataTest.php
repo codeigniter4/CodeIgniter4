@@ -11,7 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Live\SQLite3;
+namespace CodeIgniter\Database\Live\MySQLi;
 
 use CodeIgniter\Database\Live\AbstractGetFieldDataTest;
 use Config\Database;
@@ -25,17 +25,25 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
 {
     protected function createForge(): void
     {
-        if ($this->db->DBDriver !== 'SQLite3') {
-            $this->markTestSkipped('This test is only for SQLite3.');
+        if ($this->db->DBDriver !== 'MySQLi') {
+            $this->markTestSkipped('This test is only for MySQLi.');
         }
 
-        $config = [
-            'DBDriver' => 'SQLite3',
-            'database' => 'database.db',
-            'DBDebug'  => true,
-        ];
-        $this->db    = db_connect($config);
-        $this->forge = Database::forge($config);
+        $this->forge = Database::forge($this->db);
+    }
+
+    /**
+     * As of MySQL 8.0.17, the display width attribute for integer data types
+     * is deprecated and is not reported back anymore.
+     *
+     * @see https://dev.mysql.com/doc/refman/8.0/en/numeric-type-attributes.html
+     */
+    private function isOldMySQL(): bool
+    {
+        return ! (
+            version_compare($this->db->getVersion(), '8.0.17', '>=')
+            && strpos($this->db->getVersion(), 'MariaDB') === false
+        );
     }
 
     public function testGetFieldData(): void
@@ -46,58 +54,58 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             json_encode([
                 (object) [
                     'name'        => 'id',
-                    'type'        => 'INTEGER',
-                    'max_length'  => null,
+                    'type'        => 'int',
+                    'max_length'  => $this->isOldMySQL() ? 11 : null,
                     'default'     => null, // The default value is not defined.
-                    'primary_key' => true,
-                    'nullable'    => true,
+                    'primary_key' => 1,
+                    'nullable'    => false,
                 ],
                 (object) [
                     'name'        => 'text_not_null',
-                    'type'        => 'VARCHAR',
-                    'max_length'  => null,
+                    'type'        => 'varchar',
+                    'max_length'  => 64,
                     'default'     => null, // The default value is not defined.
-                    'primary_key' => false,
+                    'primary_key' => 0,
                     'nullable'    => false,
                 ],
                 (object) [
                     'name'        => 'text_null',
-                    'type'        => 'VARCHAR',
-                    'max_length'  => null,
+                    'type'        => 'varchar',
+                    'max_length'  => 64,
                     'default'     => null, // The default value is not defined.
-                    'primary_key' => false,
+                    'primary_key' => 0,
                     'nullable'    => true,
                 ],
                 (object) [
                     'name'        => 'int_default_0',
-                    'type'        => 'INT',
-                    'max_length'  => null,
+                    'type'        => 'int',
+                    'max_length'  => $this->isOldMySQL() ? 11 : null,
                     'default'     => '0', // int 0
-                    'primary_key' => false,
+                    'primary_key' => 0,
                     'nullable'    => false,
                 ],
                 (object) [
                     'name'        => 'text_default_null',
-                    'type'        => 'VARCHAR',
-                    'max_length'  => null,
-                    'default'     => 'NULL', // NULL value
-                    'primary_key' => false,
+                    'type'        => 'varchar',
+                    'max_length'  => 64,
+                    'default'     => null, // NULL value
+                    'primary_key' => 0,
                     'nullable'    => true,
                 ],
                 (object) [
                     'name'        => 'text_default_text_null',
-                    'type'        => 'VARCHAR',
-                    'max_length'  => null,
-                    'default'     => "'null'", // string "null"
-                    'primary_key' => false,
+                    'type'        => 'varchar',
+                    'max_length'  => 64,
+                    'default'     => 'null', // string "null"
+                    'primary_key' => 0,
                     'nullable'    => false,
                 ],
                 (object) [
                     'name'        => 'text_default_abc',
-                    'type'        => 'VARCHAR',
-                    'max_length'  => null,
-                    'default'     => "'abc'", // string "abc"
-                    'primary_key' => false,
+                    'type'        => 'varchar',
+                    'max_length'  => 64,
+                    'default'     => 'abc', // string "abc"
+                    'primary_key' => 0,
                     'nullable'    => false,
                 ],
             ]),
