@@ -351,11 +351,9 @@ class Builder extends BaseBuilder
             $sql .= implode(
                 ",\n",
                 array_map(
-                    static function ($key, $value) use ($table, $alias, $that) {
-                        return $key . ($value instanceof RawSql ?
-                                ' = ' . $value :
-                                ' = ' . $alias . '.' . $that->cast($value, $that->getFieldType($table, $key)));
-                    },
+                    static fn ($key, $value) => $key . ($value instanceof RawSql ?
+                            ' = ' . $value :
+                            ' = ' . $alias . '.' . $that->cast($value, $that->getFieldType($table, $key))),
                     array_keys($updateFields),
                     $updateFields
                 )
