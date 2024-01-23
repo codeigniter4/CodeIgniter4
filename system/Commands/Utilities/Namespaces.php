@@ -139,13 +139,13 @@ class Namespaces extends BaseCommand
         $tbody = [];
 
         foreach ($config->psr4 as $ns => $paths) {
-            if (array_key_exists('r', $params)) {
-                $pathOutput = $this->truncate($paths, $maxLength);
-            } else {
-                $pathOutput = $this->truncate(clean_path($paths), $maxLength);
-            }
-
             foreach ((array) $paths as $path) {
+                if (array_key_exists('r', $params)) {
+                    $pathOutput = $this->truncate($path, $maxLength);
+                } else {
+                    $pathOutput = $this->truncate(clean_path($path), $maxLength);
+                }
+
                 $path = realpath($path) ?: $path;
 
                 $tbody[] = [

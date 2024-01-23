@@ -91,7 +91,7 @@ class AutoloadConfig
      * @var array<string, string>
      */
     protected $corePsr4 = [
-        'CodeIgniter' => SYSTEMPATH,
+        'CodeIgniter' => [SYSTEMPATH, TESTPATH . 'system'],
         'Config'      => APPPATH . 'Config',
         'Tests'       => ROOTPATH . 'tests',
     ];
@@ -106,7 +106,7 @@ class AutoloadConfig
      * searched for within one or more directories as they would if they
      * were being autoloaded through a namespace.
      *
-     * @var array<string, string>
+     * @var array<class-string, string>
      */
     protected $coreClassmap = [
         AbstractLogger::class                  => SYSTEMPATH . 'ThirdParty/PSR/Log/AbstractLogger.php',

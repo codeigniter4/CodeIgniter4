@@ -175,6 +175,8 @@ class FileLocator implements FileLocatorInterface
      *      'app/Modules/foo/Config/Routes.php',
      *      'app/Modules/bar/Config/Routes.php',
      *  ]
+     *
+     * @return list<string>
      */
     public function search(string $path, string $ext = 'php', bool $prioritizeApp = true): array
     {
@@ -203,7 +205,7 @@ class FileLocator implements FileLocatorInterface
         }
 
         // Remove any duplicates
-        return array_unique($foundPaths);
+        return array_values(array_unique($foundPaths));
     }
 
     /**
@@ -237,7 +239,7 @@ class FileLocator implements FileLocatorInterface
         foreach ($this->autoloader->getNamespace() as $prefix => $paths) {
             foreach ($paths as $path) {
                 if ($prefix === 'CodeIgniter') {
-                    $system = [
+                    $system[] = [
                         'prefix' => $prefix,
                         'path'   => rtrim($path, '\\/') . DIRECTORY_SEPARATOR,
                     ];
@@ -252,9 +254,7 @@ class FileLocator implements FileLocatorInterface
             }
         }
 
-        $namespaces[] = $system;
-
-        return $namespaces;
+        return array_merge($namespaces, $system);
     }
 
     /**

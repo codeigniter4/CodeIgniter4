@@ -63,14 +63,14 @@ class Autoloader
     /**
      * Stores namespaces as key, and path as values.
      *
-     * @var array<string, array<string>>
+     * @var array<string, list<string>>
      */
     protected $prefixes = [];
 
     /**
      * Stores class name as key, and path as values.
      *
-     * @var array<string, string>
+     * @var array<class-string, string>
      */
     protected $classmap = [];
 
@@ -215,7 +215,8 @@ class Autoloader
      *
      * If a prefix param is set, returns only paths to the given prefix.
      *
-     * @return array
+     * @return array<string, list<string>>|list<string>
+     * @phpstan-return ($prefix is null ? array<string, list<string>> : list<string>)
      */
     public function getNamespace(?string $prefix = null)
     {
