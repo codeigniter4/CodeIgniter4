@@ -21,7 +21,7 @@ the response's ``Content-Security-Policy`` header and offers various configurati
 options.
 
 This sounds complex, and on some sites, can definitely be challenging. For many simple sites, though, where all content
-is served by the same domain (http://example.com), it is very simple to integrate.
+is served by the same domain (e.g., **http://example.com**), it is very simple to integrate.
 
 As this is a complex subject, this user guide will not go over all of the details. For more information, you should
 visit the following sites:
