@@ -35,6 +35,10 @@ parameters:
       collectors:
         - type: className
           regex: ^Codeigniter\\Database\\.*
+    - name: DataCaster
+      collectors:
+        - type: className
+          regex: ^Codeigniter\\DataCaster\\.*
     - name: DataConverter
       collectors:
         - type: className
@@ -170,13 +174,16 @@ parameters:
       - Entity
       - Events
       - I18n
-    DataConverter:
+    DataCaster:
       - I18n
       - URI
+    DataConverter:
+      - DataCaster
     Email:
       - I18n
       - Events
     Entity:
+      - DataCaster
       - I18n
     Files:
       - I18n
@@ -235,7 +242,10 @@ parameters:
       - CodeIgniter\HTTP\Header
       - CodeIgniter\HTTP\IncomingRequest
       - CodeIgniter\HTTP\ResponseInterface
-    CodeIgniter\DataConverter\Exceptions\CastException:
+    CodeIgniter\DataCaster\DataCaster:
+      - CodeIgniter\Entity\Cast\CastInterface
+      - CodeIgniter\Entity\Exceptions\CastException
+    CodeIgniter\DataCaster\Exceptions\CastException:
       - CodeIgniter\Entity\Exceptions\CastException
     CodeIgniter\Entity\Cast\URICast:
       - CodeIgniter\HTTP\URI
