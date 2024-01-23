@@ -1759,6 +1759,8 @@ class BaseBuilder
     /**
      * Compiles batch insert/update/upsert strings and runs the queries
      *
+     * @param '_deleteBatch'|'_insertBatch'|'_updateBatch'|'_upsertBatch' $renderMethod
+     *
      * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
      *
      * @throws DatabaseException
