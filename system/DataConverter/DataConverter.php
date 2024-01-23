@@ -28,8 +28,8 @@ final class DataConverter
     private DataCaster $dataCaster;
 
     /**
-     * @param array<string, string> $types        [column => type]
-     * @param array                 $castHandlers Custom convert handlers
+     * @param array<string, string>       $types        [column => type]
+     * @param array<string, class-string> $castHandlers Custom convert handlers
      */
     public function __construct(array $types, array $castHandlers = [])
     {
