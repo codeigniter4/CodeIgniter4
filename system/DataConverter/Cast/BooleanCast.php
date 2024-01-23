@@ -23,7 +23,7 @@ namespace CodeIgniter\DataConverter\Cast;
  */
 class BooleanCast extends BaseCast
 {
-    public static function fromDataSource(mixed $value, array $params = []): bool
+    public static function get(mixed $value, array $params = []): bool
     {
         // For PostgreSQL
         if ($value === 't') {

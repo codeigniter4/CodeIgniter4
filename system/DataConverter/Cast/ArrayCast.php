@@ -23,7 +23,7 @@ namespace CodeIgniter\DataConverter\Cast;
  */
 class ArrayCast extends BaseCast implements CastInterface
 {
-    public static function fromDataSource(mixed $value, array $params = []): array
+    public static function get(mixed $value, array $params = []): array
     {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -36,7 +36,7 @@ class ArrayCast extends BaseCast implements CastInterface
         return (array) $value;
     }
 
-    public static function toDataSource(mixed $value, array $params = []): string
+    public static function set(mixed $value, array $params = []): string
     {
         return serialize($value);
     }

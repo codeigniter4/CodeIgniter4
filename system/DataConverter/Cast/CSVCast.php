@@ -23,7 +23,7 @@ namespace CodeIgniter\DataConverter\Cast;
  */
 class CSVCast extends BaseCast
 {
-    public static function fromDataSource(mixed $value, array $params = []): array
+    public static function get(mixed $value, array $params = []): array
     {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -32,7 +32,7 @@ class CSVCast extends BaseCast
         return explode(',', $value);
     }
 
-    public static function toDataSource(mixed $value, array $params = []): string
+    public static function set(mixed $value, array $params = []): string
     {
         if (! is_array($value)) {
             self::invalidTypeValueError($value);

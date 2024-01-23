@@ -25,7 +25,7 @@ use CodeIgniter\HTTP\URI;
  */
 class URICast extends BaseCast
 {
-    public static function fromDataSource(mixed $value, array $params = []): URI
+    public static function get(mixed $value, array $params = []): URI
     {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -34,7 +34,7 @@ class URICast extends BaseCast
         return new URI($value);
     }
 
-    public static function toDataSource(mixed $value, array $params = []): string
+    public static function set(mixed $value, array $params = []): string
     {
         if (! $value instanceof URI) {
             self::invalidTypeValueError($value);

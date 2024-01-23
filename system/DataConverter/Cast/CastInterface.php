@@ -28,7 +28,7 @@ interface CastInterface
      *
      * @return TPhpValue PHP native value
      */
-    public static function fromDataSource(mixed $value, array $params = []): mixed;
+    public static function get(mixed $value, array $params = []): mixed;
 
     /**
      * Takes the PHP value, returns its value for DataSource.
@@ -38,5 +38,5 @@ interface CastInterface
      *
      * @return TToDb Data to pass to database driver
      */
-    public static function toDataSource(mixed $value, array $params = []): mixed;
+    public static function set(mixed $value, array $params = []): mixed;
 }

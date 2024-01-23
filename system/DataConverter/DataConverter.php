@@ -87,7 +87,7 @@ class DataConverter
         $output = [];
 
         foreach ($data as $field => $value) {
-            $output[$field] = $this->castAs($value, $field, 'fromDataSource');
+            $output[$field] = $this->castAs($value, $field, 'get');
         }
 
         return $output;
@@ -103,7 +103,7 @@ class DataConverter
         $output = [];
 
         foreach ($phpData as $field => $value) {
-            $output[$field] = $this->castAs($value, $field, 'toDataSource');
+            $output[$field] = $this->castAs($value, $field, 'set');
         }
 
         return $output;
@@ -116,10 +116,10 @@ class DataConverter
      *
      * @param mixed  $value  The value to convert
      * @param string $field  The field name
-     * @param string $method Allowed to "fromDataSource" and "toDataSource"
-     * @phpstan-param 'fromDataSource'|'toDataSource' $method
+     * @param string $method Allowed to "get" and "set"
+     * @phpstan-param 'get'|'set' $method
      */
-    protected function castAs($value, string $field, string $method = 'fromDataSource'): mixed
+    protected function castAs($value, string $field, string $method = 'get'): mixed
     {
         // If the type is not defined, return as it is.
         if (! isset($this->types[$field])) {

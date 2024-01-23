@@ -23,7 +23,7 @@ namespace CodeIgniter\DataConverter\Cast;
  */
 final class IntBoolCast extends BaseCast
 {
-    public static function fromDataSource(mixed $value, array $params = []): bool
+    public static function get(mixed $value, array $params = []): bool
     {
         if (! is_int($value) && ! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -32,7 +32,7 @@ final class IntBoolCast extends BaseCast
         return (bool) $value;
     }
 
-    public static function toDataSource(mixed $value, array $params = []): int
+    public static function set(mixed $value, array $params = []): int
     {
         if (! is_bool($value)) {
             self::invalidTypeValueError($value);

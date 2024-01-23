@@ -25,7 +25,7 @@ use CodeIgniter\I18n\Time;
  */
 class DatetimeCast extends BaseCast
 {
-    public static function fromDataSource(mixed $value, array $params = []): Time
+    public static function get(mixed $value, array $params = []): Time
     {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
@@ -39,7 +39,7 @@ class DatetimeCast extends BaseCast
         return Time::createFromFormat($format, $value);
     }
 
-    public static function toDataSource(mixed $value, array $params = []): string
+    public static function set(mixed $value, array $params = []): string
     {
         if (! $value instanceof Time) {
             self::invalidTypeValueError($value);

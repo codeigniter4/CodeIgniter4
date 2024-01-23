@@ -23,7 +23,7 @@ namespace CodeIgniter\DataConverter\Cast;
  */
 class IntegerCast extends BaseCast
 {
-    public static function fromDataSource(mixed $value, array $params = []): int
+    public static function get(mixed $value, array $params = []): int
     {
         if (! is_string($value) && ! is_int($value)) {
             self::invalidTypeValueError($value);
