@@ -162,4 +162,55 @@ final class EmailTest extends CIUnitTestCase
 
         return new MockEmail($config);
     }
+
+    public function testSetAttachmentCIDFile(): void
+    {
+        $email = $this->createMockEmail();
+
+        $email->setFrom('your@example.com', 'Your Name');
+        $email->setTo('foo@example.jp');
+
+        $filename = SUPPORTPATH . 'Images/ci-logo.png';
+        $email->attach($filename);
+        $cid = $email->setAttachmentCID($filename);
+        $email->setMessage('<img src="cid:' . $cid . '" alt="CI Logo">');
+
+        $this->assertTrue($email->send());
+
+        $this->assertStringStartsWith('ci-logo.png@', $cid);
+        $this->assertStringStartsWith(
+            'ci-logo.png@',
+            $email->archive['attachments'][0]['cid']
+        );
+        $this->assertMatchesRegularExpression(
+            '/<img src="cid:ci-logo.png@(.+?)" alt="CI Logo">/u',
+            $email->archive['body']
+        );
+    }
+
+    public function testSetAttachmentCIDBufferString(): void
+    {
+        $email = $this->createMockEmail();
+
+        $email->setFrom('your@example.com', 'Your Name');
+        $email->setTo('foo@example.jp');
+
+        $filename  = SUPPORTPATH . 'Images/ci-logo.png';
+        $imageData = file_get_contents($filename);
+        $email->attach($imageData, 'inline', 'image001.png', 'image/png');
+        $cid = $email->setAttachmentCID('image001.png');
+        $email->setMessage('<img src="cid:' . $cid . '" alt="CI Logo">');
+
+        $this->assertTrue($email->send());
+
+        $this->assertStringStartsWith('image001.png@', $cid);
+        $this->assertStringStartsWith(
+            'image001.png@',
+            $email->archive['attachments'][0]['cid']
+        );
+        $this->assertMatchesRegularExpression(
+            '/<img src="cid:image001.png@(.+?)" alt="CI Logo">/u',
+            $email->archive['body']
+        );
+    }
 }
