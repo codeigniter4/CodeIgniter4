@@ -170,8 +170,10 @@ class BaseBuilder
      *   setQueryAsData?: string,
      *   sql?: string,
      *   alias?: string,
-     *   fieldTypes?: array<string, string>
+     *   fieldTypes?: array<string, array<string, string>>
      * }
+     *
+     * fieldTypes: [ProtectedTableName => [FieldName => Type]]
      */
     protected $QBOptions;
 
