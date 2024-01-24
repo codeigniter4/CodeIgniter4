@@ -120,6 +120,40 @@ After the fields have been defined, they can be added using
 ``$forge->addField($fields)`` followed by a call to the
 ``createTable()`` method.
 
+Notes on Data Types
+-------------------
+
+Floating-Point Types
+^^^^^^^^^^^^^^^^^^^^
+
+Floating-Point types such as ``FLOAT`` and ``DOUBLE`` represent approximate values.
+Therefore, they should not be used when exact values are needed.
+
+::
+
+    mysql> CREATE TABLE t (f FLOAT, d DOUBLE);
+    mysql> INSERT INTO t VALUES(99.9, 99.9);
+
+    mysql> SELECT * FROM t WHERE f=99.9;
+    Empty set (0.00 sec)
+
+    mysql> SELECT * FROM t WHERE f > 99.89 AND f < 99.91;
+    +------+------+
+    | f    | d    |
+    +------+------+
+    | 99.9 | 99.9 |
+    +------+------+
+    1 row in set (0.01 sec)
+
+When it is important to preserve exact precision, for example with monetary data,
+``DECIMAL`` or ``NUMERIC`` should be used.
+
+TEXT
+^^^^
+
+``TEXT`` should not be used on SQLSRV. It is deprecated.
+See `ntext, text, and image (Transact-SQL) - SQL Server | Microsoft Learn <https://learn.microsoft.com/en-us/sql/t-sql/data-types/ntext-text-and-image-transact-sql?view=sql-server-ver16>`_.
+
 $forge->addField()
 ------------------
 
