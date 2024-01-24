@@ -81,7 +81,7 @@ trait DatabaseTestTrait
             $config          = new Migrations();
             $config->enabled = true;
 
-            $this->migrations = Services::migrations($config, $this->db);
+            $this->migrations = Services::migrations($config, $this->db, false);
             $this->migrations->setSilent(false);
         }
 
