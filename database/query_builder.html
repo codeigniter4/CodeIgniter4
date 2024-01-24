@@ -2273,6 +2273,8 @@ performing updates.</p>
 <p>Since v4.3.0, the second parameter <code class="docutils literal notranslate"><span class="pre">$index</span></code> of <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> has
 changed to <code class="docutils literal notranslate"><span class="pre">$constraints</span></code>. It now accepts types array, string, or <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>.</p>
 </div>
+<section id="update-from-data">
+<h5>Update from Data<a class="headerlink" href="#update-from-data" title="Permalink to this heading"></a></h5>
 <p>Generates an update string based on the data you supply, and runs the query.
 You can either pass an <strong>array</strong> or an <strong>object</strong> to the method.
 Here is an example using an array:</p>
@@ -2308,13 +2310,12 @@ Here is an example using an array:</p>
 <span class="cm"> */</span>
 </pre></div>
 </div>
+<p>The first parameter is an associative array of values, the second parameter is the where keys.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since v4.3.0, the generated SQL structure has been Improved.</p>
 </div>
-<p>The first parameter is an associative array of values, the second parameter is the where key.</p>
-<p>Since v4.3.0, you can also use the <code class="docutils literal notranslate"><span class="pre">setQueryAsData()</span></code>, <code class="docutils literal notranslate"><span class="pre">onConstraint()</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">updateFields()</span></code> methods:</p>
+<p>Since v4.3.0, you can also use the <code class="docutils literal notranslate"><span class="pre">onConstraint()</span></code> and <code class="docutils literal notranslate"><span class="pre">updateFields()</span></code> methods:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Database\RawSql</span><span class="p">;</span>
@@ -2367,7 +2368,10 @@ Here is an example using an array:</p>
 due to the very nature of how it works. Instead, <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code>
 returns the number of rows affected.</p>
 </div>
-<p>You can also update from a query:</p>
+</section>
+<section id="update-from-a-query">
+<h5>Update from a Query<a class="headerlink" href="#update-from-a-query" title="Permalink to this heading"></a></h5>
+<p>Since v4.3.0, you can also update from a query with the <code class="docutils literal notranslate"><span class="pre">setQueryAsData()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Database\RawSql</span><span class="p">;</span>
@@ -2404,13 +2408,9 @@ returns the number of rows affected.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">setQueryAsData()</span></code>, <code class="docutils literal notranslate"><span class="pre">onConstraint()</span></code>, and <code class="docutils literal notranslate"><span class="pre">updateFields()</span></code>
-methods can be used since v4.3.0.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
 <p>It is required to alias the columns of the select query to match those of the target table.</p>
 </div>
+</section>
 </section>
 <section id="builder-getcompiledupdate">
 <h4>$builder-&gt;getCompiledUpdate()<a class="headerlink" href="#builder-getcompiledupdate" title="Permalink to this heading"></a></h4>
@@ -4267,7 +4267,7 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 18, 2024.
+      <span class="lastupdated">Last updated on Jan 24, 2024.
       </span></p>
   </div>
 
