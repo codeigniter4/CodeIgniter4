@@ -27,3 +27,4 @@ $fields = [
         'default'    => 'pending',
     ],
 ];
+$forge->addField($fields);
