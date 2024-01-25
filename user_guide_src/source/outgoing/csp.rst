@@ -21,7 +21,7 @@ the response's ``Content-Security-Policy`` header and offers various configurati
 options.
 
 This sounds complex, and on some sites, can definitely be challenging. For many simple sites, though, where all content
-is served by the same domain (http://example.com), it is very simple to integrate.
+is served by the same domain (e.g., **http://example.com**), it is very simple to integrate.
 
 As this is a complex subject, this user guide will not go over all of the details. For more information, you should
 visit the following sites:
@@ -105,7 +105,12 @@ Inline Content
 
 It is possible to set a website to not protect even inline scripts and styles on its own pages, since this might have
 been the result of user-generated content. To protect against this, CSP allows you to specify a nonce within the
-``<style>`` and ``<script>`` tags, and to add those values to the response's header. This is a pain to handle in real
+``<style>`` and ``<script>`` tags, and to add those values to the response's header.
+
+Using Placeholders
+==================
+
+This is a pain to handle in real
 life, and is most secure when generated on the fly. To make this simple, you can include a ``{csp-style-nonce}`` or
 ``{csp-script-nonce}`` placeholder in the tag and it will be handled for you automatically::
 
@@ -126,7 +131,13 @@ life, and is most secure when generated on the fly. To make this simple, you can
 
 .. warning:: If an attacker injects a string like ``<script {csp-script-nonce}>``, it might become the real nonce attribute with this functionality. You can customize the placeholder string with the ``$scriptNonceTag`` and ``$styleNonceTag`` properties in **app/Config/ContentSecurityPolicy.php**.
 
-If you don't like this auto replacement functionality, you can turn it off with setting ``$autoNonce = false`` in **app/Config/ContentSecurityPolicy.php**.
+.. _csp-using-functions:
+
+Using Functions
+===============
+
+If you don't like the auto replacement functionality above, you can turn it off
+with setting ``$autoNonce = false`` in **app/Config/ContentSecurityPolicy.php**.
 
 In this case, you can use the functions, :php:func:`csp_script_nonce()` and :php:func:`csp_style_nonce()`::
 

@@ -226,7 +226,7 @@ Miscellaneous Functions
     :rtype: string
 
     Returns the nonce attribute for a script tag. For example: ``nonce="Eskdikejidojdk978Ad8jf"``.
-    See :ref:`content-security-policy`.
+    See :ref:`Content Security Policy <csp-using-functions>`.
 
 .. php:function:: csp_style_nonce()
 
@@ -234,7 +234,7 @@ Miscellaneous Functions
     :rtype: string
 
     Returns the nonce attribute for a style tag. For example: ``nonce="Eskdikejidojdk978Ad8jf"``.
-    See :ref:`content-security-policy`.
+    See :ref:`Content Security Policy <csp-using-functions>`.
 
 .. php:function:: csrf_token()
 
