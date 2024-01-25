@@ -954,17 +954,25 @@ $builder->upsertBatch()
 
 .. versionadded:: 4.3.0
 
+Upsert from Data
+^^^^^^^^^^^^^^^^
+
 Generates an upsert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
 method. By default a constraint will be defined in order. A primary
 key will be selected first and then unique keys. MySQL will use any
-constraint by default. Here is an example using an array:
+constraint by default.
+
+Here is an example using an array:
 
 .. literalinclude:: query_builder/108.php
 
 The first parameter is an associative array of values.
 
 .. note:: All values are escaped automatically producing safer queries.
+
+Upsert from a Query
+^^^^^^^^^^^^^^^^^^^
 
 You can also upsert from a query:
 
