@@ -878,6 +878,9 @@ insertBatch
 $builder->insertBatch()
 -----------------------
 
+Insert from Data
+^^^^^^^^^^^^^^^^
+
 Generates an insert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
 method. Here is an example using an array:
@@ -889,6 +892,9 @@ The first parameter is an associative array of values.
 .. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
 
 .. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+
+Insert from a Query
+^^^^^^^^^^^^^^^^^^^
 
 You can also insert from a query:
 
