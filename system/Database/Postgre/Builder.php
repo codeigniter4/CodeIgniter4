@@ -579,11 +579,7 @@ class Builder extends BaseBuilder
                                 );
                         }
 
-                        return $table . '.' . $value . ' = '
-                            . $that->cast(
-                                $alias . '.' . $value,
-                                $that->getFieldType($table, $key)
-                            );
+                        return $table . '.' . $value . ' = ' . $alias . '.' . $value;
                     },
                     array_keys($constraints),
                     $constraints
