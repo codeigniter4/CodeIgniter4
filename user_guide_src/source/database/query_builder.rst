@@ -1202,8 +1202,6 @@ You can also delete from a query:
 
 .. literalinclude:: query_builder/119.php
 
-.. note:: ``$deleteBatch()`` can be used since v4.3.0.
-
 $builder->emptyTable()
 ----------------------
 
