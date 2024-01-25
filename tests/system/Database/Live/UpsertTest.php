@@ -50,6 +50,56 @@ final class UpsertTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['name' => 'Upsert One']);
     }
 
+    public function testUpsertBatch(): void
+    {
+        $table = 'type_test';
+
+        // Prepares test data.
+        $builder = $this->db->table($table);
+        $builder->truncate();
+
+        $this->forge = Database::forge($this->DBGroup);
+        $this->forge->addKey(['type_varchar'], false, true);
+        $this->forge->processIndexes($table);
+
+        for ($i = 1; $i < 2; $i++) {
+            $builder->insert([
+                'type_varchar'  => 'test' . $i,
+                'type_char'     => 'char',
+                'type_smallint' => 32767,
+                'type_integer'  => 2_147_483_647,
+                'type_bigint'   => 9_223_372_036_854_775_807,
+                'type_numeric'  => 123.23,
+                'type_date'     => '2023-12-0' . $i,
+                'type_datetime' => '2023-12-21 12:00:00',
+            ]);
+        }
+
+        $data = [
+            // new row insert
+            [
+                'type_varchar'  => 'insert', // Key
+                'type_bigint'   => 9_999_999,
+                'type_date'     => '2024-01-01',
+                'type_datetime' => '2024-01-01 09:00:00',
+            ],
+            // update
+            [
+                'type_varchar'  => 'test1', // Key
+                'type_bigint'   => 9_999_999,
+                'type_date'     => '2024-01-01',
+                'type_datetime' => '2024-01-01 09:00:00',
+            ],
+        ];
+
+        $builder->onConstraint('type_varchar')->upsertBatch($data);
+
+        $expected = $data;
+        $this->seeInDatabase($table, $expected[0]);
+        $this->seeInDatabase($table, $expected[1]);
+        $this->assertSame(2, $builder->countAll());
+    }
+
     public function testUpsertAndUpsertBatchWithObject(): void
     {
         $data = [];
