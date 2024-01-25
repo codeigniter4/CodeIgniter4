@@ -52,7 +52,7 @@ class Migration_Create_test_tables extends Migration
         //   TINYINT,MEDIUMINT,BIT,YEAR,BINARY,VARBINARY,TINYTEXT,LONGTEXT,
         //   JSON,Spatial data types
         // `id` must be INTEGER else SQLite3 error on not null for autoincrement field.
-        $data_type_fields = [
+        $dataTypeFields = [
             'id'           => ['type' => 'INTEGER', 'constraint' => 20, 'auto_increment' => true],
             'type_varchar' => ['type' => 'VARCHAR', 'constraint' => 40, 'null' => true],
             'type_char'    => ['type' => 'CHAR', 'constraint' => 10, 'null' => true],
