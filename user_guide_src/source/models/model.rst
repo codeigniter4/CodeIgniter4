@@ -157,6 +157,17 @@ potential mass assignment vulnerabilities.
 
 .. note:: The `$primaryKey`_ field should never be an allowed field.
 
+$allowEmptyInserts
+------------------
+
+.. versionadded:: 4.3.0
+
+Whether to allow inserting empty data. The default value is ``false``, meaning
+that if you try to insert empty data, an exception with
+"There is no data to insert." will raise.
+
+You may also change this setting with the :ref:`model-allow-empty-inserts` method.
+
 Dates
 -----
 
@@ -370,6 +381,8 @@ allowEmptyInserts()
 You can use ``allowEmptyInserts()`` method to insert empty data. The Model throws an exception when you try to insert empty data by default. But if you call this method, the check will no longer be performed.
 
 .. literalinclude:: model/056.php
+
+You may also change this setting with the `$allowEmptyInserts`_ property.
 
 You can enable the check again by calling ``allowEmptyInserts(false)``.
 
