@@ -168,6 +168,16 @@ that if you try to insert empty data, an exception with
 
 You may also change this setting with the :ref:`model-allow-empty-inserts` method.
 
+$updateOnlyChanged
+------------------
+
+.. versionadded:: 4.5.0
+
+Whether to update :doc:`Entity <./entities>`'s only changed fields. The default
+value is ``true``, meaning that only changed field data is used when updating.
+So if you try to update an Entity without changes, an exception with
+"There is no data to update." will raise.
+
 Dates
 -----
 

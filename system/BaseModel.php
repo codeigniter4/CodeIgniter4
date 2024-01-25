@@ -181,6 +181,11 @@ abstract class BaseModel
     protected bool $allowEmptyInserts = false;
 
     /**
+     * Whether to update Entity's only changed data.
+     */
+    protected bool $updateOnlyChanged = true;
+
+    /**
      * Rules used to validate data in insert, update, and save methods.
      * The array must match the format of data passed to the Validation
      * library.
@@ -1794,9 +1799,15 @@ abstract class BaseModel
         // properties representing the collection elements, we need to grab
         // them as an array.
         if (is_object($row) && ! $row instanceof stdClass) {
+            if ($type === 'update' && ! $this->updateOnlyChanged) {
+                $onlyChanged = false;
+            }
             // If it validates with entire rules, all fields are needed.
-            $onlyChanged = ($this->skipValidation === false && $this->cleanValidationRules === false)
-                ? false : ($type === 'update');
+            elseif ($this->skipValidation === false && $this->cleanValidationRules === false) {
+                $onlyChanged = false;
+            } else {
+                $onlyChanged = ($type === 'update');
+            }
 
             $row = $this->objectToArray($row, $onlyChanged, true);
         }
