@@ -562,18 +562,25 @@ class Builder extends BaseBuilder
 
             $sql .= ') ' . $alias . "\n";
 
+            $that = $this;
             $sql .= 'WHERE ' . implode(
                 ' AND ',
                 array_map(
-                    static fn ($key, $value) => (
-                        $value instanceof RawSql ?
-                        $value :
-                        (
-                            is_string($key) ?
-                            $table . '.' . $key . ' = ' . $alias . '.' . $value :
-                            $table . '.' . $value . ' = ' . $alias . '.' . $value
-                        )
-                    ),
+                    static function ($key, $value) use ($table, $alias, $that) {
+                        if ($value instanceof RawSql) {
+                            return $value;
+                        }
+
+                        if (is_string($key)) {
+                            return $table . '.' . $key . ' = '
+                                . $that->cast(
+                                    $alias . '.' . $value,
+                                    $that->getFieldType($table, $key)
+                                );
+                        }
+
+                        return $table . '.' . $value . ' = ' . $alias . '.' . $value;
+                    },
                     array_keys($constraints),
                     $constraints
                 )
