@@ -291,7 +291,12 @@
 <li><p><a class="reference internal" href="#what-is-content-security-policy" id="id2">What is Content Security Policy?</a></p></li>
 <li><p><a class="reference internal" href="#turning-csp-on" id="id3">Turning CSP On</a></p></li>
 <li><p><a class="reference internal" href="#runtime-configuration" id="id4">Runtime Configuration</a></p></li>
-<li><p><a class="reference internal" href="#inline-content" id="id5">Inline Content</a></p></li>
+<li><p><a class="reference internal" href="#inline-content" id="id5">Inline Content</a></p>
+<ul>
+<li><p><a class="reference internal" href="#using-placeholders" id="id6">Using Placeholders</a></p></li>
+<li><p><a class="reference internal" href="#using-functions" id="id7">Using Functions</a></p></li>
+</ul>
+</li>
 </ul>
 </nav>
 <section id="what-is-content-security-policy">
@@ -304,7 +309,7 @@ sources that are not explicitly approved. This authorization is defined within
 the response’s <code class="docutils literal notranslate"><span class="pre">Content-Security-Policy</span></code> header and offers various configuration
 options.</p>
 <p>This sounds complex, and on some sites, can definitely be challenging. For many simple sites, though, where all content
-is served by the same domain (<a class="reference external" href="http://example.com">http://example.com</a>), it is very simple to integrate.</p>
+is served by the same domain (e.g., <strong>http://example.com</strong>), it is very simple to integrate.</p>
 <p>As this is a complex subject, this user guide will not go over all of the details. For more information, you should
 visit the following sites:</p>
 <ul class="simple">
@@ -416,7 +421,10 @@ that youtube.com was allowed, and then provide several allowed but reported sour
 <h2><a class="toc-backref" href="#id5" role="doc-backlink">Inline Content</a><a class="headerlink" href="#inline-content" title="Permalink to this heading"></a></h2>
 <p>It is possible to set a website to not protect even inline scripts and styles on its own pages, since this might have
 been the result of user-generated content. To protect against this, CSP allows you to specify a nonce within the
-<code class="docutils literal notranslate"><span class="pre">&lt;style&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code> tags, and to add those values to the response’s header. This is a pain to handle in real
+<code class="docutils literal notranslate"><span class="pre">&lt;style&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code> tags, and to add those values to the response’s header.</p>
+<section id="using-placeholders">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Using Placeholders</a><a class="headerlink" href="#using-placeholders" title="Permalink to this heading"></a></h3>
+<p>This is a pain to handle in real
 life, and is most secure when generated on the fly. To make this simple, you can include a <code class="docutils literal notranslate"><span class="pre">{csp-style-nonce}</span></code> or
 <code class="docutils literal notranslate"><span class="pre">{csp-script-nonce}</span></code> placeholder in the tag and it will be handled for you automatically:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Original</span>
@@ -439,7 +447,11 @@ life, and is most secure when generated on the fly. To make this simple, you can
 <p class="admonition-title">Warning</p>
 <p>If an attacker injects a string like <code class="docutils literal notranslate"><span class="pre">&lt;script</span> <span class="pre">{csp-script-nonce}&gt;</span></code>, it might become the real nonce attribute with this functionality. You can customize the placeholder string with the <code class="docutils literal notranslate"><span class="pre">$scriptNonceTag</span></code> and <code class="docutils literal notranslate"><span class="pre">$styleNonceTag</span></code> properties in <strong>app/Config/ContentSecurityPolicy.php</strong>.</p>
 </div>
-<p>If you don’t like this auto replacement functionality, you can turn it off with setting <code class="docutils literal notranslate"><span class="pre">$autoNonce</span> <span class="pre">=</span> <span class="pre">false</span></code> in <strong>app/Config/ContentSecurityPolicy.php</strong>.</p>
+</section>
+<section id="using-functions">
+<span id="csp-using-functions"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">Using Functions</a><a class="headerlink" href="#using-functions" title="Permalink to this heading"></a></h3>
+<p>If you don’t like the auto replacement functionality above, you can turn it off
+with setting <code class="docutils literal notranslate"><span class="pre">$autoNonce</span> <span class="pre">=</span> <span class="pre">false</span></code> in <strong>app/Config/ContentSecurityPolicy.php</strong>.</p>
 <p>In this case, you can use the functions, <a class="reference internal" href="../general/common_functions.html#csp_script_nonce" title="csp_script_nonce"><code class="xref php php-func docutils literal notranslate"><span class="pre">csp_script_nonce()</span></code></a> and <a class="reference internal" href="../general/common_functions.html#csp_style_nonce" title="csp_style_nonce"><code class="xref php php-func docutils literal notranslate"><span class="pre">csp_style_nonce()</span></code></a>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Original</span>
 <span class="o">&lt;</span><span class="nx">script</span> <span class="o">&lt;?=</span> <span class="nx">csp_script_nonce</span><span class="p">()</span> <span class="cp">?&gt;</span>&gt;
@@ -457,6 +469,7 @@ life, and is most secure when generated on the fly. To make this simple, you can
 <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </pre></div>
 </div>
+</section>
 </section>
 </section>
 
