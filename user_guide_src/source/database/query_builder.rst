@@ -1176,10 +1176,16 @@ method, or ``emptyTable()``.
 
 .. _delete-batch:
 
+DeleteBatch
+===========
+
 $builder->deleteBatch()
 -----------------------
 
 .. versionadded:: 4.3.0
+
+Delete from Data
+^^^^^^^^^^^^^^^^
 
 Generates a batch **DELETE** statement based on a set of data.
 
@@ -1188,6 +1194,9 @@ Generates a batch **DELETE** statement based on a set of data.
 This method may be especially useful when deleting data in a table with a composite primary key.
 
 .. note:: SQLite does not support the use of ``where()``.
+
+Delete from a Query
+^^^^^^^^^^^^^^^^^^^
 
 You can also delete from a query:
 
