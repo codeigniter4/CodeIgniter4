@@ -1096,6 +1096,16 @@ Or as an array:
 You may also use the ``$builder->set()`` method described above when
 performing updates.
 
+$builder->getCompiledUpdate()
+-----------------------------
+
+This works exactly the same way as ``$builder->getCompiledInsert()`` except
+that it produces an **UPDATE** SQL string instead of an **INSERT** SQL string.
+
+For more information view documentation for `$builder->getCompiledInsert()`_.
+
+.. note:: This method doesn't work for batched updates.
+
 .. _update-batch:
 
 UpdateBatch
@@ -1141,16 +1151,6 @@ Since v4.3.0, you can also update from a query with the ``setQueryAsData()`` met
 
 .. note:: It is required to alias the columns of the select query to match those of the target table.
 
-$builder->getCompiledUpdate()
------------------------------
-
-This works exactly the same way as ``$builder->getCompiledInsert()`` except
-that it produces an **UPDATE** SQL string instead of an **INSERT** SQL string.
-
-For more information view documentation for ``$builder->getCompiledInsert()``.
-
-.. note:: This method doesn't work for batched updates.
-
 *************
 Deleting Data
 *************
@@ -1173,6 +1173,14 @@ the data to the first parameter of the method:
 
 If you want to delete all data from a table, you can use the ``truncate()``
 method, or ``emptyTable()``.
+
+$builder->getCompiledDelete()
+-----------------------------
+
+This works exactly the same way as ``$builder->getCompiledInsert()`` except
+that it produces a **DELETE** SQL string instead of an **INSERT** SQL string.
+
+For more information view documentation for `$builder->getCompiledInsert()`_.
 
 .. _delete-batch:
 
@@ -1219,14 +1227,6 @@ Generates a **TRUNCATE** SQL string and runs the query.
 
 .. note:: If the TRUNCATE command isn't available, ``truncate()`` will
     execute as "DELETE FROM table".
-
-$builder->getCompiledDelete()
------------------------------
-
-This works exactly the same way as ``$builder->getCompiledInsert()`` except
-that it produces a **DELETE** SQL string instead of an **INSERT** SQL string.
-
-For more information view documentation for ``$builder->getCompiledInsert()``.
 
 **********************
 Conditional Statements
