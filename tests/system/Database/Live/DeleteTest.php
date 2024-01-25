@@ -100,6 +100,52 @@ final class DeleteTest extends CIUnitTestCase
         $this->dontSeeInDatabase('user', ['email' => 'ahmadinejad@world.com', 'name' => 'Ahmadinejad']);
     }
 
+    public function testDeleteBatchConstraintsDate(): void
+    {
+        $table = 'type_test';
+
+        // Prepares test data.
+        $builder = $this->db->table($table);
+        $builder->truncate();
+
+        for ($i = 1; $i < 4; $i++) {
+            $builder->insert([
+                'type_varchar'  => 'test' . $i,
+                'type_char'     => 'char',
+                'type_text'     => 'text',
+                'type_smallint' => 32767,
+                'type_integer'  => 2_147_483_647,
+                'type_bigint'   => 9_223_372_036_854_775_807,
+                'type_float'    => 10.1,
+                'type_numeric'  => 123.23,
+                'type_date'     => '2023-12-0' . $i,
+                'type_datetime' => '2023-12-21 12:00:00',
+            ]);
+        }
+
+        $data = [
+            ['date' => '2023-12-01', 'unused' => 'You can have fields you dont use'],
+            ['date' => '2023-12-02', 'unused' => 'You can have fields you dont use'],
+        ];
+        $builder = $this->db->table($table)
+            ->setData($data, null, 'data')
+            ->onConstraint(['type_date' => 'date']);
+        $builder->deleteBatch();
+
+        $this->dontSeeInDatabase(
+            $table,
+            ['type_date' => '2023-12-01', 'type_varchar' => 'test1']
+        );
+        $this->dontSeeInDatabase(
+            $table,
+            ['type_date' => '2023-12-02', 'type_varchar' => 'test2']
+        );
+        $this->seeInDatabase(
+            $table,
+            ['type_date' => '2023-12-03', 'type_varchar' => 'test3']
+        );
+    }
+
     public function testDeleteBatchWithQuery(): void
     {
         $this->forge = Database::forge($this->DBGroup);

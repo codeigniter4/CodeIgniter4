@@ -862,11 +862,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, array\\<int\\|string, array\\<int, int\\|string\\>\\|string\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Return type \\(CodeIgniter\\\\Database\\\\BaseBuilder\\) of method CodeIgniter\\\\Database\\\\Postgre\\\\Builder\\:\\:join\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\Database\\\\BaseBuilder\\)\\) of method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:join\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',

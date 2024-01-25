@@ -1115,18 +1115,20 @@ $builder->updateBatch()
 .. note:: Since v4.3.0, the second parameter ``$index`` of ``updateBatch()`` has
     changed to ``$constraints``. It now accepts types array, string, or ``RawSql``.
 
+Update from Data
+^^^^^^^^^^^^^^^^
+
 Generates an update string based on the data you supply, and runs the query.
 You can either pass an **array** or an **object** to the method.
 Here is an example using an array:
 
 .. literalinclude:: query_builder/092.php
 
+The first parameter is an associative array of values, the second parameter is the where keys.
+
 .. note:: Since v4.3.0, the generated SQL structure has been Improved.
 
-The first parameter is an associative array of values, the second parameter is the where key.
-
-Since v4.3.0, you can also use the ``setQueryAsData()``, ``onConstraint()``, and
-``updateFields()`` methods:
+Since v4.3.0, you can also use the ``onConstraint()`` and ``updateFields()`` methods:
 
 .. literalinclude:: query_builder/120.php
 
@@ -1138,12 +1140,12 @@ Since v4.3.0, you can also use the ``setQueryAsData()``, ``onConstraint()``, and
     due to the very nature of how it works. Instead, ``updateBatch()``
     returns the number of rows affected.
 
-You can also update from a query:
+Update from a Query
+^^^^^^^^^^^^^^^^^^^
+
+Since v4.3.0, you can also update from a query with the ``setQueryAsData()`` method:
 
 .. literalinclude:: query_builder/116.php
-
-.. note:: The ``setQueryAsData()``, ``onConstraint()``, and ``updateFields()``
-    methods can be used since v4.3.0.
 
 .. note:: It is required to alias the columns of the select query to match those of the target table.
 

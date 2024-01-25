@@ -51,21 +51,39 @@ final class InsertTest extends CIUnitTestCase
 
     public function testInsertBatch(): void
     {
-        $jobData = [
+        $table = 'type_test';
+
+        $builder = $this->db->table($table);
+        $builder->truncate();
+
+        $data = [
             [
-                'name'        => 'Comedian',
-                'description' => 'Theres something in your teeth',
+                'type_varchar'  => 'test1',
+                'type_char'     => 'char',
+                'type_smallint' => 32767,
+                'type_integer'  => 2_147_483_647,
+                'type_bigint'   => 9_223_372_036_854_775_807,
+                'type_numeric'  => 123.23,
+                'type_date'     => '2023-12-01',
+                'type_datetime' => '2023-12-21 12:00:00',
             ],
             [
-                'name'        => 'Cab Driver',
-                'description' => 'Iam yellow',
+                'type_varchar'  => 'test2',
+                'type_char'     => 'char',
+                'type_smallint' => 32767,
+                'type_integer'  => 2_147_483_647,
+                'type_bigint'   => 9_223_372_036_854_775_807,
+                'type_numeric'  => 123.23,
+                'type_date'     => '2023-12-02',
+                'type_datetime' => '2023-12-21 12:00:00',
             ],
         ];
 
-        $this->db->table('job')->insertBatch($jobData);
+        $this->db->table($table)->insertBatch($data);
 
-        $this->seeInDatabase('job', ['name' => 'Comedian']);
-        $this->seeInDatabase('job', ['name' => 'Cab Driver']);
+        $expected = $data;
+        $this->seeInDatabase($table, $expected[0]);
+        $this->seeInDatabase($table, $expected[1]);
     }
 
     public function testReplaceWithNoMatchingData(): void
