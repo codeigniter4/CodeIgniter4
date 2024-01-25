@@ -562,6 +562,7 @@ class Builder extends BaseBuilder
 
             $sql .= ') ' . $alias . "\n";
 
+            $that = $this;
             $sql .= 'WHERE ' . implode(
                 ' AND ',
                 array_map(
@@ -570,8 +571,8 @@ class Builder extends BaseBuilder
                         $value :
                         (
                             is_string($key) ?
-                            $table . '.' . $key . ' = ' . $alias . '.' . $value :
-                            $table . '.' . $value . ' = ' . $alias . '.' . $value
+                            $table . '.' . $key . ' = ' . $that->cast($alias . '.' . $value, $that->getFieldType($table, $key)) :
+                            $table . '.' . $value . ' = ' . $that->cast($alias . '.' . $value, $that->getFieldType($table, $key))
                         )
                     ),
                     array_keys($constraints),
