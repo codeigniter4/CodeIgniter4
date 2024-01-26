@@ -365,21 +365,22 @@ system.</p>
 <li><p><a class="reference internal" href="#deleting-data" id="id38">Deleting Data</a></p>
 <ul>
 <li><p><a class="reference internal" href="#delete" id="id39">Delete</a></p></li>
+<li><p><a class="reference internal" href="#deletebatch" id="id40">DeleteBatch</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#conditional-statements" id="id40">Conditional Statements</a></p>
+<li><p><a class="reference internal" href="#conditional-statements" id="id41">Conditional Statements</a></p>
 <ul>
-<li><p><a class="reference internal" href="#when" id="id41">When</a></p></li>
-<li><p><a class="reference internal" href="#whennot" id="id42">WhenNot</a></p></li>
+<li><p><a class="reference internal" href="#when" id="id42">When</a></p></li>
+<li><p><a class="reference internal" href="#whennot" id="id43">WhenNot</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#method-chaining" id="id43">Method Chaining</a></p></li>
-<li><p><a class="reference internal" href="#resetting-query-builder" id="id44">Resetting Query Builder</a></p>
+<li><p><a class="reference internal" href="#method-chaining" id="id44">Method Chaining</a></p></li>
+<li><p><a class="reference internal" href="#resetting-query-builder" id="id45">Resetting Query Builder</a></p>
 <ul>
-<li><p><a class="reference internal" href="#resetquery" id="id45">ResetQuery</a></p></li>
+<li><p><a class="reference internal" href="#resetquery" id="id46">ResetQuery</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#namespace-CodeIgniter\Database" id="id46">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\Database" id="id47">Class Reference</a></p></li>
 </ul>
 </nav>
 <section id="sql-injection-protection">
@@ -1737,6 +1738,8 @@ will be reset (by default it will be–just like <code class="docutils literal n
 <span id="insert-batch-data"></span><h3><a class="toc-backref" href="#id31" role="doc-backlink">insertBatch</a><a class="headerlink" href="#insertbatch" title="Permalink to this heading"></a></h3>
 <section id="builder-insertbatch">
 <h4>$builder-&gt;insertBatch()<a class="headerlink" href="#builder-insertbatch" title="Permalink to this heading"></a></h4>
+<section id="insert-from-data">
+<h5>Insert from Data<a class="headerlink" href="#insert-from-data" title="Permalink to this heading"></a></h5>
 <p>Generates an insert string based on the data you supply, and runs the
 query. You can either pass an <strong>array</strong> or an <strong>object</strong> to the
 method. Here is an example using an array:</p>
@@ -1773,6 +1776,9 @@ method. Here is an example using an array:</p>
 <p class="admonition-title">Warning</p>
 <p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the data manually. Failure to do so could result in SQL injections.</p>
 </div>
+</section>
+<section id="insert-from-a-query">
+<h5>Insert from a Query<a class="headerlink" href="#insert-from-a-query" title="Permalink to this heading"></a></h5>
 <p>You can also insert from a query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1804,6 +1810,7 @@ method. Here is an example using an array:</p>
 <p class="admonition-title">Note</p>
 <p>It is required to alias the columns of the select query to match those of the target table.</p>
 </div>
+</section>
 </section>
 </section>
 </section>
@@ -1906,11 +1913,14 @@ constraint by default. Here is an example using an array:</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.3.0.</span></p>
 </div>
+<section id="upsert-from-data">
+<h5>Upsert from Data<a class="headerlink" href="#upsert-from-data" title="Permalink to this heading"></a></h5>
 <p>Generates an upsert string based on the data you supply, and runs the
 query. You can either pass an <strong>array</strong> or an <strong>object</strong> to the
 method. By default a constraint will be defined in order. A primary
 key will be selected first and then unique keys. MySQL will use any
-constraint by default. Here is an example using an array:</p>
+constraint by default.</p>
+<p>Here is an example using an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
@@ -1941,6 +1951,9 @@ constraint by default. Here is an example using an array:</p>
 <p class="admonition-title">Note</p>
 <p>All values are escaped automatically producing safer queries.</p>
 </div>
+</section>
+<section id="upsert-from-a-query">
+<h5>Upsert from a Query<a class="headerlink" href="#upsert-from-a-query" title="Permalink to this heading"></a></h5>
 <p>You can also upsert from a query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1980,6 +1993,7 @@ methods can be used since v4.3.0.</p>
 <p class="admonition-title">Note</p>
 <p>It is required to alias the columns of the select query to match those of the target table.</p>
 </div>
+</section>
 </section>
 <section id="builder-onconstraint">
 <h4>$builder-&gt;onConstraint()<a class="headerlink" href="#builder-onconstraint" title="Permalink to this heading"></a></h4>
@@ -2263,6 +2277,16 @@ directly into the <code class="docutils literal notranslate"><span class="pre">u
 <p>You may also use the <code class="docutils literal notranslate"><span class="pre">$builder-&gt;set()</span></code> method described above when
 performing updates.</p>
 </section>
+<section id="builder-getcompiledupdate">
+<h4>$builder-&gt;getCompiledUpdate()<a class="headerlink" href="#builder-getcompiledupdate" title="Permalink to this heading"></a></h4>
+<p>This works exactly the same way as <code class="docutils literal notranslate"><span class="pre">$builder-&gt;getCompiledInsert()</span></code> except
+that it produces an <strong>UPDATE</strong> SQL string instead of an <strong>INSERT</strong> SQL string.</p>
+<p>For more information view documentation for <a class="reference internal" href="#builder-getcompiledinsert">$builder-&gt;getCompiledInsert()</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method doesn’t work for batched updates.</p>
+</div>
+</section>
 </section>
 <section id="updatebatch">
 <span id="update-batch"></span><h3><a class="toc-backref" href="#id37" role="doc-backlink">UpdateBatch</a><a class="headerlink" href="#updatebatch" title="Permalink to this heading"></a></h3>
@@ -2412,16 +2436,6 @@ returns the number of rows affected.</p>
 </div>
 </section>
 </section>
-<section id="builder-getcompiledupdate">
-<h4>$builder-&gt;getCompiledUpdate()<a class="headerlink" href="#builder-getcompiledupdate" title="Permalink to this heading"></a></h4>
-<p>This works exactly the same way as <code class="docutils literal notranslate"><span class="pre">$builder-&gt;getCompiledInsert()</span></code> except
-that it produces an <strong>UPDATE</strong> SQL string instead of an <strong>INSERT</strong> SQL string.</p>
-<p>For more information view documentation for <code class="docutils literal notranslate"><span class="pre">$builder-&gt;getCompiledInsert()</span></code>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This method doesn’t work for batched updates.</p>
-</div>
-</section>
 </section>
 </section>
 <section id="deleting-data">
@@ -2454,11 +2468,22 @@ the data to the first parameter of the method:</p>
 <p>If you want to delete all data from a table, you can use the <code class="docutils literal notranslate"><span class="pre">truncate()</span></code>
 method, or <code class="docutils literal notranslate"><span class="pre">emptyTable()</span></code>.</p>
 </section>
+<section id="builder-getcompileddelete">
+<h4>$builder-&gt;getCompiledDelete()<a class="headerlink" href="#builder-getcompileddelete" title="Permalink to this heading"></a></h4>
+<p>This works exactly the same way as <code class="docutils literal notranslate"><span class="pre">$builder-&gt;getCompiledInsert()</span></code> except
+that it produces a <strong>DELETE</strong> SQL string instead of an <strong>INSERT</strong> SQL string.</p>
+<p>For more information view documentation for <a class="reference internal" href="#builder-getcompiledinsert">$builder-&gt;getCompiledInsert()</a>.</p>
+</section>
+</section>
+<section id="deletebatch">
+<span id="delete-batch"></span><h3><a class="toc-backref" href="#id40" role="doc-backlink">DeleteBatch</a><a class="headerlink" href="#deletebatch" title="Permalink to this heading"></a></h3>
 <section id="builder-deletebatch">
-<span id="delete-batch"></span><h4>$builder-&gt;deleteBatch()<a class="headerlink" href="#builder-deletebatch" title="Permalink to this heading"></a></h4>
+<h4>$builder-&gt;deleteBatch()<a class="headerlink" href="#builder-deletebatch" title="Permalink to this heading"></a></h4>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.3.0.</span></p>
 </div>
+<section id="delete-from-data">
+<h5>Delete from Data<a class="headerlink" href="#delete-from-data" title="Permalink to this heading"></a></h5>
 <p>Generates a batch <strong>DELETE</strong> statement based on a set of data.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -2504,8 +2529,11 @@ method, or <code class="docutils literal notranslate"><span class="pre">emptyTab
 <p>This method may be especially useful when deleting data in a table with a composite primary key.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>SQLite does not support the use of <code class="docutils literal notranslate"><span class="pre">where()</span></code>.</p>
+<p>SQLite3 does not support the use of <code class="docutils literal notranslate"><span class="pre">where()</span></code>.</p>
 </div>
+</section>
+<section id="delete-from-a-query">
+<h5>Delete from a Query<a class="headerlink" href="#delete-from-a-query" title="Permalink to this heading"></a></h5>
 <p>You can also delete from a query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -2530,10 +2558,7 @@ method, or <code class="docutils literal notranslate"><span class="pre">emptyTab
 <span class="cm">*/</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">$deleteBatch()</span></code> can be used since v4.3.0.</p>
-</div>
+</section>
 </section>
 <section id="builder-emptytable">
 <h4>$builder-&gt;emptyTable()<a class="headerlink" href="#builder-emptytable" title="Permalink to this heading"></a></h4>
@@ -2564,18 +2589,12 @@ query:</p>
 execute as “DELETE FROM table”.</p>
 </div>
 </section>
-<section id="builder-getcompileddelete">
-<h4>$builder-&gt;getCompiledDelete()<a class="headerlink" href="#builder-getcompileddelete" title="Permalink to this heading"></a></h4>
-<p>This works exactly the same way as <code class="docutils literal notranslate"><span class="pre">$builder-&gt;getCompiledInsert()</span></code> except
-that it produces a <strong>DELETE</strong> SQL string instead of an <strong>INSERT</strong> SQL string.</p>
-<p>For more information view documentation for <code class="docutils literal notranslate"><span class="pre">$builder-&gt;getCompiledInsert()</span></code>.</p>
-</section>
 </section>
 </section>
 <section id="conditional-statements">
-<h2><a class="toc-backref" href="#id40" role="doc-backlink">Conditional Statements</a><a class="headerlink" href="#conditional-statements" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id41" role="doc-backlink">Conditional Statements</a><a class="headerlink" href="#conditional-statements" title="Permalink to this heading"></a></h2>
 <section id="when">
-<span id="db-builder-when"></span><h3><a class="toc-backref" href="#id41" role="doc-backlink">When</a><a class="headerlink" href="#when" title="Permalink to this heading"></a></h3>
+<span id="db-builder-when"></span><h3><a class="toc-backref" href="#id42" role="doc-backlink">When</a><a class="headerlink" href="#when" title="Permalink to this heading"></a></h3>
 <section id="builder-when">
 <h4>$builder-&gt;when()<a class="headerlink" href="#builder-when" title="Permalink to this heading"></a></h4>
 <div class="versionadded">
@@ -2619,7 +2638,7 @@ This can be accomplished by providing a second closure:</p>
 </section>
 </section>
 <section id="whennot">
-<h3><a class="toc-backref" href="#id42" role="doc-backlink">WhenNot</a><a class="headerlink" href="#whennot" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id43" role="doc-backlink">WhenNot</a><a class="headerlink" href="#whennot" title="Permalink to this heading"></a></h3>
 <section id="builder-whennot">
 <h4>$builder-&gt;whenNot()<a class="headerlink" href="#builder-whennot" title="Permalink to this heading"></a></h4>
 <div class="versionadded">
@@ -2642,7 +2661,7 @@ only run the callable when the condition evaluates to <code class="docutils lite
 </section>
 </section>
 <section id="method-chaining">
-<h2><a class="toc-backref" href="#id43" role="doc-backlink">Method Chaining</a><a class="headerlink" href="#method-chaining" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id44" role="doc-backlink">Method Chaining</a><a class="headerlink" href="#method-chaining" title="Permalink to this heading"></a></h2>
 <p>Method chaining allows you to simplify your syntax by connecting
 multiple methods. Consider this example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -2655,9 +2674,9 @@ multiple methods. Consider this example:</p>
 </div>
 </section>
 <section id="resetting-query-builder">
-<span id="ar-caching"></span><h2><a class="toc-backref" href="#id44" role="doc-backlink">Resetting Query Builder</a><a class="headerlink" href="#resetting-query-builder" title="Permalink to this heading"></a></h2>
+<span id="ar-caching"></span><h2><a class="toc-backref" href="#id45" role="doc-backlink">Resetting Query Builder</a><a class="headerlink" href="#resetting-query-builder" title="Permalink to this heading"></a></h2>
 <section id="resetquery">
-<h3><a class="toc-backref" href="#id45" role="doc-backlink">ResetQuery</a><a class="headerlink" href="#resetquery" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id46" role="doc-backlink">ResetQuery</a><a class="headerlink" href="#resetquery" title="Permalink to this heading"></a></h3>
 <section id="builder-resetquery">
 <h4>$builder-&gt;resetQuery()<a class="headerlink" href="#builder-resetquery" title="Permalink to this heading"></a></h4>
 <p>Resetting Query Builder allows you to start fresh with your query without
@@ -2688,7 +2707,7 @@ run the query:</p>
 </section>
 </section>
 <section id="namespace-CodeIgniter\Database">
-<span id="class-reference"></span><h2><a class="toc-backref" href="#id46" role="doc-backlink">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Database" title="Permalink to this heading"></a></h2>
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id47" role="doc-backlink">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Database" title="Permalink to this heading"></a></h2>
 <dl class="php class">
 <dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\Database\</span></span><span class="sig-name descname"><span class="pre">BaseBuilder</span></span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder" title="Permalink to this definition"></a></dt>
@@ -4267,7 +4286,7 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 25, 2024.
+      <span class="lastupdated">Last updated on Jan 26, 2024.
       </span></p>
   </div>
 
