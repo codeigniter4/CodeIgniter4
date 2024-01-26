@@ -392,6 +392,16 @@ class Table
                 'null'    => $field->nullable,
             ];
 
+            if ($field->default === null) {
+                // `null` means that the default value is not defined.
+                unset($return[$field->name]['default']);
+            } elseif ($field->default === 'NULL') {
+                // 'NULL' means that the default value is NULL.
+                $return[$field->name]['default'] = null;
+            } else {
+                $return[$field->name]['default'] = trim($field->default, "'");
+            }
+
             if ($field->primary_key) {
                 $this->keys['primary'] = [
                     'fields' => [$field->name],

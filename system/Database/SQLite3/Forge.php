@@ -131,9 +131,22 @@ class Forge extends BaseForge
                 return ''; // Why empty string?
 
             case 'CHANGE':
+                $fieldsToModify = [];
+
+                foreach ($processedFields as $processedField) {
+                    $name    = $processedField['name'];
+                    $newName = $processedField['new_name'];
+
+                    $field             = $this->fields[$name];
+                    $field['name']     = $name;
+                    $field['new_name'] = $newName;
+
+                    $fieldsToModify[] = $field;
+                }
+
                 (new Table($this->db, $this))
                     ->fromTable($table)
-                    ->modifyColumn($processedFields) // @TODO Bug: should be NOT processed fields
+                    ->modifyColumn($fieldsToModify)
                     ->run();
 
                 return null; // Why null?
