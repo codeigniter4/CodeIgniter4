@@ -102,4 +102,63 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             json_encode($fields)
         );
     }
+
+    protected function createTableCompositePrimaryKey()
+    {
+        $this->forge->dropTable('test1', true);
+
+        $this->forge->addField([
+            'pk1' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 64,
+            ],
+            'pk2' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 64,
+            ],
+            'text' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 64,
+            ],
+        ]);
+        $this->forge->addPrimaryKey(['pk1', 'pk2']);
+        $this->forge->createTable('test1');
+    }
+
+    public function testGetFieldDataCompositePrimaryKey(): void
+    {
+        $this->createTableCompositePrimaryKey();
+
+        $fields = $this->db->getFieldData('test1');
+
+        $this->assertJsonStringEqualsJsonString(
+            json_encode([
+                (object) [
+                    'name'        => 'pk1',
+                    'type'        => 'VARCHAR',
+                    'max_length'  => null,
+                    'default'     => null,
+                    'primary_key' => 1,
+                    'nullable'    => false,
+                ],
+                (object) [
+                    'name'        => 'pk2',
+                    'type'        => 'VARCHAR',
+                    'max_length'  => null,
+                    'default'     => null,
+                    'primary_key' => 1,
+                    'nullable'    => false,
+                ],
+                (object) [
+                    'name'        => 'text',
+                    'type'        => 'VARCHAR',
+                    'max_length'  => null,
+                    'default'     => null,
+                    'primary_key' => 0,
+                    'nullable'    => false,
+                ],
+            ]),
+            json_encode($fields)
+        );
+    }
 }
