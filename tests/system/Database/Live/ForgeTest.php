@@ -1058,7 +1058,7 @@ final class ForgeTest extends CIUnitTestCase
                     'name'       => 'username',
                     'type'       => 'VARCHAR2',
                     'max_length' => '255',
-                    'default'    => '',
+                    'default'    => null,
                     'nullable'   => false,
                 ],
                 2 => [
