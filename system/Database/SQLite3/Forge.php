@@ -141,6 +141,12 @@ class Forge extends BaseForge
                     $field['name']     = $name;
                     $field['new_name'] = $newName;
 
+                    // Unlike when creating a table, if `null` is not specified,
+                    // the column will be `NULL`, not `NOT NULL`.
+                    if ($processedField['null'] === '') {
+                        $field['null'] = true;
+                    }
+
                     $fieldsToModify[] = $field;
                 }
 
