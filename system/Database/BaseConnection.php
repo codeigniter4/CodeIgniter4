@@ -457,7 +457,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Create a persistent database connection.
      *
-     * @return false|object|resource
+     * @return         false|object|resource
      * @phpstan-return false|TConnection
      */
     public function persistentConnect()
@@ -471,7 +471,7 @@ abstract class BaseConnection implements ConnectionInterface
      * get that connection. If you pass either alias in and only a single
      * connection is present, it must return the sole connection.
      *
-     * @return false|object|resource
+     * @return         false|object|resource
      * @phpstan-return TConnection
      */
     public function getConnection(?string $alias = null)
@@ -547,7 +547,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Executes the query against the database.
      *
-     * @return false|object|resource
+     * @return         false|object|resource
      * @phpstan-return false|TResult
      */
     abstract protected function execute(string $sql);
@@ -562,7 +562,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param array|string|null $binds
      *
-     * @return BaseResult|bool|Query BaseResult when “read” type query, bool when “write” type query, Query when prepared query
+     * @return         BaseResult|bool|Query                       BaseResult when “read” type query, bool when “write” type query, Query when prepared query
      * @phpstan-return BaseResult<TConnection, TResult>|bool|Query
      *
      * @todo BC set $queryClass default as null in 4.1
@@ -681,7 +681,7 @@ abstract class BaseConnection implements ConnectionInterface
      * is performed, nor are transactions handled. Simply takes a raw
      * query string and returns the database-specific result id.
      *
-     * @return false|object|resource
+     * @return         false|object|resource
      * @phpstan-return false|TResult
      */
     public function simpleQuery(string $sql)
@@ -1006,7 +1006,7 @@ abstract class BaseConnection implements ConnectionInterface
      * @param bool         $protectIdentifiers Protect table or column names?
      * @param bool         $fieldExists        Supplied $item contains a column name?
      *
-     * @return array|string
+     * @return         array|string
      * @phpstan-return ($item is array ? array : string)
      */
     public function protectIdentifiers($item, bool $prefixSingle = false, ?bool $protectIdentifiers = null, bool $fieldExists = true)
@@ -1166,7 +1166,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param array|string $item
      *
-     * @return array|string
+     * @return         array|string
      * @phpstan-return ($item is array ? array : string)
      */
     public function escapeIdentifiers($item)
@@ -1251,7 +1251,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @param array|bool|float|int|object|string|null $str
      *
-     * @return array|float|int|string
+     * @return         array|float|int|string
      * @phpstan-return ($str is array ? array : float|int|string)
      */
     public function escape($str)
@@ -1665,7 +1665,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * Must return an array with keys 'code' and 'message':
      *
-     * @return array<string, int|string|null>
+     * @return         array<string, int|string|null>
      * @phpstan-return array{code: int|string|null, message: string|null}
      */
     abstract public function error(): array;
