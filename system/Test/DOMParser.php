@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
-use BadMethodCallException;
+use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Exceptions\InvalidArgumentException;
 use DOMDocument;
 use DOMNodeList;
