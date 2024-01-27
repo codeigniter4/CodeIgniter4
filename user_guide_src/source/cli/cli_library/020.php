@@ -1,5 +1,7 @@
 <?php
 
+use CodeIgniter\CLI\CLI;
+
 $totalSteps = count($tasks);
 $currStep   = 1;
 

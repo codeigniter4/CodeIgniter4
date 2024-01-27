@@ -39,6 +39,7 @@ Filesystem Helper
 :php:func:`get_filenames()` now follows symlink folders, which it previously just returned
 without following.
 
+************
 Enhancements
 ************
 

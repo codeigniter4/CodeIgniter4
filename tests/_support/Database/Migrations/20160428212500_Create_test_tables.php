@@ -46,16 +46,23 @@ class Migration_Create_test_tables extends Migration
         ])->addKey('id', true)->createTable('misc', true);
 
         // Database Type test table
-        // missing types :
-        // TINYINT,MEDIUMINT,BIT,YEAR,BINARY , VARBINARY, TINYTEXT,LONGTEXT,YEAR,JSON,Spatial data types
-        // id must be interger else SQLite3 error on not null for autoinc field
+        // missing types:
+        //   TINYINT,MEDIUMINT,BIT,YEAR,BINARY,VARBINARY,TINYTEXT,LONGTEXT,
+        //   JSON,Spatial data types
+        // `id` must be INTEGER else SQLite3 error on not null for autoincrement field.
         $data_type_fields = [
-            'id'              => ['type' => 'INTEGER', 'constraint' => 20, 'auto_increment' => true],
-            'type_varchar'    => ['type' => 'VARCHAR', 'constraint' => 40, 'null' => true],
-            'type_char'       => ['type' => 'CHAR', 'constraint' => 10, 'null' => true],
-            'type_text'       => ['type' => 'TEXT', 'null' => true],
-            'type_smallint'   => ['type' => 'SMALLINT', 'null' => true],
-            'type_integer'    => ['type' => 'INTEGER', 'null' => true],
+            'id'           => ['type' => 'INTEGER', 'constraint' => 20, 'auto_increment' => true],
+            'type_varchar' => ['type' => 'VARCHAR', 'constraint' => 40, 'null' => true],
+            'type_char'    => ['type' => 'CHAR', 'constraint' => 10, 'null' => true],
+            // TEXT should not be used on SQLSRV. It is deprecated.
+            'type_text'     => ['type' => 'TEXT', 'null' => true],
+            'type_smallint' => ['type' => 'SMALLINT', 'null' => true],
+            'type_integer'  => ['type' => 'INTEGER', 'null' => true],
+            // FLOAT should not be used on MySQL.
+            //   CREATE TABLE t (f FLOAT, d DOUBLE);
+            //   INSERT INTO t VALUES(99.9, 99.9);
+            //   SELECT * FROM t WHERE f=99.9; // Empty set
+            //   SELECT * FROM t WHERE d=99.9; // 1 row
             'type_float'      => ['type' => 'FLOAT', 'null' => true],
             'type_numeric'    => ['type' => 'NUMERIC', 'constraint' => '18,2', 'null' => true],
             'type_date'       => ['type' => 'DATE', 'null' => true],

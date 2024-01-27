@@ -182,8 +182,15 @@ abstract class BaseExceptionHandler
 
         $source = str_replace(["\r\n", "\r"], "\n", $source);
         $source = explode("\n", highlight_string($source, true));
-        $source = str_replace('<br />', "\n", $source[1]);
-        $source = explode("\n", str_replace("\r\n", "\n", $source));
+
+        if (PHP_VERSION_ID < 80300) {
+            $source = str_replace('<br />', "\n", $source[1]);
+            $source = explode("\n", str_replace("\r\n", "\n", $source));
+        } else {
+            // We have to remove these tags since we're preparing the result
+            // ourselves and these tags are added manually at the end.
+            $source = str_replace(['<pre><code>', '</code></pre>'], '', $source);
+        }
 
         // Get just the part to show
         $start = max($lineNumber - (int) round($lines / 2), 0);
@@ -199,7 +206,7 @@ abstract class BaseExceptionHandler
         // of open and close span tags on one line, we need
         // to ensure we can close them all to get the lines
         // showing correctly.
-        $spans = 1;
+        $spans = 0;
 
         foreach ($source as $n => $row) {
             $spans += substr_count($row, '<span') - substr_count($row, '</span');
@@ -216,6 +223,9 @@ abstract class BaseExceptionHandler
                 );
             } else {
                 $out .= sprintf('<span class="line"><span class="number">' . $format . '</span> %s', $n + $start + 1, $row) . "\n";
+                // We're closing only one span tag we added manually line before,
+                // so we have to increment $spans count to close this tag later.
+                $spans++;
             }
         }
 

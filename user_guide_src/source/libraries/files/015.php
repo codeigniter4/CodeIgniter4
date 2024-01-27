@@ -1,5 +1,7 @@
 <?php
 
+use CodeIgniter\Files\FileCollection;
+
 $files = new FileCollection();
 $files->add(APPPATH . 'Config', true); // Adds all Config files and directories
 

@@ -111,29 +111,159 @@ final class UpdateTest extends CIUnitTestCase
         }
     }
 
-    public function testUpdateBatch(): void
+    /**
+     * @dataProvider provideUpdateBatch
+     */
+    public function testUpdateBatch(string $constraints, array $data, array $expected): void
     {
-        $data = [
-            [
-                'name'    => 'Derek Jones',
-                'country' => 'Greece',
+        $table = 'type_test';
+
+        // Prepares test data.
+        $builder = $this->db->table($table);
+        $builder->truncate();
+
+        for ($i = 1; $i < 4; $i++) {
+            $builder->insert([
+                'type_varchar'  => 'test' . $i,
+                'type_char'     => 'char',
+                'type_text'     => 'text',
+                'type_smallint' => 32767,
+                'type_integer'  => 2_147_483_647,
+                'type_bigint'   => 9_223_372_036_854_775_807,
+                'type_float'    => 10.1,
+                'type_numeric'  => 123.23,
+                'type_date'     => '2023-12-0' . $i,
+                'type_datetime' => '2023-12-21 12:00:00',
+            ]);
+        }
+
+        $this->db->table($table)->updateBatch($data, $constraints);
+
+        if ($this->db->DBDriver === 'SQLSRV') {
+            // We cannot compare `text` and `varchar` with `=`. It causes the error:
+            // [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The data types text and varchar are incompatible in the equal to operator.
+            // And data type `text`, `ntext`, `image` are deprecated in SQL Server 2016
+            // See https://github.com/codeigniter4/CodeIgniter4/pull/8439#issuecomment-1902535909
+            unset($expected[0]['type_text'], $expected[1]['type_text']);
+        }
+
+        $this->seeInDatabase($table, $expected[0]);
+        $this->seeInDatabase($table, $expected[1]);
+    }
+
+    public static function provideUpdateBatch(): iterable
+    {
+        yield from [
+            'constraints varchar' => [
+                'type_varchar',
+                [
+                    [
+                        'type_varchar'  => 'test1', // Key
+                        'type_text'     => 'updated',
+                        'type_smallint' => 9999,
+                        'type_integer'  => 9_999_999,
+                        'type_bigint'   => 9_999_999,
+                        'type_float'    => 99.9,
+                        'type_numeric'  => 999999.99,
+                        'type_date'     => '2024-01-01',
+                        'type_datetime' => '2024-01-01 09:00:00',
+                    ],
+                    [
+                        'type_varchar'  => 'test2', // Key
+                        'type_text'     => 'updated',
+                        'type_smallint' => 9999,
+                        'type_integer'  => 9_999_999,
+                        'type_bigint'   => 9_999_999,
+                        'type_float'    => 99.9,
+                        'type_numeric'  => 999999.99,
+                        'type_date'     => '2024-01-01',
+                        'type_datetime' => '2024-01-01 09:00:00',
+                    ],
+                ],
+                [
+                    [
+                        'type_varchar'  => 'test1',
+                        'type_text'     => 'updated',
+                        'type_smallint' => 9999,
+                        'type_integer'  => 9_999_999,
+                        'type_bigint'   => 9_999_999,
+                        'type_numeric'  => 999999.99,
+                        'type_date'     => '2024-01-01',
+                        'type_datetime' => '2024-01-01 09:00:00',
+                    ],
+                    [
+                        'type_varchar'  => 'test2',
+                        'type_text'     => 'updated',
+                        'type_smallint' => 9999,
+                        'type_integer'  => 9_999_999,
+                        'type_bigint'   => 9_999_999,
+                        'type_numeric'  => 999999.99,
+                        'type_date'     => '2024-01-01',
+                        'type_datetime' => '2024-01-01 09:00:00',
+                    ],
+                ],
             ],
-            [
-                'name'    => 'Ahmadinejad',
-                'country' => 'Greece',
+            'constraints date' => [
+                'type_date',
+                [
+                    [
+                        'type_text'     => 'updated',
+                        'type_bigint'   => 9_999_999,
+                        'type_date'     => '2023-12-01', // Key
+                        'type_datetime' => '2024-01-01 09:00:00',
+                    ],
+                    [
+                        'type_text'     => 'updated',
+                        'type_bigint'   => 9_999_999,
+                        'type_date'     => '2023-12-02', // Key
+                        'type_datetime' => '2024-01-01 09:00:00',
+                    ],
+                ],
+                [
+                    [
+                        'type_varchar'  => 'test1',
+                        'type_text'     => 'updated',
+                        'type_bigint'   => 9_999_999,
+                        'type_date'     => '2023-12-01',
+                        'type_datetime' => '2024-01-01 09:00:00',
+                    ],
+                    [
+                        'type_varchar'  => 'test2',
+                        'type_text'     => 'updated',
+                        'type_bigint'   => 9_999_999,
+                        'type_date'     => '2023-12-02',
+                        'type_datetime' => '2024-01-01 09:00:00',
+                    ],
+                ],
+            ],
+            'int as string' => [
+                'type_varchar',
+                [
+                    [
+                        'type_varchar' => 'test1', // Key
+                        'type_integer' => '9999999', // PHP string
+                        'type_bigint'  => '2448114396435166946', // PHP string
+                    ],
+                    [
+                        'type_varchar' => 'test2', // Key
+                        'type_integer' => '9999999', // PHP string
+                        'type_bigint'  => '2448114396435166946', // PHP string
+                    ],
+                ],
+                [
+                    [
+                        'type_varchar' => 'test1',
+                        'type_integer' => 9_999_999,
+                        'type_bigint'  => 2_448_114_396_435_166_946,
+                    ],
+                    [
+                        'type_varchar' => 'test2',
+                        'type_integer' => 9_999_999,
+                        'type_bigint'  => 2_448_114_396_435_166_946,
+                    ],
+                ],
             ],
         ];
-
-        $this->db->table('user')->updateBatch($data, 'name');
-
-        $this->seeInDatabase('user', [
-            'name'    => 'Derek Jones',
-            'country' => 'Greece',
-        ]);
-        $this->seeInDatabase('user', [
-            'name'    => 'Ahmadinejad',
-            'country' => 'Greece',
-        ]);
     }
 
     public function testUpdateWithWhereSameColumn(): void

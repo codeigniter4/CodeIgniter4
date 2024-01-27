@@ -6,7 +6,21 @@
 >
 > -MGatner, kenjis
 
-## [Minor version only] Merge minor version branch into develop
+## Merge `develop` branch into next minor version branch `4.x`
+
+Before starting release process, if there are commits in `develop` branch that
+are not merged into `4.x` branch, merge them. This is because if conflicts occur,
+merging will take time.
+
+```console
+git fetch upstream
+git switch 4.x
+git merge upstream/4.x
+git merge upstream/develop
+git push upstream HEAD
+```
+
+## [Minor version only] Merge minor version branch into `develop`
 
 If you release a new minor version.
 
@@ -149,7 +163,7 @@ Work off direct clones of the repos so the release branches persist for a time.
     git merge origin/master
     git push origin HEAD
     ```
-* [ ] Update the next minor upgrade branch `4.x`:
+* [ ] Update the next minor version branch `4.x`:
     ```console
     git fetch origin
     git checkout 4.x
@@ -157,7 +171,7 @@ Work off direct clones of the repos so the release branches persist for a time.
     git merge origin/develop
     git push origin HEAD
     ```
-* [ ] [Minor version only] Create the next minor upgrade branch `4.x`:
+* [ ] [Minor version only] Create the new next minor version branch `4.x`:
     ```console
     git fetch origin
     git switch develop

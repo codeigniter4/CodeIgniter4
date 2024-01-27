@@ -1342,11 +1342,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, array\\<int\\|string, array\\<int, int\\|string\\>\\|string\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Return type \\(CodeIgniter\\\\Database\\\\BaseBuilder\\) of method CodeIgniter\\\\Database\\\\Postgre\\\\Builder\\:\\:join\\(\\) should be covariant with return type \\(\\$this\\(CodeIgniter\\\\Database\\\\BaseBuilder\\)\\) of method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:join\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Postgre/Builder.php',
@@ -1448,11 +1443,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^PHPDoc type CodeIgniter\\\\Database\\\\Postgre\\\\Connection of property CodeIgniter\\\\Database\\\\Postgre\\\\Forge\\:\\:\\$db is not the same as PHPDoc type CodeIgniter\\\\Database\\\\BaseConnection of overridden property CodeIgniter\\\\Database\\\\Forge\\:\\:\\$db\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Postgre/Forge.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Return type \\(array\\|bool\\|string\\) of method CodeIgniter\\\\Database\\\\Postgre\\\\Forge\\:\\:_alterTable\\(\\) should be covariant with return type \\(array\\<string\\>\\|string\\|false\\) of method CodeIgniter\\\\Database\\\\Forge\\:\\:_alterTable\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Postgre/Forge.php',
 ];
@@ -1657,19 +1647,9 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/SQLite3/Forge.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Return type \\(array\\|string\\|null\\) of method CodeIgniter\\\\Database\\\\SQLite3\\\\Forge\\:\\:_alterTable\\(\\) should be covariant with return type \\(array\\<string\\>\\|string\\|false\\) of method CodeIgniter\\\\Database\\\\Forge\\:\\:_alterTable\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/SQLite3/Forge.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Return type \\(SQLite3Result\\|false\\) of method CodeIgniter\\\\Database\\\\SQLite3\\\\PreparedQuery\\:\\:_getResult\\(\\) should be covariant with return type \\(object\\|resource\\|null\\) of method CodeIgniter\\\\Database\\\\BasePreparedQuery\\<SQLite3,SQLite3Stmt,SQLite3Result\\>\\:\\:_getResult\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/SQLite3/PreparedQuery.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Class stdClass referenced with incorrect case\\: stdclass\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Database/SQLite3/Table.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -1845,11 +1825,6 @@ $ignoreErrors[] = [
 	'message' => '#^PHPDoc type int of property CodeIgniter\\\\Exceptions\\\\PageNotFoundException\\:\\:\\$code is not the same as PHPDoc type mixed of overridden property Exception\\:\\:\\$code\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Exceptions/PageNotFoundException.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Call to method SplFileInfo\\:\\:getBasename\\(\\) with incorrect case\\: getBaseName$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Files/File.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
@@ -2490,11 +2465,6 @@ $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Pager/Pager.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Call to method CodeIgniter\\\\Pager\\\\PagerRenderer\\:\\:getNext\\(\\) with incorrect case\\: getnext$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Pager/Views/default_simple.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Argument \\#1 \\$name \\(class\\-string\\) passed to function model does not extend CodeIgniter\\\\\\\\Model\\.$#',

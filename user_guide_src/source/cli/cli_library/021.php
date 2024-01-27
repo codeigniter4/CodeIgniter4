@@ -1,5 +1,7 @@
 <?php
 
+use CodeIgniter\CLI\CLI;
+
 $thead = ['ID', 'Title', 'Updated At', 'Active'];
 $tbody = [
     [7, 'A great item title', '2017-11-15 10:35:02', 1],

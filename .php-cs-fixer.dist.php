@@ -43,31 +43,7 @@ $finder = Finder::create()
         __DIR__ . '/spark',
     ]);
 
-$overrides = [
-    'php_unit_data_provider_name' => [
-        'prefix' => 'provide',
-        'suffix' => '',
-    ],
-    'php_unit_data_provider_static'      => true,
-    'php_unit_data_provider_return_type' => true,
-    'no_extra_blank_lines'               => [
-        'tokens' => [
-            'attribute',
-            'break',
-            'case',
-            'continue',
-            'curly_brace_block',
-            'default',
-            'extra',
-            'parenthesis_brace_block',
-            'return',
-            'square_brace_block',
-            'switch',
-            'throw',
-            'use',
-        ],
-    ],
-];
+$overrides = [];
 
 $options = [
     'cacheFile' => 'build/.php-cs-fixer.cache',

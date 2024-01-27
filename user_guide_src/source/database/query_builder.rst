@@ -829,15 +829,17 @@ method. Here is an example using an array:
 
 The first parameter is an associative array of values.
 
+.. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
+
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+
 Here is an example using an object:
 
 .. literalinclude:: query_builder/077.php
 
+.. literalinclude:: query_builder/121.php
+
 The first parameter is an object.
-
-.. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
-
-.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
 
 $builder->ignore()
 ------------------
@@ -876,6 +878,9 @@ insertBatch
 $builder->insertBatch()
 -----------------------
 
+Insert from Data
+^^^^^^^^^^^^^^^^
+
 Generates an insert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
 method. Here is an example using an array:
@@ -887,6 +892,9 @@ The first parameter is an associative array of values.
 .. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
 
 .. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+
+Insert from a Query
+^^^^^^^^^^^^^^^^^^^
 
 You can also insert from a query:
 
@@ -922,6 +930,8 @@ The first parameter is an associative array of values.
 
 Here is an example using an object:
 
+.. literalinclude:: query_builder/122.php
+
 .. literalinclude:: query_builder/113.php
 
 The first parameter is an object.
@@ -950,17 +960,25 @@ $builder->upsertBatch()
 
 .. versionadded:: 4.3.0
 
+Upsert from Data
+^^^^^^^^^^^^^^^^
+
 Generates an upsert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
 method. By default a constraint will be defined in order. A primary
 key will be selected first and then unique keys. MySQL will use any
-constraint by default. Here is an example using an array:
+constraint by default.
+
+Here is an example using an array:
 
 .. literalinclude:: query_builder/108.php
 
 The first parameter is an associative array of values.
 
 .. note:: All values are escaped automatically producing safer queries.
+
+Upsert from a Query
+^^^^^^^^^^^^^^^^^^^
 
 You can also upsert from a query:
 
@@ -1056,6 +1074,8 @@ You can also pass an associative array to this method:
 
 Or an object:
 
+.. literalinclude:: query_builder/077.php
+
 .. literalinclude:: query_builder/087.php
 
 $builder->update()
@@ -1068,6 +1088,8 @@ is an example using an array:
 .. literalinclude:: query_builder/088.php
 
 Or you can supply an object:
+
+.. literalinclude:: query_builder/077.php
 
 .. literalinclude:: query_builder/089.php
 
@@ -1088,6 +1110,16 @@ Or as an array:
 You may also use the ``$builder->set()`` method described above when
 performing updates.
 
+$builder->getCompiledUpdate()
+-----------------------------
+
+This works exactly the same way as ``$builder->getCompiledInsert()`` except
+that it produces an **UPDATE** SQL string instead of an **INSERT** SQL string.
+
+For more information view documentation for `$builder->getCompiledInsert()`_.
+
+.. note:: This method doesn't work for batched updates.
+
 .. _update-batch:
 
 UpdateBatch
@@ -1099,18 +1131,20 @@ $builder->updateBatch()
 .. note:: Since v4.3.0, the second parameter ``$index`` of ``updateBatch()`` has
     changed to ``$constraints``. It now accepts types array, string, or ``RawSql``.
 
+Update from Data
+^^^^^^^^^^^^^^^^
+
 Generates an update string based on the data you supply, and runs the query.
 You can either pass an **array** or an **object** to the method.
 Here is an example using an array:
 
 .. literalinclude:: query_builder/092.php
 
+The first parameter is an associative array of values, the second parameter is the where keys.
+
 .. note:: Since v4.3.0, the generated SQL structure has been Improved.
 
-The first parameter is an associative array of values, the second parameter is the where key.
-
-Since v4.3.0, you can also use the ``setQueryAsData()``, ``onConstraint()``, and
-``updateFields()`` methods:
+Since v4.3.0, you can also use the ``onConstraint()`` and ``updateFields()`` methods:
 
 .. literalinclude:: query_builder/120.php
 
@@ -1122,24 +1156,14 @@ Since v4.3.0, you can also use the ``setQueryAsData()``, ``onConstraint()``, and
     due to the very nature of how it works. Instead, ``updateBatch()``
     returns the number of rows affected.
 
-You can also update from a query:
+Update from a Query
+^^^^^^^^^^^^^^^^^^^
+
+Since v4.3.0, you can also update from a query with the ``setQueryAsData()`` method:
 
 .. literalinclude:: query_builder/116.php
 
-.. note:: The ``setQueryAsData()``, ``onConstraint()``, and ``updateFields()``
-    methods can be used since v4.3.0.
-
 .. note:: It is required to alias the columns of the select query to match those of the target table.
-
-$builder->getCompiledUpdate()
------------------------------
-
-This works exactly the same way as ``$builder->getCompiledInsert()`` except
-that it produces an **UPDATE** SQL string instead of an **INSERT** SQL string.
-
-For more information view documentation for ``$builder->getCompiledInsert()``.
-
-.. note:: This method doesn't work for batched updates.
 
 *************
 Deleting Data
@@ -1164,12 +1188,26 @@ the data to the first parameter of the method:
 If you want to delete all data from a table, you can use the ``truncate()``
 method, or ``emptyTable()``.
 
+$builder->getCompiledDelete()
+-----------------------------
+
+This works exactly the same way as ``$builder->getCompiledInsert()`` except
+that it produces a **DELETE** SQL string instead of an **INSERT** SQL string.
+
+For more information view documentation for `$builder->getCompiledInsert()`_.
+
 .. _delete-batch:
+
+DeleteBatch
+===========
 
 $builder->deleteBatch()
 -----------------------
 
 .. versionadded:: 4.3.0
+
+Delete from Data
+^^^^^^^^^^^^^^^^
 
 Generates a batch **DELETE** statement based on a set of data.
 
@@ -1177,13 +1215,14 @@ Generates a batch **DELETE** statement based on a set of data.
 
 This method may be especially useful when deleting data in a table with a composite primary key.
 
-.. note:: SQLite does not support the use of ``where()``.
+.. note:: SQLite3 does not support the use of ``where()``.
+
+Delete from a Query
+^^^^^^^^^^^^^^^^^^^
 
 You can also delete from a query:
 
 .. literalinclude:: query_builder/119.php
-
-.. note:: ``$deleteBatch()`` can be used since v4.3.0.
 
 $builder->emptyTable()
 ----------------------
@@ -1202,14 +1241,6 @@ Generates a **TRUNCATE** SQL string and runs the query.
 
 .. note:: If the TRUNCATE command isn't available, ``truncate()`` will
     execute as "DELETE FROM table".
-
-$builder->getCompiledDelete()
------------------------------
-
-This works exactly the same way as ``$builder->getCompiledInsert()`` except
-that it produces a **DELETE** SQL string instead of an **INSERT** SQL string.
-
-For more information view documentation for ``$builder->getCompiledInsert()``.
 
 **********************
 Conditional Statements

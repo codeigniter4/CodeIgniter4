@@ -17,6 +17,8 @@ class {class} extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [];
 
+    protected bool $allowEmptyInserts = false;
+
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';

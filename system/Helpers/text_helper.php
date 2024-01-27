@@ -702,8 +702,6 @@ if (! function_exists('excerpt')) {
      * @param int    $radius   The amount of characters returned around the phrase.
      * @param string $ellipsis Ending that will be appended
      *
-     * @return string
-     *
      * If no $phrase is passed, will generate an excerpt of $radius characters
      * from the beginning of $text.
      */

@@ -18,11 +18,11 @@
         "psr/log": "^1.1"
     },
     "require-dev": {
-        "codeigniter/coding-standard": "^1.5",
+        "codeigniter/coding-standard": "^1.7",
         "codeigniter/phpstan-codeigniter": "^1.4",
         "ergebnis/composer-normalize": "^2.28",
         "fakerphp/faker": "^1.9",
-        "friendsofphp/php-cs-fixer": "~3.41.0",
+        "friendsofphp/php-cs-fixer": "^3.47.1",
         "kint-php/kint": "^5.0.4",
         "mikey179/vfsstream": "^1.6",
         "nexusphp/cs-config": "^3.6",
@@ -34,7 +34,7 @@
         "phpunit/phpcov": "^8.2",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1 || ^2.0",
-        "rector/rector": "0.18.13",
+        "rector/rector": "0.19.2",
         "vimeo/psalm": "^5.0"
     },
     "replace": {
@@ -91,8 +91,7 @@
     },
     "scripts": {
         "post-update-cmd": [
-            "CodeIgniter\\ComposerScripts::postUpdate",
-            "bash -c \"if [ -f admin/setup.sh ]; then bash admin/setup.sh; fi\""
+            "CodeIgniter\\ComposerScripts::postUpdate"
         ],
         "analyze": [
             "Composer\\Config::disableProcessTimeout",

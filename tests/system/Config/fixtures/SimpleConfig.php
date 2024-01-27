@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-class SimpleConfig extends \CodeIgniter\Config\BaseConfig
+class SimpleConfig extends CodeIgniter\Config\BaseConfig
 {
     public $QZERO;
     public $QZEROSTR;
