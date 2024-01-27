@@ -15,7 +15,7 @@ namespace CodeIgniter\Encryption\Exceptions;
 
 use CodeIgniter\Exceptions\DebugTraceableTrait;
 use CodeIgniter\Exceptions\ExceptionInterface;
-use RuntimeException;
+use CodeIgniter\Exceptions\RuntimeException;
 
 /**
  * Encryption exception
