@@ -13,15 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Exceptions;
 
-use RuntimeException;
-
 /**
  * Class FrameworkException
  *
  * A collection of exceptions thrown by the framework
  * that can only be determined at run time.
  */
-class FrameworkException extends RuntimeException implements ExceptionInterface
+class FrameworkException extends RuntimeException
 {
     use DebugTraceableTrait;
 
