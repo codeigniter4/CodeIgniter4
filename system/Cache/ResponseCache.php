@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Cache;
 
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Header;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Cache as CacheConfig;
-use Exception;
 
 /**
  * Web Page Caching
@@ -131,7 +131,7 @@ final class ResponseCache
                 || ! isset($cachedResponse['output'])
                 || ! isset($cachedResponse['headers'])
             ) {
-                throw new Exception('Error unserializing page cache');
+                throw new RuntimeException('Error unserializing page cache');
             }
 
             $headers = $cachedResponse['headers'];
