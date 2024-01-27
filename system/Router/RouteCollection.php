@@ -15,6 +15,7 @@ namespace CodeIgniter\Router;
 
 use Closure;
 use CodeIgniter\Autoloader\FileLocatorInterface;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\Exceptions\RouterException;
@@ -22,7 +23,6 @@ use Config\App;
 use Config\Modules;
 use Config\Routing;
 use Config\Services;
-use InvalidArgumentException;
 
 /**
  * @todo Implement nested resource routing (See CakePHP)

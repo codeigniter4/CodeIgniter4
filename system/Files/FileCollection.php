@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Files;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use Countable;
 use Generator;
-use InvalidArgumentException;
 use IteratorAggregate;
 
 /**

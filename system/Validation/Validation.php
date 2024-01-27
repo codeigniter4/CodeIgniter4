@@ -15,6 +15,7 @@ namespace CodeIgniter\Validation;
 
 use Closure;
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Method;
@@ -23,7 +24,6 @@ use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
 use Config\Services;
 use Config\Validation as ValidationConfig;
-use InvalidArgumentException;
 use LogicException;
 use TypeError;
 
