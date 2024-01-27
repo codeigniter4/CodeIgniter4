@@ -1,5 +1,27 @@
 # Changelog
 
+## [v4.4.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.5) (2024-01-27)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.4...v4.4.5)
+
+### Fixed Bugs
+
+* fix: bug 4.4.4 `spark serve` not working when using Session in Routes.php by @ALTITUDE-DEV-FR in https://github.com/codeigniter4/CodeIgniter4/pull/8389
+* fix: `highlightFile()` in `BaseExceptionHandler` for PHP 8.3 by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/8401
+* fix: [Validation] DotArrayFilter returns incorrect array when numeric index array is passed by @grimpirate in https://github.com/codeigniter4/CodeIgniter4/pull/8425
+* fix: OCI8 Forge always sets NOT NULL when BOOLEAN is specified by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8440
+* fix: DB Seeder may use wrong DB connection during testing by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8447
+* fix: [Postgre] QueryBuilder::updateBatch() does not work (No API change) by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8439
+* fix: [Postgre] QueryBuilder::deleteBatch() does not work by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8451
+* fix: [Email] setAttachmentCID() does not work with buffer string by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8446
+* fix: add undocumented Model $allowEmptyInserts by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8456
+
+### Refactoring
+
+* refactor: remove overrides for coding-standard v1.7.12 by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/8386
+* refactor: Table class to fix phpstan errors by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8402
+* fix: typo in pager default_simple by @jasonliang-dev in https://github.com/codeigniter4/CodeIgniter4/pull/8407
+* refactor: improve Forge variable names by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8434
+
 ## [v4.4.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.4) (2023-12-28)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.3...v4.4.4)
 
