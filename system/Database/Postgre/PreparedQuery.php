@@ -93,7 +93,7 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * Returns the result object for the prepared query or false on failure.
      *
-     * @return resource|null
+     * @return         resource|null
      * @phpstan-return PgSqlResult|null
      */
     public function _getResult()
