@@ -11,11 +11,11 @@
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\Exceptions\RuntimeException;
 use Config\Encryption;
 use Config\Modules;
 use ReflectionClass;
 use ReflectionException;
-use RuntimeException;
 
 /**
  * Class BaseConfig

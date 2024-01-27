@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Log;
 
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Log\Handlers\HandlerInterface;
 use Psr\Log\LoggerInterface;
-use RuntimeException;
 use Stringable;
 use Throwable;
 
