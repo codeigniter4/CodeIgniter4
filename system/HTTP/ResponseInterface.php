@@ -15,10 +15,10 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
 use DateTime;
-use InvalidArgumentException;
 
 /**
  * Representation of an outgoing, server-side response.

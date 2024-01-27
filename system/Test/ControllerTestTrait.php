@@ -12,13 +12,13 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Controller;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
 use Config\App;
 use Config\Services;
-use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Throwable;
 

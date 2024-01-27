@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP\Exceptions;
 
 use CodeIgniter\Exceptions\HTTPExceptionInterface;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\ResponsableInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use InvalidArgumentException;
 use LogicException;
 use Throwable;
 
