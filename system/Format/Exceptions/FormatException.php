@@ -14,13 +14,12 @@ declare(strict_types=1);
 namespace CodeIgniter\Format\Exceptions;
 
 use CodeIgniter\Exceptions\DebugTraceableTrait;
-use CodeIgniter\Exceptions\ExceptionInterface;
-use RuntimeException;
+use CodeIgniter\Exceptions\RuntimeException;
 
 /**
  * FormatException
  */
-class FormatException extends RuntimeException implements ExceptionInterface
+class FormatException extends RuntimeException
 {
     use DebugTraceableTrait;
 
