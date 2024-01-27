@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use BadMethodCallException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
-use InvalidArgumentException;
 
 /**
  * Abstraction for a uniform resource identifier (URI).

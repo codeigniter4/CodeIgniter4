@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace CodeIgniter\Database;
 
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Database;
 use Faker\Factory;
 use Faker\Generator;
-use InvalidArgumentException;
 
 /**
  * Class Seeder

@@ -15,9 +15,9 @@ namespace CodeIgniter\Cache\Handlers;
 
 use Closure;
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Cache;
 use Exception;
-use InvalidArgumentException;
 
 /**
  * Base class for cache handling

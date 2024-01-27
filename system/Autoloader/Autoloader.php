@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Autoloader;
 
 use CodeIgniter\Exceptions\ConfigException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Exceptions\RuntimeException;
 use Composer\Autoload\ClassLoader;
 use Composer\InstalledVersions;
@@ -21,7 +22,6 @@ use Config\Autoload;
 use Config\Kint as KintConfig;
 use Config\Modules;
 use Config\Services;
-use InvalidArgumentException;
 use Kint;
 use Kint\Renderer\CliRenderer;
 use Kint\Renderer\RichRenderer;

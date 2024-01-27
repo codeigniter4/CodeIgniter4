@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace CodeIgniter\Test;
 
 use BadMethodCallException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use DOMDocument;
 use DOMNodeList;
 use DOMXPath;
-use InvalidArgumentException;
 
 /**
  * Load a response into a DOMDocument for testing assertions based on that

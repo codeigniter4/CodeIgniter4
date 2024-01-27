@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Language;
 
-use InvalidArgumentException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use MessageFormatter;
 
 /**
