@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
-use LogicException;
+use CodeIgniter\Exceptions\LogicException;
 
 trait ConfigFromArrayTrait
 {

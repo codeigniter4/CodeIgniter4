@@ -15,7 +15,7 @@ namespace CodeIgniter\Database\MySQLi;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use LogicException;
+use CodeIgniter\Exceptions\LogicException;
 use mysqli;
 use mysqli_result;
 use mysqli_sql_exception;
