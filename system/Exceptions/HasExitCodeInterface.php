@@ -16,7 +16,7 @@ namespace CodeIgniter\Exceptions;
 /**
  * Interface for Exceptions that has exception code as exit code.
  */
-interface HasExitCodeInterface
+interface HasExitCodeInterface extends ExceptionInterface
 {
     /**
      * Returns exit status code.
