@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Exceptions\RuntimeException;
 use InvalidArgumentException;
-use RuntimeException;
 use Throwable;
 
 /**
