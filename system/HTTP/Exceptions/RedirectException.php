@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP\Exceptions;
 
 use CodeIgniter\Exceptions\HTTPExceptionInterface;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\ResponsableInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Exception;
 use InvalidArgumentException;
 use LogicException;
 use Throwable;
@@ -24,7 +24,7 @@ use Throwable;
 /**
  * RedirectException
  */
-class RedirectException extends Exception implements ResponsableInterface, HTTPExceptionInterface
+class RedirectException extends RuntimeException implements ResponsableInterface, HTTPExceptionInterface
 {
     /**
      * HTTP status code for redirects

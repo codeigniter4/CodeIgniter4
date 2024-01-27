@@ -16,7 +16,7 @@ namespace CodeIgniter\Exceptions;
 /**
  * Exception for automatic logging.
  */
-class ConfigException extends CriticalError implements HasExitCodeInterface
+class ConfigException extends RuntimeException implements HasExitCodeInterface
 {
     use DebugTraceableTrait;
 
