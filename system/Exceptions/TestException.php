@@ -16,7 +16,7 @@ namespace CodeIgniter\Exceptions;
 /**
  * Exception for automatic logging.
  */
-class TestException extends CriticalError
+class TestException extends LogicException
 {
     use DebugTraceableTrait;
 
