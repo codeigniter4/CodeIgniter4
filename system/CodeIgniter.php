@@ -16,6 +16,7 @@ use CodeIgniter\Cache\ResponseCache;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
+use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\CLIRequest;
@@ -41,7 +42,6 @@ use Kint;
 use Kint\Renderer\CliRenderer;
 use Kint\Renderer\RichRenderer;
 use Locale;
-use LogicException;
 use Throwable;
 
 /**
