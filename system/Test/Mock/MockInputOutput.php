@@ -15,9 +15,9 @@ namespace CodeIgniter\Test\Mock;
 
 use CodeIgniter\CLI\InputOutput;
 use CodeIgniter\Exceptions\InvalidArgumentException;
+use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\PhpStreamWrapper;
-use LogicException;
 
 final class MockInputOutput extends InputOutput
 {

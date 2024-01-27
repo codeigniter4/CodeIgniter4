@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View\Cells;
 
+use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Traits\PropertiesTrait;
-use LogicException;
 use ReflectionClass;
 use Stringable;
 
