@@ -16,7 +16,7 @@ namespace CodeIgniter\Database\Exceptions;
 use CodeIgniter\Exceptions\HasExitCodeInterface;
 use CodeIgniter\Exceptions\RuntimeException;
 
-class DatabaseException extends RuntimeException implements HasExitCodeInterface
+class DatabaseException extends RuntimeException implements ExceptionInterface, HasExitCodeInterface
 {
     public function getExitCode(): int
     {

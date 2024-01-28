@@ -16,7 +16,7 @@ namespace CodeIgniter\Files\Exceptions;
 use CodeIgniter\Exceptions\DebugTraceableTrait;
 use CodeIgniter\Exceptions\RuntimeException;
 
-class FileNotFoundException extends RuntimeException
+class FileNotFoundException extends RuntimeException implements ExceptionInterface
 {
     use DebugTraceableTrait;
 
