@@ -166,7 +166,7 @@ class Filters
      * Runs through all of the filters for the specified
      * uri and position.
      *
-     * @param string $uri URI path relative to baseURL
+     * @param         string           $uri      URI path relative to baseURL
      * @phpstan-param 'before'|'after' $position
      *
      * @return RequestInterface|ResponseInterface|string|null

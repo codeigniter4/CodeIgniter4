@@ -39,8 +39,8 @@ final class MockInputOutput extends InputOutput
     /**
      * Sets user inputs.
      *
-     * @param array<int, string> $inputs
-     * @phpstan-param list<string> $inputs
+     * @param         array<int, string> $inputs
+     * @phpstan-param list<string>       $inputs
      */
     public function setInputs(array $inputs): void
     {
