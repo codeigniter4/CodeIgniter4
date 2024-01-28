@@ -211,6 +211,7 @@ Test
 - ``ControllerTester``
 - ``FeatureResponse``
 - ``FeatureTestCase``
+- ``Mock\MockSecurityConfig``
 
 Spark Commands
 --------------
