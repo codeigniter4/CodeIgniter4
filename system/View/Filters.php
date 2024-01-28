@@ -66,7 +66,7 @@ class Filters
      */
     public static function default($value, string $default): string
     {
-        return empty($value)
+        return empty($value) // @phpstan-ignore-line
             ? $default
             : $value;
     }
@@ -74,7 +74,7 @@ class Filters
     /**
      * Escapes the given value with our `esc()` helper function.
      *
-     * @param string $value
+     * @param         string                               $value
      * @phpstan-param 'html'|'js'|'css'|'url'|'attr'|'raw' $context
      */
     public static function esc($value, string $context = 'html'): string

@@ -178,7 +178,7 @@ class View implements RendererInterface
 
         $fileExt = pathinfo($view, PATHINFO_EXTENSION);
         // allow Views as .html, .tpl, etc (from CI3)
-        $this->renderVars['view'] = empty($fileExt) ? $view . '.php' : $view;
+        $this->renderVars['view'] = ($fileExt === '') ? $view . '.php' : $view;
 
         $this->renderVars['options'] = $options ?? [];
 
@@ -207,12 +207,12 @@ class View implements RendererInterface
             $this->renderVars['file'] = $this->loader->locateFile(
                 $this->renderVars['view'],
                 'Views',
-                empty($fileExt) ? 'php' : $fileExt
+                ($fileExt === '') ? 'php' : $fileExt
             );
         }
 
-        // locateFile will return an empty string if the file cannot be found.
-        if (empty($this->renderVars['file'])) {
+        // locateFile() will return false if the file cannot be found.
+        if ($this->renderVars['file'] === false) {
             throw ViewException::forInvalidFile($this->renderVars['view']);
         }
 
@@ -330,8 +330,8 @@ class View implements RendererInterface
     /**
      * Sets several pieces of view data at once.
      *
-     * @param string|null $context The context to escape it for: html, css, js, url
-     *                             If null, no escaping will happen
+     * @param         string|null                               $context The context to escape it for: html, css, js, url
+     *                                                                   If null, no escaping will happen
      * @phpstan-param null|'html'|'js'|'css'|'url'|'attr'|'raw' $context
      */
     public function setData(array $data = [], ?string $context = null): RendererInterface
@@ -349,9 +349,9 @@ class View implements RendererInterface
     /**
      * Sets a single piece of view data.
      *
-     * @param mixed       $value
-     * @param string|null $context The context to escape it for: html, css, js, url
-     *                             If null, no escaping will happen
+     * @param         mixed                                     $value
+     * @param         string|null                               $context The context to escape it for: html, css, js, url
+     *                                                                   If null, no escaping will happen
      * @phpstan-param null|'html'|'js'|'css'|'url'|'attr'|'raw' $context
      */
     public function setVar(string $name, $value = null, ?string $context = null): RendererInterface

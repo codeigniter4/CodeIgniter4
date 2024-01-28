@@ -31,32 +31,13 @@ $finder = Finder::create()
     ]);
 
 $overrides = [
-    'echo_tag_syntax'                    => false,
-    'php_unit_internal_class'            => false,
-    'no_unused_imports'                  => false,
-    'class_attributes_separation'        => false,
-    'php_unit_data_provider_return_type' => true,
-    'no_extra_blank_lines'               => [
-        'tokens' => [
-            'attribute',
-            'break',
-            'case',
-            'continue',
-            'curly_brace_block',
-            'default',
-            'extra',
-            'parenthesis_brace_block',
-            'return',
-            'square_brace_block',
-            'switch',
-            'throw',
-            'use',
-        ],
-    ],
-    'php_unit_data_provider_static' => true,
-    'php_unit_data_provider_name'   => [
-        'prefix' => 'provide',
-        'suffix' => '',
+    'echo_tag_syntax'              => false,
+    'php_unit_internal_class'      => false,
+    'no_unused_imports'            => false,
+    'class_attributes_separation'  => false,
+    'fully_qualified_strict_types' => [
+        'import_symbols'                        => false,
+        'leading_backslash_in_global_namespace' => true,
     ],
 ];
 

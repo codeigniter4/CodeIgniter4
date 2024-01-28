@@ -1,5 +1,7 @@
 <?php
 
+use CodeIgniter\CLI\CLI;
+
 // wait for specified interval, with countdown displayed
 CLI::wait($seconds, true);
 

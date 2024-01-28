@@ -93,7 +93,7 @@ class Negotiate
 
         // If no charset is shown as a match, ignore the directive
         // as allowed by the RFC, and tell it a default value.
-        if (empty($match)) {
+        if ($match === '') {
             return 'utf-8';
         }
 
@@ -158,7 +158,7 @@ class Negotiate
             throw HTTPException::forEmptySupportedNegotiations();
         }
 
-        if (empty($header)) {
+        if ($header === null || $header === '') {
             return $strictMatch ? '' : $supported[0];
         }
 

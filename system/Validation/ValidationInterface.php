@@ -134,6 +134,8 @@ interface ValidationInterface
      * same format used with setRules(). Additionally, check
      * for {group}_errors for an array of custom error messages.
      *
+     * @param non-empty-string|null $group
+     *
      * @return array
      */
     public function loadRuleGroup(?string $group = null);

@@ -67,10 +67,6 @@ to a CA bundle for CURLRequest.
 
 CURLRequest option `verify` can also take *boolean* values as usual.
 
-*********************
-Breaking Enhancements
-*********************
-
 *************
 Project Files
 *************
@@ -81,21 +77,25 @@ these files being outside of the **system** scope they will not be changed witho
 There are some third-party CodeIgniter modules available to assist with merging changes to
 the project space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
 
-Content Changes
-===============
-
-The following files received significant changes (including deprecations or visual adjustments)
-and it is recommended that you merge the updated versions with your application:
-
-Config
-------
-
-- @TODO
-
 All Changes
 ===========
 
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-- @TODO
+- app/Config/App.php
+- app/Config/Autoload.php
+- app/Config/Boot/development.php
+- app/Config/Boot/testing.php
+- app/Config/Cache.php
+- app/Config/Email.php
+- app/Config/Filters.php
+- app/Config/Kint.php
+- app/Config/Modules.php
+- app/Config/Publisher.php
+- app/Config/Session.php
+- app/Views/errors/cli/error_exception.php
+- app/Views/errors/html/error_exception.php
+- composer.json
+- env
+- spark

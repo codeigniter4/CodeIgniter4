@@ -83,10 +83,10 @@ abstract class BaseResult implements ResultInterface
     /**
      * Constructor
      *
-     * @param object|resource $connID
-     * @param object|resource $resultID
-     * @phpstan-param TConnection $connID
-     * @phpstan-param TResult     $resultID
+     * @param         object|resource $connID
+     * @param         object|resource $resultID
+     * @phpstan-param TConnection     $connID
+     * @phpstan-param TResult         $resultID
      */
     public function __construct(&$connID, &$resultID)
     {
@@ -209,7 +209,7 @@ abstract class BaseResult implements ResultInterface
      *
      * If no results, an empty array is returned.
      *
-     * @return array<int, stdClass>
+     * @return         array<int, stdClass>
      * @phpstan-return list<stdClass>
      */
     public function getResultObject(): array
@@ -254,11 +254,11 @@ abstract class BaseResult implements ResultInterface
      *
      * If row doesn't exist, returns null.
      *
-     * @param int|string $n    The index of the results to return, or column name.
-     * @param string     $type The type of result object. 'array', 'object' or class name.
+     * @param         int|string                    $n    The index of the results to return, or column name.
+     * @param         string                        $type The type of result object. 'array', 'object' or class name.
      * @phpstan-param class-string|'array'|'object' $type
      *
-     * @return array|object|stdClass|null
+     * @return         array|object|stdClass|null
      * @phpstan-return ($type is 'object' ? stdClass|null : ($type is 'array' ? array|null : object|null))
      */
     public function getRow($n = 0, string $type = 'object')

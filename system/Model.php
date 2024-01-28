@@ -179,7 +179,7 @@ class Model extends BaseModel
      * @param bool                  $singleton Single or multiple results
      * @param array|int|string|null $id        One primary key or an array of primary keys
      *
-     * @return array|object|null The resulting row of data, or null.
+     * @return         array|object|null                                                     The resulting row of data, or null.
      * @phpstan-return ($singleton is true ? row_array|null|object : list<row_array|object>)
      */
     protected function doFind(bool $singleton, $id = null)
@@ -211,7 +211,7 @@ class Model extends BaseModel
      *
      * @param string $columnName Column Name
      *
-     * @return array|null The resulting row of data, or null if no data found.
+     * @return         array|null           The resulting row of data, or null if no data found.
      * @phpstan-return list<row_array>|null
      */
     protected function doFindColumn(string $columnName)
@@ -227,7 +227,7 @@ class Model extends BaseModel
      * @param int $limit  Limit
      * @param int $offset Offset
      *
-     * @return array
+     * @return         array
      * @phpstan-return list<row_array|object>
      */
     protected function doFindAll(int $limit = 0, int $offset = 0)
@@ -248,7 +248,7 @@ class Model extends BaseModel
      * Query Builder calls into account when determining the result set.
      * This method works only with dbCalls.
      *
-     * @return array|object|null
+     * @return         array|object|null
      * @phpstan-return row_array|object|null
      */
     protected function doFirst()
@@ -257,13 +257,13 @@ class Model extends BaseModel
 
         if ($this->tempUseSoftDeletes) {
             $builder->where($this->table . '.' . $this->deletedField, null);
-        } elseif ($this->useSoftDeletes && empty($builder->QBGroupBy) && $this->primaryKey) {
+        } elseif ($this->useSoftDeletes && ($builder->QBGroupBy === []) && $this->primaryKey) {
             $builder->groupBy($this->table . '.' . $this->primaryKey);
         }
 
         // Some databases, like PostgreSQL, need order
         // information to consistently return correct results.
-        if ($builder->QBGroupBy && empty($builder->QBOrderBy) && $this->primaryKey) {
+        if ($builder->QBGroupBy && ($builder->QBOrderBy === []) && $this->primaryKey) {
             $builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
         }
 
@@ -274,7 +274,7 @@ class Model extends BaseModel
      * Inserts data into the current table.
      * This method works only with dbCalls.
      *
-     * @param array $row Row data
+     * @param         array     $row Row data
      * @phpstan-param row_array $row
      *
      * @return bool
@@ -286,7 +286,7 @@ class Model extends BaseModel
 
         // Require non-empty primaryKey when
         // not using auto-increment feature
-        if (! $this->useAutoIncrement && empty($row[$this->primaryKey])) {
+        if (! $this->useAutoIncrement && ! isset($row[$this->primaryKey])) {
             throw DataException::forEmptyPrimaryKey('insert');
         }
 
@@ -351,7 +351,7 @@ class Model extends BaseModel
             foreach ($set as $row) {
                 // Require non-empty primaryKey when
                 // not using auto-increment feature
-                if (! $this->useAutoIncrement && empty($row[$this->primaryKey])) {
+                if (! $this->useAutoIncrement && ! isset($row[$this->primaryKey])) {
                     throw DataException::forEmptyPrimaryKey('insertBatch');
                 }
             }
@@ -364,9 +364,9 @@ class Model extends BaseModel
      * Updates a single record in $this->table.
      * This method works only with dbCalls.
      *
-     * @param array|int|string|null $id
-     * @param array|null            $row Row data
-     * @phpstan-param row_array|null $row
+     * @param         array|int|string|null $id
+     * @param         array|null            $row Row data
+     * @phpstan-param row_array|null        $row
      */
     protected function doUpdate($id = null, $row = null): bool
     {
@@ -433,7 +433,7 @@ class Model extends BaseModel
         }
 
         if ($this->useSoftDeletes && ! $purge) {
-            if (empty($builder->getCompiledQBWhere())) {
+            if ($builder->getCompiledQBWhere() === []) {
                 throw new DatabaseException(
                     'Deletes are not allowed unless they contain a "where" or "like" clause.'
                 );
@@ -483,9 +483,9 @@ class Model extends BaseModel
      * Compiles a replace into string and runs the query
      * This method works only with dbCalls.
      *
-     * @param array|null $row Data
+     * @param         array|null     $row       Data
      * @phpstan-param row_array|null $row
-     * @param bool $returnSQL Set to true to return Query String
+     * @param         bool           $returnSQL Set to true to return Query String
      *
      * @return BaseResult|false|Query|string
      */
@@ -531,7 +531,7 @@ class Model extends BaseModel
     /**
      * Returns the id value for the data array or object
      *
-     * @param array|object $row Row data
+     * @param         array|object     $row Row data
      * @phpstan-param row_array|object $row
      *
      * @return array|int|string|null
@@ -557,7 +557,7 @@ class Model extends BaseModel
             return $row->{$this->primaryKey};
         }
 
-        if (is_array($row) && ! empty($row[$this->primaryKey])) {
+        if (is_array($row) && isset($row[$this->primaryKey])) {
             return $row[$this->primaryKey];
         }
 
@@ -591,7 +591,7 @@ class Model extends BaseModel
 
             $offset += $size;
 
-            if (empty($rows)) {
+            if ($rows === []) {
                 continue;
             }
 
@@ -627,6 +627,8 @@ class Model extends BaseModel
     /**
      * Provides a shared instance of the Query Builder.
      *
+     * @param non-empty-string|null $table
+     *
      * @return BaseBuilder
      *
      * @throws ModelException
@@ -646,11 +648,11 @@ class Model extends BaseModel
         // We're going to force a primary key to exist
         // so we don't have overly convoluted code,
         // and future features are likely to require them.
-        if (empty($this->primaryKey)) {
+        if ($this->primaryKey === '') {
             throw ModelException::forNoPrimaryKey(static::class);
         }
 
-        $table = empty($table) ? $this->table : $table;
+        $table = ($table === null || $table === '') ? $this->table : $table;
 
         // Ensure we have a good db connection
         if (! $this->db instanceof BaseConnection) {
@@ -716,19 +718,19 @@ class Model extends BaseModel
      * Inserts data into the database. If an object is provided,
      * it will attempt to convert it to an array.
      *
-     * @param array|object|null $row
+     * @param         array|object|null     $row
      * @phpstan-param row_array|object|null $row
-     * @param bool $returnID Whether insert ID should be returned or not.
+     * @param         bool                  $returnID Whether insert ID should be returned or not.
      *
-     * @return bool|int|string
+     * @return         bool|int|string
      * @phpstan-return ($returnID is true ? int|string|false : bool)
      *
      * @throws ReflectionException
      */
     public function insert($row = null, bool $returnID = true)
     {
-        if (! empty($this->tempData['data'])) {
-            if (empty($row)) {
+        if (isset($this->tempData['data'])) {
+            if ($row === null) {
                 $row = $this->tempData['data'];
             } else {
                 $row = $this->transformDataToArray($row, 'insert');
@@ -749,7 +751,7 @@ class Model extends BaseModel
      * @used-by insert() to protect against mass assignment vulnerabilities.
      * @used-by insertBatch() to protect against mass assignment vulnerabilities.
      *
-     * @param array $row Row data
+     * @param         array     $row Row data
      * @phpstan-param row_array $row
      *
      * @throws DataException
@@ -782,16 +784,16 @@ class Model extends BaseModel
      * Updates a single record in the database. If an object is provided,
      * it will attempt to convert it into an array.
      *
-     * @param array|int|string|null $id
-     * @param array|object|null     $row
+     * @param         array|int|string|null $id
+     * @param         array|object|null     $row
      * @phpstan-param row_array|object|null $row
      *
      * @throws ReflectionException
      */
     public function update($id = null, $row = null): bool
     {
-        if (! empty($this->tempData['data'])) {
-            if (empty($row)) {
+        if (isset($this->tempData['data'])) {
+            if ($row === null) {
                 $row = $this->tempData['data'];
             } else {
                 $row = $this->transformDataToArray($row, 'update');
@@ -908,7 +910,7 @@ class Model extends BaseModel
             $properties = $data->toRawArray($onlyChanged);
 
             // Always grab the primary key otherwise updates will fail.
-            if (! empty($properties) && ! empty($primaryKey) && ! in_array($primaryKey, $properties, true) && ! empty($data->{$primaryKey})) {
+            if ($properties !== [] && isset($primaryKey) && ! in_array($primaryKey, $properties, true) && isset($data->{$primaryKey})) {
                 $properties[$primaryKey] = $data->{$primaryKey};
             }
         } else {

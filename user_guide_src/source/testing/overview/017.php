@@ -1,7 +1,10 @@
 <?php
 
+namespace Tests;
+
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
+use Tests\Support\Mock\MockUserModel;
 
 final class SomeTest extends CIUnitTestCase
 {

@@ -27,7 +27,7 @@ final class ViewTest extends CIUnitTestCase
 {
     private FileLocator $loader;
     private string $viewsDir;
-    private \Config\View $config;
+    private Config\View $config;
 
     protected function setUp(): void
     {

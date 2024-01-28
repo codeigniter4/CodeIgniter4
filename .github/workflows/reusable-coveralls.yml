@@ -24,7 +24,7 @@ jobs:
           coverage: xdebug
 
       - name: Download coverage files
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: build/cov
 
@@ -37,7 +37,7 @@ jobs:
           echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
 
       - name: Cache dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
           key: ${{ github.job }}-php-${{ inputs.php-version }}-${{ hashFiles('**/composer.*') }}
@@ -46,7 +46,7 @@ jobs:
             ${{ github.job }}-
 
       - name: Cache PHPUnit's static analysis cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: build/.phpunit.cache/code-coverage
           key: phpunit-code-coverage-${{ hashFiles('**/phpunit.*') }}

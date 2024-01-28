@@ -371,8 +371,7 @@ date              format (Y-m-d)   A PHP **date**-compatible formatting string. 
 date_modify       value to add     A **strtotime** compatible string to modify the date,       { v|date_modify(+1 day) }
                   / subtract       like ``+5 day`` or ``-1 week``.
 
-default           default value    Displays the default value if the variable is empty or      { v|default(just in case) }
-                                   undefined.
+default           default value    Displays the default value if the variable is `empty()`_.   { v|default(just in case) }
 
 esc               html, attr,      Specifies the context to escape the data.                   { v|esc(attr) }
                   css, js
@@ -418,6 +417,8 @@ title                              Displays a "title case" version of the string
 
 upper                              Displays the string in all uppercase.                       { v|upper }
 ================ ================= =========================================================== ======================================
+
+.. _empty(): https://www.php.net/manual/en/function.empty.php
 
 See `PHP's NumberFormatter <https://www.php.net/manual/en/numberformatter.create.php>`_ for details relevant to the
 "local_number" filter.

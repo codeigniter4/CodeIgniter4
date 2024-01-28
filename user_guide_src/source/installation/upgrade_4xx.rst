@@ -165,6 +165,28 @@ Hooks
 - The hook point ``post_system`` has moved just before sending the final rendered
   page.
 
+Error Handling
+==============
+
+- The behavior in CI4 has been slightly changed.
+
+  - In CI3 the behavior is set in the **index.php** file:
+
+      - errors with the error level set by ``error_reporting()`` are logged (but
+        depending on the ``log_threshold`` setting, they may not be written to
+        the log file).
+      - errors with an error level of
+        ``E_ERROR | E_PARSE | E_COMPILE_ERROR | E_CORE_ERROR | E_USER_ERROR``
+        stopped framework processing, regardless of the error level set in
+        ``error_reporting()``.
+  - In CI4, the behavior is set in the **app/Config/Boot/{environment}.php** file:
+
+      - errors with the error level set by ``error_reporting()`` are logged (but
+        depending on the ``Config\Logger::$threshold`` setting, they may not be
+        written to the log file).
+      - all errors that are not ignored by ``error_reporting()`` will stop the
+        framework processing.
+
 Extending the Framework
 =======================
 

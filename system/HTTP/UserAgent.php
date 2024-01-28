@@ -260,7 +260,7 @@ class UserAgent
         // Set the new user-agent string and parse it, unless empty
         $this->agent = $string;
 
-        if (! empty($string)) {
+        if ($string !== '') {
             $this->compileData();
         }
     }

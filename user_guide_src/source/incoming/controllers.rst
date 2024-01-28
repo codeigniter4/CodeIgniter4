@@ -313,16 +313,17 @@ Defining a Default Controller
 
 Let's try it with the ``Helloworld`` controller.
 
-To specify a default controller open your **app/Config/Routes.php**
-file and set this variable:
+To specify a default controller open your **app/Config/Routing.php**
+file and set this property::
 
-.. literalinclude:: controllers/015.php
+    public string $defaultController = 'Helloworld';
 
 Where ``Helloworld`` is the name of the controller class you want to be used.
 
-A few lines further down **Routes.php** in the "Route Definitions" section, comment out the line:
+And comment out the line in **app/Config/Routes.php**:
 
 .. literalinclude:: controllers/016.php
+    :lines: 2-
 
 If you now browse to your site without specifying any URI segments you'll
 see the "Hello World" message.
@@ -332,8 +333,8 @@ see the "Hello World" message.
     precedence over Auto Routing, and controllers defined in the defined routes
     are denied access by Auto Routing (Improved) for security reasons.
 
-For more information, please refer to the :ref:`routes-configuration-options` section of the
-:ref:`URI Routing <routing-auto-routing-improved-configuration-options>` documentation.
+For more information, please refer to the
+:ref:`routing-auto-routing-improved-configuration-options` documentation.
 
 .. _controller-default-method-fallback:
 
@@ -415,7 +416,7 @@ To call the above controller your URI will look something like this::
 Each of your sub-directories may contain a default controller which will be
 called if the URL contains *only* the sub-directory. Simply put a controller
 in there that matches the name of your default controller as specified in
-your **app/Config/Routes.php** file.
+your **app/Config/Routing.php** file.
 
 CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Routing <defined-route-routing>`..
 
@@ -546,24 +547,25 @@ Defining a Default Controller (Legacy)
 
 Let's try it with the ``Helloworld`` controller.
 
-To specify a default controller open your **app/Config/Routes.php**
-file and set this variable:
+To specify a default controller open your **app/Config/Routing.php**
+file and set this property::
 
-.. literalinclude:: controllers/015.php
+    public string $defaultController = 'Helloworld';
 
 Where ``Helloworld`` is the name of the controller class you want to be used.
 
-A few lines further down **Routes.php** in the "Route Definitions" section, comment out the line:
+And comment out the line in **app/Config/Routes.php**:
 
 .. literalinclude:: controllers/016.php
+    :lines: 2-
 
 If you now browse to your site without specifying any URI segments you'll
 see the "Hello World" message.
 
 .. note:: The line ``$routes->get('/', 'Home::index');`` is an optimization that you will want to use in a "real-world" app. But for demonstration purposes we don't want to use that feature. ``$routes->get()`` is explained in :doc:`URI Routing <routing>`
 
-For more information, please refer to the :ref:`routes-configuration-options` section of the
-:ref:`URI Routing <routing-auto-routing-legacy-configuration-options>` documentation.
+For more information, please refer to the the
+:ref:`routing-auto-routing-legacy-configuration-options` documentation.
 
 Organizing Your Controllers into Sub-directories (Legacy)
 =========================================================
@@ -593,7 +595,7 @@ To call the above controller your URI will look something like this::
 Each of your sub-directories may contain a default controller which will be
 called if the URL contains *only* the sub-directory. Simply put a controller
 in there that matches the name of your default controller as specified in
-your **app/Config/Routes.php** file.
+your **app/Config/Routing.php** file.
 
 CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Routing <defined-route-routing>`..
 

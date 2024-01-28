@@ -1,5 +1,7 @@
 <?php
 
+use Config\Services;
+
 cookies()->get(); // array of Cookie objects
 
 // alternatively, you can use the display method

@@ -30,6 +30,8 @@ use Imagick;
  * @internal
  *
  * @group Others
+ *
+ * @requires extension imagick
  */
 final class ImageMagickHandlerTest extends CIUnitTestCase
 {
@@ -40,10 +42,6 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        if (! extension_loaded('imagick')) {
-            $this->markTestSkipped('The ImageMagick extension is not available.');
-        }
-
         $this->root = WRITEPATH . 'cache/';
 
         // cleanup everything
@@ -55,11 +53,28 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
         $this->path = $this->origin . 'ci-logo.png';
 
-        $handlerConfig = new Images();
-        if (is_file('/usr/bin/convert')) {
-            $handlerConfig->libraryPath = '/usr/bin/convert';
+        // get our locally available `convert`
+        $config = new Images();
+        $found  = false;
+
+        foreach ([
+            '/usr/bin/convert',
+            trim((string) shell_exec('which convert')),
+            $config->libraryPath,
+        ] as $convert) {
+            if (is_file($convert)) {
+                $config->libraryPath = $convert;
+
+                $found = true;
+                break;
+            }
         }
-        $this->handler = Services::image('imagick', $handlerConfig, false);
+
+        if (! $found) {
+            $this->markTestSkipped('Cannot test imagick as there is no available convert program.');
+        }
+
+        $this->handler = Services::image('imagick', $config, false);
     }
 
     public function testGetVersion(): void

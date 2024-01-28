@@ -14,6 +14,7 @@ namespace CodeIgniter\Debug;
 use App\Controllers\Home;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\IniTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Services;
@@ -27,6 +28,7 @@ use RuntimeException;
 final class ExceptionHandlerTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
+    use IniTestTrait;
 
     private ExceptionHandler $handler;
 
@@ -236,5 +238,34 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         $newTrace = $maskSensitiveData($trace, $keysToMask, $path);
 
         $this->assertSame('/var/www/CodeIgniter4/app/Controllers/Home.php', $newTrace[0]['file']);
+    }
+
+    public function testHighlightFile(): void
+    {
+        $this->backupIniValues([
+            'highlight.comment', 'highlight.default', 'highlight.html', 'highlight.keyword', 'highlight.string',
+        ]);
+
+        $highlightFile = $this->getPrivateMethodInvoker($this->handler, 'highlightFile');
+        $result        = $highlightFile(SUPPORTPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Hello.php', 16);
+
+        switch (true) {
+            case PHP_VERSION_ID < 80000:
+                $resultFile = 'highlightFile_pre_80000.html';
+                break;
+
+            case PHP_VERSION_ID < 80300:
+                $resultFile = 'highlightFile_pre_80300.html';
+                break;
+
+            default:
+                $resultFile = 'highlightFile.html';
+        }
+
+        $expected = file_get_contents(SUPPORTPATH . 'Debug' . DIRECTORY_SEPARATOR . $resultFile);
+
+        $this->assertSame($expected, $result);
+
+        $this->restoreIniValues();
     }
 }

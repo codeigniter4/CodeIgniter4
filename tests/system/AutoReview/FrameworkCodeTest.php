@@ -73,14 +73,14 @@ final class FrameworkCodeTest extends TestCase
         ));
     }
 
-    public function provideEachTestClassHasCorrectGroupAnnotation(): iterable
+    public static function provideEachTestClassHasCorrectGroupAnnotation(): iterable
     {
-        foreach ($this->getTestClasses() as $class) {
+        foreach (self::getTestClasses() as $class) {
             yield $class => [$class];
         }
     }
 
-    private function getTestClasses(): array
+    private static function getTestClasses(): array
     {
         if (self::$testClasses !== []) {
             return self::$testClasses;

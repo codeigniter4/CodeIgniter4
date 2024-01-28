@@ -6,7 +6,21 @@
 >
 > -MGatner, kenjis
 
-## [Minor version only] Merge minor version branch into develop
+## Merge `develop` branch into next minor version branch `4.x`
+
+Before starting release process, if there are commits in `develop` branch that
+are not merged into `4.x` branch, merge them. This is because if conflicts occur,
+merging will take time.
+
+```console
+git fetch upstream
+git switch 4.x
+git merge upstream/4.x
+git merge upstream/develop
+git push upstream HEAD
+```
+
+## [Minor version only] Merge minor version branch into `develop`
 
 If you release a new minor version.
 
@@ -90,6 +104,8 @@ Work off direct clones of the repos so the release branches persist for a time.
       and `release = '4.x.x'`
     * Update **user_guide_src/source/changelogs/{version}.rst**
       * Set the date to format `Release Date: January 31, 2021`
+    * Update **phpdoc.dist.xml** with the new `<title>CodeIgniter v4.x API</title>`
+      and `<version number="4.x.x">`
     * Commit the changes with `Prep for 4.x.x release`
 * [ ] Create a new PR from `release-4.x.x` to `develop`:
   * Title: `Prep for 4.x.x release`
@@ -147,7 +163,7 @@ Work off direct clones of the repos so the release branches persist for a time.
     git merge origin/master
     git push origin HEAD
     ```
-* [ ] Update the next minor upgrade branch `4.x`:
+* [ ] Update the next minor version branch `4.x`:
     ```console
     git fetch origin
     git checkout 4.x
@@ -155,7 +171,7 @@ Work off direct clones of the repos so the release branches persist for a time.
     git merge origin/develop
     git push origin HEAD
     ```
-* [ ] [Minor version only] Create the next minor upgrade branch `4.x`:
+* [ ] [Minor version only] Create the new next minor version branch `4.x`:
     ```console
     git fetch origin
     git switch develop
