@@ -24,7 +24,7 @@ use Throwable;
 /**
  * RedirectException
  */
-class RedirectException extends RuntimeException implements ResponsableInterface, HTTPExceptionInterface
+class RedirectException extends RuntimeException implements ExceptionInterface, ResponsableInterface, HTTPExceptionInterface
 {
     /**
      * HTTP status code for redirects
