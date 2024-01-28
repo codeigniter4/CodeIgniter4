@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Exceptions;
 
 /**
- * Exception for automatic logging.
+ * Exception thrown when there is an error with the test code.
  */
 class TestException extends LogicException
 {
