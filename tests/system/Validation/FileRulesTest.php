@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
-use InvalidArgumentException;
 use Tests\Support\Validation\TestRules;
 
 /**
