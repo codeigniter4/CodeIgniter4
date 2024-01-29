@@ -200,7 +200,7 @@ conditions MUST always be at the beginning or at the end of the line, not a mix 
 - The conditional operator, also known simply as the ternary operator, MUST be preceded and followed by at least one space around both the `?` and `:` characters.
 - When the middle operand of the conditional operator is omitted, the operator MUST follow the same style rules as other binary comparison operators.
 
-**Note:**
+> [!NOTE]
 > All the preceding rules are quoted from PSR-12. You may visit its website to view the code block samples.
 
 ## Custom Conventions

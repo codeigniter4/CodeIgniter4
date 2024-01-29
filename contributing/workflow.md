@@ -240,7 +240,7 @@ are working in.
 At some point, you will decide that your feature branch is complete, or
 that it could benefit from a review by fellow developers.
 
-> **Note**
+> [!NOTE]
 > Remember to sync your local repo with the shared one before pushing!
 It is a lot easier to resolve conflicts at this stage.
 
@@ -279,7 +279,7 @@ Make sure that the PR title is helpful for the maintainers and other
 developers. Add any comments appropriate, for instance asking for
 review.
 
-> **Note**
+> [!NOTE]
 > If you do not provide a title or description for your PR, the odds of it being
 > summarily rejected rise astronomically.
 
