@@ -15,12 +15,12 @@ namespace CodeIgniter\Debug;
 
 use App\Controllers\Home;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\IniTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Services;
-use RuntimeException;
 
 /**
  * @internal

@@ -20,6 +20,7 @@ use CodeIgniter\Debug\Iterator;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Debug\Toolbar;
 use CodeIgniter\Email\Email;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Format\Format;
 use CodeIgniter\Honeypot\Honeypot;
@@ -46,7 +47,6 @@ use CodeIgniter\View\Parser;
 use Config\App;
 use Config\Exceptions;
 use Config\Security as SecurityConfig;
-use RuntimeException;
 use Tests\Support\Config\Services;
 
 /**

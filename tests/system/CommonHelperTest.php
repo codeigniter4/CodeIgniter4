@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace CodeIgniter;
 
 use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use PHPUnit\Framework\MockObject\MockObject;
-use RuntimeException;
 use Tests\Support\Autoloader\FatalLocator;
 
 /**
