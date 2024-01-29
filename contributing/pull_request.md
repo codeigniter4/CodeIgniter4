@@ -113,7 +113,7 @@ New classes, methods, parameters, changing default values, changing behavior etc
 are all changes that require a change to documentation.
 
 Also, the [Changelog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html) must be updated for every change,
-and [PHPDoc](https://github.com/codeigniter4/CodeIgniter4/blob/develop/phpdoc.dist.xml) blocks must be maintained.
+and PHPDoc blocks must be maintained.
 
 See [Writing CodeIgniter Documentation](./documentation.rst).
 
