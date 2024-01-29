@@ -17,7 +17,7 @@ values for when you try these:
 ## Branching
 
 - All bug fix PRs should be sent to the __"develop"__ branch, this is where the next bug fix version will be developed.
-- PRs with any enhancement should be sent to next minor version branch, e.g. __"4.3"__
+- PRs with any enhancement should be sent to next minor version branch, e.g. __"4.5"__
 
 The "master" branch will always contain the latest stable
 version and is kept clean so a "hotfix" (e.g: an emergency security
@@ -112,7 +112,7 @@ This local branch should be named appropriately, for instance
 is optional, and implies a sort of namespacing if used.
 
 - All bug fix PRs should be sent to the __"develop"__ branch, this is where the next bug fix version will be developed.
-- PRs with any enhancement should be sent to next minor version branch, e.g. __"4.3"__
+- PRs with any enhancement should be sent to next minor version branch, e.g. __"4.5"__
 
 For instance, if you send a PR to __"develop"__ branch, make sure you are in the *develop* branch, and create a
 new bugfix branch, based on *develop*, for a new feature you are
@@ -124,10 +124,10 @@ creating:
 ```
 
 If you send a PR with an enhancement, make sure you are in the *next minor version* branch,
-and create a new feature branch, based on, e.g., *4.3*, for a new feature you are creating:
+and create a new feature branch, based on, e.g., __"4.5"__, for a new feature you are creating:
 
 ```console
-> git switch 4.3
+> git switch 4.5
 > git switch -c new/mind-reader
 ```
 
@@ -267,7 +267,7 @@ On GitHub, you propose your changes one feature branch at a time, by
 switching to the branch you wish to contribute, and then clicking on
 "New pull request".
 
-Make sure the pull request is for the shared __"develop"__ or next minor version branch, e.g. __"4.3"__, or it
+Make sure the pull request is for the shared __"develop"__ or next minor version branch, e.g. __"4.5"__, or it
 may be rejected.
 
 Make sure that the PR title is helpful for the maintainers and other
@@ -308,7 +308,7 @@ And if your PRs have the breaking changes, label the following label:
 
 If you are asked for changes in the review, commit the fix in your branch and push it to GitHub again.
 
-If the __"develop"__ or next minor version branch, e.g. __"4.3"__, progresses and conflicts arise that prevent merging, or if you are asked to *rebase*,
+If the __"develop"__ or next minor version branch, e.g. __"4.5"__, progresses and conflicts arise that prevent merging, or if you are asked to *rebase*,
 do the following:
 
 Synchronize your repository:
@@ -347,7 +347,7 @@ And finally push your local branch to your GitHub repository:
 
 If you have sent a PR to the wrong branch, you need to create a new PR branch.
 
-When you have the PR branch `feat-abc` and you should have sent the PR to `4.3`,
+When you have the PR branch `feat-abc` and you should have sent the PR to __"4.5"__,
 but you created the PR branch from `develop` and sent a PR.
 
 Copy the IDs of any commits you made that you want to keep:
@@ -356,13 +356,13 @@ Copy the IDs of any commits you made that you want to keep:
 > git log
 ```
 
-Update your `4.3` branch:
+Update your __"4.5"__ branch:
 
 ```console
 > git fetch upstream
-> git switch 4.3
-> git merge upstream/4.3
-> git push origin 4.3
+> git switch 4.5
+> git merge upstream/4.5
+> git push origin 4.5
 ```
 
 (Optional) Create a new branch as a backup, just in case:
@@ -371,10 +371,10 @@ Update your `4.3` branch:
 > git branch feat-abc.bk feat-abc
 ```
 
-Rebase your PR branch from `develop` onto `4.3`:
+Rebase your PR branch from `develop` onto __"4.5"__:
 
 ```console
-> git rebase --onto 4.3 develop feat-abc
+> git rebase --onto 4.5 develop feat-abc
 ```
 
 Force push.
@@ -383,7 +383,7 @@ Force push.
 > git push --force-with-lease origin feat-abc
 ```
 
-On the GitHub PR page, change the base branch to the correct branch `4.3`.
+On the GitHub PR page, change the base branch to the correct branch __"4.5"__.
 
 ## Cleanup
 
