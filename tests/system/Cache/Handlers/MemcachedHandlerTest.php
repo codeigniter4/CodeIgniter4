@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
 use Exception;
@@ -125,7 +126,7 @@ final class MemcachedHandlerTest extends AbstractHandlerTestCase
     public function testDeleteMatching(): void
     {
         // Not implemented for Memcached, should throw an exception
-        $this->expectException(Exception::class);
+        $this->expectException(BadMethodCallException::class);
 
         $this->handler->deleteMatching('key*');
     }

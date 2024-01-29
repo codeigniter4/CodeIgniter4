@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace CodeIgniter\Log;
 
 use CodeIgniter\Exceptions\FrameworkException;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
-use Exception;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\Support\Log\Handlers\TestHandler;
 use TypeError;
@@ -241,8 +241,8 @@ final class LoggerTest extends CIUnitTestCase
         $expected = 'ERROR - ' . Time::now()->format('Y-m-d') . ' --> [ERROR] These are not the droids you are looking for';
 
         try {
-            throw new Exception('These are not the droids you are looking for');
-        } catch (Exception $e) {
+            throw new RuntimeException('These are not the droids you are looking for');
+        } catch (RuntimeException $e) {
             $logger->log('error', '[ERROR] {exception}', ['exception' => $e]);
         }
 
