@@ -16,6 +16,7 @@ namespace CodeIgniter\Autoloader;
 use App\Controllers\Home;
 use Closure;
 use CodeIgniter\Exceptions\ConfigException;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Autoload;
@@ -25,7 +26,6 @@ use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
-use RuntimeException;
 use UnnamespacedClass;
 
 /**

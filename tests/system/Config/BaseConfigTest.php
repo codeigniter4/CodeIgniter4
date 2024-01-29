@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Config;
 
 use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
 use Encryption;
@@ -22,7 +23,6 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\MockObject\MockObject;
 use RegistrarConfig;
-use RuntimeException;
 use SimpleConfig;
 use Tests\Support\Config\BadRegistrar;
 use Tests\Support\Config\TestRegistrar;
