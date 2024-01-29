@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\AutoReview;
 
-use InvalidArgumentException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use JsonException;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Group;
