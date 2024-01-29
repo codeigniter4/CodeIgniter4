@@ -29,7 +29,7 @@ Read below to find out how to sign your commits :)
 
 ## Secure Signing
 
-To verify your commits, you will need to setup a GPG key, and attach it
+To verify your commits, you will need to set up a GPG key, and attach it
 to your GitHub account.
 
 See the [git tools](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work) page
