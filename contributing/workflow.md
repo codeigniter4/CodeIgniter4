@@ -16,7 +16,8 @@ values for when you try these:
 
 ## Branching
 
-- All bug fix PRs should be sent to the __"develop"__ branch, this is where the next bug fix version will be developed.
+- All bug fix PRs should be sent to the __"develop"__ branch, this is where the
+  next bug fix version will be developed.
 - PRs with any enhancement should be sent to next minor version branch, e.g. __"4.5"__
 
 The "master" branch will always contain the latest stable
@@ -111,20 +112,22 @@ This local branch should be named appropriately, for instance
 "fix/problem123" or "new/mind-reader". The slashes in these branch names
 is optional, and implies a sort of namespacing if used.
 
-- All bug fix PRs should be sent to the __"develop"__ branch, this is where the next bug fix version will be developed.
+- All bug fix PRs should be sent to the __"develop"__ branch, this is where the
+  next bug fix version will be developed.
 - PRs with any enhancement should be sent to next minor version branch, e.g. __"4.5"__
 
-For instance, if you send a PR to __"develop"__ branch, make sure you are in the *develop* branch, and create a
-new bugfix branch, based on *develop*, for a new feature you are
-creating:
+For instance, if you send a PR to __"develop"__ branch, make sure you are in the
+*develop* branch, and create a new bugfix branch, based on *develop*, for a new
+feature you are creating:
 
 ```console
 > git switch develop
 > git switch -c fix/problem123
 ```
 
-If you send a PR with an enhancement, make sure you are in the *next minor version* branch,
-and create a new feature branch, based on, e.g., __"4.5"__, for a new feature you are creating:
+If you send a PR with an enhancement, make sure you are in the *next minor version*
+branch, and create a new feature branch, based on, e.g., __"4.5"__, for a new
+feature you are creating:
 
 ```console
 > git switch 4.5
@@ -151,14 +154,14 @@ There are some references for writing good commit messages:
 
 If there are intermediate commits that are not meaningful to the overall PR,
 such as "Fix error on style guide", "Fix phpstan error", "Fix mistake in code",
-and other related commits, you can squash your commits so that we can have a clean commit history.
-But it is not a must.
+and other related commits, you can squash your commits so that we can have a
+clean commit history. But it is not a must.
 
 ### Commit Messages
 
-Commit messages are important. They communicate the intent of a specific change, concisely.
-They make it easier to review code, and to find out why a change was made
-if the code history is examined later.
+Commit messages are important. They communicate the intent of a specific change,
+concisely. They make it easier to review code, and to find out why a change was
+made if the code history is examined later.
 
 The audience for your commit messages will be the codebase maintainers,
 any code reviewers, and debuggers trying to figure out when a bug might
@@ -166,8 +169,9 @@ have been introduced.
 
 Make your commit messages meaningful.
 
-Commit messages are expected to be descriptive of **why** and what you changed specifically.
-Commit messages like "Fixes #1234" would be asked by the reviewer to be revised.
+Commit messages are expected to be descriptive of **why** and what you changed
+specifically. Commit messages like "Fixes #1234" would be asked by the reviewer
+to be revised.
 
 You can have as many commits in a branch as you need to "get it right".
 For instance, to commit your work from a debugging session:
@@ -185,7 +189,8 @@ Just make sure that your commits in a feature branch are all related.
 
 ### GPG-Signing Old Commits
 
-Any developer can forget GPG-signing their commits with the option `-S`, like `git commit -S -m 'Signed GPG'`. In such a case, all you need to do is the following:
+Any developer can forget GPG-signing their commits with the option `-S`, like
+`git commit -S -m 'Signed GPG'`. In such a case, all you need to do is the following:
 
 Latest commit only:
 ```console
@@ -267,16 +272,16 @@ On GitHub, you propose your changes one feature branch at a time, by
 switching to the branch you wish to contribute, and then clicking on
 "New pull request".
 
-Make sure the pull request is for the shared __"develop"__ or next minor version branch, e.g. __"4.5"__, or it
-may be rejected.
+Make sure the pull request is for the shared __"develop"__ or next minor version
+branch, e.g. __"4.5"__, or it may be rejected.
 
 Make sure that the PR title is helpful for the maintainers and other
 developers. Add any comments appropriate, for instance asking for
 review.
 
 > **Note**
-> If you do not provide a title or description for your PR, the odds of it being summarily rejected
-rise astronomically.
+> If you do not provide a title or description for your PR, the odds of it being
+> summarily rejected rise astronomically.
 
 When your PR is submitted, a continuous integration task will be
 triggered, running all the unit tests as well as any other checking we
@@ -306,9 +311,11 @@ And if your PRs have the breaking changes, label the following label:
 
 ## Updating Your Branch
 
-If you are asked for changes in the review, commit the fix in your branch and push it to GitHub again.
+If you are asked for changes in the review, commit the fix in your branch and
+push it to GitHub again.
 
-If the __"develop"__ or next minor version branch, e.g. __"4.5"__, progresses and conflicts arise that prevent merging, or if you are asked to *rebase*,
+If the __"develop"__ or next minor version branch, e.g. __"4.5"__, progresses
+and conflicts arise that prevent merging, or if you are asked to *rebase*,
 do the following:
 
 Synchronize your repository:
