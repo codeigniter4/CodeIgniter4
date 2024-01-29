@@ -119,8 +119,10 @@ See [Writing CodeIgniter Documentation](./documentation.rst).
 
 #### Changelog
 
-The [Changelog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html), in the user guide, needs to be kept up-to-date. Not
-all changes will need an entry in it, but the following items should.
+The [Changelog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html)
+in the [user guide](https://github.com/codeigniter4/CodeIgniter4/tree/develop/user_guide_src/source/changelogs)
+needs to be kept up-to-date. Not all changes will need an entry in it, but the
+following items should.
 
 - all breaking changes (BCs)
 - all enhancements (new features, new classes, new APIs)
@@ -133,7 +135,8 @@ all changes will need an entry in it, but the following items should.
 If your PR requires users to do something when they upgrade CodeIgniter, or
 changes the Config values,
 the [Upgrading Guide](https://codeigniter4.github.io/CodeIgniter4/installation/upgrading.html)
-is also needed.
+in the [installation](https://github.com/codeigniter4/CodeIgniter4/tree/develop/user_guide_src/source/installation)
+folder is also needed.
 
 - Add an instruction what to do when upgrading.
 - If you add new properties or changes default values in Config files, add the
