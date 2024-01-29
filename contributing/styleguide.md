@@ -3,7 +3,7 @@
 This document declares a set of coding conventions and rules to be followed when contributing PHP code
 to the CodeIgniter project.
 
-**Note:**
+> [!NOTE]
 > While we would recommend it, there's no requirement that you follow these conventions and rules in your
 own projects. Usage is discretionary within your projects but strictly enforceable within the framework.
 
