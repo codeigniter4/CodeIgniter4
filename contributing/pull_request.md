@@ -8,7 +8,7 @@ We expect all contributions to
 - be documented (in the [user guide](https://codeigniter4.github.io/userguide/)),
 - and unit tested (in the [test folder](https://github.com/codeigniter4/CodeIgniter4/tree/develop/tests)).
 
-> [!NOTE]
+> [!IMPORTANT]
 > We expect all code changes or bug-fixes to be accompanied by one or more tests
 > added to our test suite to prove the code works.
 
