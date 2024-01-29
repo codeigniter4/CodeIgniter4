@@ -83,8 +83,11 @@ class/interface/trait, method, and variable.
 
 Do not add PHPDoc comments that are superficial, duplicated, or stating the obvious.
 
-See the [phpDocumentor website](https://phpdoc.org/) for more
-information.
+See the following for more information.
+
+- [PHPDoc reference](https://docs.phpdoc.org/3.0/guide/references/phpdoc/index.html#phpdoc-reference)
+- [PHPDocs Basics](https://phpstan.org/writing-php-code/phpdocs-basics)
+- [PHPDoc Types](https://phpstan.org/writing-php-code/phpdoc-types)
 
 #### Code Comments
 
