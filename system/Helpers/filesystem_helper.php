@@ -11,6 +11,8 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
+
 // CodeIgniter File System Helpers
 
 if (! function_exists('directory_map')) {
