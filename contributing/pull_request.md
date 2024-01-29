@@ -126,6 +126,7 @@ following items should.
 
 - all breaking changes (BCs)
 - all enhancements (new features, new classes, new APIs)
+- message changes
 - other behavior changes
 - deprecations
 - major bug fixes
