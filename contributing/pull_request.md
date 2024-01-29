@@ -79,12 +79,15 @@ and the [PHPUnit website](https://phpunit.de/) for more information.
 Source code should be commented using PHPDoc comment blocks. This means
 implementation comments to explain potentially confusing sections of
 code, and documentation comments before each public or protected
-class/interface/trait, method and variable.
+class/interface/trait, method, and variable.
 
 Do not add PHPDoc comments that are superficial, duplicated, or stating the obvious.
 
-See the [phpDocumentor website](https://phpdoc.org/) for more
-information.
+See the following for more information.
+
+- [PHPDoc reference](https://docs.phpdoc.org/3.0/guide/references/phpdoc/index.html#phpdoc-reference)
+- [PHPDocs Basics](https://phpstan.org/writing-php-code/phpdocs-basics)
+- [PHPDoc Types](https://phpstan.org/writing-php-code/phpdoc-types)
 
 #### Code Comments
 
@@ -210,11 +213,27 @@ These tools have already been integrated into our CI/CD workflow to minimize una
 are expected that their code will pass these two. In your local machine, you can manually run these tools
 so that you can fix whatever errors that pop up with your submission.
 
+#### PHPStan
+
 PHPStan is expected to scan the entire framework by running this command in your terminal:
 
 ```console
 vendor/bin/phpstan analyse
 ```
+
+See also:
+- [PHPDocs Basics](https://phpstan.org/writing-php-code/phpdocs-basics)
+- [PHPDoc Types](https://phpstan.org/writing-php-code/phpdoc-types)
+
+If PHPStan errors cannot be resolved by any means, or if the PHPStan error is
+false positive and should be ignored, the baseline can be updated with the following
+command:
+
+```console
+vendor/bin/phpstan analyze --generate-baseline phpstan-baseline.php
+```
+
+#### Rector
 
 Rector, on the other hand, can be run on the specific files you modified or added:
 
