@@ -79,7 +79,7 @@ and the [PHPUnit website](https://phpunit.de/) for more information.
 Source code should be commented using PHPDoc comment blocks. This means
 implementation comments to explain potentially confusing sections of
 code, and documentation comments before each public or protected
-class/interface/trait, method and variable.
+class/interface/trait, method, and variable.
 
 Do not add PHPDoc comments that are superficial, duplicated, or stating the obvious.
 
