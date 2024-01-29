@@ -216,9 +216,10 @@ same time, we might really want X but disagree with Y, meaning we cannot merge
 the request. Using the Git-Flow branching model you can create new branches for
 both of these features and send two requests.
 
-A reminder: **please use separate branches for each of your PRs** - it will make
-it easier for you to keep changes separate from each other and from whatever else
-you are doing with your repository!
+> [!IMPORTANT]
+> **Please use separate branches for each of your PRs** - it will make it easier
+> for you to keep changes separate from each other and from whatever else you are
+> doing with your repository!
 
 ### Signing
 
