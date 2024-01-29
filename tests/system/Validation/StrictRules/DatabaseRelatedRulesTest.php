@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation\StrictRules;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Validation\Validation;
 use Config\Database;
 use Config\Services;
-use InvalidArgumentException;
 use LogicException;
 use Tests\Support\Validation\TestRules;
 

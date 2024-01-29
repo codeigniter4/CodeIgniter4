@@ -15,11 +15,11 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Exceptions\ConfigException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
-use InvalidArgumentException;
 use JsonException;
 use TypeError;
 

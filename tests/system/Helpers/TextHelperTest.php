@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Helpers;
 
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use CodeIgniter\Test\CIUnitTestCase;
-use InvalidArgumentException;
 
 /**
  * @internal
