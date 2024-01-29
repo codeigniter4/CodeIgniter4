@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
+use CodeIgniter\Exceptions\LogicException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
-use LogicException;
 use Tests\Support\View\Cells\AdditionCell;
 use Tests\Support\View\Cells\AwesomeCell;
 use Tests\Support\View\Cells\BadCell;
