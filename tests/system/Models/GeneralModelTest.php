@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Models;
 
-use BadMethodCallException;
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Model;
 use CodeIgniter\Test\CIUnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
