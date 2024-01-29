@@ -104,7 +104,7 @@ See the following for more information.
 
 Do not add comments that are superficial, duplicated, or stating the obvious.
 
-### Documentation
+### User Guide
 
 The User Guide is an essential component of the CodeIgniter framework.
 
