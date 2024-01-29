@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace CodeIgniter\Debug;
 
 use ArgumentCountError;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
-use RuntimeException;
 
 /**
  * @internal

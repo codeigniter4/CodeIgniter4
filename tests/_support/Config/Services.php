@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Tests\Support\Config;
 
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\SiteURIFactory;
 use CodeIgniter\HTTP\URI;
 use Config\App;
 use Config\Services as BaseServices;
-use RuntimeException;
 
 /**
  * Services Class

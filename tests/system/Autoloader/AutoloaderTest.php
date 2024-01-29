@@ -16,13 +16,13 @@ namespace CodeIgniter\Autoloader;
 use App\Controllers\Home;
 use Closure;
 use CodeIgniter\Exceptions\ConfigException;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Autoload;
 use Config\Modules;
 use Config\Services;
 use InvalidArgumentException;
-use RuntimeException;
 use UnnamespacedClass;
 
 /**

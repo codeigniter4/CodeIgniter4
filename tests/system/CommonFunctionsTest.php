@@ -15,6 +15,7 @@ namespace CodeIgniter;
 
 use CodeIgniter\Config\BaseService;
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Exceptions\RuntimeException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -41,7 +42,6 @@ use Config\Services;
 use Config\Session as SessionConfig;
 use Exception;
 use Kint;
-use RuntimeException;
 use stdClass;
 use Tests\Support\Models\JobModel;
 
