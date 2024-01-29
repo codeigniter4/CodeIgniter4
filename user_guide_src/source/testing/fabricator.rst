@@ -56,6 +56,7 @@ method where you can define exactly what the faked data should look like:
 Notice in this example how the first three values are equivalent to the formatters from before. However for ``avatar``
 we have requested an image size other than the default and ``login`` uses a conditional based on app configuration,
 neither of which are possible using the ``$formatters`` parameter.
+
 You may want to keep your test data separate from your production models, so it is a good practice to define
 a child class in your test support folder:
 
