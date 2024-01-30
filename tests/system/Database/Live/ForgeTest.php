@@ -953,30 +953,30 @@ final class ForgeTest extends CIUnitTestCase
                 0 => [
                     'name'       => 'id',
                     'type'       => 'integer',
+                    'max_length' => '32',
                     'nullable'   => false,
                     'default'    => "nextval('db_forge_test_fields_id_seq'::regclass)",
-                    'max_length' => '32',
                 ],
                 1 => [
                     'name'       => 'username',
                     'type'       => 'character varying',
+                    'max_length' => '255',
                     'nullable'   => false,
                     'default'    => null,
-                    'max_length' => '255',
                 ],
                 2 => [
                     'name'       => 'name',
                     'type'       => 'character varying',
+                    'max_length' => '255',
                     'nullable'   => true,
                     'default'    => null,
-                    'max_length' => '255',
                 ],
                 3 => [
                     'name'       => 'active',
                     'type'       => 'integer',
+                    'max_length' => '32',
                     'nullable'   => false,
                     'default'    => '0',
-                    'max_length' => '32',
                 ],
             ];
         } elseif ($this->db->DBDriver === 'SQLite3') {
@@ -985,33 +985,33 @@ final class ForgeTest extends CIUnitTestCase
                     'name'        => 'id',
                     'type'        => 'INTEGER',
                     'max_length'  => null,
+                    'nullable'    => true,
                     'default'     => null,
                     'primary_key' => 1,
-                    'nullable'    => true,
                 ],
                 1 => [
                     'name'        => 'username',
                     'type'        => 'VARCHAR',
                     'max_length'  => null,
+                    'nullable'    => false,
                     'default'     => null,
                     'primary_key' => 0,
-                    'nullable'    => false,
                 ],
                 2 => [
                     'name'        => 'name',
                     'type'        => 'VARCHAR',
                     'max_length'  => null,
+                    'nullable'    => true,
                     'default'     => null,
                     'primary_key' => 0,
-                    'nullable'    => true,
                 ],
                 3 => [
                     'name'        => 'active',
                     'type'        => 'INTEGER',
                     'max_length'  => null,
+                    'nullable'    => false,
                     'default'     => '0',
                     'primary_key' => 0,
-                    'nullable'    => false,
                 ],
             ];
         } elseif ($this->db->DBDriver === 'SQLSRV') {
@@ -1019,30 +1019,30 @@ final class ForgeTest extends CIUnitTestCase
                 0 => [
                     'name'       => 'id',
                     'type'       => 'int',
-                    'default'    => null,
                     'max_length' => 10,
                     'nullable'   => false,
+                    'default'    => null,
                 ],
                 1 => [
                     'name'       => 'username',
                     'type'       => 'varchar',
-                    'default'    => null,
                     'max_length' => 255,
                     'nullable'   => false,
+                    'default'    => null,
                 ],
                 2 => [
                     'name'       => 'name',
                     'type'       => 'varchar',
-                    'default'    => null,
                     'max_length' => 255,
                     'nullable'   => true,
+                    'default'    => null,
                 ],
                 3 => [
                     'name'       => 'active',
                     'type'       => 'int',
-                    'default'    => '((0))', // Why?
                     'max_length' => 10,
                     'nullable'   => false,
+                    'default'    => '((0))', // Why?
                 ],
             ];
         } elseif ($this->db->DBDriver === 'OCI8') {
@@ -1051,29 +1051,29 @@ final class ForgeTest extends CIUnitTestCase
                     'name'       => 'id',
                     'type'       => 'NUMBER',
                     'max_length' => '11',
-                    'default'    => '"ORACLE"."ISEQ$$_80229".nextval', // Sequence id may change
                     'nullable'   => false,
+                    'default'    => '"ORACLE"."ISEQ$$_80229".nextval', // Sequence id may change
                 ],
                 1 => [
                     'name'       => 'username',
                     'type'       => 'VARCHAR2',
                     'max_length' => '255',
-                    'default'    => null,
                     'nullable'   => false,
+                    'default'    => null,
                 ],
                 2 => [
                     'name'       => 'name',
                     'type'       => 'VARCHAR2',
                     'max_length' => '255',
-                    'default'    => null,
                     'nullable'   => true,
+                    'default'    => null,
                 ],
                 3 => [
                     'name'       => 'active',
                     'type'       => 'NUMBER',
                     'max_length' => '11',
-                    'default'    => '0 ', // Why?
                     'nullable'   => false,
+                    'default'    => '0 ', // Why?
                 ],
             ];
 
