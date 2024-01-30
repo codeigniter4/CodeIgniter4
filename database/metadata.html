@@ -439,16 +439,6 @@ the column type, max length, etc.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>If you have run a query already you can use the result object instead of
-supplying the table name:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$db</span> <span class="o">=</span> <span class="nx">db_connect</span><span class="p">();</span>
-
-<span class="nv">$query</span>  <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY&#39;</span><span class="p">);</span>
-<span class="nv">$fields</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getFieldData</span><span class="p">();</span>
-</pre></div>
-</div>
 <p>The following data is available from this function if supported by your
 database:</p>
 <ul class="simple">
@@ -462,6 +452,24 @@ database:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since v4.4.0, SQLSRV supported <code class="docutils literal notranslate"><span class="pre">nullable</span></code>.</p>
+</div>
+</section>
+<section id="query-getfielddata">
+<h4>$query-&gt;getFieldData()<a class="headerlink" href="#query-getfielddata" title="Permalink to this heading"></a></h4>
+<p>If you have run a query already you can use the result object instead of
+supplying the table name:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$db</span> <span class="o">=</span> <span class="nx">db_connect</span><span class="p">();</span>
+
+<span class="nv">$query</span>  <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY&#39;</span><span class="p">);</span>
+<span class="nv">$fields</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getFieldData</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The data returned is different from the data from <code class="docutils literal notranslate"><span class="pre">$db-&gt;getFieldData()</span></code>.
+If you cannot get the data you need, use <code class="docutils literal notranslate"><span class="pre">$db-&gt;getFieldData()</span></code>.</p>
 </div>
 </section>
 </section>
