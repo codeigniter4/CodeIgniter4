@@ -29,7 +29,7 @@ Read below to find out how to sign your commits :)
 
 ## Secure Signing
 
-To verify your commits, you will need to setup a GPG key, and attach it
+To verify your commits, you will need to set up a GPG key, and attach it
 to your GitHub account.
 
 See the [git tools](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work) page
@@ -47,7 +47,19 @@ The basic steps are
 - Provide your GPG key passphrase, as prompted, when you do a commit.
 
 Depending on your IDE, you may have to do your Git commits from your Git
-bash shell to use the **-S** option to force the secure signing.
+bash shell to use the `-S` option to force the secure signing.
+
+## Set Default Signing
+
+We recommend you set git securely sign commits without the `-S` option in
+`git commit`.
+
+You can do it by setting `git config --global commit.gpgsign true` and
+`git config --global user.signingkey 3AC5C34371567BD2` to all local repositories.
+Without the `--global` option, the change is applied to one local repository only.
+
+> [!NOTE]
+> `3AC5C34371567BD2` is your GPG Key ID
 
 ## Commit Messages
 
