@@ -38,6 +38,8 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
 
     public function testGetFieldDataDefault(): void
     {
+        $this->createTableForDefault();
+
         $fields = $this->db->getFieldData($this->table);
 
         $this->assertJsonStringEqualsJsonString(
