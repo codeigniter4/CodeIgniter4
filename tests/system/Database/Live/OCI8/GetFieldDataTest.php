@@ -50,57 +50,57 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
                 'name'       => 'id',
                 'type'       => 'NUMBER',
                 'max_length' => '11',
+                'nullable'   => false,
                 'default'    => $idDefault, // The default value is not defined.
                 // 'primary_key' => 1,
-                'nullable' => false,
             ],
             (object) [
                 'name'       => 'text_not_null',
                 'type'       => 'VARCHAR2',
                 'max_length' => '64',
+                'nullable'   => false,
                 'default'    => null, // The default value is not defined.
                 // 'primary_key' => 0,
-                'nullable' => false,
             ],
             (object) [
                 'name'       => 'text_null',
                 'type'       => 'VARCHAR2',
                 'max_length' => '64',
+                'nullable'   => true,
                 'default'    => null, // The default value is not defined.
                 // 'primary_key' => 0,
-                'nullable' => true,
             ],
             (object) [
                 'name'       => 'int_default_0',
                 'type'       => 'NUMBER',
                 'max_length' => '11',
+                'nullable'   => false,
                 'default'    => '0 ', // int 0
                 // 'primary_key' => 0,
-                'nullable' => false,
             ],
             (object) [
                 'name'       => 'text_default_null',
                 'type'       => 'VARCHAR2',
                 'max_length' => '64',
+                'nullable'   => true,
                 'default'    => 'NULL ', // NULL value
                 // 'primary_key' => 0,
-                'nullable' => true,
             ],
             (object) [
                 'name'       => 'text_default_text_null',
                 'type'       => 'VARCHAR2',
                 'max_length' => '64',
+                'nullable'   => false,
                 'default'    => "'null' ", // string "null"
                 // 'primary_key' => 0,
-                'nullable' => false,
             ],
             (object) [
                 'name'       => 'text_default_abc',
                 'type'       => 'VARCHAR2',
                 'max_length' => '64',
+                'nullable'   => false,
                 'default'    => "'abc' ", // string "abc"
                 // 'primary_key' => 0,
-                'nullable' => false,
             ],
         ]), true);
         $names = array_column($expected, 'name');

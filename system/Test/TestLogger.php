@@ -21,13 +21,16 @@ use Stringable;
  */
 class TestLogger extends Logger
 {
+    /**
+     * @var list<array{level: mixed, message: string, file: string|null}>
+     */
     protected static $op_logs = [];
 
     /**
      * The log method is overridden so that we can store log history during
      * the tests to allow us to check ->assertLogged() methods.
      *
-     * @param string $level
+     * @param mixed  $level
      * @param string $message
      */
     public function log($level, string|Stringable $message, array $context = []): void
@@ -94,6 +97,8 @@ class TestLogger extends Logger
      * Expose filenames.
      *
      * @param string $file
+     *
+     * @return string
      *
      * @deprecated No longer needed as underlying protected method is also deprecated.
      */

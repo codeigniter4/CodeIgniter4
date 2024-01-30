@@ -94,22 +94,28 @@ Usage example:
 
 .. literalinclude:: metadata/006.php
 
-If you have run a query already you can use the result object instead of
-supplying the table name:
-
-.. literalinclude:: metadata/007.php
-
 The following data is available from this function if supported by your
 database:
 
 - ``name`` - column name
 - ``type`` - the type of the column
 - ``max_length`` - maximum length of the column
-- ``primary_key`` - integer ``1`` if the column is a primary key (all integer ``1``, even if there are multiple primary keys), otherwise integer ``0`` (This field is currently only available for ``MySQLi`` and ``SQLite3``)
 - ``nullable`` - boolean ``true`` if the column is nullable, otherwise boolean ``false``
 - ``default`` - the default value
+- ``primary_key`` - integer ``1`` if the column is a primary key (all integer ``1``, even if there are multiple primary keys), otherwise integer ``0`` (This field is currently only available for ``MySQLi`` and ``SQLite3``)
 
 .. note:: Since v4.4.0, SQLSRV supported ``nullable``.
+
+$query->getFieldData()
+----------------------
+
+If you have run a query already you can use the result object instead of
+supplying the table name:
+
+.. literalinclude:: metadata/007.php
+
+.. note:: The data returned is different from the data from ``$db->getFieldData()``.
+    If you cannot get the data you need, use ``$db->getFieldData()``.
 
 List the Indexes in a Table
 ===========================
