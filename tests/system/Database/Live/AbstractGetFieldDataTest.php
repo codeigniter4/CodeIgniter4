@@ -35,7 +35,7 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
         $this->db = Database::connect($this->DBGroup);
 
         $this->createForge();
-        $this->createTable();
+        $this->createTableForDefault();
     }
 
     /**
@@ -50,7 +50,7 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
         $this->forge->dropTable($this->table, true);
     }
 
-    protected function createTable()
+    protected function createTableForDefault()
     {
         $this->forge->dropTable($this->table, true);
 
