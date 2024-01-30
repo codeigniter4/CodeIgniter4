@@ -38,7 +38,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
 
     public function testGetFieldDataDefault(): void
     {
-        $fields = $this->db->getFieldData('test1');
+        $fields = $this->db->getFieldData($this->table);
 
         $this->assertJsonStringEqualsJsonString(
             json_encode([
@@ -105,7 +105,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
 
     protected function createTableCompositePrimaryKey()
     {
-        $this->forge->dropTable('test1', true);
+        $this->forge->dropTable($this->table, true);
 
         $this->forge->addField([
             'pk1' => [
@@ -122,14 +122,14 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             ],
         ]);
         $this->forge->addPrimaryKey(['pk1', 'pk2']);
-        $this->forge->createTable('test1');
+        $this->forge->createTable($this->table);
     }
 
     public function testGetFieldDataCompositePrimaryKey(): void
     {
         $this->createTableCompositePrimaryKey();
 
-        $fields = $this->db->getFieldData('test1');
+        $fields = $this->db->getFieldData($this->table);
 
         $this->assertJsonStringEqualsJsonString(
             json_encode([

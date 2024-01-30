@@ -26,6 +26,7 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
     protected $db;
 
     protected Forge $forge;
+    protected string $table = 'test1';
 
     protected function setUp(): void
     {
@@ -46,12 +47,12 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        $this->forge->dropTable('test1', true);
+        $this->forge->dropTable($this->table, true);
     }
 
     protected function createTable()
     {
-        $this->forge->dropTable('test1', true);
+        $this->forge->dropTable($this->table, true);
 
         $this->forge->addField([
             'id' => [
@@ -88,7 +89,7 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('test1');
+        $this->forge->createTable($this->table);
     }
 
     abstract public function testGetFieldDataDefault(): void;
