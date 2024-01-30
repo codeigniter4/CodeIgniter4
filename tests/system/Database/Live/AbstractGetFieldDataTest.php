@@ -92,4 +92,17 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
     }
 
     abstract public function testGetFieldDataDefault(): void;
+
+    protected function assertSameFieldData(array $expected, array $actual)
+    {
+        $expected = json_decode(json_encode($expected), true);
+        $names    = array_column($expected, 'name');
+        array_multisort($names, SORT_ASC, $expected);
+
+        $fields = json_decode(json_encode($actual), true);
+        $names  = array_column($fields, 'name');
+        array_multisort($names, SORT_ASC, $fields);
+
+        $this->assertSame($expected, $fields);
+    }
 }
