@@ -91,5 +91,5 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
         $this->forge->createTable('test1');
     }
 
-    abstract public function testGetFieldData(): void;
+    abstract public function testGetFieldDataDefault(): void;
 }

@@ -46,7 +46,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
         );
     }
 
-    public function testGetFieldData(): void
+    public function testGetFieldDataDefault(): void
     {
         $fields = $this->db->getFieldData('test1');
 

@@ -36,7 +36,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
         $this->forge = Database::forge($config);
     }
 
-    public function testGetFieldData(): void
+    public function testGetFieldDataDefault(): void
     {
         $fields = $this->db->getFieldData('test1');
 
