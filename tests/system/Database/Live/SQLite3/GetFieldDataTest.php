@@ -49,7 +49,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
                     'type'        => 'INTEGER',
                     'max_length'  => null,
                     'default'     => null, // The default value is not defined.
-                    'primary_key' => true,
+                    'primary_key' => 1,
                     'nullable'    => true,
                 ],
                 (object) [
@@ -57,7 +57,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
                     'type'        => 'VARCHAR',
                     'max_length'  => null,
                     'default'     => null, // The default value is not defined.
-                    'primary_key' => false,
+                    'primary_key' => 0,
                     'nullable'    => false,
                 ],
                 (object) [
@@ -65,7 +65,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
                     'type'        => 'VARCHAR',
                     'max_length'  => null,
                     'default'     => null, // The default value is not defined.
-                    'primary_key' => false,
+                    'primary_key' => 0,
                     'nullable'    => true,
                 ],
                 (object) [
@@ -73,7 +73,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
                     'type'        => 'INT',
                     'max_length'  => null,
                     'default'     => '0', // int 0
-                    'primary_key' => false,
+                    'primary_key' => 0,
                     'nullable'    => false,
                 ],
                 (object) [
@@ -81,7 +81,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
                     'type'        => 'VARCHAR',
                     'max_length'  => null,
                     'default'     => 'NULL', // NULL value
-                    'primary_key' => false,
+                    'primary_key' => 0,
                     'nullable'    => true,
                 ],
                 (object) [
@@ -89,7 +89,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
                     'type'        => 'VARCHAR',
                     'max_length'  => null,
                     'default'     => "'null'", // string "null"
-                    'primary_key' => false,
+                    'primary_key' => 0,
                     'nullable'    => false,
                 ],
                 (object) [
@@ -97,7 +97,66 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
                     'type'        => 'VARCHAR',
                     'max_length'  => null,
                     'default'     => "'abc'", // string "abc"
-                    'primary_key' => false,
+                    'primary_key' => 0,
+                    'nullable'    => false,
+                ],
+            ]),
+            json_encode($fields)
+        );
+    }
+
+    protected function createTableCompositePrimaryKey()
+    {
+        $this->forge->dropTable('test1', true);
+
+        $this->forge->addField([
+            'pk1' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 64,
+            ],
+            'pk2' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 64,
+            ],
+            'text' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 64,
+            ],
+        ]);
+        $this->forge->addPrimaryKey(['pk1', 'pk2']);
+        $this->forge->createTable('test1');
+    }
+
+    public function testGetFieldDataCompositePrimaryKey(): void
+    {
+        $this->createTableCompositePrimaryKey();
+
+        $fields = $this->db->getFieldData('test1');
+
+        $this->assertJsonStringEqualsJsonString(
+            json_encode([
+                (object) [
+                    'name'        => 'pk1',
+                    'type'        => 'VARCHAR',
+                    'max_length'  => null,
+                    'default'     => null,
+                    'primary_key' => 1,
+                    'nullable'    => false,
+                ],
+                (object) [
+                    'name'        => 'pk2',
+                    'type'        => 'VARCHAR',
+                    'max_length'  => null,
+                    'default'     => null,
+                    'primary_key' => 1,
+                    'nullable'    => false,
+                ],
+                (object) [
+                    'name'        => 'text',
+                    'type'        => 'VARCHAR',
+                    'max_length'  => null,
+                    'default'     => null,
+                    'primary_key' => 0,
                     'nullable'    => false,
                 ],
             ]),

@@ -988,7 +988,7 @@ final class ForgeTest extends CIUnitTestCase
                     'type'        => 'INTEGER',
                     'max_length'  => null,
                     'default'     => null,
-                    'primary_key' => true,
+                    'primary_key' => 1,
                     'nullable'    => true,
                 ],
                 1 => [
@@ -996,7 +996,7 @@ final class ForgeTest extends CIUnitTestCase
                     'type'        => 'VARCHAR',
                     'max_length'  => null,
                     'default'     => null,
-                    'primary_key' => false,
+                    'primary_key' => 0,
                     'nullable'    => false,
                 ],
                 2 => [
@@ -1004,7 +1004,7 @@ final class ForgeTest extends CIUnitTestCase
                     'type'        => 'VARCHAR',
                     'max_length'  => null,
                     'default'     => null,
-                    'primary_key' => false,
+                    'primary_key' => 0,
                     'nullable'    => true,
                 ],
                 3 => [
@@ -1012,7 +1012,7 @@ final class ForgeTest extends CIUnitTestCase
                     'type'        => 'INTEGER',
                     'max_length'  => null,
                     'default'     => '0',
-                    'primary_key' => false,
+                    'primary_key' => 0,
                     'nullable'    => false,
                 ],
             ];

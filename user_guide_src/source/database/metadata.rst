@@ -102,12 +102,12 @@ supplying the table name:
 The following data is available from this function if supported by your
 database:
 
--  name - column name
--  type - the type of the column
--  max_length - maximum length of the column
--  primary_key - integer ``1`` if the column is a primary key (all integer ``1``, even if there are multiple primary keys), otherwise integer ``0`` (This field is currently only available for MySQL and SQLite3)
--  nullable - boolean ``true`` if the column is nullable, otherwise boolean ``false``
--  default - the default value
+- ``name`` - column name
+- ``type`` - the type of the column
+- ``max_length`` - maximum length of the column
+- ``primary_key`` - integer ``1`` if the column is a primary key (all integer ``1``, even if there are multiple primary keys), otherwise integer ``0`` (This field is currently only available for ``MySQLi`` and ``SQLite3``)
+- ``nullable`` - boolean ``true`` if the column is nullable, otherwise boolean ``false``
+- ``default`` - the default value
 
 .. note:: Since v4.4.0, SQLSRV supported ``nullable``.
 
