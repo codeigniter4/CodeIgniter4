@@ -39,7 +39,9 @@ final class ForgeModifyColumnTest extends CIUnitTestCase
 
     public function testModifyColumnRename(): void
     {
-        $this->forge->dropTable('forge_test_three', true);
+        $table = 'forge_test_three';
+
+        $this->forge->dropTable($table, true);
 
         $this->forge->addField([
             'id' => [
@@ -71,11 +73,11 @@ final class ForgeModifyColumnTest extends CIUnitTestCase
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->createTable('forge_test_three');
+        $this->forge->createTable($table);
 
-        $this->assertTrue($this->db->fieldExists('name', 'forge_test_three'));
+        $this->assertTrue($this->db->fieldExists('name', $table));
 
-        $this->forge->modifyColumn('forge_test_three', [
+        $this->forge->modifyColumn($table, [
             'name' => [
                 'name'       => 'altered',
                 'type'       => 'VARCHAR',
@@ -86,15 +88,15 @@ final class ForgeModifyColumnTest extends CIUnitTestCase
 
         $this->db->resetDataCache();
 
-        $fieldData = $this->db->getFieldData('forge_test_three');
+        $fieldData = $this->db->getFieldData($table);
         $fields    = [];
 
         foreach ($fieldData as $obj) {
             $fields[$obj->name] = $obj;
         }
 
-        $this->assertFalse($this->db->fieldExists('name', 'forge_test_three'));
-        $this->assertTrue($this->db->fieldExists('altered', 'forge_test_three'));
+        $this->assertFalse($this->db->fieldExists('name', $table));
+        $this->assertTrue($this->db->fieldExists('altered', $table));
 
         $this->assertFalse($fields['int']->nullable);
         $this->assertSame('0', $fields['int']->default);
@@ -108,6 +110,6 @@ final class ForgeModifyColumnTest extends CIUnitTestCase
         $this->assertTrue($fields['altered']->nullable);
         $this->assertNull($fields['altered']->default);
 
-        $this->forge->dropTable('forge_test_three', true);
+        $this->forge->dropTable($table, true);
     }
 }
