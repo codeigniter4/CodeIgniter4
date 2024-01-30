@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Generator;
+use Faker\Generator;
 
 class UserModel
 {

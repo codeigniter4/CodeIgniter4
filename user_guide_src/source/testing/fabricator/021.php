@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Test\Fabricator;
-use Generator;
+use Faker\Generator;
 
 class UserModel
 {
