@@ -399,7 +399,15 @@ class Table
                 // 'NULL' means that the default value is NULL.
                 $return[$field->name]['default'] = null;
             } else {
-                $return[$field->name]['default'] = trim($field->default, "'");
+                $default = trim($field->default, "'");
+
+                if ($this->isIntegerType($field->type)) {
+                    $default = (int) $default;
+                } elseif ($this->isNumericType($field->type)) {
+                    $default = (float) $default;
+                }
+
+                $return[$field->name]['default'] = $default;
             }
 
             if ($field->primary_key) {
@@ -411,6 +419,30 @@ class Table
         }
 
         return $return;
+    }
+
+    /**
+     * Is INTEGER type?
+     *
+     * @param string $type SQLite data type (case-insensitive)
+     *
+     * @see https://www.sqlite.org/datatype3.html
+     */
+    private function isIntegerType(string $type): bool
+    {
+        return strpos(strtoupper($type), 'INT') !== false;
+    }
+
+    /**
+     * Is NUMERIC type?
+     *
+     * @param string $type SQLite data type (case-insensitive)
+     *
+     * @see https://www.sqlite.org/datatype3.html
+     */
+    private function isNumericType(string $type): bool
+    {
+        return in_array(strtoupper($type), ['NUMERIC', 'DECIMAL'], true);
     }
 
     /**
