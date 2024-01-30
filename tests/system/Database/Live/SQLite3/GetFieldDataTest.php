@@ -159,4 +159,183 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
         ];
         $this->assertSameFieldData($expected, $fields);
     }
+
+    public function testGetFieldDataType(): void
+    {
+        $this->createTableForType();
+
+        $fields = $this->db->getFieldData($this->table);
+
+        $expected = [
+            0 => (object) [
+                'name'        => 'id',
+                'type'        => 'INTEGER',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 1,
+            ],
+            1 => (object) [
+                'name'        => 'type_varchar',
+                'type'        => 'VARCHAR',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            2 => (object) [
+                'name'        => 'type_char',
+                'type'        => 'CHAR',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            3 => (object) [
+                'name'        => 'type_text',
+                'type'        => 'TEXT',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            4 => (object) [
+                'name'        => 'type_smallint',
+                'type'        => 'SMALLINT',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            5 => (object) [
+                'name'        => 'type_integer',
+                'type'        => 'INTEGER',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            6 => (object) [
+                'name'        => 'type_float',
+                'type'        => 'FLOAT',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            7 => (object) [
+                'name'        => 'type_numeric',
+                'type'        => 'NUMERIC',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            8 => (object) [
+                'name'        => 'type_date',
+                'type'        => 'DATE',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            9 => (object) [
+                'name'        => 'type_time',
+                'type'        => 'TIME',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            10 => (object) [
+                'name'        => 'type_datetime',
+                'type'        => 'DATETIME',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            11 => (object) [
+                'name'        => 'type_timestamp',
+                'type'        => 'TIMESTAMP',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            12 => (object) [
+                'name'        => 'type_bigint',
+                'type'        => 'BIGINT',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            13 => (object) [
+                'name'        => 'type_real',
+                'type'        => 'REAL',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            14 => (object) [
+                'name'        => 'type_enum',
+                'type'        => 'TEXT',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            15 => (object) [
+                'name'        => 'type_set',
+                'type'        => 'TEXT',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            16 => (object) [
+                'name'        => 'type_mediumtext',
+                'type'        => 'MEDIUMTEXT',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            17 => (object) [
+                'name'        => 'type_double',
+                'type'        => 'DOUBLE',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            18 => (object) [
+                'name'        => 'type_decimal',
+                'type'        => 'DECIMAL',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            19 => (object) [
+                'name'        => 'type_blob',
+                'type'        => 'BLOB',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+            20 => (object) [
+                'name'        => 'type_boolean',
+                'type'        => 'INT',
+                'max_length'  => null,
+                'nullable'    => true,
+                'default'     => null,
+                'primary_key' => 0,
+            ],
+        ];
+        $this->assertSameFieldData($expected, $fields);
+    }
 }
