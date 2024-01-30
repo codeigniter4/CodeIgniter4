@@ -94,11 +94,6 @@ Usage example:
 
 .. literalinclude:: metadata/006.php
 
-If you have run a query already you can use the result object instead of
-supplying the table name:
-
-.. literalinclude:: metadata/007.php
-
 The following data is available from this function if supported by your
 database:
 
@@ -110,6 +105,17 @@ database:
 - ``default`` - the default value
 
 .. note:: Since v4.4.0, SQLSRV supported ``nullable``.
+
+$query->getFieldData()
+----------------------
+
+If you have run a query already you can use the result object instead of
+supplying the table name:
+
+.. literalinclude:: metadata/007.php
+
+.. note:: The data returned is different from the data from ``$db->getFieldData()``.
+    If you cannot get the data you need, use ``$db->getFieldData()``.
 
 List the Indexes in a Table
 ===========================
