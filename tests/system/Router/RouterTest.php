@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Router;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
@@ -38,13 +39,21 @@ final class RouterTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        $this->createRouteCollection();
+
+        $this->request = Services::request();
+        $this->request->setMethod(Method::GET);
+    }
+
+    private function createRouteCollection(?Routing $routingConfig = null): void
+    {
         $moduleConfig          = new Modules();
         $moduleConfig->enabled = false;
 
-        $routerConfig                   = new Routing();
-        $routerConfig->defaultNamespace = '\\';
+        $routingConfig ??= new Routing();
+        $routingConfig->defaultNamespace = '\\';
 
-        $this->collection = new RouteCollection(Services::locator(), $moduleConfig, $routerConfig);
+        $this->collection = new RouteCollection(Services::locator(), $moduleConfig, $routingConfig);
 
         $routes = [
             '/'                                               => 'Home::index',
@@ -66,9 +75,6 @@ final class RouterTest extends CIUnitTestCase
             '(:segment)/(:segment)/(:segment)'                => '$2::$3/$1',
         ];
         $this->collection->map($routes);
-
-        $this->request = Services::request();
-        $this->request->setMethod(Method::GET);
     }
 
     public function testEmptyURIMatchesRoot(): void
@@ -924,5 +930,35 @@ final class RouterTest extends CIUnitTestCase
             ['post/(:num)/comment/(:any)', 'article/(:num)/(:any)', 'post/$1/comment/$2', '/article/1/2', 'post/1/comment/2', 'alias'],
             ['post/(:segment)/comment/(:any)', 'article/(:num)/(:any)', 'alias', '/article/1/2', 'post/1/comment/2', 'alias'],
         ];
+    }
+
+    public function testRoutePlaceholderAnyWithMultipleSegmentsParamFalse(): void
+    {
+        $this->createRouteCollection();
+        $this->collection->get('product/(:any)', 'Catalog::productLookup/$1');
+        $router = new Router($this->collection, $this->request);
+
+        $router->handle('product/123/456');
+
+        $this->assertSame('\Catalog', $router->controllerName());
+        $this->assertSame('productLookup', $router->methodName());
+        $this->assertSame(['123', '456'], $router->params());
+    }
+
+    public function testRoutePlaceholderAnyWithMultipleSegmentsParamTrue(): void
+    {
+        $routingConfig                           = new Routing();
+        $routingConfig->multipleSegmentsOneParam = true;
+        Factories::injectMock('config', Routing::class, $routingConfig);
+
+        $this->createRouteCollection($routingConfig);
+        $this->collection->get('product/(:any)', 'Catalog::productLookup/$1');
+        $router = new Router($this->collection, $this->request);
+
+        $router->handle('product/123/456');
+
+        $this->assertSame('\Catalog', $router->controllerName());
+        $this->assertSame('productLookup', $router->methodName());
+        $this->assertSame(['123/456'], $router->params());
     }
 }

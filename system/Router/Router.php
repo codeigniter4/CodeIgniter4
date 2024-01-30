@@ -21,6 +21,7 @@ use CodeIgniter\HTTP\Request;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
 use Config\Feature;
+use Config\Routing;
 
 /**
  * Request router.
@@ -387,7 +388,7 @@ class Router implements RouterInterface
         $routes = $this->collection->getRoutes($this->collection->getHTTPVerb());
 
         // Don't waste any time
-        if (empty($routes)) {
+        if ($routes === []) {
             return false;
         }
 
@@ -462,7 +463,12 @@ class Router implements RouterInterface
                     return true;
                 }
 
-                [$controller] = explode('::', $handler);
+                if (str_contains($handler, '::')) {
+                    [$controller, $methodAndParams] = explode('::', $handler);
+                } else {
+                    $controller      = $handler;
+                    $methodAndParams = '';
+                }
 
                 // Checks `/` in controller name
                 if (strpos($controller, '/') !== false) {
@@ -475,11 +481,29 @@ class Router implements RouterInterface
                         throw RouterException::forDynamicController($handler);
                     }
 
-                    // Using back-references
-                    $handler = preg_replace('#^' . $routeKey . '$#u', $handler, $uri);
+                    if (config(Routing::class)->multipleSegmentsOneParam === false) {
+                        // Using back-references
+                        $segments = explode('/', preg_replace('#^' . $routeKey . '$#u', $handler, $uri));
+                    } else {
+                        if (str_contains($methodAndParams, '/')) {
+                            [$method, $handlerParams] = explode('/', $methodAndParams, 2);
+                            $params                   = explode('/', $handlerParams);
+                            $handlerSegments          = array_merge([$controller . '::' . $method], $params);
+                        } else {
+                            $handlerSegments = [$handler];
+                        }
+
+                        $segments = [];
+
+                        foreach ($handlerSegments as $segment) {
+                            $segments[] = $this->replaceBackReferences($segment, $matches);
+                        }
+                    }
+                } else {
+                    $segments = explode('/', $handler);
                 }
 
-                $this->setRequest(explode('/', $handler));
+                $this->setRequest($segments);
 
                 $this->setMatchedRoute($matchedKey, $handler);
 
@@ -488,6 +512,24 @@ class Router implements RouterInterface
         }
 
         return false;
+    }
+
+    /**
+     * Replace string `$n` with `$matches[n]` value.
+     */
+    private function replaceBackReferences(string $input, array $matches): string
+    {
+        $pattern = '/\$([1-' . count($matches) . '])/u';
+
+        return preg_replace_callback(
+            $pattern,
+            static function ($match) use ($matches) {
+                $index = (int) $match[1];
+
+                return $matches[$index] ?? '';
+            },
+            $input
+        );
     }
 
     /**

@@ -200,9 +200,12 @@ For example the route:
 
 will match **product/123**, **product/123/456**, **product/123/456/789** and so on.
 
-In the above example, if the ``$1`` placeholder contains a slash
+By default, in the above example, if the ``$1`` placeholder contains a slash
 (``/``), it will still be split into multiple parameters when passed to
 ``Catalog::productLookup()``.
+
+.. note:: Since v4.5.0, you can change the behavior with the config option.
+    See :ref:`multiple-uri-segments-as-one-parameter` for details.
 
 The implementation in the
 Controller should take into account the maximum parameters:
@@ -257,9 +260,12 @@ redirect them back to the same page after they log in, you may find this example
 
 .. literalinclude:: routing/019.php
 
-In the above example, if the ``$1`` placeholder contains a slash
+By default, in the above example, if the ``$1`` placeholder contains a slash
 (``/``), it will still be split into multiple parameters when passed to
 ``Auth::login()``.
+
+.. note:: Since v4.5.0, you can change the behavior with the config option.
+    See :ref:`multiple-uri-segments-as-one-parameter` for details.
 
 For those of you who don't know regular expressions and want to learn more about them,
 `regular-expressions.info <https://www.regular-expressions.info/>`_ might be a good starting point.
@@ -704,6 +710,27 @@ Disabled by default. This functionality affects all routes.
 For an example use of lowering the priority see :ref:`routing-priority`:
 
 .. literalinclude:: routing/052.php
+
+.. _multiple-uri-segments-as-one-parameter:
+
+Multiple URI Segments as One Parameter
+======================================
+
+.. versionadded:: 4.5.0
+
+When this option is enabled, a placeholder that matches multiple segments, such
+as ``(:any)``, will be passed directly as it is to one parameter, even if it
+contains multiple segments.
+
+.. literalinclude:: routing/069.php
+
+For example the route:
+
+.. literalinclude:: routing/010.php
+
+will match **product/123**, **product/123/456**, **product/123/456/789** and so on.
+And if the URI is **product/123/456**, ``123/456`` will be passed to the first
+parameter of the ``Catalog::productLookup()`` method.
 
 .. _auto-routing-improved:
 
