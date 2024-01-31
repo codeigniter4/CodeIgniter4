@@ -82,7 +82,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         return $cookie;
     }
 
-    protected function makeController(string $routePath = '', array $userHeaders = [])
+    private function createRequestAndResponse(string $routePath = '', array $userHeaders = []): void
     {
         $config = $this->createAppConfig();
         $cookie = $this->createCookieConfig();
@@ -106,6 +106,11 @@ final class ResponseTraitTest extends CIUnitTestCase
         foreach ($headers as $key => $value) {
             $this->request->setHeader($key, $value);
         }
+    }
+
+    protected function makeController(string $routePath = '', array $userHeaders = [])
+    {
+        $this->createRequestAndResponse($routePath, $userHeaders);
 
         // Create the controller class finally.
         return new class ($this->request, $this->response, $this->formatter) {
