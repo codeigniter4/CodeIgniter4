@@ -22,6 +22,9 @@ use Config\Services;
  * Provides common, more readable, methods to provide
  * consistent HTTP responses under a variety of common
  * situations when working as an API.
+ *
+ * @property bool $stringAsHtml Whether to treat string data as HTML in JSON response.
+ *                              Setting `true` is only for backward compatibility.
  */
 trait ResponseTrait
 {
@@ -68,7 +71,7 @@ trait ResponseTrait
      * content negotiation.
      *
      * @var string|null
-     * @phpstan-var 'json'|'xml'|null
+     * @phpstan-var 'html'|'json'|'xml'|null
      */
     protected $format = 'json';
 
@@ -332,8 +335,13 @@ trait ResponseTrait
             $this->formatter = $format->getFormatter($mime);
         }
 
-        // If the data is a string, there's not much we can do to it...
-        if (is_string($data)) {
+        $asHtml = $this->stringAsHtml ?? false;
+
+        // Returns as HTML.
+        if (
+            ($mime === 'application/json' && $asHtml && is_string($data))
+            || ($mime !== 'application/json' && is_string($data))
+        ) {
             // The content type should be text/... and not application/...
             $contentType = $this->response->getHeaderLine('Content-Type');
             $contentType = str_replace('application/json', 'text/html', $contentType);

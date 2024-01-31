@@ -85,7 +85,7 @@ final class ResponseTraitTest extends CIUnitTestCase
     private function createRequestAndResponse(string $routePath = '', array $userHeaders = []): void
     {
         $config = $this->createAppConfig();
-        $cookie = $this->createCookieConfig();
+        $this->createCookieConfig();
 
         if ($this->request === null) {
             $this->request = new MockIncomingRequest(
@@ -165,7 +165,38 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $this->invoke($controller, 'respondCreated', ['A Custom Reason']);
 
+        $this->assertSame('"A Custom Reason"', $this->response->getBody());
+    }
+
+    public function testNoFormatterWithStringAsHtmlTrue(): void
+    {
+        $this->formatter = null;
+
+        $this->createRequestAndResponse('', ['Accept' => 'application/json']);
+
+        $controller = new class ($this->request, $this->response, $this->formatter) {
+            use ResponseTrait;
+
+            protected $request;
+            protected $response;
+            protected $formatter;
+            protected bool $stringAsHtml = true;
+
+            public function __construct($request, $response, $formatter)
+            {
+                $this->request   = $request;
+                $this->response  = $response;
+                $this->formatter = $formatter;
+            }
+        };
+
+        $this->invoke($controller, 'respondCreated', ['A Custom Reason']);
+
         $this->assertSame('A Custom Reason', $this->response->getBody());
+        $this->assertStringStartsWith(
+            'text/html',
+            $this->response->getHeaderLine('Content-Type')
+        );
     }
 
     public function testAssociativeArrayPayload(): void
@@ -249,6 +280,37 @@ final class ResponseTraitTest extends CIUnitTestCase
     public function testRespondSetsCorrectBodyAndStatus(): void
     {
         $controller = $this->makeController();
+
+        $this->invoke($controller, 'respond', ['something', 201]);
+
+        $this->assertSame(201, $this->response->getStatusCode());
+        $this->assertSame('"something"', $this->response->getBody());
+        $this->assertStringStartsWith(
+            'application/json',
+            $this->response->getHeaderLine('Content-Type')
+        );
+        $this->assertSame('Created', $this->response->getReasonPhrase());
+    }
+
+    public function testRespondSetsCorrectBodyAndStatusWithStringAsHtmlTrue(): void
+    {
+        $this->createRequestAndResponse();
+
+        $controller = new class ($this->request, $this->response, $this->formatter) {
+            use ResponseTrait;
+
+            protected $request;
+            protected $response;
+            protected $formatter;
+            protected bool $stringAsHtml = true;
+
+            public function __construct($request, $response, $formatter)
+            {
+                $this->request   = $request;
+                $this->response  = $response;
+                $this->formatter = $formatter;
+            }
+        };
 
         $this->invoke($controller, 'respond', ['something', 201]);
 
@@ -569,7 +631,7 @@ final class ResponseTraitTest extends CIUnitTestCase
     public function testFormatByRequestNegotiateIfFormatIsNotJsonOrXML(): void
     {
         $config = $this->createAppConfig();
-        $cookie = $this->createCookieConfig();
+        $this->createCookieConfig();
 
         $request  = new MockIncomingRequest($config, new SiteURI($config), null, new UserAgent());
         $response = new MockResponse($config);
