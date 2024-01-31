@@ -64,10 +64,11 @@ trait ResponseTrait
 
     /**
      * How to format the response data.
-     * Either 'json' or 'xml'. If blank will be
-     * determined through content negotiation.
+     * Either 'json' or 'xml'. If null is set, it will be determined through
+     * content negotiation.
      *
-     * @var string
+     * @var string|null
+     * @phpstan-var 'json'|'xml'|null
      */
     protected $format = 'json';
 
@@ -294,7 +295,7 @@ trait ResponseTrait
     // --------------------------------------------------------------------
 
     /**
-     * Handles formatting a response. Currently makes some heavy assumptions
+     * Handles formatting a response. Currently, makes some heavy assumptions
      * and needs updating! :)
      *
      * @param array|string|null $data
@@ -349,6 +350,9 @@ trait ResponseTrait
 
     /**
      * Sets the format the response should be in.
+     *
+     * @param         string|null  $format Response format
+     * @phpstan-param 'json'|'xml' $format
      *
      * @return $this
      */
