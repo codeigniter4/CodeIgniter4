@@ -44,7 +44,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->formatter = new JSONFormatter();
     }
 
-    protected function makeController(array $userConfig = [], string $routePath = '', array $userHeaders = [])
+    private function createAppConfig(): App
     {
         $config = new App();
 
@@ -60,6 +60,11 @@ final class ResponseTraitTest extends CIUnitTestCase
             $config->{$key} = $value;
         }
 
+        return $config;
+    }
+
+    private function createCookieConfig(): Cookie
+    {
         $cookie = new Cookie();
 
         foreach ([
@@ -73,6 +78,14 @@ final class ResponseTraitTest extends CIUnitTestCase
             $cookie->{$key} = $value;
         }
         Factories::injectMock('config', 'Cookie', $cookie);
+
+        return $cookie;
+    }
+
+    protected function makeController(array $userConfig = [], string $routePath = '', array $userHeaders = [])
+    {
+        $config = $this->createAppConfig();
+        $cookie = $this->createCookieConfig();
 
         if ($this->request === null) {
             $this->request = new MockIncomingRequest(
@@ -544,33 +557,8 @@ final class ResponseTraitTest extends CIUnitTestCase
 
     public function testFormatByRequestNegotiateIfFormatIsNotJsonOrXML(): void
     {
-        $config = new App();
-
-        foreach ([
-            'baseURL'          => 'http://example.com/',
-            'uriProtocol'      => 'REQUEST_URI',
-            'defaultLocale'    => 'en',
-            'negotiateLocale'  => false,
-            'supportedLocales' => ['en'],
-            'CSPEnabled'       => false,
-            'proxyIPs'         => [],
-        ] as $key => $value) {
-            $config->{$key} = $value;
-        }
-
-        $cookie = new Cookie();
-
-        foreach ([
-            'prefix'   => '',
-            'domain'   => '',
-            'path'     => '/',
-            'secure'   => false,
-            'httponly' => false,
-            'samesite' => 'Lax',
-        ] as $key => $value) {
-            $cookie->{$key} = $value;
-        }
-        Factories::injectMock('config', 'Cookie', $cookie);
+        $config = $this->createAppConfig();
+        $cookie = $this->createCookieConfig();
 
         $request  = new MockIncomingRequest($config, new SiteURI($config), null, new UserAgent());
         $response = new MockResponse($config);
