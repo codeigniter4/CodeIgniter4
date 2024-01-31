@@ -92,9 +92,6 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         foreach ($headers as $key => $value) {
             $this->request->setHeader($key, $value);
-            if (($key === 'Accept') && ! is_array($value)) {
-                $this->response->setContentType($value);
-            }
         }
 
         // Create the controller class finally.
