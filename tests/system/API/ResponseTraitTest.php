@@ -75,7 +75,12 @@ final class ResponseTraitTest extends CIUnitTestCase
         Factories::injectMock('config', 'Cookie', $cookie);
 
         if ($this->request === null) {
-            $this->request  = new MockIncomingRequest($config, new SiteURI($config, $routePath), null, new UserAgent());
+            $this->request = new MockIncomingRequest(
+                $config,
+                new SiteURI($config, $routePath),
+                null,
+                new UserAgent()
+            );
             $this->response = new MockResponse($config);
         }
 
