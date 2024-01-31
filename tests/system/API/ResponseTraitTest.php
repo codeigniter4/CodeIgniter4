@@ -105,7 +105,7 @@ final class ResponseTraitTest extends CIUnitTestCase
             protected $response;
             protected $formatter;
 
-            public function __construct(&$request, &$response, &$formatter)
+            public function __construct($request, $response, $formatter)
             {
                 $this->request   = $request;
                 $this->response  = $response;
@@ -584,7 +584,7 @@ final class ResponseTraitTest extends CIUnitTestCase
             protected $request;
             protected $response;
 
-            public function __construct(&$request, &$response)
+            public function __construct($request, $response)
             {
                 $this->request  = $request;
                 $this->response = $response;
