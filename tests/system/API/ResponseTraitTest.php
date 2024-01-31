@@ -151,8 +151,8 @@ final class ResponseTraitTest extends CIUnitTestCase
     {
         $this->formatter = null;
         $controller      = $this->makeController();
-        $payload         = ['answer' => 42];
 
+        $payload = ['answer' => 42];
         $this->invoke($controller, 'respond', [$payload]);
 
         $expected = <<<'EOH'
@@ -167,12 +167,12 @@ final class ResponseTraitTest extends CIUnitTestCase
     {
         $this->formatter = null;
         $controller      = $this->makeController();
-        $payload         = [
+
+        $payload = [
             1,
             2,
             3,
         ];
-
         $this->invoke($controller, 'respond', [$payload]);
 
         $expected = <<<'EOH'
@@ -189,9 +189,10 @@ final class ResponseTraitTest extends CIUnitTestCase
     {
         $this->formatter = null;
         $controller      = $this->makeController();
-        $payload         = new stdClass();
-        $payload->name   = 'Tom';
-        $payload->id     = 1;
+
+        $payload       = new stdClass();
+        $payload->name = 'Tom';
+        $payload->id   = 1;
 
         $this->invoke($controller, 'respond', [(array) $payload]);
 
