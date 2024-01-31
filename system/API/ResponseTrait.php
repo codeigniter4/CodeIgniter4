@@ -304,20 +304,13 @@ trait ResponseTrait
      */
     protected function format($data = null)
     {
-        // If the data is a string, there's not much we can do to it...
-        if (is_string($data)) {
-            // The content type should be text/... and not application/...
-            $contentType = $this->response->getHeaderLine('Content-Type');
-            $contentType = str_replace('application/json', 'text/html', $contentType);
-            $contentType = str_replace('application/', 'text/', $contentType);
-            $this->response->setContentType($contentType);
-            $this->format = 'html';
-
-            return $data;
-        }
-
         $format = Services::format();
-        $mime   = "application/{$this->format}";
+
+        if ($this->format === null) {
+            $mime = $format->getConfig()->supportedResponseFormats[0];
+        } else {
+            $mime = "application/{$this->format}";
+        }
 
         // Determine correct response type through content negotiation if not explicitly declared
         if (
@@ -337,6 +330,18 @@ trait ResponseTrait
         if (! isset($this->formatter)) {
             // if no formatter, use the default
             $this->formatter = $format->getFormatter($mime);
+        }
+
+        // If the data is a string, there's not much we can do to it...
+        if (is_string($data)) {
+            // The content type should be text/... and not application/...
+            $contentType = $this->response->getHeaderLine('Content-Type');
+            $contentType = str_replace('application/json', 'text/html', $contentType);
+            $contentType = str_replace('application/', 'text/', $contentType);
+            $this->response->setContentType($contentType);
+            $this->format = 'html';
+
+            return $data;
         }
 
         if ($mime !== 'application/json') {
