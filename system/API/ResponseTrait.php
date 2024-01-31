@@ -309,11 +309,8 @@ trait ResponseTrait
     {
         $format = Services::format();
 
-        if ($this->format === null) {
-            $mime = $format->getConfig()->supportedResponseFormats[0];
-        } else {
-            $mime = "application/{$this->format}";
-        }
+        $mime = ($this->format === null) ? $format->getConfig()->supportedResponseFormats[0]
+            : "application/{$this->format}";
 
         // Determine correct response type through content negotiation if not explicitly declared
         if (
