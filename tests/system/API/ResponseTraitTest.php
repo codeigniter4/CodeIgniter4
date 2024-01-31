@@ -386,7 +386,11 @@ final class ResponseTraitTest extends CIUnitTestCase
     {
         $controller = $this->makeController();
 
-        $this->invoke($controller, 'failValidationErrors', [['foo' => 'Nope', 'bar' => 'No way'], 'FAT CHANCE', 'A Custom Reason']);
+        $this->invoke(
+            $controller,
+            'failValidationErrors',
+            [['foo' => 'Nope', 'bar' => 'No way'], 'FAT CHANCE', 'A Custom Reason']
+        );
 
         $expected = [
             'status'   => 400,
@@ -493,10 +497,18 @@ final class ResponseTraitTest extends CIUnitTestCase
         $_SERVER['CONTENT_TYPE'] = $mimeType;
 
         $this->makeController([], '', ['Accept' => $mimeType]);
-        $this->assertSame($mimeType, $this->request->getHeaderLine('Accept'), 'Request header...');
+        $this->assertSame(
+            $mimeType,
+            $this->request->getHeaderLine('Accept'),
+            'Request header...'
+        );
 
         $this->response->setContentType($contentType);
-        $this->assertSame($contentType, $this->response->getHeaderLine('Content-Type'), 'Response header pre-response...');
+        $this->assertSame(
+            $contentType,
+            $this->response->getHeaderLine('Content-Type'),
+            'Response header pre-response...'
+        );
 
         $_SERVER = $original;
     }
@@ -583,7 +595,10 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $this->invoke($controller, 'respondCreated', [['id' => 3], 'A Custom Reason']);
 
-        $this->assertStringStartsWith(config('Format')->supportedResponseFormats[0], $response->getHeaderLine('Content-Type'));
+        $this->assertStringStartsWith(
+            config('Format')->supportedResponseFormats[0],
+            $response->getHeaderLine('Content-Type')
+        );
     }
 
     public function testResponseFormat(): void
@@ -594,13 +609,19 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->invoke($controller, 'setResponseFormat', ['json']);
         $this->invoke($controller, 'respond', [$data, 201]);
 
-        $this->assertStringStartsWith('application/json', $this->response->getHeaderLine('Content-Type'));
+        $this->assertStringStartsWith(
+            'application/json',
+            $this->response->getHeaderLine('Content-Type')
+        );
         $this->assertSame($this->formatter->format($data), $this->response->getJSON());
 
         $this->invoke($controller, 'setResponseFormat', ['xml']);
         $this->invoke($controller, 'respond', [$data, 201]);
 
-        $this->assertStringStartsWith('application/xml', $this->response->getHeaderLine('Content-Type'));
+        $this->assertStringStartsWith(
+            'application/xml',
+            $this->response->getHeaderLine('Content-Type')
+        );
     }
 
     public function testXMLResponseFormat(): void
