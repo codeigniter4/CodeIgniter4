@@ -32,9 +32,11 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
         $this->forge = Database::forge($this->db);
     }
 
-    public function testGetFieldData(): void
+    public function testGetFieldDataDefault(): void
     {
-        $fields = $this->db->getFieldData('test1');
+        $this->createTableForDefault();
+
+        $fields = $this->db->getFieldData($this->table);
 
         $data = [];
 
@@ -45,7 +47,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
         $idDefault = $data['id']->default;
         $this->assertMatchesRegularExpression('/"ORACLE"."ISEQ\$\$_[0-9]+".nextval/', $idDefault);
 
-        $expected = json_decode(json_encode([
+        $expected = [
             (object) [
                 'name'       => 'id',
                 'type'       => 'NUMBER',
@@ -102,14 +104,7 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
                 'default'    => "'abc' ", // string "abc"
                 // 'primary_key' => 0,
             ],
-        ]), true);
-        $names = array_column($expected, 'name');
-        array_multisort($names, SORT_ASC, $expected);
-
-        $fields = json_decode(json_encode($fields), true);
-        $names  = array_column($fields, 'name');
-        array_multisort($names, SORT_ASC, $fields);
-
-        $this->assertSame($expected, $fields);
+        ];
+        $this->assertSameFieldData($expected, $fields);
     }
 }

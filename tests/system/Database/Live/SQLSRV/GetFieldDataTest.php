@@ -32,70 +32,70 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
         $this->forge = Database::forge($this->db);
     }
 
-    public function testGetFieldData(): void
+    public function testGetFieldDataDefault(): void
     {
-        $fields = $this->db->getFieldData('test1');
+        $this->createTableForDefault();
 
-        $this->assertJsonStringEqualsJsonString(
-            json_encode([
-                (object) [
-                    'name'       => 'id',
-                    'type'       => 'int',
-                    'max_length' => 10,
-                    'default'    => null, // The default value is not defined.
-                    // 'primary_key' => 1,
-                    'nullable' => false,
-                ],
-                (object) [
-                    'name'       => 'text_not_null',
-                    'type'       => 'varchar',
-                    'max_length' => 64,
-                    'default'    => null, // The default value is not defined.
-                    // 'primary_key' => 0,
-                    'nullable' => false,
-                ],
-                (object) [
-                    'name'       => 'text_null',
-                    'type'       => 'varchar',
-                    'max_length' => 64,
-                    'default'    => null, // The default value is not defined.
-                    // 'primary_key' => 0,
-                    'nullable' => true,
-                ],
-                (object) [
-                    'name'       => 'int_default_0',
-                    'type'       => 'int',
-                    'max_length' => 10,
-                    'default'    => '((0))', // int 0
-                    // 'primary_key' => 0,
-                    'nullable' => false,
-                ],
-                (object) [
-                    'name'       => 'text_default_null',
-                    'type'       => 'varchar',
-                    'max_length' => 64,
-                    'default'    => '(NULL)', // NULL value
-                    // 'primary_key' => 0,
-                    'nullable' => true,
-                ],
-                (object) [
-                    'name'       => 'text_default_text_null',
-                    'type'       => 'varchar',
-                    'max_length' => 64,
-                    'default'    => "('null')", // string "null"
-                    // 'primary_key' => 0,
-                    'nullable' => false,
-                ],
-                (object) [
-                    'name'       => 'text_default_abc',
-                    'type'       => 'varchar',
-                    'max_length' => 64,
-                    'default'    => "('abc')", // string "abc"
-                    // 'primary_key' => 0,
-                    'nullable' => false,
-                ],
-            ]),
-            json_encode($fields)
-        );
+        $fields = $this->db->getFieldData($this->table);
+
+        $expected = [
+            (object) [
+                'name'       => 'id',
+                'type'       => 'int',
+                'max_length' => 10,
+                'nullable'   => false,
+                'default'    => null, // The default value is not defined.
+                // 'primary_key' => 1,
+            ],
+            (object) [
+                'name'       => 'text_not_null',
+                'type'       => 'varchar',
+                'max_length' => 64,
+                'nullable'   => false,
+                'default'    => null, // The default value is not defined.
+                // 'primary_key' => 0,
+            ],
+            (object) [
+                'name'       => 'text_null',
+                'type'       => 'varchar',
+                'max_length' => 64,
+                'nullable'   => true,
+                'default'    => null, // The default value is not defined.
+                // 'primary_key' => 0,
+            ],
+            (object) [
+                'name'       => 'int_default_0',
+                'type'       => 'int',
+                'max_length' => 10,
+                'nullable'   => false,
+                'default'    => '((0))', // int 0
+                // 'primary_key' => 0,
+            ],
+            (object) [
+                'name'       => 'text_default_null',
+                'type'       => 'varchar',
+                'max_length' => 64,
+                'nullable'   => true,
+                'default'    => '(NULL)', // NULL value
+                // 'primary_key' => 0,
+            ],
+            (object) [
+                'name'       => 'text_default_text_null',
+                'type'       => 'varchar',
+                'max_length' => 64,
+                'nullable'   => false,
+                'default'    => "('null')", // string "null"
+                // 'primary_key' => 0,
+            ],
+            (object) [
+                'name'       => 'text_default_abc',
+                'type'       => 'varchar',
+                'max_length' => 64,
+                'nullable'   => false,
+                'default'    => "('abc')", // string "abc"
+                // 'primary_key' => 0,
+            ],
+        ];
+        $this->assertSameFieldData($expected, $fields);
     }
 }
