@@ -126,7 +126,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $this->invoke($controller, 'respondCreated', [['id' => 3], 'A Custom Reason']);
 
-        $this->assertSame('A Custom Reason', $this->response->getReason());
+        $this->assertSame('A Custom Reason', $this->response->getReasonPhrase());
         $this->assertSame(201, $this->response->getStatusCode());
 
         $expected = <<<'EOH'
@@ -233,7 +233,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->assertSame(201, $this->response->getStatusCode());
         $this->assertSame('something', $this->response->getBody());
         $this->assertStringStartsWith('text/html', $this->response->getHeaderLine('Content-Type'));
-        $this->assertSame('Created', $this->response->getReason());
+        $this->assertSame('Created', $this->response->getReasonPhrase());
     }
 
     public function testRespondWithCustomReason(): void
@@ -243,7 +243,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->invoke($controller, 'respond', ['something', 201, 'A Custom Reason']);
 
         $this->assertSame(201, $this->response->getStatusCode());
-        $this->assertSame('A Custom Reason', $this->response->getReason());
+        $this->assertSame('A Custom Reason', $this->response->getReasonPhrase());
     }
 
     public function testFailSingleMessage(): void
@@ -262,7 +262,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         ];
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
         $this->assertSame(500, $this->response->getStatusCode());
-        $this->assertSame('A Custom Reason', $this->response->getReason());
+        $this->assertSame('A Custom Reason', $this->response->getReasonPhrase());
     }
 
     public function testCreated(): void
@@ -271,7 +271,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $this->invoke($controller, 'respondCreated', [['id' => 3], 'A Custom Reason']);
 
-        $this->assertSame('A Custom Reason', $this->response->getReason());
+        $this->assertSame('A Custom Reason', $this->response->getReasonPhrase());
         $this->assertSame(201, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format(['id' => 3]), $this->response->getBody());
     }
@@ -282,7 +282,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $this->invoke($controller, 'respondDeleted', [['id' => 3], 'A Custom Reason']);
 
-        $this->assertSame('A Custom Reason', $this->response->getReason());
+        $this->assertSame('A Custom Reason', $this->response->getReasonPhrase());
         $this->assertSame(200, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format(['id' => 3]), $this->response->getBody());
     }
@@ -293,7 +293,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $this->invoke($controller, 'respondUpdated', [['id' => 3], 'A Custom Reason']);
 
-        $this->assertSame('A Custom Reason', $this->response->getReason());
+        $this->assertSame('A Custom Reason', $this->response->getReasonPhrase());
         $this->assertSame(200, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format(['id' => 3]), $this->response->getBody());
     }
@@ -311,7 +311,7 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'error' => 'Nope',
             ],
         ];
-        $this->assertSame('A Custom Reason', $this->response->getReason());
+        $this->assertSame('A Custom Reason', $this->response->getReasonPhrase());
         $this->assertSame(401, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
@@ -329,7 +329,7 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'error' => 'Nope',
             ],
         ];
-        $this->assertSame('A Custom Reason', $this->response->getReason());
+        $this->assertSame('A Custom Reason', $this->response->getReasonPhrase());
         $this->assertSame(403, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
@@ -341,7 +341,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->invoke($controller, 'respondNoContent', ['']);
 
         $this->assertStringStartsWith('application/json', $this->response->getHeaderLine('Content-Type'));
-        $this->assertSame('No Content', $this->response->getReason());
+        $this->assertSame('No Content', $this->response->getReasonPhrase());
         $this->assertSame(204, $this->response->getStatusCode());
     }
 
@@ -358,7 +358,7 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'error' => 'Nope',
             ],
         ];
-        $this->assertSame('A Custom Reason', $this->response->getReason());
+        $this->assertSame('A Custom Reason', $this->response->getReasonPhrase());
         $this->assertSame(404, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
@@ -376,7 +376,7 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'error' => 'Nope',
             ],
         ];
-        $this->assertSame('A Custom Reason', $this->response->getReason());
+        $this->assertSame('A Custom Reason', $this->response->getReasonPhrase());
         $this->assertSame(400, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
@@ -395,7 +395,7 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'bar' => 'No way',
             ],
         ];
-        $this->assertSame('A Custom Reason', $this->response->getReason());
+        $this->assertSame('A Custom Reason', $this->response->getReasonPhrase());
         $this->assertSame(400, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
@@ -413,7 +413,7 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'error' => 'Nope',
             ],
         ];
-        $this->assertSame('A Custom Reason', $this->response->getReason());
+        $this->assertSame('A Custom Reason', $this->response->getReasonPhrase());
         $this->assertSame(409, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
@@ -431,7 +431,7 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'error' => 'Nope',
             ],
         ];
-        $this->assertSame('A Custom Reason', $this->response->getReason());
+        $this->assertSame('A Custom Reason', $this->response->getReasonPhrase());
         $this->assertSame(410, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
@@ -449,7 +449,7 @@ final class ResponseTraitTest extends CIUnitTestCase
                 'error' => 'Nope',
             ],
         ];
-        $this->assertSame('A Custom Reason', $this->response->getReason());
+        $this->assertSame('A Custom Reason', $this->response->getReasonPhrase());
         $this->assertSame(429, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format($expected), $this->response->getBody());
     }
@@ -460,7 +460,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 
         $this->invoke($controller, 'failServerError', ['Nope.', 'FAT-CHANCE', 'A custom reason.']);
 
-        $this->assertSame('A custom reason.', $this->response->getReason());
+        $this->assertSame('A custom reason.', $this->response->getReasonPhrase());
         $this->assertSame(500, $this->response->getStatusCode());
         $this->assertSame($this->formatter->format([
             'status'   => 500,
