@@ -376,6 +376,9 @@ Changes
   has been fixed from lowercase to uppercase.
 - **Exceptions:** Unused ``CodeIgniter\Exceptions\AlertError`` and
   ``CodeIgniter\Exceptions\EmergencyError`` were removed.
+- **Forge:** ``SQLSRV`` Forge now converts ``ENUM`` data types to ``VARCHAR(n)``
+  when you add table columns. In previous version, it converted to ``TEXT`` that
+  is deprecated in SQL Server.
 - ``declare(strict_types=1)`` has been added to most framework codebase.
 
 Deprecations
