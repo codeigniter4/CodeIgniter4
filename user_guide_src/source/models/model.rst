@@ -168,6 +168,8 @@ that if you try to insert empty data, ``DataException`` with
 
 You may also change this setting with the :ref:`model-allow-empty-inserts` method.
 
+.. _model-update-only-changed:
+
 $updateOnlyChanged
 ------------------
 

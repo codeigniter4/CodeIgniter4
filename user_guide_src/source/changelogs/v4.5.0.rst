@@ -291,6 +291,17 @@ findAll(0) Behavior
 - If you disable this flag, you need to change code like ``findAll(0, $offset)``
   to ``findAll(null, $offset)``.
 
+$updateOnlyChanged
+------------------
+
+Added a property ``$updateOnlyChanged`` whether to update
+:doc:`Entity <../models/entities>`'s only changed fields. If you set this property
+to ``false``, when you are updating an Entity, ``DataException``
+"There is no data to update" will not raise even if the values in the Entity have
+not changed.
+
+See :ref:`Using CodeIgniter’s Model <model-update-only-changed>` for details.
+
 Libraries
 =========
 
