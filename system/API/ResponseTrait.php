@@ -358,7 +358,7 @@ trait ResponseTrait
      */
     protected function setResponseFormat(?string $format = null)
     {
-        $this->format = strtolower($format);
+        $this->format = ($format === null) ? null : strtolower($format);
 
         return $this;
     }
