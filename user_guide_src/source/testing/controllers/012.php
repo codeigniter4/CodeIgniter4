@@ -1,11 +1,11 @@
 <?php
 
-namespace CodeIgniter;
+namespace App\Filters;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\FilterTestTrait;
 
-final class FilterTestCase extends CIUnitTestCase
+final class FooFilterTest extends CIUnitTestCase
 {
     use FilterTestTrait;
 
