@@ -199,6 +199,11 @@ using them, upgrade your code. See :ref:`ChangeLog <v450-removed-deprecated-item
 Breaking Enhancements
 *********************
 
+- The method signatures of ``Validation::run()`` and ``ValidationInterface::run()``
+  have been changed. The ``?string`` typehint on the ``$dbGroup`` parameter was
+  removed. Extending classes should likewise remove the parameter so as not to
+  break LSP.
+
 Project Files
 *************
 

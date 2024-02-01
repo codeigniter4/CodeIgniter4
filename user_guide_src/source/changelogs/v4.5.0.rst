@@ -80,6 +80,8 @@ Interface Changes
   the ``ResponseInterface::setCookie()`` has been fixed from ``''`` to ``0``.
 - **Logger:** The `psr/log <https://packagist.org/packages/psr/log>`_ package has
   been upgraded to v3.0.0.
+- **Validation:** The method signature of ``ValidationInterface::run()`` has been
+  changed. The ``?string`` typehint on the ``$dbGroup`` parameter was removed.
 
 .. _v450-method-signature-changes:
 
@@ -129,6 +131,8 @@ Others
   that implements the PSR-3 interface have been fixed. The ``bool`` return
   types are changed to ``void``. The ``$message`` parameters now have
   ``string|Stringable`` types.
+- **Validation:** The method signature of ``Validation::run()`` has been
+  changed. The ``?string`` typehint on the ``$dbGroup`` parameter was removed.
 
 .. _v450-removed-deprecated-items:
 
@@ -294,8 +298,12 @@ findAll(0) Behavior
 Libraries
 =========
 
-- **Validation:** Added the new rule ``field_exists`` that checks the filed
-  exists in the data to be validated.
+- **Validation:**
+    - Added the new rule ``field_exists`` that checks the filed exists in the
+      data to be validated.
+    - The ``$dbGroup`` parameter of ``Validation::run()`` now accepts not only
+      a database group name, but also a database connection instance or an array
+      of database settings.
 
 Helpers and Functions
 =====================
