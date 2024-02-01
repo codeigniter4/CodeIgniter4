@@ -26,6 +26,7 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
     protected $db;
 
     protected Forge $forge;
+    protected string $table = 'test1';
 
     protected function setUp(): void
     {
@@ -34,7 +35,6 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
         $this->db = Database::connect($this->DBGroup);
 
         $this->createForge();
-        $this->createTable();
     }
 
     /**
@@ -46,12 +46,12 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        $this->forge->dropTable('test1', true);
+        $this->forge->dropTable($this->table, true);
     }
 
-    protected function createTable()
+    protected function createTableForDefault()
     {
-        $this->forge->dropTable('test1', true);
+        $this->forge->dropTable($this->table, true);
 
         $this->forge->addField([
             'id' => [
@@ -88,8 +88,21 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('test1');
+        $this->forge->createTable($this->table);
     }
 
-    abstract public function testGetFieldData(): void;
+    abstract public function testGetFieldDataDefault(): void;
+
+    protected function assertSameFieldData(array $expected, array $actual)
+    {
+        $expected = json_decode(json_encode($expected), true);
+        $names    = array_column($expected, 'name');
+        array_multisort($names, SORT_ASC, $expected);
+
+        $fields = json_decode(json_encode($actual), true);
+        $names  = array_column($fields, 'name');
+        array_multisort($names, SORT_ASC, $fields);
+
+        $this->assertSame($expected, $fields);
+    }
 }

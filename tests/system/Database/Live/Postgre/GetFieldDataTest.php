@@ -32,70 +32,70 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
         $this->forge = Database::forge($this->db);
     }
 
-    public function testGetFieldData(): void
+    public function testGetFieldDataDefault(): void
     {
+        $this->createTableForDefault();
+
         $fields = $this->db->getFieldData('test1');
 
-        $this->assertJsonStringEqualsJsonString(
-            json_encode([
-                (object) [
-                    'name'       => 'id',
-                    'type'       => 'integer',
-                    'max_length' => '32',
-                    'default'    => "nextval('db_test1_id_seq'::regclass)", // The default value is not defined.
-                    // 'primary_key' => 1,
-                    'nullable' => false,
-                ],
-                (object) [
-                    'name'       => 'text_not_null',
-                    'type'       => 'character varying',
-                    'max_length' => '64',
-                    'default'    => null, // The default value is not defined.
-                    // 'primary_key' => 0,
-                    'nullable' => false,
-                ],
-                (object) [
-                    'name'       => 'text_null',
-                    'type'       => 'character varying',
-                    'max_length' => '64',
-                    'default'    => null, // The default value is not defined.
-                    // 'primary_key' => 0,
-                    'nullable' => true,
-                ],
-                (object) [
-                    'name'       => 'int_default_0',
-                    'type'       => 'integer',
-                    'max_length' => '32',
-                    'default'    => '0', // int 0
-                    // 'primary_key' => 0,
-                    'nullable' => false,
-                ],
-                (object) [
-                    'name'       => 'text_default_null',
-                    'type'       => 'character varying',
-                    'max_length' => '64',
-                    'default'    => 'NULL::character varying', // NULL value
-                    // 'primary_key' => 0,
-                    'nullable' => true,
-                ],
-                (object) [
-                    'name'       => 'text_default_text_null',
-                    'type'       => 'character varying',
-                    'max_length' => '64',
-                    'default'    => "'null'::character varying", // string "null"
-                    // 'primary_key' => 0,
-                    'nullable' => false,
-                ],
-                (object) [
-                    'name'       => 'text_default_abc',
-                    'type'       => 'character varying',
-                    'max_length' => '64',
-                    'default'    => "'abc'::character varying", // string "abc"
-                    // 'primary_key' => 0,
-                    'nullable' => false,
-                ],
-            ]),
-            json_encode($fields)
-        );
+        $expected = [
+            (object) [
+                'name'       => 'id',
+                'type'       => 'integer',
+                'max_length' => '32',
+                'nullable'   => false,
+                // 'primary_key' => 1,
+                'default' => "nextval('db_test1_id_seq'::regclass)", // The default value is not defined.
+            ],
+            (object) [
+                'name'       => 'text_not_null',
+                'type'       => 'character varying',
+                'max_length' => '64',
+                'nullable'   => false,
+                // 'primary_key' => 0,
+                'default' => null, // The default value is not defined.
+            ],
+            (object) [
+                'name'       => 'text_null',
+                'type'       => 'character varying',
+                'max_length' => '64',
+                'nullable'   => true,
+                // 'primary_key' => 0,
+                'default' => null, // The default value is not defined.
+            ],
+            (object) [
+                'name'       => 'int_default_0',
+                'type'       => 'integer',
+                'max_length' => '32',
+                'nullable'   => false,
+                // 'primary_key' => 0,
+                'default' => '0', // int 0
+            ],
+            (object) [
+                'name'       => 'text_default_null',
+                'type'       => 'character varying',
+                'max_length' => '64',
+                'nullable'   => true,
+                // 'primary_key' => 0,
+                'default' => 'NULL::character varying', // NULL value
+            ],
+            (object) [
+                'name'       => 'text_default_text_null',
+                'type'       => 'character varying',
+                'max_length' => '64',
+                'nullable'   => false,
+                // 'primary_key' => 0,
+                'default' => "'null'::character varying", // string "null"
+            ],
+            (object) [
+                'name'       => 'text_default_abc',
+                'type'       => 'character varying',
+                'max_length' => '64',
+                'nullable'   => false,
+                // 'primary_key' => 0,
+                'default' => "'abc'::character varying", // string "abc"
+            ],
+        ];
+        $this->assertSameFieldData($expected, $fields);
     }
 }

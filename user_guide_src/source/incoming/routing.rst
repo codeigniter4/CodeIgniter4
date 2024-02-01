@@ -689,15 +689,19 @@ to only those defined by you, by setting the ``$autoRoute`` property to false:
 404 Override
 ============
 
-When a page is not found that matches the current URI, the system will show a generic 404 view. You can change
-what happens by specifying an action to happen with the ``set404Override()`` method. The value can be either
-a valid class/method pair, just like you would show in any route, or a Closure:
+When a page is not found that matches the current URI, the system will show a
+generic 404 view. Using the ``$override404`` property within the routing config
+file, you can define controller class/method for 404 routes.
 
 .. literalinclude:: routing/051.php
 
-Using the ``$override404`` property within the routing config file, you can use closures. Defining the override in the Routing file is restricted to class/method pairs.
+You can also change what happens by specifying an action to happen with the
+``set404Override()`` method in Routes config file. The value can be either a
+valid class/method pair, or a Closure:
 
-.. note:: The ``set404Override()`` method does not change the Response status code to ``404``.
+.. literalinclude:: routing/069.php
+
+.. note:: The 404 Override feature does not change the Response status code to ``404``.
     If you don't set the status code in the controller you set, the default status code ``200``
     will be returned. See :php:meth:`CodeIgniter\\HTTP\\Response::setStatusCode()` for
     information on how to set the status code.
@@ -722,7 +726,7 @@ When this option is enabled, a placeholder that matches multiple segments, such
 as ``(:any)``, will be passed directly as it is to one parameter, even if it
 contains multiple segments.
 
-.. literalinclude:: routing/069.php
+.. literalinclude:: routing/070.php
 
 For example the route:
 
