@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Validation;
 
 use Closure;
+use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Method;
@@ -128,14 +129,11 @@ class Validation implements ValidationInterface
      * Runs the validation process, returning true/false determining whether
      * validation was successful or not.
      *
-     * @param array|null  $data    The array of data to validate.
-     * @param string|null $group   The predefined group of rules to apply.
-     * @param string|null $dbGroup The database group to use.
-     *
-     * @TODO Type ?string for $dbGroup should be removed.
-     *      See https://github.com/codeigniter4/CodeIgniter4/issues/6723
+     * @param array|null                                 $data    The array of data to validate.
+     * @param string|null                                $group   The predefined group of rules to apply.
+     * @param array|BaseConnection|non-empty-string|null $dbGroup The database group to use.
      */
-    public function run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool
+    public function run(?array $data = null, ?string $group = null, $dbGroup = null): bool
     {
         if ($data === null) {
             $data = $this->data;
