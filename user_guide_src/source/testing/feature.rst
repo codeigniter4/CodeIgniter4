@@ -29,12 +29,12 @@ Requesting a Page
 Essentially, feature tests simply allows you to call an endpoint on your application and get the results back.
 To do this, you use the ``call()`` method.
 
-1. The first parameter is the HTTP method to use (most frequently either GET or POST).
+1. The first parameter is the HTTP method to use (most frequently either ``GET`` or ``POST``).
 2. The second parameter is the URI path on your site to test.
 3. The third parameter ``$params`` accepts an array that is used to populate the
    superglobal variables for the HTTP verb you are using. So, a method of **GET**
-   would have the **$_GET** variable populated, while a **POST** request would
-   have the **$_POST** array populated. The ``$params`` is also used in
+   would have the ``$_GET`` variable populated, while a **POST** request would
+   have the ``$_POST`` array populated. The ``$params`` is also used in
    :ref:`feature-formatting-the-request`.
 
    .. note:: The ``$params`` array does not make sense for every HTTP verb, but is
