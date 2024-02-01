@@ -14,6 +14,6 @@ The following sections should get you quickly testing your applications.
     Controller Testing <controllers>
     HTTP Testing <feature>
     response
+    Mocking <mocking>
     benchmark
     debugging
-    Mocking <mocking>
