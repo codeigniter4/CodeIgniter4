@@ -60,12 +60,11 @@ Testing Your Application
 PHPUnit Configuration
 =====================
 
-The framework has a ``phpunit.xml.dist`` file in the project root. This controls unit
-testing of the framework itself. If you provide your own ``phpunit.xml``, it will
-over-ride this.
+In your CodeIgniter project root, there is the ``phpunit.xml.dist`` file. This
+controls unit testing of your application. If you provide your own ``phpunit.xml``,
+it will over-ride this.
 
-Your ``phpunit.xml`` should exclude the ``system`` folder, as well as any ``vendor`` or
-``ThirdParty`` folders, if you are unit testing your application.
+By default, test files are placed under the **tests** directory in the project root.
 
 The Test Class
 ==============
