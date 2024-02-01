@@ -224,6 +224,8 @@ Others
 - **Config:** The deprecated ``CodeIgniter\Config\Config`` class has been removed.
 - **Controller:** The deprecated ``Controller::loadHelpers()`` method has been removed.
 - **Exceptions:** The deprecated ``CodeIgniter\Exceptions\CastException`` class has been removed.
+- **Entity:** The deprecated ``CodeIgniter\Entity`` class has been removed. Use
+  ``CodeIgniter\Entity\Entity`` instead.
 
 Enhancements
 ************
