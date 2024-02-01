@@ -122,13 +122,14 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRun404Override(): void
     {
-        $_SERVER['argv'] = ['index.php', '/'];
-        $_SERVER['argc'] = 2;
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['REQUEST_URI']    = '/pages/about';
+        $_SERVER['SCRIPT_NAME']    = '/index.php';
 
         // Inject mock router.
         $routes = Services::routes();
         $routes->setAutoRoute(false);
-        $routes->set404Override('Tests\Support\Controllers\Hello::index');
+        $routes->set404Override('Tests\Support\Errors::show404');
         $router = Services::router($routes, Services::incomingrequest());
         Services::injectMock('router', $router);
 
@@ -136,7 +137,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run($routes);
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('Hello', $output);
+        $this->assertStringContainsString("Can't find a route for 'GET: pages/about'.", $output);
     }
 
     public function testRun404OverrideControllerReturnsResponse(): void
