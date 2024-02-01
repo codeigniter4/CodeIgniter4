@@ -51,7 +51,7 @@ class Commands
     /**
      * Runs a command given
      *
-     * @return int|void
+     * @return int|void Exit code
      */
     public function run(string $command, array $params)
     {
