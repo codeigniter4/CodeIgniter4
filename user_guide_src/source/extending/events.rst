@@ -100,6 +100,14 @@ invoked by **public/index.php**:
 * **post_system** Called right before the final rendered page is sent to the browser,
   at the end of system execution, after the execution of "after" controller filters.
 
+For CLI Apps
+------------
+
+The following is a list of available event points for :doc:`../cli/spark_commands`:
+
+* **pre_command** Called right before the command code execution.
+* **post_command** Called right after the command code execution.
+
 Others
 ------
 

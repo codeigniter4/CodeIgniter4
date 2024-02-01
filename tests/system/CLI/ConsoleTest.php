@@ -15,6 +15,7 @@ namespace CodeIgniter\CLI;
 
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\DotEnv;
+use CodeIgniter\Events\Events;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
@@ -77,6 +78,38 @@ final class ConsoleTest extends CIUnitTestCase
         // make sure the result looks like a command list
         $this->assertStringContainsString('Lists the available commands.', $this->getStreamFilterBuffer());
         $this->assertStringContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
+    }
+
+    public function testRunEventsPreCommand(): void
+    {
+        $result = '';
+        Events::on('pre_command', static function () use (&$result): void {
+            $result = 'fired';
+        });
+
+        $this->initCLI();
+
+        $console = new Console();
+        $console->run();
+
+        $this->assertEventTriggered('pre_command');
+        $this->assertSame('fired', $result);
+    }
+
+    public function testRunEventsPostCommand(): void
+    {
+        $result = '';
+        Events::on('post_command', static function () use (&$result): void {
+            $result = 'fired';
+        });
+
+        $this->initCLI();
+
+        $console = new Console();
+        $console->run();
+
+        $this->assertEventTriggered('post_command');
+        $this->assertSame('fired', $result);
     }
 
     public function testBadCommand(): void
