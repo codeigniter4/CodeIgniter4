@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
-final class OneOfMyModelsTest extends CIUnitTestCase
+final class UserModelTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

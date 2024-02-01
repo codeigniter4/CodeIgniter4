@@ -69,14 +69,22 @@ By default, test files are placed under the **tests** directory in the project r
 The Test Class
 ==============
 
-In order to take advantage of the additional tools provided, your tests must extend ``CIUnitTestCase``. All tests
-are expected to be located in the **tests/app** directory by default.
+In order to take advantage of the additional tools provided, your tests must extend
+``CIUnitTestCase``.
 
-To test a new library, **Foo**, you would create a new file at **tests/app/Libraries/FooTest.php**:
+There are no rules for how test files must be placed. However, we recommend that
+you establish placement rules in advance so that you can quickly understand where
+the test files are located.
+
+In this document, we will place the test files corresponding to the classes in
+the **app** directory in the **tests/app** directory. To test a new library,
+**app/Libraries/Foo.php**, you would create a new file at
+**tests/app/Libraries/FooTest.php**:
 
 .. literalinclude:: overview/001.php
 
-To test one of your models, you might end up with something like this in **tests/app/Models/OneOfMyModelsTest.php**:
+To test one of your models, **app/Models/UserMode.php**, you might end up with
+something like this in **tests/app/Models/UserModelTest.php**:
 
 .. literalinclude:: overview/002.php
 
@@ -103,7 +111,7 @@ to help with staging and clean up::
 The static methods ``setUpBeforeClass()`` and ``tearDownAfterClass()`` run before and after the entire test case, whereas the protected methods ``setUp()`` and ``tearDown()`` run
 between each test.
 
-If you implement any of these special functions make sure you run their
+If you implement any of these special functions, make sure you run their
 parent as well so extended test cases do not interfere with staging:
 
 .. literalinclude:: overview/003.php
