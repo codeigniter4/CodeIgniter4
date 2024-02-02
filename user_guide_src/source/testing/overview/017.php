@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Models\UserModel;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
 use Tests\Support\Mock\MockUserModel;
@@ -13,6 +14,6 @@ final class SomeTest extends CIUnitTestCase
         parent::setUp();
 
         $model = new MockUserModel();
-        Factories::injectMock('models', 'App\Models\UserModel', $model);
+        Factories::injectMock('models', UserModel::class, $model);
     }
 }

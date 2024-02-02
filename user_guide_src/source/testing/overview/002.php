@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Test\CIUnitTestCase;
 
-class OneOfMyModelsTest extends CIUnitTestCase
+class UserModelTest extends CIUnitTestCase
 {
     public function testFooNotBar()
     {
