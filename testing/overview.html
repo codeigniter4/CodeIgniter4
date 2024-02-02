@@ -373,17 +373,22 @@ This is a standalone file that should be placed within your project root.</p>
 <h2><a class="toc-backref" href="#id8" role="doc-backlink">Testing Your Application</a><a class="headerlink" href="#testing-your-application" title="Permalink to this heading"></a></h2>
 <section id="phpunit-configuration">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">PHPUnit Configuration</a><a class="headerlink" href="#phpunit-configuration" title="Permalink to this heading"></a></h3>
-<p>The framework has a <code class="docutils literal notranslate"><span class="pre">phpunit.xml.dist</span></code> file in the project root. This controls unit
-testing of the framework itself. If you provide your own <code class="docutils literal notranslate"><span class="pre">phpunit.xml</span></code>, it will
-over-ride this.</p>
-<p>Your <code class="docutils literal notranslate"><span class="pre">phpunit.xml</span></code> should exclude the <code class="docutils literal notranslate"><span class="pre">system</span></code> folder, as well as any <code class="docutils literal notranslate"><span class="pre">vendor</span></code> or
-<code class="docutils literal notranslate"><span class="pre">ThirdParty</span></code> folders, if you are unit testing your application.</p>
+<p>In your CodeIgniter project root, there is the <code class="docutils literal notranslate"><span class="pre">phpunit.xml.dist</span></code> file. This
+controls unit testing of your application. If you provide your own <code class="docutils literal notranslate"><span class="pre">phpunit.xml</span></code>,
+it will over-ride this.</p>
+<p>By default, test files are placed under the <strong>tests</strong> directory in the project root.</p>
 </section>
 <section id="the-test-class">
 <h3><a class="toc-backref" href="#id10" role="doc-backlink">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this heading"></a></h3>
-<p>In order to take advantage of the additional tools provided, your tests must extend <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code>. All tests
-are expected to be located in the <strong>tests/app</strong> directory by default.</p>
-<p>To test a new library, <strong>Foo</strong>, you would create a new file at <strong>tests/app/Libraries/FooTest.php</strong>:</p>
+<p>In order to take advantage of the additional tools provided, your tests must extend
+<code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\CIUnitTestCase</span></code>.</p>
+<p>There are no rules for how test files must be placed. However, we recommend that
+you establish placement rules in advance so that you can quickly understand where
+the test files are located.</p>
+<p>In this document, we will place the test files corresponding to the classes in
+the <strong>app</strong> directory in the <strong>tests/app</strong> directory. To test a new library,
+<strong>app/Libraries/Foo.php</strong>, you would create a new file at
+<strong>tests/app/Libraries/FooTest.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Libraries</span><span class="p">;</span>
@@ -399,14 +404,15 @@ are expected to be located in the <strong>tests/app</strong> directory by defaul
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>To test one of your models, you might end up with something like this in <strong>tests/app/Models/OneOfMyModelsTest.php</strong>:</p>
+<p>To test one of your models, <strong>app/Models/UserMode.php</strong>, you might end up with
+something like this in <strong>tests/app/Models/UserModelTest.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">OneOfMyModelsTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
+<span class="k">class</span> <span class="nc">UserModelTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">testFooNotBar</span><span class="p">()</span>
     <span class="p">{</span>
@@ -436,7 +442,7 @@ to help with staging and clean up:</p>
 </div>
 <p>The static methods <code class="docutils literal notranslate"><span class="pre">setUpBeforeClass()</span></code> and <code class="docutils literal notranslate"><span class="pre">tearDownAfterClass()</span></code> run before and after the entire test case, whereas the protected methods <code class="docutils literal notranslate"><span class="pre">setUp()</span></code> and <code class="docutils literal notranslate"><span class="pre">tearDown()</span></code> run
 between each test.</p>
-<p>If you implement any of these special functions make sure you run their
+<p>If you implement any of these special functions, make sure you run their
 parent as well so extended test cases do not interfere with staging:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -444,7 +450,7 @@ parent as well so extended test cases do not interfere with staging:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
 
-<span class="k">final</span> <span class="k">class</span> <span class="nc">OneOfMyModelsTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
+<span class="k">final</span> <span class="k">class</span> <span class="nc">UserModelTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
@@ -683,6 +689,9 @@ to simplify this.</p>
 set properties of a service so that it behaves in a certain way, or replace a service with a mocked class.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="k">namespace</span> <span class="nx">Tests</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\CURLRequest</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
 
@@ -690,8 +699,8 @@ set properties of a service so that it behaves in a certain way, or replace a se
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">testSomething</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$curlrequest</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMockBuilder</span><span class="p">(</span><span class="s1">&#39;CodeIgniter\HTTP\CURLRequest&#39;</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">setMethods</span><span class="p">([</span><span class="s1">&#39;request&#39;</span><span class="p">])</span>
+        <span class="nv">$curlrequest</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMockBuilder</span><span class="p">(</span><span class="nx">CURLRequest</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">onlyMethods</span><span class="p">([</span><span class="s1">&#39;request&#39;</span><span class="p">])</span>
             <span class="o">-&gt;</span><span class="na">getMock</span><span class="p">();</span>
         <span class="nx">Services</span><span class="o">::</span><span class="na">injectMock</span><span class="p">(</span><span class="s1">&#39;curlrequest&#39;</span><span class="p">,</span> <span class="nv">$curlrequest</span><span class="p">);</span>
 
@@ -733,6 +742,7 @@ component name:</p>
 
 <span class="k">namespace</span> <span class="nx">Tests</span><span class="p">;</span>
 
+<span class="k">use</span> <span class="nx">App\Models\UserModel</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\Factories</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Tests\Support\Mock\MockUserModel</span><span class="p">;</span>
@@ -744,7 +754,7 @@ component name:</p>
         <span class="k">parent</span><span class="o">::</span><span class="na">setUp</span><span class="p">();</span>
 
         <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MockUserModel</span><span class="p">();</span>
-        <span class="nx">Factories</span><span class="o">::</span><span class="na">injectMock</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Models\UserModel&#39;</span><span class="p">,</span> <span class="nv">$model</span><span class="p">);</span>
+        <span class="nx">Factories</span><span class="o">::</span><span class="na">injectMock</span><span class="p">(</span><span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="nx">UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="nv">$model</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -811,6 +821,8 @@ might be helpful. The <code class="docutils literal notranslate"><span class="pr
 <p>An example demonstrating this inside one of your test cases:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="k">namespace</span> <span class="nx">Tests</span><span class="p">;</span>
+
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\StreamFilterTrait</span><span class="p">;</span>
@@ -853,6 +865,8 @@ add a filter to streams.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">CITestStreamFilter::removeErrorFilter()</span></code> Removing a filter from the error stream.</p></li>
 </ul>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Tests</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
@@ -907,6 +921,8 @@ while registered.</p>
 </div>
 <p>An example demonstrating this inside one of your test cases:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Tests</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
