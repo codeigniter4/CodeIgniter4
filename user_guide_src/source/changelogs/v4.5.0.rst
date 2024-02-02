@@ -51,6 +51,13 @@ Due to a bug fix, the behavior has changed so that options passed to the outer
 ``group()`` are merged with the options of the inner ``group()``.
 See :ref:`Upgrading Guide <upgrade-450-nested-route-groups-and-options>` for details.
 
+API\\ResponseTrait
+------------------
+
+Now when a response format is JSON, if you pass string data, the framework returns
+a JSON response. In previous versions, it returned a HTML response.
+See :ref:`Upgrading Guide <upgrade-450-api-response-trait>` for details.
+
 Factories class
 ---------------
 

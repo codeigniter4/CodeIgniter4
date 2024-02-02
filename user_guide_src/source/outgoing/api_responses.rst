@@ -24,6 +24,8 @@ exist for the most common use cases:
 
 .. literalinclude:: api_responses/002.php
 
+.. _api-response-trait-handling-response-types:
+
 ***********************
 Handling Response Types
 ***********************
