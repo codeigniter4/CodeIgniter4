@@ -341,10 +341,13 @@ Others
 - **AutoRouting Improved:** The ``$translateUriToCamelCase`` option has been added
   that allows using CamelCase controller and method names. See
   :ref:`controller-translate-uri-to-camelcase`.
-- **Routing:** Added option ``$multipleSegmentsOneParam``. When this option is
-  enabled, a placeholder that matches multiple segments, such as ``(:any)``, will
-  be passed directly as it is to one parameter, even if it contains multiple segments.
-  See :ref:`multiple-uri-segments-as-one-parameter` for details.
+- **Routing:**
+    - Added option ``$multipleSegmentsOneParam``. When this option is
+      enabled, a placeholder that matches multiple segments, such as ``(:any)``, will
+      be passed directly as it is to one parameter, even if it contains multiple segments.
+      See :ref:`multiple-uri-segments-as-one-parameter` for details.
+    - Now the 404 controller's method that you set in ``$override404`` also receive
+      a ``PageNotFoundException`` message as the first parameter.
 - **Autoloader:**
     - Autoloading performance when using Composer has been improved.
       Adding the ``App`` namespace in the ``autoload.psr4`` setting in **composer.json**
