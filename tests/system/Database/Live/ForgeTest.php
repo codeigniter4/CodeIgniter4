@@ -1291,8 +1291,18 @@ final class ForgeTest extends CIUnitTestCase
                 'unsigned'       => false,
                 'auto_increment' => true,
             ],
+            'int' => [
+                'type'       => 'INT',
+                'constraint' => 10,
+                'null'       => false,
+            ],
+            'varchar' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 7,
+                'null'       => false,
+            ],
             'name' => [
-                'type'       => 'varchar',
+                'type'       => 'VARCHAR',
                 'constraint' => 255,
                 'null'       => true,
             ],
@@ -1306,7 +1316,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->modifyColumn('forge_test_three', [
             'name' => [
                 'name'       => 'altered',
-                'type'       => 'varchar',
+                'type'       => 'VARCHAR',
                 'constraint' => 255,
                 'null'       => true,
             ],
@@ -1314,8 +1324,22 @@ final class ForgeTest extends CIUnitTestCase
 
         $this->db->resetDataCache();
 
+        $fieldData = $this->db->getFieldData('forge_test_three');
+        $fields    = [];
+
+        foreach ($fieldData as $obj) {
+            $fields[$obj->name] = $obj;
+        }
+
         $this->assertFalse($this->db->fieldExists('name', 'forge_test_three'));
         $this->assertTrue($this->db->fieldExists('altered', 'forge_test_three'));
+
+        $this->assertTrue($fields['altered']->nullable);
+        $this->assertFalse($fields['int']->nullable);
+        $this->assertFalse($fields['varchar']->nullable);
+        $this->assertNull($fields['altered']->default);
+        $this->assertNull($fields['int']->default);
+        $this->assertNull($fields['varchar']->default);
 
         $this->forge->dropTable('forge_test_three', true);
     }
