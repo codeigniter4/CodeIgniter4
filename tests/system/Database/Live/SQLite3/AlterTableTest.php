@@ -89,17 +89,17 @@ final class AlterTableTest extends CIUnitTestCase
 
         $this->assertCount(5, $fields);
         $this->assertArrayHasKey('id', $fields);
-        $this->assertNull($fields['id']['default']);
+        $this->assertArrayNotHasKey('default', $fields['id']);
         $this->assertTrue($fields['id']['null']);
         $this->assertSame('integer', strtolower($fields['id']['type']));
 
         $this->assertArrayHasKey('name', $fields);
-        $this->assertNull($fields['name']['default']);
+        $this->assertArrayNotHasKey('default', $fields['name']);
         $this->assertFalse($fields['name']['null']);
         $this->assertSame('varchar', strtolower($fields['name']['type']));
 
         $this->assertArrayHasKey('email', $fields);
-        $this->assertNull($fields['email']['default']);
+        $this->assertArrayNotHasKey('default', $fields['email']);
         $this->assertTrue($fields['email']['null']);
         $this->assertSame('varchar', strtolower($fields['email']['type']));
 
