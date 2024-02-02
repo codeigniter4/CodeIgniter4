@@ -100,6 +100,8 @@ invoked by **public/index.php**:
 * **post_system** Called right before the final rendered page is sent to the browser,
   at the end of system execution, after the execution of "after" controller filters.
 
+.. _event-points-for-cli-apps:
+
 For CLI Apps
 ------------
 
