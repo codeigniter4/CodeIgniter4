@@ -17,7 +17,7 @@ use CodeIgniter\Controller;
 
 class Errors extends Controller
 {
-    public function show404(string $message)
+    public function show404(string $message): string
     {
         return $message;
     }
