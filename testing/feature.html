@@ -315,12 +315,13 @@ staging you must always ensure that <code class="docutils literal notranslate"><
 are called if you implement your own methods.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">namespace</span> <span class="nx">App</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="nx">Tests\Feature</span><span class="p">;</span>
 
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestTrait</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\FeatureTestTrait</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">TestFoo</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
+<span class="k">class</span> <span class="nc">FooTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
     <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
     <span class="k">use</span> <span class="nx">FeatureTestTrait</span><span class="p">;</span>
@@ -347,12 +348,12 @@ are called if you implement your own methods.</p>
 <p>Essentially, feature tests simply allows you to call an endpoint on your application and get the results back.
 To do this, you use the <code class="docutils literal notranslate"><span class="pre">call()</span></code> method.</p>
 <ol class="arabic">
-<li><p>The first parameter is the HTTP method to use (most frequently either GET or POST).</p></li>
+<li><p>The first parameter is the HTTP method to use (most frequently either <code class="docutils literal notranslate"><span class="pre">GET</span></code> or <code class="docutils literal notranslate"><span class="pre">POST</span></code>).</p></li>
 <li><p>The second parameter is the URI path on your site to test.</p></li>
 <li><p>The third parameter <code class="docutils literal notranslate"><span class="pre">$params</span></code> accepts an array that is used to populate the
 superglobal variables for the HTTP verb you are using. So, a method of <strong>GET</strong>
-would have the <strong>$_GET</strong> variable populated, while a <strong>POST</strong> request would
-have the <strong>$_POST</strong> array populated. The <code class="docutils literal notranslate"><span class="pre">$params</span></code> is also used in
+would have the <code class="docutils literal notranslate"><span class="pre">$_GET</span></code> variable populated, while a <strong>POST</strong> request would
+have the <code class="docutils literal notranslate"><span class="pre">$_POST</span></code> array populated. The <code class="docutils literal notranslate"><span class="pre">$params</span></code> is also used in
 <a class="reference internal" href="#feature-formatting-the-request"><span class="std std-ref">Formatting the Request</span></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -361,9 +362,7 @@ included for consistency.</p>
 </div>
 </li>
 </ol>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="c1">// Get a simple page</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get a simple page</span>
 <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">);</span>
 
 <span class="c1">// Submit a form</span>
@@ -376,9 +375,7 @@ included for consistency.</p>
 <section id="shorthand-methods">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">Shorthand Methods</a><a class="headerlink" href="#shorthand-methods" title="Permalink to this heading"></a></h3>
 <p>Shorthand methods for each of the HTTP verbs exist to ease typing and make things clearer:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">put</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">patch</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
@@ -391,9 +388,7 @@ included for consistency.</p>
 <h3><a class="toc-backref" href="#id4" role="doc-backlink">Setting Different Routes</a><a class="headerlink" href="#setting-different-routes" title="Permalink to this heading"></a></h3>
 <p>You can use a custom collection of routes by passing an array of “routes” into the <code class="docutils literal notranslate"><span class="pre">withRoutes()</span></code> method. This will
 override any existing routes in the system:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$routes</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">[</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;UserController::list&#39;</span><span class="p">],</span>
 <span class="p">];</span>
 
@@ -408,9 +403,7 @@ the URI to match, and the routing destination.</p>
 <p>You can set custom session values to use during a single test with the <code class="docutils literal notranslate"><span class="pre">withSession()</span></code> method. This takes an array
 of key/value pairs that should exist within the <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> variable when this request is made, or <code class="docutils literal notranslate"><span class="pre">null</span></code> to indicate
 that the current values of <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> should be used. This is handy for testing authentication and more.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$values</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$values</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;logged_in&#39;</span> <span class="o">=&gt;</span> <span class="mi">123</span><span class="p">,</span>
 <span class="p">];</span>
 
@@ -428,9 +421,7 @@ that the current values of <code class="docutils literal notranslate"><span clas
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">Setting Headers</a><a class="headerlink" href="#setting-headers" title="Permalink to this heading"></a></h3>
 <p>You can set header values with the <code class="docutils literal notranslate"><span class="pre">withHeaders()</span></code> method. This takes an array of key/value pairs that would be
 passed as a header into the call:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;CONTENT_TYPE&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
@@ -442,9 +433,7 @@ passed as a header into the call:</p>
 <h3><a class="toc-backref" href="#id7" role="doc-backlink">Bypassing Events</a><a class="headerlink" href="#bypassing-events" title="Permalink to this heading"></a></h3>
 <p>Events are handy to use in your application, but can be problematic during testing. Especially events that are used
 to send out emails. You can tell the system to skip any event handling with the <code class="docutils literal notranslate"><span class="pre">skipEvents()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">skipEvents</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$userInfo</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">skipEvents</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$userInfo</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -456,9 +445,7 @@ This is useful when testing JSON or XML APIs so that you can set the request in 
 <p>This will take the parameters passed into <code class="docutils literal notranslate"><span class="pre">call()</span></code>, <code class="docutils literal notranslate"><span class="pre">post()</span></code>, <code class="docutils literal notranslate"><span class="pre">get()</span></code>… and assign them to the
 body of the request in the given format.</p>
 <p>This will also set the <cite>Content-Type</cite> header for your request accordingly.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="c1">// If your feature test contains this:</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// If your feature test contains this:</span>
 <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withBodyFormat</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$userInfo</span><span class="p">);</span>
 
 <span class="c1">// Your controller can then get the parameters passed in with:</span>
@@ -493,7 +480,7 @@ how to use this class to perform additional assertions and verification in your 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 31, 2024.
+      <span class="lastupdated">Last updated on Feb 02, 2024.
       </span></p>
   </div>
 
