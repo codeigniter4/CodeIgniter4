@@ -70,7 +70,7 @@ The Test Class
 ==============
 
 In order to take advantage of the additional tools provided, your tests must extend
-``CIUnitTestCase``.
+``CodeIgniter\Test\CIUnitTestCase``.
 
 There are no rules for how test files must be placed. However, we recommend that
 you establish placement rules in advance so that you can quickly understand where
