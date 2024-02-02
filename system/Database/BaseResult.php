@@ -292,9 +292,15 @@ abstract class BaseResult implements ResultInterface
     /**
      * Returns a row as a custom class instance.
      *
-     * If row doesn't exists, returns null.
+     * If the row doesn't exist, returns null.
      *
-     * @return array|null
+     * @template T of object
+     *
+     * @param         int             $n         The row number of the results
+     * @phpstan-param class-string<T> $className
+     *
+     * @return         object|null
+     * @phpstan-return T|null
      */
     public function getCustomRowObject(int $n, string $className)
     {
