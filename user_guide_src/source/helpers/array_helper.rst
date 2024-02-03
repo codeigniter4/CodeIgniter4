@@ -15,6 +15,7 @@ Loading this Helper
 This helper is loaded using the following code:
 
 .. literalinclude:: array_helper/001.php
+        :lines: 2-
 
 Available Functions
 ===================
@@ -32,21 +33,25 @@ The following functions are available:
     and allows the use of a the '*' wildcard. Given the following array:
 
     .. literalinclude:: array_helper/002.php
+        :lines: 2-
 
     We can locate the value of 'fizz' by using the search string "foo.buzz.fizz". Likewise, the value
     of baz can be found with "foo.bar.baz":
 
     .. literalinclude:: array_helper/003.php
+        :lines: 2-
 
     You can use the asterisk as a wildcard to replace any of the segments. When found, it will search through all
     of the child nodes until it finds it. This is handy if you don't know the values, or if your values
     have a numeric index:
 
     .. literalinclude:: array_helper/004.php
+        :lines: 2-
 
     If the array key contains a dot, then the key can be escaped with a backslash:
 
     .. literalinclude:: array_helper/005.php
+        :lines: 2-
 
 .. note:: Prior to v4.2.0, ``dot_array_search('foo.bar.baz', ['foo' => ['bar' => 23]])`` returned ``23``
     due to a bug. v4.2.0 and later returns ``null``.
@@ -73,17 +78,20 @@ The following functions are available:
     from, e.g., the ``find()`` function of a model:
 
     .. literalinclude:: array_helper/006.php
+        :lines: 2-
 
     Now sort this array by two keys. Note that the method supports the dot-notation
     to access values in deeper array levels, but does not support wildcards:
 
     .. literalinclude:: array_helper/007.php
+        :lines: 2-
 
     The ``$players`` array is now sorted by the 'order' value in each players'
     'team' subarray. If this value is equal for several players, these players
     will be ordered by their 'position'. The resulting array is:
 
     .. literalinclude:: array_helper/008.php
+        :lines: 2-
 
     In the same way, the method can also handle an array of objects. In the example
     above it is further possible that each 'player' is represented by an array,
@@ -101,16 +109,19 @@ The following functions are available:
     as separators for the keys.
 
     .. literalinclude:: array_helper/009.php
+        :lines: 2-
 
     On inspection, ``$flattened`` is equal to:
 
     .. literalinclude:: array_helper/010.php
+        :lines: 2-
 
     Users may use the ``$id`` parameter on their own, but are not required to do so.
     The function uses this parameter internally to track the flattened keys. If users
     will be supplying an initial ``$id``, it will be prepended to all keys.
 
     .. literalinclude:: array_helper/011.php
+        :lines: 2-
 
 .. php:function:: array_group_by(array $array, array $indexes[, bool $includeEmpty = false]): array
 
@@ -128,10 +139,13 @@ The following functions are available:
     .. literalinclude:: array_helper/012.php
     
     We want to group them first by "gender", then by "hr.department" (max depth = 2).
+        :lines: 2-
     First the result when excluding empty values:
 
     .. literalinclude:: array_helper/013.php
-    
+        :lines: 2-
+
     And here the same code, but this time we want to include empty values:
 
     .. literalinclude:: array_helper/014.php
+        :lines: 2-
