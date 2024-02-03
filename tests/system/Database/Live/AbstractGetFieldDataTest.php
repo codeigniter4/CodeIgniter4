@@ -28,6 +28,13 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
     protected Forge $forge;
     protected string $table = 'test1';
 
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        helper('array');
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -95,14 +102,12 @@ abstract class AbstractGetFieldDataTest extends CIUnitTestCase
 
     protected function assertSameFieldData(array $expected, array $actual)
     {
-        $expected = json_decode(json_encode($expected), true);
-        $names    = array_column($expected, 'name');
-        array_multisort($names, SORT_ASC, $expected);
+        $expectedArray = json_decode(json_encode($expected), true);
+        array_sort_by_multiple_keys($expectedArray, ['name' => SORT_ASC]);
 
-        $fields = json_decode(json_encode($actual), true);
-        $names  = array_column($fields, 'name');
-        array_multisort($names, SORT_ASC, $fields);
+        $fieldsArray = json_decode(json_encode($actual), true);
+        array_sort_by_multiple_keys($fieldsArray, ['name' => SORT_ASC]);
 
-        $this->assertSame($expected, $fields);
+        $this->assertSame($expectedArray, $fieldsArray);
     }
 }
