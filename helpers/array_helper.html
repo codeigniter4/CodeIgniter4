@@ -297,9 +297,7 @@ any of the existing functionality that PHP provides - unless it is to vastly sim
 <section id="loading-this-helper">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this heading"></a></h2>
 <p>This helper is loaded using the following code:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;array&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;array&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -324,10 +322,8 @@ any of the existing functionality that PHP provides - unless it is to vastly sim
 </dd>
 </dl>
 <p>This method allows you to use dot-notation to search through an array for a specific-key,
-and allows the use of a the ‘*’ wildcard. Given the following array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+and allows the use of a the <code class="docutils literal notranslate"><span class="pre">*</span></code> wildcard. Given the following array:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;buzz&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;fizz&#39;</span> <span class="o">=&gt;</span> <span class="mi">11</span><span class="p">,</span>
@@ -339,30 +335,24 @@ and allows the use of a the ‘*’ wildcard. Given the following array:</p>
 <span class="p">];</span>
 </pre></div>
 </div>
-<p>We can locate the value of ‘fizz’ by using the search string “foo.buzz.fizz”. Likewise, the value
-of baz can be found with “foo.bar.baz”:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="c1">// Returns: 11</span>
+<p>We can locate the value of <code class="docutils literal notranslate"><span class="pre">fizz</span></code> by using the search string <code class="docutils literal notranslate"><span class="pre">foo.buzz.fizz</span></code>. Likewise, the value
+of <code class="docutils literal notranslate"><span class="pre">baz</span></code> can be found with <code class="docutils literal notranslate"><span class="pre">foo.bar.baz</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Returns: 11</span>
 <span class="nv">$fizz</span> <span class="o">=</span> <span class="nx">dot_array_search</span><span class="p">(</span><span class="s1">&#39;foo.buzz.fizz&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 
 <span class="c1">// Returns: 23</span>
 <span class="nv">$baz</span> <span class="o">=</span> <span class="nx">dot_array_search</span><span class="p">(</span><span class="s1">&#39;foo.bar.baz&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You can use the asterisk as a wildcard to replace any of the segments. When found, it will search through all
+<p>You can use the asterisk (<code class="docutils literal notranslate"><span class="pre">*</span></code>) as a wildcard to replace any of the segments. When found, it will search through all
 of the child nodes until it finds it. This is handy if you don’t know the values, or if your values
 have a numeric index:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="c1">// Returns: 23</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Returns: 23</span>
 <span class="nv">$baz</span> <span class="o">=</span> <span class="nx">dot_array_search</span><span class="p">(</span><span class="s1">&#39;foo.*.baz&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>If the array key contains a dot, then the key can be escaped with a backslash:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<p>If the array key contains a dot (<code class="docutils literal notranslate"><span class="pre">.</span></code>), then the key can be escaped with a backslash (<code class="docutils literal notranslate"><span class="pre">\</span></code>):</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;bar.baz&#39;</span> <span class="o">=&gt;</span> <span class="mi">23</span><span class="p">,</span>
     <span class="p">],</span>
@@ -425,9 +415,7 @@ sort flags as an associative array.</p></li>
 <p>This method sorts the elements of a multidimensional array by the values of one or
 more keys in a hierarchical way. Take the following array, that might be returned
 from, e.g., the <code class="docutils literal notranslate"><span class="pre">find()</span></code> function of a model:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$players</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$players</span> <span class="o">=</span> <span class="p">[</span>
     <span class="mi">0</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
         <span class="s1">&#39;team_id&#39;</span>  <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
@@ -460,20 +448,16 @@ from, e.g., the <code class="docutils literal notranslate"><span class="pre">fin
 </div>
 <p>Now sort this array by two keys. Note that the method supports the dot-notation
 to access values in deeper array levels, but does not support wildcards:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nx">array_sort_by_multiple_keys</span><span class="p">(</span><span class="nv">$players</span><span class="p">,</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">array_sort_by_multiple_keys</span><span class="p">(</span><span class="nv">$players</span><span class="p">,</span> <span class="p">[</span>
     <span class="s1">&#39;team.order&#39;</span> <span class="o">=&gt;</span> <span class="nx">SORT_ASC</span><span class="p">,</span>
     <span class="s1">&#39;position&#39;</span>   <span class="o">=&gt;</span> <span class="nx">SORT_ASC</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">$players</span></code> array is now sorted by the ‘order’ value in each players’
-‘team’ subarray. If this value is equal for several players, these players
-will be ordered by their ‘position’. The resulting array is:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$players</span> <span class="o">=</span> <span class="p">[</span>
+<p>The <code class="docutils literal notranslate"><span class="pre">$players</span></code> array is now sorted by the <code class="docutils literal notranslate"><span class="pre">order</span></code> value in each players’
+<code class="docutils literal notranslate"><span class="pre">team</span></code> subarray. If this value is equal for several players, these players
+will be ordered by their <code class="docutils literal notranslate"><span class="pre">position</span></code>. The resulting array is:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$players</span> <span class="o">=</span> <span class="p">[</span>
     <span class="mi">0</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;Frank&#39;</span><span class="p">,</span>
         <span class="s1">&#39;team_id&#39;</span>  <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
@@ -505,8 +489,8 @@ will be ordered by their ‘position’. The resulting array is:</p>
 </pre></div>
 </div>
 <p>In the same way, the method can also handle an array of objects. In the example
-above it is further possible that each ‘player’ is represented by an array,
-while the ‘teams’ are objects. The method will detect the type of elements in
+above it is further possible that each <code class="docutils literal notranslate"><span class="pre">player</span></code> is represented by an array,
+while the <code class="docutils literal notranslate"><span class="pre">teams</span></code> are objects. The method will detect the type of elements in
 each nesting level and handle it accordingly.</p>
 </dd></dl>
 
@@ -529,9 +513,7 @@ each nesting level and handle it accordingly.</p>
 </dl>
 <p>This function flattens a multidimensional array to a single key-value array by using dots
 as separators for the keys.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$arrayToFlatten</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$arrayToFlatten</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;personal&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;first_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john&#39;</span><span class="p">,</span>
         <span class="s1">&#39;last_name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;smith&#39;</span><span class="p">,</span>
@@ -545,9 +527,7 @@ as separators for the keys.</p>
 </pre></div>
 </div>
 <p>On inspection, <code class="docutils literal notranslate"><span class="pre">$flattened</span></code> is equal to:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
     <span class="s1">&#39;personal.first_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john&#39;</span><span class="p">,</span>
     <span class="s1">&#39;personal.last_name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;smith&#39;</span><span class="p">,</span>
     <span class="s1">&#39;personal.age&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;26&#39;</span><span class="p">,</span>
@@ -559,9 +539,7 @@ as separators for the keys.</p>
 <p>Users may use the <code class="docutils literal notranslate"><span class="pre">$id</span></code> parameter on their own, but are not required to do so.
 The function uses this parameter internally to track the flattened keys. If users
 will be supplying an initial <code class="docutils literal notranslate"><span class="pre">$id</span></code>, it will be prepended to all keys.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="c1">// using the same data from above</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// using the same data from above</span>
 <span class="nv">$flattened</span> <span class="o">=</span> <span class="nx">array_flatten_with_dots</span><span class="p">(</span><span class="nv">$arrayToFlatten</span><span class="p">,</span> <span class="s1">&#39;foo_&#39;</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * $flattened is now:</span>
@@ -598,9 +576,7 @@ will be supplying an initial <code class="docutils literal notranslate"><span cl
 <p>This function allows you to group data rows together by index values.
 The depth of returned array equals the number of indexes passed as parameter.</p>
 <p>The example shows some data (i.e. loaded from an API) with nested arrays.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$employees</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$employees</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">[</span>
         <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
         <span class="s1">&#39;first_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Urbano&#39;</span><span class="p">,</span>
@@ -694,11 +670,9 @@ The depth of returned array equals the number of indexes passed as parameter.</p
 <span class="p">];</span>
 </pre></div>
 </div>
-<p>We want to group them first by “gender”, then by “hr.department” (max depth = 2).
+<p>We want to group them first by <code class="docutils literal notranslate"><span class="pre">gender</span></code>, then by <code class="docutils literal notranslate"><span class="pre">hr.department</span></code> (max depth = 2).
 First the result when excluding empty values:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$result</span> <span class="o">=</span> <span class="nx">array_group_by</span><span class="p">(</span><span class="nv">$employees</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;hr.department&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span> <span class="o">=</span> <span class="nx">array_group_by</span><span class="p">(</span><span class="nv">$employees</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;hr.department&#39;</span><span class="p">]);</span>
 
 <span class="nv">$result</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;Male&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
@@ -780,9 +754,7 @@ First the result when excluding empty values:</p>
 </pre></div>
 </div>
 <p>And here the same code, but this time we want to include empty values:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$result</span> <span class="o">=</span> <span class="nx">array_group_by</span><span class="p">(</span><span class="nv">$employees</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;hr.department&#39;</span><span class="p">],</span> <span class="k">true</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span> <span class="o">=</span> <span class="nx">array_group_by</span><span class="p">(</span><span class="nv">$employees</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;hr.department&#39;</span><span class="p">],</span> <span class="k">true</span><span class="p">);</span>
 
 <span class="nv">$result</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
@@ -913,7 +885,7 @@ First the result when excluding empty values:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 02, 2024.
+      <span class="lastupdated">Last updated on Feb 03, 2024.
       </span></p>
   </div>
 
