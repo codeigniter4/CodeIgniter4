@@ -163,10 +163,25 @@ $allowEmptyInserts
 .. versionadded:: 4.3.0
 
 Whether to allow inserting empty data. The default value is ``false``, meaning
-that if you try to insert empty data, an exception with
+that if you try to insert empty data, ``DataException`` with
 "There is no data to insert." will raise.
 
 You may also change this setting with the :ref:`model-allow-empty-inserts` method.
+
+.. _model-update-only-changed:
+
+$updateOnlyChanged
+------------------
+
+.. versionadded:: 4.5.0
+
+Whether to update :doc:`Entity <./entities>`'s only changed fields. The default
+value is ``true``, meaning that only changed field data is used when updating to
+the database. So if you try to update an Entity without changes, ``DataException``
+with "There is no data to update." will raise.
+
+Setting this property to ``false`` will ensure that all allowed fields of an Entity
+are submitted to the database and updated at any time.
 
 Dates
 -----

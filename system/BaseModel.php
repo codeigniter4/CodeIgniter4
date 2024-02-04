@@ -66,6 +66,13 @@ abstract class BaseModel
     public $pager;
 
     /**
+     * Database Connection
+     *
+     * @var BaseConnection
+     */
+    protected $db;
+
+    /**
      * Last insert ID
      *
      * @var int|string
@@ -89,13 +96,20 @@ abstract class BaseModel
     protected $returnType = 'array';
 
     /**
-     * If this model should use "softDeletes" and
-     * simply set a date when rows are deleted, or
-     * do hard deletes.
+     * Used by asArray() and asObject() to provide
+     * temporary overrides of model default.
+     *
+     * @var string
+     */
+    protected $tempReturnType;
+
+    /**
+     * Whether we should limit fields in inserts
+     * and updates to those available in $allowedFields or not.
      *
      * @var bool
      */
-    protected $useSoftDeletes = false;
+    protected $protectFields = true;
 
     /**
      * An array of field names that are allowed
@@ -138,6 +152,15 @@ abstract class BaseModel
     protected $updatedField = 'updated_at';
 
     /**
+     * If this model should use "softDeletes" and
+     * simply set a date when rows are deleted, or
+     * do hard deletes.
+     *
+     * @var bool
+     */
+    protected $useSoftDeletes = false;
+
+    /**
      * Used by withDeleted to override the
      * model's softDelete setting.
      *
@@ -153,27 +176,14 @@ abstract class BaseModel
     protected $deletedField = 'deleted_at';
 
     /**
-     * Used by asArray and asObject to provide
-     * temporary overrides of model default.
-     *
-     * @var string
+     * Whether to allow inserting empty data.
      */
-    protected $tempReturnType;
+    protected bool $allowEmptyInserts = false;
 
     /**
-     * Whether we should limit fields in inserts
-     * and updates to those available in $allowedFields or not.
-     *
-     * @var bool
+     * Whether to update Entity's only changed data.
      */
-    protected $protectFields = true;
-
-    /**
-     * Database Connection
-     *
-     * @var BaseConnection
-     */
-    protected $db;
+    protected bool $updateOnlyChanged = true;
 
     /**
      * Rules used to validate data in insert, update, and save methods.
@@ -326,11 +336,6 @@ abstract class BaseModel
      * @var array
      */
     protected $afterDelete = [];
-
-    /**
-     * Whether to allow inserting empty data.
-     */
-    protected bool $allowEmptyInserts = false;
 
     public function __construct(?ValidationInterface $validation = null)
     {
@@ -1794,9 +1799,15 @@ abstract class BaseModel
         // properties representing the collection elements, we need to grab
         // them as an array.
         if (is_object($row) && ! $row instanceof stdClass) {
+            if ($type === 'update' && ! $this->updateOnlyChanged) {
+                $onlyChanged = false;
+            }
             // If it validates with entire rules, all fields are needed.
-            $onlyChanged = ($this->skipValidation === false && $this->cleanValidationRules === false)
-                ? false : ($type === 'update');
+            elseif ($this->skipValidation === false && $this->cleanValidationRules === false) {
+                $onlyChanged = false;
+            } else {
+                $onlyChanged = ($type === 'update');
+            }
 
             $row = $this->objectToArray($row, $onlyChanged, true);
         }

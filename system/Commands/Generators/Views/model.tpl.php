@@ -18,6 +18,7 @@ class {class} extends Model
     protected $allowedFields    = [];
 
     protected bool $allowEmptyInserts = false;
+    protected bool $updateOnlyChanged = true;
 
     // Dates
     protected $useTimestamps = false;
