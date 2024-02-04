@@ -175,9 +175,9 @@ final class ControllerTestTraitTest extends CIUnitTestCase
             ->controller(Popcorn::class)
             ->execute('weasel');
 
-        $body = $result->response()->getBody(); // empty
-        $this->assertEmpty($body);
-        $this->assertFalse($result->isOK());
+        $body = $result->response()->getBody(); // empty string as JSON
+        $this->assertSame('""', $body);
+        $this->assertTrue($result->isOK());
     }
 
     public function testRedirect(): void

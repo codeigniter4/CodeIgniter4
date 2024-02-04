@@ -155,6 +155,20 @@ reversed.
         Previous: route1 → route2 → filter1 → filter2
              Now: route2 → route1 → filter2 → filter1
 
+.. _upgrade-450-api-response-trait:
+
+API\\ResponseTrait and String Data
+==================================
+
+In previous versions, if you pass string data to a trait method, the framework
+returned an HTML response, even if the response format was determined to be JSON.
+
+Now if you pass string data, it returns a JSON response correctly. See also
+:ref:`api-response-trait-handling-response-types`.
+
+You can keep the behavior in previous versions if you set the ``$stringAsHtml``
+property to ``true`` in your controller.
+
 FileLocator::findQualifiedNameFromPath()
 ========================================
 
