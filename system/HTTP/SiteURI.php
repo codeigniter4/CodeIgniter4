@@ -369,8 +369,10 @@ class SiteURI extends URI
     /**
      * For base_url() helper.
      *
-     * @param array|string $relativePath URI string or array of URI segments
-     * @param string|null  $scheme       URI scheme. E.g., http, ftp
+     * @param array|string $relativePath URI string or array of URI segments.
+     * @param string|null  $scheme       URI scheme. E.g., http, ftp. If empty
+     *                                   string '' is set, a protocol-relative
+     *                                   link is returned.
      */
     public function baseUrl($relativePath = '', ?string $scheme = null): string
     {
@@ -406,9 +408,11 @@ class SiteURI extends URI
     /**
      * For site_url() helper.
      *
-     * @param array|string $relativePath URI string or array of URI segments
-     * @param string|null  $scheme       URI scheme. E.g., http, ftp
-     * @param App|null     $config       Alternate configuration to use
+     * @param array|string $relativePath URI string or array of URI segments.
+     * @param string|null  $scheme       URI scheme. E.g., http, ftp. If empty
+     *                                   string '' is set, a protocol-relative
+     *                                   link is returned.
+     * @param App|null     $config       Alternate configuration to use.
      */
     public function siteUrl($relativePath = '', ?string $scheme = null, ?App $config = null): string
     {
