@@ -952,7 +952,10 @@ class CodeIgniter
                 $this->method     = $override[1];
 
                 $controller = $this->createController();
-                $returned   = $this->runController($controller);
+
+                $returned = $controller->{$this->method}($e->getMessage());
+
+                $this->benchmark->stop('controller');
             }
 
             unset($override);
