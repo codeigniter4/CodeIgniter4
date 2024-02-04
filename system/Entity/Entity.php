@@ -374,6 +374,7 @@ class Entity implements JsonSerializable
     protected function castAs($value, string $attribute, string $method = 'get')
     {
         return $this->dataCaster
+            // @TODO if $casts is readonly, we don't need the setTypes() method.
             ->setTypes($this->casts)
             ->castAs($value, $attribute, $method);
     }

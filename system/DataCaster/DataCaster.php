@@ -98,9 +98,11 @@ final class DataCaster
     /**
      * This method is only for Entity.
      *
+     * @TODO if Entity::$casts is readonly, we don't need this method.
+     *
      * @param array<string, string> $types [field => type]
      *
-     * $return $this
+     * @return $this
      *
      * @internal
      */
