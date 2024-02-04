@@ -183,6 +183,17 @@ with "There is no data to update." will raise.
 Setting this property to ``false`` will ensure that all allowed fields of an Entity
 are submitted to the database and updated at any time.
 
+$casts
+------
+
+.. versionadded:: 4.5.0
+
+This allows you to convert data retrieved from a database into the appropriate
+PHP type.
+This option should be an array where the key is the name of the field, and the
+value is the data type. See :ref:`model-field-casting` for details.
+>>>>>>> 202e3568ce (docs: add docs)
+
 Dates
 -----
 
@@ -293,6 +304,78 @@ $afterUpdateBatch
 
 These arrays allow you to specify callback methods that will be run on the data at the
 time specified in the property name. See :ref:`model-events`.
+
+.. _model-field-casting:
+
+Model Field Casting
+*******************
+
+.. versionadded:: 4.5.0
+
+When retrieving data from a database, data of integer type may be converted to
+string type in PHP. You may also want to convert date/time data into a Time
+object in PHP.
+
+Model Field Casting allows you to convert data retrieved from a database into
+the appropriate PHP type.
+
+.. important::
+    If you use this feature with the :doc:`Entity <./entities>`, do not use
+    :ref:`Entity Property Casting <entities-property-casting>`. Using both casting
+    at the same time does not work.
+
+    Entity Property Casting works at (1)(4), but this casting works at (2)(3)::
+
+        [App Code] --- (1) --> [Entity] --- (2) --> [Database]
+        [App Code] <-- (4) --- [Entity] <-- (3) --- [Database]
+
+    When using this casting, Entity will have correct typed PHP values in the
+    attributes. This behavior is completely different from the previous behavior.
+    Do not expect the attributes hold raw data from database.
+
+Defining Data Types
+===================
+
+The ``$casts`` property sets its definition. This option should be an array
+where the key is the name of the field, and the value is the data type:
+
+.. literalinclude:: model/057.php
+
+Data Types
+==========
+
+The following types are provided by default. Add a question mark at the beginning
+of type to mark the field as nullable, i.e., ``?int``, ``?datetime``.
+
++---------------+----------------+---------------------------+
+| Type          | PHP Value Type | DB Column Type            |
++===============+================+===========================+
+|``int``        | int            | int type                  |
++---------------+----------------+---------------------------+
+|``float``      | float          | float (numeric) type      |
++---------------+----------------+---------------------------+
+|``bool``       | bool           | bool/int/string type      |
++---------------+----------------+---------------------------+
+|``int-bool``   | bool           | int type (1 or 0)         |
++---------------+----------------+---------------------------+
+|``array``      | array          | string type (serialized)  |
++---------------+----------------+---------------------------+
+|``csv``        | array          | string type (CSV)         |
++---------------+----------------+---------------------------+
+|``json``       | stdClass       | json/string type          |
++---------------+----------------+---------------------------+
+|``json-array`` | array          | json/string type          |
++---------------+----------------+---------------------------+
+|``datetime``   | Time           | datetime type             |
++---------------+----------------+---------------------------+
+|``timestamp``  | Time           | int type (UNIX timestamp) |
++---------------+----------------+---------------------------+
+|``uri``        | URI            | string type               |
++---------------+----------------+---------------------------+
+
+.. note:: Casting as ``csv`` uses PHP's internal ``implode()`` and ``explode()``
+    functions and assumes all values are string-safe and free of commas. For more
+    complex data casts try ``array`` or ``json``.
 
 Working with Data
 *****************
