@@ -373,9 +373,17 @@ of type to mark the field as nullable, i.e., ``?int``, ``?datetime``.
 |``uri``        | URI            | string type               |
 +---------------+----------------+---------------------------+
 
-.. note:: Casting as ``csv`` uses PHP's internal ``implode()`` and ``explode()``
-    functions and assumes all values are string-safe and free of commas. For more
-    complex data casts try ``array`` or ``json``.
+csv
+---
+
+Casting as ``csv`` uses PHP's internal ``implode()`` and ``explode()`` functions
+and assumes all values are string-safe and free of commas. For more complex data
+casts try ``array`` or ``json``.
+
+datetime
+--------
+
+You can set the datetime format like ``datetime[Y-m-d H:i:s.v]``.
 
 Working with Data
 *****************
