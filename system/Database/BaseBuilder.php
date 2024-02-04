@@ -1968,7 +1968,7 @@ class BaseBuilder
     /**
      * Generates a platform-specific upsertBatch string from the supplied data
      *
-     * @used-by batchExecute
+     * @used-by batchExecute()
      *
      * @param string                 $table  Protected table name
      * @param list<string>           $keys   QBKeys
@@ -2195,7 +2195,7 @@ class BaseBuilder
     /**
      * Generates a platform-specific insert string from the supplied data.
      *
-     * @used-by batchExecute
+     * @used-by batchExecute()
      *
      * @param string                 $table  Protected table name
      * @param list<string>           $keys   QBKeys
@@ -2563,7 +2563,7 @@ class BaseBuilder
     /**
      * Generates a platform-specific batch update string from the supplied data
      *
-     * @used-by batchExecute
+     * @used-by batchExecute()
      *
      * @param string                 $table  Protected table name
      * @param list<string>           $keys   QBKeys
@@ -2825,7 +2825,7 @@ class BaseBuilder
     /**
      * Generates a platform-specific batch update string from the supplied data
      *
-     * @used-by batchExecute
+     * @used-by batchExecute()
      *
      * @param string       $table Protected table name
      * @param list<string> $keys  QBKeys

@@ -315,7 +315,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific batch update string from the supplied data
      *
-     * @used-by batchExecute
+     * @used-by batchExecute()
      *
      * @param string                 $table  Protected table name
      * @param list<string>           $keys   QBKeys
