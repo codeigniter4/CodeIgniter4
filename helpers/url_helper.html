@@ -306,9 +306,9 @@
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$uri</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string</span></code></span>) – URI string or array of URI segments</p></li>
-<li><p><strong>$protocol</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Protocol, e.g., ‘http’ or ‘https’</p></li>
-<li><p><strong>$altConfig</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">\Config\App</span></code></span>) – Alternate configuration to use</p></li>
+<li><p><strong>$uri</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string</span></code></span>) – URI string or array of URI segments.</p></li>
+<li><p><strong>$protocol</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Protocol, e.g., ‘http’ or ‘https’. If empty string ‘’ is set, a protocol-relative link is returned.</p></li>
+<li><p><strong>$altConfig</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">\Config\App</span></code></span>) – Alternate configuration to use.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -357,8 +357,8 @@ We use this for unit testing the framework itself.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$uri</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string</span></code></span>) – URI string or array of URI segments</p></li>
-<li><p><strong>$protocol</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Protocol, e.g., ‘http’ or ‘https’</p></li>
+<li><p><strong>$uri</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string</span></code></span>) – URI string or array of URI segments.</p></li>
+<li><p><strong>$protocol</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Protocol, e.g., ‘http’ or ‘https’. If empty string ‘’ is set, a protocol-relative link is returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -391,11 +391,20 @@ the <code class="docutils literal notranslate"><span class="pre">Config\App::$in
 an array. Here is a string example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="c1">// Returns like `http://example.com/blog/post/123`</span>
 <span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s1">&#39;blog/post/123&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above example would return something like:
 <strong>http://example.com/blog/post/123</strong></p>
+<p>If you pass an empty string <code class="docutils literal notranslate"><span class="pre">''</span></code> as the second parameter, it returns
+the protocol-relative link:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Returns like `//example.com/blog/post/123`</span>
+<span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s1">&#39;blog/post/123&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
 <p>This is useful because unlike <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you can supply a
 string to a file, such as an image or stylesheet. For example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
