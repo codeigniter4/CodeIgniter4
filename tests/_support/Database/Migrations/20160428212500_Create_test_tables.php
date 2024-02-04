@@ -85,7 +85,8 @@ class Migration_Create_test_tables extends Migration
         if ($this->db->DBDriver === 'Postgre') {
             unset(
                 $dataTypeFields['type_real'],
-                $dataTypeFields['type_decimal']
+                $dataTypeFields['type_decimal'],
+                $dataTypeFields['type_enum'],
             );
         }
 
@@ -95,7 +96,6 @@ class Migration_Create_test_tables extends Migration
 
         if ($this->db->DBDriver === 'Postgre' || $this->db->DBDriver === 'SQLSRV') {
             unset(
-                $dataTypeFields['type_enum'],
                 $dataTypeFields['type_set'],
                 $dataTypeFields['type_mediumtext'],
                 $dataTypeFields['type_double'],

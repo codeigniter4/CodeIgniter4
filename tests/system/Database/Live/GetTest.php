@@ -188,7 +188,8 @@ final class GetTest extends CIUnitTestCase
             $this->assertNull($typeTest[10]->type_name);  // DATETIME
             $this->assertSame('bigint', $typeTest[11]->type_name); // BIGINT
             $this->assertSame('real', $typeTest[12]->type_name);  // REAL
-            $this->assertSame('decimal', $typeTest[13]->type_name);  // DECIMAL
+            $this->assertSame('varchar', $typeTest[13]->type_name);  // ENUM
+            $this->assertSame('decimal', $typeTest[14]->type_name);  // DECIMAL
         }
     }
 
