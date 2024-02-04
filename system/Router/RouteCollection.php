@@ -16,6 +16,7 @@ namespace CodeIgniter\Router;
 use Closure;
 use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\HTTP\Method;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
 use Config\Modules;
@@ -90,7 +91,7 @@ class RouteCollection implements RouteCollectionInterface
      * A callable that will be shown
      * when the route cannot be matched.
      *
-     * @var Closure|string
+     * @var (Closure(string): (ResponseInterface|string|void))|string
      */
     protected $override404;
 
@@ -492,7 +493,7 @@ class RouteCollection implements RouteCollectionInterface
      * Returns the 404 Override setting, which can be null, a closure
      * or the controller/string.
      *
-     * @return Closure|string|null
+     * @return (Closure(string): (ResponseInterface|string|void))|string|null
      */
     public function get404Override()
     {
@@ -667,7 +668,7 @@ class RouteCollection implements RouteCollectionInterface
      * Example:
      *      $routes->add('news', 'Posts::index');
      *
-     * @param array|Closure|string $to
+     * @param array|(Closure(mixed...): (ResponseInterface|string|void))|string $to
      */
     public function add(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -1013,7 +1014,7 @@ class RouteCollection implements RouteCollectionInterface
      * Example:
      *  $route->match( ['GET', 'POST'], 'users/(:num)', 'users/$1);
      *
-     * @param array|Closure|string $to
+     * @param array|(Closure(mixed...): (ResponseInterface|string|void))|string $to
      */
     public function match(array $verbs = [], string $from = '', $to = '', ?array $options = null): RouteCollectionInterface
     {
@@ -1045,7 +1046,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to GET requests.
      *
-     * @param array|Closure|string $to
+     * @param array|(Closure(mixed...): (ResponseInterface|string|void))|string $to
      */
     public function get(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -1057,7 +1058,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to POST requests.
      *
-     * @param array|Closure|string $to
+     * @param array|(Closure(mixed...): (ResponseInterface|string|void))|string $to
      */
     public function post(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -1069,7 +1070,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to PUT requests.
      *
-     * @param array|Closure|string $to
+     * @param array|(Closure(mixed...): (ResponseInterface|string|void))|string $to
      */
     public function put(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -1081,7 +1082,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to DELETE requests.
      *
-     * @param array|Closure|string $to
+     * @param array|(Closure(mixed...): (ResponseInterface|string|void))|string $to
      */
     public function delete(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -1093,7 +1094,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to HEAD requests.
      *
-     * @param array|Closure|string $to
+     * @param array|(Closure(mixed...): (ResponseInterface|string|void))|string $to
      */
     public function head(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -1105,7 +1106,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to PATCH requests.
      *
-     * @param array|Closure|string $to
+     * @param array|(Closure(mixed...): (ResponseInterface|string|void))|string $to
      */
     public function patch(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -1117,7 +1118,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to OPTIONS requests.
      *
-     * @param array|Closure|string $to
+     * @param array|(Closure(mixed...): (ResponseInterface|string|void))|string $to
      */
     public function options(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -1129,7 +1130,7 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Specifies a route that is only available to command-line requests.
      *
-     * @param array|Closure|string $to
+     * @param array|(Closure(mixed...): (ResponseInterface|string|void))|string $to
      */
     public function cli(string $from, $to, ?array $options = null): RouteCollectionInterface
     {
@@ -1433,7 +1434,7 @@ class RouteCollection implements RouteCollectionInterface
      * the request method(s) that this route will work for. They can be separated
      * by a pipe character "|" if there is more than one.
      *
-     * @param array|Closure|string $to
+     * @param array|(Closure(mixed...): (ResponseInterface|string|void))|string $to
      *
      * @return void
      */
@@ -1801,7 +1802,7 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     /**
-     * @param Closure|string $handler Handler
+     * @param (Closure(mixed...): (ResponseInterface|string|void))|string $handler Handler
      *
      * @return string|null Controller classname
      */

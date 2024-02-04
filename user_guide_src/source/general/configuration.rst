@@ -224,14 +224,15 @@ Since v4.1.5, you can also write with underscores::
 Environment Variables as Replacements for Data
 ==============================================
 
-It is very important to always remember that environment variables contained in your **.env** are
-**only replacements for existing data**.
+It is very important to always remember that environment variables contained in
+your **.env** are **only replacements for existing scalar values**.
 
-Simply put, you can change only the property value that exists in the Config class
-by setting it in your **.env**.
+Simply put, you can change only the property's scalar value that exists in the
+Config class by setting it in your **.env**.
 
-You cannot add a property that is not defined in the Config class, nor can you
-change it to an array if the value of the defined property is a scalar.
+    1. You cannot add a property that is not defined in the Config class.
+    2. You cannot change a scalar value in a property to an array.
+    3. You cannot add an element to an existing array.
 
 For example, you cannot just put ``app.myNewConfig = foo`` in your **.env** and
 expect your ``Config\App`` to magically have that property and value at run time.
