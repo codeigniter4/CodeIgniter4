@@ -33,6 +33,8 @@ final class DataConverter
 
     /**
      * @param array<string, class-string> $castHandlers Custom convert handlers
+     *
+     * @internal
      */
     public function __construct(
         /**
@@ -64,6 +66,8 @@ final class DataConverter
      * Converts data from DataSource to PHP array with specified type values.
      *
      * @param array<string, mixed> $data DataSource data
+     *
+     * @internal
      */
     public function fromDataSource(array $data): array
     {
@@ -80,6 +84,8 @@ final class DataConverter
      * Converts PHP array to data for DataSource field types.
      *
      * @param array<string, mixed> $phpData PHP data
+     *
+     * @internal
      */
     public function toDataSource(array $phpData): array
     {
@@ -100,6 +106,8 @@ final class DataConverter
      * @param         array<string, mixed>  $row       Raw data from database
      *
      * @phpstan-return TEntity
+     *
+     * @internal
      */
     public function reconstruct(string $classname, array $row): object
     {
@@ -148,6 +156,8 @@ final class DataConverter
      *                          entities will be cast as array as well.
      *
      * @return array<string, mixed>
+     *
+     * @internal
      */
     public function extract(object $object, bool $onlyChanged = false, bool $recursive = false): array
     {

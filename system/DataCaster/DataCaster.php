@@ -67,6 +67,8 @@ final class DataCaster
     /**
      * @param array<string, class-string>|null $castHandlers Custom convert handlers
      * @param array<string, string>|null       $types        [field => type]
+     *
+     * @internal
      */
     public function __construct(
         ?array $castHandlers = null,
@@ -101,6 +103,8 @@ final class DataCaster
      * @param array<string, string> $types [field => type]
      *
      * $return $this
+     *
+     * @internal
      */
     public function setTypes(array $types): static
     {
@@ -118,6 +122,8 @@ final class DataCaster
      * @param         string      $field  The field name
      * @param         string      $method Allowed to "get" and "set"
      * @phpstan-param 'get'|'set' $method
+     *
+     * @internal
      */
     public function castAs(mixed $value, string $field, string $method = 'get'): mixed
     {
