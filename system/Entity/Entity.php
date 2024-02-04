@@ -360,8 +360,8 @@ class Entity implements JsonSerializable
 
     /**
      * Provides the ability to cast an item as a specific data type.
-     * Add ? at the beginning of $type  (i.e. ?string) to get NULL
-     * instead of casting $value if $value === null
+     * Add ? at the beginning of the type (i.e. ?string) to get `null`
+     * instead of casting $value when $value is null.
      *
      * @param bool|float|int|string|null $value     Attribute value
      * @param string                     $attribute Attribute name
