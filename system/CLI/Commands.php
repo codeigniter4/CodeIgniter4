@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\Autoloader\FileLocatorInterface;
+use CodeIgniter\Events\Events;
 use CodeIgniter\Log\Logger;
 use ReflectionClass;
 use ReflectionException;
@@ -51,7 +52,7 @@ class Commands
     /**
      * Runs a command given
      *
-     * @return int|void
+     * @return int|void Exit code
      */
     public function run(string $command, array $params)
     {
@@ -64,7 +65,13 @@ class Commands
         $className = $this->commands[$command]['class'];
         $class     = new $className($this->logger, $this);
 
-        return $class->run($params);
+        Events::trigger('pre_command');
+
+        $exit = $class->run($params);
+
+        Events::trigger('post_command');
+
+        return $exit;
     }
 
     /**

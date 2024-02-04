@@ -28,7 +28,7 @@ class Console
     /**
      * Runs the current command discovered on the CLI.
      *
-     * @return int|void
+     * @return int|void Exit code
      *
      * @throws Exception
      */
