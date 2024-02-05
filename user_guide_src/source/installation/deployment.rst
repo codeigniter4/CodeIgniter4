@@ -44,7 +44,7 @@ Config Caching
 ==============
 
 Caching the Config objects can improve performance. However, the cache must be
-manually deleted when changing Confiig values.
+manually deleted when changing Config values.
 
 See :ref:`factories-config-caching`.
 
