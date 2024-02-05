@@ -22,10 +22,10 @@ class App extends BaseConfig
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
      * If you want to accept multiple Hostnames, set this.
      *
-     * E.g. When your site URL ($baseURL) is 'http://example.com/', and your site
-     *      also accepts 'http://media.example.com/' and
-     *      'http://accounts.example.com/':
-     *          ['media.example.com', 'accounts.example.com']
+     * E.g.,
+     * When your site URL ($baseURL) is 'http://example.com/', and your site
+     * also accepts 'http://media.example.com/' and 'http://accounts.example.com/':
+     *     ['media.example.com', 'accounts.example.com']
      *
      * @var list<string>
      */
@@ -106,7 +106,8 @@ class App extends BaseConfig
      * The default timezone that will be used in your application to display
      * dates with the date helper, and can be retrieved through app_timezone()
      *
-     * @see https://www.php.net/manual/en/timezones.php for list of timezones supported by PHP.
+     * @see https://www.php.net/manual/en/timezones.php for list of timezones
+     *      supported by PHP.
      */
     public string $appTimezone = 'UTC';
 
