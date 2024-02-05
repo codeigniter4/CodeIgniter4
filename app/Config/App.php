@@ -48,7 +48,7 @@ class App extends BaseConfig
      * --------------------------------------------------------------------------
      *
      * This item determines which server global should be used to retrieve the
-     * URI string.  The default setting of 'REQUEST_URI' works for most servers.
+     * URI string. The default setting of 'REQUEST_URI' works for most servers.
      * If your links do not seem to work, try one of the other delicious flavors:
      *
      * 'REQUEST_URI'    Uses $_SERVER['REQUEST_URI']
