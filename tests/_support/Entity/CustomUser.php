@@ -18,6 +18,13 @@ use LogicException;
 
 /**
  * This is a custom Entity class.
+ *
+ * @property string    $country
+ * @property Time|null $created_at
+ * @property array     $email
+ * @property int       $id
+ * @property string    $name
+ * @property Time|null $updated_at
  */
 class CustomUser
 {

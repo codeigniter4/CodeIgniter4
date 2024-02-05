@@ -555,6 +555,7 @@ final class DataConverterTest extends CIUnitTestCase
             'created_at' => '2023-12-02 07:35:57',
             'updated_at' => '2023-12-02 07:35:57',
         ];
+        /** @var CustomUser $obj */
         $obj = $converter->reconstruct(CustomUser::class, $dbData);
 
         $this->assertIsInt($obj->id);
@@ -587,6 +588,7 @@ final class DataConverterTest extends CIUnitTestCase
             'created_at' => '2023-12-02 07:35:57',
             'updated_at' => '2023-12-02 07:35:57',
         ];
+        /** @var CustomUser $obj */
         $obj = $converter->reconstruct(CustomUser::class, $dbData);
 
         $this->assertIsInt($obj->id);
