@@ -385,6 +385,47 @@ datetime
 
 You can set the datetime format like ``datetime[Y-m-d H:i:s.v]``.
 
+Custom Casting
+==============
+
+You can define your own conversion types.
+
+Creating Custom Handlers
+------------------------
+
+At first you need to create a handler class for your type.
+Let's say the class will be located in the **app/Models/Cast** directory:
+
+.. literalinclude:: model/058.php
+
+If you don't need to change values when getting or setting a value. Then just
+don't implement the appropriate method:
+
+.. literalinclude:: model/060.php
+
+Registering Custom Handlers
+---------------------------
+
+Now you need to register it:
+
+.. literalinclude:: model/059.php
+
+Parameters
+----------
+
+In some cases, one type is not enough. In this situation, you can use additional
+parameters. Additional parameters are indicated in square brackets and listed
+with a comma like ``type[param1, param2]``.
+
+.. literalinclude:: model/061.php
+
+.. literalinclude:: model/062.php
+
+.. note:: If the casting type is marked as nullable like ``?bool`` and the passed
+    value is not null, then the parameter with the value ``nullable`` will be
+    passed to the casting type handler. If casting type has predefined parameters,
+    then ``nullable`` will be added to the end of the list.
+
 Working with Data
 *****************
 
