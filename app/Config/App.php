@@ -131,7 +131,7 @@ class App extends BaseConfig
      * If true, this will force every request made to this application to be
      * made via a secure connection (HTTPS). If the incoming request is not
      * secure, the user will be redirected to a secure version of the page
-     * and the HTTP Strict Transport Security header will be set.
+     * and the HTTP Strict Transport Security (HSTS) header will be set.
      */
     public bool $forceGlobalSecureRequests = false;
 
