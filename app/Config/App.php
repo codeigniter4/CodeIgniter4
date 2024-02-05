@@ -94,7 +94,7 @@ class App extends BaseConfig
      *
      * IncomingRequest::setLocale() also uses this list.
      *
-     * @var string[]
+     * @var list<string>
      */
     public array $supportedLocales = ['en'];
 
