@@ -61,7 +61,7 @@ final class DataCaster
     /**
      * Strict mode? Set to false for casts for Entity.
      */
-    private bool $strict;
+    private readonly bool $strict;
 
     /**
      * @param array<string, class-string>|null $castHandlers Custom convert handlers
