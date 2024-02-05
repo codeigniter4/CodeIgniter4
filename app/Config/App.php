@@ -36,9 +36,9 @@ class App extends BaseConfig
      * Index File
      * --------------------------------------------------------------------------
      *
-     * Typically this will be your index.php file, unless you've renamed it to
-     * something else. If you are using mod_rewrite to remove the page set this
-     * variable so that it is blank.
+     * Typically, this will be your `index.php` file, unless you've renamed it to
+     * something else. If you have configured your web server to remove this file
+     * from your site URIs, set this variable to an empty string.
      */
     public string $indexPage = 'index.php';
 
