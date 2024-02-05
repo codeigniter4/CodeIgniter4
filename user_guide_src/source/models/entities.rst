@@ -309,7 +309,7 @@ like ``type[param1, param2]``.
 
 .. literalinclude:: entities/021.php
 
-.. note:: If the casting type is marked as nullable ``?bool`` and the passed value is not null, then the parameter with
+.. note:: If the casting type is marked as nullable like ``?bool`` and the passed value is not null, then the parameter with
     the value ``nullable`` will be passed to the casting type handler.
     If casting type has predefined parameters, then ``nullable`` will be added to the end of the list.
 
