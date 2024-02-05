@@ -38,6 +38,9 @@ final class DataConverterModelTest extends LiveModelTestCase
 
         $this->assertIsInt($user['id']);
         $this->assertInstanceOf(Time::class, $user['created_at']);
+        $this->assertSame('John Smith', $user['name']);
+        // `name` is cast by custom CastBase64 handler.
+        $this->seeInDatabase('user', ['name' => 'Sm9obiBTbWl0aA==']);
     }
 
     /**

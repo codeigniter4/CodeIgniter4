@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Tests\Support\Models;
 
 use CodeIgniter\Model;
+use Tests\Support\Entity\Cast\CastBase64;
 
 class UserCastsTimestampModel extends Model
 {
@@ -23,11 +24,15 @@ class UserCastsTimestampModel extends Model
         'email',
         'country',
     ];
-    protected $casts = [
+    protected array $casts = [
         'id'         => 'int',
+        'name'       => 'base64',
         'email'      => 'json-array',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+    ];
+    protected array $castHandlers = [
+        'base64' => CastBase64::class,
     ];
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;

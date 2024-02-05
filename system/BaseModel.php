@@ -106,11 +106,18 @@ abstract class BaseModel
     protected $tempReturnType;
 
     /**
-     * Whether we should limit fields in inserts
-     * and updates to those available in $allowedFields or not.
+     * Array of column names and the type of value to cast.
+     *
      * @var array<string, string> [column => type]
      */
-    protected $casts = [];
+    protected array $casts = [];
+
+    /**
+     * Custom convert handlers.
+     *
+     * @var array<string, class-string> [type => classname]
+     */
+    protected array $castHandlers = [];
 
     protected ?DataConverter $converter = null;
 
@@ -367,7 +374,10 @@ abstract class BaseModel
     protected function createDataConverter(): void
     {
         if ($this->useCasts()) {
-            $this->converter = new DataConverter($this->casts, [], 'reconstruct');
+            $this->converter = new DataConverter(
+                $this->casts,
+                $this->castHandlers
+            );
         }
     }
 
