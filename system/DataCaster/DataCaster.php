@@ -27,7 +27,6 @@ use CodeIgniter\DataCaster\Cast\URICast;
 use CodeIgniter\Entity\Cast\CastInterface as EntityCastInterface;
 use CodeIgniter\Entity\Exceptions\CastException;
 use InvalidArgumentException;
-use TypeError;
 
 final class DataCaster
 {
@@ -147,7 +146,7 @@ final class DataCaster
             if ($this->strict) {
                 $message = 'Field "' . $field . '" is not nullable, but null was passed.';
 
-                throw new TypeError($message);
+                throw new InvalidArgumentException($message);
             }
         }
 

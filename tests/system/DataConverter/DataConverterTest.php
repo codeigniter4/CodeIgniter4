@@ -20,7 +20,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use InvalidArgumentException;
 use Tests\Support\Entity\CustomUser;
 use Tests\Support\Entity\User;
-use TypeError;
 
 /**
  * @internal
@@ -473,7 +472,7 @@ final class DataConverterTest extends CIUnitTestCase
 
     public function testInvalidValue(): void
     {
-        $this->expectException(TypeError::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
             '[CodeIgniter\DataCaster\Cast\JsonCast] Invalid value type: bool, and its value: true'
         );
@@ -513,7 +512,7 @@ final class DataConverterTest extends CIUnitTestCase
 
     public function testNotNullable(): void
     {
-        $this->expectException(TypeError::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Field "remark" is not nullable, but null was passed.');
 
         $types = [
