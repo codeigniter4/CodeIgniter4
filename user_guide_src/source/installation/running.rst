@@ -49,9 +49,10 @@ Open the **app/Config/App.php** file with a text editor.
 Configure Database Connection Settings
 ======================================
 
-If you intend to use a database, open the
-**app/Config/Database.php** file with a text editor and set your
-database settings. Alternately, these could be set in your **.env** file.
+If you intend to use a database, open the **app/Config/Database.php** file with
+a text editor and set your database settings. Alternately, these could be set in
+your **.env** file. See :ref:`Database Configuration <database-config-explanation-of-values>`
+for details.
 
 Set to Development Mode
 =======================
