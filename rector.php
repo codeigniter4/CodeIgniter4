@@ -41,6 +41,11 @@ use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
+use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
+use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\AnnotationWithValueToAttributeRector;
+use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\CoversAnnotationWithValueToAttributeRector;
+use Rector\PHPUnit\AnnotationsToAttributes\Rector\ClassMethod\DataProviderAnnotationToAttributeRector;
+use Rector\PHPUnit\AnnotationsToAttributes\Rector\ClassMethod\DependsAnnotationWithValueToAttributeRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
@@ -133,6 +138,13 @@ return static function (RectorConfig $rectorConfig): void {
         RandomFunctionRector::class,
 
         SimplifyRegexPatternRector::class,
+
+        // PHPUnit 10 (requires PHP 8.1) features
+        DataProviderAnnotationToAttributeRector::class,
+        DependsAnnotationWithValueToAttributeRector::class,
+        AnnotationWithValueToAttributeRector::class,
+        AnnotationToAttributeRector::class,
+        CoversAnnotationWithValueToAttributeRector::class,
     ]);
 
     // auto import fully qualified class names
