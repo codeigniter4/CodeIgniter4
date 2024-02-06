@@ -1027,16 +1027,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Config.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Access to an undefined property CodeIgniter\\\\Database\\\\ConnectionInterface\\:\\:\\$DBDriver\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Database/Database.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Access to an undefined property CodeIgniter\\\\Database\\\\ConnectionInterface\\:\\:\\$connID\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Database/Database.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Database/Database.php',
