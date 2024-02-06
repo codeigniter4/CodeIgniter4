@@ -26,6 +26,7 @@ use Throwable;
  * @property-read float      $connectDuration
  * @property-read float      $connectTime
  * @property-read string     $database
+ * @property-read array      $dateFormat
  * @property-read string     $DBCollat
  * @property-read bool       $DBDebug
  * @property-read string     $DBDriver
@@ -348,6 +349,19 @@ abstract class BaseConnection implements ConnectionInterface
     protected $queryClass = Query::class;
 
     /**
+     * Default Date/Time formats
+     *
+     * @var array<string, string>
+     */
+    protected array $dateFormat = [
+        'date'        => 'Y-m-d',
+        'datetime'    => 'Y-m-d H:i:s',
+        'datetime-ms' => 'Y-m-d H:i:s.v',
+        'datetime-us' => 'Y-m-d H:i:s.u',
+        'time'        => 'H:i:s',
+    ];
+
+    /**
      * Saves our connection settings.
      */
     public function __construct(array $params)
@@ -356,6 +370,10 @@ abstract class BaseConnection implements ConnectionInterface
             if (property_exists($this, $key)) {
                 $this->{$key} = $value;
             }
+        }
+
+        if (isset($params['dateFormat'])) {
+            $this->dateFormat = array_merge($this->dateFormat, $params['dateFormat']);
         }
 
         $queryClass = str_replace('Connection', 'Query', static::class);

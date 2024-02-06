@@ -184,7 +184,17 @@ Explanation of Values:
                      To enforce Foreign Key constraint, set this config item to true.
 **busyTimeout**  milliseconds (int) - Sleeps for a specified amount of time when a table is locked (``SQLite3`` only).
 **numberNative** true/false (boolean) - Whether or not to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE (``MySQLi`` only).
+**dateFormat**   The default date/time formats as PHP's `DateTime format`_.
+                 * ``date``        - date format
+                 * ``datetime``    - date and time format
+                 * ``datetime-ms`` - date and time with millisecond format
+                 * ``datetime-us`` - date and time with microsecond format
+                 * ``time``        - time format
+                 This can be used since v4.5.0, and you can get the value, e.g., ``$db->dateFormat[datetime]``.
+                 Currently, the database drivers do not use these values directly, but just provide the values.
 ================ ===========================================================================================================
+
+.. _DateTime format: https://www.php.net/manual/en/datetime.format.php
 
 .. note:: Depending on what database driver you are using (``MySQLi``, ``Postgre``,
     etc.) not all values will be needed. For example, when using ``SQLite3`` you
