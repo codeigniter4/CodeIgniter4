@@ -798,7 +798,7 @@ Let’s say the class will be located in the <strong>app/Entities/Cast</strong> 
 
 <span class="k">class</span> <span class="nc">MyEntity</span> <span class="k">extends</span> <span class="nx">Entity</span>
 <span class="p">{</span>
-    <span class="c1">// Specifying the type for the field</span>
+    <span class="c1">// Specify the type for the field</span>
     <span class="k">protected</span> <span class="nv">$casts</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;base64&#39;</span><span class="p">,</span>
     <span class="p">];</span>
@@ -845,7 +845,7 @@ like <code class="docutils literal notranslate"><span class="pre">type[param1,</
 
 <span class="k">class</span> <span class="nc">MyEntity</span> <span class="k">extends</span> <span class="nx">Entity</span>
 <span class="p">{</span>
-    <span class="c1">// Defining a type with parameters</span>
+    <span class="c1">// Define a type with parameters</span>
     <span class="k">protected</span> <span class="nv">$casts</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;some_attribute&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;class[App\SomeClass, param2, param3]&#39;</span><span class="p">,</span>
     <span class="p">];</span>
@@ -885,7 +885,7 @@ like <code class="docutils literal notranslate"><span class="pre">type[param1,</
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If the casting type is marked as nullable <code class="docutils literal notranslate"><span class="pre">?bool</span></code> and the passed value is not null, then the parameter with
+<p>If the casting type is marked as nullable like <code class="docutils literal notranslate"><span class="pre">?bool</span></code> and the passed value is not null, then the parameter with
 the value <code class="docutils literal notranslate"><span class="pre">nullable</span></code> will be passed to the casting type handler.
 If casting type has predefined parameters, then <code class="docutils literal notranslate"><span class="pre">nullable</span></code> will be added to the end of the list.</p>
 </div>
