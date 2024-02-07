@@ -44,8 +44,9 @@ interface RendererInterface
     /**
      * Sets several pieces of view data at once.
      *
-     * @param string|null $context The context to escape it for: html, css, js, url
-     *                             If 'raw', no escaping will happen
+     * @param         non-empty-string|null                     $context The context to escape it for.
+     *                                                                   If 'raw', no escaping will happen.
+     * @phpstan-param null|'html'|'js'|'css'|'url'|'attr'|'raw' $context
      *
      * @return RendererInterface
      */
@@ -54,9 +55,10 @@ interface RendererInterface
     /**
      * Sets a single piece of view data.
      *
-     * @param mixed       $value
-     * @param string|null $context The context to escape it for: html, css, js, url
-     *                             If 'raw' no escaping will happen
+     * @param         mixed                                     $value
+     * @param         non-empty-string|null                     $context The context to escape it for.
+     *                                                                   If 'raw', no escaping will happen.
+     * @phpstan-param null|'html'|'js'|'css'|'url'|'attr'|'raw' $context
      *
      * @return RendererInterface
      */

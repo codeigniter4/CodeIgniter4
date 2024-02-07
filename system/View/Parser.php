@@ -185,8 +185,9 @@ class Parser extends View
      * so that the variable is correctly handled within the
      * parsing itself, and contexts (including raw) are respected.
      *
-     * @param non-empty-string|null $context The context to escape it for: html, css, js, url, raw
-     *                                       If 'raw', no escaping will happen
+     * @param         non-empty-string|null                     $context The context to escape it for.
+     *                                                                   If 'raw', no escaping will happen.
+     * @phpstan-param null|'html'|'js'|'css'|'url'|'attr'|'raw' $context
      */
     public function setData(array $data = [], ?string $context = null): RendererInterface
     {
