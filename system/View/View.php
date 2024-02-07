@@ -261,10 +261,19 @@ class View implements RendererInterface
             $this->renderVars['view']
         );
 
-        $afterFilters = service('filters')->getFiltersClass()['after'];
+        // Check if DebugToolbar is enabled.
+        $filters              = Services::filters();
+        $requiredAfterFilters = $filters->getRequiredFilters('after')[0];
+        if (in_array('toolbar', $requiredAfterFilters, true)) {
+            $debugBarEnabled = true;
+        } else {
+            $afterFilters    = $filters->getFiltersClass()['after'];
+            $debugBarEnabled = in_array(DebugToolbar::class, $afterFilters, true);
+        }
+
         if (
-            ($this->debug && (! isset($options['debug']) || $options['debug'] === true))
-            && in_array(DebugToolbar::class, $afterFilters, true)
+            $this->debug && $debugBarEnabled
+            && (! isset($options['debug']) || $options['debug'] === true)
         ) {
             $toolbarCollectors = config(Toolbar::class)->collectors;
 
