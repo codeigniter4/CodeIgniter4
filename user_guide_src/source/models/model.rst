@@ -192,7 +192,6 @@ This allows you to convert data retrieved from a database into the appropriate
 PHP type.
 This option should be an array where the key is the name of the field, and the
 value is the data type. See :ref:`model-field-casting` for details.
->>>>>>> 202e3568ce (docs: add docs)
 
 Dates
 -----
