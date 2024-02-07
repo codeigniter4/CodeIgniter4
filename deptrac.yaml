@@ -233,6 +233,7 @@ parameters:
       - I18n
     Validation:
       - HTTP
+      - Database
     View:
       - Cache
   skip_violations:

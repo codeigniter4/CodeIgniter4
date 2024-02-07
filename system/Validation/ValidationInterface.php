@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Validation;
 
+use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\HTTP\RequestInterface;
 
 /**
@@ -24,11 +25,11 @@ interface ValidationInterface
      * Runs the validation process, returning true/false determining whether
      * validation was successful or not.
      *
-     * @param array|null  $data    The array of data to validate.
-     * @param string|null $group   The predefined group of rules to apply.
-     * @param string|null $dbGroup The database group to use.
+     * @param array|null                                 $data    The array of data to validate.
+     * @param string|null                                $group   The predefined group of rules to apply.
+     * @param array|BaseConnection|non-empty-string|null $dbGroup The database group to use.
      */
-    public function run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool;
+    public function run(?array $data = null, ?string $group = null, $dbGroup = null): bool;
 
     /**
      * Check; runs the validation process, returning true or false
