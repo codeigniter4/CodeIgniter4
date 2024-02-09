@@ -387,11 +387,7 @@ if (! function_exists('word_wrap')) {
 
             // If $temp contains data it means we had to split up an over-length
             // word into smaller chunks so we'll add it back to our current line
-            if ($temp !== '') {
-                $output .= $temp . "\n" . $line . "\n";
-            } else {
-                $output .= $line . "\n";
-            }
+            $output .= $temp !== '' ? $temp . "\n" . $line . "\n" : $line . "\n";
         }
 
         // Put our markers back
@@ -430,11 +426,7 @@ if (! function_exists('ellipsize')) {
         $beg      = mb_substr($str, 0, (int) floor($maxLength * $position));
         $position = ($position > 1) ? 1 : $position;
 
-        if ($position === 1) {
-            $end = mb_substr($str, 0, -($maxLength - mb_strlen($beg)));
-        } else {
-            $end = mb_substr($str, -($maxLength - mb_strlen($beg)));
-        }
+        $end = $position === 1 ? mb_substr($str, 0, -($maxLength - mb_strlen($beg))) : mb_substr($str, -($maxLength - mb_strlen($beg)));
 
         return $beg . $ellipsis . $end;
     }

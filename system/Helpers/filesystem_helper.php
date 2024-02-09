@@ -218,13 +218,7 @@ if (! function_exists('get_filenames')) {
                 }
 
                 if ($includeDir || ! $object->isDir()) {
-                    if ($includePath === false) {
-                        $files[] = $basename;
-                    } elseif ($includePath === null) {
-                        $files[] = str_replace($sourceDir, '', $name);
-                    } else {
-                        $files[] = $name;
-                    }
+                    $files[] = $includePath === false ? $basename : ($includePath === null ? str_replace($sourceDir, '', $name) : $name);
                 }
             }
         } catch (Throwable $e) {

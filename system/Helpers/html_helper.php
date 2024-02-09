@@ -66,14 +66,7 @@ if (! function_exists('_list')) {
         foreach ($list as $key => $val) {
             $out .= str_repeat(' ', $depth + 2) . '<li>';
 
-            if (! is_array($val)) {
-                $out .= $val;
-            } else {
-                $out .= $key
-                        . "\n"
-                        . _list($type, $val, '', $depth + 4)
-                        . str_repeat(' ', $depth + 2);
-            }
+            $out .= ! is_array($val) ? $val : $key . "\n" . _list($type, $val, '', $depth + 4) . str_repeat(' ', $depth + 2);
 
             $out .= "</li>\n";
         }
@@ -109,11 +102,7 @@ if (! function_exists('img')) {
 
         // Check for a relative URI
         if (! preg_match('#^([a-z]+:)?//#i', $src['src']) && strpos($src['src'], 'data:') !== 0) {
-            if ($indexPage === true) {
-                $img .= ' src="' . site_url($src['src']) . '"';
-            } else {
-                $img .= ' src="' . slash_item('baseURL') . $src['src'] . '"';
-            }
+            $img .= $indexPage === true ? ' src="' . site_url($src['src']) . '"' : ' src="' . slash_item('baseURL') . $src['src'] . '"';
 
             unset($src['src']);
         }
@@ -203,11 +192,7 @@ if (! function_exists('script_tag')) {
 
         foreach ($src as $k => $v) {
             if ($k === 'src' && ! preg_match('#^([a-z]+:)?//#i', $v)) {
-                if ($indexPage === true) {
-                    $script .= 'src="' . site_url($v) . '" ';
-                } else {
-                    $script .= 'src="' . slash_item('baseURL') . $v . '" ';
-                }
+                $script .= $indexPage === true ? 'src="' . site_url($v) . '" ' : 'src="' . slash_item('baseURL') . $v . '" ';
             } else {
                 // for attributes without values, like async or defer, use NULL.
                 $script .= $k . (null === $v ? ' ' : '="' . $v . '" ');
@@ -295,13 +280,7 @@ if (! function_exists('video')) {
 
         $video = '<video';
 
-        if (_has_protocol($src)) {
-            $video .= ' src="' . $src . '"';
-        } elseif ($indexPage === true) {
-            $video .= ' src="' . site_url($src) . '"';
-        } else {
-            $video .= ' src="' . slash_item('baseURL') . $src . '"';
-        }
+        $video .= _has_protocol($src) ? ' src="' . $src . '"' : ($indexPage === true ? ' src="' . site_url($src) . '"' : ' src="' . slash_item('baseURL') . $src . '"');
 
         if ($attributes !== '') {
             $video .= ' ' . $attributes;
@@ -341,13 +320,7 @@ if (! function_exists('audio')) {
 
         $audio = '<audio';
 
-        if (_has_protocol($src)) {
-            $audio .= ' src="' . $src . '"';
-        } elseif ($indexPage === true) {
-            $audio .= ' src="' . site_url($src) . '"';
-        } else {
-            $audio .= ' src="' . slash_item('baseURL') . $src . '"';
-        }
+        $audio .= _has_protocol($src) ? ' src="' . $src . '"' : ($indexPage === true ? ' src="' . site_url($src) . '"' : ' src="' . slash_item('baseURL') . $src . '"');
 
         if ($attributes !== '') {
             $audio .= ' ' . $attributes;
