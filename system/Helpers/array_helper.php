@@ -72,6 +72,7 @@ if (! function_exists('_array_search_dot')) {
             $answer = array_filter($answer, static fn ($value) => $value !== null);
 
             if ($answer !== []) {
+                // If array only has one element, we return that element for BC.
                 return count($answer) === 1 ? current($answer) : $answer;
             }
 
