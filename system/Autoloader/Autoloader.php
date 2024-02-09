@@ -61,7 +61,7 @@ class Autoloader
     /**
      * Stores namespaces as key, and path as values.
      *
-     * @var array<string, array<string>>
+     * @var array<string, list<string>>
      */
     protected $prefixes = [];
 

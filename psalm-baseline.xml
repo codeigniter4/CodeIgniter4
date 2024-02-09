@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
+<files psalm-version="5.21.1@8c473e2437be8b6a8fd8f630f0f11a16b114c494">
   <file src="app/Config/View.php">
     <UndefinedDocblockClass>
-      <code><![CDATA[array<string, ParserCallableString>]]></code>
-      <code><![CDATA[array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>]]></code>
-      <code><![CDATA[array<string, array<ParserCallableString>|ParserCallableString|ParserCallable>]]></code>
+      <code><![CDATA[array<string, list<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, list<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, parser_callable_string>]]></code>
       <code>public $filters = [];</code>
       <code>public $plugins = [];</code>
       <code>public $plugins = [];</code>
@@ -34,8 +34,8 @@
   </file>
   <file src="system/Config/View.php">
     <UndefinedDocblockClass>
-      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
-      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, list<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, list<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
       <code><![CDATA[array<string, parser_callable_string>]]></code>
       <code><![CDATA[protected $coreFilters = [
         'abs'            => '\abs',
@@ -139,8 +139,8 @@
   </file>
   <file src="system/View/Parser.php">
     <UndefinedDocblockClass>
-      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
-      <code><![CDATA[array<string, array<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, list<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
+      <code><![CDATA[array<string, list<parser_callable_string>|parser_callable_string|parser_callable>]]></code>
       <code>protected $plugins = [];</code>
       <code>protected $plugins = [];</code>
     </UndefinedDocblockClass>
@@ -180,12 +180,6 @@
       <code><![CDATA['App\Models\UserModel']]></code>
       <code><![CDATA['Config\TestRegistrar']]></code>
     </UndefinedClass>
-  </file>
-  <file src="tests/system/Database/BaseConnectionTest.php">
-    <InaccessibleProperty>
-      <code><![CDATA[$db->username]]></code>
-      <code><![CDATA[$db->username]]></code>
-    </InaccessibleProperty>
   </file>
   <file src="tests/system/Database/Live/OCI8/CallStoredProcedureTest.php">
     <UndefinedConstant>

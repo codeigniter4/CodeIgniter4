@@ -234,7 +234,7 @@ class Validation implements ValidationInterface
      *
      * @param array|bool|float|int|object|string|null $value   The data to validate.
      * @param array|string                            $rules   The validation rules.
-     * @param array<string>                           $errors  The custom error message.
+     * @param list<string>                            $errors  The custom error message.
      * @param string|null                             $dbGroup The database group to use.
      */
     public function check($value, $rules, array $errors = [], $dbGroup = null): bool
@@ -626,7 +626,7 @@ class Validation implements ValidationInterface
      *
      * @param string $group Group.
      *
-     * @return array<string> Rule group.
+     * @return list<string> Rule group.
      *
      * @throws ValidationException If group not found.
      */

@@ -41,14 +41,14 @@ abstract class BaseResult implements ResultInterface
     /**
      * Result Array
      *
-     * @var array<array>
+     * @var list<array>
      */
     public $resultArray = [];
 
     /**
      * Result Object
      *
-     * @var array<object>
+     * @var list<object>
      */
     public $resultObject = [];
 
@@ -185,7 +185,7 @@ abstract class BaseResult implements ResultInterface
             return [];
         }
 
-        if ($this->resultObject) {
+        if ($this->resultObject !== []) {
             foreach ($this->resultObject as $row) {
                 $this->resultArray[] = (array) $row;
             }
@@ -225,7 +225,7 @@ abstract class BaseResult implements ResultInterface
             return [];
         }
 
-        if ($this->resultArray) {
+        if ($this->resultArray !== []) {
             foreach ($this->resultArray as $row) {
                 $this->resultObject[] = (object) $row;
             }

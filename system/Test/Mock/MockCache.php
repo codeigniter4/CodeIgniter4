@@ -29,7 +29,7 @@ class MockCache extends BaseHandler implements CacheInterface
     /**
      * Expiration times.
      *
-     * @var ?array<int>
+     * @var ?list<int>
      */
     protected $expirations = [];
 
@@ -203,7 +203,7 @@ class MockCache extends BaseHandler implements CacheInterface
      * The information returned and the structure of the data
      * varies depending on the handler.
      *
-     * @return array<string> Keys currently present in the store
+     * @return list<string> Keys currently present in the store
      */
     public function getCacheInfo()
     {
