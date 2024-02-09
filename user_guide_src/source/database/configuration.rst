@@ -190,7 +190,7 @@ Explanation of Values:
                  * ``datetime-ms`` - date and time with millisecond format
                  * ``datetime-us`` - date and time with microsecond format
                  * ``time``        - time format
-                 This can be used since v4.5.0, and you can get the value, e.g., ``$db->dateFormat[datetime]``.
+                 This can be used since v4.5.0, and you can get the value, e.g., ``$db->dateFormat['datetime']``.
                  Currently, the database drivers do not use these values directly, but just provide the values.
 ================ ===========================================================================================================
 
