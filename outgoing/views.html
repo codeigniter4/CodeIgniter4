@@ -327,7 +327,8 @@ not read the <a class="reference internal" href="../incoming/controllers.html"><
 </section>
 <section id="displaying-a-view">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Displaying a View</a><a class="headerlink" href="#displaying-a-view" title="Permalink to this heading"></a></h2>
-<p>To load and display a particular view file you will use the following code in your controller:</p>
+<p>To load and display a particular view file you will use the <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a>
+function like following code in your controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -365,8 +366,9 @@ Add the following code:</p>
 </section>
 <section id="loading-multiple-views">
 <h2><a class="toc-backref" href="#id4" role="doc-backlink">Loading Multiple Views</a><a class="headerlink" href="#loading-multiple-views" title="Permalink to this heading"></a></h2>
-<p>CodeIgniter will intelligently handle multiple calls to <code class="docutils literal notranslate"><span class="pre">view()</span></code> from within a controller. If more than one
-call happens they will be appended together. For example, you may wish to have a header view, a menu view, a
+<p>CodeIgniter will intelligently handle multiple calls to <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a> from
+within a controller. If more than one call happens they will be appended together.</p>
+<p>For example, you may wish to have a header view, a menu view, a
 content view, and a footer view. That might look something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -417,8 +419,8 @@ example, you could load the <strong>blog_view.php</strong> file from <strong>exa
 </section>
 <section id="caching-views">
 <span id="id1"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Caching Views</a><a class="headerlink" href="#caching-views" title="Permalink to this heading"></a></h2>
-<p>You can cache a view with the <code class="docutils literal notranslate"><span class="pre">view()</span></code> function by passing a <code class="docutils literal notranslate"><span class="pre">cache</span></code> option with the number of seconds to cache
-the view for, in the third parameter:</p>
+<p>You can cache a view with the <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a> function by passing a <code class="docutils literal notranslate"><span class="pre">cache</span></code>
+option with the number of seconds to cache the view for, in the third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Cache the view for 60 seconds</span>
 <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;file_name&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;cache&#39;</span> <span class="o">=&gt;</span> <span class="mi">60</span><span class="p">]);</span>
 </pre></div>
@@ -432,8 +434,9 @@ along <code class="docutils literal notranslate"><span class="pre">cache_name</s
 </section>
 <section id="adding-dynamic-data-to-the-view">
 <h2><a class="toc-backref" href="#id8" role="doc-backlink">Adding Dynamic Data to the View</a><a class="headerlink" href="#adding-dynamic-data-to-the-view" title="Permalink to this heading"></a></h2>
-<p>Data is passed from the controller to the view by way of an array in the second parameter of the <code class="docutils literal notranslate"><span class="pre">view()</span></code> function.
-Here’s an example:</p>
+<p>Data is passed from the controller to the view by way of an array in the second
+parameter of the <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a> function.</p>
+<p>Here’s an example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;title&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
     <span class="s1">&#39;heading&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Heading&#39;</span><span class="p">,</span>
@@ -474,8 +477,9 @@ Here’s an example:</p>
 <p>Then load the page at the URL you’ve been using and you should see the variables replaced.</p>
 <section id="the-savedata-option">
 <h3><a class="toc-backref" href="#id9" role="doc-backlink">The saveData Option</a><a class="headerlink" href="#the-savedata-option" title="Permalink to this heading"></a></h3>
-<p>The data passed in is retained for subsequent calls to <code class="docutils literal notranslate"><span class="pre">view()</span></code>. If you call the function multiple times
-in a single request, you will not have to pass the desired data to each <code class="docutils literal notranslate"><span class="pre">view()</span></code>.</p>
+<p>The data passed in is retained for subsequent calls to <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a>. If you
+call the function multiple times in a single request, you will not have to pass
+the desired data to each <code class="docutils literal notranslate"><span class="pre">view()</span></code>.</p>
 <p>But this might not keep any data from “bleeding” into
 other views, potentially causing issues. If you would prefer to clean the data after one call, you can pass the <code class="docutils literal notranslate"><span class="pre">saveData</span></code> option
 into the <code class="docutils literal notranslate"><span class="pre">$option</span></code> array in the third parameter.</p>
@@ -554,7 +558,7 @@ typically be in the form of a multi-dimensional array.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 05, 2024.
+      <span class="lastupdated">Last updated on Feb 10, 2024.
       </span></p>
   </div>
 

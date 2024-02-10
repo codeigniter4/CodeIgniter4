@@ -398,14 +398,25 @@ context as the second parameter. Valid contexts are <code class="docutils litera
 <section id="view-renderer-options">
 <h3><a class="toc-backref" href="#id6" role="doc-backlink">View Renderer Options</a><a class="headerlink" href="#view-renderer-options" title="Permalink to this heading"></a></h3>
 <p>Several options can be passed to the <code class="docutils literal notranslate"><span class="pre">render()</span></code> or <code class="docutils literal notranslate"><span class="pre">renderString()</span></code> methods:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">cache</span></code> - the time in seconds, to save a view’s results; ignored for renderString()</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cache_name</span></code> - the ID used to save/retrieve a cached view result; defaults to the viewpath; ignored for <code class="docutils literal notranslate"><span class="pre">renderString()</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">saveData</span></code> - true if the view data parameters should be retained for subsequent calls</p></li>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">$options</span></code></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cache</span></code> - the time in seconds, to save a view’s results; ignored for
+<code class="docutils literal notranslate"><span class="pre">renderString()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cache_name</span></code> - the ID used to save/retrieve a cached view result; defaults
+to the <code class="docutils literal notranslate"><span class="pre">$viewPath</span></code>; ignored for <code class="docutils literal notranslate"><span class="pre">renderString()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">debug</span></code> - can be set to false to disable the addition of debug code for
+<a class="reference internal" href="../testing/debugging.html#the-debug-toolbar"><span class="std std-ref">Debug Toolbar</span></a>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$saveData</span></code> - true if the view data parameters should be retained for
+subsequent calls.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">saveData()</span></code> as defined by the interface must be a boolean, but implementing
+<p><code class="docutils literal notranslate"><span class="pre">$saveData</span></code> as defined by the interface must be a boolean, but implementing
 classes (like <code class="docutils literal notranslate"><span class="pre">View</span></code> below) may extend this to include <code class="docutils literal notranslate"><span class="pre">null</span></code> values.</p>
 </div>
 </section>
@@ -542,7 +553,7 @@ for this object, the new value will replace the existing one.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 05, 2024.
+      <span class="lastupdated">Last updated on Feb 10, 2024.
       </span></p>
   </div>
 
