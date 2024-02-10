@@ -37,7 +37,8 @@ Then save the file in your **app/Views** directory.
 Displaying a View
 =================
 
-To load and display a particular view file you will use the following code in your controller:
+To load and display a particular view file you will use the :php:func:`view()`
+function like following code in your controller:
 
 .. literalinclude:: views/001.php
    :lines: 2-
@@ -64,8 +65,10 @@ If you visit your site, you should see your new view. The URL was similar to thi
 Loading Multiple Views
 ======================
 
-CodeIgniter will intelligently handle multiple calls to ``view()`` from within a controller. If more than one
-call happens they will be appended together. For example, you may wish to have a header view, a menu view, a
+CodeIgniter will intelligently handle multiple calls to :php:func:`view()` from
+within a controller. If more than one call happens they will be appended together.
+
+For example, you may wish to have a header view, a menu view, a
 content view, and a footer view. That might look something like this:
 
 .. literalinclude:: views/003.php
@@ -101,8 +104,8 @@ example, you could load the **blog_view.php** file from **example/blog/Views** b
 Caching Views
 =============
 
-You can cache a view with the ``view()`` function by passing a ``cache`` option with the number of seconds to cache
-the view for, in the third parameter:
+You can cache a view with the :php:func:`view()` function by passing a ``cache``
+option with the number of seconds to cache the view for, in the third parameter:
 
 .. literalinclude:: views/006.php
    :lines: 2-
@@ -116,7 +119,9 @@ along ``cache_name`` and the cache ID you wish to use:
 Adding Dynamic Data to the View
 ===============================
 
-Data is passed from the controller to the view by way of an array in the second parameter of the ``view()`` function.
+Data is passed from the controller to the view by way of an array in the second
+parameter of the :php:func:`view()` function.
+
 Here's an example:
 
 .. literalinclude:: views/008.php
@@ -142,8 +147,9 @@ Then load the page at the URL you've been using and you should see the variables
 The saveData Option
 -------------------
 
-The data passed in is retained for subsequent calls to ``view()``. If you call the function multiple times
-in a single request, you will not have to pass the desired data to each ``view()``.
+The data passed in is retained for subsequent calls to :php:func:`view()`. If you
+call the function multiple times in a single request, you will not have to pass
+the desired data to each ``view()``.
 
 But this might not keep any data from "bleeding" into
 other views, potentially causing issues. If you would prefer to clean the data after one call, you can pass the ``saveData`` option
