@@ -18,33 +18,33 @@ use stdClass;
 use Throwable;
 
 /**
- * @property array      $aliasedTables
- * @property string     $charset
- * @property bool       $compress
- * @property float      $connectDuration
- * @property float      $connectTime
- * @property string     $database
- * @property string     $DBCollat
- * @property bool       $DBDebug
- * @property string     $DBDriver
- * @property string     $DBPrefix
- * @property string     $DSN
- * @property array|bool $encrypt
- * @property array      $failover
- * @property string     $hostname
- * @property Query      $lastQuery
- * @property string     $password
- * @property bool       $pConnect
- * @property int|string $port
- * @property bool       $pretend
- * @property string     $queryClass
- * @property array      $reservedIdentifiers
- * @property bool       $strictOn
- * @property string     $subdriver
- * @property string     $swapPre
- * @property int        $transDepth
- * @property bool       $transFailure
- * @property bool       $transStatus
+ * @property-read array      $aliasedTables
+ * @property-read string     $charset
+ * @property-read bool       $compress
+ * @property-read float      $connectDuration
+ * @property-read float      $connectTime
+ * @property-read string     $database
+ * @property-read string     $DBCollat
+ * @property-read bool       $DBDebug
+ * @property-read string     $DBDriver
+ * @property-read string     $DBPrefix
+ * @property-read string     $DSN
+ * @property-read array|bool $encrypt
+ * @property-read array      $failover
+ * @property-read string     $hostname
+ * @property-read Query      $lastQuery
+ * @property-read string     $password
+ * @property-read bool       $pConnect
+ * @property-read int|string $port
+ * @property-read bool       $pretend
+ * @property-read string     $queryClass
+ * @property-read array      $reservedIdentifiers
+ * @property-read bool       $strictOn
+ * @property-read string     $subdriver
+ * @property-read string     $swapPre
+ * @property-read int        $transDepth
+ * @property-read bool       $transFailure
+ * @property-read bool       $transStatus
  *
  * @template TConnection
  * @template TResult
