@@ -22,10 +22,10 @@ interface RendererInterface
      * Builds the output based upon a file name and any
      * data that has already been set.
      *
-     * @param array $options  Reserved for 3rd-party uses since
-     *                        it might be needed to pass additional info
-     *                        to other template engines.
-     * @param bool  $saveData Whether to save data for subsequent calls
+     * @param array|null $options  Reserved for 3rd-party uses since
+     *                             it might be needed to pass additional info
+     *                             to other template engines.
+     * @param bool       $saveData Whether to save data for subsequent calls
      */
     public function render(string $view, ?array $options = null, bool $saveData = false): string;
 
@@ -33,19 +33,19 @@ interface RendererInterface
      * Builds the output based upon a string and any
      * data that has already been set.
      *
-     * @param string $view     The view contents
-     * @param array  $options  Reserved for 3rd-party uses since
-     *                         it might be needed to pass additional info
-     *                         to other template engines.
-     * @param bool   $saveData Whether to save data for subsequent calls
+     * @param string     $view     The view contents
+     * @param array|null $options  Reserved for 3rd-party uses since
+     *                             it might be needed to pass additional info
+     *                             to other template engines.
+     * @param bool       $saveData Whether to save data for subsequent calls
      */
     public function renderString(string $view, ?array $options = null, bool $saveData = false): string;
 
     /**
      * Sets several pieces of view data at once.
      *
-     * @param         string                                    $context The context to escape it for: html, css, js, url
-     *                                                                   If 'raw', no escaping will happen
+     * @param         non-empty-string|null                     $context The context to escape it for.
+     *                                                                   If 'raw', no escaping will happen.
      * @phpstan-param null|'html'|'js'|'css'|'url'|'attr'|'raw' $context
      *
      * @return RendererInterface
@@ -56,8 +56,8 @@ interface RendererInterface
      * Sets a single piece of view data.
      *
      * @param         mixed                                     $value
-     * @param         string                                    $context The context to escape it for: html, css, js, url
-     *                                                                   If 'raw' no escaping will happen
+     * @param         non-empty-string|null                     $context The context to escape it for.
+     *                                                                   If 'raw', no escaping will happen.
      * @phpstan-param null|'html'|'js'|'css'|'url'|'attr'|'raw' $context
      *
      * @return RendererInterface
