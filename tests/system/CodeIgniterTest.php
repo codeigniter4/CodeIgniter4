@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use App\Controllers\Home;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Debug\Timer;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Method;
@@ -959,5 +961,18 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->expectException(PageNotFoundException::class);
 
         $this->codeigniter->run($routes);
+    }
+
+    public function testStartControllerPermitsInvoke(): void
+    {
+        $this->setPrivateProperty($this->codeigniter, 'benchmark', new Timer());
+        $this->setPrivateProperty($this->codeigniter, 'controller', '\\' . Home::class);
+        $startController = $this->getPrivateMethodInvoker($this->codeigniter, 'startController');
+
+        $this->setPrivateProperty($this->codeigniter, 'method', '__invoke');
+        $startController();
+
+        // No PageNotFoundException
+        $this->assertTrue(true);
     }
 }
