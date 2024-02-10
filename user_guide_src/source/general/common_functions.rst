@@ -197,7 +197,8 @@ Service Accessors
 
     .. literalinclude:: common_functions/004.php
 
-    For more details, see the :doc:`Views </outgoing/views>` page.
+    For more details, see the :doc:`Views <../outgoing/views>` and
+    :doc:`../outgoing/view_renderer` page.
 
 .. php:function:: view_cell($library[, $params = null[, $ttl = 0[, $cacheName = null]]])
 
