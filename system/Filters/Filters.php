@@ -70,6 +70,8 @@ class Filters
      * The processed filters that will
      * be used to check against.
      *
+     * This does not include "Required Filters".
+     *
      * @var array<string, array>
      */
     protected $filters = [
@@ -80,6 +82,8 @@ class Filters
     /**
      * The collection of filters' class names that will
      * be used to execute in each position.
+     *
+     * This does not include "Required Filters".
      *
      * @var array<string, array>
      */
@@ -252,7 +256,7 @@ class Filters
     }
 
     /**
-     * Runs required filters for the specified position.
+     * Runs "Required Filters" for the specified position.
      *
      * @return RequestInterface|ResponseInterface|string|null
      *
@@ -289,7 +293,7 @@ class Filters
     }
 
     /**
-     * Returns required filters for the specified position.
+     * Returns "Required Filters" for the specified position.
      *
      * @phpstan-param 'before'|'after' $position
      *
@@ -423,6 +427,7 @@ class Filters
 
     /**
      * Returns the processed filters array.
+     * This does not include "Required Filters".
      */
     public function getFilters(): array
     {
@@ -431,6 +436,7 @@ class Filters
 
     /**
      * Returns the filtersClass array.
+     * This does not include "Required Filters".
      */
     public function getFiltersClass(): array
     {
