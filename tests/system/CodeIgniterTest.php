@@ -138,6 +138,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $this->assertStringContainsString("Can't find a route for 'GET: pages/about'.", $output);
+        $this->assertSame(404, response()->getStatusCode());
     }
 
     public function testRun404OverrideControllerReturnsResponse(): void
@@ -194,6 +195,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $this->assertStringContainsString('404 Override by Closure.', $output);
+        $this->assertSame(404, response()->getStatusCode());
     }
 
     public function testControllersCanReturnString(): void
