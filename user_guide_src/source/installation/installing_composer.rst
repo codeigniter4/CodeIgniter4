@@ -5,22 +5,23 @@ Composer Installation
     :local:
     :depth: 2
 
-Composer can be used in several ways to install CodeIgniter4 on your system.
+Composer can be used in two ways to install CodeIgniter4 on your system.
 
 .. important:: CodeIgniter4 requires Composer 2.0.14 or later.
 
 .. note:: If you are not familiar with Composer, we recommend you read
     `Basic usage <https://getcomposer.org/doc/01-basic-usage.md>`_ first.
 
-The first technique describes creating a skeleton project
+The first technique describes creating a skeleton project (app starter)
 using CodeIgniter4, that you would then use as the base for a new webapp.
 The second technique described below lets you add CodeIgniter4 to an existing
 webapp,
 
 .. note:: If you are using a Git repository to store your code, or for
-   collaboration with others, then the **vendor** folder would normally
-   be "git ignored". In such a case, you will need to do a ``composer update``
-   when you clone the repository to a new system.
+    collaboration with others, then the **vendor** folder would normally
+    be "git ignored". In such a case, you will need to do a ``composer install``
+    (or ``composer update`` if you want to update all Composer dependencies) when
+    you clone the repository to a new system.
 
 App Starter
 ===========
@@ -139,11 +140,11 @@ Next Minor Version
 If you want to use the next minor version branch, after using the ``builds`` command
 edit **composer.json** manually.
 
-If you try the ``4.4`` branch, change the version to ``4.4.x-dev``::
+If you try the ``4.5`` branch, change the version to ``4.5.x-dev``::
 
     "require": {
-        "php": "^7.4 || ^8.0",
-        "codeigniter4/codeigniter4": "4.4.x-dev"
+        "php": "^8.1",
+        "codeigniter4/codeigniter4": "4.5.x-dev"
     },
 
 And run ``composer update`` to sync your vendor
@@ -182,9 +183,9 @@ In your project root:
 .. important:: When you deploy to your production server, don't forget to run the
     following command:
 
-.. code-block:: console
+    .. code-block:: console
 
-    composer install --no-dev
+        composer install --no-dev
 
     The above command will remove the Composer packages only for development
     that are not needed in the production environment. This will greatly reduce
