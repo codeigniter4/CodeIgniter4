@@ -206,8 +206,8 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
             ],
             14 => (object) [
                 'name'       => 'type_enum',
-                'type'       => 'text',
-                'max_length' => 2_147_483_647,
+                'type'       => 'varchar',
+                'max_length' => 5,
                 'nullable'   => true,
                 'default'    => null,
             ],
