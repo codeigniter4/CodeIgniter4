@@ -18,9 +18,10 @@ The second technique described below lets you add CodeIgniter4 to an existing
 webapp,
 
 .. note:: If you are using a Git repository to store your code, or for
-   collaboration with others, then the **vendor** folder would normally
-   be "git ignored". In such a case, you will need to do a ``composer update``
-   when you clone the repository to a new system.
+    collaboration with others, then the **vendor** folder would normally
+    be "git ignored". In such a case, you will need to do a ``composer install``
+    (or ``composer update`` if you want to update all Composer dependencies) when
+    you clone the repository to a new system.
 
 App Starter
 ===========
