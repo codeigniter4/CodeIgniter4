@@ -398,6 +398,11 @@
             text-align: right;
         }
     }
+
+    // show tab
+    &>.debug-bar-dblock {
+        display: block;
+    }
 }
 
 
@@ -465,18 +470,6 @@
 // If we force the "Light" theme
 #toolbarContainer.light {
     @import '_theme-light';
-}
-
-// show tab
-#ci-database.debug-bar-dblock,
-#ci-files.debug-bar-dblock,
-#ci-routes.debug-bar-dblock,
-#ci-events.debug-bar-dblock,
-#ci-history.debug-bar-dblock,
-#ci-vars.debug-bar-dblock,
-#ci-config.debug-bar-dblock,
-#ci-timeline.debug-bar-dblock {
-   display: block;
 }
 
 // LAYOUT HELPERS

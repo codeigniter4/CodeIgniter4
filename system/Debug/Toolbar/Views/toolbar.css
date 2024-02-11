@@ -288,6 +288,9 @@
   padding-left: 1em;
   text-align: right;
 }
+#debug-bar > .debug-bar-dblock {
+  display: block;
+}
 
 .debug-view.show-view {
   border: 1px solid;
@@ -763,17 +766,6 @@
 #toolbarContainer.light .debug-view-path {
   background-color: #FDC894;
   color: #434343;
-}
-
-#ci-database.debug-bar-dblock,
-#ci-files.debug-bar-dblock,
-#ci-routes.debug-bar-dblock,
-#ci-events.debug-bar-dblock,
-#ci-history.debug-bar-dblock,
-#ci-vars.debug-bar-dblock,
-#ci-config.debug-bar-dblock,
-#ci-timeline.debug-bar-dblock {
-  display: block;
 }
 
 .debug-bar-width30 {
