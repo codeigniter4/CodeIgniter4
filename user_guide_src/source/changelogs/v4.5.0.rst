@@ -75,6 +75,8 @@ Others
 - **Autoloader:** The prefix ``\`` in the fully qualified classname returned by
   ``FileLocator::findQualifiedNameFromPath()`` has been removed.
 - **BaseModel:** The ``getIdValue()`` method has been changed to ``abstract``.
+- **Routing:** The :ref:`404-override` feature does change the Response status
+  code to 404 by default. See :ref:`Upgrading Guide <upgrade-450-404-override>`.
 
 Interface Changes
 =================
