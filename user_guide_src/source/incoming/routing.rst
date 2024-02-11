@@ -678,7 +678,7 @@ the ``index()`` method of the ``App\Controllers\Home`` controller is executed
 when the route matches.
 
 .. note:: Method names beginning with ``_`` cannot be used as the default method.
-    However, starting with v4.5.0, only ``__invoke`` can be used.
+    However, starting with v4.5.0, ``__invoke`` method is allowed.
 
 Translate URI Dashes
 ====================
