@@ -5,14 +5,14 @@ Composer Installation
     :local:
     :depth: 2
 
-Composer can be used in several ways to install CodeIgniter4 on your system.
+Composer can be used in two ways to install CodeIgniter4 on your system.
 
 .. important:: CodeIgniter4 requires Composer 2.0.14 or later.
 
 .. note:: If you are not familiar with Composer, we recommend you read
     `Basic usage <https://getcomposer.org/doc/01-basic-usage.md>`_ first.
 
-The first technique describes creating a skeleton project
+The first technique describes creating a skeleton project (app starter)
 using CodeIgniter4, that you would then use as the base for a new webapp.
 The second technique described below lets you add CodeIgniter4 to an existing
 webapp,
@@ -139,11 +139,11 @@ Next Minor Version
 If you want to use the next minor version branch, after using the ``builds`` command
 edit **composer.json** manually.
 
-If you try the ``4.4`` branch, change the version to ``4.4.x-dev``::
+If you try the ``4.5`` branch, change the version to ``4.5.x-dev``::
 
     "require": {
-        "php": "^7.4 || ^8.0",
-        "codeigniter4/codeigniter4": "4.4.x-dev"
+        "php": "^8.1",
+        "codeigniter4/codeigniter4": "4.5.x-dev"
     },
 
 And run ``composer update`` to sync your vendor
