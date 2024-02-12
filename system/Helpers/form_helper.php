@@ -656,13 +656,7 @@ if (! function_exists('set_radio')) {
 
         $postInput = $request->getPost($field);
 
-        if ($oldInput !== null) {
-            $input = $oldInput;
-        } elseif ($postInput !== null) {
-            $input = $postInput;
-        } else {
-            $input = $default;
-        }
+        $input = $oldInput ?? $postInput ?? $default;
 
         if (is_array($input)) {
             // Note: in_array('', array(0)) returns TRUE, do not use it
