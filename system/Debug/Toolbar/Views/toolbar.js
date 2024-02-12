@@ -49,7 +49,7 @@ var ciDebugBar = {
         var tab = ciDebugBar.readCookie("debug-bar-tab");
         if (document.getElementById(tab)) {
             var el = document.getElementById(tab);
-            el.style.display = "block";
+            ciDebugBar.switchClass(el, "debug-bar-ndisplay", "debug-bar-dblock");
             ciDebugBar.addClass(el, "active");
             tab = document.querySelector("[data-tab=" + tab + "]");
             if (tab) {
@@ -70,7 +70,24 @@ var ciDebugBar = {
         // Hook up generic toggle via data attributes `data-toggle="foo"`
         var links = this.toolbar.querySelectorAll("[data-toggle]");
         for (var i = 0; i < links.length; i++) {
-            links[i].addEventListener("click", ciDebugBar.toggleRows, true);
+            let toggleData = links[i].getAttribute("data-toggle");
+            if (toggleData === "datatable") {
+
+                let datatable = links[i].getAttribute("data-table");
+                links[i].addEventListener("click", function() {
+                    ciDebugBar.toggleDataTable(datatable)
+                }, true);
+               
+            } else if (toggleData === "childrows") {
+
+                let child = links[i].getAttribute("data-child");
+                links[i].addEventListener("click", function() {
+                    ciDebugBar.toggleChildRows(child)
+                }, true);
+                
+            } else {
+                links[i].addEventListener("click", ciDebugBar.toggleRows, true);
+            }
         }
     },
 
@@ -79,7 +96,7 @@ var ciDebugBar = {
         var tab = document.getElementById(this.getAttribute("data-tab"));
 
         // If the label have not a tab stops here
-        if (!tab) {
+        if (! tab) {
             return;
         }
 
@@ -87,13 +104,13 @@ var ciDebugBar = {
         ciDebugBar.createCookie("debug-bar-tab", "", -1);
 
         // Check our current state.
-        var state = tab.style.display;
+        var state = tab.classList.contains("debug-bar-dblock");
 
         // Hide all tabs
         var tabs = document.querySelectorAll("#debug-bar .tab");
 
         for (var i = 0; i < tabs.length; i++) {
-            tabs[i].style.display = "none";
+            ciDebugBar.switchClass(tabs[i], "debug-bar-dblock", "debug-bar-ndisplay");
         }
 
         // Mark all labels as inactive
@@ -104,8 +121,8 @@ var ciDebugBar = {
         }
 
         // Show/hide the selected tab
-        if (state != "block") {
-            tab.style.display = "block";
+        if (! state) {
+            ciDebugBar.switchClass(tab, "debug-bar-ndisplay", "debug-bar-dblock");
             ciDebugBar.addClass(this.parentNode, "active");
             // Create debug-bar-tab cookie to persistent state
             ciDebugBar.createCookie(
@@ -138,6 +155,11 @@ var ciDebugBar = {
         }
     },
 
+    switchClass  : function(el, classFrom, classTo) {
+        ciDebugBar.removeClass(el, classFrom);
+        ciDebugBar.addClass(el, classTo);
+    },
+
     /**
      * Toggle display of another object based on
      * the data-toggle value of this object
@@ -150,8 +172,12 @@ var ciDebugBar = {
             let target = document.getElementById(
                 row.getAttribute("data-toggle")
             );
-            target.style.display =
-                target.style.display === "none" ? "table-row" : "none";
+
+            if (target.classList.contains("debug-bar-ndisplay")) {
+                ciDebugBar.switchClass(target, "debug-bar-ndisplay", "debug-bar-dtableRow");   
+            } else {
+                ciDebugBar.switchClass(target, "debug-bar-dtableRow", "debug-bar-ndisplay");
+            } 
         }
     },
 
@@ -166,7 +192,11 @@ var ciDebugBar = {
         }
 
         if (obj) {
-            obj.style.display = obj.style.display === "none" ? "block" : "none";
+            if (obj.classList.contains("debug-bar-ndisplay")) {
+                ciDebugBar.switchClass(obj, "debug-bar-ndisplay", "debug-bar-dblock");
+            } else {
+                ciDebugBar.switchClass(obj, "debug-bar-dblock", "debug-bar-ndisplay");
+            }
         }
     },
 
@@ -182,7 +212,13 @@ var ciDebugBar = {
         }
 
         if (par && obj) {
-            obj.style.display = obj.style.display === "none" ? "" : "none";
+
+            if (obj.classList.contains("debug-bar-ndisplay")) {
+                ciDebugBar.removeClass(obj, "debug-bar-ndisplay");
+            } else {
+                ciDebugBar.addClass(obj, "debug-bar-ndisplay");
+            }
+
             par.classList.toggle("timeline-parent-open");
         }
     },
@@ -193,11 +229,15 @@ var ciDebugBar = {
      *   Toggle tool bar from full to icon and icon to full
      */
     toggleToolbar: function () {
-        var open = ciDebugBar.toolbar.style.display != "none";
+        var open = ! ciDebugBar.toolbar.classList.contains("debug-bar-ndisplay");
 
-        ciDebugBar.icon.style.display = open == true ? "inline-block" : "none";
-        ciDebugBar.toolbar.style.display =
-            open == false ? "inline-block" : "none";
+        if (open) {
+            ciDebugBar.switchClass(ciDebugBar.icon, "debug-bar-ndisplay", "debug-bar-dinlineBlock");
+            ciDebugBar.switchClass(ciDebugBar.toolbar, "debug-bar-dinlineBlock", "debug-bar-ndisplay");
+        } else {
+            ciDebugBar.switchClass(ciDebugBar.icon, "debug-bar-dinlineBlock", "debug-bar-ndisplay");
+            ciDebugBar.switchClass(ciDebugBar.toolbar, "debug-bar-ndisplay", "debug-bar-dinlineBlock");
+        }
 
         // Remember it for other page loads on this site
         ciDebugBar.createCookie("debug-bar-state", "", -1);
@@ -215,10 +255,13 @@ var ciDebugBar = {
     setToolbarState: function () {
         var open = ciDebugBar.readCookie("debug-bar-state");
 
-        ciDebugBar.icon.style.display =
-            open != "open" ? "inline-block" : "none";
-        ciDebugBar.toolbar.style.display =
-            open == "open" ? "inline-block" : "none";
+        if (open != "open") {
+            ciDebugBar.switchClass(ciDebugBar.icon, "debug-bar-ndisplay", "debug-bar-dinlineBlock");
+            ciDebugBar.switchClass(ciDebugBar.toolbar, "debug-bar-dinlineBlock", "debug-bar-ndisplay");
+        } else {
+            ciDebugBar.switchClass(ciDebugBar.icon, "debug-bar-dinlineBlock", "debug-bar-ndisplay");
+            ciDebugBar.switchClass(ciDebugBar.toolbar, "debug-bar-ndisplay", "debug-bar-dinlineBlock");
+        } 
     },
 
     toggleViewsHints: function () {
@@ -494,7 +537,7 @@ var ciDebugBar = {
         var btn = document.querySelector("[data-tab=ci-views]");
 
         // If the Views Collector is inactive stops here
-        if (!btn) {
+        if (! btn) {
             return;
         }
 
@@ -527,7 +570,7 @@ var ciDebugBar = {
 
                 ciDebugBar.createCookie("debug-bar-position", "", -1);
 
-                if (!position || position === "bottom") {
+                if (! position || position === "bottom") {
                     ciDebugBar.createCookie("debug-bar-position", "top", 365);
                     ciDebugBar.addClass(ciDebugBar.icon, "fixed-top");
                     ciDebugBar.addClass(ciDebugBar.toolbar, "fixed-top");
@@ -569,7 +612,7 @@ var ciDebugBar = {
                 var theme = ciDebugBar.readCookie("debug-bar-theme");
 
                 if (
-                    !theme &&
+                    ! theme &&
                     window.matchMedia("(prefers-color-scheme: dark)").matches
                 ) {
                     // If there is no cookie, and "prefers-color-scheme" is set to "dark"
@@ -617,7 +660,7 @@ var ciDebugBar = {
         var eventSource;
 
         // If the Hot Reload Collector is inactive stops here
-        if (!btn) {
+        if (! btn) {
             return;
         }
 
@@ -716,7 +759,7 @@ var ciDebugBar = {
         for (var i = 0; i < rowGet.length; i++) {
             row = rowGet[i];
             if (!/\/\(.+?\)/.test(rowGet[i].innerText)) {
-                row.style = "cursor: pointer;";
+                ciDebugBar.addClass(row, "debug-bar-pointer");
                 row.setAttribute(
                     "title",
                     location.origin + "/" + ciDebugBar.trimSlash(row.innerText)
@@ -741,7 +784,7 @@ var ciDebugBar = {
                         patt,
                         '<input type="text" placeholder="$1">'
                     ) +
-                    '<input type="submit" value="Go" style="margin-left: 4px;">' +
+                    '<input type="submit" value="Go" class="debug-bar-mleft4">' +
                     "</form>";
             }
         }

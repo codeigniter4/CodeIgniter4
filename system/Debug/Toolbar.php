@@ -197,12 +197,12 @@ class Toolbar
             $open = $row['name'] === 'Controller';
 
             if ($hasChildren || $isQuery) {
-                $output .= '<tr class="timeline-parent' . ($open ? ' timeline-parent-open' : '') . '" id="timeline-' . $styleCount . '_parent" onclick="ciDebugBar.toggleChildRows(\'timeline-' . $styleCount . '\');">';
+                $output .= '<tr class="timeline-parent' . ($open ? ' timeline-parent-open' : '') . '" id="timeline-' . $styleCount . '_parent" data-toggle="childrows" data-child="timeline-' . $styleCount . '">';
             } else {
                 $output .= '<tr>';
             }
 
-            $output .= '<td class="' . ($isChild ? 'debug-bar-width30' : '') . '" style="--level: ' . $level . ';">' . ($hasChildren || $isQuery ? '<nav></nav>' : '') . $row['name'] . '</td>';
+            $output .= '<td class="' . ($isChild ? 'debug-bar-width30' : '') . ' debug-bar-level-' . $level . '" >' . ($hasChildren || $isQuery ? '<nav></nav>' : '') . $row['name'] . '</td>';
             $output .= '<td class="' . ($isChild ? 'debug-bar-width10' : '') . '">' . $row['component'] . '</td>';
             $output .= '<td class="' . ($isChild ? 'debug-bar-width10 ' : '') . 'debug-bar-alignRight">' . number_format($row['duration'] * 1000, 2) . ' ms</td>';
             $output .= "<td class='debug-bar-noverflow' colspan='{$segmentCount}'>";
@@ -220,7 +220,7 @@ class Toolbar
 
             // Add children if any
             if ($hasChildren || $isQuery) {
-                $output .= '<tr class="child-row" id="timeline-' . ($styleCount - 1) . '_children" style="' . ($open ? '' : 'display: none;') . '">';
+                $output .= '<tr class="child-row ' . ($open ? '' : ' debug-bar-ndisplay') . '" id="timeline-' . ($styleCount - 1) . '_children" >';
                 $output .= '<td colspan="' . ($segmentCount + 3) . '" class="child-container">';
                 $output .= '<table class="timeline">';
                 $output .= '<tbody>';
@@ -228,7 +228,7 @@ class Toolbar
                 if ($isQuery) {
                     // Output query string if query
                     $output .= '<tr>';
-                    $output .= '<td class="query-container" style="--level: ' . ($level + 1) . ';">' . $row['query'] . '</td>';
+                    $output .= '<td class="query-container debug-bar-level-' . ($level + 1) . '" >' . $row['query'] . '</td>';
                     $output .= '</tr>';
                 } else {
                     // Recursively render children
