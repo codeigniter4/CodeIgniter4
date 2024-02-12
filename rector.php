@@ -33,6 +33,7 @@ use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
@@ -94,6 +95,11 @@ return static function (RectorConfig $rectorConfig): void {
 
         JsonThrowOnErrorRector::class,
         YieldDataProviderRector::class,
+
+        RemoveUnusedPromotedPropertyRector::class => [
+            // Bug in rector 1.0.0. See https://github.com/rectorphp/rector-src/pull/5573
+            __DIR__ . '/tests/_support/Entity/CustomUser.php',
+        ],
 
         RemoveUnusedPrivateMethodRector::class => [
             // private method called via getPrivateMethodInvoker
