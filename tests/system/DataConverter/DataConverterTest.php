@@ -350,18 +350,18 @@ final class DataConverterTest extends CIUnitTestCase
     {
         $types = [
             'id'   => 'int',
-            'date' => 'datetime[j-M-Y]',
+            'date' => 'datetime[us]',
         ];
         $converter = $this->createDataConverter($types, [], db_connect());
 
         $dbData = [
             'id'   => '1',
-            'date' => '15-Feb-2009',
+            'date' => '2009-02-15 00:00:01.123456',
         ];
         $data = $converter->fromDataSource($dbData);
 
         $this->assertInstanceOf(Time::class, $data['date']);
-        $expectedDate = Time::createFromFormat('j-M-Y', '15-Feb-2009');
+        $expectedDate = Time::createFromFormat('Y-m-d H:i:s.u', '2009-02-15 00:00:01.123456');
         $this->assertSame($expectedDate->getTimestamp(), $data['date']->getTimestamp());
     }
 

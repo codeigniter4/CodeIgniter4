@@ -382,7 +382,12 @@ casts try ``array`` or ``json``.
 datetime
 --------
 
-You can set the datetime format like ``datetime[Y-m-d H:i:s.v]``.
+You can pass a parameter like ``datetime[ms]`` for date/time with milliseconds,
+or ``datetime[us]`` for date/time with microseconds.
+
+The datetime format is set in the ``dateFormat`` array of the
+:ref:`database configuration <database-config-explanation-of-values>` in the
+**app/Config/Database.php** file.
 
 Custom Casting
 ==============

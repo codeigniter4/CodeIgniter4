@@ -45,8 +45,8 @@ class UserCastsTimestampModel extends Model
 
         if ($this->db->DBDriver === 'SQLSRV') {
             // SQL Server returns a string like `2023-11-27 01:44:04.000`.
-            $this->casts['created_at'] = 'datetime[Y-m-d H:i:s.v]';
-            $this->casts['updated_at'] = 'datetime[Y-m-d H:i:s.v]';
+            $this->casts['created_at'] = 'datetime[ms]';
+            $this->casts['updated_at'] = 'datetime[ms]';
         }
     }
 }
