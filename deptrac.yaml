@@ -177,6 +177,7 @@ parameters:
     DataCaster:
       - I18n
       - URI
+      - Database
     DataConverter:
       - DataCaster
     Email:
