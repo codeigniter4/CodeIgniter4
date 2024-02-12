@@ -6,8 +6,11 @@ use CodeIgniter\DataCaster\Cast\BaseCast;
 
 class SomeHandler extends BaseCast
 {
-    public static function get(mixed $value, array $params = []): mixed
-    {
+    public static function get(
+        mixed $value,
+        array $params = [],
+        ?object $helper = null
+    ): mixed {
         var_dump($params);
         /*
          * Output:

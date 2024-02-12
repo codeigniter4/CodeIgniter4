@@ -333,7 +333,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'   => 'int',
             'date' => 'datetime',
         ];
-        $converter = $this->createDataConverter($types);
+        $converter = $this->createDataConverter($types, [], db_connect());
 
         $dbData = [
             'id'   => '1',
@@ -352,7 +352,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'   => 'int',
             'date' => 'datetime[j-M-Y]',
         ];
-        $converter = $this->createDataConverter($types);
+        $converter = $this->createDataConverter($types, [], db_connect());
 
         $dbData = [
             'id'   => '1',
@@ -531,10 +531,11 @@ final class DataConverterTest extends CIUnitTestCase
     private function createDataConverter(
         array $types,
         array $handlers = [],
+        ?object $helper = null,
         Closure|string|null $reconstructor = 'reconstruct',
         Closure|string|null $extractor = null
     ): DataConverter {
-        return new DataConverter($types, $handlers, $reconstructor, $extractor);
+        return new DataConverter($types, $handlers, $helper, $reconstructor, $extractor);
     }
 
     public function testReconstructObjectWithReconstructMethod()
@@ -545,7 +546,7 @@ final class DataConverterTest extends CIUnitTestCase
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
-        $converter = $this->createDataConverter($types);
+        $converter = $this->createDataConverter($types, [], db_connect());
 
         $dbData = [
             'id'         => '1',
@@ -578,7 +579,7 @@ final class DataConverterTest extends CIUnitTestCase
 
             return $user;
         };
-        $converter = $this->createDataConverter($types, [], $reconstructor);
+        $converter = $this->createDataConverter($types, [], db_connect(), $reconstructor);
 
         $dbData = [
             'id'         => '1',
@@ -676,7 +677,7 @@ final class DataConverterTest extends CIUnitTestCase
 
             return $array;
         };
-        $converter = $this->createDataConverter($types, [], null, $extractor);
+        $converter = $this->createDataConverter($types, [], db_connect(), null, $extractor);
 
         $phpData = [
             'id'         => 1,

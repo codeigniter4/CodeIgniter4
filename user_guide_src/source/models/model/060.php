@@ -7,8 +7,11 @@ use InvalidArgumentException;
 
 class CastBase64 extends BaseCast
 {
-    public static function get(mixed $value, array $params = []): string
-    {
+    public static function get(
+        mixed $value,
+        array $params = [],
+        ?object $helper = null
+    ): string {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
         }

@@ -64,15 +64,22 @@ final class DataCaster
     private readonly bool $strict;
 
     /**
+     * Helper object.
+     */
+    private ?object $helper;
+
+    /**
      * @param array<string, class-string>|null $castHandlers Custom convert handlers
      * @param array<string, string>|null       $types        [field => type]
      */
     public function __construct(
         ?array $castHandlers = null,
         ?array $types = null,
+        ?object $helper = null,
         bool $strict = true
     ) {
         $this->castHandlers = array_merge($this->castHandlers, $castHandlers);
+        $this->helper       = $helper;
 
         if ($types !== null) {
             $this->setTypes($types);
@@ -187,6 +194,6 @@ final class DataCaster
             throw CastException::forInvalidInterface($handler);
         }
 
-        return $handler::$method($value, $params);
+        return $handler::$method($value, $params, $this->helper);
     }
 }

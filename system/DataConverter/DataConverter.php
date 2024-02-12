@@ -45,6 +45,10 @@ final class DataConverter
         private readonly array $types,
         array $castHandlers = [],
         /**
+         * Helper object.
+         */
+        private readonly ?object $helper = null,
+        /**
          * Static reconstruct method name or closure to reconstruct an object.
          * Used by reconstruct().
          *
@@ -59,7 +63,7 @@ final class DataConverter
          */
         private readonly Closure|string|null $extractor = null,
     ) {
-        $this->dataCaster = new DataCaster($castHandlers, $types);
+        $this->dataCaster = new DataCaster($castHandlers, $types, $this->helper);
     }
 
     /**

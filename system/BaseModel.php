@@ -376,7 +376,8 @@ abstract class BaseModel
         if ($this->useCasts()) {
             $this->converter = new DataConverter(
                 $this->casts,
-                $this->castHandlers
+                $this->castHandlers,
+                $this->db
             );
         }
     }

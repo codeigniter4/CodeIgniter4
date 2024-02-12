@@ -8,8 +8,11 @@ use InvalidArgumentException;
 // The class must inherit the CodeIgniter\DataCaster\Cast\BaseCast class
 class CastBase64 extends BaseCast
 {
-    public static function get(mixed $value, array $params = []): string
-    {
+    public static function get(
+        mixed $value,
+        array $params = [],
+        ?object $helper = null
+    ): string {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
         }
@@ -23,8 +26,11 @@ class CastBase64 extends BaseCast
         return $decoded;
     }
 
-    public static function set(mixed $value, array $params = []): string
-    {
+    public static function set(
+        mixed $value,
+        array $params = [],
+        ?object $helper = null
+    ): string {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
         }

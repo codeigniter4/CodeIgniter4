@@ -137,6 +137,7 @@ class Entity implements JsonSerializable
         $this->dataCaster = new DataCaster(
             array_merge($this->defaultCastHandlers, $this->castHandlers),
             null,
+            null,
             false
         );
 
