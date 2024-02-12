@@ -366,14 +366,15 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function __construct(array $params)
     {
+        if (isset($params['dateFormat'])) {
+            $this->dateFormat = array_merge($this->dateFormat, $params['dateFormat']);
+            unset($params['dateFormat']);
+        }
+
         foreach ($params as $key => $value) {
             if (property_exists($this, $key)) {
                 $this->{$key} = $value;
             }
-        }
-
-        if (isset($params['dateFormat'])) {
-            $this->dateFormat = array_merge($this->dateFormat, $params['dateFormat']);
         }
 
         $queryClass = str_replace('Connection', 'Query', static::class);
