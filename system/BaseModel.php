@@ -1356,10 +1356,10 @@ abstract class BaseModel
                 return $value;
 
             case 'datetime':
-                return date('Y-m-d H:i:s', $value);
+                return date($this->db->dateFormat['datetime'], $value);
 
             case 'date':
-                return date('Y-m-d', $value);
+                return date($this->db->dateFormat['date'], $value);
 
             default:
                 throw ModelException::forNoDateFormat(static::class);
@@ -1382,10 +1382,10 @@ abstract class BaseModel
     {
         switch ($this->dateFormat) {
             case 'datetime':
-                return $value->format('Y-m-d H:i:s');
+                return $value->format($this->db->dateFormat['datetime']);
 
             case 'date':
-                return $value->format('Y-m-d');
+                return $value->format($this->db->dateFormat['date']);
 
             case 'int':
                 return $value->getTimestamp();
