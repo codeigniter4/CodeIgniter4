@@ -80,6 +80,13 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertFalse($db->compress);
         $this->assertTrue($db->strictOn);
         $this->assertSame([], $db->failover);
+        $this->assertSame([
+            'date'        => 'Y-m-d',
+            'datetime'    => 'Y-m-d H:i:s',
+            'datetime-ms' => 'Y-m-d H:i:s.v',
+            'datetime-us' => 'Y-m-d H:i:s.u',
+            'time'        => 'H:i:s',
+        ], $db->dateFormat);
     }
 
     public function testConnectionThrowExceptionWhenCannotConnect(): void
