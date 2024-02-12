@@ -28,12 +28,14 @@ CodeIgniter is right for you if:
 
 -  You want a framework with a small footprint.
 -  You need exceptional performance.
+-  You want a framework that incorporates a number of features and techniques to
+   enable you to do good security practices easily.
+-  You want a non-magical framework that you can easily find and read the source
+   code.
 -  You want a framework that requires nearly zero configuration.
--  You want a framework that does not require you to use the command
-   line.
 -  You want a framework that does not require you to adhere to
    restrictive coding rules.
--  You are not interested in large-scale monolithic libraries like PEAR.
+-  You want a framework that makes it easy to create test code.
 -  You do not want to be forced to learn a templating language (although
    a template parser is optionally available if you desire one).
 -  You eschew complexity, favoring simple solutions.
