@@ -1110,22 +1110,28 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Hello2</title>";
         $this->assertSame($agent, $options[CURLOPT_USERAGENT]);
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/8347
+     */
     public function testMultipleHTTP100(): void
     {
-        $output = 'HTTP/1.1 100 Continue
-        Mark bundle as not supporting multiuse
-        HTTP/1.1 100 Continue
-        Mark bundle as not supporting multiuse
-        HTTP/1.1 200 OK
-        Server: Werkzeug/2.2.2 Python/3.7.17
-        Date: Sun, 28 Jan 2024 06:05:36 GMT
-        Content-Type: application/json
-        Content-Length: 33
-        Connection: close';
+        $jsonBody = '{"name":"John Doe","age":30}';
+
+        $output = "HTTP/1.1 100 Continue
+Mark bundle as not supporting multiuse
+HTTP/1.1 100 Continue
+Mark bundle as not supporting multiuse
+HTTP/1.1 200 OK
+Server: Werkzeug/2.2.2 Python/3.7.17
+Date: Sun, 28 Jan 2024 06:05:36 GMT
+Content-Type: application/json
+Content-Length: 33\r\n\r\n" . $jsonBody;
 
         $this->request->setOutput($output);
 
         $response = $this->request->request('get', 'http://example.com');
+
+        $this->assertSame($jsonBody, $response->getBody());
 
         $this->assertSame(200, $response->getStatusCode());
     }
