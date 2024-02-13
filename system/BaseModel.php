@@ -1841,8 +1841,11 @@ abstract class BaseModel
         }
 
         // If it validates with entire rules, all fields are needed.
-        $onlyChanged = ($this->skipValidation === false && $this->cleanValidationRules === false)
-            ? false : ($type === 'update');
+        if ($this->skipValidation === false && $this->cleanValidationRules === false) {
+            $onlyChanged = false;
+        } else {
+            $onlyChanged = ($type === 'update' && $this->updateOnlyChanged);
+        }
 
         if ($this->useCasts()) {
             if (is_array($row)) {
@@ -1862,13 +1865,6 @@ abstract class BaseModel
         // properties representing the collection elements, we need to grab
         // them as an array.
         elseif (is_object($row) && ! $row instanceof stdClass) {
-            // If it validates with entire rules, all fields are needed.
-            if ($this->skipValidation === false && $this->cleanValidationRules === false) {
-                $onlyChanged = false;
-            } else {
-                $onlyChanged = ($type === 'update' && $this->updateOnlyChanged);
-            }
-
             $row = $this->objectToArray($row, $onlyChanged, true);
         }
 
