@@ -66,7 +66,7 @@ final class DataCaster
     /**
      * Helper object.
      */
-    private ?object $helper;
+    private readonly ?object $helper;
 
     /**
      * @param array<string, class-string>|null $castHandlers Custom convert handlers
