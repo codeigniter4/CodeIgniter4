@@ -81,6 +81,11 @@ class TestGenerator extends BaseCommand
         $this->template  = 'test.tpl.php';
 
         $this->classNameLang = 'CLI.generator.className.test';
+
+        $autoload = Services::autoloader();
+        $autoload->addNamespace('CodeIgniter', TESTPATH . 'system');
+        $autoload->addNamespace('Tests', ROOTPATH . 'tests');
+
         $this->generateClass($params);
     }
 
