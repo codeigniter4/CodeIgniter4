@@ -214,11 +214,11 @@
                 <button id="menuToggle">&#9776;</button>
             </li>
             <li class="menu-item hidden"><a href="#">Home</a></li>
-            <li class="menu-item hidden"><a href="https://codeigniter4.github.io/userguide/" target="_blank">Docs</a>
+            <li class="menu-item hidden"><a href="https://codeigniter.com/user_guide/" target="_blank">Docs</a>
             </li>
             <li class="menu-item hidden"><a href="https://forum.codeigniter.com/" target="_blank">Community</a></li>
             <li class="menu-item hidden"><a
-                    href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md" target="_blank">Contribute</a>
+                    href="https://codeigniter.com/contribute" target="_blank">Contribute</a>
             </li>
         </ul>
     </div>
@@ -264,7 +264,7 @@
 
         <p>The User Guide contains an introduction, tutorial, a number of "how to"
             guides, and then reference documentation for the components that make up
-            the framework. Check the <a href="https://codeigniter4.github.io/userguide"
+            the framework. Check the <a href="https://codeigniter.com/user_guide/"
             target="_blank">User Guide</a> !</p>
 
         <h2>

@@ -382,7 +382,7 @@ The following functions are available:
     :returns: Absolute URL
     :rtype: string
 
-    .. note:: This function requires the controller/method to have a route defined in **app/Config/routes.php**.
+    .. note:: This function requires the controller/method to have a route defined in **app/Config/Routes.php**.
 
     Builds an absolute URL to a controller method in your app. Example:
 
