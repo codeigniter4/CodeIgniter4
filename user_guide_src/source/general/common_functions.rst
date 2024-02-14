@@ -383,7 +383,7 @@ Miscellaneous Functions
     :returns: a route path (URI path relative to baseURL)
     :rtype: string
 
-    .. note:: This function requires the controller/method to have a route defined in **app/Config/routes.php**.
+    .. note:: This function requires the controller/method to have a route defined in **app/Config/Routes.php**.
 
     .. important:: ``route_to()`` returns a *route* path, not a full URI path for your site.
         If your **baseURL** contains sub folders, the return value is not the same
