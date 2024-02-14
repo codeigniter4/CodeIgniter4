@@ -2,11 +2,13 @@
 
 namespace Config;
 
+use AllowDynamicProperties;
 use CodeIgniter\Database\Config;
 
 /**
  * Database Configuration
  */
+#[AllowDynamicProperties]
 class Database extends Config
 {
     /**
