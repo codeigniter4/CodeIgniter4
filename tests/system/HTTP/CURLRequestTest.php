@@ -1129,7 +1129,7 @@ Content-Length: 33\r\n\r\n" . $jsonBody;
 
         $this->request->setOutput($output);
 
-        $response = $this->request->request('get', 'http://example.com');
+        $response = $this->request->request('GET', 'http://example.com');
 
         $this->assertSame($jsonBody, $response->getBody());
 
