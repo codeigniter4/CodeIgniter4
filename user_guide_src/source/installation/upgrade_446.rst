@@ -20,6 +20,20 @@ Mandatory File Changes
 Breaking Changes
 ****************
 
+Time::createFromTimestamp() Timezone Change
+===========================================
+
+When you do not specify a timezone, now
+:ref:`Time::createFromTimestamp() <time-createfromtimestamp>` returns a Time
+instance with the app's timezone is returned.
+
+If you want to keep the timezone UTC, you need to call ``setTimezone('UTC')``::
+
+    use CodeIgniter\I18n\Time;
+
+    $time = Time::createFromTimestamp(1501821586)->setTimezone('UTC');
+
+
 *********************
 Breaking Enhancements
 *********************
