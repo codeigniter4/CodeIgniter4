@@ -90,7 +90,8 @@
     },
     "scripts": {
         "post-update-cmd": [
-            "CodeIgniter\\ComposerScripts::postUpdate"
+            "CodeIgniter\\ComposerScripts::postUpdate",
+            "composer update --working-dir=tools/phpmetrics"
         ],
         "analyze": [
             "Composer\\Config::disableProcessTimeout",
@@ -111,12 +112,14 @@
         ],
         "sa": "@analyze",
         "style": "@cs-fix",
-        "test": "phpunit"
+        "test": "phpunit",
+        "metrics": "tools/phpmetrics/vendor/bin/phpmetrics --config=phpmetrics.json"
     },
     "scripts-descriptions": {
         "analyze": "Run static analysis",
         "cs": "Check the coding style",
         "cs-fix": "Fix the coding style",
-        "test": "Run unit tests"
+        "test": "Run unit tests",
+        "metrics": "Run PhpMetrics"
     }
 }
