@@ -110,16 +110,16 @@
             "php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.no-header.php",
             "php-cs-fixer fix --ansi --verbose --diff"
         ],
+        "metrics": "tools/phpmetrics/vendor/bin/phpmetrics --config=phpmetrics.json",
         "sa": "@analyze",
         "style": "@cs-fix",
-        "test": "phpunit",
-        "metrics": "tools/phpmetrics/vendor/bin/phpmetrics --config=phpmetrics.json"
+        "test": "phpunit"
     },
     "scripts-descriptions": {
         "analyze": "Run static analysis",
         "cs": "Check the coding style",
         "cs-fix": "Fix the coding style",
-        "test": "Run unit tests",
-        "metrics": "Run PhpMetrics"
+        "metrics": "Run PhpMetrics",
+        "test": "Run unit tests"
     }
 }
