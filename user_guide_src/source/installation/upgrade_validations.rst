@@ -32,9 +32,10 @@ Upgrade Guide
 
 2. Within the controller you have to change the following:
 
-    - ``$this->load->helper(array('form', 'url'));`` to ``helper(['form', 'url']);``
+    - ``$this->load->helper(array('form', 'url'));`` to ``helper('form');``
     - remove the line ``$this->load->library('form_validation');``
-    - ``if ($this->form_validation->run() == FALSE)`` to ``if (! $this->validate([]))``
+    - ``if ($this->form_validation->run() == FALSE)`` to ``if (! $this->validateData($data, $rules))``
+      where ``$data`` is the data to validate, typically, the POST data ``$this->request->getPost()``.
     - ``$this->load->view('myform');`` to ``return view('myform', ['validation' => $this->validator,]);``
 
 3. You have to change the validation rules. The new syntax is to set the rules as array in the controller:
