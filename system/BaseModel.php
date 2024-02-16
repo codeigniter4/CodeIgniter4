@@ -42,15 +42,15 @@ use stdClass;
  *      - process various callbacks
  *      - allow intermingling calls to the db connection
  *
- * @phpstan-type row_array array<int|string, float|int|null|object|string>
+ * @phpstan-type row_array               array<int|string, float|int|null|object|string>
  * @phpstan-type event_data_beforeinsert array{data: row_array}
- * @phpstan-type event_data_afterinsert array{id: int|string, data: row_array, result: bool}
- * @phpstan-type event_data_beforefind array{id?: int|string, method: string, singleton: bool, limit?: int, offset?: int}
- * @phpstan-type event_data_afterfind array{id: int|string|null|list<int|string>, data: row_array|list<row_array>|object|null, method: string, singleton: bool}
+ * @phpstan-type event_data_afterinsert  array{id: int|string, data: row_array, result: bool}
+ * @phpstan-type event_data_beforefind   array{id?: int|string, method: string, singleton: bool, limit?: int, offset?: int}
+ * @phpstan-type event_data_afterfind    array{id: int|string|null|list<int|string>, data: row_array|list<row_array>|object|null, method: string, singleton: bool}
  * @phpstan-type event_data_beforeupdate array{id: null|list<int|string>, data: row_array}
- * @phpstan-type event_data_afterupdate array{id: null|list<int|string>, data: row_array|object, result: bool}
+ * @phpstan-type event_data_afterupdate  array{id: null|list<int|string>, data: row_array|object, result: bool}
  * @phpstan-type event_data_beforedelete array{id: null|list<int|string>, purge: bool}
- * @phpstan-type event_data_afterdelete array{id: null|list<int|string>, data: null, purge: bool, result: bool}
+ * @phpstan-type event_data_afterdelete  array{id: null|list<int|string>, data: null, purge: bool, result: bool}
  */
 abstract class BaseModel
 {

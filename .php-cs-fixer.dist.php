@@ -63,6 +63,8 @@ $overrides = [
             'phpstan-param',
             'phpstan-property',
             'phpstan-return',
+            'phpstan-type',
+            'phpstan-var',
             'property',
             'property-read',
             'property-write',
