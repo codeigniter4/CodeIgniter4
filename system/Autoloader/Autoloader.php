@@ -281,13 +281,13 @@ class Autoloader
 
         foreach ($this->prefixes as $namespace => $directories) {
             $classNamespaceFind = strpos($class, $namespace);
-            $classSubStr        = substr($class, strlen($namespace));
+            $fileNamespace      = str_replace('\\', DIRECTORY_SEPARATOR, substr($class, strlen($namespace)));
 
             foreach ($directories as $directory) {
                 $directory = rtrim($directory, '\\/');
 
                 if ($classNamespaceFind === 0) {
-                    $filePath = $directory . str_replace('\\', DIRECTORY_SEPARATOR, $classSubStr) . '.php';
+                    $filePath = $directory . $fileNamespace . '.php';
                     $filename = $this->includeFile($filePath);
 
                     if ($filename) {
