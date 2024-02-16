@@ -54,6 +54,9 @@ Application Structure
     This means that you should configure your web server to "point" to your project's
     **public** folder, and not to the project root.
 
+    If you would use Shared Hosting and you cannot set it, see
+    `Install CodeIgniter 4 on Shared Hosting (cPanel) <https://forum.codeigniter.com/showthread.php?tid=76779>`_.
+
 - The **application** folder is renamed as **app** and the framework still has **system** folders,
   with the same interpretation as before.
 - The framework now provides for a **public** folder, intended as the document root for your app.
