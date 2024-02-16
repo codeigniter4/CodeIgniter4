@@ -11,7 +11,7 @@ It has been built from the
 
 More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
 
-You can read the [user guide](https://codeigniter4.github.io/userguide/)
+You can read the [user guide](https://codeigniter.com/user_guide/)
 corresponding to the latest version of the framework.
 
 ## Important Change with index.php

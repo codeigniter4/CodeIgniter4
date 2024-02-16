@@ -24,7 +24,7 @@ More information about the plans for version 4 can be found in [CodeIgniter 4](h
 
 ### Documentation
 
-The [User Guide](https://codeigniter4.github.io/userguide/) is the primary documentation for CodeIgniter 4.
+The [User Guide](https://codeigniter.com/user_guide/) is the primary documentation for CodeIgniter 4.
 
 You will also find the [current **in-progress** User Guide](https://codeigniter4.github.io/CodeIgniter4/).
 As with the rest of the framework, it is a work in progress, and will see changes over time to structure, explanations, etc.
