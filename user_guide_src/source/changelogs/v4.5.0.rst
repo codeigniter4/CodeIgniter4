@@ -297,6 +297,12 @@ Others
 Model
 =====
 
+Model Field Casting
+-------------------
+
+Added a feature to convert data retrieved from a database into the appropriate
+PHP type. See :ref:`model-field-casting` for details.
+
 .. _v450-model-findall-limit-0-behavior:
 
 findAll(0) Behavior

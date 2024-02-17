@@ -19,6 +19,8 @@ use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\DataConverter\DataConverter;
+use CodeIgniter\Entity\Entity;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
@@ -99,13 +101,30 @@ abstract class BaseModel
      * Used by asArray() and asObject() to provide
      * temporary overrides of model default.
      *
-     * @var string
+     * @var 'array'|'object'|class-string
      */
     protected $tempReturnType;
 
     /**
-     * Whether we should limit fields in inserts
-     * and updates to those available in $allowedFields or not.
+     * Array of column names and the type of value to cast.
+     *
+     * @var array<string, string> [column => type]
+     */
+    protected array $casts = [];
+
+    /**
+     * Custom convert handlers.
+     *
+     * @var array<string, class-string> [type => classname]
+     */
+    protected array $castHandlers = [];
+
+    protected ?DataConverter $converter = null;
+
+    /**
+     * If this model should use "softDeletes" and
+     * simply set a date when rows are deleted, or
+     * do hard deletes.
      *
      * @var bool
      */
@@ -346,6 +365,29 @@ abstract class BaseModel
         $this->validation = $validation;
 
         $this->initialize();
+        $this->createDataConverter();
+    }
+
+    /**
+     * Creates DataConverter instance.
+     */
+    protected function createDataConverter(): void
+    {
+        if ($this->useCasts()) {
+            $this->converter = new DataConverter(
+                $this->casts,
+                $this->castHandlers,
+                $this->db
+            );
+        }
+    }
+
+    /**
+     * Are casts used?
+     */
+    protected function useCasts(): bool
+    {
+        return $this->casts !== [];
     }
 
     /**
@@ -1684,7 +1726,7 @@ abstract class BaseModel
      * class vars with the same name as the collection columns,
      * or at least allows them to be created.
      *
-     * @param string $class Class Name
+     * @param 'object'|class-string $class Class Name
      *
      * @return $this
      */
@@ -1784,6 +1826,9 @@ abstract class BaseModel
      * @throws DataException
      * @throws InvalidArgumentException
      * @throws ReflectionException
+     *
+     * @used-by insert()
+     * @used-by update()
      */
     protected function transformDataToArray($row, string $type): array
     {
@@ -1795,20 +1840,31 @@ abstract class BaseModel
             throw DataException::forEmptyDataset($type);
         }
 
+        // If it validates with entire rules, all fields are needed.
+        if ($this->skipValidation === false && $this->cleanValidationRules === false) {
+            $onlyChanged = false;
+        } else {
+            $onlyChanged = ($type === 'update' && $this->updateOnlyChanged);
+        }
+
+        if ($this->useCasts()) {
+            if (is_array($row)) {
+                $row = $this->converter->toDataSource($row);
+            } elseif ($row instanceof stdClass) {
+                $row = (array) $row;
+                $row = $this->converter->toDataSource($row);
+            } elseif ($row instanceof Entity) {
+                $row = $this->converter->extract($row, $onlyChanged);
+                // Convert any Time instances to appropriate $dateFormat
+                $row = $this->timeToString($row);
+            } elseif (is_object($row)) {
+                $row = $this->converter->extract($row, $onlyChanged);
+            }
+        }
         // If $row is using a custom class with public or protected
         // properties representing the collection elements, we need to grab
         // them as an array.
-        if (is_object($row) && ! $row instanceof stdClass) {
-            if ($type === 'update' && ! $this->updateOnlyChanged) {
-                $onlyChanged = false;
-            }
-            // If it validates with entire rules, all fields are needed.
-            elseif ($this->skipValidation === false && $this->cleanValidationRules === false) {
-                $onlyChanged = false;
-            } else {
-                $onlyChanged = ($type === 'update');
-            }
-
+        elseif (is_object($row) && ! $row instanceof stdClass) {
             $row = $this->objectToArray($row, $onlyChanged, true);
         }
 
@@ -1882,5 +1938,24 @@ abstract class BaseModel
         $this->allowEmptyInserts = $value;
 
         return $this;
+    }
+
+    /**
+     * Converts database data array to return type value.
+     *
+     * @param array<string, mixed>          $row        Raw data from database
+     * @param 'array'|'object'|class-string $returnType
+     */
+    protected function convertToReturnType(array $row, string $returnType): array|object
+    {
+        if ($returnType === 'array') {
+            return $this->converter->fromDataSource($row);
+        }
+
+        if ($returnType === 'object') {
+            return (object) $this->converter->fromDataSource($row);
+        }
+
+        return $this->converter->reconstruct($returnType, $row);
     }
 }

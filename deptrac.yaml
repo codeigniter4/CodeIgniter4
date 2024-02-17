@@ -177,6 +177,7 @@ parameters:
     DataCaster:
       - I18n
       - URI
+      - Database
     DataConverter:
       - DataCaster
     Email:
@@ -203,6 +204,7 @@ parameters:
       - I18n
     Model:
       - Database
+      - DataConverter
       - Entity
       - I18n
       - Pager
@@ -248,6 +250,8 @@ parameters:
       - CodeIgniter\Entity\Exceptions\CastException
     CodeIgniter\DataCaster\Exceptions\CastException:
       - CodeIgniter\Entity\Exceptions\CastException
+    CodeIgniter\DataConverter\DataConverter:
+      - CodeIgniter\Entity\Entity
     CodeIgniter\Entity\Cast\URICast:
       - CodeIgniter\HTTP\URI
     CodeIgniter\Log\Handlers\ChromeLoggerHandler:

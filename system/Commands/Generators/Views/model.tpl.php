@@ -20,6 +20,9 @@ class {class} extends Model
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
 
+    protected array $casts = [];
+    protected array $castHandlers = [];
+
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';

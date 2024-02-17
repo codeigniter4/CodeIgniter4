@@ -25,8 +25,11 @@ use stdClass;
  */
 class JsonCast extends BaseCast
 {
-    public static function get(mixed $value, array $params = []): array|stdClass
-    {
+    public static function get(
+        mixed $value,
+        array $params = [],
+        ?object $helper = null
+    ): array|stdClass {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
         }
@@ -44,8 +47,11 @@ class JsonCast extends BaseCast
         return $output;
     }
 
-    public static function set(mixed $value, array $params = []): string
-    {
+    public static function set(
+        mixed $value,
+        array $params = [],
+        ?object $helper = null
+    ): string {
         try {
             $output = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {

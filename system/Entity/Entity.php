@@ -137,6 +137,7 @@ class Entity implements JsonSerializable
         $this->dataCaster = new DataCaster(
             array_merge($this->defaultCastHandlers, $this->castHandlers),
             null,
+            null,
             false
         );
 
@@ -360,8 +361,8 @@ class Entity implements JsonSerializable
 
     /**
      * Provides the ability to cast an item as a specific data type.
-     * Add ? at the beginning of $type  (i.e. ?string) to get NULL
-     * instead of casting $value if $value === null
+     * Add ? at the beginning of the type (i.e. ?string) to get `null`
+     * instead of casting $value when $value is null.
      *
      * @param bool|float|int|string|null $value     Attribute value
      * @param string                     $attribute Attribute name
@@ -374,6 +375,7 @@ class Entity implements JsonSerializable
     protected function castAs($value, string $attribute, string $method = 'get')
     {
         return $this->dataCaster
+            // @TODO if $casts is readonly, we don't need the setTypes() method.
             ->setTypes($this->casts)
             ->castAs($value, $attribute, $method);
     }

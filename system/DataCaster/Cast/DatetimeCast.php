@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter\DataCaster\Cast;
 
+use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\I18n\Time;
+use InvalidArgumentException;
 
 /**
  * Class DatetimeCast
@@ -23,22 +25,39 @@ use CodeIgniter\I18n\Time;
  */
 class DatetimeCast extends BaseCast
 {
-    public static function get(mixed $value, array $params = []): Time
-    {
+    public static function get(
+        mixed $value,
+        array $params = [],
+        ?object $helper = null
+    ): Time {
         if (! is_string($value)) {
             self::invalidTypeValueError($value);
+        }
+
+        if (! $helper instanceof BaseConnection) {
+            $message = 'The parameter $helper must be BaseConnection.';
+
+            throw new InvalidArgumentException($message);
         }
 
         /**
          * @see https://www.php.net/manual/en/datetimeimmutable.createfromformat.php#datetimeimmutable.createfromformat.parameters
          */
-        $format = $params[0] ?? 'Y-m-d H:i:s';
+        $format = match ($params[0] ?? '') {
+            ''      => $helper->dateFormat['datetime'],
+            'ms'    => $helper->dateFormat['datetime-ms'],
+            'us'    => $helper->dateFormat['datetime-us'],
+            default => throw new InvalidArgumentException('Invalid parameter: ' . $params[0]),
+        };
 
         return Time::createFromFormat($format, $value);
     }
 
-    public static function set(mixed $value, array $params = []): string
-    {
+    public static function set(
+        mixed $value,
+        array $params = [],
+        ?object $helper = null
+    ): string {
         if (! $value instanceof Time) {
             self::invalidTypeValueError($value);
         }

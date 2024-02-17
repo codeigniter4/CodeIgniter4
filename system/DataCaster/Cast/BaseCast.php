@@ -13,17 +13,23 @@ declare(strict_types=1);
 
 namespace CodeIgniter\DataCaster\Cast;
 
-use TypeError;
+use InvalidArgumentException;
 
 abstract class BaseCast implements CastInterface
 {
-    public static function get(mixed $value, array $params = []): mixed
-    {
+    public static function get(
+        mixed $value,
+        array $params = [],
+        ?object $helper = null
+    ): mixed {
         return $value;
     }
 
-    public static function set(mixed $value, array $params = []): mixed
-    {
+    public static function set(
+        mixed $value,
+        array $params = [],
+        ?object $helper = null
+    ): mixed {
         return $value;
     }
 
@@ -34,6 +40,6 @@ abstract class BaseCast implements CastInterface
             $message .= ', and its value: ' . var_export($value, true);
         }
 
-        throw new TypeError($message);
+        throw new InvalidArgumentException($message);
     }
 }

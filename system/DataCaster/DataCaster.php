@@ -27,7 +27,6 @@ use CodeIgniter\DataCaster\Cast\URICast;
 use CodeIgniter\Entity\Cast\CastInterface as EntityCastInterface;
 use CodeIgniter\Entity\Exceptions\CastException;
 use InvalidArgumentException;
-use TypeError;
 
 final class DataCaster
 {
@@ -62,7 +61,12 @@ final class DataCaster
     /**
      * Strict mode? Set to false for casts for Entity.
      */
-    private bool $strict;
+    private readonly bool $strict;
+
+    /**
+     * Helper object.
+     */
+    private readonly ?object $helper;
 
     /**
      * @param array<string, class-string>|null $castHandlers Custom convert handlers
@@ -71,9 +75,11 @@ final class DataCaster
     public function __construct(
         ?array $castHandlers = null,
         ?array $types = null,
+        ?object $helper = null,
         bool $strict = true
     ) {
         $this->castHandlers = array_merge($this->castHandlers, $castHandlers);
+        $this->helper       = $helper;
 
         if ($types !== null) {
             $this->setTypes($types);
@@ -98,9 +104,13 @@ final class DataCaster
     /**
      * This method is only for Entity.
      *
+     * @TODO if Entity::$casts is readonly, we don't need this method.
+     *
      * @param array<string, string> $types [field => type]
      *
-     * $return $this
+     * @return $this
+     *
+     * @internal
      */
     public function setTypes(array $types): static
     {
@@ -111,8 +121,8 @@ final class DataCaster
 
     /**
      * Provides the ability to cast an item as a specific data type.
-     * Add ? at the beginning of $type  (i.e. ?string) to get `null`
-     * instead of casting $value if ($value === null).
+     * Add ? at the beginning of the type (i.e. ?string) to get `null`
+     * instead of casting $value when $value is null.
      *
      * @param         mixed       $value  The value to convert
      * @param         string      $field  The field name
@@ -143,7 +153,7 @@ final class DataCaster
             if ($this->strict) {
                 $message = 'Field "' . $field . '" is not nullable, but null was passed.';
 
-                throw new TypeError($message);
+                throw new InvalidArgumentException($message);
             }
         }
 
@@ -184,6 +194,6 @@ final class DataCaster
             throw CastException::forInvalidInterface($handler);
         }
 
-        return $handler::$method($value, $params);
+        return $handler::$method($value, $params, $this->helper);
     }
 }

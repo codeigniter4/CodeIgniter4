@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace CodeIgniter\DataConverter;
 
+use Closure;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use InvalidArgumentException;
-use TypeError;
+use Tests\Support\Entity\CustomUser;
+use Tests\Support\Entity\User;
 
 /**
  * @internal
@@ -331,7 +333,7 @@ final class DataConverterTest extends CIUnitTestCase
             'id'   => 'int',
             'date' => 'datetime',
         ];
-        $converter = $this->createDataConverter($types);
+        $converter = $this->createDataConverter($types, [], db_connect());
 
         $dbData = [
             'id'   => '1',
@@ -348,18 +350,18 @@ final class DataConverterTest extends CIUnitTestCase
     {
         $types = [
             'id'   => 'int',
-            'date' => 'datetime[j-M-Y]',
+            'date' => 'datetime[us]',
         ];
-        $converter = $this->createDataConverter($types);
+        $converter = $this->createDataConverter($types, [], db_connect());
 
         $dbData = [
             'id'   => '1',
-            'date' => '15-Feb-2009',
+            'date' => '2009-02-15 00:00:01.123456',
         ];
         $data = $converter->fromDataSource($dbData);
 
         $this->assertInstanceOf(Time::class, $data['date']);
-        $expectedDate = Time::createFromFormat('j-M-Y', '15-Feb-2009');
+        $expectedDate = Time::createFromFormat('Y-m-d H:i:s.u', '2009-02-15 00:00:01.123456');
         $this->assertSame($expectedDate->getTimestamp(), $data['date']->getTimestamp());
     }
 
@@ -470,7 +472,7 @@ final class DataConverterTest extends CIUnitTestCase
 
     public function testInvalidValue(): void
     {
-        $this->expectException(TypeError::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
             '[CodeIgniter\DataCaster\Cast\JsonCast] Invalid value type: bool, and its value: true'
         );
@@ -510,7 +512,7 @@ final class DataConverterTest extends CIUnitTestCase
 
     public function testNotNullable(): void
     {
-        $this->expectException(TypeError::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Field "remark" is not nullable, but null was passed.');
 
         $types = [
@@ -526,8 +528,173 @@ final class DataConverterTest extends CIUnitTestCase
         $converter->toDataSource($dbData);
     }
 
-    private function createDataConverter(array $types, array $handlers = []): DataConverter
+    private function createDataConverter(
+        array $types,
+        array $handlers = [],
+        ?object $helper = null,
+        Closure|string|null $reconstructor = 'reconstruct',
+        Closure|string|null $extractor = null
+    ): DataConverter {
+        return new DataConverter($types, $handlers, $helper, $reconstructor, $extractor);
+    }
+
+    public function testReconstructObjectWithReconstructMethod()
     {
-        return new DataConverter($types, $handlers);
+        $types = [
+            'id'         => 'int',
+            'email'      => 'json-array',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+        $converter = $this->createDataConverter($types, [], db_connect());
+
+        $dbData = [
+            'id'         => '1',
+            'name'       => 'John Smith',
+            'email'      => '["john@example.com"]',
+            'country'    => 'US',
+            'created_at' => '2023-12-02 07:35:57',
+            'updated_at' => '2023-12-02 07:35:57',
+        ];
+        /** @var CustomUser $obj */
+        $obj = $converter->reconstruct(CustomUser::class, $dbData);
+
+        $this->assertIsInt($obj->id);
+        $this->assertIsArray($obj->email);
+        $this->assertInstanceOf(Time::class, $obj->created_at);
+        $this->assertInstanceOf(Time::class, $obj->updated_at);
+    }
+
+    public function testReconstructObjectWithClosure()
+    {
+        $types = [
+            'id'         => 'int',
+            'email'      => 'json-array',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+        $reconstructor = static function ($array) {
+            $user = new User();
+            $user->fill($array);
+
+            return $user;
+        };
+        $converter = $this->createDataConverter($types, [], db_connect(), $reconstructor);
+
+        $dbData = [
+            'id'         => '1',
+            'name'       => 'John Smith',
+            'email'      => '["john@example.com"]',
+            'country'    => 'US',
+            'created_at' => '2023-12-02 07:35:57',
+            'updated_at' => '2023-12-02 07:35:57',
+        ];
+        /** @var CustomUser $obj */
+        $obj = $converter->reconstruct(CustomUser::class, $dbData);
+
+        $this->assertIsInt($obj->id);
+        $this->assertIsArray($obj->email);
+        $this->assertInstanceOf(Time::class, $obj->created_at);
+        $this->assertInstanceOf(Time::class, $obj->updated_at);
+    }
+
+    public function testExtract()
+    {
+        $types = [
+            'id'         => 'int',
+            'email'      => 'json-array',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+        $converter = $this->createDataConverter($types);
+
+        $phpData = [
+            'id'         => 1,
+            'name'       => 'John Smith',
+            'email'      => ['john@example.com'],
+            'country'    => 'US',
+            'created_at' => Time::parse('2023-12-02 07:35:57'),
+            'updated_at' => Time::parse('2023-12-02 07:35:57'),
+        ];
+        $obj = CustomUser::reconstruct($phpData);
+
+        $array = $converter->extract($obj);
+
+        $this->assertSame([
+            'id'         => 1,
+            'name'       => 'John Smith',
+            'email'      => '["john@example.com"]',
+            'country'    => 'US',
+            'created_at' => '2023-12-02 07:35:57',
+            'updated_at' => '2023-12-02 07:35:57',
+        ], $array);
+    }
+
+    public function testExtractWithExtractMethod()
+    {
+        $types = [
+            'id'         => 'int',
+            'email'      => 'json-array',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+        $converter = $this->createDataConverter($types, [], null, 'toRawArray');
+
+        $phpData = [
+            'id'         => 1,
+            'name'       => 'John Smith',
+            'email'      => ['john@example.com'],
+            'country'    => 'US',
+            'created_at' => Time::parse('2023-12-02 07:35:57'),
+            'updated_at' => Time::parse('2023-12-02 07:35:57'),
+        ];
+        $obj = new User($phpData);
+
+        $array = $converter->extract($obj);
+
+        $this->assertSame([
+            'country'    => 'US',
+            'id'         => 1,
+            'name'       => 'John Smith',
+            'email'      => '["john@example.com"]',
+            'created_at' => '2023-12-02 07:35:57',
+            'updated_at' => '2023-12-02 07:35:57',
+        ], $array);
+    }
+
+    public function testExtractWithClosure()
+    {
+        $types = [
+            'id'         => 'int',
+            'email'      => 'json-array',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+        $extractor = static function ($obj) {
+            $array['id']         = $obj->id;
+            $array['name']       = $obj->name;
+            $array['created_at'] = $obj->created_at;
+
+            return $array;
+        };
+        $converter = $this->createDataConverter($types, [], db_connect(), null, $extractor);
+
+        $phpData = [
+            'id'         => 1,
+            'name'       => 'John Smith',
+            'email'      => ['john@example.com'],
+            'country'    => 'US',
+            'created_at' => Time::parse('2023-12-02 07:35:57'),
+            'updated_at' => Time::parse('2023-12-02 07:35:57'),
+        ];
+        $obj = CustomUser::reconstruct($phpData);
+
+        $array = $converter->extract($obj);
+
+        $this->assertSame([
+            'id'         => 1,
+            'name'       => 'John Smith',
+            'created_at' => '2023-12-02 07:35:57',
+        ], $array);
     }
 }
