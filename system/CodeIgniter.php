@@ -879,7 +879,10 @@ class CodeIgniter
         }
 
         // Try to autoload the class
-        if (! class_exists($this->controller, true) || $this->method[0] === '_') {
+        if (
+            ! class_exists($this->controller, true)
+            || ($this->method[0] === '_' && $this->method !== '__invoke')
+        ) {
             throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
         }
     }

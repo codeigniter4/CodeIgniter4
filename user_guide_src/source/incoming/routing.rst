@@ -50,7 +50,7 @@ Examples
 Here are a few basic routing examples.
 
 A URL containing the word **journals** in the first segment will be mapped to the ``\App\Controllers\Blogs`` class,
-and the default method, which is usually ``index()``:
+and the :ref:`default method <routing-default-method>`, which is usually ``index()``:
 
 .. literalinclude:: routing/006.php
 
@@ -654,6 +654,32 @@ then you can change this value to save typing:
 
 .. literalinclude:: routing/046.php
 
+.. _routing-default-method:
+
+Default Method
+==============
+
+This setting is used when the route handler only has the controller name and no
+method name listed. The default value is ``index``.
+::
+
+    // In app/Config/Routing.php
+    public string $defaultMethod = 'index';
+
+.. note:: The ``$defaultMethod`` is also common with Auto Routing.
+    See :ref:`Auto Routing (Improved) <routing-auto-routing-improved-default-method>`
+    or :ref:`Auto Routing (Legacy) <routing-auto-routing-legacy-default-method>`.
+
+If you define the following route::
+
+    $routes->get('/', 'Home');
+
+the ``index()`` method of the ``App\Controllers\Home`` controller is executed
+when the route matches.
+
+.. note:: Method names beginning with ``_`` cannot be used as the default method.
+    However, starting with v4.5.0, ``__invoke`` method is allowed.
+
 Translate URI Dashes
 ====================
 
@@ -831,6 +857,8 @@ in the controllers directory. For example, if the user visits **example.com/admi
 
 See :ref:`Auto Routing in Controllers <controller-auto-routing-improved>` for more info.
 
+.. _routing-auto-routing-improved-default-method:
+
 Default Method
 --------------
 
@@ -956,6 +984,8 @@ in the controllers directory. For example, if the user visits **example.com/admi
 **app/Controllers/Admin/Home.php**, it would be used.
 
 See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>` for more info.
+
+.. _routing-auto-routing-legacy-default-method:
 
 Default Method (Legacy)
 -----------------------
