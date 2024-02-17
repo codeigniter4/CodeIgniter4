@@ -7,7 +7,7 @@ use to test your application. Those details can be found in the documentation.
 
 ## Resources
 
-* [CodeIgniter 4 User Guide on Testing](https://codeigniter4.github.io/userguide/testing/index.html)
+* [CodeIgniter 4 User Guide on Testing](https://codeigniter.com/user_guide/testing/index.html)
 * [PHPUnit docs](https://phpunit.de/documentation.html)
 * [Any tutorials on Unit testing in CI4?](https://forum.codeigniter.com/showthread.php?tid=81830)
 

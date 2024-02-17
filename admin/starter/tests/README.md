@@ -7,7 +7,7 @@ use to test your application. Those details can be found in the documentation.
 
 ## Resources
 
-* [CodeIgniter 4 User Guide on Testing](https://codeigniter4.github.io/userguide/testing/index.html)
+* [CodeIgniter 4 User Guide on Testing](https://codeigniter.com/user_guide/testing/index.html)
 * [PHPUnit docs](https://phpunit.de/documentation.html)
 * [Any tutorials on Unit testing in CI4?](https://forum.codeigniter.com/showthread.php?tid=81830)
 
@@ -38,7 +38,7 @@ In order to set up the database edit the details for the `tests` group in
 **app/Config/Database.php** or **.env**.
 Make sure that you provide a database engine that is currently running on your machine.
 More details on a test database setup are in the
-[Testing Your Database](https://codeigniter4.github.io/userguide/testing/database.html) section of the documentation.
+[Testing Your Database](https://codeigniter.com/user_guide/testing/database.html) section of the documentation.
 
 ## Running the tests
 
@@ -114,5 +114,5 @@ Review the links above and always pay attention to your code coverage.
 Tests can include migrating, seeding, and testing against a mock or live database.
 Be sure to modify the test case (or create your own) to point to your seed and migrations
 and include any additional steps to be run before tests in the `setUp()` method.
-See [Testing Your Database](https://codeigniter4.github.io/userguide/testing/database.html)
+See [Testing Your Database](https://codeigniter.com/user_guide/testing/database.html)
 for details.
