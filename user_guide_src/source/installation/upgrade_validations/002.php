@@ -8,9 +8,11 @@ class Form extends Controller
 {
     public function index()
     {
-        helper(['form', 'url']);
+        helper('form');
 
-        if (! $this->validate([
+        $data = $this->request->getPost();
+
+        if (! $this->validateData($data, [
             // Validation rules
         ])) {
             return view('myform');

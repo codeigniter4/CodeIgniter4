@@ -11,7 +11,7 @@ class Upload extends BaseController
 
     public function do_upload()
     {
-        $this->validate([
+        $this->validateData([], [
             'userfile' => [
                 'uploaded[userfile]',
                 'max_size[userfile,100]',

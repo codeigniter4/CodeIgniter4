@@ -998,7 +998,7 @@ file upload related rules::
     <input type="file" name="avatar">
 
     // In the controller
-    $this->validate([
+    $this->validateData([], [
         'avatar' => 'uploaded[avatar]|max_size[avatar,1024]',
     ]);
 
