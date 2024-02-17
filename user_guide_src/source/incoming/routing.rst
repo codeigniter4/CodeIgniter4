@@ -686,6 +686,8 @@ to only those defined by you, by setting the ``$autoRoute`` property to false:
 .. warning:: If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
     requests. If the URI is accessible by the GET method, the CSRF protection will not work.
 
+.. _404-override:
+
 404 Override
 ============
 
@@ -701,10 +703,11 @@ valid class/method pair, or a Closure:
 
 .. literalinclude:: routing/069.php
 
-.. note:: The 404 Override feature does not change the Response status code to ``404``.
-    If you don't set the status code in the controller you set, the default status code ``200``
-    will be returned. See :php:meth:`CodeIgniter\\HTTP\\Response::setStatusCode()` for
-    information on how to set the status code.
+.. note:: Starting with v4.5.0, the 404 Override feature sets the Response status
+    code to ``404`` by default. In previous versions, the code was ``200``.
+    If you want to change the status code in the controller, see
+    :php:meth:`CodeIgniter\\HTTP\\Response::setStatusCode()` for information on
+    how to set the status code.
 
 Route Processing by Priority
 ============================

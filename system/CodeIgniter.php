@@ -938,6 +938,8 @@ class CodeIgniter
      */
     protected function display404errors(PageNotFoundException $e)
     {
+        $this->response->setStatusCode($e->getCode());
+
         // Is there a 404 Override available?
         if ($override = $this->router->get404Override()) {
             $returned = null;
@@ -965,9 +967,6 @@ class CodeIgniter
 
             return $this->response;
         }
-
-        // Display 404 Errors
-        $this->response->setStatusCode($e->getCode());
 
         $this->outputBufferingEnd();
 

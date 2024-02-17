@@ -213,10 +213,29 @@ using them, upgrade your code. See :ref:`ChangeLog <v450-removed-deprecated-item
 Breaking Enhancements
 *********************
 
-- The method signatures of ``Validation::run()`` and ``ValidationInterface::run()``
-  have been changed. The ``?string`` typehint on the ``$dbGroup`` parameter was
-  removed. Extending classes should likewise remove the parameter so as not to
-  break LSP.
+.. _upgrade-450-404-override:
+
+404 Override Status Code
+========================
+
+In previous versions, :ref:`404-override` returned responses with the status code
+``200`` by default. Now it returns ``404`` by default.
+
+If you want ``200``, you need to set it in the controller::
+
+    $routes->set404Override(static function () {
+        response()->setStatusCode(200);
+
+        echo view('my_errors/not_found.html');
+    });
+
+Validation::run() Signature
+===========================
+
+The method signatures of ``Validation::run()`` and ``ValidationInterface::run()``
+have been changed. The ``?string`` typehint on the ``$dbGroup`` parameter was
+removed. Extending classes should likewise remove the parameter so as not to
+break LSP.
 
 Project Files
 *************
