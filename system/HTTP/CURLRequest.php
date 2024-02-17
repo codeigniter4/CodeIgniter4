@@ -389,7 +389,7 @@ class CURLRequest extends OutgoingRequest
         // Set the string we want to break our response from
         $breakString = "\r\n\r\n";
 
-        if (strpos($output, 'HTTP/1.1 100 Continue') === 0) {
+        while (strpos($output, 'HTTP/1.1 100 Continue') === 0) {
             $output = substr($output, strpos($output, $breakString) + 4);
         }
 
