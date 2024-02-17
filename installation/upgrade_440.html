@@ -340,7 +340,7 @@ method has been added to ensure that validated data is obtained.</p>
 use the new <code class="docutils literal notranslate"><span class="pre">Validation::getValidated()</span></code> method to get the validated data.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In Controller.</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validateData</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="p">[</span>
     <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
     <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[10]&#39;</span><span class="p">,</span>
 <span class="p">]))</span> <span class="p">{</span>

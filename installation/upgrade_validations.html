@@ -336,9 +336,10 @@ not prioritized, and are checked in the order in which they are listed.</p></li>
 <li><p>Within the controller you have to change the following:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;helper(array('form',</span> <span class="pre">'url'));</span></code> to <code class="docutils literal notranslate"><span class="pre">helper(['form',</span> <span class="pre">'url']);</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;helper(array('form',</span> <span class="pre">'url'));</span></code> to <code class="docutils literal notranslate"><span class="pre">helper('form');</span></code></p></li>
 <li><p>remove the line <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('form_validation');</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">($this-&gt;form_validation-&gt;run()</span> <span class="pre">==</span> <span class="pre">FALSE)</span></code> to <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(!</span> <span class="pre">$this-&gt;validate([]))</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">($this-&gt;form_validation-&gt;run()</span> <span class="pre">==</span> <span class="pre">FALSE)</span></code> to <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(!</span> <span class="pre">$this-&gt;validateData($data,</span> <span class="pre">$rules))</span></code>
+where <code class="docutils literal notranslate"><span class="pre">$data</span></code> is the data to validate, typically, the POST data <code class="docutils literal notranslate"><span class="pre">$this-&gt;request-&gt;getPost()</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;view('myform');</span></code> to <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">view('myform',</span> <span class="pre">['validation'</span> <span class="pre">=&gt;</span> <span class="pre">$this-&gt;validator,]);</span></code></p></li>
 </ul>
 </div></blockquote>
@@ -346,7 +347,7 @@ not prioritized, and are checked in the order in which they are listed.</p></li>
 <li><p>You have to change the validation rules. The new syntax is to set the rules as array in the controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$isValid</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
+<span class="nv">$isValid</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validateData</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="p">[</span>
     <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[3]&#39;</span><span class="p">,</span>
     <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">,</span>
     <span class="s1">&#39;phone&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|numeric|max_length[10]&#39;</span><span class="p">,</span>
@@ -458,9 +459,11 @@ not prioritized, and are checked in the order in which they are listed.</p></li>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nx">helper</span><span class="p">([</span><span class="s1">&#39;form&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">]);</span>
+        <span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">);</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">();</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validateData</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="p">[</span>
             <span class="c1">// Validation rules</span>
         <span class="p">]))</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;myform&#39;</span><span class="p">);</span>

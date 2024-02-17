@@ -941,7 +941,7 @@ the validation rules.</p>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In Controller.</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validateData</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="p">[</span>
     <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
     <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[10]&#39;</span><span class="p">,</span>
 <span class="p">]))</span> <span class="p">{</span>
@@ -1925,7 +1925,7 @@ file upload related rules:</p>
 <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;avatar&quot;</span><span class="o">&gt;</span>
 
 <span class="c1">// In the controller</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validateData</span><span class="p">([],</span> <span class="p">[</span>
     <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;uploaded[avatar]|max_size[avatar,1024]&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
