@@ -191,7 +191,8 @@ Explanation of Values:
                  * ``datetime-us`` - date and time with microsecond format
                  * ``time``        - time format
                  This can be used since v4.5.0, and you can get the value, e.g., ``$db->dateFormat['datetime']``.
-                 Currently, the database drivers do not use these values directly, but just provide the values.
+                 Currently, the database drivers do not use these values directly,
+                 but :ref:`Model <model-saving-dates>` uses them.
 ================ ===========================================================================================================
 
 .. _DateTime format: https://www.php.net/manual/en/datetime.format.php

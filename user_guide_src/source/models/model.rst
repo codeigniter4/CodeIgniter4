@@ -458,6 +458,21 @@ model's ``save()`` method to inspect the class, grab any public and private prop
 .. note:: If you find yourself working with Entities a lot, CodeIgniter provides a built-in :doc:`Entity class </models/entities>`
     that provides several handy features that make developing Entities simpler.
 
+.. _model-saving-dates:
+
+Saving Dates
+------------
+
+.. versionadded:: 4.5.0
+
+When saving data, if you pass :doc:`Time <../libraries/time>` instances, they are
+converted to strings with the format defined in ``dateFormat['datetime']`` and
+``dateFormat['date']`` in the
+:ref:`database configuration <database-config-explanation-of-values>`.
+
+.. note:: Prior to v4.5.0, the date/time formats were hard coded as ``Y-m-d H:i:s``
+    and ``Y-m-d`` in the Model class.
+
 Deleting Data
 =============
 
