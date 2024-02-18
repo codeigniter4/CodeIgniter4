@@ -186,11 +186,6 @@ class CodeIgniter
      */
     public function initialize()
     {
-        // Run this check for manual installations
-        if (! is_file(COMPOSER_PATH)) {
-            $this->resolvePlatformExtensions(); // @codeCoverageIgnore
-        }
-
         // Set default locale on the server
         Locale::setDefault($this->config->defaultLocale ?? 'en');
 
@@ -206,6 +201,8 @@ class CodeIgniter
      * @throws FrameworkException
      *
      * @codeCoverageIgnore
+     *
+     * @deprecated 4.5.0 Moved to system/bootstrap.php.
      */
     protected function resolvePlatformExtensions()
     {
