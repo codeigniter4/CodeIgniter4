@@ -39,6 +39,10 @@ unset($source);
 require CONFIGPATH . 'Paths.php';
 $paths = new Paths();
 
+// Load environment settings from .env files into $_SERVER and $_ENV
+require_once $paths->systemDirectory . '/Config/DotEnv.php';
+(new DotEnv($paths->appDirectory . '/../'))->load();
+
 // Define necessary framework path constants
 defined('APPPATH')       || define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 defined('WRITEPATH')     || define('WRITEPATH', realpath(rtrim($paths->writableDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
@@ -50,6 +54,11 @@ defined('TESTPATH')      || define('TESTPATH', realpath(HOMEPATH . 'tests/') . D
 defined('SUPPORTPATH')   || define('SUPPORTPATH', realpath(TESTPATH . '_support/') . DIRECTORY_SEPARATOR);
 defined('COMPOSER_PATH') || define('COMPOSER_PATH', (string) realpath(HOMEPATH . 'vendor/autoload.php'));
 defined('VENDORPATH')    || define('VENDORPATH', realpath(HOMEPATH . 'vendor') . DIRECTORY_SEPARATOR);
+
+// Load environment bootstrap
+if (is_file(APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php')) {
+    require_once APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php';
+}
 
 // Load Common.php from App then System
 if (is_file(APPPATH . 'Common.php')) {

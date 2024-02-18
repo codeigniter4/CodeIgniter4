@@ -186,9 +186,6 @@ class CodeIgniter
      */
     public function initialize()
     {
-        // Define environment variables
-        $this->bootstrapEnvironment();
-
         // Setup Exception Handling
         Services::exceptions()->initialize();
 
@@ -584,6 +581,8 @@ class CodeIgniter
      * is wrong. At the very least, they should have error reporting setup.
      *
      * @return void
+     *
+     * @deprecated 4.5.0 Moved to system/bootstrap.php.
      */
     protected function bootstrapEnvironment()
     {

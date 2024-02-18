@@ -36,17 +36,19 @@ require FCPATH . '../app/Config/Paths.php';
 
 $paths = new Config\Paths();
 
-// Location of the framework bootstrap file.
-require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
-
 // Load environment settings from .env files into $_SERVER and $_ENV
-require_once SYSTEMPATH . 'Config/DotEnv.php';
-(new CodeIgniter\Config\DotEnv(ROOTPATH))->load();
+require_once $paths->systemDirectory . '/Config/DotEnv.php';
+(new CodeIgniter\Config\DotEnv($paths->appDirectory . '/../'))->load();
 
 // Define ENVIRONMENT
 if (! defined('ENVIRONMENT')) {
-    define('ENVIRONMENT', env('CI_ENVIRONMENT', 'production'));
+    $env = $_ENV['CI_ENVIRONMENT'] ?? $_SERVER['CI_ENVIRONMENT'] ?? getenv('CI_ENVIRONMENT');
+    define('ENVIRONMENT', ($env !== false) ? $env : 'production');
+    unset($env);
 }
+
+// Location of the framework bootstrap file.
+require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 // Load Config Cache
 // $factoriesCache = new \CodeIgniter\Cache\FactoriesCache();
