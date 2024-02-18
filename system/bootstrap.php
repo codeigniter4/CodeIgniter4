@@ -26,11 +26,10 @@ use Config\Services;
  * so they are available in the config files that are loaded.
  */
 
+/** @var Paths $paths */
+
 // The path to the application directory.
 if (! defined('APPPATH')) {
-    /**
-     * @var Paths $paths
-     */
     define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
 
@@ -41,25 +40,16 @@ if (! defined('ROOTPATH')) {
 
 // The path to the system directory.
 if (! defined('SYSTEMPATH')) {
-    /**
-     * @var Paths $paths
-     */
     define('SYSTEMPATH', realpath(rtrim($paths->systemDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
 
 // The path to the writable directory.
 if (! defined('WRITEPATH')) {
-    /**
-     * @var Paths $paths
-     */
     define('WRITEPATH', realpath(rtrim($paths->writableDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
 
 // The path to the tests directory
 if (! defined('TESTPATH')) {
-    /**
-     * @var Paths $paths
-     */
     define('TESTPATH', realpath(rtrim($paths->testsDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
 
