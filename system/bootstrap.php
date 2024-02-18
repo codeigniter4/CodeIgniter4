@@ -11,6 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+use CodeIgniter\Exceptions\FrameworkException;
 use Config\Autoload;
 use Config\Modules;
 use Config\Paths;
@@ -144,5 +145,37 @@ Services::autoloader()->loadHelpers();
 
 Services::exceptions()->initialize();
 
-// Initialize Kint
+/*
+ * ---------------------------------------------------------------
+ * CHECK SYSTEM FOR MISSING REQUIRED PHP EXTENSIONS
+ * ---------------------------------------------------------------
+ */
+
+// Run this check for manual installations
+if (! is_file(COMPOSER_PATH)) {
+    $requiredExtensions = [
+        'intl',
+        'json',
+        'mbstring',
+    ];
+
+    $missingExtensions = [];
+
+    foreach ($requiredExtensions as $extension) {
+        if (! extension_loaded($extension)) {
+            $missingExtensions[] = $extension;
+        }
+    }
+
+    if ($missingExtensions !== []) {
+        throw FrameworkException::forMissingExtension(implode(', ', $missingExtensions));
+    }
+}
+
+/*
+ * ---------------------------------------------------------------
+ * INITIALIZE KINT
+ * ---------------------------------------------------------------
+ */
+
 Services::autoloader()->initializeKint(CI_DEBUG);
