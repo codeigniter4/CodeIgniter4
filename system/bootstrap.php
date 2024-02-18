@@ -106,3 +106,4 @@ require_once APPPATH . 'Config/Services.php';
 // Initialize and register the loader with the SPL autoloader stack.
 Services::autoloader()->initialize(new Autoload(), new Modules())->register();
 Services::autoloader()->loadHelpers();
+Services::autoloader()->initializeKint(CI_DEBUG);
