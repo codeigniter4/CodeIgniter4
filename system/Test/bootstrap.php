@@ -160,11 +160,6 @@ Services::exceptions()->initialize();
 
 Services::autoloader()->initializeKint(CI_DEBUG);
 
-// Now load Composer's if it's available
-if (is_file(COMPOSER_PATH)) {
-    require_once COMPOSER_PATH;
-}
-
 /*
  * ---------------------------------------------------------------
  * LOAD ROUTES
