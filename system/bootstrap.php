@@ -18,6 +18,18 @@ use Config\Services;
 
 /*
  * ---------------------------------------------------------------
+ * DEFINE ENVIRONMENT
+ * ---------------------------------------------------------------
+ */
+
+if (! defined('ENVIRONMENT')) {
+    $env = $_ENV['CI_ENVIRONMENT'] ?? $_SERVER['CI_ENVIRONMENT'] ?? getenv('CI_ENVIRONMENT');
+    define('ENVIRONMENT', ($env !== false) ? $env : 'production');
+    unset($env);
+}
+
+/*
+ * ---------------------------------------------------------------
  * SETUP OUR PATH CONSTANTS
  * ---------------------------------------------------------------
  *
