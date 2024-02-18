@@ -26,7 +26,6 @@ use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Test\Mock\MockIncomingRequest;
 use CodeIgniter\Test\Mock\MockSecurity;
 use CodeIgniter\Test\Mock\MockSession;
@@ -710,8 +709,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $config->CSPEnabled = true;
 
         // Initialize Kint
-        $app = new MockCodeIgniter($config);
-        $app->initialize();
+        Services::autoloader()->initializeKint(CI_DEBUG);
 
         $cliDetection        = Kint::$cli_detection;
         Kint::$cli_detection = false;
@@ -736,8 +734,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $config->CSPEnabled = true;
 
         // Initialize Kint
-        $app = new MockCodeIgniter($config);
-        $app->initialize();
+        Services::autoloader()->initializeKint(CI_DEBUG);
 
         Kint::$cli_detection = false;
 
