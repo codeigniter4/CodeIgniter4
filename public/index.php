@@ -1,6 +1,11 @@
 <?php
 
-// Check PHP version.
+/*
+ *---------------------------------------------------------------
+ * CHECK PHP VERSION
+ *---------------------------------------------------------------
+ */
+
 $minPhpVersion = '8.1'; // If you update this, don't forget to update `spark`.
 if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
     $message = sprintf(
@@ -11,6 +16,12 @@ if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
 
     exit($message);
 }
+
+/*
+ *---------------------------------------------------------------
+ * SET THE CURRENT DIRECTORY
+ *---------------------------------------------------------------
+ */
 
 // Path to the front controller (this file)
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
@@ -29,25 +40,26 @@ if (getcwd() . DIRECTORY_SEPARATOR !== FCPATH) {
  * and fires up an environment-specific bootstrapping.
  */
 
-// Load our paths config file
+// LOAD OUR PATHS CONFIG FILE
 // This is the line that might need to be changed, depending on your folder structure.
 require FCPATH . '../app/Config/Paths.php';
 // ^^^ Change this line if you move your application folder
 
 $paths = new Config\Paths();
 
+// LOAD DOTENV FILE
 // Load environment settings from .env files into $_SERVER and $_ENV
 require_once $paths->systemDirectory . '/Config/DotEnv.php';
 (new CodeIgniter\Config\DotEnv($paths->appDirectory . '/../'))->load();
 
-// Define ENVIRONMENT
+// DEFINE ENVIRONMENT
 if (! defined('ENVIRONMENT')) {
     $env = $_ENV['CI_ENVIRONMENT'] ?? $_SERVER['CI_ENVIRONMENT'] ?? getenv('CI_ENVIRONMENT');
     define('ENVIRONMENT', ($env !== false) ? $env : 'production');
     unset($env);
 }
 
-// Location of the framework bootstrap file.
+// LOAD THE FRAMEWORK BOOTSTRAP FILE
 require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 // Load Config Cache
