@@ -52,11 +52,6 @@ $paths = new Paths();
 require_once $paths->systemDirectory . '/Config/DotEnv.php';
 (new DotEnv($paths->appDirectory . '/../'))->load();
 
-// Set environment values that would otherwise stop the framework from functioning during tests.
-if (! isset($_SERVER['app.baseURL'])) {
-    $_SERVER['app.baseURL'] = 'http://example.com/';
-}
-
 /*
  * ---------------------------------------------------------------
  * SETUP OUR PATH CONSTANTS
