@@ -12,7 +12,7 @@
 
 /*
  * --------------------------------------------------------------------
- * CodeIgniter command-line tools
+ * CODEIGNITER COMMAND-LINE TOOLS
  * --------------------------------------------------------------------
  * The main entry point into the CLI system and allows you to run
  * commands and perform maintenance on your application.
@@ -26,7 +26,12 @@ if (strpos(PHP_SAPI, 'cgi') === 0) {
     exit("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
 }
 
-// Check PHP version.
+/*
+ *---------------------------------------------------------------
+ * CHECK PHP VERSION
+ *---------------------------------------------------------------
+ */
+
 $minPhpVersion = '8.1'; // If you update this, don't forget to update `public/index.php`.
 if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
     $message = sprintf(
@@ -41,6 +46,12 @@ if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
 // We want errors to be shown when using it from the CLI.
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
+
+/*
+ *---------------------------------------------------------------
+ * SET THE CURRENT DIRECTORY
+ *---------------------------------------------------------------
+ */
 
 // Path to the front controller
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR);
@@ -57,34 +68,46 @@ chdir(FCPATH);
  * and fires up an environment-specific bootstrapping.
  */
 
-// Load our paths config file
+// LOAD OUR PATHS CONFIG FILE
 // This is the line that might need to be changed, depending on your folder structure.
 require FCPATH . '../app/Config/Paths.php';
 // ^^^ Change this line if you move your application folder
 
 $paths = new Config\Paths();
 
+// LOAD DOTENV FILE
 // Load environment settings from .env files into $_SERVER and $_ENV
 require_once $paths->systemDirectory . '/Config/DotEnv.php';
 (new CodeIgniter\Config\DotEnv($paths->appDirectory . '/../'))->load();
 
-// Define ENVIRONMENT
+// DEFINE ENVIRONMENT
 if (! defined('ENVIRONMENT')) {
     $env = $_ENV['CI_ENVIRONMENT'] ?? $_SERVER['CI_ENVIRONMENT'] ?? getenv('CI_ENVIRONMENT');
     define('ENVIRONMENT', ($env !== false) ? $env : 'production');
     unset($env);
 }
 
-// Location of the framework bootstrap file.
+// LOAD THE FRAMEWORK BOOTSTRAP FILE
 require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
-// Grab our CodeIgniter
+/*
+ * ---------------------------------------------------------------
+ * GRAB OUR CODEIGNITER INSTANCE
+ * ---------------------------------------------------------------
+ */
+
 $app = Config\Services::codeigniter();
 $app->initialize();
 
-// Grab our Console
+/*
+ * ---------------------------------------------------------------
+ * GRAB OUR CONSOLE
+ * ---------------------------------------------------------------
+ */
+
 $console = new CodeIgniter\CLI\Console();
 
+// SHOW HEADER
 // Show basic information before we do anything else.
 if (is_int($suppress = array_search('--no-header', $_SERVER['argv'], true))) {
     unset($_SERVER['argv'][$suppress]); // @codeCoverageIgnore
@@ -92,6 +115,12 @@ if (is_int($suppress = array_search('--no-header', $_SERVER['argv'], true))) {
 }
 
 $console->showHeader($suppress);
+
+/*
+ *---------------------------------------------------------------
+ * EXECUTE THE COMMAND
+ *---------------------------------------------------------------
+ */
 
 // fire off the command in the main framework.
 $exit = $console->run();

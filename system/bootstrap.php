@@ -76,13 +76,19 @@ if (is_file(APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php')) {
 
 /*
  * ---------------------------------------------------------------
- * GRAB OUR CONSTANTS & COMMON
+ * GRAB OUR CONSTANTS
  * ---------------------------------------------------------------
  */
 
 if (! defined('APP_NAMESPACE')) {
     require_once APPPATH . 'Config/Constants.php';
 }
+
+/*
+ * ---------------------------------------------------------------
+ * LOAD COMMON FUNCTIONS
+ * ---------------------------------------------------------------
+ */
 
 // Require app/Common.php file if exists.
 if (is_file(APPPATH . 'Common.php')) {
