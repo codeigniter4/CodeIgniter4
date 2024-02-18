@@ -34,25 +34,6 @@ define('ENVIRONMENT', 'testing');
 defined('CI_DEBUG') || define('CI_DEBUG', true);
 
 /*
- *---------------------------------------------------------------
- * BOOTSTRAP THE APPLICATION
- *---------------------------------------------------------------
- * This process sets up the path constants, loads and registers
- * our autoloader, along with Composer's, loads our constants
- * and fires up an environment-specific bootstrapping.
- */
-
-// LOAD OUR PATHS CONFIG FILE
-// Load framework paths from their config file
-require CONFIGPATH . 'Paths.php';
-$paths = new Paths();
-
-// LOAD DOTENV FILE
-// Load environment settings from .env files into $_SERVER and $_ENV
-require_once $paths->systemDirectory . '/Config/DotEnv.php';
-(new DotEnv($paths->appDirectory . '/../'))->load();
-
-/*
  * ---------------------------------------------------------------
  * SETUP OUR PATH CONSTANTS
  * ---------------------------------------------------------------
@@ -84,6 +65,25 @@ defined('FCPATH') || define('FCPATH', realpath(PUBLICPATH) . DIRECTORY_SEPARATOR
 defined('SUPPORTPATH')   || define('SUPPORTPATH', realpath(TESTPATH . '_support/') . DIRECTORY_SEPARATOR);
 defined('COMPOSER_PATH') || define('COMPOSER_PATH', (string) realpath(HOMEPATH . 'vendor/autoload.php'));
 defined('VENDORPATH')    || define('VENDORPATH', realpath(HOMEPATH . 'vendor') . DIRECTORY_SEPARATOR);
+
+/*
+ *---------------------------------------------------------------
+ * BOOTSTRAP THE APPLICATION
+ *---------------------------------------------------------------
+ * This process sets up the path constants, loads and registers
+ * our autoloader, along with Composer's, loads our constants
+ * and fires up an environment-specific bootstrapping.
+ */
+
+// LOAD OUR PATHS CONFIG FILE
+// Load framework paths from their config file
+require CONFIGPATH . 'Paths.php';
+$paths = new Paths();
+
+// LOAD DOTENV FILE
+// Load environment settings from .env files into $_SERVER and $_ENV
+require_once $paths->systemDirectory . '/Config/DotEnv.php';
+(new DotEnv($paths->appDirectory . '/../'))->load();
 
 /*
  * ---------------------------------------------------------------
