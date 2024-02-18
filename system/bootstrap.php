@@ -153,15 +153,13 @@ Services::exceptions()->initialize();
 
 // Run this check for manual installations
 if (! is_file(COMPOSER_PATH)) {
-    $requiredExtensions = [
+    $missingExtensions = [];
+
+    foreach ([
         'intl',
         'json',
         'mbstring',
-    ];
-
-    $missingExtensions = [];
-
-    foreach ($requiredExtensions as $extension) {
+    ] as $extension) {
         if (! extension_loaded($extension)) {
             $missingExtensions[] = $extension;
         }
@@ -170,6 +168,8 @@ if (! is_file(COMPOSER_PATH)) {
     if ($missingExtensions !== []) {
         throw FrameworkException::forMissingExtension(implode(', ', $missingExtensions));
     }
+
+    unset($missingExtensions);
 }
 
 /*
