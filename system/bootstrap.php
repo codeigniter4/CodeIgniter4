@@ -68,27 +68,6 @@ if (! defined('TESTPATH')) {
 
 /*
  * ---------------------------------------------------------------
- * LOAD ENVIRONMENT BOOTSTRAP
- * ---------------------------------------------------------------
- *
- * Load any custom boot files based upon the current environment.
- * If no boot file exists, we shouldn't continue because something
- * is wrong. At the very least, they should have error reporting setup.
- */
-
-if (is_file(APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php')) {
-    require_once APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php';
-} else {
-    // @codeCoverageIgnoreStart
-    header('HTTP/1.1 503 Service Unavailable.', true, 503);
-    echo 'The application environment is not set correctly.';
-
-    exit(EXIT_ERROR); // EXIT_ERROR
-    // @codeCoverageIgnoreEnd
-}
-
-/*
- * ---------------------------------------------------------------
  * GRAB OUR CONSTANTS
  * ---------------------------------------------------------------
  */
