@@ -186,9 +186,6 @@ class CodeIgniter
      */
     public function initialize()
     {
-        // Setup Exception Handling
-        Services::exceptions()->initialize();
-
         // Run this check for manual installations
         if (! is_file(COMPOSER_PATH)) {
             $this->resolvePlatformExtensions(); // @codeCoverageIgnore
