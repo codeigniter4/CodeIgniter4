@@ -21,10 +21,51 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 
+/*
+ * ---------------------------------------------------------------
+ * DEFINE ENVIRONMENT
+ * ---------------------------------------------------------------
+ */
+
 // Make sure it recognizes that we're testing.
 $_SERVER['CI_ENVIRONMENT'] = 'testing';
 define('ENVIRONMENT', 'testing');
+
 defined('CI_DEBUG') || define('CI_DEBUG', true);
+
+/*
+ *---------------------------------------------------------------
+ * BOOTSTRAP THE APPLICATION
+ *---------------------------------------------------------------
+ * This process sets up the path constants, loads and registers
+ * our autoloader, along with Composer's, loads our constants
+ * and fires up an environment-specific bootstrapping.
+ */
+
+// LOAD OUR PATHS CONFIG FILE
+// Load framework paths from their config file
+require CONFIGPATH . 'Paths.php';
+$paths = new Paths();
+
+// LOAD DOTENV FILE
+// Load environment settings from .env files into $_SERVER and $_ENV
+require_once $paths->systemDirectory . '/Config/DotEnv.php';
+(new DotEnv($paths->appDirectory . '/../'))->load();
+
+// Set environment values that would otherwise stop the framework from functioning during tests.
+if (! isset($_SERVER['app.baseURL'])) {
+    $_SERVER['app.baseURL'] = 'http://example.com/';
+}
+
+/*
+ * ---------------------------------------------------------------
+ * SETUP OUR PATH CONSTANTS
+ * ---------------------------------------------------------------
+ *
+ * The path constants provide convenient access to the folders
+ * throughout the application. We have to setup them up here
+ * so they are available in the config files that are loaded.
+ */
 
 // Often these constants are pre-defined, but query the current directory structure as a fallback
 defined('HOMEPATH') || define('HOMEPATH', realpath(rtrim(getcwd(), '\\/ ')) . DIRECTORY_SEPARATOR);
@@ -35,30 +76,47 @@ defined('CONFIGPATH') || define('CONFIGPATH', realpath($source . 'app/Config') .
 defined('PUBLICPATH') || define('PUBLICPATH', realpath($source . 'public') . DIRECTORY_SEPARATOR);
 unset($source);
 
-// Load framework paths from their config file
-require CONFIGPATH . 'Paths.php';
-$paths = new Paths();
-
-// Load environment settings from .env files into $_SERVER and $_ENV
-require_once $paths->systemDirectory . '/Config/DotEnv.php';
-(new DotEnv($paths->appDirectory . '/../'))->load();
-
 // Define necessary framework path constants
-defined('APPPATH')       || define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
-defined('WRITEPATH')     || define('WRITEPATH', realpath(rtrim($paths->writableDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
-defined('SYSTEMPATH')    || define('SYSTEMPATH', realpath(rtrim($paths->systemDirectory, '\\/')) . DIRECTORY_SEPARATOR);
-defined('ROOTPATH')      || define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
-defined('CIPATH')        || define('CIPATH', realpath(SYSTEMPATH . '../') . DIRECTORY_SEPARATOR);
-defined('FCPATH')        || define('FCPATH', realpath(PUBLICPATH) . DIRECTORY_SEPARATOR);
-defined('TESTPATH')      || define('TESTPATH', realpath(HOMEPATH . 'tests/') . DIRECTORY_SEPARATOR);
+defined('APPPATH')    || define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
+defined('ROOTPATH')   || define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
+defined('SYSTEMPATH') || define('SYSTEMPATH', realpath(rtrim($paths->systemDirectory, '\\/')) . DIRECTORY_SEPARATOR);
+defined('WRITEPATH')  || define('WRITEPATH', realpath(rtrim($paths->writableDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
+defined('TESTPATH')   || define('TESTPATH', realpath(HOMEPATH . 'tests/') . DIRECTORY_SEPARATOR);
+
+defined('CIPATH') || define('CIPATH', realpath(SYSTEMPATH . '../') . DIRECTORY_SEPARATOR);
+defined('FCPATH') || define('FCPATH', realpath(PUBLICPATH) . DIRECTORY_SEPARATOR);
+
 defined('SUPPORTPATH')   || define('SUPPORTPATH', realpath(TESTPATH . '_support/') . DIRECTORY_SEPARATOR);
 defined('COMPOSER_PATH') || define('COMPOSER_PATH', (string) realpath(HOMEPATH . 'vendor/autoload.php'));
 defined('VENDORPATH')    || define('VENDORPATH', realpath(HOMEPATH . 'vendor') . DIRECTORY_SEPARATOR);
 
-// Load environment bootstrap
+/*
+ * ---------------------------------------------------------------
+ * LOAD ENVIRONMENT BOOTSTRAP
+ * ---------------------------------------------------------------
+ *
+ * Load any custom boot files based upon the current environment.
+ * If no boot file exists, we shouldn't continue because something
+ * is wrong. At the very least, they should have error reporting setup.
+ */
+
 if (is_file(APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php')) {
     require_once APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php';
 }
+
+/*
+ * ---------------------------------------------------------------
+ * GRAB OUR CONSTANTS
+ * ---------------------------------------------------------------
+ */
+
+require_once APPPATH . 'Config/Constants.php';
+
+/*
+ * ---------------------------------------------------------------
+ * LOAD COMMON FUNCTIONS
+ * ---------------------------------------------------------------
+ */
 
 // Load Common.php from App then System
 if (is_file(APPPATH . 'Common.php')) {
@@ -67,15 +125,18 @@ if (is_file(APPPATH . 'Common.php')) {
 
 require_once SYSTEMPATH . 'Common.php';
 
-// Set environment values that would otherwise stop the framework from functioning during tests.
-if (! isset($_SERVER['app.baseURL'])) {
-    $_SERVER['app.baseURL'] = 'http://example.com/';
-}
+/*
+ * ---------------------------------------------------------------
+ * LOAD OUR AUTOLOADER
+ * ---------------------------------------------------------------
+ *
+ * The autoloader allows all of the pieces to work together in the
+ * framework. We have to load it here, though, so that the config
+ * files can use the path constants.
+ */
 
-// Load necessary components
 require_once SYSTEMPATH . 'Config/AutoloadConfig.php';
 require_once APPPATH . 'Config/Autoload.php';
-require_once APPPATH . 'Config/Constants.php';
 require_once SYSTEMPATH . 'Modules/Modules.php';
 require_once APPPATH . 'Config/Modules.php';
 
@@ -88,10 +149,20 @@ require_once APPPATH . 'Config/Services.php';
 Services::autoloader()->initialize(new Autoload(), new Modules())->register();
 Services::autoloader()->loadHelpers();
 
-// Setup Exception Handling
+/*
+ * ---------------------------------------------------------------
+ * SET EXCEPTION AND ERROR HANDLERS
+ * ---------------------------------------------------------------
+ */
+
 Services::exceptions()->initialize();
 
-// Initialize Kint
+/*
+ * ---------------------------------------------------------------
+ * INITIALIZE KINT
+ * ---------------------------------------------------------------
+ */
+
 Services::autoloader()->initializeKint(CI_DEBUG);
 
 // Now load Composer's if it's available
@@ -99,10 +170,10 @@ if (is_file(COMPOSER_PATH)) {
     require_once COMPOSER_PATH;
 }
 
-// Load environment settings from .env files into $_SERVER and $_ENV
-require_once SYSTEMPATH . 'Config/DotEnv.php';
-
-$env = new DotEnv(ROOTPATH);
-$env->load();
+/*
+ * ---------------------------------------------------------------
+ * LOAD ROUTES
+ * ---------------------------------------------------------------
+ */
 
 Services::routes()->loadRoutes();
