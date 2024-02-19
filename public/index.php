@@ -48,7 +48,7 @@ require FCPATH . '../app/Config/Paths.php';
 $paths = new Config\Paths();
 
 // LOAD THE FRAMEWORK BOOTSTRAP FILE
-require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'Boot.php';
+require $paths->systemDirectory . '/Boot.php';
 CodeIgniter\Boot::BootWeb($paths);
 
 // Load Config Cache
