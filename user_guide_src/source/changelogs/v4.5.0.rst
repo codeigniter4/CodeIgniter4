@@ -185,6 +185,8 @@ Others
 - **Web Page Caching:** ``ResponseCache`` has been improved to include the request
   HTTP method in the cache key. This means that the same URI will be cached separately
   if the HTTP method is different.
+- **Bootstrap:** The ``CodeIgniter\Boot`` class has been introduced, replacing
+  **system/bootstrap.php**.
 
 ********
 BREAKING
@@ -469,6 +471,8 @@ Deprecations
       been moved to the ``Autoloader``.
     - The ``configureKint()`` method has been deprecated. No longer used. It has
       been moved to the ``Autoloader``.
+- **system/bootstrap.php:** This file has been deprecated. No longer used.
+  The code has been moved to the new ``CodeIgniter\Boot`` class.
 - **Response:** The constructor parameter ``$config`` has been deprecated. No
   longer used.
 - **Filters:**
