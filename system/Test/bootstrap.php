@@ -37,7 +37,7 @@ defined('CI_DEBUG') || define('CI_DEBUG', true);
  * ---------------------------------------------------------------
  *
  * The path constants provide convenient access to the folders
- * throughout the application. We have to setup them up here
+ * throughout the application. We have to set them up here
  * so they are available in the config files that are loaded.
  */
 
