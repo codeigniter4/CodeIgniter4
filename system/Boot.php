@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use CodeIgniter\Config\DotEnv;
 use CodeIgniter\Exceptions\FrameworkException;
 use Config\Autoload;
 use Config\Modules;
@@ -30,6 +31,9 @@ class Boot
      */
     public static function bootWeb(Paths $paths): void
     {
+        static::loadDotEnv($paths);
+        static::defineEnvironment();
+        static::loadEnvironmentBootstrap($paths);
         static::definePathConstant($paths);
         static::loadConstants();
         static::loadCommonFunctions();
@@ -44,6 +48,9 @@ class Boot
      */
     public static function bootSpark(Paths $paths): void
     {
+        static::loadDotEnv($paths);
+        static::defineEnvironment();
+        static::loadEnvironmentBootstrap($paths);
         static::definePathConstant($paths);
         static::loadConstants();
         static::loadCommonFunctions();
@@ -51,6 +58,36 @@ class Boot
         static::setExceptionHandler();
         static::checkMissingExtensions();
         static::initializeKint();
+    }
+
+    /**
+     * Load environment settings from .env files into $_SERVER and $_ENV
+     */
+    protected static function loadDotEnv(Paths $paths): void
+    {
+        require_once $paths->systemDirectory . '/Config/DotEnv.php';
+        (new DotEnv($paths->appDirectory . '/../'))->load();
+    }
+
+    protected static function defineEnvironment(): void
+    {
+        if (! defined('ENVIRONMENT')) {
+            $env = $_ENV['CI_ENVIRONMENT'] ?? $_SERVER['CI_ENVIRONMENT'] ?? getenv('CI_ENVIRONMENT');
+            define('ENVIRONMENT', ($env !== false) ? $env : 'production');
+            unset($env);
+        }
+    }
+
+    protected static function loadEnvironmentBootstrap(Paths $paths): void
+    {
+        if (is_file($paths->appDirectory . '/Config/Boot/' . ENVIRONMENT . '.php')) {
+            require_once $paths->appDirectory . '/Config/Boot/' . ENVIRONMENT . '.php';
+        } else {
+            header('HTTP/1.1 503 Service Unavailable.', true, 503);
+            echo 'The application environment is not set correctly.';
+
+            exit(EXIT_ERROR); // EXIT_ERROR
+        }
     }
 
     /**
