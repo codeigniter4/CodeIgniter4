@@ -80,6 +80,16 @@ $paths = new Config\Paths();
 require_once $paths->systemDirectory . '/Config/DotEnv.php';
 (new CodeIgniter\Config\DotEnv($paths->appDirectory . '/../'))->load();
 
+// LOAD ENVIRONMENT BOOTSTRAP
+if (is_file(APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php')) {
+    require_once APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php';
+} else {
+    header('HTTP/1.1 503 Service Unavailable.', true, 503);
+    echo 'The application environment is not set correctly.';
+
+    exit(EXIT_ERROR); // EXIT_ERROR
+}
+
 // LOAD THE FRAMEWORK BOOTSTRAP FILE
 require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
