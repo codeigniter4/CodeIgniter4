@@ -79,7 +79,7 @@ defined('VENDORPATH')    || define('VENDORPATH', realpath(HOMEPATH . 'vendor') .
  */
 
 // LOAD THE FRAMEWORK BOOTSTRAP FILE
-require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'Boot.php';
+require $paths->systemDirectory . '/Boot.php';
 Boot::bootTest($paths);
 
 /*
