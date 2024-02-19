@@ -852,6 +852,10 @@
   --level: 6;
 }
 
+.ci-label.active svg{
+  color:#dd4814;
+}
+
 .debug-outline #toolbarContainer.dark #debug-bar,
 .debug-outline #toolbarContainer.dark #debug-bar img,
 .debug-outline #toolbarContainer.dark #debug-bar svg,
