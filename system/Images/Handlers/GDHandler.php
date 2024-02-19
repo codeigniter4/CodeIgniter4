@@ -276,6 +276,16 @@ class GDHandler extends BaseHandler
                     throw ImageException::forSaveFailed();
                 }
                 break;
+            
+            case IMAGETYPE_AVIF:
+                if (! function_exists('imageavif')) {
+                    throw ImageException::forInvalidImageCreate(lang('Images.avifNotSupported'));
+                }
+
+                if (! @imageavif($this->resource, $target, $quality)) {
+                    throw ImageException::forSaveFailed();
+                }
+                break;
 
             default:
                 throw ImageException::forInvalidImageCreate();
@@ -367,6 +377,13 @@ class GDHandler extends BaseHandler
                 }
 
                 return imagecreatefromwebp($path);
+
+             case IMAGETYPE_AVIF:
+                if (! function_exists('imagecreatefromavif')) {
+                    throw ImageException::forInvalidImageCreate(lang('Images.avifNotSupported'));
+                }
+            
+                return imagecreatefromavif($path);
 
             default:
                 throw ImageException::forInvalidImageCreate('Ima');

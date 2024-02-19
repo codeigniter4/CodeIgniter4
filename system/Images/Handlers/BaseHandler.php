@@ -115,6 +115,7 @@ abstract class BaseHandler implements ImageHandlerInterface
     protected $supportTransparency = [
         IMAGETYPE_PNG,
         IMAGETYPE_WEBP,
+        IMAGETYPE_AVIF
     ];
 
     /**

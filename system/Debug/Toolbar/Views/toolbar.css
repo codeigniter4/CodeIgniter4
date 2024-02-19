@@ -851,3 +851,27 @@
 .debug-bar-level-6 {
   --level: 6;
 }
+
+.ci-label.active svg{
+  color:#dd4814;
+}
+
+.debug-outline #toolbarContainer.dark #debug-bar,
+.debug-outline #toolbarContainer.dark #debug-bar img,
+.debug-outline #toolbarContainer.dark #debug-bar svg,
+.debug-outline #toolbarContainer.dark #debug-bar path,
+.debug-outline #toolbarContainer.light #debug-bar,
+.debug-outline #toolbarContainer.light #debug-bar img,
+.debug-outline #toolbarContainer.light #debug-bar svg,
+.debug-outline #toolbarContainer.light #debug-bar path,
+.debug-outline #debug-bar a,
+.debug-outline #debug-bar h1,
+.debug-outline #debug-bar span,
+.debug-outline #toolbarContainer.light #debug-bar .toolbar,
+.debug-outline #toolbarContainer.dark #debug-bar .toolbar{
+  outline: 0!important;
+}
+
+body.debug-outline *:not(#toolbarContainer) {
+  outline: solid #dd4814 1px;
+}

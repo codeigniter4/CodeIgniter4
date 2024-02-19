@@ -19,6 +19,7 @@ var ciDebugBar = {
         ciDebugBar.toggleViewsHints();
         ciDebugBar.routerLink();
         ciDebugBar.setHotReloadState();
+        ciDebugBar.setDebugCss();
 
         document
             .getElementById("debug-bar-link")
@@ -656,7 +657,7 @@ var ciDebugBar = {
 
     setHotReloadState: function () {
         var btn = document.getElementById("debug-hot-reload").parentNode;
-        var btnImg = btn.getElementsByTagName("img")[0];
+        var btnImg = btn.getElementsByTagName("svg")[0];
         var eventSource;
 
         // If the Hot Reload Collector is inactive stops here
@@ -705,6 +706,32 @@ var ciDebugBar = {
         };
 
         return eventSource;
+    },
+
+    setDebugCss: function () {
+
+        var isDebugCssOn = false;
+        
+        var btnCss = document.getElementById("debug-css");
+        if (!btnCss) {
+            return;
+        }
+        
+        btnCss.onclick = function () {
+            toggleDebugClass();
+        }
+
+        function toggleDebugClass() {
+            var body = document.body;
+            if (isDebugCssOn) {
+                btnCss.classList.remove("active");
+                body.classList.remove('debug-outline');
+            } else {
+                btnCss.classList.add("active");
+                body.classList.add('debug-outline');
+            }
+            isDebugCssOn = !isDebugCssOn;
+        }
     },
 
     /**
