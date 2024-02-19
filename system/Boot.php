@@ -20,6 +20,9 @@ use Config\Modules;
 use Config\Paths;
 use Config\Services;
 
+/**
+ * Bootstrap for the application
+ */
 class Boot
 {
     /**
@@ -35,7 +38,9 @@ class Boot
         static::defineEnvironment();
         static::loadEnvironmentBootstrap($paths);
         static::definePathConstant($paths);
-        static::loadConstants();
+        if (! defined('APP_NAMESPACE')) {
+            static::loadConstants();
+        }
         static::loadCommonFunctions();
         static::loadAutoloader();
         static::setExceptionHandler();
@@ -52,6 +57,23 @@ class Boot
         static::defineEnvironment();
         static::loadEnvironmentBootstrap($paths);
         static::definePathConstant($paths);
+        if (! defined('APP_NAMESPACE')) {
+            static::loadConstants();
+        }
+        static::loadCommonFunctions();
+        static::loadAutoloader();
+        static::setExceptionHandler();
+        static::checkMissingExtensions();
+        static::initializeKint();
+    }
+
+    /**
+     * @used-by system/Test/bootstrap.php
+     */
+    public static function bootTest(Paths $paths): void
+    {
+        static::loadDotEnv($paths);
+        static::loadEnvironmentBootstrap($paths, false);
         static::loadConstants();
         static::loadCommonFunctions();
         static::loadAutoloader();
@@ -72,21 +94,27 @@ class Boot
     protected static function defineEnvironment(): void
     {
         if (! defined('ENVIRONMENT')) {
+            // @phpstan-ignore-next-line
             $env = $_ENV['CI_ENVIRONMENT'] ?? $_SERVER['CI_ENVIRONMENT'] ?? getenv('CI_ENVIRONMENT');
+
             define('ENVIRONMENT', ($env !== false) ? $env : 'production');
             unset($env);
         }
     }
 
-    protected static function loadEnvironmentBootstrap(Paths $paths): void
+    protected static function loadEnvironmentBootstrap(Paths $paths, bool $exit = true): void
     {
         if (is_file($paths->appDirectory . '/Config/Boot/' . ENVIRONMENT . '.php')) {
             require_once $paths->appDirectory . '/Config/Boot/' . ENVIRONMENT . '.php';
-        } else {
+
+            return;
+        }
+
+        if ($exit) {
             header('HTTP/1.1 503 Service Unavailable.', true, 503);
             echo 'The application environment is not set correctly.';
 
-            exit(EXIT_ERROR); // EXIT_ERROR
+            exit(EXIT_ERROR);
         }
     }
 
@@ -125,9 +153,7 @@ class Boot
 
     protected static function loadConstants(): void
     {
-        if (! defined('APP_NAMESPACE')) {
-            require_once APPPATH . 'Config/Constants.php';
-        }
+        require_once APPPATH . 'Config/Constants.php';
     }
 
     protected static function loadCommonFunctions(): void
