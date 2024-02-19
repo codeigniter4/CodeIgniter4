@@ -33,16 +33,21 @@
 </div>
 <div id="debug-bar">
     <div class="toolbar">
-        <span id="toolbar-position"><a href="#">&#8597;</a></span>
-        <span id="toolbar-theme"><a href="#">&#128261;</a></span>
+        <span id="toolbar-position"><a href="javascript: void(0)">&#8597;</a></span>
+        <span id="toolbar-theme"><a href="javascript: void(0)">&#128261;</a></span>
         <span id="hot-reload-btn" class="ci-label">
-            <a id="debug-hot-reload" href="#" title="Toggle Hot Reload">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAABNklEQVR4nN2US04CQRCGv/DaiBxEvYWuBRPDKSCIXsCdcg0ULqTI8xIGN7JwTCU/ScV5tTO64Us6maSq/7+nuqvgkLgHopTl+QAWwBToAg3+wMTzM7YBrihp4jkCToEB8OJyRkCFAB5yDDxVoAd8OpNMOkrcAeMAgz3nzsQ0EqkDayXZqXy5Qugrdy2tGNdKeNWv40xCqGpvJK0YEwXt8ooylMZzUnCh4EkJgzNpmFaMrYLNEgbH0thmGVhSUVrSeE8KLv+7RBMFb0oY3EnDeihGN+WZhmJ7ZlnPtKHB5RvtNwy0d5XWaGgqRmp7a/9QLjRevoDLvOSRM+nnlKumk++0xwZlLhVnEulOhnohTS37vnU1t5M/ho7rPR03/LKW1bxNQep6ETZb5mpGW2/Ak2KpF3oYfAPX9Xpc671kqwAAAABJRU5ErkJggg==" />
+            <a id="debug-hot-reload" href="javascript: void(0)" title="Toggle Hot Reload">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-reload" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747" /><path d="M20 4v5h-5" /></svg>
+            </a>
+        </span>
+        <span id="debug-css" class="ci-label">
+            <a href="javascript: void(0)">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box-margin" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 8h8v8h-8z" /><path d="M4 4v.01" /><path d="M8 4v.01" /><path d="M12 4v.01" /><path d="M16 4v.01" /><path d="M20 4v.01" /><path d="M4 20v.01" /><path d="M8 20v.01" /><path d="M12 20v.01" /><path d="M16 20v.01" /><path d="M20 20v.01" /><path d="M20 16v.01" /><path d="M20 12v.01" /><path d="M20 8v.01" /><path d="M4 16v.01" /><path d="M4 12v.01" /><path d="M4 8v.01" /></svg>
             </a>
         </span>
         <span class="ci-label">
-            <a href="#" data-tab="ci-timeline">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD7SURBVEhLY6ArSEtLK09NTbWHcvGC9PR0BaDaQiAdUl9fzwQVxg+AFvwHamqHcnGCpKQkeaDa9yD1UD09UCn8AKaBWJySkmIApFehi0ONwwRQBceBLurAh4FqFoHUAtkrgPgREN+ByYEw1DhMANVEMIhAYQ5U1wtU/wmILwLZRlAp/IBYC8gGw88CaFj3A/FnIL4ETDXGUCnyANSC/UC6HIpnQMXAqQXIvo0khxNDjcMEQEmU9AzDuNI7Lgw1DhOAJIEuhQcRKMcC+e+QNHdDpcgD6BaAANSSQqBcENFlDi6AzQKqgkFlwWhxjVI8o2OgmkFaXI8CTMDAAAAxd1O4FzLMaAAAAABJRU5ErkJggg==">
+            <a href="javascript: void(0)" data-tab="ci-timeline">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-activity" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12h4l3 8l4 -16l3 8h4" /></svg>
                 <span class="hide-sm"><?= $totalTime ?> ms &nbsp; <?= $totalMemory ?> MB</span>
             </a>
         </span>
