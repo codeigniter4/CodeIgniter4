@@ -18,6 +18,7 @@ return [
     'jpgNotSupported'        => 'JPG images are not supported.',
     'pngNotSupported'        => 'PNG images are not supported.',
     'webpNotSupported'       => 'WEBP images are not supported.',
+    'avifNotSupported'       => 'AVIF images are not supported.',
     'fileNotSupported'       => 'The supplied file is not a supported image type.',
     'unsupportedImageCreate' => 'Your server does not support the GD function required to process this type of image.',
     'jpgOrPngRequired'       => 'The image resize protocol specified in your preferences only works with JPEG or PNG image types.',
