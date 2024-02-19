@@ -11,6 +11,13 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+/**
+ * ---------------------------------------------------------------
+ *
+ * @deprecated 4.5.0 This file is no longer used. Moved to Boot.php.
+ * ---------------------------------------------------------------
+ */
+
 use CodeIgniter\Exceptions\FrameworkException;
 use Config\Autoload;
 use Config\Modules;
