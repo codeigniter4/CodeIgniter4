@@ -37,7 +37,7 @@ class Boot
         static::loadDotEnv($paths);
         static::defineEnvironment();
         static::loadEnvironmentBootstrap($paths);
-        static::definePathConstant($paths);
+        static::definePathConstants($paths);
         if (! defined('APP_NAMESPACE')) {
             static::loadConstants();
         }
@@ -56,7 +56,7 @@ class Boot
         static::loadDotEnv($paths);
         static::defineEnvironment();
         static::loadEnvironmentBootstrap($paths);
-        static::definePathConstant($paths);
+        static::definePathConstants($paths);
         if (! defined('APP_NAMESPACE')) {
             static::loadConstants();
         }
@@ -123,7 +123,7 @@ class Boot
      * the application. We have to set them up here, so they are available in
      * the config files that are loaded.
      */
-    protected static function definePathConstant(Paths $paths): void
+    protected static function definePathConstants(Paths $paths): void
     {
         // The path to the application directory.
         if (! defined('APPPATH')) {
