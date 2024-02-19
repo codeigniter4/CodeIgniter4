@@ -22,6 +22,8 @@ use Config\Services;
 
 /**
  * Bootstrap for the application
+ *
+ * @codeCoverageIgnore
  */
 class Boot
 {
