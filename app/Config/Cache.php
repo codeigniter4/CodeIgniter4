@@ -168,4 +168,13 @@ class Cache extends BaseConfig
         'redis'     => RedisHandler::class,
         'wincache'  => WincacheHandler::class,
     ];
+
+    /**
+     * --------------------------------------------------------------------------
+     * Config Caching
+     * --------------------------------------------------------------------------
+     *
+     * @see https://codeigniter.com/user_guide/concepts/factories.html#config-caching
+     */
+    public bool $configCacheEnabled = false;
 }

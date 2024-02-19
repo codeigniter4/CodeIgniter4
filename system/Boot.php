@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use CodeIgniter\Cache\FactoriesCache;
 use CodeIgniter\Config\DotEnv;
 use Config\Autoload;
+use Config\Cache;
 use Config\Modules;
 use Config\Paths;
 use Config\Services;
@@ -32,21 +34,47 @@ class Boot
      * Context
      *   web:     Invoked by HTTP request
      *   php-cli: Invoked by CLI via `php public/index.php`
+     *
+     * @return int Exit code.
      */
-    public static function bootWeb(Paths $paths): void
+    public static function bootWeb(Paths $paths): int
     {
-        static::boot($paths);
+        static::definePathConstants($paths);
+        if (! defined('APP_NAMESPACE')) {
+            static::loadConstants();
+        }
+        static::checkMissingExtensions();
+
+        static::loadDotEnv($paths);
+        static::defineEnvironment();
+        static::loadEnvironmentBootstrap($paths);
+
+        static::loadCommonFunctions();
+        static::loadAutoloader();
+        static::setExceptionHandler();
+        static::initializeKint();
+
+        $configCacheEnabled = (new Cache())->configCacheEnabled ?? false;
+        if ($configCacheEnabled) {
+            $factoriesCache = static::loadConfigCache();
+        }
+
+        $app = static::initializeCodeIgniter();
+        static::runCodeIgniter($app);
+
+        if ($configCacheEnabled) {
+            static::saveConfigCache($factoriesCache);
+        }
+
+        // Exits the application, setting the exit code for CLI-based
+        // applications that might be watching.
+        return EXIT_SUCCESS;
     }
 
     /**
      * Used by `spark`
      */
     public static function bootSpark(Paths $paths): void
-    {
-        static::boot($paths);
-    }
-
-    protected static function boot(Paths $paths): void
     {
         static::definePathConstants($paths);
         if (! defined('APP_NAMESPACE')) {
@@ -233,5 +261,42 @@ class Boot
     protected static function initializeKint(): void
     {
         Services::autoloader()->initializeKint(CI_DEBUG);
+    }
+
+    protected static function loadConfigCache(): FactoriesCache
+    {
+        $factoriesCache = new FactoriesCache();
+        $factoriesCache->load('config');
+
+        return $factoriesCache;
+    }
+
+    /**
+     * The CodeIgniter class contains the core functionality to make
+     * the application run, and does all the dirty work to get
+     * the pieces all working together.
+     */
+    protected static function initializeCodeIgniter(): CodeIgniter
+    {
+        $app = Config\Services::codeigniter();
+        $app->initialize();
+        $context = is_cli() ? 'php-cli' : 'web';
+        $app->setContext($context);
+
+        return $app;
+    }
+
+    /**
+     * Now that everything is set up, it's time to actually fire
+     * up the engines and make this app do its thang.
+     */
+    protected static function runCodeIgniter(CodeIgniter $app): void
+    {
+        $app->run();
+    }
+
+    protected static function saveConfigCache(FactoriesCache $factoriesCache): void
+    {
+        $factoriesCache->save('config');
     }
 }
