@@ -99,7 +99,7 @@ class {class} extends {extends}
     /**
      * Present a view to present a specific resource object.
      *
-     * @param string $id
+     * @param string|null $id
      *
      * @return ResponseInterface
      */
@@ -132,7 +132,7 @@ class {class} extends {extends}
     /**
      * Present a view to edit the properties of a specific resource object.
      *
-     * @param mixed $id
+     * @param string|null $id
      *
      * @return mixed
      */
@@ -145,7 +145,7 @@ class {class} extends {extends}
      * Process the updating, full or partial, of a specific resource object.
      * This should be a POST.
      *
-     * @param mixed $id
+     * @param string|null $id
      *
      * @return mixed
      */
@@ -157,7 +157,7 @@ class {class} extends {extends}
     /**
      * Present a view to confirm the deletion of a specific resource object.
      *
-     * @param mixed $id
+     * @param string|null $id
      *
      * @return mixed
      */
@@ -169,7 +169,7 @@ class {class} extends {extends}
     /**
      * Process the deletion of a specific resource object.
      *
-     * @param mixed $id
+     * @param string|null $id
      *
      * @return mixed
      */
