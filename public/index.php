@@ -70,7 +70,8 @@ if (is_file($paths->appDirectory . '/Config/Boot/' . ENVIRONMENT . '.php')) {
 }
 
 // LOAD THE FRAMEWORK BOOTSTRAP FILE
-require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
+require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'Boot.php';
+CodeIgniter\Boot::BootWeb($paths);
 
 // Load Config Cache
 // $factoriesCache = new \CodeIgniter\Cache\FactoriesCache();
