@@ -80,41 +80,5 @@ $paths = new Config\Paths();
 
 // LOAD THE FRAMEWORK BOOTSTRAP FILE
 require $paths->systemDirectory . '/Boot.php';
-CodeIgniter\Boot::BootSpark($paths);
 
-/*
- * ---------------------------------------------------------------
- * GRAB OUR CODEIGNITER INSTANCE
- * ---------------------------------------------------------------
- */
-
-$app = Config\Services::codeigniter();
-$app->initialize();
-
-/*
- * ---------------------------------------------------------------
- * GRAB OUR CONSOLE
- * ---------------------------------------------------------------
- */
-
-$console = new CodeIgniter\CLI\Console();
-
-// SHOW HEADER
-// Show basic information before we do anything else.
-if (is_int($suppress = array_search('--no-header', $_SERVER['argv'], true))) {
-    unset($_SERVER['argv'][$suppress]); // @codeCoverageIgnore
-    $suppress = true;
-}
-
-$console->showHeader($suppress);
-
-/*
- *---------------------------------------------------------------
- * EXECUTE THE COMMAND
- *---------------------------------------------------------------
- */
-
-// fire off the command in the main framework.
-$exit = $console->run();
-
-exit(is_int($exit) ? $exit : EXIT_SUCCESS);
+exit(CodeIgniter\Boot::BootSpark($paths));

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter;
 
 use CodeIgniter\Cache\FactoriesCache;
+use CodeIgniter\CLI\Console;
 use CodeIgniter\Config\DotEnv;
 use CodeIgniter\Exceptions\FrameworkException;
 use Config\Autoload;
@@ -72,8 +73,10 @@ class Boot
 
     /**
      * @used-by spark
+     *
+     * @return int Exit code.
      */
-    public static function bootSpark(Paths $paths): void
+    public static function bootSpark(Paths $paths): int
     {
         static::loadDotEnv($paths);
         static::defineEnvironment();
@@ -87,6 +90,11 @@ class Boot
         static::setExceptionHandler();
         static::checkMissingExtensions();
         static::initializeKint();
+
+        static::initializeCodeIgniter();
+        $console = static::initializeConsole();
+
+        return static::runCommand($console);
     }
 
     /**
@@ -282,5 +290,28 @@ class Boot
     protected static function saveConfigCache(FactoriesCache $factoriesCache): void
     {
         $factoriesCache->save('config');
+    }
+
+    protected static function initializeConsole(): Console
+    {
+        $console = new Console();
+
+        // Show basic information before we do anything else.
+        // @phpstan-ignore-next-line
+        if (is_int($suppress = array_search('--no-header', $_SERVER['argv'], true))) {
+            unset($_SERVER['argv'][$suppress]); // @phpstan-ignore-line
+            $suppress = true;
+        }
+
+        $console->showHeader($suppress);
+
+        return $console;
+    }
+
+    protected static function runCommand(Console $console): int
+    {
+        $exit = $console->run();
+
+        return is_int($exit) ? $exit : EXIT_SUCCESS;
     }
 }
