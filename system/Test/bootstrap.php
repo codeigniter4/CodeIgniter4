@@ -52,6 +52,11 @@ defined('CONFIGPATH') || define('CONFIGPATH', realpath($source . 'app/Config') .
 defined('PUBLICPATH') || define('PUBLICPATH', realpath($source . 'public') . DIRECTORY_SEPARATOR);
 unset($source);
 
+// LOAD OUR PATHS CONFIG FILE
+// Load framework paths from their config file
+require CONFIGPATH . 'Paths.php';
+$paths = new Paths();
+
 // Define necessary framework path constants
 defined('APPPATH')    || define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 defined('ROOTPATH')   || define('ROOTPATH', realpath(APPPATH . '../') . DIRECTORY_SEPARATOR);
@@ -74,11 +79,6 @@ defined('VENDORPATH')    || define('VENDORPATH', realpath(HOMEPATH . 'vendor') .
  * our autoloader, along with Composer's, loads our constants
  * and fires up an environment-specific bootstrapping.
  */
-
-// LOAD OUR PATHS CONFIG FILE
-// Load framework paths from their config file
-require CONFIGPATH . 'Paths.php';
-$paths = new Paths();
 
 // LOAD DOTENV FILE
 // Load environment settings from .env files into $_SERVER and $_ENV
