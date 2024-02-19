@@ -52,9 +52,16 @@ $paths = new Config\Paths();
 require_once $paths->systemDirectory . '/Config/DotEnv.php';
 (new CodeIgniter\Config\DotEnv($paths->appDirectory . '/../'))->load();
 
+// DEFINE ENVIRONMENT
+if (! defined('ENVIRONMENT')) {
+    $env = $_ENV['CI_ENVIRONMENT'] ?? $_SERVER['CI_ENVIRONMENT'] ?? getenv('CI_ENVIRONMENT');
+    define('ENVIRONMENT', ($env !== false) ? $env : 'production');
+    unset($env);
+}
+
 // LOAD ENVIRONMENT BOOTSTRAP
-if (is_file(APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php')) {
-    require_once APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php';
+if (is_file($paths->appDirectory . '/Config/Boot/' . ENVIRONMENT . '.php')) {
+    require_once $paths->appDirectory . '/Config/Boot/' . ENVIRONMENT . '.php';
 } else {
     header('HTTP/1.1 503 Service Unavailable.', true, 503);
     echo 'The application environment is not set correctly.';
