@@ -111,7 +111,7 @@ class {class} extends {extends}
     /**
      * Present a view to present a new single resource object.
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function new()
     {
@@ -122,7 +122,7 @@ class {class} extends {extends}
      * Process the creation/insertion of a new resource object.
      * This should be a POST.
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function create()
     {
@@ -134,7 +134,7 @@ class {class} extends {extends}
      *
      * @param string|null $id
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function edit($id = null)
     {
@@ -147,7 +147,7 @@ class {class} extends {extends}
      *
      * @param string|null $id
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function update($id = null)
     {
@@ -159,7 +159,7 @@ class {class} extends {extends}
      *
      * @param string|null $id
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function remove($id = null)
     {
@@ -171,7 +171,7 @@ class {class} extends {extends}
      *
      * @param string|null $id
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function delete($id = null)
     {
