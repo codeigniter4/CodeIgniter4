@@ -16,9 +16,12 @@
  * --------------------------------------------------------------------
  * The main entry point into the CLI system and allows you to run
  * commands and perform maintenance on your application.
- *
- * Because CodeIgniter can handle CLI requests as just another web request
- * this class mainly acts as a passthru to the framework itself.
+ */
+
+/*
+ *---------------------------------------------------------------
+ * CHECK SERVER API
+ *---------------------------------------------------------------
  */
 
 // Refuse to run when called from php-cgi
