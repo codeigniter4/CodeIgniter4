@@ -21,6 +21,8 @@ class {class} extends {extends}
     /**
      * Return the properties of a resource object.
      *
+     * @param string|null $id
+     *
      * @return ResponseInterface
      */
     public function show($id = null)
@@ -51,6 +53,8 @@ class {class} extends {extends}
     /**
      * Return the editable properties of a resource object.
      *
+     * @param string|null $id
+     *
      * @return ResponseInterface
      */
     public function edit($id = null)
@@ -61,6 +65,8 @@ class {class} extends {extends}
     /**
      * Add or update a model resource, from "posted" properties.
      *
+     * @param string|null $id
+     *
      * @return ResponseInterface
      */
     public function update($id = null)
@@ -70,6 +76,8 @@ class {class} extends {extends}
 
     /**
      * Delete the designated resource object from the model.
+     *
+     * @param string|null $id
      *
      * @return ResponseInterface
      */
