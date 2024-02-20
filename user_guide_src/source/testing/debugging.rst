@@ -33,7 +33,7 @@ See :ref:`Database Events <database-events-dbquery>` for details.
 Replacing var_dump()
 ********************
 
-While using XDebug and a good IDE can be indispensable to debug your application,
+While using Xdebug and a good IDE can be indispensable to debug your application,
 sometimes a quick ``var_dump()`` is all you need. CodeIgniter makes that even
 better by bundling in the excellent `Kint <https://kint-php.github.io/kint/>`_
 debugging tool for PHP.
