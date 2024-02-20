@@ -23,6 +23,12 @@ It would be a good idea to check them if things aren't working the way you expec
 You can adjust the error threshold to see more or fewer messages. See
 :ref:`Logging <logging-configuration>` for details.
 
+Logging All SQL Queries
+=======================
+
+All SQL queries issued by CodeIgniter can be logged.
+See :ref:`Database Events <database-events-dbquery>` for details.
+
 ********************
 Replacing var_dump()
 ********************

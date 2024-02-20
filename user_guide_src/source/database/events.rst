@@ -15,6 +15,8 @@ uses this to collect the queries to display in the Toolbar.
 The Events
 **********
 
+.. _database-events-dbquery:
+
 DBQuery
 =======
 
@@ -26,6 +28,6 @@ You could use this to display all queries in STDOUT, or logging to a file, or
 even creating tools to do automatic query analysis to help you spot potentially
 missing indexes, slow queries, etc.
 
-An example usage might be:
+An example to log all queries:
 
 .. literalinclude:: events/001.php
