@@ -42,13 +42,6 @@ if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
-/**
- * @var bool
- *
- * @deprecated No longer in use. `CodeIgniter` has `$context` property.
- */
-define('SPARKED', true);
-
 // Path to the front controller
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR);
 

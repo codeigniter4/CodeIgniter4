@@ -241,6 +241,7 @@ Others
 - **Exceptions:** The deprecated ``CodeIgniter\Exceptions\CastException`` class has been removed.
 - **Entity:** The deprecated ``CodeIgniter\Entity`` class has been removed. Use
   ``CodeIgniter\Entity\Entity`` instead.
+- **spark:** The deprecated constant ``SPARKED`` has been removed.
 
 Enhancements
 ************
