@@ -302,12 +302,14 @@ uses this to collect the queries to display in the Toolbar.</p>
 <section id="the-events">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">The Events</a><a class="headerlink" href="#the-events" title="Permalink to this heading"></a></h2>
 <section id="dbquery">
-<h3><a class="toc-backref" href="#id2" role="doc-backlink">DBQuery</a><a class="headerlink" href="#dbquery" title="Permalink to this heading"></a></h3>
-<p>This event is triggered whenever a new query has been run, whether successful or not. The only parameter is
-a <a class="reference internal" href="queries.html"><span class="doc">Query</span></a> instance of the current query. You could use this to display all queries
-in STDOUT, or logging to a file, or even creating tools to do automatic query analysis to help you spot
-potentially missing indexes, slow queries, etc.</p>
-<p>An example usage might be:</p>
+<span id="database-events-dbquery"></span><h3><a class="toc-backref" href="#id2" role="doc-backlink">DBQuery</a><a class="headerlink" href="#dbquery" title="Permalink to this heading"></a></h3>
+<p>This event is triggered whenever a new query has been run, whether successful or
+not. The only parameter is a <a class="reference internal" href="queries.html"><span class="doc">Query</span></a> instance of the
+current query.</p>
+<p>You could use this to display all queries in STDOUT, or logging to a file, or
+even creating tools to do automatic query analysis to help you spot potentially
+missing indexes, slow queries, etc.</p>
+<p>An example to log all queries:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// In app/Config/Events.php</span>
@@ -344,7 +346,7 @@ potentially missing indexes, slow queries, etc.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 17, 2024.
+      <span class="lastupdated">Last updated on Feb 20, 2024.
       </span></p>
   </div>
 
