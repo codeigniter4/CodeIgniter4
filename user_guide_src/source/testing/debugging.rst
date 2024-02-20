@@ -1,14 +1,14 @@
-**************************
+##########################
 Debugging Your Application
-**************************
+##########################
 
 .. contents::
     :local:
     :depth: 2
 
-================
-Replace var_dump
-================
+********************
+Replacing var_dump()
+********************
 
 While using XDebug and a good IDE can be indispensable to debug your application, sometimes a quick ``var_dump()`` is
 all you need. CodeIgniter makes that even better by bundling in the excellent `Kint <https://kint-php.github.io/kint/>`_
@@ -50,9 +50,9 @@ For more information, see `Kint's page <https://kint-php.github.io/kint//>`_.
 
 .. _the-debug-toolbar:
 
-=================
+*****************
 The Debug Toolbar
-=================
+*****************
 
 The Debug Toolbar provides at-a-glance information about the current page request, including benchmark results,
 queries you have run, request and response data, and more. This can all prove very useful during development
