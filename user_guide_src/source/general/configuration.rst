@@ -29,9 +29,8 @@ configuration class later during execution. In other words, it is recommended to
 treat configuration classes as immutable or readonly classes. This is especially
 important if you utilize :ref:`factories-config-caching`.
 
-Configuration values can be retrieved from environment variables, hard-coded
-within the class files, or stored in a database using the :ref:`Settings <settings>`
-library.
+Configuration values can be hard-coded in the class files or obtained from
+environment variables at instantiation.
 
 Working with Configuration Files
 ********************************
