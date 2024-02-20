@@ -6,6 +6,23 @@ Debugging Your Application
     :local:
     :depth: 2
 
+*************
+Checking Logs
+*************
+
+.. _codeigniter-error-logs:
+
+CodeIgniter Error Logs
+======================
+
+CodeIgniter logs error messages, according to the settings in **app/Config/Logger.php**.
+
+The default configuration has daily log files stored in **writable/logs**.
+It would be a good idea to check them if things aren't working the way you expect!
+
+You can adjust the error threshold to see more or fewer messages. See
+:ref:`Logging <logging-configuration>` for details.
+
 ********************
 Replacing var_dump()
 ********************
