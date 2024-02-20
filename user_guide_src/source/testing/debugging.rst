@@ -36,6 +36,7 @@ The ``d()`` method dumps all of the data it knows about the contents passed as t
 allows the script to continue executing:
 
 .. literalinclude:: debugging/001.php
+    :lines: 2-
 
 dd()
 ----
@@ -48,6 +49,7 @@ trace()
 This provides a backtrace to the current execution point, with Kint's own unique spin:
 
 .. literalinclude:: debugging/002.php
+    :lines: 2-
 
 For more information, see `Kint's page <https://kint-php.github.io/kint//>`_.
 
