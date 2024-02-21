@@ -14,6 +14,15 @@ Release Date: Unreleased
 BREAKING
 ********
 
+Time::createFromTimestamp()
+===========================
+
+A bug that caused :ref:`Time::createFromTimestamp() <time-createfromtimestamp>`
+to return a Time instance with a timezone of UTC has been fixed.
+
+Starting with this version, when you do not specify a timezone, a Time instance
+with the app's timezone is returned by default.
+
 ***************
 Message Changes
 ***************
