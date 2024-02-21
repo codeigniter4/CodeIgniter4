@@ -186,7 +186,8 @@ class Model extends BaseModel
     {
         $builder = $this->builder();
 
-        if ($this->useCasts()) {
+        $useCast = $this->useCasts();
+        if ($useCast) {
             $returnType = $this->tempReturnType;
             $this->asArray();
         }
@@ -207,7 +208,7 @@ class Model extends BaseModel
             $row = $builder->get()->getResult($this->tempReturnType);
         }
 
-        if ($this->useCasts()) {
+        if ($useCast) {
             $row = $this->convertToReturnType($row, $returnType);
 
             $this->tempReturnType = $returnType;
@@ -257,7 +258,8 @@ class Model extends BaseModel
 
         $builder = $this->builder();
 
-        if ($this->useCasts()) {
+        $useCast = $this->useCasts();
+        if ($useCast) {
             $returnType = $this->tempReturnType;
             $this->asArray();
         }
@@ -270,7 +272,7 @@ class Model extends BaseModel
             ->get()
             ->getResult($this->tempReturnType);
 
-        if ($this->useCasts()) {
+        if ($useCast) {
             foreach ($results as $i => $row) {
                 $results[$i] = $this->convertToReturnType($row, $returnType);
             }
@@ -293,7 +295,8 @@ class Model extends BaseModel
     {
         $builder = $this->builder();
 
-        if ($this->useCasts()) {
+        $useCast = $this->useCasts();
+        if ($useCast) {
             $returnType = $this->tempReturnType;
             $this->asArray();
         }
@@ -312,7 +315,7 @@ class Model extends BaseModel
 
         $row = $builder->limit(1, 0)->get()->getFirstRow($this->tempReturnType);
 
-        if ($this->useCasts()) {
+        if ($useCast) {
             $row = $this->convertToReturnType($row, $returnType);
 
             $this->tempReturnType = $returnType;
