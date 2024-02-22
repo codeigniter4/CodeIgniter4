@@ -650,7 +650,8 @@ abstract class BaseModel
      */
     public function findAll(?int $limit = null, int $offset = 0)
     {
-        if (config(Feature::class)->limitZeroAsAll) {
+        $limitZeroAsAll = config(Feature::class)->limitZeroAsAll ?? true;
+        if ($limitZeroAsAll) {
             $limit ??= 0;
         }
 
