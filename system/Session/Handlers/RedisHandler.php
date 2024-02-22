@@ -176,7 +176,7 @@ class RedisHandler extends BaseHandler
             return $data;
         }
 
-        return '';
+        return false;
     }
 
     /**
