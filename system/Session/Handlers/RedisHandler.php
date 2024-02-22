@@ -313,13 +313,13 @@ class RedisHandler extends BaseHandler
         } while (++$attempt < 30);
 
         if ($attempt === 30) {
-            log_message('error', 'Session: Unable to obtain lock for ' . $this->keyPrefix . $sessionID . ' after 30 attempts, aborting.');
+            $this->logger->error('Session: Unable to obtain lock for ' . $this->keyPrefix . $sessionID . ' after 30 attempts, aborting.');
 
             return false;
         }
 
         if ($ttl === -1) {
-            log_message('debug', 'Session: Lock for ' . $this->keyPrefix . $sessionID . ' had no TTL, overriding.');
+            $this->logger->debug('Session: Lock for ' . $this->keyPrefix . $sessionID . ' had no TTL, overriding.');
         }
 
         $this->lock = true;
