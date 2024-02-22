@@ -466,7 +466,8 @@ class CodeIgniter
             if ($routeFilters !== null) {
                 $filters->enableFilters($routeFilters, 'before');
 
-                if (! config(Feature::class)->oldFilterOrder) {
+                $oldFilterOrder = config(Feature::class)->oldFilterOrder ?? false;
+                if (! $oldFilterOrder) {
                     $routeFilters = array_reverse($routeFilters);
                 }
 
