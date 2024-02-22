@@ -343,6 +343,14 @@ except for the helper and lang files.</p></li>
 </section>
 <section id="application-structure">
 <h3><a class="toc-backref" href="#id5" role="doc-backlink">Application Structure</a><a class="headerlink" href="#application-structure" title="Permalink to this heading"></a></h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>index.php</strong> is no longer in the root of the project! It has been moved inside
+the <strong>public</strong> folder, for better security and separation of components.</p>
+<p>This means that you should configure your web server to “point” to your project’s
+<strong>public</strong> folder, and not to the project root.</p>
+<p>If you would use Shared Hosting, see <a class="reference internal" href="running.html#deployment-to-shared-hosting-services"><span class="std std-ref">Deployment to Shared Hosting Services</span></a>.</p>
+</div>
 <ul class="simple">
 <li><p>The <strong>application</strong> folder is renamed as <strong>app</strong> and the framework still has <strong>system</strong> folders,
 with the same interpretation as before.</p></li>
