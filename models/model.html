@@ -630,7 +630,7 @@ data type. See also <a class="reference internal" href="#createdfield">$createdF
 <h5>$dateFormat<a class="headerlink" href="#dateformat" title="Permalink to this heading"></a></h5>
 <p>This value works with <a class="reference internal" href="#usetimestamps">$useTimestamps</a> and <a class="reference internal" href="#usesoftdeletes">$useSoftDeletes</a> to ensure that the correct type of
 date value gets inserted into the database. By default, this creates DATETIME values, but
-valid options are: <code class="docutils literal notranslate"><span class="pre">'datetime'</span></code>, <code class="docutils literal notranslate"><span class="pre">'date'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'int'</span></code> (a PHP timestamp). Using <a class="reference internal" href="#usesoftdeletes">$useSoftDeletes</a> or
+valid options are: <code class="docutils literal notranslate"><span class="pre">'datetime'</span></code>, <code class="docutils literal notranslate"><span class="pre">'date'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'int'</span></code> (a UNIX timestamp). Using <a class="reference internal" href="#usesoftdeletes">$useSoftDeletes</a> or
 <a class="reference internal" href="#usetimestamps">$useTimestamps</a> with an invalid or missing <a class="reference internal" href="#dateformat">$dateFormat</a> will cause an exception.</p>
 </section>
 <section id="createdfield">
