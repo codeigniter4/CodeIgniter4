@@ -73,14 +73,6 @@ if (! defined('APP_NAMESPACE')) {
     require_once APPPATH . 'Config/Constants.php';
 }
 
-// Require app/Common.php file if exists.
-if (is_file(APPPATH . 'Common.php')) {
-    require_once APPPATH . 'Common.php';
-}
-
-// Require system/Common.php
-require_once SYSTEMPATH . 'Common.php';
-
 /*
  * ---------------------------------------------------------------
  * LOAD OUR AUTOLOADER
@@ -103,6 +95,21 @@ require_once SYSTEMPATH . 'Config/BaseService.php';
 require_once SYSTEMPATH . 'Config/Services.php';
 require_once APPPATH . 'Config/Services.php';
 
+$autoloadConfig = new Autoload();
+
+foreach ($autoloadConfig->psr4 as $namespace => $path) {
+    if ($path === SYSTEMPATH) {
+        continue;
+    }
+    $commonFile = realpath(rtrim($path, '\\/ ')) . DIRECTORY_SEPARATOR . 'Common.php';
+    if (is_file($commonFile)) {
+        require_once $commonFile;
+    }
+}
+
+// Require system/Common.php
+require_once SYSTEMPATH . 'Common.php';
+
 // Initialize and register the loader with the SPL autoloader stack.
-Services::autoloader()->initialize(new Autoload(), new Modules())->register();
+Services::autoloader()->initialize($autoloadConfig, new Modules())->register();
 Services::autoloader()->loadHelpers();
