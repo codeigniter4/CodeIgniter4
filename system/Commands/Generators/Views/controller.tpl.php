@@ -21,7 +21,7 @@ class {class} extends {extends}
     /**
      * Return the properties of a resource object.
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return ResponseInterface
      */
@@ -53,7 +53,7 @@ class {class} extends {extends}
     /**
      * Return the editable properties of a resource object.
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return ResponseInterface
      */
@@ -65,7 +65,7 @@ class {class} extends {extends}
     /**
      * Add or update a model resource, from "posted" properties.
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return ResponseInterface
      */
@@ -77,7 +77,7 @@ class {class} extends {extends}
     /**
      * Delete the designated resource object from the model.
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return ResponseInterface
      */
@@ -99,7 +99,7 @@ class {class} extends {extends}
     /**
      * Present a view to present a specific resource object.
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return ResponseInterface
      */
@@ -132,7 +132,7 @@ class {class} extends {extends}
     /**
      * Present a view to edit the properties of a specific resource object.
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return ResponseInterface
      */
@@ -145,7 +145,7 @@ class {class} extends {extends}
      * Process the updating, full or partial, of a specific resource object.
      * This should be a POST.
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return ResponseInterface
      */
@@ -157,7 +157,7 @@ class {class} extends {extends}
     /**
      * Present a view to confirm the deletion of a specific resource object.
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return ResponseInterface
      */
@@ -169,7 +169,7 @@ class {class} extends {extends}
     /**
      * Process the deletion of a specific resource object.
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return ResponseInterface
      */
