@@ -202,6 +202,36 @@ final class RedisHandlerTest extends CIUnitTestCase
                     'timeout'  => 10.0,
                 ],
             ],
+            'auth acl' => [
+                'tcp://localhost:6379?auth[user]=redis-admin&auth[pass]=admin-password',
+                [
+                    'host'     => 'tcp://localhost',
+                    'port'     => 6379,
+                    'password' => ['user' => 'redis-admin', 'pass' => 'admin-password'],
+                    'database' => 0,
+                    'timeout'  => 0.0,
+                ],
+            ],
+            'unix domain socket' => [
+                'unix:///tmp/redis.sock',
+                [
+                    'host'     => '/tmp/redis.sock',
+                    'port'     => 0,
+                    'password' => null,
+                    'database' => 0,
+                    'timeout'  => 0.0,
+                ],
+            ],
+            'unix domain socket w/o protocol' => [
+                '/tmp/redis.sock',
+                [
+                    'host'     => '/tmp/redis.sock',
+                    'port'     => 0,
+                    'password' => null,
+                    'database' => 0,
+                    'timeout'  => 0.0,
+                ],
+            ],
         ];
     }
 }
