@@ -98,9 +98,8 @@ class RedisHandler extends BaseHandler
             }
 
             $this->savePath = [
-                'protocol' => ! empty($matches[1]) ? $matches[1] : self::DEFAULT_PROTOCOL,
-                'host'     => $matches[2],
-                'port'     => empty($matches[3]) ? self::DEFAULT_PORT : $matches[3],
+                'host'     => (! empty($matches[1]) ? $matches[1] : self::DEFAULT_PROTOCOL) . '://' . $matches[2],
+                'port'     => empty($matches[3]) ? self::DEFAULT_PORT : (int) $matches[3],
                 'password' => preg_match('#auth=([^\s&]+)#', $matches[4], $match) ? $match[1] : null,
                 'database' => preg_match('#database=(\d+)#', $matches[4], $match) ? (int) $match[1] : 0,
                 'timeout'  => preg_match('#timeout=(\d+\.\d+|\d+)#', $matches[4], $match) ? (float) $match[1] : 0.0,
@@ -130,7 +129,7 @@ class RedisHandler extends BaseHandler
 
         if (
             ! $redis->connect(
-                $this->savePath['protocol'] . '://' . $this->savePath['host'],
+                $this->savePath['host'],
                 ($this->savePath['host'][0] === '/') ? 0 : (int) $this->savePath['port'],
                 $this->savePath['timeout']
             )
