@@ -115,6 +115,8 @@ class RedisHandler extends BaseHandler
      *
      * @param string $path The path where to store/retrieve the session
      * @param string $name The session name
+     *
+     * @throws RedisException
      */
     public function open($path, $name): bool
     {
@@ -154,6 +156,8 @@ class RedisHandler extends BaseHandler
      *
      * @return false|string Returns an encoded string of the read data.
      *                      If nothing was read, it must return false.
+     *
+     * @throws RedisException
      */
     #[ReturnTypeWillChange]
     public function read($id)
@@ -184,6 +188,8 @@ class RedisHandler extends BaseHandler
      *
      * @param string $id   The session ID
      * @param string $data The encoded session data
+     *
+     * @throws RedisException
      */
     public function write($id, $data): bool
     {
@@ -254,6 +260,8 @@ class RedisHandler extends BaseHandler
      * Destroys a session
      *
      * @param string $id The session ID being destroyed
+     *
+     * @throws RedisException
      */
     public function destroy($id): bool
     {
@@ -288,6 +296,8 @@ class RedisHandler extends BaseHandler
      * Acquires an emulated lock.
      *
      * @param string $sessionID Session ID
+     *
+     * @throws RedisException
      */
     protected function lockSession(string $sessionID): bool
     {
@@ -338,6 +348,8 @@ class RedisHandler extends BaseHandler
 
     /**
      * Releases a previously acquired lock
+     *
+     * @throws RedisException
      */
     protected function releaseLock(): bool
     {
