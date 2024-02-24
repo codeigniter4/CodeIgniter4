@@ -77,7 +77,7 @@ class ImageMagickHandler extends BaseHandler
     /**
      * Crops the image.
      *
-     * @return bool|\CodeIgniter\Images\Handlers\ImageMagickHandler
+     * @return bool|ImageMagickHandler
      *
      * @throws Exception
      */
