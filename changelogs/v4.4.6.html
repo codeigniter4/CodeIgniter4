@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Version 4.4.6 &mdash; CodeIgniter 4.4.5 documentation</title>
+  <title>Version 4.4.6 &mdash; CodeIgniter 4.4.6 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
@@ -287,7 +287,7 @@
              
   <section id="version-4-4-6">
 <h1>Version 4.4.6<a class="headerlink" href="#version-4-4-6" title="Permalink to this heading"></a></h1>
-<p>Release Date: Unreleased</p>
+<p>Release Date: February 24, 2024</p>
 <p><strong>4.4.6 release of CodeIgniter4</strong></p>
 <nav class="contents local" id="contents">
 <ul class="simple">
@@ -296,10 +296,7 @@
 <li><p><a class="reference internal" href="#time-createfromtimestamp" id="id2">Time::createFromTimestamp()</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#message-changes" id="id3">Message Changes</a></p></li>
-<li><p><a class="reference internal" href="#changes" id="id4">Changes</a></p></li>
-<li><p><a class="reference internal" href="#deprecations" id="id5">Deprecations</a></p></li>
-<li><p><a class="reference internal" href="#bugs-fixed" id="id6">Bugs Fixed</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id3">Bugs Fixed</a></p></li>
 </ul>
 </nav>
 <section id="breaking">
@@ -312,17 +309,15 @@ to return a Time instance with a timezone of UTC has been fixed.</p>
 with the app’s timezone is returned by default.</p>
 </section>
 </section>
-<section id="message-changes">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this heading"></a></h2>
-</section>
-<section id="changes">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Changes</a><a class="headerlink" href="#changes" title="Permalink to this heading"></a></h2>
-</section>
-<section id="deprecations">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this heading"></a></h2>
-</section>
 <section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Session:</strong> Fixed a bug in Redis session handler that caused locking to fail
+and the session data to be cleared.</p></li>
+<li><p><strong>DB Forge:</strong> Fixed a bug in SQLite3 Forge that caused <code class="docutils literal notranslate"><span class="pre">Forge::modifyColumn()</span></code>
+to incorrectly modify table definitions.</p></li>
+<li><p><strong>CSP:</strong> Fixed a bug that CSP blocked some elements in the Debug Toolbar.</p></li>
+</ul>
 <p>See the repo’s
 <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a>
 for a complete list of bugs fixed.</p>
@@ -341,7 +336,7 @@ for a complete list of bugs fixed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 22, 2024.
+      <span class="lastupdated">Last updated on Feb 24, 2024.
       </span></p>
   </div>
 
