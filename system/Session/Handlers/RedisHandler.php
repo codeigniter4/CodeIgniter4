@@ -64,6 +64,16 @@ class RedisHandler extends BaseHandler
     protected $sessionExpiration = 7200;
 
     /**
+     * Time (microseconds) to wait if lock cannot be acquired.
+     */
+    private int $lockRetryInterval = 100_000;
+
+    /**
+     * Maximum number of lock acquisition attempts.
+     */
+    private int $lockMaxRetries = 300;
+
+    /**
      * @param string $ipAddress User's IP address
      *
      * @throws SessionException
@@ -76,6 +86,7 @@ class RedisHandler extends BaseHandler
         $this->sessionExpiration = ($config->expiration === 0)
             ? (int) ini_get('session.gc_maxlifetime')
             : $config->expiration;
+
         // Add sessionCookieName for multiple session cookies.
         $this->keyPrefix .= $config->cookieName . ':';
 
@@ -84,6 +95,9 @@ class RedisHandler extends BaseHandler
         if ($this->matchIP === true) {
             $this->keyPrefix .= $this->ipAddress . ':';
         }
+
+        $this->lockRetryInterval = $config->lockWait ?? $this->lockRetryInterval;
+        $this->lockMaxRetries    = $config->lockAttempts ?? $this->lockMaxRetries;
     }
 
     protected function setSavePath(): void
@@ -359,14 +373,14 @@ class RedisHandler extends BaseHandler
             );
 
             if (! $result) {
-                usleep(100000);
+                usleep($this->lockRetryInterval);
 
                 continue;
             }
 
             $this->lockKey = $lockKey;
             break;
-        } while (++$attempt < 300);
+        } while (++$attempt < $this->lockMaxRetries);
 
         if ($attempt === 300) {
             $this->logger->error(
