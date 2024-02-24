@@ -6,12 +6,12 @@ Deployment
     :local:
     :depth: 3
 
-Before deploying your CodeIgniter application to production, there are several
-things you can do to make your application run more efficiently.
-
 ************
 Optimization
 ************
+
+Before deploying your CodeIgniter application to production, there are several
+things you can do to make your application run more efficiently.
 
 This section describes the optimization features that CodeIgniter provides.
 
@@ -63,3 +63,80 @@ If you want to use `Preloading <https://www.php.net/manual/en/opcache.preloading
 we provide a
 `preload script <https://github.com/codeigniter4/CodeIgniter4/blob/develop/preload.php>`_.
 
+.. _deployment-to-shared-hosting-services:
+
+*************************************
+Deployment to Shared Hosting Services
+*************************************
+
+.. important::
+    **index.php** is no longer in the root of the project! It has been moved inside
+    the **public** folder, for better security and separation of components.
+
+    This means that you should configure your web server to "point" to your project's
+    **public** folder, and not to the project root.
+
+Specifying the Document Root
+============================
+
+The best way is to set the document root to the **public** folder in the server
+configuration::
+
+    └── example.com/ (project folder)
+        └── public/  (document root)
+
+Check with your hosting service provider to see if you can change the document root.
+Unfortunately, if you cannot change the document root, go to the next way.
+
+Using Two Directories
+=====================
+
+The second way is to use two directories, and adjust the path.
+One is for the application and the other is the default document root.
+
+Upload the contents of the **public** folder to **public_html** (the default
+document root) and the other files to the directory for the application::
+
+    ├── example.com/ (for the application)
+    │       ├── app/
+    │       ├── vendor/ (or system/)
+    │       └── writable/
+    └── public_html/ (the default document root)
+            ├── .htaccess
+            ├── favicon.ico
+            ├── index.php
+            └── robots.txt
+
+See
+`Install CodeIgniter 4 on Shared Hosting (cPanel) <https://forum.codeigniter.com/showthread.php?tid=76779>`_
+for details.
+
+Adding .htaccess
+================
+
+The last resort is to add **.htaccess** to the project root.
+
+It is not recommended that you place the project folder in the document root.
+However, if you have no other choice, you can use this.
+
+Place your project folder as follows, where **public_html** is the document root,
+and create the **.htaccess** file::
+
+    └── public_html/     (the default document root)
+        └── example.com/ (project folder)
+            ├── .htaccess
+            └── public/
+
+And edit **.htaccess** as follows:
+
+.. code-block:: apache
+
+    <IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteRule ^(.*)$ public/$1 [L]
+    </IfModule>
+
+    <FilesMatch "^\.">
+        Require all denied
+        Satisfy All
+    </FilesMatch>
