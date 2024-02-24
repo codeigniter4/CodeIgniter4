@@ -1155,7 +1155,7 @@ trait TimeTrait
      *
      * @param string $name
      *
-     * @return array|bool|DateTimeInterface|DateTimeZone|int|intlCalendar|self|string|null
+     * @return array|bool|DateTimeInterface|DateTimeZone|int|IntlCalendar|self|string|null
      */
     public function __get($name)
     {
