@@ -47,6 +47,15 @@ Namespaces
 Application Structure
 =====================
 
+.. important::
+    **index.php** is no longer in the root of the project! It has been moved inside
+    the **public** folder, for better security and separation of components.
+
+    This means that you should configure your web server to "point" to your project's
+    **public** folder, and not to the project root.
+
+    If you would use Shared Hosting, see :ref:`deployment-to-shared-hosting-services`.
+
 - The **application** folder is renamed as **app** and the framework still has **system** folders,
   with the same interpretation as before.
 - The framework now provides for a **public** folder, intended as the document root for your app.

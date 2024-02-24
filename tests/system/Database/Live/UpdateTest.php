@@ -125,7 +125,7 @@ final class UpdateTest extends CIUnitTestCase
         for ($i = 1; $i < 4; $i++) {
             $builder->insert([
                 'type_varchar'  => 'test' . $i,
-                'type_char'     => 'char',
+                'type_char'     => 'char' . $i,
                 'type_text'     => 'text',
                 'type_smallint' => 32767,
                 'type_integer'  => 2_147_483_647,
@@ -159,6 +159,7 @@ final class UpdateTest extends CIUnitTestCase
                 [
                     [
                         'type_varchar'  => 'test1', // Key
+                        'type_char'     => 'updated',
                         'type_text'     => 'updated',
                         'type_smallint' => 9999,
                         'type_integer'  => 9_999_999,
@@ -170,6 +171,7 @@ final class UpdateTest extends CIUnitTestCase
                     ],
                     [
                         'type_varchar'  => 'test2', // Key
+                        'type_char'     => 'updated',
                         'type_text'     => 'updated',
                         'type_smallint' => 9999,
                         'type_integer'  => 9_999_999,
@@ -183,6 +185,7 @@ final class UpdateTest extends CIUnitTestCase
                 [
                     [
                         'type_varchar'  => 'test1',
+                        'type_char'     => 'updated',
                         'type_text'     => 'updated',
                         'type_smallint' => 9999,
                         'type_integer'  => 9_999_999,
@@ -193,6 +196,7 @@ final class UpdateTest extends CIUnitTestCase
                     ],
                     [
                         'type_varchar'  => 'test2',
+                        'type_char'     => 'updated',
                         'type_text'     => 'updated',
                         'type_smallint' => 9999,
                         'type_integer'  => 9_999_999,

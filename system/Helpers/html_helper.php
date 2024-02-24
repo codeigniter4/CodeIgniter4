@@ -70,9 +70,9 @@ if (! function_exists('_list')) {
                 $out .= $val;
             } else {
                 $out .= $key
-                        . "\n"
-                        . _list($type, $val, '', $depth + 4)
-                        . str_repeat(' ', $depth + 2);
+                    . "\n"
+                    . _list($type, $val, '', $depth + 4)
+                    . str_repeat(' ', $depth + 2);
             }
 
             $out .= "</li>\n";

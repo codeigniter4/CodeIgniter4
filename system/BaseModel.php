@@ -42,7 +42,7 @@ use stdClass;
  *      - process various callbacks
  *      - allow intermingling calls to the db connection
  *
- * @phpstan-type row_array array<int|string, float|int|null|string>
+ * @phpstan-type row_array array<int|string, float|int|null|object|string>
  * @phpstan-type event_data_beforeinsert array{data: row_array}
  * @phpstan-type event_data_afterinsert array{id: int|string, data: row_array, result: bool}
  * @phpstan-type event_data_beforefind array{id?: int|string, method: string, singleton: bool, limit?: int, offset?: int}
@@ -400,7 +400,7 @@ abstract class BaseModel
      * Inserts data into the current database.
      * This method works only with dbCalls.
      *
-     * @param array $row Row data
+     * @param         array     $row Row data
      * @phpstan-param row_array $row
      *
      * @return bool
@@ -424,9 +424,9 @@ abstract class BaseModel
      * Updates a single record in the database.
      * This method works only with dbCalls.
      *
-     * @param array|int|string|null $id  ID
-     * @param array|null            $row Row data
-     * @phpstan-param row_array|null $row
+     * @param         array|int|string|null $id  ID
+     * @param         array|null            $row Row data
+     * @phpstan-param row_array|null        $row
      */
     abstract protected function doUpdate($id = null, $row = null): bool;
 
@@ -480,9 +480,9 @@ abstract class BaseModel
      * Compiles a replace and runs the query.
      * This method works only with dbCalls.
      *
-     * @param array|null $row Row data
+     * @param         array|null     $row       Row data
      * @phpstan-param row_array|null $row
-     * @param bool $returnSQL Set to true to return Query String
+     * @param         bool           $returnSQL Set to true to return Query String
      *
      * @return BaseResult|false|Query|string
      */
@@ -511,7 +511,7 @@ abstract class BaseModel
      * Public getter to return the id value using the idValue() method.
      * For example with SQL this will return $data->$this->primaryKey.
      *
-     * @param array|object $row Row data
+     * @param         array|object     $row Row data
      * @phpstan-param row_array|object $row
      *
      * @return array|int|string|null
@@ -552,7 +552,7 @@ abstract class BaseModel
      *
      * @param array|int|string|null $id One primary key or an array of primary keys
      *
-     * @return array|object|null The resulting row of data, or null.
+     * @return         array|object|null                                                    The resulting row of data, or null.
      * @phpstan-return ($id is int|string ? row_array|object|null : list<row_array|object>)
      */
     public function find($id = null)
@@ -696,7 +696,7 @@ abstract class BaseModel
      * you must ensure that the class will provide access to the class
      * variables, even if through a magic method.
      *
-     * @param array|object $row Row data
+     * @param         array|object     $row Row data
      * @phpstan-param row_array|object $row
      *
      * @throws ReflectionException
@@ -724,7 +724,7 @@ abstract class BaseModel
      * This method is called on save to determine if entry have to be updated.
      * If this method returns false insert operation will be executed
      *
-     * @param array|object $row Row data
+     * @param         array|object     $row Row data
      * @phpstan-param row_array|object $row
      */
     protected function shouldUpdate($row): bool
@@ -748,11 +748,11 @@ abstract class BaseModel
      * Inserts data into the database. If an object is provided,
      * it will attempt to convert it to an array.
      *
-     * @param array|object|null $row Row data
+     * @param         array|object|null     $row      Row data
      * @phpstan-param row_array|object|null $row
-     * @param bool $returnID Whether insert ID should be returned or not.
+     * @param         bool                  $returnID Whether insert ID should be returned or not.
      *
-     * @return bool|int|string insert ID or true on success. false on failure.
+     * @return         bool|int|string                               insert ID or true on success. false on failure.
      * @phpstan-return ($returnID is true ? int|string|false : bool)
      *
      * @throws ReflectionException
@@ -826,8 +826,8 @@ abstract class BaseModel
     /**
      * Set datetime to created field.
      *
-     * @phpstan-param row_array $row
-     * @param int|string $date timestamp or datetime string
+     * @phpstan-param row_array  $row
+     * @param         int|string $date timestamp or datetime string
      */
     protected function setCreatedField(array $row, $date): array
     {
@@ -841,8 +841,8 @@ abstract class BaseModel
     /**
      * Set datetime to updated field.
      *
-     * @phpstan-param row_array $row
-     * @param int|string $date timestamp or datetime string
+     * @phpstan-param row_array  $row
+     * @param         int|string $date timestamp or datetime string
      */
     protected function setUpdatedField(array $row, $date): array
     {
@@ -856,11 +856,11 @@ abstract class BaseModel
     /**
      * Compiles batch insert runs the queries, validating each row prior.
      *
-     * @param list<array|object>|null $set an associative array of insert values
+     * @param         list<array|object>|null     $set       an associative array of insert values
      * @phpstan-param list<row_array|object>|null $set
-     * @param bool|null $escape    Whether to escape values
-     * @param int       $batchSize The size of the batch to run
-     * @param bool      $testing   True means only number of records is returned, false will execute the query
+     * @param         bool|null                   $escape    Whether to escape values
+     * @param         int                         $batchSize The size of the batch to run
+     * @param         bool                        $testing   True means only number of records is returned, false will execute the query
      *
      * @return bool|int Number of rows inserted or FALSE on failure
      *
@@ -937,8 +937,8 @@ abstract class BaseModel
      * Updates a single record in the database. If an object is provided,
      * it will attempt to convert it into an array.
      *
-     * @param array|int|string|null $id
-     * @param array|object|null     $row Row data
+     * @param         array|int|string|null $id
+     * @param         array|object|null     $row Row data
      * @phpstan-param row_array|object|null $row
      *
      * @throws ReflectionException
@@ -999,11 +999,11 @@ abstract class BaseModel
     /**
      * Compiles an update and runs the query.
      *
-     * @param list<array|object>|null $set an associative array of insert values
+     * @param         list<array|object>|null     $set       an associative array of insert values
      * @phpstan-param list<row_array|object>|null $set
-     * @param string|null $index     The where key
-     * @param int         $batchSize The size of the batch to run
-     * @param bool        $returnSQL True means SQL is returned, false will execute the query
+     * @param         string|null                 $index     The where key
+     * @param         int                         $batchSize The size of the batch to run
+     * @param         bool                        $returnSQL True means SQL is returned, false will execute the query
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      *
@@ -1173,9 +1173,9 @@ abstract class BaseModel
     /**
      * Compiles a replace and runs the query.
      *
-     * @param array|null $row Row data
+     * @param         array|null     $row       Row data
      * @phpstan-param row_array|null $row
-     * @param bool $returnSQL Set to true to return Query String
+     * @param         bool           $returnSQL Set to true to return Query String
      *
      * @return BaseResult|false|Query|string
      */
@@ -1279,7 +1279,7 @@ abstract class BaseModel
      * @used-by update() to protect against mass assignment vulnerabilities.
      * @used-by updateBatch() to protect against mass assignment vulnerabilities.
      *
-     * @param array $row Row data
+     * @param         array     $row Row data
      * @phpstan-param row_array $row
      *
      * @throws DataException
@@ -1310,7 +1310,7 @@ abstract class BaseModel
      * @used-by insert() to protect against mass assignment vulnerabilities.
      * @used-by insertBatch() to protect against mass assignment vulnerabilities.
      *
-     * @param array $row Row data
+     * @param         array     $row Row data
      * @phpstan-param row_array $row
      *
      * @throws DataException
@@ -1505,7 +1505,7 @@ abstract class BaseModel
      * Validate the row data against the validation rules (or the validation group)
      * specified in the class property, $validationRules.
      *
-     * @param array|object $row Row data
+     * @param         array|object     $row Row data
      * @phpstan-param row_array|object $row
      */
     public function validate($row): bool
@@ -1575,8 +1575,8 @@ abstract class BaseModel
      * currently so that rules don't block updating when only updating
      * a partial row.
      *
-     * @param array $rules Array containing field name and rule
-     * @param array $row   Row data (@TODO Remove null in param type)
+     * @param         array     $rules Array containing field name and rule
+     * @param         array     $row   Row data (@TODO Remove null in param type)
      * @phpstan-param row_array $row
      */
     protected function cleanValidationRules(array $rules, ?array $row = null): array
@@ -1760,9 +1760,9 @@ abstract class BaseModel
     /**
      * Transform data to array.
      *
-     * @param array|object|null $row Row data
+     * @param         array|object|null     $row  Row data
      * @phpstan-param row_array|object|null $row
-     * @param string $type Type of data (insert|update)
+     * @param         string                $type Type of data (insert|update)
      *
      * @throws DataException
      * @throws InvalidArgumentException

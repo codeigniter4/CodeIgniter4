@@ -831,7 +831,7 @@ class Forge
      * @param array|string          $processedFields Processed column definitions
      *                                               or column names to DROP
      *
-     * @return false|list<string>|string|null SQL string
+     * @return         false|list<string>|string|null                            SQL string
      * @phpstan-return ($alterType is 'DROP' ? string : list<string>|false|null)
      */
     protected function _alterTable(string $alterType, string $table, $processedFields)

@@ -184,7 +184,7 @@ $dateFormat
 
 This value works with `$useTimestamps`_ and `$useSoftDeletes`_ to ensure that the correct type of
 date value gets inserted into the database. By default, this creates DATETIME values, but
-valid options are: ``'datetime'``, ``'date'``, or ``'int'`` (a PHP timestamp). Using `$useSoftDeletes`_ or
+valid options are: ``'datetime'``, ``'date'``, or ``'int'`` (a UNIX timestamp). Using `$useSoftDeletes`_ or
 `$useTimestamps`_ with an invalid or missing `$dateFormat`_ will cause an exception.
 
 $createdField

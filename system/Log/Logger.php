@@ -37,7 +37,7 @@ class Logger implements LoggerInterface
      * Used by the logThreshold Config setting to define
      * which errors to show.
      *
-     * @var array<string, integer>
+     * @var array<string, int>
      */
     protected $logLevels = [
         'emergency' => 1,

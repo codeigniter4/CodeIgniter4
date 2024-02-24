@@ -11,10 +11,12 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Live\Postgre;
+namespace CodeIgniter\Database\Live\OCI8;
 
 use CodeIgniter\Database\Live\AbstractGetFieldDataTest;
 use Config\Database;
+use LogicException;
+use stdClass;
 
 /**
  * @group DatabaseLive
@@ -25,75 +27,95 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
 {
     protected function createForge(): void
     {
-        if ($this->db->DBDriver !== 'Postgre') {
-            $this->markTestSkipped('This test is only for Postgre.');
+        if ($this->db->DBDriver !== 'OCI8') {
+            $this->markTestSkipped('This test is only for OCI8.');
         }
 
         $this->forge = Database::forge($this->db);
+    }
+
+    private function getFieldMetaData(string $column, string $table): stdClass
+    {
+        $fields = $this->db->getFieldData($table);
+
+        $name = array_search(
+            $column,
+            array_column($fields, 'name'),
+            true
+        );
+
+        if ($name === false) {
+            throw new LogicException('Field not found: ' . $column);
+        }
+
+        return $fields[$name];
     }
 
     public function testGetFieldDataDefault(): void
     {
         $this->createTableForDefault();
 
-        $fields = $this->db->getFieldData('test1');
+        $fields = $this->db->getFieldData($this->table);
+
+        $idDefault = $this->getFieldMetaData('id', $this->table)->default;
+        $this->assertMatchesRegularExpression('/"ORACLE"."ISEQ\$\$_[0-9]+".nextval/', $idDefault);
 
         $expected = [
             (object) [
                 'name'       => 'id',
-                'type'       => 'integer',
-                'max_length' => '32',
+                'type'       => 'NUMBER',
+                'max_length' => '11',
                 'nullable'   => false,
+                'default'    => $idDefault, // The default value is not defined.
                 // 'primary_key' => 1,
-                'default' => "nextval('db_test1_id_seq'::regclass)", // The default value is not defined.
             ],
             (object) [
                 'name'       => 'text_not_null',
-                'type'       => 'character varying',
+                'type'       => 'VARCHAR2',
                 'max_length' => '64',
                 'nullable'   => false,
+                'default'    => null, // The default value is not defined.
                 // 'primary_key' => 0,
-                'default' => null, // The default value is not defined.
             ],
             (object) [
                 'name'       => 'text_null',
-                'type'       => 'character varying',
+                'type'       => 'VARCHAR2',
                 'max_length' => '64',
                 'nullable'   => true,
+                'default'    => null, // The default value is not defined.
                 // 'primary_key' => 0,
-                'default' => null, // The default value is not defined.
             ],
             (object) [
                 'name'       => 'int_default_0',
-                'type'       => 'integer',
-                'max_length' => '32',
+                'type'       => 'NUMBER',
+                'max_length' => '11',
                 'nullable'   => false,
+                'default'    => '0 ', // int 0
                 // 'primary_key' => 0,
-                'default' => '0', // int 0
             ],
             (object) [
                 'name'       => 'text_default_null',
-                'type'       => 'character varying',
+                'type'       => 'VARCHAR2',
                 'max_length' => '64',
                 'nullable'   => true,
+                'default'    => 'NULL ', // NULL value
                 // 'primary_key' => 0,
-                'default' => 'NULL::character varying', // NULL value
             ],
             (object) [
                 'name'       => 'text_default_text_null',
-                'type'       => 'character varying',
+                'type'       => 'VARCHAR2',
                 'max_length' => '64',
                 'nullable'   => false,
+                'default'    => "'null' ", // string "null"
                 // 'primary_key' => 0,
-                'default' => "'null'::character varying", // string "null"
             ],
             (object) [
                 'name'       => 'text_default_abc',
-                'type'       => 'character varying',
+                'type'       => 'VARCHAR2',
                 'max_length' => '64',
                 'nullable'   => false,
+                'default'    => "'abc' ", // string "abc"
                 // 'primary_key' => 0,
-                'default' => "'abc'::character varying", // string "abc"
             ],
         ];
         $this->assertSameFieldData($expected, $fields);
@@ -108,113 +130,148 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
         $expected = [
             0 => (object) [
                 'name'       => 'id',
-                'type'       => 'integer',
-                'max_length' => '32',
+                'type'       => 'NUMBER',
+                'max_length' => '20',
                 'nullable'   => false,
-                'default'    => 'nextval(\'db_test1_id_seq\'::regclass)',
+                'default'    => $this->getFieldMetaData('id', $this->table)->default,
             ],
             1 => (object) [
                 'name'       => 'type_varchar',
-                'type'       => 'character varying',
+                'type'       => 'VARCHAR2',
                 'max_length' => '40',
                 'nullable'   => true,
                 'default'    => null,
             ],
             2 => (object) [
                 'name'       => 'type_char',
-                'type'       => 'character',
+                'type'       => 'CHAR',
                 'max_length' => '10',
                 'nullable'   => true,
                 'default'    => null,
             ],
             3 => (object) [
                 'name'       => 'type_text',
-                'type'       => 'text',
-                'max_length' => null,
+                'type'       => 'VARCHAR2',
+                'max_length' => '4000',
                 'nullable'   => true,
                 'default'    => null,
             ],
             4 => (object) [
                 'name'       => 'type_smallint',
-                'type'       => 'smallint',
-                'max_length' => '16',
+                'type'       => 'NUMBER',
+                'max_length' => '5',
                 'nullable'   => true,
                 'default'    => null,
             ],
             5 => (object) [
                 'name'       => 'type_integer',
-                'type'       => 'integer',
-                'max_length' => '32',
+                'type'       => 'NUMBER',
+                'max_length' => '11',
                 'nullable'   => true,
                 'default'    => null,
             ],
             6 => (object) [
                 'name'       => 'type_float',
-                'type'       => 'double precision',
-                'max_length' => '53',
+                'type'       => 'FLOAT',
+                'max_length' => '126',
                 'nullable'   => true,
                 'default'    => null,
             ],
             7 => (object) [
                 'name'       => 'type_numeric',
-                'type'       => 'numeric',
+                'type'       => 'NUMBER',
                 'max_length' => '18',
                 'nullable'   => true,
                 'default'    => null,
             ],
             8 => (object) [
                 'name'       => 'type_date',
-                'type'       => 'date',
-                'max_length' => null,
+                'type'       => 'DATE',
+                'max_length' => '7',
                 'nullable'   => true,
                 'default'    => null,
             ],
             9 => (object) [
                 'name'       => 'type_time',
-                'type'       => 'time without time zone',
-                'max_length' => null,
+                'type'       => 'DATE',
+                'max_length' => '7',
                 'nullable'   => true,
                 'default'    => null,
             ],
             10 => (object) [
                 'name'       => 'type_datetime',
-                'type'       => 'timestamp without time zone',
-                'max_length' => null,
+                'type'       => 'DATE',
+                'max_length' => '7',
                 'nullable'   => true,
                 'default'    => null,
             ],
             11 => (object) [
                 'name'       => 'type_timestamp',
-                'type'       => 'timestamp without time zone',
-                'max_length' => null,
+                'type'       => 'TIMESTAMP(6)',
+                'max_length' => '11',
                 'nullable'   => true,
                 'default'    => null,
             ],
             12 => (object) [
                 'name'       => 'type_bigint',
-                'type'       => 'bigint',
-                'max_length' => '64',
+                'type'       => 'NUMBER',
+                'max_length' => '19',
                 'nullable'   => true,
                 'default'    => null,
             ],
             13 => (object) [
                 'name'       => 'type_real',
-                'type'       => 'real',
-                'max_length' => '24',
+                'type'       => 'FLOAT',
+                'max_length' => '63',
                 'nullable'   => true,
                 'default'    => null,
             ],
             14 => (object) [
-                'name'       => 'type_decimal',
-                'type'       => 'numeric',
-                'max_length' => '18',
+                'name'       => 'type_enum',
+                'type'       => 'VARCHAR2',
+                'max_length' => '5',
                 'nullable'   => true,
                 'default'    => null,
             ],
             15 => (object) [
+                'name'       => 'type_set',
+                'type'       => 'VARCHAR2',
+                'max_length' => '3',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            16 => (object) [
+                'name'       => 'type_mediumtext',
+                'type'       => 'VARCHAR2',
+                'max_length' => '4000',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            17 => (object) [
+                'name'       => 'type_double',
+                'type'       => 'FLOAT',
+                'max_length' => '126',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            18 => (object) [
+                'name'       => 'type_decimal',
+                'type'       => 'NUMBER',
+                'max_length' => '18',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            19 => (object) [
+                'name'       => 'type_blob',
+                'type'       => 'BLOB',
+                'max_length' => '4000',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            20 => (object) [
                 'name'       => 'type_boolean',
-                'type'       => 'boolean',
-                'max_length' => null,
+                'type'       => 'NUMBER',
+                'max_length' => '1',
                 'nullable'   => true,
                 'default'    => null,
             ],

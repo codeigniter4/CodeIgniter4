@@ -197,7 +197,8 @@ Service Accessors
 
     .. literalinclude:: common_functions/004.php
 
-    For more details, see the :doc:`Views </outgoing/views>` page.
+    For more details, see the :doc:`Views <../outgoing/views>` and
+    :doc:`../outgoing/view_renderer` page.
 
 .. php:function:: view_cell($library[, $params = null[, $ttl = 0[, $cacheName = null]]])
 
@@ -382,7 +383,7 @@ Miscellaneous Functions
     :returns: a route path (URI path relative to baseURL)
     :rtype: string
 
-    .. note:: This function requires the controller/method to have a route defined in **app/Config/routes.php**.
+    .. note:: This function requires the controller/method to have a route defined in **app/Config/Routes.php**.
 
     .. important:: ``route_to()`` returns a *route* path, not a full URI path for your site.
         If your **baseURL** contains sub folders, the return value is not the same

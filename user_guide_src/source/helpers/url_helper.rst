@@ -20,9 +20,9 @@ The following functions are available:
 
 .. php:function:: site_url([$uri = ''[, $protocol = null[, $altConfig = null]]])
 
-    :param  array|string         $uri: URI string or array of URI segments
-    :param  string        $protocol: Protocol, e.g., 'http' or 'https'
-    :param  \\Config\\App $altConfig: Alternate configuration to use
+    :param  array|string         $uri: URI string or array of URI segments.
+    :param  string        $protocol: Protocol, e.g., 'http' or 'https'. If empty string '' is set, a protocol-relative link is returned.
+    :param  \\Config\\App $altConfig: Alternate configuration to use.
     :returns: Site URL
     :rtype:    string
 
@@ -56,8 +56,8 @@ The following functions are available:
 
 .. php:function:: base_url([$uri = ''[, $protocol = null]])
 
-    :param  array|string   $uri: URI string or array of URI segments
-    :param  string  $protocol: Protocol, e.g., 'http' or 'https'
+    :param  array|string   $uri: URI string or array of URI segments.
+    :param  string  $protocol: Protocol, e.g., 'http' or 'https'. If empty string '' is set, a protocol-relative link is returned.
     :returns: Base URL
     :rtype: string
 
@@ -82,6 +82,11 @@ The following functions are available:
 
     The above example would return something like:
     **http://example.com/blog/post/123**
+
+    If you pass an empty string ``''`` as the second parameter, it returns
+    the protocol-relative link:
+
+    .. literalinclude:: url_helper/026.php
 
     This is useful because unlike :php:func:`site_url()`, you can supply a
     string to a file, such as an image or stylesheet. For example:
@@ -377,7 +382,7 @@ The following functions are available:
     :returns: Absolute URL
     :rtype: string
 
-    .. note:: This function requires the controller/method to have a route defined in **app/Config/routes.php**.
+    .. note:: This function requires the controller/method to have a route defined in **app/Config/Routes.php**.
 
     Builds an absolute URL to a controller method in your app. Example:
 

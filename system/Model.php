@@ -179,7 +179,7 @@ class Model extends BaseModel
      * @param bool                  $singleton Single or multiple results
      * @param array|int|string|null $id        One primary key or an array of primary keys
      *
-     * @return array|object|null The resulting row of data, or null.
+     * @return         array|object|null                                                     The resulting row of data, or null.
      * @phpstan-return ($singleton is true ? row_array|null|object : list<row_array|object>)
      */
     protected function doFind(bool $singleton, $id = null)
@@ -211,7 +211,7 @@ class Model extends BaseModel
      *
      * @param string $columnName Column Name
      *
-     * @return array|null The resulting row of data, or null if no data found.
+     * @return         array|null           The resulting row of data, or null if no data found.
      * @phpstan-return list<row_array>|null
      */
     protected function doFindColumn(string $columnName)
@@ -227,7 +227,7 @@ class Model extends BaseModel
      * @param int $limit  Limit
      * @param int $offset Offset
      *
-     * @return array
+     * @return         array
      * @phpstan-return list<row_array|object>
      */
     protected function doFindAll(int $limit = 0, int $offset = 0)
@@ -248,7 +248,7 @@ class Model extends BaseModel
      * Query Builder calls into account when determining the result set.
      * This method works only with dbCalls.
      *
-     * @return array|object|null
+     * @return         array|object|null
      * @phpstan-return row_array|object|null
      */
     protected function doFirst()
@@ -274,7 +274,7 @@ class Model extends BaseModel
      * Inserts data into the current table.
      * This method works only with dbCalls.
      *
-     * @param array $row Row data
+     * @param         array     $row Row data
      * @phpstan-param row_array $row
      *
      * @return bool
@@ -364,9 +364,9 @@ class Model extends BaseModel
      * Updates a single record in $this->table.
      * This method works only with dbCalls.
      *
-     * @param array|int|string|null $id
-     * @param array|null            $row Row data
-     * @phpstan-param row_array|null $row
+     * @param         array|int|string|null $id
+     * @param         array|null            $row Row data
+     * @phpstan-param row_array|null        $row
      */
     protected function doUpdate($id = null, $row = null): bool
     {
@@ -483,9 +483,9 @@ class Model extends BaseModel
      * Compiles a replace into string and runs the query
      * This method works only with dbCalls.
      *
-     * @param array|null $row Data
+     * @param         array|null     $row       Data
      * @phpstan-param row_array|null $row
-     * @param bool $returnSQL Set to true to return Query String
+     * @param         bool           $returnSQL Set to true to return Query String
      *
      * @return BaseResult|false|Query|string
      */
@@ -531,7 +531,7 @@ class Model extends BaseModel
     /**
      * Returns the id value for the data array or object
      *
-     * @param array|object $row Row data
+     * @param         array|object     $row Row data
      * @phpstan-param row_array|object $row
      *
      * @return array|int|string|null
@@ -718,11 +718,11 @@ class Model extends BaseModel
      * Inserts data into the database. If an object is provided,
      * it will attempt to convert it to an array.
      *
-     * @param array|object|null $row
+     * @param         array|object|null     $row
      * @phpstan-param row_array|object|null $row
-     * @param bool $returnID Whether insert ID should be returned or not.
+     * @param         bool                  $returnID Whether insert ID should be returned or not.
      *
-     * @return bool|int|string
+     * @return         bool|int|string
      * @phpstan-return ($returnID is true ? int|string|false : bool)
      *
      * @throws ReflectionException
@@ -751,7 +751,7 @@ class Model extends BaseModel
      * @used-by insert() to protect against mass assignment vulnerabilities.
      * @used-by insertBatch() to protect against mass assignment vulnerabilities.
      *
-     * @param array $row Row data
+     * @param         array     $row Row data
      * @phpstan-param row_array $row
      *
      * @throws DataException
@@ -784,8 +784,8 @@ class Model extends BaseModel
      * Updates a single record in the database. If an object is provided,
      * it will attempt to convert it into an array.
      *
-     * @param array|int|string|null $id
-     * @param array|object|null     $row
+     * @param         array|int|string|null $id
+     * @param         array|object|null     $row
      * @phpstan-param row_array|object|null $row
      *
      * @throws ReflectionException

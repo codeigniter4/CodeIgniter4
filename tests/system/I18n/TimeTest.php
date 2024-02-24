@@ -259,17 +259,21 @@ final class TimeTest extends CIUnitTestCase
 
     public function testCreateFromTimestamp(): void
     {
-        // Set the timezone temporarily to UTC to make sure the test timestamp is correct
+        // Save the current timezone.
         $tz = date_default_timezone_get();
-        date_default_timezone_set('UTC');
+
+        // Change the timezone other than UTC.
+        date_default_timezone_set('Asia/Tokyo'); // +09:00
 
         $timestamp = strtotime('2017-03-18 midnight');
 
-        date_default_timezone_set($tz);
-
         $time = Time::createFromTimestamp($timestamp);
 
-        $this->assertSame(date('2017-03-18 00:00:00'), $time->toDateTimeString());
+        $this->assertSame('Asia/Tokyo', $time->getTimezone()->getName());
+        $this->assertSame('2017-03-18 00:00:00', $time->format('Y-m-d H:i:s'));
+
+        // Restore timezone.
+        date_default_timezone_set($tz);
     }
 
     public function testCreateFromTimestampWithTimezone(): void

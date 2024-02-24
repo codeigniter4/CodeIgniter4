@@ -55,23 +55,31 @@ interface ResultInterface
      * Wrapper object to return a row as either an array, an object, or
      * a custom class.
      *
-     * If row doesn't exist, returns null.
+     * If the row doesn't exist, returns null.
      *
-     * @param int|string $n    The index of the results to return, or column name.
-     * @param string     $type The type of result object. 'array', 'object' or class name.
-     * @phpstan-param class-string|'array'|'object' $type
+     * @template T of object
      *
-     * @return array|object|stdClass|null
-     * @phpstan-return ($type is 'object' ? stdClass|null : ($type is 'array' ? array|null : object|null))
+     * @param         int|string                       $n    The index of the results to return, or column name.
+     * @param         string                           $type The type of result object. 'array', 'object' or class name.
+     * @phpstan-param class-string<T>|'array'|'object' $type
+     *
+     * @return         array|object|stdClass|null
+     * @phpstan-return ($type is 'object' ? stdClass|null : ($type is 'array' ? array|null : T|null))
      */
     public function getRow($n = 0, string $type = 'object');
 
     /**
      * Returns a row as a custom class instance.
      *
-     * If row doesn't exists, returns null.
+     * If the row doesn't exist, returns null.
      *
-     * @return array|null
+     * @template T of object
+     *
+     * @param         int             $n         The index of the results to return.
+     * @phpstan-param class-string<T> $className
+     *
+     * @return         object|null
+     * @phpstan-return T|null
      */
     public function getCustomRowObject(int $n, string $className);
 

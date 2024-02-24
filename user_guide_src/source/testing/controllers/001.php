@@ -1,12 +1,12 @@
 <?php
 
-namespace CodeIgniter;
+namespace App\Controllers;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ControllerTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
 
-class TestControllerA extends CIUnitTestCase
+class FooControllerTest extends CIUnitTestCase
 {
     use ControllerTestTrait;
     use DatabaseTestTrait;

@@ -315,7 +315,7 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific batch update string from the supplied data
      *
-     * @used-by batchExecute
+     * @used-by batchExecute()
      *
      * @param string                 $table  Protected table name
      * @param list<string>           $keys   QBKeys
@@ -431,7 +431,16 @@ class Builder extends BaseBuilder
             $this->QBOptions['fieldTypes'][$table] = [];
 
             foreach ($this->db->getFieldData($table) as $field) {
-                $this->QBOptions['fieldTypes'][$table][$field->name] = $field->type;
+                $type = $field->type;
+
+                // If `character` (or `char`) lacks a specifier, it is equivalent
+                // to `character(1)`.
+                // See https://www.postgresql.org/docs/current/datatype-character.html
+                if ($field->type === 'character') {
+                    $type = $field->type . '(' . $field->max_length . ')';
+                }
+
+                $this->QBOptions['fieldTypes'][$table][$field->name] = $type;
             }
         }
 

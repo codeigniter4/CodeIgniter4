@@ -112,8 +112,8 @@ class Forge extends BaseForge
      * @param array|string $processedFields Processed column definitions
      *                                      or column names to DROP
      *
-     * @return array|string|null
-     * @return list<string>|string|null SQL string or null
+     * @return         array|string|null
+     * @return         list<string>|string|null                            SQL string or null
      * @phpstan-return ($alterType is 'DROP' ? string : list<string>|null)
      */
     protected function _alterTable(string $alterType, string $table, $processedFields)
@@ -131,9 +131,28 @@ class Forge extends BaseForge
                 return ''; // Why empty string?
 
             case 'CHANGE':
+                $fieldsToModify = [];
+
+                foreach ($processedFields as $processedField) {
+                    $name    = $processedField['name'];
+                    $newName = $processedField['new_name'];
+
+                    $field             = $this->fields[$name];
+                    $field['name']     = $name;
+                    $field['new_name'] = $newName;
+
+                    // Unlike when creating a table, if `null` is not specified,
+                    // the column will be `NULL`, not `NOT NULL`.
+                    if ($processedField['null'] === '') {
+                        $field['null'] = true;
+                    }
+
+                    $fieldsToModify[] = $field;
+                }
+
                 (new Table($this->db, $this))
                     ->fromTable($table)
-                    ->modifyColumn($processedFields) // @TODO Bug: should be NOT processed fields
+                    ->modifyColumn($fieldsToModify)
                     ->run();
 
                 return null; // Why null?
