@@ -116,7 +116,7 @@ class CookieException extends FrameworkException
     /**
      * Thrown when the queried Cookie object does not exist in the cookie collection.
      *
-     * @param string[] $data
+     * @param array<string> $data
      *
      * @return static
      */

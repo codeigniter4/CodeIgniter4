@@ -544,11 +544,11 @@ if (! function_exists('set_value')) {
      * Grabs a value from the POST array for the specified field so you can
      * re-populate an input field or textarea
      *
-     * @param string          $field      Field name
-     * @param string|string[] $default    Default value
-     * @param bool            $htmlEscape Whether to escape HTML special characters or not
+     * @param string               $field      Field name
+     * @param array<string>|string $default    Default value
+     * @param bool                 $htmlEscape Whether to escape HTML special characters or not
      *
-     * @return string|string[]
+     * @return array<string>|string
      */
     function set_value(string $field, $default = '', bool $htmlEscape = true)
     {

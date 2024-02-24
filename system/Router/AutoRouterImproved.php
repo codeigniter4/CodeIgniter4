@@ -27,7 +27,7 @@ final class AutoRouterImproved implements AutoRouterInterface
     /**
      * List of controllers in Defined Routes that should not be accessed via this Auto-Routing.
      *
-     * @var class-string[]
+     * @var array<class-string>
      */
     private array $protectedControllers;
 
@@ -100,8 +100,8 @@ final class AutoRouterImproved implements AutoRouterInterface
     private ?int $paramPos = null;
 
     /**
-     * @param class-string[] $protectedControllers
-     * @param string         $defaultController    Short classname
+     * @param array<class-string> $protectedControllers
+     * @param string              $defaultController    Short classname
      *
      * @deprecated $httpVerb is deprecated. No longer used.
      */

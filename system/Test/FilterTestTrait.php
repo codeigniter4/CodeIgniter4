@@ -208,7 +208,7 @@ trait FilterTestTrait
      * @param string $route    The route to test
      * @param string $position "before" or "after"
      *
-     * @return string[] The filter aliases
+     * @return array<string> The filter aliases
      */
     protected function getFiltersForRoute(string $route, string $position): array
     {

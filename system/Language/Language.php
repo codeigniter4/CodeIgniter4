@@ -173,8 +173,8 @@ class Language
     /**
      * Advanced message formatting.
      *
-     * @param array|string $message
-     * @param string[]     $args
+     * @param array|string  $message
+     * @param array<string> $args
      *
      * @return array|string
      */
