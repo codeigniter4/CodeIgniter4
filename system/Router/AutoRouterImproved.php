@@ -427,7 +427,7 @@ final class AutoRouterImproved implements AutoRouterInterface
     {
         try {
             $refClass = new ReflectionClass($this->controller);
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
             throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
         }
 
