@@ -234,7 +234,8 @@ class Filters
             'common' => round((float) $value, $precision),
             'ceil'   => ceil((float) $value),
             'floor'  => floor((float) $value),
-            default  => $value,
+            // Still here, just return the value.
+            default => $value,
         };
     }
 
