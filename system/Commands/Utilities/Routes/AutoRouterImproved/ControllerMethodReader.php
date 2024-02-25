@@ -28,13 +28,13 @@ final class ControllerMethodReader
     private readonly bool $translateUriToCamelCase;
 
     /**
-     * @param string $namespace the default namespace
+     * @param string       $namespace   the default namespace
+     * @param list<string> $httpMethods
      */
-    public function __construct(private readonly string $namespace, /**
-     * @var list<string>
-     */
-        private readonly array $httpMethods)
-    {
+    public function __construct(
+        private readonly string $namespace,
+        private readonly array $httpMethods
+    ) {
         $config                        = config(Routing::class);
         $this->translateURIDashes      = $config->translateURIDashes;
         $this->translateUriToCamelCase = $config->translateUriToCamelCase;
