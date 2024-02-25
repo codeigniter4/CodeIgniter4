@@ -65,7 +65,7 @@ class Routes extends BaseCollector
         } else {
             try {
                 $method = new ReflectionMethod($router->controllerName(), $router->methodName());
-            } catch (ReflectionException $e) {
+            } catch (ReflectionException) {
                 try {
                     // If we're here, the method doesn't exist
                     // and is likely calculated in _remap.

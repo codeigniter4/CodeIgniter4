@@ -25,7 +25,7 @@ use CodeIgniter\Validation\CreditCardRules as NonStrictCreditCardRules;
  */
 class CreditCardRules
 {
-    private NonStrictCreditCardRules $nonStrictCreditCardRules;
+    private readonly NonStrictCreditCardRules $nonStrictCreditCardRules;
 
     public function __construct()
     {

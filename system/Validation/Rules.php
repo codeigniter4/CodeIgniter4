@@ -32,7 +32,7 @@ class Rules
      */
     public function differs($str, string $field, array $data): bool
     {
-        if (strpos($field, '.') !== false) {
+        if (str_contains($field, '.')) {
             return $str !== dot_array_search($field, $data);
         }
 
@@ -242,7 +242,7 @@ class Rules
      */
     public function matches($str, string $field, array $data): bool
     {
-        if (strpos($field, '.') !== false) {
+        if (str_contains($field, '.')) {
             return $str === dot_array_search($field, $data);
         }
 
@@ -361,7 +361,7 @@ class Rules
             if (
                 (array_key_exists($field, $data)
                     && ! empty($data[$field]))  // @phpstan-ignore-line Use empty()
-                || (strpos($field, '.') !== false
+                || (str_contains($field, '.')
                     && ! empty(dot_array_search($field, $data)))  // @phpstan-ignore-line Use empty()
             ) {
                 $requiredFields[] = $field;
@@ -407,14 +407,14 @@ class Rules
         // any of the fields are not present in $data
         foreach (explode(',', $otherFields) as $otherField) {
             if (
-                (strpos($otherField, '.') === false)
+                (! str_contains($otherField, '.'))
                 && (! array_key_exists($otherField, $data)
                     || empty($data[$otherField])) // @phpstan-ignore-line Use empty()
             ) {
                 return false;
             }
 
-            if (strpos($otherField, '.') !== false) {
+            if (str_contains($otherField, '.')) {
                 if ($field === null) {
                     throw new InvalidArgumentException('You must supply the parameters: field.');
                 }
@@ -451,7 +451,7 @@ class Rules
         ?string $error = null,
         ?string $field = null
     ): bool {
-        if (strpos($field, '.') !== false) {
+        if (str_contains($field, '.')) {
             return ArrayHelper::dotKeyExists($field, $data);
         }
 

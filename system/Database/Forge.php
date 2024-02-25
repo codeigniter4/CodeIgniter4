@@ -383,7 +383,7 @@ class Forge
                 ]);
                 $this->addKey('id', true);
             } else {
-                if (strpos($fields, ' ') === false) {
+                if (! str_contains($fields, ' ')) {
                     throw new InvalidArgumentException('Field information is required for that operation.');
                 }
 
@@ -650,7 +650,7 @@ class Forge
             return false;
         }
 
-        if ($this->db->DBPrefix && strpos($tableName, $this->db->DBPrefix) === 0) {
+        if ($this->db->DBPrefix && str_starts_with($tableName, $this->db->DBPrefix)) {
             $tableName = substr($tableName, strlen($this->db->DBPrefix));
         }
 

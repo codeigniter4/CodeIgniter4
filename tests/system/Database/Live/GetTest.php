@@ -263,7 +263,7 @@ final class GetTest extends CIUnitTestCase
             public $deleted_at;
         };
 
-        $user = $this->db->table('user')->get()->getRow(0, get_class($testClass));
+        $user = $this->db->table('user')->get()->getRow(0, $testClass::class);
 
         $this->assertSame('Derek Jones', $user->name);
     }

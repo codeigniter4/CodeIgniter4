@@ -30,9 +30,9 @@ class CustomUser
 {
     private function __construct(
         private readonly int $id,
-        private string $name,
+        private readonly string $name,
         private array $email,
-        private string $country,
+        private readonly string $country,
         private readonly ?Time $created_at,
         private readonly ?Time $updated_at,
     ) {

@@ -197,7 +197,7 @@ class Filters
             $class = new $className();
 
             if (! $class instanceof FilterInterface) {
-                throw FilterException::forIncorrectInterface(get_class($class));
+                throw FilterException::forIncorrectInterface($class::class);
             }
 
             $result = $class->before(
@@ -235,7 +235,7 @@ class Filters
             $class = new $className();
 
             if (! $class instanceof FilterInterface) {
-                throw FilterException::forIncorrectInterface(get_class($class));
+                throw FilterException::forIncorrectInterface($class::class);
             }
 
             $result = $class->after(
@@ -518,7 +518,7 @@ class Filters
     {
         $arguments = [];
 
-        if (strpos($name, ':') !== false) {
+        if (str_contains($name, ':')) {
             [$name, $arguments] = explode(':', $name);
 
             $arguments = explode(',', $arguments);

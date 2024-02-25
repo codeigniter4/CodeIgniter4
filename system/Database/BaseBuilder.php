@@ -316,7 +316,7 @@ class BaseBuilder
         $this->db = $db;
 
         // If it contains `,`, it has multiple tables
-        if (is_string($tableName) && strpos($tableName, ',') === false) {
+        if (is_string($tableName) && ! str_contains($tableName, ',')) {
             $this->tableName = $tableName;  // @TODO remove alias if exists
         } else {
             $this->tableName = '';
@@ -514,7 +514,7 @@ class BaseBuilder
             throw DataException::forEmptyInputGiven('Select');
         }
 
-        if (strpos($select, ',') !== false) {
+        if (str_contains($select, ',')) {
             throw DataException::forInvalidArgument('column name not separated by comma');
         }
 
@@ -541,7 +541,7 @@ class BaseBuilder
      */
     protected function createAliasFromTable(string $item): string
     {
-        if (strpos($item, '.') !== false) {
+        if (str_contains($item, '.')) {
             $item = explode('.', $item);
 
             return end($item);
@@ -577,7 +577,7 @@ class BaseBuilder
         }
 
         foreach ((array) $from as $table) {
-            if (strpos($table, ',') !== false) {
+            if (str_contains($table, ',')) {
                 $this->from(explode(',', $table));
             } else {
                 $table = trim($table);
@@ -766,7 +766,7 @@ class BaseBuilder
                     $op = trim(current($op));
 
                     // Does the key end with operator?
-                    if (substr($k, -strlen($op)) === $op) {
+                    if (str_ends_with($k, $op)) {
                         $k  = rtrim(substr($k, 0, -strlen($op)));
                         $op = " {$op}";
                     } else {
@@ -2342,7 +2342,7 @@ class BaseBuilder
      */
     protected function removeAlias(string $from): string
     {
-        if (strpos($from, ' ') !== false) {
+        if (str_contains($from, ' ')) {
             // if the alias is written with the AS keyword, remove it
             $from = preg_replace('/\s+AS\s+/i', ' ', $from);
 
@@ -3008,12 +3008,12 @@ class BaseBuilder
 
         // Does the string contain a comma?  If so, we need to separate
         // the string into discreet statements
-        if (strpos($table, ',') !== false) {
+        if (str_contains($table, ',')) {
             return $this->trackAliases(explode(',', $table));
         }
 
         // if a table alias is used we can recognize it by a space
-        if (strpos($table, ' ') !== false) {
+        if (str_contains($table, ' ')) {
             // if the alias is written with the AS keyword, remove it
             $table = preg_replace('/\s+AS\s+/i', ' ', $table);
 
@@ -3158,11 +3158,11 @@ class BaseBuilder
 
                     if (! empty($matches[4])) {
                         $protectIdentifiers = false;
-                        if (strpos($matches[4], '.') !== false) {
+                        if (str_contains($matches[4], '.')) {
                             $protectIdentifiers = true;
                         }
 
-                        if (strpos($matches[4], ':') === false) {
+                        if (! str_contains($matches[4], ':')) {
                             $matches[4] = $this->db->protectIdentifiers(trim($matches[4]), false, $protectIdentifiers);
                         }
 

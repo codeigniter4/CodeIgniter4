@@ -27,16 +27,14 @@ use Config\Filters as FiltersConfig;
  */
 final class FilterCollector
 {
-    /**
-     * Whether to reset Defined Routes.
-     *
-     * If set to true, route filters are not found.
-     */
-    private bool $resetRoutes;
-
-    public function __construct(bool $resetRoutes = false)
-    {
-        $this->resetRoutes = $resetRoutes;
+    public function __construct(
+        /**
+         * Whether to reset Defined Routes.
+         *
+         * If set to true, route filters are not found.
+         */
+        private readonly bool $resetRoutes = false
+    ) {
     }
 
     /**

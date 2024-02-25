@@ -24,27 +24,17 @@ use ReflectionMethod;
  */
 final class ControllerMethodReader
 {
-    /**
-     * @var string the default namespace
-     */
-    private string $namespace;
-
-    /**
-     * @var list<string>
-     */
-    private array $httpMethods;
-
-    private bool $translateURIDashes;
-    private bool $translateUriToCamelCase;
+    private readonly bool $translateURIDashes;
+    private readonly bool $translateUriToCamelCase;
 
     /**
      * @param string $namespace the default namespace
      */
-    public function __construct(string $namespace, array $httpMethods)
+    public function __construct(private readonly string $namespace, /**
+     * @var list<string>
+     */
+        private readonly array $httpMethods)
     {
-        $this->namespace   = $namespace;
-        $this->httpMethods = $httpMethods;
-
         $config                        = config(Routing::class);
         $this->translateURIDashes      = $config->translateURIDashes;
         $this->translateUriToCamelCase = $config->translateUriToCamelCase;
@@ -75,7 +65,7 @@ final class ControllerMethodReader
             $methodName = $method->getName();
 
             foreach ($this->httpMethods as $httpVerb) {
-                if (strpos($methodName, strtolower($httpVerb)) === 0) {
+                if (str_starts_with($methodName, strtolower($httpVerb))) {
                     // Remove HTTP verb prefix.
                     $methodInUri = $this->convertMethodNameToUri($httpVerb, $methodName);
 

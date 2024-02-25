@@ -802,7 +802,7 @@ class ContentSecurityPolicy
                 $reportOnly = $this->reportOnly;
             }
 
-            if (strpos($value, 'nonce-') === 0) {
+            if (str_starts_with($value, 'nonce-')) {
                 $value = "'{$value}'";
             }
 

@@ -160,7 +160,7 @@ class Security implements SecurityInterface
      */
     protected $samesite = Cookie::SAMESITE_LAX;
 
-    private IncomingRequest $request;
+    private readonly IncomingRequest $request;
 
     /**
      * CSRF Cookie Name without Prefix
@@ -253,7 +253,7 @@ class Security implements SecurityInterface
         try {
             $token = ($postedToken !== null && $this->config->tokenRandomize)
                 ? $this->derandomize($postedToken) : $postedToken;
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException) {
             $token = null;
         }
 

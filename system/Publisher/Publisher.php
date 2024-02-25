@@ -72,9 +72,9 @@ class Publisher extends FileCollection
      *
      * @var array<string,string>
      */
-    private array $restrictions;
+    private readonly array $restrictions;
 
-    private ContentReplacer $replacer;
+    private readonly ContentReplacer $replacer;
 
     /**
      * Base path to use for the source.
@@ -169,7 +169,7 @@ class Publisher extends FileCollection
 
         // Make sure the destination is allowed
         foreach (array_keys($this->restrictions) as $directory) {
-            if (strpos($this->destination, $directory) === 0) {
+            if (str_starts_with($this->destination, $directory)) {
                 return;
             }
         }
@@ -472,7 +472,7 @@ class Publisher extends FileCollection
     {
         // Verify this is an allowed file for its destination
         foreach ($this->restrictions as $directory => $pattern) {
-            if (strpos($to, $directory) === 0 && self::matchFiles([$to], $pattern) === []) {
+            if (str_starts_with($to, $directory) && self::matchFiles([$to], $pattern) === []) {
                 throw PublisherException::forFileNotAllowed($from, $directory, $pattern);
             }
         }

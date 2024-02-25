@@ -53,12 +53,12 @@ class FileLocator implements FileLocatorInterface
         $file = $this->ensureExt($file, $ext);
 
         // Clears the folder name if it is at the beginning of the filename
-        if ($folder !== null && strpos($file, $folder) === 0) {
+        if ($folder !== null && str_starts_with($file, $folder)) {
             $file = substr($file, strlen($folder . '/'));
         }
 
         // Is not namespaced? Try the application folder.
-        if (strpos($file, '\\') === false) {
+        if (! str_contains($file, '\\')) {
             return $this->legacyLocate($file, $folder);
         }
 
@@ -103,7 +103,7 @@ class FileLocator implements FileLocatorInterface
             // If we have a folder name, then the calling function
             // expects this file to be within that folder, like 'Views',
             // or 'libraries'.
-            if ($folder !== null && strpos($path . $filename, '/' . $folder . '/') === false) {
+            if ($folder !== null && ! str_contains($path . $filename, '/' . $folder . '/')) {
                 $path .= trim($folder, '/') . '/';
             }
 
@@ -192,7 +192,7 @@ class FileLocator implements FileLocatorInterface
 
                 if ($prioritizeApp) {
                     $foundPaths[] = $fullPath;
-                } elseif (strpos($fullPath, APPPATH) === 0) {
+                } elseif (str_starts_with($fullPath, APPPATH)) {
                     $appPaths[] = $fullPath;
                 } else {
                     $foundPaths[] = $fullPath;
@@ -216,7 +216,7 @@ class FileLocator implements FileLocatorInterface
         if ($ext !== '') {
             $ext = '.' . $ext;
 
-            if (substr($path, -strlen($ext)) !== $ext) {
+            if (! str_ends_with($path, $ext)) {
                 $path .= $ext;
             }
         }

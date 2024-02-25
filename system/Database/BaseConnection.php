@@ -1093,7 +1093,7 @@ abstract class BaseConnection implements ConnectionInterface
         // Break the string apart if it contains periods, then insert the table prefix
         // in the correct location, assuming the period doesn't indicate that we're dealing
         // with an alias. While we're at it, we will escape the components
-        if (strpos($item, '.') !== false) {
+        if (str_contains($item, '.')) {
             return $this->protectDotItem($item, $alias, $protectIdentifiers, $fieldExists);
         }
 
@@ -1105,11 +1105,11 @@ abstract class BaseConnection implements ConnectionInterface
         // Is there a table prefix? If not, no need to insert it
         if ($this->DBPrefix !== '') {
             // Verify table prefix and replace if necessary
-            if ($this->swapPre !== '' && strpos($item, $this->swapPre) === 0) {
+            if ($this->swapPre !== '' && str_starts_with($item, $this->swapPre)) {
                 $item = preg_replace('/^' . $this->swapPre . '(\S+?)/', $this->DBPrefix . '\\1', $item);
             }
             // Do we prefix an item with no segments?
-            elseif ($prefixSingle === true && strpos($item, $this->DBPrefix) !== 0) {
+            elseif ($prefixSingle === true && ! str_starts_with($item, $this->DBPrefix)) {
                 $item = $this->DBPrefix . $item;
             }
         }
@@ -1171,11 +1171,11 @@ abstract class BaseConnection implements ConnectionInterface
             }
 
             // Verify table prefix and replace if necessary
-            if ($this->swapPre !== '' && strpos($parts[$i], $this->swapPre) === 0) {
+            if ($this->swapPre !== '' && str_starts_with($parts[$i], $this->swapPre)) {
                 $parts[$i] = preg_replace('/^' . $this->swapPre . '(\S+?)/', $this->DBPrefix . '\\1', $parts[$i]);
             }
             // We only add the table prefix if it does not already exist
-            elseif (strpos($parts[$i], $this->DBPrefix) !== 0) {
+            elseif (! str_starts_with($parts[$i], $this->DBPrefix)) {
                 $parts[$i] = $this->DBPrefix . $parts[$i];
             }
 
@@ -1236,7 +1236,7 @@ abstract class BaseConnection implements ConnectionInterface
         if (ctype_digit($item)
             || $item[0] === "'"
             || ($this->escapeChar !== '"' && $item[0] === '"')
-            || strpos($item, '(') !== false) {
+            || str_contains($item, '(')) {
             return $item;
         }
 
@@ -1256,7 +1256,7 @@ abstract class BaseConnection implements ConnectionInterface
 
         foreach ($this->reservedIdentifiers as $id) {
             /** @psalm-suppress NoValue I don't know why ERROR. */
-            if (strpos($item, '.' . $id) !== false) {
+            if (str_contains($item, '.' . $id)) {
                 return preg_replace(
                     '/' . $this->pregEscapeChar[0] . '?([^' . $this->pregEscapeChar[1] . '\.]+)' . $this->pregEscapeChar[1] . '?\./i',
                     $this->pregEscapeChar[2] . '$1' . $this->pregEscapeChar[3] . '.',
@@ -1306,7 +1306,7 @@ abstract class BaseConnection implements ConnectionInterface
     public function escape($str)
     {
         if (is_array($str)) {
-            return array_map([&$this, 'escape'], $str);
+            return array_map($this->escape(...), $str);
         }
 
         /** @psalm-suppress NoValue I don't know why ERROR. */
@@ -1402,7 +1402,7 @@ abstract class BaseConnection implements ConnectionInterface
     {
         $driver = $this->getDriverFunctionPrefix();
 
-        if (strpos($driver, $functionName) === false) {
+        if (! str_contains($driver, $functionName)) {
             $functionName = $driver . $functionName;
         }
 

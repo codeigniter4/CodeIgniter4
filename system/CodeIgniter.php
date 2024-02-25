@@ -871,7 +871,7 @@ class CodeIgniter
         $this->benchmark->start('controller_constructor');
 
         // Is it routed to a Closure?
-        if (is_object($this->controller) && (get_class($this->controller) === 'Closure')) {
+        if (is_object($this->controller) && ($this->controller::class === 'Closure')) {
             $controller = $this->controller;
 
             return $controller(...$this->router->params());
@@ -1049,7 +1049,7 @@ class CodeIgniter
         }
 
         // Ignore non-HTML responses
-        if (strpos($this->response->getHeaderLine('Content-Type'), 'text/html') === false) {
+        if (! str_contains($this->response->getHeaderLine('Content-Type'), 'text/html')) {
             return;
         }
 

@@ -331,7 +331,7 @@ final class Factories
      */
     private static function isNamespaced(string $alias): bool
     {
-        return strpos($alias, '\\') !== false;
+        return str_contains($alias, '\\');
     }
 
     /**
@@ -349,10 +349,10 @@ final class Factories
 
         // Special case for Config since its App namespace is actually \Config
         if (self::isConfig($options['component'])) {
-            return strpos($alias, 'Config') === 0;
+            return str_starts_with($alias, 'Config');
         }
 
-        return strpos($alias, APP_NAMESPACE) === 0;
+        return str_starts_with($alias, APP_NAMESPACE);
     }
 
     /**
@@ -476,7 +476,7 @@ final class Factories
         // Force a configuration to exist for this component
         self::getOptions($component);
 
-        $class = get_class($instance);
+        $class = $instance::class;
 
         self::$instances[$component][$class] = $instance;
         self::$aliases[$component][$alias]   = $class;
