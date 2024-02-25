@@ -1,3 +1,4 @@
+#############
 Version 4.5.0
 #############
 
@@ -9,12 +10,14 @@ Release Date: Unreleased
     :local:
     :depth: 3
 
+**********
 Highlights
 **********
 
 - Update minimal PHP requirement to 8.1.
 - TBD
 
+********
 BREAKING
 ********
 
@@ -243,6 +246,7 @@ Others
   ``CodeIgniter\Entity\Entity`` instead.
 - **spark:** The deprecated constant ``SPARKED`` has been removed.
 
+************
 Enhancements
 ************
 
@@ -409,12 +413,14 @@ Others
   HTTP method in the cache key. This means that the same URI will be cached separately
   if the HTTP method is different.
 
+***************
 Message Changes
 ***************
 
 - Added ``CLI.generator.className.test`` message.
 - Added ``Validation.field_exists`` error message.
 
+*******
 Changes
 *******
 
@@ -433,6 +439,7 @@ Changes
   is deprecated in SQL Server.
 - ``declare(strict_types=1)`` has been added to most framework codebase.
 
+************
 Deprecations
 ************
 
@@ -453,6 +460,7 @@ Deprecations
   methods accept the lowercase HTTP methods has been deprecated. Use correct
   uppercase HTTP methods instead.
 
+**********
 Bugs Fixed
 **********
 
