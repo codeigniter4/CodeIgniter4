@@ -24,43 +24,24 @@ use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
 final class AutoRouteCollector
 {
     /**
-     * @var string namespace to search
-     */
-    private string $namespace;
-
-    private string $defaultController;
-    private string $defaultMethod;
-    private array $httpMethods;
-
-    /**
-     * List of controllers in Defined Routes that should not be accessed via Auto-Routing.
-     *
-     * @var list<class-string>
-     */
-    private array $protectedControllers;
-
-    /**
-     * @var string URI prefix for Module Routing
-     */
-    private string $prefix;
-
-    /**
      * @param string $namespace namespace to search
      */
     public function __construct(
-        string $namespace,
-        string $defaultController,
-        string $defaultMethod,
-        array $httpMethods,
-        array $protectedControllers,
-        string $prefix = ''
+        private readonly string $namespace,
+        private readonly string $defaultController,
+        private readonly string $defaultMethod,
+        private readonly array $httpMethods,
+        /**
+         * List of controllers in Defined Routes that should not be accessed via Auto-Routing.
+         *
+         * @var list<class-string>
+         */
+        private readonly array $protectedControllers,
+        /**
+         * @var string URI prefix for Module Routing
+         */
+        private string $prefix = ''
     ) {
-        $this->namespace            = $namespace;
-        $this->defaultController    = $defaultController;
-        $this->defaultMethod        = $defaultMethod;
-        $this->httpMethods          = $httpMethods;
-        $this->protectedControllers = $protectedControllers;
-        $this->prefix               = $prefix;
     }
 
     /**

@@ -96,7 +96,7 @@ final class CommonHelperTest extends CIUnitTestCase
         try {
             helper('baguette');
             $exception = false;
-        } catch (RuntimeException $e) {
+        } catch (RuntimeException) {
             $exception = true;
         }
 
@@ -115,7 +115,7 @@ final class CommonHelperTest extends CIUnitTestCase
         try {
             helper('baguette');
             $exception = false;
-        } catch (RuntimeException $e) {
+        } catch (RuntimeException) {
             $exception = true;
         }
 

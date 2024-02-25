@@ -379,7 +379,7 @@ final class FileHandlerTest extends AbstractHandlerTest
 final class BaseTestFileHandler extends FileHandler
 {
     private static string $directory = 'FileHandler';
-    private Cache $config;
+    private readonly Cache $config;
 
     public function __construct()
     {

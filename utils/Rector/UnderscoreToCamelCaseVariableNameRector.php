@@ -39,16 +39,10 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
      */
     private const PARAM_NAME_REGEX = '#(?<paramPrefix>@param\s.*\s+\$)(?<paramName>%s)#ms';
 
-    private ReservedKeywordAnalyzer $reservedKeywordAnalyzer;
-    private PhpDocInfoFactory $phpDocInfoFactory;
     private bool $hasChanged = false;
 
-    public function __construct(
-        ReservedKeywordAnalyzer $reservedKeywordAnalyzer,
-        PhpDocInfoFactory $phpDocInfoFactory
-    ) {
-        $this->reservedKeywordAnalyzer = $reservedKeywordAnalyzer;
-        $this->phpDocInfoFactory       = $phpDocInfoFactory;
+    public function __construct(private readonly ReservedKeywordAnalyzer $reservedKeywordAnalyzer, private readonly PhpDocInfoFactory $phpDocInfoFactory)
+    {
     }
 
     public function getRuleDefinition(): RuleDefinition

@@ -24,7 +24,7 @@ use Config\Database;
  */
 class Rules
 {
-    private NonStrictRules $nonStrictRules;
+    private readonly NonStrictRules $nonStrictRules;
 
     public function __construct()
     {
@@ -44,7 +44,7 @@ class Rules
         ?string $error = null,
         ?string $field = null
     ): bool {
-        if (strpos($otherField, '.') !== false) {
+        if (str_contains($otherField, '.')) {
             return $str !== dot_array_search($otherField, $data);
         }
 
@@ -277,7 +277,7 @@ class Rules
         ?string $error = null,
         ?string $field = null
     ): bool {
-        if (strpos($otherField, '.') !== false) {
+        if (str_contains($otherField, '.')) {
             return $str === dot_array_search($otherField, $data);
         }
 
@@ -422,7 +422,7 @@ class Rules
         ?string $error = null,
         ?string $field = null
     ): bool {
-        if (strpos($field, '.') !== false) {
+        if (str_contains($field, '.')) {
             return ArrayHelper::dotKeyExists($field, $data);
         }
 

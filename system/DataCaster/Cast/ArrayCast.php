@@ -30,7 +30,7 @@ class ArrayCast extends BaseCast implements CastInterface
             self::invalidTypeValueError($value);
         }
 
-        if ((strpos($value, 'a:') === 0 || strpos($value, 's:') === 0)) {
+        if ((str_starts_with($value, 'a:') || str_starts_with($value, 's:'))) {
             $value = unserialize($value, ['allowed_classes' => false]);
         }
 

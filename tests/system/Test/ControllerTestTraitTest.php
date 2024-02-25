@@ -250,7 +250,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
     public function testUsesRequestBody(): void
     {
         $this->controller = new class () extends Controller {
-            public function throwsBody(): void
+            public function throwsBody(): never
             {
                 throw new Exception($this->request->getBody());
             }

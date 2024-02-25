@@ -42,7 +42,7 @@ class Honeypot
     {
         $this->config = $config;
 
-        if ($this->config->container === '' || strpos($this->config->container, '{template}') === false) {
+        if ($this->config->container === '' || ! str_contains($this->config->container, '{template}')) {
             $this->config->container = '<div style="display:none">{template}</div>';
         }
 

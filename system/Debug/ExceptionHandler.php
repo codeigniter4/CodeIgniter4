@@ -56,7 +56,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
         if ($request instanceof IncomingRequest) {
             try {
                 $response->setStatusCode($statusCode);
-            } catch (HTTPException $e) {
+            } catch (HTTPException) {
                 // Workaround for invalid HTTP status code.
                 $statusCode = 500;
                 $response->setStatusCode($statusCode);
@@ -75,7 +75,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
                 );
             }
 
-            if (strpos($request->getHeaderLine('accept'), 'text/html') === false) {
+            if (! str_contains($request->getHeaderLine('accept'), 'text/html')) {
                 $data = (ENVIRONMENT === 'development' || ENVIRONMENT === 'testing')
                     ? $this->collectVars($exception, $statusCode)
                     : '';

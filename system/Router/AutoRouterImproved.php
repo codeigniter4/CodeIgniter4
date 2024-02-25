@@ -27,13 +27,6 @@ use ReflectionException;
 final class AutoRouterImproved implements AutoRouterInterface
 {
     /**
-     * List of controllers in Defined Routes that should not be accessed via this Auto-Routing.
-     *
-     * @var list<class-string>
-     */
-    private array $protectedControllers;
-
-    /**
      * Sub-directory that contains the requested controller class.
      */
     private ?string $directory = null;
@@ -59,28 +52,12 @@ final class AutoRouterImproved implements AutoRouterInterface
      *  Whether to translate dashes in URIs for controller/method to CamelCase.
      *  E.g., blog-controller -> BlogController
      */
-    private bool $translateUriToCamelCase;
-
-    /**
-     * Whether dashes in URI's should be converted
-     * to underscores when determining method names.
-     */
-    private bool $translateURIDashes;
+    private readonly bool $translateUriToCamelCase;
 
     /**
      * The namespace for controllers.
      */
     private string $namespace;
-
-    /**
-     * The name of the default controller class.
-     */
-    private string $defaultController;
-
-    /**
-     * The name of the default method without HTTP verb prefix.
-     */
-    private string $defaultMethod;
 
     /**
      * Map of URI segments and namespaces.
@@ -130,17 +107,23 @@ final class AutoRouterImproved implements AutoRouterInterface
      * @param string             $defaultController    Short classname
      */
     public function __construct(
-        array $protectedControllers,
+        /**
+         * List of controllers in Defined Routes that should not be accessed via this Auto-Routing.
+         */
+        private readonly array $protectedControllers,
         string $namespace,
-        string $defaultController,
-        string $defaultMethod,
-        bool $translateURIDashes
+        private readonly string $defaultController,
+        /**
+         * The name of the default method without HTTP verb prefix.
+         */
+        private readonly string $defaultMethod,
+        /**
+         * Whether dashes in URI's should be converted
+         * to underscores when determining method names.
+         */
+        private readonly bool $translateURIDashes
     ) {
-        $this->protectedControllers = $protectedControllers;
-        $this->namespace            = rtrim($namespace, '\\');
-        $this->translateURIDashes   = $translateURIDashes;
-        $this->defaultController    = $defaultController;
-        $this->defaultMethod        = $defaultMethod;
+        $this->namespace = rtrim($namespace, '\\');
 
         $routingConfig                 = config(Routing::class);
         $this->moduleRoutes            = $routingConfig->moduleRoutes;
@@ -377,7 +360,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         // Check parameter count
         try {
             $this->checkParameters();
-        } catch (MethodNotFoundException $e) {
+        } catch (MethodNotFoundException) {
             throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
         }
 
@@ -451,7 +434,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         try {
             $refMethod = $refClass->getMethod($this->method);
             $refParams = $refMethod->getParameters();
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
             throw new MethodNotFoundException();
         }
 
@@ -478,7 +461,7 @@ final class AutoRouterImproved implements AutoRouterInterface
                 'AutoRouterImproved does not support `_remap()` method.'
                 . ' Controller:' . $this->controller
             );
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
             // Do nothing.
         }
     }
@@ -492,7 +475,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         $paramPos = $this->paramPos ?? count($this->segments);
 
         for ($i = 0; $i < $paramPos; $i++) {
-            if (strpos($this->segments[$i], '_') !== false) {
+            if (str_contains($this->segments[$i], '_')) {
                 throw new PageNotFoundException(
                     'AutoRouterImproved prohibits access to the URI'
                     . ' containing underscores ("' . $this->segments[$i] . '")'

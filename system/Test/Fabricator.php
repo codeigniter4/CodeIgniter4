@@ -307,7 +307,7 @@ class Fabricator
             $this->faker->getFormatter($field);
 
             return $field;
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException) {
             // No match, keep going
         }
 
@@ -499,18 +499,11 @@ class Fabricator
      */
     protected function createMock(?int $count = null)
     {
-        switch ($this->model->dateFormat) {
-            case 'datetime':
-                $datetime = date('Y-m-d H:i:s');
-                break;
-
-            case 'date':
-                $datetime = date('Y-m-d');
-                break;
-
-            default:
-                $datetime = Time::now()->getTimestamp();
-        }
+        $datetime = match ($this->model->dateFormat) {
+            'datetime' => date('Y-m-d H:i:s'),
+            'date'     => date('Y-m-d'),
+            default    => Time::now()->getTimestamp(),
+        };
 
         // Determine which fields we will need
         $fields = [];

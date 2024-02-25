@@ -23,8 +23,6 @@ use CodeIgniter\Cache\FactoriesCache\FileVarExportHandler;
  */
 final class FileLocatorCached implements FileLocatorInterface
 {
-    private FileLocator $locator;
-
     /**
      * @var CacheInterface|FileVarExportHandler
      */
@@ -51,10 +49,9 @@ final class FileLocatorCached implements FileLocatorInterface
     /**
      * @param CacheInterface|FileVarExportHandler|null $cache
      */
-    public function __construct(FileLocator $locator, $cache = null)
+    public function __construct(private readonly FileLocator $locator, $cache = null)
     {
         $this->cacheHandler = $cache ?? new FileVarExportHandler();
-        $this->locator      = $locator;
 
         $this->loadCache();
     }

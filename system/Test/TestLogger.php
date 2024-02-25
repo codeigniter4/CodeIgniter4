@@ -85,7 +85,7 @@ class TestLogger extends Logger
                 continue;
             }
 
-            if (strpos($log['message'], $message) !== false) {
+            if (str_contains($log['message'], $message)) {
                 return true;
             }
         }
