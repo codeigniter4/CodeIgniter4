@@ -31,6 +31,29 @@ $finder = Finder::create()
 
 $overrides = [
     'phpdoc_array_type' => true,
+    'phpdoc_align'      => [
+        'align'   => 'vertical',
+        'spacing' => 1,
+        'tags'    => [
+            'method',
+            'param',
+            'phpstan-assert',
+            'phpstan-assert-if-true',
+            'phpstan-assert-if-false',
+            'phpstan-param',
+            'phpstan-property',
+            'phpstan-return',
+            'phpstan-type',
+            'phpstan-var',
+            'property',
+            'property-read',
+            'property-write',
+            'return',
+            'throws',
+            'type',
+            'var',
+        ],
+    ],
 ];
 
 $options = [

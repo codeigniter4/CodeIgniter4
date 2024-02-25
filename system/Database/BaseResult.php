@@ -25,7 +25,7 @@ abstract class BaseResult implements ResultInterface
     /**
      * Connection ID
      *
-     * @var object|resource
+     * @var         object|resource
      * @phpstan-var TConnection
      */
     public $connID;
@@ -33,7 +33,7 @@ abstract class BaseResult implements ResultInterface
     /**
      * Result ID
      *
-     * @var false|object|resource
+     * @var         false|object|resource
      * @phpstan-var false|TResult
      */
     public $resultID;

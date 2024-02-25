@@ -195,7 +195,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Connection ID
      *
-     * @var false|object|resource
+     * @var         false|object|resource
      * @phpstan-var false|TConnection
      */
     public $connID = false;
@@ -203,7 +203,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Result ID
      *
-     * @var false|object|resource
+     * @var         false|object|resource
      * @phpstan-var false|TResult
      */
     public $resultID = false;
