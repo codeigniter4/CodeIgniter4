@@ -124,7 +124,7 @@ class Router implements RouterInterface
      * The filter info from Route Collection
      * if the matched route should be filtered.
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $filtersInfo = [];
 
@@ -217,7 +217,7 @@ class Router implements RouterInterface
     /**
      * Returns the filter info for the matched route, if any.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getFilters(): array
     {

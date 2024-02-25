@@ -31,7 +31,7 @@ final class MockInputOutput extends InputOutput
     /**
      * Output lines.
      *
-     * @var array<int, string>
+     * @var         array<int, string>
      * @phpstan-var list<string>
      */
     private array $outputs = [];

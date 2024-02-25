@@ -70,7 +70,7 @@ trait ResponseTrait
      * Either 'json' or 'xml'. If null is set, it will be determined through
      * content negotiation.
      *
-     * @var string|null
+     * @var         string|null
      * @phpstan-var 'html'|'json'|'xml'|null
      */
     protected $format = 'json';
@@ -240,7 +240,7 @@ trait ResponseTrait
     /**
      * Used when the data provided by the client cannot be validated on one or more fields.
      *
-     * @param string|string[] $errors
+     * @param array<string>|string $errors
      *
      * @return ResponseInterface
      */

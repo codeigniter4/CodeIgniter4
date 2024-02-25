@@ -42,7 +42,7 @@ class Publisher extends FileCollection
     /**
      * Array of discovered Publishers.
      *
-     * @var array<string, self[]|null>
+     * @var array<string, array<self>|null>
      */
     private static array $discovered = [];
 
@@ -62,7 +62,7 @@ class Publisher extends FileCollection
     /**
      * List of file published curing the last write operation.
      *
-     * @var string[]
+     * @var array<string>
      */
     private array $published = [];
 
@@ -97,7 +97,7 @@ class Publisher extends FileCollection
     /**
      * Discovers and returns all Publishers in the specified namespace directory.
      *
-     * @return self[]
+     * @return array<self>
      */
     final public static function discover(string $directory = 'Publishers'): array
     {
@@ -254,7 +254,7 @@ class Publisher extends FileCollection
     /**
      * Returns the files published by the last write operation.
      *
-     * @return string[]
+     * @return array<string>
      */
     final public function getPublished(): array
     {
@@ -268,7 +268,7 @@ class Publisher extends FileCollection
     /**
      * Verifies and adds paths to the list.
      *
-     * @param string[] $paths
+     * @param array<string> $paths
      *
      * @return $this
      */
@@ -296,7 +296,7 @@ class Publisher extends FileCollection
     /**
      * Downloads and stages files from an array of URIs.
      *
-     * @param string[] $uris
+     * @param array<string> $uris
      *
      * @return $this
      */

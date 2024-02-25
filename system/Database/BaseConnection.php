@@ -203,7 +203,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Connection ID
      *
-     * @var false|object|resource
+     * @var         false|object|resource
      * @phpstan-var false|TConnection
      */
     public $connID = false;
@@ -211,7 +211,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Result ID
      *
-     * @var false|object|resource
+     * @var         false|object|resource
      * @phpstan-var false|TResult
      */
     public $resultID = false;
@@ -1308,10 +1308,10 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Escape String
      *
-     * @param string|string[] $str  Input string
-     * @param bool            $like Whether or not the string will be used in a LIKE condition
+     * @param array<string>|string $str  Input string
+     * @param bool                 $like Whether or not the string will be used in a LIKE condition
      *
-     * @return string|string[]
+     * @return array<string>|string
      */
     public function escapeString($str, bool $like = false)
     {
@@ -1351,9 +1351,9 @@ abstract class BaseConnection implements ConnectionInterface
      * Calls the individual driver for platform
      * specific escaping for LIKE conditions
      *
-     * @param string|string[] $str
+     * @param array<string>|string $str
      *
-     * @return string|string[]
+     * @return array<string>|string
      */
     public function escapeLikeString($str)
     {
@@ -1546,7 +1546,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns an object with field data
      *
-     * @return stdClass[]
+     * @return array<stdClass>
      */
     public function getFieldData(string $table)
     {

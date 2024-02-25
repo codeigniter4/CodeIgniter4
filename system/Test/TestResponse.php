@@ -483,7 +483,7 @@ class TestResponse
     /**
      * Forward any unrecognized method calls to our DOMParser instance.
      *
-     * @param mixed[] $params
+     * @param array<mixed> $params
      */
     public function __call(string $function, array $params): mixed
     {

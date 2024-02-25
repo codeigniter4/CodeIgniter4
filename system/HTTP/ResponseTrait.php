@@ -583,7 +583,7 @@ trait ResponseTrait
      * @param string $prefix Cookie prefix.
      *                       '': the default prefix
      *
-     * @return Cookie|Cookie[]|null
+     * @return array<Cookie>|Cookie|null
      */
     public function getCookie(?string $name = null, string $prefix = '')
     {
@@ -648,7 +648,7 @@ trait ResponseTrait
     /**
      * Returns all cookies currently set.
      *
-     * @return Cookie[]
+     * @return array<Cookie>
      */
     public function getCookies()
     {

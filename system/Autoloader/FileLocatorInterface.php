@@ -68,7 +68,7 @@ interface FileLocatorInterface
      * Scans the defined namespaces, returning a list of all files
      * that are contained within the subpath specified by $path.
      *
-     * @return string[] List of file paths
+     * @return array<string> List of file paths
      */
     public function listFiles(string $path): array;
 
@@ -76,7 +76,7 @@ interface FileLocatorInterface
      * Scans the provided namespace, returning a list of all files
      * that are contained within the sub path specified by $path.
      *
-     * @return string[] List of file paths
+     * @return array<string> List of file paths
      */
     public function listNamespaceFiles(string $prefix, string $path): array;
 }

@@ -284,14 +284,14 @@ class BaseBuilder
     /**
      * Strings that determine if a string represents a literal value or a field name
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $isLiteralStr = [];
 
     /**
      * RegExp used to get operators
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $pregOperators = [];
 
@@ -1778,7 +1778,7 @@ class BaseBuilder
      *
      * @param '_deleteBatch'|'_insertBatch'|'_updateBatch'|'_upsertBatch' $renderMethod
      *
-     * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
+     * @return array<string>|false|int Number of rows inserted or FALSE on failure, SQL array when testMode
      *
      * @throws DatabaseException
      */
@@ -1915,7 +1915,7 @@ class BaseBuilder
      *
      * @param array|object|null $set
      *
-     * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
+     * @return array<string>|false|int Number of affected rows or FALSE on failure, SQL array when testMode
      *
      * @throws DatabaseException
      */
@@ -1951,7 +1951,7 @@ class BaseBuilder
      *
      * @param array|object|null $set a dataset
      *
-     * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
+     * @return array<string>|false|int Number of affected rows or FALSE on failure, SQL array when testMode
      *
      * @throws DatabaseException
      */
@@ -2036,9 +2036,9 @@ class BaseBuilder
     /**
      * Sets update fields for upsert, update
      *
-     * @param RawSql[]|string|string[] $set
-     * @param bool                     $addToDefault adds update fields to the default ones
-     * @param array|null               $ignore       ignores items in set
+     * @param array<RawSql>|array<string>|string $set
+     * @param bool                               $addToDefault adds update fields to the default ones
+     * @param array|null                         $ignore       ignores items in set
      *
      * @return $this
      */
@@ -2180,7 +2180,7 @@ class BaseBuilder
      *
      * @param array|object|null $set a dataset
      *
-     * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
+     * @return array<string>|false|int Number of rows inserted or FALSE on failure, SQL array when testMode
      */
     public function insertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
@@ -2557,7 +2557,7 @@ class BaseBuilder
      * @param array|object|null        $set         a dataset
      * @param array|RawSql|string|null $constraints
      *
-     * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
+     * @return array<string>|false|int Number of rows affected or FALSE on failure, SQL array when testMode
      */
     public function updateBatch($set = null, $constraints = null, int $batchSize = 100)
     {
@@ -2823,7 +2823,7 @@ class BaseBuilder
      * @param array|object|null $set         a dataset
      * @param array|RawSql|null $constraints
      *
-     * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
+     * @return array<string>|false|int Number of rows affected or FALSE on failure, SQL array when testMode
      */
     public function deleteBatch($set = null, $constraints = null, int $batchSize = 100)
     {

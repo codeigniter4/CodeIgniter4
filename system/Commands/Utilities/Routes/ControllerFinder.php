@@ -40,7 +40,7 @@ final class ControllerFinder
     }
 
     /**
-     * @return class-string[]
+     * @return array<class-string>
      */
     public function find(): array
     {

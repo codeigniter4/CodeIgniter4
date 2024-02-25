@@ -44,6 +44,7 @@ $finder = Finder::create()
     ]);
 
 $overrides = [
+    'phpdoc_array_type'   => true,
     'phpdoc_no_alias_tag' => [
         'replacements' => [
             'type' => 'var',
@@ -62,6 +63,8 @@ $overrides = [
             'phpstan-param',
             'phpstan-property',
             'phpstan-return',
+            'phpstan-type',
+            'phpstan-var',
             'property',
             'property-read',
             'property-write',

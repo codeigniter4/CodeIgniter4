@@ -808,7 +808,7 @@ class CodeIgniter
      * @param RouteCollectionInterface|null $routes A collection interface to use in place
      *                                              of the config file.
      *
-     * @return string|string[]|null Route filters, that is, the filters specified in the routes file
+     * @return array<string>|string|null Route filters, that is, the filters specified in the routes file
      *
      * @throws RedirectException
      */

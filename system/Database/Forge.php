@@ -41,7 +41,7 @@ class Forge
     /**
      * List of keys.
      *
-     * @var list<array{fields?: string[], keyName?: string}>
+     * @var list<array{fields?: array<string>, keyName?: string}>
      */
     protected $keys = [];
 
@@ -55,7 +55,7 @@ class Forge
     /**
      * Primary keys.
      *
-     * @var array{fields?: string[], keyName?: string}
+     * @var array{fields?: array<string>, keyName?: string}
      */
     protected $primaryKeys = [];
 
@@ -401,8 +401,8 @@ class Forge
     /**
      * Add Foreign Key
      *
-     * @param string|string[] $fieldName
-     * @param string|string[] $tableField
+     * @param array<string>|string $fieldName
+     * @param array<string>|string $tableField
      *
      * @throws DatabaseException
      */
