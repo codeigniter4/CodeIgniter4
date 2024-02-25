@@ -256,6 +256,8 @@ parameters:
       - CodeIgniter\HTTP\URI
     CodeIgniter\Log\Handlers\ChromeLoggerHandler:
       - CodeIgniter\HTTP\ResponseInterface
+    CodeIgniter\Security\CheckPhpIni:
+      - CodeIgniter\View\Table
     CodeIgniter\View\Table:
       - CodeIgniter\Database\BaseResult
     CodeIgniter\View\Plugins:
