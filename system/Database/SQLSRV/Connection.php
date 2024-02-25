@@ -77,7 +77,7 @@ class Connection extends BaseConnection
      *
      * Identifiers that must NOT be escaped.
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $_reserved_identifiers = ['*'];
 
@@ -231,7 +231,7 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with index data
      *
-     * @return stdClass[]
+     * @return array<stdClass>
      *
      * @throws DatabaseException
      */
@@ -269,7 +269,7 @@ class Connection extends BaseConnection
      * Returns an array of objects with Foreign key data
      * referenced_object_id  parent_object_id
      *
-     * @return stdClass[]
+     * @return array<stdClass>
      *
      * @throws DatabaseException
      */
@@ -335,7 +335,7 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with field data
      *
-     * @return stdClass[]
+     * @return array<stdClass>
      *
      * @throws DatabaseException
      */

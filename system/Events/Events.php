@@ -59,7 +59,7 @@ class Events
     /**
      * A list of found files.
      *
-     * @var string[]
+     * @var array<string>
      */
     protected static $files = [];
 
@@ -253,7 +253,7 @@ class Events
     /**
      * Returns the files that were found/loaded during this request.
      *
-     * @return string[]
+     * @return array<string>
      */
     public static function getFiles()
     {

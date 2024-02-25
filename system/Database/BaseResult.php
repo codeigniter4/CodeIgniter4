@@ -41,14 +41,14 @@ abstract class BaseResult implements ResultInterface
     /**
      * Result Array
      *
-     * @var array[]
+     * @var array<array>
      */
     public $resultArray = [];
 
     /**
      * Result Object
      *
-     * @var object[]
+     * @var array<object>
      */
     public $resultObject = [];
 

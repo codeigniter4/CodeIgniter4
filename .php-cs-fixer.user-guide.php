@@ -39,6 +39,7 @@ $overrides = [
         'import_symbols'                        => false,
         'leading_backslash_in_global_namespace' => true,
     ],
+    'phpdoc_array_type' => true,
 ];
 
 $options = [

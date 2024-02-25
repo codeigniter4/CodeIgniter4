@@ -44,7 +44,7 @@ final class PassStrictParameterToFunctionParameterRector extends AbstractRector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getNodeTypes(): array
     {

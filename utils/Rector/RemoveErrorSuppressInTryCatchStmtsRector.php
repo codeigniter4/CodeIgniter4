@@ -44,7 +44,7 @@ final class RemoveErrorSuppressInTryCatchStmtsRector extends AbstractRector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getNodeTypes(): array
     {
