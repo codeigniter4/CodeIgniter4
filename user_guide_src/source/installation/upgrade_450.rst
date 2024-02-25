@@ -47,7 +47,7 @@ And you should use uppercase HTTP method names in your app code.
 app/Config/Filters.php
 ----------------------
 
-You should update the keys in ``$methods`` in **app/Config/Filters.php**::
+You should update the keys to uppercase in ``$methods`` in **app/Config/Filters.php**::
 
     public array $methods = [
         'POST' => ['invalidchars', 'csrf'],
@@ -60,7 +60,7 @@ CURLRequest::request()
 In previous versions, you could pass lowercase HTTP methods to the ``request()``
 method. But this bug has been fixed.
 
-Now you must pass the correct HTTP method names like "GET", "POST". Otherwise
+Now you must pass the correct HTTP method names like ``GET``, ``POST``. Otherwise
 you would get the error response::
 
     $client   = \Config\Services::curlrequest();
