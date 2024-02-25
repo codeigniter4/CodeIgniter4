@@ -101,13 +101,6 @@ Now the ``csrf`` filter is executed for both the route ``admin`` and ``admin/use
 In previous versions, it is executed only for the route ``admin``.
 See also :ref:`routing-nesting-groups`.
 
-Method Signature Changes
-========================
-
-Some method signature changes have been made. Classes that extend them should
-update their APIs to reflect the changes. See :ref:`ChangeLog <v450-method-signature-changes>`
-for details.
-
 .. _upgrade-450-filter-execution-order:
 
 Filter Execution Order
@@ -203,6 +196,13 @@ the filters will not be executed if the controller is not found.
 
 If you have code that depends on this bug, for example if you expect global filters
 to be executed even for non-existent pages, please add the necessary routes.
+
+Method Signature Changes
+========================
+
+Some method signature changes have been made. Classes that extend them should
+update their APIs to reflect the changes. See :ref:`ChangeLog <v450-method-signature-changes>`
+for details.
 
 Removed Deprecated Items
 ========================
