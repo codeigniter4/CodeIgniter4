@@ -18,7 +18,7 @@ class Validation extends BaseConfig
      * Stores the classes that contain the
      * rules that are available.
      *
-     * @var array<string>
+     * @var list<string>
      */
     public array $ruleSets = [
         Rules::class,

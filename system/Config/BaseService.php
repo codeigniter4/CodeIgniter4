@@ -170,7 +170,7 @@ class BaseService
     /**
      * A cache of the names of services classes found.
      *
-     * @var array<string>
+     * @var list<string>
      */
     private static array $serviceNames = [];
 

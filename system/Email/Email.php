@@ -296,7 +296,7 @@ class Email
     /**
      * Raw debug messages
      *
-     * @var array<string>
+     * @var list<string>
      */
     private array $debugMessageRaw = [];
 
