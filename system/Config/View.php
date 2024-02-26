@@ -59,6 +59,8 @@ class View extends BaseConfig
     /**
      * Built-in View filters.
      *
+     * @psalm-suppress UndefinedDocblockClass
+     *
      * @var         array<string, string>
      * @phpstan-var array<string, parser_callable_string>
      */
@@ -88,6 +90,8 @@ class View extends BaseConfig
 
     /**
      * Built-in View plugins.
+     *
+     * @psalm-suppress UndefinedDocblockClass
      *
      * @var         array<string, callable|list<string>|string>
      * @phpstan-var array<string, array<parser_callable_string>|parser_callable_string|parser_callable>
