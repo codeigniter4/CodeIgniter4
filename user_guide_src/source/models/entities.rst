@@ -68,8 +68,12 @@ fields are handled automatically by the class or the database, so we don't want
 to change those.
 
 Finally, we've set our Entity class as the ``$returnType``. This ensures that all
-methods on the model that return rows from the database will return instances of
-our User Entity class instead of an object or array like normal.
+built-in methods on the model that return rows from the database will return
+instances of our User Entity class instead of an object or array like normal.
+
+.. note::
+    Of course, if you add a custom method to your model, you must implement it
+    so that instances of ``$returnType`` are returned.
 
 Working with the Entity Class
 =============================
