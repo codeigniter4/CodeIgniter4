@@ -163,7 +163,7 @@ class TestResponse extends TestCase
     }
 
     /**
-     * Asserts that the Response is considered OK.
+     * Asserts that the Response is considered not OK.
      *
      * @throws Exception
      */
