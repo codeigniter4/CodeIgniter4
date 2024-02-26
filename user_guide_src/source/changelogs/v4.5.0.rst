@@ -1,3 +1,4 @@
+#############
 Version 4.5.0
 #############
 
@@ -9,12 +10,181 @@ Release Date: Unreleased
     :local:
     :depth: 3
 
+**********
 Highlights
 **********
 
 - Update minimal PHP requirement to 8.1.
 - TBD
 
+************
+Enhancements
+************
+
+Commands
+========
+
+- Added ``spark make:test`` command to generate a skeleton test file. See
+  :ref:`cli-generators-make-test` for the details.
+- Added ``spark config:check`` command to check Config values. See
+  :ref:`confirming-config-values` for the details.
+- Added ``spark lang:find`` command to update translations keys. See :ref:`generating-translation-files-via-command` for the details.
+- The ``--dbgroup`` option has been added to the ``spark db:table`` command.
+  See :ref:`Database Commands <db-command-specify-the-dbgroup>`.
+
+Testing
+=======
+
+- **DomParser:** The new methods were added ``seeXPath()`` and ``dontSeeXPath()``
+  which allows users to work directly with DOMXPath object, using complex expressions.
+- **CLI:** The new ``InputOutput`` class was added and now you can write tests
+  for commands more easily if you use ``MockInputOutput``.
+  See :ref:`using-mock-input-output`.
+- **TestResponse:** TestResponse no longer extends ``PHPUnit\Framework\TestCase`` as it
+  is not a test. Assertions' return types are now natively typed ``void``.
+
+Database
+========
+
+Query Builder
+-------------
+
+.. _v450-query-builder-limit-0-behavior:
+
+limit(0) Behavior
+^^^^^^^^^^^^^^^^^
+
+- Added a feature flag ``Feature::$limitZeroAsAll`` to fix the incorrect behavior
+  of ``limit(0)``.
+- If ``LIMIT 0`` is specified in a SQL statement, 0 records are returned. However,
+  there is a bug in the Query Builder, and if ``limit(0)`` is specified, the
+  generated SQL statement will have no ``LIMIT`` clause and all records will be
+  returned.
+- It is recommended that ``$limitZeroAsAll`` in **app/Config/Feature.php** be set
+  to ``false`` as this incorrect behavior will be fixed in a future version. See
+  also :ref:`v450-model-findall-limit-0-behavior`.
+
+Forge
+-----
+
+Others
+------
+
+Model
+=====
+
+Model Field Casting
+-------------------
+
+Added a feature to convert data retrieved from a database into the appropriate
+PHP type. See :ref:`model-field-casting` for details.
+
+.. _v450-model-findall-limit-0-behavior:
+
+findAll(0) Behavior
+-------------------
+
+- Added a feature flag ``Feature::$limitZeroAsAll`` to fix the incorrect behavior
+  of ``limit(0)`` for Query Builder. See :ref:`v450-query-builder-limit-0-behavior`
+  for details.
+- If you disable this flag, you need to change code like ``findAll(0, $offset)``
+  to ``findAll(null, $offset)``.
+
+$updateOnlyChanged
+------------------
+
+Added a property ``$updateOnlyChanged`` whether to update
+:doc:`Entity <../models/entities>`'s only changed fields. If you set this property
+to ``false``, when you are updating an Entity, ``DataException``
+"There is no data to update" will not raise even if the values in the Entity have
+not changed.
+
+See :ref:`Using CodeIgniter’s Model <model-update-only-changed>` for details.
+
+Saving Dates
+------------
+
+Now you can configure the date/time format when you save :doc:`Time <../libraries/time>`
+instances. See :ref:`model-saving-dates` for details.
+
+Libraries
+=========
+
+- **Validation:**
+    - Added the new rule ``field_exists`` that checks the filed exists in the
+      data to be validated.
+    - The ``$dbGroup`` parameter of ``Validation::run()`` now accepts not only
+      a database group name, but also a database connection instance or an array
+      of database settings.
+
+Helpers and Functions
+=====================
+
+.. _v450-required-filters:
+
+Required Filters
+================
+
+New :ref:`Required Filters <filters-required>` have been introduced. They are
+special filters that are applied before and after other kinds of filters, and
+always applied even if a route does not exist.
+
+The following existing functionalities have been reimplemented as Required Filters.
+
+- :ref:`Force Global Secure Requests <forcehttps>`
+- :doc:`../general/caching`
+- :ref:`performancemetrics`
+- :ref:`the-debug-toolbar`
+
+The Benchmark **Timers** used by Debug Toolbar now collect *Required Before Filters*
+and *Required After Filters* data.
+
+The benchmark points have been changed:
+
+- Before
+
+   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``, Instantiating RouteCollection object, Loading Routes files, Instantiating Router object,
+   - ``routing``: Routing,
+- After
+
+   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``.
+   - ``required_before_filters``: Instantiating Filters object, Running *Required Before Filters*.
+   - ``routing``: Instantiating RouteCollection object, Loading Routes files, Instantiating Router object, Routing,
+
+Others
+======
+
+- **AutoRouting Improved:** The ``$translateUriToCamelCase`` option has been added
+  that allows using CamelCase controller and method names. See
+  :ref:`controller-translate-uri-to-camelcase`.
+- **Routing:**
+    - Added option ``$multipleSegmentsOneParam``. When this option is
+      enabled, a placeholder that matches multiple segments, such as ``(:any)``, will
+      be passed directly as it is to one parameter, even if it contains multiple segments.
+      See :ref:`multiple-uri-segments-as-one-parameter` for details.
+    - Now the 404 controller's method that you set in ``$override404`` also receive
+      a ``PageNotFoundException`` message as the first parameter.
+    - Now you can use the ``__invoke()`` method as the default method. See
+      :ref:`routing-default-method`.
+- **Autoloader:**
+    - Autoloading performance when using Composer has been improved.
+      Adding the ``App`` namespace in the ``autoload.psr4`` setting in **composer.json**
+      may also improve the performance of your app. See :ref:`autoloader-application-namespace`.
+    - FileLocator Caching implemented. See :ref:`file-locator-caching` for details.
+    - ``FileLocatorInterface`` has been added.
+- **CodeIgniter:** Added a pseudo-variable ``{memory_usage}`` to show your memory
+  usage in your view files, which was supported by CodeIgniter 3.
+- **CSP:** Added ``ContentSecurityPolicy::clearDirective()`` method to clear
+  existing CSP directives. See :ref:`csp-clear-directives`.
+- **Events:** Added event points ``pre_command`` and ``post_command`` for Spark
+  commands. See :ref:`Event Points <event-points-for-cli-apps>`.
+- **HTTP:** Added ``Message::addHeader()`` method to add another header with
+  the same name. See :php:meth:`CodeIgniter\\HTTP\\Message::addHeader()`.
+- **Web Page Caching:** ``ResponseCache`` has been improved to include the request
+  HTTP method in the cache key. This means that the same URI will be cached separately
+  if the HTTP method is different.
+
+********
 BREAKING
 ********
 
@@ -243,178 +413,14 @@ Others
   ``CodeIgniter\Entity\Entity`` instead.
 - **spark:** The deprecated constant ``SPARKED`` has been removed.
 
-Enhancements
-************
-
-Commands
-========
-
-- Added ``spark make:test`` command to generate a skeleton test file. See
-  :ref:`cli-generators-make-test` for the details.
-- Added ``spark config:check`` command to check Config values. See
-  :ref:`confirming-config-values` for the details.
-- Added ``spark lang:find`` command to update translations keys. See :ref:`generating-translation-files-via-command` for the details.
-- The ``--dbgroup`` option has been added to the ``spark db:table`` command.
-  See :ref:`Database Commands <db-command-specify-the-dbgroup>`.
-
-Testing
-=======
-
-- **DomParser:** The new methods were added ``seeXPath()`` and ``dontSeeXPath()``
-  which allows users to work directly with DOMXPath object, using complex expressions.
-- **CLI:** The new ``InputOutput`` class was added and now you can write tests
-  for commands more easily if you use ``MockInputOutput``.
-  See :ref:`using-mock-input-output`.
-- **TestResponse:** TestResponse no longer extends ``PHPUnit\Framework\TestCase`` as it
-  is not a test. Assertions' return types are now natively typed ``void``.
-
-Database
-========
-
-Query Builder
--------------
-
-.. _v450-query-builder-limit-0-behavior:
-
-limit(0) Behavior
-^^^^^^^^^^^^^^^^^
-
-- Added a feature flag ``Feature::$limitZeroAsAll`` to fix the incorrect behavior
-  of ``limit(0)``.
-- If ``LIMIT 0`` is specified in a SQL statement, 0 records are returned. However,
-  there is a bug in the Query Builder, and if ``limit(0)`` is specified, the
-  generated SQL statement will have no ``LIMIT`` clause and all records will be
-  returned.
-- It is recommended that ``$limitZeroAsAll`` in **app/Config/Feature.php** be set
-  to ``false`` as this incorrect behavior will be fixed in a future version. See
-  also :ref:`v450-model-findall-limit-0-behavior`.
-
-Forge
------
-
-Others
-------
-
-Model
-=====
-
-Model Field Casting
--------------------
-
-Added a feature to convert data retrieved from a database into the appropriate
-PHP type. See :ref:`model-field-casting` for details.
-
-.. _v450-model-findall-limit-0-behavior:
-
-findAll(0) Behavior
--------------------
-
-- Added a feature flag ``Feature::$limitZeroAsAll`` to fix the incorrect behavior
-  of ``limit(0)`` for Query Builder. See :ref:`v450-query-builder-limit-0-behavior`
-  for details.
-- If you disable this flag, you need to change code like ``findAll(0, $offset)``
-  to ``findAll(null, $offset)``.
-
-$updateOnlyChanged
-------------------
-
-Added a property ``$updateOnlyChanged`` whether to update
-:doc:`Entity <../models/entities>`'s only changed fields. If you set this property
-to ``false``, when you are updating an Entity, ``DataException``
-"There is no data to update" will not raise even if the values in the Entity have
-not changed.
-
-See :ref:`Using CodeIgniter’s Model <model-update-only-changed>` for details.
-
-Saving Dates
-------------
-
-Now you can configure the date/time format when you save :doc:`Time <../libraries/time>`
-instances. See :ref:`model-saving-dates` for details.
-
-Libraries
-=========
-
-- **Validation:**
-    - Added the new rule ``field_exists`` that checks the filed exists in the
-      data to be validated.
-    - The ``$dbGroup`` parameter of ``Validation::run()`` now accepts not only
-      a database group name, but also a database connection instance or an array
-      of database settings.
-
-Helpers and Functions
-=====================
-
-.. _v450-required-filters:
-
-Required Filters
-================
-
-New :ref:`Required Filters <filters-required>` have been introduced. They are
-special filters that are applied before and after other kinds of filters, and
-always applied even if a route does not exist.
-
-The following existing functionalities have been reimplemented as Required Filters.
-
-- :ref:`Force Global Secure Requests <forcehttps>`
-- :doc:`../general/caching`
-- :ref:`performancemetrics`
-- :ref:`the-debug-toolbar`
-
-The Benchmark **Timers** used by Debug Toolbar now collect *Required Before Filters*
-and *Required After Filters* data.
-
-The benchmark points have been changed:
-
-- Before
-
-   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``, Instantiating RouteCollection object, Loading Routes files, Instantiating Router object,
-   - ``routing``: Routing,
-- After
-
-   - ``bootstrap``: Creating Request and Response objects, Event ``pre_system``.
-   - ``required_before_filters``: Instantiating Filters object, Running *Required Before Filters*.
-   - ``routing``: Instantiating RouteCollection object, Loading Routes files, Instantiating Router object, Routing,
-
-Others
-======
-
-- **AutoRouting Improved:** The ``$translateUriToCamelCase`` option has been added
-  that allows using CamelCase controller and method names. See
-  :ref:`controller-translate-uri-to-camelcase`.
-- **Routing:**
-    - Added option ``$multipleSegmentsOneParam``. When this option is
-      enabled, a placeholder that matches multiple segments, such as ``(:any)``, will
-      be passed directly as it is to one parameter, even if it contains multiple segments.
-      See :ref:`multiple-uri-segments-as-one-parameter` for details.
-    - Now the 404 controller's method that you set in ``$override404`` also receive
-      a ``PageNotFoundException`` message as the first parameter.
-    - Now you can use the ``__invoke()`` method as the default method. See
-      :ref:`routing-default-method`.
-- **Autoloader:**
-    - Autoloading performance when using Composer has been improved.
-      Adding the ``App`` namespace in the ``autoload.psr4`` setting in **composer.json**
-      may also improve the performance of your app. See :ref:`autoloader-application-namespace`.
-    - FileLocator Caching implemented. See :ref:`file-locator-caching` for details.
-    - ``FileLocatorInterface`` has been added.
-- **CodeIgniter:** Added a pseudo-variable ``{memory_usage}`` to show your memory
-  usage in your view files, which was supported by CodeIgniter 3.
-- **CSP:** Added ``ContentSecurityPolicy::clearDirective()`` method to clear
-  existing CSP directives. See :ref:`csp-clear-directives`.
-- **Events:** Added event points ``pre_command`` and ``post_command`` for Spark
-  commands. See :ref:`Event Points <event-points-for-cli-apps>`.
-- **HTTP:** Added ``Message::addHeader()`` method to add another header with
-  the same name. See :php:meth:`CodeIgniter\\HTTP\\Message::addHeader()`.
-- **Web Page Caching:** ``ResponseCache`` has been improved to include the request
-  HTTP method in the cache key. This means that the same URI will be cached separately
-  if the HTTP method is different.
-
+***************
 Message Changes
 ***************
 
 - Added ``CLI.generator.className.test`` message.
 - Added ``Validation.field_exists`` error message.
 
+*******
 Changes
 *******
 
@@ -433,6 +439,7 @@ Changes
   is deprecated in SQL Server.
 - ``declare(strict_types=1)`` has been added to most framework codebase.
 
+************
 Deprecations
 ************
 
@@ -453,6 +460,7 @@ Deprecations
   methods accept the lowercase HTTP methods has been deprecated. Use correct
   uppercase HTTP methods instead.
 
+**********
 Bugs Fixed
 **********
 
