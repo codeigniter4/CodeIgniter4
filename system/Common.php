@@ -238,8 +238,8 @@ if (! function_exists('cookies')) {
     /**
      * Fetches the global `CookieStore` instance held by `Response`.
      *
-     * @param array<Cookie> $cookies   If `getGlobal` is false, this is passed to CookieStore's constructor
-     * @param bool          $getGlobal If false, creates a new instance of CookieStore
+     * @param list<Cookie> $cookies   If `getGlobal` is false, this is passed to CookieStore's constructor
+     * @param bool         $getGlobal If false, creates a new instance of CookieStore
      */
     function cookies(array $cookies = [], bool $getGlobal = true): CookieStore
     {

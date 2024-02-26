@@ -1613,7 +1613,7 @@ class RouteCollection implements RouteCollectionInterface
      * Compares the subdomain(s) passed in against the current subdomain
      * on this page request.
      *
-     * @param array<string>|string $subdomains
+     * @param list<string>|string $subdomains
      */
     private function checkSubdomains($subdomains): bool
     {

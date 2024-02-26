@@ -31,7 +31,7 @@ class Toolbar extends BaseConfig
      * List of toolbar collectors that will be called when Debug Toolbar
      * fires up and collects data from.
      *
-     * @var array<string>
+     * @var list<string>
      */
     public array $collectors = [
         Timers::class,

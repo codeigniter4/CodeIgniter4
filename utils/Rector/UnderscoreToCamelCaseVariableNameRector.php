@@ -79,7 +79,7 @@ final class UnderscoreToCamelCaseVariableNameRector extends AbstractRector
     }
 
     /**
-     * @return array<string>
+     * @return list<string>
      */
     public function getNodeTypes(): array
     {

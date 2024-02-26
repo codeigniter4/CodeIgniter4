@@ -28,7 +28,7 @@ class MockSession extends Session
     /**
      * Holds our "cookie" data.
      *
-     * @var array<Cookie>
+     * @var list<Cookie>
      */
     public $cookies = [];
 

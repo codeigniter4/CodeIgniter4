@@ -35,7 +35,7 @@ final class AutoRouteCollector
     /**
      * List of controllers in Defined Routes that should not be accessed via Auto-Routing.
      *
-     * @var array<class-string>
+     * @var list<class-string>
      */
     private array $protectedControllers;
 

@@ -352,7 +352,7 @@ interface ResponseInterface extends MessageInterface
     /**
      * Returns the cookie
      *
-     * @return array<Cookie>|Cookie|null
+     * @return array<string, Cookie>|Cookie|null
      */
     public function getCookie(?string $name = null, string $prefix = '');
 
@@ -366,7 +366,7 @@ interface ResponseInterface extends MessageInterface
     /**
      * Returns all cookies currently set.
      *
-     * @return array<Cookie>
+     * @return array<string, Cookie>
      */
     public function getCookies();
 

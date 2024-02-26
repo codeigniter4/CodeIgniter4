@@ -39,30 +39,6 @@ $overrides = [
         'import_symbols'                        => false,
         'leading_backslash_in_global_namespace' => true,
     ],
-    'phpdoc_array_type' => true,
-    'phpdoc_align'      => [
-        'align'   => 'vertical',
-        'spacing' => 1,
-        'tags'    => [
-            'method',
-            'param',
-            'phpstan-assert',
-            'phpstan-assert-if-true',
-            'phpstan-assert-if-false',
-            'phpstan-param',
-            'phpstan-property',
-            'phpstan-return',
-            'phpstan-type',
-            'phpstan-var',
-            'property',
-            'property-read',
-            'property-write',
-            'return',
-            'throws',
-            'type',
-            'var',
-        ],
-    ],
 ];
 
 $options = [

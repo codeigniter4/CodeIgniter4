@@ -37,7 +37,7 @@ interface ValidationInterface
      *
      * @param array|bool|float|int|object|string|null $value   Value to validate.
      * @param array|string                            $rules
-     * @param array<string>                           $errors
+     * @param list<string>                            $errors
      * @param string|null                             $dbGroup The database group to use.
      *
      * @return bool True if valid, else false.
@@ -87,7 +87,7 @@ interface ValidationInterface
      *
      * @param string $group Group.
      *
-     * @return array<string> Rule group.
+     * @return list<string> Rule group.
      */
     public function getRuleGroup(string $group): array;
 

@@ -137,7 +137,7 @@ class Model extends BaseModel
     /**
      * Builder method names that should not be used in the Model.
      *
-     * @var array<string> method name
+     * @var list<string> method name
      */
     private array $builderMethodsNotAvailable = [
         'getCompiledInsert',
@@ -456,7 +456,7 @@ class Model extends BaseModel
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return array<string>|false|int Number of rows affected or FALSE on failure, SQL array when testMode
+     * @return false|int|list<string> Number of rows affected or FALSE on failure, SQL array when testMode
      *
      * @throws DatabaseException
      */

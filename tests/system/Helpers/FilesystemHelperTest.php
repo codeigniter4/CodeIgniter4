@@ -25,7 +25,7 @@ use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 final class FilesystemHelperTest extends CIUnitTestCase
 {
     /**
-     * @var array<string, array<mixed>>|array<string, array<string, array<mixed>>>|array<string, array<string, string>>|array<string, mixed>|array<string, string>|mixed
+     * @var array<string, array<string, list<mixed>>>|array<string, array<string, string>>|array<string, list<mixed>>|array<string, mixed>|array<string, string>|mixed
      */
     private array $structure;
 

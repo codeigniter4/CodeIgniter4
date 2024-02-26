@@ -29,7 +29,7 @@ final class AutoRouterImproved implements AutoRouterInterface
     /**
      * List of controllers in Defined Routes that should not be accessed via this Auto-Routing.
      *
-     * @var array<class-string>
+     * @var list<class-string>
      */
     private array $protectedControllers;
 
@@ -126,8 +126,8 @@ final class AutoRouterImproved implements AutoRouterInterface
     private ?string $uri = null;
 
     /**
-     * @param array<class-string> $protectedControllers
-     * @param string              $defaultController    Short classname
+     * @param list<class-string> $protectedControllers
+     * @param string             $defaultController    Short classname
      */
     public function __construct(
         array $protectedControllers,

@@ -532,16 +532,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/BaseResult.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, array\\<array\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseResult.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, array\\<object\\> given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/BaseResult.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$className \\(class\\-string\\) of method CodeIgniter\\\\Database\\\\BaseResult\\:\\:getCustomResultObject\\(\\) should be contravariant with parameter \\$className \\(string\\) of method CodeIgniter\\\\Database\\\\ResultInterface\\<TConnection,TResult\\>\\:\\:getCustomResultObject\\(\\)$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/BaseResult.php',
@@ -618,6 +608,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Only booleans are allowed in &&, string given on the left side\\.$#',
+	'count' => 1,
+	'path' => __DIR__ . '/system/Database/Forge.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Property CodeIgniter\\\\Database\\\\Forge\\:\\:\\$fields \\(array\\<string, array\\|string\\>\\) does not accept array\\<int\\|string, int\\>\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Database/Forge.php',
 ];
@@ -774,16 +769,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 5,
-	'path' => __DIR__ . '/system/Database/OCI8/Connection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/OCI8/Connection.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, array\\<stdClass\\> given\\.$#',
-	'count' => 1,
 	'path' => __DIR__ . '/system/Database/OCI8/Connection.php',
 ];
 $ignoreErrors[] = [
@@ -2455,6 +2440,11 @@ $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Test\\\\Mock\\\\MockCURLRequest\\:\\:\\$output has no type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/Mock/MockCURLRequest.php',
+];
+$ignoreErrors[] = [
+	'message' => '#^Cannot unset offset string on array\\<int, int\\>\\|null\\.$#',
+	'count' => 2,
+	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockCache\\:\\:assertHas\\(\\) has no return type specified\\.$#',
