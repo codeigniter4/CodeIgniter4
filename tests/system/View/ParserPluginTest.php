@@ -52,6 +52,10 @@ final class ParserPluginTest extends CIUnitTestCase
      */
     public function testPreviousURL(): void
     {
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+
         $template = '{+ previous_url +}';
 
         // Ensure a previous URL exists to work with.
