@@ -47,7 +47,7 @@ And you should use uppercase HTTP method names in your app code.
 app/Config/Filters.php
 ----------------------
 
-You should update the keys in ``$methods`` in **app/Config/Filters.php**::
+You should update the keys to uppercase in ``$methods`` in **app/Config/Filters.php**::
 
     public array $methods = [
         'POST' => ['invalidchars', 'csrf'],
@@ -60,7 +60,7 @@ CURLRequest::request()
 In previous versions, you could pass lowercase HTTP methods to the ``request()``
 method. But this bug has been fixed.
 
-Now you must pass the correct HTTP method names like "GET", "POST". Otherwise
+Now you must pass the correct HTTP method names like ``GET``, ``POST``. Otherwise
 you would get the error response::
 
     $client   = \Config\Services::curlrequest();
@@ -100,13 +100,6 @@ For example,
 Now the ``csrf`` filter is executed for both the route ``admin`` and ``admin/users``.
 In previous versions, it is executed only for the route ``admin``.
 See also :ref:`routing-nesting-groups`.
-
-Method Signature Changes
-========================
-
-Some method signature changes have been made. Classes that extend them should
-update their APIs to reflect the changes. See :ref:`ChangeLog <v450-method-signature-changes>`
-for details.
 
 .. _upgrade-450-filter-execution-order:
 
@@ -203,6 +196,13 @@ the filters will not be executed if the controller is not found.
 
 If you have code that depends on this bug, for example if you expect global filters
 to be executed even for non-existent pages, please add the necessary routes.
+
+Method Signature Changes
+========================
+
+Some method signature changes have been made. Classes that extend them should
+update their APIs to reflect the changes. See :ref:`ChangeLog <v450-method-signature-changes>`
+for details.
 
 Removed Deprecated Items
 ========================
