@@ -123,16 +123,16 @@ default value is ``true``.
 $returnType
 -----------
 
-The Model's CRUD methods will take a step of work away from you and automatically return
-the resulting data, instead of the Result object.
+The Model's CRUD methods will take a step of work away from you and automatically
+return the resulting data, instead of the Result object.
 
-This setting allows you to define
-the type of data that is returned. Valid values are '**array**' (the default), '**object**', or the **fully
-qualified name of a class** that can be used with the Result object's ``getCustomResultObject()``
-method.
+This setting allows you to define the type of data that is returned. Valid values
+are '**array**' (the default), '**object**', or the **fully qualified name of a class**
+that can be used with the Result object's ``getCustomResultObject()`` method.
 
 Using the special ``::class`` constant of the class will allow most IDEs to
-auto-complete the name and allow functions like refactoring to better understand your code.
+auto-complete the name and allow functions like refactoring to better understand
+your code.
 
 .. _model-use-soft-deletes:
 
