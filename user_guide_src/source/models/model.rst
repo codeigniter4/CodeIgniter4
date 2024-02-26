@@ -123,7 +123,7 @@ default value is ``true``.
 $returnType
 -----------
 
-The Model's CRUD methods will take a step of work away from you and automatically
+The Model's **find*()** methods will take a step of work away from you and automatically
 return the resulting data, instead of the Result object.
 
 This setting allows you to define the type of data that is returned. Valid values
