@@ -12,6 +12,7 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\RedirectException;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\Services;
@@ -67,8 +68,10 @@ final class RedirectExceptionTest extends TestCase
 
     public function testLoggingLocationHeader(): void
     {
+        Time::setTestNow('2023-11-25 12:00:00');
+
         $uri      = 'http://location';
-        $expected = 'INFO - ' . date('Y-m-d') . ' --> REDIRECTED ROUTE at ' . $uri;
+        $expected = 'INFO - ' . Time::now()->format('Y-m-d') . ' --> REDIRECTED ROUTE at ' . $uri;
         $response = (new RedirectException(Services::response()->redirect($uri)))->getResponse();
 
         $logs = TestHandler::getLogs();
@@ -80,8 +83,10 @@ final class RedirectExceptionTest extends TestCase
 
     public function testLoggingRefreshHeader(): void
     {
+        Time::setTestNow('2023-11-25 12:00:00');
+
         $uri      = 'http://location';
-        $expected = 'INFO - ' . date('Y-m-d') . ' --> REDIRECTED ROUTE at ' . $uri;
+        $expected = 'INFO - ' . Time::now()->format('Y-m-d') . ' --> REDIRECTED ROUTE at ' . $uri;
         $response = (new RedirectException(Services::response()->redirect($uri, 'refresh')))->getResponse();
 
         $logs = TestHandler::getLogs();
