@@ -28,6 +28,8 @@ Commands
   :ref:`cli-generators-make-test` for the details.
 - Added ``spark config:check`` command to check Config values. See
   :ref:`confirming-config-values` for the details.
+- Added ``spark phpini:check`` command to check important PHP ini settings. See
+  :ref:`spark-phpini-check` for the details.
 - Added ``spark lang:find`` command to update translations keys. See :ref:`generating-translation-files-via-command` for the details.
 - The ``--dbgroup`` option has been added to the ``spark db:table`` command.
   See :ref:`Database Commands <db-command-specify-the-dbgroup>`.
