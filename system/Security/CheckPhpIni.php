@@ -118,19 +118,23 @@ class CheckPhpIni
     public static function checkIni(): array
     {
         $items = [
-            'error_reporting'        => ['recommended' => '5111'],
-            'display_errors'         => ['recommended' => '0'],
-            'display_startup_errors' => ['recommended' => '0'],
-            'log_errors'             => [],
-            'error_log'              => [],
-            'default_charset'        => ['recommended' => 'UTF-8'],
-            'memory_limit'           => ['remark' => '> post_max_size'],
-            'post_max_size'          => ['remark' => '> upload_max_filesize'],
-            'upload_max_filesize'    => ['remark' => '< post_max_size'],
-            'request_order'          => ['recommended' => 'GP'],
-            'variables_order'        => ['recommended' => 'GPCS'],
-            'date.timezone'          => ['recommended' => 'UTC'],
-            'mbstring.language'      => ['recommended' => 'neutral'],
+            'error_reporting'         => ['recommended' => '5111'],
+            'display_errors'          => ['recommended' => '0'],
+            'display_startup_errors'  => ['recommended' => '0'],
+            'log_errors'              => [],
+            'error_log'               => [],
+            'default_charset'         => ['recommended' => 'UTF-8'],
+            'memory_limit'            => ['remark' => '> post_max_size'],
+            'post_max_size'           => ['remark' => '> upload_max_filesize'],
+            'upload_max_filesize'     => ['remark' => '< post_max_size'],
+            'request_order'           => ['recommended' => 'GP'],
+            'variables_order'         => ['recommended' => 'GPCS'],
+            'date.timezone'           => ['recommended' => 'UTC'],
+            'mbstring.language'       => ['recommended' => 'neutral'],
+            'opcache.enable'          => ['recommended' => '1'],
+            'opcache.enable_cli'      => [],
+            'opcache.jit'             => [],
+            'opcache.jit_buffer_size' => [],
         ];
 
         $output = [];
