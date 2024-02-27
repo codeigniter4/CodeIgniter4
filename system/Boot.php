@@ -60,6 +60,8 @@ class Boot
             $factoriesCache = static::loadConfigCache();
         }
 
+        static::autoloadHelpers();
+
         $app = static::initializeCodeIgniter();
         static::runCodeIgniter($app);
 
@@ -93,6 +95,7 @@ class Boot
         static::loadAutoloader();
         static::setExceptionHandler();
         static::initializeKint();
+        static::autoloadHelpers();
 
         static::initializeCodeIgniter();
         $console = static::initializeConsole();
@@ -115,6 +118,7 @@ class Boot
         static::loadAutoloader();
         static::setExceptionHandler();
         static::initializeKint();
+        static::autoloadHelpers();
     }
 
     /**
@@ -224,6 +228,10 @@ class Boot
 
         // Initialize and register the loader with the SPL autoloader stack.
         Services::autoloader()->initialize(new Autoload(), new Modules())->register();
+    }
+
+    protected static function autoloadHelpers(): void
+    {
         Services::autoloader()->loadHelpers();
     }
 
