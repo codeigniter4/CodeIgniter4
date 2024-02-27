@@ -318,62 +318,6 @@ class BaseService
         static::$mocks[strtolower($name)] = $mock;
     }
 
-    /**
-     * Will scan all psr4 namespaces registered with system to look
-     * for new Config\Services files. Caches a copy of each one, then
-     * looks for the service method in each, returning an instance of
-     * the service, if available.
-     *
-     * @return object|null
-     *
-     * @deprecated
-     *
-     * @codeCoverageIgnore
-     */
-    protected static function discoverServices(string $name, array $arguments)
-    {
-        if (! static::$discovered) {
-            if ((new Modules())->shouldDiscover('services')) {
-                $locator = static::locator();
-                $files   = $locator->search('Config/Services');
-
-                if (empty($files)) {
-                    // no files at all found - this would be really, really bad
-                    return null;
-                }
-
-                // Get instances of all service classes and cache them locally.
-                foreach ($files as $file) {
-                    $classname = $locator->findQualifiedNameFromPath($file);
-
-                    if ($classname === false) {
-                        continue;
-                    }
-
-                    if ($classname !== Services::class) {
-                        static::$services[] = new $classname();
-                    }
-                }
-            }
-
-            static::$discovered = true;
-        }
-
-        if (! static::$services) {
-            // we found stuff, but no services - this would be really bad
-            return null;
-        }
-
-        // Try to find the desired service method
-        foreach (static::$services as $class) {
-            if (method_exists($class, $name)) {
-                return $class::$name(...$arguments);
-            }
-        }
-
-        return null;
-    }
-
     protected static function buildServicesCache(): void
     {
         if (! static::$discovered) {
