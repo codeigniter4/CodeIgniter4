@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
-use Config\Services;
 use Config\Validation;
 
 // CodeIgniter Form Helpers
@@ -37,7 +36,7 @@ if (! function_exists('form_open')) {
         elseif (strpos($action, '://') === false) {
             // If an action has {locale}
             if (strpos($action, '{locale}') !== false) {
-                $action = str_replace('{locale}', Services::request()->getLocale(), $action);
+                $action = str_replace('{locale}', service('request')->getLocale(), $action);
             }
 
             $action = site_url($action);
@@ -61,7 +60,7 @@ if (! function_exists('form_open')) {
         $form = '<form action="' . $action . '"' . $attributes . ">\n";
 
         // Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
-        $before = Services::filters()->getFilters()['before'];
+        $before = service('filters')->getFilters()['before'];
 
         if ((in_array('csrf', $before, true) || array_key_exists('csrf', $before)) && strpos($action, base_url()) !== false && ! stripos($form, 'method="get"')) {
             $form .= csrf_field($csrfId ?? null);
@@ -554,7 +553,7 @@ if (! function_exists('set_value')) {
      */
     function set_value(string $field, $default = '', bool $htmlEscape = true)
     {
-        $request = Services::request();
+        $request = service('request');
 
         // Try any old input data we may have first
         $value = $request->getOldInput($field);
@@ -575,7 +574,7 @@ if (! function_exists('set_select')) {
      */
     function set_select(string $field, string $value = '', bool $default = false): string
     {
-        $request = Services::request();
+        $request = service('request');
 
         // Try any old input data we may have first
         $input = $request->getOldInput($field);
@@ -611,7 +610,7 @@ if (! function_exists('set_checkbox')) {
      */
     function set_checkbox(string $field, string $value = '', bool $default = false): string
     {
-        $request = Services::request();
+        $request = service('request');
 
         // Try any old input data we may have first
         $input = $request->getOldInput($field);
@@ -631,7 +630,7 @@ if (! function_exists('set_checkbox')) {
             return '';
         }
 
-        $session     = Services::session();
+        $session     = service('session');
         $hasOldInput = $session->has('_ci_old_input');
 
         // Unchecked checkbox and radio inputs are not even submitted by browsers ...
@@ -651,7 +650,7 @@ if (! function_exists('set_radio')) {
      */
     function set_radio(string $field, string $value = '', bool $default = false): string
     {
-        $request = Services::request();
+        $request = service('request');
 
         // Try any old input data we may have first
         $oldInput = $request->getOldInput($field);
@@ -705,7 +704,7 @@ if (! function_exists('validation_errors')) {
             return $errors;
         }
 
-        $validation = Services::validation();
+        $validation = service('validation');
 
         return $validation->getErrors();
     }
@@ -720,7 +719,7 @@ if (! function_exists('validation_list_errors')) {
     function validation_list_errors(string $template = 'list'): string
     {
         $config = config(Validation::class);
-        $view   = Services::renderer();
+        $view   = service('renderer');
 
         if (! array_key_exists($template, $config->templates)) {
             throw ValidationException::forInvalidTemplate($template);
@@ -740,7 +739,7 @@ if (! function_exists('validation_show_error')) {
     function validation_show_error(string $field, string $template = 'single'): string
     {
         $config = config(Validation::class);
-        $view   = Services::renderer();
+        $view   = service('renderer');
 
         $errors = array_filter(validation_errors(), static fn ($key) => preg_match(
             '/^' . str_replace(['\.\*', '\*\.'], ['\..+', '.+\.'], preg_quote($field, '/')) . '$/',

@@ -101,7 +101,7 @@ final class FilterCollector
 
     private function createRouter(Request $request): Router
     {
-        $routes = Services::routes();
+        $routes = service('routes');
 
         if ($this->resetRoutes) {
             $routes->resetRoutes();
@@ -114,6 +114,6 @@ final class FilterCollector
     {
         $config = config(FiltersConfig::class);
 
-        return new Filters($config, $request, Services::response());
+        return new Filters($config, $request, service('response'));
     }
 }

@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\View\RendererInterface;
-use Config\Services;
 
 /**
  * Views collector
@@ -77,7 +76,7 @@ class Views extends BaseCollector
 
     private function initViewer(): void
     {
-        $this->viewer ??= Services::renderer();
+        $this->viewer ??= service('renderer');
     }
 
     /**

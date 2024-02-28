@@ -21,7 +21,6 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Config\Feature;
 use Config\Filters as FiltersConfig;
 use Config\Modules;
-use Config\Services;
 
 /**
  * Filters
@@ -136,7 +135,7 @@ class Filters
      */
     private function discoverFilters(): void
     {
-        $locator = Services::locator();
+        $locator = service('locator');
 
         // for access by custom filters
         $filters = $this->config;

@@ -17,7 +17,6 @@ use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\I18n\Time;
-use Config\Services;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Constraint\IsEqual;
 
@@ -390,7 +389,7 @@ class TestResponse
         }
 
         if (is_array($test)) {
-            $test = Services::format()->getFormatter('application/json')->format($test);
+            $test = service('format')->getFormatter('application/json')->format($test);
         }
 
         Assert::assertJsonStringEqualsJsonString($test, $json, 'Response does not contain matching JSON.');

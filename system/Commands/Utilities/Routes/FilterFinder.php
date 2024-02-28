@@ -18,7 +18,6 @@ use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\Router\Router;
 use Config\Feature;
-use Config\Services;
 
 /**
  * Finds filters.
@@ -32,8 +31,8 @@ final class FilterFinder
 
     public function __construct(?Router $router = null, ?Filters $filters = null)
     {
-        $this->router  = $router ?? Services::router();
-        $this->filters = $filters ?? Services::filters();
+        $this->router  = $router ?? service('router');
+        $this->filters = $filters ?? service('filters');
     }
 
     private function getRouteFilters(string $uri): array

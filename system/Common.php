@@ -71,7 +71,7 @@ if (! function_exists('cache')) {
      */
     function cache(?string $key = null)
     {
-        $cache = Services::cache();
+        $cache = service('cache');
 
         // No params - return cache object
         if ($key === null) {
@@ -244,7 +244,7 @@ if (! function_exists('cookies')) {
     function cookies(array $cookies = [], bool $getGlobal = true): CookieStore
     {
         if ($getGlobal) {
-            return Services::response()->getCookieStore();
+            return service('response')->getCookieStore();
         }
 
         return new CookieStore($cookies);
@@ -259,7 +259,7 @@ if (! function_exists('csrf_token')) {
      */
     function csrf_token(): string
     {
-        return Services::security()->getTokenName();
+        return service('security')->getTokenName();
     }
 }
 
@@ -271,7 +271,7 @@ if (! function_exists('csrf_header')) {
      */
     function csrf_header(): string
     {
-        return Services::security()->getHeaderName();
+        return service('security')->getHeaderName();
     }
 }
 
@@ -283,7 +283,7 @@ if (! function_exists('csrf_hash')) {
      */
     function csrf_hash(): string
     {
-        return Services::security()->getHash();
+        return service('security')->getHash();
     }
 }
 
@@ -317,7 +317,7 @@ if (! function_exists('csp_style_nonce')) {
      */
     function csp_style_nonce(): string
     {
-        $csp = Services::csp();
+        $csp = service('csp');
 
         if (! $csp->enabled()) {
             return '';
@@ -333,7 +333,7 @@ if (! function_exists('csp_script_nonce')) {
      */
     function csp_script_nonce(): string
     {
-        $csp = Services::csp();
+        $csp = service('csp');
 
         if (! $csp->enabled()) {
             return '';
@@ -486,13 +486,13 @@ if (! function_exists('force_https')) {
         ?RequestInterface $request = null,
         ?ResponseInterface $response = null
     ): void {
-        $request ??= Services::request();
+        $request ??= service('request');
 
         if (! $request instanceof IncomingRequest) {
             return;
         }
 
-        $response ??= Services::response();
+        $response ??= service('response');
 
         if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure()))
             || $request->getServer('HTTPS') === 'test'
@@ -503,7 +503,7 @@ if (! function_exists('force_https')) {
         // If the session status is active, we should regenerate
         // the session ID for safety sake.
         if (ENVIRONMENT !== 'testing' && session_status() === PHP_SESSION_ACTIVE) {
-            Services::session()->regenerate(); // @codeCoverageIgnore
+            service('session')->regenerate(); // @codeCoverageIgnore
         }
 
         $uri = $request->getUri()->withScheme('https');
@@ -747,7 +747,7 @@ if (! function_exists('lang')) {
      */
     function lang(string $line, array $args = [], ?string $locale = null)
     {
-        $language = Services::language();
+        $language = service('language');
 
         // Get active locale
         $activeLocale = $language->getLocale();
@@ -836,7 +836,7 @@ if (! function_exists('old')) {
             session(); // @codeCoverageIgnore
         }
 
-        $request = Services::request();
+        $request = service('request');
 
         $value = $request->getOldInput($key);
 
@@ -934,7 +934,7 @@ if (! function_exists('request')) {
      */
     function request()
     {
-        return Services::request();
+        return service('request');
     }
 }
 
@@ -944,7 +944,7 @@ if (! function_exists('response')) {
      */
     function response(): ResponseInterface
     {
-        return Services::response();
+        return service('response');
     }
 }
 
@@ -965,7 +965,7 @@ if (! function_exists('route_to')) {
      */
     function route_to(string $method, ...$params)
     {
-        return Services::routes()->reverseRoute($method, ...$params);
+        return service('routes')->reverseRoute($method, ...$params);
     }
 }
 
@@ -983,7 +983,7 @@ if (! function_exists('session')) {
      */
     function session(?string $val = null)
     {
-        $session = Services::session();
+        $session = service('session');
 
         // Returning a single item?
         if (is_string($val)) {
@@ -1137,7 +1137,7 @@ if (! function_exists('timer')) {
      */
     function timer(?string $name = null, ?callable $callable = null)
     {
-        $timer = Services::timer();
+        $timer = service('timer');
 
         if ($name === null) {
             return $timer;
@@ -1194,7 +1194,7 @@ if (! function_exists('view_cell')) {
      */
     function view_cell(string $library, $params = null, int $ttl = 0, ?string $cacheName = null): string
     {
-        return Services::viewcell()
+        return service('viewcell')
             ->render($library, $params, $ttl, $cacheName);
     }
 }

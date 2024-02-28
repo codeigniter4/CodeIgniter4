@@ -1145,7 +1145,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function view(string $from, string $view, ?array $options = null): RouteCollectionInterface
     {
-        $to = static fn (...$data) => Services::renderer()
+        $to = static fn (...$data) => service('renderer')
             ->setData(['segments' => $data], 'raw')
             ->render($view, $options);
 
@@ -1258,7 +1258,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     protected function localizeRoute(string $route): string
     {
-        return strtr($route, ['{locale}' => Services::request()->getLocale()]);
+        return strtr($route, ['{locale}' => service('request')->getLocale()]);
     }
 
     /**
@@ -1423,7 +1423,7 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         if ($locale === null) {
-            $locale = Services::request()->getLocale();
+            $locale = service('request')->getLocale();
         }
 
         return strtr($route, ['{locale}' => $locale]);

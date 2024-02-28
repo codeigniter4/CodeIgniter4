@@ -23,7 +23,6 @@ use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Session\Session;
 use Config\Cookie as CookieConfig;
 use Config\Security as SecurityConfig;
-use Config\Services;
 use ErrorException;
 use InvalidArgumentException;
 use LogicException;
@@ -207,7 +206,7 @@ class Security implements SecurityInterface
             $this->configureSession();
         }
 
-        $this->request      = Services::request();
+        $this->request      = service('request');
         $this->hashInCookie = $this->request->getCookie($this->cookieName);
 
         $this->restoreHash();
@@ -223,7 +222,7 @@ class Security implements SecurityInterface
 
     private function configureSession(): void
     {
-        $this->session = Services::session();
+        $this->session = service('session');
     }
 
     private function configureCookie(CookieConfig $cookie): void
@@ -534,7 +533,7 @@ class Security implements SecurityInterface
             ]
         );
 
-        $response = Services::response();
+        $response = service('response');
         $response->setCookie($this->cookie);
     }
 

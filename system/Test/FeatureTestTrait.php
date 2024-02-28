@@ -48,7 +48,7 @@ trait FeatureTestTrait
      */
     protected function withRoutes(?array $routes = null)
     {
-        $collection = Services::routes();
+        $collection = service('routes');
 
         if ($routes !== null) {
             $collection->resetRoutes();
@@ -190,7 +190,7 @@ trait FeatureTestTrait
 
         // Initialize the RouteCollection
         if (! $routes = $this->routes) {
-            $routes = Services::routes()->loadRoutes();
+            $routes = service('routes')->loadRoutes();
         }
 
         $routes->setHTTPVerb($method);
@@ -211,7 +211,7 @@ trait FeatureTestTrait
             ->run($routes, true);
 
         // Reset directory if it has been set
-        Services::router()->setDirectory(null);
+        service('router')->setDirectory(null);
 
         return new TestResponse($response);
     }
@@ -313,7 +313,7 @@ trait FeatureTestTrait
         $path  = $parts[0];
         $query = $parts[1] ?? '';
 
-        $superglobals = Services::superglobals();
+        $superglobals = service('superglobals');
         $superglobals->setServer('QUERY_STRING', $query);
 
         $uri->setPath($path);
@@ -418,7 +418,7 @@ trait FeatureTestTrait
             }
 
             if ($params !== null && $formatMime !== '') {
-                $formatted = Services::format()->getFormatter($formatMime)->format($params);
+                $formatted = service('format')->getFormatter($formatMime)->format($params);
                 // "withBodyFormat() and $params of call()" has higher priority than withBody().
                 $request->setBody($formatted);
             }

@@ -16,7 +16,6 @@ namespace CodeIgniter\API;
 use CodeIgniter\Format\FormatterInterface;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\ResponseInterface;
-use Config\Services;
 
 /**
  * Provides common, more readable, methods to provide
@@ -307,7 +306,7 @@ trait ResponseTrait
      */
     protected function format($data = null)
     {
-        $format = Services::format();
+        $format = service('format');
 
         $mime = ($this->format === null) ? $format->getConfig()->supportedResponseFormats[0]
             : "application/{$this->format}";

@@ -18,7 +18,6 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\Validation\ValidationInterface;
-use Config\Services;
 use Config\Validation;
 use Psr\Log\LoggerInterface;
 
@@ -120,7 +119,7 @@ class Controller
      */
     protected function cachePage(int $time)
     {
-        Services::responsecache()->setTtl($time);
+        service('responsecache')->setTtl($time);
     }
 
     /**
@@ -156,7 +155,7 @@ class Controller
      */
     private function setValidator($rules, array $messages): void
     {
-        $this->validator = Services::validation();
+        $this->validator = service('validation');
 
         // If you replace the $rules array with the name of the group
         if (is_string($rules)) {

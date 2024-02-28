@@ -330,7 +330,7 @@ class Services extends BaseService
 
     /**
      * Acts as a factory for ImageHandler classes and returns an instance
-     * of the handler. Used like Services::image()->withFile($path)->rotate(90)->save();
+     * of the handler. Used like service('image')->withFile($path)->rotate(90)->save();
      *
      * @return BaseHandler
      */
@@ -544,7 +544,7 @@ class Services extends BaseService
             $request->setProtocolVersion($_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.1');
         }
 
-        // Inject the request object into Services::request().
+        // Inject the request object into Services.
         static::$instances['request'] = $request;
     }
 

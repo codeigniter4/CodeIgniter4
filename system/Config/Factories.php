@@ -15,7 +15,6 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Model;
-use Config\Services;
 use InvalidArgumentException;
 
 /**
@@ -284,7 +283,7 @@ final class Factories
         }
 
         // Have to do this the hard way...
-        $locator = Services::locator();
+        $locator = service('locator');
 
         // Check if the class alias was namespaced
         if (self::isNamespaced($alias)) {

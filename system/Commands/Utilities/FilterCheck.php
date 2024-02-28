@@ -16,7 +16,6 @@ namespace CodeIgniter\Commands\Utilities;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
-use Config\Services;
 
 /**
  * Check filters for a route.
@@ -88,7 +87,7 @@ class FilterCheck extends BaseCommand
         $route  = $params[1];
 
         // Load Routes
-        Services::routes()->loadRoutes();
+        service('routes')->loadRoutes();
 
         $filterCollector = new FilterCollector();
 

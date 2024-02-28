@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\Services;
 use Throwable;
 
 /**
@@ -79,7 +78,7 @@ class MigrateRollback extends BaseCommand
             // @codeCoverageIgnoreEnd
         }
 
-        $runner = Services::migrations();
+        $runner = service('migrations');
 
         try {
             $batch = $params['b'] ?? CLI::getOption('b') ?? $runner->getLastBatch() - 1;
