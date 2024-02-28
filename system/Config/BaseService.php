@@ -76,6 +76,7 @@ use Config\Services as AppServices;
 use Config\Toolbar as ConfigToolbar;
 use Config\Validation as ConfigValidation;
 use Config\View as ConfigView;
+use InvalidArgumentException;
 
 /**
  * Services Configuration file.
@@ -176,6 +177,48 @@ class BaseService
      * @var list<string>
      */
     private static array $serviceNames = [];
+
+    /**
+     * Simple method to get an entry fast.
+     *
+     * @param string $key Identifier of the entry to look for.
+     *
+     * @return mixed Entry.
+     */
+    public static function get(string $key): mixed
+    {
+        if (isset(static::$instances[$key])) {
+            return static::$instances[$key];
+        }
+
+        return static::__callStatic($key, []);
+    }
+
+    /**
+     * Sets an entry.
+     *
+     * @param string $key   Identifier of the entry.
+     * @param mixed  $value Normally an object.
+     */
+    public static function set(string $key, mixed $value): void
+    {
+        if (isset(static::$instances[$key])) {
+            throw new InvalidArgumentException('The Entry for "' . $key . '" is already set.');
+        }
+
+        static::$instances[$key] = $value;
+    }
+
+    /**
+     * Overrides an existing entry.
+     *
+     * @param string $key   Identifier of the entry.
+     * @param mixed  $value Normally an object.
+     */
+    public static function override(string $key, mixed $value): void
+    {
+        static::$instances[$key] = $value;
+    }
 
     /**
      * Returns a shared instance of any of the class' services.
@@ -315,6 +358,7 @@ class BaseService
      */
     public static function injectMock(string $name, $mock)
     {
+        static::$instances[$name]         = $mock;
         static::$mocks[strtolower($name)] = $mock;
     }
 
