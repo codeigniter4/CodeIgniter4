@@ -151,6 +151,13 @@ class BaseService
     protected static $instances = [];
 
     /**
+     * Factory method list.
+     *
+     * @var array<string, (callable(mixed ...$params): object)> [key => callable]
+     */
+    protected static array $factories = [];
+
+    /**
      * Mock objects for testing which are returned if exist.
      *
      * @var array<string, object> [key => instance]
@@ -295,6 +302,10 @@ class BaseService
      */
     public static function __callStatic(string $name, array $arguments)
     {
+        if (isset(static::$factories[$name])) {
+            return static::$factories[$name](...$arguments);
+        }
+
         $service = static::serviceExists($name);
 
         if ($service === null) {
@@ -311,11 +322,14 @@ class BaseService
     public static function serviceExists(string $name): ?string
     {
         static::buildServicesCache();
+
         $services = array_merge(self::$serviceNames, [Services::class]);
         $name     = strtolower($name);
 
         foreach ($services as $service) {
             if (method_exists($service, $name)) {
+                static::$factories[$name] = [$service, $name];
+
                 return $service;
             }
         }
@@ -332,6 +346,7 @@ class BaseService
     {
         static::$mocks     = [];
         static::$instances = [];
+        static::$factories = [];
 
         if ($initAutoloader) {
             static::autoloader()->initialize(new Autoload(), new Modules());
