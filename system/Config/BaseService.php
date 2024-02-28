@@ -145,14 +145,14 @@ class BaseService
      * have been requested as a "shared" instance.
      * Keys should be lowercase service names.
      *
-     * @var array
+     * @var array<string, object> [key => instance]
      */
     protected static $instances = [];
 
     /**
      * Mock objects for testing which are returned if exist.
      *
-     * @var array
+     * @var array<string, object> [key => instance]
      */
     protected static $mocks = [];
 
