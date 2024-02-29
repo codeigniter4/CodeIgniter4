@@ -193,3 +193,7 @@ How to Enable FileLocator Caching
 Set the following property to ``true`` in **app/Config/Optimize.php**::
 
     public bool $locatorCacheEnabled = true;
+
+.. note::
+    This property cannot be overridden by
+    :ref:`environment variables <configuration-classes-and-environment-variables>`.

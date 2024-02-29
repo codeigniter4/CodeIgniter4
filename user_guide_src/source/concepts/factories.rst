@@ -323,6 +323,10 @@ Set the following property to ``true`` in **app/Config/Optimize.php**::
     public bool $configCacheEnabled = true;
 
 .. note::
+    This property cannot be overridden by
+    :ref:`environment variables <configuration-classes-and-environment-variables>`.
+
+.. note::
     Prior to v4.5.0, uncomment the following code in **public/index.php**::
 
         --- a/public/index.php
