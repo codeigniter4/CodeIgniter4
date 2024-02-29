@@ -419,7 +419,7 @@ final class TimeLegacyTest extends CIUnitTestCase
 
     public function testAgeFuture(): void
     {
-        TimeLegacy::setTestNow('June 20, 2022', 'America/Chicago');
+        TimeLegacy::setTestNow('June 20, 2022');
         $time = TimeLegacy::parse('August 12, 2116 4:15:23pm');
 
         $this->assertSame(0, $time->getAge());
@@ -427,7 +427,7 @@ final class TimeLegacyTest extends CIUnitTestCase
 
     public function testGetAgeSameDayOfBirthday(): void
     {
-        TimeLegacy::setTestNow('December 31, 2022', 'America/Chicago');
+        TimeLegacy::setTestNow('December 31, 2022');
         $time = TimeLegacy::parse('December 31, 2020');
 
         $this->assertSame(2, $time->getAge());
@@ -435,7 +435,7 @@ final class TimeLegacyTest extends CIUnitTestCase
 
     public function testGetAgeNextDayOfBirthday(): void
     {
-        TimeLegacy::setTestNow('January 1, 2022', 'America/Chicago');
+        TimeLegacy::setTestNow('January 1, 2022');
         $time = TimeLegacy::parse('December 31, 2020');
 
         $this->assertSame(1, $time->getAge());
@@ -443,7 +443,7 @@ final class TimeLegacyTest extends CIUnitTestCase
 
     public function testGetAgeBeforeDayOfBirthday(): void
     {
-        TimeLegacy::setTestNow('December 30, 2021', 'America/Chicago');
+        TimeLegacy::setTestNow('December 30, 2021');
         $time = TimeLegacy::parse('December 31, 2020');
 
         $this->assertSame(0, $time->getAge());
