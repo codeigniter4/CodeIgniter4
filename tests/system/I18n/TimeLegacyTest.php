@@ -399,10 +399,15 @@ final class TimeLegacyTest extends CIUnitTestCase
 
     public function testGetAge(): void
     {
+        // setTestNow() does not work to parse().
         $time = TimeLegacy::parse('5 years ago');
 
-        $this->assertSame(5, $time->getAge());
-        $this->assertSame(5, $time->age);
+        // Considers leap year
+        $now      = TimeLegacy::now();
+        $expected = ($now->day === '29' && $now->month === '2') ? 4 : 5;
+
+        $this->assertSame($expected, $time->getAge());
+        $this->assertSame($expected, $time->age);
     }
 
     public function testAgeNow(): void
