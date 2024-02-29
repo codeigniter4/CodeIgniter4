@@ -168,13 +168,4 @@ class Cache extends BaseConfig
      * @var bool|list<string>
      */
     public $cacheQueryString = false;
-
-    /**
-     * --------------------------------------------------------------------------
-     * Config Caching
-     * --------------------------------------------------------------------------
-     *
-     * @see https://codeigniter.com/user_guide/concepts/factories.html#config-caching
-     */
-    public bool $configCacheEnabled = false;
 }
