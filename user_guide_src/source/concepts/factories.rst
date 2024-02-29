@@ -318,7 +318,7 @@ How to Enable Config Caching
 
 .. versionadded:: 4.5.0
 
-Set the following property to ``true`` in **app/Config/Cache.php**::
+Set the following property to ``true`` in **app/Config/Optimize.php**::
 
     public bool $configCacheEnabled = true;
 

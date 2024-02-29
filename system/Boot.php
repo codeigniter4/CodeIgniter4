@@ -17,8 +17,8 @@ use CodeIgniter\Cache\FactoriesCache;
 use CodeIgniter\CLI\Console;
 use CodeIgniter\Config\DotEnv;
 use Config\Autoload;
-use Config\Cache;
 use Config\Modules;
+use Config\Optimize;
 use Config\Paths;
 use Config\Services;
 
@@ -55,7 +55,8 @@ class Boot
         static::setExceptionHandler();
         static::initializeKint();
 
-        $configCacheEnabled = (new Cache())->configCacheEnabled ?? false;
+        $configCacheEnabled = class_exists(Optimize::class)
+            && (new Optimize())->configCacheEnabled;
         if ($configCacheEnabled) {
             $factoriesCache = static::loadConfigCache();
         }
