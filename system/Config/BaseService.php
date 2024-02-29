@@ -15,6 +15,7 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Autoloader\Autoloader;
 use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorCached;
 use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Cache\ResponseCache;
@@ -71,6 +72,7 @@ use Config\Honeypot as ConfigHoneyPot;
 use Config\Images;
 use Config\Migrations;
 use Config\Modules;
+use Config\Optimize;
 use Config\Pager as ConfigPager;
 use Config\Services as AppServices;
 use Config\Toolbar as ConfigToolbar;
@@ -235,7 +237,14 @@ class BaseService
     {
         if ($getShared) {
             if (empty(static::$instances['locator'])) {
-                static::$instances['locator'] = new FileLocator(static::autoloader());
+                $cacheEnabled = class_exists(Optimize::class)
+                    && (new Optimize())->locatorCacheEnabled;
+
+                if ($cacheEnabled) {
+                    static::$instances['locator'] = new FileLocatorCached(new FileLocator(static::autoloader()));
+                } else {
+                    static::$instances['locator'] = new FileLocator(static::autoloader());
+                }
             }
 
             return static::$mocks['locator'] ?? static::$instances['locator'];
