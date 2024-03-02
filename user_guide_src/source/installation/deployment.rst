@@ -59,9 +59,33 @@ See :ref:`file-locator-caching`.
 PHP Preloading
 ==============
 
-If you want to use `Preloading <https://www.php.net/manual/en/opcache.preloading.php>`_,
-we provide a
-`preload script <https://github.com/codeigniter4/CodeIgniter4/blob/develop/preload.php>`_.
+Every application consists of a large number of classes in many different locations.
+The framework provides classes for core functionality. As defined by `PHP RFC <https://wiki.php.net/rfc/preload>`_,
+Preloading is implemented as a part of the opcache on top of another (already committed) patch that introduces ``immutable``
+classes and functions. They assume that the immutable part is stored in shared memory once (for all processes)
+and never copied to process memory, but the variable part is specific for each process.
+The patch introduced the MAP_PTR pointer data structure, that allows pointers from SHM to process memory.
+
+.. note:: If you want to use `Preloading <https://www.php.net/manual/en/opcache.preloading.php>`_,
+    we provide a `preload script <https://github.com/codeigniter4/CodeIgniter4/blob/develop/preload.php>`_.
+
+Requirement
+-----------
+
+Preloading for classes that are used more than once in the same server is not possible. You must isolated application to ``dedicated`` server,
+even if the servers are not physical machines but virtual machines or containers. Preloading keeps the relevant definitions
+in memory by reading the files specified in ``opcache.preload``.
+
+Configuration
+-------------
+
+Open ``php.ini`` or ``xx-opcache.ini`` if you have split INI configuration in PHP, and recommendation set ``opcache.preload=/path/to/preload.php`` and ``opcache.preload_user=myuser``.
+
+.. note:: ``myuser`` is user running in your web server
+
+Make sure you use appstater installation, If using manual installation you must change directory in include path.
+
+.. literalinclude:: preloading/001.php
 
 .. _deployment-to-shared-hosting-services:
 
