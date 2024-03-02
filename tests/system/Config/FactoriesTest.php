@@ -465,4 +465,25 @@ final class FactoriesTest extends CIUnitTestCase
 
         $this->assertFalse(Factories::isUpdated('config'));
     }
+
+    public function testGet()
+    {
+        $config = Factories::config('App');
+
+        $this->assertSame($config, Factories::get('config', 'App'));
+    }
+
+    public function testGetNonexistentInstance()
+    {
+        $config = Factories::get('config', 'App');
+
+        $this->assertSame($config, Factories::config('App'));
+    }
+
+    public function testGetNonexistentClass()
+    {
+        $config = Factories::get('config', 'NonexistentInstance');
+
+        $this->assertNull($config);
+    }
 }

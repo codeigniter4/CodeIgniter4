@@ -174,6 +174,20 @@ final class Factories
     }
 
     /**
+     * Simple method to get the shared instance fast.
+     */
+    public static function get(string $component, string $alias): ?object
+    {
+        if (isset(self::$aliases[$component][$alias])) {
+            $class = self::$aliases[$component][$alias];
+
+            return self::$instances[$component][$class];
+        }
+
+        return self::__callStatic($component, [$alias]);
+    }
+
+    /**
      * Gets the defined instance. If not exists, creates new one.
      *
      * @return object|null
