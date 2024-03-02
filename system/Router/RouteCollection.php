@@ -15,6 +15,7 @@ namespace CodeIgniter\Router;
 
 use Closure;
 use CodeIgniter\Autoloader\FileLocatorInterface;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\Exceptions\RouterException;
@@ -1416,7 +1417,7 @@ class RouteCollection implements RouteCollectionInterface
 
         // Check invalid locale
         if ($locale !== null) {
-            $config = config(App::class);
+            $config = Factories::get('config', App::class);
             if (! in_array($locale, $config->supportedLocales, true)) {
                 $locale = null;
             }

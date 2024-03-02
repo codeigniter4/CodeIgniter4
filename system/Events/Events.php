@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Events;
 
+use CodeIgniter\Config\Factories;
 use Config\Modules;
 use Config\Services;
 
@@ -77,7 +78,7 @@ class Events
             return;
         }
 
-        $config = config(Modules::class);
+        $config = Factories::get('config', Modules::class);
         $events = APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Events.php';
         $files  = [];
 

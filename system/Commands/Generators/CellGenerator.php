@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Generators;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\GeneratorTrait;
+use CodeIgniter\Config\Factories;
 use Config\Generators;
 
 /**
@@ -81,13 +82,13 @@ class CellGenerator extends BaseCommand
 
         $params = array_merge($params, ['suffix' => null]);
 
-        $this->templatePath  = config(Generators::class)->views[$this->name]['class'];
+        $this->templatePath  = Factories::get('config', Generators::class)->views[$this->name]['class'];
         $this->template      = 'cell.tpl.php';
         $this->classNameLang = 'CLI.generator.className.cell';
 
         $this->generateClass($params);
 
-        $this->templatePath  = config(Generators::class)->views[$this->name]['view'];
+        $this->templatePath  = Factories::get('config', Generators::class)->views[$this->name]['view'];
         $this->template      = 'cell_view.tpl.php';
         $this->classNameLang = 'CLI.generator.viewName.cell';
 

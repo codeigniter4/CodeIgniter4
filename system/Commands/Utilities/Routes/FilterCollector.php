@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\Method;
@@ -112,7 +113,7 @@ final class FilterCollector
 
     private function createFilters(Request $request): Filters
     {
-        $config = config(FiltersConfig::class);
+        $config = Factories::get('config', FiltersConfig::class);
 
         return new Filters($config, $request, Services::response());
     }

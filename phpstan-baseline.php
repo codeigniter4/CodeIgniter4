@@ -117,11 +117,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/CLI/CLI.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, string given on the left side\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Cache/Handlers/BaseHandler.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Call to function property_exists\\(\\) with Config\\\\Cache and \'file\' will always evaluate to true\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Cache/Handlers/FileHandler.php',
@@ -218,11 +213,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Assigning non\\-falsy\\-string directly on offset \'HTTP_HOST\' of \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Commands/Utilities/Routes.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in an if condition, Config\\\\Routing given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Commands/Utilities/Routes.php',
 ];
@@ -343,11 +333,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Accessing offset \'SERVER_PROTOCOL\' directly on \\$_SERVER is discouraged\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Services.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/Services.php',
 ];
@@ -1297,11 +1282,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Entity/Entity.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Events/Events.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Events\\\\Events\\:\\:on\\(\\) has parameter \\$callback with no signature specified for callable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Events/Events.php',
@@ -1335,11 +1315,6 @@ $ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 3,
 	'path' => __DIR__ . '/system/Files/File.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',

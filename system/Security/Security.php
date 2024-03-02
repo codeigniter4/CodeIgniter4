@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Security;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Method;
@@ -199,7 +200,7 @@ class Security implements SecurityInterface
         $this->rawCookieName = $config->cookieName;
 
         if ($this->isCSRFCookie()) {
-            $cookie = config(CookieConfig::class);
+            $cookie = Factories::get('config', CookieConfig::class);
 
             $this->configureCookie($cookie);
         } else {

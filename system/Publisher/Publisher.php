@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Publisher;
 
 use CodeIgniter\Autoloader\FileLocatorInterface;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Files\FileCollection;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Publisher\Exceptions\PublisherException;
@@ -165,11 +166,11 @@ class Publisher extends FileCollection
         $this->replacer = new ContentReplacer();
 
         // Restrictions are intentionally not injected to prevent overriding
-        $this->restrictions = config(PublisherConfig::class)->restrictions;
+        $this->restrictions = Factories::get('config', PublisherConfig::class)->restrictions;
 
         // Make sure the destination is allowed
         foreach (array_keys($this->restrictions) as $directory) {
-            if (strpos($this->destination, $directory) === 0) {
+            if (strpos($this->destination, (string) $directory) === 0) {
                 return;
             }
         }

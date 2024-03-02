@@ -11,6 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Cookie;
 use Config\Cookie as CookieConfig;
 use Config\Services;
@@ -72,7 +73,7 @@ if (! function_exists('get_cookie')) {
     function get_cookie($index, bool $xssClean = false, ?string $prefix = '')
     {
         if ($prefix === '') {
-            $cookie = config(CookieConfig::class);
+            $cookie = Factories::get('config', CookieConfig::class);
 
             $prefix = $cookie->prefix;
         }

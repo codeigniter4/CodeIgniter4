@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\View;
 
 use CodeIgniter\Autoloader\FileLocatorInterface;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Debug\Toolbar\Collectors\Views;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\View\Exceptions\ViewException;
@@ -275,7 +276,7 @@ class View implements RendererInterface
             $this->debug && $debugBarEnabled
             && (! isset($options['debug']) || $options['debug'] === true)
         ) {
-            $toolbarCollectors = config(Toolbar::class)->collectors;
+            $toolbarCollectors = Factories::get('config', Toolbar::class)->collectors;
 
             if (in_array(Views::class, $toolbarCollectors, true)) {
                 // Clean up our path names to make them a little cleaner

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database;
 
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\I18n\Time;
@@ -141,7 +142,7 @@ class MigrationRunner
 
         // Even if a DB connection is passed, since it is a test,
         // it is assumed to use the default group name
-        $this->group = is_string($db) ? $db : config(Database::class)->defaultGroup;
+        $this->group = is_string($db) ? $db : Factories::get('config', Database::class)->defaultGroup;
 
         $this->db = db_connect($db);
     }

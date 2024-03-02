@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -96,7 +97,7 @@ trait ControllerTestTrait
         helper('url');
 
         if (empty($this->appConfig)) {
-            $this->appConfig = config(App::class);
+            $this->appConfig = Factories::get('config', App::class);
         }
 
         if (! $this->uri instanceof URI) {

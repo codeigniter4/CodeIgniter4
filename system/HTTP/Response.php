@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
@@ -162,7 +163,7 @@ class Response extends Message implements ResponseInterface
 
         $this->cookieStore = new CookieStore([]);
 
-        $cookie = config(CookieConfig::class);
+        $cookie = Factories::get('config', CookieConfig::class);
 
         Cookie::setDefaults($cookie);
 

@@ -336,7 +336,7 @@ abstract class CIUnitTestCase extends TestCase
     {
         $_SESSION = [];
 
-        $config  = config(Session::class);
+        $config  = Factories::get('config', Session::class);
         $session = new MockSession(new ArrayHandler($config, '0.0.0.0'), $config);
 
         Services::injectMock('session', $session);

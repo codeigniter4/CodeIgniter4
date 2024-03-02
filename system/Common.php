@@ -50,7 +50,7 @@ if (! function_exists('app_timezone')) {
      */
     function app_timezone(): string
     {
-        $config = config(App::class);
+        $config = Factories::get('config', App::class);
 
         return $config->appTimezone;
     }
@@ -1063,7 +1063,7 @@ if (! function_exists('slash_item')) {
      */
     function slash_item(string $item): ?string
     {
-        $config = config(App::class);
+        $config = Factories::get('config', App::class);
 
         if (! property_exists($config, $item)) {
             return null;
@@ -1171,7 +1171,7 @@ if (! function_exists('view')) {
     {
         $renderer = Services::renderer();
 
-        $config   = config(View::class);
+        $config   = Factories::get('config', View::class);
         $saveData = $config->saveData;
 
         if (array_key_exists('saveData', $options)) {

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved;
 
+use CodeIgniter\Config\Factories;
 use Config\Routing;
 use ReflectionClass;
 use ReflectionMethod;
@@ -45,7 +46,7 @@ final class ControllerMethodReader
         $this->namespace   = $namespace;
         $this->httpMethods = $httpMethods;
 
-        $config                        = config(Routing::class);
+        $config                        = Factories::get('config', Routing::class);
         $this->translateURIDashes      = $config->translateURIDashes;
         $this->translateUriToCamelCase = $config->translateUriToCamelCase;
     }

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database\SQLSRV;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
@@ -313,7 +314,7 @@ class Builder extends BaseBuilder
         // DatabaseException:
         //   [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The number of
         //   rows provided for a FETCH clause must be greater then zero.
-        if (! config(Feature::class)->limitZeroAsAll && $this->QBLimit === 0) {
+        if (! Factories::get('config', Feature::class)->limitZeroAsAll && $this->QBLimit === 0) {
             return "SELECT * \nFROM " . $this->_fromTables() . ' WHERE 1=0 ';
         }
 

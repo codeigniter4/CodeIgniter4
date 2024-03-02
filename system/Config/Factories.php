@@ -395,7 +395,7 @@ final class Factories
             // Handle Config as a special case to prevent logic loops
             ? self::$configOptions
             // Load values from the best Factory configuration (will include Registrars)
-            : config('Factory')->{$component} ?? [];
+            : Factories::get('config', 'Factory')->{$component} ?? [];
 
         // The setOptions() reset the component. So getOptions() may reset
         // the component.

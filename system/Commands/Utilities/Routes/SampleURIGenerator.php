@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;
 use Config\App;
@@ -57,7 +58,7 @@ final class SampleURIGenerator
         if (strpos($routeKey, '{locale}') !== false) {
             $sampleUri = str_replace(
                 '{locale}',
-                config(App::class)->defaultLocale,
+                Factories::get('config', App::class)->defaultLocale,
                 $routeKey
             );
         }

@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands\Cache;
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Config\Factories;
 use Config\Cache;
 
 /**
@@ -65,7 +66,7 @@ class ClearCache extends BaseCommand
      */
     public function run(array $params)
     {
-        $config  = config(Cache::class);
+        $config  = Factories::get('config', Cache::class);
         $handler = $params[0] ?? $config->handler;
 
         if (! array_key_exists($handler, $config->validHandlers)) {

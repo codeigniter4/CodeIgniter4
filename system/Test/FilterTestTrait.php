@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Test;
 
 use Closure;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\Filters\Filters;
@@ -100,7 +101,7 @@ trait FilterTestTrait
         $this->response ??= clone Services::response();
 
         // Create our config and Filters instance to reuse for performance
-        $this->filtersConfig ??= config(FiltersConfig::class);
+        $this->filtersConfig ??= Factories::get('config', FiltersConfig::class);
         $this->filters ??= new Filters($this->filtersConfig, $this->request, $this->response);
 
         if ($this->collection === null) {

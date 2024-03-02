@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Filters as BaseFiltersConfig;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Filters\Exceptions\FilterException;
@@ -117,7 +118,7 @@ class Filters
         $this->request = &$request;
         $this->setResponse($response);
 
-        $this->modules = $modules ?? config(Modules::class);
+        $this->modules = $modules ?? Factories::get('config', Modules::class);
 
         if ($this->modules->shouldDiscover('filters')) {
             $this->discoverFilters();
@@ -303,7 +304,7 @@ class Filters
     {
         // For backward compatibility. For users who do not update Config\Filters.
         if (! isset($this->config->required[$position])) {
-            $baseConfig = config(BaseFiltersConfig::class); // @phpstan-ignore-line
+            $baseConfig = Factories::get('config', BaseFiltersConfig::class);
             $filters    = $baseConfig->required[$position];
             $aliases    = $baseConfig->aliases;
         } else {
@@ -716,7 +717,7 @@ class Filters
         }
 
         if (isset($filters['after'])) {
-            if (! config(Feature::class)->oldFilterOrder) {
+            if (! Factories::get('config', Feature::class)->oldFilterOrder) {
                 $filters['after'] = array_reverse($filters['after']);
             }
 

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Validation\FormatRules;
 use Config\App;
@@ -61,7 +62,7 @@ trait RequestTrait
             'valid_ip',
         ];
 
-        $proxyIPs = config(App::class)->proxyIPs;
+        $proxyIPs = Factories::get('config', App::class)->proxyIPs;
 
         if (! empty($proxyIPs) && (! is_array($proxyIPs) || is_int(array_key_first($proxyIPs)))) {
             throw new ConfigException(

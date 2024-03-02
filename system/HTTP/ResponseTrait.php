@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\Cookie\Exceptions\CookieException;
@@ -523,7 +524,7 @@ trait ResponseTrait
             return $this;
         }
 
-        $cookieConfig = config(CookieConfig::class);
+        $cookieConfig = Factories::get('config', CookieConfig::class);
 
         $secure ??= $cookieConfig->secure;
         $httponly ??= $cookieConfig->httponly;

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Router;
 
 use Closure;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\Method;
@@ -146,7 +147,7 @@ class Router implements RouterInterface
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
 
         if ($this->collection->shouldAutoRoute()) {
-            $autoRoutesImproved = config(Feature::class)->autoRoutesImproved ?? false;
+            $autoRoutesImproved = Factories::get('config', Feature::class)->autoRoutesImproved ?? false;
             if ($autoRoutesImproved) {
                 $this->autoRouter = new AutoRouterImproved(
                     $this->collection->getRegisteredControllers('*'),
@@ -438,7 +439,7 @@ class Router implements RouterInterface
                     );
 
                     if ($this->collection->shouldUseSupportedLocalesOnly()
-                        && ! in_array($matched['locale'], config(App::class)->supportedLocales, true)) {
+                        && ! in_array($matched['locale'], Factories::get('config', App::class)->supportedLocales, true)) {
                         // Throw exception to prevent the autorouter, if enabled,
                         // from trying to find a route
                         throw PageNotFoundException::forLocaleNotSupported($matched['locale']);

@@ -122,7 +122,7 @@ class Services extends BaseService
             return static::getSharedInstance('cache', $config);
         }
 
-        $config ??= config(Cache::class);
+        $config ??= Factories::get('config', Cache::class);
 
         return CacheFactory::getHandler($config);
     }
@@ -141,7 +141,7 @@ class Services extends BaseService
             return static::getSharedInstance('clirequest', $config);
         }
 
-        $config ??= config(App::class);
+        $config ??= Factories::get('config', App::class);
 
         return new CLIRequest($config);
     }
@@ -157,7 +157,7 @@ class Services extends BaseService
             return static::getSharedInstance('codeigniter', $config);
         }
 
-        $config ??= config(App::class);
+        $config ??= Factories::get('config', App::class);
 
         return new CodeIgniter($config);
     }
@@ -187,7 +187,7 @@ class Services extends BaseService
             return static::getSharedInstance('csp', $config);
         }
 
-        $config ??= config(ContentSecurityPolicyConfig::class);
+        $config ??= Factories::get('config', ContentSecurityPolicyConfig::class);
 
         return new ContentSecurityPolicy($config);
     }
@@ -204,7 +204,7 @@ class Services extends BaseService
             return static::getSharedInstance('curlrequest', $options, $response, $config);
         }
 
-        $config ??= config(App::class);
+        $config ??= Factories::get('config', App::class);
         $response ??= new Response($config);
 
         return new CURLRequest(
@@ -229,7 +229,7 @@ class Services extends BaseService
         }
 
         if (empty($config) || ! (is_array($config) || $config instanceof EmailConfig)) {
-            $config = config(EmailConfig::class);
+            $config = Factories::get('config', EmailConfig::class);
         }
 
         return new Email($config);
@@ -248,7 +248,7 @@ class Services extends BaseService
             return static::getSharedInstance('encrypter', $config);
         }
 
-        $config ??= config(EncryptionConfig::class);
+        $config ??= Factories::get('config', EncryptionConfig::class);
         $encryption = new Encryption($config);
 
         return $encryption->initialize($config);
@@ -271,7 +271,7 @@ class Services extends BaseService
             return static::getSharedInstance('exceptions', $config);
         }
 
-        $config ??= config(ExceptionsConfig::class);
+        $config ??= Factories::get('config', ExceptionsConfig::class);
 
         return new Exceptions($config);
     }
@@ -290,7 +290,7 @@ class Services extends BaseService
             return static::getSharedInstance('filters', $config);
         }
 
-        $config ??= config(FiltersConfig::class);
+        $config ??= Factories::get('config', FiltersConfig::class);
 
         return new Filters($config, AppServices::request(), AppServices::response());
     }
@@ -306,7 +306,7 @@ class Services extends BaseService
             return static::getSharedInstance('format', $config);
         }
 
-        $config ??= config(FormatConfig::class);
+        $config ??= Factories::get('config', FormatConfig::class);
 
         return new Format($config);
     }
@@ -323,7 +323,7 @@ class Services extends BaseService
             return static::getSharedInstance('honeypot', $config);
         }
 
-        $config ??= config(HoneypotConfig::class);
+        $config ??= Factories::get('config', HoneypotConfig::class);
 
         return new Honeypot($config);
     }
@@ -340,7 +340,7 @@ class Services extends BaseService
             return static::getSharedInstance('image', $handler, $config);
         }
 
-        $config ??= config(Images::class);
+        $config ??= Factories::get('config', Images::class);
         assert($config instanceof Images);
 
         $handler = $handler ?: $config->defaultHandler;
@@ -414,7 +414,7 @@ class Services extends BaseService
             return static::getSharedInstance('migrations', $config, $db);
         }
 
-        $config ??= config(Migrations::class);
+        $config ??= Factories::get('config', Migrations::class);
 
         return new MigrationRunner($config, $db);
     }
@@ -448,7 +448,7 @@ class Services extends BaseService
             return static::getSharedInstance('responsecache', $config, $cache);
         }
 
-        $config ??= config(Cache::class);
+        $config ??= Factories::get('config', Cache::class);
         $cache ??= AppServices::cache();
 
         return new ResponseCache($config, $cache);
@@ -465,7 +465,7 @@ class Services extends BaseService
             return static::getSharedInstance('pager', $config, $view);
         }
 
-        $config ??= config(PagerConfig::class);
+        $config ??= Factories::get('config', PagerConfig::class);
         $view ??= AppServices::renderer(null, null, false);
 
         return new Pager($config, $view);
@@ -483,7 +483,7 @@ class Services extends BaseService
         }
 
         $viewPath = $viewPath ?: (new Paths())->viewDirectory;
-        $config ??= config(ViewConfig::class);
+        $config ??= Factories::get('config', ViewConfig::class);
 
         return new Parser($config, $viewPath, AppServices::locator(), CI_DEBUG, AppServices::logger());
     }
@@ -502,7 +502,7 @@ class Services extends BaseService
         }
 
         $viewPath = $viewPath ?: (new Paths())->viewDirectory;
-        $config ??= config(ViewConfig::class);
+        $config ??= Factories::get('config', ViewConfig::class);
 
         return new View($config, $viewPath, AppServices::locator(), CI_DEBUG, AppServices::logger());
     }
@@ -561,7 +561,7 @@ class Services extends BaseService
             return static::getSharedInstance('request', $config);
         }
 
-        $config ??= config(App::class);
+        $config ??= Factories::get('config', App::class);
 
         return new IncomingRequest(
             $config,
@@ -582,7 +582,7 @@ class Services extends BaseService
             return static::getSharedInstance('response', $config);
         }
 
-        $config ??= config(App::class);
+        $config ??= Factories::get('config', App::class);
 
         return new Response($config);
     }
@@ -598,7 +598,7 @@ class Services extends BaseService
             return static::getSharedInstance('redirectresponse', $config);
         }
 
-        $config ??= config(App::class);
+        $config ??= Factories::get('config', App::class);
         $response = new RedirectResponse($config);
         $response->setProtocolVersion(AppServices::request()->getProtocolVersion());
 
@@ -617,7 +617,7 @@ class Services extends BaseService
             return static::getSharedInstance('routes');
         }
 
-        return new RouteCollection(AppServices::locator(), config(Modules::class), config(Routing::class));
+        return new RouteCollection(AppServices::locator(), Factories::get('config', Modules::class), Factories::get('config', Routing::class));
     }
 
     /**
@@ -650,7 +650,7 @@ class Services extends BaseService
             return static::getSharedInstance('security', $config);
         }
 
-        $config ??= config(SecurityConfig::class);
+        $config ??= Factories::get('config', SecurityConfig::class);
 
         return new Security($config);
     }
@@ -666,14 +666,14 @@ class Services extends BaseService
             return static::getSharedInstance('session', $config);
         }
 
-        $config ??= config(SessionConfig::class);
+        $config ??= Factories::get('config', SessionConfig::class);
 
         $logger = AppServices::logger();
 
         $driverName = $config->driver;
 
         if ($driverName === DatabaseHandler::class) {
-            $DBGroup = $config->DBGroup ?? config(Database::class)->defaultGroup;
+            $DBGroup = $config->DBGroup ?? Factories::get('config', Database::class)->defaultGroup;
             $db      = Database::connect($DBGroup);
 
             $driver = $db->getPlatform();
@@ -712,7 +712,7 @@ class Services extends BaseService
             return static::getSharedInstance('siteurifactory', $config, $superglobals);
         }
 
-        $config ??= config('App');
+        $config ??= Factories::get('config', App::class);
         $superglobals ??= AppServices::superglobals();
 
         return new SiteURIFactory($config, $superglobals);
@@ -776,7 +776,7 @@ class Services extends BaseService
             return static::getSharedInstance('toolbar', $config);
         }
 
-        $config ??= config(ToolbarConfig::class);
+        $config ??= Factories::get('config', ToolbarConfig::class);
 
         return new Toolbar($config);
     }
@@ -795,7 +795,7 @@ class Services extends BaseService
         }
 
         if ($uri === null) {
-            $appConfig = config(App::class);
+            $appConfig = Factories::get('config', App::class);
             $factory   = AppServices::siteurifactory($appConfig, AppServices::superglobals());
 
             return $factory->createFromGlobals();
@@ -815,7 +815,7 @@ class Services extends BaseService
             return static::getSharedInstance('validation', $config);
         }
 
-        $config ??= config(ValidationConfig::class);
+        $config ??= Factories::get('config', ValidationConfig::class);
 
         return new Validation($config, AppServices::renderer());
     }

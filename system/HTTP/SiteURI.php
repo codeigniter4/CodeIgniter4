@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use BadMethodCallException;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
@@ -380,7 +381,7 @@ class SiteURI extends URI
     {
         $relativePath = $this->stringifyRelativePath($relativePath);
 
-        $config            = clone config(App::class);
+        $config            = clone Factories::get('config', App::class);
         $config->indexPage = '';
 
         $host = $this->getHost();
@@ -423,7 +424,7 @@ class SiteURI extends URI
         // Check current host.
         $host = $config === null ? $this->getHost() : null;
 
-        $config ??= config(App::class);
+        $config ??= Factories::get('config', App::class);
 
         $uri = new self($config, $relativePath, $host, $scheme);
 

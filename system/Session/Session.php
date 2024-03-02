@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Session;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\I18n\Time;
 use Config\Cookie as CookieConfig;
@@ -188,7 +189,7 @@ class Session implements SessionInterface
 
         $this->config = $config;
 
-        $cookie = config(CookieConfig::class);
+        $cookie = Factories::get('config', CookieConfig::class);
 
         $this->cookie = (new Cookie($this->config->cookieName, '', [
             'expires'  => $this->config->expiration === 0 ? 0 : Time::now()->getTimestamp() + $this->config->expiration,

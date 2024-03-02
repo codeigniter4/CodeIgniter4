@@ -15,6 +15,7 @@ namespace CodeIgniter\Cache\Handlers;
 
 use Closure;
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Config\Factories;
 use Config\Cache;
 use Exception;
 use InvalidArgumentException;
@@ -66,7 +67,7 @@ abstract class BaseHandler implements CacheInterface
             throw new InvalidArgumentException('Cache key cannot be empty.');
         }
 
-        $reserved = config(Cache::class)->reservedCharacters ?? self::RESERVED_CHARACTERS;
+        $reserved = Factories::get('config', Cache::class)->reservedCharacters ?? self::RESERVED_CHARACTERS;
         if ($reserved && strpbrk($key, $reserved) !== false) {
             throw new InvalidArgumentException('Cache key contains reserved characters ' . $reserved);
         }

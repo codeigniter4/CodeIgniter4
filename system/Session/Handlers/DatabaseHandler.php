@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Session\Handlers;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Session\Exceptions\SessionException;
@@ -75,7 +76,7 @@ class DatabaseHandler extends BaseHandler
         parent::__construct($config, $ipAddress);
 
         // Store Session configurations
-        $this->DBGroup = $config->DBGroup ?? config(Database::class)->defaultGroup;
+        $this->DBGroup = $config->DBGroup ?? Factories::get('config', Database::class)->defaultGroup;
         // Add sessionCookieName for multiple session cookies.
         $this->idPrefix = $config->cookieName . ':';
 

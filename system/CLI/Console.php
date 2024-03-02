@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\CodeIgniter;
+use CodeIgniter\Config\Factories;
 use Config\App;
 use Config\Services;
 use Exception;
@@ -35,7 +36,7 @@ class Console
     public function run()
     {
         // Create CLIRequest
-        $appConfig = config(App::class);
+        $appConfig = Factories::get('config', App::class);
         Services::createRequest($appConfig, true);
         // Load Routes
         Services::routes()->loadRoutes();

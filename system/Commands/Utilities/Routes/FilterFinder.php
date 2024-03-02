@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
@@ -58,7 +59,7 @@ final class FilterFinder
 
             $this->filters->enableFilters($routeFilters, 'before');
 
-            if (! config(Feature::class)->oldFilterOrder) {
+            if (! Factories::get('config', Feature::class)->oldFilterOrder) {
                 $routeFilters = array_reverse($routeFilters);
             }
 

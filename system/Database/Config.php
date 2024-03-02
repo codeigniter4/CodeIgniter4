@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Config\Factories;
 use Config\Database as DbConfig;
 use InvalidArgumentException;
 
@@ -60,7 +61,7 @@ class Config extends BaseConfig
             $config = $group;
             $group  = 'custom-' . md5(json_encode($config));
         } else {
-            $dbConfig = config(DbConfig::class);
+            $dbConfig = Factories::get('config', DbConfig::class);
 
             if ($group === null) {
                 $group = (ENVIRONMENT === 'testing') ? 'tests' : $dbConfig->defaultGroup;
@@ -134,7 +135,7 @@ class Config extends BaseConfig
      */
     public static function seeder(?string $group = null)
     {
-        $config = config(DbConfig::class);
+        $config = Factories::get('config', DbConfig::class);
 
         return new Seeder($config, static::connect($group));
     }

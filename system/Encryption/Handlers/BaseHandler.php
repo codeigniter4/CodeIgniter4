@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Encryption\Handlers;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Encryption\EncrypterInterface;
 use Config\Encryption;
 
@@ -26,7 +27,7 @@ abstract class BaseHandler implements EncrypterInterface
      */
     public function __construct(?Encryption $config = null)
     {
-        $config ??= config(Encryption::class);
+        $config ??= Factories::get('config', Encryption::class);
 
         // make the parameters conveniently accessible
         foreach (get_object_vars($config) as $key => $value) {

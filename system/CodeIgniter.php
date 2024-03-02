@@ -13,6 +13,7 @@ namespace CodeIgniter;
 
 use Closure;
 use CodeIgniter\Cache\ResponseCache;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
@@ -355,7 +356,7 @@ class CodeIgniter
             $this->response = $possibleResponse;
         } else {
             try {
-                $this->response = $this->handleRequest($routes, config(Cache::class), $returnResponse);
+                $this->response = $this->handleRequest($routes, Factories::get('config', Cache::class), $returnResponse);
             } catch (ResponsableInterface|DeprecatedRedirectException $e) {
                 $this->outputBufferingEnd();
                 if ($e instanceof DeprecatedRedirectException) {
@@ -469,7 +470,7 @@ class CodeIgniter
             if ($routeFilters !== null) {
                 $filters->enableFilters($routeFilters, 'before');
 
-                if (! config(Feature::class)->oldFilterOrder) {
+                if (! Factories::get('config', Feature::class)->oldFilterOrder) {
                     $routeFilters = array_reverse($routeFilters);
                 }
 
@@ -965,7 +966,7 @@ class CodeIgniter
 
             unset($override);
 
-            $cacheConfig = config(Cache::class);
+            $cacheConfig = Factories::get('config', Cache::class);
             $this->gatherOutput($cacheConfig, $returned);
 
             return $this->response;

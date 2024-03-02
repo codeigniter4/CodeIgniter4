@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Factories;
 use Config\UserAgents;
 
 /**
@@ -106,7 +107,7 @@ class UserAgent
      */
     public function __construct(?UserAgents $config = null)
     {
-        $this->config = $config ?? config(UserAgents::class);
+        $this->config = $config ?? Factories::get('config', UserAgents::class);
 
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
             $this->agent = trim($_SERVER['HTTP_USER_AGENT']);

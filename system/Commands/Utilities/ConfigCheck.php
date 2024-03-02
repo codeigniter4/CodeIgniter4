@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands\Utilities;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Config\Factories;
 use Kint\Kint;
 
 /**
@@ -87,7 +88,7 @@ final class ConfigCheck extends BaseCommand
         /** @var class-string<BaseConfig> $class */
         $class = $params[0];
 
-        $config = config($class);
+        $config = Factories::get('config', $class);
 
         if ($config === null) {
             CLI::error('No such Config class: ' . $class);

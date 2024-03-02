@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
+use CodeIgniter\Config\Factories;
 use Config\Exceptions;
 use Psr\Log\LoggerInterface;
 use ReflectionException;
@@ -126,7 +127,7 @@ abstract class BaseCommand
     {
         $exception = $e;
         $message   = $e->getMessage();
-        $config    = config(Exceptions::class);
+        $config    = Factories::get('config', Exceptions::class);
 
         require $config->errorViewPath . '/cli/error_exception.php';
     }

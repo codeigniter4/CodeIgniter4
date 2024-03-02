@@ -15,6 +15,7 @@ namespace CodeIgniter\Commands\Translation;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Helpers\Array\ArrayHelper;
 use Config\App;
 use Locale;
@@ -67,10 +68,10 @@ class LocalizationFinder extends BaseCommand
         }
 
         if (is_string($optionLocale)) {
-            if (! in_array($optionLocale, config(App::class)->supportedLocales, true)) {
+            if (! in_array($optionLocale, Factories::get('config', App::class)->supportedLocales, true)) {
                 CLI::error(
                     'Error: "' . $optionLocale . '" is not supported. Supported locales: '
-                    . implode(', ', config(App::class)->supportedLocales)
+                    . implode(', ', Factories::get('config', App::class)->supportedLocales)
                 );
 
                 return EXIT_USER_INPUT;

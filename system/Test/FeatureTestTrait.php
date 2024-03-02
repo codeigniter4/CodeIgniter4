@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -304,7 +305,7 @@ trait FeatureTestTrait
      */
     protected function setupRequest(string $method, ?string $path = null): IncomingRequest
     {
-        $config = config(App::class);
+        $config = Factories::get('config', App::class);
         $uri    = new SiteURI($config);
 
         // $path may have a query in it

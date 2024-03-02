@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Exceptions\DownloadException;
 use CodeIgniter\Files\File;
 use Config\App;
@@ -69,7 +70,7 @@ class DownloadResponse extends Response
      */
     public function __construct(string $filename, bool $setMime)
     {
-        parent::__construct(config(App::class));
+        parent::__construct(Factories::get('config', App::class));
 
         $this->filename = $filename;
         $this->setMime  = $setMime;

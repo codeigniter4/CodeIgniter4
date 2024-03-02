@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Session\Handlers;
 
+use CodeIgniter\Config\Factories;
 use Config\Cookie as CookieConfig;
 use Config\Session as SessionConfig;
 use Psr\Log\LoggerAwareTrait;
@@ -113,7 +114,7 @@ abstract class BaseHandler implements SessionHandlerInterface
         $this->matchIP    = $config->matchIP;
         $this->savePath   = $config->savePath;
 
-        $cookie = config(CookieConfig::class);
+        $cookie = Factories::get('config', CookieConfig::class);
 
         // Session cookies have no prefix.
         $this->cookieDomain = $cookie->domain;

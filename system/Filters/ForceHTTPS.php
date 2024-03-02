@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Filters;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -37,7 +38,7 @@ class ForceHTTPS implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        $config = config(App::class);
+        $config = Factories::get('config', App::class);
 
         if ($config->forceGlobalSecureRequests !== true) {
             return;

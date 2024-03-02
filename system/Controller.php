@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -160,7 +161,7 @@ class Controller
 
         // If you replace the $rules array with the name of the group
         if (is_string($rules)) {
-            $validation = config(Validation::class);
+            $validation = Factories::get('config', Validation::class);
 
             // If the rule wasn't found in the \Config\Validation, we
             // should throw an exception so the developer can find it.

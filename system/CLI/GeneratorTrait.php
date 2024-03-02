@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\CLI;
 
+use CodeIgniter\Config\Factories;
 use Config\Generators;
 use Config\Services;
 use Throwable;
@@ -336,7 +337,7 @@ trait GeneratorTrait
     protected function renderTemplate(array $data = []): string
     {
         try {
-            $template = $this->templatePath ?? config(Generators::class)->views[$this->name];
+            $template = $this->templatePath ?? Factories::get('config', Generators::class)->views[$this->name];
 
             return view($template, $data, ['debug' => false]);
         } catch (Throwable $e) {

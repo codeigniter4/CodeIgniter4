@@ -11,6 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Services;
@@ -54,7 +55,7 @@ if (! function_exists('form_open')) {
             $attributes .= ' method="post"';
         }
         if (stripos($attributes, 'accept-charset=') === false) {
-            $config = config(App::class);
+            $config = Factories::get('config', App::class);
             $attributes .= ' accept-charset="' . strtolower($config->charset) . '"';
         }
 
@@ -719,7 +720,7 @@ if (! function_exists('validation_list_errors')) {
      */
     function validation_list_errors(string $template = 'list'): string
     {
-        $config = config(Validation::class);
+        $config = Factories::get('config', Validation::class);
         $view   = Services::renderer();
 
         if (! array_key_exists($template, $config->templates)) {
@@ -739,7 +740,7 @@ if (! function_exists('validation_show_error')) {
      */
     function validation_show_error(string $field, string $template = 'single'): string
     {
-        $config = config(Validation::class);
+        $config = Factories::get('config', Validation::class);
         $view   = Services::renderer();
 
         $errors = array_filter(validation_errors(), static fn ($key) => preg_match(

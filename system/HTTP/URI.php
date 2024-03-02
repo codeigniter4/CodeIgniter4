@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use BadMethodCallException;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 use InvalidArgumentException;
@@ -650,7 +651,7 @@ class URI
     private function changeSchemeAndPath(string $scheme, string $path): array
     {
         // Check if this is an internal URI
-        $config  = config(App::class);
+        $config  = Factories::get('config', App::class);
         $baseUri = new self($config->baseURL);
 
         if (

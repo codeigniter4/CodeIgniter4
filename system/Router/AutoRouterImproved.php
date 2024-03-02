@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Router;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Router\Exceptions\MethodNotFoundException;
 use Config\Routing;
@@ -142,7 +143,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         $this->defaultController    = $defaultController;
         $this->defaultMethod        = $defaultMethod;
 
-        $routingConfig                 = config(Routing::class);
+        $routingConfig                 = Factories::get('config', Routing::class);
         $this->moduleRoutes            = $routingConfig->moduleRoutes;
         $this->translateUriToCamelCase = $routingConfig->translateUriToCamelCase;
 

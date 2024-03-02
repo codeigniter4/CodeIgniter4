@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 use Config\CURLRequest as ConfigCURLRequest;
@@ -116,12 +117,12 @@ class CURLRequest extends OutgoingRequest
 
         parent::__construct(Method::GET, $uri);
 
-        $this->responseOrig   = $response ?? new Response(config(App::class));
+        $this->responseOrig   = $response ?? new Response(Factories::get('config', App::class));
         $this->baseURI        = $uri->useRawQueryString();
         $this->defaultOptions = $options;
 
         /** @var ConfigCURLRequest|null $configCURLRequest */
-        $configCURLRequest  = config(ConfigCURLRequest::class);
+        $configCURLRequest  = Factories::get('config', ConfigCURLRequest::class);
         $this->shareOptions = $configCURLRequest->shareOptions ?? true;
 
         $this->config = $this->defaultConfig;

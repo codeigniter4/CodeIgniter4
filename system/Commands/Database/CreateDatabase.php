@@ -84,7 +84,7 @@ class CreateDatabase extends BaseCommand
         }
 
         try {
-            $config = config(Database::class);
+            $config = Factories::get('config', Database::class);
 
             // Set to an empty database to prevent connection errors.
             $group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
