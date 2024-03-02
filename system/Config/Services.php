@@ -667,6 +667,7 @@ class Services extends BaseService
         }
 
         $config ??= Factories::get('config', SessionConfig::class);
+        assert($config instanceof SessionConfig);
 
         $logger = AppServices::logger();
 
