@@ -690,6 +690,12 @@ class Services extends BaseService
         $session->setLogger($logger);
 
         if (session_status() === PHP_SESSION_NONE) {
+            // PHP Session emits the headers according to `session.cache_limiter`.
+            // See https://www.php.net/manual/en/function.session-cache-limiter.php.
+            // The headers are not managed by the CI's Response class.
+            // So removes the CI's default Cache-Control header.
+            AppServices::response()->removeHeader('Cache-Control');
+
             $session->start();
         }
 
