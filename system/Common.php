@@ -214,6 +214,10 @@ if (! function_exists('config')) {
      */
     function config(string $name, bool $getShared = true)
     {
+        if ($getShared) {
+            return Factories::get('config', $name);
+        }
+
         return Factories::config($name, ['getShared' => $getShared]);
     }
 }
