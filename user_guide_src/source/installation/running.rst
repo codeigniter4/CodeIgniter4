@@ -74,6 +74,47 @@ you will need to modify the permissions for the **writable** folder inside
 your project, so that it is writable by the user or account used by your
 web server.
 
+.. _spark-phpini-check:
+
+Checking PHP ini Settings
+=========================
+
+.. versionadded:: 4.5.0
+
+`PHP ini settings`_ change the behaviors of PHP. CodeIgniter provides a command to
+check important PHP settings.
+
+.. _PHP ini settings: https://www.php.net/manual/en/ini.list.php
+
+.. code-block:: console
+
+    php spark phpini:check
+
+The *Recommended* column shows the recommended values for production environment.
+They may differ in development environments.
+
+.. note::
+    If you cannot use the spark command, you can use ``CheckPhpIni::run(false)``
+    in your controller.
+
+    E.g.,
+
+    .. code-block:: php
+
+        <?php
+
+        namespace App\Controllers;
+
+        use CodeIgniter\Security\CheckPhpIni;
+
+        class Home extends BaseController
+        {
+            public function index(): string
+            {
+                return CheckPhpIni::run(false);
+            }
+        }
+
 ************************
 Local Development Server
 ************************
