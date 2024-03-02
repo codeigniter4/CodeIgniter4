@@ -13,7 +13,7 @@
 @import '_mixins';
 @import '_settings';
 
-[role="button"] {
+a[role="button"] {
     cursor: pointer;
 }
 
