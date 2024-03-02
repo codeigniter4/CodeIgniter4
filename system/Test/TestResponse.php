@@ -159,7 +159,7 @@ class TestResponse
     }
 
     /**
-     * Asserts that the Response is considered OK.
+     * Asserts that the Response is considered not OK.
      */
     public function assertNotOK(): void
     {
