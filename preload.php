@@ -49,11 +49,12 @@ class preload
      */
     private array $paths = [
         [
-            'include' => __DIR__ . '/vendor/codeigniter4/framework/system',
+            'include' => __DIR__ . '/vendor/codeigniter4/framework/system', // change this path if you using manual installation
             'exclude' => [
                 // Not needed if you don't use them.
                 '/system/Database/OCI8/',
                 '/system/Database/Postgre/',
+                '/system/Database/SQLite3/',
                 '/system/Database/SQLSRV/',
                 // Not needed.
                 '/system/Database/Seeder.php',
