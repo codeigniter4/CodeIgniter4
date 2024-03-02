@@ -9,7 +9,7 @@ class preload
      */
     private array $paths = [
         [
-            'include' => '/system', // <== in this
+            'include' => __DIR__ . '/system', // <== in this
             // ...
         ],
     ];
