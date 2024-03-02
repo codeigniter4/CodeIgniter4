@@ -72,7 +72,7 @@ The patch introduced the MAP_PTR pointer data structure, that allows pointers fr
 Requirement
 -----------
 
-Preloading for classes that are used more than once in the same server is not possible. You must isolated application to ``dedicated`` server,
+Preloading for classes that are used more than once in the same server is not possible. You must isolated application to *dedicated* server,
 even if the servers are not physical machines but virtual machines or containers. Preloading keeps the relevant definitions
 in memory by reading the files specified in ``opcache.preload``.
 
