@@ -48,11 +48,49 @@ final class WriteTypeQueryTest extends CIUnitTestCase
 
         $this->assertTrue($this->db->isWriteType($sql));
 
-        if ($this->db->DBDriver === 'Postgre') {
-            $sql = "INSERT INTO my_table (col1, col2) VALUES ('Joe', 'Cool') RETURNING id;";
+        $sql = "WITH seqvals AS (SELECT '3' AS seqval)INSERT INTO my_table (col1, col2) SELECT 'Joe', seqval FROM seqvals;";
 
-            $this->assertFalse($this->db->isWriteType($sql));
+        $this->assertTrue($this->db->isWriteType($sql));
+
+        $sql = <<<SQL
+            WITH seqvals AS (SELECT '3' AS seqval)
+            INSERT INTO my_table (col1, col2)
+            SELECT 'Joe', seqval
+            FROM seqvals;
+        SQL;
+
+        $this->assertTrue($this->db->isWriteType($sql));
+
+        $assertionType = 'assertTrue';
+        if ($this->db->DBDriver === 'Postgre') {
+            $assertionType = 'assertFalse';
         }
+
+        $sql = "INSERT INTO my_table (col1, col2) VALUES ('Joe', 'Cool') RETURNING id;";
+
+        $this->$assertionType($this->db->isWriteType($sql));
+
+        $sql = "WITH seqvals AS (SELECT '3' AS seqval)INSERT INTO my_table (col1, col2) SELECT 'Joe', seqval FROM seqvals RETURNING id;";
+
+        $this->$assertionType($this->db->isWriteType($sql));
+
+        $sql = <<<SQL
+            INSERT INTO my_table (col1, col2)
+            VALUES ('Joe', 'Cool')
+            RETURNING id;
+        SQL;
+
+        $this->$assertionType($this->db->isWriteType($sql));
+
+        $sql = <<<SQL
+            WITH seqvals AS (SELECT '3' AS seqval)
+            INSERT INTO my_table (col1, col2)
+            SELECT 'Joe', seqval
+            FROM seqvals
+            RETURNING id;
+        SQL;
+
+        $this->$assertionType($this->db->isWriteType($sql));
     }
 
     public function testUpdate(): void
@@ -63,11 +101,52 @@ final class WriteTypeQueryTest extends CIUnitTestCase
 
         $this->assertTrue($this->db->isWriteType($sql));
 
-        if ($this->db->DBDriver === 'Postgre') {
-            $sql = "UPDATE my_table SET col1 = 'foo' WHERE id = 2 RETURNING *;";
+        $sql = "WITH seqvals AS (SELECT '3' AS seqval)UPDATE my_table SET col1 = seqval FROM seqvals WHERE id = 2;";
 
-            $this->assertFalse($this->db->isWriteType($sql));
+        $this->assertTrue($this->db->isWriteType($sql));
+
+        $sql = <<<SQL
+            WITH seqvals AS (SELECT '3' AS seqval)
+            UPDATE my_table
+            SET col1 = seqval
+            FROM seqvals
+            WHERE id = 2;
+        SQL;
+
+        $this->assertTrue($this->db->isWriteType($sql));
+
+        $assertionType = 'assertTrue';
+        if ($this->db->DBDriver === 'Postgre') {
+            $assertionType = 'assertFalse';
         }
+
+        $sql = "UPDATE my_table SET col1 = 'foo' WHERE id = 2 RETURNING *;";
+
+        $this->$assertionType($this->db->isWriteType($sql));
+
+        $sql = "WITH seqvals AS (SELECT '3' AS seqval)UPDATE my_table SET col1 = seqval FROM seqvals WHERE id = 2 RETURNING *;";
+
+        $this->$assertionType($this->db->isWriteType($sql));
+
+        $sql = <<<SQL
+            UPDATE my_table
+            SET col1 = 'foo'
+            WHERE id = 2
+            RETURNING *;
+        SQL;
+
+        $this->$assertionType($this->db->isWriteType($sql));
+
+        $sql = <<<SQL
+            WITH seqvals AS (SELECT '3' AS seqval)
+            UPDATE my_table
+            SET col1 = seqval
+            FROM seqvals
+            WHERE id = 2
+            RETURNING *;
+        SQL;
+
+        $this->$assertionType($this->db->isWriteType($sql));
     }
 
     public function testDelete(): void
@@ -76,6 +155,56 @@ final class WriteTypeQueryTest extends CIUnitTestCase
         $sql     = $builder->testMode()->delete(['id' => 1], null, true);
 
         $this->assertTrue($this->db->isWriteType($sql));
+
+        $sql = "DELETE FROM my_table WHERE id = 2;";
+
+        $this->assertTrue($this->db->isWriteType($sql));
+
+        $sql = "WITH seqvals AS (SELECT '3' AS seqval)DELETE FROM my_table JOIN seqvals ON col1 = seqval;";
+
+        $this->assertTrue($this->db->isWriteType($sql));
+
+        $sql = <<<SQL
+            WITH seqvals AS
+            (SELECT '3' AS seqval)
+            DELETE FROM my_table
+            JOIN seqvals
+            ON col1 = seqval;
+        SQL;
+
+        $this->assertTrue($this->db->isWriteType($sql));
+
+        $assertionType = 'assertTrue';
+        if ($this->db->DBDriver === 'Postgre') {
+            $assertionType = 'assertFalse';
+        }
+
+        $sql = "DELETE FROM my_table WHERE id = 2 RETURNING *;";
+
+        $this->$assertionType($this->db->isWriteType($sql));
+
+        $sql = "WITH seqvals AS (SELECT '3' AS seqval)DELETE FROM my_table JOIN seqvals ON col1 = seqval RETURNING *;";
+
+        $this->$assertionType($this->db->isWriteType($sql));
+
+        $sql = <<<SQL
+            DELETE FROM my_table
+            WHERE id = 2
+            RETURNING *;
+        SQL;
+
+        $this->$assertionType($this->db->isWriteType($sql));
+
+        $sql = <<<SQL
+            WITH seqvals AS
+            (SELECT '3' AS seqval)
+            DELETE FROM my_table
+            JOIN seqvals
+            ON col1 = seqval
+            RETURNING *;
+        SQL;
+
+        $this->$assertionType($this->db->isWriteType($sql));
     }
 
     public function testReplace(): void

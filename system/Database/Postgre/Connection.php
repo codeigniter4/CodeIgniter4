@@ -577,7 +577,7 @@ class Connection extends BaseConnection
      */
     public function isWriteType($sql): bool
     {
-        if (preg_match('#^(INSERT|UPDATE).*RETURNING\s.+(\,\s?.+)*$#is', $sql)) {
+        if (preg_match('#^\s*(WITH\s(\s|.)+(\s|[)]))?(INSERT|UPDATE|DELETE).*RETURNING\s.+(\,\s?.+)*$#is', $sql)) {
             return false;
         }
 
