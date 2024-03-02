@@ -141,8 +141,8 @@ final class Factories
         $options = array_merge(self::getOptions($component), $options);
 
         if (! $options['getShared']) {
-            if (isset(self::$aliases[$component][$alias])) {
-                $class = self::$aliases[$component][$alias];
+            if (isset(self::$aliases[$options['component']][$alias])) {
+                $class = self::$aliases[$options['component']][$alias];
 
                 return new $class(...$arguments);
             }
