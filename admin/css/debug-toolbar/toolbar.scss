@@ -13,6 +13,9 @@
 @import '_mixins';
 @import '_settings';
 
+[role="button"] {
+    cursor: pointer;
+}
 
 // DEBUG ICON
 // ========================================================================== */
@@ -35,6 +38,9 @@
     // Content
     clear: both;
     text-align: center;
+
+    // Cursor
+    cursor: pointer;
 
     a svg {
         margin: 8px;
@@ -227,14 +233,13 @@
     // The toolbar preferences
     #toolbar-position,
     #toolbar-theme {
-        a {
-            padding: 0 6px;
-            display: inline-flex;
-            vertical-align: top;
+        padding: 0 6px;
+        display: inline-flex;
+        vertical-align: top;
+        cursor: pointer;
 
-            &:hover {
-                text-decoration: none;
-            }
+        &:hover {
+            text-decoration: none;
         }
     }
 
@@ -518,43 +523,43 @@
 .debug-bar-dtableRow {
     display: table-row;
 }
-  
+
 .debug-bar-dinlineBlock {
     display: inline-block;
 }
-  
+
 .debug-bar-pointer {
     cursor: pointer;
 }
-  
+
 .debug-bar-mleft4 {
     margin-left: 4px;
 }
-  
+
 .debug-bar-level-0 {
     --level: 0;
 }
-  
+
 .debug-bar-level-1 {
     --level: 1;
 }
-  
+
 .debug-bar-level-2 {
     --level: 2;
 }
-  
+
 .debug-bar-level-3 {
     --level: 3;
 }
-  
+
 .debug-bar-level-4 {
     --level: 4;
 }
-  
+
 .debug-bar-level-5 {
     --level: 5;
 }
-  
+
 .debug-bar-level-6 {
     --level: 6;
 }
