@@ -59,12 +59,10 @@ See :ref:`file-locator-caching`.
 PHP Preloading
 ==============
 
-Every application consists of a large number of classes in many different locations.
-The framework provides classes for core functionality. As defined by `PHP RFC <https://wiki.php.net/rfc/preload>`_,
-Preloading is implemented as a part of the opcache on top of another (already committed) patch that introduces ``immutable``
-classes and functions. They assume that the immutable part is stored in shared memory once (for all processes)
-and never copied to process memory, but the variable part is specific for each process.
-The patch introduced the MAP_PTR pointer data structure, that allows pointers from SHM to process memory.
+With PHP preloading, you can instruct the server to load essential files like functions and classes into memory during startup.
+This means these elements are readily available for all requests, skipping the usual loading process and boosting your
+application's performance. However, this comes at the cost of increased memory usage and requires restarting the
+PHP engine for changes to take effect.
 
 .. note:: If you want to use `Preloading <https://www.php.net/manual/en/opcache.preloading.php>`_,
     we provide a `preload script <https://github.com/codeigniter4/CodeIgniter4/blob/develop/preload.php>`_.
