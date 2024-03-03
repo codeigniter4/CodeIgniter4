@@ -451,10 +451,22 @@ Changes
 Deprecations
 ************
 
-- **CodeIgniter:** The ``determinePath()`` method has been deprecated. No longer
-  used.
 - **Services:** The ``BaseService::$services`` property has been deprecated. No
   longer used.
+- **CodeIgniter:**
+    - The ``determinePath()`` method has been deprecated. No longer used.
+    - The ``resolvePlatformExtensions()`` method has been deprecated. No longer
+      used. It has been moved to the ``CodeIgniter\Boot::checkMissingExtensions()``
+      method.
+    - The ``bootstrapEnvironment()`` method has been deprecated. No longer used.
+      It has been moved to the ``CodeIgniter\Boot::loadEnvironmentBootstrap()``
+      method.
+    - The ``initializeKint()`` method has been deprecated. No longer used. It has
+      been moved to the ``Autoloader``.
+    - The ``autoloadKint()`` method has been deprecated. No longer used. It has
+      been moved to the ``Autoloader``.
+    - The ``configureKint()`` method has been deprecated. No longer used. It has
+      been moved to the ``Autoloader``.
 - **Response:** The constructor parameter ``$config`` has been deprecated. No
   longer used.
 - **Filters:**
