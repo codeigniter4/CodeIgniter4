@@ -33,6 +33,14 @@ final class RedirectExceptionTest extends TestCase
         Services::injectMock('logger', new Logger(new LoggerConfig()));
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        // Reset the current time.
+        Time::setTestNow();
+    }
+
     public function testResponse(): void
     {
         $response = (new RedirectException(

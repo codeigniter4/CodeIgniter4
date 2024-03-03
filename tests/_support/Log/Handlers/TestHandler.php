@@ -37,8 +37,6 @@ class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
     {
         parent::__construct($config);
 
-        Time::setTestNow('2023-11-25 12:00:00');
-
         $this->handles     = $config['handles'] ?? [];
         $this->destination = $this->path . 'log-' . Time::now()->format('Y-m-d') . '.' . $this->fileExtension;
 
@@ -56,9 +54,7 @@ class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
      */
     public function handle($level, $message): bool
     {
-        Time::setTestNow('2023-11-25 12:00:00');
-
-        $date = Time::now()->format('Y-m-d');
+        $date = Time::now()->format($this->dateFormat);
 
         self::$logs[] = strtoupper($level) . ' - ' . $date . ' --> ' . $message;
 
