@@ -79,8 +79,7 @@ final class WriteTypeQueryTest extends CIUnitTestCase
     {
         $sql = <<<'SQL'
                 INSERT INTO my_table (col1, col2)
-                VALUES ('Joe', 'Cool')
-                RETURNING id;
+                VALUES ('Joe', 'Cool');
             SQL;
 
         $this->assertTrue($this->db->isWriteType($sql));
