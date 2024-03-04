@@ -39,12 +39,11 @@ final class WriteTypeQueryTest extends CIUnitTestCase
      */
     private function testAssertTypeReturning($dbDriver): string
     {
-        $assertType = 'assertTrue';
         if ($dbDriver === 'Postgre') {
-            $assertType = 'assertFalse';
+            return 'assertFalse';
         }
 
-        return $assertType;
+        return 'assertTrue';
     }
 
     public function testSet(): void
