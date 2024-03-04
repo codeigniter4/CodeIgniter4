@@ -1009,6 +1009,10 @@ if (! function_exists('service')) {
      */
     function service(string $name, ...$params): ?object
     {
+        if ($params === []) {
+            return Services::get($name);
+        }
+
         return Services::$name(...$params);
     }
 }
