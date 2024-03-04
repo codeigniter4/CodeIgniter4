@@ -194,11 +194,7 @@ class BaseService
      */
     public static function get(string $key): mixed
     {
-        if (isset(static::$instances[$key])) {
-            return static::$instances[$key];
-        }
-
-        return static::__callStatic($key, []);
+        return static::$instances[$key] ?? static::__callStatic($key, []);
     }
 
     /**
