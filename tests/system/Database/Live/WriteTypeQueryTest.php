@@ -29,21 +29,17 @@ final class WriteTypeQueryTest extends CIUnitTestCase
     protected $seed    = CITestSeeder::class;
 
     /**
-     * Whether CodeIgniter ignores RETURNING for isWriteType.
+     * Whether CodeIgniter considers RETURNING in isWriteType.
      *
      * Currently, only Postgre is supported by CodeIgniter.
      * This method should be updated if support for RETURNING
-     * is expanded to other databases.
+     * is expanded for other databases.
      *
      * @param string $dbDriver
      */
-    private function testAssertTypeReturning($dbDriver): string
+    private function testReturning($dbDriver): bool
     {
-        if ($dbDriver === 'Postgre') {
-            return 'assertFalse';
-        }
-
-        return 'assertTrue';
+        return $dbDriver === 'Postgre';
     }
 
     public function testSet(): void
@@ -114,9 +110,11 @@ final class WriteTypeQueryTest extends CIUnitTestCase
     {
         $sql = "INSERT INTO my_table (col1, col2) VALUES ('Joe', 'Cool') RETURNING id;";
 
-        $assertType = $this->testAssertTypeReturning($this->db->DBDriver);
-
-        $this->{$assertType}($this->db->isWriteType($sql));
+        if ($this->testReturning($this->db->DBDriver)) {
+            $this->assertFalse($this->db->isWriteType($sql));
+        } else {
+            $this->assertTrue($this->db->isWriteType($sql));
+        }
     }
 
     public function testInsertMultiReturning(): void
@@ -127,27 +125,33 @@ final class WriteTypeQueryTest extends CIUnitTestCase
                 RETURNING id;
             SQL;
 
-        $assertType = $this->testAssertTypeReturning($this->db->DBDriver);
-
-        $this->{$assertType}($this->db->isWriteType($sql));
+        if ($this->testReturning($this->db->DBDriver)) {
+            $this->assertFalse($this->db->isWriteType($sql));
+        } else {
+            $this->assertTrue($this->db->isWriteType($sql));
+        }
     }
 
     public function testInsertWithOneReturning(): void
     {
         $sql = "WITH seqvals AS (SELECT '3' AS seqval) INSERT INTO my_table (col1, col2) SELECT 'Joe', seqval FROM seqvals RETURNING id;";
 
-        $assertType = $this->testAssertTypeReturning($this->db->DBDriver);
-
-        $this->{$assertType}($this->db->isWriteType($sql));
+        if ($this->testReturning($this->db->DBDriver)) {
+            $this->assertFalse($this->db->isWriteType($sql));
+        } else {
+            $this->assertTrue($this->db->isWriteType($sql));
+        }
     }
 
     public function testInsertWithOneReturningNoSpace(): void
     {
         $sql = "WITH seqvals AS (SELECT '3' AS seqval)INSERT INTO my_table (col1, col2) SELECT 'Joe', seqval FROM seqvals RETURNING id;";
 
-        $assertType = $this->testAssertTypeReturning($this->db->DBDriver);
-
-        $this->{$assertType}($this->db->isWriteType($sql));
+        if ($this->testReturning($this->db->DBDriver)) {
+            $this->assertFalse($this->db->isWriteType($sql));
+        } else {
+            $this->assertTrue($this->db->isWriteType($sql));
+        }
     }
 
     public function testInsertWithMultiReturning(): void
@@ -160,9 +164,11 @@ final class WriteTypeQueryTest extends CIUnitTestCase
                 RETURNING id;
             SQL;
 
-        $assertType = $this->testAssertTypeReturning($this->db->DBDriver);
-
-        $this->{$assertType}($this->db->isWriteType($sql));
+        if ($this->testReturning($this->db->DBDriver)) {
+            $this->assertFalse($this->db->isWriteType($sql));
+        } else {
+            $this->assertTrue($this->db->isWriteType($sql));
+        }
     }
 
     public function testUpdateBuilder(): void
@@ -223,9 +229,11 @@ final class WriteTypeQueryTest extends CIUnitTestCase
     {
         $sql = "UPDATE my_table SET col1 = 'foo' WHERE id = 2 RETURNING *;";
 
-        $assertType = $this->testAssertTypeReturning($this->db->DBDriver);
-
-        $this->{$assertType}($this->db->isWriteType($sql));
+        if ($this->testReturning($this->db->DBDriver)) {
+            $this->assertFalse($this->db->isWriteType($sql));
+        } else {
+            $this->assertTrue($this->db->isWriteType($sql));
+        }
     }
 
     public function testUpdateMultiReturning(): void
@@ -237,27 +245,33 @@ final class WriteTypeQueryTest extends CIUnitTestCase
                 RETURNING *;
             SQL;
 
-        $assertType = $this->testAssertTypeReturning($this->db->DBDriver);
-
-        $this->{$assertType}($this->db->isWriteType($sql));
+        if ($this->testReturning($this->db->DBDriver)) {
+            $this->assertFalse($this->db->isWriteType($sql));
+        } else {
+            $this->assertTrue($this->db->isWriteType($sql));
+        }
     }
 
     public function testUpdateWithOneReturning(): void
     {
         $sql = "WITH seqvals AS (SELECT '3' AS seqval) UPDATE my_table SET col1 = seqval FROM seqvals WHERE id = 2 RETURNING *;";
 
-        $assertType = $this->testAssertTypeReturning($this->db->DBDriver);
-
-        $this->{$assertType}($this->db->isWriteType($sql));
+        if ($this->testReturning($this->db->DBDriver)) {
+            $this->assertFalse($this->db->isWriteType($sql));
+        } else {
+            $this->assertTrue($this->db->isWriteType($sql));
+        }
     }
 
     public function testUpdateWithOneReturningNoSpace(): void
     {
         $sql = "WITH seqvals AS (SELECT '3' AS seqval)UPDATE my_table SET col1 = seqval FROM seqvals WHERE id = 2 RETURNING *;";
 
-        $assertType = $this->testAssertTypeReturning($this->db->DBDriver);
-
-        $this->{$assertType}($this->db->isWriteType($sql));
+        if ($this->testReturning($this->db->DBDriver)) {
+            $this->assertFalse($this->db->isWriteType($sql));
+        } else {
+            $this->assertTrue($this->db->isWriteType($sql));
+        }
     }
 
     public function testUpdateWithMultiReturning(): void
@@ -271,9 +285,11 @@ final class WriteTypeQueryTest extends CIUnitTestCase
                 RETURNING *;
             SQL;
 
-        $assertType = $this->testAssertTypeReturning($this->db->DBDriver);
-
-        $this->{$assertType}($this->db->isWriteType($sql));
+        if ($this->testReturning($this->db->DBDriver)) {
+            $this->assertFalse($this->db->isWriteType($sql));
+        } else {
+            $this->assertTrue($this->db->isWriteType($sql));
+        }
     }
 
     public function testDeleteBuilder(): void
@@ -332,9 +348,11 @@ final class WriteTypeQueryTest extends CIUnitTestCase
     {
         $sql = 'DELETE FROM my_table WHERE id = 2 RETURNING *;';
 
-        $assertType = $this->testAssertTypeReturning($this->db->DBDriver);
-
-        $this->{$assertType}($this->db->isWriteType($sql));
+        if ($this->testReturning($this->db->DBDriver)) {
+            $this->assertFalse($this->db->isWriteType($sql));
+        } else {
+            $this->assertTrue($this->db->isWriteType($sql));
+        }
     }
 
     public function testDeleteMultiReturning(): void
@@ -345,27 +363,33 @@ final class WriteTypeQueryTest extends CIUnitTestCase
                 RETURNING *;
             SQL;
 
-        $assertType = $this->testAssertTypeReturning($this->db->DBDriver);
-
-        $this->{$assertType}($this->db->isWriteType($sql));
+        if ($this->testReturning($this->db->DBDriver)) {
+            $this->assertFalse($this->db->isWriteType($sql));
+        } else {
+            $this->assertTrue($this->db->isWriteType($sql));
+        }
     }
 
     public function testDeleteWithOneReturning(): void
     {
         $sql = "WITH seqvals AS (SELECT '3' AS seqval) DELETE FROM my_table JOIN seqvals ON col1 = seqval RETURNING *;";
 
-        $assertType = $this->testAssertTypeReturning($this->db->DBDriver);
-
-        $this->{$assertType}($this->db->isWriteType($sql));
+        if ($this->testReturning($this->db->DBDriver)) {
+            $this->assertFalse($this->db->isWriteType($sql));
+        } else {
+            $this->assertTrue($this->db->isWriteType($sql));
+        }
     }
 
     public function testDeleteWithOneReturningNoSpace(): void
     {
         $sql = "WITH seqvals AS (SELECT '3' AS seqval)DELETE FROM my_table JOIN seqvals ON col1 = seqval RETURNING *;";
 
-        $assertType = $this->testAssertTypeReturning($this->db->DBDriver);
-
-        $this->{$assertType}($this->db->isWriteType($sql));
+        if ($this->testReturning($this->db->DBDriver)) {
+            $this->assertFalse($this->db->isWriteType($sql));
+        } else {
+            $this->assertTrue($this->db->isWriteType($sql));
+        }
     }
 
     public function testDeleteWithMultiReturning(): void
@@ -379,9 +403,11 @@ final class WriteTypeQueryTest extends CIUnitTestCase
                 RETURNING *;
             SQL;
 
-        $assertType = $this->testAssertTypeReturning($this->db->DBDriver);
-
-        $this->{$assertType}($this->db->isWriteType($sql));
+        if ($this->testReturning($this->db->DBDriver)) {
+            $this->assertFalse($this->db->isWriteType($sql));
+        } else {
+            $this->assertTrue($this->db->isWriteType($sql));
+        }
     }
 
     public function testReplace(): void
