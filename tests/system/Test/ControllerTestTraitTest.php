@@ -39,6 +39,15 @@ final class ControllerTestTraitTest extends CIUnitTestCase
 {
     use ControllerTestTrait;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
+    }
+
     public function testBadController(): void
     {
         $this->expectException('InvalidArgumentException');

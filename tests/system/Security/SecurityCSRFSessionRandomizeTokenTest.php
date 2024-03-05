@@ -69,6 +69,10 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         Factories::injectMock('config', 'Security', $this->config);
 
         $this->injectSession($this->hash);
+
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
     }
 
     private function createSession($options = []): Session

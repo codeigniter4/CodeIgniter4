@@ -42,6 +42,10 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->request = $this->createRequest($config);
 
         $_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
+
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
     }
 
     private function createRequest(?App $config = null, $body = null, ?string $path = null): IncomingRequest
