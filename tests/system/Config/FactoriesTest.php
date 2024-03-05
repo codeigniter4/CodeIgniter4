@@ -482,7 +482,7 @@ final class FactoriesTest extends CIUnitTestCase
 
     public function testGetNonexistentClass()
     {
-        $config = Factories::get('config', 'NonexistentInstance');
+        $config = Factories::get('config', 'NonexistentClass');
 
         $this->assertNull($config);
     }
