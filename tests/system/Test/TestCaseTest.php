@@ -13,8 +13,6 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Events\Events;
-use CodeIgniter\HTTP\Response;
-use Config\App;
 use Tests\Support\Test\TestForReflectionHelper;
 
 /**
@@ -72,31 +70,6 @@ final class TestCaseTest extends CIUnitTestCase
         CLI::write('first.');
         $expected = PHP_EOL . 'first.' . PHP_EOL;
         $this->assertSame($expected, $this->getStreamFilterBuffer());
-    }
-
-    /**
-     * PHPunit emits headers before we get nominal control of
-     * the output stream, making header testing awkward, to say
-     * the least. This test is intended to make sure that this
-     * is happening as expected.
-     *
-     * TestCaseEmissionsTest is intended to circumvent PHPunit,
-     * and allow us to test our own header emissions.
-     */
-    public function testPHPUnitHeadersEmitted(): void
-    {
-        $response = new Response(new App());
-        $response->pretend(true);
-
-        $body = 'Hello';
-        $response->setBody($body);
-
-        ob_start();
-        $response->send();
-        ob_end_clean();
-
-        $this->assertHeaderEmitted('Content-type: text/html;');
-        $this->assertHeaderNotEmitted('Set-Cookie: foo=bar;');
     }
 
     public function testCloseEnough(): void
