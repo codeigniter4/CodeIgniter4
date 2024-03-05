@@ -206,7 +206,7 @@ class BaseService
     public static function set(string $key, mixed $value): void
     {
         if (isset(static::$instances[$key])) {
-            throw new InvalidArgumentException('The Entry for "' . $key . '" is already set.');
+            throw new InvalidArgumentException('The entry for "' . $key . '" is already set.');
         }
 
         static::$instances[$key] = $value;
