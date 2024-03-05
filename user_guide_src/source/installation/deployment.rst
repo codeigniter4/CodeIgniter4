@@ -77,11 +77,11 @@ in memory by reading the files specified in ``opcache.preload``.
 Configuration
 -------------
 
-Open ``php.ini`` or ``xx-opcache.ini`` if you have split INI configuration in PHP, and recommendation set ``opcache.preload=/path/to/preload.php`` and ``opcache.preload_user=myuser``.
+Open ``php.ini`` or ``xx-opcache.ini`` if you have split INI configuration in PHP, and recommend to set ``opcache.preload=/path/to/preload.php`` and ``opcache.preload_user=myuser``.
 
-.. note:: ``myuser`` is user running in your web server
+.. note:: ``myuser`` is user running in your web server. If you want find location split INI configuration, just run ``php --ini`` or open file ``phpinfo()`` and search *Additional .ini files parsed*.
 
-Make sure you use appstater installation, If using manual installation you must change directory in include path.
+Make sure you use the appstater installation. If using manual installation, you must change the directory in ``include`` path.
 
 .. literalinclude:: preloading/001.php
 

@@ -9,7 +9,7 @@ class preload
      */
     private array $paths = [
         [
-            'include' => __DIR__ . '/system', // <== in this
+            'include' => __DIR__ . '/system', // <== change this line to where CI is installed
             // ...
         ],
     ];
