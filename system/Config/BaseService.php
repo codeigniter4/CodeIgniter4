@@ -190,9 +190,9 @@ class BaseService
      *
      * @param string $key Identifier of the entry to look for.
      *
-     * @return mixed Entry.
+     * @return object|null Entry.
      */
-    public static function get(string $key): mixed
+    public static function get(string $key): ?object
     {
         return static::$instances[$key] ?? static::__callStatic($key, []);
     }
@@ -200,10 +200,9 @@ class BaseService
     /**
      * Sets an entry.
      *
-     * @param string $key   Identifier of the entry.
-     * @param mixed  $value Normally an object.
+     * @param string $key Identifier of the entry.
      */
-    public static function set(string $key, mixed $value): void
+    public static function set(string $key, object $value): void
     {
         if (isset(static::$instances[$key])) {
             throw new InvalidArgumentException('The entry for "' . $key . '" is already set.');
@@ -215,10 +214,9 @@ class BaseService
     /**
      * Overrides an existing entry.
      *
-     * @param string $key   Identifier of the entry.
-     * @param mixed  $value Normally an object.
+     * @param string $key Identifier of the entry.
      */
-    public static function override(string $key, mixed $value): void
+    public static function override(string $key, object $value): void
     {
         static::$instances[$key] = $value;
     }
