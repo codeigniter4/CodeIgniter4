@@ -27,6 +27,10 @@ final class CommonFunctionsSendTest extends CIUnitTestCase
         parent::setUp();
 
         unset($_ENV['foo'], $_SERVER['foo']);
+
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
     }
 
     /**

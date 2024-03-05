@@ -36,6 +36,10 @@ final class EventsTest extends CIUnitTestCase
         $this->manager = new MockEvents();
 
         Events::removeAllListeners();
+
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        restore_error_handler();
     }
 
     protected function tearDown(): void
