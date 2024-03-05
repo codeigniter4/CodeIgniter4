@@ -795,6 +795,11 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
         Kint::$cli_detection = false;
 
+        // Workaround for errors on PHPUnit 10 and PHP 8.3.
+        // See https://github.com/sebastianbergmann/phpunit/issues/5403#issuecomment-1906810619
+        // `$app->initialize()` sets error handler.
+        restore_error_handler();
+
         $this->expectOutputRegex('/<style class="kint-rich-style" nonce="[0-9a-z]{24}">/u');
         trace();
     }
