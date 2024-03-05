@@ -167,6 +167,8 @@ class BaseService
      * A cache of other service classes we've found.
      *
      * @var array
+     *
+     * @deprecated 4.5.0 No longer used.
      */
     protected static $services = [];
 
@@ -335,7 +337,6 @@ class BaseService
 
                     if ($classname !== Services::class) {
                         self::$serviceNames[] = $classname;
-                        static::$services[]   = new $classname();
                     }
                 }
             }
