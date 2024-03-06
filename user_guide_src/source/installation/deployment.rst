@@ -70,9 +70,10 @@ PHP engine for changes to take effect.
 Requirement
 -----------
 
-Preloading for classes that are used more than once in the same server is not possible. You must isolated application to *dedicated* server,
-even if the servers are not physical machines but virtual machines or containers. Preloading keeps the relevant definitions
-in memory by reading the files specified in ``opcache.preload``.
+Preloading for classes that are used more than once in the same handler PHP version server is not possible. You must *isolated* one application to *dedicated* handler PHP version in web server, in this example *php8-3* just handle one apps.
+Preloading keeps the relevant definitions in memory by reading the files specified in ``opcache.preload``.
+
+.. note:: See :ref:`running-multiple-app` to make one core CodeIgniter4 to handle your multiple apps.
 
 Configuration
 -------------
