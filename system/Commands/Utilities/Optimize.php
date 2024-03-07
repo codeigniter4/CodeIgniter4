@@ -16,6 +16,7 @@ namespace CodeIgniter\Commands\Utilities;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Publisher\Publisher;
+use RuntimeException;
 
 /**
  * Optimize for production.
@@ -56,25 +57,42 @@ final class Optimize extends BaseCommand
      */
     public function run(array $params)
     {
-        $this->enableCaching();
-        $this->clearCache();
-        $this->removeDevPackages();
+        try {
+            $this->enableCaching();
+            $this->clearCache();
+            $this->removeDevPackages();
+        } catch (RuntimeException) {
+            CLI::error('The "spark optimize" failed.');
+
+            return EXIT_ERROR;
+        }
 
         return EXIT_SUCCESS;
     }
 
-    private function clearCache()
+    private function clearCache(): void
     {
         $cache = WRITEPATH . 'cache/FileLocatorCache';
-        if (is_file($cache)) {
-            unlink($cache);
-            CLI::write('Removed "' . $cache . '".', 'green');
-        }
+        $this->removeFile($cache);
 
         $cache = WRITEPATH . 'cache/FactoriesCache_config';
+        $this->removeFile($cache);
+    }
+
+    private function removeFile(string $cache): void
+    {
         if (is_file($cache)) {
-            unlink($cache);
-            CLI::write('Removed "' . $cache . '".', 'green');
+            $result = unlink($cache);
+
+            if ($result) {
+                CLI::write('Removed "' . clean_path($cache) . '".', 'green');
+
+                return;
+            }
+
+            CLI::error('Error in removing file: ' . clean_path($cache));
+
+            throw new RuntimeException(__METHOD__);
         }
     }
 
@@ -82,8 +100,10 @@ final class Optimize extends BaseCommand
     {
         $publisher = new Publisher(APPPATH, APPPATH);
 
+        $config = APPPATH . 'Config/Optimize.php';
+
         $result = $publisher->replace(
-            APPPATH . 'Config/Optimize.php',
+            $config,
             [
                 'public bool $configCacheEnabled = false;'  => 'public bool $configCacheEnabled = true;',
                 'public bool $locatorCacheEnabled = false;' => 'public bool $locatorCacheEnabled = true;',
@@ -95,7 +115,13 @@ final class Optimize extends BaseCommand
                 'Config Caching and FileLocator Caching are enabled in "app/Config/Optimize.php".',
                 'green'
             );
+
+            return;
         }
+
+        CLI::error('Error in updating file: ' . clean_path($config));
+
+        throw new RuntimeException(__METHOD__);
     }
 
     private function removeDevPackages(): void
@@ -109,6 +135,12 @@ final class Optimize extends BaseCommand
 
         if ($status === 0) {
             CLI::write('Removed Composer dev packages.', 'green');
+
+            return;
         }
+
+        CLI::error('Error in removing Composer dev packages.');
+
+        throw new RuntimeException(__METHOD__);
     }
 }
