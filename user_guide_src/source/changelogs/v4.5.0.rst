@@ -24,6 +24,7 @@ Enhancements
 Commands
 ========
 
+- Added ``spark optimize`` command to optimize configuration for production environment.
 - Added ``spark make:test`` command to generate a skeleton test file. See
   :ref:`cli-generators-make-test` for the details.
 - Added ``spark config:check`` command to check Config values. See
