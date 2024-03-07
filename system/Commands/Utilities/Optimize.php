@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities;
 
+use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Autoloader\FileLocatorCached;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Publisher\Publisher;
@@ -72,8 +74,9 @@ final class Optimize extends BaseCommand
 
     private function clearCache(): void
     {
-        $cache = WRITEPATH . 'cache/FileLocatorCache';
-        $this->removeFile($cache);
+        $locator = new FileLocatorCached(new FileLocator(service('autoloader')));
+        $locator->deleteCache();
+        CLI::write('Removed FileLocatorCache.', 'green');
 
         $cache = WRITEPATH . 'cache/FactoriesCache_config';
         $this->removeFile($cache);
