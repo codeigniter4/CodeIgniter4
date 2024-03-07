@@ -141,8 +141,8 @@ final class Factories
         $options = array_merge(self::getOptions($component), $options);
 
         if (! $options['getShared']) {
-            if (isset(self::$aliases[$component][$alias])) {
-                $class = self::$aliases[$component][$alias];
+            if (isset(self::$aliases[$options['component']][$alias])) {
+                $class = self::$aliases[$options['component']][$alias];
 
                 return new $class(...$arguments);
             }
@@ -171,6 +171,20 @@ final class Factories
         self::setAlias($options['component'], $alias, $class);
 
         return self::$instances[$options['component']][$class];
+    }
+
+    /**
+     * Simple method to get the shared instance fast.
+     */
+    public static function get(string $component, string $alias): ?object
+    {
+        if (isset(self::$aliases[$component][$alias])) {
+            $class = self::$aliases[$component][$alias];
+
+            return self::$instances[$component][$class];
+        }
+
+        return self::__callStatic($component, [$alias]);
     }
 
     /**
