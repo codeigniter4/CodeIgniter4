@@ -192,7 +192,7 @@ class BaseService
             return static::$mocks[$key];
         }
 
-        if (! isset(static::$instances[$key])) {
+        if (! array_key_exists($key, static::$instances)) {
             // Make sure $getShared is false
             $params[] = false;
 
