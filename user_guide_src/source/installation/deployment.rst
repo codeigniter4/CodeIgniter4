@@ -70,7 +70,8 @@ PHP engine for changes to take effect.
 Requirement
 -----------
 
-Preloading for classes that are used more than once in the same handler PHP version server is not possible. You must *isolated* one application to *dedicated* handler PHP version in web server, in this example *php8-3* just handle one apps.
+Using preloading requires one dedicated PHP handler. Normally, web servers are configured to use one PHP handler, so one app requires a dedicated web server.
+If you want to use preloading for multiple apps on one web server, configure your server to use virtual hosts with multiple PHP handlers like multiple PHP-FPMs, with each virtual host using one PHP handler.
 Preloading keeps the relevant definitions in memory by reading the files specified in ``opcache.preload``.
 
 .. note:: See :ref:`running-multiple-app` to make one core CodeIgniter4 to handle your multiple apps.
