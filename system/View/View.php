@@ -17,7 +17,6 @@ use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Debug\Toolbar\Collectors\Views;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\View\Exceptions\ViewException;
-use Config\Services;
 use Config\Toolbar;
 use Config\View as ViewConfig;
 use Psr\Log\LoggerInterface;
@@ -152,8 +151,8 @@ class View implements RendererInterface
     ) {
         $this->config   = $config;
         $this->viewPath = rtrim($viewPath, '\\/ ') . DIRECTORY_SEPARATOR;
-        $this->loader   = $loader ?? Services::locator();
-        $this->logger   = $logger ?? Services::logger();
+        $this->loader   = $loader ?? service('locator');
+        $this->logger   = $logger ?? service('logger');
         $this->debug    = $debug ?? CI_DEBUG;
         $this->saveData = (bool) $config->saveData;
     }
@@ -262,7 +261,7 @@ class View implements RendererInterface
         );
 
         // Check if DebugToolbar is enabled.
-        $filters              = Services::filters();
+        $filters              = service('filters');
         $requiredAfterFilters = $filters->getRequiredFilters('after')[0];
         if (in_array('toolbar', $requiredAfterFilters, true)) {
             $debugBarEnabled = true;

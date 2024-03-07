@@ -17,7 +17,6 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use Config\Mimes;
-use Config\Services;
 use InvalidArgumentException;
 
 /**
@@ -40,7 +39,7 @@ class FileRules
     public function __construct(?RequestInterface $request = null)
     {
         if ($request === null) {
-            $request = Services::request();
+            $request = service('request');
         }
 
         assert($request instanceof IncomingRequest || $request instanceof CLIRequest);

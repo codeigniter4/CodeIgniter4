@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Events;
 
 use Config\Modules;
-use Config\Services;
 
 /**
  * Events
@@ -82,7 +81,7 @@ class Events
         $files  = [];
 
         if ($config->shouldDiscover('events')) {
-            $files = Services::locator()->search('Config/Events.php');
+            $files = service('locator')->search('Config/Events.php');
         }
 
         $files = array_filter(array_map(static function (string $file) {

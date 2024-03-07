@@ -375,10 +375,10 @@ class Toolbar
          * @var IncomingRequest|null $request
          */
         if (CI_DEBUG && ! is_cli()) {
-            $app = Services::codeigniter();
+            $app = service('codeigniter');
 
-            $request ??= Services::request();
-            $response ??= Services::response();
+            $request ??= service('request');
+            $response ??= service('response');
 
             // Disable the toolbar for downloads
             if ($response instanceof DownloadResponse) {
@@ -463,7 +463,7 @@ class Toolbar
             return;
         }
 
-        $request = Services::request();
+        $request = service('request');
 
         // If the request contains '?debugbar then we're
         // simply returning the loading script
@@ -512,7 +512,7 @@ class Toolbar
     {
         $data = json_decode($data, true);
 
-        if ($this->config->maxHistory !== 0 && preg_match('/\d+\.\d{6}/s', (string) Services::request()->getGet('debugbar_time'), $debugbarTime)) {
+        if ($this->config->maxHistory !== 0 && preg_match('/\d+\.\d{6}/s', (string) service('request')->getGet('debugbar_time'), $debugbarTime)) {
             $history = new History();
             $history->setFiles(
                 $debugbarTime[0],

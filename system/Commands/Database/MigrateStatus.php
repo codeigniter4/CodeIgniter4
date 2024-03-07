@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\Services;
 
 /**
  * Displays a list of all migrations and whether they've been run or not.
@@ -83,11 +82,11 @@ class MigrateStatus extends BaseCommand
      */
     public function run(array $params)
     {
-        $runner     = Services::migrations();
+        $runner     = service('migrations');
         $paramGroup = $params['g'] ?? CLI::getOption('g');
 
         // Get all namespaces
-        $namespaces = Services::autoloader()->getNamespace();
+        $namespaces = service('autoloader')->getNamespace();
 
         // Collection of migration status
         $status = [];

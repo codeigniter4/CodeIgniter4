@@ -93,7 +93,7 @@ class Cell
         }
 
         if (method_exists($instance, 'initController')) {
-            $instance->initController(Services::request(), Services::response(), Services::logger());
+            $instance->initController(Services::request(), service('response'), service('logger'));
         }
 
         if (! method_exists($instance, $method)) {

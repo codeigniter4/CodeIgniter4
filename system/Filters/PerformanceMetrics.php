@@ -15,7 +15,6 @@ namespace CodeIgniter\Filters;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Config\Services;
 
 /**
  * Performance Metrics filter
@@ -43,7 +42,7 @@ class PerformanceMetrics implements FilterInterface
         $body = $response->getBody();
 
         if ($body !== null) {
-            $benchmark = Services::timer();
+            $benchmark = service('timer');
 
             $output = str_replace(
                 [

@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\Commands\Utilities\Routes;
 
 use CodeIgniter\Autoloader\FileLocatorInterface;
-use CodeIgniter\Config\Services;
 
 /**
  * Finds all controllers in a namespace for auto route listing.
@@ -36,7 +35,7 @@ final class ControllerFinder
     public function __construct(string $namespace)
     {
         $this->namespace = $namespace;
-        $this->locator   = Services::locator();
+        $this->locator   = service('locator');
     }
 
     /**

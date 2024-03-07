@@ -462,7 +462,7 @@ class CodeIgniter
         $uri = $this->request->getPath();
 
         if ($this->enableFilters) {
-            $filters = Services::filters();
+            $filters = service('filters');
 
             // If any filters were specified within the routes file,
             // we need to ensure it's active for the current request
@@ -518,7 +518,7 @@ class CodeIgniter
         $this->gatherOutput($cacheConfig, $returned);
 
         if ($this->enableFilters) {
-            $filters = Services::filters();
+            $filters = service('filters');
             $filters->setResponse($this->response);
 
             // Run "after" filters
@@ -649,7 +649,7 @@ class CodeIgniter
             Services::createRequest($this->config);
         }
 
-        $this->request = Services::request();
+        $this->request = service('request');
 
         $this->spoofRequestMethod();
     }
@@ -817,7 +817,7 @@ class CodeIgniter
         $this->benchmark->start('routing');
 
         if ($routes === null) {
-            $routes = Services::routes()->loadRoutes();
+            $routes = service('routes')->loadRoutes();
         }
 
         // $routes is defined in Config/Routes.php

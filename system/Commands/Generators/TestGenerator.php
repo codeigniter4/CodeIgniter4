@@ -16,7 +16,6 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorTrait;
-use Config\Services;
 
 /**
  * Generates a skeleton command file.
@@ -82,7 +81,7 @@ class TestGenerator extends BaseCommand
 
         $this->classNameLang = 'CLI.generator.className.test';
 
-        $autoload = Services::autoloader();
+        $autoload = service('autoloader');
         $autoload->addNamespace('CodeIgniter', TESTPATH . 'system');
         $autoload->addNamespace('Tests', ROOTPATH . 'tests');
 
@@ -112,7 +111,7 @@ class TestGenerator extends BaseCommand
         $class      = $this->normalizeInputClassName();
         $classPaths = explode('\\', $class);
 
-        $namespaces = Services::autoloader()->getNamespace();
+        $namespaces = service('autoloader')->getNamespace();
 
         while ($classPaths !== []) {
             array_pop($classPaths);
@@ -176,7 +175,7 @@ class TestGenerator extends BaseCommand
      */
     private function searchTestFilePath(string $namespace): ?string
     {
-        $bases = Services::autoloader()->getNamespace($namespace);
+        $bases = service('autoloader')->getNamespace($namespace);
 
         $base = null;
 

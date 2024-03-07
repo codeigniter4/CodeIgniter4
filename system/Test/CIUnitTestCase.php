@@ -497,7 +497,7 @@ abstract class CIUnitTestCase extends TestCase
     protected function createApplication()
     {
         // Initialize the autoloader.
-        Services::autoloader()->initialize(new Autoload(), new Modules());
+        service('autoloader')->initialize(new Autoload(), new Modules());
 
         $app = new MockCodeIgniter(new App());
         $app->initialize();

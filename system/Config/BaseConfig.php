@@ -13,7 +13,6 @@ namespace CodeIgniter\Config;
 
 use Config\Encryption;
 use Config\Modules;
-use Config\Services;
 use ReflectionClass;
 use ReflectionException;
 use RuntimeException;
@@ -231,7 +230,7 @@ class BaseConfig
         }
 
         if (! static::$didDiscovery) {
-            $locator         = Services::locator();
+            $locator         = service('locator');
             $registrarsFiles = $locator->search('Config/Registrar.php');
 
             foreach ($registrarsFiles as $file) {

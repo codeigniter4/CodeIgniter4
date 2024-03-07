@@ -76,6 +76,7 @@ use Config\Services as AppServices;
 use Config\Toolbar as ConfigToolbar;
 use Config\Validation as ConfigValidation;
 use Config\View as ConfigView;
+use InvalidArgumentException;
 
 /**
  * Services Configuration file.
@@ -145,14 +146,21 @@ class BaseService
      * have been requested as a "shared" instance.
      * Keys should be lowercase service names.
      *
-     * @var array
+     * @var array<string, object> [key => instance]
      */
     protected static $instances = [];
 
     /**
+     * Factory method list.
+     *
+     * @var array<string, (callable(mixed ...$params): object)> [key => callable]
+     */
+    protected static array $factories = [];
+
+    /**
      * Mock objects for testing which are returned if exist.
      *
-     * @var array
+     * @var array<string, object> [key => instance]
      */
     protected static $mocks = [];
 
@@ -178,6 +186,42 @@ class BaseService
      * @var list<string>
      */
     private static array $serviceNames = [];
+
+    /**
+     * Simple method to get an entry fast.
+     *
+     * @param string $key Identifier of the entry to look for.
+     *
+     * @return object|null Entry.
+     */
+    public static function get(string $key): ?object
+    {
+        return static::$instances[$key] ?? static::__callStatic($key, []);
+    }
+
+    /**
+     * Sets an entry.
+     *
+     * @param string $key Identifier of the entry.
+     */
+    public static function set(string $key, object $value): void
+    {
+        if (isset(static::$instances[$key])) {
+            throw new InvalidArgumentException('The entry for "' . $key . '" is already set.');
+        }
+
+        static::$instances[$key] = $value;
+    }
+
+    /**
+     * Overrides an existing entry.
+     *
+     * @param string $key Identifier of the entry.
+     */
+    public static function override(string $key, object $value): void
+    {
+        static::$instances[$key] = $value;
+    }
 
     /**
      * Returns a shared instance of any of the class' services.
@@ -254,6 +298,10 @@ class BaseService
      */
     public static function __callStatic(string $name, array $arguments)
     {
+        if (isset(static::$factories[$name])) {
+            return static::$factories[$name](...$arguments);
+        }
+
         $service = static::serviceExists($name);
 
         if ($service === null) {
@@ -270,11 +318,14 @@ class BaseService
     public static function serviceExists(string $name): ?string
     {
         static::buildServicesCache();
+
         $services = array_merge(self::$serviceNames, [Services::class]);
         $name     = strtolower($name);
 
         foreach ($services as $service) {
             if (method_exists($service, $name)) {
+                static::$factories[$name] = [$service, $name];
+
                 return $service;
             }
         }
@@ -291,6 +342,7 @@ class BaseService
     {
         static::$mocks     = [];
         static::$instances = [];
+        static::$factories = [];
 
         if ($initAutoloader) {
             static::autoloader()->initialize(new Autoload(), new Modules());
@@ -317,6 +369,7 @@ class BaseService
      */
     public static function injectMock(string $name, $mock)
     {
+        static::$instances[$name]         = $mock;
         static::$mocks[strtolower($name)] = $mock;
     }
 
