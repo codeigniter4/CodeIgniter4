@@ -567,20 +567,4 @@ class Connection extends BaseConnection
     {
         return (bool) pg_query($this->connID, 'ROLLBACK');
     }
-
-    /**
-     * Determines if a query is a "write" type.
-     *
-     * Overrides BaseConnection::isWriteType, adding additional read query types.
-     *
-     * @param string $sql
-     */
-    public function isWriteType($sql): bool
-    {
-        if (preg_match('#^(INSERT|UPDATE).*RETURNING\s.+(\,\s?.+)*$#is', $sql)) {
-            return false;
-        }
-
-        return parent::isWriteType($sql);
-    }
 }
