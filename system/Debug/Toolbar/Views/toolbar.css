@@ -6,10 +6,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-a[role=button] {
-  cursor: pointer;
-}
-
 #debug-icon {
   bottom: 0;
   position: fixed;
@@ -34,6 +30,10 @@ a[role=button] {
 }
 #debug-icon .debug-bar-ndisplay {
   display: none;
+}
+
+.debug-bar-vars {
+  cursor: pointer;
 }
 
 #debug-bar {
@@ -175,6 +175,7 @@ a[role=button] {
 #debug-bar #debug-bar-link {
   display: flex;
   padding: 6px;
+  cursor: pointer;
 }
 #debug-bar .ci-label {
   display: inline-flex;

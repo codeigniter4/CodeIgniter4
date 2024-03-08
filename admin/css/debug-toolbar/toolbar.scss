@@ -13,10 +13,6 @@
 @import '_mixins';
 @import '_settings';
 
-a[role="button"] {
-    cursor: pointer;
-}
-
 // DEBUG ICON
 // ========================================================================== */
 
@@ -39,7 +35,6 @@ a[role="button"] {
     clear: both;
     text-align: center;
 
-    // Cursor
     cursor: pointer;
 
     a svg {
@@ -61,6 +56,10 @@ a[role="button"] {
 
 // DEBUG BAR
 // ========================================================================== */
+
+.debug-bar-vars {
+    cursor: pointer;
+}
 
 #debug-bar {
     // Position
@@ -247,6 +246,7 @@ a[role="button"] {
     #debug-bar-link {
         display: flex;
         padding: 6px;
+        cursor: pointer;
     }
 
     // The toolbar menus

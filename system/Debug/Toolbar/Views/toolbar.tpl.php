@@ -124,7 +124,7 @@
         <?php if (isset($vars['varData'])) : ?>
             <?php foreach ($vars['varData'] as $heading => $items) : ?>
 
-                <a role="button" data-toggle="datatable" data-table="<?= strtolower(str_replace(' ', '-', $heading)) ?>">
+                <a class="debug-bar-vars" data-toggle="datatable" data-table="<?= strtolower(str_replace(' ', '-', $heading)) ?>">
                     <h2><?= $heading ?></h2>
                 </a>
 
@@ -148,7 +148,7 @@
         <?php endif ?>
 
         <!-- Session -->
-        <a role="button" data-toggle="datatable" data-table="session">
+        <a class="debug-bar-vars" data-toggle="datatable" data-table="session">
             <h2>Session User Data</h2>
         </a>
 
@@ -174,7 +174,7 @@
         <h2>Request <span>( <?= $vars['request'] ?> )</span></h2>
 
         <?php if (isset($vars['get']) && $get = $vars['get']) : ?>
-            <a role="button" data-toggle="datatable" data-table="get">
+            <a class="debug-bar-vars" data-toggle="datatable" data-table="get">
                 <h3>$_GET</h3>
             </a>
 
@@ -191,7 +191,7 @@
         <?php endif ?>
 
         <?php if (isset($vars['post']) && $post = $vars['post']) : ?>
-            <a role="button" data-toggle="datatable" data-table="post">
+            <a class="debug-bar-vars" data-toggle="datatable" data-table="post">
                 <h3>$_POST</h3>
             </a>
 
@@ -208,7 +208,7 @@
         <?php endif ?>
 
         <?php if (isset($vars['headers']) && $headers = $vars['headers']) : ?>
-            <a role="button" data-toggle="datatable" data-table="request_headers">
+            <a class="debug-bar-vars" data-toggle="datatable" data-table="request_headers">
                 <h3>Headers</h3>
             </a>
 
@@ -225,7 +225,7 @@
         <?php endif ?>
 
         <?php if (isset($vars['cookies']) && $cookies = $vars['cookies']) : ?>
-            <a role="button" data-toggle="datatable" data-table="cookie">
+            <a class="debug-bar-vars" data-toggle="datatable" data-table="cookie">
                 <h3>Cookies</h3>
             </a>
 
@@ -246,7 +246,7 @@
         </h2>
 
         <?php if (isset($vars['response']['headers']) && $headers = $vars['response']['headers']) : ?>
-            <a role="button" data-toggle="datatable" data-table="response_headers">
+            <a class="debug-bar-vars" data-toggle="datatable" data-table="response_headers">
                 <h3>Headers</h3>
             </a>
 
