@@ -15,6 +15,19 @@ things you can do to make your application run more efficiently.
 
 This section describes the optimization features that CodeIgniter provides.
 
+.. _spark_optimize:
+
+spark optimize
+==============
+
+.. versionadded:: 4.5.0
+
+The ``spark optimize`` command performs the following optimizations:
+
+- `Removing Dev Packages`_
+- Enabling `Config Caching`_
+- Enabling `FileLocator Caching`_
+
 Composer Optimization
 =====================
 
