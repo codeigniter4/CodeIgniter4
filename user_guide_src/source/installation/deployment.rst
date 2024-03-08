@@ -81,7 +81,7 @@ Configuration
 
 Open ``php.ini`` or ``xx-opcache.ini`` if you have split INI configuration in PHP, and recommend to set ``opcache.preload=/path/to/preload.php`` and ``opcache.preload_user=myuser``.
 
-.. note:: ``myuser`` is user running in your web server. If you want find location split INI configuration, just run ``php --ini`` or open file ``phpinfo()`` and search *Additional .ini files parsed*.
+.. note:: ``myuser`` is user running in your web server. If you want to find the location of the split INI configuration, just run ``php --ini`` or open file ``phpinfo()`` and search *Additional .ini files parsed*.
 
 Make sure you use the appstarter installation. If using manual installation, you must change the directory in ``include`` path.
 
