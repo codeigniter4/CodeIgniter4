@@ -2437,36 +2437,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/Mock/MockCURLRequest.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Cannot unset offset string on array\\<int, int\\>\\|null\\.$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockCache\\:\\:assertHas\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockCache\\:\\:assertHasValue\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\Mock\\\\MockCache\\:\\:assertMissing\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Return type \\(mixed\\) of method CodeIgniter\\\\Test\\\\Mock\\\\MockCache\\:\\:get\\(\\) should be covariant with return type \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Cache\\\\CacheInterface\\:\\:get\\(\\)$#',
-	'count' => 2,
-	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Return type \\(mixed\\) of method CodeIgniter\\\\Test\\\\Mock\\\\MockCache\\:\\:remember\\(\\) should be covariant with return type \\(array\\|bool\\|float\\|int\\|object\\|string\\|null\\) of method CodeIgniter\\\\Cache\\\\Handlers\\\\BaseHandler\\:\\:remember\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#',
 	'count' => 2,
 	'path' => __DIR__ . '/system/Test/Mock/MockCache.php',
