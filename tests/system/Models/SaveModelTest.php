@@ -42,6 +42,24 @@ final class SaveModelTest extends LiveModelTestCase
         $this->seeInDatabase('job', ['name' => 'Magician']);
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/8613
+     */
+    public function testSaveNewRecordArrayWithEmptyStringId(): void
+    {
+        $this->createModel(JobModel::class);
+
+        $data = [
+            'id'          => '',
+            'name'        => 'Magician',
+            'description' => 'Makes peoples things dissappear.',
+        ];
+
+        $this->model->save($data);
+
+        $this->seeInDatabase('job', ['name' => 'Magician']);
+    }
+
     public function testSaveNewRecordArray(): void
     {
         $this->createModel(JobModel::class);

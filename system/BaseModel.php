@@ -731,7 +731,7 @@ abstract class BaseModel
     {
         $id = $this->getIdValue($row);
 
-        return ! ($id === null || $id === []);
+        return ! ($id === null || $id === [] || $id === '');
     }
 
     /**
