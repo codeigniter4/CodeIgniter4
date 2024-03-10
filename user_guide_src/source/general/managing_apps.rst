@@ -50,6 +50,8 @@ they can find the **Paths** configuration file:
 
   .. literalinclude:: managing_apps/003.php
 
+.. _running-multiple-app:
+
 Running Multiple Applications with one CodeIgniter Installation
 ===============================================================
 

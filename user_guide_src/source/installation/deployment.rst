@@ -59,9 +59,33 @@ See :ref:`file-locator-caching`.
 PHP Preloading
 ==============
 
-If you want to use `Preloading <https://www.php.net/manual/en/opcache.preloading.php>`_,
-we provide a
-`preload script <https://github.com/codeigniter4/CodeIgniter4/blob/develop/preload.php>`_.
+With PHP preloading, you can instruct the server to load essential files like functions and classes into memory during startup.
+This means these elements are readily available for all requests, skipping the usual loading process and boosting your
+application's performance. However, this comes at the cost of increased memory usage and requires restarting the
+PHP engine for changes to take effect.
+
+.. note:: If you want to use `Preloading <https://www.php.net/manual/en/opcache.preloading.php>`_,
+    we provide a `preload script <https://github.com/codeigniter4/CodeIgniter4/blob/develop/preload.php>`_.
+
+Requirement
+-----------
+
+Using preloading requires one dedicated PHP handler. Normally, web servers are configured to use one PHP handler, so one app requires a dedicated web server.
+If you want to use preloading for multiple apps on one web server, configure your server to use virtual hosts with multiple PHP handlers like multiple PHP-FPMs, with each virtual host using one PHP handler.
+Preloading keeps the relevant definitions in memory by reading the files specified in ``opcache.preload``.
+
+.. note:: See :ref:`running-multiple-app` to make one core CodeIgniter4 to handle your multiple apps.
+
+Configuration
+-------------
+
+Open ``php.ini`` or ``xx-opcache.ini`` if you have split INI configuration in PHP, and recommend to set ``opcache.preload=/path/to/preload.php`` and ``opcache.preload_user=myuser``.
+
+.. note:: ``myuser`` is user running in your web server. If you want to find the location of the split INI configuration, just run ``php --ini`` or open file ``phpinfo()`` and search *Additional .ini files parsed*.
+
+Make sure you use the appstarter installation. If using manual installation, you must change the directory in ``include`` path.
+
+.. literalinclude:: preloading/001.php
 
 .. _deployment-to-shared-hosting-services:
 
