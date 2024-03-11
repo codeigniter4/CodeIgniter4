@@ -909,18 +909,4 @@ class IncomingRequest extends Request
 
         return $this->files->getFile($fileID);
     }
-
-    /**
-     * Remove relative directory (../) and multi slashes (///)
-     *
-     * Do some final cleaning of the URI and return it, currently only used in static::_parse_request_uri()
-     *
-     * @deprecated 4.1.2 Use URI::removeDotSegments() directly
-     */
-    protected function removeRelativeDirectory(string $uri): string
-    {
-        $uri = URI::removeDotSegments($uri);
-
-        return $uri === '/' ? $uri : ltrim($uri, '/');
-    }
 }
