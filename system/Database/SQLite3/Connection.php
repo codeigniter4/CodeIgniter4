@@ -15,7 +15,6 @@ namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use ErrorException;
 use Exception;
 use SQLite3;
 use SQLite3Result;
@@ -87,9 +86,13 @@ class Connection extends BaseConnection
                 $this->database = WRITEPATH . $this->database;
             }
 
-            return (! $this->password)
+            $sqlite = (! $this->password)
                 ? new SQLite3($this->database)
                 : new SQLite3($this->database, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE, $this->password);
+
+            $sqlite->enableExceptions(true);
+
+            return $sqlite;
         } catch (Exception $e) {
             throw new DatabaseException('SQLite3 error: ' . $e->getMessage());
         }
@@ -146,7 +149,7 @@ class Connection extends BaseConnection
             return $this->isWriteType($sql)
                 ? $this->connID->exec($sql)
                 : $this->connID->query($sql);
-        } catch (ErrorException $e) {
+        } catch (Exception $e) {
             log_message('error', (string) $e);
 
             if ($this->DBDebug) {
@@ -274,12 +277,12 @@ class Connection extends BaseConnection
             $retVal[$i]->name       = $query[$i]->name;
             $retVal[$i]->type       = $query[$i]->type;
             $retVal[$i]->max_length = null;
+            $retVal[$i]->nullable   = isset($query[$i]->notnull) && ! (bool) $query[$i]->notnull;
             $retVal[$i]->default    = $query[$i]->dflt_value;
             // "pk" (either zero for columns that are not part of the primary key,
             // or the 1-based index of the column within the primary key).
             // https://www.sqlite.org/pragma.html#pragma_table_info
             $retVal[$i]->primary_key = ($query[$i]->pk === 0) ? 0 : 1;
-            $retVal[$i]->nullable    = isset($query[$i]->notnull) && ! (bool) $query[$i]->notnull;
         }
 
         return $retVal;

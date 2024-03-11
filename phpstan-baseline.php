@@ -2827,21 +2827,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/PhpStreamWrapper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\TestLogger\\:\\:cleanup\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestLogger.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$level \\(string\\) of method CodeIgniter\\\\Test\\\\TestLogger\\:\\:log\\(\\) should be contravariant with parameter \\$level \\(mixed\\) of method Psr\\\\Log\\\\LoggerInterface\\:\\:log\\(\\)$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestLogger.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Test\\\\TestLogger\\:\\:\\$op_logs has no type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/TestLogger.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Throttle\\\\Throttler\\:\\:\\$testTime \\(int\\) on left side of \\?\\? is not nullable\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Throttle/Throttler.php',

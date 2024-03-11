@@ -374,6 +374,8 @@ Changes
       to match the default **php.ini** for production.
 - **RouteCollection:** The HTTP method keys in the protected property ``$routes``
   has been fixed from lowercase to uppercase.
+- **Exceptions:** Unused ``CodeIgniter\Exceptions\AlertError`` and
+  ``CodeIgniter\Exceptions\EmergencyError`` were removed.
 - ``declare(strict_types=1)`` has been added to most framework codebase.
 
 Deprecations

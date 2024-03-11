@@ -16,6 +16,7 @@ namespace CodeIgniter\Database\SQLite3;
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use Exception;
 use SQLite3;
 use SQLite3Result;
 use SQLite3Stmt;
@@ -82,7 +83,15 @@ class PreparedQuery extends BasePreparedQuery
             $this->statement->bindValue($key + 1, $item, $bindType);
         }
 
-        $this->result = $this->statement->execute();
+        try {
+            $this->result = $this->statement->execute();
+        } catch (Exception $e) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
+            }
+
+            return false;
+        }
 
         return $this->result !== false;
     }
