@@ -541,12 +541,9 @@ class Exceptions
             return false;
         }
 
-        $version = explode('.', PHP_VERSION);
-        $php_version = (int)$version[0] * 10000 + (int)$version[1] * 100 + (int)$version[2];
-
         $source = str_replace(["\r\n", "\r"], "\n", $source);
         $source = explode("\n", highlight_string($source, true));
-        $source = str_replace('<br />', "\n", $php_version >= 80300 ? implode('<br />', $source) : $source[1]);
+        $source = str_replace('<br />', "\n", PHP_VERSION_ID >= 80300 ? implode('<br />', $source) : $source[1]);
         $source = explode("\n", str_replace("\r\n", "\n", $source));
 
         // Get just the part to show
