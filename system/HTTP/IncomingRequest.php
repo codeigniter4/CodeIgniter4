@@ -50,18 +50,6 @@ use stdClass;
 class IncomingRequest extends Request
 {
     /**
-     * Enable CSRF flag
-     *
-     * Enables a CSRF cookie token to be set.
-     * Set automatically based on Config setting.
-     *
-     * @var bool
-     *
-     * @deprecated Not used
-     */
-    protected $enableCSRF = false;
-
-    /**
      * The URI for this request.
      *
      * Note: This WILL NOT match the actual URL in the browser since for
