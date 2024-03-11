@@ -122,13 +122,6 @@ class IncomingRequest extends Request
     protected $validLocales = [];
 
     /**
-     * Configuration settings.
-     *
-     * @var App
-     */
-    protected $config;
-
-    /**
      * Holds the old data from a redirect.
      *
      * @var array
@@ -172,7 +165,6 @@ class IncomingRequest extends Request
             $body = null;
         }
 
-        $this->config       = $config;
         $this->uri          = $uri;
         $this->body         = $body;
         $this->userAgent    = $userAgent;

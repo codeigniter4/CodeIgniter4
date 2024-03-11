@@ -28,11 +28,11 @@ class Request extends OutgoingRequest implements RequestInterface
      * Constructor.
      *
      * @param App $config
-     *
-     * @deprecated 4.0.5 The $config is no longer needed and will be removed in a future version
      */
-    public function __construct($config = null) // @phpstan-ignore-line
+    public function __construct($config = null)
     {
+        $this->config = $config ?? config(App::class);
+
         if (empty($this->method)) {
             $this->method = $this->getServer('REQUEST_METHOD') ?? Method::GET;
         }

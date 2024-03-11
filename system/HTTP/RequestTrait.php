@@ -28,6 +28,13 @@ use Config\App;
 trait RequestTrait
 {
     /**
+     * Configuration settings.
+     *
+     * @var App
+     */
+    protected $config;
+
+    /**
      * IP address of the current user.
      *
      * @var string
@@ -61,7 +68,7 @@ trait RequestTrait
             'valid_ip',
         ];
 
-        $proxyIPs = config(App::class)->proxyIPs;
+        $proxyIPs = $this->config->proxyIPs;
 
         if (! empty($proxyIPs) && (! is_array($proxyIPs) || is_int(array_key_first($proxyIPs)))) {
             throw new ConfigException(
