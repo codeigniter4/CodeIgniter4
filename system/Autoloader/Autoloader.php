@@ -346,7 +346,7 @@ class Autoloader
             );
         }
         if ($result === false) {
-            if (version_compare(PHP_VERSION, '8.0.0', '>=')) {
+            if (PHP_VERSION_ID >= 80000) {
                 $message = preg_last_error_msg();
             } else {
                 $message = 'Regex error. error code: ' . preg_last_error();
