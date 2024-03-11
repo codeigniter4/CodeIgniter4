@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 use CodeIgniter\Cookie\Cookie;
 use Config\Cookie as CookieConfig;
-use Config\Services;
 
 // =============================================================================
 // CodeIgniter Cookie Helpers
@@ -51,7 +50,7 @@ if (! function_exists('set_cookie')) {
         ?bool $httpOnly = null,
         ?string $sameSite = null
     ) {
-        $response = Services::response();
+        $response = service('response');
         $response->setCookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly, $sameSite);
     }
 }
@@ -77,7 +76,7 @@ if (! function_exists('get_cookie')) {
             $prefix = $cookie->prefix;
         }
 
-        $request = Services::request();
+        $request = service('request');
         $filter  = $xssClean ? FILTER_SANITIZE_FULL_SPECIAL_CHARS : FILTER_DEFAULT;
 
         return $request->getCookie($prefix . $index, $filter);
@@ -99,7 +98,7 @@ if (! function_exists('delete_cookie')) {
      */
     function delete_cookie($name, string $domain = '', string $path = '/', string $prefix = '')
     {
-        Services::response()->deleteCookie($name, $domain, $path, $prefix);
+        service('response')->deleteCookie($name, $domain, $path, $prefix);
     }
 }
 
@@ -109,6 +108,6 @@ if (! function_exists('has_cookie')) {
      */
     function has_cookie(string $name, ?string $value = null, string $prefix = ''): bool
     {
-        return Services::response()->hasCookie($name, $value, $prefix);
+        return service('response')->hasCookie($name, $value, $prefix);
     }
 }

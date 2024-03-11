@@ -15,7 +15,6 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\Services;
 use Throwable;
 
 /**
@@ -68,7 +67,7 @@ class Migrate extends BaseCommand
      */
     public function run(array $params)
     {
-        $runner = Services::migrations();
+        $runner = service('migrations');
         $runner->clearCliMessages();
 
         CLI::write(lang('Migrations.latest'), 'yellow');

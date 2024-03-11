@@ -15,6 +15,6 @@ The following sections should get you quickly testing your applications.
     HTTP Testing <feature>
     response
     cli
+    Mocking <mocking>
     benchmark
     debugging
-    Mocking <mocking>

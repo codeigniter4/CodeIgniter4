@@ -1,0 +1,5 @@
+{
+    "require-dev": {
+        "phpmetrics/phpmetrics": "^3.0rc6"
+    }
+}

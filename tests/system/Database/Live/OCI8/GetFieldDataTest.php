@@ -15,6 +15,8 @@ namespace CodeIgniter\Database\Live\OCI8;
 
 use CodeIgniter\Database\Live\AbstractGetFieldDataTest;
 use Config\Database;
+use LogicException;
+use stdClass;
 
 /**
  * @group DatabaseLive
@@ -32,20 +34,33 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
         $this->forge = Database::forge($this->db);
     }
 
-    public function testGetFieldData(): void
+    private function getFieldMetaData(string $column, string $table): stdClass
     {
-        $fields = $this->db->getFieldData('test1');
+        $fields = $this->db->getFieldData($table);
 
-        $data = [];
+        $name = array_search(
+            $column,
+            array_column($fields, 'name'),
+            true
+        );
 
-        foreach ($fields as $obj) {
-            $data[$obj->name] = $obj;
+        if ($name === false) {
+            throw new LogicException('Field not found: ' . $column);
         }
 
-        $idDefault = $data['id']->default;
+        return $fields[$name];
+    }
+
+    public function testGetFieldDataDefault(): void
+    {
+        $this->createTableForDefault();
+
+        $fields = $this->db->getFieldData($this->table);
+
+        $idDefault = $this->getFieldMetaData('id', $this->table)->default;
         $this->assertMatchesRegularExpression('/"ORACLE"."ISEQ\$\$_[0-9]+".nextval/', $idDefault);
 
-        $expected = json_decode(json_encode([
+        $expected = [
             (object) [
                 'name'       => 'id',
                 'type'       => 'NUMBER',
@@ -102,14 +117,165 @@ final class GetFieldDataTest extends AbstractGetFieldDataTest
                 'default'    => "'abc' ", // string "abc"
                 // 'primary_key' => 0,
             ],
-        ]), true);
-        $names = array_column($expected, 'name');
-        array_multisort($names, SORT_ASC, $expected);
+        ];
+        $this->assertSameFieldData($expected, $fields);
+    }
 
-        $fields = json_decode(json_encode($fields), true);
-        $names  = array_column($fields, 'name');
-        array_multisort($names, SORT_ASC, $fields);
+    public function testGetFieldDataType(): void
+    {
+        $this->createTableForType();
 
-        $this->assertSame($expected, $fields);
+        $fields = $this->db->getFieldData($this->table);
+
+        $expected = [
+            0 => (object) [
+                'name'       => 'id',
+                'type'       => 'NUMBER',
+                'max_length' => '20',
+                'nullable'   => false,
+                'default'    => $this->getFieldMetaData('id', $this->table)->default,
+            ],
+            1 => (object) [
+                'name'       => 'type_varchar',
+                'type'       => 'VARCHAR2',
+                'max_length' => '40',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            2 => (object) [
+                'name'       => 'type_char',
+                'type'       => 'CHAR',
+                'max_length' => '10',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            3 => (object) [
+                'name'       => 'type_text',
+                'type'       => 'VARCHAR2',
+                'max_length' => '4000',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            4 => (object) [
+                'name'       => 'type_smallint',
+                'type'       => 'NUMBER',
+                'max_length' => '5',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            5 => (object) [
+                'name'       => 'type_integer',
+                'type'       => 'NUMBER',
+                'max_length' => '11',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            6 => (object) [
+                'name'       => 'type_float',
+                'type'       => 'FLOAT',
+                'max_length' => '126',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            7 => (object) [
+                'name'       => 'type_numeric',
+                'type'       => 'NUMBER',
+                'max_length' => '18',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            8 => (object) [
+                'name'       => 'type_date',
+                'type'       => 'DATE',
+                'max_length' => '7',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            9 => (object) [
+                'name'       => 'type_time',
+                'type'       => 'DATE',
+                'max_length' => '7',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            10 => (object) [
+                'name'       => 'type_datetime',
+                'type'       => 'DATE',
+                'max_length' => '7',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            11 => (object) [
+                'name'       => 'type_timestamp',
+                'type'       => 'TIMESTAMP(6)',
+                'max_length' => '11',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            12 => (object) [
+                'name'       => 'type_bigint',
+                'type'       => 'NUMBER',
+                'max_length' => '19',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            13 => (object) [
+                'name'       => 'type_real',
+                'type'       => 'FLOAT',
+                'max_length' => '63',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            14 => (object) [
+                'name'       => 'type_enum',
+                'type'       => 'VARCHAR2',
+                'max_length' => '5',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            15 => (object) [
+                'name'       => 'type_set',
+                'type'       => 'VARCHAR2',
+                'max_length' => '3',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            16 => (object) [
+                'name'       => 'type_mediumtext',
+                'type'       => 'VARCHAR2',
+                'max_length' => '4000',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            17 => (object) [
+                'name'       => 'type_double',
+                'type'       => 'FLOAT',
+                'max_length' => '126',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            18 => (object) [
+                'name'       => 'type_decimal',
+                'type'       => 'NUMBER',
+                'max_length' => '18',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            19 => (object) [
+                'name'       => 'type_blob',
+                'type'       => 'BLOB',
+                'max_length' => '4000',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+            20 => (object) [
+                'name'       => 'type_boolean',
+                'type'       => 'NUMBER',
+                'max_length' => '1',
+                'nullable'   => true,
+                'default'    => null,
+            ],
+        ];
+        $this->assertSameFieldData($expected, $fields);
     }
 }

@@ -17,7 +17,6 @@ use CodeIgniter\HTTP\SiteURI;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
-use Config\Services;
 
 // CodeIgniter URL Helpers
 
@@ -25,13 +24,15 @@ if (! function_exists('site_url')) {
     /**
      * Returns a site URL as defined by the App config.
      *
-     * @param array|string $relativePath URI string or array of URI segments
-     * @param string|null  $scheme       URI scheme. E.g., http, ftp
-     * @param App|null     $config       Alternate configuration to use
+     * @param array|string $relativePath URI string or array of URI segments.
+     * @param string|null  $scheme       URI scheme. E.g., http, ftp. If empty
+     *                                   string '' is set, a protocol-relative
+     *                                   link is returned.
+     * @param App|null     $config       Alternate configuration to use.
      */
     function site_url($relativePath = '', ?string $scheme = null, ?App $config = null): string
     {
-        $currentURI = Services::request()->getUri();
+        $currentURI = service('request')->getUri();
 
         assert($currentURI instanceof SiteURI);
 
@@ -44,12 +45,14 @@ if (! function_exists('base_url')) {
      * Returns the base URL as defined by the App config.
      * Base URLs are trimmed site URLs without the index page.
      *
-     * @param array|string $relativePath URI string or array of URI segments
-     * @param string|null  $scheme       URI scheme. E.g., http, ftp
+     * @param array|string $relativePath URI string or array of URI segments.
+     * @param string|null  $scheme       URI scheme. E.g., http, ftp. If empty
+     *                                   string '' is set, a protocol-relative
+     *                                   link is returned.
      */
     function base_url($relativePath = '', ?string $scheme = null): string
     {
-        $currentURI = Services::request()->getUri();
+        $currentURI = service('request')->getUri();
 
         assert($currentURI instanceof SiteURI);
 
@@ -69,7 +72,7 @@ if (! function_exists('current_url')) {
      */
     function current_url(bool $returnObject = false, ?IncomingRequest $request = null)
     {
-        $request ??= Services::request();
+        $request ??= service('request');
         /** @var CLIRequest|IncomingRequest $request */
         $uri = $request->getUri();
 
@@ -109,9 +112,9 @@ if (! function_exists('uri_string')) {
      */
     function uri_string(): string
     {
-        // The value of Services::request()->getUri()->getPath() returns
+        // The value of service('request')->getUri()->getPath() returns
         // full URI path.
-        $uri = Services::request()->getUri();
+        $uri = service('request')->getUri();
 
         $path = $uri instanceof SiteURI ? $uri->getRoutePath() : $uri->getPath();
 

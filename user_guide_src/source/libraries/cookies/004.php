@@ -22,7 +22,7 @@ $cookie = new Cookie(
 $cookie->getName();             // 'remember_token'
 $cookie->getPrefix();           // '__Secure-'
 $cookie->getPrefixedName();     // '__Secure-remember_token'
-$cookie->getExpiresTimestamp(); // Unix timestamp
+$cookie->getExpiresTimestamp(); // UNIX timestamp
 $cookie->getExpiresString();    // 'Fri, 14-Feb-2025 00:00:00 GMT'
 $cookie->isExpired();           // false
 $cookie->getMaxAge();           // the difference from time() to expires

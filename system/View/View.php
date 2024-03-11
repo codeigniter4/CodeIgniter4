@@ -17,7 +17,6 @@ use CodeIgniter\Autoloader\FileLocatorInterface;
 use CodeIgniter\Debug\Toolbar\Collectors\Views;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\View\Exceptions\ViewException;
-use Config\Services;
 use Config\Toolbar;
 use Config\View as ViewConfig;
 use Psr\Log\LoggerInterface;
@@ -139,7 +138,7 @@ class View implements RendererInterface
      * The name of the current section being rendered,
      * if any.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $sectionStack = [];
 
@@ -152,8 +151,8 @@ class View implements RendererInterface
     ) {
         $this->config   = $config;
         $this->viewPath = rtrim($viewPath, '\\/ ') . DIRECTORY_SEPARATOR;
-        $this->loader   = $loader ?? Services::locator();
-        $this->logger   = $logger ?? Services::logger();
+        $this->loader   = $loader ?? service('locator');
+        $this->logger   = $logger ?? service('logger');
         $this->debug    = $debug ?? CI_DEBUG;
         $this->saveData = (bool) $config->saveData;
     }
@@ -261,10 +260,19 @@ class View implements RendererInterface
             $this->renderVars['view']
         );
 
-        $afterFilters = service('filters')->getFiltersClass()['after'];
+        // Check if DebugToolbar is enabled.
+        $filters              = service('filters');
+        $requiredAfterFilters = $filters->getRequiredFilters('after')[0];
+        if (in_array('toolbar', $requiredAfterFilters, true)) {
+            $debugBarEnabled = true;
+        } else {
+            $afterFilters    = $filters->getFiltersClass()['after'];
+            $debugBarEnabled = in_array(DebugToolbar::class, $afterFilters, true);
+        }
+
         if (
-            ($this->debug && (! isset($options['debug']) || $options['debug'] === true))
-            && in_array(DebugToolbar::class, $afterFilters, true)
+            $this->debug && $debugBarEnabled
+            && (! isset($options['debug']) || $options['debug'] === true)
         ) {
             $toolbarCollectors = config(Toolbar::class)->collectors;
 
@@ -337,8 +345,8 @@ class View implements RendererInterface
     /**
      * Sets several pieces of view data at once.
      *
-     * @param         string|null                               $context The context to escape it for: html, css, js, url
-     *                                                                   If null, no escaping will happen
+     * @param         non-empty-string|null                     $context The context to escape it for.
+     *                                                                   If 'raw', no escaping will happen.
      * @phpstan-param null|'html'|'js'|'css'|'url'|'attr'|'raw' $context
      */
     public function setData(array $data = [], ?string $context = null): RendererInterface
@@ -357,8 +365,8 @@ class View implements RendererInterface
      * Sets a single piece of view data.
      *
      * @param         mixed                                     $value
-     * @param         string|null                               $context The context to escape it for: html, css, js, url
-     *                                                                   If null, no escaping will happen
+     * @param         non-empty-string|null                     $context The context to escape it for.
+     *                                                                   If 'raw', no escaping will happen.
      * @phpstan-param null|'html'|'js'|'css'|'url'|'attr'|'raw' $context
      */
     public function setVar(string $name, $value = null, ?string $context = null): RendererInterface

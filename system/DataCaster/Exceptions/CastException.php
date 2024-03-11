@@ -11,15 +11,13 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter;
+namespace CodeIgniter\DataCaster\Exceptions;
 
-use CodeIgniter\Entity\Entity as CoreEntity;
+use CodeIgniter\Entity\Exceptions\CastException as EntityCastException;
 
 /**
- * Entity encapsulation, for use with CodeIgniter\Model
- *
- * @deprecated use CodeIgniter\Entity\Entity class instead
+ * CastException is thrown for invalid cast initialization and management.
  */
-class Entity extends CoreEntity
+class CastException extends EntityCastException
 {
 }

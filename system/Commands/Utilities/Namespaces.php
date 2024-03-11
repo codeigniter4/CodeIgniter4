@@ -16,7 +16,6 @@ namespace CodeIgniter\Commands\Utilities;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Autoload;
-use Config\Services;
 
 /**
  * Lists namespaces set in Config\Autoload with their
@@ -96,7 +95,7 @@ class Namespaces extends BaseCommand
     {
         $maxLength = $params['m'];
 
-        $autoloader = Services::autoloader();
+        $autoloader = service('autoloader');
 
         $tbody = [];
 

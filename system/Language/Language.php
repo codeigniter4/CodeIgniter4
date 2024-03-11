@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Language;
 
-use Config\Services;
 use InvalidArgumentException;
 use MessageFormatter;
 
@@ -176,7 +175,7 @@ class Language
      * Advanced message formatting.
      *
      * @param array|string $message
-     * @param string[]     $args
+     * @param list<string> $args
      *
      * @return array|string
      */
@@ -250,7 +249,7 @@ class Language
      */
     protected function requireFile(string $path): array
     {
-        $files   = Services::locator()->search($path, 'php', false);
+        $files   = service('locator')->search($path, 'php', false);
         $strings = [];
 
         foreach ($files as $file) {

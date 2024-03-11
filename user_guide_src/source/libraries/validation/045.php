@@ -2,7 +2,7 @@
 
 // In Controller.
 
-if (! $this->validate([
+if (! $this->validateData($data, [
     'username' => 'required',
     'password' => 'required|min_length[10]',
 ])) {

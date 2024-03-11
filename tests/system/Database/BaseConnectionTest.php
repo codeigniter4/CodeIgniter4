@@ -26,22 +26,27 @@ use Throwable;
 final class BaseConnectionTest extends CIUnitTestCase
 {
     private array $options = [
-        'DSN'      => '',
-        'hostname' => 'localhost',
-        'username' => 'first',
-        'password' => 'last',
-        'database' => 'dbname',
-        'DBDriver' => 'MockDriver',
-        'DBPrefix' => 'test_',
-        'pConnect' => true,
-        'DBDebug'  => true,
-        'charset'  => 'utf8mb4',
-        'DBCollat' => 'utf8mb4_general_ci',
-        'swapPre'  => '',
-        'encrypt'  => false,
-        'compress' => false,
-        'strictOn' => true,
-        'failover' => [],
+        'DSN'        => '',
+        'hostname'   => 'localhost',
+        'username'   => 'first',
+        'password'   => 'last',
+        'database'   => 'dbname',
+        'DBDriver'   => 'MockDriver',
+        'DBPrefix'   => 'test_',
+        'pConnect'   => true,
+        'DBDebug'    => true,
+        'charset'    => 'utf8mb4',
+        'DBCollat'   => 'utf8mb4_general_ci',
+        'swapPre'    => '',
+        'encrypt'    => false,
+        'compress'   => false,
+        'strictOn'   => true,
+        'failover'   => [],
+        'dateFormat' => [
+            'date'     => 'Y-m-d',
+            'datetime' => 'Y-m-d H:i:s',
+            'time'     => 'H:i:s',
+        ],
     ];
     private array $failoverOptions = [
         'DSN'      => '',
@@ -80,6 +85,13 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertFalse($db->compress);
         $this->assertTrue($db->strictOn);
         $this->assertSame([], $db->failover);
+        $this->assertSame([
+            'date'        => 'Y-m-d',
+            'datetime'    => 'Y-m-d H:i:s',
+            'datetime-ms' => 'Y-m-d H:i:s.v',
+            'datetime-us' => 'Y-m-d H:i:s.u',
+            'time'        => 'H:i:s',
+        ], $db->dateFormat);
     }
 
     public function testConnectionThrowExceptionWhenCannotConnect(): void

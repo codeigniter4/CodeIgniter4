@@ -1,5 +1,36 @@
 # Changelog
 
+## [v4.4.6](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.6) (2024-02-24)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.5...v4.4.6)
+
+### Breaking Changes
+
+* fix: Time::createFromTimestamp() returns Time with UTC by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8544
+
+### Fixed Bugs
+
+* fix: [OCI8] getFieldData() returns incorrect `default` value by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8459
+* fix: [SQLite3] getFieldData() returns incorrect `primary_key` values by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8460
+* fix: [OCI8][Postgre][SQLSRV][SQLite3] change order of properties returned by getFieldData() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8481
+* docs: fix supported SQL Server version by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8489
+* fix: [SQLite3] Forge::modifyColumn() messes up table by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8457
+* docs: fix incorrect @return type in `ResultInterface-getCustomRowObject()` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8503
+* fix: [Postgre] updateBatch() breaks `char` type data by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8524
+* fix: DebugBar block by CSP by @YapsBridging in https://github.com/codeigniter4/CodeIgniter4/pull/8411
+* docs: fix `@phpstan-type` in Model by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8543
+* fix: [CURLRequest] Multiple HTTP 100 return by API. by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/8466
+* fix: PHPDoc types in controller.tpl.php by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8561
+* fix: [Session] Redis session race condition by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8323
+
+### Refactoring
+
+* test: refactor ImageMagickHandlerTest by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/8461
+* test: refactor GetFieldDataTest by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8480
+* refactor: use ternary operators in Helpers by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/8529
+* refactor: use official site URLs by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8541
+* refactor: remove redundant URL helper loading by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8556
+* refactor: small improvement in `loadInNamespace` Autoloader by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/8553
+
 ## [v4.4.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.5) (2024-01-27)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.4...v4.4.5)
 

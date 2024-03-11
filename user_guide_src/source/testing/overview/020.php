@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;

@@ -56,7 +56,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.4.5';
+    public const CI_VERSION = '4.4.6';
 
     /**
      * App startup time.
@@ -462,7 +462,7 @@ class CodeIgniter
         $uri = $this->request->getPath();
 
         if ($this->enableFilters) {
-            $filters = Services::filters();
+            $filters = service('filters');
 
             // If any filters were specified within the routes file,
             // we need to ensure it's active for the current request
@@ -518,7 +518,7 @@ class CodeIgniter
         $this->gatherOutput($cacheConfig, $returned);
 
         if ($this->enableFilters) {
-            $filters = Services::filters();
+            $filters = service('filters');
             $filters->setResponse($this->response);
 
             // Run "after" filters
@@ -649,7 +649,7 @@ class CodeIgniter
             Services::createRequest($this->config);
         }
 
-        $this->request = Services::request();
+        $this->request = service('request');
 
         $this->spoofRequestMethod();
     }
@@ -808,7 +808,7 @@ class CodeIgniter
      * @param RouteCollectionInterface|null $routes A collection interface to use in place
      *                                              of the config file.
      *
-     * @return string|string[]|null Route filters, that is, the filters specified in the routes file
+     * @return list<string>|string|null Route filters, that is, the filters specified in the routes file
      *
      * @throws RedirectException
      */
@@ -817,7 +817,7 @@ class CodeIgniter
         $this->benchmark->start('routing');
 
         if ($routes === null) {
-            $routes = Services::routes()->loadRoutes();
+            $routes = service('routes')->loadRoutes();
         }
 
         // $routes is defined in Config/Routes.php
@@ -879,7 +879,10 @@ class CodeIgniter
         }
 
         // Try to autoload the class
-        if (! class_exists($this->controller, true) || $this->method[0] === '_') {
+        if (
+            ! class_exists($this->controller, true)
+            || ($this->method[0] === '_' && $this->method !== '__invoke')
+        ) {
             throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
         }
     }
@@ -938,6 +941,8 @@ class CodeIgniter
      */
     protected function display404errors(PageNotFoundException $e)
     {
+        $this->response->setStatusCode($e->getCode());
+
         // Is there a 404 Override available?
         if ($override = $this->router->get404Override()) {
             $returned = null;
@@ -952,7 +957,10 @@ class CodeIgniter
                 $this->method     = $override[1];
 
                 $controller = $this->createController();
-                $returned   = $this->runController($controller);
+
+                $returned = $controller->{$this->method}($e->getMessage());
+
+                $this->benchmark->stop('controller');
             }
 
             unset($override);
@@ -962,9 +970,6 @@ class CodeIgniter
 
             return $this->response;
         }
-
-        // Display 404 Errors
-        $this->response->setStatusCode($e->getCode());
 
         $this->outputBufferingEnd();
 

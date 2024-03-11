@@ -11,16 +11,14 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Cache\Exceptions;
+namespace Tests\Support;
 
-/**
- * Provides a domain-level interface for broad capture
- * of all framework-related exceptions.
- *
- * catch (\CodeIgniter\Cache\Exceptions\ExceptionInterface) { ... }
- *
- * @deprecated 4.1.2
- */
-interface ExceptionInterface
+use CodeIgniter\Controller;
+
+class Errors extends Controller
 {
+    public function show404(string $message): string
+    {
+        return $message;
+    }
 }

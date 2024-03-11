@@ -7,14 +7,14 @@ use to test your application. Those details can be found in the documentation.
 
 ## Resources
 
-* [CodeIgniter 4 User Guide on Testing](https://codeigniter4.github.io/userguide/testing/index.html)
+* [CodeIgniter 4 User Guide on Testing](https://codeigniter.com/user_guide/testing/index.html)
 * [PHPUnit docs](https://phpunit.de/documentation.html)
 * [Any tutorials on Unit testing in CI4?](https://forum.codeigniter.com/showthread.php?tid=81830)
 
 ## Requirements
 
 It is recommended to use the latest version of PHPUnit. At the time of this
-writing we are running version 9.x. Support for this has been built into the
+writing, we are running version 9.x. Support for this has been built into the
 **composer.json** file that ships with CodeIgniter and can easily be installed
 via [Composer](https://getcomposer.org/) if you don't already have it installed globally.
 
@@ -35,10 +35,10 @@ for code coverage to be calculated successfully. After installing `XDebug`, you 
 
 A number of the tests use a running database.
 In order to set up the database edit the details for the `tests` group in
-**app/Config/Database.php** or **phpunit.xml**.
+**app/Config/Database.php** or **.env**.
 Make sure that you provide a database engine that is currently running on your machine.
 More details on a test database setup are in the
-[Testing Your Database](https://codeigniter4.github.io/userguide/testing/database.html) section of the documentation.
+[Testing Your Database](https://codeigniter.com/user_guide/testing/database.html) section of the documentation.
 
 ## Running the tests
 
@@ -92,12 +92,11 @@ HTML code coverage reports.
 ## Test Cases
 
 Every test needs a *test case*, or class that your tests extend. CodeIgniter 4
-provides a few that you may use directly:
-* `CodeIgniter\Test\CIUnitTestCase` - for basic tests with no other service needs
-* `CodeIgniter\Test\DatabaseTestTrait` - for tests that need database access
+provides one class that you may use directly:
+* `CodeIgniter\Test\CIUnitTestCase`
 
-Most of the time you will want to write your own test cases to hold functions and services
-common to your test suites.
+Most of the time you will want to write your own test cases that extend `CIUnitTestCase`
+to hold functions and services common to your test suites.
 
 ## Creating Tests
 
@@ -112,11 +111,8 @@ Review the links above and always pay attention to your code coverage.
 
 ### Database Tests
 
-Tests can include migrating, seeding, and testing against a mock or live<sup>1</sup> database.
+Tests can include migrating, seeding, and testing against a mock or live database.
 Be sure to modify the test case (or create your own) to point to your seed and migrations
 and include any additional steps to be run before tests in the `setUp()` method.
-
-<sup>1</sup> Note: If you are using database tests that require a live database connection
-you will need to rename **phpunit.xml.dist** to **phpunit.xml**, uncomment the database
-configuration lines and add your connection details. Prevent **phpunit.xml** from being
-tracked in your repo by adding it to **.gitignore**.
+See [Testing Your Database](https://codeigniter.com/user_guide/testing/database.html)
+for details.

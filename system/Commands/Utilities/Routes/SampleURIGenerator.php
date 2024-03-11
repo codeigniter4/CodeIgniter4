@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Commands\Utilities\Routes;
 
-use CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;
 use Config\App;
 
@@ -42,7 +41,7 @@ final class SampleURIGenerator
 
     public function __construct(?RouteCollection $routes = null)
     {
-        $this->routes = $routes ?? Services::routes();
+        $this->routes = $routes ?? service('routes');
     }
 
     /**

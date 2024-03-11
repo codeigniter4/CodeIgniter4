@@ -20,34 +20,35 @@ use stdClass;
 use Throwable;
 
 /**
- * @property array      $aliasedTables
- * @property string     $charset
- * @property bool       $compress
- * @property float      $connectDuration
- * @property float      $connectTime
- * @property string     $database
- * @property string     $DBCollat
- * @property bool       $DBDebug
- * @property string     $DBDriver
- * @property string     $DBPrefix
- * @property string     $DSN
- * @property array|bool $encrypt
- * @property array      $failover
- * @property string     $hostname
- * @property Query      $lastQuery
- * @property string     $password
- * @property bool       $pConnect
- * @property int|string $port
- * @property bool       $pretend
- * @property string     $queryClass
- * @property array      $reservedIdentifiers
- * @property bool       $strictOn
- * @property string     $subdriver
- * @property string     $swapPre
- * @property int        $transDepth
- * @property bool       $transFailure
- * @property bool       $transStatus
- * @property string     $username
+ * @property-read array      $aliasedTables
+ * @property-read string     $charset
+ * @property-read bool       $compress
+ * @property-read float      $connectDuration
+ * @property-read float      $connectTime
+ * @property-read string     $database
+ * @property-read array      $dateFormat
+ * @property-read string     $DBCollat
+ * @property-read bool       $DBDebug
+ * @property-read string     $DBDriver
+ * @property-read string     $DBPrefix
+ * @property-read string     $DSN
+ * @property-read array|bool $encrypt
+ * @property-read array      $failover
+ * @property-read string     $hostname
+ * @property-read Query      $lastQuery
+ * @property-read string     $password
+ * @property-read bool       $pConnect
+ * @property-read int|string $port
+ * @property-read bool       $pretend
+ * @property-read string     $queryClass
+ * @property-read array      $reservedIdentifiers
+ * @property-read bool       $strictOn
+ * @property-read string     $subdriver
+ * @property-read string     $swapPre
+ * @property-read int        $transDepth
+ * @property-read bool       $transFailure
+ * @property-read bool       $transStatus
+ * @property-read string     $username
  *
  * @template TConnection
  * @template TResult
@@ -202,7 +203,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Connection ID
      *
-     * @var false|object|resource
+     * @var         false|object|resource
      * @phpstan-var false|TConnection
      */
     public $connID = false;
@@ -210,7 +211,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Result ID
      *
-     * @var false|object|resource
+     * @var         false|object|resource
      * @phpstan-var false|TResult
      */
     public $resultID = false;
@@ -348,10 +349,28 @@ abstract class BaseConnection implements ConnectionInterface
     protected $queryClass = Query::class;
 
     /**
+     * Default Date/Time formats
+     *
+     * @var array<string, string>
+     */
+    protected array $dateFormat = [
+        'date'        => 'Y-m-d',
+        'datetime'    => 'Y-m-d H:i:s',
+        'datetime-ms' => 'Y-m-d H:i:s.v',
+        'datetime-us' => 'Y-m-d H:i:s.u',
+        'time'        => 'H:i:s',
+    ];
+
+    /**
      * Saves our connection settings.
      */
     public function __construct(array $params)
     {
+        if (isset($params['dateFormat'])) {
+            $this->dateFormat = array_merge($this->dateFormat, $params['dateFormat']);
+            unset($params['dateFormat']);
+        }
+
         foreach ($params as $key => $value) {
             if (property_exists($this, $key)) {
                 $this->{$key} = $value;
@@ -1289,10 +1308,10 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Escape String
      *
-     * @param string|string[] $str  Input string
-     * @param bool            $like Whether or not the string will be used in a LIKE condition
+     * @param list<string>|string $str  Input string
+     * @param bool                $like Whether or not the string will be used in a LIKE condition
      *
-     * @return string|string[]
+     * @return list<string>|string
      */
     public function escapeString($str, bool $like = false)
     {
@@ -1332,9 +1351,9 @@ abstract class BaseConnection implements ConnectionInterface
      * Calls the individual driver for platform
      * specific escaping for LIKE conditions
      *
-     * @param string|string[] $str
+     * @param list<string>|string $str
      *
-     * @return string|string[]
+     * @return list<string>|string
      */
     public function escapeLikeString($str)
     {
@@ -1527,7 +1546,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns an object with field data
      *
-     * @return stdClass[]
+     * @return list<stdClass>
      */
     public function getFieldData(string $table)
     {
@@ -1667,7 +1686,7 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function isWriteType($sql): bool
     {
-        return (bool) preg_match('/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX|MERGE)\s/i', $sql);
+        return (bool) preg_match('/^\s*(WITH\s.+(\s|[)]))?"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX|MERGE)\s(?!.*\sRETURNING\s)/is', $sql);
     }
 
     /**

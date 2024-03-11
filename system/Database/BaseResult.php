@@ -27,7 +27,7 @@ abstract class BaseResult implements ResultInterface
     /**
      * Connection ID
      *
-     * @var object|resource
+     * @var         object|resource
      * @phpstan-var TConnection
      */
     public $connID;
@@ -35,7 +35,7 @@ abstract class BaseResult implements ResultInterface
     /**
      * Result ID
      *
-     * @var false|object|resource
+     * @var         false|object|resource
      * @phpstan-var false|TResult
      */
     public $resultID;
@@ -43,14 +43,14 @@ abstract class BaseResult implements ResultInterface
     /**
      * Result Array
      *
-     * @var array[]
+     * @var list<array>
      */
     public $resultArray = [];
 
     /**
      * Result Object
      *
-     * @var object[]
+     * @var list<object>
      */
     public $resultObject = [];
 
@@ -187,7 +187,7 @@ abstract class BaseResult implements ResultInterface
             return [];
         }
 
-        if ($this->resultObject) {
+        if ($this->resultObject !== []) {
             foreach ($this->resultObject as $row) {
                 $this->resultArray[] = (array) $row;
             }
@@ -227,7 +227,7 @@ abstract class BaseResult implements ResultInterface
             return [];
         }
 
-        if ($this->resultArray) {
+        if ($this->resultArray !== []) {
             foreach ($this->resultArray as $row) {
                 $this->resultObject[] = (object) $row;
             }
@@ -254,14 +254,16 @@ abstract class BaseResult implements ResultInterface
      * Wrapper object to return a row as either an array, an object, or
      * a custom class.
      *
-     * If row doesn't exist, returns null.
+     * If the row doesn't exist, returns null.
      *
-     * @param         int|string                    $n    The index of the results to return, or column name.
-     * @param         string                        $type The type of result object. 'array', 'object' or class name.
-     * @phpstan-param class-string|'array'|'object' $type
+     * @template T of object
+     *
+     * @param         int|string                       $n    The index of the results to return, or column name.
+     * @param         string                           $type The type of result object. 'array', 'object' or class name.
+     * @phpstan-param class-string<T>|'array'|'object' $type
      *
      * @return         array|object|stdClass|null
-     * @phpstan-return ($type is 'object' ? stdClass|null : ($type is 'array' ? array|null : object|null))
+     * @phpstan-return ($type is 'object' ? stdClass|null : ($type is 'array' ? array|null : T|null))
      */
     public function getRow($n = 0, string $type = 'object')
     {
@@ -294,9 +296,15 @@ abstract class BaseResult implements ResultInterface
     /**
      * Returns a row as a custom class instance.
      *
-     * If row doesn't exists, returns null.
+     * If the row doesn't exist, returns null.
      *
-     * @return array|null
+     * @template T of object
+     *
+     * @param         int             $n         The index of the results to return.
+     * @phpstan-param class-string<T> $className
+     *
+     * @return         object|null
+     * @phpstan-return T|null
      */
     public function getCustomRowObject(int $n, string $className)
     {

@@ -9,7 +9,7 @@ class {class} extends {extends}
 {
 <?php if ($type === 'controller'): ?>
     /**
-     * Return an array of resource objects, themselves in array format
+     * Return an array of resource objects, themselves in array format.
      *
      * @return ResponseInterface
      */
@@ -19,7 +19,9 @@ class {class} extends {extends}
     }
 
     /**
-     * Return the properties of a resource object
+     * Return the properties of a resource object.
+     *
+     * @param int|string|null $id
      *
      * @return ResponseInterface
      */
@@ -29,7 +31,7 @@ class {class} extends {extends}
     }
 
     /**
-     * Return a new resource object, with default properties
+     * Return a new resource object, with default properties.
      *
      * @return ResponseInterface
      */
@@ -39,7 +41,7 @@ class {class} extends {extends}
     }
 
     /**
-     * Create a new resource object, from "posted" parameters
+     * Create a new resource object, from "posted" parameters.
      *
      * @return ResponseInterface
      */
@@ -49,7 +51,9 @@ class {class} extends {extends}
     }
 
     /**
-     * Return the editable properties of a resource object
+     * Return the editable properties of a resource object.
+     *
+     * @param int|string|null $id
      *
      * @return ResponseInterface
      */
@@ -59,7 +63,9 @@ class {class} extends {extends}
     }
 
     /**
-     * Add or update a model resource, from "posted" properties
+     * Add or update a model resource, from "posted" properties.
+     *
+     * @param int|string|null $id
      *
      * @return ResponseInterface
      */
@@ -69,7 +75,9 @@ class {class} extends {extends}
     }
 
     /**
-     * Delete the designated resource object from the model
+     * Delete the designated resource object from the model.
+     *
+     * @param int|string|null $id
      *
      * @return ResponseInterface
      */
@@ -79,7 +87,7 @@ class {class} extends {extends}
     }
 <?php elseif ($type === 'presenter'): ?>
     /**
-     * Present a view of resource objects
+     * Present a view of resource objects.
      *
      * @return ResponseInterface
      */
@@ -89,9 +97,9 @@ class {class} extends {extends}
     }
 
     /**
-     * Present a view to present a specific resource object
+     * Present a view to present a specific resource object.
      *
-     * @param string $id
+     * @param int|string|null $id
      *
      * @return ResponseInterface
      */
@@ -101,9 +109,9 @@ class {class} extends {extends}
     }
 
     /**
-     * Present a view to present a new single resource object
+     * Present a view to present a new single resource object.
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function new()
     {
@@ -114,7 +122,7 @@ class {class} extends {extends}
      * Process the creation/insertion of a new resource object.
      * This should be a POST.
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function create()
     {
@@ -122,11 +130,11 @@ class {class} extends {extends}
     }
 
     /**
-     * Present a view to edit the properties of a specific resource object
+     * Present a view to edit the properties of a specific resource object.
      *
-     * @param mixed $id
+     * @param int|string|null $id
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function edit($id = null)
     {
@@ -137,9 +145,9 @@ class {class} extends {extends}
      * Process the updating, full or partial, of a specific resource object.
      * This should be a POST.
      *
-     * @param mixed $id
+     * @param int|string|null $id
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function update($id = null)
     {
@@ -147,11 +155,11 @@ class {class} extends {extends}
     }
 
     /**
-     * Present a view to confirm the deletion of a specific resource object
+     * Present a view to confirm the deletion of a specific resource object.
      *
-     * @param mixed $id
+     * @param int|string|null $id
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function remove($id = null)
     {
@@ -159,11 +167,11 @@ class {class} extends {extends}
     }
 
     /**
-     * Process the deletion of a specific resource object
+     * Process the deletion of a specific resource object.
      *
-     * @param mixed $id
+     * @param int|string|null $id
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function delete($id = null)
     {

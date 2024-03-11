@@ -31,7 +31,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     /**
      * The prepared statement itself.
      *
-     * @var object|resource|null
+     * @var         object|resource|null
      * @phpstan-var TStatement|null
      */
     protected $statement;
@@ -61,7 +61,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     /**
      * A reference to the db connection to use.
      *
-     * @var BaseConnection
+     * @var         BaseConnection
      * @phpstan-var BaseConnection<TConnection, TResult>
      */
     protected $db;

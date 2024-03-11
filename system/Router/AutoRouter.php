@@ -15,6 +15,7 @@ namespace CodeIgniter\Router;
 
 use Closure;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\ResponseInterface;
 
 /**
  * Router for Auto-Routing
@@ -24,7 +25,7 @@ final class AutoRouter implements AutoRouterInterface
     /**
      * List of CLI routes that do not contain '*' routes.
      *
-     * @var array<string, Closure|string> [routeKey => handler]
+     * @var array<string, (Closure(mixed...): (ResponseInterface|string|void))|string> [routeKey => handler]
      */
     private array $cliRoutes;
 

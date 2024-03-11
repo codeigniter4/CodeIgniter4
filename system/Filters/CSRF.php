@@ -18,7 +18,6 @@ use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
-use Config\Services;
 
 /**
  * CSRF filter.
@@ -52,7 +51,7 @@ class CSRF implements FilterInterface
             return;
         }
 
-        $security = Services::security();
+        $security = service('security');
 
         try {
             $security->verify($request);

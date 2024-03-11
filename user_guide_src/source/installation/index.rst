@@ -29,6 +29,7 @@ repository.
     installing_manual
     running
     troubleshooting
+    deployment
     ../changelogs/index
     upgrading
     repositories

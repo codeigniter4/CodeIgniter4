@@ -6,7 +6,7 @@ use CodeIgniter\Entity\Entity;
 
 class MyEntity extends Entity
 {
-    // Specifying the type for the field
+    // Specify the type for the field
     protected $casts = [
         'key' => 'base64',
     ];

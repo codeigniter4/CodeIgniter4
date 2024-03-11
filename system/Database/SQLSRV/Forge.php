@@ -326,8 +326,18 @@ class Forge extends BaseForge
                 break;
 
             case 'ENUM':
-                $attributes['TYPE']       = 'TEXT';
-                $attributes['CONSTRAINT'] = null;
+                // in char(n) and varchar(n), the n defines the string length in
+                // bytes (0 to 8,000).
+                // https://learn.microsoft.com/en-us/sql/t-sql/data-types/char-and-varchar-transact-sql?view=sql-server-ver16#remarks
+                $maxLength = max(
+                    array_map(
+                        static fn ($value) => strlen($value),
+                        $attributes['CONSTRAINT']
+                    )
+                );
+
+                $attributes['TYPE']       = 'VARCHAR';
+                $attributes['CONSTRAINT'] = $maxLength;
                 break;
 
             case 'TIMESTAMP':

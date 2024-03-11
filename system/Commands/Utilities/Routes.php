@@ -23,7 +23,6 @@ use CodeIgniter\Router\DefinedRouteCollector;
 use CodeIgniter\Router\Router;
 use Config\Feature;
 use Config\Routing;
-use Config\Services;
 
 /**
  * Lists all the routes. This will include any Routes files
@@ -88,13 +87,13 @@ class Routes extends BaseCommand
 
         // Set HTTP_HOST
         if ($host) {
-            $request              = Services::request();
+            $request              = service('request');
             $_SERVER              = $request->getServer();
             $_SERVER['HTTP_HOST'] = $host;
             $request->setGlobal('server', $_SERVER);
         }
 
-        $collection = Services::routes()->loadRoutes();
+        $collection = service('routes')->loadRoutes();
 
         // Reset HTTP_HOST
         if ($host) {

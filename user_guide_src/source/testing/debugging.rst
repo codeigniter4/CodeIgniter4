@@ -1,20 +1,46 @@
-**************************
+##########################
 Debugging Your Application
-**************************
+##########################
 
 .. contents::
     :local:
     :depth: 2
 
-================
-Replace var_dump
-================
+*************
+Checking Logs
+*************
 
-While using XDebug and a good IDE can be indispensable to debug your application, sometimes a quick ``var_dump()`` is
-all you need. CodeIgniter makes that even better by bundling in the excellent `Kint <https://kint-php.github.io/kint/>`_
-debugging tool for PHP. This goes way beyond your usual tool, providing many alternate pieces of data, like formatting
-timestamps into recognizable dates, showing you hexcodes as colors, display array data like a table for easy reading,
-and much, much more.
+.. _codeigniter-error-logs:
+
+CodeIgniter Error Logs
+======================
+
+CodeIgniter logs error messages, according to the settings in **app/Config/Logger.php**.
+
+The default configuration has daily log files stored in **writable/logs**.
+It would be a good idea to check them if things aren't working the way you expect!
+
+You can adjust the error threshold to see more or fewer messages. See
+:ref:`Logging <logging-configuration>` for details.
+
+Logging All SQL Queries
+=======================
+
+All SQL queries issued by CodeIgniter can be logged.
+See :ref:`Database Events <database-events-dbquery>` for details.
+
+********************
+Replacing var_dump()
+********************
+
+While using Xdebug and a good IDE can be indispensable to debug your application,
+sometimes a quick ``var_dump()`` is all you need. CodeIgniter makes that even
+better by bundling in the excellent `Kint <https://kint-php.github.io/kint/>`_
+debugging tool for PHP.
+
+This goes way beyond your usual tool, providing many alternate pieces of data,
+like formatting timestamps into recognizable dates, showing you hexcodes as colors,
+display array data like a table for easy reading, and much, much more.
 
 Enabling Kint
 =============
@@ -33,6 +59,7 @@ The ``d()`` method dumps all of the data it knows about the contents passed as t
 allows the script to continue executing:
 
 .. literalinclude:: debugging/001.php
+    :lines: 2-
 
 dd()
 ----
@@ -45,14 +72,15 @@ trace()
 This provides a backtrace to the current execution point, with Kint's own unique spin:
 
 .. literalinclude:: debugging/002.php
+    :lines: 2-
 
 For more information, see `Kint's page <https://kint-php.github.io/kint//>`_.
 
 .. _the-debug-toolbar:
 
-=================
+*****************
 The Debug Toolbar
-=================
+*****************
 
 The Debug Toolbar provides at-a-glance information about the current page request, including benchmark results,
 queries you have run, request and response data, and more. This can all prove very useful during development

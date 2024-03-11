@@ -31,7 +31,7 @@ class Toolbar extends BaseConfig
      * List of toolbar collectors that will be called when Debug Toolbar
      * fires up and collects data from.
      *
-     * @var string[]
+     * @var list<string>
      */
     public array $collectors = [
         Timers::class,
@@ -49,7 +49,7 @@ class Toolbar extends BaseConfig
      * Collect Var Data
      * --------------------------------------------------------------------------
      *
-     * If set to false var data from the views will not be colleted. Useful to
+     * If set to false var data from the views will not be collected. Useful to
      * avoid high memory usage when there are lots of data passed to the view.
      */
     public bool $collectVarData = true;

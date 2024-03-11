@@ -17,7 +17,6 @@ use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\App;
-use Config\Services;
 
 /**
  * Force HTTPS filter
@@ -43,7 +42,7 @@ class ForceHTTPS implements FilterInterface
             return;
         }
 
-        $response = Services::response();
+        $response = service('response');
 
         try {
             force_https(YEAR, $request, $response);

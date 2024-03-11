@@ -33,6 +33,7 @@ use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
@@ -41,6 +42,11 @@ use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
+use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
+use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\AnnotationWithValueToAttributeRector;
+use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\CoversAnnotationWithValueToAttributeRector;
+use Rector\PHPUnit\AnnotationsToAttributes\Rector\ClassMethod\DataProviderAnnotationToAttributeRector;
+use Rector\PHPUnit\AnnotationsToAttributes\Rector\ClassMethod\DependsAnnotationWithValueToAttributeRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
@@ -62,7 +68,7 @@ return static function (RectorConfig $rectorConfig): void {
         PHPUnitSetList::PHPUNIT_100,
     ]);
 
-    $rectorConfig->parallel(120, 8, 15);
+    $rectorConfig->parallel(120, 8, 10);
 
     // paths to refactor; solid alternative to CLI arguments
     $rectorConfig->paths([__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils']);
@@ -90,6 +96,11 @@ return static function (RectorConfig $rectorConfig): void {
         JsonThrowOnErrorRector::class,
         YieldDataProviderRector::class,
 
+        RemoveUnusedPromotedPropertyRector::class => [
+            // Bug in rector 1.0.0. See https://github.com/rectorphp/rector-src/pull/5573
+            __DIR__ . '/tests/_support/Entity/CustomUser.php',
+        ],
+
         RemoveUnusedPrivateMethodRector::class => [
             // private method called via getPrivateMethodInvoker
             __DIR__ . '/tests/system/Test/ReflectionHelperTest.php',
@@ -111,9 +122,10 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/system/Autoloader/Autoloader.php',
         ],
 
-        // session handlers have the gc() method with underscored parameter `$max_lifetime`
         UnderscoreToCamelCaseVariableNameRector::class => [
+            // session handlers have the gc() method with underscored parameter `$max_lifetime`
             __DIR__ . '/system/Session/Handlers',
+            __DIR__ . '/tests/_support/Entity/CustomUser.php',
         ],
 
         DeclareStrictTypesRector::class => [
@@ -133,6 +145,13 @@ return static function (RectorConfig $rectorConfig): void {
         RandomFunctionRector::class,
 
         SimplifyRegexPatternRector::class,
+
+        // PHPUnit 10 (requires PHP 8.1) features
+        DataProviderAnnotationToAttributeRector::class,
+        DependsAnnotationWithValueToAttributeRector::class,
+        AnnotationWithValueToAttributeRector::class,
+        AnnotationToAttributeRector::class,
+        CoversAnnotationWithValueToAttributeRector::class,
     ]);
 
     // auto import fully qualified class names

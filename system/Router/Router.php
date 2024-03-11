@@ -18,6 +18,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Exceptions\RedirectException;
 use CodeIgniter\HTTP\Method;
 use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\Exceptions\RouterException;
 use Config\App;
 use Config\Feature;
@@ -64,7 +65,7 @@ class Router implements RouterInterface
     /**
      * The name of the controller class.
      *
-     * @var Closure|string
+     * @var (Closure(mixed...): (ResponseInterface|string|void))|string
      */
     protected $controller;
 
@@ -123,7 +124,7 @@ class Router implements RouterInterface
      * The filter info from Route Collection
      * if the matched route should be filtered.
      *
-     * @var string[]
+     * @var list<string>
      */
     protected $filtersInfo = [];
 
@@ -171,7 +172,7 @@ class Router implements RouterInterface
      *
      * @param string|null $uri URI path relative to baseURL
      *
-     * @return Closure|string Controller classname or Closure
+     * @return (Closure(mixed...): (ResponseInterface|string|void))|string Controller classname or Closure
      *
      * @throws PageNotFoundException
      * @throws RedirectException
@@ -216,7 +217,7 @@ class Router implements RouterInterface
     /**
      * Returns the filter info for the matched route, if any.
      *
-     * @return string[]
+     * @return list<string>
      */
     public function getFilters(): array
     {
@@ -226,7 +227,7 @@ class Router implements RouterInterface
     /**
      * Returns the name of the matched controller.
      *
-     * @return Closure|string Controller classname or Closure
+     * @return (Closure(mixed...): (ResponseInterface|string|void))|string Controller classname or Closure
      */
     public function controllerName()
     {

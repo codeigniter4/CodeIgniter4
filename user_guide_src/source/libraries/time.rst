@@ -114,12 +114,17 @@ and returns a ``Time`` instance, instead of DateTimeImmutable:
 
 .. literalinclude:: time/011.php
 
+.. _time-createfromtimestamp:
+
 createFromTimestamp()
 =====================
 
 This method takes a UNIX timestamp and, optionally, the timezone and locale, to create a new Time instance:
 
 .. literalinclude:: time/012.php
+
+.. note:: Due to a bug, prior to v4.4.6, this method returned a Time instance
+    in timezone UTC when you do not specify a timezone.
 
 createFromInstance()
 ====================

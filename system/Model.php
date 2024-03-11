@@ -137,7 +137,7 @@ class Model extends BaseModel
     /**
      * Builder method names that should not be used in the Model.
      *
-     * @var string[] method name
+     * @var list<string> method name
      */
     private array $builderMethodsNotAvailable = [
         'getCompiledInsert',
@@ -186,6 +186,12 @@ class Model extends BaseModel
     {
         $builder = $this->builder();
 
+        $useCast = $this->useCasts();
+        if ($useCast) {
+            $returnType = $this->tempReturnType;
+            $this->asArray();
+        }
+
         if ($this->tempUseSoftDeletes) {
             $builder->where($this->table . '.' . $this->deletedField, null);
         }
@@ -202,6 +208,12 @@ class Model extends BaseModel
             $row = $builder->get()->getResult($this->tempReturnType);
         }
 
+        if ($useCast) {
+            $row = $this->convertToReturnType($row, $returnType);
+
+            $this->tempReturnType = $returnType;
+        }
+
         return $row;
     }
 
@@ -216,7 +228,15 @@ class Model extends BaseModel
      */
     protected function doFindColumn(string $columnName)
     {
-        return $this->select($columnName)->asArray()->find();
+        $results = $this->select($columnName)->asArray()->find();
+
+        if ($this->useCasts()) {
+            foreach ($results as $i => $row) {
+                $results[$i] = $this->converter->fromDataSource($row);
+            }
+        }
+
+        return $results;
     }
 
     /**
@@ -238,13 +258,29 @@ class Model extends BaseModel
 
         $builder = $this->builder();
 
+        $useCast = $this->useCasts();
+        if ($useCast) {
+            $returnType = $this->tempReturnType;
+            $this->asArray();
+        }
+
         if ($this->tempUseSoftDeletes) {
             $builder->where($this->table . '.' . $this->deletedField, null);
         }
 
-        return $builder->limit($limit, $offset)
+        $results = $builder->limit($limit, $offset)
             ->get()
             ->getResult($this->tempReturnType);
+
+        if ($useCast) {
+            foreach ($results as $i => $row) {
+                $results[$i] = $this->convertToReturnType($row, $returnType);
+            }
+
+            $this->tempReturnType = $returnType;
+        }
+
+        return $results;
     }
 
     /**
@@ -259,6 +295,12 @@ class Model extends BaseModel
     {
         $builder = $this->builder();
 
+        $useCast = $this->useCasts();
+        if ($useCast) {
+            $returnType = $this->tempReturnType;
+            $this->asArray();
+        }
+
         if ($this->tempUseSoftDeletes) {
             $builder->where($this->table . '.' . $this->deletedField, null);
         } elseif ($this->useSoftDeletes && ($builder->QBGroupBy === []) && $this->primaryKey) {
@@ -271,7 +313,15 @@ class Model extends BaseModel
             $builder->orderBy($this->table . '.' . $this->primaryKey, 'asc');
         }
 
-        return $builder->limit(1, 0)->get()->getFirstRow($this->tempReturnType);
+        $row = $builder->limit(1, 0)->get()->getFirstRow($this->tempReturnType);
+
+        if ($useCast) {
+            $row = $this->convertToReturnType($row, $returnType);
+
+            $this->tempReturnType = $returnType;
+        }
+
+        return $row;
     }
 
     /**
@@ -406,7 +456,7 @@ class Model extends BaseModel
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
+     * @return false|int|list<string> Number of rows affected or FALSE on failure, SQL array when testMode
      *
      * @throws DatabaseException
      */

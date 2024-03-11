@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace CodeIgniter;
 
+use App\Controllers\Home;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Debug\Timer;
 use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Method;
@@ -122,13 +124,14 @@ final class CodeIgniterTest extends CIUnitTestCase
 
     public function testRun404Override(): void
     {
-        $_SERVER['argv'] = ['index.php', '/'];
-        $_SERVER['argc'] = 2;
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['REQUEST_URI']    = '/pages/about';
+        $_SERVER['SCRIPT_NAME']    = '/index.php';
 
         // Inject mock router.
         $routes = Services::routes();
         $routes->setAutoRoute(false);
-        $routes->set404Override('Tests\Support\Controllers\Hello::index');
+        $routes->set404Override('Tests\Support\Errors::show404');
         $router = Services::router($routes, Services::incomingrequest());
         Services::injectMock('router', $router);
 
@@ -136,7 +139,8 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->codeigniter->run($routes);
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('Hello', $output);
+        $this->assertStringContainsString("Can't find a route for 'GET: pages/about'.", $output);
+        $this->assertSame(404, response()->getStatusCode());
     }
 
     public function testRun404OverrideControllerReturnsResponse(): void
@@ -193,6 +197,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $this->assertStringContainsString('404 Override by Closure.', $output);
+        $this->assertSame(404, response()->getStatusCode());
     }
 
     public function testControllersCanReturnString(): void
@@ -958,5 +963,18 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->expectException(PageNotFoundException::class);
 
         $this->codeigniter->run($routes);
+    }
+
+    public function testStartControllerPermitsInvoke(): void
+    {
+        $this->setPrivateProperty($this->codeigniter, 'benchmark', new Timer());
+        $this->setPrivateProperty($this->codeigniter, 'controller', '\\' . Home::class);
+        $startController = $this->getPrivateMethodInvoker($this->codeigniter, 'startController');
+
+        $this->setPrivateProperty($this->codeigniter, 'method', '__invoke');
+        $startController();
+
+        // No PageNotFoundException
+        $this->assertTrue(true);
     }
 }

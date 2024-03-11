@@ -47,7 +47,7 @@ And you should use uppercase HTTP method names in your app code.
 app/Config/Filters.php
 ----------------------
 
-You should update the keys in ``$methods`` in **app/Config/Filters.php**::
+You should update the keys to uppercase in ``$methods`` in **app/Config/Filters.php**::
 
     public array $methods = [
         'POST' => ['invalidchars', 'csrf'],
@@ -60,7 +60,7 @@ CURLRequest::request()
 In previous versions, you could pass lowercase HTTP methods to the ``request()``
 method. But this bug has been fixed.
 
-Now you must pass the correct HTTP method names like "GET", "POST". Otherwise
+Now you must pass the correct HTTP method names like ``GET``, ``POST``. Otherwise
 you would get the error response::
 
     $client   = \Config\Services::curlrequest();
@@ -100,13 +100,6 @@ For example,
 Now the ``csrf`` filter is executed for both the route ``admin`` and ``admin/users``.
 In previous versions, it is executed only for the route ``admin``.
 See also :ref:`routing-nesting-groups`.
-
-Method Signature Changes
-========================
-
-Some method signature changes have been made. Classes that extend them should
-update their APIs to reflect the changes. See :ref:`ChangeLog <v450-method-signature-changes>`
-for details.
 
 .. _upgrade-450-filter-execution-order:
 
@@ -155,6 +148,20 @@ reversed.
         Previous: route1 → route2 → filter1 → filter2
              Now: route2 → route1 → filter2 → filter1
 
+.. _upgrade-450-api-response-trait:
+
+API\\ResponseTrait and String Data
+==================================
+
+In previous versions, if you pass string data to a trait method, the framework
+returned an HTML response, even if the response format was determined to be JSON.
+
+Now if you pass string data, it returns a JSON response correctly. See also
+:ref:`api-response-trait-handling-response-types`.
+
+You can keep the behavior in previous versions if you set the ``$stringAsHtml``
+property to ``true`` in your controller.
+
 FileLocator::findQualifiedNameFromPath()
 ========================================
 
@@ -190,6 +197,13 @@ the filters will not be executed if the controller is not found.
 If you have code that depends on this bug, for example if you expect global filters
 to be executed even for non-existent pages, please add the necessary routes.
 
+Method Signature Changes
+========================
+
+Some method signature changes have been made. Classes that extend them should
+update their APIs to reflect the changes. See :ref:`ChangeLog <v450-method-signature-changes>`
+for details.
+
 Removed Deprecated Items
 ========================
 
@@ -198,6 +212,30 @@ using them, upgrade your code. See :ref:`ChangeLog <v450-removed-deprecated-item
 
 Breaking Enhancements
 *********************
+
+.. _upgrade-450-404-override:
+
+404 Override Status Code
+========================
+
+In previous versions, :ref:`404-override` returned responses with the status code
+``200`` by default. Now it returns ``404`` by default.
+
+If you want ``200``, you need to set it in the controller::
+
+    $routes->set404Override(static function () {
+        response()->setStatusCode(200);
+
+        echo view('my_errors/not_found.html');
+    });
+
+Validation::run() Signature
+===========================
+
+The method signatures of ``Validation::run()`` and ``ValidationInterface::run()``
+have been changed. The ``?string`` typehint on the ``$dbGroup`` parameter was
+removed. Extending classes should likewise remove the parameter so as not to
+break LSP.
 
 Project Files
 *************

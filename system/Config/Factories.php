@@ -15,7 +15,6 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Model;
-use Config\Services;
 use InvalidArgumentException;
 
 /**
@@ -141,8 +140,8 @@ final class Factories
         $options = array_merge(self::getOptions($component), $options);
 
         if (! $options['getShared']) {
-            if (isset(self::$aliases[$component][$alias])) {
-                $class = self::$aliases[$component][$alias];
+            if (isset(self::$aliases[$options['component']][$alias])) {
+                $class = self::$aliases[$options['component']][$alias];
 
                 return new $class(...$arguments);
             }
@@ -171,6 +170,20 @@ final class Factories
         self::setAlias($options['component'], $alias, $class);
 
         return self::$instances[$options['component']][$class];
+    }
+
+    /**
+     * Simple method to get the shared instance fast.
+     */
+    public static function get(string $component, string $alias): ?object
+    {
+        if (isset(self::$aliases[$component][$alias])) {
+            $class = self::$aliases[$component][$alias];
+
+            return self::$instances[$component][$class];
+        }
+
+        return self::__callStatic($component, [$alias]);
     }
 
     /**
@@ -284,7 +297,7 @@ final class Factories
         }
 
         // Have to do this the hard way...
-        $locator = Services::locator();
+        $locator = service('locator');
 
         // Check if the class alias was namespaced
         if (self::isNamespaced($alias)) {

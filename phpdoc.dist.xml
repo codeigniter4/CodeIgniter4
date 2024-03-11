@@ -10,7 +10,7 @@
         <output>api/build/</output>
         <cache>api/cache/</cache>
     </paths>
-    <version number="4.4.5">
+    <version number="4.4.6">
         <api format="php">
             <source dsn=".">
                 <path>system</path>

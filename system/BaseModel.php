@@ -19,6 +19,7 @@ use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\DataConverter\DataConverter;
 use CodeIgniter\Entity\EntityInterface;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
@@ -46,15 +47,15 @@ use stdClass;
  *      - process various callbacks
  *      - allow intermingling calls to the db connection
  *
- * @phpstan-type row_array array<int|string, float|int|null|string>
+ * @phpstan-type row_array               array<int|string, float|int|null|object|string>
  * @phpstan-type event_data_beforeinsert array{data: row_array}
- * @phpstan-type event_data_afterinsert array{id: int|string, data: row_array, result: bool}
- * @phpstan-type event_data_beforefind array{id?: int|string, method: string, singleton: bool, limit?: int, offset?: int}
- * @phpstan-type event_data_afterfind array{id: int|string|null|list<int|string>, data: row_array|list<row_array>|object|null, method: string, singleton: bool}
+ * @phpstan-type event_data_afterinsert  array{id: int|string, data: row_array, result: bool}
+ * @phpstan-type event_data_beforefind   array{id?: int|string, method: string, singleton: bool, limit?: int, offset?: int}
+ * @phpstan-type event_data_afterfind    array{id: int|string|null|list<int|string>, data: row_array|list<row_array>|object|null, method: string, singleton: bool}
  * @phpstan-type event_data_beforeupdate array{id: null|list<int|string>, data: row_array}
- * @phpstan-type event_data_afterupdate array{id: null|list<int|string>, data: row_array|object, result: bool}
+ * @phpstan-type event_data_afterupdate  array{id: null|list<int|string>, data: row_array|object, result: bool}
  * @phpstan-type event_data_beforedelete array{id: null|list<int|string>, purge: bool}
- * @phpstan-type event_data_afterdelete array{id: null|list<int|string>, data: null, purge: bool, result: bool}
+ * @phpstan-type event_data_afterdelete  array{id: null|list<int|string>, data: null, purge: bool, result: bool}
  */
 abstract class BaseModel
 {
@@ -65,6 +66,13 @@ abstract class BaseModel
      * @var Pager
      */
     public $pager;
+
+    /**
+     * Database Connection
+     *
+     * @var BaseConnection
+     */
+    protected $db;
 
     /**
      * Last insert ID
@@ -90,13 +98,37 @@ abstract class BaseModel
     protected $returnType = 'array';
 
     /**
+     * Used by asArray() and asObject() to provide
+     * temporary overrides of model default.
+     *
+     * @var 'array'|'object'|class-string
+     */
+    protected $tempReturnType;
+
+    /**
+     * Array of column names and the type of value to cast.
+     *
+     * @var array<string, string> [column => type]
+     */
+    protected array $casts = [];
+
+    /**
+     * Custom convert handlers.
+     *
+     * @var array<string, class-string> [type => classname]
+     */
+    protected array $castHandlers = [];
+
+    protected ?DataConverter $converter = null;
+
+    /**
      * If this model should use "softDeletes" and
      * simply set a date when rows are deleted, or
      * do hard deletes.
      *
      * @var bool
      */
-    protected $useSoftDeletes = false;
+    protected $protectFields = true;
 
     /**
      * An array of field names that are allowed
@@ -139,6 +171,15 @@ abstract class BaseModel
     protected $updatedField = 'updated_at';
 
     /**
+     * If this model should use "softDeletes" and
+     * simply set a date when rows are deleted, or
+     * do hard deletes.
+     *
+     * @var bool
+     */
+    protected $useSoftDeletes = false;
+
+    /**
      * Used by withDeleted to override the
      * model's softDelete setting.
      *
@@ -154,27 +195,14 @@ abstract class BaseModel
     protected $deletedField = 'deleted_at';
 
     /**
-     * Used by asArray and asObject to provide
-     * temporary overrides of model default.
-     *
-     * @var string
+     * Whether to allow inserting empty data.
      */
-    protected $tempReturnType;
+    protected bool $allowEmptyInserts = false;
 
     /**
-     * Whether we should limit fields in inserts
-     * and updates to those available in $allowedFields or not.
-     *
-     * @var bool
+     * Whether to update Entity's only changed data.
      */
-    protected $protectFields = true;
-
-    /**
-     * Database Connection
-     *
-     * @var BaseConnection
-     */
-    protected $db;
+    protected bool $updateOnlyChanged = true;
 
     /**
      * Rules used to validate data in insert, update, and save methods.
@@ -328,11 +356,6 @@ abstract class BaseModel
      */
     protected $afterDelete = [];
 
-    /**
-     * Whether to allow inserting empty data.
-     */
-    protected bool $allowEmptyInserts = false;
-
     public function __construct(?ValidationInterface $validation = null)
     {
         $this->tempReturnType     = $this->returnType;
@@ -342,6 +365,29 @@ abstract class BaseModel
         $this->validation = $validation;
 
         $this->initialize();
+        $this->createDataConverter();
+    }
+
+    /**
+     * Creates DataConverter instance.
+     */
+    protected function createDataConverter(): void
+    {
+        if ($this->useCasts()) {
+            $this->converter = new DataConverter(
+                $this->casts,
+                $this->castHandlers,
+                $this->db
+            );
+        }
+    }
+
+    /**
+     * Are casts used?
+     */
+    protected function useCasts(): bool
+    {
+        return $this->casts !== [];
     }
 
     /**
@@ -439,7 +485,7 @@ abstract class BaseModel
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
+     * @return false|int|list<string> Number of rows affected or FALSE on failure, SQL array when testMode
      *
      * @throws DatabaseException
      */
@@ -993,7 +1039,7 @@ abstract class BaseModel
      * @param         int                         $batchSize The size of the batch to run
      * @param         bool                        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
+     * @return false|int|list<string> Number of rows affected or FALSE on failure, SQL array when testMode
      *
      * @throws DatabaseException
      * @throws ReflectionException
@@ -1220,7 +1266,7 @@ abstract class BaseModel
     public function paginate(?int $perPage = null, string $group = 'default', ?int $page = null, int $segment = 0)
     {
         // Since multiple models may use the Pager, the Pager must be shared.
-        $pager = Services::pager();
+        $pager = service('pager');
 
         if ($segment !== 0) {
             $pager->setSegment($segment, $group);
@@ -1352,10 +1398,10 @@ abstract class BaseModel
                 return $value;
 
             case 'datetime':
-                return date('Y-m-d H:i:s', $value);
+                return date($this->db->dateFormat['datetime'], $value);
 
             case 'date':
-                return date('Y-m-d', $value);
+                return date($this->db->dateFormat['date'], $value);
 
             default:
                 throw ModelException::forNoDateFormat(static::class);
@@ -1378,10 +1424,10 @@ abstract class BaseModel
     {
         switch ($this->dateFormat) {
             case 'datetime':
-                return $value->format('Y-m-d H:i:s');
+                return $value->format($this->db->dateFormat['datetime']);
 
             case 'date':
-                return $value->format('Y-m-d');
+                return $value->format($this->db->dateFormat['date']);
 
             case 'int':
                 return $value->getTimestamp();
@@ -1680,7 +1726,7 @@ abstract class BaseModel
      * class vars with the same name as the collection columns,
      * or at least allows them to be created.
      *
-     * @param string $class Class Name
+     * @param 'object'|class-string $class Class Name
      *
      * @return $this
      */
@@ -1749,7 +1795,7 @@ abstract class BaseModel
      */
     protected function objectToRawArray($object, bool $onlyChanged = true, bool $recursive = false): array
     {
-        // Entity::toRawArray() returns array.
+        // EntityInterface::toRawArray() returns array.
         if ($object instanceof EntityInterface) {
             $properties = $object->toRawArray($onlyChanged, $recursive);
         } else {
@@ -1780,6 +1826,9 @@ abstract class BaseModel
      * @throws DataException
      * @throws InvalidArgumentException
      * @throws ReflectionException
+     *
+     * @used-by insert()
+     * @used-by update()
      */
     protected function transformDataToArray($row, string $type): array
     {
@@ -1791,14 +1840,31 @@ abstract class BaseModel
             throw DataException::forEmptyDataset($type);
         }
 
+        // If it validates with entire rules, all fields are needed.
+        if ($this->skipValidation === false && $this->cleanValidationRules === false) {
+            $onlyChanged = false;
+        } else {
+            $onlyChanged = ($type === 'update' && $this->updateOnlyChanged);
+        }
+
+        if ($this->useCasts()) {
+            if (is_array($row)) {
+                $row = $this->converter->toDataSource($row);
+            } elseif ($row instanceof stdClass) {
+                $row = (array) $row;
+                $row = $this->converter->toDataSource($row);
+            } elseif ($row instanceof EntityInterface) {
+                $row = $this->converter->extract($row, $onlyChanged);
+                // Convert any Time instances to appropriate $dateFormat
+                $row = $this->timeToString($row);
+            } elseif (is_object($row)) {
+                $row = $this->converter->extract($row, $onlyChanged);
+            }
+        }
         // If $row is using a custom class with public or protected
         // properties representing the collection elements, we need to grab
         // them as an array.
-        if (is_object($row) && ! $row instanceof stdClass) {
-            // If it validates with entire rules, all fields are needed.
-            $onlyChanged = ($this->skipValidation === false && $this->cleanValidationRules === false)
-                ? false : ($type === 'update');
-
+        elseif (is_object($row) && ! $row instanceof stdClass) {
             $row = $this->objectToArray($row, $onlyChanged, true);
         }
 
@@ -1872,5 +1938,24 @@ abstract class BaseModel
         $this->allowEmptyInserts = $value;
 
         return $this;
+    }
+
+    /**
+     * Converts database data array to return type value.
+     *
+     * @param array<string, mixed>          $row        Raw data from database
+     * @param 'array'|'object'|class-string $returnType
+     */
+    protected function convertToReturnType(array $row, string $returnType): array|object
+    {
+        if ($returnType === 'array') {
+            return $this->converter->fromDataSource($row);
+        }
+
+        if ($returnType === 'object') {
+            return (object) $this->converter->fromDataSource($row);
+        }
+
+        return $this->converter->reconstruct($returnType, $row);
     }
 }

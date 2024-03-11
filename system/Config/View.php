@@ -41,7 +41,7 @@ class View extends BaseConfig
      *
      * @psalm-suppress UndefinedDocblockClass
      *
-     * @var array<string, string>
+     * @var         array<string, string>
      * @phpstan-var array<string, parser_callable_string>
      */
     public $filters = [];
@@ -53,15 +53,17 @@ class View extends BaseConfig
      *
      * @psalm-suppress UndefinedDocblockClass
      *
-     * @var array<string, array<string>|callable|string>
-     * @phpstan-var array<string, array<parser_callable_string>|parser_callable_string|parser_callable>
+     * @var         array<string, callable|list<string>|string>
+     * @phpstan-var array<string, list<parser_callable_string>|parser_callable_string|parser_callable>
      */
     public $plugins = [];
 
     /**
      * Built-in View filters.
      *
-     * @var array<string, string>
+     * @psalm-suppress UndefinedDocblockClass
+     *
+     * @var         array<string, string>
      * @phpstan-var array<string, parser_callable_string>
      */
     protected $coreFilters = [
@@ -91,7 +93,9 @@ class View extends BaseConfig
     /**
      * Built-in View plugins.
      *
-     * @var array<string, array<string>|callable|string>
+     * @psalm-suppress UndefinedDocblockClass
+     *
+     * @var         array<string, callable|list<string>|string>
      * @phpstan-var array<string, array<parser_callable_string>|parser_callable_string|parser_callable>
      */
     protected $corePlugins = [
@@ -114,7 +118,7 @@ class View extends BaseConfig
      *
      * All classes must implement CodeIgniter\View\ViewDecoratorInterface
      *
-     * @var class-string<ViewDecoratorInterface>[]
+     * @var list<class-string<ViewDecoratorInterface>>
      */
     public array $decorators = [];
 

@@ -74,8 +74,11 @@ function newXHR() {
                     let h2 = document.querySelector('#ci-history > h2');
 
                     if (h2) {
-                        h2.innerHTML = 'History <small>You have new debug data.</small> <button onclick="loadDoc(' + debugbarTime + ')">Update</button>';
+                        h2.innerHTML = 'History <small>You have new debug data.</small> <button id="ci-history-update">Update</button>';
                         document.querySelector('a[data-tab="ci-history"] > span > .badge').className += ' active';
+                        document.getElementById('ci-history-update').addEventListener('click', function () {
+                            loadDoc(debugbarTime);
+                        }, false)
                     }
                 }
             }

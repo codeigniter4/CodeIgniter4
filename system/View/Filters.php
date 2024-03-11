@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace CodeIgniter\View;
 
-use Config\Services;
 use NumberFormatter;
 
 /**
@@ -194,7 +193,7 @@ class Filters
      */
     public static function nl2br(string $value): string
     {
-        $typography = Services::typography();
+        $typography = service('typography');
 
         return $typography->nl2brExceptPre($value);
     }
@@ -205,7 +204,7 @@ class Filters
      */
     public static function prose(string $value): string
     {
-        $typography = Services::typography();
+        $typography = service('typography');
 
         return $typography->autoTypography($value);
     }

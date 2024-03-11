@@ -61,7 +61,7 @@ class Cache extends BaseConfig
      *    ['q'] = Enabled, but only take into account the specified list
      *            of query parameters.
      *
-     * @var bool|string[]
+     * @var bool|list<string>
      */
     public $cacheQueryString = false;
 

@@ -116,11 +116,18 @@ View Renderer Options
 
 Several options can be passed to the ``render()`` or ``renderString()`` methods:
 
--   ``cache`` - the time in seconds, to save a view's results; ignored for renderString()
--   ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath; ignored for ``renderString()``
--   ``saveData`` - true if the view data parameters should be retained for subsequent calls
+- ``$options``
 
-.. note:: ``saveData()`` as defined by the interface must be a boolean, but implementing
+    - ``cache`` - the time in seconds, to save a view's results; ignored for
+      ``renderString()``.
+    - ``cache_name`` - the ID used to save/retrieve a cached view result; defaults
+      to the ``$viewPath``; ignored for ``renderString()``.
+    - ``debug`` - can be set to false to disable the addition of debug code for
+      :ref:`Debug Toolbar <the-debug-toolbar>`.
+- ``$saveData`` - true if the view data parameters should be retained for
+  subsequent calls.
+
+.. note:: ``$saveData`` as defined by the interface must be a boolean, but implementing
     classes (like ``View`` below) may extend this to include ``null`` values.
 
 ***************

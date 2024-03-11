@@ -20,7 +20,6 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Config\Services;
 
 /**
  * Page Cache filter
@@ -31,7 +30,7 @@ class PageCache implements FilterInterface
 
     public function __construct()
     {
-        $this->pageCache = Services::responsecache();
+        $this->pageCache = service('responsecache');
     }
 
     /**
@@ -45,7 +44,7 @@ class PageCache implements FilterInterface
     {
         assert($request instanceof CLIRequest || $request instanceof IncomingRequest);
 
-        $response = Services::response();
+        $response = service('response');
 
         $cachedResponse = $this->pageCache->get($request, $response);
 

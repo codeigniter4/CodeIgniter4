@@ -50,7 +50,7 @@ Examples
 Here are a few basic routing examples.
 
 A URL containing the word **journals** in the first segment will be mapped to the ``\App\Controllers\Blogs`` class,
-and the default method, which is usually ``index()``:
+and the :ref:`default method <routing-default-method>`, which is usually ``index()``:
 
 .. literalinclude:: routing/006.php
 
@@ -654,6 +654,32 @@ then you can change this value to save typing:
 
 .. literalinclude:: routing/046.php
 
+.. _routing-default-method:
+
+Default Method
+==============
+
+This setting is used when the route handler only has the controller name and no
+method name listed. The default value is ``index``.
+::
+
+    // In app/Config/Routing.php
+    public string $defaultMethod = 'index';
+
+.. note:: The ``$defaultMethod`` is also common with Auto Routing.
+    See :ref:`Auto Routing (Improved) <routing-auto-routing-improved-default-method>`
+    or :ref:`Auto Routing (Legacy) <routing-auto-routing-legacy-default-method>`.
+
+If you define the following route::
+
+    $routes->get('/', 'Home');
+
+the ``index()`` method of the ``App\Controllers\Home`` controller is executed
+when the route matches.
+
+.. note:: Method names beginning with ``_`` cannot be used as the default method.
+    However, starting with v4.5.0, ``__invoke`` method is allowed.
+
 Translate URI Dashes
 ====================
 
@@ -686,21 +712,28 @@ to only those defined by you, by setting the ``$autoRoute`` property to false:
 .. warning:: If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
     requests. If the URI is accessible by the GET method, the CSRF protection will not work.
 
+.. _404-override:
+
 404 Override
 ============
 
-When a page is not found that matches the current URI, the system will show a generic 404 view. You can change
-what happens by specifying an action to happen with the ``set404Override()`` method. The value can be either
-a valid class/method pair, just like you would show in any route, or a Closure:
+When a page is not found that matches the current URI, the system will show a
+generic 404 view. Using the ``$override404`` property within the routing config
+file, you can define controller class/method for 404 routes.
 
 .. literalinclude:: routing/051.php
 
-Using the ``$override404`` property within the routing config file, you can use closures. Defining the override in the Routing file is restricted to class/method pairs.
+You can also change what happens by specifying an action to happen with the
+``set404Override()`` method in Routes config file. The value can be either a
+valid class/method pair, or a Closure:
 
-.. note:: The ``set404Override()`` method does not change the Response status code to ``404``.
-    If you don't set the status code in the controller you set, the default status code ``200``
-    will be returned. See :php:meth:`CodeIgniter\\HTTP\\Response::setStatusCode()` for
-    information on how to set the status code.
+.. literalinclude:: routing/069.php
+
+.. note:: Starting with v4.5.0, the 404 Override feature sets the Response status
+    code to ``404`` by default. In previous versions, the code was ``200``.
+    If you want to change the status code in the controller, see
+    :php:meth:`CodeIgniter\\HTTP\\Response::setStatusCode()` for information on
+    how to set the status code.
 
 Route Processing by Priority
 ============================
@@ -722,7 +755,7 @@ When this option is enabled, a placeholder that matches multiple segments, such
 as ``(:any)``, will be passed directly as it is to one parameter, even if it
 contains multiple segments.
 
-.. literalinclude:: routing/069.php
+.. literalinclude:: routing/070.php
 
 For example the route:
 
@@ -823,6 +856,8 @@ in the controllers directory. For example, if the user visits **example.com/admi
     When the default controller is ``Home``, you can access **example.com/**, but if you access **example.com/home**, it will be not found.
 
 See :ref:`Auto Routing in Controllers <controller-auto-routing-improved>` for more info.
+
+.. _routing-auto-routing-improved-default-method:
 
 Default Method
 --------------
@@ -949,6 +984,8 @@ in the controllers directory. For example, if the user visits **example.com/admi
 **app/Controllers/Admin/Home.php**, it would be used.
 
 See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>` for more info.
+
+.. _routing-auto-routing-legacy-default-method:
 
 Default Method (Legacy)
 -----------------------

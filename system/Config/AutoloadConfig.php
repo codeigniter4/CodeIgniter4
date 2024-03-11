@@ -91,9 +91,8 @@ class AutoloadConfig
      * @var array<string, string>
      */
     protected $corePsr4 = [
-        'CodeIgniter' => [SYSTEMPATH, TESTPATH . 'system'],
+        'CodeIgniter' => SYSTEMPATH,
         'Config'      => APPPATH . 'Config',
-        'Tests'       => ROOTPATH . 'tests',
     ];
 
     /**

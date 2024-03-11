@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\CLI;
 
 use Config\Generators;
-use Config\Services;
 use Throwable;
 
 /**
@@ -417,7 +416,7 @@ trait GeneratorTrait
         $namespace = $this->getNamespace();
 
         // Check if the namespace is actually defined and we are not just typing gibberish.
-        $base = Services::autoloader()->getNamespace($namespace);
+        $base = service('autoloader')->getNamespace($namespace);
 
         if (! $base = reset($base)) {
             CLI::error(
