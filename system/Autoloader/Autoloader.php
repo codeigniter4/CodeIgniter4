@@ -346,11 +346,7 @@ class Autoloader
             );
         }
         if ($result === false) {
-            if (PHP_VERSION_ID >= 80000) {
-                $message = preg_last_error_msg();
-            } else {
-                $message = 'Regex error. error code: ' . preg_last_error();
-            }
+            $message = PHP_VERSION_ID >= 80000 ? preg_last_error_msg() : 'Regex error. error code: ' . preg_last_error();
 
             throw new RuntimeException($message . '. filename: "' . $filename . '"');
         }
