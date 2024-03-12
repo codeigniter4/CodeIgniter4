@@ -52,7 +52,6 @@
 * refactor: Table class to fix phpstan errors by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8402
 * fix: typo in pager default_simple by @jasonliang-dev in https://github.com/codeigniter4/CodeIgniter4/pull/8407
 * refactor: improve Forge variable names by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8434
-* refactor: update entity to use interface for better extensibility by @colethorsen in https://github.com/codeigniter4/CodeIgniter4/pull/8325
 
 
 ## [v4.4.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.4) (2023-12-28)

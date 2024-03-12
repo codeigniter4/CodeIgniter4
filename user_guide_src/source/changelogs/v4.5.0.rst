@@ -72,6 +72,9 @@ Forge
 Others
 ------
 
+- Update entity to use interface for better extensibility.
+
+
 Model
 =====
 
