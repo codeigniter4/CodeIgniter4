@@ -167,9 +167,9 @@ final class ControllerMethodReader
         $routeWithoutController = rtrim(preg_replace($pattern, '', $uriByClass), '/');
         $routeWithoutController = $routeWithoutController ?: '/';
 
-        return [
+        return [[
             'route'   => $routeWithoutController,
             'handler' => '\\' . $classname . '::' . $methodName,
-        ];
+        ]];
     }
 }
