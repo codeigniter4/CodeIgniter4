@@ -65,13 +65,10 @@ p.lead {
     display: inline;
 }
 
-.footer {
+.environment {
     background: var(--dark-bg-color);
     color: var(--light-text-color);
-}
-.footer .container {
     border-top: 1px solid #e7e7e7;
-    margin-top: 1rem;
     text-align: center;
 }
 
