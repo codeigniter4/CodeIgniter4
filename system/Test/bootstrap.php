@@ -35,7 +35,7 @@ defined('CI_DEBUG') || define('CI_DEBUG', true);
 
 /*
  * ---------------------------------------------------------------
- * SETUP OUR PATH CONSTANTS
+ * SET UP OUR PATH CONSTANTS
  * ---------------------------------------------------------------
  *
  * The path constants provide convenient access to the folders
