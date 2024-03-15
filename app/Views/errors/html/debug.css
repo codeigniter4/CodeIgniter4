@@ -108,7 +108,7 @@ p.lead {
 }
 .tabs a:link,
 .tabs a:visited {
-    padding: 0rem 1rem;
+    padding: 0 1rem;
     line-height: 2.7;
     text-decoration: none;
     color: var(--dark-text-color);
