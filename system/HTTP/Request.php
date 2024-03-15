@@ -25,23 +25,14 @@ class Request extends OutgoingRequest implements RequestInterface
     use RequestTrait;
 
     /**
-     * Proxy IPs
-     *
-     * @var array<string, string>
-     *
-     * @deprecated 4.0.5 No longer used. Check the App config directly
-     */
-    protected $proxyIPs;
-
-    /**
      * Constructor.
      *
      * @param App $config
-     *
-     * @deprecated 4.0.5 The $config is no longer needed and will be removed in a future version
      */
-    public function __construct($config = null) // @phpstan-ignore-line
+    public function __construct($config = null)
     {
+        $this->config = $config ?? config(App::class);
+
         if (empty($this->method)) {
             $this->method = $this->getServer('REQUEST_METHOD') ?? Method::GET;
         }

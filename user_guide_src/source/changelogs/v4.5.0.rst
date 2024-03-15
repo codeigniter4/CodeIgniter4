@@ -329,6 +329,9 @@ Request
   has been removed.
 - The visibility of the deprecated properties ``$uri`` and ``$config`` in
   ``IncomingRequest`` has been changed to protected.
+- The ``$enableCSRF`` property in ``IncomingRequest`` has been removed.
+- The ``removeRelativeDirectory()`` method in ``IncomingRequest`` has been removed.
+- The ``$proxyIPs`` property in ``Request`` has been removed.
 
 Filters
 -------
