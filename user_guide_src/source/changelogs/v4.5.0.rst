@@ -432,6 +432,8 @@ Message Changes
 Changes
 *******
 
+- **Bootstrap:** The loading of **.env** and defining ``ENVIRONMENT`` have been
+  moved before loading of **bootstrap.php**.
 - **Config:**
     - ``Config\Feature::$multipleFilters`` has been removed, because now
       :ref:`multiple-filters` are always enabled.
