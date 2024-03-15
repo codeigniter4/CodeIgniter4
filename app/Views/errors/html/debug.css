@@ -67,7 +67,6 @@ p.lead {
 .environment {
     background: var(--dark-bg-color);
     color: var(--light-text-color);
-    border-top: 1px solid #e7e7e7;
     text-align: center;
 }
 
