@@ -16,6 +16,18 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Mandatory File Changes
 **********************
 
+URI Security
+============
+
+The feature to check if URIs do not contain not permitted strings has been added.
+This check is equivalent to the URI Security found in CodeIgniter 3.
+
+We recommend you enable this feature. Add the following to **app/Config/App.php**::
+
+        public string $permittedURIChars = 'a-z 0-9~%.:_\-';.
+
+See :ref:`urls-uri-security` for details.
+
 Error Files
 ===========
 
@@ -66,6 +78,9 @@ and it is recommended that you merge the updated versions with your application:
 Config
 ------
 
+- app/Config/App.php
+    - The property ``$permittedURIChars`` was added. See :ref:`urls-uri-security`
+      for details.
 - @TODO
 
 All Changes
