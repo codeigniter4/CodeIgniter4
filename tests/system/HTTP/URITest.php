@@ -484,17 +484,25 @@ final class URITest extends CIUnitTestCase
                 './path/to/nowhere',
                 '/path/to/nowhere',
             ],
-            'start-double' => [
+            'start-double-dot' => [
                 '../path/to/nowhere',
                 '/path/to/nowhere',
             ],
             'decoded' => [
-                '../%41path',
+                '/%41path',
                 '/Apath',
             ],
-            'encoded' => [
+            'encode-unreserved-chars' => [
                 '/path^here',
                 '/path%5Ehere',
+            ],
+            'encode-invalid-percent-encoding' => [
+                '/pa%2-th',
+                '/pa%252-th',
+            ],
+            'encode-multibyte-chars' => [
+                '/あいう',
+                '/%E3%81%82%E3%81%84%E3%81%86',
             ],
         ];
     }
