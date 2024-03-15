@@ -68,6 +68,7 @@ p.lead {
     background: var(--dark-bg-color);
     color: var(--light-text-color);
     text-align: center;
+    padding: 0.2rem;
 }
 
 .source {
