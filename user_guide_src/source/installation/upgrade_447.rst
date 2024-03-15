@@ -16,6 +16,14 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Mandatory File Changes
 **********************
 
+Error Files
+===========
+
+The error page has been updated. Please update the following files:
+
+- app/Views/errors/html/debug.css
+- app/Views/errors/html/error_exception.php
+
 ****************
 Breaking Changes
 ****************
