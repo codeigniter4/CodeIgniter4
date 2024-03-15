@@ -66,6 +66,16 @@ add the config variables as a query string:
     database character set), which are present in the rest of the configuration
     fields, CodeIgniter will append them.
 
+Configuring a MySQL socket connection
+-------------------------------------
+
+To connect to a MySQL server over a filesystem socket, the path to the socket should be specified in 
+the ``'hostname'`` setting. CodeIgniter's MySQLi driver will notice this and configure the 
+connection properly.
+
+.. literalinclude:: configuration/011.php
+    :lines: 11-18
+
 Failovers
 ---------
 
