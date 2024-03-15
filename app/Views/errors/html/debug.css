@@ -43,7 +43,7 @@ p.lead {
     color: var(--dark-text-color);
 }
 .header .container {
-    padding: 1rem 1.75rem 1.75rem 1.75rem;
+    padding: 1rem;
 }
 .header h1 {
     font-size: 2.5rem;
@@ -147,9 +147,6 @@ p.lead {
     border: 1px solid #bcdff1;
     border-radius: 5px;
     color: #31708f;
-}
-ul, ol {
-    line-height: 1.8;
 }
 
 table {
