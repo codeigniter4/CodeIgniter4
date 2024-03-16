@@ -586,7 +586,7 @@ if (! function_exists('helper')) {
     {
         static $loaded = [];
 
-        $loader = Services::locator();
+        $loader = service('locator');
 
         if (! is_array($filenames)) {
             $filenames = [$filenames];
@@ -801,7 +801,7 @@ if (! function_exists('log_message')) {
             return;
         }
 
-        Services::logger(true)->log($level, $message, $context); // @codeCoverageIgnore
+        service('logger')->log($level, $message, $context); // @codeCoverageIgnore
     }
 }
 
@@ -866,7 +866,7 @@ if (! function_exists('redirect')) {
      */
     function redirect(?string $route = null): RedirectResponse
     {
-        $response = Services::redirectresponse(null, true);
+        $response = service('redirectresponse');
 
         if ($route !== null) {
             return $response->route($route);
@@ -1177,7 +1177,7 @@ if (! function_exists('view')) {
      */
     function view(string $name, array $data = [], array $options = []): string
     {
-        $renderer = Services::renderer();
+        $renderer = service('renderer');
 
         $config   = config(View::class);
         $saveData = $config->saveData;
