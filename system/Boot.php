@@ -28,7 +28,7 @@ use Config\Services;
 class Boot
 {
     /**
-     * @used-by public/index.php
+     * Used by `public/index.php`
      *
      * Context
      *   web:     Invoked by HTTP request
@@ -51,7 +51,7 @@ class Boot
     }
 
     /**
-     * @used-by spark
+     * Used by `spark`
      */
     public static function bootSpark(Paths $paths): void
     {
@@ -70,7 +70,7 @@ class Boot
     }
 
     /**
-     * @used-by system/Test/bootstrap.php
+     * Used by `system/Test/bootstrap.php`
      */
     public static function bootTest(Paths $paths): void
     {
