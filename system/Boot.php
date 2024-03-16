@@ -91,10 +91,11 @@ class Boot
     {
         if (! defined('ENVIRONMENT')) {
             // @phpstan-ignore-next-line
-            $env = $_ENV['CI_ENVIRONMENT'] ?? $_SERVER['CI_ENVIRONMENT'] ?? getenv('CI_ENVIRONMENT');
+            $env = $_ENV['CI_ENVIRONMENT'] ?? $_SERVER['CI_ENVIRONMENT']
+                ?? getenv('CI_ENVIRONMENT')
+                ?: 'production';
 
-            define('ENVIRONMENT', ($env !== false) ? $env : 'production');
-            unset($env);
+            define('ENVIRONMENT', $env);
         }
     }
 
