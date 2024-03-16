@@ -212,8 +212,6 @@ class Boot
             if ($missingExtensions !== []) {
                 throw FrameworkException::forMissingExtension(implode(', ', $missingExtensions));
             }
-
-            unset($missingExtensions);
         }
     }
 
