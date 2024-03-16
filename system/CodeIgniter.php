@@ -186,24 +186,11 @@ class CodeIgniter
      */
     public function initialize()
     {
-        // Define environment variables
-        $this->bootstrapEnvironment();
-
-        // Setup Exception Handling
-        Services::exceptions()->initialize();
-
-        // Run this check for manual installations
-        if (! is_file(COMPOSER_PATH)) {
-            $this->resolvePlatformExtensions(); // @codeCoverageIgnore
-        }
-
         // Set default locale on the server
         Locale::setDefault($this->config->defaultLocale ?? 'en');
 
         // Set default timezone on the server
         date_default_timezone_set($this->config->appTimezone ?? 'UTC');
-
-        $this->initializeKint();
     }
 
     /**
@@ -214,6 +201,8 @@ class CodeIgniter
      * @throws FrameworkException
      *
      * @codeCoverageIgnore
+     *
+     * @deprecated 4.5.0 Moved to system/bootstrap.php.
      */
     protected function resolvePlatformExtensions()
     {
@@ -240,6 +229,8 @@ class CodeIgniter
      * Initializes Kint
      *
      * @return void
+     *
+     * @deprecated 4.5.0 Moved to Autoloader.
      */
     protected function initializeKint()
     {
@@ -255,6 +246,9 @@ class CodeIgniter
         helper('kint');
     }
 
+    /**
+     * @deprecated 4.5.0 Moved to Autoloader.
+     */
     private function autoloadKint(): void
     {
         // If we have KINT_DIR it means it's already loaded via composer
@@ -277,6 +271,9 @@ class CodeIgniter
         }
     }
 
+    /**
+     * @deprecated 4.5.0 Moved to Autoloader.
+     */
     private function configureKint(): void
     {
         $config = new KintConfig();
@@ -578,6 +575,8 @@ class CodeIgniter
      * is wrong. At the very least, they should have error reporting setup.
      *
      * @return void
+     *
+     * @deprecated 4.5.0 Moved to system/bootstrap.php.
      */
     protected function bootstrapEnvironment()
     {

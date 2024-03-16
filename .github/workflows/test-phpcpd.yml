@@ -57,4 +57,5 @@ jobs:
             --exclude system/Debug/Exceptions.php
             --exclude system/HTTP/SiteURI.php
             --exclude system/Validation/Rules.php
+            --exclude system/Autoloader/Autoloader.php
             -- app/ public/ system/

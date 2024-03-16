@@ -1,6 +1,11 @@
 <?php
 
-// Check PHP version.
+/*
+ *---------------------------------------------------------------
+ * CHECK PHP VERSION
+ *---------------------------------------------------------------
+ */
+
 $minPhpVersion = '8.1'; // If you update this, don't forget to update `spark`.
 if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
     $message = sprintf(
@@ -11,6 +16,12 @@ if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
 
     exit($message);
 }
+
+/*
+ *---------------------------------------------------------------
+ * SET THE CURRENT DIRECTORY
+ *---------------------------------------------------------------
+ */
 
 // Path to the front controller (this file)
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
@@ -29,24 +40,37 @@ if (getcwd() . DIRECTORY_SEPARATOR !== FCPATH) {
  * and fires up an environment-specific bootstrapping.
  */
 
-// Load our paths config file
+// LOAD OUR PATHS CONFIG FILE
 // This is the line that might need to be changed, depending on your folder structure.
 require FCPATH . '../app/Config/Paths.php';
 // ^^^ Change this line if you move your application folder
 
 $paths = new Config\Paths();
 
-// Location of the framework bootstrap file.
-require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
-
+// LOAD DOTENV FILE
 // Load environment settings from .env files into $_SERVER and $_ENV
-require_once SYSTEMPATH . 'Config/DotEnv.php';
-(new CodeIgniter\Config\DotEnv(ROOTPATH))->load();
+require_once $paths->systemDirectory . '/Config/DotEnv.php';
+(new CodeIgniter\Config\DotEnv($paths->appDirectory . '/../'))->load();
 
-// Define ENVIRONMENT
+// DEFINE ENVIRONMENT
 if (! defined('ENVIRONMENT')) {
-    define('ENVIRONMENT', env('CI_ENVIRONMENT', 'production'));
+    $env = $_ENV['CI_ENVIRONMENT'] ?? $_SERVER['CI_ENVIRONMENT'] ?? getenv('CI_ENVIRONMENT');
+    define('ENVIRONMENT', ($env !== false) ? $env : 'production');
+    unset($env);
 }
+
+// LOAD ENVIRONMENT BOOTSTRAP
+if (is_file($paths->appDirectory . '/Config/Boot/' . ENVIRONMENT . '.php')) {
+    require_once $paths->appDirectory . '/Config/Boot/' . ENVIRONMENT . '.php';
+} else {
+    header('HTTP/1.1 503 Service Unavailable.', true, 503);
+    echo 'The application environment is not set correctly.';
+
+    exit(EXIT_ERROR); // EXIT_ERROR
+}
+
+// LOAD THE FRAMEWORK BOOTSTRAP FILE
+require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 // Load Config Cache
 // $factoriesCache = new \CodeIgniter\Cache\FactoriesCache();

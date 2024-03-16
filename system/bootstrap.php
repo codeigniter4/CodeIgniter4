@@ -11,6 +11,7 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+use CodeIgniter\Exceptions\FrameworkException;
 use Config\Autoload;
 use Config\Modules;
 use Config\Paths;
@@ -26,11 +27,10 @@ use Config\Services;
  * so they are available in the config files that are loaded.
  */
 
+/** @var Paths $paths */
+
 // The path to the application directory.
 if (! defined('APPPATH')) {
-    /**
-     * @var Paths $paths
-     */
     define('APPPATH', realpath(rtrim($paths->appDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
 
@@ -41,37 +41,34 @@ if (! defined('ROOTPATH')) {
 
 // The path to the system directory.
 if (! defined('SYSTEMPATH')) {
-    /**
-     * @var Paths $paths
-     */
     define('SYSTEMPATH', realpath(rtrim($paths->systemDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
 
 // The path to the writable directory.
 if (! defined('WRITEPATH')) {
-    /**
-     * @var Paths $paths
-     */
     define('WRITEPATH', realpath(rtrim($paths->writableDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
 
 // The path to the tests directory
 if (! defined('TESTPATH')) {
-    /**
-     * @var Paths $paths
-     */
     define('TESTPATH', realpath(rtrim($paths->testsDirectory, '\\/ ')) . DIRECTORY_SEPARATOR);
 }
 
 /*
  * ---------------------------------------------------------------
- * GRAB OUR CONSTANTS & COMMON
+ * GRAB OUR CONSTANTS
  * ---------------------------------------------------------------
  */
 
 if (! defined('APP_NAMESPACE')) {
     require_once APPPATH . 'Config/Constants.php';
 }
+
+/*
+ * ---------------------------------------------------------------
+ * LOAD COMMON FUNCTIONS
+ * ---------------------------------------------------------------
+ */
 
 // Require app/Common.php file if exists.
 if (is_file(APPPATH . 'Common.php')) {
@@ -106,3 +103,46 @@ require_once APPPATH . 'Config/Services.php';
 // Initialize and register the loader with the SPL autoloader stack.
 Services::autoloader()->initialize(new Autoload(), new Modules())->register();
 Services::autoloader()->loadHelpers();
+
+/*
+ * ---------------------------------------------------------------
+ * SET EXCEPTION AND ERROR HANDLERS
+ * ---------------------------------------------------------------
+ */
+
+Services::exceptions()->initialize();
+
+/*
+ * ---------------------------------------------------------------
+ * CHECK SYSTEM FOR MISSING REQUIRED PHP EXTENSIONS
+ * ---------------------------------------------------------------
+ */
+
+// Run this check for manual installations
+if (! is_file(COMPOSER_PATH)) {
+    $missingExtensions = [];
+
+    foreach ([
+        'intl',
+        'json',
+        'mbstring',
+    ] as $extension) {
+        if (! extension_loaded($extension)) {
+            $missingExtensions[] = $extension;
+        }
+    }
+
+    if ($missingExtensions !== []) {
+        throw FrameworkException::forMissingExtension(implode(', ', $missingExtensions));
+    }
+
+    unset($missingExtensions);
+}
+
+/*
+ * ---------------------------------------------------------------
+ * INITIALIZE KINT
+ * ---------------------------------------------------------------
+ */
+
+Services::autoloader()->initializeKint(CI_DEBUG);
