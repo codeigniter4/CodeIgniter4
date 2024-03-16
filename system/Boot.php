@@ -30,7 +30,7 @@ class Boot
     /**
      * @used-by public/index.php
      *
-     *  Context
+     * Context
      *   web:     Invoked by HTTP request
      *   php-cli: Invoked by CLI via `php public/index.php`
      */
