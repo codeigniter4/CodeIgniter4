@@ -36,24 +36,18 @@ class Boot
      */
     public static function bootWeb(Paths $paths): void
     {
-        static::loadDotEnv($paths);
-        static::defineEnvironment();
-        static::loadEnvironmentBootstrap($paths);
-        static::definePathConstants($paths);
-        if (! defined('APP_NAMESPACE')) {
-            static::loadConstants();
-        }
-        static::loadCommonFunctions();
-        static::loadAutoloader();
-        static::setExceptionHandler();
-        static::checkMissingExtensions();
-        static::initializeKint();
+        static::boot($paths);
     }
 
     /**
      * Used by `spark`
      */
     public static function bootSpark(Paths $paths): void
+    {
+        static::boot($paths);
+    }
+
+    protected static function boot(Paths $paths): void
     {
         static::loadDotEnv($paths);
         static::defineEnvironment();
