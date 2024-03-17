@@ -251,6 +251,8 @@ Others
 - **BaseModel:** The ``getIdValue()`` method has been changed to ``abstract``.
 - **Routing:** The :ref:`404-override` feature does change the Response status
   code to 404 by default. See :ref:`Upgrading Guide <upgrade-450-404-override>`.
+- **system/bootstrap.php:** This file cannot be used. The code has been moved to
+  the new ``CodeIgniter\Boot`` class.
 
 Interface Changes
 =================
@@ -471,8 +473,6 @@ Deprecations
       been moved to the ``Autoloader``.
     - The ``configureKint()`` method has been deprecated. No longer used. It has
       been moved to the ``Autoloader``.
-- **system/bootstrap.php:** This file has been deprecated. No longer used.
-  The code has been moved to the new ``CodeIgniter\Boot`` class.
 - **Response:** The constructor parameter ``$config`` has been deprecated. No
   longer used.
 - **Filters:**
