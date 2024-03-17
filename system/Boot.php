@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter;
 
 use CodeIgniter\Config\DotEnv;
-use CodeIgniter\Exceptions\FrameworkException;
 use Config\Autoload;
 use Config\Modules;
 use Config\Paths;
@@ -49,17 +48,19 @@ class Boot
 
     protected static function boot(Paths $paths): void
     {
-        static::loadDotEnv($paths);
-        static::defineEnvironment();
-        static::loadEnvironmentBootstrap($paths);
         static::definePathConstants($paths);
         if (! defined('APP_NAMESPACE')) {
             static::loadConstants();
         }
+        static::checkMissingExtensions();
+
+        static::loadDotEnv($paths);
+        static::defineEnvironment();
+        static::loadEnvironmentBootstrap($paths);
+
         static::loadCommonFunctions();
         static::loadAutoloader();
         static::setExceptionHandler();
-        static::checkMissingExtensions();
         static::initializeKint();
     }
 
@@ -68,13 +69,15 @@ class Boot
      */
     public static function bootTest(Paths $paths): void
     {
+        static::loadConstants();
+        static::checkMissingExtensions();
+
         static::loadDotEnv($paths);
         static::loadEnvironmentBootstrap($paths, false);
-        static::loadConstants();
+
         static::loadCommonFunctions();
         static::loadAutoloader();
         static::setExceptionHandler();
-        static::checkMissingExtensions();
         static::initializeKint();
     }
 
@@ -210,7 +213,15 @@ class Boot
             }
 
             if ($missingExtensions !== []) {
-                throw FrameworkException::forMissingExtension(implode(', ', $missingExtensions));
+                $message = sprintf(
+                    'The framework needs the following extension(s) installed and loaded: %s.',
+                    implode(', ', $missingExtensions)
+                );
+
+                header('HTTP/1.1 503 Service Unavailable.', true, 503);
+                echo $message;
+
+                exit(EXIT_ERROR);
             }
         }
     }
