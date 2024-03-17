@@ -198,32 +198,36 @@ class Boot
 
     protected static function checkMissingExtensions(): void
     {
+        if (is_file(COMPOSER_PATH)) {
+            return;
+        }
+
         // Run this check for manual installations
-        if (! is_file(COMPOSER_PATH)) {
-            $missingExtensions = [];
+        $missingExtensions = [];
 
-            foreach ([
-                'intl',
-                'json',
-                'mbstring',
-            ] as $extension) {
-                if (! extension_loaded($extension)) {
-                    $missingExtensions[] = $extension;
-                }
-            }
-
-            if ($missingExtensions !== []) {
-                $message = sprintf(
-                    'The framework needs the following extension(s) installed and loaded: %s.',
-                    implode(', ', $missingExtensions)
-                );
-
-                header('HTTP/1.1 503 Service Unavailable.', true, 503);
-                echo $message;
-
-                exit(EXIT_ERROR);
+        foreach ([
+            'intl',
+            'json',
+            'mbstring',
+        ] as $extension) {
+            if (! extension_loaded($extension)) {
+                $missingExtensions[] = $extension;
             }
         }
+
+        if ($missingExtensions === []) {
+            return;
+        }
+
+        $message = sprintf(
+            'The framework needs the following extension(s) installed and loaded: %s.',
+            implode(', ', $missingExtensions)
+        );
+
+        header('HTTP/1.1 503 Service Unavailable.', true, 503);
+        echo $message;
+
+        exit(EXIT_ERROR);
     }
 
     protected static function initializeKint(): void
