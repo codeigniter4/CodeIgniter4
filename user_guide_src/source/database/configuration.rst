@@ -190,3 +190,19 @@ Explanation of Values:
     etc.) not all values will be needed. For example, when using ``SQLite3`` you
     will not need to supply a username or password, and the database name
     will be the path to your database file.
+
+MySQLi
+======
+
+hostname
+--------
+
+Configuring a Socket Connection
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To connect to a MySQL server over a filesystem socket, the path to the socket should be specified in
+the ``'hostname'`` setting. CodeIgniter's MySQLi driver will notice this and configure the
+connection properly.
+
+.. literalinclude:: configuration/011.php
+    :lines: 11-18
