@@ -15,6 +15,23 @@ the application configuration files in the **app/Config** folder.
     :local:
     :depth: 2
 
+
+What are Configuration Classes?
+*******************************
+
+Configuration classes are utilized to define system default configuration values.
+System configuration values are typically *static*. Configuration classes are
+intended to retain the settings that configure how the application operates,
+rather than responding to each user's individual settings.
+
+It is not recommended to alter values set during the instantiation of a
+configuration class later during execution. In other words, it is recommended to
+treat configuration classes as immutable or readonly classes. This is especially
+important if you utilize :ref:`factories-config-caching`.
+
+Configuration values can be hard-coded in the class files or obtained from
+environment variables at instantiation.
+
 Working with Configuration Files
 ********************************
 

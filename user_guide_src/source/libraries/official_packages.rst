@@ -29,6 +29,8 @@ Among the many features, it includes:
 * Per-user permission overrides,
 * and more...
 
+.. _settings:
+
 ********
 Settings
 ********
