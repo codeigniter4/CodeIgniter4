@@ -165,8 +165,8 @@ Explanation of Values
                  customizable by the end user.
 **schema**       (``Postgre`` and ``SQLSRV`` only) The database schema, default value varies by driver.
 **encrypt**      (``MySQLi`` and ``SQLSRV`` only) Whether or not to use an encrypted connection.
-                 ``SQLSRV`` driver accepts true/false.
                  See :ref:`MySQLi encrypt <mysqli-encrypt>` for ``MySQLi`` settings.
+                 ``SQLSRV`` driver accepts true/false.
 **compress**     (``MySQLi`` only) Whether or not to use client compression.
 **strictOn**     (``MySQLi`` only) true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring
                  strict SQL while developing an application.
