@@ -136,9 +136,9 @@ and decode it in the constructor in the Config class:
 
 .. _database-config-explanation-of-values:
 
-**********************
-Explanation of Values:
-**********************
+*********************
+Explanation of Values
+*********************
 
 ================ ===========================================================================================================
  Name Config     Description
@@ -164,15 +164,9 @@ Explanation of Values:
                  applications where you might run manually written queries, and need the prefix to still be
                  customizable by the end user.
 **schema**       The database schema, default value varies by driver. (Used by ``Postgre`` and ``SQLSRV``.)
-**encrypt**      Whether or not to use an encrypted connection.
-                 ``SQLSRV`` driver accepts true/false
-                 ``MySQLi`` driver accepts an array with the following options:
-                 * ``ssl_key``    - Path to the private key file
-                 * ``ssl_cert``   - Path to the public key certificate file
-                 * ``ssl_ca``     - Path to the certificate authority file
-                 * ``ssl_capath`` - Path to a directory containing trusted CA certificates in PEM format
-                 * ``ssl_cipher`` - List of *allowed* ciphers to be used for the encryption, separated by colons (``:``)
-                 * ``ssl_verify`` - true/false; Whether to verify the server certificate or not (``MySQLi`` only)
+**encrypt**      Whether or not to use an encrypted connection. (``MySQLi`` and ``SQLSRV`` only).
+                 ``SQLSRV`` driver accepts true/false.
+                 See :ref:`MySQLi encrypt <mysqli-encrypt>` for ``MySQLi`` settings.
 **compress**     Whether or not to use client compression (``MySQLi`` only).
 **strictOn**     true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring strict SQL
                  while developing an application (``MySQLi`` only).
@@ -206,3 +200,17 @@ connection properly.
 
 .. literalinclude:: configuration/011.php
     :lines: 11-18
+
+.. _mysqli-encrypt:
+
+encrypt
+-------
+
+MySQLi driver accepts an array with the following options:
+
+* ``ssl_key``    - Path to the private key file
+* ``ssl_cert``   - Path to the public key certificate file
+* ``ssl_ca``     - Path to the certificate authority file
+* ``ssl_capath`` - Path to a directory containing trusted CA certificates in PEM format
+* ``ssl_cipher`` - List of *allowed* ciphers to be used for the encryption, separated by colons (``:``)
+* ``ssl_verify`` - true/false; Whether to verify the server certificate or not
