@@ -24,6 +24,12 @@ $errorId = uniqid('error', true);
 
     <!-- Header -->
     <div class="header">
+        <div class="environment">
+            Displayed at <?= esc(date('H:i:sa')) ?> &mdash;
+            PHP: <?= esc(PHP_VERSION) ?>  &mdash;
+            CodeIgniter: <?= esc(CodeIgniter::CI_VERSION) ?> --
+            Environment: <?= ENVIRONMENT ?>
+        </div>
         <div class="container">
             <h1><?= esc($title), esc($exception->getCode() ? ' #' . $exception->getCode() : '') ?></h1>
             <p>
@@ -419,19 +425,6 @@ $errorId = uniqid('error', true);
 
     </div> <!-- /container -->
     <?php endif; ?>
-
-    <div class="footer">
-        <div class="container">
-
-            <p>
-                Displayed at <?= esc(date('H:i:sa')) ?> &mdash;
-                PHP: <?= esc(PHP_VERSION) ?>  &mdash;
-                CodeIgniter: <?= esc(CodeIgniter::CI_VERSION) ?> --
-                Environment: <?= ENVIRONMENT ?>
-            </p>
-
-        </div>
-    </div>
 
 </body>
 </html>
