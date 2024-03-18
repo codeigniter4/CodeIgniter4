@@ -301,7 +301,15 @@
 </ul>
 </li>
 <li><p><a class="reference internal" href="#configuring-with-env-file" id="id7">Configuring with .env File</a></p></li>
-<li><p><a class="reference internal" href="#explanation-of-values" id="id8">Explanation of Values:</a></p></li>
+<li><p><a class="reference internal" href="#explanation-of-values" id="id8">Explanation of Values:</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mysqli" id="id9">MySQLi</a></p>
+<ul>
+<li><p><a class="reference internal" href="#hostname" id="id10">hostname</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
 <div class="admonition note">
@@ -713,6 +721,28 @@ etc.) not all values will be needed. For example, when using <code class="docuti
 will not need to supply a username or password, and the database name
 will be the path to your database file.</p>
 </div>
+<section id="mysqli">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">MySQLi</a><a class="headerlink" href="#mysqli" title="Permalink to this heading"></a></h3>
+<section id="hostname">
+<h4><a class="toc-backref" href="#id10" role="doc-backlink">hostname</a><a class="headerlink" href="#hostname" title="Permalink to this heading"></a></h4>
+<section id="configuring-a-socket-connection">
+<h5>Configuring a Socket Connection<a class="headerlink" href="#configuring-a-socket-connection" title="Permalink to this heading"></a></h5>
+<p>To connect to a MySQL server over a filesystem socket, the path to the socket should be specified in
+the <code class="docutils literal notranslate"><span class="pre">'hostname'</span></code> setting. CodeIgniter’s MySQLi driver will notice this and configure the
+connection properly.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>    <span class="c1">// MySQLi over a socket</span>
+    <span class="k">public</span> <span class="k">array</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1">// ...</span>
+        <span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/cloudsql/toolbox-tests:europe-north1:toolbox-db&#39;</span><span class="p">,</span>
+        <span class="c1">// ...</span>
+        <span class="s1">&#39;DBDriver&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MySQLi&#39;</span><span class="p">,</span>
+        <span class="c1">// ...</span>
+    <span class="p">];</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
 </section>
 </section>
 
