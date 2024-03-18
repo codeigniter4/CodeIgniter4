@@ -159,25 +159,25 @@ Explanation of Values
 **pConnect**     true/false (boolean) - Whether to use a persistent connection.
 **DBDebug**      true/false (boolean) - Whether to throw exceptions or not when database errors occur.
 **charset**      The character set used in communicating with the database.
-**DBCollat**     The character collation used in communicating with the database (``MySQLi`` only).
+**DBCollat**     (``MySQLi`` only) The character collation used in communicating with the database.
 **swapPre**      A default table prefix that should be swapped with ``DBPrefix``. This is useful for distributed
                  applications where you might run manually written queries, and need the prefix to still be
                  customizable by the end user.
-**schema**       The database schema, default value varies by driver. (Used by ``Postgre`` and ``SQLSRV``.)
-**encrypt**      Whether or not to use an encrypted connection. (``MySQLi`` and ``SQLSRV`` only).
+**schema**       (``Postgre`` and ``SQLSRV`` only) The database schema, default value varies by driver.
+**encrypt**      (``MySQLi`` and ``SQLSRV`` only) Whether or not to use an encrypted connection.
                  ``SQLSRV`` driver accepts true/false.
                  See :ref:`MySQLi encrypt <mysqli-encrypt>` for ``MySQLi`` settings.
-**compress**     Whether or not to use client compression (``MySQLi`` only).
-**strictOn**     true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring strict SQL
-                 while developing an application (``MySQLi`` only).
+**compress**     (``MySQLi`` only) Whether or not to use client compression.
+**strictOn**     (``MySQLi`` only) true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring
+                 strict SQL while developing an application.
 **port**         The database port number - Empty string ``''`` for default port (or dynamic port with ``SQLSRV``).
-**foreignKeys**  true/false (boolean) - Whether or not to enable Foreign Key constraint (``SQLite3`` only).
+**foreignKeys**  (``SQLite3`` only) true/false (boolean) - Whether or not to enable Foreign Key constraint.
 
                  .. important:: SQLite3 Foreign Key constraint is disabled by default.
                      See `SQLite documentation <https://www.sqlite.org/pragma.html#pragma_foreign_keys>`_.
                      To enforce Foreign Key constraint, set this config item to true.
-**busyTimeout**  milliseconds (int) - Sleeps for a specified amount of time when a table is locked (``SQLite3`` only).
-**numberNative** true/false (boolean) - Whether or not to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE (``MySQLi`` only).
+**busyTimeout**  (``SQLite3`` only) milliseconds (int) - Sleeps for a specified amount of time when a table is locked.
+**numberNative** (``MySQLi`` only) true/false (boolean) - Whether or not to enable MYSQLI_OPT_INT_AND_FLOAT_NATIVE.
 ================ ===========================================================================================================
 
 .. note:: Depending on what database driver you are using (``MySQLi``, ``Postgre``,
