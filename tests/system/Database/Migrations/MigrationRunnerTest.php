@@ -470,6 +470,10 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $this->assertCount(2, $tables);
         $this->assertSame('migrations', $tables[0]);
         $this->assertSame('foo', $tables[1]);
+
+        if (is_file($config['database'])) {
+            unlink($config['database']);
+        }
     }
 
     protected function resetTables($db = null): void
