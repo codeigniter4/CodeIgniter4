@@ -4,6 +4,7 @@ on:
     branches:
       - 'develop'
       - '4.*'
+      - '.github/workflows/label-signing.yml'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
