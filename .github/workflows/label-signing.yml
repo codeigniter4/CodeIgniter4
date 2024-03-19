@@ -24,8 +24,6 @@ jobs:
         uses: 1Password/check-signed-commits-action@v1.2.0
         with:
           comment: |
-            You must GPG-sign your work, certifying that you either wrote the work or otherwise have the right to pass it on to an open-source project. See Developer's Certificate of Origin. See [signing][1].
+            You must GPG-sign your work, certifying that you either wrote the work or otherwise have the right to pass it on to an open-source project. See Developer's Certificate of Origin. See [signing](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#signing).
 
-            **Note that all your commits must be signed.** If you have an unsigned commit, you can sign the previous commits by referring to [gpg-signing-old-commits][2].
-            [1]: https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/pull_request.md#signing
-            [2]: https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/workflow.md#gpg-signing-old-commits
+            **Note that all your commits must be signed.** If you have an unsigned commit, you can sign the previous commits by referring to [gpg-signing-old-commits](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/workflow.md#gpg-signing-old-commits).
