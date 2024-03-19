@@ -1,6 +1,6 @@
 name: Check Signed PR
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - 'develop'
       - '4.*'
@@ -9,20 +9,19 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
-permissions:
-  contents: read
-  pull-requests: write
-
 jobs:
   build:
     name: Check Signed Commit
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Check signed commits in PR
-        uses: 1Password/check-signed-commits-action@v1
+        uses: 1Password/check-signed-commits-action@v1.2.0
         with:
           comment: |
             You must GPG-sign your work, certifying that you either wrote the work or otherwise have the right to pass it on to an open-source project. See Developer's Certificate of Origin. See [signing][1].
