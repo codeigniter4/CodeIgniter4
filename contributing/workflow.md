@@ -207,7 +207,7 @@ Only commits in PR:
 ```
 
 > [!NOTE]
-> `HEAD~3` is defined have 3 commit in PR, change number *3* with the number you have in commit.
+> `HEAD~3` specifies the last 3 commits in the PR. Change *3* to the actual number of commits.
 
 All commits:
 ```console
