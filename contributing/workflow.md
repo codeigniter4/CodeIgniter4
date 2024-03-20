@@ -199,7 +199,7 @@ Latest commit only:
 > git push --force-with-lease origin your-branch
 ```
 
-Only commits in PR:
+Only the specified number of commits:
 ```console
 > git switch your-branch
 > git rebase -i HEAD~3 --exec 'git commit --amend --no-edit --no-verify -S'
