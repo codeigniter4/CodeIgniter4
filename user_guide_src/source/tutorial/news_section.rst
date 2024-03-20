@@ -176,7 +176,7 @@ Create **app/Views/news/index.php** and add the next piece of code.
 
 .. literalinclude:: news_section/005.php
 
-.. note:: We are again using using :php:func:`esc()` to help prevent XSS attacks.
+.. note:: We are again using :php:func:`esc()` to help prevent XSS attacks.
     But this time we also passed "url" as a second parameter. That's because
     attack patterns are different depending on the context in which the output
     is used.
