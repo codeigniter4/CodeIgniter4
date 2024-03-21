@@ -14,6 +14,7 @@ parameters:
 	bootstrapFiles:
 		- phpstan-bootstrap.php
 	paths:
+		- admin/starter/tests
 		- app
 		- system
 		- utils/PHPStan
