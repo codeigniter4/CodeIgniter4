@@ -10,7 +10,7 @@ class News extends BaseController
     {
         $model = model(NewsModel::class);
 
-        $data['news'] = $model->getNews();
+        $data['news_list'] = $model->getNews();
     }
 
     public function show($slug = null)
