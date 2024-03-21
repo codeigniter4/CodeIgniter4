@@ -1,6 +1,6 @@
 <h2><?= esc($title) ?></h2>
 
-<?php if (! empty($news) && is_array($news)): ?>
+<?php if ($news !== []): ?>
 
     <?php foreach ($news as $news_item): ?>
 
