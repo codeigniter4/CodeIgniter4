@@ -98,7 +98,7 @@ some additional tools to make working with data simpler. Add the
 following code to your model.
 
 .. literalinclude:: news_section/002.php
-    :lines: 11-18
+    :lines: 11-23
 
 With this code, you can perform two different queries. You can get all
 news records, or get a news item by its slug. You might have
