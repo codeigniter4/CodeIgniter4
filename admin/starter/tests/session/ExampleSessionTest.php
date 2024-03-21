@@ -8,7 +8,7 @@ use Config\Services;
  */
 final class ExampleSessionTest extends CIUnitTestCase
 {
-    public function testSessionSimple()
+    public function testSessionSimple(): void
     {
         $session = Services::session();
 
