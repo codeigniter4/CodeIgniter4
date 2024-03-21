@@ -297,11 +297,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeDelete type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
@@ -328,16 +323,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeUpdateBatch type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$validationMessages type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$validationRules type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
@@ -2232,16 +2217,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/Factory.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Config\\\\Routing\\:\\:\\$moduleRoutes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Routing.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Config\\\\Routing\\:\\:\\$routeFiles type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Routing.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Accessing offset \'SERVER_PROTOCOL\' directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/Services.php',
@@ -2322,7 +2297,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Controller.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Controller\\:\\:\\$helpers type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property CodeIgniter\\\\Controller\\:\\:\\$request \\(CodeIgniter\\\\HTTP\\\\CLIRequest\\|CodeIgniter\\\\HTTP\\\\IncomingRequest\\) does not accept CodeIgniter\\\\HTTP\\\\RequestInterface\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Controller.php',
 ];
@@ -4732,11 +4707,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Seeder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Seeder\\:\\:run\\(\\) should return mixed but return statement is missing\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Seeder.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Debug/BaseExceptionHandler.php',
@@ -5767,7 +5737,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
+	'message' => '#^Only booleans are allowed in a negated boolean, array\\<string, array\\<string, array\\<int, string\\>\\>\\> given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
@@ -6168,11 +6138,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\ContentSecurityPolicy\\:\\:addObjectSrc\\(\\) has parameter \\$uri with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\ContentSecurityPolicy\\:\\:addOption\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
 ];
@@ -8217,11 +8182,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/RESTful/BaseResource.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^PHPDoc type CodeIgniter\\\\HTTP\\\\CLIRequest\\|CodeIgniter\\\\HTTP\\\\IncomingRequest of property CodeIgniter\\\\RESTful\\\\BaseResource\\:\\:\\$request is not the same as PHPDoc type CodeIgniter\\\\HTTP\\\\RequestInterface of overridden property CodeIgniter\\\\Controller\\:\\:\\$request\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/RESTful/BaseResource.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\RESTful\\\\ResourceController\\:\\:fail\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/RESTful/ResourceController.php',
@@ -9162,101 +9122,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Superglobals.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:seed\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\CIDatabaseTestCase\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIDatabaseTestCase.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:assertCloseEnough\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
@@ -9317,22 +9182,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$seed \\(array\\<int, class\\-string\\<CodeIgniter\\\\Database\\\\Seeder\\>\\>\\|class\\-string\\<CodeIgniter\\\\Database\\\\Seeder\\>\\) does not accept default value of type string\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$session type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$setUpMethods type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$tearDownMethods type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
 ];
@@ -9462,47 +9317,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:clearInsertCache\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:delete\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:dontSeeInDatabase\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:dontSeeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:get\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:grabFromDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:hasInDatabase\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:loadDependencies\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:migrateDatabase\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
 ];
@@ -9532,67 +9352,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:regressDatabase\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:resetMigrationSeedCount\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:runSeeds\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:seeInDatabase\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:seeInDatabase\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:seeNumRecords\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:seeNumRecords\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:seed\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:setRequestBody\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:setUpDatabase\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:setUpMigrate\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:setUpSeed\\(\\) has no return type specified\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Test\\\\FeatureTestCase\\:\\:tearDownDatabase\\(\\) has no return type specified\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/FeatureTestCase.php',
 ];
