@@ -219,7 +219,7 @@ controller you made above produces...
     | localhost:8080/pages            | the results from the ``index()`` method inside our ``Pages``    |
     |                                 | controller, which is to display the CodeIgniter "welcome" page. |
     +---------------------------------+-----------------------------------------------------------------+
-    | localhost:8080/home             | show the "home" page that you made above, because we explicitly |
+    | localhost:8080/home             | the "home" page that you made above, because we explicitly |
     |                                 | asked for it. the results from the ``view()`` method inside our |
     |                                 | ``Pages`` controller.                                           |
     +---------------------------------+-----------------------------------------------------------------+
