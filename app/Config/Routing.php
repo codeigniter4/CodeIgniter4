@@ -108,7 +108,7 @@ class Routing extends BaseRouting
      *       'blog' => 'Acme\Blog\Controllers',
      *   ]
      *
-     * @var array<string, string> [ uri_segment => namespace ]
+     * @var array<string, string>
      */
     public array $moduleRoutes = [];
 }
