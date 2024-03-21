@@ -181,7 +181,7 @@ class Seeder
      * Child classes must implement this method and take care
      * of inserting their data here.
      *
-     * @return mixed
+     * @return void
      *
      * @codeCoverageIgnore
      */
