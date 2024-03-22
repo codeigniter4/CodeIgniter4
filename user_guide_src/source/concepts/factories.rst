@@ -86,17 +86,17 @@ The following code loads **app/Libraries/Sub/SubLib.php** if it exists:
 .. literalinclude:: factories/013.php
    :lines: 2-
 
-Passing Full Qualified Classname
+Passing Fully Qualified Classname
 --------------------------------
 
-You could also request a full qualified classname:
+You could also request a fully qualified classname:
 
 .. literalinclude:: factories/002.php
    :lines: 2-
 
 It returns the instance of ``Blog\Models\UserModel`` if it exists.
 
-.. note:: Prior to v4.4.0, when you requested a full qualified classname,
+.. note:: Prior to v4.4.0, when you requested a fully qualified classname,
     if you had only ``Blog\Models\UserModel``, the instance would be returned.
     But if you had both ``App\Models\UserModel`` and ``Blog\Models\UserModel``,
     the instance of ``App\Models\UserModel`` would be returned.
@@ -143,7 +143,7 @@ the ``Factories::define()`` method:
 
 The first parameter is a component. The second parameter is a class alias
 (the first parameter to Factories magic static method), and the third parameter
-is the true full qualified classname to be loaded.
+is the true fully qualified classname to be loaded.
 
 After that, if you load ``Myth\Auth\Models\UserModel`` with Factories, the
 ``App\Models\UserModel`` instance will be returned:
