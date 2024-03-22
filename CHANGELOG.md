@@ -53,7 +53,6 @@
 * fix: typo in pager default_simple by @jasonliang-dev in https://github.com/codeigniter4/CodeIgniter4/pull/8407
 * refactor: improve Forge variable names by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/8434
 
-
 ## [v4.4.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.4.4) (2023-12-28)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.4.3...v4.4.4)
 

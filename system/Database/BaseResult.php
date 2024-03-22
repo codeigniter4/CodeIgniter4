@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace CodeIgniter\Database;
 
-use CodeIgniter\Entity\Entity;
+use CodeIgniter\Entity\EntityInterface;
 use stdClass;
 
 /**
@@ -159,7 +159,7 @@ abstract class BaseResult implements ResultInterface
         $this->customResultObject[$className] = [];
 
         while ($row = $this->fetchObject($className)) {
-            if (! is_subclass_of($row, Entity::class) && method_exists($row, 'syncOriginal')) {
+            if (! is_subclass_of($row, EntityInterface::class) && method_exists($row, 'syncOriginal')) {
                 $row->syncOriginal();
             }
 
@@ -240,7 +240,7 @@ abstract class BaseResult implements ResultInterface
         }
 
         while ($row = $this->fetchObject()) {
-            if (! is_subclass_of($row, Entity::class) && method_exists($row, 'syncOriginal')) {
+            if (! is_subclass_of($row, EntityInterface::class) && method_exists($row, 'syncOriginal')) {
                 $row->syncOriginal();
             }
 
@@ -539,7 +539,7 @@ abstract class BaseResult implements ResultInterface
      *
      * Overridden by child classes.
      *
-     * @return Entity|false|object|stdClass
+     * @return EntityInterface|false|object|stdClass
      */
     abstract protected function fetchObject(string $className = 'stdClass');
 }

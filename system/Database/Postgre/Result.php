@@ -111,7 +111,7 @@ class Result extends BaseResult
      *
      * Overridden by child classes.
      *
-     * @return Entity|false|object|stdClass
+     * @return EntityInterface|false|object|stdClass
      */
     protected function fetchObject(string $className = 'stdClass')
     {
