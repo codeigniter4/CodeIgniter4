@@ -219,7 +219,7 @@ final class CorsTest extends CIUnitTestCase
     public function testHandlePreflightRequestAllowedOriginsPatternsAllowed()
     {
         $config                         = $this->createCorsConfig();
-        $config->allowedOriginsPatterns = ['!\Ahttps://\w+\.example\.com\z!'];
+        $config->allowedOriginsPatterns = ['https://\w+\.example\.com'];
         $cors                           = $this->createCors($config);
 
         $request = $this->createRequest()
@@ -256,7 +256,7 @@ final class CorsTest extends CIUnitTestCase
     public function testHandlePreflightRequestAllowedOriginsPatternsNotAllowed()
     {
         $config                         = $this->createCorsConfig();
-        $config->allowedOriginsPatterns = ['!\Ahttps://\w+\.example\.com\z!'];
+        $config->allowedOriginsPatterns = ['https://\w+\.example\.com'];
         $cors                           = $this->createCors($config);
 
         $request = $this->createRequest()

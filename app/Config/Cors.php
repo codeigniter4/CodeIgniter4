@@ -29,13 +29,11 @@ class Cors extends BaseConfig
      *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
      *
-     * NOTE: You must set `\A` (beginning with) and `\z` (ending with) in patterns,
-     *       otherwise you will give access from unintended external domains.
-     *       E.g., if you set '!\w+\.example\.com!', 'www.example.com.evil.site'
-     *       is permitted.
+     * NOTE: A pattern specified here is part of a regular expression. It will
+     *       be actually `#\A<pattern>\z#`.
      *
      * E.g.:
-     *   - ['!\Ahttps://\w+\.example\.com\z!']
+     *   - ['https://\w+\.example\.com']
      *
      * @var list<string>
      */

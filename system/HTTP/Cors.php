@@ -123,7 +123,9 @@ class Cors
 
         if ($originPatternCount > 0) {
             foreach ($this->config['allowedOriginsPatterns'] as $pattern) {
-                if (preg_match($pattern, $origin)) {
+                $regex = '#\A' . $pattern . '\z#';
+
+                if (preg_match($regex, $origin)) {
                     $response->setHeader('Access-Control-Allow-Origin', $origin);
                     $response->appendHeader('Vary', 'Origin');
                 }

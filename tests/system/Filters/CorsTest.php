@@ -260,7 +260,7 @@ final class CorsTest extends CIUnitTestCase
     public function testItAddsAVaryHeaderWhenHasOriginPatterns()
     {
         $this->cors = $this->createCors([
-            'allowedOriginsPatterns' => ['!\Ahttp://l(o|0)calh(o|0)st\z!'],
+            'allowedOriginsPatterns' => ['http://l(o|0)calh(o|0)st'],
         ]);
         $request = $this->createValidActualRequest();
 
@@ -324,7 +324,7 @@ final class CorsTest extends CIUnitTestCase
     {
         $this->cors = $this->createCors([
             'allowedOrigins'         => [],
-            'allowedOriginsPatterns' => ['!\Ahttp://l(o|0)calh(o|0)st\z!'],
+            'allowedOriginsPatterns' => ['http://l(o|0)calh(o|0)st'],
         ]);
         $request = $this->createValidActualRequest();
 
