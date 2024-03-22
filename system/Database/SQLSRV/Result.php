@@ -151,7 +151,7 @@ class Result extends BaseResult
     /**
      * Returns the result set as an object.
      *
-     * @return Entity|false|object|stdClass
+     * @return EntityInterface|false|object|stdClass
      */
     protected function fetchObject(string $className = 'stdClass')
     {
