@@ -72,8 +72,10 @@ Forge
 Others
 ------
 
-- Update entity to use interface for better extensibility.
-
+- **Entity:**
+    - Added ``CodeIgniter\Entity\EntityInterface`` for better extensibility.
+    - Now ``Entity`` implements ``EntityInterface``.
+    - Now ``BaseModel`` and ``Result`` classes use ``EntityInterface`` instead of ``Entity``.
 
 Model
 =====
