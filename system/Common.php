@@ -426,6 +426,15 @@ if (! function_exists('esc')) {
      */
     function esc($data, string $context = 'html', ?string $encoding = null)
     {
+        $context = strtolower($context);
+
+        // Provide a way to NOT escape data since
+        // this could be called automatically by
+        // the View library.
+        if ($context === 'raw') {
+            return $data;
+        }
+
         if (is_array($data)) {
             foreach ($data as &$value) {
                 $value = esc($value, $context);
@@ -433,15 +442,6 @@ if (! function_exists('esc')) {
         }
 
         if (is_string($data)) {
-            $context = strtolower($context);
-
-            // Provide a way to NOT escape data since
-            // this could be called automatically by
-            // the View library.
-            if ($context === 'raw') {
-                return $data;
-            }
-
             if (! in_array($context, ['html', 'js', 'css', 'url', 'attr'], true)) {
                 throw new InvalidArgumentException('Invalid escape context provided.');
             }
