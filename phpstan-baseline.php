@@ -6357,11 +6357,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/HTTP/MessageInterface.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Call to function is_array\\(\\) with array will always evaluate to true\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/Negotiate.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\Negotiate\\:\\:charset\\(\\) has parameter \\$supported with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/Negotiate.php',
@@ -7012,11 +7007,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Helpers/filesystem_helper.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Call to function is_array\\(\\) with array will always evaluate to true\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/form_helper.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/form_helper.php',
@@ -7203,11 +7193,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Function parse_form_attributes\\(\\) has parameter \\$default with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Helpers/form_helper.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, array given on the right side\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Helpers/form_helper.php',
 ];

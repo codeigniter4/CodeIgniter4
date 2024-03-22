@@ -457,10 +457,8 @@ if (! function_exists('form_label')) {
             $label .= ' for="' . $id . '"';
         }
 
-        if (is_array($attributes) && $attributes) {
-            foreach ($attributes as $key => $val) {
-                $label .= ' ' . $key . '="' . $val . '"';
-            }
+        foreach ($attributes as $key => $val) {
+            $label .= ' ' . $key . '="' . $val . '"';
         }
 
         return $label . '>' . $labelText . '</label>';
