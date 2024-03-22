@@ -58,4 +58,5 @@ jobs:
             --exclude system/HTTP/SiteURI.php
             --exclude system/Validation/Rules.php
             --exclude system/Autoloader/Autoloader.php
+            --exclude system/Config/Filters.php
             -- app/ public/ system/
