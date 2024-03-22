@@ -203,13 +203,20 @@ class Language
                 $fmtError = '"' . $e->getMessage() . '" (' . $e->getCode() . ')';
             }
 
-            $argsString = implode(',', $args);
+            $argsString = implode(
+                ', ',
+                array_map(static fn ($element) => '"' . $element . '"', $args)
+            );
+            $argsUrlEncoded = implode(
+                ', ',
+                array_map(static fn ($element) => '"' . rawurlencode($element) . '"', $args)
+            );
 
             log_message(
                 'error',
                 'Language.invalidMessageFormat: $message: "' . $message
-                . '", $args: "' . $argsString . '"'
-                . ' (urlencoded: ' . rawurlencode($argsString) . '),'
+                . '", $args: ' . $argsString
+                . ' (urlencoded: ' . $argsUrlEncoded . '),'
                 . ' MessageFormatter Error: ' . $fmtError
             );
 
