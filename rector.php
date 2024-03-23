@@ -70,7 +70,7 @@ return static function (RectorConfig $rectorConfig): void {
         && in_array($_SERVER['argv'][2], ['app', 'system', 'tests', 'utils'], true)
         && is_dir('/tmp/rector-' . $_SERVER['argv'][2])
     ) {
-        $rectorConfig->cacheDirectory($_SERVER['argv'][2]);
+        $rectorConfig->cacheDirectory('/tmp/rector-' . $_SERVER['argv'][2]);
     }
 
     // paths to refactor; solid alternative to CLI arguments
