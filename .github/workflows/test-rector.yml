@@ -80,5 +80,14 @@ jobs:
       - name: Install dependencies
         run: composer update --ansi --no-interaction
 
+      - name: Rector Cache
+        uses: actions/cache@v4
+        with:
+          path: /tmp/rector-${{ matrix.paths }}
+          key: ${{ runner.os }}-rector-${{ github.run_id }}-${{ matrix.paths }}
+          restore-keys: ${{ runner.os }}-rector-${{ matrix.paths }}
+
+      - run: mkdir -p /tmp/rector-${{ matrix.paths }}
+
       - name: Run static analysis
         run: vendor/bin/rector process ${{ matrix.paths }} --dry-run --no-progress-bar
