@@ -86,16 +86,22 @@ class Cors
         return $response;
     }
 
+    private function checkWildcard(string $name, int $count): void
+    {
+        if (in_array('*', $this->config[$name], true) && $count > 1) {
+            throw new ConfigException(
+                "If wildcard is specified, you must set `'{$name}' => ['*']`."
+                . ' But using wildcard is not recommended.'
+            );
+        }
+    }
+
     private function setAllowOrigin(RequestInterface $request, ResponseInterface $response): void
     {
         $originCount        = count($this->config['allowedOrigins']);
         $originPatternCount = count($this->config['allowedOriginsPatterns']);
 
-        if (in_array('*', $this->config['allowedOrigins'], true) && $originCount > 1) {
-            throw new ConfigException(
-                "If wildcard is specified, you must set `'allowedOrigins' => ['*']`."
-            );
-        }
+        $this->checkWildcard('allowedOrigins', $originCount);
 
         if (
             $originCount === 1 && $this->config['allowedOrigins'][0] === '*'
@@ -135,14 +141,7 @@ class Cors
 
     private function setAllowHeaders(ResponseInterface $response): void
     {
-        if (
-            in_array('*', $this->config['allowedHeaders'], true)
-            && count($this->config['allowedHeaders']) > 1
-        ) {
-            throw new ConfigException(
-                "If wildcard is specified, you must set `'allowedHeaders' => ['*']`."
-            );
-        }
+        $this->checkWildcard('allowedHeaders', count($this->config['allowedHeaders']));
 
         if (
             $this->config['allowedHeaders'][0] === '*'
@@ -161,14 +160,7 @@ class Cors
 
     private function setAllowMethods(ResponseInterface $response): void
     {
-        if (
-            in_array('*', $this->config['allowedMethods'], true)
-            && count($this->config['allowedMethods']) > 1
-        ) {
-            throw new ConfigException(
-                "If wildcard is specified, you must set `'allowedMethods' => ['*']`."
-            );
-        }
+        $this->checkWildcard('allowedMethods', count($this->config['allowedMethods']));
 
         if (
             $this->config['allowedMethods'][0] === '*'
