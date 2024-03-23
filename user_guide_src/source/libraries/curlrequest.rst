@@ -157,7 +157,7 @@ or any of the shortcut methods.
 allow_redirects
 ===============
 
-By default, cURL will not follow all "Location:" headers the remote servers send
+By default, cURL will not follow any "Location:" headers the remote servers send
 back. The ``allow_redirects`` option allows you to modify how that works.
 
 If you set the value to ``true``, then it will follow redirects:
