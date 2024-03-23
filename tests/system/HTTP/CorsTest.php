@@ -59,7 +59,7 @@ final class CorsTest extends CIUnitTestCase
         $this->assertFalse($cors->isPreflightRequest($request));
     }
 
-    private function createRequest(): RequestInterface
+    private function createRequest(): IncomingRequest
     {
         return Services::incomingrequest(null, false);
     }
