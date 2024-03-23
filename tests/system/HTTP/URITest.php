@@ -473,8 +473,8 @@ final class URITest extends CIUnitTestCase
     {
         return [
             'dot-segment' => [
-                '/./path/to/nowhere',
-                '/path/to/nowhere',
+                '/./path/to/nowhere', // path
+                '/path/to/nowhere',   // expectedPath
             ],
             'double-dots' => [
                 '/../path/to/nowhere',
@@ -488,21 +488,25 @@ final class URITest extends CIUnitTestCase
                 '../path/to/nowhere',
                 '/path/to/nowhere',
             ],
-            'decoded' => [
+            'decode-percent-encoded-chars' => [
                 '/%41path',
                 '/Apath',
+            ],
+            'decode-slash' => [
+                '/a%2Fb',
+                '/a/b',
             ],
             'encode-unreserved-chars' => [
                 '/path^here',
                 '/path%5Ehere',
             ],
-            'encode-invalid-percent-encoding' => [
-                '/pa%2-th',
-                '/pa%252-th',
-            ],
             'encode-multibyte-chars' => [
                 '/あいう',
                 '/%E3%81%82%E3%81%84%E3%81%86',
+            ],
+            'encode-invalid-percent-encoding' => [
+                '/pa%2-th',
+                '/pa%252-th',
             ],
         ];
     }
