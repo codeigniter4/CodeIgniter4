@@ -112,6 +112,7 @@ instances. See :ref:`model-saving-dates` for details.
 Libraries
 =========
 
+- **CORS:** Added :doc:`../libraries/cors` filter and class.
 - **Validation:**
     - Added the new rule ``field_exists`` that checks the filed exists in the
       data to be validated.
