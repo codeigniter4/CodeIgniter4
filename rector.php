@@ -9,6 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\BooleanAnd\SimplifyEmptyArrayCheckRector;
 use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
 use Rector\CodeQuality\Rector\Empty_\SimplifyEmptyCheckOnEmptyArrayRector;
@@ -61,6 +62,16 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->parallel(120, 8, 10);
+
+    // Github action cache
+    $rectorConfig->cacheClass(FileCacheStorage::class);
+
+    if (isset($_SERVER['argv'][2])
+        && in_array($_SERVER['argv'][2], ['app', 'system', 'tests', 'utils'], true)
+        && is_dir('/tmp/rector-' . $_SERVER['argv'][2])
+    ) {
+        $rectorConfig->cacheDirectory($_SERVER['argv'][2]);
+    }
 
     // paths to refactor; solid alternative to CLI arguments
     $rectorConfig->paths([__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils']);
