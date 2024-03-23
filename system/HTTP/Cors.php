@@ -96,21 +96,27 @@ class Cors
         }
     }
 
+    private function checkWildcardAndCredentials(string $name, string $header): void
+    {
+        if (
+            $this->config[$name] === ['*']
+            && $this->config['supportsCredentials']
+        ) {
+            throw new ConfigException(
+                'When responding to a credentialed request, '
+                . 'the server must not specify the "*" wildcard for the '
+                . $header . ' response-header value.'
+            );
+        }
+    }
+
     private function setAllowOrigin(RequestInterface $request, ResponseInterface $response): void
     {
         $originCount        = count($this->config['allowedOrigins']);
         $originPatternCount = count($this->config['allowedOriginsPatterns']);
 
         $this->checkWildcard('allowedOrigins', $originCount);
-
-        if (
-            $originCount === 1 && $this->config['allowedOrigins'][0] === '*'
-            && $this->config['supportsCredentials']
-        ) {
-            throw new ConfigException(
-                'When responding to a credentialed request, the server must not specify the "*" wildcard for the Access-Control-Allow-Origin response-header value.'
-            );
-        }
+        $this->checkWildcardAndCredentials('allowedOrigins', 'Access-Control-Allow-Origin');
 
         if ($originCount === 1 && $originPatternCount === 0) {
             $response->setHeader('Access-Control-Allow-Origin', $this->config['allowedOrigins'][0]);
@@ -142,15 +148,7 @@ class Cors
     private function setAllowHeaders(ResponseInterface $response): void
     {
         $this->checkWildcard('allowedHeaders', count($this->config['allowedHeaders']));
-
-        if (
-            $this->config['allowedHeaders'][0] === '*'
-            && $this->config['supportsCredentials']
-        ) {
-            throw new ConfigException(
-                'When responding to a credentialed request, the server must not specify the "*" wildcard for the Access-Control-Allow-Headers response-header value.'
-            );
-        }
+        $this->checkWildcardAndCredentials('allowedHeaders', 'Access-Control-Allow-Headers');
 
         $response->setHeader(
             'Access-Control-Allow-Headers',
@@ -161,15 +159,7 @@ class Cors
     private function setAllowMethods(ResponseInterface $response): void
     {
         $this->checkWildcard('allowedMethods', count($this->config['allowedMethods']));
-
-        if (
-            $this->config['allowedMethods'][0] === '*'
-            && $this->config['supportsCredentials']
-        ) {
-            throw new ConfigException(
-                'When responding to a credentialed request, the server must not specify the "*" wildcard for the Access-Control-Allow-Methods response-header value.'
-            );
-        }
+        $this->checkWildcardAndCredentials('allowedMethods', 'Access-Control-Allow-Methods');
 
         $response->setHeader(
             'Access-Control-Allow-Methods',
