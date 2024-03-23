@@ -85,7 +85,7 @@ jobs:
         with:
           path: /tmp/rector-${{ matrix.paths }}
           key: ${{ runner.os }}-rector-${{ matrix.paths }}-${{ github.run_id }}
-          restore-keys: ${{ runner.os }}-rector-${{ matrix.paths }}
+          restore-keys: ${{ runner.os }}-rector-${{ matrix.paths }}-
 
       - run: mkdir -p /tmp/rector-${{ matrix.paths }}
 
