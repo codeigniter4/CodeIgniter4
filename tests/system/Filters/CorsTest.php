@@ -270,7 +270,7 @@ final class CorsTest extends CIUnitTestCase
         $this->assertHeader('Vary', 'Origin');
     }
 
-    public function testItDoesntPermitWilcardAndOrigin()
+    public function testItDoesntPermitWildcardAndOrigin()
     {
         $this->expectException(ConfigException::class);
 
