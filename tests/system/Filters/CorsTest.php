@@ -24,6 +24,10 @@ use CodeIgniter\Test\Mock\MockAppConfig;
 use Config\Services;
 
 /**
+ * This test case is based on:
+ *   https://github.com/asm89/stack-cors/blob/master/tests/CorsTest.php
+ *   https://github.com/asm89/stack-cors/blob/b6920bd8996449400ac976e083b55fb45f035467/tests/CorsTest.php
+ *
  * @internal
  *
  * @group Others
