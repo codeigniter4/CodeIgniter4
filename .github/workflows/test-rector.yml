@@ -84,7 +84,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: /tmp/rector-${{ matrix.paths }}
-          key: ${{ runner.os }}-rector-${{ github.run_id }}-${{ matrix.paths }}
+          key: ${{ runner.os }}-rector-${{ matrix.paths }}-${{ github.run_id }}
           restore-keys: ${{ runner.os }}-rector-${{ matrix.paths }}
 
       - run: mkdir -p /tmp/rector-${{ matrix.paths }}
