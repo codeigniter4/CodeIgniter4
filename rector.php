@@ -65,12 +65,8 @@ return static function (RectorConfig $rectorConfig): void {
 
     // Github action cache
     $rectorConfig->cacheClass(FileCacheStorage::class);
-
-    if (isset($_SERVER['argv'][2])
-        && in_array($_SERVER['argv'][2], ['app', 'system', 'tests', 'utils'], true)
-        && is_dir('/tmp/rector-' . $_SERVER['argv'][2])
-    ) {
-        $rectorConfig->cacheDirectory('/tmp/rector-' . $_SERVER['argv'][2]);
+    if (is_dir('/tmp')) {
+        $rectorConfig->cacheDirectory('/tmp/rector');
     }
 
     // paths to refactor; solid alternative to CLI arguments

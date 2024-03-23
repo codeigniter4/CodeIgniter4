@@ -40,17 +40,12 @@ permissions:
 
 jobs:
   build:
-    name: PHP ${{ matrix.php-versions }} Analyze code (Rector) on ${{ matrix.paths }}
+    name: PHP ${{ matrix.php-versions }} Analyze code (Rector)
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
         php-versions: ['7.4', '8.0']
-        paths:
-          - app
-          - system
-          - tests
-          - utils
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -83,11 +78,11 @@ jobs:
       - name: Rector Cache
         uses: actions/cache@v4
         with:
-          path: /tmp/rector-${{ matrix.paths }}
-          key: ${{ runner.os }}-rector-${{ matrix.paths }}-${{ github.run_id }}
-          restore-keys: ${{ runner.os }}-rector-${{ matrix.paths }}-
+          path: /tmp/rector
+          key: ${{ runner.os }}-rector-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-rector-
 
-      - run: mkdir -p /tmp/rector-${{ matrix.paths }}
+      - run: mkdir -p /tmp/rector
 
       - name: Run static analysis
-        run: vendor/bin/rector process ${{ matrix.paths }} --dry-run --no-progress-bar
+        run: vendor/bin/rector process --dry-run --no-progress-bar
