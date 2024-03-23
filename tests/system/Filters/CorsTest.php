@@ -187,6 +187,9 @@ final class CorsTest extends CIUnitTestCase
     public function testItDoesntPermitWildcardAllowedHeadersAndSupportsCredentials()
     {
         $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage(
+            'When responding to a credentialed request, the server must not specify the "*" wildcard for the Access-Control-Allow-Headers response-header value.'
+        );
 
         $this->cors = $this->createCors(['allowedHeaders' => ['*'], 'supportsCredentials' => true]);
         $request    = $this->createValidPreflightRequest();
@@ -233,6 +236,9 @@ final class CorsTest extends CIUnitTestCase
     public function testItDoesNotPermitWildcardAllowedOriginsAndSupportsCredentials()
     {
         $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage(
+            'When responding to a credentialed request, the server must not specify the "*" wildcard for the Access-Control-Allow-Origin response-header value.'
+        );
 
         $this->cors = $this->createCors([
             'allowedOrigins'      => ['*'],
@@ -246,6 +252,9 @@ final class CorsTest extends CIUnitTestCase
     public function testItDoesNotPermitWildcardAllowedOriginsAllowedMethodAndSupportsCredentials()
     {
         $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage(
+            'When responding to a credentialed request, the server must not specify the "*" wildcard for the Access-Control-Allow-Origin response-header value.'
+        );
 
         $this->cors = $this->createCors([
             'allowedOrigins'      => ['*'],
@@ -273,6 +282,9 @@ final class CorsTest extends CIUnitTestCase
     public function testItDoesntPermitWildcardAndOrigin()
     {
         $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage(
+            "If wildcard is specified, you must set `'allowedOrigins' => ['*']`. But using wildcard is not recommended."
+        );
 
         $this->cors = $this->createCors([
             'allowedOrigins' => ['*', 'http://localhost'],
