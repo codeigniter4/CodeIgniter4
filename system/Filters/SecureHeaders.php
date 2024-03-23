@@ -49,7 +49,7 @@ class SecureHeaders implements FilterInterface
     /**
      * We don't have anything to do here.
      *
-     * @param array|null $arguments
+     * @param list<string>|null $arguments
      *
      * @return void
      */
@@ -60,7 +60,7 @@ class SecureHeaders implements FilterInterface
     /**
      * Add security headers.
      *
-     * @param array|null $arguments
+     * @param list<string>|null $arguments
      *
      * @return void
      */
