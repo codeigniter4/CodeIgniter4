@@ -39,7 +39,7 @@ class CSRF implements FilterInterface
      * sent back to the client, allowing for error pages,
      * redirects, etc.
      *
-     * @param array|null $arguments
+     * @param list<string>|null $arguments
      *
      * @return RedirectResponse|void
      *
@@ -67,7 +67,7 @@ class CSRF implements FilterInterface
     /**
      * We don't have anything to do here.
      *
-     * @param array|null $arguments
+     * @param list<string>|null $arguments
      *
      * @return void
      */

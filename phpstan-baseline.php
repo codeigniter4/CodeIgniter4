@@ -2,84 +2,14 @@
 
 $ignoreErrors = [];
 $ignoreErrors[] = [
-	'message' => '#^Property Config\\\\ContentSecurityPolicy\\:\\:\\$frameSrc type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/ContentSecurityPolicy.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Database\\:\\:\\$default type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Database.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Database\\:\\:\\$tests type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Database.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Exceptions\\:\\:\\$ignoreCodes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Exceptions.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Exceptions\\:\\:\\$sensitiveDataInTrace type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Exceptions.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Filters\\:\\:\\$filters type has no value type specified in iterable type array\\.$#',
+	'message' => '#^PHPDoc type array\\<string, array\\<int, string\\>\\> of property Config\\\\Filters\\:\\:\\$methods is not the same as PHPDoc type array of overridden property CodeIgniter\\\\Config\\\\Filters\\:\\:\\$methods\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/app/Config/Filters.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Filters\\:\\:\\$methods type has no value type specified in iterable type array\\.$#',
+	'message' => '#^PHPDoc type array\\<string, array\\<string, array\\<int, string\\>\\>\\> of property Config\\\\Filters\\:\\:\\$filters is not the same as PHPDoc type array of overridden property CodeIgniter\\\\Config\\\\Filters\\:\\:\\$filters\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/app/Config/Filters.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Logger\\:\\:\\$handlers type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Logger.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Logger\\:\\:\\$threshold type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Logger.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Mimes\\:\\:\\$mimes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Mimes.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Routing\\:\\:\\$moduleRoutes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Routing.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Routing\\:\\:\\$routeFiles type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Routing.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Toolbar\\:\\:\\$watchedDirectories type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Toolbar.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property Config\\\\Toolbar\\:\\:\\$watchedExtensions type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Config/Toolbar.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc type CodeIgniter\\\\HTTP\\\\CLIRequest\\|CodeIgniter\\\\HTTP\\\\IncomingRequest of property App\\\\Controllers\\\\BaseController\\:\\:\\$request is not the same as PHPDoc type CodeIgniter\\\\HTTP\\\\RequestInterface of overridden property CodeIgniter\\\\Controller\\:\\:\\$request\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Controllers/BaseController.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property App\\\\Controllers\\\\BaseController\\:\\:\\$helpers type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/app/Controllers/BaseController.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Call to function method_exists\\(\\) with \'Composer\\\\\\\\InstalledVersions\' and \'getAllRawData\' will always evaluate to true\\.$#',
@@ -362,11 +292,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$allowedFields type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeDelete type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
@@ -393,16 +318,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$beforeUpdateBatch type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$validationMessages type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/BaseModel.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\BaseModel\\:\\:\\$validationRules type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/BaseModel.php',
 ];
@@ -1852,16 +1767,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Config/Filters.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Config\\\\Routing\\:\\:\\$moduleRoutes type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Routing.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Config\\\\Routing\\:\\:\\$routeFiles type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Config/Routing.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Accessing offset \'SERVER_PROTOCOL\' directly on \\$_SERVER is discouraged\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Config/Services.php',
@@ -1942,7 +1847,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Controller.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Controller\\:\\:\\$helpers type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property CodeIgniter\\\\Controller\\:\\:\\$request \\(CodeIgniter\\\\HTTP\\\\CLIRequest\\|CodeIgniter\\\\HTTP\\\\IncomingRequest\\) does not accept CodeIgniter\\\\HTTP\\\\RequestInterface\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Controller.php',
 ];
@@ -4367,11 +4272,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Database/Seeder.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Database\\\\Seeder\\:\\:run\\(\\) should return mixed but return statement is missing\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Database/Seeder.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Debug/BaseExceptionHandler.php',
@@ -5322,36 +5222,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Files/File.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\CSRF\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/CSRF.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\CSRF\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/CSRF.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\DebugToolbar\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/DebugToolbar.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\DebugToolbar\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/DebugToolbar.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\FilterInterface\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/FilterInterface.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\FilterInterface\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/FilterInterface.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/Filters.php',
@@ -5417,7 +5287,7 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in a negated boolean, array given\\.$#',
+	'message' => '#^Only booleans are allowed in a negated boolean, array\\<string, array\\<string, array\\<int, string\\>\\>\\> given\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
@@ -5440,26 +5310,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Filters\\\\ForceHTTPS\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/ForceHTTPS.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\Honeypot\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Honeypot.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\Honeypot\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Honeypot.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\InvalidChars\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/InvalidChars.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\InvalidChars\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/InvalidChars.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Filters\\\\InvalidChars\\:\\:checkControl\\(\\) has parameter \\$value with no value type specified in iterable type array\\.$#',
@@ -5500,16 +5350,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Filters\\\\PerformanceMetrics\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/PerformanceMetrics.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\SecureHeaders\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/SecureHeaders.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\SecureHeaders\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/SecureHeaders.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Format\\\\FormatterInterface\\:\\:format\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
@@ -5848,11 +5688,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\HTTP\\\\ContentSecurityPolicy\\:\\:addObjectSrc\\(\\) has parameter \\$uri with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\HTTP\\\\ContentSecurityPolicy\\:\\:addOption\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/HTTP/ContentSecurityPolicy.php',
 ];
@@ -7902,11 +7737,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/RESTful/BaseResource.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^PHPDoc type CodeIgniter\\\\HTTP\\\\CLIRequest\\|CodeIgniter\\\\HTTP\\\\IncomingRequest of property CodeIgniter\\\\RESTful\\\\BaseResource\\:\\:\\$request is not the same as PHPDoc type CodeIgniter\\\\HTTP\\\\RequestInterface of overridden property CodeIgniter\\\\Controller\\:\\:\\$request\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/RESTful/BaseResource.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\RESTful\\\\ResourceController\\:\\:fail\\(\\) has parameter \\$messages with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/RESTful/ResourceController.php',
@@ -8937,22 +8767,12 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$seed type has no value type specified in iterable type array\\.$#',
+	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$seed \\(array\\<int, class\\-string\\<CodeIgniter\\\\Database\\\\Seeder\\>\\>\\|class\\-string\\<CodeIgniter\\\\Database\\\\Seeder\\>\\) does not accept default value of type string\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$session type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$setUpMethods type has no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property CodeIgniter\\\\Test\\\\CIUnitTestCase\\:\\:\\$tearDownMethods type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Test/CIUnitTestCase.php',
 ];

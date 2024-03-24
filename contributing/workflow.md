@@ -199,6 +199,16 @@ Latest commit only:
 > git push --force-with-lease origin your-branch
 ```
 
+Only the specified number of commits:
+```console
+> git switch your-branch
+> git rebase -i HEAD~3 --exec 'git commit --amend --no-edit --no-verify -S'
+> git push --force-with-lease origin your-branch
+```
+
+> [!NOTE]
+> `HEAD~3` specifies the last 3 commits in the PR. Change *3* to the actual number of commits.
+
 All commits:
 ```console
 > git switch your-branch

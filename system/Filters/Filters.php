@@ -101,7 +101,7 @@ class Filters
     /**
      * Any arguments to be passed to filtersClass.
      *
-     * @var array<class-string, array<string, list<string>>|null> [classname => arguments]
+     * @var array<class-string, list<string>|null> [classname => arguments]
      */
     protected $argumentsClass = [];
 

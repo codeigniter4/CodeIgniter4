@@ -25,6 +25,8 @@ class Routing extends BaseConfig
      * found taking precedence.
      *
      * Default: APPPATH . 'Config/Routes.php'
+     *
+     * @var list<string>
      */
     public array $routeFiles = [
         APPPATH . 'Config/Routes.php',
@@ -121,7 +123,7 @@ class Routing extends BaseConfig
      *       'blog' => 'Acme\Blog\Controllers',
      *   ]
      *
-     * @var array [ uri_segment => namespace ]
+     * @var array<string, string>
      */
     public array $moduleRoutes = [];
 

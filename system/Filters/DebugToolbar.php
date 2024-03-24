@@ -26,7 +26,7 @@ class DebugToolbar implements FilterInterface
     /**
      * We don't need to do anything here.
      *
-     * @param array|null $arguments
+     * @param list<string>|null $arguments
      */
     public function before(RequestInterface $request, $arguments = null)
     {
@@ -36,7 +36,7 @@ class DebugToolbar implements FilterInterface
      * If the debug flag is set (CI_DEBUG) then collect performance
      * and debug information and display it in a toolbar.
      *
-     * @param array|null $arguments
+     * @param list<string>|null $arguments
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {

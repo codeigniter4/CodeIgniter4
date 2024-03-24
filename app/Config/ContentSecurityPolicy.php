@@ -122,7 +122,7 @@ class ContentSecurityPolicy extends BaseConfig
      * The frame-src directive restricts the URLs which may
      * be loaded into nested browsing contexts.
      *
-     * @var array|string|null
+     * @var list<string>|string|null
      */
     public $frameSrc;
 

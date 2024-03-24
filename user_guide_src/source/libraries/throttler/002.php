@@ -13,9 +13,9 @@ class Throttle implements FilterInterface
      * This is a demo implementation of using the Throttler class
      * to implement rate limiting for your application.
      *
-     * @param array|null $arguments
+     * @param list<string>|null $arguments
      *
-     * @return mixed
+     * @return ResponseInterface|void
      */
     public function before(RequestInterface $request, $arguments = null)
     {
@@ -31,9 +31,9 @@ class Throttle implements FilterInterface
     /**
      * We don't have anything to do here.
      *
-     * @param array|null $arguments
+     * @param list<string>|null $arguments
      *
-     * @return mixed
+     * @return void
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {

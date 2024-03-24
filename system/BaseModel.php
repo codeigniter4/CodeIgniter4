@@ -134,7 +134,7 @@ abstract class BaseModel
      * An array of field names that are allowed
      * to be set by the user in inserts/updates.
      *
-     * @var array
+     * @var list<string>
      */
     protected $allowedFields = [];
 
@@ -209,7 +209,7 @@ abstract class BaseModel
      * The array must match the format of data passed to the Validation
      * library.
      *
-     * @var array|string
+     * @var list<string>|string
      */
     protected $validationRules = [];
 
@@ -217,7 +217,7 @@ abstract class BaseModel
      * Contains any custom error messages to be
      * used during data validation.
      *
-     * @var array
+     * @var array<string, array<string, string>>
      */
     protected $validationMessages = [];
 
