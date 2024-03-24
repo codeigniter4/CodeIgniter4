@@ -92,7 +92,7 @@ final class CorsTest extends CIUnitTestCase
         return new Cors($passedOptions);
     }
 
-    public function testBeforeDoesNothingWhenCLIRequest(): void
+    public function testBeforeDoesNothingWhenCliRequest(): void
     {
         $this->cors = $this->createCors();
         $cliRequest = new CLIRequest(new MockAppConfig());
