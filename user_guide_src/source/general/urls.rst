@@ -84,12 +84,21 @@ data can be passed to your application. URIs may only contain the following:
 -  Dash: ``-``
 -  Space: `` ``
 
-This setting can be changed by ``Config\App::$permittedURIChars``.
-
 .. note::
     This check is performed by the ``Router``. The Router takes the URL-encoded
     value held by the ``SiteURI`` class, decodes it, and then checks that it
     does not contain not permitted strings.
+
+Adding Permitted Characters
+---------------------------
+
+The permitted characters can be changed by ``Config\App::$permittedURIChars``.
+
+If you want to use Unicode for URI paths, modify it to allow the characters to
+be used. For example, if you want to use Bengali, you will need to set the
+following value in **app/Config/App.php**::
+
+    public string $permittedURIChars = 'a-z 0-9~%.:_\-\x{0980}-\x{09ff}';
 
 .. _urls-remove-index-php:
 
