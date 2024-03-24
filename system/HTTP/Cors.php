@@ -59,9 +59,19 @@ class Cors
     {
         $config ??= config(CorsConfig::class);
         if ($config instanceof CorsConfig) {
-            $config = (array) $config;
+            $config = $config->default;
         }
         $this->config = array_merge($this->config, $config);
+    }
+
+    /**
+     * Creates a new instance by config name.
+     */
+    public static function factory(string $configName = 'default'): self
+    {
+        $config = config(CorsConfig::class)->{$configName};
+
+        return new self($config);
     }
 
     public function isPreflightRequest(IncomingRequest $request): bool

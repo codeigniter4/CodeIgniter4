@@ -23,9 +23,11 @@ use CodeIgniter\HTTP\ResponseInterface;
  */
 class Cors implements FilterInterface
 {
-    private CorsService $cors;
+    private ?CorsService $cors = null;
 
     /**
+     * @testTag $config is used for testing purposes only.
+     *
      * @param array{
      *      allowedOrigins?: list<string>,
      *      allowedOriginsPatterns?: list<string>,
@@ -38,19 +40,23 @@ class Cors implements FilterInterface
      */
     public function __construct(array $config = [])
     {
-        $this->cors = new CorsService($config);
+        if ($config !== []) {
+            $this->cors = new CorsService($config);
+        }
     }
 
     /**
-     * @param array<string, list<string>>|null $arguments
+     * @param list<string>|null $arguments
      *
-     * @return RequestInterface|ResponseInterface|string|void
+     * @return ResponseInterface|string|void
      */
     public function before(RequestInterface $request, $arguments = null)
     {
         if (! $request instanceof IncomingRequest) {
             return;
         }
+
+        $this->createCorsService($arguments);
 
         /** @var ResponseInterface $response */
         $response = service('response');
@@ -61,7 +67,16 @@ class Cors implements FilterInterface
     }
 
     /**
-     * @param array<string, list<string>>|null $arguments
+     * @param list<string>|null $arguments
+     */
+    private function createCorsService(?array $arguments): void
+    {
+        $this->cors ??= ($arguments === null) ? CorsService::factory()
+            : CorsService::factory($arguments[0]);
+    }
+
+    /**
+     * @param list<string>|null $arguments
      *
      * @return ResponseInterface|void
      */
@@ -70,6 +85,8 @@ class Cors implements FilterInterface
         if (! $request instanceof IncomingRequest) {
             return;
         }
+
+        $this->createCorsService($arguments);
 
         return $this->cors->addResponseHeaders($request, $response);
     }

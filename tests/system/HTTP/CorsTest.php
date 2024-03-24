@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use Config\Cors as CorsConfig;
 use Config\Services;
 
 /**
@@ -24,10 +23,8 @@ use Config\Services;
  */
 final class CorsTest extends CIUnitTestCase
 {
-    private function createCors(?CorsConfig $config = null): Cors
+    private function createCors(array $config = []): Cors
     {
-        $config ??= new CorsConfig();
-
         return new Cors($config);
     }
 
@@ -64,22 +61,23 @@ final class CorsTest extends CIUnitTestCase
         return Services::incomingrequest(null, false);
     }
 
-    private function createCorsConfig(): CorsConfig
+    private function getDefaultConfig(): array
     {
-        $config = new CorsConfig();
-
-        $config->allowedHeaders = ['X-API-KEY', 'X-Requested-With', 'Content-Type', 'Accept'];
-        $config->allowedMethods = ['PUT'];
-        $config->maxAge         = 3600;
-
-        return $config;
+        return [
+            'allowedOrigins'         => [],
+            'allowedOriginsPatterns' => [],
+            'supportsCredentials'    => false,
+            'allowedHeaders'         => ['X-API-KEY', 'X-Requested-With', 'Content-Type', 'Accept'],
+            'allowedMethods'         => ['PUT'],
+            'maxAge'                 => 3600,
+        ];
     }
 
     public function testHandlePreflightRequestSingleAllowedOrigin()
     {
-        $config                 = $this->createCorsConfig();
-        $config->allowedOrigins = ['http://localhost:8080'];
-        $cors                   = $this->createCors($config);
+        $config                   = $this->getDefaultConfig();
+        $config['allowedOrigins'] = ['http://localhost:8080'];
+        $cors                     = $this->createCors($config);
 
         $request = $this->createRequest()
             ->withMethod('OPTIONS')
@@ -117,9 +115,9 @@ final class CorsTest extends CIUnitTestCase
 
     public function testHandlePreflightRequestMultipleAllowedOriginsAllowed()
     {
-        $config                 = $this->createCorsConfig();
-        $config->allowedOrigins = ['https://example.com', 'https://api.example.com'];
-        $cors                   = $this->createCors($config);
+        $config                   = $this->getDefaultConfig();
+        $config['allowedOrigins'] = ['https://example.com', 'https://api.example.com'];
+        $cors                     = $this->createCors($config);
 
         $request = $this->createRequest()
             ->withMethod('OPTIONS')
@@ -154,9 +152,9 @@ final class CorsTest extends CIUnitTestCase
 
     public function testHandlePreflightRequestMultipleAllowedOriginsAllowedAlreadyVary()
     {
-        $config                 = $this->createCorsConfig();
-        $config->allowedOrigins = ['https://example.com', 'https://api.example.com'];
-        $cors                   = $this->createCors($config);
+        $config                   = $this->getDefaultConfig();
+        $config['allowedOrigins'] = ['https://example.com', 'https://api.example.com'];
+        $cors                     = $this->createCors($config);
 
         $request = $this->createRequest()
             ->withMethod('OPTIONS')
@@ -192,9 +190,9 @@ final class CorsTest extends CIUnitTestCase
 
     public function testHandlePreflightRequestMultipleAllowedOriginsNotAllowed()
     {
-        $config                 = $this->createCorsConfig();
-        $config->allowedOrigins = ['https://example.com', 'https://api.example.com'];
-        $cors                   = $this->createCors($config);
+        $config                   = $this->getDefaultConfig();
+        $config['allowedOrigins'] = ['https://example.com', 'https://api.example.com'];
+        $cors                     = $this->createCors($config);
 
         $request = $this->createRequest()
             ->withMethod('OPTIONS')
@@ -218,9 +216,9 @@ final class CorsTest extends CIUnitTestCase
 
     public function testHandlePreflightRequestAllowedOriginsPatternsAllowed()
     {
-        $config                         = $this->createCorsConfig();
-        $config->allowedOriginsPatterns = ['https://\w+\.example\.com'];
-        $cors                           = $this->createCors($config);
+        $config                           = $this->getDefaultConfig();
+        $config['allowedOriginsPatterns'] = ['https://\w+\.example\.com'];
+        $cors                             = $this->createCors($config);
 
         $request = $this->createRequest()
             ->withMethod('OPTIONS')
@@ -255,9 +253,9 @@ final class CorsTest extends CIUnitTestCase
 
     public function testHandlePreflightRequestAllowedOriginsPatternsNotAllowed()
     {
-        $config                         = $this->createCorsConfig();
-        $config->allowedOriginsPatterns = ['https://\w+\.example\.com'];
-        $cors                           = $this->createCors($config);
+        $config                           = $this->getDefaultConfig();
+        $config['allowedOriginsPatterns'] = ['https://\w+\.example\.com'];
+        $cors                             = $this->createCors($config);
 
         $request = $this->createRequest()
             ->withMethod('OPTIONS')
@@ -281,10 +279,10 @@ final class CorsTest extends CIUnitTestCase
 
     public function testHandlePreflightRequestSingleAllowedOriginWithCredentials()
     {
-        $config                      = $this->createCorsConfig();
-        $config->allowedOrigins      = ['http://localhost:8080'];
-        $config->supportsCredentials = true;
-        $cors                        = $this->createCors($config);
+        $config                        = $this->getDefaultConfig();
+        $config['allowedOrigins']      = ['http://localhost:8080'];
+        $config['supportsCredentials'] = true;
+        $cors                          = $this->createCors($config);
 
         $request = $this->createRequest()
             ->withMethod('OPTIONS')
@@ -319,10 +317,10 @@ final class CorsTest extends CIUnitTestCase
 
     public function testAddResponseHeadersSingleAllowedOriginSimpleRequest()
     {
-        $config                 = $this->createCorsConfig();
-        $config->allowedOrigins = ['http://localhost:8080'];
-        $config->allowedMethods = ['GET', 'POST', 'PUT'];
-        $cors                   = $this->createCors($config);
+        $config                   = $this->getDefaultConfig();
+        $config['allowedOrigins'] = ['http://localhost:8080'];
+        $config['allowedMethods'] = ['GET', 'POST', 'PUT'];
+        $cors                     = $this->createCors($config);
 
         $request = $this->createRequest()
             ->withMethod('GET')
@@ -350,10 +348,10 @@ final class CorsTest extends CIUnitTestCase
 
     public function testAddResponseHeadersSingleAllowedOriginRealRequest()
     {
-        $config                 = $this->createCorsConfig();
-        $config->allowedOrigins = ['http://localhost:8080'];
-        $config->allowedMethods = ['GET', 'POST', 'PUT'];
-        $cors                   = $this->createCors($config);
+        $config                   = $this->getDefaultConfig();
+        $config['allowedOrigins'] = ['http://localhost:8080'];
+        $config['allowedMethods'] = ['GET', 'POST', 'PUT'];
+        $cors                     = $this->createCors($config);
 
         $request = $this->createRequest()
             ->withMethod('POST')
@@ -372,11 +370,11 @@ final class CorsTest extends CIUnitTestCase
 
     public function testAddResponseHeadersSingleAllowedOriginWithCredentials()
     {
-        $config                      = $this->createCorsConfig();
-        $config->allowedOrigins      = ['http://localhost:8080'];
-        $config->supportsCredentials = true;
-        $config->allowedMethods      = ['GET'];
-        $cors                        = $this->createCors($config);
+        $config                        = $this->getDefaultConfig();
+        $config['allowedOrigins']      = ['http://localhost:8080'];
+        $config['supportsCredentials'] = true;
+        $config['allowedMethods']      = ['GET'];
+        $cors                          = $this->createCors($config);
 
         $request = $this->createRequest()
             ->withMethod('GET')
@@ -401,11 +399,11 @@ final class CorsTest extends CIUnitTestCase
 
     public function testAddResponseHeadersSingleAllowedOriginWithExposeHeaders()
     {
-        $config                 = $this->createCorsConfig();
-        $config->allowedOrigins = ['http://localhost:8080'];
-        $config->allowedMethods = ['GET'];
-        $config->exposedHeaders = ['Content-Length', 'X-Kuma-Revision'];
-        $cors                   = $this->createCors($config);
+        $config                   = $this->getDefaultConfig();
+        $config['allowedOrigins'] = ['http://localhost:8080'];
+        $config['allowedMethods'] = ['GET'];
+        $config['exposedHeaders'] = ['Content-Length', 'X-Kuma-Revision'];
+        $cors                     = $this->createCors($config);
 
         $request = $this->createRequest()
             ->withMethod('GET')
@@ -429,9 +427,9 @@ final class CorsTest extends CIUnitTestCase
 
     public function testAddResponseHeadersMultipleAllowedOriginsAllowed()
     {
-        $config                 = $this->createCorsConfig();
-        $config->allowedOrigins = ['https://example.com', 'https://api.example.com'];
-        $cors                   = $this->createCors($config);
+        $config                   = $this->getDefaultConfig();
+        $config['allowedOrigins'] = ['https://example.com', 'https://api.example.com'];
+        $cors                     = $this->createCors($config);
 
         $request = $this->createRequest()
             ->withMethod('PUT')
@@ -461,9 +459,9 @@ final class CorsTest extends CIUnitTestCase
 
     public function testAddResponseHeadersMultipleAllowedOriginsAllowedAlreadyVary()
     {
-        $config                 = $this->createCorsConfig();
-        $config->allowedOrigins = ['https://example.com', 'https://api.example.com'];
-        $cors                   = $this->createCors($config);
+        $config                   = $this->getDefaultConfig();
+        $config['allowedOrigins'] = ['https://example.com', 'https://api.example.com'];
+        $cors                     = $this->createCors($config);
 
         $request = $this->createRequest()
             ->withMethod('PUT')
@@ -488,9 +486,9 @@ final class CorsTest extends CIUnitTestCase
 
     public function testAddResponseHeadersMultipleAllowedOriginsNotAllowed()
     {
-        $config                 = $this->createCorsConfig();
-        $config->allowedOrigins = ['https://example.com', 'https://api.example.com'];
-        $cors                   = $this->createCors($config);
+        $config                   = $this->getDefaultConfig();
+        $config['allowedOrigins'] = ['https://example.com', 'https://api.example.com'];
+        $cors                     = $this->createCors($config);
 
         $request = $this->createRequest()
             ->withMethod('PUT')

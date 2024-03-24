@@ -27,16 +27,16 @@ CodeIgniter provides the CORS filter and helper class.
 Configuring CORS
 ****************
 
-Setting CORS Values
-===================
+Setting Default Config
+======================
 
 CORS can be configured by **app/Config/Cors.php**.
 
-At a minimum, the following properties must be set:
+At a minimum, the following items in the ``$default`` property must be set:
 
-- ``$allowedOrigins``: List explicitly the Origin(s) you want to allow.
-- ``$allowedHeaders``: List explicitly the HTTP headers you want to allow.
-- ``$allowedMethods``: List explicitly the HTTP methods you want to allow.
+- ``allowedOrigins``: List explicitly the Origin(s) you want to allow.
+- ``allowedHeaders``: List explicitly the HTTP headers you want to allow.
+- ``allowedMethods``: List explicitly the HTTP methods you want to allow.
 
 .. warning:: Based on the principle of least privilege, only the minimum necessary
     Origin, Methods, and Headers should be allowed.
@@ -88,6 +88,22 @@ Checking Routes and Filters
 
 After configuration, you can check the routes and filters with the :ref:`routing-spark-routes`
 command.
+
+Setting Another Config
+======================
+
+If you want to use a different configuration than the default configuration, add
+a property to **app/Config/Cors.php**.
+
+For example, add the ``$api`` property.
+
+.. literalinclude:: cors/004.php
+
+The property name (``api`` in the above example) will become the configuration name.
+
+Then, specify the property name as the filter argument like ``cors:api``:
+
+.. literalinclude:: cors/005.php
 
 ***************
 Class Reference
