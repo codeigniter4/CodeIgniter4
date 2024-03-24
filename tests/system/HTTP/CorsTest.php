@@ -28,6 +28,28 @@ final class CorsTest extends CIUnitTestCase
         return new Cors($config);
     }
 
+    private function createRequest(): IncomingRequest
+    {
+        return Services::incomingrequest(null, false);
+    }
+
+    private function getDefaultConfig(): array
+    {
+        return [
+            'allowedOrigins'         => [],
+            'allowedOriginsPatterns' => [],
+            'supportsCredentials'    => false,
+            'allowedHeaders'         => ['X-API-KEY', 'X-Requested-With', 'Content-Type', 'Accept'],
+            'allowedMethods'         => ['PUT'],
+            'maxAge'                 => 3600,
+        ];
+    }
+
+    private function assertHeader(ResponseInterface $response, string $name, string $value): void
+    {
+        $this->assertSame($value, $response->getHeaderLine($name));
+    }
+
     public function testInstantiate()
     {
         $cors = $this->createCors();
@@ -54,23 +76,6 @@ final class CorsTest extends CIUnitTestCase
             ->withMethod('OPTIONS');
 
         $this->assertFalse($cors->isPreflightRequest($request));
-    }
-
-    private function createRequest(): IncomingRequest
-    {
-        return Services::incomingrequest(null, false);
-    }
-
-    private function getDefaultConfig(): array
-    {
-        return [
-            'allowedOrigins'         => [],
-            'allowedOriginsPatterns' => [],
-            'supportsCredentials'    => false,
-            'allowedHeaders'         => ['X-API-KEY', 'X-Requested-With', 'Content-Type', 'Accept'],
-            'allowedMethods'         => ['PUT'],
-            'maxAge'                 => 3600,
-        ];
     }
 
     public function testHandlePreflightRequestSingleAllowedOrigin()
@@ -106,11 +111,6 @@ final class CorsTest extends CIUnitTestCase
         $this->assertFalse(
             $response->hasHeader('Access-Control-Allow-Credentials')
         );
-    }
-
-    private function assertHeader(ResponseInterface $response, string $name, string $value): void
-    {
-        $this->assertSame($value, $response->getHeaderLine($name));
     }
 
     public function testHandlePreflightRequestMultipleAllowedOriginsAllowed()
