@@ -14,7 +14,7 @@ Release Date: Unreleased
 SECURITY
 ********
 
-- *Language class DoS Vulnerability* was fixed.
+- **Language:** *Language class DoS Vulnerability* was fixed.
   See the `Security advisory GHSA-39fp-mqmm-gxj6 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-39fp-mqmm-gxj6>`_
   for more information.
 - **URI Security:** The feature to check if URIs do not contain not permitted
