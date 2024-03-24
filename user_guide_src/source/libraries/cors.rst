@@ -64,8 +64,8 @@ E.g.,
 Don't forget to add OPTIONS routes for Preflight Requests. Because Controller
 Filters (except for Required Filters) do not work if the route does not exist.
 
-The CORS filter handles all preflight requests, so the configured controllers
-are not normally called.
+The CORS filter handles all Preflight Requests, so the closure controllers
+for the OPTIONS routes are not normally called.
 
 Set in Config\\Filters
 ----------------------
@@ -83,8 +83,8 @@ E.g.,
 
 .. literalinclude:: cors/003.php
 
-The CORS filter handles all preflight requests, so the configured controllers
-are not normally called.
+The CORS filter handles all Preflight Requests, so the closure controller
+for the OPTIONS routes is not normally called.
 
 Checking Routes and Filters
 ===========================
