@@ -21,6 +21,8 @@ SECURITY
   strings has been added. This check is equivalent to the URI Security found in
   CodeIgniter 3. This is enabled by default, but upgraded users need to add
   a setting to enable it. See :ref:`urls-uri-security` for details.
+- **Filters:** A bug where URI paths processed by Filters were not URL-decoded
+  has been fixed. See :ref:`upgrade-447-filter-paths` for details.
 
 ********
 BREAKING

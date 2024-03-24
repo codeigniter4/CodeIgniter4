@@ -449,6 +449,7 @@ class CodeIgniter
 
         $routeFilter = $this->tryToRouteIt($routes);
 
+        // $uri is URL-encoded.
         $uri = $this->determinePath();
 
         if ($this->enableFilters) {
@@ -813,6 +814,7 @@ class CodeIgniter
         // $routes is defined in Config/Routes.php
         $this->router = Services::router($routes, $this->request);
 
+        // $path is URL-encoded.
         $path = $this->determinePath();
 
         $this->benchmark->stop('bootstrap');
