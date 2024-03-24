@@ -353,9 +353,9 @@ along the lines of:</p>
 <span class="sd">     * This is a demo implementation of using the Throttler class</span>
 <span class="sd">     * to implement rate limiting for your application.</span>
 <span class="sd">     *</span>
-<span class="sd">     * @param array|null $arguments</span>
+<span class="sd">     * @param list&lt;string&gt;|null $arguments</span>
 <span class="sd">     *</span>
-<span class="sd">     * @return mixed</span>
+<span class="sd">     * @return ResponseInterface|void</span>
 <span class="sd">     */</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
     <span class="p">{</span>
@@ -371,9 +371,9 @@ along the lines of:</p>
     <span class="sd">/**</span>
 <span class="sd">     * We don&#39;t have anything to do here.</span>
 <span class="sd">     *</span>
-<span class="sd">     * @param array|null $arguments</span>
+<span class="sd">     * @param list&lt;string&gt;|null $arguments</span>
 <span class="sd">     *</span>
-<span class="sd">     * @return mixed</span>
+<span class="sd">     * @return void</span>
 <span class="sd">     */</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">after</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">,</span> <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
     <span class="p">{</span>
@@ -514,7 +514,7 @@ Won’t fail if the bucket doesn’t exist.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2024 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 22, 2024.
+      <span class="lastupdated">Last updated on Mar 24, 2024.
       </span></p>
   </div>
 
