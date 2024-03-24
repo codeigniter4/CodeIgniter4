@@ -120,6 +120,18 @@ final class CorsTest extends CIUnitTestCase
         );
     }
 
+    public function testItDoesNotModifyOnARequestWithoutOrigin()
+    {
+        $this->cors = $this->createCors([
+            'allowedOrigins' => ['https://www.example.com', 'https://app.example.com'],
+        ]);
+        $request = $this->createRequest();
+
+        $response = $this->handle($request);
+
+        $this->assertFalse($response->hasHeader('Access-Control-Allow-Origin'));
+    }
+
     private function handle($request): ResponseInterface
     {
         $response = $this->cors->before($request);

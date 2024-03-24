@@ -128,9 +128,15 @@ class Cors
         $this->checkWildcard('allowedOrigins', $originCount);
         $this->checkWildcardAndCredentials('allowedOrigins', 'Access-Control-Allow-Origin');
 
+        // Single Origin.
         if ($originCount === 1 && $originPatternCount === 0) {
             $response->setHeader('Access-Control-Allow-Origin', $this->config['allowedOrigins'][0]);
 
+            return;
+        }
+
+        // Multiple Origins.
+        if (! $request->hasHeader('Origin')) {
             return;
         }
 
@@ -150,6 +156,8 @@ class Cors
                 if (preg_match($regex, $origin)) {
                     $response->setHeader('Access-Control-Allow-Origin', $origin);
                     $response->appendHeader('Vary', 'Origin');
+
+                    return;
                 }
             }
         }
