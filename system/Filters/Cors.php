@@ -58,12 +58,21 @@ class Cors implements FilterInterface
 
         $this->createCorsService($arguments);
 
+        if (! $this->cors->isPreflightRequest($request)) {
+            return;
+        }
+
         /** @var ResponseInterface $response */
         $response = service('response');
 
-        if ($this->cors->isPreflightRequest($request)) {
-            return $this->cors->handlePreflightRequest($request, $response);
-        }
+        $response = $this->cors->handlePreflightRequest($request, $response);
+
+        // Always adds `Vary: Origin` header because if there is no Origin header
+        // in a OPTIONS request, the request may be cached on an intermediate
+        // cache server such as a CDN.
+        $response->appendHeader('Vary', 'Origin');
+
+        return $response;
     }
 
     /**
@@ -87,6 +96,13 @@ class Cors implements FilterInterface
         }
 
         $this->createCorsService($arguments);
+
+        // Always adds `Vary: Origin` header because if there is no Origin header
+        // in a OPTIONS request, the request may be cached on an intermediate
+        // cache server such as a CDN.
+        if ($request->is('OPTIONS')) {
+            $response->appendHeader('Vary', 'Origin');
+        }
 
         return $this->cors->addResponseHeaders($request, $response);
     }

@@ -185,7 +185,8 @@ final class CorsTest extends CIUnitTestCase
 
         $this->assertSame(204, $response->getStatusCode());
         $this->assertHeader('Access-Control-Allow-Headers', '*');
-        $this->assertFalse($response->hasHeader('Vary'));
+        // Always adds `Vary: Origin` header.
+        $this->assertHeader('Vary', 'Origin');
     }
 
     public function testItDoesntPermitWildcardAllowedHeadersAndSupportsCredentials()
@@ -431,5 +432,18 @@ final class CorsTest extends CIUnitTestCase
         $response = $this->handle($request);
 
         $this->assertSame(204, $response->getStatusCode());
+    }
+
+    public function testItAddsVaryOriginHeaderEvenIfItIsNormalOptionsRequest()
+    {
+        $this->cors = $this->createCors(['allowedHeaders' => ['*']]);
+        $request    = $this->createRequest()->withMethod('OPTIONS');
+
+        $response = $this->handle($request);
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertFalse($response->hasHeader('Access-Control-Allow-Headers'));
+        // Always adds `Vary: Origin` header.
+        $this->assertHeader('Vary', 'Origin');
     }
 }
