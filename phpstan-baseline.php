@@ -5767,36 +5767,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Files/File.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\CSRF\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/CSRF.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\CSRF\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/CSRF.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\DebugToolbar\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/DebugToolbar.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\DebugToolbar\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/DebugToolbar.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\FilterInterface\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/FilterInterface.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\FilterInterface\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/FilterInterface.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Argument \\#1 \\$name \\(\'Config\\\\\\\\Modules\'\\) passed to function config does not extend CodeIgniter\\\\\\\\Config\\\\\\\\BaseConfig\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/Filters.php',
@@ -5862,26 +5832,6 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/system/Filters/Filters.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\Honeypot\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Honeypot.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\Honeypot\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/Honeypot.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\InvalidChars\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/InvalidChars.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\InvalidChars\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/InvalidChars.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Filters\\\\InvalidChars\\:\\:checkControl\\(\\) has parameter \\$value with no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/InvalidChars.php',
@@ -5900,16 +5850,6 @@ $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Filters\\\\InvalidChars\\:\\:checkEncoding\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'count' => 1,
 	'path' => __DIR__ . '/system/Filters/InvalidChars.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\SecureHeaders\\:\\:after\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/SecureHeaders.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method CodeIgniter\\\\Filters\\\\SecureHeaders\\:\\:before\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#',
-	'count' => 1,
-	'path' => __DIR__ . '/system/Filters/SecureHeaders.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method CodeIgniter\\\\Format\\\\FormatterInterface\\:\\:format\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
