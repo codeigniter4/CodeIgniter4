@@ -448,7 +448,7 @@ class Router implements RouterInterface
                     }, is_array($handler) ? key($handler) : $handler);
 
                     throw new RedirectException(
-                        preg_replace('#^' . $routeKey . '$#u', $redirectTo, $uri),
+                        preg_replace('#\A' . $routeKey . '\z#u', $redirectTo, $uri),
                         $this->collection->getRedirectCode($routeKey)
                     );
                 }
@@ -502,7 +502,7 @@ class Router implements RouterInterface
                     }
 
                     // Using back-references
-                    $handler = preg_replace('#^' . $routeKey . '$#u', $handler, $uri);
+                    $handler = preg_replace('#\A' . $routeKey . '\z#u', $handler, $uri);
                 }
 
                 $this->setRequest(explode('/', $handler));
