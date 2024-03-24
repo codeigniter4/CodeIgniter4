@@ -14,7 +14,7 @@ final class ExampleDatabaseTest extends CIUnitTestCase
 
     protected $seed = ExampleSeeder::class;
 
-    public function testModelFindAll()
+    public function testModelFindAll(): void
     {
         $model = new ExampleModel();
 
@@ -25,7 +25,7 @@ final class ExampleDatabaseTest extends CIUnitTestCase
         $this->assertCount(3, $objects);
     }
 
-    public function testSoftDeleteLeavesRow()
+    public function testSoftDeleteLeavesRow(): void
     {
         $model = new ExampleModel();
         $this->setPrivateProperty($model, 'useSoftDeletes', true);
