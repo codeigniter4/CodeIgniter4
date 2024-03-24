@@ -41,6 +41,9 @@ At a minimum, the following items in the ``$default`` property must be set:
 .. warning:: Based on the principle of least privilege, only the minimum necessary
     Origin, Methods, and Headers should be allowed.
 
+If you send credentials (e.g., cookies) with a cross-origin request, set
+``supportsCredentials`` to ``true``.
+
 Enabling CORS
 =============
 
