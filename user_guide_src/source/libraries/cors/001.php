@@ -14,13 +14,5 @@ $routes->group('', ['filter' => 'cors'], static function (RouteCollection $route
 
         return $response;
     });
-    $routes->options('product/(:any)', static function () {
-        // Implement processing for normal non-preflight OPTIONS requests,
-        // if necessary.
-        $response = response();
-        $response->setStatusCode(204);
-        $response->setHeader('Allow:', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
-
-        return $response;
-    });
+    $routes->options('product/(:any)', static function () {});
 });
