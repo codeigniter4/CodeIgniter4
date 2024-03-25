@@ -75,7 +75,7 @@ by different servers, but we will show examples for the two most common web serv
 Apache Web Server
 -----------------
 
-Apache must have the *mod_rewrite* extension enabled. If it does, you can use a ``.htaccess`` file with some simple rules.
+Apache must have the *mod_rewrite* extension enabled. If it has, you can use a ``.htaccess`` file with some simple rules.
 Here is an example of such a file, using the "negative" method in which everything is redirected except the specified
 items:
 
