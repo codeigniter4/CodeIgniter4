@@ -25,11 +25,15 @@ interface EntityInterface
      *
      * @param bool $onlyChanged If true, only return values that have changed since object creation
      * @param bool $recursive   If true, inner entities will be cast as array as well.
+     *
+     * @return array<string, mixed>
      */
     public function toRawArray(bool $onlyChanged = false, bool $recursive = false): array;
 
     /**
      * Set raw data array without any mutations
+     *
+     * @param array<string, mixed> $data
      *
      * @return $this
      */
