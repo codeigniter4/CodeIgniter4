@@ -8333,12 +8333,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
 	'message' => '#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#',
-	'count' => 4,
-	'path' => __DIR__ . '/system/Session/Handlers/RedisHandler.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Only booleans are allowed in &&, string given on the right side\\.$#',
-	'count' => 1,
+	'count' => 2,
 	'path' => __DIR__ . '/system/Session/Handlers/RedisHandler.php',
 ];
 $ignoreErrors[] = [

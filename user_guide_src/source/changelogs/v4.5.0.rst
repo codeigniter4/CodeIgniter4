@@ -118,6 +118,11 @@ Libraries
     - The ``$dbGroup`` parameter of ``Validation::run()`` now accepts not only
       a database group name, but also a database connection instance or an array
       of database settings.
+- **Session:**
+    - ``RedisHandler`` now can configure the interval time for acquiring locks
+      (``$lockRetryInterval``) and the number of retries (``$lockMaxRetries``).
+    - Now you can use Redis ACL (username and password) with ``RedisHandler``.
+      See :ref:`sessions-redishandler-driver` for details.
 
 Helpers and Functions
 =====================
